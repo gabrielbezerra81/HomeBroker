@@ -1,0 +1,50 @@
+.mytable {
+  background: #000;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.operacoes .col {
+  flex-grow: 0;
+  padding: 0px 1.5rem;
+}
+
+.table-striped > tbody > tr:nth-child(odd) > td,
+.table-striped > tbody > tr:nth-child(odd) > th {
+  background-color: #222;
+}
+
+.form-group {
+  padding: 0.1rem 1rem;
+  margin: 0;
+}
+
+.form-label {
+  margin-bottom: 0;
+  margin-top: 0.2rem;
+}
+
+.modal-footer {
+  display: flex;
+  padding: 0.7rem 1rem;
+}
+
+.modal-footer button {
+  flex: 1;
+}
+
+.no-border {
+  border-width: 0;
+}
+
+.opicons {
+  padding: 0;
+  border: none;
+  color: #fff;
+}
+
+.operacoes .btn:focus,
+.btn:active {
+  outline: none !important;
+  box-shadow: none;
+}
