@@ -6,7 +6,7 @@ import ModalDialog from "react-bootstrap/ModalDialog";
 import "../css/GenericModalForm.css";
 import { connect } from "react-redux";
 import { mudarQtdAction } from "./redux/actions/bookOfertaActions";
-import TabelaCotacoes from "./TabelaCotacoes";
+import TabelaOfertas from "./TabelaOfertas"
 
 class DraggableModalDialog extends React.Component {
   render() {
@@ -23,8 +23,7 @@ class BSModal extends Component {
     return (
       <Modal
         dialogAs={DraggableModalDialog}
-        //show={this.props.show}
-        show={true}
+        show={this.props.show}
         backdrop="static"
         onHide={this.props.close}
         backdropClassName="modal-backdrop"
@@ -36,7 +35,11 @@ class BSModal extends Component {
           <Modal.Title>{this.props.headerTitle}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <TabelaCotacoes />
+          <TabelaOfertas
+            tableDataVenda={this.props.tableDataVenda}
+            tableDataCompra={this.props.tableDataCompra}
+          />
+
           <Form className="formNumericInput">
             <Row>
               <Col>
@@ -68,11 +71,15 @@ class BSModal extends Component {
             </Row>
           </Form>
         </Modal.Body>
+
         <Modal.Footer className="no-border">
           <Button variant="danger">Vender</Button>
-          <Button variant="success">Fechar</Button>
+          <Button variant="success" onClick={this.props.close}>
+            Fechar
+          </Button>
           <Button variant="primary">Comprar</Button>
         </Modal.Footer>
+
       </Modal>
     );
   }

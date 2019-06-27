@@ -12,11 +12,6 @@
   padding: 0px 1.5rem;
 }
 
-.table-striped > tbody > tr:nth-child(odd) > td,
-.table-striped > tbody > tr:nth-child(odd) > th {
-  background-color: #222;
-}
-
 .form-group {
   padding: 0.1rem 0rem;
   margin: 0;
@@ -62,5 +57,17 @@
   margin-bottom: 0;
 }
 .formNumericInput {
-  padding: 0 1rem
+  padding: 0 1rem;
+}
+
+.itemOrdemVenda {
+  color: rgb(229, 97, 216);
+}
+
+.itemOrdemCompra {
+  color: rgb(124, 176, 183);
+}
+
+.tableItemBookOferta td {
+  padding: 0.2rem;
 }

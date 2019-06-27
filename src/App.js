@@ -10,7 +10,7 @@ class App extends React.Component {
     this.handleClose = this.handleClose.bind(this);
 
     this.state = {
-      show: false
+      show: true
     };
   }
 
@@ -31,7 +31,7 @@ class App extends React.Component {
           </Button>
           <BookOfertas
             show={this.state.show}
-            close={this.state.handleClose}
+            close={this.handleClose}
           />
         </header>
       </div>
