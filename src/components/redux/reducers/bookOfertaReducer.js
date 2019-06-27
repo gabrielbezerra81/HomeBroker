@@ -1,4 +1,4 @@
-import { MUDAR_QTDE } from "../../../contants/ActionTypes";
+import { MUDAR_QTDE } from "../../../constants/ActionTypes";
 
 const INITIAL_STATE = {
   qtde: 0,

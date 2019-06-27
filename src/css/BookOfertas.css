@@ -1,7 +1,6 @@
 #bookofertas .modal-content {
-  max-width: 50vmin;
+  max-width: 45vmin;
 }
-
 .mytable {
   background: #000;
   margin: 0;
@@ -19,7 +18,7 @@
 }
 
 .form-group {
-  padding: 0.1rem 1rem;
+  padding: 0.1rem 0rem;
   margin: 0;
 }
 
@@ -41,7 +40,7 @@
   border-width: 0;
 }
 
-.opicons {
+.operation-icons {
   padding: 0;
   border: none;
   color: #ddd;
@@ -56,9 +55,12 @@
 
 .erro-validacao {
   text-align: center;
-  flex:1;
+  flex: 1;
   color: red;
   font-size: 0.8rem;
   padding: 0.5rem 0 0 0;
   margin-bottom: 0;
+}
+.formNumericInput {
+  padding: 0 1rem
 }

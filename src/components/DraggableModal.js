@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { Modal, Button, Table, Form, Row, Col } from "react-bootstrap";
+import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import Draggable from "react-draggable";
 import ModalDialog from "react-bootstrap/ModalDialog";
-import OperationIcon from "./OperationIcon";
+
 import "../css/GenericModalForm.css";
 import { connect } from "react-redux";
 import { mudarQtdAction } from "./redux/actions/bookOfertaActions";
+import TabelaCotacoes from "./TabelaCotacoes";
 
 class DraggableModalDialog extends React.Component {
   render() {
@@ -18,7 +19,6 @@ class DraggableModalDialog extends React.Component {
 }
 
 class BSModal extends Component {
-
   render() {
     return (
       <Modal
@@ -36,59 +36,8 @@ class BSModal extends Component {
           <Modal.Title>{this.props.headerTitle}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Table
-            striped
-            variant="dark"
-            hover
-            borderless
-            className="mytable text-center"
-          >
-            <thead>
-              <tr>
-                <th>Qtde</th>
-                <th>Preço</th>
-                <th>Operações</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>43300</td>
-                <td>26.75</td>
-                <td>
-                  <OperationIcon />
-                </td>
-              </tr>
-              <tr>
-                <td>43300</td>
-                <td>26.75</td>
-                <td>
-                  <OperationIcon />
-                </td>
-              </tr>
-              <tr>
-                <td>43300</td>
-                <td>26.75</td>
-                <td>
-                  <OperationIcon />
-                </td>
-              </tr>
-              <tr>
-                <td>43300</td>
-                <td>26.75</td>
-                <td>
-                  <OperationIcon />
-                </td>
-              </tr>
-              <tr>
-                <td>43300</td>
-                <td>26.75</td>
-                <td>
-                  <OperationIcon />
-                </td>
-              </tr>
-            </tbody>
-          </Table>
-          <Form>
+          <TabelaCotacoes />
+          <Form className="formNumericInput">
             <Row>
               <Col>
                 <Form.Group>
@@ -138,5 +87,3 @@ export default connect(
   mapStateToProps,
   { mudarQtdAction }
 )(BSModal);
-/*
- */

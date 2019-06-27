@@ -1,5 +1,5 @@
-import React from "react";
-import { VALIDACAO_QTDE } from "../../../contants/Erros";
+import { VALIDACAO_QTDE } from "../../../constants/Erros";
+import { MUDAR_QTDE } from "../../../constants/ActionTypes";
 
 export const mudarQtdAction = event => {
   return dispatch => {
@@ -8,7 +8,7 @@ export const mudarQtdAction = event => {
       erro = VALIDACAO_QTDE;
     }
     dispatch({
-      type: "mudar_qtde",
+      type: MUDAR_QTDE,
       payload: { qtde: event.target.value, erro: erro }
     });
   };
