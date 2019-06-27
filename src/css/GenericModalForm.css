@@ -16,16 +16,17 @@ DraggableModal {
   padding: 0.5rem 0rem;
   border-color: green;
   border-width: 0.4rem;
-  color: #fff;
+  color: #ddd;
+  font-size: 0.9rem;
 }
 
 .modal-header {
-  padding: 0.5rem 1.5rem;
+  padding: 0rem 1.5rem;
 }
 
 .modal-title {
-  color: #fff;
   margin: 0 auto;
+  font-size: 1.3rem;
 }
 
 .close {

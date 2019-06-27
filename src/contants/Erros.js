@@ -1,0 +1,1 @@
+export const VALIDACAO_QTDE = "A quantidade deve ser um múltiplo de 100"

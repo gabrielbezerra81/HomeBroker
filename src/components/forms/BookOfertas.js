@@ -9,7 +9,7 @@ class CompraAgendada extends React.Component {
         <DraggableModal
           show={this.props.show}
           close={this.props.handleClose}
-          id="compralimitada"
+          id="bookofertas"
           headerTitle="PETR4, PETROBRAS PN N2"
         />
       </div>

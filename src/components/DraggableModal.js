@@ -4,6 +4,8 @@ import Draggable from "react-draggable";
 import ModalDialog from "react-bootstrap/ModalDialog";
 import OperationIcon from "./OperationIcon";
 import "../css/GenericModalForm.css";
+import { connect } from "react-redux";
+import { mudarQtdAction } from "./redux/actions/bookOfertaActions";
 
 class DraggableModalDialog extends React.Component {
   render() {
@@ -15,10 +17,7 @@ class DraggableModalDialog extends React.Component {
   }
 }
 
-export default class BSModal extends Component {
-  changeQTDE(value) {
-    return value + 100;
-  }
+class BSModal extends Component {
 
   render() {
     return (
@@ -102,9 +101,9 @@ export default class BSModal extends Component {
                   <Form.Label>Qtde</Form.Label>
                   <Form.Control
                     type="number"
-                    placeholder=""
-                    onPointerDown={value => 
-                    console.log(value)}
+                    step={100}
+                    value={this.props.qtde}
+                    onChange={event => this.props.mudarQtdAction(event)}
                   />
                 </Form.Group>
               </Col>
@@ -114,6 +113,9 @@ export default class BSModal extends Component {
                   <Form.Control type="number" placeholder="" />
                 </Form.Group>
               </Col>
+            </Row>
+            <Row>
+              <h6 className="erro-validacao">{this.props.erro}</h6>
             </Row>
           </Form>
         </Modal.Body>
@@ -127,5 +129,14 @@ export default class BSModal extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  qtde: state.bookOfertaReducer.qtde,
+  erro: state.bookOfertaReducer.erro
+});
+
+export default connect(
+  mapStateToProps,
+  { mudarQtdAction }
+)(BSModal);
 /*
  */
