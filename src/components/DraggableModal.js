@@ -26,6 +26,7 @@ class BSModal extends Component {
         className="modal-dialog"
         dialogClassName="dialog"
         id={this.props.id}
+        enforceFocus={false}
       >
         <Modal.Header closeButton className={this.props.headerClass}>
           <Modal.Title>{this.props.headerTitle}</Modal.Title>

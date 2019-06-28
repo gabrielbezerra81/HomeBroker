@@ -1,6 +1,12 @@
 #bookofertas .modal-content {
   max-width: 45vmin;
 }
+
+#bookofertas .modal-body {
+  padding: 0;
+  margin: 0;
+}
+
 .mytable {
   background: #000;
   margin: 0;

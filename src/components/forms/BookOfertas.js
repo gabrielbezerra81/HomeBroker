@@ -49,6 +49,7 @@ const modalBody = props => (
               step={100}
               value={props.qtde}
               onChange={event => props.mudarQtdAction(event)}
+              min={0}
             />
           </Form.Group>
         </Col>

@@ -9,18 +9,29 @@ class App extends React.Component {
 
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleShowAgend = this.handleShowAgend.bind(this);
+    this.handleCloseAgend = this.handleCloseAgend.bind(this);
 
     this.state = {
-      show: true
+      book: true,
+      agendada: true
     };
   }
 
   handleClose() {
-    this.setState({ show: false });
+    this.setState({ book: false });
   }
 
   handleShow() {
-    this.setState({ show: true });
+    this.setState({ book: true });
+  }
+
+  handleCloseAgend() {
+    this.setState({ agendada: false });
+  }
+
+  handleShowAgend() {
+    this.setState({ agendada: true });
   }
 
   render() {
@@ -28,14 +39,24 @@ class App extends React.Component {
       <div className="App">
         <header className="App-header">
           <Button variant="primary" onClick={this.handleShow}>
-            Abrir form
+            Abrir Book
+          </Button>
+          <Button variant="primary" onClick={this.handleShowAgend}>
+            Abrir Compra Agendada
           </Button>
           <BookOfertas
-            show={this.state.show}
+            show={this.state.book}
             close={this.handleClose}
             tableDataVenda={dataOrdemVenda}
             tableDataCompra={dataOrdemCompra}
             headerTitle="PETR4, PETROBRAS PN N2"
+            name="book"
+          />
+          <CompraAgendada
+            show={this.state.agendada}
+            close={this.handleCloseAgend}
+            headerTitle="COMPRA AGENDADA"
+            name="agendada"
           />
         </header>
       </div>
