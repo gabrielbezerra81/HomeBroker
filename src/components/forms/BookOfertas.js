@@ -1,71 +1,91 @@
 import React from "react";
 import DraggableModal from "../DraggableModal";
 import "../../css/BookOfertas.css";
+import { connect } from "react-redux";
+import {
+  mudarQtdAction,
+  comprarAction,
+  venderAction
+} from "../redux/actions/bookOfertaActions";
+import { Modal, Button, Form, Row, Col } from "react-bootstrap";
+
+import TabelaOfertas from "../TabelaOfertas";
 
 class BookOfertas extends React.Component {
   render() {
     return (
-        <DraggableModal
-          show={this.props.show}
-          close={this.props.close}
-          id="bookofertas"
-          headerTitle="PETR4, PETROBRAS PN N2"
-          tableDataVenda={dataOrdemVenda}
-          tableDataCompra={dataOrdemCompra}
-        />
+      <DraggableModal
+        show={this.props.show}
+        close={this.props.close}
+        id="bookofertas"
+        headerTitle={this.props.headerTitle}
+        renderModalBody={() => modalBody(this.props)}
+        renderModalFooter={() => modalFooter(this.props)}
+        headerClass="no-border"
+      />
     );
   }
 }
 
-export default BookOfertas;
+const modalBody = props => (
+  <Modal.Body>
+    <TabelaOfertas
+      tableDataVenda={props.tableDataVenda}
+      tableDataCompra={props.tableDataCompra}
+    />
+    <Form className="formNumericInput">
+      <Row>
+        <Col>
+          <Form.Group>
+            <Form.Label>Stop Loss</Form.Label>
+            <Form.Control type="number" placeholder="" />
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group>
+            <Form.Label>Qtde</Form.Label>
+            <Form.Control
+              type="number"
+              step={100}
+              value={props.qtde}
+              onChange={event => props.mudarQtdAction(event)}
+            />
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group>
+            <Form.Label>Gain</Form.Label>
+            <Form.Control type="number" placeholder="" />
+          </Form.Group>
+        </Col>
+      </Row>
+      <Row>
+        <h6 className="erro-validacao">{props.erro}</h6>
+      </Row>
+    </Form>
+  </Modal.Body>
+);
 
-/*<DraggableModal
-          show={this.props.show}
-          close={this.props.handleClose}
-          id="compraagendada"
-        />*/
-const dataOrdemVenda = [
-  {
-    qtde: 43300,
-    valor: 26.75
-  },
-  {
-    qtde: 9800,
-    valor: 26.74
-  },
-  {
-    qtde: 1000,
-    valor: 26.73
-  },
-  {
-    qtde: 10900,
-    valor: 26.72
-  },
-  {
-    qtde: 43300,
-    valor: 26.71
-  }
-];
+const modalFooter = props => (
+  <Modal.Footer className="no-border">
+    <Button variant="danger" onClick={() => props.venderAction()}>
+      Vender
+    </Button>
+    <Button variant="success" onClick={props.close}>
+      Fechar
+    </Button>
+    <Button variant="primary" onClick={() => props.comprarAction()}>
+      Comprar
+    </Button>
+  </Modal.Footer>
+);
 
-const dataOrdemCompra = [
-  {
-    qtde: 9800,
-    valor: 26.7
-  },
-  {
-    qtde: 1000,
-    valor: 26.68
-  },
-  {
-    qtde: 10900,
-    valor: 26.66
-  },
-  {
-    qtde: 1000,
-    valor: 26.68
-  },
-  {
-    qtde: 10900,
-    valor: 26.66
-  }
-];
+const mapStateToProps = state => ({
+  qtde: state.bookOfertaReducer.qtde,
+  erro: state.bookOfertaReducer.erro
+});
+
+export default connect(
+  mapStateToProps,
+  { mudarQtdAction, comprarAction, venderAction }
+)(BookOfertas);
