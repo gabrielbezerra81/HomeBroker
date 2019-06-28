@@ -5,14 +5,14 @@ import "../../css/BookOfertas.css";
 class BookOfertas extends React.Component {
   render() {
     return (
-      <DraggableModal
-        show={this.props.show}
-        close={this.props.close}
-        id="bookofertas"
-        headerTitle="PETR4, PETROBRAS PN N2"
-        tableDataVenda={dataOrdemVenda}
-        tableDataCompra={dataOrdemCompra}
-      />
+        <DraggableModal
+          show={this.props.show}
+          close={this.props.close}
+          id="bookofertas"
+          headerTitle="PETR4, PETROBRAS PN N2"
+          tableDataVenda={dataOrdemVenda}
+          tableDataCompra={dataOrdemCompra}
+        />
     );
   }
 }

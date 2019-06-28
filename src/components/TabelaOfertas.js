@@ -1,11 +1,11 @@
 import React from "react";
 import OperationIcon from "./OperationIcon";
-import { Table, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 
 class TabelaOfertas extends React.Component {
   renderItems(data, tipo) {
-    return data.map(item => (
-      <tr className={tipo}>
+    return data.map((item, index) => (
+      <tr className={tipo} key={index}>
         <td>{item.qtde}</td>
         <td>{item.valor}</td>
         <td>
@@ -17,13 +17,7 @@ class TabelaOfertas extends React.Component {
 
   render() {
     return (
-      <Table
-        striped
-        variant="dark"
-        borderless
-        className="mytable text-center"
-        item
-      >
+      <Table striped variant="dark" borderless className="mytable text-center">
         <thead>
           <tr>
             <th>Qtde</th>

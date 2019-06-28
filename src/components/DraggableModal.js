@@ -5,8 +5,12 @@ import ModalDialog from "react-bootstrap/ModalDialog";
 
 import "../css/GenericModalForm.css";
 import { connect } from "react-redux";
-import { mudarQtdAction } from "./redux/actions/bookOfertaActions";
-import TabelaOfertas from "./TabelaOfertas"
+import {
+  mudarQtdAction,
+  comprarAction,
+  venderAction
+} from "./redux/actions/bookOfertaActions";
+import TabelaOfertas from "./TabelaOfertas";
 
 class DraggableModalDialog extends React.Component {
   render() {
@@ -73,13 +77,16 @@ class BSModal extends Component {
         </Modal.Body>
 
         <Modal.Footer className="no-border">
-          <Button variant="danger">Vender</Button>
+          <Button variant="danger" onClick={() => this.props.venderAction()}>
+            Vender
+          </Button>
           <Button variant="success" onClick={this.props.close}>
             Fechar
           </Button>
-          <Button variant="primary">Comprar</Button>
+          <Button variant="primary" onClick={() => this.props.comprarAction()}>
+            Comprar
+          </Button>
         </Modal.Footer>
-
       </Modal>
     );
   }
@@ -92,5 +99,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { mudarQtdAction }
+  { mudarQtdAction, comprarAction, venderAction }
 )(BSModal);

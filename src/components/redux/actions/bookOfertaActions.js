@@ -13,3 +13,17 @@ export const mudarQtdAction = event => {
     });
   };
 };
+
+export const venderAction = () => {
+  return dispatch => {
+    console.log("vendeu");
+    dispatch({ type: "" });
+  };
+};
+
+export const comprarAction = () => {
+  return dispatch => {
+    console.log("comprou");
+    dispatch({ type: "" });
+  };
+};

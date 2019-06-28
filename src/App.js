@@ -33,6 +33,7 @@ class App extends React.Component {
             show={this.state.show}
             close={this.handleClose}
           />
+          
         </header>
       </div>
     );
