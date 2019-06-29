@@ -41,7 +41,7 @@ DraggableModal {
 .divAsModalContainer {
   background-color: #000;
   border-radius: 2.5rem;
-  padding: 0.5rem 0rem;
+  padding: 0.5rem 1rem;
   border: 0.2rem solid green;
   color: #ddd;
   font-size: 0.9rem;
@@ -49,6 +49,11 @@ DraggableModal {
 }
 
 .padding-padrao {
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 0rem;
+  padding-right: 0rem;
+}
+
+.align-me {
+  display: flex;
+  align-items: flex-end;
 }

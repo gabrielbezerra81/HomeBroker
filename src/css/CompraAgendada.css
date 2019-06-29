@@ -28,3 +28,15 @@
   padding: 0.5rem 0;
   color: rgb(243, 148, 44);
 }
+
+.colValorTotal {
+  padding: 0;
+}
+
+.colValidadeCheck {
+  padding-top: 0.2rem;
+}
+
+.rowFormValidade {
+  padding: 0.75rem 0;
+}
