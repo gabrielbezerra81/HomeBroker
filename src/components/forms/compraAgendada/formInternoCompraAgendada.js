@@ -1,10 +1,11 @@
 import React from "react";
-
 import { Button, Form, Row, Col } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { MDBIcon } from "mdbreact";
+import { connect } from "react-redux";
+import { mudarQtdAction } from "../../redux/actions/bookOfertaActions";
 
-class formInternoCompraAgendada extends React.Component {
+class FormInternoCompraAgendada extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -207,4 +208,11 @@ class formInternoCompraAgendada extends React.Component {
   }
 }
 
-export default formInternoCompraAgendada;
+const mapStateToProps = state => ({
+  qtde: state.bookOfertaReducer.qtde
+});
+
+export default connect(
+  mapStateToProps,
+  { mudarQtdAction }
+)(FormInternoCompraAgendada);
