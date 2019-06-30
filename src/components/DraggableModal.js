@@ -32,8 +32,6 @@ class BSModal extends Component {
           <Modal.Title>{this.props.headerTitle}</Modal.Title>
         </Modal.Header>
         {this.props.renderModalBody()}
-
-        {this.props.renderModalFooter()}
       </Modal>
     );
   }

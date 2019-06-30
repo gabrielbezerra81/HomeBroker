@@ -20,7 +20,6 @@ class BookOfertas extends React.Component {
         id="bookofertas"
         headerTitle={this.props.headerTitle}
         renderModalBody={() => modalBody(this.props)}
-        renderModalFooter={() => modalFooter(this.props)}
         headerClass="no-border"
       />
     );
@@ -64,6 +63,7 @@ const modalBody = props => (
         <h6 className="erro-validacao">{props.erro}</h6>
       </Row>
     </Form>
+    {modalFooter(props)}
   </Modal.Body>
 );
 

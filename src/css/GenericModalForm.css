@@ -57,3 +57,8 @@ DraggableModal {
   display: flex;
   align-items: flex-end;
 }
+
+.customFooter {
+  padding: 0.5rem 0 0.5rem 0;
+  border-top:0.5px dashed white
+}
