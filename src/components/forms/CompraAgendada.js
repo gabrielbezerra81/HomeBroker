@@ -1,12 +1,10 @@
 import React from "react";
 import DraggableModal from "../DraggableModal";
 import { connect } from "react-redux";
-import { Modal, Button, Form, Row, Col } from "react-bootstrap";
+import { Modal, Row, Col } from "react-bootstrap";
 import "../../css/CompraAgendada.css";
 import { mudarQtdAction } from "../redux/actions/bookOfertaActions";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { MDBIcon } from "mdbreact";
 import FormInternoCompraAgendada from "./compraAgendada/FormInternoCompraAgendada";
 
 class CompraAgendada extends React.Component {
@@ -31,7 +29,16 @@ const modalBody = props => (
         <h6>PETR4, PETROBRAS PN N2 4,17</h6>
       </Col>
     </Row>
-    <FormInternoCompraAgendada />
+    <Row>
+      <Col>
+        <FormInternoCompraAgendada />
+      </Col>
+
+      <Col>
+        <h1>texto</h1>
+<Polygon></Polygon>
+      </Col>
+    </Row>
   </Modal.Body>
 );
 

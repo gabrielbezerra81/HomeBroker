@@ -46,6 +46,7 @@ DraggableModal {
   color: #ddd;
   font-size: 0.9rem;
   padding-bottom: 1rem;
+  width: 100%;
 }
 
 .padding-padrao {
@@ -60,5 +61,5 @@ DraggableModal {
 
 .customFooter {
   padding: 0.5rem 0 0.5rem 0;
-  border-top:0.5px dashed white
+  border-top: 0.5px dashed white;
 }

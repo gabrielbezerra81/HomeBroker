@@ -56,7 +56,8 @@ class App extends React.Component {
             show={this.state.agendada}
             close={this.handleCloseAgend}
             headerTitle="COMPRA AGENDADA"
-            name="agendada"
+            name="compraagendada"
+            id="compraagendada"
           />
         </header>
       </div>

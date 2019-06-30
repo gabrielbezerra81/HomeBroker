@@ -2,6 +2,10 @@
   margin: 0 0 0 46vmin;
 }
 
+#compraagendada {
+  max-width: 90vmin;
+}
+
 .border-green {
   border-color: green;
 }

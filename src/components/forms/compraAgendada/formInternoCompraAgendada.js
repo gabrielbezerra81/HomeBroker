@@ -163,7 +163,7 @@ class FormInternoCompraAgendada extends React.Component {
           <Col md={2}>
             <Form.Label>Validade:</Form.Label>
           </Col>
-          <Col md={4} className="colValidadeCheck">
+          <Col md={5} className="colValidadeCheck">
             <Form.Check
               type="checkbox"
               id="checkboxValidade"
