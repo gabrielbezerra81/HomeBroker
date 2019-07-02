@@ -6,6 +6,8 @@ import "../../css/CompraAgendada.css";
 import { mudarQtdAction } from "../redux/actions/bookOfertaActions";
 import "react-datepicker/dist/react-datepicker.css";
 import FormInternoCompraAgendada from "./compraAgendada/FormInternoCompraAgendada";
+import img from "../../img/compraAgendada.PNG";
+import { MDBMask, MDBView, MDBContainer, MDBRow, MDBCol } from "mdbreact";
 
 class CompraAgendada extends React.Component {
   render() {
@@ -24,21 +26,20 @@ class CompraAgendada extends React.Component {
 
 const modalBody = props => (
   <Modal.Body>
-    <Row className="textBodyHeader">
-      <Col>
+    <MDBRow className="textBodyHeader">
+      <MDBCol>
         <h6>PETR4, PETROBRAS PN N2 4,17</h6>
-      </Col>
-    </Row>
-    <Row>
-      <Col>
+      </MDBCol>
+    </MDBRow>
+    <MDBRow>
+      <MDBCol >
         <FormInternoCompraAgendada />
-      </Col>
+      </MDBCol>
 
-      <Col>
-        <h1>texto</h1>
-<Polygon></Polygon>
-      </Col>
-    </Row>
+      <MDBCol  className="colGrafico">
+        <div class="valorTotalGrafico">26,50</div>
+      </MDBCol>
+    </MDBRow>
   </Modal.Body>
 );
 

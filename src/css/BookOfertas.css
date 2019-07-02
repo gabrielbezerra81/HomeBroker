@@ -8,9 +8,14 @@
 }
 
 .mytable {
-  background: #000;
+  background: var(--brackground-color);
   margin: 0;
   color: #ddd;
+}
+
+.table-striped > tbody > tr:nth-child(odd) > td,
+.table-striped > tbody > tr:nth-child(odd) > th {
+  background-color: var(--light-brackground-color);
 }
 
 .operacoes .col {
