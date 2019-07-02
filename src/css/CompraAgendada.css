@@ -90,7 +90,7 @@ svg {
 }
 
 text {
-  transform: translate(102px, 252px);
+  transform: translate(62px, 252px);
   font-size: 152px;
   font-weight: 700;
   fill: #000;
@@ -101,11 +101,24 @@ text {
   left: 49%;
 }
 
-#StopDisparoGrafico {
+#GainExecGrafico {
   top: 16.5%;
   left: 69%;
 }
 
+#StopDisparoGrafico {
+  top: 78%;
+  left: 49%;
+}
+
+#StopExecGrafico {
+  top: 78%;
+  left: 69%;
+}
+#CotacaoAtualGrafico {
+  top: 48.2%;
+  left: 3%;
+}
 /*
 #valorTotalGrafico {
   color: #fff;

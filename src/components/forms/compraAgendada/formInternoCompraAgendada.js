@@ -4,6 +4,12 @@ import DatePicker from "react-datepicker";
 import { MDBIcon } from "mdbreact";
 import { connect } from "react-redux";
 import { mudarQtdAction } from "../../redux/actions/bookOfertaActions";
+import {
+  mudarGainDisparoAction,
+  mudarGainExecAction,
+  mudarStopDisparoAction,
+  mudarStopExecAction
+} from "../../redux/actions/compraAgendadaActions";
 
 class FormInternoCompraAgendada extends React.Component {
   constructor(props) {
@@ -100,6 +106,8 @@ class FormInternoCompraAgendada extends React.Component {
                   step={0.1}
                   min={0}
                   name="gainDisparo"
+                  value={this.props.gainDisparo}
+                  onChange={event => this.props.mudarGainDisparoAction(event)}
                 />
               </Form.Group>
             </Col>
@@ -111,6 +119,8 @@ class FormInternoCompraAgendada extends React.Component {
                   step={0.1}
                   min={0}
                   name="gainExecucao"
+                  value={this.props.gainExec}
+                  onChange={event => this.props.mudarGainExecAction(event)}
                 />
               </Form.Group>
             </Col>
@@ -135,6 +145,8 @@ class FormInternoCompraAgendada extends React.Component {
                   step={0.1}
                   min={0}
                   name="stopDisparo"
+                  value={this.props.stopDisparo}
+                  onChange={event => this.props.mudarStopDisparoAction(event)}
                 />
               </Form.Group>
             </Col>
@@ -146,6 +158,8 @@ class FormInternoCompraAgendada extends React.Component {
                   step={0.1}
                   min={0}
                   name="stopExecucao"
+                  value={this.props.stopExec}
+                  onChange={event => this.props.mudarStopExecAction(event)}
                 />
               </Form.Group>
             </Col>
@@ -168,6 +182,7 @@ class FormInternoCompraAgendada extends React.Component {
               type="checkbox"
               id="checkboxValidade"
               label="Até cancelar"
+              checked={this.props.validadeChecked}
               onChange={value => false}
             />
           </Col>
@@ -209,10 +224,21 @@ class FormInternoCompraAgendada extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  qtde: state.bookOfertaReducer.qtde
+  qtde: state.bookOfertaReducer.qtde,
+  gainDisparo: state.compraAgendadaReducer.gainDisparo,
+  gainExec: state.compraAgendadaReducer.gainExec,
+  stopDisparo: state.compraAgendadaReducer.stopDisparo,
+  stopExec: state.compraAgendadaReducer.stopExec,
+  validadeChecked: state.compraAgendadaReducer.validadeChecked
 });
 
 export default connect(
   mapStateToProps,
-  { mudarQtdAction }
+  {
+    mudarQtdAction,
+    mudarGainDisparoAction,
+    mudarGainExecAction,
+    mudarStopDisparoAction,
+    mudarStopExecAction
+  }
 )(FormInternoCompraAgendada);

@@ -36,16 +36,31 @@ const modalBody = props => (
       </Col>
 
       <Col md={6} className="colGrafico">
-        <div class="imgContainer">
-          <img src={img} className="imgChart" />{" "}
-          <div id="GainDisparoGrafico" class="textoGrafico">
+        <div className="imgContainer">
+          <img src={img} className="imgChart" alt="" />
+          <div id="GainDisparoGrafico" className="textoGrafico">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560.96 558.98">
-              <text>26,50</text>
+              <text>{props.gainDisparo}</text>
             </svg>
           </div>
-          <div id="StopDisparoGrafico" class="textoGrafico">
+          <div id="GainExecGrafico" className="textoGrafico">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560.96 558.98">
-              <text>36,50</text>
+              <text>{props.gainExec}</text>
+            </svg>
+          </div>
+          <div id="StopDisparoGrafico" className="textoGrafico">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560.96 558.98">
+              <text>{props.stopDisparo}</text>
+            </svg>
+          </div>
+          <div id="StopExecGrafico" className="textoGrafico">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560.96 558.98">
+              <text>{props.stopExec}</text>
+            </svg>
+          </div>
+          <div id="CotacaoAtualGrafico" className="textoGrafico">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560.96 558.98">
+              <text>{props.cotacaoAtual}</text>
             </svg>
           </div>
         </div>
@@ -54,10 +69,13 @@ const modalBody = props => (
   </Modal.Body>
 );
 
-const modalFooter = props => false;
-
 const mapStateToProps = state => ({
-  qtde: state.bookOfertaReducer.qtde
+  qtde: state.bookOfertaReducer.qtde,
+  gainDisparo: state.compraAgendadaReducer.gainDisparo,
+  gainExec: state.compraAgendadaReducer.gainExec,
+  stopDisparo: state.compraAgendadaReducer.stopDisparo,
+  stopExec: state.compraAgendadaReducer.stopExec,
+  cotacaoAtual: state.compraAgendadaReducer.cotacaoAtual
 });
 
 export default connect(
