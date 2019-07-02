@@ -63,30 +63,47 @@
   text-align: center;
 }
 
-.grafico {
-  width: 45vmin;
-  height: 45vmin;
-}
-
 .colGrafico {
-  background-image: url("../img/compraAgendada.PNG");
-  background-repeat: no-repeat;
-  background-size: 100%;
-  background-position: center center;
+  display: flex;
+  align-items: center;
 }
 
-.valorTotalGrafico {
-  color: #000;
-  position: fixed;
-  top: 55%;
-  left: 97.5%;
-  font-size: 2vmin;
-  font-weight: 700;
+.imgContainer {
+  position: relative;
+  display: inline-block;
 }
 
-.graficoContainer {
+.imgContainer img {
+  max-width: 100%;
+  display: block;
+}
+
+.textoGrafico {
+  width: 18%;
+  height: 8%;
+  position: absolute;
+}
+
+svg {
   width: 100%;
-  height: 100%;
+  height: auto;
+}
+
+text {
+  transform: translate(102px, 252px);
+  font-size: 152px;
+  font-weight: 700;
+  fill: #000;
+}
+
+#GainDisparoGrafico {
+  top: 16.5%;
+  left: 49%;
+}
+
+#StopDisparoGrafico {
+  top: 16.5%;
+  left: 69%;
 }
 
 /*

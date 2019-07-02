@@ -7,7 +7,6 @@ import { mudarQtdAction } from "../redux/actions/bookOfertaActions";
 import "react-datepicker/dist/react-datepicker.css";
 import FormInternoCompraAgendada from "./compraAgendada/FormInternoCompraAgendada";
 import img from "../../img/compraAgendada.PNG";
-import { MDBMask, MDBView, MDBContainer, MDBRow, MDBCol } from "mdbreact";
 
 class CompraAgendada extends React.Component {
   render() {
@@ -26,20 +25,32 @@ class CompraAgendada extends React.Component {
 
 const modalBody = props => (
   <Modal.Body>
-    <MDBRow className="textBodyHeader">
-      <MDBCol>
+    <Row className="textBodyHeader">
+      <Col>
         <h6>PETR4, PETROBRAS PN N2 4,17</h6>
-      </MDBCol>
-    </MDBRow>
-    <MDBRow>
-      <MDBCol >
+      </Col>
+    </Row>
+    <Row>
+      <Col>
         <FormInternoCompraAgendada />
-      </MDBCol>
+      </Col>
 
-      <MDBCol  className="colGrafico">
-        <div class="valorTotalGrafico">26,50</div>
-      </MDBCol>
-    </MDBRow>
+      <Col md={6} className="colGrafico">
+        <div class="imgContainer">
+          <img src={img} className="imgChart" />{" "}
+          <div id="GainDisparoGrafico" class="textoGrafico">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560.96 558.98">
+              <text>26,50</text>
+            </svg>
+          </div>
+          <div id="StopDisparoGrafico" class="textoGrafico">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560.96 558.98">
+              <text>36,50</text>
+            </svg>
+          </div>
+        </div>
+      </Col>
+    </Row>
   </Modal.Body>
 );
 
