@@ -5,7 +5,9 @@ import { connect } from "react-redux";
 import {
   mudarQtdAction,
   comprarAction,
-  venderAction
+  venderAction,
+  mudarStopLossAction,
+  mudarGainAction
 } from "../redux/actions/bookOfertaActions";
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 
@@ -37,7 +39,13 @@ const modalBody = props => (
         <Col>
           <Form.Group>
             <Form.Label>Stop Loss</Form.Label>
-            <Form.Control type="number" placeholder="" />
+            <Form.Control
+              type="number"
+              placeholder=""
+              value={props.stopLoss}
+              step={0.1}
+              onChange={event => props.mudarStopLossAction(event)}
+            />
           </Form.Group>
         </Col>
         <Col>
@@ -55,7 +63,13 @@ const modalBody = props => (
         <Col>
           <Form.Group>
             <Form.Label>Gain</Form.Label>
-            <Form.Control type="number" placeholder="" />
+            <Form.Control
+              type="number"
+              placeholder=""
+              step={0.1}
+              value={props.gain}
+              onChange={event => props.mudarGainAction(event)}
+            />
           </Form.Group>
         </Col>
       </Row>
@@ -83,10 +97,18 @@ const modalFooter = props => (
 
 const mapStateToProps = state => ({
   qtde: state.bookOfertaReducer.qtde,
-  erro: state.bookOfertaReducer.erro
+  erro: state.bookOfertaReducer.erro,
+  stopLoss: state.bookOfertaReducer.stopLoss,
+  gain: state.bookOfertaReducer.gain
 });
 
 export default connect(
   mapStateToProps,
-  { mudarQtdAction, comprarAction, venderAction }
+  {
+    mudarQtdAction,
+    comprarAction,
+    venderAction,
+    mudarStopLossAction,
+    mudarGainAction
+  }
 )(BookOfertas);

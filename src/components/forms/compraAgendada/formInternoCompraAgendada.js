@@ -8,7 +8,15 @@ import {
   mudarGainDisparoAction,
   mudarGainExecAction,
   mudarStopDisparoAction,
-  mudarStopExecAction
+  mudarStopExecAction,
+  mudarValidadeCheckAction,
+  mudarDataAction,
+  limparAction,
+  comprarAgendadaAction,
+  mudarAtivoAction,
+  mudarEntradaDisparoAction,
+  mudarEntradaExecAction,
+  mudarAssinaturaAction
 } from "../../redux/actions/compraAgendadaActions";
 
 class FormInternoCompraAgendada extends React.Component {
@@ -37,7 +45,13 @@ class FormInternoCompraAgendada extends React.Component {
             <Col md={4} className="formAtivo">
               <Form.Group>
                 <Form.Label />
-                <Form.Control type="text" placeholder="" name="ativo" />
+                <Form.Control
+                  type="text"
+                  placeholder=""
+                  name="ativo"
+                  value={this.props.ativo}
+                  onChange={event => this.props.mudarAtivoAction(event)}
+                />
               </Form.Group>
             </Col>
 
@@ -51,6 +65,7 @@ class FormInternoCompraAgendada extends React.Component {
                   value={this.props.qtde}
                   onChange={event => this.props.mudarQtdAction(event)}
                   name="qtde"
+                  max={9999999}
                 />
               </Form.Group>
             </Col>
@@ -63,7 +78,17 @@ class FormInternoCompraAgendada extends React.Component {
             <Col md={4}>
               <Form.Group>
                 <Form.Label>Disparo</Form.Label>
-                <Form.Control type="number" step={0.1} min={0} name="disparo" />
+                <Form.Control
+                  type="number"
+                  step={0.1}
+                  min={0}
+                  name="disparo"
+                  max={9999999}
+                  value={this.props.entradaDisparo}
+                  onChange={event =>
+                    this.props.mudarEntradaDisparoAction(event)
+                  }
+                />
               </Form.Group>
             </Col>
             <Col md={4}>
@@ -74,6 +99,9 @@ class FormInternoCompraAgendada extends React.Component {
                   step={0.1}
                   min={0}
                   name="execucao"
+                  max={999999}
+                  value={this.props.entradaExec}
+                  onChange={event => this.props.mudarEntradaExecAction(event)}
                 />
               </Form.Group>
             </Col>
@@ -89,7 +117,9 @@ class FormInternoCompraAgendada extends React.Component {
 
         <Row>
           <Col className="colValorTotal">
-            <h2 className="valorTotalText">VALOR TOTAL: 26,50</h2>
+            <h2 className="valorTotalText">
+              VALOR TOTAL: {this.props.valorTotal}
+            </h2>
           </Col>
         </Row>
 
@@ -105,6 +135,7 @@ class FormInternoCompraAgendada extends React.Component {
                   type="number"
                   step={0.1}
                   min={0}
+                  max={999999}
                   name="gainDisparo"
                   value={this.props.gainDisparo}
                   onChange={event => this.props.mudarGainDisparoAction(event)}
@@ -118,6 +149,7 @@ class FormInternoCompraAgendada extends React.Component {
                   type="number"
                   step={0.1}
                   min={0}
+                  max={999999}
                   name="gainExecucao"
                   value={this.props.gainExec}
                   onChange={event => this.props.mudarGainExecAction(event)}
@@ -144,6 +176,7 @@ class FormInternoCompraAgendada extends React.Component {
                   type="number"
                   step={0.1}
                   min={0}
+                  max={999999}
                   name="stopDisparo"
                   value={this.props.stopDisparo}
                   onChange={event => this.props.mudarStopDisparoAction(event)}
@@ -157,6 +190,7 @@ class FormInternoCompraAgendada extends React.Component {
                   type="number"
                   step={0.1}
                   min={0}
+                  max={999999}
                   name="stopExecucao"
                   value={this.props.stopExec}
                   onChange={event => this.props.mudarStopExecAction(event)}
@@ -183,14 +217,17 @@ class FormInternoCompraAgendada extends React.Component {
               id="checkboxValidade"
               label="Até cancelar"
               checked={this.props.validadeChecked}
-              onChange={value => false}
+              onChange={() =>
+                this.props.mudarValidadeCheckAction(this.props.validadeChecked)
+              }
             />
           </Col>
           <Col md={3} className="colFormDate">
             <DatePicker
               className="form-control"
-              selected={this.state.date}
-              onChange={this.handleChange}
+              selected={this.props.date}
+              onChange={data => this.props.mudarDataAction(data)}
+              dateFormat="dd/MM/yyyy"
             />
           </Col>
           <Col className="colDateIcon">
@@ -204,17 +241,31 @@ class FormInternoCompraAgendada extends React.Component {
               <Form>
                 <Form.Group>
                   <Form.Label>Assinatura eletrônica</Form.Label>
-                  <Form.Control />
+                  <Form.Control
+                    type="password"
+                    value={this.props.assinatura}
+                    onChange={event => this.props.mudarAssinaturaAction(event)}
+                  />
                 </Form.Group>
               </Form>
             </Col>
           </Row>
           <Row>
             <Col md={5}>
-              <Button variant="secondary">Limpar</Button>
+              <Button
+                variant="secondary"
+                onClick={() => this.props.limparAction()}
+              >
+                Limpar
+              </Button>
             </Col>
             <Col md={5}>
-              <Button variant="primary">Comprar</Button>
+              <Button
+                variant="primary"
+                onClick={() => this.props.comprarAgendadaAction()}
+              >
+                Comprar
+              </Button>
             </Col>
           </Row>
         </div>
@@ -229,7 +280,13 @@ const mapStateToProps = state => ({
   gainExec: state.compraAgendadaReducer.gainExec,
   stopDisparo: state.compraAgendadaReducer.stopDisparo,
   stopExec: state.compraAgendadaReducer.stopExec,
-  validadeChecked: state.compraAgendadaReducer.validadeChecked
+  validadeChecked: state.compraAgendadaReducer.validadeChecked,
+  date: state.compraAgendadaReducer.date,
+  valorTotal: state.compraAgendadaReducer.valorTotal,
+  entradaDisparo: state.compraAgendadaReducer.entradaDisparo,
+  entradaExec: state.compraAgendadaReducer.entradaExec,
+  ativo: state.compraAgendadaReducer.ativo,
+  assinatura: state.compraAgendadaReducer.assinatura
 });
 
 export default connect(
@@ -239,6 +296,14 @@ export default connect(
     mudarGainDisparoAction,
     mudarGainExecAction,
     mudarStopDisparoAction,
-    mudarStopExecAction
+    mudarStopExecAction,
+    mudarValidadeCheckAction,
+    mudarDataAction,
+    limparAction,
+    comprarAgendadaAction,
+    mudarAtivoAction,
+    mudarEntradaDisparoAction,
+    mudarEntradaExecAction,
+    mudarAssinaturaAction
   }
 )(FormInternoCompraAgendada);

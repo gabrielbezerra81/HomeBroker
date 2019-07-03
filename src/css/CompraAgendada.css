@@ -66,6 +66,7 @@
 .colGrafico {
   display: flex;
   align-items: center;
+  padding-left: 0;
 }
 
 .imgContainer {
@@ -79,52 +80,61 @@
 }
 
 .textoGrafico {
-  width: 18%;
-  height: 8%;
+  width: 19%;
+  height: 7.2%;
   position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-svg {
-  width: 100%;
-  height: auto;
+.iconeConfiguracaoGrafico {
+  width: 19%;
+  height: 7.2%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8vw;
 }
 
-text {
-  transform: translate(62px, 252px);
-  font-size: 152px;
+.textoGrafico h6 {
+  font-size: 1.1vw;
+  margin: 0 0 0 0;
+  color: #000;
   font-weight: 700;
-  fill: #000;
 }
 
 #GainDisparoGrafico {
-  top: 16.5%;
-  left: 49%;
+  top: 19%;
+  left: 48.6%;
 }
 
 #GainExecGrafico {
-  top: 16.5%;
+  top: 19%;
   left: 69%;
 }
 
 #StopDisparoGrafico {
-  top: 78%;
-  left: 49%;
+  top: 80.3%;
+  left: 48.7%;
 }
 
 #StopExecGrafico {
-  top: 78%;
+  top: 80.3%;
   left: 69%;
 }
 #CotacaoAtualGrafico {
-  top: 48.2%;
-  left: 3%;
+  top: 50.5%;
+  left: 3.3%;
 }
-/*
-#valorTotalGrafico {
-  color: #fff;
-  position: relative;
-  left: 29px;
-  top: 232px;
-  line-height: 50%
+
+#ConfigGainGrafico {
+  top: 2%;
+  left: 86%;
 }
-*/
+
+#ConfigStopGrafico {
+  top: 63%;
+  left: 86%;
+}

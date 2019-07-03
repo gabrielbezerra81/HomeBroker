@@ -1,5 +1,9 @@
 import { VALIDACAO_QTDE } from "../../../constants/Erros";
-import { MUDAR_QTDE } from "../../../constants/ActionTypes";
+import {
+  MUDAR_QTDE_BOOK,
+  MUDAR_STOPLOSS_BOOK,
+  MUDAR_GAIN_BOOK
+} from "../../../constants/ActionTypes";
 
 export const mudarQtdAction = event => {
   return dispatch => {
@@ -8,7 +12,7 @@ export const mudarQtdAction = event => {
       erro = VALIDACAO_QTDE;
     }
     dispatch({
-      type: MUDAR_QTDE,
+      type: MUDAR_QTDE_BOOK,
       payload: { qtde: event.target.value, erro: erro }
     });
   };
@@ -25,5 +29,23 @@ export const comprarAction = () => {
   return dispatch => {
     console.log("comprou");
     dispatch({ type: "" });
+  };
+};
+
+export const mudarStopLossAction = event => {
+  return dispatch => {
+    dispatch({
+      type: MUDAR_STOPLOSS_BOOK,
+      payload: event.target.value
+    });
+  };
+};
+
+export const mudarGainAction = event => {
+  return dispatch => {
+    dispatch({
+      type: MUDAR_GAIN_BOOK,
+      payload: event.target.value
+    });
   };
 };
