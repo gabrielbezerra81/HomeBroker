@@ -1,16 +1,15 @@
 import React from "react";
-import DraggableModal from "../../DraggableModal";
+import { MDBIcon } from "mdbreact";
+import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import { Modal, Row, Col, Button } from "react-bootstrap";
-import { mudarQtdAction } from "../../redux/actions/bookOfertaActions";
-import "react-datepicker/dist/react-datepicker.css";
+import DraggableModal from "../../DraggableModal";
 import FormInternoCompraAgendada from "./FormInternoCompraAgendada";
+import { mudarQtdAction } from "../../redux/actions/bookOfertaActions";
 import img from "../../../img/compraAgendada.PNG";
-import { MDBIcon } from "mdbreact";
 import { ReactComponent as ArrowDown } from "../../../img/down-arrow.svg";
 import { ReactComponent as ArrowUp } from "../../../img/up-arrow.svg";
 import Clock from "../../Clock";
-
 
 class CompraAgendada extends React.Component {
   render() {
