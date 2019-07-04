@@ -1,6 +1,10 @@
 {
   "name": "homebroker",
   "version": "0.1.0",
+  "engines": {
+    "node": "10.16.0",
+    "npm": "6.9"
+  },
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
