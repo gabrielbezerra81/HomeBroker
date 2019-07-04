@@ -1,9 +1,9 @@
 #compraagendada .modal-content {
-  margin: 0 0 0 46vmin;
+  margin: 0 0 0 280px;
 }
 
 #compraagendada {
-  max-width: 940px;
+  max-width: 850px;
 }
 
 .border-green {
