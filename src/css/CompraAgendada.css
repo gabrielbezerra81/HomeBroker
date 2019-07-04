@@ -35,7 +35,7 @@
   text-align: center;
   background-color: var(--light-brackground-color);
   margin-top: 1rem;
-  padding: 0.5rem 0;
+  padding: 0.2rem 0;
   color: var(--laranja-valorTotal);
 }
 
@@ -48,7 +48,7 @@
 }
 
 .rowFormValidade {
-  padding: 0.75rem 0;
+  padding: 0.7rem 0;
   display: flex;
   align-items: center;
 }
@@ -56,7 +56,7 @@
 .colFormDate {
   padding-right: 0;
   padding-left: 0;
-  max-width: 108px;
+  max-width: 109px;
 }
 
 .colDateIcon {
@@ -64,13 +64,12 @@
 }
 
 .rowAssinaturaEletronica {
-  padding-bottom: 1rem;
+  padding-bottom: 0.6rem;
 }
 
 .rowBodyHeader {
   text-align: center;
   justify-content: center;
-  padding: 0 0%;
 }
 
 .rowBodyHeader h5 {
