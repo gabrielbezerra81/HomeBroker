@@ -1,8 +1,8 @@
 import React from "react";
 import "./css/";
 import { Button } from "react-bootstrap";
-import BookOfertas from "././components/forms/bookOfertas/BookOfertas";
-import CompraAgendada from "./components/forms/compraAgendada/CompraAgendada";
+import BookOfertas from "./components/forms/book_Ofertas/BookOfertas";
+import CompraAgendada from "./components/forms/compra_Agendada/CompraAgendada";
 class App extends React.Component {
   constructor(props, context) {
     super(props, context);
