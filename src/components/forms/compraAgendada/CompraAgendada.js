@@ -9,6 +9,8 @@ import img from "../../../img/compraAgendada.PNG";
 import { MDBIcon } from "mdbreact";
 import { ReactComponent as ArrowDown } from "../../../img/down-arrow.svg";
 import { ReactComponent as ArrowUp } from "../../../img/up-arrow.svg";
+import Clock from "../../Clock";
+
 
 class CompraAgendada extends React.Component {
   render() {
@@ -68,7 +70,7 @@ const modalBody = props => (
         {renderValorPorcentagem(props.porcentagem)}
       </Col>
       <Col md={2} className="colDataBodyHeader">
-        <span className="dataBodyHeader">18:57:18</span>
+        <span className="dataBodyHeader">{Clock()}</span>
       </Col>
     </Row>
     <Row>

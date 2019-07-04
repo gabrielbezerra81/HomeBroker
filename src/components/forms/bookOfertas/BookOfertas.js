@@ -1,5 +1,5 @@
 import React from "react";
-import DraggableModal from "../DraggableModal";
+import DraggableModal from "../../DraggableModal";
 import { connect } from "react-redux";
 import {
   mudarQtdAction,
@@ -7,10 +7,9 @@ import {
   venderAction,
   mudarStopLossAction,
   mudarGainAction
-} from "../redux/actions/bookOfertaActions";
+} from "../../redux/actions/bookOfertaActions";
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
-
-import TabelaOfertas from "../TabelaOfertas";
+import TabelaOfertas from "./TabelaOfertas";
 
 class BookOfertas extends React.Component {
   render() {

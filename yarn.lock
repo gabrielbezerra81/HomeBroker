@@ -8237,7 +8237,7 @@ prop-types-extra@^1.1.0:
     react-is "^16.3.2"
     warning "^3.0.0"
 
-prop-types@^15.5.10, prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.0.0, prop-types@^15.5.10, prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -8527,6 +8527,13 @@ react-image-lightbox@5.1.0:
   dependencies:
     prop-types "^15.6.2"
     react-modal "^3.6.1"
+
+react-interval-rerender@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-interval-rerender/-/react-interval-rerender-1.0.1.tgz#0d7e2e28e415a4cd1e29525e47b70aed788de011"
+  integrity sha512-ZajtFFS0EFHy8aXMJ0+MLEEOzaVSNGiAUwz/hSt2yeXT6LSjym2UcYYU0kAJAnvbXQvAmJRsyCSkw6VyVvwM9A==
+  dependencies:
+    prop-types "^15.0.0"
 
 react-is@^16.3.2, react-is@^16.6.0, react-is@^16.6.3, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   version "16.8.6"
