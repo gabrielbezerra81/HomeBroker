@@ -1,13 +1,15 @@
 import React from "react";
 import DraggableModal from "../../DraggableModal";
 import { connect } from "react-redux";
-import { Modal, Row, Col } from "react-bootstrap";
+import { Modal, Row, Col, Button } from "react-bootstrap";
 import "../../../css/CompraAgendada.css";
 import { mudarQtdAction } from "../../redux/actions/bookOfertaActions";
 import "react-datepicker/dist/react-datepicker.css";
 import FormInternoCompraAgendada from "./FormInternoCompraAgendada";
 import img from "../../../img/compraAgendada.PNG";
 import { MDBIcon } from "mdbreact";
+import { ReactComponent as ArrowDown } from "../../../img/down-arrow.svg";
+import { ReactComponent as ArrowUp } from "../../../img/up-arrow.svg";
 
 class CompraAgendada extends React.Component {
   render() {
@@ -19,16 +21,55 @@ class CompraAgendada extends React.Component {
         headerTitle={this.props.headerTitle}
         renderModalBody={() => modalBody(this.props)}
         headerClass="border-green"
+        renderOptionalHeader={() => modalHeader(this.props)}
+        closeButton={false}
       />
     );
   }
 }
 
+const modalHeader = props => (
+  <div className="wrapperIconesHeader">
+    <Button variant="" className="iconesHeader">
+      <span className="fa-stack">
+        <MDBIcon far icon="circle" className="fa-stack-2x" />
+        <MDBIcon icon="caret-left" className="fa-stack-2x" />
+      </span>
+    </Button>
+
+    <Button variant="" className="iconesHeader">
+      <MDBIcon icon="cog" size="2x" />
+    </Button>
+
+    <Button variant="" className="iconesHeader" onClick={props.close}>
+      <span className="fa-stack">
+        <MDBIcon icon="circle" className="fa-stack-2x" />
+        <MDBIcon icon="times" className="fa-stack-1x iconeFechar" />
+      </span>
+    </Button>
+  </div>
+);
+
 const modalBody = props => (
   <Modal.Body>
-    <Row className="textBodyHeader">
-      <Col>
-        <h6>PETR4, PETROBRAS PN N2 4,17</h6>
+    <Row className="rowBodyHeader">
+      <Col md={3} className="colAtivo1BodyHeader">
+        <h5>PETR4, PETROBRAS</h5>
+      </Col>
+      <Col md={2} className="colAtivo2BodyHeader">
+        <h5>PN N2</h5>
+      </Col>
+      <Col md={1} className="colValorBodyHeader">
+        <h5>4,17</h5>
+      </Col>
+      <Col md={1} className="colIconeSetaBodyHeader">
+        {renderSeta(1)}
+      </Col>
+      <Col md={1} className="colPorcentagemBodyHeader">
+        {renderValorPorcentagem(props.porcentagem)}
+      </Col>
+      <Col md={2} className="colDataBodyHeader">
+        <text className="dataBodyHeader">18:57:18</text>
       </Col>
     </Row>
     <Row>
@@ -54,11 +95,21 @@ const modalBody = props => (
           <div id="CotacaoAtualGrafico" className="textoGrafico">
             <h6>{props.valorTotal}</h6>
           </div>
-          <div id="ConfigGainGrafico" className="iconeConfiguracaoGrafico">
-            <MDBIcon icon="cog" size="2x" />
+          <div
+            id="ConfigGainGrafico"
+            className="wrapperIconeConfiguracaoGrafico"
+          >
+            <Button variant="" className="iconeConfiguracaoGrafico">
+              <MDBIcon icon="cog" size="2x" />
+            </Button>
           </div>
-          <div id="ConfigStopGrafico" className="iconeConfiguracaoGrafico">
-            <MDBIcon icon="cog" size="2x" />
+          <div
+            id="ConfigStopGrafico"
+            className="wrapperIconeConfiguracaoGrafico"
+          >
+            <Button variant="" className="iconeConfiguracaoGrafico">
+              <MDBIcon icon="cog" size="2x" />
+            </Button>
           </div>
         </div>
       </Col>
@@ -73,10 +124,24 @@ const mapStateToProps = state => ({
   stopDisparo: state.compraAgendadaReducer.stopDisparo,
   stopExec: state.compraAgendadaReducer.stopExec,
   cotacaoAtual: state.compraAgendadaReducer.cotacaoAtual,
-  valorTotal: state.compraAgendadaReducer.valorTotal
+  valorTotal: state.compraAgendadaReducer.valorTotal,
+  porcentagem: state.compraAgendadaReducer.porcentagem
 });
 
 export default connect(
   mapStateToProps,
   { mudarQtdAction }
 )(CompraAgendada);
+
+const renderSeta = valor => {
+  if (valor >= 0) return <ArrowUp fill="green" className="iconeSeta" />;
+  else return <ArrowDown fill="red" className="iconeSeta" />;
+};
+
+const renderValorPorcentagem = porcentagem => {
+  if (porcentagem > 0) {
+    return <h5 className="porcentagemPositiva">+{porcentagem}%</h5>;
+  } else if (porcentagem < 0) {
+    return <h5 className="porcentagemNegativa">{porcentagem}%</h5>;
+  } else return <h5>+{porcentagem}%</h5>;
+};

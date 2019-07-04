@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import "@fortawesome/fontawesome-free/css/all.min.css";
+import "@fortawesome/fontawesome-free/css/all.css";
 import { Provider } from "react-redux";
 import ReduxThunk from "redux-thunk";
 import { createStore, applyMiddleware, compose } from "redux";

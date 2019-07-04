@@ -20,20 +20,6 @@ import {
 } from "../../redux/actions/compraAgendadaActions";
 
 class FormInternoCompraAgendada extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      startDate: new Date()
-    };
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(date) {
-    this.setState({
-      startDate: date
-    });
-  }
-
   render() {
     return (
       <div className="divAsModalContainer">
@@ -105,12 +91,14 @@ class FormInternoCompraAgendada extends React.Component {
                 />
               </Form.Group>
             </Col>
-            <Col md={2}>
-              <MDBIcon
-                icon="cog"
-                size="2x"
-                className="labelForm-verticalAlign"
-              />
+            <Col md={2} className="colIconeConfig">
+              <Button variant="" className="operation-icons">
+                <MDBIcon
+                  icon="cog"
+                  size="2x"
+                  className="labelForm-verticalAlign"
+                />
+              </Button>
             </Col>
           </Row>
         </Form>
@@ -156,12 +144,14 @@ class FormInternoCompraAgendada extends React.Component {
                 />
               </Form.Group>
             </Col>
-            <Col md={2}>
-              <MDBIcon
-                icon="cog"
-                size="2x"
-                className="labelForm-verticalAlign"
-              />
+            <Col md={2} className="colIconeConfig">
+              <Button variant="" className="operation-icons">
+                <MDBIcon
+                  icon="cog"
+                  size="2x"
+                  className="labelForm-verticalAlign"
+                />
+              </Button>
             </Col>
           </Row>
 
@@ -197,12 +187,14 @@ class FormInternoCompraAgendada extends React.Component {
                 />
               </Form.Group>
             </Col>
-            <Col md={2}>
-              <MDBIcon
-                icon="cog"
-                size="2x"
-                className="labelForm-verticalAlign"
-              />
+            <Col md={2} className="colIconeConfig">
+              <Button variant="" className="operation-icons">
+                <MDBIcon
+                  icon="cog"
+                  size="2x"
+                  className="labelForm-verticalAlign"
+                />
+              </Button>
             </Col>
           </Row>
         </Form>

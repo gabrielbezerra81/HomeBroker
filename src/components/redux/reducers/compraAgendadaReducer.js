@@ -25,7 +25,8 @@ const INITIAL_STATE = {
   cotacaoAtual: 0,
   validadeChecked: true,
   date: new Date(),
-  assinatura: ""
+  assinatura: "",
+  porcentagem: +9.55
 };
 
 export default (state = INITIAL_STATE, action) => {

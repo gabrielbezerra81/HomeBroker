@@ -23,6 +23,8 @@ class BookOfertas extends React.Component {
         headerTitle={this.props.headerTitle}
         renderModalBody={() => modalBody(this.props)}
         headerClass="no-border"
+        renderOptionalHeader={() => false}
+        closeButton={true}
       />
     );
   }

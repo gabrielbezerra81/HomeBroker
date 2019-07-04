@@ -28,8 +28,12 @@ class BSModal extends Component {
         id={this.props.id}
         enforceFocus={false}
       >
-        <Modal.Header closeButton className={this.props.headerClass}>
+        <Modal.Header
+          closeButton={this.props.closeButton}
+          className={`${this.props.headerClass}`}
+        >
           <Modal.Title>{this.props.headerTitle}</Modal.Title>
+          {this.props.renderOptionalHeader()}
         </Modal.Header>
         {this.props.renderModalBody()}
       </Modal>

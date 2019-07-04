@@ -23,13 +23,19 @@
 .formAtivo {
   align-self: flex-end;
 }
+.colIconeConfig {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  padding-bottom: 0.5vmin;
+}
 
 .valorTotalText {
   text-align: center;
   background-color: var(--light-brackground-color);
   margin-top: 1rem;
   padding: 0.5rem 0;
-  color: rgb(243, 148, 44);
+  color: var(--laranja-valorTotal);
 }
 
 .colValorTotal {
@@ -59,8 +65,46 @@
   padding-bottom: 1rem;
 }
 
-.textBodyHeader {
+.rowBodyHeader {
   text-align: center;
+  justify-content: center;
+  padding: 0 0%;
+}
+
+.colAtivo1BodyHeader {
+  padding-right: 0;
+}
+
+.colAtivo2BodyHeader {
+  padding-left: 0;
+}
+
+.colValorBodyHeader {
+  padding-right: 0;
+}
+
+.colIconeSetaBodyHeader {
+  padding-left: 0;
+}
+
+.colPorcentagemBodyHeader {
+  padding-right: 0;
+}
+
+.colDataBodyHeader {
+  padding-left: 0;
+}
+
+.dataBodyHeader {
+  font-size: 80%;
+}
+
+.porcentagemPositiva {
+  color: green;
+}
+
+.porcentagemNegativa {
+  color: red;
 }
 
 .colGrafico {
@@ -88,21 +132,30 @@
   justify-content: center;
 }
 
-.iconeConfiguracaoGrafico {
+.wrapperIconeConfiguracaoGrafico {
   width: 19%;
   height: 7.2%;
   position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.8vw;
 }
 
+.iconeConfiguracaoGrafico {
+  padding: 0;
+  border: none;
+  color: #ddd;
+  font-size: 0.8vw;
+}
 .textoGrafico h6 {
   font-size: 1.1vw;
   margin: 0 0 0 0;
   color: #000;
   font-weight: 700;
+}
+
+.seta {
+  color: #f00;
 }
 
 #GainDisparoGrafico {
