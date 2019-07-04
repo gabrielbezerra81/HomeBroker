@@ -1,6 +1,5 @@
 import React from "react";
 import DraggableModal from "../DraggableModal";
-import "../../css/BookOfertas.css";
 import { connect } from "react-redux";
 import {
   mudarQtdAction,

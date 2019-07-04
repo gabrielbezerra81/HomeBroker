@@ -2,7 +2,6 @@ import React from "react";
 import DraggableModal from "../../DraggableModal";
 import { connect } from "react-redux";
 import { Modal, Row, Col, Button } from "react-bootstrap";
-import "../../../css/CompraAgendada.css";
 import { mudarQtdAction } from "../../redux/actions/bookOfertaActions";
 import "react-datepicker/dist/react-datepicker.css";
 import FormInternoCompraAgendada from "./FormInternoCompraAgendada";
@@ -69,15 +68,15 @@ const modalBody = props => (
         {renderValorPorcentagem(props.porcentagem)}
       </Col>
       <Col md={2} className="colDataBodyHeader">
-        <text className="dataBodyHeader">18:57:18</text>
+        <span className="dataBodyHeader">18:57:18</span>
       </Col>
     </Row>
     <Row>
-      <Col>
+      <Col className="colFormInterno">
         <FormInternoCompraAgendada />
       </Col>
 
-      <Col md={6} className="colGrafico">
+      <Col className="colGrafico">
         <div className="imgContainer">
           <img src={img} className="imgChart" alt="" />
           <div id="GainDisparoGrafico" className="textoGrafico">

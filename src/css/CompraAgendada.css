@@ -3,19 +3,19 @@
 }
 
 #compraagendada {
-  max-width: 105vmin;
+  max-width: 950px;
 }
 
 .border-green {
-  border-color: green;
+  border-color: var(--cor-borda);
 }
 
-.labelCol {
+.colLabelInput {
   flex-grow: 0.3;
   padding-right: 0;
 }
 
-.labelForm-verticalAlign {
+.labelInput-verticalAlign {
   position: relative;
   top: 50%;
 }
@@ -23,6 +23,7 @@
 .formAtivo {
   align-self: flex-end;
 }
+
 .colIconeConfig {
   display: flex;
   justify-content: flex-start;
@@ -55,6 +56,7 @@
 .colFormDate {
   padding-right: 0;
   padding-left: 0;
+  max-width: 108px;
 }
 
 .colDateIcon {
@@ -144,7 +146,7 @@
 .iconeConfiguracaoGrafico {
   padding: 0;
   border: none;
-  color: #ddd;
+  color: var(--cor-texto);
   font-size: 0.8vw;
 }
 .textoGrafico h6 {
@@ -152,10 +154,6 @@
   margin: 0 0 0 0;
   color: #000;
   font-weight: 700;
-}
-
-.seta {
-  color: #f00;
 }
 
 #GainDisparoGrafico {

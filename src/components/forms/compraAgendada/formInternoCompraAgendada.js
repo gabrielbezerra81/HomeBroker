@@ -25,8 +25,8 @@ class FormInternoCompraAgendada extends React.Component {
       <div className="divAsModalContainer">
         <Form>
           <Row>
-            <Col md={2} className="labelCol">
-              <h6 className="labelForm-verticalAlign">Ativo</h6>
+            <Col md={2} className="colLabelInput">
+              <h6 className="labelInput-verticalAlign">Ativo</h6>
             </Col>
             <Col md={4} className="formAtivo">
               <Form.Group>
@@ -58,8 +58,8 @@ class FormInternoCompraAgendada extends React.Component {
           </Row>
 
           <Row>
-            <Col md={2} className="labelCol">
-              <h6 className="labelForm-verticalAlign">Entrada</h6>
+            <Col md={2} className="colLabelInput">
+              <h6 className="labelInput-verticalAlign">Entrada</h6>
             </Col>
             <Col md={4}>
               <Form.Group>
@@ -96,7 +96,7 @@ class FormInternoCompraAgendada extends React.Component {
                 <MDBIcon
                   icon="cog"
                   size="2x"
-                  className="labelForm-verticalAlign"
+                  className="labelInput-verticalAlign"
                 />
               </Button>
             </Col>
@@ -113,8 +113,8 @@ class FormInternoCompraAgendada extends React.Component {
 
         <Form>
           <Row>
-            <Col className="labelCol">
-              <h6 className="labelForm-verticalAlign">Gain</h6>
+            <Col className="colLabelInput">
+              <h6 className="labelInput-verticalAlign">Gain</h6>
             </Col>
             <Col>
               <Form.Group>
@@ -149,15 +149,15 @@ class FormInternoCompraAgendada extends React.Component {
                 <MDBIcon
                   icon="cog"
                   size="2x"
-                  className="labelForm-verticalAlign"
+                  className="labelInput-verticalAlign"
                 />
               </Button>
             </Col>
           </Row>
 
           <Row>
-            <Col className="labelCol">
-              <h6 className="labelForm-verticalAlign">Stop</h6>
+            <Col className="colLabelInput">
+              <h6 className="labelInput-verticalAlign">Stop</h6>
             </Col>
             <Col>
               <Form.Group>
@@ -192,7 +192,7 @@ class FormInternoCompraAgendada extends React.Component {
                 <MDBIcon
                   icon="cog"
                   size="2x"
-                  className="labelForm-verticalAlign"
+                  className="labelInput-verticalAlign"
                 />
               </Button>
             </Col>
@@ -214,7 +214,7 @@ class FormInternoCompraAgendada extends React.Component {
               }
             />
           </Col>
-          <Col md={3} className="colFormDate">
+          <Col md={4} className="colFormDate">
             <DatePicker
               className="form-control"
               selected={this.props.date}
@@ -222,7 +222,7 @@ class FormInternoCompraAgendada extends React.Component {
               dateFormat="dd/MM/yyyy"
             />
           </Col>
-          <Col className="colDateIcon">
+          <Col md={1} className="colDateIcon">
             <MDBIcon icon="calendar-alt" size="lg" />
           </Col>
         </Row>

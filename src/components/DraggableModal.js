@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Modal } from "react-bootstrap";
 import Draggable from "react-draggable";
 import ModalDialog from "react-bootstrap/ModalDialog";
-import "../css/GenericModalForm.css";
 
 class DraggableModalDialog extends React.Component {
   render() {

@@ -2,6 +2,8 @@
   --brackground-color: rgb(23, 25, 23);
   --light-brackground-color: rgb(29, 31, 29);
   --laranja-valorTotal: rgb(243, 148, 44);
+  --cor-texto: #ddd;
+  --cor-borda: green;
 }
 
 .modal-backdrop {
@@ -21,9 +23,9 @@ DraggableModal {
   background-color: var(--brackground-color);
   border-radius: 2.5rem;
   padding: 0.5rem 0rem;
-  border-color: green;
+  border-color: var(--cor-borda);
   border-width: 0.4rem;
-  color: #ddd;
+  color: var(--cor-texto);
   font-size: 0.9rem;
 }
 
@@ -52,7 +54,7 @@ DraggableModal {
 .iconesHeader {
   padding: 0;
   border: none;
-  color: #ddd;
+  color: var(--cor-texto);
   font-size: 0.9rem;
   margin: 0 3px;
 }
@@ -65,19 +67,17 @@ DraggableModal {
   max-width: 1.8vmin;
 }
 
-.close {
-  font-weight: 800;
-  color: red;
-  text-shadow: 0 0 0 #fff;
-  opacity: 1;
+.colFormInterno {
+  max-width: 420px;
+  min-width: 350px;
 }
 
 .divAsModalContainer {
   background-color: var(--brackground-color);
   border-radius: 2.5rem;
   padding: 0.5rem 1rem;
-  border: 0.2rem solid green;
-  color: #ddd;
+  border: 0.2rem solid var(--cor-borda);
+  color: var(--cor-texto);
   font-size: 0.9rem;
   padding-bottom: 1rem;
   width: 100%;
@@ -86,11 +86,6 @@ DraggableModal {
 .padding-padrao {
   padding-left: 0rem;
   padding-right: 0rem;
-}
-
-.align-me {
-  display: flex;
-  align-items: flex-end;
 }
 
 .customFooter {

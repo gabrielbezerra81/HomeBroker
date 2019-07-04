@@ -1,5 +1,5 @@
 import React from "react";
-import "./css/App.css";
+import "./css/";
 import { Button } from "react-bootstrap";
 import BookOfertas from "././components/forms/BookOfertas";
 import CompraAgendada from "./components/forms/compraAgendada/CompraAgendada";
@@ -65,14 +65,6 @@ class App extends React.Component {
   }
 }
 export default App;
-
-/*
-          <CompraAgendada
-            show={this.state.show}
-            close={this.handleClose}
-            headerTitle="PETR4, PETROBRAS PN N2"
-          />
-*/
 
 const dataOrdemVenda = [
   {
