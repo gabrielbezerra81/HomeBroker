@@ -54,6 +54,10 @@ DraggableModal {
   text-align: center;
 }
 
+.form-label {
+  margin-top: 0 !important;
+}
+
 .wrapperIconesHeader {
   display: flex;
   align-items: flex-start;
