@@ -73,6 +73,10 @@
   padding: 0 0%;
 }
 
+.rowBodyHeader h5 {
+  font-size: 1.1rem;
+}
+
 .colAtivo1BodyHeader {
   padding-right: 0;
 }

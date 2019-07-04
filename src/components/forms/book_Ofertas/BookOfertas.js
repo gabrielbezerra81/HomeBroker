@@ -10,6 +10,7 @@ import {
 } from "../../redux/actions/bookOfertaActions";
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import TabelaOfertas from "./TabelaOfertas";
+import { MDBIcon } from "mdbreact";
 
 class BookOfertas extends React.Component {
   render() {
@@ -21,12 +22,23 @@ class BookOfertas extends React.Component {
         headerTitle={this.props.headerTitle}
         renderModalBody={() => modalBody(this.props)}
         headerClass="no-border"
-        renderOptionalHeader={() => false}
-        closeButton={true}
+        renderOptionalHeader={() => modalHeader(this.props)}
+        closeButton={false}
       />
     );
   }
 }
+
+const modalHeader = props => (
+  <div className="wrapperIconesHeader">
+    <Button variant="" className="iconesHeader" onClick={props.close}>
+      <span className="fa-stack">
+        <MDBIcon icon="circle" className="fa-stack-2x" />
+        <MDBIcon icon="times" className="fa-stack-1x iconeFechar" />
+      </span>
+    </Button>
+  </div>
+);
 
 const modalBody = props => (
   <Modal.Body>
