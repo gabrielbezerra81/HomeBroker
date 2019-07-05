@@ -52,6 +52,7 @@ const modalBody = props => (
           <Form.Group>
             <Form.Label>Stop Loss</Form.Label>
             <Form.Control
+              className="textInput"
               type="number"
               placeholder=""
               value={props.stopLoss}
@@ -64,6 +65,7 @@ const modalBody = props => (
           <Form.Group>
             <Form.Label>Qtde</Form.Label>
             <Form.Control
+              className="textInput"
               type="number"
               step={100}
               value={props.qtde}
@@ -76,6 +78,7 @@ const modalBody = props => (
           <Form.Group>
             <Form.Label>Gain</Form.Label>
             <Form.Control
+              className="textInput"
               type="number"
               placeholder=""
               step={0.1}

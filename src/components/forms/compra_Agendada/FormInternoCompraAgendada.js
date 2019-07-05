@@ -32,6 +32,7 @@ class FormInternoCompraAgendada extends React.Component {
               <Form.Group>
                 <Form.Label />
                 <Form.Control
+                  className="textInput"
                   type="text"
                   placeholder=""
                   name="ativo"
@@ -45,6 +46,7 @@ class FormInternoCompraAgendada extends React.Component {
               <Form.Group>
                 <Form.Label>Qtde</Form.Label>
                 <Form.Control
+                  className="textInput"
                   type="number"
                   step={100}
                   min={0}
@@ -65,6 +67,7 @@ class FormInternoCompraAgendada extends React.Component {
               <Form.Group>
                 <Form.Label>Disparo</Form.Label>
                 <Form.Control
+                  className="textInput"
                   type="number"
                   step={0.1}
                   min={0}
@@ -81,6 +84,7 @@ class FormInternoCompraAgendada extends React.Component {
               <Form.Group>
                 <Form.Label>Execução</Form.Label>
                 <Form.Control
+                  className="textInput"
                   type="number"
                   step={0.1}
                   min={0}
@@ -105,9 +109,9 @@ class FormInternoCompraAgendada extends React.Component {
 
         <Row>
           <Col className="colValorTotal">
-            <h2 className="valorTotalText">
+            <h4 className="valorTotalText">
               VALOR TOTAL: {this.props.valorTotal}
-            </h2>
+            </h4>
           </Col>
         </Row>
 
@@ -120,6 +124,7 @@ class FormInternoCompraAgendada extends React.Component {
               <Form.Group>
                 <Form.Label>Disparo</Form.Label>
                 <Form.Control
+                  className="textInput"
                   type="number"
                   step={0.1}
                   min={0}
@@ -134,6 +139,7 @@ class FormInternoCompraAgendada extends React.Component {
               <Form.Group>
                 <Form.Label>Execução</Form.Label>
                 <Form.Control
+                  className="textInput"
                   type="number"
                   step={0.1}
                   min={0}
@@ -163,6 +169,7 @@ class FormInternoCompraAgendada extends React.Component {
               <Form.Group>
                 <Form.Label>Disparo</Form.Label>
                 <Form.Control
+                  className="textInput"
                   type="number"
                   step={0.1}
                   min={0}
@@ -177,6 +184,7 @@ class FormInternoCompraAgendada extends React.Component {
               <Form.Group>
                 <Form.Label>Execução</Form.Label>
                 <Form.Control
+                  className="textInput"
                   type="number"
                   step={0.1}
                   min={0}
@@ -216,7 +224,7 @@ class FormInternoCompraAgendada extends React.Component {
           </Col>
           <Col md={4} className="colFormDate">
             <DatePicker
-              className="form-control"
+              className="form-control textInput"
               selected={this.props.date}
               onChange={data => this.props.mudarDataAction(data)}
               dateFormat="dd/MM/yyyy"
@@ -234,6 +242,7 @@ class FormInternoCompraAgendada extends React.Component {
                 <Form.Group>
                   <Form.Label>Assinatura eletrônica</Form.Label>
                   <Form.Control
+                    className="textInput"
                     type="password"
                     value={this.props.assinatura}
                     onChange={event => this.props.mudarAssinaturaAction(event)}

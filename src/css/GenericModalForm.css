@@ -58,6 +58,10 @@ DraggableModal {
   margin-top: 0 !important;
 }
 
+.textInput {
+  height: 35px;
+}
+
 .wrapperIconesHeader {
   display: flex;
   align-items: flex-start;
