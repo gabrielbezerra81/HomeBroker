@@ -19,7 +19,6 @@ class BookOfertas extends React.Component {
         show={this.props.show}
         close={this.props.close}
         id="bookofertas"
-        headerTitle={this.props.headerTitle}
         renderModalBody={() => modalBody(this.props)}
         headerClass="no-border"
         renderOptionalHeader={() => modalHeader(this.props)}
@@ -30,14 +29,26 @@ class BookOfertas extends React.Component {
 }
 
 const modalHeader = props => (
-  <div className="wrapperIconesHeader">
-    <Button variant="" className="iconesHeader" onClick={props.close}>
-      <span className="fa-stack">
-        <MDBIcon icon="circle" className="fa-stack-2x" />
-        <MDBIcon icon="times" className="fa-stack-1x iconeFechar" />
-      </span>
-    </Button>
-  </div>
+  <Row>
+    <Col md={10} className="colInputHeader">
+      <Form>
+        <Form.Control
+          type="text"
+          placeholder=""
+          className="inputHeader"
+          defaultValue="PETR4, PETROBRAS PN N2"
+        />
+      </Form>
+    </Col>
+    <Col md={2} className="wrapperIconesHeader">
+      <Button variant="" className="iconesHeader" onClick={props.close}>
+        <span className="fa-stack">
+          <MDBIcon icon="circle" className="fa-stack-2x" />
+          <MDBIcon icon="times" className="fa-stack-1x iconeFechar" />
+        </span>
+      </Button>
+    </Col>
+  </Row>
 );
 
 const modalBody = props => (

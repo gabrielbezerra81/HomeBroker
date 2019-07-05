@@ -105,3 +105,24 @@ DraggableModal {
   padding: 0.2rem 0 0.2rem 0;
   border-top: 0.5px dashed white;
 }
+
+.colInputHeader {
+  padding-left: 0;
+}
+
+.inputHeader {
+  background-color: transparent;
+  border-color: transparent;
+  height: 30px;
+  color: #ddd;
+  font-weight: 600;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.inputHeader:focus {
+  background-color: transparent;
+  color: #ddd;
+  border-color: transparent;
+  box-shadow: none;
+}

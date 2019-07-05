@@ -128,18 +128,31 @@
   display: block;
 }
 
-.textoGrafico {
+.inputGrafico {
   width: 19%;
   height: 7.2%;
   position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background-color: transparent;
+  border-color: transparent;
+  border-radius: 0;
+  text-align: center;
+  font-size: 85%;
+  font-weight: 600;
+  appearance: none;
+}
+
+.form-control[type="number"]::-webkit-inner-spin-button,
+.form-contro[type="number"]::-webkit-outer-spin-button {
+  appearance: none;
+}
+
+.form-control[type="number"] {
+  appearance: none;
 }
 
 .wrapperIconeConfiguracaoGrafico {
-  width: 19%;
-  height: 7.2%;
+  width: 19.2%;
+  height: 7.4%;
   position: absolute;
   display: flex;
   align-items: center;
@@ -151,12 +164,6 @@
   border: none;
   color: var(--cor-texto);
   font-size: 0.7vw;
-}
-.textoGrafico h6 {
-  font-size: 1.1vw;
-  margin: 0 0 0 0;
-  color: #000;
-  font-weight: 700;
 }
 
 #GainDisparoGrafico {
@@ -179,8 +186,10 @@
   left: 69%;
 }
 #CotacaoAtualGrafico {
-  top: 50.5%;
+  top: 49%;
   left: 3.3%;
+  width: 19%;
+  height: 9.2%;
 }
 
 #ConfigGainGrafico {

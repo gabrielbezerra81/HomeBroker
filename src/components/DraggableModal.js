@@ -6,7 +6,7 @@ import ModalDialog from "react-bootstrap/ModalDialog";
 class DraggableModalDialog extends React.Component {
   render() {
     return (
-      <Draggable handle=".modal-header">
+      <Draggable handle=".modal-header" enableUserSelectHack={false}>
         <ModalDialog {...this.props} />
       </Draggable>
     );
@@ -29,7 +29,7 @@ class BSModal extends Component {
       >
         <Modal.Header
           closeButton={this.props.closeButton}
-          className={`${this.props.headerClass}`}
+          className={`${this.props.headerClass} handle`}
         >
           <Modal.Title>{this.props.headerTitle}</Modal.Title>
           {this.props.renderOptionalHeader()}

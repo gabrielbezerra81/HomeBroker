@@ -10,6 +10,13 @@ import img from "../../../img/compraAgendada.PNG";
 import { ReactComponent as ArrowDown } from "../../../img/down-arrow.svg";
 import { ReactComponent as ArrowUp } from "../../../img/up-arrow.svg";
 import Clock from "../../Clock";
+import { Form } from "react-bootstrap";
+import {
+  mudarGainDisparoAction,
+  mudarGainExecAction,
+  mudarStopDisparoAction,
+  mudarStopExecAction
+} from "../../redux/actions/compraAgendadaActions";
 
 class CompraAgendada extends React.Component {
   render() {
@@ -80,21 +87,50 @@ const modalBody = props => (
       <Col className="colGrafico">
         <div className="imgContainer">
           <img src={img} className="imgChart" alt="" />
-          <div id="GainDisparoGrafico" className="textoGrafico">
-            <h6>{props.gainDisparo}</h6>
-          </div>
-          <div id="GainExecGrafico" className="textoGrafico">
-            <h6>{props.gainExec}</h6>
-          </div>
-          <div id="StopDisparoGrafico" className="textoGrafico">
-            <h6>{props.stopDisparo}</h6>
-          </div>
-          <div id="StopExecGrafico" className="textoGrafico">
-            <h6>{props.stopExec}</h6>
-          </div>
-          <div id="CotacaoAtualGrafico" className="textoGrafico">
-            <h6>{props.valorTotal}</h6>
-          </div>
+          <Form>
+            <Form.Control
+              type="number"
+              step={0.1}
+              min={0}
+              id="GainDisparoGrafico"
+              className="inputGrafico"
+              value={props.gainDisparo}
+              onChange={event => props.mudarGainDisparoAction(event)}
+            />
+            <Form.Control
+              type="number"
+              step={0.1}
+              min={0}
+              id="GainExecGrafico"
+              className="inputGrafico"
+              value={props.gainExec}
+              onChange={event => props.mudarGainExecAction(event)}
+            />
+            <Form.Control
+              type="number"
+              step={0.1}
+              min={0}
+              id="StopDisparoGrafico"
+              className="inputGrafico"
+              value={props.stopDisparo}
+              onChange={event => props.mudarStopDisparoAction(event)}
+            />
+            <Form.Control
+              type="number"
+              step={0.1}
+              min={0}
+              id="StopExecGrafico"
+              className="inputGrafico"
+              value={props.stopExec}
+              onChange={event => props.mudarStopExecAction(event)}
+            />
+            <Form.Control
+              id="CotacaoAtualGrafico"
+              className="inputGrafico"
+              value={props.valorTotal}
+              onChange={() => false}
+            />
+          </Form>
           <div
             id="ConfigGainGrafico"
             className="wrapperIconeConfiguracaoGrafico"
@@ -130,7 +166,13 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { mudarQtdAction }
+  {
+    mudarQtdAction,
+    mudarGainDisparoAction,
+    mudarGainExecAction,
+    mudarStopDisparoAction,
+    mudarStopExecAction
+  }
 )(CompraAgendada);
 
 const renderSeta = valor => {

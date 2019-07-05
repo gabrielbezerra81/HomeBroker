@@ -246,6 +246,7 @@ class FormInternoCompraAgendada extends React.Component {
                     type="password"
                     value={this.props.assinatura}
                     onChange={event => this.props.mudarAssinaturaAction(event)}
+                    autoComplete="current-password"
                   />
                 </Form.Group>
               </Form>

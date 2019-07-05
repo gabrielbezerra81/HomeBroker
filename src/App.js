@@ -49,7 +49,6 @@ class App extends React.Component {
             close={this.handleClose}
             tableDataVenda={dataOrdemVenda}
             tableDataCompra={dataOrdemCompra}
-            headerTitle="PETR4, PETROBRAS PN N2"
             name="book"
           />
           <CompraAgendada
