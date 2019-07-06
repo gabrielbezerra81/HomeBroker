@@ -1,0 +1,80 @@
+.divAsModalContainer {
+  background-color: var(--brackground-color);
+  border-radius: 2.5rem;
+  padding: 0rem 1rem;
+  border: 0.2rem solid var(--cor-borda);
+  color: var(--cor-texto);
+  font-size: 0.9rem;
+  padding-bottom: 0.5rem;
+  width: 100%;
+}
+
+.colFormInterno {
+  max-width: 400px;
+  min-width: 350px;
+}
+
+.colLabelInput {
+  flex-grow: 0.3;
+  padding-right: 0;
+}
+
+.form-label {
+  margin-top: 0 !important;
+}
+
+.labelInput-verticalAlign {
+  position: relative;
+  top: 50%;
+}
+
+.formAtivo {
+  align-self: flex-end;
+}
+
+.textInput {
+  height: 35px;
+}
+
+.colIconeConfig {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  padding-bottom: 0.5vmin;
+}
+
+.valorTotalText {
+  text-align: center;
+  background-color: var(--light-brackground-color);
+  margin-top: 0.8rem;
+  padding: 0.2rem 0;
+  color: var(--laranja-valorTotal);
+}
+
+.colValorTotal {
+  padding: 0;
+}
+
+.colValidadeCheck {
+  padding-top: 0.2rem;
+}
+
+.rowFormValidade {
+  padding: 0.7rem 0;
+  display: flex;
+  align-items: center;
+}
+
+.colFormDate {
+  padding-right: 0;
+  padding-left: 0;
+  max-width: 109px;
+}
+
+.colDateIcon {
+  padding-left: 0.5rem;
+}
+
+.rowAssinaturaEletronica {
+  padding-bottom: 0.6rem;
+}

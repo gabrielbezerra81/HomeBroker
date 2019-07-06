@@ -1,0 +1,44 @@
+.imgContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.imgContainer img {
+  max-width: 100%;
+  display: block;
+}
+
+.colGrafico {
+  display: flex;
+  align-items: center;
+  padding-left: 0;
+}
+
+.wrapperIconeConfiguracaoGrafico {
+  width: 19.2%;
+  height: 7.4%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconeConfiguracaoGrafico {
+  padding: 0;
+  border: none;
+  color: var(--cor-texto);
+  font-size: 0.7vw;
+}
+
+.inputGrafico {
+  width: 19%;
+  height: 7.2%;
+  position: absolute;
+  background-color: transparent;
+  border-color: transparent;
+  border-radius: 0;
+  text-align: center;
+  font-size: 85%;
+  font-weight: 600;
+  appearance: none;
+}

@@ -41,27 +41,6 @@ DraggableModal {
   justify-content: center;
 }
 
-.close {
-  font-weight: 800;
-  color: red;
-  text-shadow: 0 0 0 #fff;
-  opacity: 1;
-}
-
-.modal-title {
-  flex: 7;
-  font-size: 1.1rem;
-  text-align: center;
-}
-
-.form-label {
-  margin-top: 0 !important;
-}
-
-.textInput {
-  height: 35px;
-}
-
 .wrapperIconesHeader {
   display: flex;
   align-items: flex-start;
@@ -77,39 +56,6 @@ DraggableModal {
   margin: 0 3px;
 }
 
-.iconeFechar {
-  color: red;
-}
-
-.iconeSeta {
-  max-width: 1.8vmin;
-}
-
-.colFormInterno {
-  max-width: 400px;
-  min-width: 350px;
-}
-
-.divAsModalContainer {
-  background-color: var(--brackground-color);
-  border-radius: 2.5rem;
-  padding: 0rem 1rem;
-  border: 0.2rem solid var(--cor-borda);
-  color: var(--cor-texto);
-  font-size: 0.9rem;
-  padding-bottom: 0.5rem;
-  width: 100%;
-}
-
-.customFooter {
-  padding: 0.2rem 0 0.2rem 0;
-  border-top: 0.5px dashed white;
-}
-
-.colInputHeader {
-  padding-left: 0;
-}
-
 .inputHeader {
   background-color: transparent;
   border-color: transparent;
@@ -120,9 +66,41 @@ DraggableModal {
   padding-right: 0;
 }
 
+.colInputHeader {
+  padding-left: 0;
+}
+
 .inputHeader:focus {
   background-color: transparent;
   color: #ddd;
   border-color: transparent;
   box-shadow: none;
+}
+
+.iconeFechar {
+  color: red;
+}
+
+.modal-title {
+  flex: 7;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.border-green {
+  border-color: var(--cor-borda);
+}
+
+.customFooter {
+  padding: 0.2rem 0 0.2rem 0;
+  border-top: 0.5px dashed white;
+}
+
+.form-control[type="number"]::-webkit-inner-spin-button,
+.form-contro[type="number"]::-webkit-outer-spin-button {
+  appearance: none;
+}
+
+.form-control[type="number"] {
+  appearance: none;
 }

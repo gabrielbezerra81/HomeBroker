@@ -1,0 +1,48 @@
+.rowBodyHeader {
+  text-align: center;
+  justify-content: center;
+}
+
+.rowBodyHeader h5 {
+  font-size: 1rem;
+}
+
+.colAtivo1BodyHeader {
+  padding-right: 0;
+}
+
+.colAtivo2BodyHeader {
+  padding-left: 0;
+}
+
+.colValorBodyHeader {
+  padding-right: 0;
+}
+
+.colIconeSetaBodyHeader {
+  padding-left: 0;
+}
+
+.colPorcentagemBodyHeader {
+  padding-right: 0;
+}
+
+.colDataBodyHeader {
+  padding-left: 0;
+}
+
+.dataBodyHeader {
+  font-size: 80%;
+}
+
+.iconeSeta {
+  max-width: 1.8vmin;
+}
+
+.porcentagemPositiva {
+  color: green;
+}
+
+.porcentagemNegativa {
+  color: red;
+}

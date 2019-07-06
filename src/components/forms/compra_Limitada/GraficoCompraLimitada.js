@@ -10,7 +10,7 @@ import {
 } from "../../redux/actions/compraAgendadaActions";
 import img from "../../../img/compraAgendada.PNG";
 
-class Grafico extends React.Component {
+class GraficoCompraLimitada extends React.Component {
   render() {
     return (
       <Col className="colGrafico">
@@ -21,7 +21,7 @@ class Grafico extends React.Component {
               type="number"
               step={0.1}
               min={0}
-              id="GainDisparoGrafico"
+              id="GainDisparoGrafico_CL"
               className="inputGrafico"
               value={this.props.gainDisparo}
               onChange={event => this.props.mudarGainDisparoAction(event)}
@@ -30,7 +30,7 @@ class Grafico extends React.Component {
               type="number"
               step={0.1}
               min={0}
-              id="GainExecGrafico"
+              id="GainExecGrafico_CL"
               className="inputGrafico"
               value={this.props.gainExec}
               onChange={event => this.props.mudarGainExecAction(event)}
@@ -39,7 +39,7 @@ class Grafico extends React.Component {
               type="number"
               step={0.1}
               min={0}
-              id="StopDisparoGrafico"
+              id="StopDisparoGrafico_CL"
               className="inputGrafico"
               value={this.props.stopDisparo}
               onChange={event => this.props.mudarStopDisparoAction(event)}
@@ -48,20 +48,20 @@ class Grafico extends React.Component {
               type="number"
               step={0.1}
               min={0}
-              id="StopExecGrafico"
+              id="StopExecGrafico_CL"
               className="inputGrafico"
               value={this.props.stopExec}
               onChange={event => this.props.mudarStopExecAction(event)}
             />
             <Form.Control
-              id="CotacaoAtualGrafico"
+              id="CotacaoAtualGrafico_CL"
               className="inputGrafico"
               value={this.props.cotacaoAtual}
               onChange={() => false}
             />
           </Form>
           <div
-            id="ConfigGainGrafico"
+            id="ConfigGainGrafico_CL"
             className="wrapperIconeConfiguracaoGrafico"
           >
             <Button variant="" className="iconeConfiguracaoGrafico">
@@ -69,7 +69,7 @@ class Grafico extends React.Component {
             </Button>
           </div>
           <div
-            id="ConfigStopGrafico"
+            id="ConfigStopGrafico_CL"
             className="wrapperIconeConfiguracaoGrafico"
           >
             <Button variant="" className="iconeConfiguracaoGrafico">
@@ -98,4 +98,4 @@ export default connect(
     mudarStopDisparoAction,
     mudarStopExecAction
   }
-)(Grafico);
+)(GraficoCompraLimitada);

@@ -5,7 +5,7 @@ import { ReactComponent as ArrowDown } from "../../../img/down-arrow.svg";
 import { ReactComponent as ArrowUp } from "../../../img/up-arrow.svg";
 import Clock from "../../Clock";
 
-class BodyHeader extends React.Component {
+class BodyHeaderCompraAgendada extends React.Component {
   render() {
     return (
       <Row className="rowBodyHeader">
@@ -39,7 +39,7 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {}
-)(BodyHeader);
+)(BodyHeaderCompraAgendada);
 
 const renderSeta = valor => {
   if (valor >= 0) return <ArrowUp fill="green" className="iconeSeta" />;

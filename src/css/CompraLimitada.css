@@ -1,43 +1,43 @@
-#compraagendada .modal-content {
+#compralimitada .modal-content {
   margin: 0 0 0 355px;
 }
 
-#compraagendada {
+#compralimitada {
   max-width: 750px;
 }
 
-#GainDisparoGrafico_CA {
+#GainDisparoGrafico_CL {
   top: 19%;
   left: 48.6%;
 }
 
-#GainExecGrafico_CA {
+#GainExecGrafico_CL {
   top: 19%;
   left: 69%;
 }
 
-#StopDisparoGrafico_CA {
+#StopDisparoGrafico_CL {
   top: 80.3%;
   left: 48.7%;
 }
 
-#StopExecGrafico_CA {
+#StopExecGrafico_CL {
   top: 80.3%;
   left: 69%;
 }
-#CotacaoAtualGrafico_CA {
+#CotacaoAtualGrafico_CL {
   top: 49%;
   left: 3.3%;
   width: 19%;
   height: 9.2%;
 }
 
-#ConfigGainGrafico_CA {
+#ConfigGainGrafico_CL {
   top: 2%;
   left: 86%;
 }
 
-#ConfigStopGrafico_CA {
+#ConfigStopGrafico_CL {
   top: 63%;
   left: 86%;
 }

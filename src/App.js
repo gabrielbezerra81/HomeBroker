@@ -3,6 +3,7 @@ import "./css/";
 import { Button } from "react-bootstrap";
 import BookOfertas from "./components/forms/book_Ofertas/BookOfertas";
 import CompraAgendada from "./components/forms/compra_Agendada/CompraAgendada";
+import CompraLimitada from "./components/forms/compra_Limitada/CompraLimitada";
 class App extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -57,6 +58,13 @@ class App extends React.Component {
             headerTitle="COMPRA AGENDADA"
             name="compraagendada"
             id="compraagendada"
+          />
+          <CompraLimitada
+            show={this.state.agendada}
+            close={this.handleCloseAgend}
+            headerTitle="COMPRA LIMITADA"
+            name="compralimitada"
+            id="compralimitada"
           />
         </header>
       </div>

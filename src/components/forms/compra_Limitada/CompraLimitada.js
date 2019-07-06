@@ -4,17 +4,17 @@ import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import { Modal, Row, Button } from "react-bootstrap";
 import DraggableModal from "../../DraggableModal";
-import FormInternoCompraAgendada from "./FormInternoCompraAgendada";
-import GraficoCompraAgendada from "./GraficoCompraAgendada";
-import BodyHeaderCompraAgendada from "./BodyHeaderCompraAgendada";
+import FormInternoCompraLimitada from "./FormInternoCompraLimitada";
+import GraficoCompraLimitada from "./GraficoCompraLimitada";
+import BodyHeaderCompraLimitada from "./BodyHeaderCompraLimitada";
 
-class CompraAgendada extends React.Component {
+class CompraLimitada extends React.Component {
   render() {
     return (
       <DraggableModal
         show={this.props.show}
         close={this.props.close}
-        id="compraagendada"
+        id={"compralimitada"}
         headerTitle={this.props.headerTitle}
         renderModalBody={() => modalBody()}
         headerClass="border-green"
@@ -49,10 +49,10 @@ const modalHeader = props => (
 
 const modalBody = () => (
   <Modal.Body>
-    <BodyHeaderCompraAgendada />
+    <BodyHeaderCompraLimitada />
     <Row>
-      <FormInternoCompraAgendada />
-      <GraficoCompraAgendada />
+      <FormInternoCompraLimitada />
+      <GraficoCompraLimitada />
     </Row>
   </Modal.Body>
 );
@@ -62,4 +62,4 @@ const mapStateToProps = state => ({});
 export default connect(
   mapStateToProps,
   {}
-)(CompraAgendada);
+)(CompraLimitada);
