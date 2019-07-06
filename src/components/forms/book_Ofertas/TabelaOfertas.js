@@ -1,5 +1,5 @@
 import React from "react";
-import OperationIcon from "../../OperationIcon";
+import OperationIcon from "./OperationIcon";
 import { Table } from "react-bootstrap";
 
 class TabelaOfertas extends React.Component {
