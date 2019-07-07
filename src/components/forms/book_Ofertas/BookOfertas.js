@@ -6,7 +6,8 @@ import {
   comprarAction,
   venderAction,
   mudarStopLossAction,
-  mudarGainAction
+  mudarGainAction,
+  onEnterInputHeader
 } from "../../redux/actions/bookOfertaActions";
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import TabelaOfertas from "./TabelaOfertas";
@@ -37,6 +38,11 @@ const modalHeader = props => (
           placeholder=""
           className="inputHeader"
           defaultValue="PETR4, PETROBRAS PN N2"
+          //value={props.inputHeader}
+          onKeyPress={event => {
+            event.preventDefault();
+            if (event.key === "Enter") props.onEnterInputHeader();
+          }}
         />
       </Form>
     </Col>
@@ -125,7 +131,8 @@ const mapStateToProps = state => ({
   qtde: state.bookOfertaReducer.qtde,
   erro: state.bookOfertaReducer.erro,
   stopLoss: state.bookOfertaReducer.stopLoss,
-  gain: state.bookOfertaReducer.gain
+  gain: state.bookOfertaReducer.gain,
+  inputHeader: state.bookOfertaReducer.inputHeader
 });
 
 export default connect(
@@ -135,6 +142,7 @@ export default connect(
     comprarAction,
     venderAction,
     mudarStopLossAction,
-    mudarGainAction
+    mudarGainAction,
+    onEnterInputHeader
   }
 )(BookOfertas);

@@ -4,5 +4,6 @@ import compraAgendadaReducer from "./compraAgendadaReducer";
 
 export default combineReducers({
   bookOfertaReducer: bookOfertaReducer,
-  compraAgendadaReducer: compraAgendadaReducer
+  compraAgendadaReducer: compraAgendadaReducer,
+  compraLimitadaReducer: compraAgendadaReducer
 });

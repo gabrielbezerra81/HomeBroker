@@ -49,3 +49,12 @@ export const mudarGainAction = event => {
     });
   };
 };
+
+export const onEnterInputHeader = () => {
+  return dispatch => {
+    dispatch({
+      type: "teste",
+      payload: "testando"
+    });
+  };
+};

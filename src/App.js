@@ -12,10 +12,13 @@ class App extends React.Component {
     this.handleClose = this.handleClose.bind(this);
     this.handleShowAgend = this.handleShowAgend.bind(this);
     this.handleCloseAgend = this.handleCloseAgend.bind(this);
+    this.handleShowLimitada = this.handleShowLimitada.bind(this);
+    this.handleCloseLimitada = this.handleCloseLimitada.bind(this);
 
     this.state = {
       book: true,
-      agendada: true
+      agendada: true,
+      limitada: true
     };
   }
 
@@ -35,6 +38,14 @@ class App extends React.Component {
     this.setState({ agendada: true });
   }
 
+  handleCloseLimitada() {
+    this.setState({ limitada: false });
+  }
+
+  handleShowLimitada() {
+    this.setState({ limitada: true });
+  }
+
   render() {
     return (
       <div className="App">
@@ -44,6 +55,9 @@ class App extends React.Component {
           </Button>
           <Button variant="primary" onClick={this.handleShowAgend}>
             Abrir Compra Agendada
+          </Button>
+          <Button variant="primary" onClick={this.handleShowLimitada}>
+            Abrir Compra Limitada
           </Button>
           <BookOfertas
             show={this.state.book}
@@ -60,8 +74,8 @@ class App extends React.Component {
             id="compraagendada"
           />
           <CompraLimitada
-            show={this.state.agendada}
-            close={this.handleCloseAgend}
+            show={this.state.limitada}
+            close={this.handleCloseLimitada}
             headerTitle="COMPRA LIMITADA"
             name="compralimitada"
             id="compralimitada"
