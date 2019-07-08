@@ -10,72 +10,55 @@ class App extends React.Component {
 
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    this.handleShowAgend = this.handleShowAgend.bind(this);
-    this.handleCloseAgend = this.handleCloseAgend.bind(this);
-    this.handleShowLimitada = this.handleShowLimitada.bind(this);
-    this.handleCloseLimitada = this.handleCloseLimitada.bind(this);
 
     this.state = {
       book: true,
       agendada: true,
-      limitada: true
+      limitada: true,
+      mercado: true
     };
   }
 
-  handleClose() {
-    this.setState({ book: false });
+  handleShow(event) {
+    this.setState({ [event.target.getAttribute("name")]: true });
   }
 
-  handleShow() {
-    this.setState({ book: true });
-  }
-
-  handleCloseAgend() {
-    this.setState({ agendada: false });
-  }
-
-  handleShowAgend() {
-    this.setState({ agendada: true });
-  }
-
-  handleCloseLimitada() {
-    this.setState({ limitada: false });
-  }
-
-  handleShowLimitada() {
-    this.setState({ limitada: true });
+  handleClose(event) {
+    this.setState({ [event.target.getAttribute("name")]: false });
   }
 
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <Button variant="primary" onClick={this.handleShow}>
+          <Button variant="primary" onClick={this.handleShow} name="book">
             Abrir Book
           </Button>
-          <Button variant="primary" onClick={this.handleShowAgend}>
+          <Button variant="primary" onClick={this.handleShow} name="agendada">
             Abrir Compra Agendada
           </Button>
-          <Button variant="primary" onClick={this.handleShowLimitada}>
+          <Button variant="primary" onClick={this.handleShow} name="limitada">
             Abrir Compra Limitada
           </Button>
+          <Button variant="primary">Abrir Compra a Mercado</Button>
+          <Button variant="primary">Abrir Compra Start/Stop</Button>
           <BookOfertas
             show={this.state.book}
             close={this.handleClose}
             tableDataVenda={dataOrdemVenda}
             tableDataCompra={dataOrdemCompra}
-            name="book"
+            name="bookofertas"
           />
           <CompraAgendada
             show={this.state.agendada}
-            close={this.handleCloseAgend}
+            close={this.handleClose}
             headerTitle="COMPRA AGENDADA"
             name="compraagendada"
             id="compraagendada"
           />
           <CompraLimitada
             show={this.state.limitada}
-            close={this.handleCloseLimitada}
+            close={this.handleClose}
             headerTitle="COMPRA LIMITADA"
             name="compralimitada"
             id="compralimitada"

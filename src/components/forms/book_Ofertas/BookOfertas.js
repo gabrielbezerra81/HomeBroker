@@ -47,10 +47,18 @@ const modalHeader = props => (
       </Form>
     </Col>
     <Col md={2} className="wrapperIconesHeader">
-      <Button variant="" className="iconesHeader" onClick={props.close}>
+      <Button
+        variant=""
+        className="iconesHeader"
+        onClick={event => props.close(event)}
+      >
         <span className="fa-stack">
           <MDBIcon icon="circle" className="fa-stack-2x" />
-          <MDBIcon icon="times" className="fa-stack-1x iconeFechar" />
+          <MDBIcon
+            icon="times"
+            className="fa-stack-1x iconeFechar"
+            name="book"
+          />
         </span>
       </Button>
     </Col>
@@ -118,7 +126,7 @@ const modalFooter = props => (
     <Button variant="danger" onClick={() => props.venderAction()}>
       Vender
     </Button>
-    <Button variant="success" onClick={props.close}>
+    <Button variant="success" onClick={props.close} name="book">
       Fechar
     </Button>
     <Button variant="primary" onClick={() => props.comprarAction()}>

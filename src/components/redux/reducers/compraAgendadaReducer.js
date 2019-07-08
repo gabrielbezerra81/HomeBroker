@@ -11,7 +11,7 @@ import {
   MUDAR_ATIVO_COMPRA_AGENDADA,
   MUDAR_ENTRADA_DISPARO_COMPRA_AGENDADA,
   MUDAR_ENTRADA_EXEC_COMPRA_AGENDADA,
-  MUDAR_PRECO_COMPRA_MERCADO
+  MUDAR_PRECO_COMPRA_LIMITADA
 } from "../../../constants/ActionTypes";
 
 const INITIAL_STATE = {
@@ -55,7 +55,7 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, assinatura: action.payload };
     case LIMPAR_COMPRA_AGENDADA:
       return { ...INITIAL_STATE };
-    case MUDAR_PRECO_COMPRA_MERCADO:
+    case MUDAR_PRECO_COMPRA_LIMITADA:
       return { ...state, preco: action.payload };
     case COMPRAR_AGENDADO:
       return { ...state };

@@ -11,7 +11,7 @@ import {
   MUDAR_ENTRADA_DISPARO_COMPRA_AGENDADA,
   MUDAR_ENTRADA_EXEC_COMPRA_AGENDADA,
   MUDAR_ASSINATURA_COMPRA_AGENDADA,
-  MUDAR_PRECO_COMPRA_MERCADO
+  MUDAR_PRECO_COMPRA_LIMITADA
 } from "../../../constants/ActionTypes";
 
 export const mudarGainDisparoAction = event => {
@@ -127,7 +127,7 @@ export const mudarAssinaturaAction = event => {
 export const mudarPrecoAction = event => {
   return dispatch => {
     dispatch({
-      type: MUDAR_PRECO_COMPRA_MERCADO,
+      type: MUDAR_PRECO_COMPRA_LIMITADA,
       payload: event.target.value
     });
   };

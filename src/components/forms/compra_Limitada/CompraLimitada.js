@@ -41,7 +41,11 @@ const modalHeader = props => (
     <Button variant="" className="iconesHeader" onClick={props.close}>
       <span className="fa-stack">
         <MDBIcon icon="circle" className="fa-stack-2x" />
-        <MDBIcon icon="times" className="fa-stack-1x iconeFechar" />
+        <MDBIcon
+          icon="times"
+          className="fa-stack-1x iconeFechar"
+          name="limitada"
+        />
       </span>
     </Button>
   </div>
