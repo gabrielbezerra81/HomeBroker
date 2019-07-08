@@ -19,6 +19,11 @@ DraggableModal {
   margin: 0.5rem;
 }
 
+.modal-open {
+  overflow: visible !important;
+  padding-right: 0 !important;
+}
+
 .modal-content {
   background-color: var(--brackground-color);
   border-radius: 2.5rem;

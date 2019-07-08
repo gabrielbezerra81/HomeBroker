@@ -118,7 +118,7 @@ class FormInternoCompraAgendada extends React.Component {
 
           <Form>
             <Row>
-              <Col className="colLabelInput">
+              <Col md={2} className="colLabelInput">
                 <h6 className="labelInput-verticalAlign">Gain</h6>
               </Col>
               <Col>
@@ -163,7 +163,7 @@ class FormInternoCompraAgendada extends React.Component {
             </Row>
 
             <Row>
-              <Col className="colLabelInput">
+              <Col md={2} className="colLabelInput">
                 <h6 className="labelInput-verticalAlign">Stop</h6>
               </Col>
               <Col>
@@ -212,7 +212,7 @@ class FormInternoCompraAgendada extends React.Component {
             <Col md={2}>
               <Form.Label>Validade:</Form.Label>
             </Col>
-            <Col md={5} className="colValidadeCheck">
+            <Col className="colValidadeCheck">
               <Form.Check
                 type="checkbox"
                 id="checkboxValidade"
@@ -225,7 +225,7 @@ class FormInternoCompraAgendada extends React.Component {
                 }
               />
             </Col>
-            <Col md={4} className="colFormDate">
+            <Col md={5} className="colFormDate">
               <DatePicker
                 className="form-control textInput"
                 selected={this.props.date}

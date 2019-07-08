@@ -14,3 +14,5 @@ export const MUDAR_ATIVO_COMPRA_AGENDADA = "mudar_ativo_compra_agendada"
 export const MUDAR_ENTRADA_DISPARO_COMPRA_AGENDADA = "mudar_entrada_disparo_compra_agendada"
 export const MUDAR_ENTRADA_EXEC_COMPRA_AGENDADA = "mudar_entrada_exec_compra_agendada"
 export const MUDAR_ASSINATURA_COMPRA_AGENDADA = "mudar_assinatura_compra_agendada"
+
+export const MUDAR_PRECO_COMPRA_MERCADO = "mudar_preco_compra_mercado"

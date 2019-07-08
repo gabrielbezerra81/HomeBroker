@@ -14,9 +14,8 @@ import {
   limparAction,
   comprarAgendadaAction,
   mudarAtivoAction,
-  mudarEntradaDisparoAction,
-  mudarEntradaExecAction,
-  mudarAssinaturaAction
+  mudarAssinaturaAction,
+  mudarPrecoAction
 } from "../../redux/actions/compraAgendadaActions";
 
 class FormInternoCompraLimitada extends React.Component {
@@ -62,11 +61,11 @@ class FormInternoCompraLimitada extends React.Component {
 
             <Row>
               <Col md={2} className="colLabelInput">
-                <h6 className="labelInput-verticalAlign">Entrada</h6>
+                <h6 className="labelInput-verticalAlign">Preço</h6>
               </Col>
               <Col md={4}>
                 <Form.Group>
-                  <Form.Label>Disparo</Form.Label>
+                  <Form.Label />
                   <Form.Control
                     className="textInput"
                     type="number"
@@ -74,51 +73,21 @@ class FormInternoCompraLimitada extends React.Component {
                     min={0}
                     name="disparo"
                     max={9999999}
-                    value={this.props.entradaDisparo}
-                    onChange={event =>
-                      this.props.mudarEntradaDisparoAction(event)
-                    }
+                    value={this.props.preco}
+                    onChange={event => this.props.mudarPrecoAction(event)}
                   />
                 </Form.Group>
               </Col>
-              <Col md={4}>
-                <Form.Group>
-                  <Form.Label>Execução</Form.Label>
-                  <Form.Control
-                    className="textInput"
-                    type="number"
-                    step={0.1}
-                    min={0}
-                    name="execucao"
-                    max={999999}
-                    value={this.props.entradaExec}
-                    onChange={event => this.props.mudarEntradaExecAction(event)}
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={2} className="colIconeConfig">
-                <Button variant="" className="operation-icons">
-                  <MDBIcon
-                    icon="cog"
-                    size="2x"
-                    className="labelInput-verticalAlign"
-                  />
-                </Button>
+              <Col md={5} className="colValorTotal_CL">
+                <h6 className="valorTotalText_CL">VALOR TOTAL</h6>
+                <h6 className="valorTotalText_CL">{this.props.valorTotal}</h6>
               </Col>
             </Row>
           </Form>
 
-          <Row>
-            <Col className="colValorTotal">
-              <h4 className="valorTotalText">
-                VALOR TOTAL: {this.props.valorTotal}
-              </h4>
-            </Col>
-          </Row>
-
           <Form>
             <Row>
-              <Col className="colLabelInput">
+              <Col md={2} className="colLabelInput">
                 <h6 className="labelInput-verticalAlign">Gain</h6>
               </Col>
               <Col>
@@ -163,7 +132,7 @@ class FormInternoCompraLimitada extends React.Component {
             </Row>
 
             <Row>
-              <Col className="colLabelInput">
+              <Col md={2} className="colLabelInput">
                 <h6 className="labelInput-verticalAlign">Stop</h6>
               </Col>
               <Col>
@@ -291,10 +260,9 @@ const mapStateToProps = state => ({
   validadeChecked: state.compraAgendadaReducer.validadeChecked,
   date: state.compraAgendadaReducer.date,
   valorTotal: state.compraAgendadaReducer.valorTotal,
-  entradaDisparo: state.compraAgendadaReducer.entradaDisparo,
-  entradaExec: state.compraAgendadaReducer.entradaExec,
   ativo: state.compraAgendadaReducer.ativo,
-  assinatura: state.compraAgendadaReducer.assinatura
+  assinatura: state.compraAgendadaReducer.assinatura,
+  preco: state.compraAgendadaReducer.preco
 });
 
 export default connect(
@@ -310,8 +278,7 @@ export default connect(
     limparAction,
     comprarAgendadaAction,
     mudarAtivoAction,
-    mudarEntradaDisparoAction,
-    mudarEntradaExecAction,
-    mudarAssinaturaAction
+    mudarAssinaturaAction,
+    mudarPrecoAction
   }
 )(FormInternoCompraLimitada);

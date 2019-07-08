@@ -10,8 +10,8 @@
 }
 
 .colFormInterno {
-  max-width: 400px;
-  min-width: 350px;
+  max-width: 420px;
+  min-width: 390px;
 }
 
 .colLabelInput {
@@ -49,6 +49,18 @@
   margin-top: 0.8rem;
   padding: 0.2rem 0;
   color: var(--laranja-valorTotal);
+}
+
+.valorTotalText_CL {
+  text-align: center;
+  color: var(--laranja-valorTotal);
+  margin: 0;
+}
+
+.colValorTotal_CL {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 .colValorTotal {

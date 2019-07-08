@@ -10,7 +10,8 @@ import {
   MUDAR_ASSINATURA_COMPRA_AGENDADA,
   MUDAR_ATIVO_COMPRA_AGENDADA,
   MUDAR_ENTRADA_DISPARO_COMPRA_AGENDADA,
-  MUDAR_ENTRADA_EXEC_COMPRA_AGENDADA
+  MUDAR_ENTRADA_EXEC_COMPRA_AGENDADA,
+  MUDAR_PRECO_COMPRA_MERCADO
 } from "../../../constants/ActionTypes";
 
 const INITIAL_STATE = {
@@ -26,7 +27,8 @@ const INITIAL_STATE = {
   validadeChecked: true,
   date: new Date(),
   assinatura: "",
-  porcentagem: 9.55
+  porcentagem: 9.55,
+  preco: 0.0
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -53,6 +55,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, assinatura: action.payload };
     case LIMPAR_COMPRA_AGENDADA:
       return { ...INITIAL_STATE };
+    case MUDAR_PRECO_COMPRA_MERCADO:
+      return { ...state, preco: action.payload };
     case COMPRAR_AGENDADO:
       return { ...state };
     default:

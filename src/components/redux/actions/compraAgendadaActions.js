@@ -10,7 +10,8 @@ import {
   MUDAR_ATIVO_COMPRA_AGENDADA,
   MUDAR_ENTRADA_DISPARO_COMPRA_AGENDADA,
   MUDAR_ENTRADA_EXEC_COMPRA_AGENDADA,
-  MUDAR_ASSINATURA_COMPRA_AGENDADA
+  MUDAR_ASSINATURA_COMPRA_AGENDADA,
+  MUDAR_PRECO_COMPRA_MERCADO
 } from "../../../constants/ActionTypes";
 
 export const mudarGainDisparoAction = event => {
@@ -118,6 +119,15 @@ export const mudarAssinaturaAction = event => {
   return dispatch => {
     dispatch({
       type: MUDAR_ASSINATURA_COMPRA_AGENDADA,
+      payload: event.target.value
+    });
+  };
+};
+
+export const mudarPrecoAction = event => {
+  return dispatch => {
+    dispatch({
+      type: MUDAR_PRECO_COMPRA_MERCADO,
       payload: event.target.value
     });
   };
