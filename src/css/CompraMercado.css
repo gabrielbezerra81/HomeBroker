@@ -1,43 +1,43 @@
-#compralimitada .modal-content {
+#compramercado .modal-content {
   margin-left: 1120px;
 }
 
-#compralimitada {
-  max-width: 750px;
+#compramercado {
+  max-width: 720px;
 }
 
-#GainDisparoGrafico_CL {
+#GainDisparoGrafico_CM {
   top: 19%;
   left: 48.6%;
 }
 
-#GainExecGrafico_CL {
+#GainExecGrafico_CM {
   top: 19%;
   left: 69%;
 }
 
-#StopDisparoGrafico_CL {
+#StopDisparoGrafico_CM {
   top: 80.3%;
   left: 48.7%;
 }
 
-#StopExecGrafico_CL {
+#StopExecGrafico_CM {
   top: 80.3%;
   left: 69%;
 }
-#CotacaoAtualGrafico_CL {
+#CotacaoAtualGrafico_CM {
   top: 49%;
   left: 3.3%;
   width: 19%;
   height: 9.2%;
 }
 
-#ConfigGainGrafico_CL {
+#ConfigGainGrafico_CM {
   top: 2%;
   left: 86%;
 }
 
-#ConfigStopGrafico_CL {
+#ConfigStopGrafico_CM {
   top: 63%;
   left: 86%;
 }

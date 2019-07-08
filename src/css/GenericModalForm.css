@@ -32,6 +32,7 @@ DraggableModal {
   border-width: 0.4rem;
   color: var(--cor-texto);
   font-size: 0.9rem;
+  margin-top: 50px;
 }
 
 .modal-body {

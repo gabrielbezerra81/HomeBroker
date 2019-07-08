@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap";
 import BookOfertas from "./components/forms/book_Ofertas/BookOfertas";
 import CompraAgendada from "./components/forms/compra_Agendada/CompraAgendada";
 import CompraLimitada from "./components/forms/compra_Limitada/CompraLimitada";
+import CompraMercado from "./components/forms/compra_Mercado/CompraMercado";
 class App extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -40,8 +41,13 @@ class App extends React.Component {
           <Button variant="primary" onClick={this.handleShow} name="limitada">
             Abrir Compra Limitada
           </Button>
-          <Button variant="primary">Abrir Compra a Mercado</Button>
+          <Button variant="primary" onClick={this.handleShow} name="mercado">
+            Abrir Compra a Mercado
+          </Button>
           <Button variant="primary">Abrir Compra Start/Stop</Button>
+          <Button variant="primary">Abrir Compra Start Móvel</Button>
+          <Button variant="primary">Abrir Gain/Redução de compra</Button>
+
           <BookOfertas
             show={this.state.book}
             close={this.handleClose}
@@ -54,14 +60,18 @@ class App extends React.Component {
             close={this.handleClose}
             headerTitle="COMPRA AGENDADA"
             name="compraagendada"
-            id="compraagendada"
           />
           <CompraLimitada
             show={this.state.limitada}
             close={this.handleClose}
             headerTitle="COMPRA LIMITADA"
             name="compralimitada"
-            id="compralimitada"
+          />
+          <CompraMercado
+            show={this.state.mercado}
+            close={this.handleClose}
+            headerTitle="COMPRA A MERCADO"
+            name="compramercado"
           />
         </header>
       </div>
