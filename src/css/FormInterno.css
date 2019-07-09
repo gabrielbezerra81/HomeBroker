@@ -10,8 +10,9 @@
 }
 
 .colFormInterno {
-  max-width: 420px;
-  min-width: 390px;
+  max-width: 378px;
+  min-width: 378px;
+  padding-right: 2px
 }
 
 .colLabelInput {
