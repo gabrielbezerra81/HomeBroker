@@ -5,7 +5,7 @@ import {} from "mdbreact";
 import { ReactComponent as ArrowDown } from "../../../img/down-arrow.svg";
 import { ReactComponent as ArrowUp } from "../../../img/up-arrow.svg";
 import Clock from "../../Clock";
-import Toggle from "react-bootstrap-toggle";
+import Switch from "react-switch";
 import "../../../css/bootstrap2-toggle.css";
 
 class BodyHeaderCompraStartStop extends React.Component {
@@ -22,15 +22,15 @@ class BodyHeaderCompraStartStop extends React.Component {
     return (
       <div>
         <Row className="rowToggleSwitch">
-          <Toggle
-           onClick={this.onToggle}
-           active={this.state.toggleActive}
-            size="xs"
-            onstyle="default"
-            offstyle="default"
-            onClassName="onclass"
-            offClassName="offclass"
-            className="toggle"
+          <Switch
+            onChange={this.onToggle}
+            checked={this.state.toggleActive}
+            offColor="#000"
+            onColor="#008000"
+            uncheckedIcon={false}
+            checkedIcon={false}
+            boxShadow="0 0 0px 0px #444"
+            activeBoxShadow="0 0 0px 0px #444"
           />
         </Row>
         <Row className="rowBodyHeader padding-right">

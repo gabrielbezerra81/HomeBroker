@@ -18,13 +18,21 @@ export default class MainApp extends Component {
 
   criarApp() {
     let apps = [...this.state.apps];
-    let sub = <SubApp key={apps.length} removerApp={this.removerApp} />;
+    console.log("index", apps.length);
+    let sub = (
+      <SubApp
+        key={apps.length}
+        index={apps.length}
+        removerApp={this.removerApp}
+      />
+    );
     apps.push(sub);
     this.setState({ apps });
   }
 
   removerApp(index) {
     let apps = [...this.state.apps];
+    console.log("index", index);
     apps.splice(index, 1);
     this.setState({ apps });
   }
@@ -57,7 +65,7 @@ class SubApp extends Component {
   render() {
     return (
       <Provider store={this.store}>
-        <App removerApp={this.props.removerApp} appkey={this.key} />
+        <App removerApp={this.props.removerApp} appkey={this.props.index} />
       </Provider>
     );
   }
