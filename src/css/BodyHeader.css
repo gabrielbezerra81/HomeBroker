@@ -46,3 +46,30 @@
 .porcentagemNegativa {
   color: red;
 }
+
+.rowToggleSwitch {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 2.5rem;
+  padding-top: 0.2rem;
+}
+
+.padding-right {
+  padding-right: 3rem;
+}
+
+.toggle {
+  border-radius: 15px;
+  border-color: #666;
+  color: #999;
+}
+
+.onclass {
+  background-color: #111;
+  color: #999;
+}
+
+.offclass {
+  background-color: #111;
+  color: #999;
+}

@@ -1,0 +1,53 @@
+#comprastartstop .modal-content {
+  margin-left: 355px;
+}
+
+#comprastartstop {
+  max-width: 750px;
+}
+
+#GainDisparoGrafico_CST {
+  top: 14%;
+  left: 52%;
+}
+
+#GainExecGrafico_CST {
+  top: 14%;
+  left: 71.5%;
+}
+
+#StopDisparoGrafico_CST {
+  top: 66.5%;
+  left: 52%;
+}
+
+#StopExecGrafico_CST {
+  top: 66.5%;
+  left: 71.5%;
+}
+#CotacaoAtualGrafico_CST {
+  top: 40%;
+  left: 7.3%;
+  width: 18.5%;
+  height: 8.2%;
+}
+
+#ConfigGainGrafico_CST {
+  top: 14%;
+  left: 86%;
+}
+
+#ConfigStopGrafico_CST {
+  top: 66%;
+  left: 86%;
+}
+
+#ValorTotalGain {
+  top: 24%;
+  left: 61%;
+}
+
+#ValorTotalStop {
+  top: 76%;
+  left: 61%;
+}

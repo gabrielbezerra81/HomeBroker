@@ -3,11 +3,11 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import "@fortawesome/fontawesome-free/css/all.css";
-import SubApp from "./SubApp";
+import MainApp from "./MainApp";
 
 ReactDOM.render(
   <div>
-    <SubApp />
+    <MainApp />
   </div>,
   document.getElementById("root")
 );

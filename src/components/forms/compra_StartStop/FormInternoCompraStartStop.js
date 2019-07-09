@@ -19,7 +19,7 @@ import {
   mudarAssinaturaAction
 } from "../../redux/actions/compraAgendadaActions";
 
-class FormInternoCompraAgendada extends React.Component {
+class FormInternoCompraStartStop extends React.Component {
   render() {
     return (
       <Col className="colFormInterno">
@@ -59,63 +59,9 @@ class FormInternoCompraAgendada extends React.Component {
                 </Form.Group>
               </Col>
             </Row>
-
-            <Row>
-              <Col md={2} className="colLabelInput">
-                <h6 className="labelInput-verticalAlign">Entrada</h6>
-              </Col>
-              <Col md={4}>
-                <Form.Group>
-                  <Form.Label>Disparo</Form.Label>
-                  <Form.Control
-                    className="textInput"
-                    type="number"
-                    step={0.1}
-                    min={0}
-                    name="disparo"
-                    max={9999999}
-                    value={this.props.entradaDisparo}
-                    onChange={event =>
-                      this.props.mudarEntradaDisparoAction(event)
-                    }
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={4}>
-                <Form.Group>
-                  <Form.Label>Execução</Form.Label>
-                  <Form.Control
-                    className="textInput"
-                    type="number"
-                    step={0.1}
-                    min={0}
-                    name="execucao"
-                    max={999999}
-                    value={this.props.entradaExec}
-                    onChange={event => this.props.mudarEntradaExecAction(event)}
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={2} className="colIconeConfig">
-                <Button variant="" className="operation-icons">
-                  <MDBIcon
-                    icon="cog"
-                    size="2x"
-                    className="labelInput-verticalAlign"
-                  />
-                </Button>
-              </Col>
-            </Row>
           </Form>
 
-          <Row>
-            <Col className="colValorTotal">
-              <h5 className="valorTotalText">
-                VALOR TOTAL: {this.props.valorTotal}
-              </h5>
-            </Col>
-          </Row>
-
+          <Form.Label />
           <Form>
             <Row>
               <Col md={2} className="colLabelInput">
@@ -314,4 +260,4 @@ export default connect(
     mudarEntradaExecAction,
     mudarAssinaturaAction
   }
-)(FormInternoCompraAgendada);
+)(FormInternoCompraStartStop);

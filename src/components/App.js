@@ -1,10 +1,11 @@
 import React from "react";
-import "./css/";
+import "../css";
 import { Button } from "react-bootstrap";
-import BookOfertas from "./components/forms/book_Ofertas/BookOfertas";
-import CompraAgendada from "./components/forms/compra_Agendada/CompraAgendada";
-import CompraLimitada from "./components/forms/compra_Limitada/CompraLimitada";
-import CompraMercado from "./components/forms/compra_Mercado/CompraMercado";
+import BookOfertas from "./forms/book_Ofertas/BookOfertas";
+import CompraAgendada from "./forms/compra_Agendada/CompraAgendada";
+import CompraLimitada from "./forms/compra_Limitada/CompraLimitada";
+import CompraMercado from "./forms/compra_Mercado/CompraMercado";
+import CompraStartStop from "./forms/compra_StartStop/CompraStartStop";
 class App extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -16,7 +17,8 @@ class App extends React.Component {
       book: true,
       agendada: true,
       limitada: true,
-      mercado: true
+      mercado: true,
+      startstop: true
     };
   }
 
@@ -32,6 +34,12 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
+          <Button
+            variant="primary"
+            onClick={() => this.props.removerApp(this.props.appkey)}
+          >
+            Fechar
+          </Button>
           <Button variant="primary" onClick={this.handleShow} name="book">
             Abrir Book
           </Button>
@@ -72,6 +80,12 @@ class App extends React.Component {
             close={this.handleClose}
             headerTitle="COMPRA A MERCADO"
             name="compramercado"
+          />
+          <CompraStartStop
+            show={this.state.startstop}
+            close={this.handleClose}
+            headerTitle="COMPRA START STOP"
+            name="comprastartstop"
           />
         </header>
       </div>

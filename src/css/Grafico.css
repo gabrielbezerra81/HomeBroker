@@ -42,3 +42,19 @@
   font-weight: 600;
   appearance: none;
 }
+
+.colGrafico_StartStop {
+  display: flex;
+  align-items: center;
+  padding-left: 0;
+  padding-right: 0.7rem;
+}
+
+.wrapperValorTotalGrafico {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--laranja-valorTotal);
+}

@@ -4,6 +4,7 @@ import "./BookOfertas.css";
 import "./CompraAgendada.css";
 import "./CompraLimitada.css";
 import "./CompraMercado.css";
+import "./CompraStartStop.css";
 import "./FormInterno.css";
 import "./Grafico.css";
 import "./BodyHeader.css";
