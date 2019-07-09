@@ -7,5 +7,10 @@
   align-items: center;
   justify-content: space-evenly;
   color: white;
-  padding: 0.5rem;
+  padding-top: 0.5rem
+}
+
+.appbody {
+  margin-left: 10px;
+  margin-right: 10px;
 }

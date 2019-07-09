@@ -2,7 +2,7 @@ import React from "react";
 import { MDBIcon } from "mdbreact";
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
-import { Modal, Row, Button } from "react-bootstrap";
+import { Row, Button } from "react-bootstrap";
 import DraggableModal from "../../DraggableModal";
 import FormInternoCompraAgendada from "./FormInternoCompraAgendada";
 import GraficoCompraAgendada from "./GraficoCompraAgendada";
@@ -52,13 +52,13 @@ const modalHeader = props => (
 );
 
 const modalBody = () => (
-  <Modal.Body>
+  <div className="mbody">
     <BodyHeaderCompraAgendada />
     <Row>
       <FormInternoCompraAgendada />
       <GraficoCompraAgendada />
     </Row>
-  </Modal.Body>
+  </div>
 );
 
 const mapStateToProps = state => ({});

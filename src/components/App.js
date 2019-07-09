@@ -6,6 +6,7 @@ import CompraAgendada from "./forms/compra_Agendada/CompraAgendada";
 import CompraLimitada from "./forms/compra_Limitada/CompraLimitada";
 import CompraMercado from "./forms/compra_Mercado/CompraMercado";
 import CompraStartStop from "./forms/compra_StartStop/CompraStartStop";
+import { Row } from "react-bootstrap";
 class App extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -52,42 +53,58 @@ class App extends React.Component {
           <Button variant="primary" onClick={this.handleShow} name="mercado">
             Abrir Compra a Mercado
           </Button>
-          <Button variant="primary">Abrir Compra Start/Stop</Button>
+          <Button variant="primary" onClick={this.handleShow} name="startstop">
+            Abrir Compra Start/Stop
+          </Button>
           <Button variant="primary">Abrir Compra Start Móvel</Button>
           <Button variant="primary">Abrir Gain/Redução de compra</Button>
-
-          <BookOfertas
-            show={this.state.book}
-            close={this.handleClose}
-            tableDataVenda={dataOrdemVenda}
-            tableDataCompra={dataOrdemCompra}
-            name="bookofertas"
-          />
-          <CompraAgendada
-            show={this.state.agendada}
-            close={this.handleClose}
-            headerTitle="COMPRA AGENDADA"
-            name="compraagendada"
-          />
-          <CompraLimitada
-            show={this.state.limitada}
-            close={this.handleClose}
-            headerTitle="COMPRA LIMITADA"
-            name="compralimitada"
-          />
-          <CompraMercado
-            show={this.state.mercado}
-            close={this.handleClose}
-            headerTitle="COMPRA A MERCADO"
-            name="compramercado"
-          />
-          <CompraStartStop
-            show={this.state.startstop}
-            close={this.handleClose}
-            headerTitle="COMPRA START STOP"
-            name="comprastartstop"
-          />
         </header>
+        <Row className="appbody">
+          {this.state.book ? (
+            <BookOfertas
+              show={this.state.book}
+              close={this.handleClose}
+              tableDataVenda={dataOrdemVenda}
+              tableDataCompra={dataOrdemCompra}
+              name="bookofertas"
+            />
+          ) : null}
+          {this.state.agendada ? (
+            <CompraAgendada
+              show={this.state.agendada}
+              close={this.handleClose}
+              headerTitle="COMPRA AGENDADA"
+              name="compraagendada"
+            />
+          ) : null}
+
+          {this.state.limitada ? (
+            <CompraLimitada
+              show={this.state.limitada}
+              close={this.handleClose}
+              headerTitle="COMPRA LIMITADA"
+              name="compralimitada"
+            />
+          ) : null}
+
+          {this.state.mercado ? (
+            <CompraMercado
+              show={this.state.mercado}
+              close={this.handleClose}
+              headerTitle="COMPRA A MERCADO"
+              name="compramercado"
+            />
+          ) : null}
+
+          {this.state.startstop ? (
+            <CompraStartStop
+              show={this.state.startstop}
+              close={this.handleClose}
+              headerTitle="COMPRA START STOP"
+              name="comprastartstop"
+            />
+          ) : null}
+        </Row>
       </div>
     );
   }
@@ -110,10 +127,6 @@ const dataOrdemVenda = [
   {
     qtde: 10900,
     valor: 26.72
-  },
-  {
-    qtde: 43300,
-    valor: 26.71
   }
 ];
 
@@ -133,9 +146,5 @@ const dataOrdemCompra = [
   {
     qtde: 1000,
     valor: 26.68
-  },
-  {
-    qtde: 10900,
-    valor: 26.66
   }
 ];

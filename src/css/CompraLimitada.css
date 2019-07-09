@@ -3,7 +3,8 @@
 }
 
 #compralimitada {
-  max-width: 740px;
+  min-width: 720px;
+  max-width: 720px;
 }
 
 #GainDisparoGrafico_CL {

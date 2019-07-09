@@ -211,7 +211,7 @@ class FormInternoCompraMercado extends React.Component {
               </Col>
             </Row>
             <Row>
-              <Col md={5}>
+              <Col md={3}>
                 <Button
                   variant="secondary"
                   onClick={() => this.props.limparAction()}
@@ -219,7 +219,7 @@ class FormInternoCompraMercado extends React.Component {
                   Limpar
                 </Button>
               </Col>
-              <Col md={5}>
+              <Col md={6}>
                 <Button
                   variant="primary"
                   onClick={() => this.props.comprarAgendadaAction()}

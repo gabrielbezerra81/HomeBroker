@@ -6,40 +6,22 @@
   --cor-borda: green;
 }
 
-.modal-backdrop {
-  display: none !important;
-}
-
-DraggableModal {
-  position: absolute;
-}
-
-.modal-dialog {
-  position: fixed !important;
-  margin: 0.5rem;
-}
-
-.modal-open {
-  overflow: visible !important;
-  padding-right: 0 !important;
-}
-
-.modal-content {
+.mcontent {
   background-color: var(--brackground-color);
   border-radius: 2.5rem;
   padding: 0.3rem 0rem;
-  border-color: var(--cor-borda);
-  border-width: 0.4rem;
+  border: 0.4rem solid var(--cor-borda);
   color: var(--cor-texto);
   font-size: 0.9rem;
-  margin-top: 50px;
+  margin-top: 20px;
+  margin-right: 10px;
 }
 
-.modal-body {
+.mbody {
   padding: 1vmin;
 }
 
-.modal-header {
+.mheader {
   padding: 0rem 1.5rem;
   padding-bottom: 0rem;
   display: flex;
@@ -87,14 +69,14 @@ DraggableModal {
   color: red;
 }
 
-.modal-title {
+.mtitle {
   flex: 7;
   font-size: 1.1rem;
   text-align: center;
 }
 
 .border-green {
-  border-color: var(--cor-borda);
+  border-bottom: 1px solid var(--cor-borda);
 }
 
 .customFooter {
@@ -109,4 +91,8 @@ DraggableModal {
 
 .form-control[type="number"] {
   appearance: none;
+}
+
+.form-group {
+  text-align: left;
 }
