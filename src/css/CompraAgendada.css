@@ -2,6 +2,11 @@
   max-width: 720px;
 }
 
+#formInternoCompraAgendada {
+  max-width: 370px !important;
+  min-width: 370px !important;
+}
+
 #GainDisparoGrafico_CA {
   top: 19%;
   left: 48.6%;

@@ -22,7 +22,7 @@ import {
 class FormInternoCompraAgendada extends React.Component {
   render() {
     return (
-      <Col className="colFormInterno">
+      <Col className="colFormInterno" id="formInternoCompraAgendada">
         <div className="divAsModalContainer">
           <Form>
             <Row>
