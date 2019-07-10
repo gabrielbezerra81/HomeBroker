@@ -10,8 +10,8 @@
 }
 
 .colFormInterno {
-  max-width: 355px;
-  min-width: 355px;
+  max-width: 339px;
+  min-width: 339px;
   padding-right: 2px;
 }
 
@@ -76,6 +76,7 @@
 
 .colValidadeCheck {
   padding-top: 0.2rem;
+  padding-right: 0;
 }
 
 .rowFormValidade {
@@ -92,7 +93,7 @@
 
 .colDateIcon {
   padding-left: 0.5rem;
-  color: var(--cor-cinza-botoes)
+  color: var(--cor-cinza-botoes);
 }
 
 .rowAssinaturaEletronica {
