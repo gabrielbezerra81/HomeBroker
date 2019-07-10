@@ -69,14 +69,15 @@
 }
 
 .iconeFechar {
-  color: red;
+  color: #000;
 }
 
 .mtitle {
   flex: 7;
-  font-size: 1.1rem;
+  font-size: 1rem;
   text-align: center;
-  margin-bottom: 0.1rem;
+  margin-bottom: 0rem;
+  padding-top: 0.1rem;
 }
 
 .border-green {
