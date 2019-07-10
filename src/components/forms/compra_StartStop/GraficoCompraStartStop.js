@@ -64,12 +64,12 @@ class GraficoCompraStartStop extends React.Component {
           <IconeConfigGrafico id="ConfigStopGrafico_CST" />
 
           <div className="wrapperValorTotalGrafico" id="ValorTotalGain">
-            <h6>VALOR TOTAL</h6>
-            <h6>26,50</h6>
+            <h6 className="textoValorGrafico">VALOR TOTAL</h6>
+            <h6 className="textoValorGrafico">26,50</h6>
           </div>
           <div className="wrapperValorTotalGrafico" id="ValorTotalStop">
-            <h6>VALOR TOTAL</h6>
-            <h6>26,50</h6>
+            <h6 className="textoValorGrafico">VALOR TOTAL</h6>
+            <h6 className="textoValorGrafico">26,50</h6>
           </div>
         </div>
       </Col>

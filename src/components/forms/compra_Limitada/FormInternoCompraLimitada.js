@@ -181,7 +181,7 @@ class FormInternoCompraLimitada extends React.Component {
             <Col md={2}>
               <Form.Label>Validade:</Form.Label>
             </Col>
-            <Col md={5} className="colValidadeCheck">
+            <Col className="colValidadeCheck">
               <Form.Check
                 type="checkbox"
                 id="checkboxValidade"
@@ -194,7 +194,10 @@ class FormInternoCompraLimitada extends React.Component {
                 }
               />
             </Col>
-            <Col md={4} className="colFormDate">
+          </Row>
+
+          <Row className="rowFormDate">
+            <Col md={6} className="colFormDate">
               <DatePicker
                 className="form-control textInput"
                 selected={this.props.date}
@@ -209,7 +212,7 @@ class FormInternoCompraLimitada extends React.Component {
 
           <div className="customFooter">
             <Row className="rowAssinaturaEletronica">
-              <Col md={7}>
+              <Col md={9}>
                 <Form>
                   <Form.Group>
                     <Form.Label>Assinatura eletrônica</Form.Label>

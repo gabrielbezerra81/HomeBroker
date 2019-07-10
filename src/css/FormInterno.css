@@ -10,8 +10,8 @@
 }
 
 .colFormInterno {
-  max-width: 339px;
-  min-width: 339px;
+  max-width: 280px;
+  min-width: 280px;
   padding-right: 2px;
 }
 
@@ -53,7 +53,8 @@
 .valorTotalText {
   text-align: center;
   background-color: var(--light-brackground-color);
-  margin-top: 0.8rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0rem;
   padding: 0.2rem 0;
   color: var(--laranja-valorTotal);
 }
@@ -75,27 +76,32 @@
 }
 
 .colValidadeCheck {
-  padding-top: 0.2rem;
+  padding-top: 0.1rem;
   padding-right: 0;
 }
 
 .rowFormValidade {
-  padding: 0.7rem 0;
+  padding-top: 0.5rem;
+  padding-bottom: 0.2rem;
   display: flex;
   align-items: center;
 }
 
+.rowFormDate {
+  padding-bottom: 0.2rem;
+}
+
 .colFormDate {
   padding-right: 0;
-  padding-left: 0;
-  max-width: 109px;
+  padding-left: 1rem;
+  max-width: 120px;
 }
 
 .colDateIcon {
-  padding-left: 0.5rem;
+  padding-left: 0.7rem;
   color: var(--cor-cinza-botoes);
 }
 
 .rowAssinaturaEletronica {
-  padding-bottom: 0.6rem;
+  padding-bottom: 0.3rem;
 }

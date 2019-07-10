@@ -60,8 +60,6 @@ class FormInternoCompraStartStop extends React.Component {
               </Col>
             </Row>
           </Form>
-
-          <Form.Label />
           <Form>
             <Row>
               <Col md={2} className="colLabelInput">
@@ -171,7 +169,10 @@ class FormInternoCompraStartStop extends React.Component {
                 }
               />
             </Col>
-            <Col md={5} className="colFormDate">
+          </Row>
+
+          <Row className="rowFormDate">
+            <Col md={6} className="colFormDate">
               <DatePicker
                 className="form-control textInput"
                 selected={this.props.date}
@@ -186,7 +187,7 @@ class FormInternoCompraStartStop extends React.Component {
 
           <div className="customFooter">
             <Row className="rowAssinaturaEletronica">
-              <Col md={7}>
+              <Col md={9}>
                 <Form>
                   <Form.Group>
                     <Form.Label>Assinatura eletrônica</Form.Label>
