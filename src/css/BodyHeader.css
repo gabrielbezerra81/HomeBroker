@@ -29,7 +29,10 @@
 }
 
 .colDataBodyHeader {
-  padding-left: 0;
+  display: flex;
+  justify-content: center;
+  padding-top: 0.05rem;
+  padding-left: 1.4rem;
 }
 
 .dataBodyHeader {
@@ -37,7 +40,8 @@
 }
 
 .iconeSeta {
-  max-width: 1.8vmin;
+  max-width: 1.7vmin;
+  vertical-align: initial;
 }
 
 .porcentagemPositiva {
