@@ -5,7 +5,7 @@
   --cor-texto: #ddd;
   --cor-cinza-botoes: #444;
   --cor-borda: green;
-  --cor-text-input: #bbb
+  --cor-text-input: #bbb;
 }
 
 .mcontent {
@@ -15,7 +15,7 @@
   border: 0.4rem solid var(--cor-borda);
   color: var(--cor-texto);
   font-size: 0.9rem;
-  margin-top: 20px;
+  margin-top: 10px;
   margin-right: 10px;
 }
 
@@ -83,7 +83,7 @@
 }
 
 .customFooter {
-  padding: 0.2rem 0 0.2rem 0;
+  padding-bottom: 0.1rem;
   border-top: 0.5px dashed white;
 }
 
@@ -98,4 +98,24 @@
 
 .form-group {
   text-align: left;
+}
+
+.btn-primary {
+  max-height: 25px;
+}
+
+.btn-danger {
+  max-height: 25px;
+}
+
+.btn-success {
+  max-height: 25px;
+}
+
+.btn-secondary {
+  max-height: 25px;
+}
+
+.btn > h6 {
+  font-size: 0.8rem !important;
 }

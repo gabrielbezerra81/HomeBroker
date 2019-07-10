@@ -214,17 +214,19 @@ class FormInternoCompraMercado extends React.Component {
               <Col md={3}>
                 <Button
                   variant="secondary"
+                  size="sm"
                   onClick={() => this.props.limparAction()}
                 >
-                  Limpar
+                  <h6>Limpar</h6>
                 </Button>
               </Col>
               <Col md={6}>
                 <Button
                   variant="primary"
+                  size="sm"
                   onClick={() => this.props.comprarAgendadaAction()}
                 >
-                  Comprar
+                  <h6>Comprar</h6>
                 </Button>
               </Col>
             </Row>

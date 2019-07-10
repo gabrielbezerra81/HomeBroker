@@ -92,6 +92,7 @@
 
 .colDateIcon {
   padding-left: 0.5rem;
+  color: var(--cor-cinza-botoes)
 }
 
 .rowAssinaturaEletronica {

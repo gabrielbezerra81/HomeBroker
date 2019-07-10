@@ -37,27 +37,57 @@ class App extends React.Component {
         <header className="App-header">
           <Button
             variant="primary"
+            size="sm"
             onClick={() => this.props.removerApp(this.props.appkey)}
           >
-            Fechar
+            <h6>Fechar</h6>
           </Button>
-          <Button variant="primary" onClick={this.handleShow} name="book">
-            Book de Ofertas
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={this.handleShow}
+            name="book"
+          >
+            <h6>Book de Ofertas</h6>
           </Button>
-          <Button variant="primary" onClick={this.handleShow} name="agendada">
-            Compra Agendada
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={this.handleShow}
+            name="agendada"
+          >
+            <h6>Compra Agendada</h6>
           </Button>
-          <Button variant="primary" onClick={this.handleShow} name="limitada">
-            Compra Limitada
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={this.handleShow}
+            name="limitada"
+          >
+            <h6>Compra Limitada</h6>
           </Button>
-          <Button variant="primary" onClick={this.handleShow} name="mercado">
-            Compra a Mercado
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={this.handleShow}
+            name="mercado"
+          >
+            <h6>Compra a Mercado</h6>
           </Button>
-          <Button variant="primary" onClick={this.handleShow} name="startstop">
-            Compra Start/Stop
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={this.handleShow}
+            name="startstop"
+          >
+            <h6>Compra Start/Stop</h6>
           </Button>
-          <Button variant="primary">Compra Start Móvel</Button>
-          <Button variant="primary">Gain/Redução de compra</Button>
+          <Button variant="primary" size="sm">
+            <h6>Compra Start Móvel</h6>
+          </Button>
+          <Button variant="primary" size="sm">
+            <h6>Gain/Redução de compra</h6>
+          </Button>
         </header>
         <Row className="appbody">
           {this.state.book ? (

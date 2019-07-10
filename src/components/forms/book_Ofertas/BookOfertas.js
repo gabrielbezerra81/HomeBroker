@@ -122,17 +122,17 @@ const modalBody = props => (
 );
 
 const modalFooter = props => (
-  <Modal.Footer className="no-border">
-    <Button variant="danger" onClick={() => props.venderAction()}>
-      Vender
+  <div className="no-border modal-footer">
+    <Button variant="danger" size="sm" onClick={() => props.venderAction()}>
+      <h6>Vender</h6>
     </Button>
-    <Button variant="success" onClick={props.close} name="book">
-      Fechar
+    <Button variant="success" size="sm" onClick={props.close} name="book">
+      <h6>Fechar</h6>
     </Button>
-    <Button variant="primary" onClick={() => props.comprarAction()}>
-      Comprar
+    <Button variant="primary" size="sm" onClick={() => props.comprarAction()}>
+      <h6>Comprar</h6>
     </Button>
-  </Modal.Footer>
+  </div>
 );
 
 const mapStateToProps = state => ({

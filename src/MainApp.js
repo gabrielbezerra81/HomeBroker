@@ -40,8 +40,8 @@ export default class MainApp extends Component {
   render() {
     return (
       <div>
-        <Button variant="primary" onClick={() => this.criarApp()}>
-          Criar App
+        <Button variant="primary" size="sm" onClick={() => this.criarApp()}>
+          <h6>Criar App</h6>
         </Button>
 
         {this.state.apps.map(Subapp => Subapp)}

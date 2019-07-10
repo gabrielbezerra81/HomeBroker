@@ -1,5 +1,5 @@
 #bookofertas {
-  max-width: 345px;
+  width: 320px;
 }
 
 #bookofertas .modal-body {
@@ -35,7 +35,7 @@
 
 .modal-footer {
   display: flex;
-  padding: 0.5rem 1rem;
+  padding: 0 1rem 0.3rem 1rem;
 }
 
 .modal-footer button {
