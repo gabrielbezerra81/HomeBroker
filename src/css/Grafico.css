@@ -12,6 +12,7 @@
   display: flex;
   align-items: center;
   padding-left: 0;
+  padding-bottom: 0.15rem;
 }
 
 .wrapperIconeConfiguracaoGrafico {
@@ -41,12 +42,6 @@
   font-size: 85%;
   font-weight: 600;
   appearance: none;
-}
-
-.colGrafico_StartStop {
-  display: flex;
-  align-items: center;
-  padding-left: 0;
 }
 
 .wrapperValorTotalGrafico {

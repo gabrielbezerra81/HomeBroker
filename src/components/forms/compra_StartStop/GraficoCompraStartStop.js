@@ -13,7 +13,7 @@ import IconeConfigGrafico from "../../IconeConfigGrafico";
 class GraficoCompraStartStop extends React.Component {
   render() {
     return (
-      <Col className="colGrafico_StartStop">
+      <Col className="colGrafico">
         <div className="imgContainer">
           <img src={img} className="imgChart" alt="" />
           <Form>

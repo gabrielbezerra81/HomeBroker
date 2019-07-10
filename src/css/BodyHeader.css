@@ -51,17 +51,25 @@
   display: flex;
   justify-content: flex-end;
   padding-right: 2.5rem;
-  padding-top: 0.2rem;
+  padding-top: 0.1rem;
 }
 
 .padding-right {
-  padding-right: 3rem;
+  padding-right: 0.5rem;
+  padding-bottom: 0.3rem;
 }
 
 .react-switch-handle {
   background: #000 !important;
   border: 4px solid #444 !important;
+  height: 19px !important;
+  width: 19px !important;
 }
 .rowToggleSwitch > div {
   border: 2px solid #444 !important;
+}
+
+.react-switch-bg {
+  height: 21px !important;
+  width: 49px !important;
 }
