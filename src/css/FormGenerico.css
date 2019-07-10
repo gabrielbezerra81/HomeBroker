@@ -11,7 +11,7 @@
 .mcontent {
   background-color: var(--brackground-color);
   border-radius: 2.5rem;
-  padding: 0.3rem 0rem;
+  padding: 0.1rem 0rem;
   border: 0.4rem solid var(--cor-borda);
   color: var(--cor-texto);
   font-size: 0.9rem;
@@ -20,7 +20,7 @@
 }
 
 .mbody {
-  padding: 1vmin;
+  padding: 0.5rem;
 }
 
 .mheader {
@@ -33,16 +33,17 @@
 
 .wrapperIconesHeader {
   display: flex;
-  align-items: flex-start;
   justify-content: flex-end;
   flex: 1;
+  padding-top: 0.1rem;
+  padding-left: 0;
 }
 
 .iconesHeader {
   padding: 0;
   border: none;
   color: var(--cor-cinza-botoes);
-  font-size: 0.9rem;
+  font-size: 0.65rem;
   margin: 0 3px;
 }
 
@@ -75,7 +76,7 @@
   flex: 7;
   font-size: 1.1rem;
   text-align: center;
-  padding-top: 0.1rem;
+  margin-bottom: 0.1rem;
 }
 
 .border-green {

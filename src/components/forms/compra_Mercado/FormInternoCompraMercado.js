@@ -63,9 +63,9 @@ class FormInternoCompraMercado extends React.Component {
 
           <Row>
             <Col className="colValorTotal">
-              <h5 className="valorTotalText">
+              <h6 className="valorTotalText">
                 VALOR ESTIMADO: {this.props.valorTotal}
-              </h5>
+              </h6>
             </Col>
           </Row>
 
