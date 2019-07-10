@@ -17,7 +17,7 @@ class TabelaOfertas extends React.Component {
 
   render() {
     return (
-      <Table striped variant="dark" borderless className="mytable text-center">
+      <Table striped variant="dark" borderless className="tableBook text-center">
         <thead>
           <tr>
             <th>Qtde</th>

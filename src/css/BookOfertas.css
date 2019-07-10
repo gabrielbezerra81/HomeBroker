@@ -7,10 +7,14 @@
   margin: 0;
 }
 
-.mytable {
+.tableBook {
   background: var(--brackground-color);
   margin: 0;
   color: #ddd;
+}
+
+.tableBook th {
+  padding: 0.5rem !important;
 }
 
 .table-striped > tbody > tr:nth-child(odd) > td,
@@ -80,5 +84,5 @@
 }
 
 .tableItemBookOferta td {
-  padding: 0.2rem;
+  padding: 0rem;
 }
