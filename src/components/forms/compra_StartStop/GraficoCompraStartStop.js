@@ -15,7 +15,7 @@ class GraficoCompraStartStop extends React.Component {
     return (
       <Col className="colGrafico">
         <div className="imgContainer">
-          <img src={img} className="imgChart imgCST" alt="" />
+          <img src={img} className="imgChart" alt="" />
           <Form>
             <Form.Control
               type="number"

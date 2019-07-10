@@ -1,9 +1,9 @@
 .configDiv {
-  max-width: 270px !important;
+  max-width: 210px !important;
   position: relative;
   left: 99%;
-  top: -430px;
-  padding-bottom: 1.85rem;
+  top: -427px;
+  padding-bottom: 2rem;
 }
 
 .configurarheader {
@@ -15,7 +15,7 @@
 }
 
 .imgConfigurar {
-  max-width: 75%;
+  max-width: 100%;
   display: flex;
 }
 .switchGrafico {
