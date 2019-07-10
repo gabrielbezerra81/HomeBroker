@@ -42,22 +42,22 @@ class App extends React.Component {
             Fechar
           </Button>
           <Button variant="primary" onClick={this.handleShow} name="book">
-            Abrir Book
+            Book de Ofertas
           </Button>
           <Button variant="primary" onClick={this.handleShow} name="agendada">
-            Abrir Compra Agendada
+            Compra Agendada
           </Button>
           <Button variant="primary" onClick={this.handleShow} name="limitada">
-            Abrir Compra Limitada
+            Compra Limitada
           </Button>
           <Button variant="primary" onClick={this.handleShow} name="mercado">
-            Abrir Compra a Mercado
+            Compra a Mercado
           </Button>
           <Button variant="primary" onClick={this.handleShow} name="startstop">
-            Abrir Compra Start/Stop
+            Compra Start/Stop
           </Button>
-          <Button variant="primary">Abrir Compra Start Móvel</Button>
-          <Button variant="primary">Abrir Gain/Redução de compra</Button>
+          <Button variant="primary">Compra Start Móvel</Button>
+          <Button variant="primary">Gain/Redução de compra</Button>
         </header>
         <Row className="appbody">
           {this.state.book ? (
