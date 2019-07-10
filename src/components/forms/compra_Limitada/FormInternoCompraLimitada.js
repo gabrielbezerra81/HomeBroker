@@ -78,7 +78,7 @@ class FormInternoCompraLimitada extends React.Component {
                   />
                 </Form.Group>
               </Col>
-              <Col md={5} className="colValorTotal_CL">
+              <Col md={6} className="colValorTotal_CL">
                 <h6 className="valorTotalText_CL">VALOR TOTAL</h6>
                 <h6 className="valorTotalText_CL">{this.props.valorTotal}</h6>
               </Col>
