@@ -1,6 +1,10 @@
 #compralimitada {
- max-width: 600px;
+  max-width: 600px;
   min-width: 600px;
+}
+
+#compralimitada .mbody {
+  padding-bottom: 2.6rem;
 }
 
 #GainDisparoGrafico_CL {
