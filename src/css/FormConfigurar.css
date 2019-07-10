@@ -1,0 +1,71 @@
+.configDiv {
+  max-width: 270px !important;
+  position: relative;
+  left: 99%;
+  top: -516px;
+  padding-bottom: 2rem;
+}
+
+.configurarheader {
+  padding: 0.3rem 1rem;
+  padding-bottom: 0rem;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+.imgConfigurar {
+  max-width: 87%;
+  display: flex;
+}
+.switchGrafico {
+  width: 19.2%;
+  height: 7.4%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.switchGrafico > div {
+  border: 2px solid #444 !important;
+}
+#ConfigGain1Grafico_CONFIGURAR {
+  top: 8.5%;
+  left: 86%;
+}
+
+#ConfigStop1Grafico_CONFIGURAR {
+  top: 35%;
+  left: 86%;
+}
+
+#ConfigGain2Grafico_CONFIGURAR {
+  top: 54%;
+  left: 86%;
+}
+
+#ConfigStop2Grafico_CONFIGURAR {
+  top: 81%;
+  left: 86%;
+}
+
+#switch1Grafico_CONFIGURAR {
+  top: 17.5%;
+  left: 61%;
+}
+
+#switch2Grafico_CONFIGURAR {
+  top: 26.5%;
+  left: 61%;
+}
+
+#switch3Grafico_CONFIGURAR {
+  top: 63.5%;
+  left: 61%;
+}
+
+#switch4Grafico_CONFIGURAR {
+  top: 72.5%;
+  left: 61%;
+}

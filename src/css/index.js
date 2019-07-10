@@ -1,5 +1,5 @@
 import "./App.css";
-import "./GenericModalForm.css";
+import "./FormGenerico.css";
 import "./BookOfertas.css";
 import "./CompraAgendada.css";
 import "./CompraLimitada.css";
@@ -8,3 +8,4 @@ import "./CompraStartStop.css";
 import "./FormInterno.css";
 import "./Grafico.css";
 import "./BodyHeader.css";
+import "./FormConfigurar.css";

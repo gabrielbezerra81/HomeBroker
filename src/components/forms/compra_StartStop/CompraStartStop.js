@@ -19,7 +19,7 @@ class CompraStartStop extends React.Component {
         renderModalBody={() => modalBody()}
         headerClass="border-green"
         renderOptionalHeader={() => modalHeader(this.props)}
-        closeButton={false}
+        renderConfigForm={this.props.showConfigStop}
       />
     );
   }
@@ -61,7 +61,9 @@ const modalBody = () => (
   </div>
 );
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  showConfigStop: state.compraAgendadaReducer.showConfigStop
+});
 
 export default connect(
   mapStateToProps,

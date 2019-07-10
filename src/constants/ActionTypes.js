@@ -16,3 +16,5 @@ export const MUDAR_ENTRADA_EXEC_COMPRA_AGENDADA = "mudar_entrada_exec_compra_age
 export const MUDAR_ASSINATURA_COMPRA_AGENDADA = "mudar_assinatura_compra_agendada"
 
 export const MUDAR_PRECO_COMPRA_LIMITADA = "mudar_preco_compra_limitada"
+
+export const FECHAR_CONFIGURAR_STOP = "fechar_configurar_stop"

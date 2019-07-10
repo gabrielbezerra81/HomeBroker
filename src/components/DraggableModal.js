@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Draggable from "react-draggable";
+import ConfigurarStop from "./forms/compra_StartStop/ConfigurarStop";
 
 class BSModal extends Component {
   render() {
@@ -13,6 +14,9 @@ class BSModal extends Component {
             </div>
             {this.props.renderModalBody()}
           </div>
+          {this.props.renderConfigForm ? (
+            <ConfigurarStop className="mcontent configDiv" />
+          ) : null}
         </div>
       </Draggable>
     );

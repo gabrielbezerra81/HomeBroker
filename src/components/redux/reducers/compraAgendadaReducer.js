@@ -11,7 +11,8 @@ import {
   MUDAR_ATIVO_COMPRA_AGENDADA,
   MUDAR_ENTRADA_DISPARO_COMPRA_AGENDADA,
   MUDAR_ENTRADA_EXEC_COMPRA_AGENDADA,
-  MUDAR_PRECO_COMPRA_LIMITADA
+  MUDAR_PRECO_COMPRA_LIMITADA,
+  FECHAR_CONFIGURAR_STOP
 } from "../../../constants/ActionTypes";
 
 const INITIAL_STATE = {
@@ -28,7 +29,8 @@ const INITIAL_STATE = {
   date: new Date(),
   assinatura: "",
   porcentagem: 9.55,
-  preco: 0.0
+  preco: 0.0,
+  showConfigStop: true
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -59,6 +61,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, preco: action.payload };
     case COMPRAR_AGENDADO:
       return { ...state };
+    case FECHAR_CONFIGURAR_STOP:
+      return { ...state, showConfigStop: false };
     default:
       return state;
   }

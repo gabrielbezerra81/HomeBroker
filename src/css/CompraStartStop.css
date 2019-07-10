@@ -1,10 +1,6 @@
-#comprastartstop .modal-content {
-  margin-left: 355px;
-}
-
 #comprastartstop {
-  min-width: 690px;
-  max-width: 690px;
+  min-width: 680px;
+  max-width: 680px;
 }
 
 #GainDisparoGrafico_CST {
@@ -35,12 +31,12 @@
 
 #ConfigGainGrafico_CST {
   top: 14%;
-  left: 86%;
+  left: 87%;
 }
 
 #ConfigStopGrafico_CST {
   top: 66%;
-  left: 86%;
+  left: 87%;
 }
 
 #ValorTotalGain {

@@ -1,6 +1,5 @@
 import React from "react";
-import { Col, Form, Button } from "react-bootstrap";
-import { MDBIcon } from "mdbreact";
+import { Col, Form } from "react-bootstrap";
 import { connect } from "react-redux";
 import {
   mudarGainDisparoAction,
@@ -9,6 +8,7 @@ import {
   mudarStopExecAction
 } from "../../redux/actions/compraAgendadaActions";
 import img from "../../../img/compraAgendada.PNG";
+import IconeConfigGrafico from "../../IconeConfigGrafico";
 
 class GraficoCompraLimitada extends React.Component {
   render() {
@@ -60,22 +60,8 @@ class GraficoCompraLimitada extends React.Component {
               onChange={() => false}
             />
           </Form>
-          <div
-            id="ConfigGainGrafico_CL"
-            className="wrapperIconeConfiguracaoGrafico"
-          >
-            <Button variant="" className="iconeConfiguracaoGrafico">
-              <MDBIcon icon="cog" size="2x" />
-            </Button>
-          </div>
-          <div
-            id="ConfigStopGrafico_CL"
-            className="wrapperIconeConfiguracaoGrafico"
-          >
-            <Button variant="" className="iconeConfiguracaoGrafico">
-              <MDBIcon icon="cog" size="2x" />
-            </Button>
-          </div>
+          <IconeConfigGrafico id="ConfigGainGrafico_CL" />
+          <IconeConfigGrafico id="ConfigStopGrafico_CL" />
         </div>
       </Col>
     );
