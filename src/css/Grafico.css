@@ -26,8 +26,8 @@
 .iconeConfiguracaoGrafico {
   padding: 0;
   border: none;
-  color: var(--cor-texto);
-  font-size: 0.8rem;
+  color: var(--cor-cinza-botoes);
+  font-size: 0.6rem;
 }
 
 .inputGrafico {

@@ -1,10 +1,6 @@
-#compralimitada .modal-content {
-  margin-left: 1120px;
-}
-
 #compralimitada {
-  min-width: 710px;
-  max-width: 710px;
+  min-width: 680px;
+  max-width: 680px;
 }
 
 #GainDisparoGrafico_CL {

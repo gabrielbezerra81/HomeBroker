@@ -1,10 +1,6 @@
-#compramercado .modal-content {
-  margin-left: 1120px;
-}
-
 #compramercado {
-  min-width: 690px;
-  max-width: 690px;
+  min-width: 680px;
+  max-width: 680px;
 }
 
 #GainDisparoGrafico_CM {

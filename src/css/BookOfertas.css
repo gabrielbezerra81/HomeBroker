@@ -49,7 +49,7 @@
 .operation-icons {
   padding: 0;
   border: none;
-  color: #ddd;
+  color: var(--cor-cinza-botoes);
   font-size: 0.8rem;
 }
 

@@ -3,7 +3,9 @@
   --light-brackground-color: rgb(29, 31, 29);
   --laranja-valorTotal: rgb(243, 148, 44);
   --cor-texto: #ddd;
+  --cor-cinza-botoes: #444;
   --cor-borda: green;
+  --cor-text-input: #bbb
 }
 
 .mcontent {
@@ -39,7 +41,7 @@
 .iconesHeader {
   padding: 0;
   border: none;
-  color: var(--cor-texto);
+  color: var(--cor-cinza-botoes);
   font-size: 0.9rem;
   margin: 0 3px;
 }
