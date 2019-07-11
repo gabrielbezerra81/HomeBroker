@@ -50,8 +50,7 @@
 }
 
 .form-control.textInput {
-  padding-right: 0.05rem;
-  padding-left: 0.05rem;
+  padding: 0 0.04rem 0 0.04rem;
 }
 
 .textInput:focus {
@@ -99,15 +98,15 @@
 }
 
 .colValidadeCheck {
-  padding-top: 0.1rem;
   padding-right: 0;
+  padding-bottom: 0.04rem;
 }
 
 .rowFormValidade {
   padding-top: 0.5rem;
   padding-bottom: 0.2rem;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
 }
 
 .rowFormDate {
@@ -116,7 +115,6 @@
 
 .colFormDate {
   padding-right: 0;
-  padding-left: 1rem;
   max-width: 120px;
 }
 

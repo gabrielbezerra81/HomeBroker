@@ -3,7 +3,7 @@ import {
   MUDAR_GAIN_EXEC_COMPRA_AGENDADA,
   MUDAR_STOP_DISPARO_COMPRA_AGENDADA,
   MUDAR_STOP_EXEC_COMPRA_AGENDADA,
-  MUDAR_VALIDADE_CHECK_COMPRA_AGENDADA,
+  MUDAR_VALIDADE_SELECT_COMPRA_AGENDADA,
   MUDAR_DATA_COMPRA_AGENDADA,
   LIMPAR_COMPRA_AGENDADA,
   COMPRAR_AGENDADO,
@@ -50,18 +50,12 @@ export const mudarStopExecAction = event => {
   };
 };
 
-export const mudarValidadeCheckAction = checked => {
+export const mudarValidadeSelectAction = event => {
   return dispatch => {
-    if (checked) {
-      dispatch({
-        type: MUDAR_VALIDADE_CHECK_COMPRA_AGENDADA,
-        payload: false
-      });
-    } else
-      dispatch({
-        type: MUDAR_VALIDADE_CHECK_COMPRA_AGENDADA,
-        payload: true
-      });
+    dispatch({
+      type: MUDAR_VALIDADE_SELECT_COMPRA_AGENDADA,
+      payload: event.target.value
+    });
   };
 };
 

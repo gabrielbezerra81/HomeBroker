@@ -1,6 +1,5 @@
 import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
-import DatePicker from "react-datepicker";
 import { MDBIcon } from "mdbreact";
 import { connect } from "react-redux";
 import { mudarQtdAction } from "../../redux/actions/bookOfertaActions";
@@ -9,7 +8,7 @@ import {
   mudarGainExecAction,
   mudarStopDisparoAction,
   mudarStopExecAction,
-  mudarValidadeCheckAction,
+  mudarValidadeSelectAction,
   mudarDataAction,
   limparAction,
   comprarAgendadaAction,
@@ -18,6 +17,7 @@ import {
   mudarEntradaExecAction,
   mudarAssinaturaAction
 } from "../../redux/actions/compraAgendadaActions";
+import { rowFormValidade } from "../../RowFormValidade";
 
 class FormInternoCompraMercado extends React.Component {
   render() {
@@ -161,39 +161,7 @@ class FormInternoCompraMercado extends React.Component {
             </Row>
           </Form>
 
-          <Row className="rowFormValidade">
-            <Col md={2}>
-              <Form.Label>Validade:</Form.Label>
-            </Col>
-            <Col className="colValidadeCheck">
-              <Form.Check
-                type="checkbox"
-                id="checkboxValidade"
-                label="Até cancelar"
-                checked={this.props.validadeChecked}
-                onChange={() =>
-                  this.props.mudarValidadeCheckAction(
-                    this.props.validadeChecked
-                  )
-                }
-              />
-            </Col>
-          </Row>
-
-          <Row className="rowFormDate">
-            <Col md={6} className="colFormDate">
-              <DatePicker
-                className="form-control textInput"
-                selected={this.props.date}
-                onChange={data => this.props.mudarDataAction(data)}
-                dateFormat="dd/MM/yyyy"
-                popperPlacement="top-start"
-              />
-            </Col>
-            <Col md={1} className="colDateIcon">
-              <MDBIcon icon="calendar-alt" size="lg" />
-            </Col>
-          </Row>
+          {rowFormValidade(this.props)}
 
           <div className="customFooter">
             <Row className="rowAssinaturaEletronica">
@@ -247,7 +215,7 @@ const mapStateToProps = state => ({
   gainExec: state.compraAgendadaReducer.gainExec,
   stopDisparo: state.compraAgendadaReducer.stopDisparo,
   stopExec: state.compraAgendadaReducer.stopExec,
-  validadeChecked: state.compraAgendadaReducer.validadeChecked,
+  validadeSelect: state.compraAgendadaReducer.validadeSelect,
   date: state.compraAgendadaReducer.date,
   valorTotal: state.compraAgendadaReducer.valorTotal,
   entradaDisparo: state.compraAgendadaReducer.entradaDisparo,
@@ -264,7 +232,7 @@ export default connect(
     mudarGainExecAction,
     mudarStopDisparoAction,
     mudarStopExecAction,
-    mudarValidadeCheckAction,
+    mudarValidadeSelectAction,
     mudarDataAction,
     limparAction,
     comprarAgendadaAction,
