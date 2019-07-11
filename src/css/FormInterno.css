@@ -40,6 +40,10 @@
   border-color: var(--cor-text-input);
 }
 
+.textInput:focus {
+  background-color: var(--cor-text-input);
+}
+
 .colIconeConfig {
   display: flex;
   justify-content: flex-start;
