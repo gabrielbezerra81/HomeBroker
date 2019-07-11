@@ -9,6 +9,7 @@ import {
 } from "../../redux/actions/compraAgendadaActions";
 import img from "../../../img/compraAgendada.PNG";
 import IconeConfigGrafico from "../../utils/IconeConfigGrafico";
+import { LabelInputGrafico } from "../../utils/TextoGrafico";
 
 class GraficoCompraLimitada extends React.Component {
   render() {
@@ -60,6 +61,10 @@ class GraficoCompraLimitada extends React.Component {
               onChange={() => false}
             />
           </Form>
+          {LabelInputGrafico("Disparo", "TextoGainDisparo_CA")}
+          {LabelInputGrafico("Execução", "TextoGainExecucao_CA")}
+          {LabelInputGrafico("Disparo", "TextoStopDisparo_CA")}
+          {LabelInputGrafico("Execução", "TextoStopExecucao_CA")}
           <IconeConfigGrafico id="ConfigGainGrafico_CL" />
           <IconeConfigGrafico id="ConfigStopGrafico_CL" />
         </div>

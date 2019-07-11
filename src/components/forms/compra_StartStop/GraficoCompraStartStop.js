@@ -9,6 +9,10 @@ import {
 } from "../../redux/actions/compraAgendadaActions";
 import IconeConfigGrafico from "../../utils/IconeConfigGrafico";
 import graficoCompraStartStop from "../../../img/compraStartStop.PNG";
+import {
+  LabelInputGrafico,
+  TextoValorTotalGrafico
+} from "../../utils/TextoGrafico";
 
 class GraficoCompraStartStop extends React.Component {
   render() {
@@ -62,15 +66,12 @@ class GraficoCompraStartStop extends React.Component {
           </Form>
           <IconeConfigGrafico id="ConfigGainGrafico_CST" />
           <IconeConfigGrafico id="ConfigStopGrafico_CST" />
-
-          <div className="wrapperValorTotalGrafico" id="ValorTotalGain">
-            <h6 className="textoValorGrafico">VALOR TOTAL</h6>
-            <h6 className="textoValorGrafico">26,50</h6>
-          </div>
-          <div className="wrapperValorTotalGrafico" id="ValorTotalStop">
-            <h6 className="textoValorGrafico">VALOR TOTAL</h6>
-            <h6 className="textoValorGrafico">26,50</h6>
-          </div>
+          {TextoValorTotalGrafico(26.5, "ValorTotalGain")}
+          {TextoValorTotalGrafico(26.5, "ValorTotalStop")}
+          {LabelInputGrafico("Disparo", "TextoGainDisparo_CST")}
+          {LabelInputGrafico("Execução", "TextoGainExecucao_CST")}
+          {LabelInputGrafico("Disparo", "TextoStopDisparo_CST")}
+          {LabelInputGrafico("Execução", "TextoStopExecucao_CST")}
         </div>
       </Col>
     );

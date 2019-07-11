@@ -58,3 +58,23 @@
 .textoValorGrafico {
   font-size: 0.8rem;
 }
+
+#TextoGainDisparo_CST {
+  top: 5.9%;
+  left: 50.4%;
+}
+
+#TextoGainExecucao_CST {
+  top: 5.9%;
+  left: 70.6%;
+}
+
+#TextoStopDisparo_CST {
+  top: 58%;
+  left: 50.4%;
+}
+
+#TextoStopExecucao_CST {
+  top: 58%;
+  left: 70.6%;
+}

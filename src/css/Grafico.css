@@ -30,6 +30,11 @@
   font-size: 0.6rem;
 }
 
+.LabelInputGrafico {
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
 .inputGrafico {
   width: 19%;
   height: 7.2%;

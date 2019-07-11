@@ -42,3 +42,23 @@
   top: 63%;
   left: 86%;
 }
+
+#TextoGainDisparo_CA {
+  top: 10.9%;
+  left: 48.9%;
+}
+
+#TextoGainExecucao_CA {
+  top: 10.9%;
+  left: 69%;
+}
+
+#TextoStopDisparo_CA {
+  top: 72%;
+  left: 48.9%;
+}
+
+#TextoStopExecucao_CA {
+  top: 72%;
+  left: 69%;
+}
