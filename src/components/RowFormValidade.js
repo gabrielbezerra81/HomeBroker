@@ -6,7 +6,7 @@ import { Col, Row, Form } from "react-bootstrap";
 export const rowFormValidade = props => (
   <Row className="rowFormValidade">
     <Form>
-      <Col md={2}>
+      <Col md={3}>
         <Form.Label>Validade:</Form.Label>
       </Col>
       <Col className="colValidadeCheck">

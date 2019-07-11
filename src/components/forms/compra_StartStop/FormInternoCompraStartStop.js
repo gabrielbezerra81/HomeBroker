@@ -18,6 +18,7 @@ import {
   mudarAssinaturaAction
 } from "../../redux/actions/compraAgendadaActions";
 import { rowFormValidade } from "../../RowFormValidade";
+import RowFormAssinatura from "../../RowFormAssinatura";
 
 class FormInternoCompraStartStop extends React.Component {
   render() {
@@ -155,24 +156,7 @@ class FormInternoCompraStartStop extends React.Component {
           {rowFormValidade(this.props)}
 
           <div className="customFooter">
-            <Row className="rowAssinaturaEletronica">
-              <Col md={9}>
-                <Form>
-                  <Form.Group>
-                    <Form.Label>Assinatura eletrônica</Form.Label>
-                    <Form.Control
-                      className="textInput"
-                      type="password"
-                      value={this.props.assinatura}
-                      onChange={event =>
-                        this.props.mudarAssinaturaAction(event)
-                      }
-                      autoComplete="current-password"
-                    />
-                  </Form.Group>
-                </Form>
-              </Col>
-            </Row>
+            {RowFormAssinatura(this.props)}
             <Row>
               <Col md={3}>
                 <Button

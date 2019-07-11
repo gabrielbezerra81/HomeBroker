@@ -11,7 +11,8 @@ import {
   MUDAR_ENTRADA_DISPARO_COMPRA_AGENDADA,
   MUDAR_ENTRADA_EXEC_COMPRA_AGENDADA,
   MUDAR_ASSINATURA_COMPRA_AGENDADA,
-  MUDAR_PRECO_COMPRA_LIMITADA
+  MUDAR_PRECO_COMPRA_LIMITADA,
+  MUDAR_CHECK_SALVA_ASSINATURA
 } from "../../../constants/ActionTypes";
 
 export const mudarGainDisparoAction = event => {
@@ -124,5 +125,21 @@ export const mudarPrecoAction = event => {
       type: MUDAR_PRECO_COMPRA_LIMITADA,
       payload: event.target.value
     });
+  };
+};
+
+export const mudarCheckSalvarAssinaturaAction = checked => {
+  return dispatch => {
+    if (checked) {
+      dispatch({
+        type: MUDAR_CHECK_SALVA_ASSINATURA,
+        payload: false
+      });
+    } else {
+      dispatch({
+        type: MUDAR_CHECK_SALVA_ASSINATURA,
+        payload: true
+      });
+    }
   };
 };

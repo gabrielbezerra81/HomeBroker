@@ -12,7 +12,8 @@ import {
   MUDAR_ENTRADA_DISPARO_COMPRA_AGENDADA,
   MUDAR_ENTRADA_EXEC_COMPRA_AGENDADA,
   MUDAR_PRECO_COMPRA_LIMITADA,
-  FECHAR_CONFIGURAR_STOP
+  FECHAR_CONFIGURAR_STOP,
+  MUDAR_CHECK_SALVA_ASSINATURA
 } from "../../../constants/ActionTypes";
 
 const INITIAL_STATE = {
@@ -30,7 +31,8 @@ const INITIAL_STATE = {
   assinatura: "",
   porcentagem: 9.55,
   preco: 0.0,
-  showConfigStop: true
+  showConfigStop: true,
+  checkSalvarAssinatura: false
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -63,6 +65,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state };
     case FECHAR_CONFIGURAR_STOP:
       return { ...state, showConfigStop: false };
+    case MUDAR_CHECK_SALVA_ASSINATURA:
+      return { ...state, checkSalvarAssinatura: action.payload };
     default:
       return state;
   }

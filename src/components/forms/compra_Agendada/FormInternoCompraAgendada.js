@@ -15,9 +15,11 @@ import {
   mudarAtivoAction,
   mudarEntradaDisparoAction,
   mudarEntradaExecAction,
-  mudarAssinaturaAction
+  mudarAssinaturaAction,
+  mudarCheckSalvarAssinaturaAction
 } from "../../redux/actions/compraAgendadaActions";
 import { rowFormValidade } from "../../RowFormValidade";
+import RowFormAssinatura from "../../RowFormAssinatura";
 
 class FormInternoCompraAgendada extends React.Component {
   render() {
@@ -211,24 +213,7 @@ class FormInternoCompraAgendada extends React.Component {
           {rowFormValidade(this.props)}
 
           <div className="customFooter">
-            <Row className="rowAssinaturaEletronica">
-              <Col md={9}>
-                <Form>
-                  <Form.Group>
-                    <Form.Label>Assinatura eletrônica</Form.Label>
-                    <Form.Control
-                      className="textInput"
-                      type="password"
-                      value={this.props.assinatura}
-                      onChange={event =>
-                        this.props.mudarAssinaturaAction(event)
-                      }
-                      autoComplete="current-password"
-                    />
-                  </Form.Group>
-                </Form>
-              </Col>
-            </Row>
+            {RowFormAssinatura(this.props)}
             <Row>
               <Col md={3}>
                 <Button
@@ -268,7 +253,8 @@ const mapStateToProps = state => ({
   entradaDisparo: state.compraAgendadaReducer.entradaDisparo,
   entradaExec: state.compraAgendadaReducer.entradaExec,
   ativo: state.compraAgendadaReducer.ativo,
-  assinatura: state.compraAgendadaReducer.assinatura
+  assinatura: state.compraAgendadaReducer.assinatura,
+  checkSalvarAssinatura: state.compraAgendadaReducer.checkSalvarAssinatura
 });
 
 export default connect(
@@ -286,6 +272,7 @@ export default connect(
     mudarAtivoAction,
     mudarEntradaDisparoAction,
     mudarEntradaExecAction,
-    mudarAssinaturaAction
+    mudarAssinaturaAction,
+    mudarCheckSalvarAssinaturaAction
   }
 )(FormInternoCompraAgendada);
