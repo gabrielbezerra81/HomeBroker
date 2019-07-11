@@ -43,6 +43,11 @@
   appearance: none;
 }
 
+.inputGrafico:focus {
+  background-color: var(--cor-text-input);
+  box-shadow: 0 0 3px 2.5px var(--box-shadow-color);
+}
+
 .wrapperValorTotalGrafico {
   position: absolute;
   display: flex;
