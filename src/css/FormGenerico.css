@@ -10,7 +10,7 @@
 
 .mcontent {
   background-color: var(--brackground-color);
-  border-radius: 2.5rem;
+  border-radius: 1rem;
   padding: 0.1rem 0rem;
   border: 0.4rem solid var(--cor-borda);
   color: var(--cor-texto);
@@ -85,8 +85,8 @@
 }
 
 .customFooter {
-  padding-bottom: 0.1rem;
   border-top: 0.5px dashed white;
+  display: grid;
 }
 
 .form-control[type="number"]::-webkit-inner-spin-button,

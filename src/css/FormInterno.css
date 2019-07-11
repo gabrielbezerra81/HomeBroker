@@ -1,12 +1,14 @@
 .divAsModalContainer {
   background-color: var(--brackground-color);
-  border-radius: 2.5rem;
+  border-radius: 1rem;
   padding: 0rem 1rem;
   border: 0.2rem solid var(--cor-borda);
   color: var(--cor-texto);
   font-size: 0.9rem;
   padding-bottom: 0.5rem;
   width: 100%;
+  height: 100%;
+  display: grid;
 }
 
 .colFormInterno {

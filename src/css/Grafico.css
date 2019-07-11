@@ -10,9 +10,8 @@
 
 .colGrafico {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   padding-left: 0;
-  padding-bottom: 0.15rem;
 }
 
 .wrapperIconeConfiguracaoGrafico {
