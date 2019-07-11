@@ -8,7 +8,7 @@ import {
   mudarStopExecAction
 } from "../../redux/actions/compraAgendadaActions";
 import IconeConfigGrafico from "../../IconeConfigGrafico";
-import graficoCompraStartStop from "../../../img/compraStartStop.png";
+import graficoCompraStartStop from "../../../img/compraStartStop.PNG";
 
 class GraficoCompraStartStop extends React.Component {
   render() {
