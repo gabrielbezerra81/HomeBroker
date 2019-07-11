@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import {} from "mdbreact";
 import { ReactComponent as ArrowDown } from "../../../img/down-arrow.svg";
 import { ReactComponent as ArrowUp } from "../../../img/up-arrow.svg";
-import Clock from "../../Clock";
+import Clock from "../../utils/Clock";
 import "../../../css/bootstrap2-toggle.css";
 
 class BodyHeaderCompraStartStop extends React.Component {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Draggable from "react-draggable";
-import ConfigurarStop from "./forms/compra_StartStop/ConfigurarStop";
+import ConfigurarStop from "../forms/compra_StartStop/ConfigurarStop";
 
 class BSModal extends Component {
   render() {

@@ -3,7 +3,7 @@ import { Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
 import { ReactComponent as ArrowDown } from "../../../img/down-arrow.svg";
 import { ReactComponent as ArrowUp } from "../../../img/up-arrow.svg";
-import Clock from "../../Clock";
+import Clock from "../../utils/Clock";
 
 class BodyHeaderCompraLimitada extends React.Component {
   render() {

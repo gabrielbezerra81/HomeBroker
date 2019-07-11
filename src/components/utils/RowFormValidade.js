@@ -3,7 +3,7 @@ import { MDBIcon } from "mdbreact";
 import DatePicker from "react-datepicker";
 import { Col, Row, Form } from "react-bootstrap";
 
-export const rowFormValidade = props => (
+export default props => (
   <Row className="rowFormValidade">
     <Form>
       <Col md={3}>

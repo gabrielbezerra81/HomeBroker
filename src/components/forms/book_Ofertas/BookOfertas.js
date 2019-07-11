@@ -1,5 +1,6 @@
 import React from "react";
-import DraggableModal from "../../DraggableModal";
+import DraggableModal from "../../utils/DraggableModal";
+
 import { connect } from "react-redux";
 import {
   mudarQtdAction,

@@ -3,7 +3,7 @@ import { MDBIcon } from "mdbreact";
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import { Row, Button } from "react-bootstrap";
-import DraggableModal from "../../DraggableModal";
+import DraggableModal from "../../utils/DraggableModal";
 import FormInternoCompraAgendada from "./FormInternoCompraAgendada";
 import GraficoCompraAgendada from "./GraficoCompraAgendada";
 import BodyHeaderCompraAgendada from "./BodyHeaderCompraAgendada";

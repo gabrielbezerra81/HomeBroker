@@ -17,8 +17,8 @@ import {
   mudarPrecoAction
 } from "../../redux/actions/compraAgendadaActions";
 import NumberFormat from "react-number-format";
-import { rowFormValidade } from "../../RowFormValidade";
-import RowFormAssinatura from "../../RowFormAssinatura";
+import RowFormValidade from "../../utils/RowFormValidade";
+import RowFormAssinatura from "../../utils/RowFormAssinatura";
 
 class FormInternoCompraLimitada extends React.Component {
   render() {
@@ -179,7 +179,7 @@ class FormInternoCompraLimitada extends React.Component {
             </Row>
           </Form>
 
-          {rowFormValidade(this.props)}
+          {RowFormValidade(this.props)}
 
           <div className="customFooter">
             {RowFormAssinatura(this.props)}

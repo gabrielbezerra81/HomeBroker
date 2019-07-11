@@ -18,8 +18,8 @@ import {
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction
 } from "../../redux/actions/compraAgendadaActions";
-import { rowFormValidade } from "../../RowFormValidade";
-import RowFormAssinatura from "../../RowFormAssinatura";
+import RowFormValidade from "../../utils/RowFormValidade";
+import RowFormAssinatura from "../../utils/RowFormAssinatura";
 
 class FormInternoCompraAgendada extends React.Component {
   render() {
@@ -210,7 +210,7 @@ class FormInternoCompraAgendada extends React.Component {
             </Row>
           </Form>
 
-          {rowFormValidade(this.props)}
+          {RowFormValidade(this.props)}
 
           <div className="customFooter">
             {RowFormAssinatura(this.props)}

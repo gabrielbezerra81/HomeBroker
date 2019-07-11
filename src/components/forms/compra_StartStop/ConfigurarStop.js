@@ -3,7 +3,7 @@ import configurarStop from "../../../img/configurarStop.PNG";
 import { connect } from "react-redux";
 import { Button } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
-import IconeConfigGrafico from "../../IconeConfigGrafico";
+import IconeConfigGrafico from "../../utils/IconeConfigGrafico";
 import { mostrarConfigurarStopAction } from "../../redux/actions/compraStartStopActions";
 
 class ConfigurarStop extends React.Component {
