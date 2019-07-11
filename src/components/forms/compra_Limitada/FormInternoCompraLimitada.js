@@ -17,6 +17,7 @@ import {
   mudarAssinaturaAction,
   mudarPrecoAction
 } from "../../redux/actions/compraAgendadaActions";
+import NumberFormat from "react-number-format";
 
 class FormInternoCompraLimitada extends React.Component {
   render() {
@@ -66,11 +67,11 @@ class FormInternoCompraLimitada extends React.Component {
               <Col md={4} className="colTextInput">
                 <Form.Group>
                   <Form.Label />
-                  <Form.Control
-                    className="textInput"
-                    type="number"
-                    step={0.1}
-                    min={0}
+                  <NumberFormat
+                    className="textInput form-control"
+                    thousandSeparator="."
+                    decimalSeparator=","
+                    allowNegative={false}
                     name="disparo"
                     max={9999999}
                     value={this.props.preco}
@@ -203,6 +204,7 @@ class FormInternoCompraLimitada extends React.Component {
                 selected={this.props.date}
                 onChange={data => this.props.mudarDataAction(data)}
                 dateFormat="dd/MM/yyyy"
+                popperPlacement="top-start"
               />
             </Col>
             <Col md={1} className="colDateIcon">

@@ -19,10 +19,6 @@ import {
   mudarAssinaturaAction
 } from "../../redux/actions/compraAgendadaActions";
 
-// MUDAR BOX SHADOW DOS INPUTS
-// AJEITAR CALENDÁRIO ATRAS DOS FORMS
-// MUDAR MASCARA DO PREÇO
-
 class FormInternoCompraStartStop extends React.Component {
   render() {
     return (
@@ -182,6 +178,7 @@ class FormInternoCompraStartStop extends React.Component {
                 selected={this.props.date}
                 onChange={data => this.props.mudarDataAction(data)}
                 dateFormat="dd/MM/yyyy"
+                popperPlacement="top-start"
               />
             </Col>
             <Col md={1} className="colDateIcon">

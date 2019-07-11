@@ -187,6 +187,7 @@ class FormInternoCompraMercado extends React.Component {
                 selected={this.props.date}
                 onChange={data => this.props.mudarDataAction(data)}
                 dateFormat="dd/MM/yyyy"
+                popperPlacement="top-start"
               />
             </Col>
             <Col md={1} className="colDateIcon">
