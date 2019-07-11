@@ -35,6 +35,7 @@
 
 .colTextInput {
   padding-right: 0;
+  padding-left: 14px;
 }
 
 .textInput {
@@ -43,16 +44,12 @@
   background-color: var(--cor-text-input);
   border-color: var(--cor-text-input);
   color: black;
-  text-align: center
-}
-
-col + .textInput {
-  padding-right: 0;
+  text-align: center;
 }
 
 .form-control.textInput {
-  padding-right: 0.02rem;
-  padding-left: 0.02rem;
+  padding-right: 0.05rem;
+  padding-left: 0.05rem;
 }
 
 .textInput:focus {
@@ -63,6 +60,8 @@ col + .textInput {
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
+  padding-left: 10px;
+  padding-right: 5px;
 }
 
 .operation-icons > .fa-cog {

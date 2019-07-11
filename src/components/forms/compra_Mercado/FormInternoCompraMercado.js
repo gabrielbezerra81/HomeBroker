@@ -29,7 +29,7 @@ class FormInternoCompraMercado extends React.Component {
               <Col md={2} className="colLabelInput">
                 <h6 className="labelInput-verticalAlign">Ativo</h6>
               </Col>
-              <Col md={4} className="formAtivo">
+              <Col md={4} className="formAtivo colTextInput">
                 <Form.Group>
                   <Form.Label />
                   <Form.Control
@@ -43,7 +43,7 @@ class FormInternoCompraMercado extends React.Component {
                 </Form.Group>
               </Col>
 
-              <Col md={4}>
+              <Col md={4} className="colTextInput">
                 <Form.Group>
                   <Form.Label>Qtde</Form.Label>
                   <Form.Control
@@ -74,7 +74,7 @@ class FormInternoCompraMercado extends React.Component {
               <Col md={2} className="colLabelInput">
                 <h6 className="labelInput-verticalAlign">Gain</h6>
               </Col>
-              <Col>
+              <Col className="colTextInput">
                 <Form.Group>
                   <Form.Label>Disparo</Form.Label>
                   <Form.Control
@@ -89,7 +89,7 @@ class FormInternoCompraMercado extends React.Component {
                   />
                 </Form.Group>
               </Col>
-              <Col>
+              <Col className="colTextInput">
                 <Form.Group>
                   <Form.Label>Execução</Form.Label>
                   <Form.Control
@@ -119,7 +119,7 @@ class FormInternoCompraMercado extends React.Component {
               <Col md={2} className="colLabelInput">
                 <h6 className="labelInput-verticalAlign">Stop</h6>
               </Col>
-              <Col>
+              <Col className="colTextInput">
                 <Form.Group>
                   <Form.Label>Disparo</Form.Label>
                   <Form.Control
@@ -134,7 +134,7 @@ class FormInternoCompraMercado extends React.Component {
                   />
                 </Form.Group>
               </Col>
-              <Col>
+              <Col className="colTextInput">
                 <Form.Group>
                   <Form.Label>Execução</Form.Label>
                   <Form.Control
