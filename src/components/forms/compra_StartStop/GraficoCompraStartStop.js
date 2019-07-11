@@ -7,15 +7,15 @@ import {
   mudarStopDisparoAction,
   mudarStopExecAction
 } from "../../redux/actions/compraAgendadaActions";
-import img from "../../../img/compraStartStop.png";
 import IconeConfigGrafico from "../../IconeConfigGrafico";
+import graficoCompraStartStop from "../../../img/compraStartStop.png";
 
 class GraficoCompraStartStop extends React.Component {
   render() {
     return (
       <Col className="colGrafico">
         <div className="imgContainer">
-          <img src={img} className="imgChart" alt="" />
+          <img src={graficoCompraStartStop} className="imgChart" alt="" />
           <Form>
             <Form.Control
               type="number"
