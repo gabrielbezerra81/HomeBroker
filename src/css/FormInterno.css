@@ -33,11 +33,26 @@
   align-self: flex-end;
 }
 
+.colTextInput {
+  padding-right: 0;
+}
+
 .textInput {
   height: 15px;
-  font-size: 0.8rem;
+  font-size: 0.66rem;
   background-color: var(--cor-text-input);
   border-color: var(--cor-text-input);
+  color: black;
+  text-align: center
+}
+
+col + .textInput {
+  padding-right: 0;
+}
+
+.form-control.textInput {
+  padding-right: 0.02rem;
+  padding-left: 0.02rem;
 }
 
 .textInput:focus {
