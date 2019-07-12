@@ -1,12 +1,12 @@
 :root {
-  --brackground-color: rgb(23, 25, 23);
+  --brackground-color: #171917;
   --light-brackground-color: rgb(29, 31, 29);
   --laranja-valorTotal: rgb(243, 148, 44);
   --cor-texto: #ddd;
   --cor-cinza-botoes: #444;
-  --cor-borda: #333;
+  --cor-borda: #4a494c;
   --cor-text-input: #bbb;
-  --box-shadow-color: rgb(0, 123, 255);
+  --box-shadow-color: #0a51bd;
 }
 
 .mcontent {
@@ -91,7 +91,6 @@
   display: grid;
 }
 
-
 .form-group {
   text-align: left;
 }
@@ -114,4 +113,14 @@
 
 .btn > h6 {
   font-size: 0.8rem !important;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 1;
+}
+
+input[type="number"] {
+  padding-left: 0;
+  padding-right: 0;
 }
