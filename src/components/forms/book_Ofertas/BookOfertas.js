@@ -74,7 +74,7 @@ const modalBody = props => (
     />
     <Form className="formNumericInput">
       <Row>
-        <Col>
+        <Col className="ColFormStopLoss">
           <Form.Group>
             <Form.Label>Stop Loss</Form.Label>
             <Form.Control
@@ -87,7 +87,7 @@ const modalBody = props => (
             />
           </Form.Group>
         </Col>
-        <Col>
+        <Col className="ColFormQtde">
           <Form.Group>
             <Form.Label>Qtde</Form.Label>
             <Form.Control
@@ -100,7 +100,7 @@ const modalBody = props => (
             />
           </Form.Group>
         </Col>
-        <Col>
+        <Col className="ColFormGain">
           <Form.Group>
             <Form.Label>Gain</Form.Label>
             <Form.Control

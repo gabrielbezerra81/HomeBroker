@@ -55,7 +55,6 @@ class FormInternoCompraStartMovel extends React.Component {
                     value={this.props.qtde}
                     onChange={event => this.props.mudarQtdAction(event)}
                     name="qtde"
-                    max={9999999}
                   />
                 </Form.Group>
               </Col>
@@ -74,7 +73,6 @@ class FormInternoCompraStartMovel extends React.Component {
                     step={0.1}
                     min={0}
                     name="disparo"
-                    max={9999999}
                     value={this.props.entradaDisparo}
                     onChange={event =>
                       this.props.mudarEntradaDisparoAction(event)

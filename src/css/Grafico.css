@@ -31,7 +31,7 @@
 }
 
 .LabelInputGrafico {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 400;
 }
 
@@ -63,7 +63,7 @@
 }
 
 .wrapperTextoCotacaoAtualGrafico {
-  width: 35.0%;
+  width: 38.0%;
   height: 7.4%;
   position: absolute;
   display: flex;

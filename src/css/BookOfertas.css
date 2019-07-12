@@ -1,5 +1,5 @@
 #bookofertas {
-  width: 320px;
+  width: 340px;
 }
 
 #bookofertas .modal-body {
@@ -85,4 +85,17 @@
 
 .tableItemBookOferta td {
   padding: 0rem;
+}
+
+.ColFormQtde {
+  padding-right: 0.09rem;
+  padding-left: 0.09rem;
+}
+
+.ColFormStopLoss {
+  padding-right: 0.18rem;
+}
+
+.ColFormGain {
+  padding-left: 0.18rem;
 }

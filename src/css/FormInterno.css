@@ -12,8 +12,8 @@
 }
 
 .colFormInterno {
-  max-width: 280px;
-  min-width: 280px;
+  max-width: 310px;
+  min-width: 310px;
   padding-right: 2px;
 }
 
@@ -38,6 +38,7 @@
 .colTextInput {
   padding-right: 0;
   padding-left: 14px;
+  max-width: 106.73px;
 }
 
 .textInput {
@@ -62,8 +63,8 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
-  padding-left: 10px;
-  padding-right: 5px;
+  padding-left: 3px;
+  padding-right: 2px;
 }
 
 .operation-icons > .fa-cog {
@@ -104,9 +105,9 @@
 
 .rowFormValidade {
   padding-top: 0.5rem;
-  padding-bottom: 0.3rem;
+  padding-bottom: 0.2rem;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
 }
 
 .rowFormDate {
@@ -125,4 +126,8 @@
 
 .rowAssinaturaEletronica {
   padding-bottom: 0.3rem;
+}
+
+.col-md-4 > h6 {
+  margin-bottom: 0 !important;
 }

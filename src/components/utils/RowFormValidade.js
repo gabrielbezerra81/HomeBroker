@@ -5,10 +5,10 @@ import { Col, Row, Form } from "react-bootstrap";
 
 export default props => (
   <Row className="rowFormValidade">
+    <Col md={4}>
+      <h6>Validade:</h6>
+    </Col>
     <Form>
-      <Col md={3}>
-        <Form.Label>Validade:</Form.Label>
-      </Col>
       <Col className="colValidadeCheck">
         <Form.Control
           as="select"

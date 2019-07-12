@@ -30,7 +30,7 @@ class FormInternoCompraStartStop extends React.Component {
               <Col md={2} className="colLabelInput">
                 <h6 className="labelInput-verticalAlign">Ativo</h6>
               </Col>
-              <Col md={4} className="formAtivo colTextInput">
+              <Col className="formAtivo colTextInput">
                 <Form.Group>
                   <Form.Label />
                   <Form.Control
@@ -44,7 +44,7 @@ class FormInternoCompraStartStop extends React.Component {
                 </Form.Group>
               </Col>
 
-              <Col md={4} className="colTextInput">
+              <Col className="colTextInput">
                 <Form.Group>
                   <Form.Label>Qtde</Form.Label>
                   <Form.Control
@@ -55,7 +55,6 @@ class FormInternoCompraStartStop extends React.Component {
                     value={this.props.qtde}
                     onChange={event => this.props.mudarQtdAction(event)}
                     name="qtde"
-                    max={9999999}
                   />
                 </Form.Group>
               </Col>
@@ -96,7 +95,7 @@ class FormInternoCompraStartStop extends React.Component {
                   />
                 </Form.Group>
               </Col>
-              <Col md={2} className="colIconeConfig">
+              <Col md={1} className="colIconeConfig">
                 <Button variant="" className="operation-icons">
                   <MDBIcon
                     icon="cog"
@@ -141,7 +140,7 @@ class FormInternoCompraStartStop extends React.Component {
                   />
                 </Form.Group>
               </Col>
-              <Col md={2} className="colIconeConfig">
+              <Col md={1} className="colIconeConfig">
                 <Button variant="" className="operation-icons">
                   <MDBIcon
                     icon="cog"
