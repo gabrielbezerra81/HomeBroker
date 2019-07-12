@@ -9,7 +9,7 @@ import {
   mudarAtivoAction,
   mudarInicioDisparoAction,
   mudarAjustePadraoAction
-} from "../../redux/actions/compraAgendadaActions";
+} from "../../redux/actions/formInputActions";
 
 class FormInternoCompraStartMovel extends React.Component {
   render() {
@@ -131,12 +131,12 @@ class FormInternoCompraStartMovel extends React.Component {
 
 const mapStateToProps = state => ({
   qtde: state.bookOfertaReducer.qtde,
-  stopDisparo: state.compraAgendadaReducer.stopDisparo,
-  stopExec: state.compraAgendadaReducer.stopExec,
-  valorTotal: state.compraAgendadaReducer.valorTotal,
-  ativo: state.compraAgendadaReducer.ativo,
-  inicioDisparo: state.compraAgendadaReducer.inicioDisparo,
-  ajustePadrao: state.compraAgendadaReducer.ajustePadrao
+  stopDisparo: state.formInputReducer.stopDisparo,
+  stopExec: state.formInputReducer.stopExec,
+  valorTotal: state.formInputReducer.valorTotal,
+  ativo: state.formInputReducer.ativo,
+  inicioDisparo: state.formInputReducer.inicioDisparo,
+  ajustePadrao: state.formInputReducer.ajustePadrao
 });
 
 export default connect(

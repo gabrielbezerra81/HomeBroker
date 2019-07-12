@@ -11,12 +11,11 @@ import {
   mudarValidadeSelectAction,
   mudarDataAction,
   limparAction,
-  comprarAgendadaAction,
   mudarAtivoAction,
   mudarAssinaturaAction,
   mudarPrecoAction,
   mudarCheckSalvarAssinaturaAction
-} from "../../redux/actions/compraAgendadaActions";
+} from "../../redux/actions/formInputActions";
 import NumberFormat from "react-number-format";
 import RowFormValidade from "../../utils/RowFormValidade";
 import RowFormAssinatura from "../../utils/RowFormAssinatura";
@@ -189,11 +188,7 @@ class FormInternoCompraLimitada extends React.Component {
                 </Button>
               </Col>
               <Col md={6}>
-                <Button
-                  variant="primary"
-                  size="sm"
-                  onClick={() => this.props.comprarAgendadaAction()}
-                >
+                <Button variant="primary" size="sm" onClick={() => false}>
                   <h6>Comprar</h6>
                 </Button>
               </Col>
@@ -207,16 +202,17 @@ class FormInternoCompraLimitada extends React.Component {
 
 const mapStateToProps = state => ({
   qtde: state.bookOfertaReducer.qtde,
-  gainDisparo: state.compraAgendadaReducer.gainDisparo,
-  gainExec: state.compraAgendadaReducer.gainExec,
-  stopDisparo: state.compraAgendadaReducer.stopDisparo,
-  stopExec: state.compraAgendadaReducer.stopExec,
-  validadeSelect: state.compraAgendadaReducer.validadeSelect,
-  date: state.compraAgendadaReducer.date,
-  valorTotal: state.compraAgendadaReducer.valorTotal,
-  ativo: state.compraAgendadaReducer.ativo,
-  assinatura: state.compraAgendadaReducer.assinatura,
-  preco: state.compraAgendadaReducer.preco
+  gainDisparo: state.formInputReducer.gainDisparo,
+  gainExec: state.formInputReducer.gainExec,
+  stopDisparo: state.formInputReducer.stopDisparo,
+  stopExec: state.formInputReducer.stopExec,
+  validadeSelect: state.formInputReducer.validadeSelect,
+  date: state.formInputReducer.date,
+  valorTotal: state.formInputReducer.valorTotal,
+  ativo: state.formInputReducer.ativo,
+  assinatura: state.formInputReducer.assinatura,
+  preco: state.formInputReducer.preco,
+  checkSalvarAssinatura: state.formInputReducer.checkSalvarAssinatura
 });
 
 export default connect(
@@ -230,7 +226,6 @@ export default connect(
     mudarValidadeSelectAction,
     mudarDataAction,
     limparAction,
-    comprarAgendadaAction,
     mudarAtivoAction,
     mudarAssinaturaAction,
     mudarPrecoAction,

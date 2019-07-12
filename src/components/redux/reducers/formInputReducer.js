@@ -34,9 +34,9 @@ const INITIAL_STATE = {
   porcentagem: 9.55,
   preco: 0.0,
   showConfigStop: true,
-  checkSalvarAssinatura: false,
-  inicioDisparo: 1,
-  ajustePadrao: 1
+  checkSalvarAssinatura: true,
+  inicioDisparo: 0,
+  ajustePadrao: 0
 };
 
 export default (state = INITIAL_STATE, action) => {

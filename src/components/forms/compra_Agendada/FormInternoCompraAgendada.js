@@ -17,7 +17,7 @@ import {
   mudarEntradaExecAction,
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction
-} from "../../redux/actions/compraAgendadaActions";
+} from "../../redux/actions/formInputActions";
 import RowFormValidade from "../../utils/RowFormValidade";
 import RowFormAssinatura from "../../utils/RowFormAssinatura";
 
@@ -236,18 +236,18 @@ class FormInternoCompraAgendada extends React.Component {
 
 const mapStateToProps = state => ({
   qtde: state.bookOfertaReducer.qtde,
-  gainDisparo: state.compraAgendadaReducer.gainDisparo,
-  gainExec: state.compraAgendadaReducer.gainExec,
-  stopDisparo: state.compraAgendadaReducer.stopDisparo,
-  stopExec: state.compraAgendadaReducer.stopExec,
-  validadeSelect: state.compraAgendadaReducer.validadeSelect,
-  date: state.compraAgendadaReducer.date,
-  valorTotal: state.compraAgendadaReducer.valorTotal,
-  entradaDisparo: state.compraAgendadaReducer.entradaDisparo,
-  entradaExec: state.compraAgendadaReducer.entradaExec,
-  ativo: state.compraAgendadaReducer.ativo,
-  assinatura: state.compraAgendadaReducer.assinatura,
-  checkSalvarAssinatura: state.compraAgendadaReducer.checkSalvarAssinatura
+  gainDisparo: state.formInputReducer.gainDisparo,
+  gainExec: state.formInputReducer.gainExec,
+  stopDisparo: state.formInputReducer.stopDisparo,
+  stopExec: state.formInputReducer.stopExec,
+  validadeSelect: state.formInputReducer.validadeSelect,
+  date: state.formInputReducer.date,
+  valorTotal: state.formInputReducer.valorTotal,
+  entradaDisparo: state.formInputReducer.entradaDisparo,
+  entradaExec: state.formInputReducer.entradaExec,
+  ativo: state.formInputReducer.ativo,
+  assinatura: state.formInputReducer.assinatura,
+  checkSalvarAssinatura: state.formInputReducer.checkSalvarAssinatura
 });
 
 export default connect(

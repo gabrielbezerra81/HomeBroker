@@ -6,7 +6,7 @@ import {
   mudarGainExecAction,
   mudarStopDisparoAction,
   mudarStopExecAction
-} from "../../redux/actions/compraAgendadaActions";
+} from "../../redux/actions/formInputActions";
 import img from "../../../img/compraAgendada.PNG";
 import IconeConfigGrafico from "../../utils/IconeConfigGrafico";
 import {
@@ -81,11 +81,11 @@ class GraficoCompraAgendada extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  gainDisparo: state.compraAgendadaReducer.gainDisparo,
-  gainExec: state.compraAgendadaReducer.gainExec,
-  stopDisparo: state.compraAgendadaReducer.stopDisparo,
-  stopExec: state.compraAgendadaReducer.stopExec,
-  cotacaoAtual: state.compraAgendadaReducer.cotacaoAtual
+  gainDisparo: state.formInputReducer.gainDisparo,
+  gainExec: state.formInputReducer.gainExec,
+  stopDisparo: state.formInputReducer.stopDisparo,
+  stopExec: state.formInputReducer.stopExec,
+  cotacaoAtual: state.formInputReducer.cotacaoAtual
 });
 
 export default connect(

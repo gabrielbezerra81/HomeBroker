@@ -46,7 +46,7 @@ class BodyHeaderCompraStartStop extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  porcentagem: state.compraAgendadaReducer.porcentagem
+  porcentagem: state.formInputReducer.porcentagem
 });
 
 export default connect(

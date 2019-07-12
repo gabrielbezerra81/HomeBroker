@@ -63,7 +63,7 @@ const modalBody = () => (
 );
 
 const mapStateToProps = state => ({
-  showConfigStop: state.compraAgendadaReducer.showConfigStop
+  showConfigStop: state.formInputReducer.showConfigStop
 });
 
 export default connect(
