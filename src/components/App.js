@@ -6,6 +6,7 @@ import CompraAgendada from "./forms/compra_Agendada/CompraAgendada";
 import CompraLimitada from "./forms/compra_Limitada/CompraLimitada";
 import CompraMercado from "./forms/compra_Mercado/CompraMercado";
 import CompraStartStop from "./forms/compra_StartStop/CompraStartStop";
+import CompraStartMovel from "./forms/compra_StartMovel/CompraStartMovel";
 import { Row } from "react-bootstrap";
 class App extends React.Component {
   constructor(props, context) {
@@ -19,11 +20,13 @@ class App extends React.Component {
       agendada: true,
       limitada: true,
       mercado: true,
-      startstop: true
+      startstop: true,
+      startmovel: false
     };
   }
 
   handleShow(event) {
+    console.log(event.target);
     this.setState({ [event.target.getAttribute("name")]: true });
   }
 
@@ -48,7 +51,7 @@ class App extends React.Component {
             onClick={this.handleShow}
             name="book"
           >
-            <h6>Book de Ofertas</h6>
+            <h6 name="book">Book de Ofertas</h6>
           </Button>
           <Button
             variant="primary"
@@ -56,7 +59,7 @@ class App extends React.Component {
             onClick={this.handleShow}
             name="agendada"
           >
-            <h6>Compra Agendada</h6>
+            <h6 name="agendada">Compra Agendada</h6>
           </Button>
           <Button
             variant="primary"
@@ -64,7 +67,7 @@ class App extends React.Component {
             onClick={this.handleShow}
             name="limitada"
           >
-            <h6>Compra Limitada</h6>
+            <h6 name="limitada">Compra Limitada</h6>
           </Button>
           <Button
             variant="primary"
@@ -72,7 +75,7 @@ class App extends React.Component {
             onClick={this.handleShow}
             name="mercado"
           >
-            <h6>Compra a Mercado</h6>
+            <h6 name="mercado">Compra a Mercado</h6>
           </Button>
           <Button
             variant="primary"
@@ -80,13 +83,18 @@ class App extends React.Component {
             onClick={this.handleShow}
             name="startstop"
           >
-            <h6>Compra Start/Stop</h6>
+            <h6 name="startstop">Compra Start/Stop</h6>
           </Button>
-          <Button variant="primary" size="sm">
-            <h6>Compra Start Móvel</h6>
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={this.handleShow}
+            name="startmovel"
+          >
+            <h6 name="startmovel">Compra Start Móvel</h6>
           </Button>
-          <Button variant="primary" size="sm">
-            <h6>Gain/Redução de compra</h6>
+          <Button variant="primary" size="sm" name="reducao">
+            <h6 name="reducao">Gain/Redução de compra</h6>
           </Button>
         </header>
         <Row className="appbody">
@@ -132,6 +140,15 @@ class App extends React.Component {
               close={this.handleClose}
               headerTitle="COMPRA START STOP"
               name="comprastartstop"
+            />
+          ) : null}
+
+          {this.state.startmovel ? (
+            <CompraStartMovel
+              show={this.state.startstop}
+              close={this.handleClose}
+              headerTitle="COMPRA START MÓVEL"
+              name="comprastartmovel"
             />
           ) : null}
         </Row>

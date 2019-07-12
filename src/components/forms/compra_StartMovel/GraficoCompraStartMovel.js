@@ -9,13 +9,9 @@ import {
 } from "../../redux/actions/compraAgendadaActions";
 import img from "../../../img/compraAgendada.PNG";
 import IconeConfigGrafico from "../../utils/IconeConfigGrafico";
-import {
-  LabelInputGrafico,
-  TextoGainStopGrafico,
-  TextoCotacaoAtualGrafico
-} from "../../utils/TextoGrafico";
+import { LabelInputGrafico } from "../../utils/TextoGrafico";
 
-class GraficoCompraMercado extends React.Component {
+class GraficoCompraStartMovel extends React.Component {
   render() {
     return (
       <Col className="colGrafico">
@@ -26,7 +22,7 @@ class GraficoCompraMercado extends React.Component {
               type="number"
               step={0.1}
               min={0}
-              id="GainDisparoGrafico_CM"
+              id="GainDisparoGrafico_CA"
               className="inputGrafico"
               value={this.props.gainDisparo}
               onChange={event => this.props.mudarGainDisparoAction(event)}
@@ -35,7 +31,7 @@ class GraficoCompraMercado extends React.Component {
               type="number"
               step={0.1}
               min={0}
-              id="GainExecGrafico_CM"
+              id="GainExecGrafico_CA"
               className="inputGrafico"
               value={this.props.gainExec}
               onChange={event => this.props.mudarGainExecAction(event)}
@@ -44,7 +40,7 @@ class GraficoCompraMercado extends React.Component {
               type="number"
               step={0.1}
               min={0}
-              id="StopDisparoGrafico_CM"
+              id="StopDisparoGrafico_CA"
               className="inputGrafico"
               value={this.props.stopDisparo}
               onChange={event => this.props.mudarStopDisparoAction(event)}
@@ -53,13 +49,13 @@ class GraficoCompraMercado extends React.Component {
               type="number"
               step={0.1}
               min={0}
-              id="StopExecGrafico_CM"
+              id="StopExecGrafico_CA"
               className="inputGrafico"
               value={this.props.stopExec}
               onChange={event => this.props.mudarStopExecAction(event)}
             />
             <Form.Control
-              id="CotacaoAtualGrafico_CM"
+              id="CotacaoAtualGrafico_CA"
               className="inputGrafico"
               value={this.props.cotacaoAtual}
               onChange={() => false}
@@ -69,11 +65,8 @@ class GraficoCompraMercado extends React.Component {
           {LabelInputGrafico("Execução", "TextoGainExecucao_CA")}
           {LabelInputGrafico("Disparo", "TextoStopDisparo_CA")}
           {LabelInputGrafico("Execução", "TextoStopExecucao_CA")}
-          {TextoGainStopGrafico("GAIN", "TextoGain_CA")}
-          {TextoGainStopGrafico("STOP", "TextoStop_CA")}
-          {TextoCotacaoAtualGrafico("TextoCotacaoAtualGrafico_CA")}
-          <IconeConfigGrafico id="ConfigGainGrafico_CM" />
-          <IconeConfigGrafico id="ConfigStopGrafico_CM" />
+          <IconeConfigGrafico id="ConfigGainGrafico_CA" />
+          <IconeConfigGrafico id="ConfigStopGrafico_CA" />
         </div>
       </Col>
     );
@@ -96,4 +89,4 @@ export default connect(
     mudarStopDisparoAction,
     mudarStopExecAction
   }
-)(GraficoCompraMercado);
+)(GraficoCompraStartMovel);

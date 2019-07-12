@@ -55,7 +55,7 @@
 
 .textInput:focus {
   background-color: var(--cor-text-input);
-  box-shadow: 0 0 3px 2.5px var(--box-shadow-color);
+  box-shadow: 0 0 0px 3.5px var(--box-shadow-color);
 }
 
 .colIconeConfig {
@@ -104,7 +104,7 @@
 
 .rowFormValidade {
   padding-top: 0.5rem;
-  padding-bottom: 0.2rem;
+  padding-bottom: 0.3rem;
   display: flex;
   align-items: flex-end;
 }

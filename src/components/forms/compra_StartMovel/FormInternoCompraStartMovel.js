@@ -1,6 +1,5 @@
 import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
-import { MDBIcon } from "mdbreact";
 import { connect } from "react-redux";
 import { mudarQtdAction } from "../../redux/actions/bookOfertaActions";
 import {
@@ -15,12 +14,13 @@ import {
   mudarAtivoAction,
   mudarEntradaDisparoAction,
   mudarEntradaExecAction,
-  mudarAssinaturaAction
+  mudarAssinaturaAction,
+  mudarCheckSalvarAssinaturaAction
 } from "../../redux/actions/compraAgendadaActions";
 import RowFormValidade from "../../utils/RowFormValidade";
 import RowFormAssinatura from "../../utils/RowFormAssinatura";
 
-class FormInternoCompraMercado extends React.Component {
+class FormInternoCompraStartMovel extends React.Component {
   render() {
     return (
       <Col className="colFormInterno">
@@ -60,22 +60,12 @@ class FormInternoCompraMercado extends React.Component {
                 </Form.Group>
               </Col>
             </Row>
-          </Form>
 
-          <Row>
-            <Col className="colValorTotal">
-              <h6 className="valorTotalText">
-                VALOR ESTIMADO: {this.props.valorTotal}
-              </h6>
-            </Col>
-          </Row>
-
-          <Form>
             <Row>
               <Col md={2} className="colLabelInput">
-                <h6 className="labelInput-verticalAlign">Gain</h6>
+                <h6 className="labelInput-verticalAlign">Entr.</h6>
               </Col>
-              <Col className="colTextInput">
+              <Col md={4} className="colTextInput">
                 <Form.Group>
                   <Form.Label>Disparo</Form.Label>
                   <Form.Control
@@ -83,14 +73,16 @@ class FormInternoCompraMercado extends React.Component {
                     type="number"
                     step={0.1}
                     min={0}
-                    max={999999}
-                    name="gainDisparo"
-                    value={this.props.gainDisparo}
-                    onChange={event => this.props.mudarGainDisparoAction(event)}
+                    name="disparo"
+                    max={9999999}
+                    value={this.props.entradaDisparo}
+                    onChange={event =>
+                      this.props.mudarEntradaDisparoAction(event)
+                    }
                   />
                 </Form.Group>
               </Col>
-              <Col className="colTextInput">
+              <Col md={4} className="colTextInput">
                 <Form.Group>
                   <Form.Label>Execução</Form.Label>
                   <Form.Control
@@ -98,24 +90,17 @@ class FormInternoCompraMercado extends React.Component {
                     type="number"
                     step={0.1}
                     min={0}
+                    name="execucao"
                     max={999999}
-                    name="gainExecucao"
-                    value={this.props.gainExec}
-                    onChange={event => this.props.mudarGainExecAction(event)}
+                    value={this.props.entradaExec}
+                    onChange={event => this.props.mudarEntradaExecAction(event)}
                   />
                 </Form.Group>
               </Col>
-              <Col md={2} className="colIconeConfig">
-                <Button variant="" className="operation-icons">
-                  <MDBIcon
-                    icon="cog"
-                    size="2x"
-                    className="labelInput-verticalAlign"
-                  />
-                </Button>
-              </Col>
             </Row>
+          </Form>
 
+          <Form>
             <Row>
               <Col md={2} className="colLabelInput">
                 <h6 className="labelInput-verticalAlign">Stop</h6>
@@ -149,15 +134,6 @@ class FormInternoCompraMercado extends React.Component {
                     onChange={event => this.props.mudarStopExecAction(event)}
                   />
                 </Form.Group>
-              </Col>
-              <Col md={2} className="colIconeConfig">
-                <Button variant="" className="operation-icons">
-                  <MDBIcon
-                    icon="cog"
-                    size="2x"
-                    className="labelInput-verticalAlign"
-                  />
-                </Button>
               </Col>
             </Row>
           </Form>
@@ -201,9 +177,11 @@ const mapStateToProps = state => ({
   stopExec: state.compraAgendadaReducer.stopExec,
   validadeSelect: state.compraAgendadaReducer.validadeSelect,
   date: state.compraAgendadaReducer.date,
-  valorTotal: state.compraAgendadaReducer.valorTotal,
+  entradaDisparo: state.compraAgendadaReducer.entradaDisparo,
+  entradaExec: state.compraAgendadaReducer.entradaExec,
   ativo: state.compraAgendadaReducer.ativo,
-  assinatura: state.compraAgendadaReducer.assinatura
+  assinatura: state.compraAgendadaReducer.assinatura,
+  checkSalvarAssinatura: state.compraAgendadaReducer.checkSalvarAssinatura
 });
 
 export default connect(
@@ -221,6 +199,7 @@ export default connect(
     mudarAtivoAction,
     mudarEntradaDisparoAction,
     mudarEntradaExecAction,
-    mudarAssinaturaAction
+    mudarAssinaturaAction,
+    mudarCheckSalvarAssinaturaAction
   }
-)(FormInternoCompraMercado);
+)(FormInternoCompraStartMovel);

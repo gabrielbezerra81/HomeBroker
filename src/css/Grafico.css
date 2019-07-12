@@ -50,7 +50,7 @@
 
 .inputGrafico:focus {
   background-color: var(--cor-text-input);
-  box-shadow: 0 0 3px 2.5px var(--box-shadow-color);
+  box-shadow: 0 0 0px 3.5px var(--box-shadow-color);
 }
 
 .wrapperValorTotalGrafico {
@@ -60,4 +60,17 @@
   align-items: center;
   justify-content: center;
   color: var(--laranja-valorTotal);
+}
+
+.wrapperTextoCotacaoAtualGrafico {
+  width: 35.0%;
+  height: 7.4%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.TextoCotacaoAtualGrafico{
+  font-size: 0.9rem
 }

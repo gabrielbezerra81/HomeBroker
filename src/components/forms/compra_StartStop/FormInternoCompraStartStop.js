@@ -193,8 +193,6 @@ const mapStateToProps = state => ({
   validadeSelect: state.compraAgendadaReducer.validadeSelect,
   date: state.compraAgendadaReducer.date,
   valorTotal: state.compraAgendadaReducer.valorTotal,
-  entradaDisparo: state.compraAgendadaReducer.entradaDisparo,
-  entradaExec: state.compraAgendadaReducer.entradaExec,
   ativo: state.compraAgendadaReducer.ativo,
   assinatura: state.compraAgendadaReducer.assinatura
 });

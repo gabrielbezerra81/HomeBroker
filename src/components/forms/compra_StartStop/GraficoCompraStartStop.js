@@ -11,7 +11,9 @@ import IconeConfigGrafico from "../../utils/IconeConfigGrafico";
 import graficoCompraStartStop from "../../../img/compraStartStop.PNG";
 import {
   LabelInputGrafico,
-  TextoValorTotalGrafico
+  TextoValorTotalGrafico,
+  TextoGainStopGrafico,
+  TextoCotacaoAtualGrafico
 } from "../../utils/TextoGrafico";
 
 class GraficoCompraStartStop extends React.Component {
@@ -72,6 +74,9 @@ class GraficoCompraStartStop extends React.Component {
           {LabelInputGrafico("Execução", "TextoGainExecucao_CST")}
           {LabelInputGrafico("Disparo", "TextoStopDisparo_CST")}
           {LabelInputGrafico("Execução", "TextoStopExecucao_CST")}
+          {TextoGainStopGrafico("GAIN", "TextoGain_CST")}
+          {TextoGainStopGrafico("STOP", "TextoStop_CST")}
+          {TextoCotacaoAtualGrafico("TextoCotacaoAtualGrafico_CST")}
         </div>
       </Col>
     );
