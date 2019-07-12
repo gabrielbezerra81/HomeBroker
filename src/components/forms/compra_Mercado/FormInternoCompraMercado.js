@@ -83,7 +83,6 @@ class FormInternoCompraMercado extends React.Component {
                     type="number"
                     step={0.1}
                     min={0}
-                    max={999999}
                     name="gainDisparo"
                     value={this.props.gainDisparo}
                     onChange={event => this.props.mudarGainDisparoAction(event)}
@@ -98,7 +97,6 @@ class FormInternoCompraMercado extends React.Component {
                     type="number"
                     step={0.1}
                     min={0}
-                    max={999999}
                     name="gainExecucao"
                     value={this.props.gainExec}
                     onChange={event => this.props.mudarGainExecAction(event)}
@@ -128,7 +126,6 @@ class FormInternoCompraMercado extends React.Component {
                     type="number"
                     step={0.1}
                     min={0}
-                    max={999999}
                     name="stopDisparo"
                     value={this.props.stopDisparo}
                     onChange={event => this.props.mudarStopDisparoAction(event)}
@@ -143,7 +140,6 @@ class FormInternoCompraMercado extends React.Component {
                     type="number"
                     step={0.1}
                     min={0}
-                    max={999999}
                     name="stopExecucao"
                     value={this.props.stopExec}
                     onChange={event => this.props.mudarStopExecAction(event)}

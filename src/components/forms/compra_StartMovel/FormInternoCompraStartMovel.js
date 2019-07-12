@@ -3,22 +3,13 @@ import { Button, Form, Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
 import { mudarQtdAction } from "../../redux/actions/bookOfertaActions";
 import {
-  mudarGainDisparoAction,
-  mudarGainExecAction,
   mudarStopDisparoAction,
   mudarStopExecAction,
-  mudarValidadeSelectAction,
-  mudarDataAction,
-  limparAction,
   comprarAgendadaAction,
   mudarAtivoAction,
-  mudarEntradaDisparoAction,
-  mudarEntradaExecAction,
-  mudarAssinaturaAction,
-  mudarCheckSalvarAssinaturaAction
+  mudarInicioDisparoAction,
+  mudarAjustePadraoAction
 } from "../../redux/actions/compraAgendadaActions";
-import RowFormValidade from "../../utils/RowFormValidade";
-import RowFormAssinatura from "../../utils/RowFormAssinatura";
 
 class FormInternoCompraStartMovel extends React.Component {
   render() {
@@ -30,7 +21,7 @@ class FormInternoCompraStartMovel extends React.Component {
               <Col md={2} className="colLabelInput">
                 <h6 className="labelInput-verticalAlign">Ativo</h6>
               </Col>
-              <Col md={4} className="formAtivo colTextInput">
+              <Col className="formAtivo colTextInput">
                 <Form.Group>
                   <Form.Label />
                   <Form.Control
@@ -44,7 +35,7 @@ class FormInternoCompraStartMovel extends React.Component {
                 </Form.Group>
               </Col>
 
-              <Col md={4} className="colTextInput">
+              <Col className="colTextInput">
                 <Form.Group>
                   <Form.Label>Qtde</Form.Label>
                   <Form.Control
@@ -62,9 +53,9 @@ class FormInternoCompraStartMovel extends React.Component {
 
             <Row>
               <Col md={2} className="colLabelInput">
-                <h6 className="labelInput-verticalAlign">Entr.</h6>
+                <h6 className="labelInput-verticalAlign">Início</h6>
               </Col>
-              <Col md={4} className="colTextInput">
+              <Col className="colTextInput">
                 <Form.Group>
                   <Form.Label>Disparo</Form.Label>
                   <Form.Control
@@ -73,32 +64,31 @@ class FormInternoCompraStartMovel extends React.Component {
                     step={0.1}
                     min={0}
                     name="disparo"
-                    value={this.props.entradaDisparo}
+                    value={this.props.inicioDisparo}
                     onChange={event =>
-                      this.props.mudarEntradaDisparoAction(event)
+                      this.props.mudarInicioDisparoAction(event)
                     }
                   />
                 </Form.Group>
               </Col>
-              <Col md={4} className="colTextInput">
+              <Col className="colTextInput">
                 <Form.Group>
-                  <Form.Label>Execução</Form.Label>
+                  <Form.Label>Ajuste padrão</Form.Label>
                   <Form.Control
                     className="textInput"
                     type="number"
                     step={0.1}
                     min={0}
                     name="execucao"
-                    max={999999}
-                    value={this.props.entradaExec}
-                    onChange={event => this.props.mudarEntradaExecAction(event)}
+                    value={this.props.ajustePadrao}
+                    onChange={event =>
+                      this.props.mudarAjustePadraoAction(event)
+                    }
                   />
                 </Form.Group>
               </Col>
             </Row>
-          </Form>
 
-          <Form>
             <Row>
               <Col md={2} className="colLabelInput">
                 <h6 className="labelInput-verticalAlign">Stop</h6>
@@ -111,7 +101,6 @@ class FormInternoCompraStartMovel extends React.Component {
                     type="number"
                     step={0.1}
                     min={0}
-                    max={999999}
                     name="stopDisparo"
                     value={this.props.stopDisparo}
                     onChange={event => this.props.mudarStopDisparoAction(event)}
@@ -126,7 +115,6 @@ class FormInternoCompraStartMovel extends React.Component {
                     type="number"
                     step={0.1}
                     min={0}
-                    max={999999}
                     name="stopExecucao"
                     value={this.props.stopExec}
                     onChange={event => this.props.mudarStopExecAction(event)}
@@ -135,32 +123,6 @@ class FormInternoCompraStartMovel extends React.Component {
               </Col>
             </Row>
           </Form>
-
-          {RowFormValidade(this.props)}
-
-          <div className="customFooter">
-            {RowFormAssinatura(this.props)}
-            <Row>
-              <Col md={3}>
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  onClick={() => this.props.limparAction()}
-                >
-                  <h6>Limpar</h6>
-                </Button>
-              </Col>
-              <Col md={6}>
-                <Button
-                  variant="primary"
-                  size="sm"
-                  onClick={() => this.props.comprarAgendadaAction()}
-                >
-                  <h6>Comprar</h6>
-                </Button>
-              </Col>
-            </Row>
-          </div>
         </div>
       </Col>
     );
@@ -169,35 +131,33 @@ class FormInternoCompraStartMovel extends React.Component {
 
 const mapStateToProps = state => ({
   qtde: state.bookOfertaReducer.qtde,
-  gainDisparo: state.compraAgendadaReducer.gainDisparo,
-  gainExec: state.compraAgendadaReducer.gainExec,
   stopDisparo: state.compraAgendadaReducer.stopDisparo,
   stopExec: state.compraAgendadaReducer.stopExec,
-  validadeSelect: state.compraAgendadaReducer.validadeSelect,
-  date: state.compraAgendadaReducer.date,
-  entradaDisparo: state.compraAgendadaReducer.entradaDisparo,
-  entradaExec: state.compraAgendadaReducer.entradaExec,
+  valorTotal: state.compraAgendadaReducer.valorTotal,
   ativo: state.compraAgendadaReducer.ativo,
-  assinatura: state.compraAgendadaReducer.assinatura,
-  checkSalvarAssinatura: state.compraAgendadaReducer.checkSalvarAssinatura
+  inicioDisparo: state.compraAgendadaReducer.inicioDisparo,
+  ajustePadrao: state.compraAgendadaReducer.ajustePadrao
 });
 
 export default connect(
   mapStateToProps,
   {
     mudarQtdAction,
-    mudarGainDisparoAction,
-    mudarGainExecAction,
     mudarStopDisparoAction,
     mudarStopExecAction,
-    mudarValidadeSelectAction,
-    mudarDataAction,
-    limparAction,
     comprarAgendadaAction,
     mudarAtivoAction,
-    mudarEntradaDisparoAction,
-    mudarEntradaExecAction,
-    mudarAssinaturaAction,
-    mudarCheckSalvarAssinaturaAction
+    mudarInicioDisparoAction,
+    mudarAjustePadraoAction
   }
 )(FormInternoCompraStartMovel);
+
+/**
+ * 
+          <div className="customFooter">
+            <Row>
+              <Col md={3} />
+              <Col md={6} />
+            </Row>
+          </div>
+ */

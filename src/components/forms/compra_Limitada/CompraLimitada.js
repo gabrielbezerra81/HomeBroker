@@ -20,7 +20,6 @@ class CompraLimitada extends React.Component {
         renderModalBody={() => modalBody()}
         headerClass="border-green"
         renderOptionalHeader={() => modalHeader(this.props)}
-        closeButton={false}
       />
     );
   }

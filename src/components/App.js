@@ -21,7 +21,7 @@ class App extends React.Component {
       limitada: true,
       mercado: true,
       startstop: true,
-      startmovel: false
+      startmovel: true
     };
   }
 
