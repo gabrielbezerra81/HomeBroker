@@ -19,6 +19,7 @@ import {
 import NumberFormat from "react-number-format";
 import RowFormValidade from "../../utils/RowFormValidade";
 import RowFormAssinatura from "../../utils/RowFormAssinatura";
+import { COMPRA_LIMITADA_NAMESPACE } from "../../../constants/ActionTypes";
 
 class FormInternoCompraLimitada extends React.Component {
   render() {
@@ -39,7 +40,12 @@ class FormInternoCompraLimitada extends React.Component {
                     placeholder=""
                     name="ativo"
                     value={this.props.ativo}
-                    onChange={event => this.props.mudarAtivoAction(event)}
+                    onChange={event =>
+                      this.props.mudarAtivoAction(
+                        event,
+                        COMPRA_LIMITADA_NAMESPACE
+                      )
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -53,7 +59,12 @@ class FormInternoCompraLimitada extends React.Component {
                     step={100}
                     min={0}
                     value={this.props.qtde}
-                    onChange={event => this.props.mudarQtdAction(event)}
+                    onChange={event =>
+                      this.props.mudarQtdAction(
+                        event,
+                        COMPRA_LIMITADA_NAMESPACE
+                      )
+                    }
                     name="qtde"
                   />
                 </Form.Group>
@@ -74,7 +85,12 @@ class FormInternoCompraLimitada extends React.Component {
                     allowNegative={false}
                     name="disparo"
                     value={this.props.preco}
-                    onChange={event => this.props.mudarPrecoAction(event)}
+                    onChange={event =>
+                      this.props.mudarPrecoAction(
+                        event,
+                        COMPRA_LIMITADA_NAMESPACE
+                      )
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -100,7 +116,12 @@ class FormInternoCompraLimitada extends React.Component {
                     min={0}
                     name="gainDisparo"
                     value={this.props.gainDisparo}
-                    onChange={event => this.props.mudarGainDisparoAction(event)}
+                    onChange={event =>
+                      this.props.mudarGainDisparoAction(
+                        event,
+                        COMPRA_LIMITADA_NAMESPACE
+                      )
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -114,7 +135,12 @@ class FormInternoCompraLimitada extends React.Component {
                     min={0}
                     name="gainExecucao"
                     value={this.props.gainExec}
-                    onChange={event => this.props.mudarGainExecAction(event)}
+                    onChange={event =>
+                      this.props.mudarGainExecAction(
+                        event,
+                        COMPRA_LIMITADA_NAMESPACE
+                      )
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -143,7 +169,12 @@ class FormInternoCompraLimitada extends React.Component {
                     min={0}
                     name="stopDisparo"
                     value={this.props.stopDisparo}
-                    onChange={event => this.props.mudarStopDisparoAction(event)}
+                    onChange={event =>
+                      this.props.mudarStopDisparoAction(
+                        event,
+                        COMPRA_LIMITADA_NAMESPACE
+                      )
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -157,7 +188,12 @@ class FormInternoCompraLimitada extends React.Component {
                     min={0}
                     name="stopExecucao"
                     value={this.props.stopExec}
-                    onChange={event => this.props.mudarStopExecAction(event)}
+                    onChange={event =>
+                      this.props.mudarStopExecAction(
+                        event,
+                        COMPRA_LIMITADA_NAMESPACE
+                      )
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -173,16 +209,18 @@ class FormInternoCompraLimitada extends React.Component {
             </Row>
           </Form>
 
-          {RowFormValidade(this.props)}
+          {RowFormValidade(this.props, COMPRA_LIMITADA_NAMESPACE)}
 
           <div className="customFooter">
-            {RowFormAssinatura(this.props)}
+            {RowFormAssinatura(this.props, COMPRA_LIMITADA_NAMESPACE)}
             <Row>
               <Col md={3}>
                 <Button
                   variant="secondary"
                   size="sm"
-                  onClick={() => this.props.limparAction()}
+                  onClick={() =>
+                    this.props.limparAction(COMPRA_LIMITADA_NAMESPACE)
+                  }
                 >
                   <h6>Limpar</h6>
                 </Button>
@@ -202,17 +240,17 @@ class FormInternoCompraLimitada extends React.Component {
 
 const mapStateToProps = state => ({
   qtde: state.bookOfertaReducer.qtde,
-  gainDisparo: state.formInputReducer.gainDisparo,
-  gainExec: state.formInputReducer.gainExec,
-  stopDisparo: state.formInputReducer.stopDisparo,
-  stopExec: state.formInputReducer.stopExec,
-  validadeSelect: state.formInputReducer.validadeSelect,
-  date: state.formInputReducer.date,
-  valorTotal: state.formInputReducer.valorTotal,
-  ativo: state.formInputReducer.ativo,
-  assinatura: state.formInputReducer.assinatura,
-  preco: state.formInputReducer.preco,
-  checkSalvarAssinatura: state.formInputReducer.checkSalvarAssinatura
+  gainDisparo: state.compraLimitadaReducer.gainDisparo,
+  gainExec: state.compraLimitadaReducer.gainExec,
+  stopDisparo: state.compraLimitadaReducer.stopDisparo,
+  stopExec: state.compraLimitadaReducer.stopExec,
+  validadeSelect: state.compraLimitadaReducer.validadeSelect,
+  date: state.compraLimitadaReducer.date,
+  valorTotal: state.compraLimitadaReducer.valorTotal,
+  ativo: state.compraLimitadaReducer.ativo,
+  assinatura: state.compraLimitadaReducer.assinatura,
+  preco: state.compraLimitadaReducer.preco,
+  checkSalvarAssinatura: state.compraLimitadaReducer.checkSalvarAssinatura
 });
 
 export default connect(

@@ -17,64 +17,64 @@ import {
   MUDAR_AJUSTE_PADRAO
 } from "../../../constants/ActionTypes";
 
-export const mudarGainDisparoAction = event => {
+export const mudarGainDisparoAction = (event, namespace) => {
   return dispatch => {
     dispatch({
-      type: MUDAR_GAIN_DISPARO,
+      type: `${MUDAR_GAIN_DISPARO}${namespace}`,
       payload: event.target.value
     });
   };
 };
 
-export const mudarGainExecAction = event => {
+export const mudarGainExecAction = (event, namespace) => {
   return dispatch => {
     dispatch({
-      type: MUDAR_GAIN_EXEC,
+      type: `${MUDAR_GAIN_EXEC}${namespace}`,
       payload: event.target.value
     });
   };
 };
 
-export const mudarStopDisparoAction = event => {
+export const mudarStopDisparoAction = (event, namespace) => {
   return dispatch => {
     dispatch({
-      type: MUDAR_STOP_DISPARO,
+      type: `${MUDAR_STOP_DISPARO}${namespace}`,
       payload: event.target.value
     });
   };
 };
 
-export const mudarStopExecAction = event => {
+export const mudarStopExecAction = (event, namespace) => {
   return dispatch => {
     dispatch({
-      type: MUDAR_STOP_EXEC,
+      type: `${MUDAR_STOP_EXEC}${namespace}`,
       payload: event.target.value
     });
   };
 };
 
-export const mudarValidadeSelectAction = event => {
+export const mudarValidadeSelectAction = (event, namespace) => {
   return dispatch => {
     dispatch({
-      type: MUDAR_VALIDADE_SELECT,
+      type: `${MUDAR_VALIDADE_SELECT}${namespace}`,
       payload: event.target.value
     });
   };
 };
 
-export const mudarDataAction = data => {
+export const mudarDataAction = (data, namespace) => {
   return dispatch => {
     dispatch({
-      type: MUDAR_DATA,
+      type: `${MUDAR_DATA}${namespace}`,
       payload: data
     });
   };
 };
 
-export const limparAction = () => {
+export const limparAction = namespace => {
   return dispatch => {
     dispatch({
-      type: LIMPAR_FORMS
+      type: `${LIMPAR_FORMS}${namespace}`
     });
   };
 };
@@ -85,73 +85,73 @@ export const comprarAgendadaAction = () => {
   };
 };
 
-export const mudarAtivoAction = event => {
+export const mudarAtivoAction = (event, namespace) => {
   return dispatch => {
     dispatch({
-      type: MUDAR_ATIVO,
+      type: `${MUDAR_ATIVO}${namespace}`,
       payload: event.target.value
     });
   };
 };
 
-export const mudarEntradaDisparoAction = event => {
+export const mudarEntradaDisparoAction = (event, namespace) => {
   return dispatch => {
     dispatch({
-      type: MUDAR_ENTRADA_DISPARO,
+      type: `${MUDAR_ENTRADA_DISPARO}${namespace}`,
       payload: event.target.value
     });
   };
 };
 
-export const mudarEntradaExecAction = event => {
+export const mudarEntradaExecAction = (event, namespace) => {
   return dispatch => {
     dispatch({
-      type: MUDAR_ENTRADA_EXEC,
+      type: `${MUDAR_ENTRADA_EXEC}${namespace}`,
       payload: event.target.value
     });
   };
 };
 
-export const mudarAssinaturaAction = event => {
+export const mudarAssinaturaAction = (event, namespace) => {
   return dispatch => {
     dispatch({
-      type: MUDAR_ASSINATURA,
+      type: `${MUDAR_ASSINATURA}${namespace}`,
       payload: event.target.value
     });
   };
 };
 
-export const mudarPrecoAction = event => {
+export const mudarPrecoAction = (event, namespace) => {
   return dispatch => {
     dispatch({
-      type: MUDAR_PRECO,
+      type: `${MUDAR_PRECO}${namespace}`,
       payload: event.target.value
     });
   };
 };
 
-export const mudarCheckSalvarAssinaturaAction = checked => {
+export const mudarCheckSalvarAssinaturaAction = (checked, namespace) => {
   return dispatch => {
     dispatch({
-      type: MUDAR_CHECK_SALVA_ASSINATURA,
+      type: `${MUDAR_CHECK_SALVA_ASSINATURA}${namespace}`,
       payload: !checked
     });
   };
 };
 
-export const mudarInicioDisparoAction = event => {
+export const mudarInicioDisparoAction = (event, namespace) => {
   return dispatch => {
     dispatch({
-      type: MUDAR_INICIO_DISPARO,
+      type: `${MUDAR_INICIO_DISPARO}${namespace}`,
       payload: event.target.value
     });
   };
 };
 
-export const mudarAjustePadraoAction = event => {
+export const mudarAjustePadraoAction = (event, namespace) => {
   return dispatch => {
     dispatch({
-      type: MUDAR_AJUSTE_PADRAO,
+      type: `${MUDAR_AJUSTE_PADRAO}${namespace}`,
       payload: event.target.value
     });
   };

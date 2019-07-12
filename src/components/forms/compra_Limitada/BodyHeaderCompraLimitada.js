@@ -33,7 +33,7 @@ class BodyHeaderCompraLimitada extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  porcentagem: state.formInputReducer.porcentagem
+  porcentagem: state.compraLimitadaReducer.porcentagem
 });
 
 export default connect(

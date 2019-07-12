@@ -33,7 +33,7 @@ class BodyHeaderCompraAgendada extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  porcentagem: state.formInputReducer.porcentagem
+  porcentagem: state.compraAgendadaReducer.porcentagem
 });
 
 export default connect(

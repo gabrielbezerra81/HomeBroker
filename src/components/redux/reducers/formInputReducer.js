@@ -39,41 +39,43 @@ const INITIAL_STATE = {
   ajustePadrao: 0
 };
 
-export default (state = INITIAL_STATE, action) => {
+export default namespace => (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case MUDAR_ATIVO:
+    case `${MUDAR_ATIVO}${namespace}`:
       return { ...state, ativo: action.payload };
-    case MUDAR_ENTRADA_DISPARO:
+    case `${MUDAR_ATIVO}${namespace}`:
+      return { ...state, ativo: action.payload };
+    case `${MUDAR_ENTRADA_DISPARO}${namespace}`:
       return { ...state, entradaDisparo: action.payload };
-    case MUDAR_ENTRADA_EXEC:
+    case `${MUDAR_ENTRADA_EXEC}${namespace}`:
       return { ...state, entradaExec: action.payload };
-    case MUDAR_GAIN_DISPARO:
+    case `${MUDAR_GAIN_DISPARO}${namespace}`:
       return { ...state, gainDisparo: action.payload };
-    case MUDAR_GAIN_EXEC:
+    case `${MUDAR_GAIN_EXEC}${namespace}`:
       return { ...state, gainExec: action.payload };
-    case MUDAR_STOP_DISPARO:
+    case `${MUDAR_STOP_DISPARO}${namespace}`:
       return { ...state, stopDisparo: action.payload };
-    case MUDAR_STOP_EXEC:
+    case `${MUDAR_STOP_EXEC}${namespace}`:
       return { ...state, stopExec: action.payload };
-    case MUDAR_VALIDADE_SELECT:
+    case `${MUDAR_VALIDADE_SELECT}${namespace}`:
       return { ...state, validadeSelect: action.payload };
-    case MUDAR_DATA:
+    case `${MUDAR_DATA}${namespace}`:
       return { ...state, date: action.payload };
-    case MUDAR_ASSINATURA:
+    case `${MUDAR_ASSINATURA}${namespace}`:
       return { ...state, assinatura: action.payload };
-    case LIMPAR_FORMS:
+    case `${LIMPAR_FORMS}${namespace}`:
       return { ...INITIAL_STATE };
-    case MUDAR_PRECO:
+    case `${MUDAR_PRECO}${namespace}`:
       return { ...state, preco: action.payload };
     case COMPRAR_AGENDADO:
       return { ...state };
     case FECHAR_CONFIGURAR_STOP:
       return { ...state, showConfigStop: false };
-    case MUDAR_CHECK_SALVA_ASSINATURA:
+    case `${MUDAR_CHECK_SALVA_ASSINATURA}${namespace}`:
       return { ...state, checkSalvarAssinatura: action.payload };
-    case MUDAR_INICIO_DISPARO:
+    case `${MUDAR_INICIO_DISPARO}${namespace}`:
       return { ...state, inicioDisparo: action.payload };
-    case MUDAR_AJUSTE_PADRAO:
+    case `${MUDAR_AJUSTE_PADRAO}${namespace}`:
       return { ...state, ajustePadrao: action.payload };
     default:
       return state;

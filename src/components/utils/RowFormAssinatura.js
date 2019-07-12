@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Form } from "react-bootstrap";
 
-export default props => (
+export default (props, namespace) => (
   <Row className="rowAssinaturaEletronica">
     <Col md={8}>
       <Form>
@@ -11,7 +11,7 @@ export default props => (
             className="textInput"
             type="password"
             value={props.assinatura}
-            onChange={event => props.mudarAssinaturaAction(event)}
+            onChange={event => props.mudarAssinaturaAction(event, namespace)}
             autoComplete="current-password"
           />
         </Form.Group>
@@ -26,7 +26,8 @@ export default props => (
             checked={props.checkSalvarAssinatura}
             onChange={() =>
               props.mudarCheckSalvarAssinaturaAction(
-                props.checkSalvarAssinatura
+                props.checkSalvarAssinatura,
+                namespace
               )
             }
           />

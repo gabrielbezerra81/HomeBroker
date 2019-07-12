@@ -20,6 +20,7 @@ import {
 } from "../../redux/actions/formInputActions";
 import RowFormValidade from "../../utils/RowFormValidade";
 import RowFormAssinatura from "../../utils/RowFormAssinatura";
+import { COMPRA_AGENDADA_NAMESPACE } from "../../../constants/ActionTypes";
 
 class FormInternoCompraAgendada extends React.Component {
   render() {
@@ -40,7 +41,12 @@ class FormInternoCompraAgendada extends React.Component {
                     placeholder=""
                     name="ativo"
                     value={this.props.ativo}
-                    onChange={event => this.props.mudarAtivoAction(event)}
+                    onChange={event =>
+                      this.props.mudarAtivoAction(
+                        event,
+                        COMPRA_AGENDADA_NAMESPACE
+                      )
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -76,7 +82,10 @@ class FormInternoCompraAgendada extends React.Component {
                     name="disparo"
                     value={this.props.entradaDisparo}
                     onChange={event =>
-                      this.props.mudarEntradaDisparoAction(event)
+                      this.props.mudarEntradaDisparoAction(
+                        event,
+                        COMPRA_AGENDADA_NAMESPACE
+                      )
                     }
                   />
                 </Form.Group>
@@ -91,7 +100,12 @@ class FormInternoCompraAgendada extends React.Component {
                     min={0}
                     name="execucao"
                     value={this.props.entradaExec}
-                    onChange={event => this.props.mudarEntradaExecAction(event)}
+                    onChange={event =>
+                      this.props.mudarEntradaExecAction(
+                        event,
+                        COMPRA_AGENDADA_NAMESPACE
+                      )
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -130,7 +144,12 @@ class FormInternoCompraAgendada extends React.Component {
                     min={0}
                     name="gainDisparo"
                     value={this.props.gainDisparo}
-                    onChange={event => this.props.mudarGainDisparoAction(event)}
+                    onChange={event =>
+                      this.props.mudarGainDisparoAction(
+                        event,
+                        COMPRA_AGENDADA_NAMESPACE
+                      )
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -144,7 +163,12 @@ class FormInternoCompraAgendada extends React.Component {
                     min={0}
                     name="gainExecucao"
                     value={this.props.gainExec}
-                    onChange={event => this.props.mudarGainExecAction(event)}
+                    onChange={event =>
+                      this.props.mudarGainExecAction(
+                        event,
+                        COMPRA_AGENDADA_NAMESPACE
+                      )
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -173,7 +197,12 @@ class FormInternoCompraAgendada extends React.Component {
                     min={0}
                     name="stopDisparo"
                     value={this.props.stopDisparo}
-                    onChange={event => this.props.mudarStopDisparoAction(event)}
+                    onChange={event =>
+                      this.props.mudarStopDisparoAction(
+                        event,
+                        COMPRA_AGENDADA_NAMESPACE
+                      )
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -187,7 +216,12 @@ class FormInternoCompraAgendada extends React.Component {
                     min={0}
                     name="stopExecucao"
                     value={this.props.stopExec}
-                    onChange={event => this.props.mudarStopExecAction(event)}
+                    onChange={event =>
+                      this.props.mudarStopExecAction(
+                        event,
+                        COMPRA_AGENDADA_NAMESPACE
+                      )
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -203,16 +237,18 @@ class FormInternoCompraAgendada extends React.Component {
             </Row>
           </Form>
 
-          {RowFormValidade(this.props)}
+          {RowFormValidade(this.props, COMPRA_AGENDADA_NAMESPACE)}
 
           <div className="customFooter">
-            {RowFormAssinatura(this.props)}
+            {RowFormAssinatura(this.props, COMPRA_AGENDADA_NAMESPACE)}
             <Row>
               <Col md={3}>
                 <Button
                   variant="secondary"
                   size="sm"
-                  onClick={() => this.props.limparAction()}
+                  onClick={() =>
+                    this.props.limparAction(COMPRA_AGENDADA_NAMESPACE)
+                  }
                 >
                   <h6>Limpar</h6>
                 </Button>
@@ -236,18 +272,18 @@ class FormInternoCompraAgendada extends React.Component {
 
 const mapStateToProps = state => ({
   qtde: state.bookOfertaReducer.qtde,
-  gainDisparo: state.formInputReducer.gainDisparo,
-  gainExec: state.formInputReducer.gainExec,
-  stopDisparo: state.formInputReducer.stopDisparo,
-  stopExec: state.formInputReducer.stopExec,
-  validadeSelect: state.formInputReducer.validadeSelect,
-  date: state.formInputReducer.date,
-  valorTotal: state.formInputReducer.valorTotal,
-  entradaDisparo: state.formInputReducer.entradaDisparo,
-  entradaExec: state.formInputReducer.entradaExec,
-  ativo: state.formInputReducer.ativo,
-  assinatura: state.formInputReducer.assinatura,
-  checkSalvarAssinatura: state.formInputReducer.checkSalvarAssinatura
+  gainDisparo: state.compraAgendadaReducer.gainDisparo,
+  gainExec: state.compraAgendadaReducer.gainExec,
+  stopDisparo: state.compraAgendadaReducer.stopDisparo,
+  stopExec: state.compraAgendadaReducer.stopExec,
+  validadeSelect: state.compraAgendadaReducer.validadeSelect,
+  date: state.compraAgendadaReducer.date,
+  valorTotal: state.compraAgendadaReducer.valorTotal,
+  entradaDisparo: state.compraAgendadaReducer.entradaDisparo,
+  entradaExec: state.compraAgendadaReducer.entradaExec,
+  ativo: state.compraAgendadaReducer.ativo,
+  assinatura: state.compraAgendadaReducer.assinatura,
+  checkSalvarAssinatura: state.compraAgendadaReducer.checkSalvarAssinatura
 });
 
 export default connect(
