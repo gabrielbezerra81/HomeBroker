@@ -4,6 +4,13 @@
   height: 420px;
 }
 
+#comprastartstopAberto {
+  min-width: 585px;
+  max-width: 585px;
+  height: 420px;
+  margin-right: 230px;
+}
+
 #GainDisparoGrafico_CST {
   top: 14%;
   left: 50.5%;
@@ -88,4 +95,8 @@
 #TextoCotacaoAtualGrafico_CST {
   top: 41.5%;
   left: 25%;
+}
+
+.configStopAberto {
+  margin-right: 235px;
 }

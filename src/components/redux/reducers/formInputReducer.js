@@ -69,7 +69,7 @@ export default namespace => (state = INITIAL_STATE, action) => {
       return { ...state, preco: action.payload };
     case COMPRAR_AGENDADO:
       return { ...state };
-    case FECHAR_CONFIGURAR_STOP:
+    case `${FECHAR_CONFIGURAR_STOP}${namespace}`:
       return { ...state, showConfigStop: false };
     case `${MUDAR_CHECK_SALVA_ASSINATURA}${namespace}`:
       return { ...state, checkSalvarAssinatura: action.payload };

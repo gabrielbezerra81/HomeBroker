@@ -10,6 +10,7 @@ import {
   mudarInicioDisparoAction,
   mudarAjustePadraoAction
 } from "../../redux/actions/formInputActions";
+import { COMPRA_STARTMOVEL_NAMESPACE } from "../../../constants/ActionTypes";
 
 class FormInternoCompraStartMovel extends React.Component {
   render() {
@@ -30,7 +31,12 @@ class FormInternoCompraStartMovel extends React.Component {
                     placeholder=""
                     name="ativo"
                     value={this.props.ativo}
-                    onChange={event => this.props.mudarAtivoAction(event)}
+                    onChange={event =>
+                      this.props.mudarAtivoAction(
+                        event,
+                        COMPRA_STARTMOVEL_NAMESPACE
+                      )
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -44,7 +50,12 @@ class FormInternoCompraStartMovel extends React.Component {
                     step={100}
                     min={0}
                     value={this.props.qtde}
-                    onChange={event => this.props.mudarQtdAction(event)}
+                    onChange={event =>
+                      this.props.mudarQtdAction(
+                        event,
+                        COMPRA_STARTMOVEL_NAMESPACE
+                      )
+                    }
                     name="qtde"
                   />
                 </Form.Group>
@@ -66,7 +77,10 @@ class FormInternoCompraStartMovel extends React.Component {
                     name="disparo"
                     value={this.props.inicioDisparo}
                     onChange={event =>
-                      this.props.mudarInicioDisparoAction(event)
+                      this.props.mudarInicioDisparoAction(
+                        event,
+                        COMPRA_STARTMOVEL_NAMESPACE
+                      )
                     }
                   />
                 </Form.Group>
@@ -82,7 +96,10 @@ class FormInternoCompraStartMovel extends React.Component {
                     name="execucao"
                     value={this.props.ajustePadrao}
                     onChange={event =>
-                      this.props.mudarAjustePadraoAction(event)
+                      this.props.mudarAjustePadraoAction(
+                        event,
+                        COMPRA_STARTMOVEL_NAMESPACE
+                      )
                     }
                   />
                 </Form.Group>
@@ -103,7 +120,12 @@ class FormInternoCompraStartMovel extends React.Component {
                     min={0}
                     name="stopDisparo"
                     value={this.props.stopDisparo}
-                    onChange={event => this.props.mudarStopDisparoAction(event)}
+                    onChange={event =>
+                      this.props.mudarStopDisparoAction(
+                        event,
+                        COMPRA_STARTMOVEL_NAMESPACE
+                      )
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -117,7 +139,12 @@ class FormInternoCompraStartMovel extends React.Component {
                     min={0}
                     name="stopExecucao"
                     value={this.props.stopExec}
-                    onChange={event => this.props.mudarStopExecAction(event)}
+                    onChange={event =>
+                      this.props.mudarStopExecAction(
+                        event,
+                        COMPRA_STARTMOVEL_NAMESPACE
+                      )
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -131,12 +158,12 @@ class FormInternoCompraStartMovel extends React.Component {
 
 const mapStateToProps = state => ({
   qtde: state.bookOfertaReducer.qtde,
-  stopDisparo: state.formInputReducer.stopDisparo,
-  stopExec: state.formInputReducer.stopExec,
-  valorTotal: state.formInputReducer.valorTotal,
-  ativo: state.formInputReducer.ativo,
-  inicioDisparo: state.formInputReducer.inicioDisparo,
-  ajustePadrao: state.formInputReducer.ajustePadrao
+  stopDisparo: state.compraStartMovelReducer.stopDisparo,
+  stopExec: state.compraStartMovelReducer.stopExec,
+  valorTotal: state.compraStartMovelReducer.valorTotal,
+  ativo: state.compraStartMovelReducer.ativo,
+  inicioDisparo: state.compraStartMovelReducer.inicioDisparo,
+  ajustePadrao: state.compraStartMovelReducer.ajustePadrao
 });
 
 export default connect(

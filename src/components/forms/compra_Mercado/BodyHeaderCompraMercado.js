@@ -33,7 +33,7 @@ class BodyHeaderCompraMercado extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  porcentagem: state.formInputReducer.porcentagem
+  porcentagem: state.compraMercadoReducer.porcentagem
 });
 
 export default connect(

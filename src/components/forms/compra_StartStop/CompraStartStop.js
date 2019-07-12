@@ -21,6 +21,7 @@ class CompraStartStop extends React.Component {
         headerClass="border-green"
         renderOptionalHeader={() => modalHeader(this.props)}
         renderConfigForm={this.props.showConfigStop}
+        classConfigAberto={this.props.showConfigStop ? "configStopAberto": null}
       />
     );
   }
@@ -63,7 +64,7 @@ const modalBody = () => (
 );
 
 const mapStateToProps = state => ({
-  showConfigStop: state.formInputReducer.showConfigStop
+  showConfigStop: state.compraStartStopReducer.showConfigStop
 });
 
 export default connect(

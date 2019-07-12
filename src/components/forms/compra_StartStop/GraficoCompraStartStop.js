@@ -15,6 +15,7 @@ import {
   TextoGainStopGrafico,
   TextoCotacaoAtualGrafico
 } from "../../utils/TextoGrafico";
+import { COMPRA_STARTSTOP_NAMESPACE } from "../../../constants/ActionTypes";
 
 class GraficoCompraStartStop extends React.Component {
   render() {
@@ -30,7 +31,12 @@ class GraficoCompraStartStop extends React.Component {
               id="GainDisparoGrafico_CST"
               className="inputGrafico"
               value={this.props.gainDisparo}
-              onChange={event => this.props.mudarGainDisparoAction(event)}
+              onChange={event =>
+                this.props.mudarGainDisparoAction(
+                  event,
+                  COMPRA_STARTSTOP_NAMESPACE
+                )
+              }
             />
             <Form.Control
               type="number"
@@ -39,7 +45,12 @@ class GraficoCompraStartStop extends React.Component {
               id="GainExecGrafico_CST"
               className="inputGrafico"
               value={this.props.gainExec}
-              onChange={event => this.props.mudarGainExecAction(event)}
+              onChange={event =>
+                this.props.mudarGainExecAction(
+                  event,
+                  COMPRA_STARTSTOP_NAMESPACE
+                )
+              }
             />
             <Form.Control
               type="number"
@@ -48,7 +59,12 @@ class GraficoCompraStartStop extends React.Component {
               id="StopDisparoGrafico_CST"
               className="inputGrafico"
               value={this.props.stopDisparo}
-              onChange={event => this.props.mudarStopDisparoAction(event)}
+              onChange={event =>
+                this.props.mudarStopDisparoAction(
+                  event,
+                  COMPRA_STARTSTOP_NAMESPACE
+                )
+              }
             />
             <Form.Control
               type="number"
@@ -57,7 +73,12 @@ class GraficoCompraStartStop extends React.Component {
               id="StopExecGrafico_CST"
               className="inputGrafico"
               value={this.props.stopExec}
-              onChange={event => this.props.mudarStopExecAction(event)}
+              onChange={event =>
+                this.props.mudarStopExecAction(
+                  event,
+                  COMPRA_STARTSTOP_NAMESPACE
+                )
+              }
             />
             <Form.Control
               id="CotacaoAtualGrafico_CST"
@@ -84,11 +105,11 @@ class GraficoCompraStartStop extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  gainDisparo: state.formInputReducer.gainDisparo,
-  gainExec: state.formInputReducer.gainExec,
-  stopDisparo: state.formInputReducer.stopDisparo,
-  stopExec: state.formInputReducer.stopExec,
-  cotacaoAtual: state.formInputReducer.cotacaoAtual
+  gainDisparo: state.compraStartStopReducer.gainDisparo,
+  gainExec: state.compraStartStopReducer.gainExec,
+  stopDisparo: state.compraStartStopReducer.stopDisparo,
+  stopExec: state.compraStartStopReducer.stopExec,
+  cotacaoAtual: state.compraStartStopReducer.cotacaoAtual
 });
 
 export default connect(

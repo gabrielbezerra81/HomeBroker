@@ -17,6 +17,7 @@ import {
 } from "../../redux/actions/formInputActions";
 import RowFormValidade from "../../utils/RowFormValidade";
 import RowFormAssinatura from "../../utils/RowFormAssinatura";
+import { COMPRA_STARTSTOP_NAMESPACE } from "../../../constants/ActionTypes";
 
 class FormInternoCompraStartStop extends React.Component {
   render() {
@@ -37,7 +38,12 @@ class FormInternoCompraStartStop extends React.Component {
                     placeholder=""
                     name="ativo"
                     value={this.props.ativo}
-                    onChange={event => this.props.mudarAtivoAction(event)}
+                    onChange={event =>
+                      this.props.mudarAtivoAction(
+                        event,
+                        COMPRA_STARTSTOP_NAMESPACE
+                      )
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -51,7 +57,12 @@ class FormInternoCompraStartStop extends React.Component {
                     step={100}
                     min={0}
                     value={this.props.qtde}
-                    onChange={event => this.props.mudarQtdAction(event)}
+                    onChange={event =>
+                      this.props.mudarQtdAction(
+                        event,
+                        COMPRA_STARTSTOP_NAMESPACE
+                      )
+                    }
                     name="qtde"
                   />
                 </Form.Group>
@@ -73,7 +84,12 @@ class FormInternoCompraStartStop extends React.Component {
                     min={0}
                     name="gainDisparo"
                     value={this.props.gainDisparo}
-                    onChange={event => this.props.mudarGainDisparoAction(event)}
+                    onChange={event =>
+                      this.props.mudarGainDisparoAction(
+                        event,
+                        COMPRA_STARTSTOP_NAMESPACE
+                      )
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -87,7 +103,12 @@ class FormInternoCompraStartStop extends React.Component {
                     min={0}
                     name="gainExecucao"
                     value={this.props.gainExec}
-                    onChange={event => this.props.mudarGainExecAction(event)}
+                    onChange={event =>
+                      this.props.mudarGainExecAction(
+                        event,
+                        COMPRA_STARTSTOP_NAMESPACE
+                      )
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -116,7 +137,12 @@ class FormInternoCompraStartStop extends React.Component {
                     min={0}
                     name="stopDisparo"
                     value={this.props.stopDisparo}
-                    onChange={event => this.props.mudarStopDisparoAction(event)}
+                    onChange={event =>
+                      this.props.mudarStopDisparoAction(
+                        event,
+                        COMPRA_STARTSTOP_NAMESPACE
+                      )
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -130,7 +156,12 @@ class FormInternoCompraStartStop extends React.Component {
                     min={0}
                     name="stopExecucao"
                     value={this.props.stopExec}
-                    onChange={event => this.props.mudarStopExecAction(event)}
+                    onChange={event =>
+                      this.props.mudarStopExecAction(
+                        event,
+                        COMPRA_STARTSTOP_NAMESPACE
+                      )
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -146,16 +177,18 @@ class FormInternoCompraStartStop extends React.Component {
             </Row>
           </Form>
 
-          {RowFormValidade(this.props)}
+          {RowFormValidade(this.props, COMPRA_STARTSTOP_NAMESPACE)}
 
           <div className="customFooter">
-            {RowFormAssinatura(this.props)}
+            {RowFormAssinatura(this.props, COMPRA_STARTSTOP_NAMESPACE)}
             <Row>
               <Col md={3}>
                 <Button
                   variant="secondary"
                   size="sm"
-                  onClick={() => this.props.limparAction()}
+                  onClick={() =>
+                    this.props.limparAction(COMPRA_STARTSTOP_NAMESPACE)
+                  }
                 >
                   <h6>Limpar</h6>
                 </Button>
@@ -175,16 +208,16 @@ class FormInternoCompraStartStop extends React.Component {
 
 const mapStateToProps = state => ({
   qtde: state.bookOfertaReducer.qtde,
-  gainDisparo: state.formInputReducer.gainDisparo,
-  gainExec: state.formInputReducer.gainExec,
-  stopDisparo: state.formInputReducer.stopDisparo,
-  stopExec: state.formInputReducer.stopExec,
-  validadeSelect: state.formInputReducer.validadeSelect,
-  date: state.formInputReducer.date,
-  valorTotal: state.formInputReducer.valorTotal,
-  ativo: state.formInputReducer.ativo,
-  assinatura: state.formInputReducer.assinatura,
-  checkSalvarAssinatura: state.formInputReducer.checkSalvarAssinatura
+  gainDisparo: state.compraStartStopReducer.gainDisparo,
+  gainExec: state.compraStartStopReducer.gainExec,
+  stopDisparo: state.compraStartStopReducer.stopDisparo,
+  stopExec: state.compraStartStopReducer.stopExec,
+  validadeSelect: state.compraStartStopReducer.validadeSelect,
+  date: state.compraStartStopReducer.date,
+  valorTotal: state.compraStartStopReducer.valorTotal,
+  ativo: state.compraStartStopReducer.ativo,
+  assinatura: state.compraStartStopReducer.assinatura,
+  checkSalvarAssinatura: state.compraStartStopReducer.checkSalvarAssinatura
 });
 
 export default connect(

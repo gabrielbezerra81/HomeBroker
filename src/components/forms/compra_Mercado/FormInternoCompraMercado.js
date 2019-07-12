@@ -17,6 +17,7 @@ import {
 } from "../../redux/actions/formInputActions";
 import RowFormValidade from "../../utils/RowFormValidade";
 import RowFormAssinatura from "../../utils/RowFormAssinatura";
+import { COMPRA_MERCADO_NAMESPACE } from "../../../constants/ActionTypes";
 
 class FormInternoCompraMercado extends React.Component {
   render() {
@@ -37,7 +38,7 @@ class FormInternoCompraMercado extends React.Component {
                     placeholder=""
                     name="ativo"
                     value={this.props.ativo}
-                    onChange={event => this.props.mudarAtivoAction(event)}
+                    onChange={event => this.props.mudarAtivoAction(event, COMPRA_MERCADO_NAMESPACE)}
                   />
                 </Form.Group>
               </Col>
@@ -51,7 +52,7 @@ class FormInternoCompraMercado extends React.Component {
                     step={100}
                     min={0}
                     value={this.props.qtde}
-                    onChange={event => this.props.mudarQtdAction(event)}
+                    onChange={event => this.props.mudarQtdAction(event, COMPRA_MERCADO_NAMESPACE)}
                     name="qtde"
                   />
                 </Form.Group>
@@ -82,7 +83,7 @@ class FormInternoCompraMercado extends React.Component {
                     min={0}
                     name="gainDisparo"
                     value={this.props.gainDisparo}
-                    onChange={event => this.props.mudarGainDisparoAction(event)}
+                    onChange={event => this.props.mudarGainDisparoAction(event, COMPRA_MERCADO_NAMESPACE)}
                   />
                 </Form.Group>
               </Col>
@@ -96,7 +97,7 @@ class FormInternoCompraMercado extends React.Component {
                     min={0}
                     name="gainExecucao"
                     value={this.props.gainExec}
-                    onChange={event => this.props.mudarGainExecAction(event)}
+                    onChange={event => this.props.mudarGainExecAction(event, COMPRA_MERCADO_NAMESPACE)}
                   />
                 </Form.Group>
               </Col>
@@ -125,7 +126,7 @@ class FormInternoCompraMercado extends React.Component {
                     min={0}
                     name="stopDisparo"
                     value={this.props.stopDisparo}
-                    onChange={event => this.props.mudarStopDisparoAction(event)}
+                    onChange={event => this.props.mudarStopDisparoAction(event, COMPRA_MERCADO_NAMESPACE)}
                   />
                 </Form.Group>
               </Col>
@@ -139,7 +140,7 @@ class FormInternoCompraMercado extends React.Component {
                     min={0}
                     name="stopExecucao"
                     value={this.props.stopExec}
-                    onChange={event => this.props.mudarStopExecAction(event)}
+                    onChange={event => this.props.mudarStopExecAction(event, COMPRA_MERCADO_NAMESPACE)}
                   />
                 </Form.Group>
               </Col>
@@ -155,16 +156,16 @@ class FormInternoCompraMercado extends React.Component {
             </Row>
           </Form>
 
-          {RowFormValidade(this.props)}
+          {RowFormValidade(this.props, COMPRA_MERCADO_NAMESPACE)}
 
           <div className="customFooter">
-            {RowFormAssinatura(this.props)}
+            {RowFormAssinatura(this.props, COMPRA_MERCADO_NAMESPACE)}
             <Row>
               <Col md={3}>
                 <Button
                   variant="secondary"
                   size="sm"
-                  onClick={() => this.props.limparAction()}
+                  onClick={() => this.props.limparAction(COMPRA_MERCADO_NAMESPACE)}
                 >
                   <h6>Limpar</h6>
                 </Button>
@@ -183,17 +184,17 @@ class FormInternoCompraMercado extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  ativo: state.formInputReducer.ativo,
-  qtde: state.bookOfertaReducer.qtde,
-  gainDisparo: state.formInputReducer.gainDisparo,
-  gainExec: state.formInputReducer.gainExec,
-  stopDisparo: state.formInputReducer.stopDisparo,
-  stopExec: state.formInputReducer.stopExec,
-  validadeSelect: state.formInputReducer.validadeSelect,
-  date: state.formInputReducer.date,
-  valorTotal: state.formInputReducer.valorTotal,
-  assinatura: state.formInputReducer.assinatura,
-  checkSalvarAssinatura: state.formInputReducer.checkSalvarAssinatura
+  ativo: state.compraMercadoReducer.ativo,
+  qtde: state.compraMercadoReducer.qtde,
+  gainDisparo: state.compraMercadoReducer.gainDisparo,
+  gainExec: state.compraMercadoReducer.gainExec,
+  stopDisparo: state.compraMercadoReducer.stopDisparo,
+  stopExec: state.compraMercadoReducer.stopExec,
+  validadeSelect: state.compraMercadoReducer.validadeSelect,
+  date: state.compraMercadoReducer.date,
+  valorTotal: state.compraMercadoReducer.valorTotal,
+  assinatura: state.compraMercadoReducer.assinatura,
+  checkSalvarAssinatura: state.compraMercadoReducer.checkSalvarAssinatura
 });
 
 export default connect(

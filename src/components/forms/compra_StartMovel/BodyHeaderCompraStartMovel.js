@@ -18,7 +18,7 @@ class BodyHeaderCompraStartMovel extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  porcentagem: state.formInputReducer.porcentagem
+  porcentagem: state.compraStartMovelReducer.porcentagem
 });
 
 export default connect(

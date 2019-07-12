@@ -5,6 +5,7 @@ import { Button } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import IconeConfigGrafico from "../../utils/IconeConfigGrafico";
 import { mostrarConfigurarStopAction } from "../../redux/actions/compraStartStopActions";
+import { COMPRA_STARTSTOP_NAMESPACE } from "../../../constants/ActionTypes";
 
 class ConfigurarStop extends React.Component {
   render() {
@@ -25,7 +26,9 @@ const modalHeader = props => (
     <Button
       variant=""
       className="iconesHeader"
-      onClick={() => props.mostrarConfigurarStopAction()}
+      onClick={() =>
+        props.mostrarConfigurarStopAction(COMPRA_STARTSTOP_NAMESPACE)
+      }
     >
       <span className="fa-stack">
         <MDBIcon icon="circle" className="fa-stack-2x" />
