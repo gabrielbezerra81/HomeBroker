@@ -90,14 +90,6 @@
   display: grid;
 }
 
-.form-control[type="number"]::-webkit-inner-spin-button,
-.form-contro[type="number"]::-webkit-outer-spin-button {
-  appearance: none;
-}
-
-.form-control[type="number"] {
-  appearance: none;
-}
 
 .form-group {
   text-align: left;
