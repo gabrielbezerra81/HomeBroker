@@ -14,7 +14,8 @@ import {
   comprarAgendadaAction,
   mudarAtivoAction,
   mudarAssinaturaAction,
-  mudarPrecoAction
+  mudarPrecoAction,
+  mudarCheckSalvarAssinaturaAction
 } from "../../redux/actions/compraAgendadaActions";
 import NumberFormat from "react-number-format";
 import RowFormValidade from "../../utils/RowFormValidade";
@@ -236,6 +237,7 @@ export default connect(
     comprarAgendadaAction,
     mudarAtivoAction,
     mudarAssinaturaAction,
-    mudarPrecoAction
+    mudarPrecoAction,
+    mudarCheckSalvarAssinaturaAction
   }
 )(FormInternoCompraLimitada);

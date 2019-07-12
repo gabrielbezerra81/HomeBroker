@@ -130,16 +130,9 @@ export const mudarPrecoAction = event => {
 
 export const mudarCheckSalvarAssinaturaAction = checked => {
   return dispatch => {
-    if (checked) {
-      dispatch({
-        type: MUDAR_CHECK_SALVA_ASSINATURA,
-        payload: false
-      });
-    } else {
-      dispatch({
-        type: MUDAR_CHECK_SALVA_ASSINATURA,
-        payload: true
-      });
-    }
+    dispatch({
+      type: MUDAR_CHECK_SALVA_ASSINATURA,
+      payload: !checked
+    });
   };
 };

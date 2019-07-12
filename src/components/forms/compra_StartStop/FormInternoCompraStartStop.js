@@ -13,9 +13,8 @@ import {
   limparAction,
   comprarAgendadaAction,
   mudarAtivoAction,
-  mudarEntradaDisparoAction,
-  mudarEntradaExecAction,
-  mudarAssinaturaAction
+  mudarAssinaturaAction,
+  mudarCheckSalvarAssinaturaAction
 } from "../../redux/actions/compraAgendadaActions";
 import RowFormValidade from "../../utils/RowFormValidade";
 import RowFormAssinatura from "../../utils/RowFormAssinatura";
@@ -209,8 +208,7 @@ export default connect(
     limparAction,
     comprarAgendadaAction,
     mudarAtivoAction,
-    mudarEntradaDisparoAction,
-    mudarEntradaExecAction,
-    mudarAssinaturaAction
+    mudarAssinaturaAction,
+    mudarCheckSalvarAssinaturaAction
   }
 )(FormInternoCompraStartStop);

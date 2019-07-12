@@ -110,10 +110,6 @@
   align-items: center;
 }
 
-.rowFormDate {
-  padding-bottom: 0.2rem;
-}
-
 .colFormDate {
   padding-right: 0;
   max-width: 120px;
