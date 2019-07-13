@@ -8,7 +8,7 @@ import {
   mudarStopExecAction
 } from "../../redux/actions/formInputActions";
 import IconeConfigGrafico from "../../utils/IconeConfigGrafico";
-import graficoCompraStartStop from "../../../img/compraStartStop.PNG";
+import graficoCompraStartStop from "../../../img/CompraModeloNovo.png";
 import {
   LabelInputGrafico,
   TextoValorTotalGrafico,

@@ -5,37 +5,37 @@
 }
 
 #GainDisparoGrafico_CM {
-  top: 19%;
-  left: 48.6%;
+  top: 16%;
+  left: 45.2%;
 }
 
 #GainExecGrafico_CM {
-  top: 19%;
-  left: 69%;
+  top: 21.2%;
+  left: 45.2%;
 }
 
 #StopDisparoGrafico_CM {
-  top: 80.3%;
-  left: 48.7%;
+  top: 74%;
+  left: 45.2%;
 }
 
 #StopExecGrafico_CM {
-  top: 80.3%;
-  left: 69%;
+  top: 79.3%;
+  left: 45.2%;
 }
 #CotacaoAtualGrafico_CM {
-  top: 49%;
-  left: 3.3%;
+  top: 46.2%;
+  left: 2%;
   width: 19%;
   height: 9.2%;
 }
 
 #ConfigGainGrafico_CM {
-  top: 2%;
-  left: 86%;
+  top: 0%;
+  left: 80%;
 }
 
 #ConfigStopGrafico_CM {
-  top: 63%;
-  left: 86%;
+  top: 59%;
+  left: 80%;
 }

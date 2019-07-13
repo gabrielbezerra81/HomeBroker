@@ -1,50 +1,50 @@
 #comprastartstop {
-  min-width: 585px;
-  max-width: 585px;
+  min-width: 600px;
+  max-width: 600px;
   height: 420px;
 }
 
 #comprastartstopAberto {
-  min-width: 585px;
-  max-width: 585px;
+  min-width: 600px;
+  max-width: 600px;
   height: 420px;
   margin-right: 230px;
 }
 
 #GainDisparoGrafico_CST {
-  top: 14%;
-  left: 50.5%;
+  top: 16%;
+  left: 45%;
 }
 
 #GainExecGrafico_CST {
-  top: 14%;
-  left: 71%;
+  top: 21.2%;
+  left: 45%;
 }
 
 #StopDisparoGrafico_CST {
-  top: 66.5%;
-  left: 50.5%;
+  top: 74%;
+  left: 45%;
 }
 
 #StopExecGrafico_CST {
-  top: 66.5%;
-  left: 71%;
+  top: 79%;
+  left: 45%;
 }
 #CotacaoAtualGrafico_CST {
-  top: 40%;
-  left: 3.5%;
-  width: 18.5%;
-  height: 8.2%;
+  top: 46.7%;
+  left: 3.3%;
+  width: 16.2%;
+  height: 8%;
 }
 
 #ConfigGainGrafico_CST {
-  top: 14%;
-  left: 87%;
+  top: 0%;
+  left: 80%;
 }
 
 #ConfigStopGrafico_CST {
-  top: 66%;
-  left: 87%;
+  top: 59%;
+  left: 80%;
 }
 
 #ValorTotalGain {
@@ -63,38 +63,38 @@
 }
 
 #TextoGainDisparo_CST {
-  top: 5.9%;
-  left: 50.4%;
+  top: 9.5%;
+  left: 43%;
 }
 
 #TextoGainExecucao_CST {
-  top: 5.9%;
-  left: 70.6%;
+  top: 28%;
+  left: 44.5%;
 }
 
 #TextoStopDisparo_CST {
-  top: 58%;
-  left: 50.4%;
+  top: 67%;
+  left: 43%;
 }
 
 #TextoStopExecucao_CST {
-  top: 58%;
-  left: 70.6%;
+  top: 86.5%;
+  left: 44.5%;
 }
 
 #TextoGain_CST {
-  top: -0.3%;
-  left: 61%;
+  top: 1%;
+  left: 55%;
 }
 
 #TextoStop_CST {
-  top: 51.8%;
-  left: 61%;
+  top: 59%;
+  left: 55%;
 }
 
 #TextoCotacaoAtualGrafico_CST {
-  top: 41.5%;
-  left: 25%;
+  top: 48.5%;
+  left: 22%;
 }
 
 .configStopAberto {

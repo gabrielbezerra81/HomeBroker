@@ -36,16 +36,14 @@
 }
 
 .inputGrafico {
-  width: 19%;
-  height: 7.2%;
+  width: 36%;
+  height: 11px;
   position: absolute;
   background-color: transparent;
   border-color: transparent;
-  border-radius: 0;
   text-align: center;
-  font-size: 85%;
-  font-weight: 600;
-  appearance: none;
+  font-size: 70%;
+  font-weight: 400;
 }
 
 .inputGrafico:focus {

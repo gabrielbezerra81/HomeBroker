@@ -4,26 +4,26 @@
 }
 
 #GainDisparoGrafico_CA {
-  top: 15%;
-  left: 48.6%;
+  top: 16%;
+  left: 45%;
 }
 
 #GainExecGrafico_CA {
-  top: 20%;
-  left: 69%;
+  top: 21.2%;
+  left: 45%;
 }
 
 #StopDisparoGrafico_CA {
-  top: 73%;
-  left: 48.7%;
+  top: 74%;
+  left: 45%;
 }
 
 #StopExecGrafico_CA {
-  top: 78%;
-  left: 69%;
+  top: 79%;
+  left: 45%;
 }
 #CotacaoAtualGrafico_CA {
-  top: 47.2%;
+  top: 46.7%;
   left: 3.3%;
   width: 16.2%;
   height: 8%;
