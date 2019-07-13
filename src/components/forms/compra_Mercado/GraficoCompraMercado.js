@@ -25,8 +25,7 @@ class GraficoCompraMercado extends React.Component {
           <Form>
             <Form.Control
               type="number"
-              step={0.1}
-              min={0}
+              step={0.01}
               id="GainDisparoGrafico_CM"
               className="inputGrafico"
               value={this.props.gainDisparo}
@@ -39,8 +38,7 @@ class GraficoCompraMercado extends React.Component {
             />
             <Form.Control
               type="number"
-              step={0.1}
-              min={0}
+              step={0.01}
               id="GainExecGrafico_CM"
               className="inputGrafico"
               value={this.props.gainExec}
@@ -50,8 +48,7 @@ class GraficoCompraMercado extends React.Component {
             />
             <Form.Control
               type="number"
-              step={0.1}
-              min={0}
+              step={0.01}
               id="StopDisparoGrafico_CM"
               className="inputGrafico"
               value={this.props.stopDisparo}
@@ -64,8 +61,7 @@ class GraficoCompraMercado extends React.Component {
             />
             <Form.Control
               type="number"
-              step={0.1}
-              min={0}
+              step={0.01}
               id="StopExecGrafico_CM"
               className="inputGrafico"
               value={this.props.stopExec}

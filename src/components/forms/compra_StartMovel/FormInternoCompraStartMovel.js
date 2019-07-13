@@ -73,8 +73,7 @@ class FormInternoCompraStartMovel extends React.Component {
                   <Form.Control
                     className="textInput"
                     type="number"
-                    step={0.1}
-                    min={0}
+                    step={0.01}
                     name="disparo"
                     value={this.props.inicioDisparo}
                     onChange={event =>
@@ -92,8 +91,7 @@ class FormInternoCompraStartMovel extends React.Component {
                   <Form.Control
                     className="textInput"
                     type="number"
-                    step={0.1}
-                    min={0}
+                    step={0.01}
                     name="execucao"
                     value={this.props.ajustePadrao}
                     onChange={event =>
@@ -117,8 +115,7 @@ class FormInternoCompraStartMovel extends React.Component {
                   <Form.Control
                     className="textInput"
                     type="number"
-                    step={0.1}
-                    min={0}
+                    step={0.01}
                     name="stopDisparo"
                     value={this.props.stopDisparo}
                     onChange={event =>
@@ -136,8 +133,7 @@ class FormInternoCompraStartMovel extends React.Component {
                   <Form.Control
                     className="textInput"
                     type="number"
-                    step={0.1}
-                    min={0}
+                    step={0.01}
                     name="stopExecucao"
                     value={this.props.stopExec}
                     onChange={event =>
@@ -161,8 +157,7 @@ class FormInternoCompraStartMovel extends React.Component {
                   <Form.Control
                     className="textInput"
                     type="number"
-                    step={0.1}
-                    min={0}
+                    step={0.01}
                     name="ajusteAssimétrico"
                   />
                 </Form.Group>

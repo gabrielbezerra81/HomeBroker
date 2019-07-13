@@ -38,7 +38,12 @@ class FormInternoCompraMercado extends React.Component {
                     placeholder=""
                     name="ativo"
                     value={this.props.ativo}
-                    onChange={event => this.props.mudarAtivoAction(event, COMPRA_MERCADO_NAMESPACE)}
+                    onChange={event =>
+                      this.props.mudarAtivoAction(
+                        event,
+                        COMPRA_MERCADO_NAMESPACE
+                      )
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -52,7 +57,9 @@ class FormInternoCompraMercado extends React.Component {
                     step={100}
                     min={0}
                     value={this.props.qtde}
-                    onChange={event => this.props.mudarQtdAction(event, COMPRA_MERCADO_NAMESPACE)}
+                    onChange={event =>
+                      this.props.mudarQtdAction(event, COMPRA_MERCADO_NAMESPACE)
+                    }
                     name="qtde"
                   />
                 </Form.Group>
@@ -79,11 +86,15 @@ class FormInternoCompraMercado extends React.Component {
                   <Form.Control
                     className="textInput"
                     type="number"
-                    step={0.1}
-                    min={0}
+                    step={0.01}
                     name="gainDisparo"
                     value={this.props.gainDisparo}
-                    onChange={event => this.props.mudarGainDisparoAction(event, COMPRA_MERCADO_NAMESPACE)}
+                    onChange={event =>
+                      this.props.mudarGainDisparoAction(
+                        event,
+                        COMPRA_MERCADO_NAMESPACE
+                      )
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -93,11 +104,15 @@ class FormInternoCompraMercado extends React.Component {
                   <Form.Control
                     className="textInput"
                     type="number"
-                    step={0.1}
-                    min={0}
+                    step={0.01}
                     name="gainExecucao"
                     value={this.props.gainExec}
-                    onChange={event => this.props.mudarGainExecAction(event, COMPRA_MERCADO_NAMESPACE)}
+                    onChange={event =>
+                      this.props.mudarGainExecAction(
+                        event,
+                        COMPRA_MERCADO_NAMESPACE
+                      )
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -122,11 +137,15 @@ class FormInternoCompraMercado extends React.Component {
                   <Form.Control
                     className="textInput"
                     type="number"
-                    step={0.1}
-                    min={0}
+                    step={0.01}
                     name="stopDisparo"
                     value={this.props.stopDisparo}
-                    onChange={event => this.props.mudarStopDisparoAction(event, COMPRA_MERCADO_NAMESPACE)}
+                    onChange={event =>
+                      this.props.mudarStopDisparoAction(
+                        event,
+                        COMPRA_MERCADO_NAMESPACE
+                      )
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -136,11 +155,15 @@ class FormInternoCompraMercado extends React.Component {
                   <Form.Control
                     className="textInput"
                     type="number"
-                    step={0.1}
-                    min={0}
+                    step={0.01}
                     name="stopExecucao"
                     value={this.props.stopExec}
-                    onChange={event => this.props.mudarStopExecAction(event, COMPRA_MERCADO_NAMESPACE)}
+                    onChange={event =>
+                      this.props.mudarStopExecAction(
+                        event,
+                        COMPRA_MERCADO_NAMESPACE
+                      )
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -165,7 +188,9 @@ class FormInternoCompraMercado extends React.Component {
                 <Button
                   variant="secondary"
                   size="sm"
-                  onClick={() => this.props.limparAction(COMPRA_MERCADO_NAMESPACE)}
+                  onClick={() =>
+                    this.props.limparAction(COMPRA_MERCADO_NAMESPACE)
+                  }
                 >
                   <h6>Limpar</h6>
                 </Button>

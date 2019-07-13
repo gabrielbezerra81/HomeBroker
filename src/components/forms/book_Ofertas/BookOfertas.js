@@ -82,7 +82,7 @@ const modalBody = props => (
               type="number"
               placeholder=""
               value={props.stopLoss}
-              step={0.1}
+              step={0.01}
               onChange={event => props.mudarStopLossAction(event)}
             />
           </Form.Group>
@@ -107,7 +107,7 @@ const modalBody = props => (
               className="textInput"
               type="number"
               placeholder=""
-              step={0.1}
+              step={0.01}
               value={props.gain}
               onChange={event => props.mudarGainAction(event)}
             />

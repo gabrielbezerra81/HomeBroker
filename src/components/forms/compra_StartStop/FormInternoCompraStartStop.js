@@ -80,8 +80,7 @@ class FormInternoCompraStartStop extends React.Component {
                   <Form.Control
                     className="textInput"
                     type="number"
-                    step={0.1}
-                    min={0}
+                    step={0.01}
                     name="gainDisparo"
                     value={this.props.gainDisparo}
                     onChange={event =>
@@ -99,8 +98,7 @@ class FormInternoCompraStartStop extends React.Component {
                   <Form.Control
                     className="textInput"
                     type="number"
-                    step={0.1}
-                    min={0}
+                    step={0.01}
                     name="gainExecucao"
                     value={this.props.gainExec}
                     onChange={event =>
@@ -133,8 +131,7 @@ class FormInternoCompraStartStop extends React.Component {
                   <Form.Control
                     className="textInput"
                     type="number"
-                    step={0.1}
-                    min={0}
+                    step={0.01}
                     name="stopDisparo"
                     value={this.props.stopDisparo}
                     onChange={event =>
@@ -152,8 +149,7 @@ class FormInternoCompraStartStop extends React.Component {
                   <Form.Control
                     className="textInput"
                     type="number"
-                    step={0.1}
-                    min={0}
+                    step={0.01}
                     name="stopExecucao"
                     value={this.props.stopExec}
                     onChange={event =>

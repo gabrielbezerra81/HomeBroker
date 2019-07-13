@@ -25,8 +25,7 @@ class GraficoCompraStartMovel extends React.Component {
           <Form>
             <Form.Control
               type="number"
-              step={0.1}
-              min={0}
+              step={0.01}
               id="GainDisparoGrafico_CA"
               className="inputGrafico"
               value={this.props.gainDisparo}
@@ -39,8 +38,7 @@ class GraficoCompraStartMovel extends React.Component {
             />
             <Form.Control
               type="number"
-              step={0.1}
-              min={0}
+              step={0.01}
               id="GainExecGrafico_CA"
               className="inputGrafico"
               value={this.props.gainExec}
@@ -53,8 +51,7 @@ class GraficoCompraStartMovel extends React.Component {
             />
             <Form.Control
               type="number"
-              step={0.1}
-              min={0}
+              step={0.01}
               id="StopDisparoGrafico_CA"
               className="inputGrafico"
               value={this.props.stopDisparo}
@@ -67,8 +64,7 @@ class GraficoCompraStartMovel extends React.Component {
             />
             <Form.Control
               type="number"
-              step={0.1}
-              min={0}
+              step={0.01}
               id="StopExecGrafico_CA"
               className="inputGrafico"
               value={this.props.stopExec}
