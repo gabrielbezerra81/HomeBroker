@@ -89,8 +89,6 @@ class GraficoCompraStartStop extends React.Component {
           </Form>
           <IconeConfigGrafico id="ConfigGainGrafico_CST" />
           <IconeConfigGrafico id="ConfigStopGrafico_CST" />
-          {TextoValorTotalGrafico(26.5, "ValorTotalGain")}
-          {TextoValorTotalGrafico(26.5, "ValorTotalStop")}
           {LabelInputGrafico("Disparo", "TextoGainDisparo_CST")}
           {LabelInputGrafico("Execução", "TextoGainExecucao_CST")}
           {LabelInputGrafico("Disparo", "TextoStopDisparo_CST")}
@@ -103,6 +101,9 @@ class GraficoCompraStartStop extends React.Component {
     );
   }
 }
+
+// {TextoValorTotalGrafico(26.5, "ValorTotalGain")}
+//{TextoValorTotalGrafico(26.5, "ValorTotalStop")}
 
 const mapStateToProps = state => ({
   gainDisparo: state.compraStartStopReducer.gainDisparo,

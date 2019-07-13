@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
+import { MDBIcon } from "mdbreact";
 import { mudarQtdAction } from "../../redux/actions/bookOfertaActions";
 import {
   mudarStopDisparoAction,
@@ -149,7 +150,40 @@ class FormInternoCompraStartMovel extends React.Component {
                 </Form.Group>
               </Col>
             </Row>
+
+            <Row className="rowTextoAjusteAssimetrico">
+              <Col md={7} className="colTextoAjusteAssimetrico">
+                <h6>Ajuste Assimétrico</h6>
+              </Col>
+              <Col className="colTextInput colInputAjusteAssimetrico">
+                <Form.Group>
+                  <Form.Label>Valor</Form.Label>
+                  <Form.Control
+                    className="textInput"
+                    type="number"
+                    step={0.1}
+                    min={0}
+                    name="ajusteAssimétrico"
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={1} className="colIconeConfig">
+                <Button
+                  variant=""
+                  onClick={() => false}
+                  className="operation-icons"
+                >
+                  <MDBIcon icon="plus-circle" size="2x" />
+                </Button>
+              </Col>
+            </Row>
           </Form>
+
+          <Row>
+            <Col>
+              <h6>Simulação</h6>
+            </Col>
+          </Row>
         </div>
       </Col>
     );

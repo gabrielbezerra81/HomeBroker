@@ -127,3 +127,31 @@
 .col-md-4 > h6 {
   margin-bottom: 0 !important;
 }
+
+.rowTextoAjusteAssimetrico {
+  border-top: 1px dashed #ddd;
+  border-bottom: 1px dashed #ddd;
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
+  padding-bottom: 0.5rem
+}
+
+.row.rowTextoAjusteAssimetrico h6 {
+  margin-bottom: 0;
+}
+
+.colTextoAjusteAssimetrico {
+  padding-right: 0;
+  text-align: initial;
+  display: flex;
+  align-items: flex-end;
+}
+
+.colInputAjusteAssimetrico {
+  padding-left: 2.16px !important;
+  padding-right: 0px;
+}
+
+.fa-plus-circle{
+  font-size: 1.2rem
+}

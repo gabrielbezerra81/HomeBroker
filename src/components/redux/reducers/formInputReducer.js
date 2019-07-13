@@ -33,7 +33,7 @@ const INITIAL_STATE = {
   assinatura: "",
   porcentagem: 9.55,
   preco: 0.0,
-  showConfigStop: true,
+  showConfigStop: false,
   checkSalvarAssinatura: true,
   inicioDisparo: 0,
   ajustePadrao: 0
