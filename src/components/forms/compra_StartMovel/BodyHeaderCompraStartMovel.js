@@ -1,25 +1,14 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
+import { BodyHeaderAtivo } from "../../utils/BodyHeader";
 
 class BodyHeaderCompraStartMovel extends React.Component {
   render() {
-    return (
-      <Row className="rowBodyHeader">
-        <Col md={3} className="colAtivo1BodyHeader">
-          <h5>PETR4, PETROBRAS</h5>
-        </Col>
-        <Col md={2} className="colAtivo2BodyHeader">
-          <h5>PN N2</h5>
-        </Col>
-      </Row>
-    );
+    return <BodyHeaderAtivo props={this.props} />;
   }
 }
 
-const mapStateToProps = state => ({
-  porcentagem: state.compraStartMovelReducer.porcentagem
-});
+const mapStateToProps = state => ({});
 
 export default connect(
   mapStateToProps,

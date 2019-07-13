@@ -1,6 +1,5 @@
 import React from "react";
 import DraggableModal from "../../utils/DraggableModal";
-
 import { connect } from "react-redux";
 import {
   mudarQtdAction,
@@ -12,7 +11,7 @@ import {
 } from "../../redux/actions/bookOfertaActions";
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import TabelaOfertas from "./TabelaOfertas";
-import { MDBIcon } from "mdbreact";
+import { bookHeader } from "../../utils/FormHeader";
 
 class BookOfertas extends React.Component {
   render() {
@@ -23,48 +22,12 @@ class BookOfertas extends React.Component {
         id="bookofertas"
         renderModalBody={() => modalBody(this.props)}
         headerClass="no-border"
-        renderOptionalHeader={() => modalHeader(this.props)}
+        renderHeader={() => bookHeader(this.props, "no-border")}
         closeButton={false}
       />
     );
   }
 }
-
-const modalHeader = props => (
-  <Row>
-    <Col md={10} className="colInputHeader">
-      <Form>
-        <Form.Control
-          type="text"
-          placeholder=""
-          className="inputHeader"
-          defaultValue="PETR4, PETROBRAS PN N2"
-          //value={props.inputHeader}
-          onKeyPress={event => {
-            event.preventDefault();
-            if (event.key === "Enter") props.onEnterInputHeader();
-          }}
-        />
-      </Form>
-    </Col>
-    <Col md={2} className="wrapperIconesHeader">
-      <Button
-        variant=""
-        className="iconesHeader"
-        onClick={event => props.close(event)}
-      >
-        <span className="fa-stack">
-          <MDBIcon icon="circle" className="fa-stack-2x" />
-          <MDBIcon
-            icon="times"
-            className="fa-stack-1x iconeFechar"
-            name="book"
-          />
-        </span>
-      </Button>
-    </Col>
-  </Row>
-);
 
 const modalBody = props => (
   <Modal.Body>

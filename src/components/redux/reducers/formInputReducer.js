@@ -22,7 +22,7 @@ const INITIAL_STATE = {
   ativo: "",
   entradaDisparo: 0,
   entradaExec: 0,
-  valorTotal: 0,
+  valorTotal: 15.52,
   gainDisparo: 0,
   gainExec: 0,
   stopDisparo: 0,

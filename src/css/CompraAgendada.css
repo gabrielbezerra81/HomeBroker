@@ -4,72 +4,72 @@
 }
 
 #GainDisparoGrafico_CA {
-  top: 16%;
-  left: 45%;
+  top: 13%;
+  left: 51%;
 }
 
 #GainExecGrafico_CA {
-  top: 21.2%;
-  left: 45%;
+  top: 18%;
+  left: 51%;
 }
 
 #StopDisparoGrafico_CA {
-  top: 74%;
-  left: 45%;
+  top: 66.4%;
+  left: 51%;
 }
 
 #StopExecGrafico_CA {
-  top: 79%;
-  left: 45%;
+  top: 71%;
+  left: 51%;
 }
 #CotacaoAtualGrafico_CA {
-  top: 46.7%;
-  left: 3.3%;
-  width: 16.2%;
-  height: 8%;
+  top: 42.5%;
+  left: 7%;
+  width: 37%;
+  height: 12px;
 }
 
 #ConfigGainGrafico_CA {
-  top: 0%;
-  left: 80%;
+  top: 14%;
+  left: 87%;
 }
 
 #ConfigStopGrafico_CA {
-  top: 59%;
-  left: 80%;
+  top: 67%;
+  left: 87%;
 }
 
 #TextoGainDisparo_CA {
-  top: 9.5%;
-  left: 43%;
+  top: 7%;
+  left: 49%;
 }
 
 #TextoGainExecucao_CA {
-  top: 28%;
-  left: 44.5%;
+  top: 22.5%;
+  left: 50.5%;
 }
 
 #TextoStopDisparo_CA {
-  top: 67%;
-  left: 43%;
+  top: 60.2%;
+  left: 49%;
 }
 
 #TextoStopExecucao_CA {
-  top: 86.5%;
-  left: 44.5%;
+  top: 76%;
+  left: 50.5%;
 }
 
 #TextoGain_CA {
-  top: 1%;
-  left: 55%;
+  top: 0%;
+  left: 61%;
 }
 
 #TextoStop_CA {
-  top: 59%;
-  left: 55%;
+  top: 53.5%;
+  left: 61%;
 }
 
 #TextoCotacaoAtualGrafico_CA {
-  top: 48.5%;
-  left: 22%;
+  top: 42%;
+  left: 45%;
 }

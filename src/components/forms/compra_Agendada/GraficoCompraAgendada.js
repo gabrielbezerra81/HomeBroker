@@ -12,7 +12,8 @@ import IconeConfigGrafico from "../../utils/IconeConfigGrafico";
 import {
   LabelInputGrafico,
   TextoGainStopGrafico,
-  TextoCotacaoAtualGrafico
+  TextoCotacaoAtualGrafico,
+  TextoValorTotalGrafico
 } from "../../utils/TextoGrafico";
 import { COMPRA_AGENDADA_NAMESPACE } from "../../../constants/ActionTypes";
 
@@ -83,6 +84,8 @@ class GraficoCompraAgendada extends React.Component {
           {TextoGainStopGrafico("GAIN", "TextoGain_CA")}
           {TextoGainStopGrafico("STOP", "TextoStop_CA")}
           {TextoCotacaoAtualGrafico("TextoCotacaoAtualGrafico_CA")}
+          {TextoValorTotalGrafico(26.5, "ValorTotalGain")}
+          {TextoValorTotalGrafico(26.5, "ValorTotalStop")}
           <IconeConfigGrafico id="ConfigGainGrafico_CA" />
           <IconeConfigGrafico id="ConfigStopGrafico_CA" />
         </div>
@@ -96,7 +99,8 @@ const mapStateToProps = state => ({
   gainExec: state.compraAgendadaReducer.gainExec,
   stopDisparo: state.compraAgendadaReducer.stopDisparo,
   stopExec: state.compraAgendadaReducer.stopExec,
-  cotacaoAtual: state.compraAgendadaReducer.cotacaoAtual
+  cotacaoAtual: state.compraAgendadaReducer.cotacaoAtual,
+  valorTotal: state.compraAgendadaReducer.valorTotal
 });
 
 export default connect(

@@ -27,7 +27,7 @@ class GraficoCompraStartStop extends React.Component {
             <Form.Control
               type="number"
               step={0.01}
-              id="GainDisparoGrafico_CST"
+              id="GainDisparoGrafico_CA"
               className="inputGrafico"
               value={this.props.gainDisparo}
               onChange={event =>
@@ -40,7 +40,7 @@ class GraficoCompraStartStop extends React.Component {
             <Form.Control
               type="number"
               step={0.01}
-              id="GainExecGrafico_CST"
+              id="GainExecGrafico_CA"
               className="inputGrafico"
               value={this.props.gainExec}
               onChange={event =>
@@ -53,7 +53,7 @@ class GraficoCompraStartStop extends React.Component {
             <Form.Control
               type="number"
               step={0.01}
-              id="StopDisparoGrafico_CST"
+              id="StopDisparoGrafico_CA"
               className="inputGrafico"
               value={this.props.stopDisparo}
               onChange={event =>
@@ -66,7 +66,7 @@ class GraficoCompraStartStop extends React.Component {
             <Form.Control
               type="number"
               step={0.01}
-              id="StopExecGrafico_CST"
+              id="StopExecGrafico_CA"
               className="inputGrafico"
               value={this.props.stopExec}
               onChange={event =>
@@ -77,29 +77,30 @@ class GraficoCompraStartStop extends React.Component {
               }
             />
             <Form.Control
-              id="CotacaoAtualGrafico_CST"
+              id="CotacaoAtualGrafico_CA"
               className="inputGrafico"
               value={this.props.cotacaoAtual}
               onChange={() => false}
             />
           </Form>
-          <IconeConfigGrafico id="ConfigGainGrafico_CST" />
-          <IconeConfigGrafico id="ConfigStopGrafico_CST" />
-          {LabelInputGrafico("Disparo", "TextoGainDisparo_CST")}
-          {LabelInputGrafico("Execução", "TextoGainExecucao_CST")}
-          {LabelInputGrafico("Disparo", "TextoStopDisparo_CST")}
-          {LabelInputGrafico("Execução", "TextoStopExecucao_CST")}
-          {TextoGainStopGrafico("GAIN", "TextoGain_CST")}
-          {TextoGainStopGrafico("STOP", "TextoStop_CST")}
-          {TextoCotacaoAtualGrafico("TextoCotacaoAtualGrafico_CST")}
+          <IconeConfigGrafico id="ConfigGainGrafico_CA" />
+          <IconeConfigGrafico id="ConfigStopGrafico_CA" />
+          {LabelInputGrafico("Disparo", "TextoGainDisparo_CA")}
+          {LabelInputGrafico("Execução", "TextoGainExecucao_CA")}
+          {LabelInputGrafico("Disparo", "TextoStopDisparo_CA")}
+          {LabelInputGrafico("Execução", "TextoStopExecucao_CA")}
+          {TextoGainStopGrafico("GAIN", "TextoGain_CA")}
+          {TextoGainStopGrafico("STOP", "TextoStop_CA")}
+          {TextoCotacaoAtualGrafico("TextoCotacaoAtualGrafico_CA")}
+          {TextoValorTotalGrafico(26.5, "ValorTotalGain")}
+          {TextoValorTotalGrafico(26.5, "ValorTotalStop")}
         </div>
       </Col>
     );
   }
 }
 
-// {TextoValorTotalGrafico(26.5, "ValorTotalGain")}
-//{TextoValorTotalGrafico(26.5, "ValorTotalStop")}
+//
 
 const mapStateToProps = state => ({
   gainDisparo: state.compraStartStopReducer.gainDisparo,

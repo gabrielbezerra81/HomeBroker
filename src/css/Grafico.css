@@ -36,7 +36,7 @@
 }
 
 .inputGrafico {
-  width: 36%;
+  width: 39%;
   height: 11px;
   position: absolute;
   background-color: transparent;
@@ -61,7 +61,7 @@
 }
 
 .wrapperTextoCotacaoAtualGrafico {
-  width: 38.0%;
+  width: 38%;
   height: 7.4%;
   position: absolute;
   display: flex;
@@ -69,6 +69,11 @@
   justify-content: center;
 }
 
-.TextoCotacaoAtualGrafico{
-  font-size: 0.9rem
+.TextoCotacaoAtualGrafico {
+  font-size: 0.9rem;
+}
+
+.textoValorGrafico {
+  font-size: 0.8rem;
+  margin-bottom: 0;
 }

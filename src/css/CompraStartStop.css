@@ -48,18 +48,14 @@
 }
 
 #ValorTotalGain {
-  top: 24%;
-  left: 61%;
+  top: 27%;
+  left: 68%;
   font-size: 0.8rem !important;
 }
 
 #ValorTotalStop {
-  top: 76%;
-  left: 61%;
-}
-
-.textoValorGrafico {
-  font-size: 0.8rem;
+  top: 81%;
+  left: 68%;
 }
 
 #TextoGainDisparo_CST {

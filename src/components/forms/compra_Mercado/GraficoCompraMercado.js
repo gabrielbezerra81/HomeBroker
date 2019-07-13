@@ -12,7 +12,8 @@ import IconeConfigGrafico from "../../utils/IconeConfigGrafico";
 import {
   LabelInputGrafico,
   TextoGainStopGrafico,
-  TextoCotacaoAtualGrafico
+  TextoCotacaoAtualGrafico,
+  TextoValorTotalGrafico
 } from "../../utils/TextoGrafico";
 import { COMPRA_MERCADO_NAMESPACE } from "../../../constants/ActionTypes";
 
@@ -26,7 +27,7 @@ class GraficoCompraMercado extends React.Component {
             <Form.Control
               type="number"
               step={0.01}
-              id="GainDisparoGrafico_CM"
+              id="GainDisparoGrafico_CA"
               className="inputGrafico"
               value={this.props.gainDisparo}
               onChange={event =>
@@ -39,7 +40,7 @@ class GraficoCompraMercado extends React.Component {
             <Form.Control
               type="number"
               step={0.01}
-              id="GainExecGrafico_CM"
+              id="GainExecGrafico_CA"
               className="inputGrafico"
               value={this.props.gainExec}
               onChange={event =>
@@ -49,7 +50,7 @@ class GraficoCompraMercado extends React.Component {
             <Form.Control
               type="number"
               step={0.01}
-              id="StopDisparoGrafico_CM"
+              id="StopDisparoGrafico_CA"
               className="inputGrafico"
               value={this.props.stopDisparo}
               onChange={event =>
@@ -62,7 +63,7 @@ class GraficoCompraMercado extends React.Component {
             <Form.Control
               type="number"
               step={0.01}
-              id="StopExecGrafico_CM"
+              id="StopExecGrafico_CA"
               className="inputGrafico"
               value={this.props.stopExec}
               onChange={event =>
@@ -70,7 +71,7 @@ class GraficoCompraMercado extends React.Component {
               }
             />
             <Form.Control
-              id="CotacaoAtualGrafico_CM"
+              id="CotacaoAtualGrafico_CA"
               className="inputGrafico"
               value={this.props.cotacaoAtual}
               onChange={() => false}
@@ -83,8 +84,10 @@ class GraficoCompraMercado extends React.Component {
           {TextoGainStopGrafico("GAIN", "TextoGain_CA")}
           {TextoGainStopGrafico("STOP", "TextoStop_CA")}
           {TextoCotacaoAtualGrafico("TextoCotacaoAtualGrafico_CA")}
-          <IconeConfigGrafico id="ConfigGainGrafico_CM" />
-          <IconeConfigGrafico id="ConfigStopGrafico_CM" />
+          {TextoValorTotalGrafico(26.5, "ValorTotalGain")}
+          {TextoValorTotalGrafico(26.5, "ValorTotalStop")}
+          <IconeConfigGrafico id="ConfigGainGrafico_CA" />
+          <IconeConfigGrafico id="ConfigStopGrafico_CA" />
         </div>
       </Col>
     );
