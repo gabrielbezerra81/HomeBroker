@@ -33,7 +33,7 @@ const INITIAL_STATE = {
   assinatura: "",
   porcentagem: 9.55,
   preco: 0.0,
-  showConfigStop: false,
+  showConfigStop: true,
   checkSalvarAssinatura: true,
   inicioDisparo: 0,
   ajustePadrao: 0
@@ -41,8 +41,6 @@ const INITIAL_STATE = {
 
 export default namespace => (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case `${MUDAR_ATIVO}${namespace}`:
-      return { ...state, ativo: action.payload };
     case `${MUDAR_ATIVO}${namespace}`:
       return { ...state, ativo: action.payload };
     case `${MUDAR_ENTRADA_DISPARO}${namespace}`:

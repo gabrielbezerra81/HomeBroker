@@ -12,9 +12,9 @@ export const TextoGainStopGrafico = (texto, id) => (
   </div>
 );
 
-export const TextoValorTotalGrafico = (valor, id) => (
+export const TextoValorTotalGrafico = (texto, valor, id) => (
   <div className="wrapperValorTotalGrafico" id={id}>
-    <h6 className="textoValorGrafico">VALOR TOTAL</h6>
+    <h6 className="textoValorGrafico">{texto}</h6>
     <h6 className="textoValorGrafico">{valor}</h6>
   </div>
 );

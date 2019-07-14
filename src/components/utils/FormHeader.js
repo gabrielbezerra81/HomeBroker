@@ -30,7 +30,6 @@ export const modalHeader = (props, headerTitle, headerClass) => (
 
 export const bookHeader = (props, headerClass) => (
   <div className={`${headerClass} handle mheader`}>
-    <h6 className="mtitle" />
     <Row>
       <Col md={10} className="colInputHeader">
         <Form>

@@ -92,8 +92,8 @@ class GraficoCompraStartStop extends React.Component {
           {TextoGainStopGrafico("GAIN", "TextoGain_CA")}
           {TextoGainStopGrafico("STOP", "TextoStop_CA")}
           {TextoCotacaoAtualGrafico("TextoCotacaoAtualGrafico_CA")}
-          {TextoValorTotalGrafico(26.5, "ValorTotalGain")}
-          {TextoValorTotalGrafico(26.5, "ValorTotalStop")}
+          {TextoValorTotalGrafico("VALOR TOTAL", 26.5, "ValorTotalGain")}
+          {TextoValorTotalGrafico("VALOR TOTAL", 26.5, "ValorTotalStop")}
         </div>
       </Col>
     );
