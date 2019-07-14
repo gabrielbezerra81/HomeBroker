@@ -48,21 +48,24 @@ const INITIAL_STATE = {
 };
 
 export default namespace => (state = INITIAL_STATE, action) => {
+  if (action.payload === "0" || action.payload === 0)
+    action.payload = Number(action.payload).toFixed(2);
+
   switch (action.type) {
     case `${MUDAR_ATIVO}${namespace}`:
       return { ...state, ativo: action.payload };
     case `${MUDAR_ENTRADA_DISPARO}${namespace}`:
-      return { ...state, entradaDisparo: Number(action.payload).toFixed(2) };
+      return { ...state, entradaDisparo: action.payload };
     case `${MUDAR_ENTRADA_EXEC}${namespace}`:
-      return { ...state, entradaExec: Number(action.payload).toFixed(2) };
+      return { ...state, entradaExec: action.payload };
     case `${MUDAR_GAIN_DISPARO}${namespace}`:
-      return { ...state, gainDisparo: Number(action.payload).toFixed(2) };
+      return { ...state, gainDisparo: action.payload };
     case `${MUDAR_GAIN_EXEC}${namespace}`:
-      return { ...state, gainExec: Number(action.payload).toFixed(2) };
+      return { ...state, gainExec: action.payload };
     case `${MUDAR_STOP_DISPARO}${namespace}`:
-      return { ...state, stopDisparo: Number(action.payload).toFixed(2) };
+      return { ...state, stopDisparo: action.payload };
     case `${MUDAR_STOP_EXEC}${namespace}`:
-      return { ...state, stopExec: Number(action.payload).toFixed(2) };
+      return { ...state, stopExec: action.payload };
     case `${MUDAR_VALIDADE_SELECT}${namespace}`:
       return { ...state, validadeSelect: action.payload };
     case `${MUDAR_DATA}${namespace}`:
@@ -80,19 +83,19 @@ export default namespace => (state = INITIAL_STATE, action) => {
     case `${MUDAR_CHECK_SALVA_ASSINATURA}${namespace}`:
       return { ...state, checkSalvarAssinatura: action.payload };
     case `${MUDAR_INICIO_DISPARO}${namespace}`:
-      return { ...state, inicioDisparo: Number(action.payload).toFixed(2) };
+      return { ...state, inicioDisparo: action.payload };
     case `${MUDAR_AJUSTE_PADRAO}${namespace}`:
-      return { ...state, ajustePadrao: Number(action.payload).toFixed(2) };
+      return { ...state, ajustePadrao: action.payload };
     case `${MUDAR_DISPARO_PRIMEIRO_AJUSTE}${namespace}`:
-      return { ...state, disparo1Ajuste: Number(action.payload).toFixed(2) };
+      return { ...state, disparo1Ajuste: action.payload };
     case `${MUDAR_DISPARO_MAIS_AJUSTE}${namespace}`:
-      return { ...state, disparoMaisAjuste: Number(action.payload).toFixed(2) };
+      return { ...state, disparoMaisAjuste: action.payload };
     case `${MUDAR_STOP_MAIS_PRIMEIRO_AJUSTE}${namespace}`:
-      return { ...state, stopMais1Ajuste: Number(action.payload).toFixed(2) };
+      return { ...state, stopMais1Ajuste: action.payload };
     case `${MUDAR_STOP_ANTERIOR_AJUSTE}${namespace}`:
       return {
         ...state,
-        stopAnteriorAjuste: Number(action.payload).toFixed(2)
+        stopAnteriorAjuste: action.payload
       };
     default:
       return state;
