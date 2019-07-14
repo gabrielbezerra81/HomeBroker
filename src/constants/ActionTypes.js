@@ -23,6 +23,10 @@ export const MUDAR_CHECK_SALVA_ASSINATURA = "mudar_check_salva_assinatura";
 
 export const MUDAR_INICIO_DISPARO = "mudar_inicio_disparo";
 export const MUDAR_AJUSTE_PADRAO = "mudar_ajuste_padrao";
+export const MUDAR_DISPARO_PRIMEIRO_AJUSTE = "mudar_disparo_primeiro_ajuste"
+export const MUDAR_DISPARO_MAIS_AJUSTE = "mudar_disparo_mais_ajuste"
+export const MUDAR_STOP_MAIS_PRIMEIRO_AJUSTE = "mudar_stop_mais_primeiro_ajuste"
+export const MUDAR_STOP_ANTERIOR_AJUSTE = "mudar_stop_anterior_ajuste"
 
 export const COMPRA_AGENDADA_NAMESPACE = "_COMPRA_AGENDADA";
 export const COMPRA_LIMITADA_NAMESPACE = "_COMPRA_LIMITADA";

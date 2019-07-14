@@ -15,7 +15,11 @@ import {
   FECHAR_CONFIGURAR_STOP,
   MUDAR_CHECK_SALVA_ASSINATURA,
   MUDAR_INICIO_DISPARO,
-  MUDAR_AJUSTE_PADRAO
+  MUDAR_AJUSTE_PADRAO,
+  MUDAR_DISPARO_PRIMEIRO_AJUSTE,
+  MUDAR_DISPARO_MAIS_AJUSTE,
+  MUDAR_STOP_MAIS_PRIMEIRO_AJUSTE,
+  MUDAR_STOP_ANTERIOR_AJUSTE
 } from "../../../constants/ActionTypes";
 
 const INITIAL_STATE = {
@@ -79,6 +83,17 @@ export default namespace => (state = INITIAL_STATE, action) => {
       return { ...state, inicioDisparo: Number(action.payload).toFixed(2) };
     case `${MUDAR_AJUSTE_PADRAO}${namespace}`:
       return { ...state, ajustePadrao: Number(action.payload).toFixed(2) };
+    case `${MUDAR_DISPARO_PRIMEIRO_AJUSTE}${namespace}`:
+      return { ...state, disparo1Ajuste: Number(action.payload).toFixed(2) };
+    case `${MUDAR_DISPARO_MAIS_AJUSTE}${namespace}`:
+      return { ...state, disparoMaisAjuste: Number(action.payload).toFixed(2) };
+    case `${MUDAR_STOP_MAIS_PRIMEIRO_AJUSTE}${namespace}`:
+      return { ...state, stopMais1Ajuste: Number(action.payload).toFixed(2) };
+    case `${MUDAR_STOP_ANTERIOR_AJUSTE}${namespace}`:
+      return {
+        ...state,
+        stopAnteriorAjuste: Number(action.payload).toFixed(2)
+      };
     default:
       return state;
   }

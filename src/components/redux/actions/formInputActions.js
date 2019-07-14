@@ -14,7 +14,11 @@ import {
   MUDAR_PRECO,
   MUDAR_CHECK_SALVA_ASSINATURA,
   MUDAR_INICIO_DISPARO,
-  MUDAR_AJUSTE_PADRAO
+  MUDAR_AJUSTE_PADRAO,
+  MUDAR_DISPARO_PRIMEIRO_AJUSTE,
+  MUDAR_DISPARO_MAIS_AJUSTE,
+  MUDAR_STOP_MAIS_PRIMEIRO_AJUSTE,
+  MUDAR_STOP_ANTERIOR_AJUSTE
 } from "../../../constants/ActionTypes";
 
 export const mudarGainDisparoAction = (event, namespace) => {
@@ -152,6 +156,42 @@ export const mudarAjustePadraoAction = (event, namespace) => {
   return dispatch => {
     dispatch({
       type: `${MUDAR_AJUSTE_PADRAO}${namespace}`,
+      payload: event.target.value
+    });
+  };
+};
+
+export const mudarDisparo1AjusteAction = (event, namespace) => {
+  return dispatch => {
+    dispatch({
+      type: `${MUDAR_DISPARO_PRIMEIRO_AJUSTE}${namespace}`,
+      payload: event.target.value
+    });
+  };
+};
+
+export const mudarDisparoMaisAjusteAction = (event, namespace) => {
+  return dispatch => {
+    dispatch({
+      type: `${MUDAR_DISPARO_MAIS_AJUSTE}${namespace}`,
+      payload: event.target.value
+    });
+  };
+};
+
+export const mudarStopMaisPrimeiroAjusteAction = (event, namespace) => {
+  return dispatch => {
+    dispatch({
+      type: `${MUDAR_STOP_MAIS_PRIMEIRO_AJUSTE}${namespace}`,
+      payload: event.target.value
+    });
+  };
+};
+
+export const mudarStopAnteriorAjusteAction = (event, namespace) => {
+  return dispatch => {
+    dispatch({
+      type: `${MUDAR_STOP_ANTERIOR_AJUSTE}${namespace}`,
       payload: event.target.value
     });
   };
