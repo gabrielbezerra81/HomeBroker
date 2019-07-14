@@ -23,7 +23,6 @@ class GraficoCompraStartMovel extends React.Component {
         <div className="imgContainer">
           <img src={img} className="imgChart" alt="" />
           <Form>
-
             <Form.Control
               type="number"
               step={0.01}
@@ -56,6 +55,38 @@ class GraficoCompraStartMovel extends React.Component {
               value={this.props.cotacaoAtual}
               onChange={() => false}
             />
+            <Form.Control
+              type="number"
+              step={0.01}
+              id="Disparo1AjusteGrafico_CSM"
+              className="inputGrafico TamanhoInputGrafico_StartMovel"
+              value={this.props.disparo1Ajuste}
+              onChange={event => false}
+            />
+            <Form.Control
+              type="number"
+              step={0.01}
+              id="DisparoMaisAjusteGrafico_CSM"
+              className="inputGrafico TamanhoInputGrafico_StartMovel"
+              value={this.props.disparoMaisAjuste}
+              onChange={event => false}
+            />
+            <Form.Control
+              type="number"
+              step={0.01}
+              id="StopMais1AjusteGrafico_CSM"
+              className="inputGrafico TamanhoInputGrafico_StartMovel"
+              value={this.props.stopMais1Ajuste}
+              onChange={event => false}
+            />
+            <Form.Control
+              type="number"
+              step={0.01}
+              id="StopAnteriorAjusteGrafico_CSM"
+              className="inputGrafico TamanhoInputGrafico_StartMovel"
+              value={this.props.stopAnteriorAjuste}
+              onChange={event => false}
+            />
           </Form>
           {LabelInputGrafico("Disparo", "TextoGainDisparo_CSM")}
           {LabelInputGrafico("Disparo + ajuste", "TextoDisparoMaisAjuste_CSM")}
@@ -67,11 +98,36 @@ class GraficoCompraStartMovel extends React.Component {
           {TextoGainStopGrafico("STOP", "TextoStop_CSM")}
           {TextoCotacaoAtualGrafico("TextoCotacaoAtualGrafico_CSM")}
 
-          {TextoMenorGrafico("Stop + 1 ajuste", "TextoMenorGrafico_Stop1ajuste_CSM")}
-          {TextoMenorGrafico("Stop anterior + ajuste", "TextoMenorGrafico_StopAnterior_CSM")}
+          {TextoMenorGrafico(
+            "Stop + 1 ajuste",
+            "TextoMenorGrafico_Stop1ajuste_CSM"
+          )}
+          {TextoMenorGrafico(
+            "Stop anterior + ajuste",
+            "TextoMenorGrafico_StopAnterior_CSM"
+          )}
           {TextoMenorGrafico("Ajuste", "TextoMenorGrafico_Ajuste1_CSM")}
           {TextoMenorGrafico("Ajuste", "TextoMenorGrafico_Ajuste2_CSM")}
           {TextoMenorGrafico("Ajuste", "TextoMenorGrafico_Ajuste3_CSM")}
+
+          {TextoMenorGrafico(
+            Number(
+              this.props.disparoMaisAjuste - this.props.disparo1Ajuste
+            ).toFixed(2),
+            "ValorAjuste1Grafico_CSM"
+          )}
+          {TextoMenorGrafico(
+            Number(
+              this.props.stopAnteriorAjuste - this.props.stopMais1Ajuste
+            ).toFixed(2),
+            "ValorAjuste2Grafico_CSM"
+          )}
+          {TextoMenorGrafico(
+            Number(this.props.stopMais1Ajuste - this.props.stopDisparo).toFixed(
+              2
+            ),
+            "ValorAjuste3Grafico_CSM"
+          )}
         </div>
       </Col>
     );
@@ -83,7 +139,11 @@ const mapStateToProps = state => ({
   gainExec: state.compraStartMovelReducer.gainExec,
   stopDisparo: state.compraStartMovelReducer.stopDisparo,
   stopExec: state.compraStartMovelReducer.stopExec,
-  cotacaoAtual: state.compraStartMovelReducer.cotacaoAtual
+  cotacaoAtual: state.compraStartMovelReducer.cotacaoAtual,
+  disparo1Ajuste: state.compraStartMovelReducer.disparo1Ajuste,
+  disparoMaisAjuste: state.compraStartMovelReducer.disparoMaisAjuste,
+  stopMais1Ajuste: state.compraStartMovelReducer.stopMais1Ajuste,
+  stopAnteriorAjuste: state.compraStartMovelReducer.stopAnteriorAjuste
 });
 
 export default connect(

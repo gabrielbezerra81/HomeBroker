@@ -27,14 +27,34 @@ Inputs do grafico
   height: 12px;
 }
 
+#Disparo1AjusteGrafico_CSM {
+  top: 27.6%;
+  left: 28.7%;
+}
+
+#DisparoMaisAjusteGrafico_CSM {
+  top: 16%;
+  left: 56%;
+}
+
+#StopMais1AjusteGrafico_CSM {
+  top: 60.2%;
+  left: 37.4%;
+}
+
+#StopAnteriorAjusteGrafico_CSM {
+  top: 49.3%;
+  left: 56.5%;
+}
+
 /*Textos do grafico*/
 
-#TextoPrimeiroAjuste_CSM{
+#TextoPrimeiroAjuste_CSM {
   top: 3%;
   left: 19.8%;
 }
 
-#TextoSegundoAjuste_CSM{
+#TextoSegundoAjuste_CSM {
   top: 3%;
   left: 55.5%;
 }
@@ -92,4 +112,23 @@ Inputs do grafico
 #TextoMenorGrafico_Ajuste3_CSM {
   top: 73.5%;
   left: 67.7%;
+}
+
+/*Valores dos textos dos 3 ajustes */
+#ValorAjuste1Grafico_CSM {
+  top: 24%;
+  left: 80.5%;
+  color: black;
+}
+
+#ValorAjuste2Grafico_CSM {
+  top: 56%;
+  left: 80.5%;
+  color: black;
+}
+
+#ValorAjuste3Grafico_CSM {
+  top: 75.5%;
+  left: 80.5%;
+  color: black;
 }

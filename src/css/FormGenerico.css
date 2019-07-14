@@ -33,6 +33,10 @@
   justify-content: center;
 }
 
+input {
+  color: black !important;
+}
+
 .wrapperIconesHeader {
   display: flex;
   justify-content: flex-end;

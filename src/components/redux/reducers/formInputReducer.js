@@ -20,14 +20,14 @@ import {
 
 const INITIAL_STATE = {
   ativo: "",
-  entradaDisparo: 0,
-  entradaExec: 0,
+  entradaDisparo: 0.0,
+  entradaExec: 0.0,
   valorTotal: 15.52,
-  gainDisparo: 0,
-  gainExec: 0,
-  stopDisparo: 0,
-  stopExec: 0,
-  cotacaoAtual: 0,
+  gainDisparo: 0.0,
+  gainExec: 0.0,
+  stopDisparo: 0.0,
+  stopExec: 0.0,
+  cotacaoAtual: 0.0,
   validadeSelect: "hoje",
   date: new Date(),
   assinatura: "",
@@ -35,8 +35,12 @@ const INITIAL_STATE = {
   preco: 0.0,
   showConfigStop: true,
   checkSalvarAssinatura: true,
-  inicioDisparo: 0,
-  ajustePadrao: 0
+  inicioDisparo: 0.0,
+  ajustePadrao: 0.0,
+  disparo1Ajuste: 0.1,
+  disparoMaisAjuste: 0.2,
+  stopMais1Ajuste: 0.3,
+  stopAnteriorAjuste: 0.4
 };
 
 export default namespace => (state = INITIAL_STATE, action) => {
