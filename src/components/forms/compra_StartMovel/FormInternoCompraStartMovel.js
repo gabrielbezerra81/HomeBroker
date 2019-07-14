@@ -124,7 +124,6 @@ class FormInternoCompraStartMovel extends React.Component {
                         COMPRA_STARTMOVEL_NAMESPACE
                       )
                     }
-                    
                   />
                 </Form.Group>
               </Col>
@@ -136,7 +135,7 @@ class FormInternoCompraStartMovel extends React.Component {
                     type="number"
                     step={0.01}
                     name="stopExecucao"
-                    value={Number(this.props.stopExec).toFixed(2)}
+                    value={this.props.stopExec}
                     onChange={event =>
                       this.props.mudarStopExecAction(
                         event,
