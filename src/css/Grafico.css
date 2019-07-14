@@ -16,11 +16,16 @@
 
 .wrapperIconeConfiguracaoGrafico {
   width: 19.2%;
-  height: 7.4%;
+  height: 20px;
   position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.TamanhoTextoGrafico_StartMovel{
+  width: 15%;
+  height: 5%;
 }
 
 .iconeConfiguracaoGrafico {
@@ -46,6 +51,10 @@
   font-weight: 400;
 }
 
+.TamanhoInputGrafico_StartMovel {
+  width: 16.3% !important;
+}
+
 .inputGrafico:focus {
   background-color: var(--cor-text-input);
   box-shadow: 0 0 0px 3.5px var(--box-shadow-color);
@@ -61,7 +70,7 @@
 }
 
 .wrapperTextoCotacaoAtualGrafico {
-  width: 38%;
+  width: 102px;
   height: 7.4%;
   position: absolute;
   display: flex;
@@ -76,4 +85,9 @@
 .textoValorGrafico {
   font-size: 0.8rem;
   margin-bottom: 0;
+}
+
+.TextoMenorGrafico {
+  font-size: 0.7rem;
+  font-weight: 400;
 }

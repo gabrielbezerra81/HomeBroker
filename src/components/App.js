@@ -107,6 +107,14 @@ class App extends React.Component {
               name="bookofertas"
             />
           ) : null}
+          {this.state.startmovel ? (
+            <CompraStartMovel
+              show={this.state.startstop}
+              close={this.handleClose}
+              headerTitle="COMPRA START MÓVEL"
+              name="comprastartmovel"
+            />
+          ) : null}
           {this.state.agendada ? (
             <CompraAgendada
               show={this.state.agendada}
@@ -140,15 +148,6 @@ class App extends React.Component {
               close={this.handleClose}
               headerTitle="COMPRA START STOP"
               name="comprastartstop"
-            />
-          ) : null}
-
-          {this.state.startmovel ? (
-            <CompraStartMovel
-              show={this.state.startstop}
-              close={this.handleClose}
-              headerTitle="COMPRA START MÓVEL"
-              name="comprastartmovel"
             />
           ) : null}
         </Row>

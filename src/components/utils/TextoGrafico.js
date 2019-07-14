@@ -24,3 +24,9 @@ export const TextoCotacaoAtualGrafico = id => (
     <h6 className="TextoCotacaoAtualGrafico">Cotação Atual</h6>
   </div>
 );
+
+export const TextoMenorGrafico = (texto, id) => (
+  <div className="wrapperIconeConfiguracaoGrafico" id={id}>
+    <h6 className="TextoMenorGrafico">{texto}</h6>
+  </div>
+);

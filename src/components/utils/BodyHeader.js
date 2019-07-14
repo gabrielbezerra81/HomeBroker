@@ -28,8 +28,8 @@ export const BodyHeaderCompleto = ({ props }) => (
 );
 
 export const BodyHeaderAtivo = ({ props }) => (
-  <Row className="rowBodyHeader">
-    <Col md={3} className="colAtivo1BodyHeader">
+  <Row className="rowBodyHeaderCompraStartMovel">
+    <Col md={2} className="colAtivo1BodyHeader">
       <h5>PETR4, PETROBRAS</h5>
     </Col>
     <Col md={2} className="colAtivo2BodyHeader">

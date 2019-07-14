@@ -1,64 +1,95 @@
 #comprastartmovel {
-  max-width: 600px;
-  min-width: 600px;
+  max-width: 1000px;
+  min-width: 1000px;
 }
 
 #comprastartmovel .mbody {
-  height: 386.98px;
+  height: unset !important;
+}
+/*
+Inputs do grafico
+*/
+
+#StopDisparoGrafico_CSM {
+  top: 84%;
+  left: 29.5%;
 }
 
-#GainDisparoGrafico_SM {
-  top: 19%;
-  left: 48.6%;
+#StopExecGrafico_CSM {
+  top: 87.5%;
+  left: 29.5%;
 }
 
-#GainExecGrafico_SM {
-  top: 19%;
-  left: 69%;
-}
-
-#StopDisparoGrafico_SM {
-  top: 80.3%;
-  left: 48.7%;
-}
-
-#StopExecGrafico_SM {
-  top: 80.3%;
-  left: 69%;
-}
-#CotacaoAtualGrafico_SM {
-  top: 49.4%;
-  left: 3.3%;
-  width: 19%;
-  height: 9.2%;
-}
-
-#ConfigGainGrafico_SM {
-  top: 2%;
-  left: 86%;
-}
-
-#ConfigStopGrafico_SM {
+#CotacaoAtualGrafico_CSM {
   top: 63%;
-  left: 86%;
+  left: 3.7%;
+  width: 16.3%;
+  height: 12px;
 }
 
-#TextoGainDisparo_SM {
-  top: 10.9%;
-  left: 48.9%;
+/*Textos do grafico*/
+
+#TextoPrimeiroAjuste_CSM{
+  top: 3%;
+  left: 19.8%;
 }
 
-#TextoGainExecucao_SM {
-  top: 10.9%;
-  left: 69%;
+#TextoSegundoAjuste_CSM{
+  top: 3%;
+  left: 55.5%;
 }
 
-#TextoStopDisparo_SM {
-  top: 72%;
-  left: 48.9%;
+#TextoGainDisparo_CSM {
+  top: 23%;
+  left: 22%;
 }
 
-#TextoStopExecucao_SM {
-  top: 72%;
-  left: 69%;
+#TextoStopDisparo_CSM {
+  top: 79.5%;
+  left: 22.5%;
+}
+
+#TextoStopExecucao_CSM {
+  top: 91.5%;
+  left: 23.3%;
+}
+
+#TextoDisparoMaisAjuste_CSM {
+  top: 10.5%;
+  left: 54%;
+}
+
+#TextoCotacaoAtualGrafico_CSM {
+  top: 62%;
+  left: 20.5%;
+}
+
+#TextoStop_CSM {
+  top: 73%;
+  left: 26.5%;
+}
+
+#TextoMenorGrafico_Stop1ajuste_CSM {
+  top: 55.5%;
+  left: 33.5%;
+}
+
+#TextoMenorGrafico_StopAnterior_CSM {
+  top: 44.5%;
+  left: 54.5%;
+}
+
+#TextoMenorGrafico_Ajuste1_CSM {
+  top: 23.5%;
+  left: 67.7%;
+}
+
+#TextoMenorGrafico_Ajuste2_CSM {
+  top: 55.5%;
+  left: 67.7%;
+}
+
+#TextoMenorGrafico_Ajuste3_CSM {
+  top: 73.5%;
+  left: 67.7%;
 }

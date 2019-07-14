@@ -3,7 +3,17 @@
   justify-content: center;
 }
 
+.rowBodyHeaderCompraStartMovel {
+  text-align: center;
+  justify-content: flex-start;
+  padding-left: 1.5rem
+}
+
 .rowBodyHeader h5 {
+  font-size: 0.9rem;
+}
+
+.rowBodyHeaderCompraStartMovel h5 {
   font-size: 0.9rem;
 }
 
