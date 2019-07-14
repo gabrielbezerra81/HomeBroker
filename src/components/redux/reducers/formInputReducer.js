@@ -20,27 +20,27 @@ import {
 
 const INITIAL_STATE = {
   ativo: "",
-  entradaDisparo: 0.0,
-  entradaExec: 0.0,
-  valorTotal: 15.52,
-  gainDisparo: 0.0,
-  gainExec: 0.0,
-  stopDisparo: 0.0,
-  stopExec: 0.0,
-  cotacaoAtual: 0.0,
+  entradaDisparo: "0.00",
+  entradaExec: "0.00",
+  valorTotal: "15.52",
+  gainDisparo: "0.00",
+  gainExec: "0.00",
+  stopDisparo: "0.00",
+  stopExec: "0.00",
+  cotacaoAtual: "0.00",
   validadeSelect: "hoje",
   date: new Date(),
   assinatura: "",
-  porcentagem: 9.55,
-  preco: 0.0,
+  porcentagem: "9.55",
+  preco: "0,00",
   showConfigStop: true,
   checkSalvarAssinatura: true,
-  inicioDisparo: 0.0,
-  ajustePadrao: 0.0,
-  disparo1Ajuste: 0.1,
-  disparoMaisAjuste: 0.2,
-  stopMais1Ajuste: 0.3,
-  stopAnteriorAjuste: 0.4
+  inicioDisparo: "0.00",
+  ajustePadrao: "0.00",
+  disparo1Ajuste: "0.10",
+  disparoMaisAjuste: "0.20",
+  stopMais1Ajuste: "0.30",
+  stopAnteriorAjuste: "0.40"
 };
 
 export default namespace => (state = INITIAL_STATE, action) => {
@@ -48,17 +48,17 @@ export default namespace => (state = INITIAL_STATE, action) => {
     case `${MUDAR_ATIVO}${namespace}`:
       return { ...state, ativo: action.payload };
     case `${MUDAR_ENTRADA_DISPARO}${namespace}`:
-      return { ...state, entradaDisparo: action.payload };
+      return { ...state, entradaDisparo: Number(action.payload).toFixed(2) };
     case `${MUDAR_ENTRADA_EXEC}${namespace}`:
-      return { ...state, entradaExec: action.payload };
+      return { ...state, entradaExec: Number(action.payload).toFixed(2) };
     case `${MUDAR_GAIN_DISPARO}${namespace}`:
-      return { ...state, gainDisparo: action.payload };
+      return { ...state, gainDisparo: Number(action.payload).toFixed(2) };
     case `${MUDAR_GAIN_EXEC}${namespace}`:
-      return { ...state, gainExec: action.payload };
+      return { ...state, gainExec: Number(action.payload).toFixed(2) };
     case `${MUDAR_STOP_DISPARO}${namespace}`:
-      return { ...state, stopDisparo: action.payload };
+      return { ...state, stopDisparo: Number(action.payload).toFixed(2) };
     case `${MUDAR_STOP_EXEC}${namespace}`:
-      return { ...state, stopExec: action.payload };
+      return { ...state, stopExec: Number(action.payload).toFixed(2) };
     case `${MUDAR_VALIDADE_SELECT}${namespace}`:
       return { ...state, validadeSelect: action.payload };
     case `${MUDAR_DATA}${namespace}`:
@@ -76,9 +76,9 @@ export default namespace => (state = INITIAL_STATE, action) => {
     case `${MUDAR_CHECK_SALVA_ASSINATURA}${namespace}`:
       return { ...state, checkSalvarAssinatura: action.payload };
     case `${MUDAR_INICIO_DISPARO}${namespace}`:
-      return { ...state, inicioDisparo: action.payload };
+      return { ...state, inicioDisparo: Number(action.payload).toFixed(2) };
     case `${MUDAR_AJUSTE_PADRAO}${namespace}`:
-      return { ...state, ajustePadrao: action.payload };
+      return { ...state, ajustePadrao: Number(action.payload).toFixed(2) };
     default:
       return state;
   }

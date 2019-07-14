@@ -124,6 +124,7 @@ class FormInternoCompraStartMovel extends React.Component {
                         COMPRA_STARTMOVEL_NAMESPACE
                       )
                     }
+                    
                   />
                 </Form.Group>
               </Col>
@@ -135,7 +136,7 @@ class FormInternoCompraStartMovel extends React.Component {
                     type="number"
                     step={0.01}
                     name="stopExecucao"
-                    value={this.props.stopExec}
+                    value={Number(this.props.stopExec).toFixed(2)}
                     onChange={event =>
                       this.props.mudarStopExecAction(
                         event,
@@ -159,6 +160,7 @@ class FormInternoCompraStartMovel extends React.Component {
                     type="number"
                     step={0.01}
                     name="ajusteAssimétrico"
+                    pattern="0.00"
                   />
                 </Form.Group>
               </Col>
