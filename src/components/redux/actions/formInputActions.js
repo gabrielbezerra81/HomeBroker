@@ -18,7 +18,10 @@ import {
   MUDAR_DISPARO_PRIMEIRO_AJUSTE,
   MUDAR_DISPARO_MAIS_AJUSTE,
   MUDAR_STOP_MAIS_PRIMEIRO_AJUSTE,
-  MUDAR_STOP_ANTERIOR_AJUSTE
+  MUDAR_STOP_ANTERIOR_AJUSTE,
+  MUDAR_REDUCAO1,
+  MUDAR_REDUCAO2,
+  MUDAR_GAIN
 } from "../../../constants/ActionTypes";
 
 export const mudarGainDisparoAction = (event, namespace) => {
@@ -192,6 +195,33 @@ export const mudarStopAnteriorAjusteAction = (event, namespace) => {
   return dispatch => {
     dispatch({
       type: `${MUDAR_STOP_ANTERIOR_AJUSTE}${namespace}`,
+      payload: event.target.value
+    });
+  };
+};
+
+export const mudarReducao1Action = (event, namespace) => {
+  return dispatch => {
+    dispatch({
+      type: `${MUDAR_REDUCAO1}${namespace}`,
+      payload: event.target.value
+    });
+  };
+};
+
+export const mudarReducao2Action = (event, namespace) => {
+  return dispatch => {
+    dispatch({
+      type: `${MUDAR_REDUCAO2}${namespace}`,
+      payload: event.target.value
+    });
+  };
+};
+
+export const mudarGainAction = (event, namespace) => {
+  return dispatch => {
+    dispatch({
+      type: `${MUDAR_GAIN}${namespace}`,
       payload: event.target.value
     });
   };

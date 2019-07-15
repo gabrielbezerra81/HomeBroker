@@ -28,8 +28,13 @@ export const MUDAR_DISPARO_MAIS_AJUSTE = "mudar_disparo_mais_ajuste"
 export const MUDAR_STOP_MAIS_PRIMEIRO_AJUSTE = "mudar_stop_mais_primeiro_ajuste"
 export const MUDAR_STOP_ANTERIOR_AJUSTE = "mudar_stop_anterior_ajuste"
 
+export const MUDAR_REDUCAO1 = "mudar_reducao1"
+export const MUDAR_REDUCAO2 = "mudar_reducao2"
+export const MUDAR_GAIN = "mudar_gain"
+
 export const COMPRA_AGENDADA_NAMESPACE = "_COMPRA_AGENDADA";
 export const COMPRA_LIMITADA_NAMESPACE = "_COMPRA_LIMITADA";
 export const COMPRA_MERCADO_NAMESPACE = "_COMPRA_MERCADO";
 export const COMPRA_STARTSTOP_NAMESPACE = "_COMPRA_STARTSTOP";
 export const COMPRA_STARTMOVEL_NAMESPACE = "_COMPRA_STARTMOVEL";
+export const COMPRA_GAINREDUCAO_NAMESPACE = "_COMPRA_GAINREDUCAO"

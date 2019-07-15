@@ -19,7 +19,10 @@ import {
   MUDAR_DISPARO_PRIMEIRO_AJUSTE,
   MUDAR_DISPARO_MAIS_AJUSTE,
   MUDAR_STOP_MAIS_PRIMEIRO_AJUSTE,
-  MUDAR_STOP_ANTERIOR_AJUSTE
+  MUDAR_STOP_ANTERIOR_AJUSTE,
+  MUDAR_REDUCAO1,
+  MUDAR_REDUCAO2,
+  MUDAR_GAIN
 } from "../../../constants/ActionTypes";
 
 const INITIAL_STATE = {
@@ -44,7 +47,10 @@ const INITIAL_STATE = {
   disparo1Ajuste: "0.10",
   disparoMaisAjuste: "0.20",
   stopMais1Ajuste: "0.30",
-  stopAnteriorAjuste: "0.40"
+  stopAnteriorAjuste: "0.40",
+  reducao1: "0.00",
+  reducao2: "0.00",
+  gain: "0.00"
 };
 
 export default namespace => (state = INITIAL_STATE, action) => {
@@ -97,6 +103,12 @@ export default namespace => (state = INITIAL_STATE, action) => {
         ...state,
         stopAnteriorAjuste: action.payload
       };
+    case `${MUDAR_REDUCAO1}${namespace}`:
+      return { ...state, reducao1: action.payload };
+    case `${MUDAR_REDUCAO2}${namespace}`:
+      return { ...state, reducao2: action.payload };
+    case `${MUDAR_GAIN}${namespace}`:
+      return { ...state, gain: action.payload };
     default:
       return state;
   }

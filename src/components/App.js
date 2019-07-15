@@ -7,6 +7,7 @@ import CompraLimitada from "./forms/compra_Limitada/CompraLimitada";
 import CompraMercado from "./forms/compra_Mercado/CompraMercado";
 import CompraStartStop from "./forms/compra_StartStop/CompraStartStop";
 import CompraStartMovel from "./forms/compra_StartMovel/CompraStartMovel";
+import CompraGainReducao from "./forms/compra_GainReducao/CompraGainReducao";
 import { Row } from "react-bootstrap";
 class App extends React.Component {
   constructor(props, context) {
@@ -21,7 +22,8 @@ class App extends React.Component {
       limitada: true,
       mercado: true,
       startstop: true,
-      startmovel: true
+      startmovel: true,
+      gainreducao: true
     };
   }
 
@@ -149,6 +151,14 @@ class App extends React.Component {
               close={this.handleClose}
               headerTitle="COMPRA START MÓVEL"
               name="comprastartmovel"
+            />
+          ) : null}
+          {this.state.startmovel ? (
+            <CompraGainReducao
+              show={this.state.gainreducao}
+              close={this.handleClose}
+              headerTitle="GAIN / REDUÇÃO DE COMPRA"
+              name="compragainreducao"
             />
           ) : null}
         </Row>

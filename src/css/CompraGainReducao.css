@@ -1,0 +1,54 @@
+#compragainreducao {
+  max-width: 950px;
+  min-width: 950px;
+}
+
+#compragainreducao .mbody {
+  height: unset !important;
+}
+/*
+  Inputs do grafico
+  */
+
+#Reducao1Grafico_CGR {
+  top: 48.3%;
+  left: 28.6%;
+}
+
+#Reducao2Grafico_CGR {
+  top: 36%;
+  left: 54.9%;
+}
+#GainGrafico_CGR {
+  top: 24.8%;
+  left: 81%;
+}
+
+#CotacaoAtualGrafico_CGR {
+  top: 82%;
+  left: 2.3%;
+  width: 18%;
+  height: 12px;
+}
+
+/*Textos do grafico*/
+
+#TextoReducao1_CGR {
+  top: 41%;
+  left: 27%;
+}
+
+#TextoReducao2_CGR {
+  top: 29%;
+  left: 53%;
+}
+
+#TextoCotacaoAtualGrafico_CGR {
+  top: 80.5%;
+  left: 20.5%;
+}
+
+#TextoGain_CGR {
+  top: 18%;
+  left: 68%;
+}
