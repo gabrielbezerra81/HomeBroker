@@ -198,7 +198,7 @@ const tableDataOrdens = [
   { disparo: 28.5, ajuste: 0.1, stop: 28 },
   { disparo: 28.6, ajuste: 0.1, stop: 28.1 },
   { disparo: 28.6, ajuste: 0.1, stop: 28.1 },
-  { disparo: 28.6, ajuste: 0.1, stop: 28.1 }
+  { disparo: 28.6, ajuste: 0.1, stop: 28.1 },
 ];
 
 const mapStateToProps = state => ({
