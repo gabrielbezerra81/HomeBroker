@@ -181,7 +181,7 @@ class FormInternoCompraStartMovel extends React.Component {
               <h6 className="textoSimulacao">SIMULAÇÃO</h6>
             </Col>
             <Col className="colTabelaOrdens">
-              <TabelaOrdens tableDataOrdens={tableDataOrdens} />
+              <TabelaOrdens tableDataOrdens={this.props.tabelaOrdens} />
             </Col>
           </Row>
         </div>
@@ -190,17 +190,6 @@ class FormInternoCompraStartMovel extends React.Component {
   }
 }
 
-const tableDataOrdens = [
-  { disparo: 27.5, ajuste: 2.0, stop: 27.0 },
-  { disparo: 28.0, ajuste: 0.5, stop: 27.5 },
-  { disparo: 28.3, ajuste: 0.3, stop: 27.8 },
-  { disparo: 28.4, ajuste: 0.1, stop: 27.9 },
-  { disparo: 28.5, ajuste: 0.1, stop: 28 },
-  { disparo: 28.6, ajuste: 0.1, stop: 28.1 },
-  { disparo: 28.6, ajuste: 0.1, stop: 28.1 },
-  { disparo: 28.6, ajuste: 0.1, stop: 28.1 }
-];
-
 const mapStateToProps = state => ({
   qtde: state.bookOfertaReducer.qtde,
   stopDisparo: state.compraStartMovelReducer.stopDisparo,
@@ -208,7 +197,8 @@ const mapStateToProps = state => ({
   valorTotal: state.compraStartMovelReducer.valorTotal,
   ativo: state.compraStartMovelReducer.ativo,
   inicioDisparo: state.compraStartMovelReducer.inicioDisparo,
-  ajustePadrao: state.compraStartMovelReducer.ajustePadrao
+  ajustePadrao: state.compraStartMovelReducer.ajustePadrao,
+  tabelaOrdens: state.compraStartMovelReducer.tabelaOrdens
 });
 
 export default connect(

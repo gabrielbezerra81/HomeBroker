@@ -1,6 +1,10 @@
 #comprastartmovel {
-  max-width: 950px;
-  min-width: 950px;
+  max-width: 940px;
+  min-width: 940px;
+}
+
+#comprastartmovel .mcontent {
+  min-height: 501.05px;
 }
 
 #comprastartmovel .mbody {

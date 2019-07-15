@@ -50,9 +50,20 @@ const INITIAL_STATE = {
   stopAnteriorAjuste: "0.40",
   reducao1: "0.00",
   reducao2: "0.00",
-  gain: "0.00"
+  gain: "0.00",
+  tabelaOrdens: [
+    { disparo: 27.5, ajuste: 2.0, stop: 27.0 },
+    { disparo: 28.0, ajuste: 0.5, stop: 27.5 },
+    { disparo: 28.3, ajuste: 0.3, stop: 27.8 },
+    { disparo: 28.4, ajuste: 0.1, stop: 27.9 },
+    { disparo: 28.5, ajuste: 0.1, stop: 28 },
+    { disparo: 28.6, ajuste: 0.1, stop: 28.1 },
+    { disparo: 28.6, ajuste: 0.1, stop: 28.1 },
+    { disparo: 28.6, ajuste: 0.1, stop: 28.1 }
+  ],
+  tabelaOfertasCompra: [],
+  tabelaOfertasVenda: []
 };
-
 export default namespace => (state = INITIAL_STATE, action) => {
   if (action.payload === "0" || action.payload === 0)
     action.payload = Number(action.payload).toFixed(2);

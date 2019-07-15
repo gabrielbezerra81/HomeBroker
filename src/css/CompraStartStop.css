@@ -4,12 +4,6 @@
   height: 420px;
 }
 
-#comprastartstopAberto {
-  min-width: 600px;
-  max-width: 600px;
-  height: 420px;
-}
-
 #GainDisparoGrafico_CST {
   top: 16%;
   left: 45%;
@@ -94,4 +88,5 @@
 
 .configStopAberto {
   margin-right: 260px;
+  margin-bottom: 60px;
 }
