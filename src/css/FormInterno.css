@@ -182,5 +182,5 @@
 }
 
 .rowTabelaOrdens {
-  height: 53.5%;
+  min-height: 198px;
 }
