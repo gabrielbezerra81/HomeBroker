@@ -9,7 +9,8 @@ import {
   comprarAgendadaAction,
   mudarAtivoAction,
   mudarInicioDisparoAction,
-  mudarAjustePadraoAction
+  mudarAjustePadraoAction,
+  mudarAjusteAssimetricoAction
 } from "../../redux/actions/formInputActions";
 import { COMPRA_STARTMOVEL_NAMESPACE } from "../../../constants/ActionTypes";
 import TabelaOrdens from "./TabelaOrdens";
@@ -161,6 +162,13 @@ class FormInternoCompraStartMovel extends React.Component {
                     step={0.01}
                     name="ajusteAssimétrico"
                     pattern="0.00"
+                    value={this.props.ajusteAssimetrico}
+                    onChange={event =>
+                      this.props.mudarAjusteAssimetricoAction(
+                        event,
+                        COMPRA_STARTMOVEL_NAMESPACE
+                      )
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -198,7 +206,8 @@ const mapStateToProps = state => ({
   ativo: state.compraStartMovelReducer.ativo,
   inicioDisparo: state.compraStartMovelReducer.inicioDisparo,
   ajustePadrao: state.compraStartMovelReducer.ajustePadrao,
-  tabelaOrdens: state.compraStartMovelReducer.tabelaOrdens
+  tabelaOrdens: state.compraStartMovelReducer.tabelaOrdens,
+  ajusteAssimetrico: state.compraStartMovelReducer.ajusteAssimetrico
 });
 
 export default connect(
@@ -210,7 +219,8 @@ export default connect(
     comprarAgendadaAction,
     mudarAtivoAction,
     mudarInicioDisparoAction,
-    mudarAjustePadraoAction
+    mudarAjustePadraoAction,
+    mudarAjusteAssimetricoAction
   }
 )(FormInternoCompraStartMovel);
 

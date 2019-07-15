@@ -14,124 +14,124 @@
   Inputs do grafico
   */
 
-#StopDisparoGrafico_CSM {
+#StopDisparoGrafico_VSM {
   top: 84%;
   left: 29.5%;
 }
 
-#StopExecGrafico_CSM {
+#StopExecGrafico_VSM {
   top: 87.5%;
   left: 29.5%;
 }
 
-#CotacaoAtualGrafico_CSM {
+#CotacaoAtualGrafico_VSM {
   top: 63%;
   left: 3.7%;
   width: 16.3%;
   height: 12px;
 }
 
-#Disparo1AjusteGrafico_CSM {
+#Disparo1AjusteGrafico_VSM {
   top: 27.6%;
   left: 28.7%;
 }
 
-#DisparoMaisAjusteGrafico_CSM {
+#DisparoMaisAjusteGrafico_VSM {
   top: 16%;
   left: 56%;
 }
 
-#StopMais1AjusteGrafico_CSM {
+#StopMais1AjusteGrafico_VSM {
   top: 60.2%;
   left: 37.4%;
 }
 
-#StopAnteriorAjusteGrafico_CSM {
+#StopAnteriorAjusteGrafico_VSM {
   top: 49.3%;
   left: 56.5%;
 }
 
 /*Textos do grafico*/
 
-#TextoPrimeiroAjuste_CSM {
+#TextoPrimeiroAjuste_VSM {
   top: 3%;
   left: 19.8%;
 }
 
-#TextoSegundoAjuste_CSM {
+#TextoSegundoAjuste_VSM {
   top: 3%;
   left: 55.5%;
 }
 
-#TextoGainDisparo_CSM {
+#TextoGainDisparo_VSM {
   top: 23%;
   left: 22%;
 }
 
-#TextoStopDisparo_CSM {
+#TextoStopDisparo_VSM {
   top: 79.5%;
   left: 22.5%;
 }
 
-#TextoStopExecucao_CSM {
+#TextoStopExecucao_VSM {
   top: 91.5%;
   left: 23.3%;
 }
 
-#TextoDisparoMaisAjuste_CSM {
+#TextoDisparoMaisAjuste_VSM {
   top: 10.5%;
   left: 54%;
 }
 
-#TextoCotacaoAtualGrafico_CSM {
+#TextoCotacaoAtualGrafico_VSM {
   top: 62%;
   left: 20.5%;
 }
 
-#TextoStop_CSM {
+#TextoStop_VSM {
   top: 73%;
   left: 26.5%;
 }
 
-#TextoMenorGrafico_Stop1ajuste_CSM {
+#TextoMenorGrafico_Stop1ajuste_VSM {
   top: 55.5%;
   left: 33.5%;
 }
 
-#TextoMenorGrafico_StopAnterior_CSM {
+#TextoMenorGrafico_StopAnterior_VSM {
   top: 44.5%;
   left: 54.5%;
 }
 
-#TextoMenorGrafico_Ajuste1_CSM {
+#TextoMenorGrafico_Ajuste1_VSM {
   top: 23.5%;
   left: 67.7%;
 }
 
-#TextoMenorGrafico_Ajuste2_CSM {
+#TextoMenorGrafico_Ajuste2_VSM {
   top: 55.5%;
   left: 67.7%;
 }
 
-#TextoMenorGrafico_Ajuste3_CSM {
+#TextoMenorGrafico_Ajuste3_VSM {
   top: 73.5%;
   left: 67.7%;
 }
 
 /*Valores dos textos dos 3 ajustes */
-#ValorAjuste1Grafico_CSM {
+#ValorAjuste1Grafico_VSM {
   top: 24%;
   left: 80.5%;
   color: black;
 }
 
-#ValorAjuste2Grafico_CSM {
+#ValorAjuste2Grafico_VSM {
   top: 56%;
   left: 80.5%;
   color: black;
 }
 
-#ValorAjuste3Grafico_CSM {
+#ValorAjuste3Grafico_VSM {
   top: 75.5%;
   left: 80.5%;
   color: black;

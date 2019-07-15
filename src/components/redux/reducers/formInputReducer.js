@@ -22,7 +22,8 @@ import {
   MUDAR_STOP_ANTERIOR_AJUSTE,
   MUDAR_REDUCAO1,
   MUDAR_REDUCAO2,
-  MUDAR_GAIN
+  MUDAR_GAIN,
+  MUDAR_AJUSTE_ASSIMETRICO
 } from "../../../constants/ActionTypes";
 
 const INITIAL_STATE = {
@@ -52,6 +53,7 @@ const INITIAL_STATE = {
   reducao1: "0.00",
   reducao2: "0.00",
   gain: "0.00",
+  ajusteAssimetrico: "0.00",
   tabelaOrdens: [
     { disparo: 27.5, ajuste: 2.0, stop: 27.0 },
     { disparo: 28.0, ajuste: 0.5, stop: 27.5 },
@@ -126,6 +128,8 @@ export default namespace => (state = INITIAL_STATE, action) => {
       return { ...state, reducao2: action.payload };
     case `${MUDAR_GAIN}${namespace}`:
       return { ...state, gain: action.payload };
+    case `${MUDAR_AJUSTE_ASSIMETRICO}${namespace}`:
+      return { ...state, ajusteAssimetrico: action.payload };
     default:
       return state;
   }

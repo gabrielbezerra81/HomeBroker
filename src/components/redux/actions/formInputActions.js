@@ -21,7 +21,8 @@ import {
   MUDAR_STOP_ANTERIOR_AJUSTE,
   MUDAR_REDUCAO1,
   MUDAR_REDUCAO2,
-  MUDAR_GAIN
+  MUDAR_GAIN,
+  MUDAR_AJUSTE_ASSIMETRICO
 } from "../../../constants/ActionTypes";
 
 export const mudarGainDisparoAction = (event, namespace) => {
@@ -222,6 +223,15 @@ export const mudarGainAction = (event, namespace) => {
   return dispatch => {
     dispatch({
       type: `${MUDAR_GAIN}${namespace}`,
+      payload: event.target.value
+    });
+  };
+};
+
+export const mudarAjusteAssimetricoAction = (event, namespace) => {
+  return dispatch => {
+    dispatch({
+      type: `${MUDAR_AJUSTE_ASSIMETRICO}${namespace}`,
       payload: event.target.value
     });
   };

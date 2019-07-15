@@ -28,6 +28,7 @@ export const MUDAR_DISPARO_MAIS_AJUSTE = "mudar_disparo_mais_ajuste";
 export const MUDAR_STOP_MAIS_PRIMEIRO_AJUSTE =
   "mudar_stop_mais_primeiro_ajuste";
 export const MUDAR_STOP_ANTERIOR_AJUSTE = "mudar_stop_anterior_ajuste";
+export const MUDAR_AJUSTE_ASSIMETRICO = "mudar_ajuste_assimetrico";
 
 export const MUDAR_REDUCAO1 = "mudar_reducao1";
 export const MUDAR_REDUCAO2 = "mudar_reducao2";

@@ -30,7 +30,7 @@ class GraficoVendaStopMovel extends React.Component {
             <Form.Control
               type="number"
               step={0.01}
-              id="StopDisparoGrafico_CSM"
+              id="StopDisparoGrafico_VSM"
               className="inputGrafico TamanhoInputGrafico_StartMovel"
               value={this.props.stopDisparo}
               onChange={event =>
@@ -43,7 +43,7 @@ class GraficoVendaStopMovel extends React.Component {
             <Form.Control
               type="number"
               step={0.01}
-              id="StopExecGrafico_CSM"
+              id="StopExecGrafico_VSM"
               className="inputGrafico TamanhoInputGrafico_StartMovel"
               value={this.props.stopExec}
               onChange={event =>
@@ -51,7 +51,7 @@ class GraficoVendaStopMovel extends React.Component {
               }
             />
             <Form.Control
-              id="CotacaoAtualGrafico_CSM"
+              id="CotacaoAtualGrafico_VSM"
               className="inputGrafico"
               value={this.props.cotacaoAtual}
               onChange={() => false}
@@ -59,7 +59,7 @@ class GraficoVendaStopMovel extends React.Component {
             <Form.Control
               type="number"
               step={0.01}
-              id="Disparo1AjusteGrafico_CSM"
+              id="Disparo1AjusteGrafico_VSM"
               className="inputGrafico TamanhoInputGrafico_StartMovel"
               value={this.props.disparo1Ajuste}
               onChange={event =>
@@ -72,7 +72,7 @@ class GraficoVendaStopMovel extends React.Component {
             <Form.Control
               type="number"
               step={0.01}
-              id="DisparoMaisAjusteGrafico_CSM"
+              id="DisparoMaisAjusteGrafico_VSM"
               className="inputGrafico TamanhoInputGrafico_StartMovel"
               value={this.props.disparoMaisAjuste}
               onChange={event =>
@@ -85,7 +85,7 @@ class GraficoVendaStopMovel extends React.Component {
             <Form.Control
               type="number"
               step={0.01}
-              id="StopMais1AjusteGrafico_CSM"
+              id="StopMais1AjusteGrafico_VSM"
               className="inputGrafico TamanhoInputGrafico_StartMovel"
               value={this.props.stopMais1Ajuste}
               onChange={event =>
@@ -98,7 +98,7 @@ class GraficoVendaStopMovel extends React.Component {
             <Form.Control
               type="number"
               step={0.01}
-              id="StopAnteriorAjusteGrafico_CSM"
+              id="StopAnteriorAjusteGrafico_VSM"
               className="inputGrafico TamanhoInputGrafico_StartMovel"
               value={this.props.stopAnteriorAjuste}
               onChange={event =>
@@ -109,45 +109,45 @@ class GraficoVendaStopMovel extends React.Component {
               }
             />
           </Form>
-          {LabelInputGrafico("Disparo", "TextoGainDisparo_CSM")}
-          {LabelInputGrafico("Disparo + ajuste", "TextoDisparoMaisAjuste_CSM")}
-          {LabelInputGrafico("Disparo", "TextoStopDisparo_CSM")}
-          {LabelInputGrafico("Execução", "TextoStopExecucao_CSM")}
+          {LabelInputGrafico("Disparo", "TextoGainDisparo_VSM")}
+          {LabelInputGrafico("Disparo + ajuste", "TextoDisparoMaisAjuste_VSM")}
+          {LabelInputGrafico("Disparo", "TextoStopDisparo_VSM")}
+          {LabelInputGrafico("Execução", "TextoStopExecucao_VSM")}
 
-          {TextoGainStopGrafico("1º Ajuste", "TextoPrimeiroAjuste_CSM")}
-          {TextoGainStopGrafico("2º Ajuste", "TextoSegundoAjuste_CSM")}
-          {TextoGainStopGrafico("STOP", "TextoStop_CSM")}
-          {TextoCotacaoAtualGrafico("TextoCotacaoAtualGrafico_CSM")}
+          {TextoGainStopGrafico("1º Ajuste", "TextoPrimeiroAjuste_VSM")}
+          {TextoGainStopGrafico("2º Ajuste", "TextoSegundoAjuste_VSM")}
+          {TextoGainStopGrafico("STOP", "TextoStop_VSM")}
+          {TextoCotacaoAtualGrafico("TextoCotacaoAtualGrafico_VSM")}
 
           {TextoMenorGrafico(
             "Stop + 1 ajuste",
-            "TextoMenorGrafico_Stop1ajuste_CSM"
+            "TextoMenorGrafico_Stop1ajuste_VSM"
           )}
           {TextoMenorGrafico(
             "Stop anterior + ajuste",
-            "TextoMenorGrafico_StopAnterior_CSM"
+            "TextoMenorGrafico_StopAnterior_VSM"
           )}
-          {TextoMenorGrafico("Ajuste", "TextoMenorGrafico_Ajuste1_CSM")}
-          {TextoMenorGrafico("Ajuste", "TextoMenorGrafico_Ajuste2_CSM")}
-          {TextoMenorGrafico("Ajuste", "TextoMenorGrafico_Ajuste3_CSM")}
+          {TextoMenorGrafico("Ajuste", "TextoMenorGrafico_Ajuste1_VSM")}
+          {TextoMenorGrafico("Ajuste", "TextoMenorGrafico_Ajuste2_VSM")}
+          {TextoMenorGrafico("Ajuste", "TextoMenorGrafico_Ajuste3_VSM")}
 
           {TextoMenorGrafico(
             Number(
               this.props.disparoMaisAjuste - this.props.disparo1Ajuste
             ).toFixed(2),
-            "ValorAjuste1Grafico_CSM"
+            "ValorAjuste1Grafico_VSM"
           )}
           {TextoMenorGrafico(
             Number(
               this.props.stopAnteriorAjuste - this.props.stopMais1Ajuste
             ).toFixed(2),
-            "ValorAjuste2Grafico_CSM"
+            "ValorAjuste2Grafico_VSM"
           )}
           {TextoMenorGrafico(
             Number(this.props.stopMais1Ajuste - this.props.stopDisparo).toFixed(
               2
             ),
-            "ValorAjuste3Grafico_CSM"
+            "ValorAjuste3Grafico_VSM"
           )}
         </div>
       </Col>
