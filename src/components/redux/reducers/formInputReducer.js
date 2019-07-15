@@ -26,6 +26,7 @@ import {
 } from "../../../constants/ActionTypes";
 
 const INITIAL_STATE = {
+  resultadoAtivo: "PETR4, PETROBRAS",
   ativo: "",
   entradaDisparo: "0.00",
   entradaExec: "0.00",
@@ -62,7 +63,12 @@ const INITIAL_STATE = {
     { disparo: 28.6, ajuste: 0.1, stop: 28.1 }
   ],
   tabelaOfertasCompra: [],
-  tabelaOfertasVenda: []
+  tabelaOfertasVenda: [],
+  TabelaGainReducao: [
+    { disparo: 27.5, execucao: 27.45, qtde: 500, total: 13725 },
+    { disparo: 28, execucao: 27.95, qtde: 300, total: 8400 },
+    { disparo: 29, execucao: 28.95, qtde: 200, total: 5800 }
+  ]
 };
 export default namespace => (state = INITIAL_STATE, action) => {
   if (action.payload === "0" || action.payload === 0)

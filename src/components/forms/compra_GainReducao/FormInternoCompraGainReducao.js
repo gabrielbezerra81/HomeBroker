@@ -6,28 +6,29 @@ import { mudarQtdAction } from "../../redux/actions/bookOfertaActions";
 import {
   mudarGainDisparoAction,
   mudarGainExecAction,
-  mudarStopDisparoAction,
-  mudarStopExecAction,
   mudarValidadeSelectAction,
   mudarDataAction,
   limparAction,
-  comprarAgendadaAction,
   mudarAtivoAction,
-  mudarEntradaDisparoAction,
-  mudarEntradaExecAction,
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction
 } from "../../redux/actions/formInputActions";
 import RowFormValidade from "../../utils/RowFormValidade";
 import RowFormAssinatura from "../../utils/RowFormAssinatura";
-import { COMPRA_AGENDADA_NAMESPACE } from "../../../constants/ActionTypes";
+import { COMPRA_GAINREDUCAO_NAMESPACE } from "../../../constants/ActionTypes";
+import TabelaGainReducao from "./TabelaGainReducao";
 
 class FormInternoCompraGainReducao extends React.Component {
   render() {
     return (
       <Col className="colFormInterno">
-        <div className="divAsModalContainer">
-          <Form>
+        <div className="divAsModalContainer formInternoCompraStartMovel">
+          <Row className="rowTextoAtivoGainReducao">
+            <Col>
+              <h6 className="resultadoTextoAtivo">{this.props.resultadoAtivo}</h6>
+            </Col>
+          </Row>
+          <Form className="item">
             <Row>
               <Col className="colTextInput">
                 <Form.Group>
@@ -41,7 +42,7 @@ class FormInternoCompraGainReducao extends React.Component {
                     onChange={event =>
                       this.props.mudarGainDisparoAction(
                         event,
-                        COMPRA_AGENDADA_NAMESPACE
+                        COMPRA_GAINREDUCAO_NAMESPACE
                       )
                     }
                   />
@@ -59,24 +60,12 @@ class FormInternoCompraGainReducao extends React.Component {
                     onChange={event =>
                       this.props.mudarGainExecAction(
                         event,
-                        COMPRA_AGENDADA_NAMESPACE
+                        COMPRA_GAINREDUCAO_NAMESPACE
                       )
                     }
                   />
                 </Form.Group>
               </Col>
-              <Col md={1} className="colIconeConfig">
-                <Button variant="" className="operation-icons">
-                  <MDBIcon
-                    icon="plus-circle"
-                    size="2x"
-                    className="labelInput-verticalAlign"
-                  />
-                </Button>
-              </Col>
-            </Row>
-
-            <Row>
               <Col className="colTextInput">
                 <Form.Group>
                   <Form.Label>Qtde</Form.Label>
@@ -91,31 +80,43 @@ class FormInternoCompraGainReducao extends React.Component {
                   />
                 </Form.Group>
               </Col>
+              <Col md={1} className="colIconeConfig">
+                <Button variant="" className="operation-icons">
+                  <MDBIcon
+                    icon="plus-circle"
+                    size="2x"
+                    className="labelInput-verticalAlign"
+                  />
+                </Button>
+              </Col>
             </Row>
           </Form>
+          {RowFormValidade(this.props, COMPRA_GAINREDUCAO_NAMESPACE)}
 
-          {RowFormValidade(this.props, COMPRA_AGENDADA_NAMESPACE)}
+          <Row className="rowTabelaGainReducao">
+            <Col className="colTabelaOrdens">
+              <TabelaGainReducao
+                tableDataOrdens={this.props.TabelaGainReducao}
+              />
+            </Col>
+          </Row>
 
-          <div className="customFooter">
-            {RowFormAssinatura(this.props, COMPRA_AGENDADA_NAMESPACE)}
+          <div className="customFooter footerSemBorda">
+            {RowFormAssinatura(this.props, COMPRA_GAINREDUCAO_NAMESPACE)}
             <Row>
               <Col md={3}>
                 <Button
                   variant="secondary"
                   size="sm"
                   onClick={() =>
-                    this.props.limparAction(COMPRA_AGENDADA_NAMESPACE)
+                    this.props.limparAction(COMPRA_GAINREDUCAO_NAMESPACE)
                   }
                 >
                   <h6>Limpar</h6>
                 </Button>
               </Col>
               <Col md={6}>
-                <Button
-                  variant="primary"
-                  size="sm"
-                  onClick={() => this.props.comprarAgendadaAction()}
-                >
+                <Button variant="primary" size="sm" onClick={() => false}>
                   <h6>Comprar</h6>
                 </Button>
               </Col>
@@ -129,18 +130,15 @@ class FormInternoCompraGainReducao extends React.Component {
 
 const mapStateToProps = state => ({
   qtde: state.bookOfertaReducer.qtde,
-  gainDisparo: state.compraAgendadaReducer.gainDisparo,
-  gainExec: state.compraAgendadaReducer.gainExec,
-  stopDisparo: state.compraAgendadaReducer.stopDisparo,
-  stopExec: state.compraAgendadaReducer.stopExec,
-  validadeSelect: state.compraAgendadaReducer.validadeSelect,
-  date: state.compraAgendadaReducer.date,
-  valorTotal: state.compraAgendadaReducer.valorTotal,
-  entradaDisparo: state.compraAgendadaReducer.entradaDisparo,
-  entradaExec: state.compraAgendadaReducer.entradaExec,
-  ativo: state.compraAgendadaReducer.ativo,
-  assinatura: state.compraAgendadaReducer.assinatura,
-  checkSalvarAssinatura: state.compraAgendadaReducer.checkSalvarAssinatura
+  gainDisparo: state.compraGainReducao.gainDisparo,
+  gainExec: state.compraGainReducao.gainExec,
+  validadeSelect: state.compraGainReducao.validadeSelect,
+  date: state.compraGainReducao.date,
+  ativo: state.compraGainReducao.ativo,
+  resultadoAtivo: state.compraGainReducao.resultadoAtivo,
+  assinatura: state.compraGainReducao.assinatura,
+  checkSalvarAssinatura: state.compraGainReducao.checkSalvarAssinatura,
+  TabelaGainReducao: state.compraGainReducao.TabelaGainReducao
 });
 
 export default connect(
@@ -149,15 +147,10 @@ export default connect(
     mudarQtdAction,
     mudarGainDisparoAction,
     mudarGainExecAction,
-    mudarStopDisparoAction,
-    mudarStopExecAction,
     mudarValidadeSelectAction,
     mudarDataAction,
     limparAction,
-    comprarAgendadaAction,
     mudarAtivoAction,
-    mudarEntradaDisparoAction,
-    mudarEntradaExecAction,
     mudarAssinaturaAction,
     mudarCheckSalvarAssinaturaAction
   }

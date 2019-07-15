@@ -11,10 +11,6 @@
   display: grid;
 }
 
-.formInternoCompraStartMovel {
-  display: inherit;
-}
-
 .colFormInterno {
   max-width: 310px;
   min-width: 310px;
@@ -183,4 +179,32 @@
 
 .rowTabelaOrdens {
   min-height: 198px;
+}
+
+.rowTabelaGainReducao {
+  min-height: 55px;
+}
+
+.tabelaGainReducao {
+  background: var(--brackground-color);
+  margin: 0;
+  color: #ddd;
+  border-bottom: 1px dashed #ddd;
+  border-top: 1px dashed #ddd;
+  margin: 0.5rem 0 0.2rem 0;
+}
+
+.ultimaLinhaTabelaGainReducao {
+  border-top: 1px dashed #ddd;
+}
+
+.footerSemBorda {
+  border-top: 0px !important;
+}
+
+.rowTextoAtivoGainReducao{
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px dashed #ddd;
+  margin-bottom: 0.2rem
 }
