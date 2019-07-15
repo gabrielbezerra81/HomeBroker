@@ -11,6 +11,10 @@
   display: grid;
 }
 
+.formInternoCompraStartMovel {
+  display: inherit;
+}
+
 .colFormInterno {
   max-width: 310px;
   min-width: 310px;
@@ -133,7 +137,7 @@
   border-bottom: 1px dashed #ddd;
   margin-top: 0.4rem;
   margin-bottom: 0.4rem;
-  padding-bottom: 0.5rem
+  padding-bottom: 0.5rem;
 }
 
 .row.rowTextoAjusteAssimetrico h6 {
@@ -152,6 +156,31 @@
   padding-right: 0px;
 }
 
-.fa-plus-circle{
-  font-size: 1.2rem
+.fa-plus-circle {
+  font-size: 1.2rem;
+}
+
+.colTextoSimulacao {
+  padding-left: 0;
+  padding-right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px #ddd dashed;
+}
+
+.textoSimulacao {
+  width: 80px;
+  height: 25px;
+  margin-bottom: 0;
+  transform: rotateZ(-90deg);
+}
+
+.colTabelaOrdens {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.rowTabelaOrdens {
+  height: 57%;
 }

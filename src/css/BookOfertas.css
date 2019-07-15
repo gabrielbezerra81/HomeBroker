@@ -13,8 +13,8 @@
   color: #ddd;
 }
 
-.tableBook th {
-  padding: 0.5rem !important;
+th {
+  padding: 0.2rem !important;
 }
 
 .table-striped > tbody > tr:nth-child(odd) > td,
@@ -83,8 +83,8 @@
   color: rgb(124, 176, 183);
 }
 
-.tableItemBookOferta td {
-  padding: 0rem;
+td {
+  padding: 0.05rem !important;
 }
 
 .ColFormQtde {

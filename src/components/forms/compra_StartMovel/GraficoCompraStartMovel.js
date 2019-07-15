@@ -65,7 +65,12 @@ class GraficoCompraStartMovel extends React.Component {
               id="Disparo1AjusteGrafico_CSM"
               className="inputGrafico TamanhoInputGrafico_StartMovel"
               value={this.props.disparo1Ajuste}
-              onChange={event => this.props.mudarDisparo1AjusteAction(event, COMPRA_STARTMOVEL_NAMESPACE)}
+              onChange={event =>
+                this.props.mudarDisparo1AjusteAction(
+                  event,
+                  COMPRA_STARTMOVEL_NAMESPACE
+                )
+              }
             />
             <Form.Control
               type="number"
@@ -73,7 +78,12 @@ class GraficoCompraStartMovel extends React.Component {
               id="DisparoMaisAjusteGrafico_CSM"
               className="inputGrafico TamanhoInputGrafico_StartMovel"
               value={this.props.disparoMaisAjuste}
-              onChange={event => this.props.mudarDisparoMaisAjusteAction(event, COMPRA_STARTMOVEL_NAMESPACE)}
+              onChange={event =>
+                this.props.mudarDisparoMaisAjusteAction(
+                  event,
+                  COMPRA_STARTMOVEL_NAMESPACE
+                )
+              }
             />
             <Form.Control
               type="number"
@@ -81,7 +91,12 @@ class GraficoCompraStartMovel extends React.Component {
               id="StopMais1AjusteGrafico_CSM"
               className="inputGrafico TamanhoInputGrafico_StartMovel"
               value={this.props.stopMais1Ajuste}
-              onChange={event => this.props.mudarStopMaisPrimeiroAjusteAction(event, COMPRA_STARTMOVEL_NAMESPACE)}
+              onChange={event =>
+                this.props.mudarStopMaisPrimeiroAjusteAction(
+                  event,
+                  COMPRA_STARTMOVEL_NAMESPACE
+                )
+              }
             />
             <Form.Control
               type="number"
@@ -89,7 +104,12 @@ class GraficoCompraStartMovel extends React.Component {
               id="StopAnteriorAjusteGrafico_CSM"
               className="inputGrafico TamanhoInputGrafico_StartMovel"
               value={this.props.stopAnteriorAjuste}
-              onChange={event => this.props.mudarStopAnteriorAjusteAction(event, COMPRA_STARTMOVEL_NAMESPACE)}
+              onChange={event =>
+                this.props.mudarStopAnteriorAjusteAction(
+                  event,
+                  COMPRA_STARTMOVEL_NAMESPACE
+                )
+              }
             />
           </Form>
           {LabelInputGrafico("Disparo", "TextoGainDisparo_CSM")}

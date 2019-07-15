@@ -12,12 +12,13 @@ import {
   mudarAjustePadraoAction
 } from "../../redux/actions/formInputActions";
 import { COMPRA_STARTMOVEL_NAMESPACE } from "../../../constants/ActionTypes";
+import TabelaOrdens from "./TabelaOrdens";
 
 class FormInternoCompraStartMovel extends React.Component {
   render() {
     return (
       <Col className="colFormInterno">
-        <div className="divAsModalContainer">
+        <div className="divAsModalContainer formInternoCompraStartMovel">
           <Form>
             <Row>
               <Col md={2} className="colLabelInput">
@@ -175,9 +176,12 @@ class FormInternoCompraStartMovel extends React.Component {
             </Row>
           </Form>
 
-          <Row>
-            <Col>
-              <h6>Simulação</h6>
+          <Row className="rowTabelaOrdens">
+            <Col md={1} className="colTextoSimulacao">
+              <h6 className="textoSimulacao">SIMULAÇÃO</h6>
+            </Col>
+            <Col className="colTabelaOrdens">
+              <TabelaOrdens tableDataOrdens={tableDataOrdens} />
             </Col>
           </Row>
         </div>
@@ -185,6 +189,17 @@ class FormInternoCompraStartMovel extends React.Component {
     );
   }
 }
+
+const tableDataOrdens = [
+  { disparo: 27.5, ajuste: 2.0, stop: 27.0 },
+  { disparo: 28.0, ajuste: 0.5, stop: 27.5 },
+  { disparo: 28.3, ajuste: 0.3, stop: 27.8 },
+  { disparo: 28.4, ajuste: 0.1, stop: 27.9 },
+  { disparo: 28.5, ajuste: 0.1, stop: 28 },
+  { disparo: 28.6, ajuste: 0.1, stop: 28.1 },
+  { disparo: 28.6, ajuste: 0.1, stop: 28.1 },
+  { disparo: 28.6, ajuste: 0.1, stop: 28.1 }
+];
 
 const mapStateToProps = state => ({
   qtde: state.bookOfertaReducer.qtde,

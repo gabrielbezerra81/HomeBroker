@@ -83,6 +83,8 @@ class FormInternoCompraLimitada extends React.Component {
                     thousandSeparator="."
                     decimalSeparator=","
                     allowNegative={false}
+                    type="number"
+                    maxLength={300}
                     name="disparo"
                     value={this.props.preco}
                     onChange={event =>
