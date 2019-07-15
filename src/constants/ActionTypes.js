@@ -23,18 +23,26 @@ export const MUDAR_CHECK_SALVA_ASSINATURA = "mudar_check_salva_assinatura";
 
 export const MUDAR_INICIO_DISPARO = "mudar_inicio_disparo";
 export const MUDAR_AJUSTE_PADRAO = "mudar_ajuste_padrao";
-export const MUDAR_DISPARO_PRIMEIRO_AJUSTE = "mudar_disparo_primeiro_ajuste"
-export const MUDAR_DISPARO_MAIS_AJUSTE = "mudar_disparo_mais_ajuste"
-export const MUDAR_STOP_MAIS_PRIMEIRO_AJUSTE = "mudar_stop_mais_primeiro_ajuste"
-export const MUDAR_STOP_ANTERIOR_AJUSTE = "mudar_stop_anterior_ajuste"
+export const MUDAR_DISPARO_PRIMEIRO_AJUSTE = "mudar_disparo_primeiro_ajuste";
+export const MUDAR_DISPARO_MAIS_AJUSTE = "mudar_disparo_mais_ajuste";
+export const MUDAR_STOP_MAIS_PRIMEIRO_AJUSTE =
+  "mudar_stop_mais_primeiro_ajuste";
+export const MUDAR_STOP_ANTERIOR_AJUSTE = "mudar_stop_anterior_ajuste";
 
-export const MUDAR_REDUCAO1 = "mudar_reducao1"
-export const MUDAR_REDUCAO2 = "mudar_reducao2"
-export const MUDAR_GAIN = "mudar_gain"
+export const MUDAR_REDUCAO1 = "mudar_reducao1";
+export const MUDAR_REDUCAO2 = "mudar_reducao2";
+export const MUDAR_GAIN = "mudar_gain";
 
 export const COMPRA_AGENDADA_NAMESPACE = "_COMPRA_AGENDADA";
 export const COMPRA_LIMITADA_NAMESPACE = "_COMPRA_LIMITADA";
 export const COMPRA_MERCADO_NAMESPACE = "_COMPRA_MERCADO";
 export const COMPRA_STARTSTOP_NAMESPACE = "_COMPRA_STARTSTOP";
 export const COMPRA_STARTMOVEL_NAMESPACE = "_COMPRA_STARTMOVEL";
-export const COMPRA_GAINREDUCAO_NAMESPACE = "_COMPRA_GAINREDUCAO"
+export const COMPRA_GAINREDUCAO_NAMESPACE = "_COMPRA_GAINREDUCAO";
+
+export const VENDA_AGENDADA_NAMESPACE = "_VENDA_AGENDADA";
+export const VENDA_LIMITADA_NAMESPACE = "_VENDA_LIMITADA";
+export const VENDA_MERCADO_NAMESPACE = "_VENDA_MERCADO";
+export const VENDA_STARTSTOP_NAMESPACE = "_VENDA_STARTSTOP";
+export const VENDA_STOPMOVEL_NAMESPACE = "_VENDA_STOPMOVEL";
+export const VENDA_GAINREDUCAO_NAMESPACE = "_VENDA_GAINREDUCAO";

@@ -2,19 +2,19 @@ import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import { Row } from "react-bootstrap";
-import DraggableModal from "../../utils/DraggableModal";
-import FormInternoCompraStartMovel from "./FormInternoCompraStartMovel";
-import GraficoCompraStartMovel from "./GraficoCompraStartMovel";
-import BodyHeaderCompraStartMovel from "./BodyHeaderCompraStartMovel";
-import { modalHeader } from "../../utils/FormHeader";
+import DraggableModal from "../../../utils/DraggableModal";
+import FormInternoVendaStopMovel from "./FormInternoVendaStopMovel";
+import GraficoVendaStopMovel from "./GraficoVendaStopMovel";
+import BodyHeaderVendaStopMovel from "./BodyHeaderVendaStopMovel";
+import { modalHeader } from "../../../utils/FormHeader";
 
-class CompraStarMovel extends React.Component {
+class VendaStopMovel extends React.Component {
   render() {
     return (
       <DraggableModal
         show={this.props.show}
         close={this.props.close}
-        id="comprastartmovel"
+        id="vendastopmovel"
         headerTitle={this.props.headerTitle}
         renderModalBody={() => modalBody()}
         headerClass="border-green"
@@ -26,14 +26,12 @@ class CompraStarMovel extends React.Component {
   }
 }
 
-
-
 const modalBody = () => (
   <div className="mbody">
-    <BodyHeaderCompraStartMovel />
+    <BodyHeaderVendaStopMovel />
     <Row>
-      <FormInternoCompraStartMovel />
-      <GraficoCompraStartMovel />
+      <FormInternoVendaStopMovel />
+      <GraficoVendaStopMovel />
     </Row>
   </div>
 );
@@ -43,4 +41,4 @@ const mapStateToProps = state => ({});
 export default connect(
   mapStateToProps,
   {}
-)(CompraStarMovel);
+)(VendaStopMovel);

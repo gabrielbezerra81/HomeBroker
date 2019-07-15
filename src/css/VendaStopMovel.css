@@ -1,0 +1,138 @@
+#vendastopmovel {
+  max-width: 940px;
+  min-width: 940px;
+}
+
+#vendastopmovel .mcontent {
+  min-height: 501.05px;
+}
+
+#vendastopmovel .mbody {
+  height: unset !important;
+}
+/*
+  Inputs do grafico
+  */
+
+#StopDisparoGrafico_CSM {
+  top: 84%;
+  left: 29.5%;
+}
+
+#StopExecGrafico_CSM {
+  top: 87.5%;
+  left: 29.5%;
+}
+
+#CotacaoAtualGrafico_CSM {
+  top: 63%;
+  left: 3.7%;
+  width: 16.3%;
+  height: 12px;
+}
+
+#Disparo1AjusteGrafico_CSM {
+  top: 27.6%;
+  left: 28.7%;
+}
+
+#DisparoMaisAjusteGrafico_CSM {
+  top: 16%;
+  left: 56%;
+}
+
+#StopMais1AjusteGrafico_CSM {
+  top: 60.2%;
+  left: 37.4%;
+}
+
+#StopAnteriorAjusteGrafico_CSM {
+  top: 49.3%;
+  left: 56.5%;
+}
+
+/*Textos do grafico*/
+
+#TextoPrimeiroAjuste_CSM {
+  top: 3%;
+  left: 19.8%;
+}
+
+#TextoSegundoAjuste_CSM {
+  top: 3%;
+  left: 55.5%;
+}
+
+#TextoGainDisparo_CSM {
+  top: 23%;
+  left: 22%;
+}
+
+#TextoStopDisparo_CSM {
+  top: 79.5%;
+  left: 22.5%;
+}
+
+#TextoStopExecucao_CSM {
+  top: 91.5%;
+  left: 23.3%;
+}
+
+#TextoDisparoMaisAjuste_CSM {
+  top: 10.5%;
+  left: 54%;
+}
+
+#TextoCotacaoAtualGrafico_CSM {
+  top: 62%;
+  left: 20.5%;
+}
+
+#TextoStop_CSM {
+  top: 73%;
+  left: 26.5%;
+}
+
+#TextoMenorGrafico_Stop1ajuste_CSM {
+  top: 55.5%;
+  left: 33.5%;
+}
+
+#TextoMenorGrafico_StopAnterior_CSM {
+  top: 44.5%;
+  left: 54.5%;
+}
+
+#TextoMenorGrafico_Ajuste1_CSM {
+  top: 23.5%;
+  left: 67.7%;
+}
+
+#TextoMenorGrafico_Ajuste2_CSM {
+  top: 55.5%;
+  left: 67.7%;
+}
+
+#TextoMenorGrafico_Ajuste3_CSM {
+  top: 73.5%;
+  left: 67.7%;
+}
+
+/*Valores dos textos dos 3 ajustes */
+#ValorAjuste1Grafico_CSM {
+  top: 24%;
+  left: 80.5%;
+  color: black;
+}
+
+#ValorAjuste2Grafico_CSM {
+  top: 56%;
+  left: 80.5%;
+  color: black;
+}
+
+#ValorAjuste3Grafico_CSM {
+  top: 75.5%;
+  left: 80.5%;
+  color: black;
+}

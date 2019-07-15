@@ -8,6 +8,9 @@ import CompraMercado from "./forms/compra_Mercado/CompraMercado";
 import CompraStartStop from "./forms/compra_StartStop/CompraStartStop";
 import CompraStartMovel from "./forms/compra_StartMovel/CompraStartMovel";
 import CompraGainReducao from "./forms/compra_GainReducao/CompraGainReducao";
+
+import VendaStopMovel from "./forms/venda/venda_StopMovel/VendaStopMovel";
+
 import { Row } from "react-bootstrap";
 class App extends React.Component {
   constructor(props, context) {
@@ -23,7 +26,8 @@ class App extends React.Component {
       mercado: true,
       startstop: true,
       startmovel: true,
-      gainreducao: true
+      gainreducao: true,
+      venda_stop_movel: true
     };
   }
 
@@ -102,7 +106,6 @@ class App extends React.Component {
         <Row className="appbody">
           {this.state.book ? (
             <BookOfertas
-              show={this.state.book}
               close={this.handleClose}
               tableDataVenda={dataOrdemVenda}
               tableDataCompra={dataOrdemCompra}
@@ -112,7 +115,6 @@ class App extends React.Component {
 
           {this.state.agendada ? (
             <CompraAgendada
-              show={this.state.agendada}
               close={this.handleClose}
               headerTitle="COMPRA AGENDADA"
               name="compraagendada"
@@ -121,7 +123,6 @@ class App extends React.Component {
 
           {this.state.limitada ? (
             <CompraLimitada
-              show={this.state.limitada}
               close={this.handleClose}
               headerTitle="COMPRA LIMITADA"
               name="compralimitada"
@@ -130,7 +131,6 @@ class App extends React.Component {
 
           {this.state.mercado ? (
             <CompraMercado
-              show={this.state.mercado}
               close={this.handleClose}
               headerTitle="COMPRA A MERCADO"
               name="compramercado"
@@ -139,7 +139,6 @@ class App extends React.Component {
 
           {this.state.startstop ? (
             <CompraStartStop
-              show={this.state.startstop}
               close={this.handleClose}
               headerTitle="COMPRA START STOP"
               name="comprastartstop"
@@ -147,18 +146,23 @@ class App extends React.Component {
           ) : null}
           {this.state.startmovel ? (
             <CompraStartMovel
-              show={this.state.startstop}
               close={this.handleClose}
               headerTitle="COMPRA START MÓVEL"
               name="comprastartmovel"
             />
           ) : null}
-          {this.state.startmovel ? (
+          {this.state.gainreducao ? (
             <CompraGainReducao
-              show={this.state.gainreducao}
               close={this.handleClose}
               headerTitle="GAIN / REDUÇÃO DE COMPRA"
               name="compragainreducao"
+            />
+          ) : null}
+          {this.state.venda_stop_movel ? (
+            <VendaStopMovel
+              close={this.handleClose}
+              headerTitle="VENDA STOP MÓVEL"
+              name="vendastopmovel"
             />
           ) : null}
         </Row>
