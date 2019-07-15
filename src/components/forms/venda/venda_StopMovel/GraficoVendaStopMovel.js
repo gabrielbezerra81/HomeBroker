@@ -11,7 +11,7 @@ import {
   mudarStopMaisPrimeiroAjusteAction,
   mudarStopAnteriorAjusteAction
 } from "../../../redux/actions/formInputActions";
-import img from "../../../../img/CompraStartMovel.png";
+import img from "../../../../img/VendaStopMovel.png";
 import {
   LabelInputGrafico,
   TextoGainStopGrafico,

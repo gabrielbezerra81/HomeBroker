@@ -15,124 +15,125 @@ Inputs do grafico
 */
 
 #StopDisparoGrafico_CSM {
-  top: 84%;
-  left: 29.5%;
+  top: 19%;
+  left: 30%;
 }
 
 #StopExecGrafico_CSM {
-  top: 87.5%;
-  left: 29.5%;
+  top: 15.4%;
+  left: 30%;
 }
 
 #CotacaoAtualGrafico_CSM {
-  top: 63%;
-  left: 3.7%;
+  top: 40%;
+  left: 4.6%;
   width: 16.3%;
   height: 12px;
 }
 
 #Disparo1AjusteGrafico_CSM {
-  top: 27.6%;
-  left: 28.7%;
+  top: 76.2%;
+  left: 29%;
 }
 
 #DisparoMaisAjusteGrafico_CSM {
-  top: 16%;
-  left: 56%;
+  top: 88%;
+  left: 56.4%;
 }
 
 #StopMais1AjusteGrafico_CSM {
-  top: 60.2%;
-  left: 37.4%;
+  top: 43.2%;
+  left: 37.5%;
 }
 
 #StopAnteriorAjusteGrafico_CSM {
-  top: 49.3%;
-  left: 56.5%;
+  top: 54.3%;
+  left: 57.2%;
 }
 
 /*Textos do grafico*/
 
 #TextoPrimeiroAjuste_CSM {
-  top: 3%;
+  top: 1.5%;
   left: 19.8%;
 }
 
 #TextoSegundoAjuste_CSM {
-  top: 3%;
+  top: 1.5%;
   left: 55.5%;
 }
 
 #TextoGainDisparo_CSM {
-  top: 23%;
-  left: 22%;
-}
-
-#TextoStopDisparo_CSM {
-  top: 79.5%;
-  left: 22.5%;
+  top: 70.5%;
+  left: 23.5%;
 }
 
 #TextoStopExecucao_CSM {
-  top: 91.5%;
-  left: 23.3%;
+  top: 10.5%;
+  
+  left: 23.8%;
+}
+
+#TextoStopDisparo_CSM {
+  top: 23.5%;
+  left: 23%;
 }
 
 #TextoDisparoMaisAjuste_CSM {
-  top: 10.5%;
-  left: 54%;
+  top: 82%;
+  left: 54.5%;
 }
 
 #TextoCotacaoAtualGrafico_CSM {
-  top: 62%;
-  left: 20.5%;
+  top: 39%;
+  left: 21%;
 }
 
 #TextoStop_CSM {
-  top: 73%;
-  left: 26.5%;
+  top: 8%;
+  left: 33%;
 }
 
 #TextoMenorGrafico_Stop1ajuste_CSM {
-  top: 55.5%;
+  top: 47.5%;
   left: 33.5%;
 }
 
 #TextoMenorGrafico_StopAnterior_CSM {
-  top: 44.5%;
-  left: 54.5%;
+  top: 58.5%;
+  left: 55.5%;
 }
 
 #TextoMenorGrafico_Ajuste1_CSM {
-  top: 23.5%;
-  left: 67.7%;
+  top: 27.5%;
+  left: 68.3%;
 }
 
 #TextoMenorGrafico_Ajuste2_CSM {
-  top: 55.5%;
-  left: 67.7%;
+  top: 47.5%;
+  left: 68.3%;
 }
 
 #TextoMenorGrafico_Ajuste3_CSM {
-  top: 73.5%;
-  left: 67.7%;
+  top: 80%;
+  left: 68.3%;
 }
 
 /*Valores dos textos dos 3 ajustes */
 #ValorAjuste1Grafico_CSM {
-  top: 24%;
-  left: 80.5%;
+  top: 28%;
+  left: 81%;
   color: black;
 }
 
 #ValorAjuste2Grafico_CSM {
-  top: 56%;
-  left: 80.5%;
+  top: 47.8%;
+  left: 81%;
   color: black;
 }
 
 #ValorAjuste3Grafico_CSM {
-  top: 75.5%;
-  left: 80.5%;
+  top: 80.5%;
+  left: 81%;
   color: black;
 }
