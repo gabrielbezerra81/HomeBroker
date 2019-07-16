@@ -12,6 +12,7 @@ import CompraGainReducao from "./forms/compra_GainReducao/CompraGainReducao";
 import VendaAgendada from "./forms/venda/venda_Agendada/VendaAgendada";
 import VendaLimitada from "./forms/venda/venda_Limitada/VendaLimitada";
 import VendaMercado from "./forms/venda/venda_Mercado/VendaMercado";
+import VendaStartStop from './forms/venda/venda_StartStop/VendaStartStop'
 import VendaStopMovel from "./forms/venda/venda_StopMovel/VendaStopMovel";
 import VendaGainReducao from "./forms/venda/venda_GainReducao/VendaGainReducao";
 
@@ -23,6 +24,7 @@ class App extends React.Component {
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
 
+    //Verificar names nos icones de fechar e nos componentes abaixo
     this.state = {
       book: true,
       agendada: true,
@@ -34,6 +36,7 @@ class App extends React.Component {
       venda_agendada: true,
       venda_limitada: true,
       venda_mercado: true,
+      venda_startstop: true,
       venda_stop_movel: true,
       venda_gain_reducao: true
     };
@@ -185,6 +188,13 @@ class App extends React.Component {
               close={this.handleClose}
               headerTitle="VENDA MERCADO"
               name="vendamercado"
+            />
+          ) : null}
+          {this.state.venda_startstop ? (
+            <VendaStartStop
+              close={this.handleClose}
+              headerTitle="VENDA START STOP"
+              name="vendastartstop"
             />
           ) : null}
           {this.state.venda_stop_movel ? (

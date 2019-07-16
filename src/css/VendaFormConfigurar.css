@@ -1,0 +1,162 @@
+/*
+Textos da primeira parte do grafico
+*/
+#TextoGainDisparo_CONFIGURAR_VENDA {
+  top: 34%;
+  left: 31%;
+}
+
+#TextoGainExecucao_CONFIGURAR_VENDA {
+  top: 46%;
+  left: 33.5%;
+}
+
+#TextoStopDisparo_CONFIGURAR_VENDA {
+  top: 9%;
+  left: 31%;
+}
+
+#TextoStopExecucao_CONFIGURAR_VENDA {
+  top: 21%;
+  left: 33.5%;
+}
+
+#TextoGain_CONFIGURAR_VENDA {
+  top: 28.5%;
+  left: 26%;
+}
+
+#TextoStop_CONFIGURAR_VENDA {
+  top: 3%;
+  left: 26%;
+}
+
+/*
+  Icones de configuração do gráfico
+  */
+
+#ConfigGain1Grafico_CONFIGURAR_VENDA {
+  top: 27.7%;
+  left: 49%;
+}
+
+#ConfigStop1Grafico_CONFIGURAR_VENDA {
+  top: 2.2%;
+  left: 48.5%;
+}
+
+#ConfigGain2Grafico_CONFIGURAR_VENDA {
+  top: 75.3%;
+  left: 49%;
+}
+
+#ConfigStop2Grafico_CONFIGURAR_VENDA {
+  top: 51%;
+  left: 49%;
+}
+
+/*
+  Textos da segunda parte do gráfico
+  */
+
+#TextoGainDisparo2_CONFIGURAR_VENDA {
+  top: 81.6%;
+  left: 31%;
+}
+
+#TextoGainExecucao2_CONFIGURAR_VENDA {
+  top: 93.5%;
+  left: 33.5%;
+}
+
+#TextoStopDisparo2_CONFIGURAR_VENDA {
+  top: 56.3%;
+  left: 31%;
+}
+
+#TextoStopExecucao2_CONFIGURAR_VENDA {
+  top: 68.5%;
+  left: 33.5%;
+}
+
+#TextoGain2_CONFIGURAR_VENDA {
+  top: 76%;
+  left: 26%;
+}
+
+#TextoStop2_CONFIGURAR_VENDA {
+  top: 51.5%;
+  left: 26%;
+}
+
+/*
+  Textos de valor total do gráfico
+  */
+
+#ValorTotalGain1_CONFIGURAR_VENDA {
+  top: 30%;
+  left: 72%;
+}
+
+#ValorTotalStop1_CONFIGURAR_VENDA {
+  top: 5%;
+  left: 72%;
+}
+
+#ValorTotalGain2_CONFIGURAR_VENDA {
+  top: 77.5%;
+  left: 72%;
+}
+
+#ValorTotalStop2_CONFIGURAR_VENDA {
+  top: 52.5%;
+  left: 72%;
+}
+
+/*
+  Inputs da primeira parte do gráfico
+  */
+
+#GainDisparoGrafico_CONFIGURAR_VENDA {
+  top: 38.2%;
+  left: 31%;
+}
+
+#GainExecGrafico_CONFIGURAR_VENDA {
+  top: 41.9%;
+  left: 31%;
+}
+
+#StopDisparoGrafico_CONFIGURAR_VENDA {
+  top: 13%;
+  left: 31%;
+}
+
+#StopExecGrafico_CONFIGURAR_VENDA {
+  top: 16.6%;
+  left: 31%;
+}
+
+/*
+  Inputs da segunda parte do gráfico
+  */
+
+#GainDisparoGrafico2_CONFIGURAR_VENDA {
+  top: 86.2%;
+  left: 31%;
+}
+
+#GainExecGrafico2_CONFIGURAR_VENDA {
+  top: 89.8%;
+  left: 31%;
+}
+
+#StopDisparoGrafico2_CONFIGURAR_VENDA {
+  top: 61%;
+  left: 31%;
+}
+
+#StopExecGrafico2_CONFIGURAR_VENDA {
+  top: 64.7%;
+  left: 31%;
+}
