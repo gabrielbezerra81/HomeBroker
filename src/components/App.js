@@ -26,7 +26,7 @@ class App extends React.Component {
 
     //Verificar names nos icones de fechar e nos componentes abaixo
     this.state = {
-      book: true,
+      book: false,
       agendada: true,
       limitada: true,
       mercado: true,
