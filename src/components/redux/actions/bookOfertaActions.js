@@ -18,6 +18,12 @@ export const mudarQtdAction = event => {
   };
 };
 
+export const mostrarErroQtdeOnBlurAction = erro => {
+  return dispatch => {
+    if (erro !== "") alert(VALIDACAO_QTDE);
+  };
+};
+
 export const venderAction = () => {
   return dispatch => {
     console.log("vendeu");

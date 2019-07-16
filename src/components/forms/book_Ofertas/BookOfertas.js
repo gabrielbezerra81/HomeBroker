@@ -7,7 +7,8 @@ import {
   venderAction,
   mudarStopLossAction,
   mudarGainAction,
-  onEnterInputHeader
+  onEnterInputHeader,
+  mostrarErroQtdeOnBlurAction
 } from "../../redux/actions/bookOfertaActions";
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import TabelaOfertas from "./TabelaOfertas";
@@ -59,6 +60,7 @@ const modalBody = props => (
               step={100}
               value={props.qtde}
               onChange={event => props.mudarQtdAction(event)}
+              onBlur={() => props.mostrarErroQtdeOnBlurAction(props.erro)}
               min={0}
             />
           </Form.Group>
@@ -76,9 +78,6 @@ const modalBody = props => (
             />
           </Form.Group>
         </Col>
-      </Row>
-      <Row>
-        <h6 className="erro-validacao">{props.erro}</h6>
       </Row>
     </Form>
     {modalFooter(props)}
@@ -115,6 +114,7 @@ export default connect(
     venderAction,
     mudarStopLossAction,
     mudarGainAction,
-    onEnterInputHeader
+    onEnterInputHeader,
+    mostrarErroQtdeOnBlurAction
   }
 )(BookOfertas);
