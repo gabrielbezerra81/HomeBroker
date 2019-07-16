@@ -15,7 +15,8 @@ import {
   mudarAjustePadraoAction,
   mudarAjusteAssimetricoAction,
   mudarValidadeSelectAction,
-  mudarDataAction
+  mudarDataAction,
+  adicionarItemTabelaStopMovel
 } from "../../../redux/actions/formInputActions";
 import { VENDA_STOPMOVEL_NAMESPACE } from "../../../../constants/ActionTypes";
 import TabelaOrdens from "./TabelaOrdens";
@@ -187,7 +188,7 @@ class FormInternoVendaStopMovel extends React.Component {
               <Col md={1} className="colIconeConfig">
                 <Button
                   variant=""
-                  onClick={() => false}
+                  onClick={() => this.props.adicionarItemTabelaStopMovel(this.props, VENDA_STOPMOVEL_NAMESPACE)}
                   className="operation-icons"
                 >
                   <MDBIcon icon="plus-circle" size="2x" />
@@ -219,7 +220,10 @@ const mapStateToProps = state => ({
   tabelaOrdens: state.vendaStopMovel.tabelaOrdens,
   ajusteAssimetrico: state.vendaStopMovel.ajusteAssimetrico,
   validadeSelect: state.vendaStopMovel.validadeSelect,
-  date: state.vendaStopMovel.date
+  date: state.vendaStopMovel.date,
+  stopMais1Ajuste: state.vendaStopMovel.stopMais1Ajuste,
+  stopAnteriorAjuste: state.vendaStopMovel.stopAnteriorAjuste,
+  disparoMaisAjuste:state.vendaStopMovel.disparoMaisAjuste
 });
 
 export default connect(
@@ -235,6 +239,7 @@ export default connect(
     mudarAjusteAssimetricoAction,
     mudarValidadeSelectAction,
     mudarDataAction,
-    mostrarErroQtdeOnBlurAction
+    mostrarErroQtdeOnBlurAction,
+    adicionarItemTabelaStopMovel
   }
 )(FormInternoVendaStopMovel);

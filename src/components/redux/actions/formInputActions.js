@@ -23,7 +23,8 @@ import {
   MUDAR_REDUCAO2,
   MUDAR_GAIN,
   MUDAR_AJUSTE_ASSIMETRICO,
-  ADICIONAR_ITEM_TABELA_REDUCAO
+  ADICIONAR_ITEM_TABELA_REDUCAO,
+  ADICIONA_ITEM_TABELA_ORDENS_VENDA
 } from "../../../constants/ActionTypes";
 
 export const mudarGainDisparoAction = (event, namespace) => {
@@ -258,6 +259,35 @@ export const adicionarItemTabelaGainReducaoAction = (props, namespace) => {
     dispatch({
       type: `${ADICIONAR_ITEM_TABELA_REDUCAO}${namespace}`,
       payload: tabelaGainReducao
+    });
+  };
+};
+
+export const adicionarItemTabelaStopMovel = (props, namespace) => {
+  const { inicioDisparo, stopDisparo, stopMais1Ajuste,stopAnteriorAjuste, ajustePadrao,disparoMaisAjuste } = props;
+
+  const linha1 = {
+    disparo: inicioDisparo,
+    ajuste: stopMais1Ajuste - stopDisparo,
+    stop: stopMais1Ajuste
+  }
+  const linha2 = {
+    disparo: disparoMaisAjuste,
+    ajuste: stopAnteriorAjuste - stopMais1Ajuste,
+    stop: stopAnteriorAjuste
+  }
+  const linha3 = {
+    disparo: disparoMaisAjuste+ 3*ajustePadrao,
+    ajuste: 3*ajustePadrao,
+    stop: stopMais1Ajuste + 3*ajustePadrao
+  }
+ 
+  let tabelaOrdens = [...props.tabelaOrdens];
+  tabelaOrdens.push(linha1,linha2,linha3)
+  return dispatch => {
+    dispatch({
+      type: `${ADICIONA_ITEM_TABELA_ORDENS_VENDA}${namespace}`,
+      payload: tabelaOrdens
     });
   };
 };

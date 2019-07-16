@@ -24,7 +24,8 @@ import {
   MUDAR_REDUCAO2,
   MUDAR_GAIN,
   MUDAR_AJUSTE_ASSIMETRICO,
-  ADICIONAR_ITEM_TABELA_REDUCAO
+  ADICIONAR_ITEM_TABELA_REDUCAO,
+  ADICIONA_ITEM_TABELA_ORDENS_VENDA
 } from "../../../constants/ActionTypes";
 
 const INITIAL_STATE = {
@@ -35,8 +36,8 @@ const INITIAL_STATE = {
   valorTotal: "15.52",
   gainDisparo: "0.00",
   gainExec: "0.00",
-  stopDisparo: "0.00",
-  stopExec: "0.00",
+  stopDisparo: 25,
+  stopExec: 24.95,
   cotacaoAtual: "0.00",
   validadeSelect: "hoje",
   date: new Date(),
@@ -45,12 +46,12 @@ const INITIAL_STATE = {
   preco: "0.00",
   showConfigStop: true,
   checkSalvarAssinatura: true,
-  inicioDisparo: "0.00",
-  ajustePadrao: "0.00",
-  disparo1Ajuste: "0.10",
-  disparoMaisAjuste: "0.20",
-  stopMais1Ajuste: "0.30",
-  stopAnteriorAjuste: "0.40",
+  inicioDisparo: 27.5,
+  ajustePadrao: 0.1,
+  disparo1Ajuste: 27.5,
+  disparoMaisAjuste: 28.00,
+  stopMais1Ajuste: 27.00,
+  stopAnteriorAjuste: 27.50,
   reducao1: "0.00",
   reducao2: "0.00",
   gain: "0.00",
@@ -58,12 +59,7 @@ const INITIAL_STATE = {
   tabelaOrdens: [
     { disparo: 27.5, ajuste: 2.0, stop: 27.0 },
     { disparo: 28.0, ajuste: 0.5, stop: 27.5 },
-    { disparo: 28.3, ajuste: 0.3, stop: 27.8 },
-    { disparo: 28.4, ajuste: 0.1, stop: 27.9 },
-    { disparo: 28.5, ajuste: 0.1, stop: 28 },
-    { disparo: 28.6, ajuste: 0.1, stop: 28.1 },
-    { disparo: 28.6, ajuste: 0.1, stop: 28.1 },
-    { disparo: 28.6, ajuste: 0.1, stop: 28.1 }
+    { disparo: 28.3, ajuste: 0.3, stop: 27.8 }
   ],
   tabelaOfertasCompra: [],
   tabelaOfertasVenda: [],
@@ -133,6 +129,8 @@ export default namespace => (state = INITIAL_STATE, action) => {
       return { ...state, ajusteAssimetrico: action.payload };
     case `${ADICIONAR_ITEM_TABELA_REDUCAO}${namespace}`:
       return { ...state, tabelaGainReducao: action.payload };
+    case `${ADICIONA_ITEM_TABELA_ORDENS_VENDA}${namespace}`:
+      return { ...state, tabelaOrdens: action.payload };
     default:
       return state;
   }
