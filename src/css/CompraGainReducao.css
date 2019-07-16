@@ -3,6 +3,10 @@
   min-width: 940px;
 }
 
+#compragainreducao .mcontent {
+  min-height: 501.05px;
+}
+
 #compragainreducao .mbody {
   height: unset !important;
 }

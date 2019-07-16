@@ -10,6 +10,7 @@ import CompraStartMovel from "./forms/compra_StartMovel/CompraStartMovel";
 import CompraGainReducao from "./forms/compra_GainReducao/CompraGainReducao";
 
 import VendaStopMovel from "./forms/venda/venda_StopMovel/VendaStopMovel";
+import VendaGainReducao from "./forms/venda/venda_GainReducao/VendaGainReducao";
 
 import { Row } from "react-bootstrap";
 class App extends React.Component {
@@ -27,7 +28,8 @@ class App extends React.Component {
       startstop: true,
       startmovel: true,
       gainreducao: true,
-      venda_stop_movel: true
+      venda_stop_movel: true,
+      venda_gain_reducao: true
     };
   }
 
@@ -163,6 +165,13 @@ class App extends React.Component {
               close={this.handleClose}
               headerTitle="VENDA STOP MÓVEL"
               name="vendastopmovel"
+            />
+          ) : null}
+          {this.state.venda_gain_reducao ? (
+            <VendaGainReducao
+              close={this.handleClose}
+              headerTitle="GAIN / REDUÇÃO DE VENDA"
+              name="vendagainreducao"
             />
           ) : null}
         </Row>

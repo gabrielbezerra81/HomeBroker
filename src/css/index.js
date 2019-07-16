@@ -13,4 +13,5 @@ import "./CompraStartStop.css";
 import "./CompraStartMovel.css";
 import "./CompraGainReducao.css";
 
-import "./VendaStopMovel.css"
+import "./VendaStopMovel.css";
+import "./VendaGainReducao.css";
