@@ -1,5 +1,6 @@
 import React from "react";
-import { Table } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
+import { MDBIcon } from "mdbreact";
 
 class TabelaOrdens extends React.Component {
   renderItems(tableData) {
@@ -9,6 +10,11 @@ class TabelaOrdens extends React.Component {
         <td>{Number(item.disparo).toFixed(2)}</td>
         <td>{Number(item.ajuste).toFixed(2)}</td>
         <td>{Number(item.stop).toFixed(2)}</td>
+        <td>
+          <Button variant="" onClick={() => false} className="operation-icons">
+            <MDBIcon icon="times" size="1x" />
+          </Button>
+        </td>
       </tr>
     ));
   }
@@ -27,6 +33,7 @@ class TabelaOrdens extends React.Component {
             <th>Disparo</th>
             <th>Ajuste</th>
             <th>Stop</th>
+            <th />
           </tr>
         </thead>
         <tbody>{this.renderItems(this.props.tableDataOrdens)}</tbody>

@@ -49,18 +49,14 @@ const INITIAL_STATE = {
   inicioDisparo: 27.5,
   ajustePadrao: 0.1,
   disparo1Ajuste: 27.5,
-  disparoMaisAjuste: 28.00,
-  stopMais1Ajuste: 27.00,
-  stopAnteriorAjuste: 27.50,
+  disparoMaisAjuste: 28.0,
+  stopMais1Ajuste: 27.0,
+  stopAnteriorAjuste: 27.5,
   reducao1: "0.00",
   reducao2: "0.00",
   gain: "0.00",
   ajusteAssimetrico: "0.00",
-  tabelaOrdens: [
-    { disparo: 27.5, ajuste: 2.0, stop: 27.0 },
-    { disparo: 28.0, ajuste: 0.5, stop: 27.5 },
-    { disparo: 28.3, ajuste: 0.3, stop: 27.8 }
-  ],
+  tabelaOrdens: [],
   tabelaOfertasCompra: [],
   tabelaOfertasVenda: [],
   tabelaGainReducao: [
