@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import { connect } from "react-redux";
-import { mudarQtdAction } from "../../../redux/actions/bookOfertaActions";
+import { mudarQtdAction, mostrarErroQtdeOnBlurAction } from "../../../redux/actions/bookOfertaActions";
 import {
   mudarGainDisparoAction,
   mudarGainExecAction,
@@ -62,6 +62,9 @@ class FormInternoVendaAgendada extends React.Component {
                     value={this.props.qtde}
                     onChange={event => this.props.mudarQtdAction(event)}
                     name="qtde"
+                    onBlur={() =>
+                      this.props.mostrarErroQtdeOnBlurAction(this.props.erro)
+                    }
                   />
                 </Form.Group>
               </Col>
@@ -265,6 +268,7 @@ class FormInternoVendaAgendada extends React.Component {
 
 const mapStateToProps = state => ({
   qtde: state.bookOfertaReducer.qtde,
+  erro: state.bookOfertaReducer.erro,
   gainDisparo: state.vendaAgendadaReducer.gainDisparo,
   gainExec: state.vendaAgendadaReducer.gainExec,
   stopDisparo: state.vendaAgendadaReducer.stopDisparo,
@@ -295,6 +299,7 @@ export default connect(
     mudarEntradaDisparoAction,
     mudarEntradaExecAction,
     mudarAssinaturaAction,
-    mudarCheckSalvarAssinaturaAction
+    mudarCheckSalvarAssinaturaAction,
+    mostrarErroQtdeOnBlurAction
   }
 )(FormInternoVendaAgendada);

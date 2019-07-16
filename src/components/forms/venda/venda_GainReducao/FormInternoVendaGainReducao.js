@@ -2,7 +2,10 @@ import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import { connect } from "react-redux";
-import { mudarQtdAction } from "../../../redux/actions/bookOfertaActions";
+import {
+  mudarQtdAction,
+  mostrarErroQtdeOnBlurAction
+} from "../../../redux/actions/bookOfertaActions";
 import {
   mudarGainDisparoAction,
   mudarGainExecAction,
@@ -79,11 +82,18 @@ class FormInternoVendaGainReducao extends React.Component {
                     value={this.props.qtde}
                     onChange={event => this.props.mudarQtdAction(event)}
                     name="qtde"
+                    onBlur={() =>
+                      this.props.mostrarErroQtdeOnBlurAction(this.props.erro)
+                    }
                   />
                 </Form.Group>
               </Col>
               <Col md={1} className="colIconeConfig">
-                <Button variant="" className="operation-icons">
+                <Button
+                  variant=""
+                  className="operation-icons"
+                  onClick={() => false}
+                >
                   <MDBIcon
                     icon="plus-circle"
                     size="2x"
@@ -132,6 +142,7 @@ class FormInternoVendaGainReducao extends React.Component {
 
 const mapStateToProps = state => ({
   qtde: state.bookOfertaReducer.qtde,
+  erro: state.bookOfertaReducer.erro,
   gainDisparo: state.vendaGainReducao.gainDisparo,
   gainExec: state.vendaGainReducao.gainExec,
   validadeSelect: state.vendaGainReducao.validadeSelect,
@@ -154,6 +165,7 @@ export default connect(
     limparAction,
     mudarAtivoAction,
     mudarAssinaturaAction,
-    mudarCheckSalvarAssinaturaAction
+    mudarCheckSalvarAssinaturaAction,
+    mostrarErroQtdeOnBlurAction
   }
 )(FormInternoVendaGainReducao);

@@ -2,7 +2,10 @@ import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
 import { MDBIcon } from "mdbreact";
-import { mudarQtdAction } from "../../redux/actions/bookOfertaActions";
+import {
+  mudarQtdAction,
+  mostrarErroQtdeOnBlurAction
+} from "../../redux/actions/bookOfertaActions";
 import {
   mudarStopDisparoAction,
   mudarStopExecAction,
@@ -61,6 +64,9 @@ class FormInternoCompraStartMovel extends React.Component {
                         event,
                         COMPRA_STARTMOVEL_NAMESPACE
                       )
+                    }
+                    onBlur={() =>
+                      this.props.mostrarErroQtdeOnBlurAction(this.props.erro)
                     }
                     name="qtde"
                   />
@@ -202,6 +208,7 @@ class FormInternoCompraStartMovel extends React.Component {
 
 const mapStateToProps = state => ({
   qtde: state.bookOfertaReducer.qtde,
+  erro: state.bookOfertaReducer.erro,
   stopDisparo: state.compraStartMovelReducer.stopDisparo,
   stopExec: state.compraStartMovelReducer.stopExec,
   valorTotal: state.compraStartMovelReducer.valorTotal,
@@ -226,7 +233,8 @@ export default connect(
     mudarAjustePadraoAction,
     mudarAjusteAssimetricoAction,
     mudarValidadeSelectAction,
-    mudarDataAction
+    mudarDataAction,
+    mostrarErroQtdeOnBlurAction
   }
 )(FormInternoCompraStartMovel);
 

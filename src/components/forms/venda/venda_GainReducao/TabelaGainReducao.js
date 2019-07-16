@@ -1,6 +1,7 @@
 import React from "react";
 import { Table, Button } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
+import { connect } from "react-redux";
 
 class TabelaGainReducao extends React.Component {
   somaQtde = 0;
@@ -70,4 +71,9 @@ class TabelaGainReducao extends React.Component {
   }
 }
 
-export default TabelaGainReducao;
+const mapStateToProps = state => ({});
+
+export default connect(
+  mapStateToProps,
+  {}
+)(TabelaGainReducao);

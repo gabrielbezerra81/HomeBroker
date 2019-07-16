@@ -236,3 +236,18 @@ export const mudarAjusteAssimetricoAction = (event, namespace) => {
     });
   };
 };
+
+export const adicionarItemTabelaGainReducaoAction = (
+  disparo,
+  execucao,
+  qtde
+) => {
+  const total = qtde * 1;
+  const itemTabela = {
+    disparo: disparo,
+    execucao: execucao,
+    qtde: qtde,
+    total: total
+  };
+  return dispatch => {};
+};

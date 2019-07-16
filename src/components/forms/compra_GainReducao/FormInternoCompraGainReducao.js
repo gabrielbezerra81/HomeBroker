@@ -2,7 +2,10 @@ import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import { connect } from "react-redux";
-import { mudarQtdAction } from "../../redux/actions/bookOfertaActions";
+import {
+  mudarQtdAction,
+  mostrarErroQtdeOnBlurAction
+} from "../../redux/actions/bookOfertaActions";
 import {
   mudarGainDisparoAction,
   mudarGainExecAction,
@@ -25,7 +28,9 @@ class FormInternoCompraGainReducao extends React.Component {
         <div className="divAsModalContainer formInternoCompraStartMovel">
           <Row className="rowTextoAtivoGainReducao">
             <Col>
-              <h6 className="resultadoTextoAtivo">{this.props.resultadoAtivo}</h6>
+              <h6 className="resultadoTextoAtivo">
+                {this.props.resultadoAtivo}
+              </h6>
             </Col>
           </Row>
           <Form className="item">
@@ -76,6 +81,9 @@ class FormInternoCompraGainReducao extends React.Component {
                     min={0}
                     value={this.props.qtde}
                     onChange={event => this.props.mudarQtdAction(event)}
+                    onBlur={() =>
+                      this.props.mostrarErroQtdeOnBlurAction(this.props.erro)
+                    }
                     name="qtde"
                   />
                 </Form.Group>
@@ -130,6 +138,7 @@ class FormInternoCompraGainReducao extends React.Component {
 
 const mapStateToProps = state => ({
   qtde: state.bookOfertaReducer.qtde,
+  erro: state.bookOfertaReducer.erro,
   gainDisparo: state.compraGainReducao.gainDisparo,
   gainExec: state.compraGainReducao.gainExec,
   validadeSelect: state.compraGainReducao.validadeSelect,
@@ -152,6 +161,7 @@ export default connect(
     limparAction,
     mudarAtivoAction,
     mudarAssinaturaAction,
-    mudarCheckSalvarAssinaturaAction
+    mudarCheckSalvarAssinaturaAction,
+    mostrarErroQtdeOnBlurAction
   }
 )(FormInternoCompraGainReducao);

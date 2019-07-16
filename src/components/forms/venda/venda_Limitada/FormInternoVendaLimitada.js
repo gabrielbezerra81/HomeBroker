@@ -2,7 +2,10 @@ import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import { connect } from "react-redux";
-import { mudarQtdAction } from "../../../redux/actions/bookOfertaActions";
+import {
+  mudarQtdAction,
+  mostrarErroQtdeOnBlurAction
+} from "../../../redux/actions/bookOfertaActions";
 import {
   mudarGainDisparoAction,
   mudarGainExecAction,
@@ -61,6 +64,9 @@ class FormInternoVendaLimitada extends React.Component {
                     value={this.props.qtde}
                     onChange={event =>
                       this.props.mudarQtdAction(event, VENDA_LIMITADA_NAMESPACE)
+                    }
+                    onBlur={() =>
+                      this.props.mostrarErroQtdeOnBlurAction(this.props.erro)
                     }
                     name="qtde"
                   />
@@ -234,6 +240,7 @@ class FormInternoVendaLimitada extends React.Component {
 
 const mapStateToProps = state => ({
   qtde: state.bookOfertaReducer.qtde,
+  erro: state.bookOfertaReducer.erro,
   gainDisparo: state.vendaLimitadaReducer.gainDisparo,
   gainExec: state.vendaLimitadaReducer.gainExec,
   stopDisparo: state.vendaLimitadaReducer.stopDisparo,
@@ -261,6 +268,7 @@ export default connect(
     mudarAtivoAction,
     mudarAssinaturaAction,
     mudarPrecoAction,
-    mudarCheckSalvarAssinaturaAction
+    mudarCheckSalvarAssinaturaAction,
+    mostrarErroQtdeOnBlurAction
   }
 )(FormInternoVendaLimitada);
