@@ -220,10 +220,7 @@ const mapStateToProps = state => ({
   tabelaOrdens: state.vendaStopMovel.tabelaOrdens,
   ajusteAssimetrico: state.vendaStopMovel.ajusteAssimetrico,
   validadeSelect: state.vendaStopMovel.validadeSelect,
-  date: state.vendaStopMovel.date,
-  stopMais1Ajuste: state.vendaStopMovel.stopMais1Ajuste,
-  stopAnteriorAjuste: state.vendaStopMovel.stopAnteriorAjuste,
-  disparoMaisAjuste:state.vendaStopMovel.disparoMaisAjuste
+  date: state.vendaStopMovel.date
 });
 
 export default connect(

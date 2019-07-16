@@ -8,8 +8,9 @@ class TabelaOrdens extends React.Component {
       <tr key={index}>
         <td>{index + 1}º</td>
         <td>{Number(item.disparo).toFixed(2)}</td>
+        <td>{Number(item.stopAtual).toFixed(2)}</td>
         <td>{Number(item.ajuste).toFixed(2)}</td>
-        <td>{Number(item.stop).toFixed(2)}</td>
+        <td>{Number(item.novoStop).toFixed(2)}</td>
         <td>
           <Button variant="" onClick={() => false} className="operation-icons">
             <MDBIcon icon="times" size="1x" />
@@ -31,8 +32,9 @@ class TabelaOrdens extends React.Component {
           <tr>
             <th>Ord</th>
             <th>Disparo</th>
+            <th>Stop Atual</th>
             <th>Ajuste</th>
-            <th>Stop</th>
+            <th>Novo Stop</th>
             <th />
           </tr>
         </thead>

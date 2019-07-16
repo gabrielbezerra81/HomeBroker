@@ -264,26 +264,17 @@ export const adicionarItemTabelaGainReducaoAction = (props, namespace) => {
 };
 
 export const adicionarItemTabelaStopMovel = (props, namespace) => {
-  const { inicioDisparo, stopDisparo, stopMais1Ajuste,stopAnteriorAjuste, ajustePadrao,disparoMaisAjuste } = props;
+  const { inicioDisparo, ajusteAssimetrico, stopDisparo } = props;
 
-  const linha1 = {
+  const itemTabela = {
     disparo: inicioDisparo,
-    ajuste: stopMais1Ajuste - stopDisparo,
-    stop: stopMais1Ajuste
-  }
-  const linha2 = {
-    disparo: disparoMaisAjuste,
-    ajuste: stopAnteriorAjuste - stopMais1Ajuste,
-    stop: stopAnteriorAjuste
-  }
-  const linha3 = {
-    disparo: disparoMaisAjuste+ 3*ajustePadrao,
-    ajuste: 3*ajustePadrao,
-    stop: stopMais1Ajuste + 3*ajustePadrao
-  }
- 
+    stopAtual: stopDisparo,
+    ajuste: ajusteAssimetrico,
+    novoStop: Number(stopDisparo) + Number(ajusteAssimetrico)
+  };
+
   let tabelaOrdens = [...props.tabelaOrdens];
-  tabelaOrdens.push(linha1,linha2,linha3)
+  tabelaOrdens.push(itemTabela);
   return dispatch => {
     dispatch({
       type: `${ADICIONA_ITEM_TABELA_ORDENS_VENDA}${namespace}`,

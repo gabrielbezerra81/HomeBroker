@@ -15,7 +15,8 @@ import {
   mudarAjustePadraoAction,
   mudarAjusteAssimetricoAction,
   mudarValidadeSelectAction,
-  mudarDataAction
+  mudarDataAction,
+  adicionarItemTabelaStopMovel
 } from "../../redux/actions/formInputActions";
 import { COMPRA_STARTMOVEL_NAMESPACE } from "../../../constants/ActionTypes";
 import TabelaOrdens from "./TabelaOrdens";
@@ -187,7 +188,12 @@ class FormInternoCompraStartMovel extends React.Component {
               <Col md={1} className="colIconeConfig">
                 <Button
                   variant=""
-                  onClick={() => false}
+                  onClick={() =>
+                    this.props.adicionarItemTabelaStopMovel(
+                      this.props,
+                      COMPRA_STARTMOVEL_NAMESPACE
+                    )
+                  }
                   className="operation-icons"
                 >
                   <MDBIcon icon="plus-circle" size="2x" />
@@ -234,7 +240,8 @@ export default connect(
     mudarAjusteAssimetricoAction,
     mudarValidadeSelectAction,
     mudarDataAction,
-    mostrarErroQtdeOnBlurAction
+    mostrarErroQtdeOnBlurAction,
+    adicionarItemTabelaStopMovel
   }
 )(FormInternoCompraStartMovel);
 
