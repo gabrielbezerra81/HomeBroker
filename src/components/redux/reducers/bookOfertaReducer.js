@@ -1,7 +1,8 @@
 import {
   MUDAR_QTDE_BOOK,
   MUDAR_STOPLOSS_BOOK,
-  MUDAR_GAIN_BOOK
+  MUDAR_GAIN_BOOK,
+  MUDAR_INPUTHEADER_BOOK
 } from "../../../constants/ActionTypes";
 
 const INITIAL_STATE = {
@@ -9,7 +10,7 @@ const INITIAL_STATE = {
   erro: "",
   stopLoss: 0,
   gain: 0,
-  inputHeader: "test"
+  inputHeader: ""
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -20,7 +21,7 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, stopLoss: action.payload };
     case MUDAR_GAIN_BOOK:
       return { ...state, gain: action.payload };
-    case "teste":
+    case MUDAR_INPUTHEADER_BOOK:
       return { ...state, inputHeader: action.payload };
     default:
       return state;

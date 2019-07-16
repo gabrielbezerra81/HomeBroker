@@ -2,7 +2,8 @@ import { VALIDACAO_QTDE } from "../../../constants/Erros";
 import {
   MUDAR_QTDE_BOOK,
   MUDAR_STOPLOSS_BOOK,
-  MUDAR_GAIN_BOOK
+  MUDAR_GAIN_BOOK,
+  MUDAR_INPUTHEADER_BOOK
 } from "../../../constants/ActionTypes";
 
 export const mudarQtdAction = event => {
@@ -61,6 +62,15 @@ export const onEnterInputHeader = () => {
     dispatch({
       type: "teste",
       payload: "testando"
+    });
+  };
+};
+
+export const mudarInputHeaderAction = event => {
+  return dispatch => {
+    dispatch({
+      type: MUDAR_INPUTHEADER_BOOK,
+      payload: event.target.value
     });
   };
 };

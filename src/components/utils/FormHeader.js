@@ -37,10 +37,10 @@ export const bookHeader = (props, headerClass) => (
             type="text"
             placeholder=""
             className="inputHeader"
-            defaultValue="PETR4, PETROBRAS PN N2"
-            //value={props.inputHeader}
+            value={props.inputHeader}
+            onChange={event => props.mudarInputHeaderAction(event)}
             onKeyPress={event => {
-              event.preventDefault();
+              //event.preventDefault();
               if (event.key === "Enter") props.onEnterInputHeader();
             }}
           />

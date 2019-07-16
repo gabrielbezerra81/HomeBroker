@@ -8,7 +8,8 @@ import {
   mudarStopLossAction,
   mudarGainAction,
   onEnterInputHeader,
-  mostrarErroQtdeOnBlurAction
+  mostrarErroQtdeOnBlurAction,
+  mudarInputHeaderAction
 } from "../../redux/actions/bookOfertaActions";
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import TabelaOfertas from "./TabelaOfertas";
@@ -115,6 +116,7 @@ export default connect(
     mudarStopLossAction,
     mudarGainAction,
     onEnterInputHeader,
-    mostrarErroQtdeOnBlurAction
+    mostrarErroQtdeOnBlurAction,
+    mudarInputHeaderAction
   }
 )(BookOfertas);

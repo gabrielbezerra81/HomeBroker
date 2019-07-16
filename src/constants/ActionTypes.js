@@ -1,6 +1,7 @@
 export const MUDAR_QTDE_BOOK = "mudar_qtde";
 export const MUDAR_STOPLOSS_BOOK = "mudar_stoploss_book";
 export const MUDAR_GAIN_BOOK = "mudar_gain_book";
+export const MUDAR_INPUTHEADER_BOOK = "mudar_inputheader_book"
 
 export const MUDAR_GAIN_DISPARO = "mudar_gain_disparo";
 export const MUDAR_GAIN_EXEC = "mudar_gain_exec";
