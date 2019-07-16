@@ -10,10 +10,13 @@ import {
   mudarAtivoAction,
   mudarInicioDisparoAction,
   mudarAjustePadraoAction,
-  mudarAjusteAssimetricoAction
+  mudarAjusteAssimetricoAction,
+  mudarValidadeSelectAction,
+  mudarDataAction
 } from "../../redux/actions/formInputActions";
 import { COMPRA_STARTMOVEL_NAMESPACE } from "../../../constants/ActionTypes";
 import TabelaOrdens from "./TabelaOrdens";
+import RowFormValidade from "../../utils/RowFormValidade";
 
 class FormInternoCompraStartMovel extends React.Component {
   render() {
@@ -148,7 +151,10 @@ class FormInternoCompraStartMovel extends React.Component {
                 </Form.Group>
               </Col>
             </Row>
+          </Form>
+          {RowFormValidade(this.props, COMPRA_STARTMOVEL_NAMESPACE)}
 
+          <Form>
             <Row className="rowTextoAjusteAssimetrico">
               <Col md={7} className="colTextoAjusteAssimetrico">
                 <h6>Ajuste Assimétrico</h6>
@@ -183,7 +189,6 @@ class FormInternoCompraStartMovel extends React.Component {
               </Col>
             </Row>
           </Form>
-
           <Row className="rowTabelaOrdens">
             <Col className="colTabelaOrdens">
               <TabelaOrdens tableDataOrdens={this.props.tabelaOrdens} />
@@ -204,7 +209,9 @@ const mapStateToProps = state => ({
   inicioDisparo: state.compraStartMovelReducer.inicioDisparo,
   ajustePadrao: state.compraStartMovelReducer.ajustePadrao,
   tabelaOrdens: state.compraStartMovelReducer.tabelaOrdens,
-  ajusteAssimetrico: state.compraStartMovelReducer.ajusteAssimetrico
+  ajusteAssimetrico: state.compraStartMovelReducer.ajusteAssimetrico,
+  validadeSelect: state.compraStartMovelReducer.validadeSelect,
+  date: state.compraStartMovelReducer.date
 });
 
 export default connect(
@@ -217,7 +224,9 @@ export default connect(
     mudarAtivoAction,
     mudarInicioDisparoAction,
     mudarAjustePadraoAction,
-    mudarAjusteAssimetricoAction
+    mudarAjusteAssimetricoAction,
+    mudarValidadeSelectAction,
+    mudarDataAction
   }
 )(FormInternoCompraStartMovel);
 
