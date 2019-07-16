@@ -1,13 +1,13 @@
 import React from "react";
 
 export const LabelInputGrafico = (texto, id) => (
-  <div className="wrapperIconeConfiguracaoGrafico" id={id}>
+  <div className="wrapperTextoGrafico" id={id}>
     <h6 className="LabelInputGrafico">{texto}</h6>
   </div>
 );
 
 export const TextoGainStopGrafico = (texto, id) => (
-  <div className="wrapperIconeConfiguracaoGrafico" id={id}>
+  <div className="wrapperTextoGrafico" id={id}>
     <h6 className="">{texto}</h6>
   </div>
 );
@@ -26,7 +26,7 @@ export const TextoCotacaoAtualGrafico = id => (
 );
 
 export const TextoMenorGrafico = (texto, id) => (
-  <div className="wrapperIconeConfiguracaoGrafico" id={id}>
+  <div className="wrapperTextoGrafico" id={id}>
     <h6 className="TextoMenorGrafico">{texto}</h6>
   </div>
 );

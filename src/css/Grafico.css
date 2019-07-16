@@ -15,6 +15,15 @@
 }
 
 .wrapperIconeConfiguracaoGrafico {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapperTextoGrafico {
   width: 19.2%;
   height: 20px;
   position: absolute;
@@ -23,7 +32,7 @@
   justify-content: center;
 }
 
-.TamanhoTextoGrafico_StartMovel{
+.TamanhoTextoGrafico_StartMovel {
   width: 15%;
   height: 5%;
 }
@@ -94,4 +103,14 @@
 .TextoMenorGrafico {
   font-size: 0.7rem;
   font-weight: 400;
+}
+
+#ValorTotalGain {
+  top: 28%;
+  left: 68%;
+}
+
+#ValorTotalStop {
+  top: 81%;
+  left: 68%;
 }

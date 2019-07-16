@@ -3,6 +3,8 @@
   min-width: 600px;
 }
 
+/*Inputs do grafico*/
+
 #GainDisparoGrafico_CA {
   top: 13%;
   left: 51%;
@@ -29,15 +31,19 @@
   height: 12px;
 }
 
+/*Icones de configuração*/
+
 #ConfigGainGrafico_CA {
   top: 14%;
-  left: 87%;
+  left: 93%;
 }
 
 #ConfigStopGrafico_CA {
   top: 67%;
-  left: 87%;
+  left: 93%;
 }
+
+/*Textos do grafico*/
 
 #TextoGainDisparo_CA {
   top: 7%;

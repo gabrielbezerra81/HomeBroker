@@ -9,6 +9,7 @@ import CompraStartStop from "./forms/compra_StartStop/CompraStartStop";
 import CompraStartMovel from "./forms/compra_StartMovel/CompraStartMovel";
 import CompraGainReducao from "./forms/compra_GainReducao/CompraGainReducao";
 
+import VendaAgendada from "./forms/venda/venda_Agendada/VendaAgendada";
 import VendaStopMovel from "./forms/venda/venda_StopMovel/VendaStopMovel";
 import VendaGainReducao from "./forms/venda/venda_GainReducao/VendaGainReducao";
 
@@ -28,6 +29,7 @@ class App extends React.Component {
       startstop: true,
       startmovel: true,
       gainreducao: true,
+      venda_agendada: true,
       venda_stop_movel: true,
       venda_gain_reducao: true
     };
@@ -158,6 +160,13 @@ class App extends React.Component {
               close={this.handleClose}
               headerTitle="GAIN / REDUÇÃO DE COMPRA"
               name="compragainreducao"
+            />
+          ) : null}
+          {this.state.venda_agendada ? (
+            <VendaAgendada
+              close={this.handleClose}
+              headerTitle="VENDA AGENDADA"
+              name="vendaagendada"
             />
           ) : null}
           {this.state.venda_stop_movel ? (

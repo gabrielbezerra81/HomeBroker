@@ -9,7 +9,8 @@ import {
   COMPRA_STARTMOVEL_NAMESPACE,
   COMPRA_GAINREDUCAO_NAMESPACE,
   VENDA_STOPMOVEL_NAMESPACE,
-  VENDA_GAINREDUCAO_NAMESPACE
+  VENDA_GAINREDUCAO_NAMESPACE,
+  VENDA_AGENDADA_NAMESPACE
 } from "../../../constants/ActionTypes";
 
 export default combineReducers({
@@ -21,6 +22,7 @@ export default combineReducers({
   compraStartStopReducer: formInputReducer(COMPRA_STARTSTOP_NAMESPACE),
   compraStartMovelReducer: formInputReducer(COMPRA_STARTMOVEL_NAMESPACE),
   compraGainReducao: formInputReducer(COMPRA_GAINREDUCAO_NAMESPACE),
+  vendaAgendadaReducer: formInputReducer(VENDA_AGENDADA_NAMESPACE),
   vendaStopMovel: formInputReducer(VENDA_STOPMOVEL_NAMESPACE),
   vendaGainReducao: formInputReducer(VENDA_GAINREDUCAO_NAMESPACE)
 });
