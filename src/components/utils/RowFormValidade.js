@@ -26,7 +26,9 @@ const renderFormData = (props, namespace) => (
     dateFormat="dd/MM/yyyy"
     popperPlacement="top-start"
     autoFocus
-    customInput={<Form>{formSelect(props, getformatedDate(props.date))}</Form>}
+    customInput={
+      <Form>{formSelect(props, getformatedDate(props.date), namespace)}</Form>
+    }
   />
 );
 
