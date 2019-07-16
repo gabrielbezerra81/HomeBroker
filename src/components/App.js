@@ -10,6 +10,7 @@ import CompraStartMovel from "./forms/compra_StartMovel/CompraStartMovel";
 import CompraGainReducao from "./forms/compra_GainReducao/CompraGainReducao";
 
 import VendaAgendada from "./forms/venda/venda_Agendada/VendaAgendada";
+import VendaLimitada from "./forms/venda/venda_Limitada/VendaLimitada";
 import VendaStopMovel from "./forms/venda/venda_StopMovel/VendaStopMovel";
 import VendaGainReducao from "./forms/venda/venda_GainReducao/VendaGainReducao";
 
@@ -30,6 +31,7 @@ class App extends React.Component {
       startmovel: true,
       gainreducao: true,
       venda_agendada: true,
+      venda_limitada: true,
       venda_stop_movel: true,
       venda_gain_reducao: true
     };
@@ -167,6 +169,13 @@ class App extends React.Component {
               close={this.handleClose}
               headerTitle="VENDA AGENDADA"
               name="vendaagendada"
+            />
+          ) : null}
+          {this.state.venda_limitada ? (
+            <VendaLimitada
+              close={this.handleClose}
+              headerTitle="VENDA LIMITADA"
+              name="vendalimitada"
             />
           ) : null}
           {this.state.venda_stop_movel ? (

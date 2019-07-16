@@ -14,5 +14,6 @@ import "./CompraStartMovel.css";
 import "./CompraGainReducao.css";
 
 import "./VendaAgendada.css";
+import "./VendaLimitada.css";
 import "./VendaStopMovel.css";
 import "./VendaGainReducao.css";
