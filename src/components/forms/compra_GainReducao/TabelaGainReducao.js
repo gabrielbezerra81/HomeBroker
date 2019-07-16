@@ -1,6 +1,12 @@
 import React from "react";
 import { Table, Button } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
+import {
+  COMPRA_GAINREDUCAO_NAMESPACE,
+  REMOVE_ITEM_TABELA_GAIN_REDUCAO
+} from "../../../constants/ActionTypes";
+import { connect } from "react-redux";
+import { removerItemTabelaAction } from "../../redux/actions/formInputActions";
 
 class TabelaGainReducao extends React.Component {
   somaQtde = 0;
@@ -21,7 +27,14 @@ class TabelaGainReducao extends React.Component {
           <td>
             <Button
               variant=""
-              onClick={() => false}
+              onClick={() =>
+                this.props.removerItemTabelaAction(
+                  REMOVE_ITEM_TABELA_GAIN_REDUCAO,
+                  tableData,
+                  index,
+                  COMPRA_GAINREDUCAO_NAMESPACE
+                )
+              }
               className="operation-icons"
             >
               <MDBIcon icon="times" size="1x" />
@@ -69,5 +82,9 @@ class TabelaGainReducao extends React.Component {
     );
   }
 }
+const mapStateToProps = state => ({});
 
-export default TabelaGainReducao;
+export default connect(
+  mapStateToProps,
+  { removerItemTabelaAction }
+)(TabelaGainReducao);

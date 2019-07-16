@@ -282,3 +282,14 @@ export const adicionarItemTabelaStopMovel = (props, namespace) => {
     });
   };
 };
+
+export const removerItemTabelaAction = (actionType,tabela, index, namespace) => {
+  let novaTabela = [...tabela];
+  novaTabela.splice(index, 1);
+  return dispatch => {
+    dispatch({
+      type: `${actionType}${namespace}`,
+      payload: novaTabela
+    });
+  };
+};

@@ -25,7 +25,9 @@ import {
   MUDAR_GAIN,
   MUDAR_AJUSTE_ASSIMETRICO,
   ADICIONAR_ITEM_TABELA_REDUCAO,
-  ADICIONA_ITEM_TABELA_ORDENS_VENDA
+  ADICIONA_ITEM_TABELA_ORDENS_VENDA,
+  REMOVE_ITEM_TABELA_GAIN_REDUCAO,
+  REMOVE_ITEM_TABELA_ORDENS_MOVEL
 } from "../../../constants/ActionTypes";
 
 const INITIAL_STATE = {
@@ -122,6 +124,10 @@ export default namespace => (state = INITIAL_STATE, action) => {
     case `${ADICIONAR_ITEM_TABELA_REDUCAO}${namespace}`:
       return { ...state, tabelaGainReducao: action.payload };
     case `${ADICIONA_ITEM_TABELA_ORDENS_VENDA}${namespace}`:
+      return { ...state, tabelaOrdens: action.payload };
+    case `${REMOVE_ITEM_TABELA_GAIN_REDUCAO}${namespace}`:
+      return { ...state, tabelaGainReducao: action.payload };
+    case `${REMOVE_ITEM_TABELA_ORDENS_MOVEL}${namespace}`:
       return { ...state, tabelaOrdens: action.payload };
     default:
       return state;

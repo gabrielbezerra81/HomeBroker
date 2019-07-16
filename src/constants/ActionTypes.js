@@ -30,11 +30,13 @@ export const MUDAR_STOP_MAIS_PRIMEIRO_AJUSTE ="mudar_stop_mais_primeiro_ajuste";
 export const MUDAR_STOP_ANTERIOR_AJUSTE = "mudar_stop_anterior_ajuste";
 export const MUDAR_AJUSTE_ASSIMETRICO = "mudar_ajuste_assimetrico";
 export const ADICIONA_ITEM_TABELA_ORDENS_VENDA = "adiciona_item_tabela_ordens_venda"
+export const REMOVE_ITEM_TABELA_ORDENS_MOVEL = "remove_item_tabela_ordens_movel"
 
 export const MUDAR_REDUCAO1 = "mudar_reducao1";
 export const MUDAR_REDUCAO2 = "mudar_reducao2";
 export const MUDAR_GAIN = "mudar_gain";
 export const ADICIONAR_ITEM_TABELA_REDUCAO = "adicionar_item_tabela_reducao";
+export const REMOVE_ITEM_TABELA_GAIN_REDUCAO = "remove_item_tabela_gain_reducao"
 
 export const COMPRA_AGENDADA_NAMESPACE = "_COMPRA_AGENDADA";
 export const COMPRA_LIMITADA_NAMESPACE = "_COMPRA_LIMITADA";
