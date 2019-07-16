@@ -59,11 +59,7 @@ const INITIAL_STATE = {
   tabelaOrdens: [],
   tabelaOfertasCompra: [],
   tabelaOfertasVenda: [],
-  tabelaGainReducao: [
-    { disparo: 27.5, execucao: 27.45, qtde: 500, total: 13725 },
-    { disparo: 28, execucao: 27.95, qtde: 300, total: 8400 },
-    { disparo: 29, execucao: 28.95, qtde: 200, total: 5800 }
-  ]
+  tabelaGainReducao: []
 };
 export default namespace => (state = INITIAL_STATE, action) => {
   if (action.payload === "0" || action.payload === 0)
