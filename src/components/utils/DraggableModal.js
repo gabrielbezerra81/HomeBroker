@@ -3,11 +3,20 @@ import Draggable from "react-draggable";
 import ConfigurarStop from "../forms/compra_StartStop/ConfigurarStop";
 import ConfigurarStopVenda from "../forms/venda/venda_StartStop/ConfigurarStopVenda";
 
+var my_index = 100; //global var on page
+function sendontop(div_id) {
+  document.getElementById(div_id).style.zIndex = my_index++;
+}
+
 class BSModal extends Component {
   render() {
     return (
       <Draggable enableUserSelectHack={false} handle=".mheader">
-        <div id={this.props.id} className={this.props.classConfigAberto}>
+        <div
+          id={this.props.id}
+          className={this.props.classConfigAberto}
+          onClick={() => sendontop(this.props.id)}
+        >
           <div className="mcontent">
             {this.props.renderHeader()}
             {this.props.renderModalBody()}

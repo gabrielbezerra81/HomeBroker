@@ -12,11 +12,12 @@ import CompraGainReducao from "./forms/compra_GainReducao/CompraGainReducao";
 import VendaAgendada from "./forms/venda/venda_Agendada/VendaAgendada";
 import VendaLimitada from "./forms/venda/venda_Limitada/VendaLimitada";
 import VendaMercado from "./forms/venda/venda_Mercado/VendaMercado";
-import VendaStartStop from './forms/venda/venda_StartStop/VendaStartStop'
+import VendaStartStop from "./forms/venda/venda_StartStop/VendaStartStop";
 import VendaStopMovel from "./forms/venda/venda_StopMovel/VendaStopMovel";
 import VendaGainReducao from "./forms/venda/venda_GainReducao/VendaGainReducao";
 
 import { Row } from "react-bootstrap";
+
 class App extends React.Component {
   constructor(props, context) {
     super(props, context);
