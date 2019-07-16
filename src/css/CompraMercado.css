@@ -3,39 +3,3 @@
   min-width: 600px;
   max-height: 430px;
 }
-
-#GainDisparoGrafico_CM {
-  top: 16%;
-  left: 45.2%;
-}
-
-#GainExecGrafico_CM {
-  top: 21.2%;
-  left: 45.2%;
-}
-
-#StopDisparoGrafico_CM {
-  top: 74%;
-  left: 45.2%;
-}
-
-#StopExecGrafico_CM {
-  top: 79.3%;
-  left: 45.2%;
-}
-#CotacaoAtualGrafico_CM {
-  top: 46.2%;
-  left: 2%;
-  width: 19%;
-  height: 9.2%;
-}
-
-#ConfigGainGrafico_CM {
-  top: 0%;
-  left: 80%;
-}
-
-#ConfigStopGrafico_CM {
-  top: 59%;
-  left: 80%;
-}
