@@ -22,7 +22,8 @@ import {
   MUDAR_REDUCAO1,
   MUDAR_REDUCAO2,
   MUDAR_GAIN,
-  MUDAR_AJUSTE_ASSIMETRICO
+  MUDAR_AJUSTE_ASSIMETRICO,
+  ADICIONAR_ITEM_TABELA_REDUCAO
 } from "../../../constants/ActionTypes";
 
 export const mudarGainDisparoAction = (event, namespace) => {
@@ -237,17 +238,26 @@ export const mudarAjusteAssimetricoAction = (event, namespace) => {
   };
 };
 
-export const adicionarItemTabelaGainReducaoAction = (
-  disparo,
-  execucao,
-  qtde
-) => {
-  const total = qtde * 1;
+export const adicionarItemTabelaGainReducaoAction = (props, namespace) => {
+  const { gainDisparo, gainExec, qtde } = props;
+
+  let total = qtde * gainExec;
+  if (gainExec === "0.00") {
+    total = qtde * gainDisparo;
+    console.log("entrou");
+  }
   const itemTabela = {
-    disparo: disparo,
-    execucao: execucao,
-    qtde: qtde,
+    disparo: gainDisparo,
+    execucao: gainExec,
+    qtde: parseInt(qtde),
     total: total
   };
-  return dispatch => {};
+  let tabelaGainReducao = [...props.tabelaGainReducao];
+  tabelaGainReducao.push(itemTabela);
+  return dispatch => {
+    dispatch({
+      type: `${ADICIONAR_ITEM_TABELA_REDUCAO}${namespace}`,
+      payload: tabelaGainReducao
+    });
+  };
 };

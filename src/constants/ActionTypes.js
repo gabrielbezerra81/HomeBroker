@@ -33,6 +33,7 @@ export const MUDAR_AJUSTE_ASSIMETRICO = "mudar_ajuste_assimetrico";
 export const MUDAR_REDUCAO1 = "mudar_reducao1";
 export const MUDAR_REDUCAO2 = "mudar_reducao2";
 export const MUDAR_GAIN = "mudar_gain";
+export const ADICIONAR_ITEM_TABELA_REDUCAO = "adicionar_item_tabela_reducao";
 
 export const COMPRA_AGENDADA_NAMESPACE = "_COMPRA_AGENDADA";
 export const COMPRA_LIMITADA_NAMESPACE = "_COMPRA_LIMITADA";

@@ -14,7 +14,8 @@ import {
   limparAction,
   mudarAtivoAction,
   mudarAssinaturaAction,
-  mudarCheckSalvarAssinaturaAction
+  mudarCheckSalvarAssinaturaAction,
+  adicionarItemTabelaGainReducaoAction
 } from "../../../redux/actions/formInputActions";
 import RowFormValidade from "../../../utils/RowFormValidade";
 import RowFormAssinatura from "../../../utils/RowFormAssinatura";
@@ -92,7 +93,12 @@ class FormInternoVendaGainReducao extends React.Component {
                 <Button
                   variant=""
                   className="operation-icons"
-                  onClick={() => false}
+                  onClick={() =>
+                    this.props.adicionarItemTabelaGainReducaoAction(
+                      this.props,
+                      VENDA_GAINREDUCAO_NAMESPACE
+                    )
+                  }
                 >
                   <MDBIcon
                     icon="plus-circle"
@@ -108,7 +114,7 @@ class FormInternoVendaGainReducao extends React.Component {
           <Row className="rowTabelaGainReducao">
             <Col className="colTabelaOrdens">
               <TabelaGainReducao
-                tableDataOrdens={this.props.TabelaGainReducao}
+                tableDataOrdens={this.props.tabelaGainReducao}
               />
             </Col>
           </Row>
@@ -151,7 +157,7 @@ const mapStateToProps = state => ({
   resultadoAtivo: state.vendaGainReducao.resultadoAtivo,
   assinatura: state.vendaGainReducao.assinatura,
   checkSalvarAssinatura: state.vendaGainReducao.checkSalvarAssinatura,
-  TabelaGainReducao: state.vendaGainReducao.TabelaGainReducao
+  tabelaGainReducao: state.vendaGainReducao.tabelaGainReducao
 });
 
 export default connect(
@@ -166,6 +172,7 @@ export default connect(
     mudarAtivoAction,
     mudarAssinaturaAction,
     mudarCheckSalvarAssinaturaAction,
-    mostrarErroQtdeOnBlurAction
+    mostrarErroQtdeOnBlurAction,
+    adicionarItemTabelaGainReducaoAction
   }
 )(FormInternoVendaGainReducao);

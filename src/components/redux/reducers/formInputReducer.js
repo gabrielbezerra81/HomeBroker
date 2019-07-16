@@ -23,7 +23,8 @@ import {
   MUDAR_REDUCAO1,
   MUDAR_REDUCAO2,
   MUDAR_GAIN,
-  MUDAR_AJUSTE_ASSIMETRICO
+  MUDAR_AJUSTE_ASSIMETRICO,
+  ADICIONAR_ITEM_TABELA_REDUCAO
 } from "../../../constants/ActionTypes";
 
 const INITIAL_STATE = {
@@ -41,7 +42,7 @@ const INITIAL_STATE = {
   date: new Date(),
   assinatura: "",
   porcentagem: "9.55",
-  preco: "0,00",
+  preco: "0.00",
   showConfigStop: true,
   checkSalvarAssinatura: true,
   inicioDisparo: "0.00",
@@ -66,7 +67,7 @@ const INITIAL_STATE = {
   ],
   tabelaOfertasCompra: [],
   tabelaOfertasVenda: [],
-  TabelaGainReducao: [
+  tabelaGainReducao: [
     { disparo: 27.5, execucao: 27.45, qtde: 500, total: 13725 },
     { disparo: 28, execucao: 27.95, qtde: 300, total: 8400 },
     { disparo: 29, execucao: 28.95, qtde: 200, total: 5800 }
@@ -130,6 +131,8 @@ export default namespace => (state = INITIAL_STATE, action) => {
       return { ...state, gain: action.payload };
     case `${MUDAR_AJUSTE_ASSIMETRICO}${namespace}`:
       return { ...state, ajusteAssimetrico: action.payload };
+    case `${ADICIONAR_ITEM_TABELA_REDUCAO}${namespace}`:
+      return { ...state, tabelaGainReducao: action.payload };
     default:
       return state;
   }

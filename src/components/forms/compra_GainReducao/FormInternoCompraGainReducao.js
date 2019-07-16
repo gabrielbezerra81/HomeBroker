@@ -14,7 +14,8 @@ import {
   limparAction,
   mudarAtivoAction,
   mudarAssinaturaAction,
-  mudarCheckSalvarAssinaturaAction
+  mudarCheckSalvarAssinaturaAction,
+  adicionarItemTabelaGainReducaoAction
 } from "../../redux/actions/formInputActions";
 import RowFormValidade from "../../utils/RowFormValidade";
 import RowFormAssinatura from "../../utils/RowFormAssinatura";
@@ -89,7 +90,16 @@ class FormInternoCompraGainReducao extends React.Component {
                 </Form.Group>
               </Col>
               <Col md={1} className="colIconeConfig">
-                <Button variant="" className="operation-icons">
+                <Button
+                  variant=""
+                  className="operation-icons"
+                  onClick={() =>
+                    this.props.adicionarItemTabelaGainReducaoAction(
+                      this.props,
+                      COMPRA_GAINREDUCAO_NAMESPACE
+                    )
+                  }
+                >
                   <MDBIcon
                     icon="plus-circle"
                     size="2x"
@@ -104,7 +114,7 @@ class FormInternoCompraGainReducao extends React.Component {
           <Row className="rowTabelaGainReducao">
             <Col className="colTabelaOrdens">
               <TabelaGainReducao
-                tableDataOrdens={this.props.TabelaGainReducao}
+                tableDataOrdens={this.props.tabelaGainReducao}
               />
             </Col>
           </Row>
@@ -147,7 +157,7 @@ const mapStateToProps = state => ({
   resultadoAtivo: state.compraGainReducao.resultadoAtivo,
   assinatura: state.compraGainReducao.assinatura,
   checkSalvarAssinatura: state.compraGainReducao.checkSalvarAssinatura,
-  TabelaGainReducao: state.compraGainReducao.TabelaGainReducao
+  tabelaGainReducao: state.compraGainReducao.tabelaGainReducao
 });
 
 export default connect(
@@ -162,6 +172,7 @@ export default connect(
     mudarAtivoAction,
     mudarAssinaturaAction,
     mudarCheckSalvarAssinaturaAction,
-    mostrarErroQtdeOnBlurAction
+    mostrarErroQtdeOnBlurAction,
+    adicionarItemTabelaGainReducaoAction
   }
 )(FormInternoCompraGainReducao);
