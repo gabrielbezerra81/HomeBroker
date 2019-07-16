@@ -6,7 +6,7 @@ import {
   mudarReducao2Action,
   mudarGainAction
 } from "../../redux/actions/formInputActions";
-import img from "../../../img/GainReducaoCompra.png";
+import img from "../../../img/compra/GainReducaoCompra.png";
 import {
   TextoGainStopGrafico,
   TextoCotacaoAtualGrafico

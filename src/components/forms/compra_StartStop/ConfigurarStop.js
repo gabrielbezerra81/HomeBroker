@@ -1,5 +1,5 @@
 import React from "react";
-import configurarStop from "../../../img/configurarStop.PNG";
+import configurarStop from "../../../img/compra/configurarStop.PNG";
 import { connect } from "react-redux";
 import { Button, Form } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";

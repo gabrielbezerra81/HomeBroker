@@ -7,7 +7,7 @@ import {
   mudarStopDisparoAction,
   mudarStopExecAction
 } from "../../redux/actions/formInputActions";
-import img from "../../../img/CompraModeloNovo.png";
+import img from "../../../img/compra/CompraModeloNovo.png";
 import IconeConfigGrafico from "../../utils/IconeConfigGrafico";
 import {
   LabelInputGrafico,
