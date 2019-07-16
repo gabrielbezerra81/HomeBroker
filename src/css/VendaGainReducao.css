@@ -6,6 +6,10 @@
 #vendagainreducao .mbody {
   min-height: 434.09px;
 }
+
+#vendagainreducao .mbody {
+  height: unset !important;
+}
 /*
     Inputs do grafico
     */
