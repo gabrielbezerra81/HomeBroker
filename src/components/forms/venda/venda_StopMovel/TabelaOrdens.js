@@ -1,6 +1,12 @@
 import React from "react";
 import { Table, Button } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
+import { connect } from "react-redux";
+import {
+  VENDA_STOPMOVEL_NAMESPACE,
+  REMOVE_ITEM_TABELA_ORDENS_MOVEL
+} from "../../../../constants/ActionTypes";
+import { removerItemTabelaAction } from "../../../redux/actions/formInputActions";
 
 class TabelaOrdens extends React.Component {
   renderItems(tableData) {
@@ -12,7 +18,18 @@ class TabelaOrdens extends React.Component {
         <td>{Number(item.ajuste).toFixed(2)}</td>
         <td>{Number(item.novoStop).toFixed(2)}</td>
         <td>
-          <Button variant="" onClick={() => false} className="operation-icons">
+          <Button
+            variant=""
+            onClick={() =>
+              this.props.removerItemTabelaAction(
+                REMOVE_ITEM_TABELA_ORDENS_MOVEL,
+                tableData,
+                index,
+                VENDA_STOPMOVEL_NAMESPACE
+              )
+            }
+            className="operation-icons"
+          >
             <MDBIcon icon="times" size="1x" />
           </Button>
         </td>
@@ -44,4 +61,9 @@ class TabelaOrdens extends React.Component {
   }
 }
 
-export default TabelaOrdens;
+const mapStateToProps = state => ({});
+
+export default connect(
+  mapStateToProps,
+  {removerItemTabelaAction}
+)(TabelaOrdens);
