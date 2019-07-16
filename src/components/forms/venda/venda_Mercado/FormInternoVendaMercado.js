@@ -195,8 +195,8 @@ class FormInternoVendaMercado extends React.Component {
                 </Button>
               </Col>
               <Col md={6}>
-                <Button variant="primary" size="sm" onClick={() => false}>
-                  <h6>Comprar</h6>
+                <Button variant="danger" size="sm" onClick={() => false}>
+                  <h6>Vender</h6>
                 </Button>
               </Col>
             </Row>

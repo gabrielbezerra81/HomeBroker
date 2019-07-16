@@ -185,9 +185,6 @@ class FormInternoCompraStartMovel extends React.Component {
           </Form>
 
           <Row className="rowTabelaOrdens">
-            <Col md={1} className="colTextoSimulacao">
-              <h6 className="textoSimulacao">SIMULAÇÃO</h6>
-            </Col>
             <Col className="colTabelaOrdens">
               <TabelaOrdens tableDataOrdens={this.props.tabelaOrdens} />
             </Col>

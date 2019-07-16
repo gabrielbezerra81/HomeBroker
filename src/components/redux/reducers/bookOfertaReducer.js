@@ -5,7 +5,7 @@ import {
 } from "../../../constants/ActionTypes";
 
 const INITIAL_STATE = {
-  qtde: 0,
+  qtde: "",
   erro: "",
   stopLoss: 0,
   gain: 0,

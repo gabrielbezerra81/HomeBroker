@@ -248,11 +248,11 @@ class FormInternoVendaAgendada extends React.Component {
               </Col>
               <Col md={6}>
                 <Button
-                  variant="primary"
+                  variant="danger"
                   size="sm"
                   onClick={() => this.props.comprarAgendadaAction()}
                 >
-                  <h6>Comprar</h6>
+                  <h6>Vender</h6>
                 </Button>
               </Col>
             </Row>
