@@ -33,55 +33,66 @@ import {
 const INITIAL_STATE = {
   resultadoAtivo: "PETR4, PETROBRAS",
   ativo: "",
-  entradaDisparo: "0.00",
-  entradaExec: "0.00",
-  valorTotal: "15.52",
-  gainDisparo: "0.00",
-  gainExec: "0.00",
-  stopDisparo: 26,
-  stopExec: 24.95,
-  cotacaoAtual: "0.00",
+  entradaDisparo: "",
+  entradaExec: "",
+  valorTotal: "",
+  gainDisparo: "",
+  gainExec: "",
+  stopDisparo: "",
+  stopExec: "",
+  cotacaoAtual: "",
   validadeSelect: "hoje",
   date: new Date(),
   assinatura: "",
-  porcentagem: "9.55",
-  preco: "0.00",
+  porcentagem: "0.00",
+  preco: "",
   showConfigStop: true,
   checkSalvarAssinatura: true,
-  inicioDisparo: 24.0,
-  ajustePadrao: 0.1,
-  disparo1Ajuste: 27.5,
-  disparoMaisAjuste: 28.0,
-  stopMais1Ajuste: 27.0,
-  stopAnteriorAjuste: 27.5,
-  reducao1: "0.00",
-  reducao2: "0.00",
-  gain: "0.00",
-  ajusteAssimetrico: "1.00",
+  inicioDisparo: "",
+  ajustePadrao: "",
+  disparo1Ajuste: "",
+  disparoMaisAjuste: "",
+  stopMais1Ajuste: "",
+  stopAnteriorAjuste: "",
+  reducao1: "",
+  reducao2: "",
+  gain: "",
+  ajusteAssimetrico: "",
   tabelaOrdens: [],
   tabelaOfertasCompra: [],
   tabelaOfertasVenda: [],
   tabelaGainReducao: []
 };
-export default namespace => (state = INITIAL_STATE, action) => {
-  if (action.payload === "0" || action.payload === 0)
-    action.payload = Number(action.payload).toFixed(2);
 
+const formatarNumero = value => {
+  value = value.split(".").join("");
+
+  if (value.length > 2) {
+    value =
+      value.substring(0, value.length - 2) +
+      "." +
+      value.substring(value.length - 2, value.length);
+  }
+
+  return value;
+};
+
+export default namespace => (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case `${MUDAR_ATIVO}${namespace}`:
       return { ...state, ativo: action.payload };
     case `${MUDAR_ENTRADA_DISPARO}${namespace}`:
-      return { ...state, entradaDisparo: action.payload };
+      return { ...state, entradaDisparo: formatarNumero(action.payload) };
     case `${MUDAR_ENTRADA_EXEC}${namespace}`:
-      return { ...state, entradaExec: action.payload };
+      return { ...state, entradaExec: formatarNumero(action.payload)  };
     case `${MUDAR_GAIN_DISPARO}${namespace}`:
-      return { ...state, gainDisparo: action.payload };
+      return { ...state, gainDisparo: formatarNumero(action.payload)  };
     case `${MUDAR_GAIN_EXEC}${namespace}`:
-      return { ...state, gainExec: action.payload };
+      return { ...state, gainExec: formatarNumero(action.payload)  };
     case `${MUDAR_STOP_DISPARO}${namespace}`:
-      return { ...state, stopDisparo: action.payload };
+      return { ...state, stopDisparo: formatarNumero(action.payload)  };
     case `${MUDAR_STOP_EXEC}${namespace}`:
-      return { ...state, stopExec: action.payload };
+      return { ...state, stopExec: formatarNumero(action.payload)  };
     case `${MUDAR_VALIDADE_SELECT}${namespace}`:
       return { ...state, validadeSelect: action.payload };
     case `${MUDAR_DATA}${namespace}`:
@@ -99,28 +110,28 @@ export default namespace => (state = INITIAL_STATE, action) => {
     case `${MUDAR_CHECK_SALVA_ASSINATURA}${namespace}`:
       return { ...state, checkSalvarAssinatura: action.payload };
     case `${MUDAR_INICIO_DISPARO}${namespace}`:
-      return { ...state, inicioDisparo: action.payload };
+      return { ...state, inicioDisparo: formatarNumero(action.payload)  };
     case `${MUDAR_AJUSTE_PADRAO}${namespace}`:
-      return { ...state, ajustePadrao: action.payload };
+      return { ...state, ajustePadrao: formatarNumero(action.payload)  };
     case `${MUDAR_DISPARO_PRIMEIRO_AJUSTE}${namespace}`:
-      return { ...state, disparo1Ajuste: action.payload };
+      return { ...state, disparo1Ajuste: formatarNumero(action.payload)  };
     case `${MUDAR_DISPARO_MAIS_AJUSTE}${namespace}`:
-      return { ...state, disparoMaisAjuste: action.payload };
+      return { ...state, disparoMaisAjuste: formatarNumero(action.payload)  };
     case `${MUDAR_STOP_MAIS_PRIMEIRO_AJUSTE}${namespace}`:
-      return { ...state, stopMais1Ajuste: action.payload };
+      return { ...state, stopMais1Ajuste: formatarNumero(action.payload)  };
     case `${MUDAR_STOP_ANTERIOR_AJUSTE}${namespace}`:
       return {
         ...state,
-        stopAnteriorAjuste: action.payload
+        stopAnteriorAjuste: formatarNumero(action.payload) 
       };
     case `${MUDAR_REDUCAO1}${namespace}`:
-      return { ...state, reducao1: action.payload };
+      return { ...state, reducao1: formatarNumero(action.payload)  };
     case `${MUDAR_REDUCAO2}${namespace}`:
-      return { ...state, reducao2: action.payload };
+      return { ...state, reducao2: formatarNumero(action.payload)  };
     case `${MUDAR_GAIN}${namespace}`:
-      return { ...state, gain: action.payload };
+      return { ...state, gain: formatarNumero(action.payload)  };
     case `${MUDAR_AJUSTE_ASSIMETRICO}${namespace}`:
-      return { ...state, ajusteAssimetrico: action.payload };
+      return { ...state, ajusteAssimetrico: formatarNumero(action.payload)  };
     case `${ADICIONAR_ITEM_TABELA_REDUCAO}${namespace}`:
       return { ...state, tabelaGainReducao: action.payload };
     case `${ADICIONA_ITEM_TABELA_ORDENS_VENDA}${namespace}`:
