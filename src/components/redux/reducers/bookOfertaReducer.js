@@ -2,7 +2,8 @@ import {
   MUDAR_QTDE_BOOK,
   MUDAR_STOPLOSS_BOOK,
   MUDAR_GAIN_BOOK,
-  MUDAR_INPUTHEADER_BOOK
+  MUDAR_INPUTHEADER_BOOK,
+  LIMPAR_FORMS
 } from "../../../constants/ActionTypes";
 
 const INITIAL_STATE = {
@@ -23,6 +24,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, gain: action.payload };
     case MUDAR_INPUTHEADER_BOOK:
       return { ...state, inputHeader: action.payload };
+    case LIMPAR_FORMS:
+      return { ...state, qtde: "" };
     default:
       return state;
   }

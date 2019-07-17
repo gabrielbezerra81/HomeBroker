@@ -86,6 +86,9 @@ export const limparAction = namespace => {
     dispatch({
       type: `${LIMPAR_FORMS}${namespace}`
     });
+    dispatch({
+      type: LIMPAR_FORMS
+    });
   };
 };
 
