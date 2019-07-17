@@ -86,10 +86,9 @@ class FormInternoCompraLimitada extends React.Component {
                   <Form.Label />
                   <NumberFormat
                     className="textInput form-control"
-                    thousandSeparator="."
-                    decimalSeparator=","
+                    thousandSeparator=","
+                    decimalSeparator="."
                     allowNegative={false}
-                    type="number"
                     maxLength={300}
                     name="disparo"
                     value={this.props.preco}
