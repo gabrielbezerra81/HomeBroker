@@ -136,7 +136,7 @@ class GraficoCompraStartMovel extends React.Component {
 
           {TextoMenorGrafico(
             Number(
-              this.props.stopMais1Ajuste - this.props.stopExec
+              this.props.stopMais1Ajuste - this.props.stopDisparo
             ).toFixed(2),
             "ValorAjuste1Grafico_CSM"
           )}
