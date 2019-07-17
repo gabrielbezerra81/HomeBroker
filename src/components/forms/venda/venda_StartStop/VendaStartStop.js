@@ -7,6 +7,7 @@ import FormInternoVendaStartStop from "./FormInternoVendaStartStop";
 import GraficoVendaStartStop from "./GraficoVendaStartStop";
 import BodyHeaderVendaStartStop from "./BodyHeaderVendaStartStop";
 import { modalHeader } from "../../../utils/FormHeader";
+import { abrirFormularioAction } from "../../../redux/actions/AppActions";
 
 class VendaStartStop extends React.Component {
   render() {
@@ -46,5 +47,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {}
+  {abrirFormularioAction}
 )(VendaStartStop);

@@ -7,6 +7,7 @@ import FormInternoVendaAgendada from "./FormInternoVendaAgendada";
 import GraficoVendaAgendada from "./GraficoVendaAgendada";
 import BodyHeaderVendaAgendada from "./BodyHeaderVendaAgendada";
 import { modalHeader } from "../../../utils/FormHeader";
+import { abrirFormularioAction } from "../../../redux/actions/AppActions";
 
 class VendaAgendada extends React.Component {
   render() {
@@ -38,5 +39,5 @@ const mapStateToProps = state => ({});
 
 export default connect(
   mapStateToProps,
-  {}
+  {abrirFormularioAction}
 )(VendaAgendada);

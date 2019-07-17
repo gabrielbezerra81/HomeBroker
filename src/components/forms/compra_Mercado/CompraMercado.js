@@ -7,6 +7,8 @@ import FormInternoCompraMercado from "./FormInternoCompraMercado";
 import GraficoCompraMercado from "./GraficoCompraMercado";
 import BodyHeaderCompraMercado from "./BodyHeaderCompraMercado";
 import { modalHeader } from "../../utils/FormHeader";
+import { abrirFormularioAction } from "../../redux/actions/AppActions";
+
 class CompraMercado extends React.Component {
   render() {
     return (
@@ -39,5 +41,5 @@ const mapStateToProps = state => ({});
 
 export default connect(
   mapStateToProps,
-  {}
+  {abrirFormularioAction}
 )(CompraMercado);

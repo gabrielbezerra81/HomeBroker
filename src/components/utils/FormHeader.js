@@ -5,9 +5,9 @@ import { MDBIcon } from "mdbreact";
 export const modalHeader = (props, headerTitle, headerClass) => (
   <div className={`${headerClass} handle mheader`}>
     <h6 className="mtitle">{headerTitle}</h6>
-    <div className="wrapperIconesHeader">
-      <Button variant="" className="iconesHeader">
-        <MDBIcon icon="book" size="2x" />
+    <div className="wrapperIconesHeader" name="book">
+      <Button variant="" className="iconesHeader" onClick={props.abrirFormularioAction} name="book">
+        <MDBIcon icon="book" size="2x" name="book"/>
       </Button>
 
       <Button variant="" className="iconesHeader">

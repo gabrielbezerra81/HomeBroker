@@ -7,6 +7,7 @@ import FormInternoVendaGainReducao from "./FormInternoVendaGainReducao";
 import GraficoVendaGainReducao from "./GraficoVendaGainReducao"
 import BodyHeaderVendaGainReducao from "./BodyHeaderVendaGainReducao";
 import { modalHeader } from "../../../utils/FormHeader";
+import { abrirFormularioAction } from "../../../redux/actions/AppActions";
 
 class VendaGainReducao extends React.Component {
   render() {
@@ -38,5 +39,5 @@ const mapStateToProps = state => ({});
 
 export default connect(
   mapStateToProps,
-  {}
+  {abrirFormularioAction}
 )(VendaGainReducao);

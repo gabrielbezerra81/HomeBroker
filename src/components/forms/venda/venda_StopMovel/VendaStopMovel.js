@@ -7,6 +7,7 @@ import FormInternoVendaStopMovel from "./FormInternoVendaStopMovel";
 import GraficoVendaStopMovel from "./GraficoVendaStopMovel";
 import BodyHeaderVendaStopMovel from "./BodyHeaderVendaStopMovel";
 import { modalHeader } from "../../../utils/FormHeader";
+import { abrirFormularioAction } from "../../../redux/actions/AppActions";
 
 class VendaStopMovel extends React.Component {
   render() {
@@ -40,5 +41,5 @@ const mapStateToProps = state => ({});
 
 export default connect(
   mapStateToProps,
-  {}
+  {abrirFormularioAction}
 )(VendaStopMovel);
