@@ -16,7 +16,7 @@ import {
   mudarAjusteAssimetricoAction,
   mudarValidadeSelectAction,
   mudarDataAction,
-  adicionarItemTabelaStopMovel,
+  adicionarItemTabelaStartMovel,
   limparAction,
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction
@@ -193,7 +193,7 @@ class FormInternoCompraStartMovel extends React.Component {
                 <Button
                   variant=""
                   onClick={() =>
-                    this.props.adicionarItemTabelaStopMovel(
+                    this.props.adicionarItemTabelaStartMovel(
                       this.props,
                       COMPRA_STARTMOVEL_NAMESPACE
                     )
@@ -269,7 +269,7 @@ export default connect(
     mudarValidadeSelectAction,
     mudarDataAction,
     mostrarErroQtdeOnBlurAction,
-    adicionarItemTabelaStopMovel,
+    adicionarItemTabelaStartMovel,
     mudarAssinaturaAction,
     mudarCheckSalvarAssinaturaAction,
     limparAction

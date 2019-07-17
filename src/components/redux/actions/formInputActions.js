@@ -264,17 +264,31 @@ export const adicionarItemTabelaGainReducaoAction = (props, namespace) => {
 };
 
 export const adicionarItemTabelaStopMovel = (props, namespace) => {
-  const { inicioDisparo, ajusteAssimetrico, stopDisparo } = props;
-
-  const itemTabela = {
-    disparo: inicioDisparo,
-    stopAtual: stopDisparo,
-    ajuste: ajusteAssimetrico,
-    novoStop: Number(stopDisparo) + Number(ajusteAssimetrico)
-  };
-
   let tabelaOrdens = [...props.tabelaOrdens];
-  tabelaOrdens.push(itemTabela);
+
+  let { inicioDisparo, ajusteAssimetrico, stopDisparo } = props;
+
+  if (tabelaOrdens.length === 0) {
+    const itemTabela = {
+      disparo: inicioDisparo,
+      stopAtual: stopDisparo,
+      ajuste: ajusteAssimetrico,
+      novoStop: Number(stopDisparo) + Number(ajusteAssimetrico)
+    };
+    tabelaOrdens.push(itemTabela);
+  } else {
+    const tamanho = tabelaOrdens.length;
+    const ultimoItem = tabelaOrdens[tamanho - 1];
+
+    const itemTabela = {
+      disparo: Number(ultimoItem.disparo) + Number(ajusteAssimetrico),
+      stopAtual: stopDisparo,
+      ajuste: ajusteAssimetrico,
+      novoStop: Number(stopDisparo) + Number(ajusteAssimetrico)
+    };
+    tabelaOrdens.push(itemTabela);
+  }
+
   return dispatch => {
     dispatch({
       type: `${ADICIONA_ITEM_TABELA_ORDENS_VENDA}${namespace}`,
@@ -283,7 +297,46 @@ export const adicionarItemTabelaStopMovel = (props, namespace) => {
   };
 };
 
-export const removerItemTabelaAction = (actionType,tabela, index, namespace) => {
+export const adicionarItemTabelaStartMovel = (props, namespace) => {
+  let tabelaOrdens = [...props.tabelaOrdens];
+
+  let { inicioDisparo, ajusteAssimetrico, stopDisparo } = props;
+
+  if (tabelaOrdens.length === 0) {
+    const itemTabela = {
+      disparo: inicioDisparo,
+      stopAtual: stopDisparo,
+      ajuste: ajusteAssimetrico,
+      novoStop: Number(stopDisparo) - Number(ajusteAssimetrico)
+    };
+    tabelaOrdens.push(itemTabela);
+  } else {
+    const tamanho = tabelaOrdens.length;
+    const ultimoItem = tabelaOrdens[tamanho - 1];
+
+    const itemTabela = {
+      disparo: Number(ultimoItem.disparo) - Number(ajusteAssimetrico),
+      stopAtual: stopDisparo,
+      ajuste: ajusteAssimetrico,
+      novoStop: Number(stopDisparo) - Number(ajusteAssimetrico)
+    };
+    tabelaOrdens.push(itemTabela);
+  }
+
+  return dispatch => {
+    dispatch({
+      type: `${ADICIONA_ITEM_TABELA_ORDENS_VENDA}${namespace}`,
+      payload: tabelaOrdens
+    });
+  };
+};
+
+export const removerItemTabelaAction = (
+  actionType,
+  tabela,
+  index,
+  namespace
+) => {
   let novaTabela = [...tabela];
   novaTabela.splice(index, 1);
   return dispatch => {

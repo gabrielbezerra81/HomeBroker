@@ -2,7 +2,10 @@ import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import { connect } from "react-redux";
-import { mudarQtdAction, mostrarErroQtdeOnBlurAction } from "../../../redux/actions/bookOfertaActions";
+import {
+  mudarQtdAction,
+  mostrarErroQtdeOnBlurAction
+} from "../../../redux/actions/bookOfertaActions";
 import {
   mudarGainDisparoAction,
   mudarGainExecAction,
@@ -109,15 +112,6 @@ class FormInternoVendaAgendada extends React.Component {
                     }
                   />
                 </Form.Group>
-              </Col>
-              <Col md={1} className="colIconeConfig">
-                <Button variant="" className="operation-icons">
-                  <MDBIcon
-                    icon="cog"
-                    size="2x"
-                    className="labelInput-verticalAlign"
-                  />
-                </Button>
               </Col>
             </Row>
           </Form>

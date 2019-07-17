@@ -113,15 +113,6 @@ class FormInternoCompraAgendada extends React.Component {
                   />
                 </Form.Group>
               </Col>
-              <Col md={1} className="colIconeConfig">
-                <Button variant="" className="operation-icons">
-                  <MDBIcon
-                    icon="cog"
-                    size="2x"
-                    className="labelInput-verticalAlign"
-                  />
-                </Button>
-              </Col>
             </Row>
           </Form>
 

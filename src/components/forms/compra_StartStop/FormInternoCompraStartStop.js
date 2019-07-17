@@ -78,7 +78,7 @@ class FormInternoCompraStartStop extends React.Component {
           <Form>
             <Row>
               <Col md={2} className="colLabelInput">
-                <h6 className="labelInput-verticalAlign">Gain</h6>
+                <h6 className="labelInput-verticalAlign">Start</h6>
               </Col>
               <Col className="colTextInput">
                 <Form.Group>

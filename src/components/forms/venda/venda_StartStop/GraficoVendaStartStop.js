@@ -89,7 +89,7 @@ class GraficoVendaStartStop extends React.Component {
           {LabelInputGrafico("Execução", "TextoGainExecucao_VA")}
           {LabelInputGrafico("Disparo", "TextoStopDisparo_VA")}
           {LabelInputGrafico("Execução", "TextoStopExecucao_VA")}
-          {TextoGainStopGrafico("GAIN", "TextoGain_VA")}
+          {TextoGainStopGrafico("START", "TextoGain_VA")}
           {TextoGainStopGrafico("STOP", "TextoStop_VA")}
           {TextoCotacaoAtualGrafico("TextoCotacaoAtualGrafico_VA")}
           {TextoValorTotalGrafico("VALOR TOTAL", 26.5, "ValorTotalGain")}
