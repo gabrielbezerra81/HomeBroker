@@ -16,11 +16,15 @@ import {
   mudarAjusteAssimetricoAction,
   mudarValidadeSelectAction,
   mudarDataAction,
-  adicionarItemTabelaStopMovel
+  adicionarItemTabelaStopMovel,
+  limparAction,
+  mudarAssinaturaAction,
+  mudarCheckSalvarAssinaturaAction
 } from "../../redux/actions/formInputActions";
 import { COMPRA_STARTMOVEL_NAMESPACE } from "../../../constants/ActionTypes";
 import TabelaOrdens from "./TabelaOrdens";
 import RowFormValidade from "../../utils/RowFormValidade";
+import RowFormAssinatura from "../../utils/RowFormAssinatura";
 
 class FormInternoCompraStartMovel extends React.Component {
   render() {
@@ -206,6 +210,28 @@ class FormInternoCompraStartMovel extends React.Component {
               <TabelaOrdens tableDataOrdens={this.props.tabelaOrdens} />
             </Col>
           </Row>
+
+          <div className="customFooter footerSemBorda">
+            {RowFormAssinatura(this.props, COMPRA_STARTMOVEL_NAMESPACE)}
+            <Row>
+              <Col md={3}>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() =>
+                    this.props.limparAction(COMPRA_STARTMOVEL_NAMESPACE)
+                  }
+                >
+                  <h6>Limpar</h6>
+                </Button>
+              </Col>
+              <Col md={6}>
+                <Button variant="primary" size="sm" onClick={() => false}>
+                  <h6>Comprar</h6>
+                </Button>
+              </Col>
+            </Row>
+          </div>
         </div>
       </Col>
     );
@@ -224,7 +250,9 @@ const mapStateToProps = state => ({
   tabelaOrdens: state.compraStartMovelReducer.tabelaOrdens,
   ajusteAssimetrico: state.compraStartMovelReducer.ajusteAssimetrico,
   validadeSelect: state.compraStartMovelReducer.validadeSelect,
-  date: state.compraStartMovelReducer.date
+  date: state.compraStartMovelReducer.date,
+  assinatura: state.compraStartMovelReducer.assinatura,
+  checkSalvarAssinatura: state.compraStartMovelReducer.checkSalvarAssinatura
 });
 
 export default connect(
@@ -241,7 +269,10 @@ export default connect(
     mudarValidadeSelectAction,
     mudarDataAction,
     mostrarErroQtdeOnBlurAction,
-    adicionarItemTabelaStopMovel
+    adicionarItemTabelaStopMovel,
+    mudarAssinaturaAction,
+    mudarCheckSalvarAssinaturaAction,
+    limparAction
   }
 )(FormInternoCompraStartMovel);
 

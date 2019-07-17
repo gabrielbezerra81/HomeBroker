@@ -37,7 +37,7 @@ class App extends React.Component {
       venda_agendada: true,
       venda_limitada: true,
       venda_mercado: true,
-      venda_startstop: true,
+      venda_startstop: false,
       venda_stop_movel: true,
       venda_gain_reducao: true
     };

@@ -16,11 +16,15 @@ import {
   mudarAjusteAssimetricoAction,
   mudarValidadeSelectAction,
   mudarDataAction,
-  adicionarItemTabelaStopMovel
+  adicionarItemTabelaStopMovel,
+  limparAction,
+  mudarAssinaturaAction,
+  mudarCheckSalvarAssinaturaAction
 } from "../../../redux/actions/formInputActions";
 import { VENDA_STOPMOVEL_NAMESPACE } from "../../../../constants/ActionTypes";
 import TabelaOrdens from "./TabelaOrdens";
 import RowFormValidade from "../../../utils/RowFormValidade";
+import RowFormAssinatura from "../../../utils/RowFormAssinatura";
 
 class FormInternoVendaStopMovel extends React.Component {
   render() {
@@ -188,7 +192,12 @@ class FormInternoVendaStopMovel extends React.Component {
               <Col md={1} className="colIconeConfig">
                 <Button
                   variant=""
-                  onClick={() => this.props.adicionarItemTabelaStopMovel(this.props, VENDA_STOPMOVEL_NAMESPACE)}
+                  onClick={() =>
+                    this.props.adicionarItemTabelaStopMovel(
+                      this.props,
+                      VENDA_STOPMOVEL_NAMESPACE
+                    )
+                  }
                   className="operation-icons"
                 >
                   <MDBIcon icon="plus-circle" size="2x" />
@@ -202,6 +211,27 @@ class FormInternoVendaStopMovel extends React.Component {
               <TabelaOrdens tableDataOrdens={this.props.tabelaOrdens} />
             </Col>
           </Row>
+          <div className="customFooter footerSemBorda">
+            {RowFormAssinatura(this.props, VENDA_STOPMOVEL_NAMESPACE)}
+            <Row>
+              <Col md={3}>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() =>
+                    this.props.limparAction(VENDA_STOPMOVEL_NAMESPACE)
+                  }
+                >
+                  <h6>Limpar</h6>
+                </Button>
+              </Col>
+              <Col md={6}>
+                <Button variant="danger" size="sm" onClick={() => false}>
+                  <h6>Vender</h6>
+                </Button>
+              </Col>
+            </Row>
+          </div>
         </div>
       </Col>
     );
@@ -220,7 +250,9 @@ const mapStateToProps = state => ({
   tabelaOrdens: state.vendaStopMovel.tabelaOrdens,
   ajusteAssimetrico: state.vendaStopMovel.ajusteAssimetrico,
   validadeSelect: state.vendaStopMovel.validadeSelect,
-  date: state.vendaStopMovel.date
+  date: state.vendaStopMovel.date,
+  assinatura: state.vendaStopMovel.assinatura,
+  checkSalvarAssinatura: state.vendaStopMovel.checkSalvarAssinatura
 });
 
 export default connect(
@@ -237,6 +269,9 @@ export default connect(
     mudarValidadeSelectAction,
     mudarDataAction,
     mostrarErroQtdeOnBlurAction,
-    adicionarItemTabelaStopMovel
+    adicionarItemTabelaStopMovel,
+    mudarAssinaturaAction,
+    mudarCheckSalvarAssinaturaAction,
+    limparAction
   }
 )(FormInternoVendaStopMovel);
