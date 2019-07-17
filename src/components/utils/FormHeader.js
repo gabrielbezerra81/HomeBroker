@@ -20,7 +20,7 @@ export const modalHeader = (props, headerTitle, headerClass) => (
           <MDBIcon
             icon="times"
             className="fa-stack-1x iconeFechar"
-            name="agendada"
+            name={props.name}
           />
         </span>
       </Button>

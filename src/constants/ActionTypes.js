@@ -1,7 +1,7 @@
 export const MUDAR_QTDE_BOOK = "mudar_qtde";
 export const MUDAR_STOPLOSS_BOOK = "mudar_stoploss_book";
 export const MUDAR_GAIN_BOOK = "mudar_gain_book";
-export const MUDAR_INPUTHEADER_BOOK = "mudar_inputheader_book"
+export const MUDAR_INPUTHEADER_BOOK = "mudar_inputheader_book";
 
 export const MUDAR_GAIN_DISPARO = "mudar_gain_disparo";
 export const MUDAR_GAIN_EXEC = "mudar_gain_exec";
@@ -26,17 +26,21 @@ export const MUDAR_INICIO_DISPARO = "mudar_inicio_disparo";
 export const MUDAR_AJUSTE_PADRAO = "mudar_ajuste_padrao";
 export const MUDAR_DISPARO_PRIMEIRO_AJUSTE = "mudar_disparo_primeiro_ajuste";
 export const MUDAR_DISPARO_MAIS_AJUSTE = "mudar_disparo_mais_ajuste";
-export const MUDAR_STOP_MAIS_PRIMEIRO_AJUSTE ="mudar_stop_mais_primeiro_ajuste";
+export const MUDAR_STOP_MAIS_PRIMEIRO_AJUSTE =
+  "mudar_stop_mais_primeiro_ajuste";
 export const MUDAR_STOP_ANTERIOR_AJUSTE = "mudar_stop_anterior_ajuste";
 export const MUDAR_AJUSTE_ASSIMETRICO = "mudar_ajuste_assimetrico";
-export const ADICIONA_ITEM_TABELA_ORDENS_VENDA = "adiciona_item_tabela_ordens_venda"
-export const REMOVE_ITEM_TABELA_ORDENS_MOVEL = "remove_item_tabela_ordens_movel"
+export const ADICIONA_ITEM_TABELA_ORDENS_VENDA =
+  "adiciona_item_tabela_ordens_venda";
+export const REMOVE_ITEM_TABELA_ORDENS_MOVEL =
+  "remove_item_tabela_ordens_movel";
 
 export const MUDAR_REDUCAO1 = "mudar_reducao1";
 export const MUDAR_REDUCAO2 = "mudar_reducao2";
 export const MUDAR_GAIN = "mudar_gain";
 export const ADICIONAR_ITEM_TABELA_REDUCAO = "adicionar_item_tabela_reducao";
-export const REMOVE_ITEM_TABELA_GAIN_REDUCAO = "remove_item_tabela_gain_reducao"
+export const REMOVE_ITEM_TABELA_GAIN_REDUCAO =
+  "remove_item_tabela_gain_reducao";
 
 export const COMPRA_AGENDADA_NAMESPACE = "_COMPRA_AGENDADA";
 export const COMPRA_LIMITADA_NAMESPACE = "_COMPRA_LIMITADA";
@@ -51,3 +55,6 @@ export const VENDA_MERCADO_NAMESPACE = "_VENDA_MERCADO";
 export const VENDA_STARTSTOP_NAMESPACE = "_VENDA_STARTSTOP";
 export const VENDA_STOPMOVEL_NAMESPACE = "_VENDA_STOPMOVEL";
 export const VENDA_GAINREDUCAO_NAMESPACE = "_VENDA_GAINREDUCAO";
+
+export const ABRIR_FORMULARIO = "abrir_formulario";
+export const FECHAR_FORMULARIO = "fechar_formulario";

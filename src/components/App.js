@@ -16,7 +16,12 @@ import VendaStartStop from "./forms/venda/venda_StartStop/VendaStartStop";
 import VendaStopMovel from "./forms/venda/venda_StopMovel/VendaStopMovel";
 import VendaGainReducao from "./forms/venda/venda_GainReducao/VendaGainReducao";
 
-import { Row } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
+import {
+  abrirFormularioAction,
+  fecharFormularioAction
+} from "./redux/actions/AppActions";
+import { connect } from "react-redux";
 
 class App extends React.Component {
   constructor(props, context) {
@@ -27,19 +32,19 @@ class App extends React.Component {
 
     //Verificar names nos icones de fechar e nos componentes abaixo
     this.state = {
-      book: true,
-      agendada: true,
-      limitada: true,
-      mercado: true,
-      startstop: true,
-      startmovel: true,
-      gainreducao: true,
-      venda_agendada: true,
-      venda_limitada: true,
-      venda_mercado: true,
-      venda_startstop: true,
-      venda_stop_movel: true,
-      venda_gain_reducao: true
+      book: false,
+      compra_agendada: false,
+      compra_limitada: false,
+      compra_mercado: false,
+      compra_startstop: false,
+      compra_startmovel: false,
+      compra_gainreducao: false,
+      venda_agendada: false,
+      venda_limitada: false,
+      venda_mercado: false,
+      venda_startstop: false,
+      venda_stop_movel: false,
+      venda_gainreducao: false
     };
   }
 
@@ -56,160 +61,249 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={() => this.props.removerApp(this.props.appkey)}
-          >
-            <h6>Fechar</h6>
-          </Button>
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={this.handleShow}
-            name="book"
-          >
-            <h6 name="book">Book de Ofertas</h6>
-          </Button>
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={this.handleShow}
-            name="agendada"
-          >
-            <h6 name="agendada">Compra Agendada</h6>
-          </Button>
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={this.handleShow}
-            name="limitada"
-          >
-            <h6 name="limitada">Compra Limitada</h6>
-          </Button>
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={this.handleShow}
-            name="mercado"
-          >
-            <h6 name="mercado">Compra a Mercado</h6>
-          </Button>
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={this.handleShow}
-            name="startstop"
-          >
-            <h6 name="startstop">Compra Start/Stop</h6>
-          </Button>
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={this.handleShow}
-            name="startmovel"
-          >
-            <h6 name="startmovel">Compra Start Móvel</h6>
-          </Button>
-          <Button variant="primary" size="sm" name="reducao">
-            <h6 name="reducao">Gain/Redução de compra</h6>
-          </Button>
+          <Row style={{ paddingBottom: "0.5rem" }}>
+            <Col md={2}>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => this.props.removerApp(this.props.appkey)}
+              >
+                <h6>Fechar</h6>
+              </Button>
+            </Col>
+            <Col md={2}>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={this.props.abrirFormularioAction}
+                name="book"
+              >
+                <h6 name="book">Book de Ofertas</h6>
+              </Button>
+            </Col>
+          </Row>
+          <Row style={{ paddingBottom: "0.5rem" }}>
+            <Col>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={this.props.abrirFormularioAction}
+                name="compra_agendada"
+              >
+                <h6 name="compra_agendada">Compra Agendada</h6>
+              </Button>
+            </Col>
+            <Col>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={this.props.abrirFormularioAction}
+                name="compra_limitada"
+              >
+                <h6 name="compra_limitada">Compra Limitada</h6>
+              </Button>
+            </Col>
+            <Col>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={this.props.abrirFormularioAction}
+                name="compra_mercado"
+              >
+                <h6 name="compra_mercado">Compra a Mercado</h6>
+              </Button>
+            </Col>
+            <Col>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={this.props.abrirFormularioAction}
+                name="compra_startstop"
+              >
+                <h6 name="compra_startstop">Compra Start/Stop</h6>
+              </Button>
+            </Col>
+            <Col>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={this.props.abrirFormularioAction}
+                name="compra_startmovel"
+              >
+                <h6 name="compra_startmovel">Compra Start Móvel</h6>
+              </Button>
+            </Col>
+
+            <Col>
+              {" "}
+              <Button
+                variant="primary"
+                size="sm"
+                name="compra_gainreducao"
+                onClick={this.props.abrirFormularioAction}
+              >
+                <h6 name="compra_gainreducao">Gain/Redução de compra</h6>
+              </Button>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Button
+                variant="primary"
+                size="sm"
+                name="venda_agendada"
+                onClick={this.props.abrirFormularioAction}
+              >
+                <h6 name="venda_agendada">Venda Agendada</h6>
+              </Button>
+            </Col>
+            <Col>
+              <Button
+                variant="primary"
+                size="sm"
+                name="venda_limitada"
+                onClick={this.props.abrirFormularioAction}
+              >
+                <h6 name="venda_limitada">Venda Limitada</h6>
+              </Button>
+            </Col>
+            <Col>
+              <Button
+                variant="primary"
+                size="sm"
+                name="venda_mercado"
+                onClick={this.props.abrirFormularioAction}
+              >
+                <h6 name="venda_mercado">Venda a Mercado</h6>
+              </Button>
+            </Col>
+            <Col>
+              <Button
+                variant="primary"
+                size="sm"
+                name="venda_startstop"
+                onClick={this.props.abrirFormularioAction}
+              >
+                <h6 name="venda_startstop">Venda Start/Stop</h6>
+              </Button>
+            </Col>
+            <Col>
+              <Button
+                variant="primary"
+                size="sm"
+                name="venda_stop_movel"
+                onClick={this.props.abrirFormularioAction}
+              >
+                <h6 name="venda_stop_movel">Venda Stop Móvel</h6>
+              </Button>
+            </Col>
+            <Col>
+              <Button
+                variant="primary"
+                size="sm"
+                name="venda_gainreducao"
+                onClick={this.props.abrirFormularioAction}
+              >
+                <h6 name="venda_gainreducao">Gain/Redução de venda</h6>
+              </Button>
+            </Col>
+          </Row>
         </header>
         <Row className="appbody">
-          {this.state.book ? (
+          {this.props.book ? (
             <BookOfertas
-              close={this.handleClose}
+              close={this.props.fecharFormularioAction}
               tableDataVenda={dataOrdemVenda}
               tableDataCompra={dataOrdemCompra}
-              name="bookofertas"
+              name="book"
             />
           ) : null}
 
-          {this.state.agendada ? (
+          {this.props.compra_agendada ? (
             <CompraAgendada
-              close={this.handleClose}
+              close={this.props.fecharFormularioAction}
               headerTitle="COMPRA AGENDADA"
-              name="compraagendada"
+              name="compra_agendada"
             />
           ) : null}
 
-          {this.state.limitada ? (
+          {this.props.compra_limitada ? (
             <CompraLimitada
-              close={this.handleClose}
+              close={this.props.fecharFormularioAction}
               headerTitle="COMPRA LIMITADA"
-              name="compralimitada"
+              name="compra_limitada"
             />
           ) : null}
 
-          {this.state.mercado ? (
+          {this.props.compra_mercado ? (
             <CompraMercado
-              close={this.handleClose}
+              close={this.props.fecharFormularioAction}
               headerTitle="COMPRA A MERCADO"
-              name="compramercado"
+              name="compra_mercado"
             />
           ) : null}
 
-          {this.state.startstop ? (
+          {this.props.compra_startstop ? (
             <CompraStartStop
-              close={this.handleClose}
+              close={this.props.fecharFormularioAction}
               headerTitle="COMPRA START STOP"
-              name="comprastartstop"
+              name="compra_startstop"
             />
           ) : null}
-          {this.state.startmovel ? (
+          {this.props.compra_startmovel ? (
             <CompraStartMovel
-              close={this.handleClose}
+              close={this.props.fecharFormularioAction}
               headerTitle="COMPRA START MÓVEL"
-              name="comprastartmovel"
+              name="compra_startmovel"
             />
           ) : null}
-          {this.state.gainreducao ? (
+          {this.props.compra_gainreducao ? (
             <CompraGainReducao
-              close={this.handleClose}
+              close={this.props.fecharFormularioAction}
               headerTitle="GAIN / REDUÇÃO DE COMPRA"
-              name="compragainreducao"
+              name="compra_gainreducao"
             />
           ) : null}
-          {this.state.venda_agendada ? (
+          {this.props.venda_agendada ? (
             <VendaAgendada
-              close={this.handleClose}
+              close={this.props.fecharFormularioAction}
               headerTitle="VENDA AGENDADA"
-              name="vendaagendada"
+              name="venda_agendada"
             />
           ) : null}
-          {this.state.venda_limitada ? (
+          {this.props.venda_limitada ? (
             <VendaLimitada
-              close={this.handleClose}
+              close={this.props.fecharFormularioAction}
               headerTitle="VENDA LIMITADA"
-              name="vendalimitada"
+              name="venda_limitada"
             />
           ) : null}
-          {this.state.venda_mercado ? (
+          {this.props.venda_mercado ? (
             <VendaMercado
-              close={this.handleClose}
+              close={this.props.fecharFormularioAction}
               headerTitle="VENDA MERCADO"
-              name="vendamercado"
+              name="venda_mercado"
             />
           ) : null}
-          {this.state.venda_startstop ? (
+          {this.props.venda_startstop ? (
             <VendaStartStop
-              close={this.handleClose}
+              close={this.props.fecharFormularioAction}
               headerTitle="VENDA START STOP"
-              name="vendastartstop"
+              name="venda_startstop"
             />
           ) : null}
-          {this.state.venda_stop_movel ? (
+          {this.props.venda_stop_movel ? (
             <VendaStopMovel
-              close={this.handleClose}
+              close={this.props.fecharFormularioAction}
               headerTitle="VENDA STOP MÓVEL"
-              name="vendastopmovel"
+              name="venda_stop_movel"
             />
           ) : null}
-          {this.state.venda_gain_reducao ? (
+          {this.props.venda_gainreducao ? (
             <VendaGainReducao
-              close={this.handleClose}
+              close={this.props.fecharFormularioAction}
               headerTitle="GAIN / REDUÇÃO DE VENDA"
-              name="vendagainreducao"
+              name="venda_gainreducao"
             />
           ) : null}
         </Row>
@@ -217,7 +311,27 @@ class App extends React.Component {
     );
   }
 }
-export default App;
+
+const mapStateToProps = state => ({
+  book: state.appReducer.book,
+  compra_agendada: state.appReducer.compra_agendada,
+  compra_limitada: state.appReducer.compra_limitada,
+  compra_mercado: state.appReducer.compra_mercado,
+  compra_startstop: state.appReducer.compra_startstop,
+  compra_startmovel: state.appReducer.compra_startmovel,
+  compra_gainreducao: state.appReducer.compra_gainreducao,
+  venda_agendada: state.appReducer.venda_agendada,
+  venda_limitada: state.appReducer.venda_limitada,
+  venda_mercado: state.appReducer.venda_mercado,
+  venda_startstop: state.appReducer.venda_startstop,
+  venda_stop_movel: state.appReducer.venda_stop_movel,
+  venda_gainreducao: state.appReducer.venda_gainreducao
+});
+
+export default connect(
+  mapStateToProps,
+  { abrirFormularioAction, fecharFormularioAction }
+)(App);
 
 const dataOrdemVenda = [
   {
@@ -256,3 +370,35 @@ const dataOrdemCompra = [
     valor: 26.68
   }
 ];
+
+const True = {
+  book: true,
+  compra_agendada: true,
+  compra_limitada: true,
+  compra_mercado: true,
+  compra_startstop: true,
+  compra_startmovel: true,
+  compra_gainreducao: true,
+  venda_agendada: true,
+  venda_limitada: true,
+  venda_mercado: true,
+  venda_startstop: true,
+  venda_stop_movel: true,
+  venda_gainreducao: true
+};
+
+const False = {
+  book: false,
+  compra_agendada: false,
+  compra_limitada: false,
+  compra_mercado: false,
+  compra_startstop: false,
+  compra_startmovel: false,
+  compra_gainreducao: false,
+  venda_agendada: false,
+  venda_limitada: false,
+  venda_mercado: false,
+  venda_startstop: false,
+  venda_stop_movel: false,
+  venda_gainreducao: false
+};

@@ -3,9 +3,6 @@
 }
 
 .App-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
   color: white;
   padding-top: 5px
 }

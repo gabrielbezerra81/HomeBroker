@@ -132,7 +132,7 @@ export default namespace => (state = INITIAL_STATE, action) => {
   }
 };
 
-const formatarNumero = value => {
+export const formatarNumero = value => {
   value = value.split(".").join("");
 
   if (value.length > 2) {
