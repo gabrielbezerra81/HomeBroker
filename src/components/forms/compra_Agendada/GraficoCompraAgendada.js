@@ -86,8 +86,8 @@ class GraficoCompraAgendada extends React.Component {
           {TextoCotacaoAtualGrafico("TextoCotacaoAtualGrafico_CA")}
           {TextoValorTotalGrafico("VALOR TOTAL", 26.5, "ValorTotalGain")}
           {TextoValorTotalGrafico("VALOR TOTAL", 26.5, "ValorTotalStop")}
-          <IconeConfigGrafico id="ConfigGainGrafico_CA" />
-          <IconeConfigGrafico id="ConfigStopGrafico_CA" />
+          <IconeConfigGrafico id="ConfigGainGrafico_CA" name="compra_gainreducao"/>
+          <IconeConfigGrafico id="ConfigStopGrafico_CA" name="venda_stop_movel"/>
         </div>
       </Col>
     );

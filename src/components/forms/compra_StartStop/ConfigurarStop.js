@@ -64,10 +64,10 @@ const modalBody = props => (
     {TextoGainStopGrafico("LOSS", "TextoStop_CONFIGURAR")}
     {TextoValorTotalGrafico("TOTAL", 26.5, "ValorTotalGain1_CONFIGURAR")}
     {TextoValorTotalGrafico("TOTAL", 26.5, "ValorTotalStop1_CONFIGURAR")}
-    <IconeConfigGrafico id="ConfigGain1Grafico_CONFIGURAR" />
-    <IconeConfigGrafico id="ConfigStop1Grafico_CONFIGURAR" />
-    <IconeConfigGrafico id="ConfigGain2Grafico_CONFIGURAR" />
-    <IconeConfigGrafico id="ConfigStop2Grafico_CONFIGURAR" />
+    <IconeConfigGrafico id="ConfigGain1Grafico_CONFIGURAR" name="compra_gainreducao"/>
+    <IconeConfigGrafico id="ConfigStop1Grafico_CONFIGURAR" name="venda_stop_movel"/>
+    <IconeConfigGrafico id="ConfigGain2Grafico_CONFIGURAR" name="compra_gainreducao"/>
+    <IconeConfigGrafico id="ConfigStop2Grafico_CONFIGURAR" name="venda_stop_movel"/>
     {LabelInputGrafico("Disparo", "TextoGainDisparo2_CONFIGURAR")}
     {LabelInputGrafico("Execução", "TextoGainExecucao2_CONFIGURAR")}
     {LabelInputGrafico("Disparo", "TextoStopDisparo2_CONFIGURAR")}
