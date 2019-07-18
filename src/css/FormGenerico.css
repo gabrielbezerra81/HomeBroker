@@ -134,3 +134,7 @@ input[type="number"] {
 .resultadoTextoAtivo {
   color: var(--laranja-valorTotal);
 }
+
+.react-draggable {
+  position: fixed;
+}
