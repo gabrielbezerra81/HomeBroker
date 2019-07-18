@@ -26,6 +26,7 @@ import {
   ADICIONAR_ITEM_TABELA_REDUCAO,
   ADICIONA_ITEM_TABELA_ORDENS_VENDA
 } from "../../../constants/ActionTypes";
+import { ALERTA_COMPRA, ALERTA_VENDA } from "../../../constants/Erros";
 
 export const mudarGainDisparoAction = (event, namespace) => {
   return dispatch => {
@@ -248,7 +249,6 @@ export const adicionarItemTabelaGainReducaoAction = (props, namespace) => {
   let total = qtde * gainExec;
   if (gainExec === "0.00") {
     total = qtde * gainDisparo;
-    console.log("entrou");
   }
   const itemTabela = {
     disparo: gainDisparo,
@@ -347,5 +347,19 @@ export const removerItemTabelaAction = (
       type: `${actionType}${namespace}`,
       payload: novaTabela
     });
+  };
+};
+
+export const alertaCompraAction = (disparo, execucao) => {
+  return dispatch => {
+    if (execucao < disparo) alert(ALERTA_COMPRA);
+    dispatch({ type: "" });
+  };
+};
+
+export const alertaVendaAction = (disparo, execucao) => {
+  return dispatch => {
+    if (execucao > disparo) alert(ALERTA_VENDA);
+    dispatch({ type: "" });
   };
 };

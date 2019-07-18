@@ -19,11 +19,14 @@ import {
   mudarEntradaDisparoAction,
   mudarEntradaExecAction,
   mudarAssinaturaAction,
-  mudarCheckSalvarAssinaturaAction
+  mudarCheckSalvarAssinaturaAction,
+  alertaCompraAction,
+  alertaVendaAction
 } from "../../redux/actions/formInputActions";
 import RowFormValidade from "../../utils/RowFormValidade";
 import RowFormAssinatura from "../../utils/RowFormAssinatura";
 import { COMPRA_AGENDADA_NAMESPACE } from "../../../constants/ActionTypes";
+import { CalculoValorTotalAgendada } from "../../utils/CalculoValorTotal";
 
 class FormInternoCompraAgendada extends React.Component {
   render() {
@@ -92,6 +95,7 @@ class FormInternoCompraAgendada extends React.Component {
                         COMPRA_AGENDADA_NAMESPACE
                       )
                     }
+                    onBlur={()=>this.props.alertaCompraAction(this.props.entradaDisparo, this.props.entradaExec)}
                   />
                 </Form.Group>
               </Col>
@@ -110,6 +114,7 @@ class FormInternoCompraAgendada extends React.Component {
                         COMPRA_AGENDADA_NAMESPACE
                       )
                     }
+                    onBlur={()=>this.props.alertaCompraAction(this.props.entradaDisparo, this.props.entradaExec)}
                   />
                 </Form.Group>
               </Col>
@@ -119,7 +124,12 @@ class FormInternoCompraAgendada extends React.Component {
           <Row>
             <Col className="colValorTotal">
               <h6 className="valorTotalText">
-                VALOR TOTAL: {this.props.valorTotal}
+                VALOR TOTAL:{" "}
+                {CalculoValorTotalAgendada(
+                  this.props.entradaDisparo,
+                  this.props.entradaExec,
+                  this.props.qtde
+                )}
               </h6>
             </Col>
           </Row>
@@ -144,6 +154,7 @@ class FormInternoCompraAgendada extends React.Component {
                         COMPRA_AGENDADA_NAMESPACE
                       )
                     }
+                    onBlur={()=>this.props.alertaVendaAction(this.props.gainDisparo, this.props.gainExec)}
                   />
                 </Form.Group>
               </Col>
@@ -162,6 +173,7 @@ class FormInternoCompraAgendada extends React.Component {
                         COMPRA_AGENDADA_NAMESPACE
                       )
                     }
+                    onBlur={()=>this.props.alertaVendaAction(this.props.gainDisparo, this.props.gainExec)}
                   />
                 </Form.Group>
               </Col>
@@ -195,6 +207,7 @@ class FormInternoCompraAgendada extends React.Component {
                         COMPRA_AGENDADA_NAMESPACE
                       )
                     }
+                    onBlur={()=>this.props.alertaVendaAction(this.props.stopDisparo, this.props.stopExec)}
                   />
                 </Form.Group>
               </Col>
@@ -213,6 +226,7 @@ class FormInternoCompraAgendada extends React.Component {
                         COMPRA_AGENDADA_NAMESPACE
                       )
                     }
+                    onBlur={()=>this.props.alertaVendaAction(this.props.stopDisparo, this.props.stopExec)}
                   />
                 </Form.Group>
               </Col>
@@ -295,6 +309,8 @@ export default connect(
     mudarEntradaExecAction,
     mudarAssinaturaAction,
     mudarCheckSalvarAssinaturaAction,
-    mostrarErroQtdeOnBlurAction
+    mostrarErroQtdeOnBlurAction,
+    alertaCompraAction,
+    alertaVendaAction
   }
 )(FormInternoCompraAgendada);

@@ -16,6 +16,7 @@ import {
   TextoValorTotalGrafico
 } from "../../../utils/TextoGrafico";
 import { VENDA_AGENDADA_NAMESPACE } from "../../../../constants/ActionTypes";
+import { CalculoValorTotalAgendada } from "../../../utils/CalculoValorTotal";
 
 class GraficoVendaAgendada extends React.Component {
   render() {
@@ -84,8 +85,8 @@ class GraficoVendaAgendada extends React.Component {
           {TextoGainStopGrafico("GAIN", "TextoGain_VA")}
           {TextoGainStopGrafico("STOP", "TextoStop_VA")}
           {TextoCotacaoAtualGrafico("TextoCotacaoAtualGrafico_VA")}
-          {TextoValorTotalGrafico("VALOR TOTAL", 26.5, "ValorTotalGain")}
-          {TextoValorTotalGrafico("VALOR TOTAL", 26.5, "ValorTotalStop")}
+          {TextoValorTotalGrafico("VALOR TOTAL", CalculoValorTotalAgendada(this.props.stopDisparo, this.props.stopExec,this.props.qtde), "ValorTotalGain")}
+          {TextoValorTotalGrafico("VALOR TOTAL", CalculoValorTotalAgendada(this.props.gainDisparo, this.props.gainExec,this.props.qtde), "ValorTotalStop")}
           <IconeConfigGrafico id="ConfigGainGrafico_VA" />
           <IconeConfigGrafico id="ConfigStopGrafico_VA" />
         </div>
@@ -100,7 +101,8 @@ const mapStateToProps = state => ({
   stopDisparo: state.vendaAgendadaReducer.stopDisparo,
   stopExec: state.vendaAgendadaReducer.stopExec,
   cotacaoAtual: state.vendaAgendadaReducer.cotacaoAtual,
-  valorTotal: state.vendaAgendadaReducer.valorTotal
+  valorTotal: state.vendaAgendadaReducer.valorTotal,
+  qtde: state.bookOfertaReducer.qtde
 });
 
 export default connect(

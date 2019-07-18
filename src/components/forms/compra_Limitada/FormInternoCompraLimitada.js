@@ -17,12 +17,14 @@ import {
   mudarAtivoAction,
   mudarAssinaturaAction,
   mudarPrecoAction,
-  mudarCheckSalvarAssinaturaAction
+  mudarCheckSalvarAssinaturaAction,
+  alertaVendaAction
 } from "../../redux/actions/formInputActions";
 import NumberFormat from "react-number-format";
 import RowFormValidade from "../../utils/RowFormValidade";
 import RowFormAssinatura from "../../utils/RowFormAssinatura";
 import { COMPRA_LIMITADA_NAMESPACE } from "../../../constants/ActionTypes";
+import { CalculoValorTotalLimitada } from "../../utils/CalculoValorTotal";
 
 class FormInternoCompraLimitada extends React.Component {
   render() {
@@ -103,7 +105,7 @@ class FormInternoCompraLimitada extends React.Component {
               </Col>
               <Col md={5} className="colValorTotal_CL">
                 <h6 className="valorTotalText_CL">VALOR TOTAL</h6>
-                <h6 className="valorTotalText_CL">{this.props.valorTotal}</h6>
+                <h6 className="valorTotalText_CL">{CalculoValorTotalLimitada(this.props.preco,this.props.qtde)}</h6>
               </Col>
             </Row>
           </Form>
@@ -128,6 +130,7 @@ class FormInternoCompraLimitada extends React.Component {
                         COMPRA_LIMITADA_NAMESPACE
                       )
                     }
+                    onBlur={()=>this.props.alertaVendaAction(this.props.gainDisparo, this.props.gainExec)}
                   />
                 </Form.Group>
               </Col>
@@ -146,6 +149,7 @@ class FormInternoCompraLimitada extends React.Component {
                         COMPRA_LIMITADA_NAMESPACE
                       )
                     }
+                    onBlur={()=>this.props.alertaVendaAction(this.props.gainDisparo, this.props.gainExec)}
                   />
                 </Form.Group>
               </Col>
@@ -179,6 +183,7 @@ class FormInternoCompraLimitada extends React.Component {
                         COMPRA_LIMITADA_NAMESPACE
                       )
                     }
+                    onBlur={()=>this.props.alertaVendaAction(this.props.stopDisparo, this.props.stopExec)}
                   />
                 </Form.Group>
               </Col>
@@ -197,6 +202,7 @@ class FormInternoCompraLimitada extends React.Component {
                         COMPRA_LIMITADA_NAMESPACE
                       )
                     }
+                    onBlur={()=>this.props.alertaVendaAction(this.props.stopDisparo, this.props.stopExec)}
                   />
                 </Form.Group>
               </Col>
@@ -272,6 +278,7 @@ export default connect(
     mudarAssinaturaAction,
     mudarPrecoAction,
     mudarCheckSalvarAssinaturaAction,
-    mostrarErroQtdeOnBlurAction
+    mostrarErroQtdeOnBlurAction,
+    alertaVendaAction
   }
 )(FormInternoCompraLimitada);

@@ -19,7 +19,8 @@ import {
   adicionarItemTabelaStartMovel,
   limparAction,
   mudarAssinaturaAction,
-  mudarCheckSalvarAssinaturaAction
+  mudarCheckSalvarAssinaturaAction,
+  alertaCompraAction
 } from "../../redux/actions/formInputActions";
 import { COMPRA_STARTMOVEL_NAMESPACE } from "../../../constants/ActionTypes";
 import TabelaOrdens from "./TabelaOrdens";
@@ -140,6 +141,7 @@ class FormInternoCompraStartMovel extends React.Component {
                         COMPRA_STARTMOVEL_NAMESPACE
                       )
                     }
+                    onBlur={()=>this.props.alertaCompraAction(this.props.stopDisparo, this.props.stopExec)}
                   />
                 </Form.Group>
               </Col>
@@ -158,6 +160,7 @@ class FormInternoCompraStartMovel extends React.Component {
                         COMPRA_STARTMOVEL_NAMESPACE
                       )
                     }
+                    onBlur={()=>this.props.alertaCompraAction(this.props.stopDisparo, this.props.stopExec)}
                   />
                 </Form.Group>
               </Col>
@@ -272,7 +275,8 @@ export default connect(
     adicionarItemTabelaStartMovel,
     mudarAssinaturaAction,
     mudarCheckSalvarAssinaturaAction,
-    limparAction
+    limparAction,
+    alertaCompraAction
   }
 )(FormInternoCompraStartMovel);
 

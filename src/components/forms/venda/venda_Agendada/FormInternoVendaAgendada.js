@@ -24,6 +24,7 @@ import {
 import RowFormValidade from "../../../utils/RowFormValidade";
 import RowFormAssinatura from "../../../utils/RowFormAssinatura";
 import { VENDA_AGENDADA_NAMESPACE } from "../../../../constants/ActionTypes";
+import { CalculoValorTotalAgendada } from "../../../utils/CalculoValorTotal";
 
 class FormInternoVendaAgendada extends React.Component {
   render() {
@@ -119,7 +120,12 @@ class FormInternoVendaAgendada extends React.Component {
           <Row>
             <Col className="colValorTotal">
               <h6 className="valorTotalText">
-                VALOR TOTAL: {this.props.valorTotal}
+                VALOR TOTAL:{" "}
+                {CalculoValorTotalAgendada(
+                  this.props.entradaDisparo,
+                  this.props.entradaExec,
+                  this.props.qtde
+                )}
               </h6>
             </Col>
           </Row>

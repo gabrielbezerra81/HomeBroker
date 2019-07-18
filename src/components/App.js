@@ -24,38 +24,6 @@ import {
 import { connect } from "react-redux";
 
 class App extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-
-    this.handleShow = this.handleShow.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-
-    //Verificar names nos icones de fechar e nos componentes abaixo
-    this.state = {
-      book: false,
-      compra_agendada: false,
-      compra_limitada: false,
-      compra_mercado: false,
-      compra_startstop: false,
-      compra_startmovel: false,
-      compra_gainreducao: false,
-      venda_agendada: false,
-      venda_limitada: false,
-      venda_mercado: false,
-      venda_startstop: false,
-      venda_stop_movel: false,
-      venda_gainreducao: false
-    };
-  }
-
-  handleShow(event) {
-    console.log(event.target);
-    this.setState({ [event.target.getAttribute("name")]: true });
-  }
-
-  handleClose(event) {
-    this.setState({ [event.target.getAttribute("name")]: false });
-  }
 
   render() {
     return (
@@ -370,35 +338,3 @@ const dataOrdemCompra = [
     valor: 26.68
   }
 ];
-
-const True = {
-  book: true,
-  compra_agendada: true,
-  compra_limitada: true,
-  compra_mercado: true,
-  compra_startstop: true,
-  compra_startmovel: true,
-  compra_gainreducao: true,
-  venda_agendada: true,
-  venda_limitada: true,
-  venda_mercado: true,
-  venda_startstop: true,
-  venda_stop_movel: true,
-  venda_gainreducao: true
-};
-
-const False = {
-  book: false,
-  compra_agendada: false,
-  compra_limitada: false,
-  compra_mercado: false,
-  compra_startstop: false,
-  compra_startmovel: false,
-  compra_gainreducao: false,
-  venda_agendada: false,
-  venda_limitada: false,
-  venda_mercado: false,
-  venda_startstop: false,
-  venda_stop_movel: false,
-  venda_gainreducao: false
-};
