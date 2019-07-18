@@ -93,12 +93,6 @@ export const limparAction = namespace => {
   };
 };
 
-export const comprarAgendadaAction = () => {
-  return dispatch => {
-    dispatch({ type: COMPRAR_AGENDADO });
-  };
-};
-
 export const mudarAtivoAction = (event, namespace) => {
   return dispatch => {
     dispatch({
@@ -350,16 +344,32 @@ export const removerItemTabelaAction = (
   };
 };
 
-export const alertaCompraAction = (disparo, execucao) => {
+const alertaCompraAction = (disparo, execucao) => {
+  if (execucao < disparo) alert(ALERTA_COMPRA);
+};
+
+const alertaVendaAction = (disparo, execucao) => {
+  if (execucao > disparo) {
+    alert(ALERTA_VENDA);
+  }
+};
+
+export const comprarAction = (props, formulario) => {
+  const {} = props;
+
+  alertaCompraAction(0, 0);
+
   return dispatch => {
-    if (execucao < disparo) alert(ALERTA_COMPRA);
     dispatch({ type: "" });
   };
 };
 
-export const alertaVendaAction = (disparo, execucao) => {
+export const venderAction = (props, formulario) => {
+  const {} = props;
+
+  alertaVendaAction(0, 0);
+
   return dispatch => {
-    if (execucao > disparo) alert(ALERTA_VENDA);
     dispatch({ type: "" });
   };
 };

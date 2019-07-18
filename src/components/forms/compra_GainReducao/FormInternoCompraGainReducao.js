@@ -15,8 +15,7 @@ import {
   mudarAtivoAction,
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction,
-  adicionarItemTabelaGainReducaoAction,
-  alertaVendaAction
+  adicionarItemTabelaGainReducaoAction
 } from "../../redux/actions/formInputActions";
 import RowFormValidade from "../../utils/RowFormValidade";
 import RowFormAssinatura from "../../utils/RowFormAssinatura";
@@ -52,7 +51,6 @@ class FormInternoCompraGainReducao extends React.Component {
                         COMPRA_GAINREDUCAO_NAMESPACE
                       )
                     }
-                    onBlur={()=>this.props.alertaVendaAction(this.props.gainDisparo, this.props.gainExec)}
                   />
                 </Form.Group>
               </Col>
@@ -71,7 +69,6 @@ class FormInternoCompraGainReducao extends React.Component {
                         COMPRA_GAINREDUCAO_NAMESPACE
                       )
                     }
-                    onBlur={()=>this.props.alertaVendaAction(this.props.gainDisparo, this.props.gainExec)}
                   />
                 </Form.Group>
               </Col>
@@ -176,7 +173,6 @@ export default connect(
     mudarAssinaturaAction,
     mudarCheckSalvarAssinaturaAction,
     mostrarErroQtdeOnBlurAction,
-    adicionarItemTabelaGainReducaoAction,
-    alertaVendaAction
+    adicionarItemTabelaGainReducaoAction
   }
 )(FormInternoCompraGainReducao);

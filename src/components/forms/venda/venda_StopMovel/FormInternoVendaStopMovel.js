@@ -9,7 +9,6 @@ import {
 import {
   mudarStopDisparoAction,
   mudarStopExecAction,
-  comprarAgendadaAction,
   mudarAtivoAction,
   mudarInicioDisparoAction,
   mudarAjustePadraoAction,
@@ -261,7 +260,6 @@ export default connect(
     mudarQtdAction,
     mudarStopDisparoAction,
     mudarStopExecAction,
-    comprarAgendadaAction,
     mudarAtivoAction,
     mudarInicioDisparoAction,
     mudarAjustePadraoAction,

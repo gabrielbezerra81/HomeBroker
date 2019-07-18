@@ -15,8 +15,7 @@ import {
   mudarGainDisparoAction,
   mudarGainExecAction,
   mudarStopDisparoAction,
-  mudarStopExecAction,
-  alertaVendaAction
+  mudarStopExecAction
 } from "../../redux/actions/formInputActions";
 
 class ConfigurarStop extends React.Component {
@@ -87,7 +86,6 @@ const modalBody = props => (
         onChange={event =>
           props.mudarGainDisparoAction(event, COMPRA_STARTSTOP_NAMESPACE)
         }
-        onBlur={()=>props.alertaVendaAction(props.gainDisparo, props.gainExec)}
       />
       <Form.Control
         type="number"
@@ -98,7 +96,6 @@ const modalBody = props => (
         onChange={event =>
           props.mudarGainExecAction(event, COMPRA_STARTSTOP_NAMESPACE)
         }
-        onBlur={()=>props.alertaVendaAction(props.gainDisparo, props.gainExec)}
       />
       <Form.Control
         type="number"
@@ -109,7 +106,6 @@ const modalBody = props => (
         onChange={event =>
           props.mudarStopDisparoAction(event, COMPRA_STARTSTOP_NAMESPACE)
         }
-        onBlur={()=>props.alertaVendaAction(props.stopDisparo, props.stopExec)}
       />
       <Form.Control
         type="number"
@@ -120,7 +116,6 @@ const modalBody = props => (
         onChange={event =>
           props.mudarStopExecAction(event, COMPRA_STARTSTOP_NAMESPACE)
         }
-        onBlur={()=>props.alertaVendaAction(props.stopDisparo, props.stopExec)}
       />
       <Form.Control
         type="number"
@@ -131,7 +126,6 @@ const modalBody = props => (
         onChange={event =>
           props.mudarGainDisparoAction(event, COMPRA_STARTSTOP_NAMESPACE)
         }
-        onBlur={()=>props.alertaVendaAction(props.gainDisparo, props.gainExec)}
       />
       <Form.Control
         type="number"
@@ -142,7 +136,6 @@ const modalBody = props => (
         onChange={event =>
           props.mudarGainExecAction(event, COMPRA_STARTSTOP_NAMESPACE)
         }
-        onBlur={()=>props.alertaVendaAction(props.gainDisparo, props.gainExec)}
       />
       <Form.Control
         type="number"
@@ -153,7 +146,6 @@ const modalBody = props => (
         onChange={event =>
           props.mudarStopDisparoAction(event, COMPRA_STARTSTOP_NAMESPACE)
         }
-        onBlur={()=>props.alertaVendaAction(props.stopDisparo, props.stopExec)}
       />
       <Form.Control
         type="number"
@@ -164,7 +156,6 @@ const modalBody = props => (
         onChange={event =>
           props.mudarStopExecAction(event, COMPRA_STARTSTOP_NAMESPACE)
         }
-        onBlur={()=>props.alertaVendaAction(props.stopDisparo, props.stopExec)}
       />
     </Form>
   </div>
@@ -184,7 +175,6 @@ export default connect(
     mudarGainDisparoAction,
     mudarGainExecAction,
     mudarStopDisparoAction,
-    mudarStopExecAction,
-    alertaVendaAction
+    mudarStopExecAction
   }
 )(ConfigurarStop);

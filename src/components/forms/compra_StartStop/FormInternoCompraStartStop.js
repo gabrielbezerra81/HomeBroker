@@ -16,8 +16,7 @@ import {
   limparAction,
   mudarAtivoAction,
   mudarAssinaturaAction,
-  mudarCheckSalvarAssinaturaAction,
-  alertaCompraAction
+  mudarCheckSalvarAssinaturaAction
 } from "../../redux/actions/formInputActions";
 import RowFormValidade from "../../utils/RowFormValidade";
 import RowFormAssinatura from "../../utils/RowFormAssinatura";
@@ -96,7 +95,6 @@ class FormInternoCompraStartStop extends React.Component {
                         COMPRA_STARTSTOP_NAMESPACE
                       )
                     }
-                    onBlur={()=>this.props.alertaCompraAction(this.props.gainDisparo, this.props.gainExec)}
                   />
                 </Form.Group>
               </Col>
@@ -115,7 +113,6 @@ class FormInternoCompraStartStop extends React.Component {
                         COMPRA_STARTSTOP_NAMESPACE
                       )
                     }
-                    onBlur={()=>this.props.alertaCompraAction(this.props.gainDisparo, this.props.gainExec)}
                   />
                 </Form.Group>
               </Col>
@@ -149,7 +146,6 @@ class FormInternoCompraStartStop extends React.Component {
                         COMPRA_STARTSTOP_NAMESPACE
                       )
                     }
-                    onBlur={()=>this.props.alertaCompraAction(this.props.stopDisparo, this.props.stopExec)}
                   />
                 </Form.Group>
               </Col>
@@ -168,7 +164,6 @@ class FormInternoCompraStartStop extends React.Component {
                         COMPRA_STARTSTOP_NAMESPACE
                       )
                     }
-                    onBlur={()=>this.props.alertaCompraAction(this.props.stopDisparo, this.props.stopExec)}
                   />
                 </Form.Group>
               </Col>
@@ -242,7 +237,6 @@ export default connect(
     mudarAtivoAction,
     mudarAssinaturaAction,
     mudarCheckSalvarAssinaturaAction,
-    mostrarErroQtdeOnBlurAction,
-    alertaCompraAction
+    mostrarErroQtdeOnBlurAction
   }
 )(FormInternoCompraStartStop);

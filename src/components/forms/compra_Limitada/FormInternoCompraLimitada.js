@@ -17,8 +17,7 @@ import {
   mudarAtivoAction,
   mudarAssinaturaAction,
   mudarPrecoAction,
-  mudarCheckSalvarAssinaturaAction,
-  alertaVendaAction
+  mudarCheckSalvarAssinaturaAction
 } from "../../redux/actions/formInputActions";
 import NumberFormat from "react-number-format";
 import RowFormValidade from "../../utils/RowFormValidade";
@@ -130,7 +129,6 @@ class FormInternoCompraLimitada extends React.Component {
                         COMPRA_LIMITADA_NAMESPACE
                       )
                     }
-                    onBlur={()=>this.props.alertaVendaAction(this.props.gainDisparo, this.props.gainExec)}
                   />
                 </Form.Group>
               </Col>
@@ -149,7 +147,6 @@ class FormInternoCompraLimitada extends React.Component {
                         COMPRA_LIMITADA_NAMESPACE
                       )
                     }
-                    onBlur={()=>this.props.alertaVendaAction(this.props.gainDisparo, this.props.gainExec)}
                   />
                 </Form.Group>
               </Col>
@@ -183,7 +180,6 @@ class FormInternoCompraLimitada extends React.Component {
                         COMPRA_LIMITADA_NAMESPACE
                       )
                     }
-                    onBlur={()=>this.props.alertaVendaAction(this.props.stopDisparo, this.props.stopExec)}
                   />
                 </Form.Group>
               </Col>
@@ -202,7 +198,6 @@ class FormInternoCompraLimitada extends React.Component {
                         COMPRA_LIMITADA_NAMESPACE
                       )
                     }
-                    onBlur={()=>this.props.alertaVendaAction(this.props.stopDisparo, this.props.stopExec)}
                   />
                 </Form.Group>
               </Col>
@@ -278,7 +273,6 @@ export default connect(
     mudarAssinaturaAction,
     mudarPrecoAction,
     mudarCheckSalvarAssinaturaAction,
-    mostrarErroQtdeOnBlurAction,
-    alertaVendaAction
+    mostrarErroQtdeOnBlurAction
   }
 )(FormInternoCompraLimitada);

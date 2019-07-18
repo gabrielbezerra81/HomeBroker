@@ -16,8 +16,7 @@ import {
   limparAction,
   mudarAtivoAction,
   mudarAssinaturaAction,
-  mudarCheckSalvarAssinaturaAction,
-  alertaVendaAction
+  mudarCheckSalvarAssinaturaAction
 } from "../../redux/actions/formInputActions";
 import RowFormValidade from "../../utils/RowFormValidade";
 import RowFormAssinatura from "../../utils/RowFormAssinatura";
@@ -102,7 +101,6 @@ class FormInternoCompraMercado extends React.Component {
                         COMPRA_MERCADO_NAMESPACE
                       )
                     }
-                    onBlur={()=>this.props.alertaVendaAction(this.props.gainDisparo, this.props.gainExec)}
                   />
                 </Form.Group>
               </Col>
@@ -121,7 +119,6 @@ class FormInternoCompraMercado extends React.Component {
                         COMPRA_MERCADO_NAMESPACE
                       )
                     }
-                    onBlur={()=>this.props.alertaVendaAction(this.props.gainDisparo, this.props.gainExec)}
                   />
                 </Form.Group>
               </Col>
@@ -155,7 +152,6 @@ class FormInternoCompraMercado extends React.Component {
                         COMPRA_MERCADO_NAMESPACE
                       )
                     }
-                    onBlur={()=>this.props.alertaVendaAction(this.props.stopDisparo, this.props.stopExec)}
                   />
                 </Form.Group>
               </Col>
@@ -174,7 +170,6 @@ class FormInternoCompraMercado extends React.Component {
                         COMPRA_MERCADO_NAMESPACE
                       )
                     }
-                    onBlur={()=>this.props.alertaVendaAction(this.props.stopDisparo, this.props.stopExec)}
                   />
                 </Form.Group>
               </Col>
@@ -248,7 +243,6 @@ export default connect(
     mudarAtivoAction,
     mudarAssinaturaAction,
     mudarCheckSalvarAssinaturaAction,
-    mostrarErroQtdeOnBlurAction,
-    alertaVendaAction
+    mostrarErroQtdeOnBlurAction
   }
 )(FormInternoCompraMercado);
