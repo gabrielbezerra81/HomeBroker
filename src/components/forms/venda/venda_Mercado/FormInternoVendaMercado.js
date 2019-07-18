@@ -21,6 +21,7 @@ import {
 import RowFormValidade from "../../../utils/RowFormValidade";
 import RowFormAssinatura from "../../../utils/RowFormAssinatura";
 import { VENDA_MERCADO_NAMESPACE } from "../../../../constants/ActionTypes";
+import { CalculoValorAproximadoMercado } from "../../../utils/CalculoValorTotal";
 
 class FormInternoVendaMercado extends React.Component {
   render() {
@@ -76,7 +77,10 @@ class FormInternoVendaMercado extends React.Component {
           <Row>
             <Col className="colValorTotal">
               <h6 className="valorTotalText">
-                VALOR ESTIMADO: {this.props.valorTotal}
+                {CalculoValorAproximadoMercado(
+                  this.props.qtde,
+                  this.props.cotacaoAtual
+                )}
               </h6>
             </Col>
           </Row>
@@ -225,7 +229,8 @@ const mapStateToProps = state => ({
   date: state.vendaMercadoReducer.date,
   valorTotal: state.vendaMercadoReducer.valorTotal,
   assinatura: state.vendaMercadoReducer.assinatura,
-  checkSalvarAssinatura: state.vendaMercadoReducer.checkSalvarAssinatura
+  checkSalvarAssinatura: state.vendaMercadoReducer.checkSalvarAssinatura,
+  cotacaoAtual: state.vendaMercadoReducer.cotacaoAtual
 });
 
 export default connect(

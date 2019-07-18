@@ -106,11 +106,21 @@
 }
 
 #ValorTotalGain {
-  top: 28%;
+  top: 27%;
   left: 68%;
 }
 
 #ValorTotalStop {
-  top: 81%;
+  top: 80%;
+  left: 68%;
+}
+
+#ValorTotalGain_Venda {
+  top: 26.5%;
+  left: 68%;
+}
+
+#ValorTotalStop_Venda {
+  top: 78%;
   left: 68%;
 }

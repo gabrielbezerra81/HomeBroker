@@ -17,6 +17,7 @@ import {
   mudarStopDisparoAction,
   mudarStopExecAction
 } from "../../redux/actions/formInputActions";
+import { CalculoValorTotalAgendada } from "../../utils/CalculoValorTotal";
 
 class ConfigurarStop extends React.Component {
   render() {
@@ -62,8 +63,8 @@ const modalBody = props => (
     {LabelInputGrafico("Execução", "TextoStopExecucao_CONFIGURAR")}
     {TextoGainStopGrafico("GAIN", "TextoGain_CONFIGURAR")}
     {TextoGainStopGrafico("LOSS", "TextoStop_CONFIGURAR")}
-    {TextoValorTotalGrafico("TOTAL", 26.5, "ValorTotalGain1_CONFIGURAR")}
-    {TextoValorTotalGrafico("TOTAL", 26.5, "ValorTotalStop1_CONFIGURAR")}
+    {TextoValorTotalGrafico("", CalculoValorTotalAgendada(props.gainDisparo, props.gainExec,props.qtde), "ValorTotalGain1_CONFIGURAR")}
+    {TextoValorTotalGrafico("", CalculoValorTotalAgendada(props.stopDisparo, props.stopExec,props.qtde), "ValorTotalStop1_CONFIGURAR")}
     <IconeConfigGrafico id="ConfigGain1Grafico_CONFIGURAR" name="compra_gainreducao"/>
     <IconeConfigGrafico id="ConfigStop1Grafico_CONFIGURAR" name="venda_stop_movel"/>
     <IconeConfigGrafico id="ConfigGain2Grafico_CONFIGURAR" name="compra_gainreducao"/>
@@ -74,8 +75,8 @@ const modalBody = props => (
     {LabelInputGrafico("Execução", "TextoStopExecucao2_CONFIGURAR")}
     {TextoGainStopGrafico("GAIN", "TextoGain2_CONFIGURAR")}
     {TextoGainStopGrafico("LOSS", "TextoStop2_CONFIGURAR")}
-    {TextoValorTotalGrafico("TOTAL", 26.5, "ValorTotalGain2_CONFIGURAR")}
-    {TextoValorTotalGrafico("TOTAL", 26.5, "ValorTotalStop2_CONFIGURAR")}
+    {TextoValorTotalGrafico("", CalculoValorTotalAgendada(props.gainDisparo, props.gainExec,props.qtde), "ValorTotalGain2_CONFIGURAR")}
+    {TextoValorTotalGrafico("", CalculoValorTotalAgendada(props.stopDisparo, props.stopExec,props.qtde), "ValorTotalStop2_CONFIGURAR")}
     <Form>
       <Form.Control
         type="number"
@@ -165,7 +166,8 @@ const mapStateToProps = state => ({
   gainDisparo: state.compraStartStopReducer.gainDisparo,
   gainExec: state.compraStartStopReducer.gainExec,
   stopDisparo: state.compraStartStopReducer.stopDisparo,
-  stopExec: state.compraStartStopReducer.stopExec
+  stopExec: state.compraStartStopReducer.stopExec,
+  qtde: state.bookOfertaReducer.qtde
 });
 
 export default connect(

@@ -119,7 +119,6 @@ class FormInternoCompraAgendada extends React.Component {
           <Row>
             <Col className="colValorTotal">
               <h6 className="valorTotalText">
-                VALOR TOTAL:{" "}
                 {CalculoValorTotalAgendada(
                   this.props.entradaDisparo,
                   this.props.entradaExec,

@@ -21,6 +21,7 @@ import {
 import RowFormValidade from "../../utils/RowFormValidade";
 import RowFormAssinatura from "../../utils/RowFormAssinatura";
 import { COMPRA_MERCADO_NAMESPACE } from "../../../constants/ActionTypes";
+import { CalculoValorAproximadoMercado } from "../../utils/CalculoValorTotal";
 
 class FormInternoCompraMercado extends React.Component {
   render() {
@@ -76,7 +77,10 @@ class FormInternoCompraMercado extends React.Component {
           <Row>
             <Col className="colValorTotal">
               <h6 className="valorTotalText">
-                VALOR ESTIMADO: {this.props.valorTotal}
+                {CalculoValorAproximadoMercado(
+                  this.props.qtde,
+                  this.props.cotacaoAtual
+                )}
               </h6>
             </Col>
           </Row>
@@ -216,7 +220,7 @@ class FormInternoCompraMercado extends React.Component {
 
 const mapStateToProps = state => ({
   ativo: state.compraMercadoReducer.ativo,
-  qtde: state.compraMercadoReducer.qtde,
+  qtde: state.bookOfertaReducer.qtde,
   erro: state.bookOfertaReducer.erro,
   gainDisparo: state.compraMercadoReducer.gainDisparo,
   gainExec: state.compraMercadoReducer.gainExec,
@@ -226,7 +230,8 @@ const mapStateToProps = state => ({
   date: state.compraMercadoReducer.date,
   valorTotal: state.compraMercadoReducer.valorTotal,
   assinatura: state.compraMercadoReducer.assinatura,
-  checkSalvarAssinatura: state.compraMercadoReducer.checkSalvarAssinatura
+  checkSalvarAssinatura: state.compraMercadoReducer.checkSalvarAssinatura,
+  cotacaoAtual: state.compraMercadoReducer.cotacaoAtual
 });
 
 export default connect(

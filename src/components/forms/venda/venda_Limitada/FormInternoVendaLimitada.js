@@ -23,6 +23,7 @@ import NumberFormat from "react-number-format";
 import RowFormValidade from "../../../utils/RowFormValidade";
 import RowFormAssinatura from "../../../utils/RowFormAssinatura";
 import { VENDA_LIMITADA_NAMESPACE } from "../../../../constants/ActionTypes";
+import { CalculoValorTotalLimitada } from "../../../utils/CalculoValorTotal";
 
 class FormInternoVendaLimitada extends React.Component {
   render() {
@@ -83,10 +84,9 @@ class FormInternoVendaLimitada extends React.Component {
                   <Form.Label />
                   <NumberFormat
                     className="textInput form-control"
-                    thousandSeparator="."
-                    decimalSeparator=","
+                    thousandSeparator=","
+                    decimalSeparator="."
                     allowNegative={false}
-                    type="number"
                     maxLength={300}
                     name="disparo"
                     value={this.props.preco}
@@ -100,8 +100,9 @@ class FormInternoVendaLimitada extends React.Component {
                 </Form.Group>
               </Col>
               <Col md={5} className="colValorTotal_CL">
-                <h6 className="valorTotalText_CL">VALOR TOTAL</h6>
-                <h6 className="valorTotalText_CL">{this.props.valorTotal}</h6>
+                <h6 className="valorTotalText_CL">
+                  {CalculoValorTotalLimitada(this.props.preco, this.props.qtde)}
+                </h6>
               </Col>
             </Row>
           </Form>

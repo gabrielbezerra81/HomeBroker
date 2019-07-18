@@ -103,8 +103,9 @@ class FormInternoCompraLimitada extends React.Component {
                 </Form.Group>
               </Col>
               <Col md={5} className="colValorTotal_CL">
-                <h6 className="valorTotalText_CL">VALOR TOTAL</h6>
-                <h6 className="valorTotalText_CL">{CalculoValorTotalLimitada(this.props.preco,this.props.qtde)}</h6>
+                <h6 className="valorTotalText_CL">
+                  {CalculoValorTotalLimitada(this.props.preco, this.props.qtde)}
+                </h6>
               </Col>
             </Row>
           </Form>

@@ -16,6 +16,7 @@ import {
   TextoCotacaoAtualGrafico
 } from "../../../utils/TextoGrafico";
 import { VENDA_STARTSTOP_NAMESPACE } from "../../../../constants/ActionTypes";
+import { CalculoValorTotalAgendada } from "../../../utils/CalculoValorTotal";
 
 class GraficoVendaStartStop extends React.Component {
   render() {
@@ -44,10 +45,7 @@ class GraficoVendaStartStop extends React.Component {
               className="inputGrafico"
               value={this.props.gainExec}
               onChange={event =>
-                this.props.mudarGainExecAction(
-                  event,
-                  VENDA_STARTSTOP_NAMESPACE
-                )
+                this.props.mudarGainExecAction(event, VENDA_STARTSTOP_NAMESPACE)
               }
             />
             <Form.Control
@@ -70,10 +68,7 @@ class GraficoVendaStartStop extends React.Component {
               className="inputGrafico"
               value={this.props.stopExec}
               onChange={event =>
-                this.props.mudarStopExecAction(
-                  event,
-                  VENDA_STARTSTOP_NAMESPACE
-                )
+                this.props.mudarStopExecAction(event, VENDA_STARTSTOP_NAMESPACE)
               }
             />
             <Form.Control
@@ -92,8 +87,8 @@ class GraficoVendaStartStop extends React.Component {
           {TextoGainStopGrafico("START", "TextoGain_VA")}
           {TextoGainStopGrafico("STOP", "TextoStop_VA")}
           {TextoCotacaoAtualGrafico("TextoCotacaoAtualGrafico_VA")}
-          {TextoValorTotalGrafico("VALOR TOTAL", 26.5, "ValorTotalGain")}
-          {TextoValorTotalGrafico("VALOR TOTAL", 26.5, "ValorTotalStop")}
+          {TextoValorTotalGrafico("", CalculoValorTotalAgendada(this.props.stopDisparo, this.props.stopExec,this.props.qtde), "ValorTotalGain_Venda")}
+          {TextoValorTotalGrafico("",CalculoValorTotalAgendada(this.props.gainDisparo, this.props.gainExec,this.props.qtde), "ValorTotalStop_Venda")}
         </div>
       </Col>
     );
@@ -107,7 +102,8 @@ const mapStateToProps = state => ({
   gainExec: state.vendaStartStopReducer.gainExec,
   stopDisparo: state.vendaStartStopReducer.stopDisparo,
   stopExec: state.vendaStartStopReducer.stopExec,
-  cotacaoAtual: state.vendaStartStopReducer.cotacaoAtual
+  cotacaoAtual: state.vendaStartStopReducer.cotacaoAtual,
+  qtde: state.bookOfertaReducer.qtde
 });
 
 export default connect(
