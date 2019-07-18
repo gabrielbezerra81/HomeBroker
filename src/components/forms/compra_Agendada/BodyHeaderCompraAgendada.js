@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import {BodyHeaderCompleto} from "../../utils/BodyHeader";
+import { BodyHeaderCompleto } from "../../utils/BodyHeader";
 
 class BodyHeaderCompraAgendada extends React.Component {
   render() {
@@ -9,7 +9,8 @@ class BodyHeaderCompraAgendada extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  porcentagem: state.compraAgendadaReducer.porcentagem
+  porcentagem: state.compraAgendadaReducer.porcentagem,
+  cotacaoAtual: state.compraAgendadaReducer.cotacaoAtual
 });
 
 export default connect(

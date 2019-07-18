@@ -40,7 +40,7 @@ const INITIAL_STATE = {
   gainExec: "",
   stopDisparo: "",
   stopExec: "",
-  cotacaoAtual: "",
+  cotacaoAtual: "15,21",
   validadeSelect: "hoje",
   date: new Date(),
   assinatura: "",

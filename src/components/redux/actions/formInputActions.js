@@ -6,7 +6,6 @@ import {
   MUDAR_VALIDADE_SELECT,
   MUDAR_DATA,
   LIMPAR_FORMS,
-  COMPRAR_AGENDADO,
   MUDAR_ATIVO,
   MUDAR_ENTRADA_DISPARO,
   MUDAR_ENTRADA_EXEC,
@@ -24,9 +23,15 @@ import {
   MUDAR_GAIN,
   MUDAR_AJUSTE_ASSIMETRICO,
   ADICIONAR_ITEM_TABELA_REDUCAO,
-  ADICIONA_ITEM_TABELA_ORDENS_VENDA
+  ADICIONA_ITEM_TABELA_ORDENS_VENDA,
+  COMPRA_AGENDADA_NAMESPACE,
+  COMPRA_LIMITADA_NAMESPACE,
+  COMPRA_MERCADO_NAMESPACE,
+  COMPRA_STARTSTOP_NAMESPACE,
+  COMPRA_STARTMOVEL_NAMESPACE,
+  COMPRA_GAINREDUCAO_NAMESPACE
 } from "../../../constants/ActionTypes";
-import { ALERTA_COMPRA, ALERTA_VENDA } from "../../../constants/Erros";
+import { validacaoCompraAgenda } from "../../utils/Validacoes";
 
 export const mudarGainDisparoAction = (event, namespace) => {
   return dispatch => {
@@ -344,20 +349,24 @@ export const removerItemTabelaAction = (
   };
 };
 
-const alertaCompraAction = (disparo, execucao) => {
-  if (execucao < disparo) alert(ALERTA_COMPRA);
-};
-
-const alertaVendaAction = (disparo, execucao) => {
-  if (execucao > disparo) {
-    alert(ALERTA_VENDA);
+export const comprarAction = (props, namespace) => {
+  switch (namespace) {
+    case COMPRA_AGENDADA_NAMESPACE:
+      validacaoCompraAgenda(props);
+      break;
+    case COMPRA_LIMITADA_NAMESPACE:
+      break;
+    case COMPRA_MERCADO_NAMESPACE:
+      break;
+    case COMPRA_STARTSTOP_NAMESPACE:
+      break;
+    case COMPRA_STARTMOVEL_NAMESPACE:
+      break;
+    case COMPRA_GAINREDUCAO_NAMESPACE:
+      break;
+    default:
+      break;
   }
-};
-
-export const comprarAction = (props, formulario) => {
-  const {} = props;
-
-  alertaCompraAction(0, 0);
 
   return dispatch => {
     dispatch({ type: "" });
@@ -365,10 +374,6 @@ export const comprarAction = (props, formulario) => {
 };
 
 export const venderAction = (props, formulario) => {
-  const {} = props;
-
-  alertaVendaAction(0, 0);
-
   return dispatch => {
     dispatch({ type: "" });
   };

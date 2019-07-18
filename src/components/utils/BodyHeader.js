@@ -13,7 +13,7 @@ export const BodyHeaderCompleto = ({ props }) => (
       <h5>PN N2</h5>
     </Col>
     <Col md={1} className="colValorBodyHeader">
-      <h5>4,17</h5>
+      <h5>{props.cotacaoAtual}</h5>
     </Col>
     <Col md={1} className="colIconeSetaBodyHeader">
       {renderSeta(props.porcentagem)}

@@ -16,7 +16,7 @@ class CompraAgendada extends React.Component {
         show={this.props.show}
         close={this.props.close}
         id="compraagendada"
-        renderModalBody={() => modalBody()}
+        renderModalBody={() => modalBody(this.props)}
         renderHeader={() =>
           modalHeader(this.props, this.props.headerTitle, "border-green")
         }

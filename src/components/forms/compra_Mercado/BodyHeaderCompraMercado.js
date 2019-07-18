@@ -9,7 +9,8 @@ class BodyHeaderCompraMercado extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  porcentagem: state.compraMercadoReducer.porcentagem
+  porcentagem: state.compraMercadoReducer.porcentagem,
+  cotacaoAtual: state.compraMercadoReducer.cotacaoAtual
 });
 
 export default connect(
