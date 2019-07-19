@@ -2,11 +2,9 @@ import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import { connect } from "react-redux";
+import { mostrarErroQtdeOnBlurAction } from "../../redux/actions/bookOfertaActions";
 import {
   mudarQtdAction,
-  mostrarErroQtdeOnBlurAction
-} from "../../redux/actions/bookOfertaActions";
-import {
   mudarGainDisparoAction,
   mudarGainExecAction,
   mudarValidadeSelectAction,
@@ -81,7 +79,12 @@ class FormInternoCompraGainReducao extends React.Component {
                     step={100}
                     min={0}
                     value={this.props.qtde}
-                    onChange={event => this.props.mudarQtdAction(event)}
+                    onChange={event =>
+                      this.props.mudarQtdAction(
+                        event,
+                        COMPRA_GAINREDUCAO_NAMESPACE
+                      )
+                    }
                     onBlur={() =>
                       this.props.mostrarErroQtdeOnBlurAction(this.props.erro)
                     }
@@ -147,8 +150,8 @@ class FormInternoCompraGainReducao extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  qtde: state.bookOfertaReducer.qtde,
-  erro: state.bookOfertaReducer.erro,
+  qtde: state.compraGainReducao.qtde,
+  erro: state.compraGainReducao.erro,
   gainDisparo: state.compraGainReducao.gainDisparo,
   gainExec: state.compraGainReducao.gainExec,
   validadeSelect: state.compraGainReducao.validadeSelect,

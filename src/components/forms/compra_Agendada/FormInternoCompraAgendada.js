@@ -2,10 +2,7 @@ import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import { connect } from "react-redux";
-import {
-  mudarQtdAction,
-  mostrarErroQtdeOnBlurAction
-} from "../../redux/actions/bookOfertaActions";
+import { mostrarErroQtdeOnBlurAction } from "../../redux/actions/bookOfertaActions";
 import {
   mudarGainDisparoAction,
   mudarGainExecAction,
@@ -18,7 +15,8 @@ import {
   mudarEntradaDisparoAction,
   mudarEntradaExecAction,
   mudarAssinaturaAction,
-  mudarCheckSalvarAssinaturaAction
+  mudarCheckSalvarAssinaturaAction,
+  mudarQtdAction
 } from "../../redux/actions/formInputActions";
 import RowFormValidade from "../../utils/RowFormValidade";
 import RowFormAssinatura from "../../utils/RowFormAssinatura";
@@ -63,7 +61,12 @@ class FormInternoCompraAgendada extends React.Component {
                     step={100}
                     min={0}
                     value={this.props.qtde}
-                    onChange={event => this.props.mudarQtdAction(event)}
+                    onChange={event =>
+                      this.props.mudarQtdAction(
+                        event,
+                        COMPRA_AGENDADA_NAMESPACE
+                      )
+                    }
                     name="qtde"
                     onBlur={() =>
                       this.props.mostrarErroQtdeOnBlurAction(this.props.erro)
@@ -266,8 +269,8 @@ class FormInternoCompraAgendada extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  qtde: state.bookOfertaReducer.qtde,
-  erro: state.bookOfertaReducer.erro,
+  qtde: state.compraAgendadaReducer.qtde,
+  erro: state.compraAgendadaReducer.erro,
   gainDisparo: state.compraAgendadaReducer.gainDisparo,
   gainExec: state.compraAgendadaReducer.gainExec,
   stopDisparo: state.compraAgendadaReducer.stopDisparo,

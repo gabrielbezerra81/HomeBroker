@@ -28,7 +28,8 @@ import {
   ADICIONA_ITEM_TABELA_ORDENS_VENDA,
   REMOVE_ITEM_TABELA_GAIN_REDUCAO,
   REMOVE_ITEM_TABELA_ORDENS_MOVEL,
-  MUDAR_INPUT_CONFIGURAR
+  MUDAR_INPUT_CONFIGURAR,
+  MUDAR_QTDE
 } from "../../../constants/ActionTypes";
 
 const INITIAL_STATE = {
@@ -70,7 +71,9 @@ const INITIAL_STATE = {
   gainDisparoConfig2: "",
   gainExecConfig2: "",
   stopDisparoConfig2: "",
-  stopExecConfig2: ""
+  stopExecConfig2: "",
+  qtde: "",
+  erro: ""
 };
 
 export default namespace => (state = INITIAL_STATE, action) => {
@@ -137,7 +140,9 @@ export default namespace => (state = INITIAL_STATE, action) => {
     case `${REMOVE_ITEM_TABELA_ORDENS_MOVEL}${namespace}`:
       return { ...state, tabelaOrdens: action.payload };
     case `${MUDAR_INPUT_CONFIGURAR}${namespace}`:
-      return { ...state, [action.name]: action.payload };
+      return { ...state, [action.name]: formatarNumero(action.payload) };
+    case `${MUDAR_QTDE}${namespace}`:
+      return { ...state, qtde: action.payload.qtde, erro: action.payload.erro };
     default:
       return state;
   }

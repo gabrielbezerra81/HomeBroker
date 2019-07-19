@@ -2,11 +2,9 @@ import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import { connect } from "react-redux";
+import { mostrarErroQtdeOnBlurAction } from "../../redux/actions/bookOfertaActions";
 import {
   mudarQtdAction,
-  mostrarErroQtdeOnBlurAction
-} from "../../redux/actions/bookOfertaActions";
-import {
   mudarGainDisparoAction,
   mudarGainExecAction,
   mudarStopDisparoAction,
@@ -244,8 +242,8 @@ class FormInternoCompraLimitada extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  qtde: state.bookOfertaReducer.qtde,
-  erro: state.bookOfertaReducer.erro,
+  qtde: state.compraLimitadaReducer.qtde,
+  erro: state.compraLimitadaReducer.erro,
   gainDisparo: state.compraLimitadaReducer.gainDisparo,
   gainExec: state.compraLimitadaReducer.gainExec,
   stopDisparo: state.compraLimitadaReducer.stopDisparo,

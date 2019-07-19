@@ -1,4 +1,5 @@
-export const MUDAR_QTDE_BOOK = "mudar_qtde";
+export const MUDAR_QTDE_BOOK = "mudar_qtde_book";
+export const MUDAR_QTDE = "mudar_qtde";
 export const MUDAR_STOPLOSS_BOOK = "mudar_stoploss_book";
 export const MUDAR_GAIN_BOOK = "mudar_gain_book";
 export const MUDAR_INPUTHEADER_BOOK = "mudar_inputheader_book";
@@ -61,4 +62,4 @@ export const FECHAR_FORMULARIO = "fechar_formulario";
 
 export const AUMENTAR_ZINDEX = "aumentar_zindex";
 
-export const MUDAR_INPUT_CONFIGURAR = "mudar_input_configurar"
+export const MUDAR_INPUT_CONFIGURAR = "mudar_input_configurar";

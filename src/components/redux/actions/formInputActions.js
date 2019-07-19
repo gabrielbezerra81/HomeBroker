@@ -30,9 +30,11 @@ import {
   COMPRA_STARTSTOP_NAMESPACE,
   COMPRA_STARTMOVEL_NAMESPACE,
   COMPRA_GAINREDUCAO_NAMESPACE,
-  MUDAR_INPUT_CONFIGURAR
+  MUDAR_INPUT_CONFIGURAR,
+  MUDAR_QTDE
 } from "../../../constants/ActionTypes";
 import { validacaoCompraAgenda } from "../../utils/Validacoes";
+import { VALIDACAO_QTDE } from "../../../constants/Erros";
 
 export const mudarGainDisparoAction = (event, namespace) => {
   return dispatch => {
@@ -388,6 +390,19 @@ export const mudarInputConfigAction = (event, namespace) => {
       type: `${MUDAR_INPUT_CONFIGURAR}${namespace}`,
       name: name,
       payload: event.target.value
+    });
+  };
+};
+
+export const mudarQtdAction = (event, namespace) => {
+  return dispatch => {
+    let erro = "";
+    if (event.target.validationMessage) {
+      erro = VALIDACAO_QTDE;
+    }
+    dispatch({
+      type: `${MUDAR_QTDE}${namespace}`,
+      payload: { qtde: event.target.value, erro: erro }
     });
   };
 };
