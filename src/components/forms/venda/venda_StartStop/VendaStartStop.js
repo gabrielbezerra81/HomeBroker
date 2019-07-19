@@ -10,6 +10,9 @@ import { modalHeader } from "../../../utils/FormHeader";
 import { abrirFormularioAction } from "../../../redux/actions/AppActions";
 
 class VendaStartStop extends React.Component {
+  componentDidMount() {
+    document.getElementById("vendastartstop").style.zIndex = this.props.zIndex;
+  }
   render() {
     return (
       <DraggableModal
@@ -42,7 +45,8 @@ const modalBody = () => (
 );
 
 const mapStateToProps = state => ({
-  showConfigStop: state.vendaStartStopReducer.showConfigStop
+  showConfigStop: state.vendaStartStopReducer.showConfigStop,
+  zIndex: state.appReducer.zIndex
 });
 
 export default connect(

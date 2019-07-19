@@ -16,6 +16,9 @@ import TabelaOfertas from "./TabelaOfertas";
 import { bookHeader } from "../../utils/FormHeader";
 
 class BookOfertas extends React.Component {
+  componentDidMount() {
+    document.getElementById("bookofertas").style.zIndex = this.props.zIndex;
+  }
   render() {
     return (
       <DraggableModal
@@ -104,7 +107,8 @@ const mapStateToProps = state => ({
   erro: state.bookOfertaReducer.erro,
   stopLoss: state.bookOfertaReducer.stopLoss,
   gain: state.bookOfertaReducer.gain,
-  inputHeader: state.bookOfertaReducer.inputHeader
+  inputHeader: state.bookOfertaReducer.inputHeader,
+  zIndex: state.appReducer.zIndex
 });
 
 export default connect(

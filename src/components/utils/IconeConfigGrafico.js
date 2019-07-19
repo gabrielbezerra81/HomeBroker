@@ -15,7 +15,7 @@ class IconeConfigGrafico extends React.Component {
         <Button
           variant=""
           className="iconeConfiguracaoGrafico"
-          onClick={this.props.abrirFormularioAction}
+          onClick={event=>this.props.abrirFormularioAction(event, this.props)}
           name={this.props.name}
         >
           <MDBIcon icon="cog" size="2x" name={this.props.name} />

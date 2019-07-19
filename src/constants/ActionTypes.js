@@ -58,3 +58,5 @@ export const VENDA_GAINREDUCAO_NAMESPACE = "_VENDA_GAINREDUCAO";
 
 export const ABRIR_FORMULARIO = "abrir_formulario";
 export const FECHAR_FORMULARIO = "fechar_formulario";
+
+export const AUMENTAR_ZINDEX = "aumentar_zindex";

@@ -2,11 +2,8 @@ import React, { Component } from "react";
 import Draggable from "react-draggable";
 import ConfigurarStop from "../forms/compra_StartStop/ConfigurarStop";
 import ConfigurarStopVenda from "../forms/venda/venda_StartStop/ConfigurarStopVenda";
-
-var my_index = 100; //global var on page
-function sendontop(div_id) {
-  document.getElementById(div_id).style.zIndex = my_index++;
-}
+import { connect } from "react-redux";
+import { aumentarZindexAction } from "../redux/actions/AppActions";
 
 class BSModal extends Component {
   render() {
@@ -15,7 +12,9 @@ class BSModal extends Component {
         <div
           id={this.props.id}
           className={this.props.classConfigAberto}
-          onClick={() => sendontop(this.props.id)}
+          onClick={() =>
+            this.props.aumentarZindexAction(this.props.id, this.props.zIndex)
+          }
         >
           <div className="mcontent">
             {this.props.renderHeader()}
@@ -34,4 +33,11 @@ class BSModal extends Component {
   }
 }
 
-export default BSModal;
+const mapStateToProps = state => ({
+  zIndex: state.appReducer.zIndex
+});
+
+export default connect(
+  mapStateToProps,
+  { aumentarZindexAction }
+)(BSModal);

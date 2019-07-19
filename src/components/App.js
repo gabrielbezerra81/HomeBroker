@@ -24,7 +24,6 @@ import {
 import { connect } from "react-redux";
 
 class App extends React.Component {
-
   render() {
     return (
       <div className="App">
@@ -43,7 +42,9 @@ class App extends React.Component {
               <Button
                 variant="primary"
                 size="sm"
-                onClick={this.props.abrirFormularioAction}
+                onClick={event =>
+                  this.props.abrirFormularioAction(event, this.props)
+                }
                 name="book"
               >
                 <h6 name="book">Book de Ofertas</h6>
@@ -55,7 +56,9 @@ class App extends React.Component {
               <Button
                 variant="primary"
                 size="sm"
-                onClick={this.props.abrirFormularioAction}
+                onClick={event =>
+                  this.props.abrirFormularioAction(event, this.props)
+                }
                 name="compra_agendada"
               >
                 <h6 name="compra_agendada">Compra Agendada</h6>
@@ -65,7 +68,9 @@ class App extends React.Component {
               <Button
                 variant="primary"
                 size="sm"
-                onClick={this.props.abrirFormularioAction}
+                onClick={event =>
+                  this.props.abrirFormularioAction(event, this.props)
+                }
                 name="compra_limitada"
               >
                 <h6 name="compra_limitada">Compra Limitada</h6>
@@ -75,7 +80,9 @@ class App extends React.Component {
               <Button
                 variant="primary"
                 size="sm"
-                onClick={this.props.abrirFormularioAction}
+                onClick={event =>
+                  this.props.abrirFormularioAction(event, this.props)
+                }
                 name="compra_mercado"
               >
                 <h6 name="compra_mercado">Compra a Mercado</h6>
@@ -85,7 +92,9 @@ class App extends React.Component {
               <Button
                 variant="primary"
                 size="sm"
-                onClick={this.props.abrirFormularioAction}
+                onClick={event =>
+                  this.props.abrirFormularioAction(event, this.props)
+                }
                 name="compra_startstop"
               >
                 <h6 name="compra_startstop">Compra Start/Stop</h6>
@@ -95,7 +104,9 @@ class App extends React.Component {
               <Button
                 variant="primary"
                 size="sm"
-                onClick={this.props.abrirFormularioAction}
+                onClick={event =>
+                  this.props.abrirFormularioAction(event, this.props)
+                }
                 name="compra_startmovel"
               >
                 <h6 name="compra_startmovel">Compra Start Móvel</h6>
@@ -108,7 +119,9 @@ class App extends React.Component {
                 variant="primary"
                 size="sm"
                 name="compra_gainreducao"
-                onClick={this.props.abrirFormularioAction}
+                onClick={event =>
+                  this.props.abrirFormularioAction(event, this.props)
+                }
               >
                 <h6 name="compra_gainreducao">Gain/Redução de compra</h6>
               </Button>
@@ -120,7 +133,9 @@ class App extends React.Component {
                 variant="primary"
                 size="sm"
                 name="venda_agendada"
-                onClick={this.props.abrirFormularioAction}
+                onClick={event =>
+                  this.props.abrirFormularioAction(event, this.props)
+                }
               >
                 <h6 name="venda_agendada">Venda Agendada</h6>
               </Button>
@@ -130,7 +145,9 @@ class App extends React.Component {
                 variant="primary"
                 size="sm"
                 name="venda_limitada"
-                onClick={this.props.abrirFormularioAction}
+                onClick={event =>
+                  this.props.abrirFormularioAction(event, this.props)
+                }
               >
                 <h6 name="venda_limitada">Venda Limitada</h6>
               </Button>
@@ -140,7 +157,9 @@ class App extends React.Component {
                 variant="primary"
                 size="sm"
                 name="venda_mercado"
-                onClick={this.props.abrirFormularioAction}
+                onClick={event =>
+                  this.props.abrirFormularioAction(event, this.props)
+                }
               >
                 <h6 name="venda_mercado">Venda a Mercado</h6>
               </Button>
@@ -150,7 +169,9 @@ class App extends React.Component {
                 variant="primary"
                 size="sm"
                 name="venda_startstop"
-                onClick={this.props.abrirFormularioAction}
+                onClick={event =>
+                  this.props.abrirFormularioAction(event, this.props)
+                }
               >
                 <h6 name="venda_startstop">Venda Start/Stop</h6>
               </Button>
@@ -160,7 +181,9 @@ class App extends React.Component {
                 variant="primary"
                 size="sm"
                 name="venda_stop_movel"
-                onClick={this.props.abrirFormularioAction}
+                onClick={event =>
+                  this.props.abrirFormularioAction(event, this.props)
+                }
               >
                 <h6 name="venda_stop_movel">Venda Stop Móvel</h6>
               </Button>
@@ -170,7 +193,9 @@ class App extends React.Component {
                 variant="primary"
                 size="sm"
                 name="venda_gainreducao"
-                onClick={this.props.abrirFormularioAction}
+                onClick={event =>
+                  this.props.abrirFormularioAction(event, this.props)
+                }
               >
                 <h6 name="venda_gainreducao">Gain/Redução de venda</h6>
               </Button>
@@ -293,7 +318,8 @@ const mapStateToProps = state => ({
   venda_mercado: state.appReducer.venda_mercado,
   venda_startstop: state.appReducer.venda_startstop,
   venda_stop_movel: state.appReducer.venda_stop_movel,
-  venda_gainreducao: state.appReducer.venda_gainreducao
+  venda_gainreducao: state.appReducer.venda_gainreducao,
+  zIndex: state.appReducer.zIndex
 });
 
 export default connect(

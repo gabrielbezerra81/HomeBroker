@@ -10,6 +10,9 @@ import { modalHeader } from "../../../utils/FormHeader";
 import { abrirFormularioAction } from "../../../redux/actions/AppActions";
 
 class VendaAgendada extends React.Component {
+  componentDidMount() {
+    document.getElementById("vendaagendada").style.zIndex = this.props.zIndex;
+  }
   render() {
     return (
       <DraggableModal
@@ -35,7 +38,9 @@ const modalBody = () => (
   </div>
 );
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  zIndex: state.appReducer.zIndex
+});
 
 export default connect(
   mapStateToProps,
