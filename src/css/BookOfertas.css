@@ -99,3 +99,7 @@ td {
 .ColFormGain {
   padding-left: 0.18rem;
 }
+
+.text-align-center {
+  text-align: center !important;
+}

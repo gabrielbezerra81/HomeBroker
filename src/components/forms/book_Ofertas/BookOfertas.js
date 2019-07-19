@@ -43,7 +43,7 @@ const modalBody = props => (
     <Form className="formNumericInput">
       <Row>
         <Col className="ColFormStopLoss">
-          <Form.Group>
+          <Form.Group className="text-align-center">
             <Form.Label>Stop Loss</Form.Label>
             <Form.Control
               className="textInput"
@@ -56,7 +56,7 @@ const modalBody = props => (
           </Form.Group>
         </Col>
         <Col className="ColFormQtde">
-          <Form.Group>
+          <Form.Group className="text-align-center">
             <Form.Label>Qtde</Form.Label>
             <Form.Control
               className="textInput"
@@ -70,8 +70,8 @@ const modalBody = props => (
           </Form.Group>
         </Col>
         <Col className="ColFormGain">
-          <Form.Group>
-            <Form.Label>Gain</Form.Label>
+          <Form.Group className="text-align-center">
+            <Form.Label >Gain</Form.Label>
             <Form.Control
               className="textInput"
               type="number"
