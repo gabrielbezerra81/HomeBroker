@@ -133,7 +133,14 @@ export default namespace => (state = INITIAL_STATE, action) => {
 };
 
 export const formatarNumero = value => {
-  value = value.split(".").join("");
+  let a = value;
+  value = value.split(".");
+  if (value[1]) {
+    if (value[1].length == 1) {
+      value[1] = value[1] * 10;
+    }
+  }
+  value = value.join("");
 
   if (value.length > 2) {
     value =
