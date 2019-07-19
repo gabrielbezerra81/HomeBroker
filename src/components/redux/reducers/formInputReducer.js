@@ -27,7 +27,8 @@ import {
   ADICIONAR_ITEM_TABELA_REDUCAO,
   ADICIONA_ITEM_TABELA_ORDENS_VENDA,
   REMOVE_ITEM_TABELA_GAIN_REDUCAO,
-  REMOVE_ITEM_TABELA_ORDENS_MOVEL
+  REMOVE_ITEM_TABELA_ORDENS_MOVEL,
+  MUDAR_INPUT_CONFIGURAR
 } from "../../../constants/ActionTypes";
 
 const INITIAL_STATE = {
@@ -61,7 +62,15 @@ const INITIAL_STATE = {
   tabelaOrdens: [],
   tabelaOfertasCompra: [],
   tabelaOfertasVenda: [],
-  tabelaGainReducao: []
+  tabelaGainReducao: [],
+  gainDisparoConfig1: "",
+  gainExecConfig1: "",
+  stopDisparoConfig1: "",
+  stopExecConfig1: "",
+  gainDisparoConfig2: "",
+  gainExecConfig2: "",
+  stopDisparoConfig2: "",
+  stopExecConfig2: ""
 };
 
 export default namespace => (state = INITIAL_STATE, action) => {
@@ -127,6 +136,8 @@ export default namespace => (state = INITIAL_STATE, action) => {
       return { ...state, tabelaGainReducao: action.payload };
     case `${REMOVE_ITEM_TABELA_ORDENS_MOVEL}${namespace}`:
       return { ...state, tabelaOrdens: action.payload };
+    case `${MUDAR_INPUT_CONFIGURAR}${namespace}`:
+      return { ...state, [action.name]: action.payload };
     default:
       return state;
   }

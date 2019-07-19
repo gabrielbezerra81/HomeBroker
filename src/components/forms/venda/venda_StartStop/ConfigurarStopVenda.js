@@ -15,7 +15,8 @@ import {
   mudarGainDisparoAction,
   mudarGainExecAction,
   mudarStopDisparoAction,
-  mudarStopExecAction
+  mudarStopExecAction,
+  mudarInputConfigAction
 } from "../../../redux/actions/formInputActions";
 import { CalculoValorTotalAgendada } from "../../../utils/CalculoValorTotal";
 import { fecharFormularioAction } from "../../../redux/actions/AppActions";
@@ -99,91 +100,103 @@ const modalBody = props => (
         step={0.01}
         id="GainDisparoGrafico_CONFIGURAR_VENDA"
         className="inputGrafico"
-        value={props.gainDisparo}
+        value={props.gainDisparoConfig1}
         onChange={event =>
-          props.mudarGainDisparoAction(event, VENDA_STARTSTOP_NAMESPACE)
+          props.mudarInputConfigAction(event, VENDA_STARTSTOP_NAMESPACE)
         }
+        name="gainDisparoConfig1"
       />
       <Form.Control
         type="number"
         step={0.01}
         id="GainExecGrafico_CONFIGURAR_VENDA"
         className="inputGrafico"
-        value={props.gainExec}
+        value={props.gainExecConfig1}
         onChange={event =>
-          props.mudarGainExecAction(event, VENDA_STARTSTOP_NAMESPACE)
+          props.mudarInputConfigAction(event, VENDA_STARTSTOP_NAMESPACE)
         }
+        name="gainExecConfig1"
       />
       <Form.Control
         type="number"
         step={0.01}
         id="StopDisparoGrafico_CONFIGURAR_VENDA"
         className="inputGrafico"
-        value={props.stopDisparo}
+        value={props.stopDisparoConfig1}
         onChange={event =>
-          props.mudarStopDisparoAction(event, VENDA_STARTSTOP_NAMESPACE)
+          props.mudarInputConfigAction(event, VENDA_STARTSTOP_NAMESPACE)
         }
+        name="stopDisparoConfig1"
       />
       <Form.Control
         type="number"
         step={0.01}
         id="StopExecGrafico_CONFIGURAR_VENDA"
         className="inputGrafico"
-        value={props.stopExec}
+        value={props.stopExecConfig1}
         onChange={event =>
-          props.mudarStopExecAction(event, VENDA_STARTSTOP_NAMESPACE)
+          props.mudarInputConfigAction(event, VENDA_STARTSTOP_NAMESPACE)
         }
+        name="stopExecConfig1"
       />
       <Form.Control
         type="number"
         step={0.01}
         id="GainDisparoGrafico2_CONFIGURAR_VENDA"
         className="inputGrafico"
-        value={props.gainDisparo}
+        value={props.gainDisparoConfig2}
         onChange={event =>
-          props.mudarGainDisparoAction(event, VENDA_STARTSTOP_NAMESPACE)
+          props.mudarInputConfigAction(event, VENDA_STARTSTOP_NAMESPACE)
         }
+        name="gainDisparoConfig2"
       />
       <Form.Control
         type="number"
         step={0.01}
         id="GainExecGrafico2_CONFIGURAR_VENDA"
         className="inputGrafico"
-        value={props.gainExec}
+        value={props.gainExecConfig2}
         onChange={event =>
-          props.mudarGainExecAction(event, VENDA_STARTSTOP_NAMESPACE)
+          props.mudarInputConfigAction(event, VENDA_STARTSTOP_NAMESPACE)
         }
+        name="gainExecConfig2"
       />
       <Form.Control
         type="number"
         step={0.01}
         id="StopDisparoGrafico2_CONFIGURAR_VENDA"
         className="inputGrafico"
-        value={props.stopDisparo}
+        value={props.stopDisparoConfig2}
         onChange={event =>
-          props.mudarStopDisparoAction(event, VENDA_STARTSTOP_NAMESPACE)
+          props.mudarInputConfigAction(event, VENDA_STARTSTOP_NAMESPACE)
         }
+        name="stopDisparoConfig2"
       />
       <Form.Control
         type="number"
         step={0.01}
         id="StopExecGrafico2_CONFIGURAR_VENDA"
         className="inputGrafico"
-        value={props.stopExec}
+        value={props.stopExecConfig2}
         onChange={event =>
-          props.mudarStopExecAction(event, VENDA_STARTSTOP_NAMESPACE)
+          props.mudarInputConfigAction(event, VENDA_STARTSTOP_NAMESPACE)
         }
+        name="stopExecConfig2"
       />
     </Form>
   </div>
 );
 
 const mapStateToProps = state => ({
-  gainDisparo: state.vendaStartStopReducer.gainDisparo,
-  gainExec: state.vendaStartStopReducer.gainExec,
-  stopDisparo: state.vendaStartStopReducer.stopDisparo,
-  stopExec: state.vendaStartStopReducer.stopExec,
-  qtde: state.bookOfertaReducer.qtde
+  qtde: state.bookOfertaReducer.qtde,
+  gainDisparoConfig1: state.vendaStartStopReducer.gainDisparoConfig1,
+  gainExecConfig1: state.vendaStartStopReducer.gainExecConfig1,
+  stopDisparoConfig1: state.vendaStartStopReducer.stopDisparoConfig1,
+  stopExecConfig1: state.vendaStartStopReducer.stopExecConfig1,
+  gainDisparoConfig2: state.vendaStartStopReducer.gainDisparoConfig2,
+  gainExecConfig2: state.vendaStartStopReducer.gainExecConfig2,
+  stopDisparoConfig2: state.vendaStartStopReducer.stopDisparoConfig2,
+  stopExecConfig2: state.vendaStartStopReducer.stopExecConfig2
 });
 
 export default connect(
@@ -194,6 +207,7 @@ export default connect(
     mudarGainExecAction,
     mudarStopDisparoAction,
     mudarStopExecAction,
-    fecharFormularioAction
+    fecharFormularioAction,
+    mudarInputConfigAction
   }
 )(ConfigurarStopVenda);

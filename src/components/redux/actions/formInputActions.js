@@ -29,7 +29,8 @@ import {
   COMPRA_MERCADO_NAMESPACE,
   COMPRA_STARTSTOP_NAMESPACE,
   COMPRA_STARTMOVEL_NAMESPACE,
-  COMPRA_GAINREDUCAO_NAMESPACE
+  COMPRA_GAINREDUCAO_NAMESPACE,
+  MUDAR_INPUT_CONFIGURAR
 } from "../../../constants/ActionTypes";
 import { validacaoCompraAgenda } from "../../utils/Validacoes";
 
@@ -376,5 +377,17 @@ export const comprarAction = (props, namespace) => {
 export const venderAction = (props, formulario) => {
   return dispatch => {
     dispatch({ type: "" });
+  };
+};
+
+export const mudarInputConfigAction = (event, namespace) => {
+  const name = event.target.getAttribute("name");
+
+  return dispatch => {
+    dispatch({
+      type: `${MUDAR_INPUT_CONFIGURAR}${namespace}`,
+      name: name,
+      payload: event.target.value
+    });
   };
 };

@@ -60,3 +60,5 @@ export const ABRIR_FORMULARIO = "abrir_formulario";
 export const FECHAR_FORMULARIO = "fechar_formulario";
 
 export const AUMENTAR_ZINDEX = "aumentar_zindex";
+
+export const MUDAR_INPUT_CONFIGURAR = "mudar_input_configurar"
