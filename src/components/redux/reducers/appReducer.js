@@ -7,8 +7,8 @@ import { formatarNumero } from "./formInputReducer";
 
 const INITIAL_STATE = {
   book: false,
-  compra_agendada: false,
-  compra_limitada: false,
+  compra_agendada: true,
+  compra_limitada: true,
   compra_mercado: false,
   compra_startstop: false,
   compra_startmovel: false,

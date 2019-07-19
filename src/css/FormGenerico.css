@@ -136,5 +136,5 @@ input[type="number"] {
 }
 
 .react-draggable {
-  position: fixed;
+  position: absolute;
 }
