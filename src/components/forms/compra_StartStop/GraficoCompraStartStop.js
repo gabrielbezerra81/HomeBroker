@@ -84,8 +84,8 @@ class GraficoCompraStartStop extends React.Component {
               onChange={() => false}
             />
           </Form>
-          <IconeConfigGrafico id="ConfigGainGrafico_CA" />
-          <IconeConfigGrafico id="ConfigStopGrafico_CA" />
+          <IconeConfigGrafico id="ConfigGainGrafico_CA" name="config_compra"/>
+          <IconeConfigGrafico id="ConfigStopGrafico_CA" name="config_compra"/>
           {LabelInputGrafico("Disparo", "TextoGainDisparo_CA")}
           {LabelInputGrafico("Execução", "TextoGainExecucao_CA")}
           {LabelInputGrafico("Disparo", "TextoStopDisparo_CA")}

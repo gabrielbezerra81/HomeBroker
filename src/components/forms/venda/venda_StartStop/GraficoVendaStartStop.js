@@ -78,8 +78,8 @@ class GraficoVendaStartStop extends React.Component {
               onChange={() => false}
             />
           </Form>
-          <IconeConfigGrafico id="ConfigGainGrafico_VA" />
-          <IconeConfigGrafico id="ConfigStopGrafico_VA" />
+          <IconeConfigGrafico id="ConfigGainGrafico_VA" name="config_venda" />
+          <IconeConfigGrafico id="ConfigStopGrafico_VA" name="config_venda" />
           {LabelInputGrafico("Disparo", "TextoGainDisparo_VA")}
           {LabelInputGrafico("Execução", "TextoGainExecucao_VA")}
           {LabelInputGrafico("Disparo", "TextoStopDisparo_VA")}
@@ -87,8 +87,24 @@ class GraficoVendaStartStop extends React.Component {
           {TextoGainStopGrafico("START", "TextoGain_VA")}
           {TextoGainStopGrafico("STOP", "TextoStop_VA")}
           {TextoCotacaoAtualGrafico("TextoCotacaoAtualGrafico_VA")}
-          {TextoValorTotalGrafico("", CalculoValorTotalAgendada(this.props.stopDisparo, this.props.stopExec,this.props.qtde), "ValorTotalGain_Venda")}
-          {TextoValorTotalGrafico("",CalculoValorTotalAgendada(this.props.gainDisparo, this.props.gainExec,this.props.qtde), "ValorTotalStop_Venda")}
+          {TextoValorTotalGrafico(
+            "",
+            CalculoValorTotalAgendada(
+              this.props.stopDisparo,
+              this.props.stopExec,
+              this.props.qtde
+            ),
+            "ValorTotalGain_Venda"
+          )}
+          {TextoValorTotalGrafico(
+            "",
+            CalculoValorTotalAgendada(
+              this.props.gainDisparo,
+              this.props.gainExec,
+              this.props.qtde
+            ),
+            "ValorTotalStop_Venda"
+          )}
         </div>
       </Col>
     );

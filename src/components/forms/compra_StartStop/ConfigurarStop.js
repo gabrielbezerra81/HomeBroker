@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { Button, Form } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import IconeConfigGrafico from "../../utils/IconeConfigGrafico";
-import { mostrarConfigurarStopAction } from "../../redux/actions/compraStartStopActions";
 import { COMPRA_STARTSTOP_NAMESPACE } from "../../../constants/ActionTypes";
 import {
   LabelInputGrafico,
@@ -18,6 +17,7 @@ import {
   mudarStopExecAction
 } from "../../redux/actions/formInputActions";
 import { CalculoValorTotalAgendada } from "../../utils/CalculoValorTotal";
+import { fecharFormularioAction } from "../../redux/actions/AppActions";
 
 class ConfigurarStop extends React.Component {
   render() {
@@ -38,16 +38,15 @@ const modalHeader = props => (
     <Button
       variant=""
       className="iconesHeader"
-      onClick={() =>
-        props.mostrarConfigurarStopAction(COMPRA_STARTSTOP_NAMESPACE)
-      }
+      onClick={event => props.fecharFormularioAction(event)}
+      name="config_compra"
     >
       <span className="fa-stack">
         <MDBIcon icon="circle" className="fa-stack-2x" />
         <MDBIcon
           icon="times"
           className="fa-stack-1x iconeFechar"
-          name="startstop"
+          name="config_compra"
         />
       </span>
     </Button>
@@ -63,20 +62,48 @@ const modalBody = props => (
     {LabelInputGrafico("Execução", "TextoStopExecucao_CONFIGURAR")}
     {TextoGainStopGrafico("GAIN", "TextoGain_CONFIGURAR")}
     {TextoGainStopGrafico("LOSS", "TextoStop_CONFIGURAR")}
-    {TextoValorTotalGrafico("", CalculoValorTotalAgendada(props.gainDisparo, props.gainExec,props.qtde), "ValorTotalGain1_CONFIGURAR")}
-    {TextoValorTotalGrafico("", CalculoValorTotalAgendada(props.stopDisparo, props.stopExec,props.qtde), "ValorTotalStop1_CONFIGURAR")}
-    <IconeConfigGrafico id="ConfigGain1Grafico_CONFIGURAR" name="compra_gainreducao"/>
-    <IconeConfigGrafico id="ConfigStop1Grafico_CONFIGURAR" name="venda_stop_movel"/>
-    <IconeConfigGrafico id="ConfigGain2Grafico_CONFIGURAR" name="compra_gainreducao"/>
-    <IconeConfigGrafico id="ConfigStop2Grafico_CONFIGURAR" name="venda_stop_movel"/>
+    {TextoValorTotalGrafico(
+      "",
+      CalculoValorTotalAgendada(props.gainDisparo, props.gainExec, props.qtde),
+      "ValorTotalGain1_CONFIGURAR"
+    )}
+    {TextoValorTotalGrafico(
+      "",
+      CalculoValorTotalAgendada(props.stopDisparo, props.stopExec, props.qtde),
+      "ValorTotalStop1_CONFIGURAR"
+    )}
+    <IconeConfigGrafico
+      id="ConfigGain1Grafico_CONFIGURAR"
+      name="compra_gainreducao"
+    />
+    <IconeConfigGrafico
+      id="ConfigStop1Grafico_CONFIGURAR"
+      name="venda_stop_movel"
+    />
+    <IconeConfigGrafico
+      id="ConfigGain2Grafico_CONFIGURAR"
+      name="compra_gainreducao"
+    />
+    <IconeConfigGrafico
+      id="ConfigStop2Grafico_CONFIGURAR"
+      name="venda_stop_movel"
+    />
     {LabelInputGrafico("Disparo", "TextoGainDisparo2_CONFIGURAR")}
     {LabelInputGrafico("Execução", "TextoGainExecucao2_CONFIGURAR")}
     {LabelInputGrafico("Disparo", "TextoStopDisparo2_CONFIGURAR")}
     {LabelInputGrafico("Execução", "TextoStopExecucao2_CONFIGURAR")}
     {TextoGainStopGrafico("GAIN", "TextoGain2_CONFIGURAR")}
     {TextoGainStopGrafico("LOSS", "TextoStop2_CONFIGURAR")}
-    {TextoValorTotalGrafico("", CalculoValorTotalAgendada(props.gainDisparo, props.gainExec,props.qtde), "ValorTotalGain2_CONFIGURAR")}
-    {TextoValorTotalGrafico("", CalculoValorTotalAgendada(props.stopDisparo, props.stopExec,props.qtde), "ValorTotalStop2_CONFIGURAR")}
+    {TextoValorTotalGrafico(
+      "",
+      CalculoValorTotalAgendada(props.gainDisparo, props.gainExec, props.qtde),
+      "ValorTotalGain2_CONFIGURAR"
+    )}
+    {TextoValorTotalGrafico(
+      "",
+      CalculoValorTotalAgendada(props.stopDisparo, props.stopExec, props.qtde),
+      "ValorTotalStop2_CONFIGURAR"
+    )}
     <Form>
       <Form.Control
         type="number"
@@ -173,10 +200,10 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
-    mostrarConfigurarStopAction,
     mudarGainDisparoAction,
     mudarGainExecAction,
     mudarStopDisparoAction,
-    mudarStopExecAction
+    mudarStopExecAction,
+    fecharFormularioAction
   }
 )(ConfigurarStop);

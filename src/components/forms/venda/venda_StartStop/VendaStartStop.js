@@ -25,10 +25,8 @@ class VendaStartStop extends React.Component {
         renderHeader={() =>
           modalHeader(this.props, this.props.headerTitle, "border-green")
         }
-        renderConfigForm={this.props.showConfigStop}
-        classConfigAberto={
-          this.props.showConfigStop ? "configStopAberto" : null
-        }
+        renderConfigForm={this.props.config_venda}
+        classConfigAberto={this.props.config_venda ? "configStopAberto" : null}
       />
     );
   }
@@ -45,11 +43,11 @@ const modalBody = () => (
 );
 
 const mapStateToProps = state => ({
-  showConfigStop: state.vendaStartStopReducer.showConfigStop,
+  config_venda: state.appReducer.config_venda,
   zIndex: state.appReducer.zIndex
 });
 
 export default connect(
   mapStateToProps,
-  {abrirFormularioAction}
+  { abrirFormularioAction }
 )(VendaStartStop);

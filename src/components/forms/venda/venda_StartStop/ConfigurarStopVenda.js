@@ -18,6 +18,7 @@ import {
   mudarStopExecAction
 } from "../../../redux/actions/formInputActions";
 import { CalculoValorTotalAgendada } from "../../../utils/CalculoValorTotal";
+import { fecharFormularioAction } from "../../../redux/actions/AppActions";
 
 class ConfigurarStopVenda extends React.Component {
   render() {
@@ -38,16 +39,15 @@ const modalHeader = props => (
     <Button
       variant=""
       className="iconesHeader"
-      onClick={() =>
-        props.mostrarConfigurarStopAction(VENDA_STARTSTOP_NAMESPACE)
-      }
+      onClick={event => props.fecharFormularioAction(event)}
+      name="config_venda"
     >
       <span className="fa-stack">
         <MDBIcon icon="circle" className="fa-stack-2x" />
         <MDBIcon
           icon="times"
           className="fa-stack-1x iconeFechar"
-          name="startstop"
+          name="config_venda"
         />
       </span>
     </Button>
@@ -63,8 +63,16 @@ const modalBody = props => (
     {LabelInputGrafico("Execução", "TextoStopExecucao_CONFIGURAR_VENDA")}
     {TextoGainStopGrafico("GAIN", "TextoGain_CONFIGURAR_VENDA")}
     {TextoGainStopGrafico("LOSS", "TextoStop_CONFIGURAR_VENDA")}
-    {TextoValorTotalGrafico("TOTAL", CalculoValorTotalAgendada(props.stopDisparo, props.stopExec,props.qtde), "ValorTotalStop1_CONFIGURAR_VENDA")}
-    {TextoValorTotalGrafico("TOTAL", CalculoValorTotalAgendada(props.gainDisparo, props.gainExec,props.qtde), "ValorTotalGain1_CONFIGURAR_VENDA")}
+    {TextoValorTotalGrafico(
+      "TOTAL",
+      CalculoValorTotalAgendada(props.stopDisparo, props.stopExec, props.qtde),
+      "ValorTotalStop1_CONFIGURAR_VENDA"
+    )}
+    {TextoValorTotalGrafico(
+      "TOTAL",
+      CalculoValorTotalAgendada(props.gainDisparo, props.gainExec, props.qtde),
+      "ValorTotalGain1_CONFIGURAR_VENDA"
+    )}
     <IconeConfigGrafico id="ConfigGain1Grafico_CONFIGURAR_VENDA" />
     <IconeConfigGrafico id="ConfigStop1Grafico_CONFIGURAR_VENDA" />
     <IconeConfigGrafico id="ConfigGain2Grafico_CONFIGURAR_VENDA" />
@@ -75,8 +83,16 @@ const modalBody = props => (
     {LabelInputGrafico("Execução", "TextoStopExecucao2_CONFIGURAR_VENDA")}
     {TextoGainStopGrafico("GAIN", "TextoGain2_CONFIGURAR_VENDA")}
     {TextoGainStopGrafico("LOSS", "TextoStop2_CONFIGURAR_VENDA")}
-    {TextoValorTotalGrafico("TOTAL", CalculoValorTotalAgendada(props.stopDisparo, props.stopExec,props.qtde), "ValorTotalStop2_CONFIGURAR_VENDA")}
-    {TextoValorTotalGrafico("TOTAL", CalculoValorTotalAgendada(props.gainDisparo, props.gainExec,props.qtde), "ValorTotalGain2_CONFIGURAR_VENDA")}
+    {TextoValorTotalGrafico(
+      "TOTAL",
+      CalculoValorTotalAgendada(props.stopDisparo, props.stopExec, props.qtde),
+      "ValorTotalStop2_CONFIGURAR_VENDA"
+    )}
+    {TextoValorTotalGrafico(
+      "TOTAL",
+      CalculoValorTotalAgendada(props.gainDisparo, props.gainExec, props.qtde),
+      "ValorTotalGain2_CONFIGURAR_VENDA"
+    )}
     <Form>
       <Form.Control
         type="number"
@@ -177,6 +193,7 @@ export default connect(
     mudarGainDisparoAction,
     mudarGainExecAction,
     mudarStopDisparoAction,
-    mudarStopExecAction
+    mudarStopExecAction,
+    fecharFormularioAction
   }
 )(ConfigurarStopVenda);

@@ -19,6 +19,8 @@ const INITIAL_STATE = {
   venda_startstop: false,
   venda_stop_movel: false,
   venda_gainreducao: false,
+  config_compra: false,
+  config_venda: false,
   zIndex: 100
 };
 
