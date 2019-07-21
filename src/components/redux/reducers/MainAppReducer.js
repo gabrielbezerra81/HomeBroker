@@ -7,7 +7,7 @@ import {
   FECHAR_FORM
 } from "../../../constants/ActionTypes";
 import React from "react";
-import { Sub } from "../../../MainApp";
+import { SubAppConectado } from "../../../MainApp";
 
 const INITIAL_STATE = {
   apps: [],
@@ -141,7 +141,7 @@ const criarMostrarApp = (name, props, dispatch) => {
 
   let numeroApps = show.length;
   let sub = (
-    <Sub
+    <SubAppConectado
       key={apps.length}
       index={apps.length}
       indiceShow={numeroApps - 1}
