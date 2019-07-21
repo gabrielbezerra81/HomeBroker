@@ -4,6 +4,7 @@ import {
   AUMENTAR_ZINDEX
 } from "../../../constants/ActionTypes";
 
+//Usado apenas na store local de cada sub-app para abrir os forms de configuração de start/stop movel
 export const abrirFormularioAction = (event, props) => {
   const name = event.target.getAttribute("name");
 
@@ -18,6 +19,7 @@ export const abrirFormularioAction = (event, props) => {
   };
 };
 
+//Usado apenas na store local de cada sub-app para abrir os forms de configuração de start/stop movel
 export const fecharFormularioAction = event => {
   const name = event.target.getAttribute("name");
   return dispatch => {
@@ -29,15 +31,6 @@ export const fecharFormularioAction = event => {
   };
 };
 
-export const aumentarZindexAction = (div_id, zIndex, show) => {
-  return dispatch => {
-    if (show) {
-      zIndex = zIndex + 1;
-      document.getElementById(div_id).style.zIndex = zIndex;
-      dispatch({ type: AUMENTAR_ZINDEX, payload: zIndex, divkey: div_id });
-    }
-  };
-};
 export const aumentarZindex = (zIndex, dispatch) => {
   zIndex = zIndex + 1;
   dispatch({ type: AUMENTAR_ZINDEX, payload: zIndex });

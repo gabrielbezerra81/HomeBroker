@@ -63,3 +63,10 @@ export const FECHAR_FORMULARIO = "fechar_formulario";
 export const AUMENTAR_ZINDEX = "aumentar_zindex";
 
 export const MUDAR_INPUT_CONFIGURAR = "mudar_input_configurar";
+
+//Actions do MainReducer
+export const CRIAR_APP = "criar_app"
+export const MOSTRAR_APP = "mostrar_app"
+export const ATUALIZAR_SHOW = "atualizar_show"
+export const ATUALIZAR_DIVKEY = "atualizar_divkey"
+export const FECHAR_FORM = "fechar_form"

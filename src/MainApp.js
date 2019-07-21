@@ -10,10 +10,10 @@ import {
   atualizarShowAction,
   atualizarDivKeyAction,
   fecharFormAction,
-  abrirFormAction
-} from "./MainAppReducer";
-import MainAppReducer from "./MainAppReducer";
-
+  abrirFormAction,
+  aumentarZindexAction
+} from "./components/redux/reducers/MainAppReducer";
+import MainAppReducer from "./components/redux/reducers/MainAppReducer";
 import "./css";
 import BookOfertas from "./components/forms/book_Ofertas/BookOfertas";
 import CompraAgendada from "./components/forms/compra_Agendada/CompraAgendada";
@@ -22,15 +22,12 @@ import CompraMercado from "./components/forms/compra_Mercado/CompraMercado";
 import CompraStartStop from "./components/forms/compra_StartStop/CompraStartStop";
 import CompraStartMovel from "./components/forms/compra_StartMovel/CompraStartMovel";
 import CompraGainReducao from "./components/forms/compra_GainReducao/CompraGainReducao";
-
 import VendaAgendada from "./components/forms/venda/venda_Agendada/VendaAgendada";
 import VendaLimitada from "./components/forms/venda/venda_Limitada/VendaLimitada";
 import VendaMercado from "./components/forms/venda/venda_Mercado/VendaMercado";
 import VendaStartStop from "./components/forms/venda/venda_StartStop/VendaStartStop";
 import VendaStopMovel from "./components/forms/venda/venda_StopMovel/VendaStopMovel";
 import VendaGainReducao from "./components/forms/venda/venda_GainReducao/VendaGainReducao";
-
-import { aumentarZindexAction } from "./components/redux/actions/AppActions";
 
 export const GlobalContext = React.createContext();
 export const localContext = React.createContext();
@@ -205,29 +202,7 @@ class MainApp extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    apps: state.MainAppReducer.apps,
-    show: state.MainAppReducer.show,
-    divkey: state.MainAppReducer.divkey,
-    zIndex: state.MainAppReducer.zIndex
-  };
-};
-
-export const MainApli = connect(
-  mapStateToProps,
-  {
-    criarMostrarAppAction,
-    mostrarAppAction,
-    atualizarShowAction,
-    atualizarDivKeyAction,
-    abrirFormAction
-  },
-  null,
-  { context: GlobalContext }
-)(MainApp);
-
-//Responsável por criar uma store individual para cada app
+//Responsável por criar uma store individual para cada sub-app
 class SubApp extends Component {
   constructor(props) {
     super(props);
@@ -249,13 +224,6 @@ class SubApp extends Component {
     );
   }
 }
-
-export const Sub = connect(
-  mapStateToProps,
-  {},
-  null,
-  { context: GlobalContext }
-)(SubApp);
 
 class Ap extends React.Component {
   componentDidUpdate() {
@@ -566,6 +534,35 @@ class Ap extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    apps: state.MainAppReducer.apps,
+    show: state.MainAppReducer.show,
+    divkey: state.MainAppReducer.divkey,
+    zIndex: state.MainAppReducer.zIndex
+  };
+};
+
+export const MainApli = connect(
+  mapStateToProps,
+  {
+    criarMostrarAppAction,
+    mostrarAppAction,
+    atualizarShowAction,
+    atualizarDivKeyAction,
+    abrirFormAction
+  },
+  null,
+  { context: GlobalContext }
+)(MainApp);
+
+export const Sub = connect(
+  mapStateToProps,
+  {},
+  null,
+  { context: GlobalContext }
+)(SubApp);
 
 export const ApConectado = compose(
   connect(

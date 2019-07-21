@@ -1,6 +1,13 @@
-import { AUMENTAR_ZINDEX } from "./constants/ActionTypes";
+import {
+  AUMENTAR_ZINDEX,
+  CRIAR_APP,
+  MOSTRAR_APP,
+  ATUALIZAR_SHOW,
+  ATUALIZAR_DIVKEY,
+  FECHAR_FORM
+} from "../../../constants/ActionTypes";
 import React from "react";
-import { Sub } from "./MainApp";
+import { Sub } from "../../../MainApp";
 
 const INITIAL_STATE = {
   apps: [],
@@ -11,27 +18,27 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case "CRIAR_APP":
+    case CRIAR_APP:
       return {
         ...state,
         apps: action.apps,
         show: action.show,
         zIndex: action.zIndex
       };
-    case "MOSTRAR_APP":
+    case MOSTRAR_APP:
       return {
         ...state,
         apps: action.apps,
         show: action.show,
         zIndex: action.zIndex
       };
-    case "ATUALIZAR_SHOW":
+    case ATUALIZAR_SHOW:
       return { ...state, show: action.payload };
     case AUMENTAR_ZINDEX:
       return { ...state, zIndex: action.payload, divkey: action.divkey };
-    case "ATUALIZAR_DIVKEY":
+    case ATUALIZAR_DIVKEY:
       return { ...state, divkey: action.payload };
-    case "FECHAR_FORM":
+    case FECHAR_FORM:
       return { ...state, show: action.payload, divkey: "" };
     default:
       return state;
@@ -39,11 +46,11 @@ export default (state = INITIAL_STATE, action) => {
 };
 
 export const criarMostrarAppAction = (apps, show, zindex, dispatch) => {
-  dispatch({ type: "CRIAR_APP", apps: apps, show: show, zIndex: zindex + 1 });
+  dispatch({ type: CRIAR_APP, apps: apps, show: show, zIndex: zindex + 1 });
 };
 export const mostrarAppAction = (apps, show, zindex, dispatch) => {
   dispatch({
-    type: "MOSTRAR_APP",
+    type: MOSTRAR_APP,
     apps: apps,
     show: show,
     zIndex: zindex + 1
@@ -51,21 +58,33 @@ export const mostrarAppAction = (apps, show, zindex, dispatch) => {
 };
 
 export const atualizarShowAction = (show, dispatch) => {
-  dispatch({ type: "ATUALIZAR_SHOW", payload: show });
+  dispatch({ type: ATUALIZAR_SHOW, payload: show });
 };
 
 export const atualizarDivKeyAction = (divkey, dispatch) => {
-  dispatch({ type: "ATUALIZAR_DIVKEY", payload: divkey });
+  dispatch({ type: ATUALIZAR_DIVKEY, payload: divkey });
 };
 
 export const fecharFormAction = (props, divkey) => {
   let show = [...props.show];
   show[props.appkey][divkey] = false;
   return dispatch => {
-    dispatch({ type: "FECHAR_FORM", payload: show });
+    dispatch({ type: FECHAR_FORM, payload: show });
   };
 };
 
+//Usado para aumentar o Zindex e dar foco ao clicar em uma div.
+export const aumentarZindexAction = (div_id, zIndex, show) => {
+  return dispatch => {
+    if (show) {
+      zIndex = zIndex + 1;
+      document.getElementById(div_id).style.zIndex = zIndex;
+      dispatch({ type: AUMENTAR_ZINDEX, payload: zIndex, divkey: div_id });
+    }
+  };
+};
+
+//Abrir formulário de maneira geral, decide entre criar novo sub-app e mostrar o form, ou apenas mostrar o form
 export const abrirFormAction = (event, props) => {
   return dispatch => {
     let apps = [...props.apps];
@@ -92,6 +111,7 @@ export const abrirFormAction = (event, props) => {
   };
 };
 
+//Cria um sub-app e mostra o formulario desejado
 const criarMostrarApp = (name, props, dispatch) => {
   let apps = [...props.apps];
   let show = [...props.show];
@@ -126,10 +146,6 @@ const criarMostrarApp = (name, props, dispatch) => {
       index={apps.length}
       indiceShow={numeroApps - 1}
       context={props.context}
-      //show={this.state.show[numeroApps - 1]}
-      //globalStore={this.props.globalStore}
-      //globalContext={this.props.context}
-      //SubApp show = show[numeroApps - 1]
     />
   );
   apps.push(sub);
