@@ -17,6 +17,7 @@ import MainAppReducer from "./components/redux/reducers/MainAppReducer";
 import "./css";
 import App from "./components/App";
 import { modalHeader } from "./components/utils/FormHeader";
+import { receberAppPropsAction } from "./components/redux/actions/AppActions";
 
 export const GlobalContext = React.createContext();
 export const localContext = React.createContext();
@@ -223,6 +224,8 @@ const mapStateToProps = state => {
   };
 };
 
+const mapStateToPropsLocal = state => ({});
+
 export const MainAppConectado = connect(
   mapStateToProps,
   {
@@ -253,6 +256,10 @@ export const AppConectado = compose(
     },
     null,
     { context: GlobalContext }
+  ),
+  connect(
+    mapStateToPropsLocal,
+    { receberAppPropsAction }
   )
 )(App);
 

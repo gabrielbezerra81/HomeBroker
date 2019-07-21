@@ -13,7 +13,6 @@ import VendaMercado from "./forms/venda/venda_Mercado/VendaMercado";
 import VendaStartStop from "./forms/venda/venda_StartStop/VendaStartStop";
 import VendaStopMovel from "./forms/venda/venda_StopMovel/VendaStopMovel";
 import VendaGainReducao from "./forms/venda/venda_GainReducao/VendaGainReducao";
-
 import { Row } from "react-bootstrap";
 
 export default class App extends React.Component {
@@ -21,6 +20,12 @@ export default class App extends React.Component {
     if (this.props.divkey !== "")
       document.getElementById(this.props.divkey).style.zIndex =
         this.props.zIndex + 1;
+
+    this.props.receberAppPropsAction(this.props);
+  }
+
+  componentDidMount() {
+    this.props.receberAppPropsAction(this.props);
   }
 
   render() {

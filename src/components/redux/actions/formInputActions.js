@@ -249,7 +249,7 @@ export const adicionarItemTabelaGainReducaoAction = (props, namespace) => {
   const { gainDisparo, gainExec, qtde } = props;
 
   let total = qtde * gainExec;
-  if (gainExec === "0.00") {
+  if (gainExec === "0.00" || gainExec === "" || gainExec === "0") {
     total = qtde * gainDisparo;
   }
   const itemTabela = {

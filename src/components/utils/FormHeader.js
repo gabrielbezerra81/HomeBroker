@@ -9,7 +9,10 @@ export const modalHeader = (props, headerTitle, headerClass) => (
       <Button
         variant=""
         className="iconesHeader"
-        onClick={props.abrirFormularioAction}
+        onClick={event => {
+          event.stopPropagation();
+          props.handleShow(event);
+        }}
         name="book"
       >
         <MDBIcon icon="book" size="2x" name="book" />

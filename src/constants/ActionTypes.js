@@ -64,6 +64,8 @@ export const AUMENTAR_ZINDEX = "aumentar_zindex";
 
 export const MUDAR_INPUT_CONFIGURAR = "mudar_input_configurar";
 
+export const RECEBER_APPKEYLOCAL = "receber_appkeylocal"
+
 //Actions do MainReducer
 export const CRIAR_APP = "criar_app"
 export const MOSTRAR_APP = "mostrar_app"
