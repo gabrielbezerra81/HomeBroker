@@ -147,21 +147,31 @@ export default namespace => (state = INITIAL_STATE, action) => {
 };
 
 export const formatarNumero = value => {
+  console.log("valor antes", value);
   value = value.split(".");
-  if (value[1]) {
-    if (value[1].length === 1) {
-      value[1] = value[1] * 10;
-    }
+  console.log("valor split", value);
+  if (value[1] && value[1].length === 1) {
+    //value[1] = value[1] * 10;
   }
   value = value.join("");
+
 
   if (value.length > 2) {
     value =
       value.substring(0, value.length - 2) +
       "." +
       value.substring(value.length - 2, value.length);
+      return value;
+  }
+  if (value.length > 1) {
+    value =
+      value.substring(0, value.length - 1) +
+      "." +
+      value.substring(value.length - 1, value.length);
+      return value;
   }
 
+  console.log("valor retornado", value);
   return value;
 };
 
