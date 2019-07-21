@@ -287,9 +287,9 @@ export const adicionarItemTabelaStopMovel = (props, namespace) => {
 
     const itemTabela = {
       disparo: Number(ultimoItem.disparo) + Number(ajusteAssimetrico),
-      stopAtual: stopDisparo,
+      stopAtual: Number(ultimoItem.novoStop),
       ajuste: ajusteAssimetrico,
-      novoStop: Number(stopDisparo) + Number(ajusteAssimetrico)
+      novoStop: Number(ultimoItem.novoStop) + Number(ajusteAssimetrico)
     };
     tabelaOrdens.push(itemTabela);
   }
@@ -321,9 +321,9 @@ export const adicionarItemTabelaStartMovel = (props, namespace) => {
 
     const itemTabela = {
       disparo: Number(ultimoItem.disparo) - Number(ajusteAssimetrico),
-      stopAtual: stopDisparo,
+      stopAtual: Number(ultimoItem.novoStop),
       ajuste: ajusteAssimetrico,
-      novoStop: Number(stopDisparo) - Number(ajusteAssimetrico)
+      novoStop: Number(ultimoItem.novoStop) - Number(ajusteAssimetrico)
     };
     tabelaOrdens.push(itemTabela);
   }
