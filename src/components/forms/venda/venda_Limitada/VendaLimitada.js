@@ -16,11 +16,9 @@ class VendaLimitada extends React.Component {
   render() {
     return (
       <DraggableModal
-        show={this.props.show}
-        close={this.props.close}
         id={"vendalimitada"}
         headerTitle={this.props.headerTitle}
-        renderModalBody={() => modalBody()}
+        renderModalBody={() => modalBody(this.props)}
         headerClass="border-green"
         renderHeader={() =>
           modalHeader(this.props, this.props.headerTitle, "border-green")
@@ -30,18 +28,17 @@ class VendaLimitada extends React.Component {
   }
 }
 
-const modalBody = () => (
+const modalBody = (props) => (
   <div className="mbody">
     <BodyHeaderVendaLimitada />
     <Row>
       <FormInternoVendaLimitada />
-      <GraficoVendaLimitada />
+      <GraficoVendaLimitada handleShow={props.handleShow}/>
     </Row>
   </div>
 );
 
 const mapStateToProps = state => ({
-  zIndex: state.appReducer.zIndex
 });
 
 export default connect(

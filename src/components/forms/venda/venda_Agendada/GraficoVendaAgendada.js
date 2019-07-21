@@ -103,8 +103,8 @@ class GraficoVendaAgendada extends React.Component {
             ),
             "ValorTotalStop_Venda"
           )}
-          <IconeConfigGrafico id="ConfigGainGrafico_VA" />
-          <IconeConfigGrafico id="ConfigStopGrafico_VA" />
+          <IconeConfigGrafico id="ConfigGainGrafico_VA" name="venda_gainreducao" handleShow={this.props.handleShow}/>
+          <IconeConfigGrafico id="ConfigStopGrafico_VA" name="venda_stop_movel" handleShow={this.props.handleShow}/>
         </div>
       </Col>
     );

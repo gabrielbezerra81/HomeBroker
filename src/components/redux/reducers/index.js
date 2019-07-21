@@ -1,7 +1,6 @@
 import { combineReducers } from "redux";
 import bookOfertaReducer from "./bookOfertaReducer";
 import formInputReducer from "./formInputReducer";
-import appReducer from './appReducer'
 import {
   COMPRA_AGENDADA_NAMESPACE,
   COMPRA_MERCADO_NAMESPACE,
@@ -16,6 +15,7 @@ import {
   VENDA_STOPMOVEL_NAMESPACE,
   VENDA_GAINREDUCAO_NAMESPACE
 } from "../../../constants/ActionTypes";
+import appReducer from "./appReducer";
 
 export default combineReducers({
   bookOfertaReducer: bookOfertaReducer,

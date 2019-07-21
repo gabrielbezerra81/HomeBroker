@@ -8,6 +8,7 @@ import CompraMercado from "./forms/compra_Mercado/CompraMercado";
 import CompraStartStop from "./forms/compra_StartStop/CompraStartStop";
 import CompraStartMovel from "./forms/compra_StartMovel/CompraStartMovel";
 import CompraGainReducao from "./forms/compra_GainReducao/CompraGainReducao";
+import { compose } from "redux";
 
 import VendaAgendada from "./forms/venda/venda_Agendada/VendaAgendada";
 import VendaLimitada from "./forms/venda/venda_Limitada/VendaLimitada";
@@ -15,6 +16,7 @@ import VendaMercado from "./forms/venda/venda_Mercado/VendaMercado";
 import VendaStartStop from "./forms/venda/venda_StartStop/VendaStartStop";
 import VendaStopMovel from "./forms/venda/venda_StopMovel/VendaStopMovel";
 import VendaGainReducao from "./forms/venda/venda_GainReducao/VendaGainReducao";
+import _ from "lodash";
 
 import { Row, Col } from "react-bootstrap";
 import {
@@ -38,32 +40,10 @@ class App extends React.Component {
                 <h6>Fechar</h6>
               </Button>
             </Col>
-            <Col md={2}>
-              <Button
-                variant="primary"
-                size="sm"
-                onClick={event =>
-                  this.props.abrirFormularioAction(event, this.props)
-                }
-                name="book"
-              >
-                <h6 name="book">Book de Ofertas</h6>
-              </Button>
-            </Col>
+            <Col md={2} />
           </Row>
           <Row style={{ paddingBottom: "0.5rem" }}>
-            <Col>
-              <Button
-                variant="primary"
-                size="sm"
-                onClick={event =>
-                  this.props.abrirFormularioAction(event, this.props)
-                }
-                name="compra_agendada"
-              >
-                <h6 name="compra_agendada">Compra Agendada</h6>
-              </Button>
-            </Col>
+            <Col />
             <Col>
               <Button
                 variant="primary"
@@ -203,7 +183,7 @@ class App extends React.Component {
           </Row>
         </header>
         <Row className="appbody">
-          {this.props.book ? (
+          {this.props.show.book ? (
             <BookOfertas
               close={this.props.fecharFormularioAction}
               tableDataVenda={dataOrdemVenda}
@@ -212,7 +192,7 @@ class App extends React.Component {
             />
           ) : null}
 
-          {this.props.compra_agendada ? (
+          {this.props.show.compra_agendada ? (
             <CompraAgendada
               close={this.props.fecharFormularioAction}
               headerTitle="COMPRA AGENDADA"
@@ -305,26 +285,36 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  book: state.appReducer.book,
-  compra_agendada: state.appReducer.compra_agendada,
-  compra_limitada: state.appReducer.compra_limitada,
-  compra_mercado: state.appReducer.compra_mercado,
-  compra_startstop: state.appReducer.compra_startstop,
-  compra_startmovel: state.appReducer.compra_startmovel,
-  compra_gainreducao: state.appReducer.compra_gainreducao,
-  venda_agendada: state.appReducer.venda_agendada,
-  venda_limitada: state.appReducer.venda_limitada,
-  venda_mercado: state.appReducer.venda_mercado,
-  venda_startstop: state.appReducer.venda_startstop,
-  venda_stop_movel: state.appReducer.venda_stop_movel,
-  venda_gainreducao: state.appReducer.venda_gainreducao,
-  zIndex: state.appReducer.zIndex
-});
+const mapStateToProps = state => {
+  return {
+    book: state.appReducer.book,
+    compra_agendada: state.appReducer.compra_agendada,
+    compra_limitada: state.appReducer.compra_limitada,
+    compra_mercado: state.appReducer.compra_mercado,
+    compra_startstop: state.appReducer.compra_startstop,
+    compra_startmovel: state.appReducer.compra_startmovel,
+    compra_gainreducao: state.appReducer.compra_gainreducao,
+    venda_agendada: state.appReducer.venda_agendada,
+    venda_limitada: state.appReducer.venda_limitada,
+    venda_mercado: state.appReducer.venda_mercado,
+    venda_startstop: state.appReducer.venda_startstop,
+    venda_stop_movel: state.appReducer.venda_stop_movel,
+    venda_gainreducao: state.appReducer.venda_gainreducao,
+    zIndex: state.appReducer.zIndex
+  };
+};
 
-export default connect(
-  mapStateToProps,
-  { abrirFormularioAction, fecharFormularioAction }
+const mapStateToPropsB = state => {
+  return {
+    show: state.MainAppReducer.show
+  };
+};
+
+export default compose(
+  connect(
+    mapStateToProps,
+    { abrirFormularioAction, fecharFormularioAction }
+  )
 )(App);
 
 const dataOrdemVenda = [

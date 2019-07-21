@@ -16,8 +16,6 @@ class VendaStartStop extends React.Component {
   render() {
     return (
       <DraggableModal
-        show={this.props.show}
-        close={this.props.close}
         id="vendastartstop"
         headerTitle={this.props.headerTitle}
         renderModalBody={() => modalBody()}
@@ -43,8 +41,7 @@ const modalBody = () => (
 );
 
 const mapStateToProps = state => ({
-  config_venda: state.appReducer.config_venda,
-  zIndex: state.appReducer.zIndex
+  config_venda: state.appReducer.config_venda
 });
 
 export default connect(

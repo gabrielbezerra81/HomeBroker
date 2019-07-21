@@ -10,14 +10,9 @@ import { modalHeader } from "../../utils/FormHeader";
 import { abrirFormularioAction } from "../../redux/actions/AppActions";
 
 class CompraAgendada extends React.Component {
-  componentDidMount() {
-    document.getElementById("compra_agendada").style.zIndex = this.props.zIndex;
-  }
   render() {
     return (
       <DraggableModal
-        show={this.props.show}
-        close={this.props.close}
         id="compra_agendada"
         renderModalBody={() => modalBody(this.props)}
         renderHeader={() =>
@@ -28,19 +23,17 @@ class CompraAgendada extends React.Component {
   }
 }
 
-const modalBody = () => (
+const modalBody = props => (
   <div className="mbody">
     <BodyHeaderCompraAgendada />
     <Row>
       <FormInternoCompraAgendada />
-      <GraficoCompraAgendada />
+      <GraficoCompraAgendada handleShow={props.handleShow}/>
     </Row>
   </div>
 );
 
-const mapStateToProps = state => ({
-  zIndex: state.appReducer.zIndex
-});
+const mapStateToProps = state => ({});
 
 export default connect(
   mapStateToProps,

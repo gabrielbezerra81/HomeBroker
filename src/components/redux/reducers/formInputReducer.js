@@ -61,8 +61,6 @@ const INITIAL_STATE = {
   gain: "",
   ajusteAssimetrico: "",
   tabelaOrdens: [],
-  tabelaOfertasCompra: [],
-  tabelaOfertasVenda: [],
   tabelaGainReducao: [],
   gainDisparoConfig1: "",
   gainExecConfig1: "",
@@ -149,10 +147,9 @@ export default namespace => (state = INITIAL_STATE, action) => {
 };
 
 export const formatarNumero = value => {
-  let a = value;
   value = value.split(".");
   if (value[1]) {
-    if (value[1].length == 1) {
+    if (value[1].length === 1) {
       value[1] = value[1] * 10;
     }
   }

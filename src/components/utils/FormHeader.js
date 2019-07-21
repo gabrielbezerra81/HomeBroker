@@ -6,8 +6,13 @@ export const modalHeader = (props, headerTitle, headerClass) => (
   <div className={`${headerClass} handle mheader`}>
     <h6 className="mtitle">{headerTitle}</h6>
     <div className="wrapperIconesHeader" name="book">
-      <Button variant="" className="iconesHeader" onClick={props.abrirFormularioAction} name="book">
-        <MDBIcon icon="book" size="2x" name="book"/>
+      <Button
+        variant=""
+        className="iconesHeader"
+        onClick={props.abrirFormularioAction}
+        name="book"
+      >
+        <MDBIcon icon="book" size="2x" name="book" />
       </Button>
 
       <Button variant="" className="iconesHeader">
@@ -47,11 +52,7 @@ export const bookHeader = (props, headerClass) => (
         </Form>
       </Col>
       <Col md={2} className="wrapperIconesHeader">
-        <Button
-          variant=""
-          className="iconesHeader"
-          onClick={event => props.close(event)}
-        >
+        <Button variant="" className="iconesHeader" onClick={props.close}>
           <span className="fa-stack">
             <MDBIcon icon="circle" className="fa-stack-2x" />
             <MDBIcon

@@ -29,11 +29,13 @@ export const fecharFormularioAction = event => {
   };
 };
 
-export const aumentarZindexAction = (div_id, zIndex) => {
+export const aumentarZindexAction = (div_id, zIndex, show) => {
   return dispatch => {
-    zIndex = zIndex + 1;
-    document.getElementById(div_id).style.zIndex = zIndex;
-    dispatch({ type: AUMENTAR_ZINDEX, payload: zIndex });
+    if (show) {
+      zIndex = zIndex + 1;
+      document.getElementById(div_id).style.zIndex = zIndex;
+      dispatch({ type: AUMENTAR_ZINDEX, payload: zIndex, divkey: div_id });
+    }
   };
 };
 export const aumentarZindex = (zIndex, dispatch) => {

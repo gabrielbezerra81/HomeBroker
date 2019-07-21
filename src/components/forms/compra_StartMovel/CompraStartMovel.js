@@ -10,14 +10,10 @@ import { modalHeader } from "../../utils/FormHeader";
 import { abrirFormularioAction } from "../../redux/actions/AppActions";
 
 class CompraStarMovel extends React.Component {
-  componentDidMount() {
-    document.getElementById("comprastartmovel").style.zIndex = this.props.zIndex;
-  }
+
   render() {
     return (
       <DraggableModal
-        show={this.props.show}
-        close={this.props.close}
         id="comprastartmovel"
         headerTitle={this.props.headerTitle}
         renderModalBody={() => modalBody()}
@@ -43,7 +39,6 @@ const modalBody = () => (
 );
 
 const mapStateToProps = state => ({
-  zIndex: state.appReducer.zIndex
 });
 
 export default connect(

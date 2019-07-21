@@ -17,6 +17,7 @@ import {
 } from "../../utils/TextoGrafico";
 import { COMPRA_STARTSTOP_NAMESPACE } from "../../../constants/ActionTypes";
 import { CalculoValorTotalAgendada } from "../../utils/CalculoValorTotal";
+import { abrirFormularioAction } from "../../redux/actions/AppActions";
 
 class GraficoCompraStartStop extends React.Component {
   render() {
@@ -84,8 +85,12 @@ class GraficoCompraStartStop extends React.Component {
               onChange={() => false}
             />
           </Form>
-          <IconeConfigGrafico id="ConfigGainGrafico_CA" name="config_compra"/>
-          <IconeConfigGrafico id="ConfigStopGrafico_CA" name="config_compra"/>
+          <IconeConfigGrafico id="ConfigGainGrafico_CA" name="config_compra" handleShow={event => {
+              this.props.abrirFormularioAction(event, this.props);
+            }}/>
+          <IconeConfigGrafico id="ConfigStopGrafico_CA" name="config_compra" handleShow={event => {
+              this.props.abrirFormularioAction(event, this.props);
+            }}/>
           {LabelInputGrafico("Disparo", "TextoGainDisparo_CA")}
           {LabelInputGrafico("Execução", "TextoGainExecucao_CA")}
           {LabelInputGrafico("Disparo", "TextoStopDisparo_CA")}
@@ -118,6 +123,7 @@ export default connect(
     mudarGainDisparoAction,
     mudarGainExecAction,
     mudarStopDisparoAction,
-    mudarStopExecAction
+    mudarStopExecAction,
+    abrirFormularioAction
   }
 )(GraficoCompraStartStop);

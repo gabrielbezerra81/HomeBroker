@@ -16,14 +16,9 @@ import TabelaOfertas from "./TabelaOfertas";
 import { bookHeader } from "../../utils/FormHeader";
 
 class BookOfertas extends React.Component {
-  componentDidMount() {
-    document.getElementById("bookofertas").style.zIndex = this.props.zIndex;
-  }
   render() {
     return (
       <DraggableModal
-        show={this.props.show}
-        close={this.props.close}
         id="bookofertas"
         renderModalBody={() => modalBody(this.props)}
         headerClass="no-border"
@@ -37,8 +32,8 @@ class BookOfertas extends React.Component {
 const modalBody = props => (
   <Modal.Body>
     <TabelaOfertas
-      tableDataVenda={props.tableDataVenda}
-      tableDataCompra={props.tableDataCompra}
+      tableDataVenda={props.tabelaOfertasVenda}
+      tableDataCompra={props.tabelaOfertasCompra}
     />
     <Form className="formNumericInput">
       <Row>
@@ -71,7 +66,7 @@ const modalBody = props => (
         </Col>
         <Col className="ColFormGain">
           <Form.Group className="text-align-center">
-            <Form.Label >Gain</Form.Label>
+            <Form.Label>Gain</Form.Label>
             <Form.Control
               className="textInput"
               type="number"
@@ -108,7 +103,8 @@ const mapStateToProps = state => ({
   stopLoss: state.bookOfertaReducer.stopLoss,
   gain: state.bookOfertaReducer.gain,
   inputHeader: state.bookOfertaReducer.inputHeader,
-  zIndex: state.appReducer.zIndex
+  tabelaOfertasCompra: state.bookOfertaReducer.tabelaOfertasCompra,
+  tabelaOfertasVenda: state.bookOfertaReducer.tabelaOfertasVenda
 });
 
 export default connect(

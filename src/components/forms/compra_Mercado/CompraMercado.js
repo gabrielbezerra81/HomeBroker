@@ -10,17 +10,12 @@ import { modalHeader } from "../../utils/FormHeader";
 import { abrirFormularioAction } from "../../redux/actions/AppActions";
 
 class CompraMercado extends React.Component {
-  componentDidMount() {
-    document.getElementById("compramercado").style.zIndex = this.props.zIndex;
-  }
   render() {
     return (
       <DraggableModal
-        show={this.props.show}
-        close={this.props.close}
         id={"compramercado"}
         headerTitle={this.props.headerTitle}
-        renderModalBody={() => modalBody()}
+        renderModalBody={() => modalBody(this.props)}
         headerClass="border-green"
         renderHeader={() =>
           modalHeader(this.props, this.props.headerTitle, "border-green")
@@ -30,21 +25,20 @@ class CompraMercado extends React.Component {
   }
 }
 
-const modalBody = () => (
+const modalBody = props => (
   <div className="mbody">
     <BodyHeaderCompraMercado />
     <Row>
       <FormInternoCompraMercado />
-      <GraficoCompraMercado />
+      <GraficoCompraMercado handleShow={props.handleShow} />
     </Row>
   </div>
 );
 
 const mapStateToProps = state => ({
-  zIndex: state.appReducer.zIndex
 });
 
 export default connect(
   mapStateToProps,
-  {abrirFormularioAction}
+  { abrirFormularioAction }
 )(CompraMercado);

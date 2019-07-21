@@ -10,17 +10,12 @@ import { modalHeader } from "../../utils/FormHeader";
 import { abrirFormularioAction } from "../../redux/actions/AppActions";
 
 class CompraLimitada extends React.Component {
-  componentDidMount() {
-    document.getElementById("compra_limitada").style.zIndex = this.props.zIndex;
-  }
   render() {
     return (
       <DraggableModal
-        show={this.props.show}
-        close={this.props.close}
         id={"compra_limitada"}
         headerTitle={this.props.headerTitle}
-        renderModalBody={() => modalBody()}
+        renderModalBody={() => modalBody(this.props)}
         headerClass="border-green"
         renderHeader={() =>
           modalHeader(this.props, this.props.headerTitle, "border-green")
@@ -30,19 +25,17 @@ class CompraLimitada extends React.Component {
   }
 }
 
-const modalBody = () => (
+const modalBody = props => (
   <div className="mbody">
     <BodyHeaderCompraLimitada />
     <Row>
       <FormInternoCompraLimitada />
-      <GraficoCompraLimitada />
+      <GraficoCompraLimitada handleShow={props.handleShow} />
     </Row>
   </div>
 );
 
-const mapStateToProps = state => ({
-  zIndex: state.appReducer.zIndex
-});
+const mapStateToProps = state => ({});
 
 export default connect(
   mapStateToProps,

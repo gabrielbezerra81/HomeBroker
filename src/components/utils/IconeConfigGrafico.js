@@ -2,7 +2,6 @@ import React from "react";
 import { MDBIcon } from "mdbreact";
 import { Button } from "react-bootstrap";
 import { connect } from "react-redux";
-import { abrirFormularioAction } from "../redux/actions/AppActions";
 
 class IconeConfigGrafico extends React.Component {
   render() {
@@ -15,7 +14,10 @@ class IconeConfigGrafico extends React.Component {
         <Button
           variant=""
           className="iconeConfiguracaoGrafico"
-          onClick={event=>this.props.abrirFormularioAction(event, this.props)}
+          onClick={event => {
+            event.stopPropagation();
+            this.props.handleShow(event);
+          }}
           name={this.props.name}
         >
           <MDBIcon icon="cog" size="2x" name={this.props.name} />
@@ -28,5 +30,5 @@ const mapStateToProps = state => ({});
 
 export default connect(
   mapStateToProps,
-  { abrirFormularioAction }
+  {}
 )(IconeConfigGrafico);

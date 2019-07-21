@@ -138,3 +138,12 @@ input[type="number"] {
 .react-draggable {
   position: absolute;
 }
+
+.posicao1 {
+  left: 605px;
+}
+
+.posicao2 {
+  left: 605px;
+  top: 580px;
+}

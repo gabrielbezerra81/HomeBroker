@@ -3,19 +3,12 @@ import Draggable from "react-draggable";
 import ConfigurarStop from "../forms/compra_StartStop/ConfigurarStop";
 import ConfigurarStopVenda from "../forms/venda/venda_StartStop/ConfigurarStopVenda";
 import { connect } from "react-redux";
-import { aumentarZindexAction } from "../redux/actions/AppActions";
 
 class BSModal extends Component {
   render() {
     return (
       <Draggable enableUserSelectHack={false} handle=".mheader">
-        <div
-          id={this.props.id}
-          className={this.props.classConfigAberto}
-          onClick={() =>
-            this.props.aumentarZindexAction(this.props.id, this.props.zIndex)
-          }
-        >
+        <div id={this.props.id} className={this.props.classConfigAberto}>
           <div className="mcontent">
             {this.props.renderHeader()}
             {this.props.renderModalBody()}
@@ -33,11 +26,9 @@ class BSModal extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  zIndex: state.appReducer.zIndex
-});
+const mapStateToProps = state => ({});
 
 export default connect(
   mapStateToProps,
-  { aumentarZindexAction }
+  {}
 )(BSModal);

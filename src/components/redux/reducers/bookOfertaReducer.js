@@ -12,7 +12,43 @@ const INITIAL_STATE = {
   erro: "",
   stopLoss: 0,
   gain: 0,
-  inputHeader: ""
+  inputHeader: "",
+  tabelaOfertasCompra: [
+    {
+      qtde: 9800,
+      valor: 26.7
+    },
+    {
+      qtde: 1000,
+      valor: 26.68
+    },
+    {
+      qtde: 10900,
+      valor: 26.66
+    },
+    {
+      qtde: 1000,
+      valor: 26.68
+    }
+  ],
+  tabelaOfertasVenda: [
+    {
+      qtde: 43300,
+      valor: 26.75
+    },
+    {
+      qtde: 9800,
+      valor: 26.74
+    },
+    {
+      qtde: 1000,
+      valor: 26.73
+    },
+    {
+      qtde: 10900,
+      valor: 26.72
+    }
+  ]
 };
 
 export default (state = INITIAL_STATE, action) => {

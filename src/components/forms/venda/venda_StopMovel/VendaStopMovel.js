@@ -16,8 +16,6 @@ class VendaStopMovel extends React.Component {
   render() {
     return (
       <DraggableModal
-        show={this.props.show}
-        close={this.props.close}
         id="vendastopmovel"
         headerTitle={this.props.headerTitle}
         renderModalBody={() => modalBody()}
@@ -41,7 +39,6 @@ const modalBody = () => (
 );
 
 const mapStateToProps = state => ({
-  zIndex: state.appReducer.zIndex
 });
 
 export default connect(

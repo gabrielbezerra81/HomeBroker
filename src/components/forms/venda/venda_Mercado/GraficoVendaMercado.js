@@ -87,8 +87,8 @@ class GraficoVendaMercado extends React.Component {
           {TextoCotacaoAtualGrafico("TextoCotacaoAtualGrafico_VA")}
           {TextoValorTotalGrafico("", CalculoValorTotalAgendada(this.props.stopDisparo, this.props.stopExec,this.props.qtde), "ValorTotalGain_Venda")}
           {TextoValorTotalGrafico("", CalculoValorTotalAgendada(this.props.gainDisparo, this.props.gainExec,this.props.qtde), "ValorTotalStop_Venda")}
-          <IconeConfigGrafico id="ConfigGainGrafico_VA" />
-          <IconeConfigGrafico id="ConfigStopGrafico_VA" />
+          <IconeConfigGrafico id="ConfigGainGrafico_VA" name="compra_gainreducao" handleShow={this.props.handleShow}/>
+          <IconeConfigGrafico id="ConfigStopGrafico_VA" name="venda_stop_movel" handleShow={this.props.handleShow}/>
         </div>
       </Col>
     );

@@ -16,10 +16,8 @@ class VendaAgendada extends React.Component {
   render() {
     return (
       <DraggableModal
-        show={this.props.show}
-        close={this.props.close}
         id="vendaagendada"
-        renderModalBody={() => modalBody()}
+        renderModalBody={() => modalBody(this.props)}
         renderHeader={() =>
           modalHeader(this.props, this.props.headerTitle, "border-green")
         }
@@ -28,18 +26,17 @@ class VendaAgendada extends React.Component {
   }
 }
 
-const modalBody = () => (
+const modalBody = (props) => (
   <div className="mbody">
     <BodyHeaderVendaAgendada />
     <Row>
       <FormInternoVendaAgendada />
-      <GraficoVendaAgendada />
+      <GraficoVendaAgendada handleShow={props.handleShow}/>
     </Row>
   </div>
 );
 
 const mapStateToProps = state => ({
-  zIndex: state.appReducer.zIndex
 });
 
 export default connect(
