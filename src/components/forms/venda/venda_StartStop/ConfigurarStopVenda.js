@@ -66,12 +66,12 @@ const modalBody = props => (
     {TextoGainStopGrafico("LOSS", "TextoStop_CONFIGURAR_VENDA")}
     {TextoValorTotalGrafico(
       "TOTAL",
-      CalculoValorTotalAgendada(props.stopDisparo, props.stopExec, props.qtde),
+      CalculoValorTotalAgendada(props.stopDisparoConfig1, props.stopExecConfig1, props.qtde),
       "ValorTotalStop1_CONFIGURAR_VENDA"
     )}
     {TextoValorTotalGrafico(
       "TOTAL",
-      CalculoValorTotalAgendada(props.gainDisparo, props.gainExec, props.qtde),
+      CalculoValorTotalAgendada(props.gainDisparoConfig1, props.gainExecConfig1, props.qtde),
       "ValorTotalGain1_CONFIGURAR_VENDA"
     )}
     <IconeConfigGrafico id="ConfigGain1Grafico_CONFIGURAR_VENDA" />
@@ -86,12 +86,12 @@ const modalBody = props => (
     {TextoGainStopGrafico("LOSS", "TextoStop2_CONFIGURAR_VENDA")}
     {TextoValorTotalGrafico(
       "TOTAL",
-      CalculoValorTotalAgendada(props.stopDisparo, props.stopExec, props.qtde),
+      CalculoValorTotalAgendada(props.stopDisparoConfig2, props.stopExecConfig2, props.qtde),
       "ValorTotalStop2_CONFIGURAR_VENDA"
     )}
     {TextoValorTotalGrafico(
       "TOTAL",
-      CalculoValorTotalAgendada(props.gainDisparo, props.gainExec, props.qtde),
+      CalculoValorTotalAgendada(props.gainDisparoConfig2, props.gainExecConfig2, props.qtde),
       "ValorTotalGain2_CONFIGURAR_VENDA"
     )}
     <Form>
@@ -188,7 +188,7 @@ const modalBody = props => (
 );
 
 const mapStateToProps = state => ({
-  qtde: state.bookOfertaReducer.qtde,
+  qtde: state.vendaStartStopReducer.qtde,
   gainDisparoConfig1: state.vendaStartStopReducer.gainDisparoConfig1,
   gainExecConfig1: state.vendaStartStopReducer.gainExecConfig1,
   stopDisparoConfig1: state.vendaStartStopReducer.stopDisparoConfig1,

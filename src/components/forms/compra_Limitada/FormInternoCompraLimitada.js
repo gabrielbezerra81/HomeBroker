@@ -83,13 +83,11 @@ class FormInternoCompraLimitada extends React.Component {
               <Col className="colTextInput">
                 <Form.Group>
                   <Form.Label />
-                  <NumberFormat
-                    className="textInput form-control"
-                    thousandSeparator=","
-                    decimalSeparator="."
-                    allowNegative={false}
-                    maxLength={300}
-                    name="disparo"
+                  <Form.Control
+                    className="textInput"
+                    type="number"
+                    step={0.01}
+                    name="preco"
                     value={this.props.preco}
                     onChange={event =>
                       this.props.mudarPrecoAction(
@@ -98,6 +96,7 @@ class FormInternoCompraLimitada extends React.Component {
                       )
                     }
                   />
+            
                 </Form.Group>
               </Col>
               <Col md={5} className="colValorTotal_CL">

@@ -269,7 +269,6 @@ class FormInternoCompraAgendada extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  qtde: state.compraAgendadaReducer.qtde,
   erro: state.compraAgendadaReducer.erro,
   gainDisparo: state.compraAgendadaReducer.gainDisparo,
   gainExec: state.compraAgendadaReducer.gainExec,
@@ -282,7 +281,8 @@ const mapStateToProps = state => ({
   entradaExec: state.compraAgendadaReducer.entradaExec,
   ativo: state.compraAgendadaReducer.ativo,
   assinatura: state.compraAgendadaReducer.assinatura,
-  checkSalvarAssinatura: state.compraAgendadaReducer.checkSalvarAssinatura
+  checkSalvarAssinatura: state.compraAgendadaReducer.checkSalvarAssinatura,
+  qtde: state.compraAgendadaReducer.qtde
 });
 
 export default connect(

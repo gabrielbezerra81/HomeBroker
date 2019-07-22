@@ -139,7 +139,7 @@ export default namespace => (state = INITIAL_STATE, action) => {
       return { ...state, tabelaOrdens: action.payload };
     case `${MUDAR_INPUT_CONFIGURAR}${namespace}`:
       return { ...state, [action.name]: formatarNumero(action.payload) };
-    case `${MUDAR_QTDE}${namespace}`:
+    case `a${MUDAR_QTDE}${namespace}`:
       return { ...state, qtde: action.payload.qtde, erro: action.payload.erro };
     default:
       return state;
@@ -147,31 +147,27 @@ export default namespace => (state = INITIAL_STATE, action) => {
 };
 
 export const formatarNumero = value => {
-  console.log("valor antes", value);
   value = value.split(".");
-  console.log("valor split", value);
   if (value[1] && value[1].length === 1) {
     //value[1] = value[1] * 10;
   }
   value = value.join("");
-
 
   if (value.length > 2) {
     value =
       value.substring(0, value.length - 2) +
       "." +
       value.substring(value.length - 2, value.length);
-      return value;
+    return value;
   }
   if (value.length > 1) {
     value =
       value.substring(0, value.length - 1) +
       "." +
       value.substring(value.length - 1, value.length);
-      return value;
+    return value;
   }
 
-  console.log("valor retornado", value);
   return value;
 };
 

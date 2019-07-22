@@ -4,7 +4,6 @@ import {
   AUMENTAR_ZINDEX,
   RECEBER_APPKEYLOCAL
 } from "../../../constants/ActionTypes";
-import { formatarNumero } from "./formInputReducer";
 
 const INITIAL_STATE = {
   config_compra: false,

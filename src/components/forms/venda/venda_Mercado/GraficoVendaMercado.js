@@ -101,7 +101,7 @@ const mapStateToProps = state => ({
   stopDisparo: state.vendaMercadoReducer.stopDisparo,
   stopExec: state.vendaMercadoReducer.stopExec,
   cotacaoAtual: state.vendaMercadoReducer.cotacaoAtual,
-  qtde: state.bookOfertaReducer.qtde
+  qtde: state.vendaMercadoReducer.qtde
 });
 
 export default connect(
