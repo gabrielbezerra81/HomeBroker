@@ -94,7 +94,7 @@ class FormInternoCompraGainReducao extends React.Component {
               </Col>
               <Col md={1} className="colIconeConfig">
                 <Button
-                  variant=""
+                  variant="link"
                   className="operation-icons"
                   onClick={() =>
                     this.props.adicionarItemTabelaGainReducaoAction(

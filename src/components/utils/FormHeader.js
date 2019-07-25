@@ -7,7 +7,7 @@ export const modalHeader = (props, headerTitle, headerClass) => (
     <h6 className="mtitle">{headerTitle}</h6>
     <div className="wrapperIconesHeader" name="book">
       <Button
-        variant=""
+        variant="link"
         className="iconesHeader"
         onClick={event => {
           event.stopPropagation();
@@ -18,11 +18,11 @@ export const modalHeader = (props, headerTitle, headerClass) => (
         <MDBIcon icon="book" size="2x" name="book" />
       </Button>
 
-      <Button variant="" className="iconesHeader">
+      <Button variant="link" className="iconesHeader">
         <MDBIcon icon="cog" size="2x" />
       </Button>
 
-      <Button variant="" className="iconesHeader" onClick={props.close}>
+      <Button variant="link" className="iconesHeader" onClick={props.close}>
         <span className="fa-stack">
           <MDBIcon icon="circle" className="fa-stack-2x" />
           <MDBIcon
@@ -55,7 +55,7 @@ export const bookHeader = (props, headerClass) => (
         </Form>
       </Col>
       <Col md={2} className="wrapperIconesHeader">
-        <Button variant="" className="iconesHeader" onClick={props.close}>
+        <Button variant="link" className="iconesHeader" onClick={props.close}>
           <span className="fa-stack">
             <MDBIcon icon="circle" className="fa-stack-2x" />
             <MDBIcon

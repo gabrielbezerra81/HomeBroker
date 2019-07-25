@@ -115,7 +115,7 @@ class FormInternoVendaStartStop extends React.Component {
                 </Form.Group>
               </Col>
               <Col md={1} className="colIconeConfig">
-                <Button variant="" className="operation-icons">
+                <Button variant="link" className="operation-icons">
                   <MDBIcon
                     icon="cog"
                     size="2x"
@@ -165,7 +165,7 @@ class FormInternoVendaStartStop extends React.Component {
                 </Form.Group>
               </Col>
               <Col md={1} className="colIconeConfig">
-                <Button variant="" className="operation-icons">
+                <Button variant="link" className="operation-icons">
                   <MDBIcon
                     icon="cog"
                     size="2x"

@@ -38,7 +38,7 @@ class ConfigurarStopVenda extends React.Component {
 const modalHeader = props => (
   <div className="wrapperIconesHeader">
     <Button
-      variant=""
+      variant="link"
       className="iconesHeader"
       onClick={event => props.fecharFormularioAction(event)}
       name="config_venda"

@@ -188,7 +188,7 @@ class FormInternoCompraStartMovel extends React.Component {
               </Col>
               <Col md={1} className="colIconeConfig">
                 <Button
-                  variant=""
+                  variant="link"
                   onClick={() =>
                     this.props.adicionarItemTabelaStartMovel(
                       this.props,

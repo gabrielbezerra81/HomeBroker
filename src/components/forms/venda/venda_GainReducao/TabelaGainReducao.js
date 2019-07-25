@@ -26,7 +26,7 @@ class TabelaGainReducao extends React.Component {
           <td>{Number(item.total).toFixed(2)}</td>
           <td>
             <Button
-              variant=""
+              variant="link"
               onClick={() =>
                 this.props.removerItemTabelaAction(
                   REMOVE_ITEM_TABELA_GAIN_REDUCAO,

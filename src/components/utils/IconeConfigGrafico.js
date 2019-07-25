@@ -1,7 +1,6 @@
 import React from "react";
 import { MDBIcon } from "mdbreact";
 import { Button } from "react-bootstrap";
-import { connect } from "react-redux";
 
 class IconeConfigGrafico extends React.Component {
   render() {
@@ -9,10 +8,9 @@ class IconeConfigGrafico extends React.Component {
       <div
         id={this.props.id}
         className="wrapperIconeConfiguracaoGrafico"
-        name={this.props.name}
       >
         <Button
-          variant=""
+          variant="link"
           className="iconeConfiguracaoGrafico"
           onClick={event => {
             event.stopPropagation();
@@ -26,9 +24,5 @@ class IconeConfigGrafico extends React.Component {
     );
   }
 }
-const mapStateToProps = state => ({});
 
-export default connect(
-  mapStateToProps,
-  {}
-)(IconeConfigGrafico);
+export default IconeConfigGrafico;

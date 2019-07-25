@@ -5,12 +5,12 @@ import { MDBIcon } from "mdbreact";
 export default () => (
   <Row className="operacoes justify-content-md-center">
     <Col>
-      <Button variant="" className="operation-icons">
+      <Button variant="link" className="operation-icons">
         <MDBIcon icon="chevron-down" />
       </Button>
     </Col>
     <Col>
-      <Button variant="" className="operation-icons">
+      <Button variant="link" className="operation-icons">
         <MDBIcon icon="chevron-up" />
       </Button>
     </Col>

@@ -1,4 +1,5 @@
 import React from "react";
+// @ts-ignore
 import configurarStop from "img/compra/configurarStop.PNG";
 import { connect } from "react-redux";
 import { Button, Form } from "react-bootstrap";
@@ -37,7 +38,7 @@ class ConfigurarStop extends React.Component {
 const modalHeader = props => (
   <div className="wrapperIconesHeader">
     <Button
-      variant=""
+      variant="link"
       className="iconesHeader"
       onClick={event => props.fecharFormularioAction(event)}
       name="config_compra"

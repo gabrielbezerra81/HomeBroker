@@ -19,7 +19,7 @@ class TabelaOrdens extends React.Component {
         <td>{Number(item.novoStop).toFixed(2)}</td>
         <td>
           <Button
-            variant=""
+            variant="link"
             onClick={() =>
               this.props.removerItemTabelaAction(
                 REMOVE_ITEM_TABELA_ORDENS_MOVEL,
