@@ -5,7 +5,7 @@ import {
   ATUALIZAR_SHOW,
   ATUALIZAR_DIVKEY,
   FECHAR_FORM
-} from "../../../constants/ActionTypes";
+} from "constants/ActionTypes";
 import React from "react";
 import { SubAppConectado } from "../../../MainApp";
 

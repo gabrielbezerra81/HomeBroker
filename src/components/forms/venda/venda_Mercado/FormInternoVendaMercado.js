@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import { connect } from "react-redux";
-import { mostrarErroQtdeOnBlurAction } from "../../../redux/actions/bookOfertaActions";
+import { mostrarErroQtdeOnBlurAction } from "components/redux/actions/bookOfertaActions";
 import {
   mudarQtdAction,
   mudarGainDisparoAction,
@@ -15,11 +15,11 @@ import {
   mudarAtivoAction,
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction
-} from "../../../redux/actions/formInputActions";
-import RowFormValidade from "../../../utils/RowFormValidade";
-import RowFormAssinatura from "../../../utils/RowFormAssinatura";
-import { VENDA_MERCADO_NAMESPACE } from "../../../../constants/ActionTypes";
-import { CalculoValorAproximadoMercado } from "../../../utils/CalculoValorTotal";
+} from "components/redux/actions/formInputActions";
+import RowFormValidade from "components/utils/RowFormValidade";
+import RowFormAssinatura from "components/utils/RowFormAssinatura";
+import { VENDA_MERCADO_NAMESPACE } from "constants/ActionTypes";
+import { CalculoValorAproximadoMercado } from "components/utils/CalculoValorTotal";
 
 class FormInternoVendaMercado extends React.Component {
   render() {

@@ -10,15 +10,15 @@ import {
   mudarDisparoMaisAjusteAction,
   mudarStopMaisPrimeiroAjusteAction,
   mudarStopAnteriorAjusteAction
-} from "../../../redux/actions/formInputActions";
-import img from "../../../../img/venda/VendaStopMovel.png";
+} from "components/redux/actions/formInputActions";
+import img from "img/venda/VendaStopMovel.png";
 import {
   LabelInputGrafico,
   TextoGainStopGrafico,
   TextoCotacaoAtualGrafico,
   TextoMenorGrafico
-} from "../../../utils/TextoGrafico";
-import { VENDA_STOPMOVEL_NAMESPACE } from "../../../../constants/ActionTypes";
+} from "components/utils/TextoGrafico";
+import { VENDA_STOPMOVEL_NAMESPACE } from "constants/ActionTypes";
 
 class GraficoVendaStopMovel extends React.Component {
   render() {

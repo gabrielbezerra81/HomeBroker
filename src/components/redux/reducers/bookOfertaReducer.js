@@ -4,7 +4,7 @@ import {
   MUDAR_GAIN_BOOK,
   MUDAR_INPUTHEADER_BOOK,
   LIMPAR_FORMS
-} from "../../../constants/ActionTypes";
+} from "constants/ActionTypes";
 import { formatarNumero } from "./formInputReducer";
 
 const INITIAL_STATE = {

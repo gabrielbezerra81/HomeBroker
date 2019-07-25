@@ -5,13 +5,13 @@ import {
   mudarReducao1Action,
   mudarReducao2Action,
   mudarGainAction
-} from "../../../redux/actions/formInputActions";
-import img from "../../../../img/venda/VendaGainReducao.png";
+} from "components/redux/actions/formInputActions";
+import img from "img/venda/VendaGainReducao.png";
 import {
   TextoGainStopGrafico,
   TextoCotacaoAtualGrafico
-} from "../../../utils/TextoGrafico";
-import { VENDA_GAINREDUCAO_NAMESPACE } from "../../../../constants/ActionTypes";
+} from "components/utils/TextoGrafico";
+import { VENDA_GAINREDUCAO_NAMESPACE } from "constants/ActionTypes";
 
 class GraficoVendaGainReducao extends React.Component {
   render() {
@@ -53,10 +53,7 @@ class GraficoVendaGainReducao extends React.Component {
               className="inputGrafico TamanhoInputGrafico_GainReducao"
               value={this.props.gain}
               onChange={event =>
-                this.props.mudarGainAction(
-                  event,
-                  VENDA_GAINREDUCAO_NAMESPACE
-                )
+                this.props.mudarGainAction(event, VENDA_GAINREDUCAO_NAMESPACE)
               }
             />
             <Form.Control

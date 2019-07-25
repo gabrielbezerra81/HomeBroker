@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import {BodyHeaderCompleto} from "../../../utils/BodyHeader";
+import { BodyHeaderCompleto } from "components/utils/BodyHeader";
 
 class BodyHeaderVendaAgendada extends React.Component {
   render() {

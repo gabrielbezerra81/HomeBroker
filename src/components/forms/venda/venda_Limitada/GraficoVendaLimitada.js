@@ -6,17 +6,17 @@ import {
   mudarGainExecAction,
   mudarStopDisparoAction,
   mudarStopExecAction
-} from "../../../redux/actions/formInputActions";
-import img from "../../../../img/venda/VendaAgendada.png";
-import IconeConfigGrafico from "../../../utils/IconeConfigGrafico";
+} from "components/redux/actions/formInputActions";
+import img from "img/venda/VendaAgendada.png";
+import IconeConfigGrafico from "components/utils/IconeConfigGrafico";
 import {
   LabelInputGrafico,
   TextoGainStopGrafico,
   TextoCotacaoAtualGrafico,
   TextoValorTotalGrafico
-} from "../../../utils/TextoGrafico";
-import { VENDA_LIMITADA_NAMESPACE } from "../../../../constants/ActionTypes";
-import { CalculoValorTotalAgendada } from "../../../utils/CalculoValorTotal";
+} from "components/utils/TextoGrafico";
+import { VENDA_LIMITADA_NAMESPACE } from "constants/ActionTypes";
+import { CalculoValorTotalAgendada } from "components/utils/CalculoValorTotal";
 
 class GraficoVendaLimitada extends React.Component {
   render() {
@@ -85,10 +85,34 @@ class GraficoVendaLimitada extends React.Component {
           {TextoGainStopGrafico("GAIN", "TextoGain_VA")}
           {TextoGainStopGrafico("STOP", "TextoStop_VA")}
           {TextoCotacaoAtualGrafico("TextoCotacaoAtualGrafico_VA")}
-          {TextoValorTotalGrafico("", CalculoValorTotalAgendada(this.props.stopDisparo, this.props.stopExec,this.props.qtde), "ValorTotalGain_Venda")}
-          {TextoValorTotalGrafico("", CalculoValorTotalAgendada(this.props.gainDisparo, this.props.gainExec,this.props.qtde), "ValorTotalStop_Venda")}
-          <IconeConfigGrafico id="ConfigGainGrafico_VA" handleShow={this.props.handleShow} name="compra_gainreducao"/>
-          <IconeConfigGrafico id="ConfigStopGrafico_VA" handleShow={this.props.handleShow} name="venda_stop_movel"/>
+          {TextoValorTotalGrafico(
+            "",
+            CalculoValorTotalAgendada(
+              this.props.stopDisparo,
+              this.props.stopExec,
+              this.props.qtde
+            ),
+            "ValorTotalGain_Venda"
+          )}
+          {TextoValorTotalGrafico(
+            "",
+            CalculoValorTotalAgendada(
+              this.props.gainDisparo,
+              this.props.gainExec,
+              this.props.qtde
+            ),
+            "ValorTotalStop_Venda"
+          )}
+          <IconeConfigGrafico
+            id="ConfigGainGrafico_VA"
+            handleShow={this.props.handleShow}
+            name="compra_gainreducao"
+          />
+          <IconeConfigGrafico
+            id="ConfigStopGrafico_VA"
+            handleShow={this.props.handleShow}
+            name="venda_stop_movel"
+          />
         </div>
       </Col>
     );

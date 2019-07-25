@@ -30,7 +30,7 @@ import {
   REMOVE_ITEM_TABELA_ORDENS_MOVEL,
   MUDAR_INPUT_CONFIGURAR,
   MUDAR_QTDE
-} from "../../../constants/ActionTypes";
+} from "constants/ActionTypes";
 
 const INITIAL_STATE = {
   resultadoAtivo: "PETR4, PETROBRAS",

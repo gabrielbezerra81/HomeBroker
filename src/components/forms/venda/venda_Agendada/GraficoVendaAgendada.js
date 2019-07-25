@@ -6,17 +6,17 @@ import {
   mudarGainExecAction,
   mudarStopDisparoAction,
   mudarStopExecAction
-} from "../../../redux/actions/formInputActions";
-import img from "../../../../img/venda/VendaAgendada.png";
-import IconeConfigGrafico from "../../../utils/IconeConfigGrafico";
+} from "components/redux/actions/formInputActions";
+import img from "img/venda/VendaAgendada.png";
+import IconeConfigGrafico from "components/utils/IconeConfigGrafico";
 import {
   LabelInputGrafico,
   TextoGainStopGrafico,
   TextoCotacaoAtualGrafico,
   TextoValorTotalGrafico
-} from "../../../utils/TextoGrafico";
-import { VENDA_AGENDADA_NAMESPACE } from "../../../../constants/ActionTypes";
-import { CalculoValorTotalAgendada } from "../../../utils/CalculoValorTotal";
+} from "components/utils/TextoGrafico";
+import { VENDA_AGENDADA_NAMESPACE } from "constants/ActionTypes";
+import { CalculoValorTotalAgendada } from "components/utils/CalculoValorTotal";
 
 class GraficoVendaAgendada extends React.Component {
   render() {
@@ -103,8 +103,16 @@ class GraficoVendaAgendada extends React.Component {
             ),
             "ValorTotalStop_Venda"
           )}
-          <IconeConfigGrafico id="ConfigGainGrafico_VA" name="venda_gainreducao" handleShow={this.props.handleShow}/>
-          <IconeConfigGrafico id="ConfigStopGrafico_VA" name="venda_stop_movel" handleShow={this.props.handleShow}/>
+          <IconeConfigGrafico
+            id="ConfigGainGrafico_VA"
+            name="venda_gainreducao"
+            handleShow={this.props.handleShow}
+          />
+          <IconeConfigGrafico
+            id="ConfigStopGrafico_VA"
+            name="venda_stop_movel"
+            handleShow={this.props.handleShow}
+          />
         </div>
       </Col>
     );

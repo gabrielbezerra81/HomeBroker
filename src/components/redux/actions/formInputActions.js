@@ -32,9 +32,9 @@ import {
   COMPRA_GAINREDUCAO_NAMESPACE,
   MUDAR_INPUT_CONFIGURAR,
   MUDAR_QTDE
-} from "../../../constants/ActionTypes";
-import { validacaoCompraAgenda } from "../../utils/Validacoes";
-import { VALIDACAO_QTDE } from "../../../constants/Erros";
+} from "constants/ActionTypes";
+import { validacaoCompraAgenda } from "components/utils/Validacoes";
+import { VALIDACAO_QTDE } from "constants/Erros";
 
 export const mudarGainDisparoAction = (event, namespace) => {
   return dispatch => {

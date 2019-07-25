@@ -3,7 +3,7 @@ import {
   FECHAR_FORMULARIO,
   AUMENTAR_ZINDEX,
   RECEBER_APPKEYLOCAL
-} from "../../../constants/ActionTypes";
+} from "constants/ActionTypes";
 
 //Usado apenas na store local de cada sub-app para abrir os forms de configuração de start/stop movel
 export const abrirFormularioAction = (event, props) => {
@@ -38,7 +38,6 @@ export const aumentarZindex = (zIndex, dispatch) => {
 };
 
 export const receberAppPropsAction = appProps => {
-
   return dispatch => {
     dispatch({ type: RECEBER_APPKEYLOCAL, payload: appProps });
   };

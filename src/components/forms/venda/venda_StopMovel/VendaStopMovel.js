@@ -2,12 +2,12 @@ import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import { Row } from "react-bootstrap";
-import DraggableModal from "../../../utils/DraggableModal";
+import DraggableModal from "components/utils/DraggableModal";
 import FormInternoVendaStopMovel from "./FormInternoVendaStopMovel";
 import GraficoVendaStopMovel from "./GraficoVendaStopMovel";
 import BodyHeaderVendaStopMovel from "./BodyHeaderVendaStopMovel";
-import { modalHeader } from "../../../utils/FormHeader";
-import { abrirFormularioAction } from "../../../redux/actions/AppActions";
+import { modalHeader } from "components/utils/FormHeader";
+import { abrirFormularioAction } from "components/redux/actions/AppActions";
 
 class VendaStopMovel extends React.Component {
   componentDidMount() {
@@ -38,8 +38,7 @@ const modalBody = () => (
   </div>
 );
 
-const mapStateToProps = state => ({
-});
+const mapStateToProps = state => ({});
 
 export default connect(
   mapStateToProps,

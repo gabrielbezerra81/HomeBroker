@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import { connect } from "react-redux";
-import { mostrarErroQtdeOnBlurAction } from "../../../redux/actions/bookOfertaActions";
+import { mostrarErroQtdeOnBlurAction } from "components/redux/actions/bookOfertaActions";
 import {
   mudarQtdAction,
   mudarGainDisparoAction,
@@ -16,12 +16,11 @@ import {
   mudarAssinaturaAction,
   mudarPrecoAction,
   mudarCheckSalvarAssinaturaAction
-} from "../../../redux/actions/formInputActions";
-import NumberFormat from "react-number-format";
-import RowFormValidade from "../../../utils/RowFormValidade";
-import RowFormAssinatura from "../../../utils/RowFormAssinatura";
-import { VENDA_LIMITADA_NAMESPACE } from "../../../../constants/ActionTypes";
-import { CalculoValorTotalLimitada } from "../../../utils/CalculoValorTotal";
+} from "components/redux/actions/formInputActions";
+import RowFormValidade from "components/utils/RowFormValidade";
+import RowFormAssinatura from "components/utils/RowFormAssinatura";
+import { VENDA_LIMITADA_NAMESPACE } from "constants/ActionTypes";
+import { CalculoValorTotalLimitada } from "components/utils/CalculoValorTotal";
 
 class FormInternoVendaLimitada extends React.Component {
   render() {

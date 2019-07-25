@@ -6,18 +6,18 @@ import {
   mudarGainExecAction,
   mudarStopDisparoAction,
   mudarStopExecAction
-} from "../../../redux/actions/formInputActions";
-import IconeConfigGrafico from "../../../utils/IconeConfigGrafico";
-import graficoCompraStartStop from "../../../../img/venda/VendaAgendada.png";
+} from "components/redux/actions/formInputActions";
+import IconeConfigGrafico from "components/utils/IconeConfigGrafico";
+import graficoCompraStartStop from "img/venda/VendaAgendada.png";
 import {
   LabelInputGrafico,
   TextoValorTotalGrafico,
   TextoGainStopGrafico,
   TextoCotacaoAtualGrafico
-} from "../../../utils/TextoGrafico";
-import { VENDA_STARTSTOP_NAMESPACE } from "../../../../constants/ActionTypes";
-import { CalculoValorTotalAgendada } from "../../../utils/CalculoValorTotal";
-import { abrirFormularioAction } from "../../../redux/actions/AppActions";
+} from "components/utils/TextoGrafico";
+import { VENDA_STARTSTOP_NAMESPACE } from "constants/ActionTypes";
+import { CalculoValorTotalAgendada } from "components/utils/CalculoValorTotal";
+import { abrirFormularioAction } from "components/redux/actions/AppActions";
 
 class GraficoVendaStartStop extends React.Component {
   render() {
@@ -79,12 +79,20 @@ class GraficoVendaStartStop extends React.Component {
               onChange={() => false}
             />
           </Form>
-          <IconeConfigGrafico id="ConfigGainGrafico_VA" name="config_venda" handleShow={event => {
+          <IconeConfigGrafico
+            id="ConfigGainGrafico_VA"
+            name="config_venda"
+            handleShow={event => {
               this.props.abrirFormularioAction(event, this.props);
-            }}/>
-          <IconeConfigGrafico id="ConfigStopGrafico_VA" name="config_venda" handleShow={event => {
+            }}
+          />
+          <IconeConfigGrafico
+            id="ConfigStopGrafico_VA"
+            name="config_venda"
+            handleShow={event => {
               this.props.abrirFormularioAction(event, this.props);
-            }}/>
+            }}
+          />
           {LabelInputGrafico("Disparo", "TextoGainDisparo_VA")}
           {LabelInputGrafico("Execução", "TextoGainExecucao_VA")}
           {LabelInputGrafico("Disparo", "TextoStopDisparo_VA")}

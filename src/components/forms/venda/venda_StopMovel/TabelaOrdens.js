@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 import {
   VENDA_STOPMOVEL_NAMESPACE,
   REMOVE_ITEM_TABELA_ORDENS_MOVEL
-} from "../../../../constants/ActionTypes";
-import { removerItemTabelaAction } from "../../../redux/actions/formInputActions";
+} from "constants/ActionTypes";
+import { removerItemTabelaAction } from "components/redux/actions/formInputActions";
 
 class TabelaOrdens extends React.Component {
   renderItems(tableData) {
@@ -65,5 +65,5 @@ const mapStateToProps = state => ({});
 
 export default connect(
   mapStateToProps,
-  {removerItemTabelaAction}
+  { removerItemTabelaAction }
 )(TabelaOrdens);

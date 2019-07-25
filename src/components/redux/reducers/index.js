@@ -14,7 +14,7 @@ import {
   VENDA_STARTSTOP_NAMESPACE,
   VENDA_STOPMOVEL_NAMESPACE,
   VENDA_GAINREDUCAO_NAMESPACE
-} from "../../../constants/ActionTypes";
+} from "constants/ActionTypes";
 import appReducer from "./appReducer";
 
 export default combineReducers({

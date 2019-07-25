@@ -3,7 +3,7 @@ import {
   FECHAR_FORMULARIO,
   AUMENTAR_ZINDEX,
   RECEBER_APPKEYLOCAL
-} from "../../../constants/ActionTypes";
+} from "constants/ActionTypes";
 
 const INITIAL_STATE = {
   config_compra: false,

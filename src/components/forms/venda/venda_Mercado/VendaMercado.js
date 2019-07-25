@@ -2,12 +2,12 @@ import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import { Row } from "react-bootstrap";
-import DraggableModal from "../../../utils/DraggableModal";
+import DraggableModal from "components/utils/DraggableModal";
 import FormInternoVendaMercado from "./FormInternoVendaMercado";
 import GraficoVendaMercado from "./GraficoVendaMercado";
 import BodyHeaderVendaMercado from "./BodyHeaderVendaMercado";
-import { modalHeader } from "../../../utils/FormHeader";
-import { abrirFormularioAction } from "../../../redux/actions/AppActions";
+import { modalHeader } from "components/utils/FormHeader";
+import { abrirFormularioAction } from "components/redux/actions/AppActions";
 
 class VendaMercado extends React.Component {
   componentDidMount() {
@@ -28,18 +28,17 @@ class VendaMercado extends React.Component {
   }
 }
 
-const modalBody = (props) => (
+const modalBody = props => (
   <div className="mbody">
     <BodyHeaderVendaMercado />
     <Row>
       <FormInternoVendaMercado />
-      <GraficoVendaMercado handleShow={props.handleShow}/>
+      <GraficoVendaMercado handleShow={props.handleShow} />
     </Row>
   </div>
 );
 
-const mapStateToProps = state => ({
-});
+const mapStateToProps = state => ({});
 
 export default connect(
   mapStateToProps,

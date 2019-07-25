@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
 import { MDBIcon } from "mdbreact";
-import { mostrarErroQtdeOnBlurAction } from "../../../redux/actions/bookOfertaActions";
+import { mostrarErroQtdeOnBlurAction } from "components/redux/actions/bookOfertaActions";
 import {
   mudarQtdAction,
   mudarStopDisparoAction,
@@ -17,11 +17,11 @@ import {
   limparAction,
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction
-} from "../../../redux/actions/formInputActions";
-import { VENDA_STOPMOVEL_NAMESPACE } from "../../../../constants/ActionTypes";
+} from "components/redux/actions/formInputActions";
+import { VENDA_STOPMOVEL_NAMESPACE } from "constants/ActionTypes";
 import TabelaOrdens from "./TabelaOrdens";
-import RowFormValidade from "../../../utils/RowFormValidade";
-import RowFormAssinatura from "../../../utils/RowFormAssinatura";
+import RowFormValidade from "components/utils/RowFormValidade";
+import RowFormAssinatura from "components/utils/RowFormAssinatura";
 
 class FormInternoVendaStopMovel extends React.Component {
   render() {

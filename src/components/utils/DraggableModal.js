@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Draggable from "react-draggable";
-import ConfigurarStop from "../forms/compra_StartStop/ConfigurarStop";
-import ConfigurarStopVenda from "../forms/venda/venda_StartStop/ConfigurarStopVenda";
+import ConfigurarStop from "components/forms/compra/compra_StartStop/ConfigurarStop";
+import ConfigurarStopVenda from "components/forms/venda/venda_StartStop/ConfigurarStopVenda";
 import { connect } from "react-redux";
 
 class BSModal extends Component {

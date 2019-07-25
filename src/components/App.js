@@ -1,19 +1,19 @@
 import React from "react";
+import { Row } from "react-bootstrap";
 import "../css";
 import BookOfertas from "./forms/book_Ofertas/BookOfertas";
-import CompraAgendada from "./forms/compra_Agendada/CompraAgendada";
-import CompraLimitada from "./forms/compra_Limitada/CompraLimitada";
-import CompraMercado from "./forms/compra_Mercado/CompraMercado";
-import CompraStartStop from "./forms/compra_StartStop/CompraStartStop";
-import CompraStartMovel from "./forms/compra_StartMovel/CompraStartMovel";
-import CompraGainReducao from "./forms/compra_GainReducao/CompraGainReducao";
+import CompraAgendada from "components/forms/compra/compra_Agendada/CompraAgendada";
+import CompraLimitada from "components/forms/compra/compra_Limitada/CompraLimitada";
+import CompraMercado from "components/forms/compra/compra_Mercado/CompraMercado";
+import CompraStartStop from "components/forms/compra/compra_StartStop/CompraStartStop";
+import CompraStartMovel from "components/forms/compra/compra_StartMovel/CompraStartMovel";
+import CompraGainReducao from "components/forms/compra/compra_GainReducao/CompraGainReducao";
 import VendaAgendada from "./forms/venda/venda_Agendada/VendaAgendada";
 import VendaLimitada from "./forms/venda/venda_Limitada/VendaLimitada";
 import VendaMercado from "./forms/venda/venda_Mercado/VendaMercado";
 import VendaStartStop from "./forms/venda/venda_StartStop/VendaStartStop";
 import VendaStopMovel from "./forms/venda/venda_StopMovel/VendaStopMovel";
 import VendaGainReducao from "./forms/venda/venda_GainReducao/VendaGainReducao";
-import { Row } from "react-bootstrap";
 
 export default class App extends React.Component {
   componentDidUpdate() {

@@ -1,10 +1,10 @@
-import { VALIDACAO_QTDE } from "../../../constants/Erros";
+import { VALIDACAO_QTDE } from "constants/Erros";
 import {
   MUDAR_QTDE_BOOK,
   MUDAR_STOPLOSS_BOOK,
   MUDAR_GAIN_BOOK,
   MUDAR_INPUTHEADER_BOOK
-} from "../../../constants/ActionTypes";
+} from "constants/ActionTypes";
 
 export const mudarQtdAction = event => {
   return dispatch => {
