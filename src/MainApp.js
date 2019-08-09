@@ -57,7 +57,7 @@ export const Helper = () => {
     </Provider>
   );
 };
-//<MainAppConectado />
+//
 class MainApp extends Component {
   render() {
     return (

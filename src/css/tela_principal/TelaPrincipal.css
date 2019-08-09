@@ -1,9 +1,49 @@
 .divTelaPrincipal {
   background-color: var(--brackground-colors);
-  height: 100vh;
   display: flex;
 }
 
 .conteudoMenuPrincipal {
   flex: 9;
+}
+
+.divBarraTopo {
+  background-image: linear-gradient(#444, #222);
+  width: 100%;
+  height: 45px;
+  border-bottom: #888 1px solid;
+  border-top: #888 1px solid;
+  color: #ddd;
+}
+
+.divBarraTopo > .row {
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  padding-left: 1rem;
+  padding-right: 1rem
+}
+
+.iconesMostrarMenu {
+  padding: 0;
+  border: none;
+  color: #888;
+  margin: 0 0px;
+  font-size: 1rem;
+}
+
+.iconeCirculo {
+  color: #888;
+}
+
+.iconeHome {
+  font-size: 1.4rem;
+}
+
+.valorLiquido {
+  color: #0cc45b;
+}
+
+.valorComprar {
+  color: #ff9a2c;
 }
