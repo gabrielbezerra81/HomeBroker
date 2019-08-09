@@ -24,16 +24,9 @@ import {
   MUDAR_AJUSTE_ASSIMETRICO,
   ADICIONAR_ITEM_TABELA_REDUCAO,
   ADICIONA_ITEM_TABELA_ORDENS_VENDA,
-  COMPRA_AGENDADA_NAMESPACE,
-  COMPRA_LIMITADA_NAMESPACE,
-  COMPRA_MERCADO_NAMESPACE,
-  COMPRA_STARTSTOP_NAMESPACE,
-  COMPRA_STARTMOVEL_NAMESPACE,
-  COMPRA_GAINREDUCAO_NAMESPACE,
   MUDAR_INPUT_CONFIGURAR,
   MUDAR_QTDE
 } from "constants/ActionTypes";
-import { validacaoCompraAgenda } from "components/utils/Validacoes";
 import { VALIDACAO_QTDE } from "constants/Erros";
 
 export const mudarGainDisparoAction = (event, namespace) => {
@@ -349,36 +342,6 @@ export const removerItemTabelaAction = (
       type: `${actionType}${namespace}`,
       payload: novaTabela
     });
-  };
-};
-
-export const comprarAction = (props, namespace) => {
-  switch (namespace) {
-    case COMPRA_AGENDADA_NAMESPACE:
-      validacaoCompraAgenda(props);
-      break;
-    case COMPRA_LIMITADA_NAMESPACE:
-      break;
-    case COMPRA_MERCADO_NAMESPACE:
-      break;
-    case COMPRA_STARTSTOP_NAMESPACE:
-      break;
-    case COMPRA_STARTMOVEL_NAMESPACE:
-      break;
-    case COMPRA_GAINREDUCAO_NAMESPACE:
-      break;
-    default:
-      break;
-  }
-
-  return dispatch => {
-    dispatch({ type: "" });
-  };
-};
-
-export const venderAction = (props, formulario) => {
-  return dispatch => {
-    dispatch({ type: "" });
   };
 };
 

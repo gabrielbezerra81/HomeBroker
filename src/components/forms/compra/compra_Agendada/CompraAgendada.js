@@ -7,7 +7,6 @@ import FormInternoCompraAgendada from "./FormInternoCompraAgendada";
 import GraficoCompraAgendada from "./GraficoCompraAgendada";
 import BodyHeaderCompraAgendada from "./BodyHeaderCompraAgendada";
 import { modalHeader } from "components/utils/FormHeader";
-import { abrirFormularioAction } from "components/redux/actions/AppActions";
 
 class CompraAgendada extends React.Component {
   render() {
@@ -37,5 +36,5 @@ const mapStateToProps = state => ({});
 
 export default connect(
   mapStateToProps,
-  { abrirFormularioAction }
+  {  }
 )(CompraAgendada);

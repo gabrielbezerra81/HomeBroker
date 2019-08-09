@@ -1,0 +1,9 @@
+.divTelaPrincipal {
+  background-color: var(--brackground-colors);
+  height: 100vh;
+  display: flex;
+}
+
+.conteudoMenuPrincipal {
+  flex: 9;
+}

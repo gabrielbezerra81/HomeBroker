@@ -7,7 +7,6 @@ import FormInternoVendaLimitada from "./FormInternoVendaLimitada";
 import GraficoVendaLimitada from "./GraficoVendaLimitada";
 import BodyHeaderVendaLimitada from "./BodyHeaderVendaLimitada";
 import { modalHeader } from "components/utils/FormHeader";
-import { abrirFormularioAction } from "components/redux/actions/AppActions";
 
 class VendaLimitada extends React.Component {
   componentDidMount() {
@@ -42,5 +41,5 @@ const mapStateToProps = state => ({});
 
 export default connect(
   mapStateToProps,
-  { abrirFormularioAction }
+  {}
 )(VendaLimitada);

@@ -1,0 +1,56 @@
+.divMenuLateral {
+  background-color: #222;
+  height: 100vh;
+  flex: 1;
+}
+
+.corAlternada {
+  background-color: #333;
+}
+
+.itemMenuLateral {
+  height: 70px;
+  color: #ddd;
+  display: grid;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  border-radius: 0;
+}
+
+.itemMenuLateral .row {
+  align-items: center;
+  justify-content: center;
+}
+
+.colLogout {
+  padding: 0 0 0 0;
+}
+
+.textoConectado {
+  font-size: 0.55rem;
+  padding-top: 0.5rem;
+}
+
+.iconeDeslogar {
+  font-size: 0.8rem;
+  padding-right: 0.3rem;
+}
+
+.iconeStatusCirculo {
+  font-size: 0.4rem;
+  padding-left: 0.3rem;
+  padding-right: 0.1rem;
+}
+
+.iconeStatusConectado {
+  color: rgb(0, 255, 0);
+}
+
+.iconeStatusDesconectado {
+  color: red;
+}
+
+h6 {
+  margin-bottom: 0rem;
+}

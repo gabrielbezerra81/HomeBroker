@@ -22,6 +22,7 @@ import { COMPRA_STARTMOVEL_NAMESPACE } from "constants/ActionTypes";
 import TabelaOrdens from "./TabelaOrdens";
 import RowFormValidade from "components/utils/RowFormValidade";
 import RowFormAssinatura from "components/utils/RowFormAssinatura";
+import { compraStartMovelAction } from "components/redux/actions/SubAppActions";
 
 class FormInternoCompraStartMovel extends React.Component {
   render() {
@@ -223,7 +224,16 @@ class FormInternoCompraStartMovel extends React.Component {
                 </Button>
               </Col>
               <Col md={6}>
-                <Button variant="primary" size="sm" onClick={() => false}>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={() =>
+                    this.props.compraStartMovelAction(
+                      this.props,
+                      COMPRA_STARTMOVEL_NAMESPACE
+                    )
+                  }
+                >
                   <h6>Comprar</h6>
                 </Button>
               </Col>
@@ -268,7 +278,8 @@ export default connect(
     adicionarItemTabelaStartMovel,
     mudarAssinaturaAction,
     mudarCheckSalvarAssinaturaAction,
-    limparAction
+    limparAction,
+    compraStartMovelAction
   }
 )(FormInternoCompraStartMovel);
 

@@ -7,7 +7,6 @@ import FormInternoVendaMercado from "./FormInternoVendaMercado";
 import GraficoVendaMercado from "./GraficoVendaMercado";
 import BodyHeaderVendaMercado from "./BodyHeaderVendaMercado";
 import { modalHeader } from "components/utils/FormHeader";
-import { abrirFormularioAction } from "components/redux/actions/AppActions";
 
 class VendaMercado extends React.Component {
   componentDidMount() {
@@ -42,5 +41,5 @@ const mapStateToProps = state => ({});
 
 export default connect(
   mapStateToProps,
-  { abrirFormularioAction }
+  {}
 )(VendaMercado);

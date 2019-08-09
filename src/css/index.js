@@ -1,22 +1,25 @@
 import "./App.css";
-import "./FormGenerico.css";
+import "./estilo_geral_formCompraVenda/FormGenerico.css";
 import "./BookOfertas.css";
-import "./FormInterno.css";
-import "./Grafico.css";
-import "./BodyHeader.css";
+import "./estilo_geral_formCompraVenda/FormInterno.css";
+import "./estilo_geral_formCompraVenda/Grafico.css";
+import "./estilo_geral_formCompraVenda/BodyHeader.css";
 
-import "./CompraAgendada.css";
-import "./CompraLimitada.css";
-import "./CompraMercado.css";
-import "./CompraStartStop.css";
-import "./CompraStartMovel.css";
-import "./CompraGainReducao.css";
-import "./CompraFormConfigurar.css";
+import "./compra/CompraAgendada.css";
+import "./compra/CompraLimitada.css";
+import "./compra/CompraMercado.css";
+import "./compra/CompraStartStop.css";
+import "./compra/CompraStartMovel.css";
+import "./compra/CompraGainReducao.css";
+import "./compra/CompraFormConfigurar.css";
 
-import "./VendaAgendada.css";
-import "./VendaLimitada.css";
-import "./VendaMercado.css";
-import "./VendaStartStop.css";
-import "./VendaStopMovel.css";
-import "./VendaGainReducao.css";
-import "./VendaFormConfigurar.css";
+import "./venda/VendaAgendada.css";
+import "./venda/VendaLimitada.css";
+import "./venda/VendaMercado.css";
+import "./venda/VendaStartStop.css";
+import "./venda/VendaStopMovel.css";
+import "./venda/VendaGainReducao.css";
+import "./venda/VendaFormConfigurar.css";
+
+import "./tela_principal/TelaPrincipal.css"
+import "./tela_principal/MenuLateral.css"

@@ -20,6 +20,7 @@ import RowFormValidade from "components/utils/RowFormValidade";
 import RowFormAssinatura from "components/utils/RowFormAssinatura";
 import { COMPRA_MERCADO_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorAproximadoMercado } from "components/utils/CalculoValorTotal";
+import { compraMercadoAction } from "components/redux/actions/SubAppActions";
 
 class FormInternoCompraMercado extends React.Component {
   render() {
@@ -204,7 +205,16 @@ class FormInternoCompraMercado extends React.Component {
                 </Button>
               </Col>
               <Col md={6}>
-                <Button variant="primary" size="sm" onClick={() => false}>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={() =>
+                    this.props.compraMercadoAction(
+                      this.props,
+                      COMPRA_MERCADO_NAMESPACE
+                    )
+                  }
+                >
                   <h6>Comprar</h6>
                 </Button>
               </Col>
@@ -246,6 +256,7 @@ export default connect(
     mudarAtivoAction,
     mudarAssinaturaAction,
     mudarCheckSalvarAssinaturaAction,
-    mostrarErroQtdeOnBlurAction
+    mostrarErroQtdeOnBlurAction,
+    compraMercadoAction
   }
 )(FormInternoCompraMercado);

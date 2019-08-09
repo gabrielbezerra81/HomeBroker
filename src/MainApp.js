@@ -11,24 +11,39 @@ import {
   atualizarDivKeyAction,
   fecharFormAction,
   abrirFormAction,
-  aumentarZindexAction
+  aumentarZindexAction,
+  receberAppPropsAction
 } from "./components/redux/reducers/MainAppReducer";
 import MainAppReducer from "./components/redux/reducers/MainAppReducer";
 import "./css";
 import App from "./components/App";
 import { modalHeader } from "./components/utils/FormHeader";
-import { receberAppPropsAction } from "./components/redux/actions/AppActions";
+import TelaPrincipal from "components/tela_principal/TelaPrincipal";
+import TelaPrincipalReducer from "components/redux/reducers/TelaPrincipalReducer";
 
 export const GlobalContext = React.createContext();
 export const localContext = React.createContext();
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const combinedReducers = combineReducers({
   MainAppReducer: MainAppReducer
 });
 
+const combinedAppPrincipal = combineReducers({
+  telaPrincipalReducer: TelaPrincipalReducer
+});
+
+//Usada apenas para gerenciar os estados de mostrar ou não os formulários
 const globalStore = createStore(
   combinedReducers,
+  {},
+  composeEnhancers(applyMiddleware(ReduxThunk))
+);
+
+//Usado para todos os outros dados gerais como os da tela principal
+const storeAppPrincipal = createStore(
+  combinedAppPrincipal,
   {},
   composeEnhancers(applyMiddleware(ReduxThunk))
 );
@@ -36,11 +51,13 @@ const globalStore = createStore(
 export const Helper = () => {
   return (
     <Provider store={globalStore} context={GlobalContext}>
-      <MainAppConectado />
+      <Provider store={storeAppPrincipal}>
+        <TelaPrincipal />
+      </Provider>
     </Provider>
   );
 };
-
+//<MainAppConectado />
 class MainApp extends Component {
   render() {
     return (

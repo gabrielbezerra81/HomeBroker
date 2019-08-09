@@ -19,6 +19,7 @@ import {
 import RowFormValidade from "components/utils/RowFormValidade";
 import RowFormAssinatura from "components/utils/RowFormAssinatura";
 import { COMPRA_STARTSTOP_NAMESPACE } from "constants/ActionTypes";
+import { compraStartStopAction } from "components/redux/actions/SubAppActions";
 
 class FormInternoCompraStartStop extends React.Component {
   render() {
@@ -194,7 +195,16 @@ class FormInternoCompraStartStop extends React.Component {
                 </Button>
               </Col>
               <Col md={6}>
-                <Button variant="primary" size="sm" onClick={() => false}>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={() =>
+                    this.props.compraStartStopAction(
+                      this.props,
+                      COMPRA_STARTSTOP_NAMESPACE
+                    )
+                  }
+                >
                   <h6>Comprar</h6>
                 </Button>
               </Col>
@@ -235,6 +245,7 @@ export default connect(
     mudarAtivoAction,
     mudarAssinaturaAction,
     mudarCheckSalvarAssinaturaAction,
-    mostrarErroQtdeOnBlurAction
+    mostrarErroQtdeOnBlurAction,
+    compraStartStopAction
   }
 )(FormInternoCompraStartStop);

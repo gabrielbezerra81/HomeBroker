@@ -19,7 +19,7 @@ import {
   mudarInputConfigAction
 } from "components/redux/actions/formInputActions";
 import { CalculoValorTotalAgendada } from "components/utils/CalculoValorTotal";
-import { fecharFormularioAction } from "components/redux/actions/AppActions";
+import { fecharFormConfigurarAction } from "components/redux/reducers/MainAppReducer";
 
 class ConfigurarStop extends React.Component {
   render() {
@@ -40,7 +40,7 @@ const modalHeader = props => (
     <Button
       variant="link"
       className="iconesHeader"
-      onClick={event => props.fecharFormularioAction(event)}
+      onClick={event => props.fecharFormConfigurarAction(event)}
       name="config_compra"
     >
       <span className="fa-stack">
@@ -234,7 +234,7 @@ export default connect(
     mudarGainExecAction,
     mudarStopDisparoAction,
     mudarStopExecAction,
-    fecharFormularioAction,
+    fecharFormConfigurarAction,
     mudarInputConfigAction
   }
 )(ConfigurarStop);

@@ -3,8 +3,6 @@ import DraggableModal from "components/utils/DraggableModal";
 import { connect } from "react-redux";
 import {
   mudarQtdAction,
-  comprarAction,
-  venderAction,
   mudarStopLossAction,
   mudarGainAction,
   onEnterInputHeader,
@@ -85,13 +83,13 @@ const modalBody = props => (
 
 const modalFooter = props => (
   <div className="no-border modal-footer">
-    <Button variant="danger" size="sm" onClick={() => props.venderAction()}>
+    <Button variant="danger" size="sm" onClick={() => false}>
       <h6>Vender</h6>
     </Button>
     <Button variant="success" size="sm" onClick={props.close} name="book">
       <h6>Fechar</h6>
     </Button>
-    <Button variant="primary" size="sm" onClick={() => props.comprarAction()}>
+    <Button variant="primary" size="sm" onClick={() => false}>
       <h6>Comprar</h6>
     </Button>
   </div>
@@ -111,8 +109,6 @@ export default connect(
   mapStateToProps,
   {
     mudarQtdAction,
-    comprarAction,
-    venderAction,
     mudarStopLossAction,
     mudarGainAction,
     onEnterInputHeader,

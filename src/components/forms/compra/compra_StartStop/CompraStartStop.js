@@ -7,7 +7,6 @@ import FormInternoCompraStartStop from "./FormInternoCompraStartStop";
 import GraficoCompraStartStop from "./GraficoCompraStartStop";
 import BodyHeaderCompraStartStop from "./BodyHeaderCompraStartStop";
 import { modalHeader } from "components/utils/FormHeader";
-import { abrirFormularioAction } from "components/redux/actions/AppActions";
 
 class CompraStartStop extends React.Component {
   render() {
@@ -38,10 +37,10 @@ const modalBody = () => (
 );
 
 const mapStateToProps = state => ({
-  config_compra: state.appReducer.config_compra
+  config_compra: state.SubAppReducer.config_compra
 });
 
 export default connect(
   mapStateToProps,
-  { abrirFormularioAction }
+  {}
 )(CompraStartStop);

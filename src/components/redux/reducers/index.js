@@ -15,7 +15,7 @@ import {
   VENDA_STOPMOVEL_NAMESPACE,
   VENDA_GAINREDUCAO_NAMESPACE
 } from "constants/ActionTypes";
-import appReducer from "./appReducer";
+import SubAppReducer from "./SubAppReducer";
 
 export default combineReducers({
   bookOfertaReducer: bookOfertaReducer,
@@ -32,5 +32,5 @@ export default combineReducers({
   vendaStartStopReducer: formInputReducer(VENDA_STARTSTOP_NAMESPACE),
   vendaStopMovel: formInputReducer(VENDA_STOPMOVEL_NAMESPACE),
   vendaGainReducao: formInputReducer(VENDA_GAINREDUCAO_NAMESPACE),
-  appReducer: appReducer
+  SubAppReducer: SubAppReducer
 });

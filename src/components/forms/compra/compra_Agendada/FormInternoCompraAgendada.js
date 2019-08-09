@@ -22,6 +22,7 @@ import RowFormValidade from "components/utils/RowFormValidade";
 import RowFormAssinatura from "components/utils/RowFormAssinatura";
 import { COMPRA_AGENDADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalAgendada } from "components/utils/CalculoValorTotal";
+import { compraAgendadaAction } from "components/redux/actions/SubAppActions";
 
 class FormInternoCompraAgendada extends React.Component {
   render() {
@@ -255,7 +256,12 @@ class FormInternoCompraAgendada extends React.Component {
                 <Button
                   variant="primary"
                   size="sm"
-                  onClick={() => this.props.comprarAgendadaAction()}
+                  onClick={() =>
+                    this.props.compraAgendadaAction(
+                      this.props,
+                      COMPRA_AGENDADA_NAMESPACE
+                    )
+                  }
                 >
                   <h6>Comprar</h6>
                 </Button>
@@ -301,6 +307,7 @@ export default connect(
     mudarEntradaExecAction,
     mudarAssinaturaAction,
     mudarCheckSalvarAssinaturaAction,
-    mostrarErroQtdeOnBlurAction
+    mostrarErroQtdeOnBlurAction,
+    compraAgendadaAction
   }
 )(FormInternoCompraAgendada);

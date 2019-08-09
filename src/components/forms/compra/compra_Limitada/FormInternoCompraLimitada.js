@@ -21,6 +21,7 @@ import RowFormValidade from "components/utils/RowFormValidade";
 import RowFormAssinatura from "components/utils/RowFormAssinatura";
 import { COMPRA_LIMITADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalLimitada } from "components/utils/CalculoValorTotal";
+import { compraLimitadaAction } from "components/redux/actions/SubAppActions";
 
 class FormInternoCompraLimitada extends React.Component {
   render() {
@@ -226,7 +227,16 @@ class FormInternoCompraLimitada extends React.Component {
                 </Button>
               </Col>
               <Col md={6}>
-                <Button variant="primary" size="sm" onClick={() => false}>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={() =>
+                    this.props.compraLimitadaAction(
+                      this.props,
+                      COMPRA_LIMITADA_NAMESPACE
+                    )
+                  }
+                >
                   <h6>Comprar</h6>
                 </Button>
               </Col>
@@ -269,6 +279,7 @@ export default connect(
     mudarAssinaturaAction,
     mudarPrecoAction,
     mudarCheckSalvarAssinaturaAction,
-    mostrarErroQtdeOnBlurAction
+    mostrarErroQtdeOnBlurAction,
+    compraLimitadaAction
   }
 )(FormInternoCompraLimitada);

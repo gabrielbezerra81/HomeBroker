@@ -1,6 +1,7 @@
 import React from "react";
 import DatePicker from "react-datepicker";
 import { Col, Row, Form } from "react-bootstrap";
+import { getformatedDate } from "components/utils/FormatacoesData";
 
 export default (props, namespace) => (
   <Row className="rowFormValidade">
@@ -45,11 +46,3 @@ const formSelect = (props, opcao2, namespace) => (
     <option value="cancelar">ATÉ CANCELAR</option>
   </Form.Control>
 );
-
-const getformatedDate = date => {
-  const DD = date.getDate();
-  const MM = date.getMonth() + 1;
-  const YYYY = date.getFullYear();
-  const formatedDate = `${DD}/${MM}/${YYYY}`;
-  return formatedDate;
-};

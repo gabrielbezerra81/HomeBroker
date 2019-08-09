@@ -7,7 +7,6 @@ import FormInternoCompraGainReducao from "./FormInternoCompraGainReducao";
 import GraficoCompraGainReducao from "./GraficoCompraGainReducao";
 import BodyHeaderCompraGainReducao from "./BodyHeaderCompraGainReducao";
 import { modalHeader } from "components/utils/FormHeader";
-import { abrirFormularioAction } from "components/redux/actions/AppActions";
 
 class CompraGainReducao extends React.Component {
   render() {
@@ -37,5 +36,5 @@ const mapStateToProps = state => ({});
 
 export default connect(
   mapStateToProps,
-  { abrirFormularioAction }
+  {  }
 )(CompraGainReducao);

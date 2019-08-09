@@ -4,7 +4,10 @@ import {
   MOSTRAR_APP,
   ATUALIZAR_SHOW,
   ATUALIZAR_DIVKEY,
-  FECHAR_FORM
+  FECHAR_FORM,
+  ABRIR_FORMULARIO,//Apenas para form de configurar, pois usa o reducer dos sub-apps
+  FECHAR_FORMULARIO,//Apenas para form de configurar, pois usa o reducer dos sub-apps
+  RECEBER_APPKEYLOCAL
 } from "constants/ActionTypes";
 import React from "react";
 import { SubAppConectado } from "../../../MainApp";
@@ -158,4 +161,43 @@ const mostrarApp = (name, index, props, dispatch) => {
   atualizarDivKeyAction(`${name}${index}`, dispatch);
   show[index][name] = true;
   mostrarAppAction(apps, show, props.zIndex, dispatch);
+};
+
+//Usado apenas na store local de cada sub-app para abrir os forms de configuração de start/stop movel
+export const abrirFormConfigurarAction = (event, props) => {
+  const name = event.target.getAttribute("name");
+
+  return dispatch => {
+    dispatch({
+      type: ABRIR_FORMULARIO,
+      name: name,
+      payload: true
+    });
+
+    aumentarZindex(props.zIndex, dispatch);
+  };
+};
+
+//Usado apenas na store local de cada sub-app para abrir os forms de configuração de start/stop movel
+export const fecharFormConfigurarAction = event => {
+  const name = event.target.getAttribute("name");
+  return dispatch => {
+    dispatch({
+      type: FECHAR_FORMULARIO,
+      name: name,
+      payload: false
+    });
+  };
+};
+
+//Apenas para form configurar
+export const aumentarZindex = (zIndex, dispatch) => {
+  zIndex = zIndex + 1;
+  dispatch({ type: AUMENTAR_ZINDEX, payload: zIndex });
+};
+
+export const receberAppPropsAction = appProps => {
+  return dispatch => {
+    dispatch({ type: RECEBER_APPKEYLOCAL, payload: appProps });
+  };
 };
