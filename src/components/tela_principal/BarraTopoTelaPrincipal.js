@@ -12,8 +12,7 @@ class BarraTopoTelaPrincipal extends React.Component {
       <div className="divBarraTopo">
         <Row>
           <Col md={1}>
-            <Button
-              variant=""
+            <div
               className="iconesMostrarMenu"
               onClick={event => {
                 if (this.props.menuLateralAberto === true) {
@@ -31,7 +30,7 @@ class BarraTopoTelaPrincipal extends React.Component {
                 }
               }}
             >
-              <span className="fa-stack">
+              <span tabIndex={0} className="fa-stack divClicavel">
                 <MDBIcon
                   far
                   icon="circle"
@@ -42,7 +41,7 @@ class BarraTopoTelaPrincipal extends React.Component {
                   className="fa-stack-1x iconeCirculo"
                 />
               </span>
-            </Button>
+            </div>
           </Col>
           <Col md={0}>
             <MDBIcon icon="home" className="iconeHome" />
