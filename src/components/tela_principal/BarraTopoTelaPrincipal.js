@@ -55,7 +55,7 @@ class BarraTopoTelaPrincipal extends React.Component {
             <h6>CONTA: {this.props.usuarioConectado.toUpperCase()}</h6>
           </Col>
           <Col md={0}>
-            <img src={imgCaraFeliz} />
+            <img src={imgCaraFeliz} alt="cara feliz" />
           </Col>
           <Col md={0}>
             <h6 className="">VALOR LIQUIDO:</h6>

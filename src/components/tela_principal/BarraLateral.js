@@ -12,28 +12,32 @@ class BarraLateral extends React.Component {
   render() {
     return (
       <div className="divBarraLateral">
-        <div className="itemDivBarraLateral">
-          <img src={iconeAbrirOrdens} />
+        <div
+          tabIndex={0}
+          className="itemDivBarraLateral divClicavel"
+          onClick={() => console.log("SAS")}
+        >
+          <img src={iconeAbrirOrdens} alt="Ordens" />
           <h6>ORDENS</h6>
         </div>
-        <div className="itemDivBarraLateral">
-          <img src={iconeOrdensEmExecucao} />
+        <div tabIndex={0} className="itemDivBarraLateral divClicavel">
+          <img src={iconeOrdensEmExecucao} alt="Ordens em execução" />
           <h6>ORDENS EM EXECUÇÃO</h6>
         </div>
-        <div className="itemDivBarraLateral">
-          <img src={iconePosicao} />
+        <div tabIndex={0} className="itemDivBarraLateral divClicavel">
+          <img src={iconePosicao} alt="Posição" />
           <h6>POSIÇÃO</h6>
         </div>
-        <div className="itemDivBarraLateral">
-          <img src={iconeRelatorioDetalhado} />
+        <div tabIndex={0} className="itemDivBarraLateral divClicavel">
+          <img src={iconeRelatorioDetalhado} alt="Relatório detalhado" />
           <h6>RELATÓRIO DETALHADO DA OPERAÇÃO</h6>
         </div>
-        <div className="itemDivBarraLateral">
-          <img src={iconeListaCompleta} />
+        <div tabIndex={0} className="itemDivBarraLateral divClicavel">
+          <img src={iconeListaCompleta} alt="Lista completa" />
           <h6>LISTA COMPLETA</h6>
         </div>
-        <div className="itemDivBarraLateral">
-          <img src={iconeMultileg} />
+        <div tabIndex={0} className="itemDivBarraLateral divClicavel">
+          <img src={iconeMultileg} alt="Multileg" />
           <h6>MULTILEG</h6>
         </div>
       </div>

@@ -53,11 +53,11 @@
 
 .divBarraLateral {
   background-image: linear-gradient(#333, #222, #111);
-  width: 80px;
+  width: 85px;
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 2rem 0.45rem 0rem 0.45rem;
+  padding: 2rem 0.45rem 0rem 0.25rem;
 }
 
 .itemDivBarraLateral {
@@ -65,12 +65,30 @@
   text-align: center;
 }
 
+.divClicavel:hover {
+  cursor: pointer;
+  transition-duration: 0.15s;
+  opacity: 0.5;
+}
+
+.divClicavel:active {
+  transition-timing-function: linear;
+  outline: none !important;
+  opacity: 0.1;
+}
+
+.divClicavel:focus {
+  outline: solid medium rgba(0, 83, 186, 0.3) !important;
+  transition-duration: 0.3s;
+  transition-timing-function: linear;
+}
+
 .itemDivBarraLateral img {
-  max-width: 70px;
+  max-width: 50px;
   margin-bottom: 0.2rem;
 }
 
 .itemDivBarraLateral h6 {
   color: var(--cor-texto);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
 }

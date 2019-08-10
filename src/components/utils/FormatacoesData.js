@@ -33,6 +33,8 @@ export const getDiaSemana = () => {
     case 6:
       diaSemana = "Sábado";
       break;
+    default:
+      break;
   }
   return diaSemana;
 };
@@ -76,6 +78,8 @@ export const getDiaEMes = () => {
       break;
     case 11:
       mes = "Dezembro";
+      break;
+    default:
       break;
   }
   return date.getDate() + " de " + mes;

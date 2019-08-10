@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
 import { getDiaSemana, getDiaEMes } from "components/utils/FormatacoesData";
 import { MDBIcon } from "mdbreact";
@@ -42,55 +42,55 @@ export default connect(
 const renderDivLogin = props => {
   if (props.logado) {
     return (
-      <Button variant="" className="itemMenuLateral corAlternada">
-        <div>
-          <Row className="botaoDeslogar">
-            <Col md={0} className="colLogout">
-              <MDBIcon icon="power-off" className="iconeDeslogar" />
-            </Col>
-            <Col md={4} className="colLogout">
-              <h6>LOGOUT</h6>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={0} className="colLogout">
-              <MDBIcon
-                icon="circle"
-                className="iconeStatusCirculo iconeStatusConectado"
-              />
-            </Col>
-            <Col md={4} className="colLogout">
-              <h6 className="textoConectado">CONECTADO</h6>
-            </Col>
-          </Row>
-        </div>
-      </Button>
+      <div
+        className="divClicavel itemMenuLateral corAlternada"
+        onClick={() => false}
+        tabIndex={0}
+      >
+        <Row className="botaoDeslogar">
+          <Col md={0} className="colLogout">
+            <MDBIcon icon="power-off" className="iconeDeslogar" />
+          </Col>
+          <Col md={4} className="colLogout">
+            <h6>LOGOUT</h6>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={0} className="colLogout">
+            <MDBIcon
+              icon="circle"
+              className="iconeStatusCirculo iconeStatusConectado"
+            />
+          </Col>
+          <Col md={4} className="colLogout">
+            <h6 className="textoConectado">CONECTADO</h6>
+          </Col>
+        </Row>
+      </div>
     );
   } else {
     return (
-      <Button variant="" className="itemMenuLateral corAlternada">
-        <div>
-          <Row className="botaoDeslogar">
-            <Col md={0} className="colLogout">
-              <MDBIcon icon="power-off" className="iconeDeslogar" />
-            </Col>
-            <Col md={3} className="colLogout">
-              <h6>LOGIN</h6>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={0} className="colLogout">
-              <MDBIcon
-                icon="circle"
-                className="iconeStatusCirculo iconeStatusDesconectado"
-              />
-            </Col>
-            <Col md={4} className="colLogout">
-              <h6 className="textoConectado">DESCONECTADO</h6>
-            </Col>
-          </Row>
-        </div>
-      </Button>
+      <div tabIndex={0} className="divClicavel itemMenuLateral corAlternada">
+        <Row className="botaoDeslogar">
+          <Col md={0} className="colLogout">
+            <MDBIcon icon="power-off" className="iconeDeslogar" />
+          </Col>
+          <Col md={3} className="colLogout">
+            <h6>LOGIN</h6>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={0} className="colLogout">
+            <MDBIcon
+              icon="circle"
+              className="iconeStatusCirculo iconeStatusDesconectado"
+            />
+          </Col>
+          <Col md={4} className="colLogout">
+            <h6 className="textoConectado">DESCONECTADO</h6>
+          </Col>
+        </Row>
+      </div>
     );
   }
 };
