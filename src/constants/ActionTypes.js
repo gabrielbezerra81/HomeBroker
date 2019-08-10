@@ -64,11 +64,14 @@ export const AUMENTAR_ZINDEX = "aumentar_zindex";
 
 export const MUDAR_INPUT_CONFIGURAR = "mudar_input_configurar";
 
-export const RECEBER_APPKEYLOCAL = "receber_appkeylocal"
+export const RECEBER_APPKEYLOCAL = "receber_appkeylocal";
 
 //Actions do MainReducer
-export const CRIAR_APP = "criar_app"
-export const MOSTRAR_APP = "mostrar_app"
-export const ATUALIZAR_SHOW = "atualizar_show"
-export const ATUALIZAR_DIVKEY = "atualizar_divkey"
-export const FECHAR_FORM = "fechar_form"
+export const CRIAR_APP = "criar_app";
+export const MOSTRAR_APP = "mostrar_app";
+export const ATUALIZAR_SHOW = "atualizar_show";
+export const ATUALIZAR_DIVKEY = "atualizar_divkey";
+export const FECHAR_FORM = "fechar_form";
+
+//tela principal
+export const ABRIR_FECHAR_MENU_LATERAL = "abrir_fechar_menu_lateral";

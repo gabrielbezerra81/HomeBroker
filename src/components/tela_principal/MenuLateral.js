@@ -7,7 +7,7 @@ import { MDBIcon } from "mdbreact";
 class MenuLateral extends React.Component {
   render() {
     return (
-      <div className="divMenuLateral">
+      <div className="divMenuLateral" id="divMenuLateral">
         <div className="itemMenuLateral corAlternada">
           <h6>Menu</h6>
         </div>

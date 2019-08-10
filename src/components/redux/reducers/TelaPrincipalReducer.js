@@ -1,3 +1,5 @@
+import { ABRIR_FECHAR_MENU_LATERAL } from "constants/ActionTypes";
+
 const INITIAL_STATE = {
   usuarioConectado: "Gabriel Alencar",
   menuLateralAberto: true,
@@ -9,6 +11,8 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case ABRIR_FECHAR_MENU_LATERAL:
+      return { ...state, menuLateralAberto: action.payload };
     default:
       return state;
   }

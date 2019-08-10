@@ -5,10 +5,13 @@
 
 .conteudoMenuPrincipal {
   flex: 9;
+  border-left: 1px solid #888;
+  display: flex;
+  flex-direction: column;
 }
 
 .divBarraTopo {
-  background-image: linear-gradient(#444, #222);
+  background-image: linear-gradient(#444, #333, #222);
   width: 100%;
   height: 45px;
   border-bottom: #888 1px solid;
@@ -21,7 +24,7 @@
   height: 100%;
   align-items: center;
   padding-left: 1rem;
-  padding-right: 1rem
+  padding-right: 1rem;
 }
 
 .iconesMostrarMenu {
@@ -46,4 +49,28 @@
 
 .valorComprar {
   color: #ff9a2c;
+}
+
+.divBarraLateral {
+  background-image: linear-gradient(#333, #222, #111);
+  width: 80px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 0.45rem 0rem 0.45rem;
+}
+
+.itemDivBarraLateral {
+  margin-bottom: 1.6rem;
+  text-align: center;
+}
+
+.itemDivBarraLateral img {
+  max-width: 70px;
+  margin-bottom: 0.2rem;
+}
+
+.itemDivBarraLateral h6 {
+  color: var(--cor-texto);
+  font-size: 0.72rem;
 }

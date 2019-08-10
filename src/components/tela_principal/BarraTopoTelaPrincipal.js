@@ -3,6 +3,8 @@ import { Row, Col, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { MDBIcon } from "mdbreact";
 import imgCaraFeliz from "img/iconeCaraFeliz.png";
+import { abrirFecharMenuLateralAction } from "components/redux/actions/TelaPrincipalActions";
+import { ocultarDIV, mostrarDIV } from "components/utils/MostrarOcultarDiv";
 
 class BarraTopoTelaPrincipal extends React.Component {
   render() {
@@ -10,7 +12,25 @@ class BarraTopoTelaPrincipal extends React.Component {
       <div className="divBarraTopo">
         <Row>
           <Col md={1}>
-            <Button variant="" className="iconesMostrarMenu">
+            <Button
+              variant=""
+              className="iconesMostrarMenu"
+              onClick={event => {
+                if (this.props.menuLateralAberto === true) {
+                  this.props.abrirFecharMenuLateralAction(
+                    event,
+                    this.props.menuLateralAberto
+                  );
+                  return ocultarDIV("divMenuLateral");
+                } else {
+                  this.props.abrirFecharMenuLateralAction(
+                    event,
+                    this.props.menuLateralAberto
+                  );
+                  return mostrarDIV("divMenuLateral");
+                }
+              }}
+            >
               <span className="fa-stack">
                 <MDBIcon
                   far
@@ -62,10 +82,11 @@ const mapStateToProps = state => ({
   usuarioConectado: state.telaPrincipalReducer.usuarioConectado,
   valorLiquido: state.telaPrincipalReducer.valorLiquido,
   valorComprar: state.telaPrincipalReducer.valorComprar,
-  ativo: state.telaPrincipalReducer.ativo
+  ativo: state.telaPrincipalReducer.ativo,
+  menuLateralAberto: state.telaPrincipalReducer.menuLateralAberto
 });
 
 export default connect(
   mapStateToProps,
-  {}
+  { abrirFecharMenuLateralAction }
 )(BarraTopoTelaPrincipal);
