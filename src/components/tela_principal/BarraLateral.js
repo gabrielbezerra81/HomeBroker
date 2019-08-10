@@ -7,15 +7,28 @@ import iconePosicao from "img/iconePosicao.png";
 import iconeRelatorioDetalhado from "img/iconeRelatorioDetalhado.png";
 import iconeListaCompleta from "img/iconeListaCompleta.png";
 import iconeMultileg from "img/iconeMultileg.png";
+import { ocultarDIV, mostrarDIV } from "components/utils/MostrarOcultarDiv";
 
 class BarraLateral extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      divOrdens: true
+    };
+  }
+
   render() {
     return (
       <div className="divBarraLateral">
         <div
           tabIndex={0}
           className="itemDivBarraLateral divClicavel"
-          onClick={() => console.log("SAS")}
+          onClick={() => {
+            if (this.state.divOrdens) ocultarDIV("divOrdens");
+            else mostrarDIV("divOrdens");
+            this.setState({ divOrdens: !this.state.divOrdens });
+          }}
         >
           <img src={iconeAbrirOrdens} alt="Ordens" />
           <h6>ORDENS</h6>

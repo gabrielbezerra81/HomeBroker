@@ -20,6 +20,18 @@ import App from "./components/App";
 import { modalHeader } from "./components/utils/FormHeader";
 import TelaPrincipal from "components/tela_principal/TelaPrincipal";
 import TelaPrincipalReducer from "components/redux/reducers/TelaPrincipalReducer";
+import iconeCompra from "img/IconeCompra.png";
+import iconeCompra2 from "img/iconeCompra2.png";
+import iconeCompra3 from "img/iconeCompra3.png";
+import iconeCompra4 from "img/iconeCompra4.png";
+import iconeCompra5 from "img/iconeCompra5.png";
+import iconeCompra6 from "img/iconeCompra6.png";
+import iconeVenda from "img/iconeVenda.png";
+import iconeVenda2 from "img/iconeVenda2.png";
+import iconeVenda3 from "img/iconeVenda3.png";
+import iconeVenda4 from "img/iconeVenda4.png";
+import iconeVenda5 from "img/iconeVenda5.png";
+import iconeVenda6 from "img/iconeVenda6.png";
 
 export const GlobalContext = React.createContext();
 export const localContext = React.createContext();
@@ -57,76 +69,9 @@ export const Helper = () => {
     </Provider>
   );
 };
-//
-class MainApp extends Component {
-  render() {
-    return (
+/*
       <div className="App">
-        <header className="App-header">
           <Row style={{ paddingBottom: "0.5rem" }}>
-            <Col md={2}>
-              <Button
-                variant="primary"
-                size="sm"
-                onClick={event => this.props.abrirFormAction(event, this.props)}
-                name="book"
-              >
-                <h6 name="book">Book de Ofertas</h6>
-              </Button>
-            </Col>
-          </Row>
-          <Row style={{ paddingBottom: "0.5rem" }}>
-            <Col>
-              <Button
-                variant="primary"
-                size="sm"
-                onClick={event => this.props.abrirFormAction(event, this.props)}
-                name="compra_agendada"
-              >
-                <h6 name="compra_agendada">Compra Agendada</h6>
-              </Button>
-            </Col>
-            <Col>
-              <Button
-                variant="primary"
-                size="sm"
-                onClick={event => this.props.abrirFormAction(event, this.props)}
-                name="compra_limitada"
-              >
-                <h6 name="compra_limitada">Compra Limitada</h6>
-              </Button>
-            </Col>
-            <Col>
-              <Button
-                variant="primary"
-                size="sm"
-                onClick={event => this.props.abrirFormAction(event, this.props)}
-                name="compra_mercado"
-              >
-                <h6 name="compra_mercado">Compra a Mercado</h6>
-              </Button>
-            </Col>
-            <Col>
-              <Button
-                variant="primary"
-                size="sm"
-                onClick={event => this.props.abrirFormAction(event, this.props)}
-                name="compra_startstop"
-              >
-                <h6 name="compra_startstop">Compra Start/Stop</h6>
-              </Button>
-            </Col>
-            <Col>
-              <Button
-                variant="primary"
-                size="sm"
-                onClick={event => this.props.abrirFormAction(event, this.props)}
-                name="compra_startmovel"
-              >
-                <h6 name="compra_startmovel">Compra Start Móvel</h6>
-              </Button>
-            </Col>
-
             <Col>
               {" "}
               <Button
@@ -144,56 +89,6 @@ class MainApp extends Component {
               <Button
                 variant="primary"
                 size="sm"
-                name="venda_agendada"
-                onClick={event => this.props.abrirFormAction(event, this.props)}
-              >
-                <h6 name="venda_agendada">Venda Agendada</h6>
-              </Button>
-            </Col>
-            <Col>
-              <Button
-                variant="primary"
-                size="sm"
-                name="venda_limitada"
-                onClick={event => this.props.abrirFormAction(event, this.props)}
-              >
-                <h6 name="venda_limitada">Venda Limitada</h6>
-              </Button>
-            </Col>
-            <Col>
-              <Button
-                variant="primary"
-                size="sm"
-                name="venda_mercado"
-                onClick={event => this.props.abrirFormAction(event, this.props)}
-              >
-                <h6 name="venda_mercado">Venda a Mercado</h6>
-              </Button>
-            </Col>
-            <Col>
-              <Button
-                variant="primary"
-                size="sm"
-                name="venda_startstop"
-                onClick={event => this.props.abrirFormAction(event, this.props)}
-              >
-                <h6 name="venda_startstop">Venda Start/Stop</h6>
-              </Button>
-            </Col>
-            <Col>
-              <Button
-                variant="primary"
-                size="sm"
-                name="venda_stop_movel"
-                onClick={event => this.props.abrirFormAction(event, this.props)}
-              >
-                <h6 name="venda_stop_movel">Venda Stop Móvel</h6>
-              </Button>
-            </Col>
-            <Col>
-              <Button
-                variant="primary"
-                size="sm"
                 name="venda_gainreducao"
                 onClick={event => this.props.abrirFormAction(event, this.props)}
               >
@@ -201,13 +96,116 @@ class MainApp extends Component {
               </Button>
             </Col>
           </Row>
-        </header>
-
-        {this.props.apps.map(Subapp => Subapp)}
+      </div>
+*/
+class MainApp extends Component {
+  render() {
+    return (
+      <div className="divOrdens" id="divOrdens">
+        <Row className="rowOrdensTracejada">
+          <img src={iconeCompra} alt="" />
+          <img
+            src={iconeCompra2}
+            alt=""
+            onClick={event => this.props.abrirFormAction(event, this.props)}
+            name="compra_agendada"
+            className="divClicavel"
+          />
+          <img
+            src={iconeCompra3}
+            alt=""
+            onClick={event => this.props.abrirFormAction(event, this.props)}
+            name="compra_limitada"
+            className="divClicavel"
+          />
+          <img
+            src={iconeCompra4}
+            alt=""
+            onClick={event => this.props.abrirFormAction(event, this.props)}
+            name="compra_mercado"
+            className="divClicavel"
+          />
+          <img
+            src={iconeCompra5}
+            alt=""
+            onClick={event => this.props.abrirFormAction(event, this.props)}
+            name="compra_startstop"
+            className="divClicavel"
+          />
+          <img
+            src={iconeCompra6}
+            alt=""
+            onClick={event => this.props.abrirFormAction(event, this.props)}
+            name="compra_startmovel"
+            className="divClicavel"
+          />
+        </Row>
+        <Row className="rowOrdensTracejada">
+          <img src={iconeVenda} alt="" />
+          <img
+            src={iconeVenda2}
+            alt=""
+            name="venda_agendada"
+            onClick={event => this.props.abrirFormAction(event, this.props)}
+            className="divClicavel"
+          />
+          <img
+            src={iconeVenda3}
+            alt=""
+            name="venda_limitada"
+            onClick={event => this.props.abrirFormAction(event, this.props)}
+            className="divClicavel"
+          />
+          <img
+            src={iconeVenda4}
+            alt=""
+            name="venda_mercado"
+            onClick={event => this.props.abrirFormAction(event, this.props)}
+            className="divClicavel"
+          />
+          <img
+            src={iconeVenda5}
+            alt=""
+            name="venda_startstop"
+            onClick={event => this.props.abrirFormAction(event, this.props)}
+            className="divClicavel"
+          />
+          <img
+            src={iconeVenda6}
+            alt=""
+            name="venda_stop_movel"
+            onClick={event => this.props.abrirFormAction(event, this.props)}
+            className="divClicavel"
+          />
+        </Row>
+        <Row />
+        <div>{this.props.apps.map(Subapp => Subapp)}</div>
       </div>
     );
   }
 }
+
+/*
+<div className="divOrdens" id="divOrdens">
+              <Row className="rowOrdensTracejada">
+                <img src={iconeCompra} alt="" />
+                <img src={iconeCompra2} alt="" />
+                <img src={iconeCompra3} alt="" />
+                <img src={iconeCompra4} alt="" />
+                <img src={iconeCompra5} alt="" />
+                <img src={iconeCompra6} alt="" />
+              </Row>
+              <Row className="rowOrdensTracejada">
+                <img src={iconeVenda} alt="" />
+                <img src={iconeVenda2} alt="" />
+                <img src={iconeVenda3} alt="" />
+                <img src={iconeVenda4} alt="" />
+                <img src={iconeVenda5} alt="" />
+                <img src={iconeVenda6} alt="" />
+              </Row>
+              <Row />
+            </div>
+*/
 
 //Responsável por criar uma store individual para cada sub-app
 class SubApp extends Component {
