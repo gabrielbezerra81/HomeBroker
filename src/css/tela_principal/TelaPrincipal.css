@@ -93,7 +93,7 @@
 }
 
 .divOrdens {
-  width: 500px;
+  width: 605px;
   height: 200px;
   border: 2px solid #888;
   border-left: none;
@@ -116,7 +116,7 @@
 #divOrdens.visible {
   opacity: 1;
   pointer-events: all;
-  width: 500px;
+  width: 605px;
 }
 
 .rowOrdensTracejada {
@@ -130,6 +130,15 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+}
+
+.divBotaoFormulario {
+  display: flex;
+  flex-direction: column;
+  color: var(--cor-texto);
+  flex: 1;
+  align-items: center;
+  text-align: end !important;
 }
 
 .divOrdens > .row img {
