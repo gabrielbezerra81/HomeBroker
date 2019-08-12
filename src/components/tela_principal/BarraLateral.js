@@ -14,7 +14,7 @@ class BarraLateral extends React.Component {
     super(props);
 
     this.state = {
-      divOrdens: true
+      divOrdens: false
     };
   }
 
