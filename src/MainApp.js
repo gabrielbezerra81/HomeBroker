@@ -3,7 +3,7 @@ import { Provider, connect } from "react-redux";
 import ReduxThunk from "redux-thunk";
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import rootReducer from "./components/redux/reducers";
-import { Button, Row, Col } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import {
   criarMostrarAppAction,
   mostrarAppAction,

@@ -1,4 +1,7 @@
-import { ABRIR_FECHAR_MENU_LATERAL } from "constants/ActionTypes";
+import {
+  ABRIR_FECHAR_MENU_LATERAL,
+  LOGAR_DESLOGAR_USUARIO
+} from "constants/ActionTypes";
 
 const INITIAL_STATE = {
   usuarioConectado: "Gabriel Alencar",
@@ -13,6 +16,12 @@ export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case ABRIR_FECHAR_MENU_LATERAL:
       return { ...state, menuLateralAberto: action.payload };
+    case LOGAR_DESLOGAR_USUARIO:
+      return {
+        ...state,
+        usuarioConectado: action.payload.usuarioConectado,
+        logado: action.payload.logado
+      };
     default:
       return state;
   }

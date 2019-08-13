@@ -1,5 +1,4 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap";
 import MenuLateral from "components/tela_principal/MenuLateral";
 import { connect } from "react-redux";
 import { MainAppConectado } from "MainApp";
