@@ -5,6 +5,12 @@ import { MDBIcon } from "mdbreact";
 import imgCaraFeliz from "img/iconeCaraFeliz.png";
 import { abrirFecharMenuLateralAction } from "components/redux/actions/TelaPrincipalActions";
 import { ocultarDIV, mostrarDIV } from "components/utils/MostrarOcultarDiv";
+import { Animate } from "react-show";
+
+const startStyle = {
+  opacity: 0,
+  pointerEvents: "none"
+};
 
 class BarraTopoTelaPrincipal extends React.Component {
   render() {
@@ -51,7 +57,17 @@ class BarraTopoTelaPrincipal extends React.Component {
           </Col>
 
           <Col md={3}>
-            <h6>CONTA: {this.props.usuarioConectado.toUpperCase()}</h6>
+            <Animate
+              show={this.props.logado}
+              duration={100}
+              transitionOnMount
+              stayMounted
+              preMount
+              start={startStyle}
+            >
+              {" "}
+              <h6>CONTA: {this.props.usuarioConectado.toUpperCase()}</h6>
+            </Animate>
           </Col>
           <Col md={0}>
             <img src={imgCaraFeliz} alt="cara feliz" />
@@ -82,7 +98,8 @@ const mapStateToProps = state => ({
   valorLiquido: state.telaPrincipalReducer.valorLiquido,
   valorComprar: state.telaPrincipalReducer.valorComprar,
   ativo: state.telaPrincipalReducer.ativo,
-  menuLateralAberto: state.telaPrincipalReducer.menuLateralAberto
+  menuLateralAberto: state.telaPrincipalReducer.menuLateralAberto,
+  logado: state.telaPrincipalReducer.logado
 });
 
 export default connect(

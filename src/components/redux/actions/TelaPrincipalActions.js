@@ -24,7 +24,7 @@ export const deslogarUsuarioAction = (event, props) => {
   return dispatch => {
     dispatch({
       type: LOGAR_DESLOGAR_USUARIO,
-      payload: { usuarioConectado: "", logado: false }
+      payload: { usuarioConectado: "Gabriel Alencar", logado: false }
     });
   };
 };

@@ -7,7 +7,12 @@ import {
   logarUsuarioAction,
   deslogarUsuarioAction
 } from "components/redux/actions/TelaPrincipalActions";
+import { Animate } from "react-show";
 
+const startStyle = {
+  opacity: 0,
+  pointerEvents: "none"
+};
 
 class MenuLateral extends React.Component {
   render() {
@@ -19,11 +24,19 @@ class MenuLateral extends React.Component {
         <div className="itemMenuLateral">
           <Row>
             <Col>
-              <h6>{this.props.usuarioConectado}</h6>
+              <Animate
+                show={this.props.logado}
+                duration={100}
+                transitionOnMount
+                stayMounted
+                preMount
+                start={startStyle}
+              >
+                <h6>{this.props.usuarioConectado}</h6>
+              </Animate>
             </Col>
           </Row>
         </div>
-
         {renderDivLogin(this.props)}
         <div className="itemMenuLateral">
           <h6>

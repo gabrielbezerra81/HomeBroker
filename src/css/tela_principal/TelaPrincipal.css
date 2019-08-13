@@ -1,6 +1,7 @@
 .divTelaPrincipal {
   background-color: var(--brackground-colors);
   display: flex;
+  height: 100%;
 }
 
 .conteudoMenuPrincipal {
@@ -17,6 +18,7 @@
   border-bottom: #888 1px solid;
   border-top: #888 1px solid;
   color: #ddd;
+  padding-right: 28vw;
 }
 
 .divBarraTopo > .row {
@@ -111,13 +113,14 @@
 #divOrdens.hide {
   opacity: 0;
   pointer-events: none;
-  width: 0px;
+  overflow: hidden;
 }
 
 #divOrdens.visible {
   opacity: 1;
   pointer-events: all;
   width: 605px;
+  height: 200px;
 }
 
 .rowOrdensTracejada {
