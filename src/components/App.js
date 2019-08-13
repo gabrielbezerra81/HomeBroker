@@ -133,6 +133,9 @@ export default class App extends React.Component {
               }}
               headerTitle="COMPRA START MÓVEL"
               name="compra_startmovel"
+              handleShow={event => {
+                this.props.abrirFormAction(event, this.props);
+              }}
             />
           )}
 
@@ -144,6 +147,9 @@ export default class App extends React.Component {
               }}
               headerTitle="GAIN / REDUÇÃO DE COMPRA"
               name="compra_gainreducao"
+              handleShow={event => {
+                this.props.abrirFormAction(event, this.props);
+              }}
             />
           )}
 
