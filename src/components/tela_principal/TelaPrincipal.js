@@ -28,6 +28,7 @@ class TelaPrincipal extends React.Component {
               transitionOnMount
               start={startStyle}
               stayMounted={false}
+              className="animatedivOrdens"
             >
               <MainAppConectado />
             </Animate>
@@ -36,7 +37,6 @@ class TelaPrincipal extends React.Component {
               duration={250}
               transitionOnMount
               stayMounted
-              preMount
               start={startStyle}
               className="animateDiv"
             >

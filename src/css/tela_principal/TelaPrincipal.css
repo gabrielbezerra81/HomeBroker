@@ -94,6 +94,11 @@
   font-size: 0.7rem;
 }
 
+.animatedivOrdens {
+  height: 250px;
+  width: 605px;
+}
+
 .divOrdens {
   width: 605px;
   height: 200px;
