@@ -22,7 +22,7 @@ class TabelaOfertas extends React.Component {
         variant="dark"
         borderless
         className="tableBook text-center"
-        style={{tableLayout:"fixed"}}
+        style={{ tableLayout: "fixed" }}
       >
         <thead>
           <tr>
@@ -32,14 +32,14 @@ class TabelaOfertas extends React.Component {
           </tr>
         </thead>
         <tbody>
-            {this.renderItems(
-              this.props.tableDataVenda,
-              "itemOrdemVenda tableItemBookOferta"
-            )}
-            {this.renderItems(
-              this.props.tableDataCompra,
-              "itemOrdemCompra tableItemBookOferta"
-            )}
+          {this.renderItems(
+            this.props.tableDataVenda,
+            "itemOrdemVenda tableItemBookOferta"
+          )}
+          {this.renderItems(
+            this.props.tableDataCompra,
+            "itemOrdemCompra tableItemBookOferta"
+          )}
         </tbody>
       </Table>
     );

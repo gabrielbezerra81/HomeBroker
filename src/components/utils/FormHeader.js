@@ -69,3 +69,25 @@ export const bookHeader = (props, headerClass) => (
     </Row>
   </div>
 );
+
+export const modalHeaderSemBook = (props, headerTitle, headerClass) => (
+  <div className={`${headerClass} handle mheader`}>
+    <h6 className="mtitle">{headerTitle}</h6>
+    <div className="wrapperIconesHeader" name="book">
+      <Button variant="link" className="iconesHeader">
+        <MDBIcon icon="cog" size="2x" />
+      </Button>
+
+      <Button variant="link" className="iconesHeader" onClick={props.close}>
+        <span className="fa-stack">
+          <MDBIcon icon="circle" className="fa-stack-2x" />
+          <MDBIcon
+            icon="times"
+            className="fa-stack-1x iconeFechar"
+            name={props.name}
+          />
+        </span>
+      </Button>
+    </div>
+  </div>
+);

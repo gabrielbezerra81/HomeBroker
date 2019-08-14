@@ -1,0 +1,27 @@
+#ordens_execucao {
+  width: 1200px;
+}
+
+#ordens_execucao .mcontent {
+  min-height: 200px !important;
+  font-size: 0.7rem;
+  padding-bottom: 1.2rem;
+}
+
+.tableOrdensExecucao {
+  color: #ddd;
+  border: none;
+}
+
+.bodyOrdensExecucao .row {
+  margin: 0 0;
+}
+
+.bodyOrdensExecucao thead {
+  background-color: var(--brackground-color);
+}
+
+.bodyOrdensExecucao tbody tr {
+  border-bottom: 4px solid var(--brackground-color) !important;
+  background: #333;
+}
