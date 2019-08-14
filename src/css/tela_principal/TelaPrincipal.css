@@ -5,7 +5,7 @@
 }
 
 .conteudoMenuPrincipal {
-  flex: 9;
+  flex: 10;
   border-left: 1px solid #888;
   display: flex;
   flex-direction: column;
