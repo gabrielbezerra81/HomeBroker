@@ -5,7 +5,7 @@ import { MainAppConectado } from "MainApp";
 import BarraTopoTelaPrincipal from "components/tela_principal/BarraTopoTelaPrincipal";
 import BarraLateral from "components/tela_principal/BarraLateral";
 import OrdensExecucao from "components/forms/ordens_em_execucao/OrdensExecucao";
-import { Animate } from "react-show";
+import { Animate, easings } from "react-show";
 import { abrirFecharOrdensExecucaoAction } from "components/redux/actions/TelaPrincipalActions";
 
 const startStyle = {
@@ -22,7 +22,15 @@ class TelaPrincipal extends React.Component {
           <BarraTopoTelaPrincipal />
           <div style={{ display: "flex", height: "100%" }}>
             <BarraLateral />
-            <MainAppConectado />
+            <Animate
+              show={this.props.ordensAberto}
+              duration={250}
+              transitionOnMount
+              start={startStyle}
+              stayMounted={false}
+            >
+              <MainAppConectado />
+            </Animate>
             <Animate
               show={this.props.ordensExecucaoAberto}
               duration={250}
@@ -51,6 +59,7 @@ class TelaPrincipal extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  ordensAberto: state.telaPrincipalReducer.ordensAberto,
   ordensExecucaoAberto: state.telaPrincipalReducer.ordensExecucaoAberto
 });
 
