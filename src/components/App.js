@@ -21,15 +21,26 @@ const startStyle = {
   pointerEvents: "none"
 };
 
+const leave = {
+  // these styles will be applied when the component leaves
+  opacity: 0,
+  pointerEvents: "none"
+};
+
+const enter = {
+  // These styles will be applied when the component enters
+};
+
 const animate = (props, componente) => {
   return (
     <Animate
       show={props.show[props.indiceShow][componente.props.name]}
       duration={250}
       transitionOnMount
-      stayMounted
       preMount
+      leave={leave}
       start={startStyle}
+      enter={enter}
       id={`${componente.props.name}${props.appkey}`}
       onClick={() =>
         props.aumentarZindexAction(

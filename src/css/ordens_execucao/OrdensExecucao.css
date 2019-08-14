@@ -2,6 +2,12 @@
   width: 1200px;
 }
 
+.animateDiv {
+  position: absolute;
+  left: 300px;
+  top: 280px;
+}
+
 #ordens_execucao .mcontent {
   min-height: 200px !important;
   font-size: 0.7rem;
