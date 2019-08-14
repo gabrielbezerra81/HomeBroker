@@ -8,6 +8,7 @@ import iconeRelatorioDetalhado from "img/iconeRelatorioDetalhado.png";
 import iconeListaCompleta from "img/iconeListaCompleta.png";
 import iconeMultileg from "img/iconeMultileg.png";
 import { ocultarDIV, mostrarDIV } from "components/utils/MostrarOcultarDiv";
+import { abrirFecharOrdensExecucaoAction } from "components/redux/actions/TelaPrincipalActions";
 
 class BarraLateral extends React.Component {
   constructor(props) {
@@ -33,7 +34,16 @@ class BarraLateral extends React.Component {
           <img src={iconeAbrirOrdens} alt="Ordens" />
           <h6>ORDENS</h6>
         </div>
-        <div tabIndex={0} className="itemDivBarraLateral divClicavel">
+        <div
+          tabIndex={0}
+          className="itemDivBarraLateral divClicavel"
+          onClick={event =>
+            this.props.abrirFecharOrdensExecucaoAction(
+              event,
+              this.props.ordensExecucaoAberto
+            )
+          }
+        >
           <img src={iconeOrdensEmExecucao} alt="Ordens em execução" />
           <h6>ORDENS EM EXECUÇÃO</h6>
         </div>
@@ -58,9 +68,11 @@ class BarraLateral extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  ordensExecucaoAberto: state.telaPrincipalReducer.ordensExecucaoAberto
+});
 
 export default connect(
   mapStateToProps,
-  {}
+  { abrirFecharOrdensExecucaoAction }
 )(BarraLateral);

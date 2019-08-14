@@ -5,6 +5,13 @@ import { MainAppConectado } from "MainApp";
 import BarraTopoTelaPrincipal from "components/tela_principal/BarraTopoTelaPrincipal";
 import BarraLateral from "components/tela_principal/BarraLateral";
 import OrdensExecucao from "components/forms/ordens_em_execucao/OrdensExecucao";
+import { Animate } from "react-show";
+import { abrirFecharOrdensExecucaoAction } from "components/redux/actions/TelaPrincipalActions";
+
+const startStyle = {
+  opacity: 0,
+  pointerEvents: "none"
+};
 
 class TelaPrincipal extends React.Component {
   render() {
@@ -16,13 +23,26 @@ class TelaPrincipal extends React.Component {
           <div style={{ display: "flex", height: "100%" }}>
             <BarraLateral />
             <MainAppConectado />
-            <OrdensExecucao
-              /*close={() => {
-                this.props.fecharFormAction(this.props, "compra_agendada");
-              }}*/
-              headerTitle="ORDENS EM EXECUÇÃO"
-              name="ordens_execucao"
-            />
+            <Animate
+              show={this.props.ordensExecucaoAberto}
+              duration={250}
+              transitionOnMount
+              stayMounted
+              preMount
+              start={startStyle}
+              className="animateDiv"
+            >
+              <OrdensExecucao
+                close={event => {
+                  this.props.abrirFecharOrdensExecucaoAction(
+                    event,
+                    this.props.ordensExecucaoAberto
+                  );
+                }}
+                headerTitle="ORDENS EM EXECUÇÃO"
+                name="ordens_execucao"
+              />
+            </Animate>
           </div>
         </div>
       </div>
@@ -30,9 +50,11 @@ class TelaPrincipal extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  ordensExecucaoAberto: state.telaPrincipalReducer.ordensExecucaoAberto
+});
 
 export default connect(
   mapStateToProps,
-  {}
+  { abrirFecharOrdensExecucaoAction }
 )(TelaPrincipal);

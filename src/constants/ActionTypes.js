@@ -76,3 +76,4 @@ export const FECHAR_FORM = "fechar_form";
 //tela principal
 export const ABRIR_FECHAR_MENU_LATERAL = "abrir_fechar_menu_lateral";
 export const LOGAR_DESLOGAR_USUARIO = "logar_deslogar_usuario";
+export const ABRIR_FECHAR_ORDENS_EXECUCAO = "abrir_fechar_ordens_execucao";

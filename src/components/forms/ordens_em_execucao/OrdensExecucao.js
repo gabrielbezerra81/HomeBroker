@@ -62,32 +62,32 @@ const modalBody = props => (
               <td>{item.operacao}</td>
               <td>{item.modoExec}</td>
               <td>
-                {item.ativo.map(item => (
-                  <div>
+                {item.ativo.map((item, index2) => (
+                  <div key={index2}>
                     {item}
                     <br />
                   </div>
                 ))}
               </td>
               <td>
-                {item.oferta.map(item => (
-                  <span>
+                {item.oferta.map((item, index3) => (
+                  <span key={index3}>
                     {item}
                     <br />
                   </span>
                 ))}
               </td>
               <td>
-                {item.qtdeOferta.map(item => (
-                  <span>
+                {item.qtdeOferta.map((item, index4) => (
+                  <span key={index4}>
                     {item}
                     <br />
                   </span>
                 ))}
               </td>
               <td>
-                {item.qtdeEmAberto.map(item => (
-                  <span>
+                {item.qtdeEmAberto.map((item, index5) => (
+                  <span key={index5}>
                     {item}
                     <br />
                   </span>
@@ -95,16 +95,16 @@ const modalBody = props => (
               </td>
               <td>
                 {" "}
-                {item.qtdeExecutada.map(item => (
-                  <span>
+                {item.qtdeExecutada.map((item, index6) => (
+                  <span key={index6}>
                     {item}
                     <br />
                   </span>
                 ))}
               </td>
               <td>
-                {item.qtdeCancelada.map(item => (
-                  <span>
+                {item.qtdeCancelada.map((item, index7) => (
+                  <span key={index7}>
                     {item}
                     <br />
                   </span>
@@ -112,8 +112,8 @@ const modalBody = props => (
               </td>
               <td>{item.precoDisparo}</td>
               <td>
-                {item.precoEnvio.map(item => (
-                  <span>
+                {item.precoEnvio.map((item, index8) => (
+                  <span key={index8}>
                     {item}
                     <br />
                   </span>
@@ -124,8 +124,8 @@ const modalBody = props => (
               <td>{item.validade}</td>
               <td>{item.roteador}</td>
               <td>
-                {item.st.map(item => (
-                  <span>
+                {item.st.map((item, index9) => (
+                  <span key={index9}>
                     {item}
                     <br />
                   </span>

@@ -1,6 +1,7 @@
 import {
   ABRIR_FECHAR_MENU_LATERAL,
-  LOGAR_DESLOGAR_USUARIO
+  LOGAR_DESLOGAR_USUARIO,
+  ABRIR_FECHAR_ORDENS_EXECUCAO
 } from "constants/ActionTypes";
 
 export const abrirFecharMenuLateralAction = (event, menuLateralAberto) => {
@@ -25,6 +26,18 @@ export const deslogarUsuarioAction = (event, props) => {
     dispatch({
       type: LOGAR_DESLOGAR_USUARIO,
       payload: { usuarioConectado: "Gabriel Alencar", logado: false }
+    });
+  };
+};
+
+export const abrirFecharOrdensExecucaoAction = (
+  event,
+  ordensExecucaoAberto
+) => {
+  return dispatch => {
+    dispatch({
+      type: ABRIR_FECHAR_ORDENS_EXECUCAO,
+      payload: !ordensExecucaoAberto
     });
   };
 };
