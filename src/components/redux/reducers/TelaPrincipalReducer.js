@@ -10,7 +10,7 @@ const INITIAL_STATE = {
   menuLateralAberto: true,
   logado: true,
   valorLiquido: "15.000,00",
-  valorComprar: "3.000,00",
+  valorComprar: "3.500,00",
   ativo: "Bender",
   ordensAberto: false,
   ordensExecucaoAberto: false
