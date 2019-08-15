@@ -9,9 +9,8 @@
 }
 
 #ordens_execucao .mcontent {
-  min-height: 200px !important;
   font-size: 0.7rem;
-  padding-bottom: 1.2rem;
+  padding-bottom: 1rem;
 }
 
 .tableOrdensExecucao {
@@ -30,4 +29,12 @@
 .bodyOrdensExecucao tbody tr {
   border-bottom: 4px solid var(--brackground-color) !important;
   background: #333;
+}
+
+.divFiltrarOrdens {
+  max-width: 605px !important;
+  height: 80px !important;
+  position: relative;
+  left: 0%;
+  padding-bottom: 0.5rem;
 }

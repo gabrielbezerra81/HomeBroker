@@ -9,6 +9,10 @@ class BSModal extends Component {
     return (
       <Draggable enableUserSelectHack={false} handle=".mheader">
         <div id={this.props.id} className={this.props.classConfigAberto}>
+          {this.props.renderDivFiltrarOrdens &&
+          this.props.id === "ordens_execucao" ? (
+            <div className="mcontent divFiltrarOrdens" />
+          ) : null}
           <div className="mcontent">
             {this.props.renderHeader()}
             {this.props.renderModalBody()}

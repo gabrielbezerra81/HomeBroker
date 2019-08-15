@@ -11,6 +11,7 @@ class OrdensExecucao extends React.Component {
       <DraggableModal
         id="ordens_execucao"
         renderModalBody={() => modalBody(this.props)}
+        renderDivFiltrarOrdens={true}
         renderHeader={() =>
           modalHeaderSemBook(this.props, this.props.headerTitle, "border-green")
         }
