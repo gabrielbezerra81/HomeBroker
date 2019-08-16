@@ -13,7 +13,13 @@ const INITIAL_STATE = {
   valorComprar: "3.500,00",
   ativo: "Bender",
   ordensAberto: false,
-  ordensExecucaoAberto: false
+  ordensExecucaoAberto: true,
+  ativoFiltrarOrdens: "",
+  mercadoFiltrarOrdens: "",
+  contaFiltrarOrdens: "",
+  statusFiltrarOrdens: "",
+  dataFiltrarOrdens: "",
+  ofertaFiltrarOrdens: ""
 };
 
 export default (state = INITIAL_STATE, action) => {

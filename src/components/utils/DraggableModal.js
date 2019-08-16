@@ -3,6 +3,7 @@ import Draggable from "react-draggable";
 import ConfigurarStop from "components/forms/compra/compra_StartStop/ConfigurarStop";
 import ConfigurarStopVenda from "components/forms/venda/venda_StartStop/ConfigurarStopVenda";
 import { connect } from "react-redux";
+import FiltrarOrdens from "components/forms/ordens_em_execucao/FiltrarOrdens";
 
 class BSModal extends Component {
   render() {
@@ -11,7 +12,7 @@ class BSModal extends Component {
         <div id={this.props.id} className={this.props.classConfigAberto}>
           {this.props.renderDivFiltrarOrdens &&
           this.props.id === "ordens_execucao" ? (
-            <div className="mcontent divFiltrarOrdens" />
+            <FiltrarOrdens />
           ) : null}
           <div className="mcontent">
             {this.props.renderHeader()}

@@ -53,7 +53,7 @@ const modalBody = props => (
             <th>Msg</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="verticalAlignColunaTabela">
           {dataOrdensExecucao.map((item, index) => (
             <tr key={index}>
               <td>{item.progresso}</td>
@@ -120,13 +120,20 @@ const modalBody = props => (
                   </span>
                 ))}
               </td>
-              <td>{item.precoExecutado}</td>
+              <td>
+                {item.precoExecutado.map((item, index9) => (
+                  <span key={index9}>
+                    {item}
+                    <br />
+                  </span>
+                ))}
+              </td>
               <td>{item.cotacao}</td>
               <td>{item.validade}</td>
               <td>{item.roteador}</td>
               <td>
-                {item.st.map((item, index9) => (
-                  <span key={index9}>
+                {item.st.map((item, index10) => (
+                  <span key={index10}>
                     {item}
                     <br />
                   </span>
@@ -164,7 +171,7 @@ const dataOrdensExecucao = [
     qtdeCancelada: [0, 0],
     precoDisparo: "0,20",
     precoEnvio: ["2,70", "2,50"],
-    precoExecutado: "0,20",
+    precoExecutado: ["0,20", "0,20"],
     cotacao: "",
     validade: "",
     roteador: "MT5",
@@ -186,7 +193,7 @@ const dataOrdensExecucao = [
     qtdeCancelada: [0, 0],
     precoDisparo: "0,20",
     precoEnvio: ["2,70", "2,50"],
-    precoExecutado: "0,20",
+    precoExecutado: ["0,20", "0,20"],
     cotacao: "",
     validade: "",
     roteador: "MT5",
@@ -208,7 +215,7 @@ const dataOrdensExecucao = [
     qtdeCancelada: [0, 0],
     precoDisparo: "0,20",
     precoEnvio: ["2,70", "2,50"],
-    precoExecutado: "0,20",
+    precoExecutado: ["0,20", "0,20"],
     cotacao: "",
     validade: "",
     roteador: "MT5",
