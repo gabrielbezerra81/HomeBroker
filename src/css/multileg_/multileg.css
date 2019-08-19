@@ -2,12 +2,6 @@
   width: 1200px;
 }
 
-.animateDivMultileg {
-  position: absolute;
-  left: 300px;
-  top: 610px;
-}
-
 #multileg .mcontent {
   font-size: 0.7rem;
   padding-bottom: 1rem;

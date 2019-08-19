@@ -1,11 +1,6 @@
 #ordens_execucao {
   width: 1200px;
-}
-
-.animateDiv {
-  position: absolute;
-  left: 300px;
-  top: 280px;
+  position: relative;
 }
 
 #ordens_execucao .mcontent {

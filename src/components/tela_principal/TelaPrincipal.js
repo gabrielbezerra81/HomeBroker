@@ -23,52 +23,51 @@ class TelaPrincipal extends React.Component {
           <BarraTopoTelaPrincipal />
           <div style={{ display: "flex", height: "100%" }}>
             <BarraLateral />
-            <Animate
-              show={this.props.ordensAberto}
-              duration={250}
-              transitionOnMount
-              start={startStyle}
-              stayMounted={false}
-              className="animatedivOrdens"
-            >
-              <MainAppConectado />
-            </Animate>
-            <Animate
-              show={this.props.ordensExecucaoAberto}
-              duration={250}
-              transitionOnMount
-              stayMounted
-              start={startStyle}
-              className="animateDiv"
-            >
-              <OrdensExecucao
-                close={() => {
-                  this.props.abrirItemBarraLateralAction(
-                    this.props,
-                    "ordensExecucaoAberto"
-                  );
-                }}
-                headerTitle="ORDENS EM EXECUÇÃO"
-              />
-            </Animate>
-            <Animate
-              className="animateDivMultileg"
-              show={this.props.multilegAberto}
-              duration={250}
-              transitionOnMount
-              stayMounted
-              start={startStyle}
-            >
-              <Multileg
-                close={() => {
-                  this.props.abrirItemBarraLateralAction(
-                    this.props,
-                    "multilegAberto"
-                  );
-                }}
-                headerTitle="MULTILEG"
-              />
-            </Animate>
+            <div>
+              <Animate
+                show={this.props.ordensAberto}
+                duration={250}
+                transitionOnMount
+                stayMounted={false}
+                start={startStyle}
+              >
+                <MainAppConectado />
+              </Animate>
+              <Animate
+                show={this.props.ordensExecucaoAberto}
+                duration={250}
+                transitionOnMount
+                stayMounted={false}
+                start={startStyle}
+              >
+                <OrdensExecucao
+                  close={() => {
+                    this.props.abrirItemBarraLateralAction(
+                      this.props,
+                      "ordensExecucaoAberto"
+                    );
+                  }}
+                  headerTitle="ORDENS EM EXECUÇÃO"
+                />
+              </Animate>
+              <Animate
+                show={this.props.multilegAberto}
+                duration={250}
+                transitionOnMount
+                stayMounted={false}
+                start={startStyle}
+              >
+                <Multileg
+                  close={() => {
+                    this.props.abrirItemBarraLateralAction(
+                      this.props,
+                      "multilegAberto"
+                    );
+                  }}
+                  headerTitle="MULTILEG"
+                />
+              </Animate>
+            </div>
           </div>
         </div>
       </div>
