@@ -1,8 +1,7 @@
 import {
   ABRIR_FECHAR_MENU_LATERAL,
   LOGAR_DESLOGAR_USUARIO,
-  ABRIR_FECHAR_ORDENS_EXECUCAO,
-  ABRIR_FECHAR_ORDENS
+  ABRIR_FECHAR_ITEM_BARRA_LATERAL
 } from "constants/ActionTypes";
 
 const INITIAL_STATE = {
@@ -13,7 +12,8 @@ const INITIAL_STATE = {
   valorComprar: "3.500,00",
   ativo: "Bender",
   ordensAberto: false,
-  ordensExecucaoAberto: true,
+  ordensExecucaoAberto: false,
+  multilegAberto: true,
   ativoFiltrarOrdens: "",
   mercadoFiltrarOrdens: "",
   contaFiltrarOrdens: "",
@@ -32,10 +32,8 @@ export default (state = INITIAL_STATE, action) => {
         usuarioConectado: action.payload.usuarioConectado,
         logado: action.payload.logado
       };
-    case ABRIR_FECHAR_ORDENS:
-      return { ...state, ordensAberto: action.payload };
-    case ABRIR_FECHAR_ORDENS_EXECUCAO:
-      return { ...state, ordensExecucaoAberto: action.payload };
+    case ABRIR_FECHAR_ITEM_BARRA_LATERAL:
+      return { ...state, [action.payload.name]: action.payload.valor };
     default:
       return state;
   }

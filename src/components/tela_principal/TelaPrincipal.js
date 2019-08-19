@@ -5,8 +5,9 @@ import { MainAppConectado } from "MainApp";
 import BarraTopoTelaPrincipal from "components/tela_principal/BarraTopoTelaPrincipal";
 import BarraLateral from "components/tela_principal/BarraLateral";
 import OrdensExecucao from "components/forms/ordens_em_execucao/OrdensExecucao";
-import { Animate, easings } from "react-show";
-import { abrirFecharOrdensExecucaoAction } from "components/redux/actions/TelaPrincipalActions";
+import { Animate } from "react-show";
+import { abrirItemBarraLateralAction } from "components/redux/actions/TelaPrincipalActions";
+import Multileg from "components/forms/multileg_/Multileg";
 
 const startStyle = {
   opacity: 0,
@@ -41,14 +42,31 @@ class TelaPrincipal extends React.Component {
               className="animateDiv"
             >
               <OrdensExecucao
-                close={event => {
-                  this.props.abrirFecharOrdensExecucaoAction(
-                    event,
-                    this.props.ordensExecucaoAberto
+                close={() => {
+                  this.props.abrirItemBarraLateralAction(
+                    this.props,
+                    "ordensExecucaoAberto"
                   );
                 }}
                 headerTitle="ORDENS EM EXECUÇÃO"
-                name="ordens_execucao"
+              />
+            </Animate>
+            <Animate
+              className="animateDivMultileg"
+              show={this.props.multilegAberto}
+              duration={250}
+              transitionOnMount
+              stayMounted
+              start={startStyle}
+            >
+              <Multileg
+                close={() => {
+                  this.props.abrirItemBarraLateralAction(
+                    this.props,
+                    "multilegAberto"
+                  );
+                }}
+                headerTitle="MULTILEG"
               />
             </Animate>
           </div>
@@ -60,10 +78,11 @@ class TelaPrincipal extends React.Component {
 
 const mapStateToProps = state => ({
   ordensAberto: state.telaPrincipalReducer.ordensAberto,
-  ordensExecucaoAberto: state.telaPrincipalReducer.ordensExecucaoAberto
+  ordensExecucaoAberto: state.telaPrincipalReducer.ordensExecucaoAberto,
+  multilegAberto: state.telaPrincipalReducer.multilegAberto
 });
 
 export default connect(
   mapStateToProps,
-  { abrirFecharOrdensExecucaoAction }
+  { abrirItemBarraLateralAction }
 )(TelaPrincipal);

@@ -21,6 +21,7 @@ import "./venda/VendaStopMovel.css";
 import "./venda/VendaGainReducao.css";
 import "./venda/VendaFormConfigurar.css";
 
-import "./tela_principal/TelaPrincipal.css"
-import "./tela_principal/MenuLateral.css"
-import "./ordens_execucao/OrdensExecucao.css"
+import "./tela_principal/TelaPrincipal.css";
+import "./tela_principal/MenuLateral.css";
+import "./ordens_execucao/OrdensExecucao.css";
+import "./multileg_/multileg.css";

@@ -7,29 +7,17 @@ import iconePosicao from "img/iconePosicao.png";
 import iconeRelatorioDetalhado from "img/iconeRelatorioDetalhado.png";
 import iconeListaCompleta from "img/iconeListaCompleta.png";
 import iconeMultileg from "img/iconeMultileg.png";
-import { ocultarDIV, mostrarDIV } from "components/utils/MostrarOcultarDiv";
-import {
-  abrirFecharOrdensAction,
-  abrirFecharOrdensExecucaoAction
-} from "components/redux/actions/TelaPrincipalActions";
+import { abrirItemBarraLateralAction } from "components/redux/actions/TelaPrincipalActions";
 
 class BarraLateral extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      divOrdens: false
-    };
-  }
-
   render() {
     return (
       <div className="divBarraLateral">
         <div
           tabIndex={0}
           className="itemDivBarraLateral divClicavel"
-          onClick={event =>
-            this.props.abrirFecharOrdensAction(event, this.props.ordensAberto)
+          onClick={() =>
+            this.props.abrirItemBarraLateralAction(this.props, "ordensAberto")
           }
         >
           <img src={iconeAbrirOrdens} alt="Ordens" />
@@ -38,10 +26,10 @@ class BarraLateral extends React.Component {
         <div
           tabIndex={0}
           className="itemDivBarraLateral divClicavel"
-          onClick={event =>
-            this.props.abrirFecharOrdensExecucaoAction(
-              event,
-              this.props.ordensExecucaoAberto
+          onClick={() =>
+            this.props.abrirItemBarraLateralAction(
+              this.props,
+              "ordensExecucaoAberto"
             )
           }
         >
@@ -60,7 +48,13 @@ class BarraLateral extends React.Component {
           <img src={iconeListaCompleta} alt="Lista completa" />
           <h6>LISTA COMPLETA</h6>
         </div>
-        <div tabIndex={0} className="itemDivBarraLateral divClicavel">
+        <div
+          tabIndex={0}
+          className="itemDivBarraLateral divClicavel"
+          onClick={() =>
+            this.props.abrirItemBarraLateralAction(this.props, "multilegAberto")
+          }
+        >
           <img src={iconeMultileg} alt="Multileg" />
           <h6>MULTILEG</h6>
         </div>
@@ -71,10 +65,11 @@ class BarraLateral extends React.Component {
 
 const mapStateToProps = state => ({
   ordensAberto: state.telaPrincipalReducer.ordensAberto,
-  ordensExecucaoAberto: state.telaPrincipalReducer.ordensExecucaoAberto
+  ordensExecucaoAberto: state.telaPrincipalReducer.ordensExecucaoAberto,
+  multilegAberto: state.telaPrincipalReducer.multilegAberto
 });
 
 export default connect(
   mapStateToProps,
-  { abrirFecharOrdensAction, abrirFecharOrdensExecucaoAction }
+  { abrirItemBarraLateralAction }
 )(BarraLateral);

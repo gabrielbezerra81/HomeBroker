@@ -1,0 +1,23 @@
+#multileg {
+  width: 1200px;
+}
+
+.animateDivMultileg {
+  position: absolute;
+  left: 300px;
+  top: 610px;
+}
+
+#multileg .mcontent {
+  font-size: 0.7rem;
+  padding-bottom: 1rem;
+}
+
+.bodyMultilegTESTE tbody tr {
+  border-bottom: 4px solid var(--brackground-color) !important;
+  background: #333;
+}
+
+.bodyMultiTESTE .row {
+  margin: 0 0;
+}

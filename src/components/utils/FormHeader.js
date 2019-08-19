@@ -78,11 +78,7 @@ export const modalHeaderSemBook = (props, headerTitle, headerClass) => (
         <MDBIcon icon="cog" size="2x" />
       </Button>
 
-      <Button
-        variant="link"
-        className="iconesHeader"
-        onClick={event => props.close(event)}
-      >
+      <Button variant="link" className="iconesHeader" onClick={props.close}>
         <span className="fa-stack">
           <MDBIcon icon="circle" className="fa-stack-2x" />
           <MDBIcon
