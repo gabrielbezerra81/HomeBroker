@@ -32,6 +32,16 @@ import iconeVendaLimitada from "img/venda/iconeVendaLimitada.png";
 import iconeVendaAgendada from "img/venda/iconeVendaAgendada.png";
 import iconeVendaStartStop from "img/venda/iconeVendaStartStop.png";
 import iconeVendaStopMovel from "img/venda/iconeVendaStopMovel.png";
+import { Animate } from "react-show";
+import {
+  mouseOverAction,
+  mouseLeaveAction
+} from "components/redux/actions/TelaPrincipalActions";
+
+const startStyle = {
+  opacity: 0,
+  pointerEvents: "none"
+};
 
 export const GlobalContext = React.createContext();
 export const localContext = React.createContext();
@@ -73,115 +83,154 @@ export const Helper = () => {
 class MainApp extends Component {
   render() {
     return (
-      <div className="divOrdens" id="divOrdens">
-        <Row className="rowOrdensTracejada">
-          <img src={iconeCompra} alt="" />
-          <div className="divBotaoFormulario">
-            <img
-              src={iconeCompraMercado}
-              alt=""
-              onClick={event => this.props.abrirFormAction(event, this.props)}
-              name="compra_mercado"
-              className="divClicavel"
-            />
-            <span>A mercado</span>
+      <div>
+        <Animate
+          show={this.props.ordensAberto}
+          duration={100}
+          transitionOnMount
+          stayMounted={false}
+          start={startStyle}
+        >
+          <div
+            className="divOrdens"
+            id="divOrdens"
+            onMouseOver={() =>
+              this.props.mouseOverAction(this.props, "ordensAberto")
+            }
+            onMouseLeave={() =>
+              this.props.mouseLeaveAction(this.props, "ordensAberto")
+            }
+          >
+            <Row className="rowOrdensTracejada">
+              <img src={iconeCompra} alt="" />
+              <div className="divBotaoFormulario">
+                <img
+                  src={iconeCompraMercado}
+                  alt=""
+                  onClick={event =>
+                    this.props.abrirFormAction(event, this.props)
+                  }
+                  name="compra_mercado"
+                  className="divClicavel"
+                />
+                <span>A mercado</span>
+              </div>
+              <div className="divBotaoFormulario">
+                <img
+                  src={iconeCompraLimitada}
+                  alt=""
+                  onClick={event =>
+                    this.props.abrirFormAction(event, this.props)
+                  }
+                  name="compra_limitada"
+                  className="divClicavel"
+                />
+                <span>Limitada</span>
+              </div>
+              <div className="divBotaoFormulario">
+                <img
+                  src={iconeCompraAgendada}
+                  alt=""
+                  onClick={event =>
+                    this.props.abrirFormAction(event, this.props)
+                  }
+                  name="compra_agendada"
+                  className="divClicavel"
+                />
+                <span>Agendada</span>
+              </div>
+              <div className="divBotaoFormulario">
+                <img
+                  src={iconeCompraStartStop}
+                  alt=""
+                  onClick={event =>
+                    this.props.abrirFormAction(event, this.props)
+                  }
+                  name="compra_startstop"
+                  className="divClicavel"
+                />
+                <span>Start/Stop</span>
+              </div>
+              <div className="divBotaoFormulario">
+                <img
+                  src={iconeCompraStartMovel}
+                  alt=""
+                  onClick={event =>
+                    this.props.abrirFormAction(event, this.props)
+                  }
+                  name="compra_startmovel"
+                  className="divClicavel"
+                />
+                <span>Start Móvel</span>
+              </div>
+            </Row>
+            <Row className="rowOrdensTracejada">
+              <img src={iconeVenda} alt="" className="imagemVenda" />
+              <div className="divBotaoFormulario">
+                <img
+                  src={iconeVendaMercado}
+                  alt=""
+                  name="venda_mercado"
+                  onClick={event =>
+                    this.props.abrirFormAction(event, this.props)
+                  }
+                  className="divClicavel"
+                />
+                <span>A mercado</span>
+              </div>
+              <div className="divBotaoFormulario">
+                <img
+                  src={iconeVendaLimitada}
+                  alt=""
+                  name="venda_limitada"
+                  onClick={event =>
+                    this.props.abrirFormAction(event, this.props)
+                  }
+                  className="divClicavel"
+                />
+                <span>Limitada</span>
+              </div>
+              <div className="divBotaoFormulario">
+                <img
+                  src={iconeVendaAgendada}
+                  alt=""
+                  name="venda_agendada"
+                  onClick={event =>
+                    this.props.abrirFormAction(event, this.props)
+                  }
+                  className="divClicavel"
+                />
+                <span>Agendada</span>
+              </div>
+              <div className="divBotaoFormulario">
+                <img
+                  src={iconeVendaStartStop}
+                  alt=""
+                  name="venda_startstop"
+                  onClick={event =>
+                    this.props.abrirFormAction(event, this.props)
+                  }
+                  className="divClicavel"
+                />
+                <span>Start/Stop</span>
+              </div>
+              <div className="divBotaoFormulario">
+                <img
+                  src={iconeVendaStopMovel}
+                  alt=""
+                  name="venda_stop_movel"
+                  onClick={event =>
+                    this.props.abrirFormAction(event, this.props)
+                  }
+                  className="divClicavel"
+                />
+                <span>Stop Móvel</span>
+              </div>
+            </Row>
+            <Row />
           </div>
-          <div className="divBotaoFormulario">
-            <img
-              src={iconeCompraLimitada}
-              alt=""
-              onClick={event => this.props.abrirFormAction(event, this.props)}
-              name="compra_limitada"
-              className="divClicavel"
-            />
-            <span>Limitada</span>
-          </div>
-          <div className="divBotaoFormulario">
-            <img
-              src={iconeCompraAgendada}
-              alt=""
-              onClick={event => this.props.abrirFormAction(event, this.props)}
-              name="compra_agendada"
-              className="divClicavel"
-            />
-            <span>Agendada</span>
-          </div>
-          <div className="divBotaoFormulario">
-            <img
-              src={iconeCompraStartStop}
-              alt=""
-              onClick={event => this.props.abrirFormAction(event, this.props)}
-              name="compra_startstop"
-              className="divClicavel"
-            />
-            <span>Start/Stop</span>
-          </div>
-          <div className="divBotaoFormulario">
-            <img
-              src={iconeCompraStartMovel}
-              alt=""
-              onClick={event => this.props.abrirFormAction(event, this.props)}
-              name="compra_startmovel"
-              className="divClicavel"
-            />
-            <span>Start Móvel</span>
-          </div>
-        </Row>
-        <Row className="rowOrdensTracejada">
-          <img src={iconeVenda} alt="" className="imagemVenda" />
-          <div className="divBotaoFormulario">
-            <img
-              src={iconeVendaMercado}
-              alt=""
-              name="venda_mercado"
-              onClick={event => this.props.abrirFormAction(event, this.props)}
-              className="divClicavel"
-            />
-            <span>A mercado</span>
-          </div>
-          <div className="divBotaoFormulario">
-            <img
-              src={iconeVendaLimitada}
-              alt=""
-              name="venda_limitada"
-              onClick={event => this.props.abrirFormAction(event, this.props)}
-              className="divClicavel"
-            />
-            <span>Limitada</span>
-          </div>
-          <div className="divBotaoFormulario">
-            <img
-              src={iconeVendaAgendada}
-              alt=""
-              name="venda_agendada"
-              onClick={event => this.props.abrirFormAction(event, this.props)}
-              className="divClicavel"
-            />
-            <span>Agendada</span>
-          </div>
-          <div className="divBotaoFormulario">
-            <img
-              src={iconeVendaStartStop}
-              alt=""
-              name="venda_startstop"
-              onClick={event => this.props.abrirFormAction(event, this.props)}
-              className="divClicavel"
-            />
-            <span>Start/Stop</span>
-          </div>
-          <div className="divBotaoFormulario">
-            <img
-              src={iconeVendaStopMovel}
-              alt=""
-              name="venda_stop_movel"
-              onClick={event => this.props.abrirFormAction(event, this.props)}
-              className="divClicavel"
-            />
-            <span>Stop Móvel</span>
-          </div>
-        </Row>
-        <Row />
-        <div>{this.props.apps.map(Subapp => Subapp)}</div>
+        </Animate>
+        {this.props.apps.map(Subapp => Subapp)}
       </div>
     );
   }
@@ -221,17 +270,27 @@ const mapStateToProps = state => {
 
 const mapStateToPropsLocal = state => ({});
 
-export const MainAppConectado = connect(
-  mapStateToProps,
-  {
-    criarMostrarAppAction,
-    mostrarAppAction,
-    atualizarShowAction,
-    atualizarDivKeyAction,
-    abrirFormAction
-  },
-  null,
-  { context: GlobalContext }
+const mapStateToPropsAppPrincipal = state => ({
+  ordensAberto: state.telaPrincipalReducer.ordensAberto
+});
+
+export const MainAppConectado = compose(
+  connect(
+    mapStateToProps,
+    {
+      criarMostrarAppAction,
+      mostrarAppAction,
+      atualizarShowAction,
+      atualizarDivKeyAction,
+      abrirFormAction
+    },
+    null,
+    { context: GlobalContext }
+  ),
+  connect(
+    mapStateToPropsAppPrincipal,
+    { mouseOverAction, mouseLeaveAction }
+  )
 )(MainApp);
 
 export const SubAppConectado = connect(

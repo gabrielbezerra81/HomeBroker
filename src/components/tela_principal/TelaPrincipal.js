@@ -24,18 +24,10 @@ class TelaPrincipal extends React.Component {
           <div style={{ display: "flex", height: "100%" }}>
             <BarraLateral />
             <div>
-              <Animate
-                show={this.props.ordensAberto}
-                duration={250}
-                transitionOnMount
-                stayMounted={false}
-                start={startStyle}
-              >
-                <MainAppConectado />
-              </Animate>
+              <MainAppConectado />
               <Animate
                 show={this.props.ordensExecucaoAberto}
-                duration={250}
+                duration={100}
                 transitionOnMount
                 stayMounted={false}
                 start={startStyle}
@@ -52,7 +44,7 @@ class TelaPrincipal extends React.Component {
               </Animate>
               <Animate
                 show={this.props.multilegAberto}
-                duration={250}
+                duration={100}
                 transitionOnMount
                 stayMounted={false}
                 start={startStyle}
@@ -76,7 +68,6 @@ class TelaPrincipal extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  ordensAberto: state.telaPrincipalReducer.ordensAberto,
   ordensExecucaoAberto: state.telaPrincipalReducer.ordensExecucaoAberto,
   posicaoAberta: state.telaPrincipalReducer.posicaoAberta,
   relatorioDetalhadoAberto: state.telaPrincipalReducer.relatorioDetalhadoAberto,

@@ -38,3 +38,21 @@ export const abrirItemBarraLateralAction = (props, nameVariavelReducer) => {
     });
   };
 };
+
+export const mouseOverAction = (props, nameVariavelReducer) => {
+  return dispatch => {
+    dispatch({
+      type: ABRIR_FECHAR_ITEM_BARRA_LATERAL,
+      payload: { name: nameVariavelReducer, valor: true }
+    });
+  };
+};
+
+export const mouseLeaveAction = (props, nameVariavelReducer) => {
+  return dispatch => {
+    dispatch({
+      type: ABRIR_FECHAR_ITEM_BARRA_LATERAL,
+      payload: { name: nameVariavelReducer, valor: false }
+    });
+  };
+};

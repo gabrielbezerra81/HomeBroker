@@ -7,7 +7,11 @@ import iconePosicao from "img/iconePosicao.png";
 import iconeRelatorioDetalhado from "img/iconeRelatorioDetalhado.png";
 import iconeListaCompleta from "img/iconeListaCompleta.png";
 import iconeMultileg from "img/iconeMultileg.png";
-import { abrirItemBarraLateralAction } from "components/redux/actions/TelaPrincipalActions";
+import {
+  abrirItemBarraLateralAction,
+  mouseOverAction,
+  mouseLeaveAction
+} from "components/redux/actions/TelaPrincipalActions";
 
 class BarraLateral extends React.Component {
   render() {
@@ -16,8 +20,11 @@ class BarraLateral extends React.Component {
         <div
           tabIndex={0}
           className="itemDivBarraLateral divClicavel"
-          onClick={() =>
-            this.props.abrirItemBarraLateralAction(this.props, "ordensAberto")
+          onMouseOver={() =>
+            this.props.mouseOverAction(this.props, "ordensAberto")
+          }
+          onMouseLeave={() =>
+            this.props.mouseLeaveAction(this.props, "ordensAberto")
           }
         >
           <img src={iconeAbrirOrdens} alt="Ordens" />
@@ -74,5 +81,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { abrirItemBarraLateralAction }
+  { abrirItemBarraLateralAction, mouseOverAction, mouseLeaveAction }
 )(BarraLateral);

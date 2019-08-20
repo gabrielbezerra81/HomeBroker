@@ -25,7 +25,7 @@ const animate = (props, Componente) => {
   return (
     <Animate
       show={props.show[props.indiceShow][Componente.props.name]}
-      duration={props.show[props.indiceShow][Componente.props.name] ? 300 : 0}
+      duration={props.show[props.indiceShow][Componente.props.name] ? 100 : 0}
       transitionOnMount
       preMount
       start={startStyle}
