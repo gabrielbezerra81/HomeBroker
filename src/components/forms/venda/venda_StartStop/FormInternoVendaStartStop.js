@@ -19,6 +19,7 @@ import {
 import RowFormValidade from "components/utils/RowFormValidade";
 import RowFormAssinatura from "components/utils/RowFormAssinatura";
 import { VENDA_STARTSTOP_NAMESPACE } from "constants/ActionTypes";
+import { iconeConfigAbrirFormulario } from "components/utils/IconesConfigFormInterno";
 
 class FormInternoVendaStartStop extends React.Component {
   render() {
@@ -115,13 +116,10 @@ class FormInternoVendaStartStop extends React.Component {
                 </Form.Group>
               </Col>
               <Col md={1} className="colIconeConfig">
-                <Button variant="link" className="operation-icons">
-                  <MDBIcon
-                    icon="cog"
-                    size="2x"
-                    className="labelInput-verticalAlign"
-                  />
-                </Button>
+                {iconeConfigAbrirFormulario(
+                  this.props.handleShow,
+                  "venda_stop_movel"
+                )}
               </Col>
             </Row>
             <Row>
@@ -165,13 +163,10 @@ class FormInternoVendaStartStop extends React.Component {
                 </Form.Group>
               </Col>
               <Col md={1} className="colIconeConfig">
-                <Button variant="link" className="operation-icons">
-                  <MDBIcon
-                    icon="cog"
-                    size="2x"
-                    className="labelInput-verticalAlign"
-                  />
-                </Button>
+                {iconeConfigAbrirFormulario(
+                  this.props.handleShow,
+                  "venda_gainreducao"
+                )}
               </Col>
             </Row>
           </Form>

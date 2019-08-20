@@ -22,6 +22,7 @@ import RowFormAssinatura from "components/utils/RowFormAssinatura";
 import { COMPRA_LIMITADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalLimitada } from "components/utils/CalculoValorTotal";
 import { compraLimitadaAction } from "components/redux/actions/SubAppActions";
+import { iconeConfigAbrirFormulario } from "components/utils/IconesConfigFormInterno";
 
 class FormInternoCompraLimitada extends React.Component {
   render() {
@@ -148,13 +149,10 @@ class FormInternoCompraLimitada extends React.Component {
                 </Form.Group>
               </Col>
               <Col md={1} className="colIconeConfig">
-                <Button variant="link" className="operation-icons">
-                  <MDBIcon
-                    icon="cog"
-                    size="2x"
-                    className="labelInput-verticalAlign"
-                  />
-                </Button>
+                {iconeConfigAbrirFormulario(
+                  this.props.handleShow,
+                  "compra_gainreducao"
+                )}
               </Col>
             </Row>
 
@@ -199,13 +197,10 @@ class FormInternoCompraLimitada extends React.Component {
                 </Form.Group>
               </Col>
               <Col md={1} className="colIconeConfig">
-                <Button variant="link" className="operation-icons">
-                  <MDBIcon
-                    icon="cog"
-                    size="2x"
-                    className="labelInput-verticalAlign"
-                  />
-                </Button>
+                {iconeConfigAbrirFormulario(
+                  this.props.handleShow,
+                  "venda_stop_movel"
+                )}
               </Col>
             </Row>
           </Form>

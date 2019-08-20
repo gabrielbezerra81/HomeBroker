@@ -16,8 +16,13 @@ class CompraMercado extends React.Component {
         headerTitle={this.props.headerTitle}
         renderModalBody={() => modalBody(this.props)}
         headerClass="border-green"
-        renderHeader={(resetPosition) =>
-          modalHeader(this.props, this.props.headerTitle, "border-green",resetPosition)
+        renderHeader={resetPosition =>
+          modalHeader(
+            this.props,
+            this.props.headerTitle,
+            "border-green",
+            resetPosition
+          )
         }
       />
     );
@@ -28,7 +33,7 @@ const modalBody = props => (
   <div className="mbody">
     <BodyHeaderCompraMercado />
     <Row>
-      <FormInternoCompraMercado />
+      <FormInternoCompraMercado handleShow={props.handleShow} />
       <GraficoCompraMercado handleShow={props.handleShow} />
     </Row>
   </div>

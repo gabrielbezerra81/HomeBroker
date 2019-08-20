@@ -31,7 +31,7 @@ const modalBody = props => (
   <div className="mbody">
     <BodyHeaderVendaMercado />
     <Row>
-      <FormInternoVendaMercado />
+      <FormInternoVendaMercado handleShow={props.handleShow}/>
       <GraficoVendaMercado handleShow={props.handleShow} />
     </Row>
   </div>

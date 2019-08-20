@@ -15,7 +15,12 @@ class CompraAgendada extends React.Component {
         id="compra_agendada"
         renderModalBody={() => modalBody(this.props)}
         renderHeader={resetPosition =>
-          modalHeader(this.props, this.props.headerTitle, "border-green", resetPosition)
+          modalHeader(
+            this.props,
+            this.props.headerTitle,
+            "border-green",
+            resetPosition
+          )
         }
       />
     );
@@ -26,7 +31,7 @@ const modalBody = props => (
   <div className="mbody">
     <BodyHeaderCompraAgendada />
     <Row>
-      <FormInternoCompraAgendada />
+      <FormInternoCompraAgendada handleShow={props.handleShow} />
       <GraficoCompraAgendada handleShow={props.handleShow} />
     </Row>
   </div>

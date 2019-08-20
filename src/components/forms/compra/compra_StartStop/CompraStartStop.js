@@ -14,10 +14,15 @@ class CompraStartStop extends React.Component {
       <DraggableModal
         id="comprastartstop"
         headerTitle={this.props.headerTitle}
-        renderModalBody={() => modalBody()}
+        renderModalBody={() => modalBody(this.props)}
         headerClass="border-green"
-        renderHeader={(resetPosition) =>
-          modalHeader(this.props, this.props.headerTitle, "border-green",resetPosition)
+        renderHeader={resetPosition =>
+          modalHeader(
+            this.props,
+            this.props.headerTitle,
+            "border-green",
+            resetPosition
+          )
         }
         renderConfigForm={this.props.config_compra}
         classConfigAberto={this.props.config_compra ? "configStopAberto" : null}
@@ -26,11 +31,11 @@ class CompraStartStop extends React.Component {
   }
 }
 
-const modalBody = () => (
+const modalBody = props => (
   <div className="mbody">
     <BodyHeaderCompraStartStop />
     <Row>
-      <FormInternoCompraStartStop />
+      <FormInternoCompraStartStop handleShow={props.handleShow} />
       <GraficoCompraStartStop />
     </Row>
   </div>

@@ -29,7 +29,7 @@ const modalBody = props => (
   <div className="mbody">
     <BodyHeaderVendaAgendada />
     <Row>
-      <FormInternoVendaAgendada />
+      <FormInternoVendaAgendada handleShow={props.handleShow}/>
       <GraficoVendaAgendada handleShow={props.handleShow} />
     </Row>
   </div>

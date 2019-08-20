@@ -21,6 +21,7 @@ import RowFormValidade from "components/utils/RowFormValidade";
 import RowFormAssinatura from "components/utils/RowFormAssinatura";
 import { VENDA_LIMITADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalLimitada } from "components/utils/CalculoValorTotal";
+import { iconeConfigAbrirFormulario } from "components/utils/IconesConfigFormInterno";
 
 class FormInternoVendaLimitada extends React.Component {
   render() {
@@ -144,13 +145,10 @@ class FormInternoVendaLimitada extends React.Component {
                 </Form.Group>
               </Col>
               <Col md={1} className="colIconeConfig">
-                <Button variant="link" className="operation-icons">
-                  <MDBIcon
-                    icon="cog"
-                    size="2x"
-                    className="labelInput-verticalAlign"
-                  />
-                </Button>
+                {iconeConfigAbrirFormulario(
+                  this.props.handleShow,
+                  "venda_stop_movel"
+                )}
               </Col>
             </Row>
             <Row>
@@ -194,13 +192,10 @@ class FormInternoVendaLimitada extends React.Component {
                 </Form.Group>
               </Col>
               <Col md={1} className="colIconeConfig">
-                <Button variant="link" className="operation-icons">
-                  <MDBIcon
-                    icon="cog"
-                    size="2x"
-                    className="labelInput-verticalAlign"
-                  />
-                </Button>
+                {iconeConfigAbrirFormulario(
+                  this.props.handleShow,
+                  "venda_gainreducao"
+                )}
               </Col>
             </Row>
           </Form>

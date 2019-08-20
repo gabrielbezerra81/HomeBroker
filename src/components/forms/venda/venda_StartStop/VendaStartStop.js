@@ -18,7 +18,7 @@ class VendaStartStop extends React.Component {
       <DraggableModal
         id="vendastartstop"
         headerTitle={this.props.headerTitle}
-        renderModalBody={() => modalBody()}
+        renderModalBody={() => modalBody(this.props)}
         headerClass="border-green"
         renderHeader={(resetPosition) =>
           modalHeader(this.props, this.props.headerTitle, "border-green",resetPosition)
@@ -30,11 +30,11 @@ class VendaStartStop extends React.Component {
   }
 }
 
-const modalBody = () => (
+const modalBody = (props) => (
   <div className="mbody">
     <BodyHeaderVendaStartStop />
     <Row>
-      <FormInternoVendaStartStop />
+      <FormInternoVendaStartStop handleShow={props.handleShow}/>
       <GraficoVendaStartStop />
     </Row>
   </div>

@@ -22,6 +22,7 @@ import RowFormValidade from "components/utils/RowFormValidade";
 import RowFormAssinatura from "components/utils/RowFormAssinatura";
 import { VENDA_AGENDADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalAgendada } from "components/utils/CalculoValorTotal";
+import { iconeConfigAbrirFormulario } from "components/utils/IconesConfigFormInterno";
 
 class FormInternoVendaAgendada extends React.Component {
   render() {
@@ -170,13 +171,10 @@ class FormInternoVendaAgendada extends React.Component {
                 </Form.Group>
               </Col>
               <Col md={1} className="colIconeConfig">
-                <Button variant="link" className="operation-icons">
-                  <MDBIcon
-                    icon="cog"
-                    size="2x"
-                    className="labelInput-verticalAlign"
-                  />
-                </Button>
+                {iconeConfigAbrirFormulario(
+                  this.props.handleShow,
+                  "venda_stop_movel"
+                )}
               </Col>
             </Row>
             <Row>
@@ -220,13 +218,10 @@ class FormInternoVendaAgendada extends React.Component {
                 </Form.Group>
               </Col>
               <Col md={1} className="colIconeConfig">
-                <Button variant="link" className="operation-icons">
-                  <MDBIcon
-                    icon="cog"
-                    size="2x"
-                    className="labelInput-verticalAlign"
-                  />
-                </Button>
+                {iconeConfigAbrirFormulario(
+                  this.props.handleShow,
+                  "venda_gainreducao"
+                )}
               </Col>
             </Row>
           </Form>

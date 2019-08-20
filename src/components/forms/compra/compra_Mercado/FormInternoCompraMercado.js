@@ -21,6 +21,7 @@ import RowFormAssinatura from "components/utils/RowFormAssinatura";
 import { COMPRA_MERCADO_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorAproximadoMercado } from "components/utils/CalculoValorTotal";
 import { compraMercadoAction } from "components/redux/actions/SubAppActions";
+import { iconeConfigAbrirFormulario } from "components/utils/IconesConfigFormInterno";
 
 class FormInternoCompraMercado extends React.Component {
   render() {
@@ -126,13 +127,10 @@ class FormInternoCompraMercado extends React.Component {
                 </Form.Group>
               </Col>
               <Col md={1} className="colIconeConfig">
-                <Button variant="link" className="operation-icons">
-                  <MDBIcon
-                    icon="cog"
-                    size="2x"
-                    className="labelInput-verticalAlign"
-                  />
-                </Button>
+                {iconeConfigAbrirFormulario(
+                  this.props.handleShow,
+                  "compra_gainreducao"
+                )}
               </Col>
             </Row>
 
@@ -177,13 +175,10 @@ class FormInternoCompraMercado extends React.Component {
                 </Form.Group>
               </Col>
               <Col md={1} className="colIconeConfig">
-                <Button variant="link" className="operation-icons">
-                  <MDBIcon
-                    icon="cog"
-                    size="2x"
-                    className="labelInput-verticalAlign"
-                  />
-                </Button>
+                {iconeConfigAbrirFormulario(
+                  this.props.handleShow,
+                  "venda_stop_movel"
+                )}
               </Col>
             </Row>
           </Form>
