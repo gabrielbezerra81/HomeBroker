@@ -21,24 +21,24 @@ const startStyle = {
   pointerEvents: "none"
 };
 
-const animate = (props, componente) => {
+const animate = (props, Componente) => {
   return (
     <Animate
-      show={props.show[props.indiceShow][componente.props.name]}
-      duration={250}
+      show={props.show[props.indiceShow][Componente.props.name]}
+      duration={props.show[props.indiceShow][Componente.props.name] ? 300 : 0}
       transitionOnMount
       preMount
       start={startStyle}
-      id={`${componente.props.name}${props.appkey}`}
+      id={`${Componente.props.name}${props.appkey}`}
       onClick={() =>
         props.aumentarZindexAction(
-          `${componente.props.name}${props.appkey}`,
+          `${Componente.props.name}${props.appkey}`,
           props.zIndex,
-          props.show[props.indiceShow][componente.props.name]
+          props.show[props.indiceShow][Componente.props.name]
         )
       }
     >
-      {componente}
+      {Componente}
     </Animate>
   );
 };

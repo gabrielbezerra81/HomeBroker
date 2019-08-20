@@ -14,8 +14,8 @@ class CompraAgendada extends React.Component {
       <DraggableModal
         id="compra_agendada"
         renderModalBody={() => modalBody(this.props)}
-        renderHeader={() =>
-          modalHeader(this.props, this.props.headerTitle, "border-green")
+        renderHeader={resetPosition =>
+          modalHeader(this.props, this.props.headerTitle, "border-green", resetPosition)
         }
       />
     );
@@ -36,5 +36,5 @@ const mapStateToProps = state => ({});
 
 export default connect(
   mapStateToProps,
-  {  }
+  {}
 )(CompraAgendada);

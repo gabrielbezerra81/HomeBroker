@@ -19,8 +19,8 @@ class VendaMercado extends React.Component {
         headerTitle={this.props.headerTitle}
         renderModalBody={() => modalBody(this.props)}
         headerClass="border-green"
-        renderHeader={() =>
-          modalHeader(this.props, this.props.headerTitle, "border-green")
+        renderHeader={(resetPosition) =>
+          modalHeader(this.props, this.props.headerTitle, "border-green",resetPosition)
         }
       />
     );

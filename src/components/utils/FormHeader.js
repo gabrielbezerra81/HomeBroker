@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Col, Row, Form } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 
-export const modalHeader = (props, headerTitle, headerClass) => (
+export const modalHeader = (props, headerTitle, headerClass, resetPosition) => (
   <div className={`${headerClass} handle mheader`}>
     <h6 className="mtitle">{headerTitle}</h6>
     <div className="wrapperIconesHeader" name="book">
@@ -22,7 +22,14 @@ export const modalHeader = (props, headerTitle, headerClass) => (
         <MDBIcon icon="cog" size="2x" />
       </Button>
 
-      <Button variant="link" className="iconesHeader" onClick={props.close}>
+      <Button
+        variant="link"
+        className="iconesHeader"
+        onClick={() => {
+          resetPosition();
+          props.close();
+        }}
+      >
         <span className="fa-stack">
           <MDBIcon icon="circle" className="fa-stack-2x" />
           <MDBIcon
@@ -36,7 +43,7 @@ export const modalHeader = (props, headerTitle, headerClass) => (
   </div>
 );
 
-export const bookHeader = (props, headerClass) => (
+export const bookHeader = (props, headerClass, resetPosition) => (
   <div className={`${headerClass} handle mheader`}>
     <Row>
       <Col md={10} className="colInputHeader">
@@ -55,7 +62,14 @@ export const bookHeader = (props, headerClass) => (
         </Form>
       </Col>
       <Col md={2} className="wrapperIconesHeader">
-        <Button variant="link" className="iconesHeader" onClick={props.close}>
+        <Button
+          variant="link"
+          className="iconesHeader"
+          onClick={() => {
+            props.close();
+            resetPosition();
+          }}
+        >
           <span className="fa-stack">
             <MDBIcon icon="circle" className="fa-stack-2x" />
             <MDBIcon

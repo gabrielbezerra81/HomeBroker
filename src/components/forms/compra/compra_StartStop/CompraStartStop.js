@@ -16,8 +16,8 @@ class CompraStartStop extends React.Component {
         headerTitle={this.props.headerTitle}
         renderModalBody={() => modalBody()}
         headerClass="border-green"
-        renderHeader={() =>
-          modalHeader(this.props, this.props.headerTitle, "border-green")
+        renderHeader={(resetPosition) =>
+          modalHeader(this.props, this.props.headerTitle, "border-green",resetPosition)
         }
         renderConfigForm={this.props.config_compra}
         classConfigAberto={this.props.config_compra ? "configStopAberto" : null}

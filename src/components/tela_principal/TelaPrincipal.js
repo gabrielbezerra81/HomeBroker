@@ -78,6 +78,9 @@ class TelaPrincipal extends React.Component {
 const mapStateToProps = state => ({
   ordensAberto: state.telaPrincipalReducer.ordensAberto,
   ordensExecucaoAberto: state.telaPrincipalReducer.ordensExecucaoAberto,
+  posicaoAberta: state.telaPrincipalReducer.posicaoAberta,
+  relatorioDetalhadoAberto: state.telaPrincipalReducer.relatorioDetalhadoAberto,
+  listaCompletaAberta: state.telaPrincipalReducer.listaCompletaAberta,
   multilegAberto: state.telaPrincipalReducer.multilegAberto
 });
 

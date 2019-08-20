@@ -17,8 +17,8 @@ class VendaAgendada extends React.Component {
       <DraggableModal
         id="vendaagendada"
         renderModalBody={() => modalBody(this.props)}
-        renderHeader={() =>
-          modalHeader(this.props, this.props.headerTitle, "border-green")
+        renderHeader={(resetPosition) =>
+          modalHeader(this.props, this.props.headerTitle, "border-green",resetPosition)
         }
       />
     );
