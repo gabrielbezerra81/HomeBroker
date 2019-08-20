@@ -140,11 +140,14 @@ pointer-events: none;
   display: flex;
   flex-direction: column;
   color: var(--cor-texto);
-  flex: 1;
   align-items: center;
   text-align: end !important;
 }
 
 .divOrdens > .row img {
   max-height: 50px;
+}
+
+.imagemVenda {
+  margin-right: 43px;
 }

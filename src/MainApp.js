@@ -128,7 +128,7 @@ class MainApp extends Component {
           </div>
         </Row>
         <Row className="rowOrdensTracejada">
-          <img src={iconeVenda} alt="" />
+          <img src={iconeVenda} alt="" className="imagemVenda" />
           <div className="divBotaoFormulario">
             <img
               src={iconeVendaMercado}
