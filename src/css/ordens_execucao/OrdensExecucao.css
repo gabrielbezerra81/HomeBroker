@@ -1,5 +1,5 @@
 #ordens_execucao {
-  width: 1200px;
+  width: 1400px;
   margin-top: 85px;
   margin-left: 5px;
 }
@@ -16,6 +16,11 @@
 .tableOrdensExecucao {
   color: #ddd;
   border: none;
+}
+
+.tableOrdensExecucao td:first-child {
+  padding-right: 0px !important;
+  padding-left: 10px !important;
 }
 
 .bodyOrdensExecucao .row {
@@ -64,4 +69,9 @@
 
 .verticalAlignColunaTabela td {
   vertical-align: middle !important ;
+}
+
+.barraProgresso > .progress-bar {
+  color: black !important;
+  text-align: center;
 }

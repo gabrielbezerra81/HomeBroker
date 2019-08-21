@@ -1,6 +1,6 @@
 import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import { Row, Table } from "react-bootstrap";
+import { Row, Table, ProgressBar } from "react-bootstrap";
 import DraggableModal from "components/utils/DraggableModal";
 import { modalHeaderSemBook } from "components/utils/FormHeader";
 
@@ -36,9 +36,11 @@ const modalBody = props => (
     <Row>
       <Table
         variant="dark"
+        bordered={false}
         borderless
         className="tableOrdensExecucao text-center"
         style={{ tableLayout: "fixed" }}
+        responsive="lg"
       >
         <thead>
           <tr>
@@ -67,7 +69,15 @@ const modalBody = props => (
         <tbody className="verticalAlignColunaTabela">
           {dataOrdensExecucao.map((item, index) => (
             <tr key={index}>
-              <td>{item.progresso}</td>
+              <td>
+                <ProgressBar
+                  animated
+                  variant="success"
+                  now={item.progresso}
+                  label={`${item.progresso}%`}
+                  className="barraProgresso"
+                />
+              </td>
               <td>{item.cadastro}</td>
               <td>{item.corretora}</td>
               <td>{item.conta}</td>
@@ -161,7 +171,7 @@ const modalBody = props => (
 
 const dataOrdensExecucao = [
   {
-    progresso: "0%",
+    progresso: 50,
     cadastro: "16/09/2019 13:12:67",
     corretora: "XP",
     conta: "23897-8",
@@ -183,7 +193,7 @@ const dataOrdensExecucao = [
     msg: ""
   },
   {
-    progresso: "0%",
+    progresso: 100,
     cadastro: "16/09/2019 13:12:67",
     corretora: "XP",
     conta: "23897-8",
