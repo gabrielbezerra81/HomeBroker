@@ -1,5 +1,7 @@
 #ordens_execucao {
   width: 1200px;
+  margin-top: 85px;
+  margin-left: 5px;
 }
 
 .po1 {
@@ -30,10 +32,10 @@
 }
 
 .divFiltrarOrdens {
-  max-width: 605px !important;
+  width: 605px !important;
   height: 80px !important;
-  position: relative;
-  left: 0%;
+  position: absolute;
+  top: -85px;
   padding-bottom: 0 !important;
   display: flex;
   align-items: center;
