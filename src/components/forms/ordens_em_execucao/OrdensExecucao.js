@@ -1,6 +1,5 @@
 import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import { connect } from "react-redux";
 import { Row, Table } from "react-bootstrap";
 import DraggableModal from "components/utils/DraggableModal";
 import { modalHeaderSemBook } from "components/utils/FormHeader";
@@ -153,8 +152,6 @@ const modalBody = props => (
     </Row>
   </div>
 );
-
-const mapStateToProps = state => ({});
 
 const dataOrdensExecucao = [
   {

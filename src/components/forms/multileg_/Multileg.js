@@ -1,17 +1,21 @@
 import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import { connect } from "react-redux";
 import {} from "react-bootstrap";
 import DraggableModal from "components/utils/DraggableModal";
 import { modalHeaderSemBook } from "components/utils/FormHeader";
 
-class Multileg extends React.Component {
+export default class Multileg extends React.Component {
+  componentDidMount() {
+    if (this.props.divkey !== "" && this.props.divkey === "multileg")
+      document.getElementById("multileg").style.zIndex = this.props.zIndex + 1;
+  }
+
   render() {
     return (
       <DraggableModal
         id="multileg"
         renderModalBody={() => modalBody(this.props)}
-        renderDivFiltrarOrdens={true}
+        renderDivFiltrarOrdens={false}
         renderHeader={() =>
           modalHeaderSemBook(this.props, this.props.headerTitle, "border-green")
         }
@@ -20,11 +24,8 @@ class Multileg extends React.Component {
   }
 }
 
-const modalBody = props => <div className="bodyMultileg" />;
-
-const mapStateToProps = state => ({});
-
-export default connect(
-  mapStateToProps,
-  {}
-)(Multileg);
+const modalBody = props => (
+  <div className="bodyMultileg">
+    <h1>multileg</h1>
+  </div>
+);

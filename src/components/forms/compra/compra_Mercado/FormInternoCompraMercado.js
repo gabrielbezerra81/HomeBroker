@@ -1,6 +1,5 @@
 import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
-import { MDBIcon } from "mdbreact";
 import { connect } from "react-redux";
 import { mostrarErroQtdeOnBlurAction } from "components/redux/actions/bookOfertaActions";
 import {

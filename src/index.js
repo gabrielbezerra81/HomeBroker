@@ -2,7 +2,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import "@fortawesome/fontawesome-free/css/all.css";
-import { Helper } from "./MainApp";
+import { Helper } from "components/redux/ElementosConectadosRedux";
 
 ReactDOM.render(Helper(), document.getElementById("root"));
 

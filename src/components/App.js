@@ -45,7 +45,11 @@ const animate = (props, Componente) => {
 
 export default class App extends React.Component {
   componentDidUpdate() {
-    if (this.props.divkey !== "" && this.props.divkey !== "ordens_execucao")
+    if (
+      this.props.divkey !== "" &&
+      this.props.divkey !== "ordens_execucao" &&
+      this.props.divkey !== "multileg"
+    )
       document.getElementById(this.props.divkey).style.zIndex =
         this.props.zIndex + 1;
 
@@ -53,7 +57,11 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.divkey !== "" && this.props.divkey !== "ordens_execucao")
+    if (
+      this.props.divkey !== "" &&
+      this.props.divkey !== "ordens_execucao" &&
+      this.props.divkey !== "multileg"
+    )
       document.getElementById(this.props.divkey).style.zIndex =
         this.props.zIndex + 1;
     this.props.receberAppPropsAction(this.props);

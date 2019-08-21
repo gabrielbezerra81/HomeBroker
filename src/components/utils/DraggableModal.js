@@ -60,9 +60,12 @@ export default connect(
   {}
 )(BSModal);
 
+/*
 const aplicarPosicao = id => {
   const IDs = [];
   if (IDs.includes(id)) {
     return "posicaoFormCompraVenda";
   } else return "";
 };
+
+*/

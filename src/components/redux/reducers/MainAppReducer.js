@@ -10,7 +10,7 @@ import {
   RECEBER_APPKEYLOCAL
 } from "constants/ActionTypes";
 import React from "react";
-import { SubAppConectado } from "../../../MainApp";
+import { SubAppConectado } from "components/redux/ElementosConectadosRedux";
 
 const INITIAL_STATE = {
   apps: [],

@@ -1,25 +1,10 @@
 import React, { Component } from "react";
-import { Provider, connect } from "react-redux";
+import { Provider } from "react-redux";
 import ReduxThunk from "redux-thunk";
-import { createStore, applyMiddleware, compose, combineReducers } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
 import rootReducer from "./components/redux/reducers";
 import { Row } from "react-bootstrap";
-import {
-  criarMostrarAppAction,
-  mostrarAppAction,
-  atualizarShowAction,
-  atualizarDivKeyAction,
-  fecharFormAction,
-  abrirFormAction,
-  aumentarZindexAction,
-  receberAppPropsAction
-} from "./components/redux/reducers/MainAppReducer";
-import MainAppReducer from "./components/redux/reducers/MainAppReducer";
 import "./css";
-import App from "./components/App";
-import { modalHeader } from "./components/utils/FormHeader";
-import TelaPrincipal from "components/tela_principal/TelaPrincipal";
-import TelaPrincipalReducer from "components/redux/reducers/TelaPrincipalReducer";
 import iconeCompra from "img/compra/IconeCompra.png";
 import iconeCompraMercado from "img/compra/iconeCompraMercado.png";
 import iconeCompraLimitada from "img/compra/iconeCompraLimitada.png";
@@ -33,57 +18,17 @@ import iconeVendaAgendada from "img/venda/iconeVendaAgendada.png";
 import iconeVendaStartStop from "img/venda/iconeVendaStartStop.png";
 import iconeVendaStopMovel from "img/venda/iconeVendaStopMovel.png";
 import { Animate } from "react-show";
-import {
-  mouseOverAction,
-  mouseLeaveAction
-} from "components/redux/actions/TelaPrincipalActions";
-import { abrirItemBarraLateralAction } from "components/redux/actions/TelaPrincipalActions";
-import OrdensExecucao from "components/forms/ordens_em_execucao/OrdensExecucao";
-import BarraLateral from "components/tela_principal/BarraLateral";
+import { AppConectado } from "components/redux/ElementosConectadosRedux";
 
 const startStyle = {
   opacity: 0,
   pointerEvents: "none"
 };
 
-export const GlobalContext = React.createContext();
-export const localContext = React.createContext();
-
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const combinedReducers = combineReducers({
-  MainAppReducer: MainAppReducer
-});
-
-const combinedAppPrincipal = combineReducers({
-  telaPrincipalReducer: TelaPrincipalReducer
-});
-
-//Usada apenas para gerenciar os estados de mostrar ou não os formulários
-const globalStore = createStore(
-  combinedReducers,
-  {},
-  composeEnhancers(applyMiddleware(ReduxThunk))
-);
-
-//Usado para todos os outros dados gerais como os da tela principal
-const storeAppPrincipal = createStore(
-  combinedAppPrincipal,
-  {},
-  composeEnhancers(applyMiddleware(ReduxThunk))
-);
-
-export const Helper = () => {
-  return (
-    <Provider store={globalStore} context={GlobalContext}>
-      <Provider store={storeAppPrincipal}>
-        <TelaPrincipalConectada />
-      </Provider>
-    </Provider>
-  );
-};
-
-class MainApp extends Component {
+//Possui o menu de ordens e encapsula todos os sub-apps.
+export class MainApp extends Component {
   render() {
     return (
       <div>
@@ -239,8 +184,8 @@ class MainApp extends Component {
   }
 }
 
-//Responsável por criar uma store individual para cada sub-app
-class SubApp extends Component {
+//Responsável por criar uma store individual para cada sub-app e encapsulá-los. Cada sub-app contem os 12 formularios de compra e venda
+export class SubApp extends Component {
   constructor(props) {
     super(props);
 
@@ -261,108 +206,3 @@ class SubApp extends Component {
     );
   }
 }
-
-const mapStateToProps = state => {
-  return {
-    apps: state.MainAppReducer.apps,
-    show: state.MainAppReducer.show,
-    divkey: state.MainAppReducer.divkey,
-    zIndex: state.MainAppReducer.zIndex
-  };
-};
-
-const mapStateToPropsLocal = state => ({});
-
-const mapStateToPropsAppPrincipal = state => ({
-  ordensAberto: state.telaPrincipalReducer.ordensAberto,
-  ordensExecucaoAberto: state.telaPrincipalReducer.ordensExecucaoAberto,
-  posicaoAberta: state.telaPrincipalReducer.posicaoAberta,
-  relatorioDetalhadoAberto: state.telaPrincipalReducer.relatorioDetalhadoAberto,
-  listaCompletaAberta: state.telaPrincipalReducer.listaCompletaAberta,
-  multilegAberto: state.telaPrincipalReducer.multilegAberto
-});
-
-export const MainAppConectado = compose(
-  connect(
-    mapStateToProps,
-    {
-      criarMostrarAppAction,
-      mostrarAppAction,
-      atualizarShowAction,
-      atualizarDivKeyAction,
-      abrirFormAction
-    },
-    null,
-    { context: GlobalContext }
-  ),
-  connect(
-    mapStateToPropsAppPrincipal,
-    { mouseOverAction, mouseLeaveAction }
-  )
-)(MainApp);
-
-export const SubAppConectado = connect(
-  mapStateToProps,
-  {},
-  null,
-  { context: GlobalContext }
-)(SubApp);
-
-export const AppConectado = compose(
-  connect(
-    mapStateToProps,
-    {
-      aumentarZindexAction,
-      fecharFormAction,
-      abrirFormAction
-    },
-    null,
-    { context: GlobalContext }
-  ),
-  connect(
-    mapStateToPropsLocal,
-    { receberAppPropsAction }
-  )
-)(App);
-
-export const ModalHeaderConectado = connect(
-  mapStateToProps,
-  { fecharFormAction, abrirFormAction },
-  null,
-  { context: GlobalContext }
-)(modalHeader);
-
-const TelaPrincipalConectada = compose(
-  connect(
-    mapStateToProps,
-    {
-      aumentarZindexAction
-    },
-    null,
-    { context: GlobalContext }
-  ),
-  connect(
-    mapStateToPropsAppPrincipal,
-    { abrirItemBarraLateralAction }
-  )
-)(TelaPrincipal);
-
-export const OrdensExecucaoConectada = connect(
-  mapStateToProps,
-  {},
-  null,
-  { context: GlobalContext }
-)(OrdensExecucao);
-
-export const BarraLateralConectada = compose(
-  connect(
-    null,
-    { atualizarDivKeyAction },
-    null,
-    { context: GlobalContext }
-  ),
-  connect(
-    mapStateToPropsAppPrincipal,
-    { abrirItemBarraLateralAction, mouseOverAction, mouseLeaveAction }
-  )
-)(BarraLateral);

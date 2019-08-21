@@ -3,11 +3,10 @@ import MenuLateral from "components/tela_principal/MenuLateral";
 import {
   MainAppConectado,
   OrdensExecucaoConectada,
-  BarraLateralConectada
-} from "MainApp";
+  BarraLateralConectada,
+  MultilegConectado
+} from "components/redux/ElementosConectadosRedux";
 import BarraTopoTelaPrincipal from "components/tela_principal/BarraTopoTelaPrincipal";
-import BarraLateral from "components/tela_principal/BarraLateral";
-import OrdensExecucao from "components/forms/ordens_em_execucao/OrdensExecucao";
 import { Animate } from "react-show";
 import Multileg from "components/forms/multileg_/Multileg";
 
@@ -28,6 +27,65 @@ export default class TelaPrincipal extends React.Component {
             <div>
               <MainAppConectado />
               <Animate
+                show={this.props.ordensExecucaoAberto}
+                duration={100}
+                transitionOnMount
+                stayMounted={false}
+                start={startStyle}
+                onClick={() =>
+                  this.props.aumentarZindexAction(
+                    "ordens_execucao",
+                    this.props.zIndex,
+                    this.props.ordensExecucaoAberto
+                  )
+                }
+                className="po"
+              >
+                <OrdensExecucaoConectada
+                  close={() => {
+                    this.props.abrirItemBarraLateralAction(
+                      this.props,
+                      "ordensExecucaoAberto"
+                    );
+                  }}
+                  headerTitle="ORDENS EM EXECUÇÃO"
+                />
+              </Animate>
+              <Animate
+                className="po"
+                show={this.props.multilegAberto}
+                duration={100}
+                transitionOnMount
+                stayMounted={false}
+                start={startStyle}
+                onClick={() =>
+                  this.props.aumentarZindexAction(
+                    "multileg",
+                    this.props.zIndex,
+                    this.props.multilegAberto
+                  )
+                }
+              >
+                <MultilegConectado
+                  close={() => {
+                    this.props.abrirItemBarraLateralAction(
+                      this.props,
+                      "multilegAberto"
+                    );
+                  }}
+                  headerTitle="MULTILEG"
+                />
+              </Animate>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+/*
+
+<Animate
                 show={this.props.ordensExecucaoAberto}
                 duration={100}
                 transitionOnMount
@@ -58,8 +116,16 @@ export default class TelaPrincipal extends React.Component {
                 transitionOnMount
                 stayMounted={false}
                 start={startStyle}
+                id="multileg"
+                onClick={() =>
+                  this.props.aumentarZindexAction(
+                    "multileg",
+                    this.props.zIndex,
+                    this.props.multilegAberto
+                  )
+                }
               >
-                <Multileg
+                <MultilegConectado
                   close={() => {
                     this.props.abrirItemBarraLateralAction(
                       this.props,
@@ -69,10 +135,6 @@ export default class TelaPrincipal extends React.Component {
                   headerTitle="MULTILEG"
                 />
               </Animate>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
+
+
+*/

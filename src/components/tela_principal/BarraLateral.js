@@ -1,17 +1,11 @@
 import React from "react";
 import {} from "react-bootstrap";
-import { connect } from "react-redux";
 import iconeAbrirOrdens from "img/iconeAbrirOrdens.png";
 import iconeOrdensEmExecucao from "img/iconeOrdensEmExecucao.png";
 import iconePosicao from "img/iconePosicao.png";
 import iconeRelatorioDetalhado from "img/iconeRelatorioDetalhado.png";
 import iconeListaCompleta from "img/iconeListaCompleta.png";
 import iconeMultileg from "img/iconeMultileg.png";
-import {
-  abrirItemBarraLateralAction,
-  mouseOverAction,
-  mouseLeaveAction
-} from "components/redux/actions/TelaPrincipalActions";
 
 export default class BarraLateral extends React.Component {
   render() {
@@ -59,9 +53,13 @@ export default class BarraLateral extends React.Component {
         <div
           tabIndex={0}
           className="itemDivBarraLateral divClicavel"
-          onClick={() =>
-            this.props.abrirItemBarraLateralAction(this.props, "multilegAberto")
-          }
+          onClick={() => {
+            this.props.atualizarDivKeyAction("multileg");
+            this.props.abrirItemBarraLateralAction(
+              this.props,
+              "multilegAberto"
+            );
+          }}
         >
           <img src={iconeMultileg} alt="Multileg" />
           <h6>MULTILEG</h6>
@@ -70,12 +68,3 @@ export default class BarraLateral extends React.Component {
     );
   }
 }
-
-const mapStateToProps = state => ({
-  ordensAberto: state.telaPrincipalReducer.ordensAberto,
-  ordensExecucaoAberto: state.telaPrincipalReducer.ordensExecucaoAberto,
-  posicaoAberta: state.telaPrincipalReducer.posicaoAberta,
-  relatorioDetalhadoAberto: state.telaPrincipalReducer.relatorioDetalhadoAberto,
-  listaCompletaAberta: state.telaPrincipalReducer.listaCompletaAberta,
-  multilegAberto: state.telaPrincipalReducer.multilegAberto
-});
