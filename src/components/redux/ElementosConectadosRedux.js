@@ -151,7 +151,7 @@ const TelaPrincipalConectada = compose(
 
 export const OrdensExecucaoConectada = connect(
   mapStateToPropsGlobalStore,
-  {},
+  { aumentarZindexAction },
   null,
   { context: GlobalContext }
 )(OrdensExecucao);
@@ -171,7 +171,7 @@ export const BarraLateralConectada = compose(
 
 export const MultilegConectado = connect(
   mapStateToPropsGlobalStore,
-  {},
+  { aumentarZindexAction },
   null,
   { context: GlobalContext }
 )(Multileg);

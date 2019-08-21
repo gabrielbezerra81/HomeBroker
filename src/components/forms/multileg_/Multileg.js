@@ -6,8 +6,10 @@ import { modalHeaderSemBook } from "components/utils/FormHeader";
 
 export default class Multileg extends React.Component {
   componentDidMount() {
-    if (this.props.divkey !== "" && this.props.divkey === "multileg")
+    if (this.props.divkey !== "" && this.props.divkey === "multileg") {
       document.getElementById("multileg").style.zIndex = this.props.zIndex + 1;
+      this.props.aumentarZindexAction("multileg", this.props.zIndex, true);
+    }
   }
 
   render() {

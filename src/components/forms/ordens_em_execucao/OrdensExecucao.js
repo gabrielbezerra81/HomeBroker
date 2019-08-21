@@ -6,9 +6,15 @@ import { modalHeaderSemBook } from "components/utils/FormHeader";
 
 export default class OrdensExecucao extends React.Component {
   componentDidMount() {
-    if (this.props.divkey !== "" && this.props.divkey === "ordens_execucao")
+    if (this.props.divkey !== "" && this.props.divkey === "ordens_execucao") {
       document.getElementById("ordens_execucao").style.zIndex =
         this.props.zIndex + 1;
+      this.props.aumentarZindexAction(
+        "ordens_execucao",
+        this.props.zIndex,
+        true
+      );
+    }
   }
 
   render() {
