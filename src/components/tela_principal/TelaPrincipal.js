@@ -1,12 +1,14 @@
 import React from "react";
 import MenuLateral from "components/tela_principal/MenuLateral";
-import { connect } from "react-redux";
-import { MainAppConectado } from "MainApp";
+import {
+  MainAppConectado,
+  OrdensExecucaoConectada,
+  BarraLateralConectada
+} from "MainApp";
 import BarraTopoTelaPrincipal from "components/tela_principal/BarraTopoTelaPrincipal";
 import BarraLateral from "components/tela_principal/BarraLateral";
 import OrdensExecucao from "components/forms/ordens_em_execucao/OrdensExecucao";
 import { Animate } from "react-show";
-import { abrirItemBarraLateralAction } from "components/redux/actions/TelaPrincipalActions";
 import Multileg from "components/forms/multileg_/Multileg";
 
 const startStyle = {
@@ -14,7 +16,7 @@ const startStyle = {
   pointerEvents: "none"
 };
 
-class TelaPrincipal extends React.Component {
+export default class TelaPrincipal extends React.Component {
   render() {
     return (
       <div className="divTelaPrincipal">
@@ -22,7 +24,7 @@ class TelaPrincipal extends React.Component {
         <div className="conteudoMenuPrincipal">
           <BarraTopoTelaPrincipal />
           <div style={{ display: "flex", height: "100%" }}>
-            <BarraLateral />
+            <BarraLateralConectada />
             <div>
               <MainAppConectado />
               <Animate
@@ -31,8 +33,16 @@ class TelaPrincipal extends React.Component {
                 transitionOnMount
                 stayMounted={false}
                 start={startStyle}
+                id="ordens_execucao"
+                onClick={() =>
+                  this.props.aumentarZindexAction(
+                    "ordens_execucao",
+                    this.props.zIndex,
+                    this.props.ordensExecucaoAberto
+                  )
+                }
               >
-                <OrdensExecucao
+                <OrdensExecucaoConectada
                   close={() => {
                     this.props.abrirItemBarraLateralAction(
                       this.props,
@@ -66,16 +76,3 @@ class TelaPrincipal extends React.Component {
     );
   }
 }
-
-const mapStateToProps = state => ({
-  ordensExecucaoAberto: state.telaPrincipalReducer.ordensExecucaoAberto,
-  posicaoAberta: state.telaPrincipalReducer.posicaoAberta,
-  relatorioDetalhadoAberto: state.telaPrincipalReducer.relatorioDetalhadoAberto,
-  listaCompletaAberta: state.telaPrincipalReducer.listaCompletaAberta,
-  multilegAberto: state.telaPrincipalReducer.multilegAberto
-});
-
-export default connect(
-  mapStateToProps,
-  { abrirItemBarraLateralAction }
-)(TelaPrincipal);

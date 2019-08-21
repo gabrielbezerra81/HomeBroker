@@ -31,12 +31,7 @@ class BSModal extends Component {
           });
         }}
       >
-        <div
-          id={this.props.id}
-          className={`${this.props.classConfigAberto} ${aplicarPosicao(
-            this.props.id
-          )}`}
-        >
+        <div id={this.props.id} className={` ${this.props.classConfigAberto}`}>
           {this.props.renderDivFiltrarOrdens &&
           this.props.id === "ordens_execucao" ? (
             <FiltrarOrdens />

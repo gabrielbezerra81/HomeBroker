@@ -13,7 +13,7 @@ import {
   mouseLeaveAction
 } from "components/redux/actions/TelaPrincipalActions";
 
-class BarraLateral extends React.Component {
+export default class BarraLateral extends React.Component {
   render() {
     return (
       <div className="divBarraLateral">
@@ -33,12 +33,13 @@ class BarraLateral extends React.Component {
         <div
           tabIndex={0}
           className="itemDivBarraLateral divClicavel"
-          onClick={() =>
+          onClick={() => {
+            this.props.atualizarDivKeyAction("ordens_execucao");
             this.props.abrirItemBarraLateralAction(
               this.props,
               "ordensExecucaoAberto"
-            )
-          }
+            );
+          }}
         >
           <img src={iconeOrdensEmExecucao} alt="Ordens em execução" />
           <h6>ORDENS EM EXECUÇÃO</h6>
@@ -78,8 +79,3 @@ const mapStateToProps = state => ({
   listaCompletaAberta: state.telaPrincipalReducer.listaCompletaAberta,
   multilegAberto: state.telaPrincipalReducer.multilegAberto
 });
-
-export default connect(
-  mapStateToProps,
-  { abrirItemBarraLateralAction, mouseOverAction, mouseLeaveAction }
-)(BarraLateral);

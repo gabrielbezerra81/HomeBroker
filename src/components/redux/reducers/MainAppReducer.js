@@ -5,8 +5,8 @@ import {
   ATUALIZAR_SHOW,
   ATUALIZAR_DIVKEY,
   FECHAR_FORM,
-  ABRIR_FORMULARIO,//Apenas para form de configurar, pois usa o reducer dos sub-apps
-  FECHAR_FORMULARIO,//Apenas para form de configurar, pois usa o reducer dos sub-apps
+  ABRIR_FORMULARIO, //Apenas para form de configurar, pois usa o reducer dos sub-apps
+  FECHAR_FORMULARIO, //Apenas para form de configurar, pois usa o reducer dos sub-apps
   RECEBER_APPKEYLOCAL
 } from "constants/ActionTypes";
 import React from "react";
@@ -15,7 +15,7 @@ import { SubAppConectado } from "../../../MainApp";
 const INITIAL_STATE = {
   apps: [],
   show: [],
-  divkey: 0,
+  divkey: "",
   zIndex: 100
 };
 
@@ -64,7 +64,13 @@ export const atualizarShowAction = (show, dispatch) => {
   dispatch({ type: ATUALIZAR_SHOW, payload: show });
 };
 
-export const atualizarDivKeyAction = (divkey, dispatch) => {
+export const atualizarDivKeyAction = divkey => {
+  return dispatch => {
+    dispatch({ type: ATUALIZAR_DIVKEY, payload: divkey });
+  };
+};
+
+export const atualizarDivKeyAction2 = (divkey, dispatch) => {
   dispatch({ type: ATUALIZAR_DIVKEY, payload: divkey });
 };
 
@@ -118,7 +124,7 @@ export const abrirFormAction = (event, props) => {
 const criarMostrarApp = (name, props, dispatch) => {
   let apps = [...props.apps];
   let show = [...props.show];
-  atualizarDivKeyAction(`${name}${apps.length}`, dispatch);
+  atualizarDivKeyAction2(`${name}${apps.length}`, dispatch);
   show.push({
     book: false,
     compra_agendada: false,
@@ -158,7 +164,7 @@ const criarMostrarApp = (name, props, dispatch) => {
 const mostrarApp = (name, index, props, dispatch) => {
   let apps = [...props.apps];
   let show = [...props.show];
-  atualizarDivKeyAction(`${name}${index}`, dispatch);
+  atualizarDivKeyAction2(`${name}${index}`, dispatch);
   show[index][name] = true;
   mostrarAppAction(apps, show, props.zIndex, dispatch);
 };

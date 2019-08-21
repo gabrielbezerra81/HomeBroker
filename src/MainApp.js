@@ -37,6 +37,9 @@ import {
   mouseOverAction,
   mouseLeaveAction
 } from "components/redux/actions/TelaPrincipalActions";
+import { abrirItemBarraLateralAction } from "components/redux/actions/TelaPrincipalActions";
+import OrdensExecucao from "components/forms/ordens_em_execucao/OrdensExecucao";
+import BarraLateral from "components/tela_principal/BarraLateral";
 
 const startStyle = {
   opacity: 0,
@@ -74,7 +77,7 @@ export const Helper = () => {
   return (
     <Provider store={globalStore} context={GlobalContext}>
       <Provider store={storeAppPrincipal}>
-        <TelaPrincipal />
+        <TelaPrincipalConectada />
       </Provider>
     </Provider>
   );
@@ -271,7 +274,12 @@ const mapStateToProps = state => {
 const mapStateToPropsLocal = state => ({});
 
 const mapStateToPropsAppPrincipal = state => ({
-  ordensAberto: state.telaPrincipalReducer.ordensAberto
+  ordensAberto: state.telaPrincipalReducer.ordensAberto,
+  ordensExecucaoAberto: state.telaPrincipalReducer.ordensExecucaoAberto,
+  posicaoAberta: state.telaPrincipalReducer.posicaoAberta,
+  relatorioDetalhadoAberto: state.telaPrincipalReducer.relatorioDetalhadoAberto,
+  listaCompletaAberta: state.telaPrincipalReducer.listaCompletaAberta,
+  multilegAberto: state.telaPrincipalReducer.multilegAberto
 });
 
 export const MainAppConectado = compose(
@@ -323,3 +331,38 @@ export const ModalHeaderConectado = connect(
   null,
   { context: GlobalContext }
 )(modalHeader);
+
+const TelaPrincipalConectada = compose(
+  connect(
+    mapStateToProps,
+    {
+      aumentarZindexAction
+    },
+    null,
+    { context: GlobalContext }
+  ),
+  connect(
+    mapStateToPropsAppPrincipal,
+    { abrirItemBarraLateralAction }
+  )
+)(TelaPrincipal);
+
+export const OrdensExecucaoConectada = connect(
+  mapStateToProps,
+  {},
+  null,
+  { context: GlobalContext }
+)(OrdensExecucao);
+
+export const BarraLateralConectada = compose(
+  connect(
+    null,
+    { atualizarDivKeyAction },
+    null,
+    { context: GlobalContext }
+  ),
+  connect(
+    mapStateToPropsAppPrincipal,
+    { abrirItemBarraLateralAction, mouseOverAction, mouseLeaveAction }
+  )
+)(BarraLateral);

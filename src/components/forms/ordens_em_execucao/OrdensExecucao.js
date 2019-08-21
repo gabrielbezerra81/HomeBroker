@@ -5,7 +5,13 @@ import { Row, Table } from "react-bootstrap";
 import DraggableModal from "components/utils/DraggableModal";
 import { modalHeaderSemBook } from "components/utils/FormHeader";
 
-class OrdensExecucao extends React.Component {
+export default class OrdensExecucao extends React.Component {
+  componentDidMount() {
+    if (this.props.divkey !== "" && this.props.divkey === "ordens_execucao")
+      document.getElementById("ordens_execucao").style.zIndex =
+        this.props.zIndex + 1;
+  }
+
   render() {
     return (
       <DraggableModal
@@ -149,11 +155,6 @@ const modalBody = props => (
 );
 
 const mapStateToProps = state => ({});
-
-export default connect(
-  mapStateToProps,
-  {}
-)(OrdensExecucao);
 
 const dataOrdensExecucao = [
   {
