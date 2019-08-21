@@ -8,7 +8,8 @@
 .divMenuLateral {
   background-image: linear-gradient(#333, #222, #111);
   min-height: 100vh;
-  width: 211.699px !important;
+  flex: 1;
+  max-width: 211.699px;
   transition-duration: 0.4s;
 }
 
