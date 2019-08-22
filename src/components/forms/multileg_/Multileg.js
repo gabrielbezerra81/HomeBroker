@@ -61,9 +61,10 @@ export default class Multileg extends React.Component {
                 <Form.Label>Preço</Form.Label>
                 <Form.Control
                   className="textInput"
-                  type="text"
-                  //value=""
-                  //onChange={() => {}}
+                  type="number"
+                  step={0.01}
+                  //value={this.props.preco}
+                  onChange={event => false}
                 />
               </Form.Group>
             </Col>
@@ -72,9 +73,10 @@ export default class Multileg extends React.Component {
                 <Form.Label>Custo Unitário</Form.Label>
                 <Form.Control
                   className="textInput"
-                  type="text"
-                  // value=""
-                  // onChange={() => {}}
+                  type="number"
+                  step={0.01}
+                  //value={this.props.preco}
+                  onChange={event => false}
                 />
               </Form.Group>
             </Col>

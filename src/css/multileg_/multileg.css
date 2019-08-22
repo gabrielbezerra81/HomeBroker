@@ -80,6 +80,7 @@ a.botaoAddAba.active {
   max-width: 70px;
   margin-left: 5px;
   height: 17px !important ;
+  font-size: 0.7rem;
 }
 
 .containerPrecoCustoModo .form-label {
