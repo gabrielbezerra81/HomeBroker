@@ -17,6 +17,34 @@
   margin: 0 0;
 }
 
-.po {
-  position: absolute !important;
+.navTabMultileg {
+  height: 30px;
+  text-align: center;
+  padding-left: 0.5rem;
+  border-color: var(--cor-borda);
+  padding-top: 5px;
+}
+
+.navTabMultileg a {
+  width: 50px;
+  height: 25px;
+  font-size: 1rem;
+  padding: 0;
+  background-color: rgb(40, 40, 40);
+  margin-right: 3px;
+  color: var(--cor-texto);
+  border: none !important;
+  border-bottom: 1px solid var(--cor-borda) !important;
+}
+
+a.abaNavTab.active {
+  color: var(--cor-texto) !important;
+  background-color: rgb(40, 40, 40) !important;
+  border: 1px solid var(--cor-borda) !important;
+  border-bottom: none !important;
+}
+
+a.botaoAddAba.active {
+  color: var(--cor-texto) !important;
+  background-color: rgb(40, 40, 40) !important;
 }

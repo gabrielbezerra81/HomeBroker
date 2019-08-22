@@ -16,7 +16,7 @@ const INITIAL_STATE = {
   posicaoAberta: false,
   relatorioDetalhadoAberto: false,
   listaCompletaAberta: false,
-  multilegAberto: false,
+  multilegAberto: true,
   ativoFiltrarOrdens: "",
   mercadoFiltrarOrdens: "",
   contaFiltrarOrdens: "",

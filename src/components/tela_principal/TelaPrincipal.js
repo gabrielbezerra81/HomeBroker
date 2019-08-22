@@ -39,7 +39,6 @@ export default class TelaPrincipal extends React.Component {
                     this.props.ordensExecucaoAberto
                   )
                 }
-                className="po"
               >
                 <OrdensExecucaoConectada
                   close={() => {
@@ -52,7 +51,6 @@ export default class TelaPrincipal extends React.Component {
                 />
               </Animate>
               <Animate
-                className="po"
                 show={this.props.multilegAberto}
                 duration={100}
                 transitionOnMount
