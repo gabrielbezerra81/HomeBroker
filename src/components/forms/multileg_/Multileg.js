@@ -1,6 +1,6 @@
 import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import { Tabs, Tab } from "react-bootstrap";
+import { Tabs, Tab, Form, Button, Row, Col } from "react-bootstrap";
 import DraggableModal from "components/utils/DraggableModal";
 import { modalHeaderSemBook } from "components/utils/FormHeader";
 
@@ -28,29 +28,68 @@ export default class Multileg extends React.Component {
   modalBody = props => {
     return (
       <div className="bodyMultileg">
-        <div>
-          <Tabs
-            id="tabBarMultileg"
-            className="navTabMultileg"
-            onSelect={this.handleSelect}
-            activeKey={this.state.abaAtual}
-          >
-            {this.state.tabs.map((tab, index) => {
-              return (
-                <Tab
-                  eventKey={`tab${index}`}
-                  title={tab.name}
-                  tabClassName="abaNavTab"
-                  key={index}
+        <div className="containerTabBar">
+          <div>
+            <Tabs
+              id="tabBarMultileg"
+              className="navTabMultileg"
+              onSelect={this.handleSelect}
+              activeKey={this.state.abaAtual}
+            >
+              {this.state.tabs.map((tab, index) => {
+                return (
+                  <Tab
+                    eventKey={`tab${index}`}
+                    title={tab.name}
+                    tabClassName="abaNavTab"
+                    key={index}
+                  >
+                    <h6>{tab.content}</h6>
+                  </Tab>
+                );
+              })}
+              <Tab
+                eventKey="adicionar"
+                title="+"
+                tabClassName="botaoAddAba divClicavel"
+              />
+            </Tabs>
+          </div>
+          <div className="containerPrecoCustoModo">
+            <Col md={0} className="colPrecoCustoModo">
+              <Form.Group>
+                <Form.Label>Preço</Form.Label>
+                <Form.Control
+                  className="textInput"
+                  type="text"
+                  //value=""
+                  //onChange={() => {}}
                 />
-              );
-            })}
-            <Tab
-              eventKey="adicionar"
-              title="+"
-              tabClassName="botaoAddAba divClicavel"
-            />
-          </Tabs>
+              </Form.Group>
+            </Col>
+            <Col md={0} className="colPrecoCustoModo">
+              <Form.Group>
+                <Form.Label>Custo Unitário</Form.Label>
+                <Form.Control
+                  className="textInput"
+                  type="text"
+                  // value=""
+                  // onChange={() => {}}
+                />
+              </Form.Group>
+            </Col>
+            <Col md={0} className="colPrecoCustoModo">
+              <Form.Group>
+                <Form.Label>Modo de Execução</Form.Label>
+                <Form.Control
+                  className="textInput"
+                  type="text"
+                  // value=""
+                  // onChange={() => {}}
+                />
+              </Form.Group>
+            </Col>
+          </div>
         </div>
       </div>
     );

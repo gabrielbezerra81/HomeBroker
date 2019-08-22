@@ -1,5 +1,5 @@
 #multileg {
-  width: 1000px;
+  min-width: 1000px;
   margin-left: 5px;
 }
 
@@ -17,8 +17,14 @@
   margin: 0 0;
 }
 
+.containerTabBar {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
 .navTabMultileg {
-  height: 30px;
+  min-height: 30px;
   text-align: center;
   padding-left: 0.5rem;
   border-color: var(--cor-borda);
@@ -26,15 +32,16 @@
 }
 
 .navTabMultileg a {
-  width: 50px;
+  width: 47px;
   height: 25px;
-  font-size: 1rem;
+  font-size: 0.95rem;
   padding: 0;
   background-color: rgb(40, 40, 40);
   margin-right: 3px;
   color: var(--cor-texto);
   border: none !important;
   border-bottom: 1px solid var(--cor-borda) !important;
+  text-align: center;
 }
 
 a.abaNavTab.active {
@@ -47,4 +54,35 @@ a.abaNavTab.active {
 a.botaoAddAba.active {
   color: var(--cor-texto) !important;
   background-color: rgb(40, 40, 40) !important;
+}
+
+.containerPrecoCustoModo {
+  border-bottom: 1px solid var(--cor-borda) !important;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding-left: 4rem;
+  height: 30px;
+  min-width: 600px;
+}
+
+.containerPrecoCustoModo .form-group {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+}
+
+.colPrecoCustoModo {
+  margin-right: 15px;
+}
+
+.containerPrecoCustoModo input {
+  max-width: 70px;
+  margin-left: 5px;
+  height: 17px !important ;
+}
+
+.containerPrecoCustoModo .form-label {
+  font-size: 0.9rem;
+  height: 22px;
 }
