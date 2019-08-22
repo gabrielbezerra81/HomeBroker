@@ -6,7 +6,7 @@ import {
 
 const INITIAL_STATE = {
   usuarioConectado: "Gabriel Alencar",
-  menuLateralAberto: true,
+  menuLateralAberto: false,
   logado: true,
   valorLiquido: "15.000,00",
   valorComprar: "3.500,00",

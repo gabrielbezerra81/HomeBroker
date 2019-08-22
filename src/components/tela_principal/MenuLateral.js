@@ -17,7 +17,7 @@ const startStyle = {
 class MenuLateral extends React.Component {
   render() {
     return (
-      <div className="divMenuLateral" id="divMenuLateral">
+      <div className="divMenuLateral hide" id="divMenuLateral">
         <div className="itemMenuLateral corAlternada">
           <h6>Menu</h6>
         </div>
