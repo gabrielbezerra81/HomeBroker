@@ -20,8 +20,11 @@
 .navTabMultileg {
   height: 24px;
   text-align: center;
-  padding-left: 0.5rem;
+  padding: 0 0.5rem;
   border-color: var(--cor-borda);
+  margin: 0 !important;
+  margin-top: 0.5rem !important;
+  border-bottom: 1px solid var(--cor-borda) !important;
 }
 
 .navTabMultileg a {
@@ -55,9 +58,8 @@ a.botaoAddAba.active {
   align-items: center;
   justify-content: center;
   padding-left: 4rem;
-  height: 23px;
+  height: 24px;
   min-width: 600px;
-  border-bottom: 1px solid var(--cor-borda) !important;
 }
 
 .containerPrecoCustoModo .form-group {
