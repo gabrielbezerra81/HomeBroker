@@ -65,6 +65,54 @@ class AbaMultileg extends React.Component {
             <h6>Book</h6>
           </div>
         </div>
+        <Table
+          variant="dark"
+          bordered={false}
+          borderless
+          striped
+          className="tableMultileg text-center"
+        >
+          <thead>
+            <tr>
+              <th>C/V</th>
+              <th>Qtde.</th>
+              <th>Série</th>
+              <th>Código</th>
+              <th>Tipo</th>
+              <th>Modelo</th>
+              <th>Despernamento Máx.</th>
+              <th>Prioridade de Execução</th>
+              <th>Cotação</th>
+              <th>Valor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+            </tr>
+            <tr>
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+              <td>V</td>
+            </tr>
+          </tbody>
+        </Table>
       </div>
     );
   }

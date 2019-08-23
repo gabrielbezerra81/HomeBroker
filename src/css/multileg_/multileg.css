@@ -116,6 +116,7 @@ a.botaoAddAba.active {
 
 .divColunaDetalhes.book {
   flex: 1 !important;
+  border-right: none !important;
 }
 
 .divFlexRowDetalhesAba {
@@ -139,3 +140,13 @@ a.botaoAddAba.active {
   align-items: flex-start;
 }
 */
+
+.tableMultileg {
+  background-color: var(--light-brackground-color);
+  color: #ddd;
+}
+
+.tableMultileg > tbody > tr:nth-child(odd) > td,
+.tableMultileg > tbody > tr:nth-child(odd) > th {
+  background-color: var(--brackground-color) !important;
+}
