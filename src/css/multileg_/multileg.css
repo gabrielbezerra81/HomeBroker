@@ -144,9 +144,39 @@ a.botaoAddAba.active {
 .tableMultileg {
   background-color: var(--light-brackground-color);
   color: #ddd;
+  padding: 20px;
+}
+
+.tableMultileg tbody tr td {
+  padding: 2px !important;
 }
 
 .tableMultileg > tbody > tr:nth-child(odd) > td,
 .tableMultileg > tbody > tr:nth-child(odd) > th {
   background-color: var(--brackground-color) !important;
+}
+
+.divCV {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.divCV h6 {
+  background-color: #444;
+  font-size: 0.66rem !important;
+  width: 16px;
+  height: 16px;
+  padding-top: 2px;
+  border-radius: 5px;
+  margin-top: 1px;
+}
+
+.cvCompra {
+  background-color: green !important;
+}
+
+.cvVenda {
+  background-color: red !important;
 }

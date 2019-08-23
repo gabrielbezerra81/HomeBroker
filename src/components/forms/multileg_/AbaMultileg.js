@@ -1,6 +1,10 @@
 import React from "react";
 import { Row, Col, Table, Form, Button } from "react-bootstrap";
 
+String.prototype.capitalize = function() {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+};
+
 class AbaMultileg extends React.Component {
   render() {
     return (
@@ -77,6 +81,7 @@ class AbaMultileg extends React.Component {
               <th>C/V</th>
               <th>Qtde.</th>
               <th>Série</th>
+              <th>Strike</th>
               <th>Código</th>
               <th>Tipo</th>
               <th>Modelo</th>
@@ -87,30 +92,23 @@ class AbaMultileg extends React.Component {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>V</td>
-              <td>V</td>
-              <td>V</td>
-              <td>V</td>
-              <td>V</td>
-              <td>V</td>
-              <td>V</td>
-              <td>V</td>
-              <td>V</td>
-              <td>V</td>
-            </tr>
-            <tr>
-              <td>V</td>
-              <td>V</td>
-              <td>V</td>
-              <td>V</td>
-              <td>V</td>
-              <td>V</td>
-              <td>V</td>
-              <td>V</td>
-              <td>V</td>
-              <td>V</td>
-            </tr>
+            {tabelaMultileg.map((item, index) => {
+              return (
+                <tr key={index}>
+                  {renderCV(item.cv)}
+                  <td>{item.qtde}</td>
+                  <td>{item.serie}</td>
+                  <td>{item.strike}</td>
+                  <td>{item.codigo}</td>
+                  <td>{item.tipo.capitalize()}</td>
+                  <td>{item.modelo}</td>
+                  <td>{item.despernamento}</td>
+                  <td>{item.prioridade}</td>
+                  <td>{item.cotacao}</td>
+                  <td>{item.valor}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </Table>
       </div>
@@ -119,3 +117,50 @@ class AbaMultileg extends React.Component {
 }
 
 export default AbaMultileg;
+
+const tabelaMultileg = [
+  {
+    cv: "compra",
+    qtde: 1000,
+    serie: "2019-08",
+    strike: 27.48,
+    codigo: "PETRH275",
+    tipo: "call",
+    modelo: "V",
+    despernamento: "",
+    prioridade: "",
+    cotacao: "",
+    valor: "-40,00"
+  },
+  {
+    cv: "venda",
+    qtde: 1000,
+    serie: "2019-08",
+    strike: 27.48,
+    codigo: "PETRH275",
+    tipo: "call",
+    modelo: "V",
+    despernamento: "",
+    prioridade: "",
+    cotacao: "",
+    valor: "-40,00"
+  }
+];
+
+const renderCV = cv => {
+  return (
+    <td>
+      {cv === "compra" ? (
+        <div className="divCV">
+          <h6 className="cvCompra"> C </h6>
+          <h6> V </h6>
+        </div>
+      ) : (
+        <div className="divCV">
+          <h6> C </h6>
+          <h6 className="cvVenda"> V </h6>
+        </div>
+      )}
+    </td>
+  );
+};
