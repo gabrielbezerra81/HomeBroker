@@ -57,6 +57,7 @@ a.botaoAddAba.active {
   padding-left: 4rem;
   height: 23px;
   min-width: 600px;
+  border-bottom: 1px solid var(--cor-borda) !important;
 }
 
 .containerPrecoCustoModo .form-group {
