@@ -17,23 +17,16 @@
   margin: 0 0;
 }
 
-.containerTabBar {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-}
-
 .navTabMultileg {
-  min-height: 30px;
+  height: 24px;
   text-align: center;
   padding-left: 0.5rem;
   border-color: var(--cor-borda);
-  padding-top: 5px;
 }
 
 .navTabMultileg a {
   width: 47px;
-  height: 25px;
+  height: 24px;
   font-size: 0.95rem;
   padding: 0;
   background-color: rgb(40, 40, 40);
@@ -57,12 +50,12 @@ a.botaoAddAba.active {
 }
 
 .containerPrecoCustoModo {
-  border-bottom: 1px solid var(--cor-borda) !important;
   flex: 1;
   display: flex;
   align-items: center;
+  justify-content: center;
   padding-left: 4rem;
-  height: 30px;
+  height: 23px;
   min-width: 600px;
 }
 
@@ -87,3 +80,62 @@ a.botaoAddAba.active {
   font-size: 0.9rem;
   height: 22px;
 }
+
+.containerAbaMultileg {
+}
+
+.divDetalhesAbaMultileg {
+  display: flex;
+  flex-direction: row;
+}
+
+.divColunaDetalhes {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  border-right: 1px solid var(--cor-borda);
+  padding: 0 0.5rem;
+  flex: 2;
+  justify-content: space-evenly;
+  height: 53px;
+  padding-bottom: 7px;
+}
+
+.divColunaDetalhes .form-label {
+  font-size: 0.9rem;
+}
+
+.divColunaDetalhes .textoValor {
+  margin: 0 1rem;
+  color: var(--laranja-valorTotal);
+}
+
+.divColunaDetalhes.modoPreco {
+  flex: 1 !important;
+}
+
+.divColunaDetalhes.book {
+  flex: 1 !important;
+}
+
+.divFlexRowDetalhesAba {
+  flex: 1;
+  text-align: center;
+}
+
+.divFlexRowDetalhesAba > div {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1px;
+}
+
+.textoLaranja {
+  color: var(--laranja-valorTotal);
+}
+/*
+.containerTabBar {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+*/

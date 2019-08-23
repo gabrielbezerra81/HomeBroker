@@ -3,6 +3,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Tabs, Tab, Form, Button, Row, Col } from "react-bootstrap";
 import DraggableModal from "components/utils/DraggableModal";
 import { modalHeaderSemBook } from "components/utils/FormHeader";
+import AbaMultileg from "components/forms/multileg_/AbaMultileg";
 
 export default class Multileg extends React.Component {
   componentDidMount() {
@@ -28,79 +29,77 @@ export default class Multileg extends React.Component {
   modalBody = props => {
     return (
       <div className="bodyMultileg">
-        <div className="containerTabBar">
-          <div>
-            <Tabs
-              id="tabBarMultileg"
-              className="navTabMultileg"
-              onSelect={this.handleSelect}
-              activeKey={this.state.abaAtual}
-            >
-              {this.state.tabs.map((tab, index) => {
-                return (
-                  <Tab
-                    eventKey={`tab${index}`}
-                    title={tab.name}
-                    tabClassName="abaNavTab"
-                    key={index}
-                  >
-                    <h6>{tab.content}</h6>
-                  </Tab>
-                );
-              })}
-              <Tab
-                eventKey="adicionar"
-                title="+"
-                tabClassName="botaoAddAba divClicavel"
+        <div className="containerPrecoCustoModo">
+          <Col md={0} className="colPrecoCustoModo">
+            <Form.Group>
+              <Form.Label>Preço</Form.Label>
+              <Form.Control
+                className="textInput"
+                type="number"
+                step={0.01}
+                //value={this.props.preco}
+                onChange={event => false}
               />
-            </Tabs>
-          </div>
-          <div className="containerPrecoCustoModo">
-            <Col md={0} className="colPrecoCustoModo">
-              <Form.Group>
-                <Form.Label>Preço</Form.Label>
-                <Form.Control
-                  className="textInput"
-                  type="number"
-                  step={0.01}
-                  //value={this.props.preco}
-                  onChange={event => false}
-                />
-              </Form.Group>
-            </Col>
-            <Col md={0} className="colPrecoCustoModo">
-              <Form.Group>
-                <Form.Label>Custo Unitário</Form.Label>
-                <Form.Control
-                  className="textInput"
-                  type="number"
-                  step={0.01}
-                  //value={this.props.preco}
-                  onChange={event => false}
-                />
-              </Form.Group>
-            </Col>
-            <Col md={0} className="colPrecoCustoModo">
-              <Form.Group>
-                <Form.Label>Modo de Execução</Form.Label>
-                <Form.Control
-                  className="textInput"
-                  type="text"
-                  // value=""
-                  // onChange={() => {}}
-                />
-              </Form.Group>
-            </Col>
-          </div>
+            </Form.Group>
+          </Col>
+          <Col md={0} className="colPrecoCustoModo">
+            <Form.Group>
+              <Form.Label>Custo Unitário</Form.Label>
+              <Form.Control
+                className="textInput"
+                type="number"
+                step={0.01}
+                //value={this.props.preco}
+                onChange={event => false}
+              />
+            </Form.Group>
+          </Col>
+          <Col md={0} className="colPrecoCustoModo">
+            <Form.Group>
+              <Form.Label>Modo de Execução</Form.Label>
+              <Form.Control
+                className="textInput"
+                type="text"
+                // value=""
+                // onChange={() => {}}
+              />
+            </Form.Group>
+          </Col>
         </div>
+        <Tabs
+          id="tabBarMultileg"
+          className="navTabMultileg"
+          onSelect={this.handleSelect}
+          activeKey={this.state.abaAtual}
+        >
+          {this.state.tabs.map((tab, index) => {
+            return (
+              <Tab
+                eventKey={`tab${index}`}
+                title={tab.name}
+                tabClassName="abaNavTab"
+                key={index}
+              >
+                <AbaMultileg />
+              </Tab>
+            );
+          })}
+          <Tab
+            eventKey="adicionar"
+            title="+"
+            tabClassName="botaoAddAba divClicavel"
+          />
+        </Tabs>
       </div>
     );
   };
 
   state = {
     tabs: [
-      { name: "Sim 1", content: "Wow this is tab 1" },
-      { name: "Sim 2", content: "Wow this is tab 2" }
+      { name: "Sim 1" },
+      { name: "Sim 2" },
+      { name: "Sim 3" },
+      { name: "Sim 4" }
     ],
     abaAtual: ""
   };
