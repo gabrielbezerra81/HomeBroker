@@ -1,5 +1,7 @@
 import React from "react";
-import { Row, Col, Table, Form, Button } from "react-bootstrap";
+import { Table, Form, Button } from "react-bootstrap";
+import imgModeloEU from "img/modeloEU.png";
+import imgModeloUSA from "img/modeloUSA.png";
 
 String.prototype.capitalize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1);
@@ -75,6 +77,7 @@ class AbaMultileg extends React.Component {
           borderless
           striped
           className="tableMultileg text-center"
+          style={{ tableLayout: "auto" }}
         >
           <thead>
             <tr>
@@ -101,9 +104,34 @@ class AbaMultileg extends React.Component {
                   <td>{item.strike}</td>
                   <td>{item.codigo}</td>
                   <td>{item.tipo.capitalize()}</td>
-                  <td>{item.modelo}</td>
-                  <td>{item.despernamento}</td>
-                  <td>{item.prioridade}</td>
+                  {renderModelo(item.modelo)}
+                  <td>
+                    <Form.Group>
+                      <Form.Control
+                        className="textInput formDespernamento"
+                        type="number"
+                        min={0}
+                        step={100}
+                        //value={item.despernamento}
+                      />
+                    </Form.Group>
+                  </td>
+                  <td>
+                    <Form.Group>
+                      <Form.Control
+                        as="select"
+                        className="textInput formPrioridade"
+                        //value={item.prioridade}
+                      >
+                        <option value={-1}>-1</option>
+                        <option value={0}>0</option>
+                        <option value={1}>1</option>
+                        <option value={2}>2</option>
+                        <option value={3}>3</option>
+                        <option value={4}>4</option>
+                      </Form.Control>
+                    </Form.Group>
+                  </td>
                   <td>{item.cotacao}</td>
                   <td>{item.valor}</td>
                 </tr>
@@ -117,35 +145,6 @@ class AbaMultileg extends React.Component {
 }
 
 export default AbaMultileg;
-
-const tabelaMultileg = [
-  {
-    cv: "compra",
-    qtde: 1000,
-    serie: "2019-08",
-    strike: 27.48,
-    codigo: "PETRH275",
-    tipo: "call",
-    modelo: "",
-    despernamento: "",
-    prioridade: "",
-    cotacao: "",
-    valor: "-40,00"
-  },
-  {
-    cv: "venda",
-    qtde: 1000,
-    serie: "2019-08",
-    strike: 27.48,
-    codigo: "PETRH275",
-    tipo: "call",
-    modelo: "",
-    despernamento: "",
-    prioridade: "",
-    cotacao: "",
-    valor: "-40,00"
-  }
-];
 
 const renderCV = cv => {
   return (
@@ -164,3 +163,48 @@ const renderCV = cv => {
     </td>
   );
 };
+
+const renderModelo = modelo => {
+  return (
+    <td>
+      {modelo === "EU" ? (
+        <div>
+          <img src={imgModeloEU} alt="" className="imgModelo" />
+        </div>
+      ) : (
+        <div>
+          <img src={imgModeloUSA} alt="" className="imgModelo" />
+        </div>
+      )}
+    </td>
+  );
+};
+
+const tabelaMultileg = [
+  {
+    cv: "compra",
+    qtde: 1000,
+    serie: "2019-08",
+    strike: 27.48,
+    codigo: "PETRH275",
+    tipo: "call",
+    modelo: "EU",
+    despernamento: 100,
+    prioridade: -1,
+    cotacao: "15,25",
+    valor: "-40,00"
+  },
+  {
+    cv: "venda",
+    qtde: 2000,
+    serie: "2019-08",
+    strike: 27.48,
+    codigo: "PETRH275",
+    tipo: "call",
+    modelo: "USA",
+    despernamento: 500,
+    prioridade: 2,
+    cotacao: "10,30",
+    valor: "-40,00"
+  }
+];

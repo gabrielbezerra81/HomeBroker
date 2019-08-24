@@ -4,17 +4,8 @@
 }
 
 #multileg .mcontent {
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   padding-bottom: 1rem;
-}
-
-.bodyMultilegTESTE tbody tr {
-  border-bottom: 4px solid var(--brackground-color) !important;
-  background: #333;
-}
-
-.bodyMultiTESTE .row {
-  margin: 0 0;
 }
 
 .navTabMultileg {
@@ -133,16 +124,14 @@ a.botaoAddAba.active {
   margin-top: 1px;
 }
 
+.divFlexRowDetalhesAba button {
+  flex: 1;
+  max-width: 65px;
+}
+
 .textoLaranja {
   color: var(--laranja-valorTotal);
 }
-/*
-.containerTabBar {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-}
-*/
 
 .tableMultileg {
   background-color: var(--light-brackground-color);
@@ -151,7 +140,12 @@ a.botaoAddAba.active {
 }
 
 .tableMultileg tbody tr td {
-  padding: 2px !important;
+  padding: 3px !important;
+}
+
+.tableMultileg tbody tr td > .form-group {
+  display: flex;
+  justify-content: center;
 }
 
 .tableMultileg > tbody > tr:nth-child(odd) > td,
@@ -177,9 +171,21 @@ a.botaoAddAba.active {
 }
 
 .cvCompra {
-  background-color: green !important;
+  background-color: #28a745 !important;
 }
 
 .cvVenda {
   background-color: red !important;
+}
+
+.formPrioridade {
+  width: 50px;
+}
+
+.formDespernamento {
+  width: 100px;
+}
+
+.imgModelo {
+  height: 20px;
 }

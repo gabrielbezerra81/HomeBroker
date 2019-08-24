@@ -125,7 +125,7 @@ export default class Multileg extends React.Component {
   };
 
   state = {
-    tabs: [{ name: "Sim 1" }, { name: "Sim 2" }],
+    tabs: [{ name: "Sim 1" }],
     abaAtual: "tab0"
   };
 
