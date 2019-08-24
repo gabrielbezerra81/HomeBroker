@@ -104,6 +104,10 @@ a.botaoAddAba.active {
   color: var(--laranja-valorTotal);
 }
 
+.textoLaranja {
+  color: var(--laranja-valorTotal) !important;
+}
+
 .divColunaDetalhes.modoPreco {
   flex: 1 !important;
 }
@@ -127,10 +131,6 @@ a.botaoAddAba.active {
 .divFlexRowDetalhesAba button {
   flex: 1;
   max-width: 65px;
-}
-
-.textoLaranja {
-  color: var(--laranja-valorTotal);
 }
 
 .tableMultileg {
@@ -188,4 +188,8 @@ a.botaoAddAba.active {
 
 .imgModelo {
   height: 20px;
+}
+
+.divColunaDetalhes select {
+  font-size: 0.7rem !important;
 }

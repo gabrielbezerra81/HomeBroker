@@ -31,11 +31,12 @@ class AbaMultileg extends React.Component {
               <Form.Label>Modo de preços</Form.Label>
               <Form.Control
                 className="textInput"
-                type="number"
-                step={0.01}
+                as="select"
                 //value={1}
-                onChange={() => false}
-              />
+                //onChange={() => false}
+              >
+                <option value="live">Live</option>
+              </Form.Control>
             </Form.Group>
           </div>
           <div className="divColunaDetalhes">
@@ -99,7 +100,17 @@ class AbaMultileg extends React.Component {
               return (
                 <tr key={index}>
                   {renderCV(item.cv)}
-                  <td>{item.qtde}</td>
+                  <td>
+                    <Form.Group>
+                      <Form.Control
+                        className="textInput formDespernamento"
+                        type="number"
+                        min={0}
+                        step={100}
+                        //value={item.qtde}
+                      />
+                    </Form.Group>
+                  </td>
                   <td>{item.serie}</td>
                   <td>{item.strike}</td>
                   <td>{item.codigo}</td>
