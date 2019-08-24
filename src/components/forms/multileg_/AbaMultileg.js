@@ -3,8 +3,8 @@ import { Table, Form, Button } from "react-bootstrap";
 import imgModeloEU from "img/modeloEU.png";
 import imgModeloUSA from "img/modeloUSA.png";
 
-String.prototype.capitalize = function() {
-  return this.charAt(0).toUpperCase() + this.slice(1);
+const capitalize = function(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
 class AbaMultileg extends React.Component {
@@ -14,7 +14,7 @@ class AbaMultileg extends React.Component {
         <div className="divDetalhesAbaMultileg">
           <div className="divColunaDetalhes">
             <h6>PETR4</h6>
-            <h6 className="textoValor">27,43-</h6>
+            <h6 className="textoValor">-27,43</h6>
             <Form.Group>
               <Form.Label>Juros</Form.Label>
               <Form.Control
@@ -114,7 +114,7 @@ class AbaMultileg extends React.Component {
                   <td>{item.serie}</td>
                   <td>{item.strike}</td>
                   <td>{item.codigo}</td>
-                  <td>{item.tipo.capitalize()}</td>
+                  <td>{capitalize(item.tipo)}</td>
                   {renderModelo(item.modelo)}
                   <td>
                     <Form.Group>
