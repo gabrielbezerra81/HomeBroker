@@ -111,8 +111,36 @@ class AbaMultileg extends React.Component {
                       />
                     </Form.Group>
                   </td>
-                  <td>{item.serie}</td>
-                  <td>{item.strike}</td>
+                  <td>
+                    <Form.Group>
+                      <Form.Control
+                        as="select"
+                        className="textInput"
+                        //value={item.prioridade}
+                      >
+                        {item.serie.map((serie, indice) => (
+                          <option key={serie + indice} value={serie}>
+                            {serie}
+                          </option>
+                        ))}
+                      </Form.Control>
+                    </Form.Group>
+                  </td>
+                  <td>
+                    <Form.Group>
+                      <Form.Control
+                        as="select"
+                        className="textInput"
+                        //value={item.prioridade}
+                      >
+                        {item.strike.map((strike, indice) => (
+                          <option key={strike + indice} value={strike}>
+                            {strike}
+                          </option>
+                        ))}
+                      </Form.Control>
+                    </Form.Group>
+                  </td>
                   <td>{item.codigo}</td>
                   <td>{capitalize(item.tipo)}</td>
                   {renderModelo(item.modelo)}
@@ -195,8 +223,8 @@ const tabelaMultileg = [
   {
     cv: "compra",
     qtde: 1000,
-    serie: "2019-08",
-    strike: 27.48,
+    serie: ["2019-08", "2019-07", "2019-06"],
+    strike: [26.32, 27.48, 28.48],
     codigo: "PETRH275",
     tipo: "call",
     modelo: "EU",
@@ -208,8 +236,8 @@ const tabelaMultileg = [
   {
     cv: "venda",
     qtde: 2000,
-    serie: "2019-08",
-    strike: 27.48,
+    serie: ["2019-08", "2019-07", "2019-06"],
+    strike: [26.32, 27.48, 28.48],
     codigo: "PETRH275",
     tipo: "call",
     modelo: "USA",
