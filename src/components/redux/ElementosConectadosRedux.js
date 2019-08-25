@@ -26,6 +26,9 @@ import { abrirItemBarraLateralAction } from "components/redux/actions/TelaPrinci
 import OrdensExecucao from "components/forms/ordens_em_execucao/OrdensExecucao";
 import BarraLateral from "components/tela_principal/BarraLateral";
 import Multileg from "components/forms/multileg_/Multileg";
+import ListaCompleta from "components/forms/lista_completa/ListaCompleta";
+import Posicao from "components/forms/posicao_/Posicao";
+import RelatorioDetalhado from "components/forms/relatorio_detalhado/RelatorioDetalhado";
 
 export const GlobalContext = React.createContext();
 export const localContext = React.createContext();
@@ -175,3 +178,24 @@ export const MultilegConectado = connect(
   null,
   { context: GlobalContext }
 )(Multileg);
+
+export const ListaCompletaConectada = connect(
+  mapStateToPropsGlobalStore,
+  { aumentarZindexAction },
+  null,
+  { context: GlobalContext }
+)(ListaCompleta);
+
+export const PosicaoConectada = connect(
+  mapStateToPropsGlobalStore,
+  { aumentarZindexAction },
+  null,
+  { context: GlobalContext }
+)(Posicao);
+
+export const RelatorioDetalhadoConectado = connect(
+  mapStateToPropsGlobalStore,
+  { aumentarZindexAction },
+  null,
+  { context: GlobalContext }
+)(RelatorioDetalhado);

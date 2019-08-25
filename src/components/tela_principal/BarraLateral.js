@@ -38,15 +38,42 @@ export default class BarraLateral extends React.Component {
           <img src={iconeOrdensEmExecucao} alt="Ordens em execução" />
           <h6>ORDENS EM EXECUÇÃO</h6>
         </div>
-        <div tabIndex={0} className="itemDivBarraLateral divClicavel">
+        <div
+          tabIndex={0}
+          className="itemDivBarraLateral divClicavel"
+          onClick={() => {
+            this.props.atualizarDivKeyAction("posicao");
+            this.props.abrirItemBarraLateralAction(this.props, "posicaoAberta");
+          }}
+        >
           <img src={iconePosicao} alt="Posição" />
           <h6>POSIÇÃO</h6>
         </div>
-        <div tabIndex={0} className="itemDivBarraLateral divClicavel">
+        <div
+          tabIndex={0}
+          className="itemDivBarraLateral divClicavel"
+          onClick={() => {
+            this.props.atualizarDivKeyAction("relatorio_detalhado");
+            this.props.abrirItemBarraLateralAction(
+              this.props,
+              "relatorioDetalhadoAberto"
+            );
+          }}
+        >
           <img src={iconeRelatorioDetalhado} alt="Relatório detalhado" />
           <h6>RELATÓRIO DETALHADO DA OPERAÇÃO</h6>
         </div>
-        <div tabIndex={0} className="itemDivBarraLateral divClicavel">
+        <div
+          tabIndex={0}
+          className="itemDivBarraLateral divClicavel"
+          onClick={() => {
+            this.props.atualizarDivKeyAction("lista_completa");
+            this.props.abrirItemBarraLateralAction(
+              this.props,
+              "listaCompletaAberta"
+            );
+          }}
+        >
           <img src={iconeListaCompleta} alt="Lista completa" />
           <h6>LISTA COMPLETA</h6>
         </div>

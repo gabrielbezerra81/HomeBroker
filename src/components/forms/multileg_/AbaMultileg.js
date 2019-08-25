@@ -244,6 +244,6 @@ const tabelaMultileg = [
     despernamento: 500,
     prioridade: 2,
     cotacao: "10,30",
-    valor: "-40,00"
+    valor: "-200,00"
   }
 ];
