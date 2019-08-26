@@ -50,12 +50,12 @@ Inputs do grafico
 /*Textos do grafico*/
 
 #TextoPrimeiroAjuste_CSM {
-  top: 1.5%;
+  top: 1%;
   left: 19.8%;
 }
 
 #TextoSegundoAjuste_CSM {
-  top: 1.5%;
+  top: 1%;
   left: 55.5%;
 }
 
@@ -65,14 +65,13 @@ Inputs do grafico
 }
 
 #TextoStopExecucao_CSM {
-  top: 10.5%;
-  
+  top: 10%;
   left: 23.8%;
 }
 
 #TextoStopDisparo_CSM {
-  top: 23.5%;
-  left: 23%;
+  top: 22.5%;
+  left: 23.2%;
 }
 
 #TextoDisparoMaisAjuste_CSM {
@@ -81,8 +80,15 @@ Inputs do grafico
 }
 
 #TextoCotacaoAtualGrafico_CSM {
-  top: 39%;
-  left: 21%;
+  top: 37%;
+  left: 21.5%;
+  width: 88px;
+}
+
+#TextoCotacaoAtualGrafico_CSM h6 {
+  top: 37%;
+  left: 20.8%;
+  font-size: 0.85rem !important;
 }
 
 #TextoStop_CSM {

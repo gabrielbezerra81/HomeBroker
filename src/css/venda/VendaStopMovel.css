@@ -50,32 +50,32 @@
 /*Textos do grafico*/
 
 #TextoPrimeiroAjuste_VSM {
-  top: 2.7%;
+  top: 2%;
   left: 19.8%;
 }
 
 #TextoSegundoAjuste_VSM {
-  top: 2.7%;
+  top: 2%;
   left: 55.5%;
 }
 
 #TextoGainDisparo_VSM {
-  top: 22.6%;
+  top: 22%;
   left: 22%;
 }
 
 #TextoStopDisparo_VSM {
-  top: 79.2%;
+  top: 78.5%;
   left: 22.5%;
 }
 
 #TextoStopExecucao_VSM {
-  top: 91.4%;
+  top: 90.8%;
   left: 23.3%;
 }
 
 #TextoDisparoMaisAjuste_VSM {
-  top: 10.3%;
+  top: 9.5%;
   left: 54%;
 }
 
@@ -90,13 +90,13 @@
 }
 
 #TextoMenorGrafico_Stop1ajuste_VSM {
-  top: 55.5%;
-  left: 33.5%;
+  top: 54%;
+  left: 33%;
 }
 
 #TextoMenorGrafico_StopAnterior_VSM {
-  top: 44.5%;
-  left: 54.5%;
+  top: 43%;
+  left: 55%;
 }
 
 #TextoMenorGrafico_Ajuste1_VSM {
@@ -128,7 +128,7 @@
 }
 
 #ValorAjuste3Grafico_VSM {
-  top: 74.3%;
+  top: 74%;
   left: 80.5%;
   color: black;
 }
