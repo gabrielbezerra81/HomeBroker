@@ -17,7 +17,7 @@ export default class Posicao extends React.Component {
       <DraggableModal
         id="posicao"
         renderModalBody={() => this.modalBody(this.props)}
-        renderDivFiltrarOrdens={false}
+        renderDivPosicaoEmCustodia={true}
         renderHeader={() =>
           modalHeaderSemBook(this.props, this.props.headerTitle, "border-green")
         }

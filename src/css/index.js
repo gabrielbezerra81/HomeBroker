@@ -26,3 +26,4 @@ import "./tela_principal/MenuLateral.css";
 import "./ordens_execucao/OrdensExecucao.css";
 import "./multileg_/multileg.css";
 import "./lista_completa/ListaCompleta.css";
+import "./posicao_/Posicao.css";
