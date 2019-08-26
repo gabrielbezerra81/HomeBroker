@@ -17,16 +17,13 @@ export default class Posicao extends React.Component {
       <DraggableModal
         id="posicao"
         renderModalBody={() => this.modalBody(this.props)}
-        renderDivPosicaoEmCustodia={true}
+        renderDivFiltrarOrdens={false}
         renderHeader={() =>
           modalHeaderSemBook(this.props, this.props.headerTitle, "border-green")
         }
       />
     );
   }
-  /*
- 
-  */
 
   modalBody = props => {
     return <div className="bodyMultileg"></div>;

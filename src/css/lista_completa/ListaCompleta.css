@@ -1,0 +1,51 @@
+#lista_completa {
+  margin-left: 5px;
+  width: 985px;
+}
+
+#lista_completa .mcontent {
+  font-size: 0.75rem;
+}
+
+.tableListaCompleta {
+  background-color: var(--light-brackground-color);
+  color: #ddd;
+  padding: 20px;
+}
+
+.tableColunaDividida {
+  color: #ddd;
+  background-color: inherit !important;
+  margin-bottom: 0 !important;
+}
+
+.tableListaCompleta td,
+th {
+  border-right: 1px solid var(--cor-borda);
+  padding-left: 0.7rem !important;
+  padding-right: 0.7rem !important;
+}
+
+.tableListaCompleta tbody tr td:last-child {
+  border-right: none;
+}
+
+.tableListaCompleta > tbody > tr:nth-child(odd) > td,
+.tableListaCompleta > tbody > tr:nth-child(odd) > th {
+  background-color: var(--brackground-color) !important;
+}
+
+.colunaDividida {
+  display: flex;
+  flex-direction: row;
+}
+
+.colunaDividida div {
+  flex: 1;
+  border-right: none;
+}
+
+th .colunaDividida div {
+  padding-left: 0.7rem !important;
+  padding-right: 0.7rem !important;
+}

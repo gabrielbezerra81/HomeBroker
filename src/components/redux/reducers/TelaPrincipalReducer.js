@@ -15,7 +15,7 @@ const INITIAL_STATE = {
   ordensExecucaoAberto: false,
   posicaoAberta: false,
   relatorioDetalhadoAberto: false,
-  listaCompletaAberta: false,
+  listaCompletaAberta: true,
   multilegAberto: false,
   ativoFiltrarOrdens: "",
   mercadoFiltrarOrdens: "",

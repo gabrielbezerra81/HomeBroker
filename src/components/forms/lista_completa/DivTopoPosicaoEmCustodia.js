@@ -13,7 +13,7 @@ class DivTopoPosicaoEmCustodia extends React.Component {
             bordered={false}
             borderless
             striped
-            className="tablePosicao text-center"
+            className="tableListaCompleta text-center"
             style={{ tableLayout: "auto" }}
           >
             <thead>
@@ -70,10 +70,6 @@ class DivTopoPosicaoEmCustodia extends React.Component {
     );
   }
 }
-/*
-<td>{item.qtdeInicial}</td>
-<td>{item.qtdeAtual}</td>
-*/
 
 const mapStateToProps = state => ({});
 

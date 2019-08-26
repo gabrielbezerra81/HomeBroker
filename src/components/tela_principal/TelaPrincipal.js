@@ -122,7 +122,7 @@ export default class TelaPrincipal extends React.Component {
                       "listaCompletaAberta"
                     );
                   }}
-                  headerTitle="LISTA COMPLETA"
+                  headerTitle="POSIÇÃO EM CUSTÓDIA"
                 />
               </Animate>
               <Animate

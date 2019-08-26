@@ -22,7 +22,7 @@ export default class ListaCompleta extends React.Component {
       <DraggableModal
         id="lista_completa"
         renderModalBody={() => this.modalBody(this.props)}
-        renderDivFiltrarOrdens={false}
+        renderDivPosicaoEmCustodia={true}
         renderHeader={() =>
           modalHeaderSemBook(this.props, this.props.headerTitle, "border-green")
         }
