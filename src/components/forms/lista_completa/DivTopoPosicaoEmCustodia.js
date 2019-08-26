@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Row, Button, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import { connect } from "react-redux";
 
 class DivTopoPosicaoEmCustodia extends React.Component {
@@ -56,8 +56,10 @@ class DivTopoPosicaoEmCustodia extends React.Component {
                   <td>{item.totalAtual}</td>
                   <td>{item.resultado}</td>
                   <td className="colunaDividida">
-                    <div>{item.operacoesDia.executadas}</div>
-                    <div>{item.qtdeAtual}</div>
+                    {renderCV(item.operacoesDia.executadas.tipo)}
+                    <div>{item.operacoesDia.executadas.valor}</div>
+                    {renderCV(item.operacoesDia.emAberto.tipo)}
+                    <div>{item.operacoesDia.emAberto.valor}</div>
                   </td>
                   <td>{item.stopLoss}</td>
                   <td>{item.stopGain}</td>
@@ -78,6 +80,18 @@ export default connect(
   {}
 )(DivTopoPosicaoEmCustodia);
 
+const renderCV = cv => {
+  return (
+    <div className="divCV">
+      {cv === "compra" ? (
+        <h6 className="cvCompra"> C </h6>
+      ) : (
+        <h6 className="cvVenda"> V </h6>
+      )}
+    </div>
+  );
+};
+
 const tabelaPosicao = [
   {
     ativo: "BGIV19",
@@ -88,7 +102,10 @@ const tabelaPosicao = [
     precoUlt: "25,65",
     totalAtual: "2458,20",
     resultado: "20",
-    operacoesDia: { executadas: 1000, emAberto: 1000 },
+    operacoesDia: {
+      executadas: { valor: 1000, tipo: "compra" },
+      emAberto: { valor: 4000, tipo: "venda" }
+    },
     stopLoss: "26,78",
     stopGain: "28,20"
   },
@@ -101,7 +118,10 @@ const tabelaPosicao = [
     precoUlt: "25,65",
     totalAtual: "2458,20",
     resultado: "20",
-    operacoesDia: { executadas: 1000, emAberto: 1000 },
+    operacoesDia: {
+      executadas: { valor: 2000, tipo: "compra" },
+      emAberto: { valor: 5000, tipo: "venda" }
+    },
     stopLoss: "26,78",
     stopGain: "28,20"
   },
@@ -114,7 +134,10 @@ const tabelaPosicao = [
     precoUlt: "25,65",
     totalAtual: "2458,20",
     resultado: "20",
-    operacoesDia: { executadas: 1000, emAberto: 1000 },
+    operacoesDia: {
+      executadas: { valor: 3000, tipo: "compra" },
+      emAberto: { valor: 6000, tipo: "venda" }
+    },
     stopLoss: "26,78",
     stopGain: "28,20"
   }
