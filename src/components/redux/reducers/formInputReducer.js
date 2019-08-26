@@ -111,7 +111,7 @@ export default namespace => (state = INITIAL_STATE, action) => {
     case `${MUDAR_AJUSTE_PADRAO}${namespace}`:
       return { ...state, ajustePadrao: formatarNumero(action.payload) };
     case `${MUDAR_DISPARO_PRIMEIRO_AJUSTE}${namespace}`:
-      return { ...state, disparo1Ajuste: formatarNumero(action.payload) };
+      return { ...state, inicioDisparo: formatarNumero(action.payload) };
     case `${MUDAR_DISPARO_MAIS_AJUSTE}${namespace}`:
       return { ...state, disparoMaisAjuste: formatarNumero(action.payload) };
     case `${MUDAR_STOP_MAIS_PRIMEIRO_AJUSTE}${namespace}`:

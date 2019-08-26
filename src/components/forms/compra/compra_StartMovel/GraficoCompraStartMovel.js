@@ -64,7 +64,7 @@ class GraficoCompraStartMovel extends React.Component {
               step={0.01}
               id="Disparo1AjusteGrafico_CSM"
               className="inputGrafico TamanhoInputGrafico_StartMovel"
-              value={this.props.disparo1Ajuste}
+              value={this.props.inicioDisparo}
               onChange={event =>
                 this.props.mudarDisparo1AjusteAction(
                   event,
@@ -148,7 +148,7 @@ class GraficoCompraStartMovel extends React.Component {
           )}
           {TextoMenorGrafico(
             Number(
-              this.props.disparoMaisAjuste - this.props.disparo1Ajuste
+              this.props.disparoMaisAjuste - this.props.inicioDisparo
             ).toFixed(2),
             "ValorAjuste3Grafico_CSM"
           )}
@@ -164,7 +164,7 @@ const mapStateToProps = state => ({
   stopDisparo: state.compraStartMovelReducer.stopDisparo,
   stopExec: state.compraStartMovelReducer.stopExec,
   cotacaoAtual: state.compraStartMovelReducer.cotacaoAtual,
-  disparo1Ajuste: state.compraStartMovelReducer.disparo1Ajuste,
+  inicioDisparo: state.compraStartMovelReducer.inicioDisparo,
   disparoMaisAjuste: state.compraStartMovelReducer.disparoMaisAjuste,
   stopMais1Ajuste: state.compraStartMovelReducer.stopMais1Ajuste,
   stopAnteriorAjuste: state.compraStartMovelReducer.stopAnteriorAjuste
