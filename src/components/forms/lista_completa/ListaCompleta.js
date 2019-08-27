@@ -85,10 +85,10 @@ export default class ListaCompleta extends React.Component {
           <Col>
             <div className="divSeletor">
               <div tabIndex={0} className="divClicavel seletorAtivo">
-                <h6>ALTA</h6>
+                <h6>AMPLIADO</h6>
               </div>
               <div tabIndex={0} className="divClicavel seletorAtivo">
-                <h6>PEQUENO</h6>
+                <h6>RESUMIDO</h6>
               </div>
               <div tabIndex={0} className="divClicavel seletorAtivo">
                 <h6>LISTA</h6>
@@ -96,7 +96,90 @@ export default class ListaCompleta extends React.Component {
             </div>
           </Col>
         </Row>
+        <Row style={{ justifyContent: "center" }}>
+          <div className="rowListagenItens">
+            {itensListaCompleta.map((item, index) => (
+              <div key={index} className="mt-3 ml-3">
+                <Row className="rowAtivosEmblema">
+                  <Col md={0}>
+                    <h6>{item.ativo}</h6>
+                  </Col>
+                  <Col md={0}>
+                    {item.custodiaCompra.map((itemCustodiaCompra, index2) => (
+                      <h6
+                        key={`custodiaCompra${index2}`}
+                        className="itemCustodiaCompra"
+                      >
+                        {itemCustodiaCompra.ativo} (
+                        {itemCustodiaCompra.qtde / 1000}K)
+                      </h6>
+                    ))}
+                  </Col>
+                  <Col md={0}>
+                    {item.custodiaVenda.map((itemCustodiaVenda, index2) => (
+                      <h6
+                        key={`custodiaVenda${index2}`}
+                        className="itemCustodiaVenda"
+                      >
+                        {itemCustodiaVenda.ativo} (-
+                        {itemCustodiaVenda.qtde / 1000}K)
+                      </h6>
+                    ))}
+                  </Col>
+                </Row>
+                <div className="mcontent itemListaCompleta"></div>
+              </div>
+            ))}
+          </div>
+        </Row>
       </div>
     );
   };
 }
+
+const itensListaCompleta = [
+  {
+    ativo: "PETR4",
+    custodiaCompra: [
+      { ativo: "X280", qtde: 1000 },
+      { ativo: "X290", qtde: 1000 }
+    ],
+    custodiaVenda: [
+      { ativo: "S272", qtde: 1000 },
+      { ativo: "S290", qtde: 1000 }
+    ]
+  },
+  {
+    ativo: "PETR4",
+    custodiaCompra: [
+      { ativo: "X280", qtde: 1000 },
+      { ativo: "X290", qtde: 1000 }
+    ],
+    custodiaVenda: [
+      { ativo: "S272", qtde: 1000 },
+      { ativo: "S290", qtde: 1000 }
+    ]
+  },
+  {
+    ativo: "PETR4",
+    custodiaCompra: [
+      { ativo: "X280", qtde: 1000 },
+      { ativo: "X290", qtde: 1000 }
+    ],
+    custodiaVenda: [
+      { ativo: "S272", qtde: 1000 },
+      { ativo: "S290", qtde: 1000 }
+    ]
+  },
+  {
+    ativo: "PETR4",
+    custodiaCompra: [
+      { ativo: "X280", qtde: 1000 },
+      { ativo: "X290", qtde: 1000 }
+    ],
+    custodiaVenda: [
+      { ativo: "S272", qtde: 1000 },
+      { ativo: "S290", qtde: 1000 }
+    ]
+  }
+];

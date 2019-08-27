@@ -1,6 +1,6 @@
 #lista_completa {
   margin-left: 5px;
-  min-width: 985px;
+  width: 985px;
 }
 
 #lista_completa .mcontent {
@@ -74,6 +74,11 @@ th .colunaDividida div {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 0.8rem !important;
+}
+
+.divSeletor > div > h6 {
+  font-size: 0.85rem !important;
 }
 
 .divSeletor > div:first-child {
@@ -103,4 +108,30 @@ th .colunaDividida div {
 .divIconeConfigOrdernar {
   display: flex;
   justify-content: center;
+}
+
+.rowListagenItens {
+  display: flex;
+  flex-wrap: wrap;
+  width: 96.8%;
+  padding-left: 0.5px;
+}
+
+.itemListaCompleta {
+  width: 210px;
+}
+
+.rowAtivosEmblema {
+  justify-content: space-evenly;
+  align-items: flex-end;
+}
+
+.itemCustodiaCompra {
+  color: #008fca;
+  font-size: 0.8rem;
+}
+
+.itemCustodiaVenda {
+  color: #a67269;
+  font-size: 0.8rem;
 }
