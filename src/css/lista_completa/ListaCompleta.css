@@ -117,6 +117,12 @@ th .colunaDividida div {
   padding-left: 0.5px;
 }
 
+.rowListagenItens > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
 .itemListaCompleta {
   width: 210px;
 }
