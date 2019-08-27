@@ -1,6 +1,6 @@
 #lista_completa {
   margin-left: 5px;
-  width: 985px;
+  min-width: 985px;
 }
 
 #lista_completa .mcontent {
@@ -48,4 +48,59 @@ th {
 th .colunaDividida div {
   padding-left: 0.7rem !important;
   padding-right: 0.7rem !important;
+}
+
+.bodyListaCompleta {
+  padding: 0.5rem;
+}
+
+.rowHeaderListaCompleta {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.divSeletor {
+  display: flex;
+  border: 2px solid var(--cor-borda);
+  border-radius: 22px;
+  height: 65px;
+}
+
+.divSeletor > div {
+  border-right: 2px solid var(--cor-borda);
+  flex: 1;
+  padding: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.divSeletor > div:first-child {
+  border-bottom-left-radius: 22px;
+  border-top-left-radius: 22px;
+}
+
+.divSeletor > div:last-child {
+  border-bottom-right-radius: 22px;
+  border-top-right-radius: 19px;
+}
+
+.divSeletor > div:last-child {
+  border-right: none;
+}
+
+.seletorAtivo:focus {
+  background-color: #314351 !important;
+  outline: none !important;
+}
+
+.formPosicao {
+  height: 38px !important;
+  font-size: 1rem !important;
+}
+
+.divIconeConfigOrdernar {
+  display: flex;
+  justify-content: center;
 }
