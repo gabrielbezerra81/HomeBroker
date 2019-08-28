@@ -50,6 +50,11 @@ export default class ListaCompleta extends React.Component {
               {iconeConfigAbrirFormulario(() => false, "")}
             </div>
           </Col>
+          <Col md={8}>
+            <div className="divIconeConfigAmpliado">
+              {iconeConfigAbrirFormulario(() => false, "")}
+            </div>
+          </Col>
         </Row>
         <Row className="rowHeaderListaCompleta mt-2">
           <Col>

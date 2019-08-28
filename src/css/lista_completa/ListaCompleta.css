@@ -110,6 +110,12 @@ th .colunaDividida div {
   justify-content: center;
 }
 
+.divIconeConfigAmpliado {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 1.5rem;
+}
+
 .rowListagenItens {
   display: flex;
   flex-wrap: wrap;
