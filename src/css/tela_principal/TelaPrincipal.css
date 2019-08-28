@@ -66,6 +66,14 @@
   text-align: center;
 }
 
+.divClicavel {
+  /* backface-visibility: hidden !important;
+  transform: translateZ(0) scale(1, 1) !important;
+  -webkit-transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden;*/
+  will-change: opacity;
+}
+
 .divClicavel:hover {
   cursor: pointer;
   transition-duration: 0.15s;
@@ -79,6 +87,24 @@
 }
 
 .divClicavel:focus {
+  outline: solid medium rgba(0, 83, 186, 0.3) !important;
+  transition-duration: 0.3s;
+  transition-timing-function: linear;
+}
+
+.divClicavell:hover {
+  cursor: pointer;
+  transition-duration: 0.15s;
+  opacity: 0.5;
+}
+
+.divClicavell:active {
+  transition-timing-function: linear;
+  outline: none !important;
+  opacity: 0.1;
+}
+
+.divClicavell:focus {
   outline: solid medium rgba(0, 83, 186, 0.3) !important;
   transition-duration: 0.3s;
   transition-timing-function: linear;
