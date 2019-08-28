@@ -1,6 +1,6 @@
 import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import {} from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import DraggableModal from "components/utils/DraggableModal";
 import { modalHeaderSemBook } from "components/utils/FormHeader";
 
@@ -26,6 +26,10 @@ export default class Posicao extends React.Component {
   }
 
   modalBody = props => {
-    return <div className="bodyMultileg"></div>;
+    return (
+      <div className="bodyPosicao">
+        <Row></Row>
+      </div>
+    );
   };
 }

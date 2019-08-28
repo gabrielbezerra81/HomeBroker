@@ -41,9 +41,7 @@ export default class ListaCompleta extends React.Component {
     return (
       <div className="bodyListaCompleta">
         <Row>
-          <Col md={2}>
-            <h6>GRIDI</h6>
-          </Col>
+          <Col md={2}></Col>
           <Col md={2}>
             <div className="divIconeConfigOrdernar">
               <h6 className="mr-2">Ordernar</h6>
@@ -106,8 +104,17 @@ export default class ListaCompleta extends React.Component {
         </Row>
         <Row style={{ justifyContent: "center" }}>
           <div className="rowListagenItens">
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <h6></h6>
+            </div>
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <h6></h6>
+            </div>
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <h6></h6>
+            </div>
             {itensListaCompleta.map((item, index) => (
-              <div key={index} className="mt-3 ml-3">
+              <div key={index} className="mt-2 ml-3">
                 <Row className="rowAtivosEmblema">
                   {renderAtivo(item)}
                   {item.custodiaCompra.length > 0 ? (
