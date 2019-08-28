@@ -114,7 +114,7 @@ export default class ListaCompleta extends React.Component {
               <h6></h6>
             </div>
             {itensListaCompleta.map((item, index) => (
-              <div key={index} className="mt-2 ml-3">
+              <div key={index} className="mt-2 ml-2 mr-2">
                 <Row className="rowAtivosEmblema">
                   {renderAtivo(item)}
                   {item.custodiaCompra.length > 0 ? (
