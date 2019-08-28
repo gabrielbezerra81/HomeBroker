@@ -38,7 +38,7 @@ export default (state = INITIAL_STATE, action) => {
     case ATUALIZAR_SHOW:
       return { ...state, show: action.payload };
     case AUMENTAR_ZINDEX:
-      return { ...state, zIndex: action.payload, divkey: action.divkey };
+      return { ...state, zIndex: action.payload, divkey: "" };
     case ATUALIZAR_DIVKEY:
       return { ...state, divkey: action.payload };
     case FECHAR_FORM:

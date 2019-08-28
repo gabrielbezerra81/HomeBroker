@@ -14,9 +14,10 @@ export default class BarraLateral extends React.Component {
         <div
           tabIndex={0}
           className="itemDivBarraLateral divClicavel"
-          onMouseOver={() =>
-            this.props.mouseOverAction(this.props, "ordensAberto")
-          }
+          onMouseOver={() => {
+            this.props.atualizarDivKeyAction("divOrdens");
+            this.props.mouseOverAction(this.props, "ordensAberto");
+          }}
           onMouseLeave={() =>
             this.props.mouseLeaveAction(this.props, "ordensAberto")
           }

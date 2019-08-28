@@ -105,6 +105,8 @@
   margin-top: 35px;
   flex-direction: column;
   display: flex;
+  position: absolute;
+  background-color:rgb(15, 15, 15) !important;
   /*opacity: 1;
 pointer-events: none;
   */

@@ -95,7 +95,8 @@ export const MainAppConectado = compose(
       mostrarAppAction,
       atualizarShowAction,
       atualizarDivKeyAction,
-      abrirFormAction
+      abrirFormAction,
+      aumentarZindexAction
     },
     null,
     { context: GlobalContext }

@@ -47,7 +47,9 @@ export default class App extends React.Component {
   componentDidUpdate() {
     if (
       this.props.divkey !== "" &&
+      this.props.divkey !== "divOrdens" &&
       this.props.divkey !== "ordens_execucao" &&
+      this.props.divkey !== "lista_completa" &&
       this.props.divkey !== "multileg"
     )
       document.getElementById(this.props.divkey).style.zIndex =
@@ -59,7 +61,9 @@ export default class App extends React.Component {
   componentDidMount() {
     if (
       this.props.divkey !== "" &&
+      this.props.divkey !== "divOrdens" &&
       this.props.divkey !== "ordens_execucao" &&
+      this.props.divkey !== "lista_completa" &&
       this.props.divkey !== "multileg"
     )
       document.getElementById(this.props.divkey).style.zIndex =

@@ -29,14 +29,27 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 //Possui o menu de ordens e encapsula todos os sub-apps.
 export class MainApp extends Component {
+  componentDidUpdate() {
+    if (
+      this.props.divkey !== "" &&
+      this.props.divkey === "divOrdens" &&
+      this.props.ordensAberto === true
+    ) {
+      console.log(1);
+      document.getElementById("divOrdens").style.zIndex = this.props.zIndex + 1;
+      this.props.aumentarZindexAction("divOrdens", this.props.zIndex, true);
+    }
+  }
+
   render() {
     return (
       <div>
         <Animate
           show={this.props.ordensAberto}
           duration={100}
+          preMount
           transitionOnMount
-          stayMounted={false}
+          stayMounted={true}
           start={startStyle}
         >
           <div
