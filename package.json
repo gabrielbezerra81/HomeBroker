@@ -13,6 +13,7 @@
     "bootstrap": "^4.3.1",
     "lodash": "^4.17.15",
     "mdbreact": "^4.17.0",
+    "pretty-checkbox": "^3.0.3",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.9",
     "react-bootstrap-date-picker": "^5.1.0",

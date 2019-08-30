@@ -1,8 +1,33 @@
 #posicao {
-  width: 900px;
+  width: 1100px;
   margin-left: 5px;
 }
 
+#posicao .mcontent {
+  margin-right: 0 !important;
+}
+
 .bodyPosicao {
-  padding: 0.5rem;
+  padding: 0.8rem;
+}
+
+.bodyPosicao h6 {
+  font-size: 0.9rem !important;
+}
+
+.rowCheckbox {
+  border-bottom: 1px dashed var(--cor-borda);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.divCheckbox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.text-align-right {
+  text-align: right;
 }
