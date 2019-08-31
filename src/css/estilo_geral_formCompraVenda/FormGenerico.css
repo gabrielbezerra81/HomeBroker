@@ -153,3 +153,13 @@ input[type="number"] {
   top: 0px;
   left: 0px;
 }
+
+table {
+  background-color: var(--light-brackground-color) !important;
+  color: #ddd !important;
+}
+
+table > tbody > tr:nth-child(odd) > td,
+table > tbody > tr:nth-child(odd) > th {
+  background-color: var(--brackground-color) !important;
+}

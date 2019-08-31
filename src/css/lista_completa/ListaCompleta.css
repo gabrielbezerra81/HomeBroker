@@ -21,7 +21,7 @@
 }
 
 .tableListaCompleta td,
-th {
+.tableListaCompleta th {
   border-right: 1px solid var(--cor-borda);
   padding-left: 0.7rem !important;
   padding-right: 0.7rem !important;
@@ -29,11 +29,6 @@ th {
 
 .tableListaCompleta tbody tr td:last-child {
   border-right: none;
-}
-
-.tableListaCompleta > tbody > tr:nth-child(odd) > td,
-.tableListaCompleta > tbody > tr:nth-child(odd) > th {
-  background-color: var(--brackground-color) !important;
 }
 
 .colunaDividida {
@@ -131,7 +126,7 @@ th .colunaDividida div {
 }
 
 .itemListaCompleta {
-  width: 210px;
+  width: 180px;
 }
 
 .rowAtivosEmblema {

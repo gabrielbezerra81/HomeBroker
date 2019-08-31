@@ -1,10 +1,11 @@
 #posicao {
-  width: 1100px;
+  width: 1080px;
   margin-left: 5px;
 }
 
 #posicao .mcontent {
   margin-right: 0 !important;
+  font-size: 0.75rem;
 }
 
 .bodyPosicao {
@@ -30,4 +31,56 @@
 
 .text-align-right {
   text-align: right;
+}
+
+.rowCompra {
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.rowCompra > div:first-child {
+  border-right: 1px solid var(--cor-borda);
+  padding-bottom: 1rem;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+
+.rowCompra > div:nth-child(2) {
+  flex: 1;
+}
+
+.colTabela {
+  padding-right: 2px;
+  padding-left: 0;
+}
+
+.colunaCompraVenda {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tabelaCompraPosicao {
+  margin-bottom: 0 !important;
+  margin-top: 0px !important;
+  height: 100%;
+}
+
+.tabelaCompraPosicao > thead > tr > th {
+  border-right: 1px solid var(--cor-borda);
+}
+
+.tabelaCompraPosicao > thead > tr > th:last-child {
+  border-right: none;
+}
+
+.tabelaCompraPosicao td {
+  border-right: 1px solid var(--cor-borda);
+  vertical-align: middle;
+}
+
+.tabelaCompraPosicao > tbody > tr:last-child > td {
+  padding-bottom: 1rem !important;
+}
+
+.colunaTotal {
+  flex: 2 !important;
 }

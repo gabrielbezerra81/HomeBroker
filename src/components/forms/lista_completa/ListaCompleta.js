@@ -4,9 +4,8 @@ import { Row, Col, Form, Table } from "react-bootstrap";
 import DraggableModal from "components/utils/DraggableModal";
 import { modalHeaderSemBook } from "components/utils/FormHeader";
 import { iconeConfigAbrirFormulario } from "components/utils/IconesConfigFormInterno";
-import { ReactComponent as ArrowDown } from "img/down-arrow.svg";
-import { ReactComponent as ArrowUp } from "img/up-arrow.svg";
 import { MDBIcon } from "mdbreact";
+import EmblemaSimples from "components/utils/EmblemaSimples";
 
 export default class ListaCompleta extends React.Component {
   componentDidMount() {
@@ -145,62 +144,12 @@ export default class ListaCompleta extends React.Component {
                   ) : null}
                 </Row>
 
-                <div className="mcontent itemListaCompleta containerEmblema">
-                  <Row>
-                    <Col>COMPRA</Col>
-                    <Col>Médio</Col>
-                    <Col>VENDA</Col>
-                  </Row>
-                  <div className="containerSliderTopo">
-                    <div className="sliderTopo"></div>
-                    <div className="meioSliderTopo"></div>
-                    <div className="sliderTopo"></div>
-                  </div>
-                  <Row>
-                    <Col md={3}>{item.precoCompra}</Col>
-                    <Col md={6}></Col>
-                    <Col md={3}>{item.precoVenda}</Col>
-                  </Row>
-                  <Row>
-                    <Col md={12} className="text-align-center">
-                      <h3>{item.valorAcao}</h3>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md={12} className="text-align-center">
-                      <div className="divSetaPorcentagem">
-                        {renderSeta(item.porcentagem)}
-                        {renderValorPorcentagem(item.porcentagem)}
-                      </div>
-                    </Col>
-                  </Row>
-                  <div className="divSetaPorcentagem">
-                    <Col md={0}>
-                      STOP<br></br>
-                      {item.stop}
-                    </Col>
-                    <Col md={8}>
-                      <div>
-                        <input
-                          type="range"
-                          className="custom-range"
-                          id="customRange1"
-                          min={Number(item.stop.replace(",", "."))}
-                          max={Number(item.gain.replace(",", "."))}
-                          step={0.01}
-                          //value={item.valorAcao}
-                        />
-                      </div>
-                    </Col>
-                    <Col md={0}>
-                      GAIN<br></br>
-                      {item.gain}
-                    </Col>
-                  </div>
+                <div className="mcontent containerEmblema">
+                  <EmblemaSimples item={item}></EmblemaSimples>
                   {ampliado ? (
                     <div className="divSetaPorcentagem">
                       <Col md={0} className="m-2">
-                        Resultado: {item.resultado}
+                        Resultado: {item.resultado.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
                       </Col>
                       <Col md={0} className="m-2">
                         {renderValorPorcentagem(item.porcentagemResultado)}
@@ -275,23 +224,15 @@ const renderAtivo = item => {
   );
 };
 
-const renderSeta = valor => {
-  valor = Number(valor.replace(",", "."));
-  if (valor >= 0)
-    return <ArrowUp fill="green" className="iconeSeta setaEmblema mr-1" />;
-  else return <ArrowDown fill="red" className="iconeSeta setaEmblema mr-1" />;
-};
-
 const renderValorPorcentagem = porcentagem => {
-  porcentagem = Number(porcentagem.replace(",", ".")).toPrecision(3);
   if (porcentagem > 0) {
-    porcentagem = porcentagem.toString().replace(".", ",");
+    porcentagem = porcentagem.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
     return <span className="porcentagemPositiva">+{porcentagem}%</span>;
   } else if (porcentagem < 0) {
-    porcentagem = porcentagem.toString().replace(".", ",");
+    porcentagem = porcentagem.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
     return <span className="porcentagemNegativa">{porcentagem}%</span>;
   } else {
-    porcentagem = porcentagem.toString().replace(".", ",");
+    porcentagem = porcentagem.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
     return <span>+{porcentagem}%</span>;
   }
 };
@@ -331,14 +272,14 @@ const itensListaCompleta = [
       { ativo: "S272", qtde: 1000 },
       { ativo: "S290", qtde: 1000 }
     ],
-    precoCompra: "2,50",
-    precoVenda: "2,60",
-    valorAcao: "2,55",
-    porcentagem: "-5,36",
-    stop: "0,00",
-    gain: "3,60",
-    resultado: "180,00",
-    porcentagemResultado: "38,46",
+    precoCompra: 2.5,
+    precoVenda: 2.6,
+    valorAcao: 2.55,
+    porcentagem: -5.36,
+    stop: 0,
+    gain: 3.6,
+    resultado: 180,
+    porcentagemResultado: 38.46,
     executando: [
       { ativo: "S272", qtde: 1000, valor: "0,30", tipo: "compra" },
       { ativo: "T272", qtde: 1000, valor: "0,40", tipo: "venda" }
@@ -354,28 +295,28 @@ const itensListaCompleta = [
       { ativo: "S272", qtde: 1000 },
       { ativo: "S290", qtde: 1000 }
     ],
-    precoCompra: "28,22",
-    precoVenda: "28,31",
-    valorAcao: "28,40",
-    porcentagem: "2,00",
-    stop: "28,22",
-    gain: "28,31",
-    resultado: "180,00",
-    porcentagemResultado: "38,46",
+    precoCompra: 28.22,
+    precoVenda: 28.31,
+    valorAcao: 28.4,
+    porcentagem: 2,
+    stop: 28.22,
+    gain: 28.31,
+    resultado: 180,
+    porcentagemResultado: 38.46,
     executando: []
   },
   {
     ativo: "PETR4",
     custodiaCompra: [{ ativo: "PETR4", qtde: 1000 }],
     custodiaVenda: [],
-    precoCompra: "2,50",
-    precoVenda: "2,60",
-    valorAcao: "2,55",
-    porcentagem: "-5,36",
-    stop: "0,00",
-    gain: "3,60",
-    resultado: "180,00",
-    porcentagemResultado: "38,46",
+    precoCompra: 2.5,
+    precoVenda: 2.6,
+    valorAcao: 2.55,
+    porcentagem: -5.36,
+    stop: 0,
+    gain: 3.6,
+    resultado: 180,
+    porcentagemResultado: 38.46,
     executando: []
   }
 ];
