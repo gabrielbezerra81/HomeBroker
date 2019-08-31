@@ -18,13 +18,25 @@ class EmblemaSimples extends React.Component {
           <div className="sliderTopo"></div>
         </div>
         <Row>
-          <Col md={3}>{this.props.item.precoCompra.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</Col>
+          <Col md={3}>
+            {this.props.item.precoCompra.toLocaleString("pt-BR", {
+              minimumFractionDigits: 2
+            })}
+          </Col>
           <Col md={6}></Col>
-          <Col md={3}>{this.props.item.precoVenda.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</Col>
+          <Col md={3}>
+            {this.props.item.precoVenda.toLocaleString("pt-BR", {
+              minimumFractionDigits: 2
+            })}
+          </Col>
         </Row>
         <Row>
           <Col md={12} className="text-align-center">
-            <h3>{this.props.item.valorAcao.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</h3>
+            <h3>
+              {this.props.item.valorAcao.toLocaleString("pt-BR", {
+                minimumFractionDigits: 2
+              })}
+            </h3>
           </Col>
         </Row>
         <Row>
@@ -38,7 +50,9 @@ class EmblemaSimples extends React.Component {
         <div className="divSetaPorcentagem">
           <Col md={0}>
             STOP<br></br>
-            {this.props.item.stop.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+            {this.props.item.stop.toLocaleString("pt-BR", {
+              minimumFractionDigits: 2
+            })}
           </Col>
           <Col md={8}>
             <div>
@@ -48,6 +62,7 @@ class EmblemaSimples extends React.Component {
                 id="customRange1"
                 min={this.props.item.stop}
                 max={this.props.item.gain}
+                value={(this.props.item.stop + this.props.item.gain) / 2}
                 step={0.01}
                 //value={item.valorAcao}
               />
@@ -55,7 +70,9 @@ class EmblemaSimples extends React.Component {
           </Col>
           <Col md={0}>
             GAIN<br></br>
-            {this.props.item.gain.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+            {this.props.item.gain.toLocaleString("pt-BR", {
+              minimumFractionDigits: 2
+            })}
           </Col>
         </div>
       </div>
@@ -74,13 +91,19 @@ const renderSeta = valor => {
 
 const renderValorPorcentagem = porcentagem => {
   if (porcentagem > 0) {
-    porcentagem = porcentagem.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
+    porcentagem = porcentagem.toLocaleString("pt-BR", {
+      minimumFractionDigits: 2
+    });
     return <span className="porcentagemPositiva">+{porcentagem}%</span>;
   } else if (porcentagem < 0) {
-    porcentagem = porcentagem.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
+    porcentagem = porcentagem.toLocaleString("pt-BR", {
+      minimumFractionDigits: 2
+    });
     return <span className="porcentagemNegativa">{porcentagem}%</span>;
   } else {
-    porcentagem = porcentagem.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
+    porcentagem = porcentagem.toLocaleString("pt-BR", {
+      minimumFractionDigits: 2
+    });
     return <span>+{porcentagem}%</span>;
   }
 };
