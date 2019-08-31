@@ -100,15 +100,15 @@ export default class Posicao extends React.Component {
         </Row>
         <Row>
           <Col md={3}>
-            <h5>COMPRA: {dados.ativo}</h5>
+            <h5>{dados.estrategia}: {dados.ativo}</h5>
           </Col>
         </Row>
-        <Row>
-          <Col md={4}></Col>
-          <Col md={4} className="text-align-right">
-            <h6>Resultado:</h6>
+        <Row className="mb-1">
+          <Col md={6}></Col>
+          <Col md={3} className="text-align-right">
+          <h6>{calculaResultado(dados.resultado)}</h6>
           </Col>
-          <Col md={4} className="text-align-right">
+          <Col md={3} className="text-align-right">
             <h6>Início: {dados.dataInicio}</h6>
           </Col>
         </Row>
@@ -198,17 +198,17 @@ export default class Posicao extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col md={4}>
-            <h5>THL PUT 28:</h5>
+          <Col md={12}>
+            <h5>{renderAtivos(dados2)}</h5>
           </Col>
         </Row>
-        <Row>
-          <Col md={4}></Col>
-          <Col md={4} className="text-align-right">
-            <h6>Resultado:</h6>
+        <Row className="mb-1">
+          <Col md={6}></Col>
+          <Col md={3} className="text-align-right">
+            <h6>{calculaResultado(dados2.resultado)}</h6>
           </Col>
-          <Col md={4} className="text-align-right">
-            <h6>Início: {dados.dataInicio}</h6>
+          <Col md={3} className="text-align-right">
+            <h6>Início: {dados2.dataInicio}</h6>
           </Col>
         </Row>
         <Row className="rowCompra mb-3">
@@ -360,6 +360,18 @@ export default class Posicao extends React.Component {
   };
 }
 
+const renderAtivos = (dados)=>{
+
+  let ativos = `${dados.estrategia}: ${dados.ativo}`
+  var codigos = "   "
+  dados.operacoes.map(item=>{
+    codigos += item.codigo +" | "
+  })
+  ativos+=codigos
+
+  return ativos.substring(0, ativos.length-2)
+}
+
 const calculaTotal = item => {
   let total = Number(item.qtde) * 1000 * Number(item.unit);
   let tipo = ""
@@ -370,10 +382,27 @@ const calculaTotal = item => {
   return total.toLocaleString("pt-BR", { minimumFractionDigits: 2 })+tipo;
 };
 
+const calculaResultado = (resultado) => {
+  let result = "Resultado: R$ "
+  if(resultado.valor>=0)
+  result += "+"
+  else 
+  result+="-"
+  result+=resultado.valor.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
+  if(resultado.variacao>=0)
+  result += " +"
+  else 
+  result+=" -"
+  result += resultado.variacao.toLocaleString("pt-BR", { minimumFractionDigits: 2 })+"%"
+
+  return result
+}
+
 const dados2 = {
   dinheiro: 227708,
   posicaoLiquida: 227708,
-  ativo: "PETR4",
+  estrategia:"BORBOLETA",
+  ativo: "PETR",
   dataInicio: "25/06/2019",
   precoCompra: 0.18,
   precoVenda: 0.22,
@@ -381,7 +410,10 @@ const dados2 = {
   porcentagem: 2.00,
   stop: 0,
   gain: 0.40,
-
+  resultado:{
+    valor:180,
+    variacao:38.46
+  },
   operacoes: [
     {
       codigo: "G260",
@@ -461,6 +493,7 @@ const dados2 = {
 const dados = {
   dinheiro: 227708,
   posicaoLiquida: 227708,
+  estrategia:"COMPRA",
   ativo: "PETR4",
   dataInicio: "25/06/2019",
   precoCompra: 2.5,
@@ -469,7 +502,10 @@ const dados = {
   porcentagem: 5.36,
   stop: 0,
   gain: 3.6,
-
+  resultado:{
+    valor:1800,
+    variacao:30.46
+  },
   operacoes: [
     {
       codigo: "PETR4",
