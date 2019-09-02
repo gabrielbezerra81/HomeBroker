@@ -1,0 +1,57 @@
+#relatorio_detalhado {
+  width: 1100px;
+  margin-left: 5px;
+}
+
+#relatorio_detalhado .mcontent {
+  margin-right: 0 !important;
+}
+
+.bodyRelatorioDetalhado {
+  padding: 0.8rem;
+}
+
+.row1 {
+  justify-content: space-around;
+}
+
+.flexRow {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.ativoCompra {
+  color: #008fca;
+}
+
+.ativoVenda {
+  color: #a67269;
+}
+
+.tabela1Custo {
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.tabela1Custo td:nth-child(1),
+.tabela1Custo td:nth-child(2),
+.tabela1Custo td:nth-child(3) {
+  border-right: 1px solid var(--cor-borda);
+}
+
+.tabela1Custo tr:last-child td {
+  padding-bottom: 0.3rem !important;
+}
+
+.qtdeAtivo {
+  font-size: 0.7rem !important;
+}
+
+.tabela2ProximaOrdem td:first-child {
+  padding-right: 0px !important;
+  padding-left: 10px !important;
+}
+
+.colTextoPosicao {
+  background-color: var(--light-brackground-color);
+}

@@ -27,5 +27,6 @@ import "./ordens_execucao/OrdensExecucao.css";
 import "./multileg_/multileg.css";
 import "./lista_completa/ListaCompleta.css";
 import "./posicao_/Posicao.css";
+import "./relatorio_detalhado/RelatorioDetalhado.css";
 
 import "./CustomCheckbox.css";
