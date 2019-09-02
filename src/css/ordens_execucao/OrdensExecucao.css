@@ -31,11 +31,6 @@
   background-color: var(--brackground-color);
 }
 
-.bodyOrdensExecucao tbody tr {
-  border-bottom: 4px solid var(--brackground-color) !important;
-  background: #333;
-}
-
 .divFiltrarOrdens {
   width: 605px !important;
   height: 80px !important;

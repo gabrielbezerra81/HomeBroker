@@ -5,6 +5,33 @@ import DraggableModal from "components/utils/DraggableModal";
 import { modalHeaderSemBook } from "components/utils/FormHeader";
 import TabelaCompleta from "components/forms/posicao_/TabelaCompleta";
 import TabelaSimples from "components/forms/posicao_/TabelaSimples";
+import Chart from "react-apexcharts";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  ReferenceLine,
+  ReferenceArea
+} from "recharts";
+
+const x = [20, 22.5, 25, 27.5, 30, 32.5, 35, 37.5, 40];
+const y = [20, 30, 50, 80, 100, 60, 40, 30, 0];
+const options = {
+  chart: {
+    id: "basic-bar"
+  },
+  xaxis: { name: "Valor ação", categories: x }
+};
+
+const series = [
+  {
+    data: y
+  }
+];
 
 export default class Posicao extends React.Component {
   componentDidMount() {
@@ -55,18 +82,38 @@ export default class Posicao extends React.Component {
             <h6>Mudança do dia</h6>
           </Col>
           <Col md={6}>
-            <div
-              style={{
-                border: "2px solid #4a494c",
-                borderRadius: "10px",
-                height: "80px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center"
-              }}
+            <ResponsiveContainer
+              width={"100%"}
+              height={100}
+              className="containerGrafico"
             >
-              <h4>Gráfico</h4>
-            </div>
+              <LineChart
+                margin={{ top: 10, right: 10, bottom: 5, left: 10 }}
+                width={500}
+                height={100}
+                data={[
+                  { name: "Dia 1", x: x[0], y: y[0] },
+                  { name: "Dia 2", x: x[1], y: y[1] },
+                  { name: "Dia 3", x: x[2], y: y[2] },
+                  { name: "Dia 4", x: x[3], y: y[3] },
+                  { name: "Dia 5", x: x[4], y: y[4] },
+                  { name: "Dia 6", x: x[5], y: y[5] },
+                  { name: "Dia 7", x: x[6], y: y[6] },
+                  { name: "Dia 8", x: x[7], y: y[7] },
+                  { name: "Hoje", x: x[8], y: y[8] }
+                ]}
+              >
+                <Line type="monotone" dataKey="y" stroke="green" dot={false} />
+                <XAxis dataKey="x" height={20}></XAxis>
+                <YAxis width={25}></YAxis>
+                <ReferenceLine
+                  x={x[4]}
+                  stroke="#388daf"
+                  strokeDasharray="4 4"
+                ></ReferenceLine>
+                <Tooltip></Tooltip>
+              </LineChart>
+            </ResponsiveContainer>
           </Col>
         </Row>
         <Row className="rowCheckbox">
@@ -340,3 +387,48 @@ const dados = {
     }
   ]
 };
+
+/*
+ResponsiveContainer width={"100%"} height={100}>
+              <LineChart
+                margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+                width={500}
+                height={100}
+                data={[
+                  { name: "Dia 1", x: x[0], y: y[0] },
+                  { name: "Dia 2", x: x[1], y: y[1] },
+                  { name: "Dia 3", x: x[2], y: y[2] },
+                  { name: "Dia 4", x: x[3], y: y[3] },
+                  { name: "Dia 5", x: x[4], y: y[4] },
+                  { name: "Dia 6", x: x[5], y: y[5] },
+                  { name: "Dia 7", x: x[6], y: y[6] },
+                  { name: "Dia 8", x: x[7], y: y[7] },
+                  { name: "Hoje", x: x[8], y: y[8] }
+                ]}
+              >
+                <Line type="monotone" dataKey="y" stroke="green" dot={false} />
+                <XAxis dataKey="x" height={20}></XAxis>
+                <YAxis width={25}></YAxis>
+                <CartesianGrid
+                  stroke="#333"
+                  strokeDasharray="4 4"
+                ></CartesianGrid>
+                <Tooltip></Tooltip>
+                <ReferenceLine
+                  x={x[4]}
+                  stroke="#388daf"
+                  strokeDasharray="4 4"
+                ></ReferenceLine>
+                <ReferenceArea
+                  x1={20}
+                  x2={40}
+                  y1={0}
+                  y2={100}
+                  fill="#444"
+                  fillOpacity={0.2}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+
+
+*/

@@ -84,3 +84,8 @@
 .colunaTotal {
   flex: 2 !important;
 }
+
+.containerGrafico {
+  background-color: var(--light-brackground-color);
+  border-radius: 5px;
+}
