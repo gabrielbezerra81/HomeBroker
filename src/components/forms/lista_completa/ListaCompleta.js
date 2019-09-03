@@ -103,15 +103,6 @@ export default class ListaCompleta extends React.Component {
         </Row>
         <Row style={{ justifyContent: "center" }}>
           <div className="rowListagenItens">
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              <h6></h6>
-            </div>
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              <h6></h6>
-            </div>
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              <h6></h6>
-            </div>
             {itensListaCompleta.map((item, index) => (
               <div key={index} className="mt-2 ml-2 mr-2">
                 <Row className="rowAtivosEmblema">
@@ -149,7 +140,10 @@ export default class ListaCompleta extends React.Component {
                   {ampliado ? (
                     <div className="divSetaPorcentagem">
                       <Col md={0} className="m-2">
-                        Resultado: {item.resultado.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                        Resultado:{" "}
+                        {item.resultado.toLocaleString("pt-BR", {
+                          minimumFractionDigits: 2
+                        })}
                       </Col>
                       <Col md={0} className="m-2">
                         {renderValorPorcentagem(item.porcentagemResultado)}
@@ -226,13 +220,19 @@ const renderAtivo = item => {
 
 const renderValorPorcentagem = porcentagem => {
   if (porcentagem > 0) {
-    porcentagem = porcentagem.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
+    porcentagem = porcentagem.toLocaleString("pt-BR", {
+      minimumFractionDigits: 2
+    });
     return <span className="porcentagemPositiva">+{porcentagem}%</span>;
   } else if (porcentagem < 0) {
-    porcentagem = porcentagem.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
+    porcentagem = porcentagem.toLocaleString("pt-BR", {
+      minimumFractionDigits: 2
+    });
     return <span className="porcentagemNegativa">{porcentagem}%</span>;
   } else {
-    porcentagem = porcentagem.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
+    porcentagem = porcentagem.toLocaleString("pt-BR", {
+      minimumFractionDigits: 2
+    });
     return <span>+{porcentagem}%</span>;
   }
 };
@@ -301,6 +301,20 @@ const itensListaCompleta = [
     porcentagem: 2,
     stop: 28.22,
     gain: 28.31,
+    resultado: 180,
+    porcentagemResultado: 38.46,
+    executando: []
+  },
+  {
+    ativo: "PETR4",
+    custodiaCompra: [{ ativo: "PETR4", qtde: 1000 }],
+    custodiaVenda: [],
+    precoCompra: 2.5,
+    precoVenda: 2.6,
+    valorAcao: 2.55,
+    porcentagem: -5.36,
+    stop: 0,
+    gain: 3.6,
     resultado: 180,
     porcentagemResultado: 38.46,
     executando: []

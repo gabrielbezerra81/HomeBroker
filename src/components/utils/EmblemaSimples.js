@@ -23,8 +23,8 @@ class EmblemaSimples extends React.Component {
               minimumFractionDigits: 2
             })}
           </Col>
-          <Col md={6}></Col>
-          <Col md={3}>
+          <Col md={5}></Col>
+          <Col md={4} className="text-align-right">
             {this.props.item.precoVenda.toLocaleString("pt-BR", {
               minimumFractionDigits: 2
             })}

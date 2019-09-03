@@ -163,3 +163,29 @@ table > tbody > tr:nth-child(odd) > td,
 table > tbody > tr:nth-child(odd) > th {
   background-color: var(--brackground-color) !important;
 }
+
+.flexJustifyCenter {
+  display: flex;
+  justify-content: center;
+}
+
+.flexAlignEnd {
+  display: flex;
+  align-items: flex-end;
+}
+
+.flexJustifyCenterAlignEnd {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.flexColumnTextCenter {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.spaceBetween {
+  justify-content: space-between !important;
+}

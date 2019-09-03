@@ -1,11 +1,12 @@
 import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import { Row, Col, Table, ProgressBar } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import DraggableModal from "components/utils/DraggableModal";
 import { modalHeaderSemBook } from "components/utils/FormHeader";
 import {} from "recharts";
 import Tabela1Custos from "components/forms/relatorio_detalhado/Tabela1Custos";
 import Tabela2ProximaOrdem from "components/forms/relatorio_detalhado/Tabela2ProximaOrdem";
+import EmblemaRelatorio from "components/forms/relatorio_detalhado/EmblemaRelatorio";
 
 export default class RelatorioDetalhado extends React.Component {
   componentDidMount() {
@@ -71,17 +72,17 @@ export default class RelatorioDetalhado extends React.Component {
           </Col>
         </Row>
         <Row className="mt-2">
-          <Col className="p-1">
+          <Col className="pl-1 pr-1">
             <Tabela1Custos></Tabela1Custos>
           </Col>
         </Row>
-        <Row className="mt-2">
+        <Row>
           <Col>
             <h6>Próxima Ordem</h6>
           </Col>
         </Row>
         <Row className="mt-2">
-          <Col className="p-1">
+          <Col className="pl-1 pr-1">
             <Tabela2ProximaOrdem></Tabela2ProximaOrdem>
           </Col>
         </Row>
@@ -98,7 +99,38 @@ export default class RelatorioDetalhado extends React.Component {
             <h6>PERMANENTE (GARANTIAS)</h6>
           </Col>
         </Row>
-        <Row className="mt-2"></Row>
+        <Row className="mt-2 flexJustifyCenter">
+          <div className="divListagenEmblemasRelatorio">
+            <div className="ml-3 mr-3 mt-2">
+              <EmblemaRelatorio item={item}></EmblemaRelatorio>
+            </div>
+            <div className="ml-3 mr-3 mt-2">
+              <EmblemaRelatorio item={item}></EmblemaRelatorio>
+            </div>
+            <div className="ml-3 mr-3 mt-2">
+              <EmblemaRelatorio item={item}></EmblemaRelatorio>
+            </div>
+            <div className="ml-3 mr-3 mt-2">
+              <EmblemaRelatorio item={item}></EmblemaRelatorio>
+            </div>
+          </div>
+        </Row>
+        <Row className="mt-2" style={{ justifyContent: "center" }}>
+          <Col>
+            <div
+              style={{
+                border: "3px solid #333",
+                height: "250px",
+                borderRadius: "10px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+            >
+              <h4>GRÁFICO</h4>
+            </div>
+          </Col>
+        </Row>
       </div>
     );
   };
@@ -107,4 +139,27 @@ export default class RelatorioDetalhado extends React.Component {
 const positivoNegativo = valor => {
   if (valor >= 0) return "porcentagemPositiva";
   else return "porcentagemNegativa";
+};
+
+export const ativoCompraVenda = tipo => {
+  if (tipo === "compra") return "ativoCompra";
+  else return "ativoVenda";
+};
+
+const item = {
+  ativo: "PETR4",
+  custodiaCompra: [
+    { ativo: "X280", qtde: 1000 },
+    { ativo: "X290", qtde: 1000 }
+  ],
+  custodiaVenda: [{ ativo: "S272", qtde: 1000 }, { ativo: "S290", qtde: 1000 }],
+  precoCompra: 2.5,
+  precoVenda: 2.6,
+  valorAcao: 2.55,
+  porcentagem: -5.36,
+  porcentagemResultado: 38.46,
+  executando: [
+    { ativo: "S272", qtde: 1000, valor: "0,30", tipo: "compra" },
+    { ativo: "T272", qtde: 1000, valor: "0,40", tipo: "venda" }
+  ]
 };
