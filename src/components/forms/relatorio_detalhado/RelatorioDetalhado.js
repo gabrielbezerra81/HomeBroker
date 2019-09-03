@@ -8,6 +8,7 @@ import Tabela1Custos from "components/forms/relatorio_detalhado/Tabela1Custos";
 import Tabela2ProximaOrdem from "components/forms/relatorio_detalhado/Tabela2ProximaOrdem";
 import EmblemaRelatorio from "components/forms/relatorio_detalhado/EmblemaRelatorio";
 import Tabela3Resultado from "components/forms/relatorio_detalhado/Tabela3Resultado";
+import Tabela4HistoricoOrdens from "components/forms/relatorio_detalhado/Tabela4HistoricoOrdens";
 
 export default class RelatorioDetalhado extends React.Component {
   componentDidMount() {
@@ -145,6 +146,11 @@ export default class RelatorioDetalhado extends React.Component {
         <Row>
           <Col className="colTextoPosicao mr-1 ml-1 pt-1 pb-1">
             <h5 className="mb-0">Histórico de Ordens</h5>
+          </Col>
+        </Row>
+        <Row className="mt-1">
+          <Col className="pl-1 pr-1">
+            <Tabela4HistoricoOrdens></Tabela4HistoricoOrdens>
           </Col>
         </Row>
       </div>

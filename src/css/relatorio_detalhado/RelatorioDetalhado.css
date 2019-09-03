@@ -115,3 +115,30 @@
 .tabela3Resultado th:last-child {
   border-right: none !important;
 }
+
+.tabela4HistoricoOrdens td:first-child {
+  padding-right: 0px !important;
+  padding-left: 10px !important;
+}
+
+.tabela4HistoricoOrdens {
+  border-spacing: 0px 5px;
+  border-collapse: separate;
+  margin-bottom: 10px !important;
+}
+
+.tabela4HistoricoOrdens tbody tr td {
+  color: black !important;
+}
+
+table.tabela4HistoricoOrdens > tbody > tr.linhaVermelha td {
+  background-color: #a67269 !important;
+}
+
+table.tabela4HistoricoOrdens > tbody > tr.linhaAmarela td {
+  background-color: #ddbe05 !important;
+}
+
+table.tabela4HistoricoOrdens > tbody > tr.linhaVerde td {
+  background-color: #265626 !important;
+}
