@@ -7,6 +7,7 @@ import {} from "recharts";
 import Tabela1Custos from "components/forms/relatorio_detalhado/Tabela1Custos";
 import Tabela2ProximaOrdem from "components/forms/relatorio_detalhado/Tabela2ProximaOrdem";
 import EmblemaRelatorio from "components/forms/relatorio_detalhado/EmblemaRelatorio";
+import Tabela3Resultado from "components/forms/relatorio_detalhado/Tabela3Resultado";
 
 export default class RelatorioDetalhado extends React.Component {
   componentDidMount() {
@@ -120,8 +121,8 @@ export default class RelatorioDetalhado extends React.Component {
             <div
               style={{
                 border: "3px solid #333",
-                height: "250px",
-                borderRadius: "10px",
+                height: "150px",
+                borderRadius: "15px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center"
@@ -129,6 +130,21 @@ export default class RelatorioDetalhado extends React.Component {
             >
               <h4>GRÁFICO</h4>
             </div>
+          </Col>
+        </Row>
+        <Row className="text-align-center">
+          <Col className="colTextoPosicao mr-1 ml-1 p-1 mt-2">
+            <h6>RESULTADO</h6>
+          </Col>
+        </Row>
+        <Row>
+          <Col className="pl-1 pr-1">
+            <Tabela3Resultado></Tabela3Resultado>
+          </Col>
+        </Row>
+        <Row>
+          <Col className="colTextoPosicao mr-1 ml-1 pt-1 pb-1">
+            <h5 className="mb-0">Histórico de Ordens</h5>
           </Col>
         </Row>
       </div>

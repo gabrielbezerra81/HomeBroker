@@ -95,3 +95,23 @@
   width: 87.1%;
   padding-left: 0.5px;
 }
+
+.tabela3Resultado {
+  background-color: var(--brackground-color) !important;
+}
+
+.tabela3Resultado > tbody > tr:nth-child(odd) > td,
+.tabela3Resultado > tbody > tr:nth-child(odd) > th {
+  background-color: var(--light-brackground-color) !important;
+}
+
+.tabela3Resultado td,
+.tabela3Resultado th {
+  border-right: 1px solid var(--cor-borda) !important;
+  padding: 0.2rem !important;
+}
+
+.tabela3Resultado td:last-child,
+.tabela3Resultado th:last-child {
+  border-right: none !important;
+}
