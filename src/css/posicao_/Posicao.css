@@ -89,3 +89,15 @@
   background-color: var(--light-brackground-color);
   border-radius: 5px;
 }
+
+.graficoVermelho {
+  background-color: #a67269 !important;
+}
+
+.graficoAmarelo {
+  background-color: #ddbe05 !important;
+}
+
+.graficoVerde {
+  background-color: #265626 !important;
+}

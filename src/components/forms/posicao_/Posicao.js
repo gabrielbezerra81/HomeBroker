@@ -7,31 +7,31 @@ import TabelaCompleta from "components/forms/posicao_/TabelaCompleta";
 import TabelaSimples from "components/forms/posicao_/TabelaSimples";
 import Chart from "react-apexcharts";
 import {
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
   ReferenceLine,
-  ReferenceArea
+  ReferenceArea,
+  BarChart,
+  Bar,
+  Legend
 } from "recharts";
 
-const x = [20, 22.5, 25, 27.5, 30, 32.5, 35, 37.5, 40];
-const y = [20, 30, 50, 80, 100, 60, 40, 30, 0];
-const options = {
-  chart: {
-    id: "basic-bar"
-  },
-  xaxis: { name: "Valor ação", categories: x }
-};
-
-const series = [
-  {
-    data: y
-  }
+const dia = [
+  ,
+  "04-25",
+  "04-26",
+  "04-27",
+  "04-28",
+  "04-29",
+  "04-30",
+  "05-01",
+  "05-02",
+  "05-03"
 ];
+const patrimonio = [426, 839, 992, 2249, 1462, 1095, 705, 712, 1514, 2130];
 
 export default class Posicao extends React.Component {
   componentDidMount() {
@@ -84,35 +84,37 @@ export default class Posicao extends React.Component {
           <Col md={6}>
             <ResponsiveContainer
               width={"100%"}
-              height={100}
+              height={150}
               className="containerGrafico"
             >
-              <LineChart
-                margin={{ top: 10, right: 10, bottom: 5, left: 10 }}
+              <BarChart
                 width={500}
-                height={100}
-                data={[
-                  { name: "Dia 1", x: x[0], y: y[0] },
-                  { name: "Dia 2", x: x[1], y: y[1] },
-                  { name: "Dia 3", x: x[2], y: y[2] },
-                  { name: "Dia 4", x: x[3], y: y[3] },
-                  { name: "Dia 5", x: x[4], y: y[4] },
-                  { name: "Dia 6", x: x[5], y: y[5] },
-                  { name: "Dia 7", x: x[6], y: y[6] },
-                  { name: "Dia 8", x: x[7], y: y[7] },
-                  { name: "Hoje", x: x[8], y: y[8] }
-                ]}
+                height={150}
+                data={data}
+                margin={{ top: 15, right: 5, left: 0, bottom: 2 }}
+                barSize={30}
               >
-                <Line type="monotone" dataKey="y" stroke="green" dot={false} />
-                <XAxis dataKey="x" height={20}></XAxis>
-                <YAxis width={25}></YAxis>
-                <ReferenceLine
-                  x={x[4]}
-                  stroke="#388daf"
-                  strokeDasharray="4 4"
-                ></ReferenceLine>
+                <XAxis dataKey="dia" height={18}></XAxis>
+                <YAxis width={35}></YAxis>
                 <Tooltip></Tooltip>
-              </LineChart>
+                <Legend></Legend>
+                <CartesianGrid
+                  strokeDasharray="5 5"
+                  stroke="#444"
+                ></CartesianGrid>
+                <Bar
+                  dataKey="dinheiro"
+                  stackId="patrimonio"
+                  fill="#265626"
+                ></Bar>
+                <Bar dataKey="opcao" stackId="patrimonio" fill="#ddbe05"></Bar>
+                <Bar
+                  dataKey="acao"
+                  stackId="patrimonio"
+                  fill="#a67269"
+                  label={{ position: "top", fill: "#ddd" }}
+                ></Bar>
+              </BarChart>
             </ResponsiveContainer>
           </Col>
         </Row>
@@ -387,6 +389,69 @@ const dados = {
     }
   ]
 };
+
+const data = [
+  {
+    dia: "04-24",
+    acao: 100,
+    opcao: 150,
+    dinheiro: 220
+  },
+  {
+    dia: "04-25",
+    acao: 200,
+    opcao: 250,
+    dinheiro: 350
+  },
+  {
+    dia: "04-26",
+    acao: 300,
+    opcao: 350,
+    dinheiro: 450
+  },
+  {
+    dia: "04-27",
+    acao: 400,
+    opcao: 450,
+    dinheiro: 550
+  },
+  {
+    dia: "04-28",
+    acao: 420,
+    opcao: 550,
+    dinheiro: 650
+  },
+  {
+    dia: "04-29",
+    acao: 320,
+    opcao: 450,
+    dinheiro: 550
+  },
+  {
+    dia: "04-30",
+    acao: 220,
+    opcao: 350,
+    dinheiro: 450
+  },
+  {
+    dia: "05-01",
+    acao: 200,
+    opcao: 300,
+    dinheiro: 400
+  },
+  {
+    dia: "05-02",
+    acao: 150,
+    opcao: 250,
+    dinheiro: 330
+  },
+  {
+    dia: "05-03",
+    acao: 100,
+    opcao: 180,
+    dinheiro: 250
+  }
+];
 
 /*
 ResponsiveContainer width={"100%"} height={100}>
