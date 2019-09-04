@@ -105,7 +105,7 @@ export default class Posicao extends React.Component {
                 <Bar
                   dataKey="dinheiro"
                   stackId="patrimonio"
-                  fill="#265626"
+                  fill="#008fca"
                 ></Bar>
                 <Bar dataKey="opcao" stackId="patrimonio" fill="#ddbe05"></Bar>
                 <Bar
