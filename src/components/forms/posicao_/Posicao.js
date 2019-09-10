@@ -12,26 +12,10 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  ReferenceLine,
-  ReferenceArea,
   BarChart,
   Bar,
   Legend
 } from "recharts";
-
-const dia = [
-  ,
-  "04-25",
-  "04-26",
-  "04-27",
-  "04-28",
-  "04-29",
-  "04-30",
-  "05-01",
-  "05-02",
-  "05-03"
-];
-const patrimonio = [426, 839, 992, 2249, 1462, 1095, 705, 712, 1514, 2130];
 
 export default class Posicao extends React.Component {
   componentDidMount() {
@@ -103,12 +87,19 @@ export default class Posicao extends React.Component {
                   stroke="#444"
                 ></CartesianGrid>
                 <Bar
+                  name="Dinheiro"
                   dataKey="dinheiro"
                   stackId="patrimonio"
-                  fill="#008fca"
+                  fill="#ad8abe"
                 ></Bar>
-                <Bar dataKey="opcao" stackId="patrimonio" fill="#ddbe05"></Bar>
                 <Bar
+                  name="Opção"
+                  dataKey="opcao"
+                  stackId="patrimonio"
+                  fill="#ddbe05"
+                ></Bar>
+                <Bar
+                  name="Ação"
                   dataKey="acao"
                   stackId="patrimonio"
                   fill="#a67269"
