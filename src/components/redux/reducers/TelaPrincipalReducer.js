@@ -13,7 +13,7 @@ const INITIAL_STATE = {
   ativo: "Bender",
   ordensAberto: false,
   ordensExecucaoAberto: false,
-  posicaoAberta: true,
+  posicaoAberta: false,
   relatorioDetalhadoAberto: false,
   listaCompletaAberta: false,
   multilegAberto: false,

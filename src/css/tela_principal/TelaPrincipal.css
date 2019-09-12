@@ -46,15 +46,15 @@
 }
 
 .valorLiquido {
-  color: #0cc45b;
+  color: #40b65c;
 }
 
 .valorComprar {
-  color: #ff9a2c;
+  color: #f89a30;
 }
 
 .divBarraLateral {
-  background-image: linear-gradient(#333, #222, #111);
+  background-color: #333333;
   width: 85px;
   display: flex;
   flex-direction: column;
@@ -110,9 +110,8 @@
   transition-timing-function: linear;
 }
 
-.itemDivBarraLateral img {
-  max-width: 50px;
-  margin-bottom: 0.2rem;
+.itemDivBarraLateral svg {
+  max-width: 60px;
 }
 
 .itemDivBarraLateral h6 {
@@ -179,4 +178,8 @@
 
 .defaultDraggable {
   position: relative;
+}
+
+.iconesBarraLateral {
+  fill: blue;
 }

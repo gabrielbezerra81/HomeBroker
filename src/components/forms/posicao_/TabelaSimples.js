@@ -1,7 +1,10 @@
 import React from "react";
 import { Row, Col, Table } from "react-bootstrap";
 import EmblemaSimples from "components/utils/EmblemaSimples";
-import { calculaTotal, calculaResultado } from "components/forms/posicao_/TabelaCompleta";
+import {
+  calculaTotal,
+  calculaResultado
+} from "components/forms/posicao_/TabelaCompleta";
 
 export default class TabelaSimples extends React.Component {
   render() {
@@ -20,7 +23,9 @@ export default class TabelaSimples extends React.Component {
             <h6>{calculaResultado(this.props.dados.resultado)}</h6>
           </Col>
           <Col md={3} className="text-align-right">
-            <h6>Início: {this.props.dados.dataInicio}</h6>
+            <h6 className="textosTitulos">
+              Início: {this.props.dados.dataInicio}
+            </h6>
           </Col>
         </Row>
         <Row className="rowCompra mb-3">

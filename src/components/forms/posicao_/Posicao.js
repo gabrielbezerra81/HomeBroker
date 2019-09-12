@@ -5,7 +5,6 @@ import DraggableModal from "components/utils/DraggableModal";
 import { modalHeaderSemBook } from "components/utils/FormHeader";
 import TabelaCompleta from "components/forms/posicao_/TabelaCompleta";
 import TabelaSimples from "components/forms/posicao_/TabelaSimples";
-import Chart from "react-apexcharts";
 import {
   XAxis,
   YAxis,
@@ -14,7 +13,9 @@ import {
   ResponsiveContainer,
   BarChart,
   Bar,
-  Legend
+  Legend,
+  ReferenceLine,
+  LabelList
 } from "recharts";
 
 export default class Posicao extends React.Component {
@@ -86,11 +87,12 @@ export default class Posicao extends React.Component {
                   strokeDasharray="5 5"
                   stroke="#444"
                 ></CartesianGrid>
+                <ReferenceLine y={0} stroke="#888" />
                 <Bar
                   name="Dinheiro"
                   dataKey="dinheiro"
                   stackId="patrimonio"
-                  fill="#ad8abe"
+                  fill="#AB89BD"
                 ></Bar>
                 <Bar
                   name="Opção"
@@ -381,7 +383,7 @@ const dados = {
   ]
 };
 
-const data = [
+export const data = [
   {
     dia: "04-24",
     acao: 100,

@@ -6,6 +6,14 @@ import iconePosicao from "img/iconePosicao.png";
 import iconeRelatorioDetalhado from "img/iconeRelatorioDetalhado.png";
 import iconeListaCompleta from "img/iconeListaCompleta.png";
 import iconeMultileg from "img/iconeMultileg.png";
+import { ReactComponent as Icones } from "img/Icones.svg";
+
+/*
+<img src={iconeAbrirOrdens} alt="Ordens" />
+
+Icone Ordens
+
+*/
 
 export default class BarraLateral extends React.Component {
   render() {
@@ -22,7 +30,7 @@ export default class BarraLateral extends React.Component {
             this.props.mouseLeaveAction(this.props, "ordensAberto")
           }
         >
-          <img src={iconeAbrirOrdens} alt="Ordens" />
+          <Icones viewBox="9 0 41 45" className="iconesBarraLateral"></Icones>
           <h6>ORDENS</h6>
         </div>
         <div
@@ -36,7 +44,7 @@ export default class BarraLateral extends React.Component {
             );
           }}
         >
-          <img src={iconeOrdensEmExecucao} alt="Ordens em execução" />
+          <Icones viewBox="11 97 35 43" className="iconesBarraLateral"></Icones>
           <h6>ORDENS EM EXECUÇÃO</h6>
         </div>
         <div
@@ -47,7 +55,7 @@ export default class BarraLateral extends React.Component {
             this.props.abrirItemBarraLateralAction(this.props, "posicaoAberta");
           }}
         >
-          <img src={iconePosicao} alt="Posição" />
+          <Icones viewBox="5 190 45 52" className="iconesBarraLateral"></Icones>
           <h6>POSIÇÃO</h6>
         </div>
         <div

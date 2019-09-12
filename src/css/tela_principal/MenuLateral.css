@@ -6,7 +6,7 @@
 }
 
 .divMenuLateral {
-  background-image: linear-gradient(#333, #222, #111);
+  background-color: #1D1D1D;
   min-height: 100vh;
   flex: 1;
   max-width: 211.699px;

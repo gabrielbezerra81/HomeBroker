@@ -9,6 +9,18 @@ import Tabela2ProximaOrdem from "components/forms/relatorio_detalhado/Tabela2Pro
 import EmblemaRelatorio from "components/forms/relatorio_detalhado/EmblemaRelatorio";
 import Tabela3Resultado from "components/forms/relatorio_detalhado/Tabela3Resultado";
 import Tabela4HistoricoOrdens from "components/forms/relatorio_detalhado/Tabela4HistoricoOrdens";
+import {
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  Legend,
+  ReferenceLine
+} from "recharts";
+import { data } from "components/forms/posicao_/Posicao";
 
 export default class RelatorioDetalhado extends React.Component {
   componentDidMount() {
@@ -44,7 +56,7 @@ export default class RelatorioDetalhado extends React.Component {
 
   modalBody = props => {
     return (
-      <div className="bodyRelatorioDetalhado">
+      <div className="bodyRelatorioDetalhado">  
         <Row className="row1">
           <Col md={0}>
             <h6>TRAVA HORIZONTAL DE LINHA - THL</h6>
@@ -119,18 +131,49 @@ export default class RelatorioDetalhado extends React.Component {
         </Row>
         <Row className="mt-2" style={{ justifyContent: "center" }}>
           <Col>
-            <div
-              style={{
-                border: "3px solid #333",
-                height: "150px",
-                borderRadius: "15px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center"
-              }}
+            <ResponsiveContainer
+              width={"100%"}
+              height={150}
+              className="containerGrafico"
             >
-              <h4>GRÁFICO</h4>
-            </div>
+              <BarChart
+                width={500}
+                height={150}
+                data={data}
+                margin={{ top: 15, right: 5, left: 0, bottom: 2 }}
+                barSize={30}
+                stackOffset="sign"
+              >
+                <XAxis dataKey="dia" height={18}></XAxis>
+                <YAxis width={35}></YAxis>
+                <Tooltip></Tooltip>
+                <Legend></Legend>
+                <CartesianGrid
+                  strokeDasharray="5 5"
+                  stroke="#444"
+                ></CartesianGrid>
+                <ReferenceLine y={0} stroke="#888" />
+                <Bar
+                  name="Dinheiro"
+                  dataKey="dinheiro"
+                  stackId="patrimonio"
+                  fill="#ad8abe"
+                ></Bar>
+                <Bar
+                  name="Opção"
+                  dataKey="opcao"
+                  stackId="patrimonio"
+                  fill="#ddbe05"
+                ></Bar>
+                <Bar
+                  name="Ação"
+                  dataKey="acao"
+                  stackId="patrimonio"
+                  fill="#a67269"
+                  label={{ position: "top", fill: "#ddd" }}
+                ></Bar>
+              </BarChart>
+            </ResponsiveContainer>
           </Col>
         </Row>
         <Row className="text-align-center">
