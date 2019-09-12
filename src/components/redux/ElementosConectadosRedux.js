@@ -103,7 +103,7 @@ export const MainAppConectado = compose(
   ),
   connect(
     mapStateToPropsAppPrincipal,
-    { mouseOverAction, mouseLeaveAction }
+    { mouseOverAction, mouseLeaveAction, abrirItemBarraLateralAction }
   )
 )(MainApp);
 

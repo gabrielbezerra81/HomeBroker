@@ -1,11 +1,6 @@
 import React from "react";
 import {} from "react-bootstrap";
-import iconeAbrirOrdens from "img/iconeAbrirOrdens.png";
-import iconeOrdensEmExecucao from "img/iconeOrdensEmExecucao.png";
-import iconePosicao from "img/iconePosicao.png";
-import iconeRelatorioDetalhado from "img/iconeRelatorioDetalhado.png";
 import iconeListaCompleta from "img/iconeListaCompleta.png";
-import iconeMultileg from "img/iconeMultileg.png";
 import { ReactComponent as Icones } from "img/Icones.svg";
 
 /*
@@ -69,8 +64,8 @@ export default class BarraLateral extends React.Component {
             );
           }}
         >
-          <img src={iconeRelatorioDetalhado} alt="Relatório detalhado" />
-          <h6>RELATÓRIO DETALHADO DA OPERAÇÃO</h6>
+          <Icones viewBox="8 277 41 52" className="iconesBarraLateral"></Icones>
+          <h6>HISTÓRICO</h6>
         </div>
         <div
           tabIndex={0}
@@ -82,23 +77,10 @@ export default class BarraLateral extends React.Component {
               "listaCompletaAberta"
             );
           }}
+          style={{ display: "none" }}
         >
           <img src={iconeListaCompleta} alt="Lista completa" />
           <h6>LISTA COMPLETA</h6>
-        </div>
-        <div
-          tabIndex={0}
-          className="itemDivBarraLateral divClicavel"
-          onClick={() => {
-            this.props.atualizarDivKeyAction("multileg");
-            this.props.abrirItemBarraLateralAction(
-              this.props,
-              "multilegAberto"
-            );
-          }}
-        >
-          <img src={iconeMultileg} alt="Multileg" />
-          <h6>MULTILEG</h6>
         </div>
       </div>
     );

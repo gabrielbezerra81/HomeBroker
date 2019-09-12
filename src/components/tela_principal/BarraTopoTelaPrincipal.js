@@ -6,6 +6,8 @@ import imgCaraFeliz from "img/iconeCaraFeliz.png";
 import { abrirFecharMenuLateralAction } from "components/redux/actions/TelaPrincipalActions";
 import { ocultarDIV, mostrarDIV } from "components/utils/MostrarOcultarDiv";
 import { Animate } from "react-show";
+import { ReactComponent as IconeAbrirMenu } from "img/IconeAbrirMenu.svg";
+import { ReactComponent as IconeHome } from "img/IconeHome.svg";
 
 const startStyle = {
   opacity: 0,
@@ -19,7 +21,7 @@ class BarraTopoTelaPrincipal extends React.Component {
         <Row>
           <Col md={1}>
             <div
-              className="iconesMostrarMenu"
+              className="iconesMostrarMenu divClicavel"
               onClick={event => {
                 if (this.props.menuLateralAberto === true) {
                   this.props.abrirFecharMenuLateralAction(
@@ -36,21 +38,11 @@ class BarraTopoTelaPrincipal extends React.Component {
                 }
               }}
             >
-              <span tabIndex={0} className="fa-stack divClicavel">
-                <MDBIcon
-                  far
-                  icon="circle"
-                  className="fa-stack-2x iconeCirculo"
-                />
-                <MDBIcon
-                  icon="ellipsis-h"
-                  className="fa-stack-1x iconeCirculo"
-                />
-              </span>
+              <IconeAbrirMenu height="30"></IconeAbrirMenu>
             </div>
           </Col>
           <Col md={0}>
-            <MDBIcon icon="home" className="iconeHome" />
+            <IconeHome height="25"></IconeHome>
           </Col>
           <Col md={1}>
             <h6>HOME</h6>
@@ -70,7 +62,7 @@ class BarraTopoTelaPrincipal extends React.Component {
             </Animate>
           </Col>
           <Col md={0}>
-            <img src={imgCaraFeliz} alt="cara feliz" />
+            <img src={imgCaraFeliz} alt="cara feliz" className="mr-1"/>
           </Col>
           <Col md={0}>
             <h6 className="">VALOR LIQUIDO:</h6>

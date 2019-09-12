@@ -19,6 +19,7 @@ import iconeVendaStartStop from "img/venda/iconeVendaStartStop.png";
 import iconeVendaStopMovel from "img/venda/iconeVendaStopMovel.png";
 import { Animate } from "react-show";
 import { AppConectado } from "components/redux/ElementosConectadosRedux";
+import iconeMultileg from "img/iconeMultileg.png";
 
 const startStyle = {
   opacity: 0,
@@ -188,7 +189,25 @@ export class MainApp extends Component {
                 <span>Stop Móvel</span>
               </div>
             </Row>
-            <Row />
+            <Row className="rowSpeciais">
+
+            <span className="mr-5">ESPECIAIS</span>
+              <div className="divBotaoFormulario">
+                <img
+                  src={iconeMultileg}
+                  alt="Multileg"
+                  onClick={() => {
+                    this.props.atualizarDivKeyAction("multileg");
+                    this.props.abrirItemBarraLateralAction(
+                      this.props,
+                      "multilegAberto"
+                    );
+                  }}
+                  className="divClicavel"
+                />
+                <span>MULTILEG</span>
+              </div>
+            </Row>
           </div>
         </Animate>
         {this.props.apps.map(Subapp => Subapp)}

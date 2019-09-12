@@ -115,13 +115,12 @@
 }
 
 .itemDivBarraLateral h6 {
-  color: var(--cor-texto);
+  color: #8ba5c2;
   font-size: 0.7rem;
 }
 
 .divOrdens {
   width: 605px;
-  height: 200px;
   border: 2px solid #888;
   border-left: none;
   border-radius: 10px;
@@ -158,6 +157,12 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+  color: var(--cor-texto);
+}
+
+.rowSpeciais {
+  justify-content: flex-start !important;
+  padding-left: 2.5rem;
 }
 
 .divBotaoFormulario {
@@ -181,5 +186,5 @@
 }
 
 .iconesBarraLateral {
-  fill: blue;
+  fill: #8ba5c2;
 }
