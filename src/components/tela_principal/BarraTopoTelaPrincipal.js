@@ -38,11 +38,11 @@ class BarraTopoTelaPrincipal extends React.Component {
                 }
               }}
             >
-              <IconeAbrirMenu height="30"></IconeAbrirMenu>
+              <IconeAbrirMenu className="ml-2" fill="#aaa" height="40"></IconeAbrirMenu>
             </div>
           </Col>
           <Col md={0}>
-            <IconeHome height="25"></IconeHome>
+            <IconeHome height="25" fill="#eee"></IconeHome>
           </Col>
           <Col md={1}>
             <h6>HOME</h6>
@@ -62,7 +62,7 @@ class BarraTopoTelaPrincipal extends React.Component {
             </Animate>
           </Col>
           <Col md={0}>
-            <img src={imgCaraFeliz} alt="cara feliz" className="mr-1"/>
+            <img src={imgCaraFeliz} alt="cara feliz" className="mr-1" />
           </Col>
           <Col md={0}>
             <h6 className="">VALOR LIQUIDO:</h6>

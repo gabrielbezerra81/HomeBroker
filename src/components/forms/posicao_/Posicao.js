@@ -5,18 +5,8 @@ import DraggableModal from "components/utils/DraggableModal";
 import { modalHeaderSemBook } from "components/utils/FormHeader";
 import TabelaCompleta from "components/forms/posicao_/TabelaCompleta";
 import TabelaSimples from "components/forms/posicao_/TabelaSimples";
-import {
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  Legend,
-  ReferenceLine,
-  LabelList
-} from "recharts";
+import GraficoPatrimonio from "components/forms/posicao_/GraficoPatrimonio";
+import IconeRostoCoberto from "img/rostoCoberto2.svg";
 
 export default class Posicao extends React.Component {
   componentDidMount() {
@@ -67,48 +57,7 @@ export default class Posicao extends React.Component {
             <h6>Mudança do dia</h6>
           </Col>
           <Col md={6}>
-            <ResponsiveContainer
-              width={"100%"}
-              height={150}
-              className="containerGrafico"
-            >
-              <BarChart
-                width={500}
-                height={150}
-                data={data}
-                margin={{ top: 15, right: 5, left: 0, bottom: 2 }}
-                barSize={30}
-              >
-                <XAxis dataKey="dia" height={18}></XAxis>
-                <YAxis width={35}></YAxis>
-                <Tooltip></Tooltip>
-                <Legend></Legend>
-                <CartesianGrid
-                  strokeDasharray="5 5"
-                  stroke="#444"
-                ></CartesianGrid>
-                <ReferenceLine y={0} stroke="#888" />
-                <Bar
-                  name="Dinheiro"
-                  dataKey="dinheiro"
-                  stackId="patrimonio"
-                  fill="#AB89BD"
-                ></Bar>
-                <Bar
-                  name="Opção"
-                  dataKey="opcao"
-                  stackId="patrimonio"
-                  fill="#ddbe05"
-                ></Bar>
-                <Bar
-                  name="Ação"
-                  dataKey="acao"
-                  stackId="patrimonio"
-                  fill="#a67269"
-                  label={{ position: "top", fill: "#ddd" }}
-                ></Bar>
-              </BarChart>
-            </ResponsiveContainer>
+            <GraficoPatrimonio></GraficoPatrimonio>
           </Col>
         </Row>
         <Row className="rowCheckbox">
@@ -149,6 +98,11 @@ export default class Posicao extends React.Component {
                 <h6>Executando</h6>
               </div>
             </Col>
+          </Col>
+        </Row>
+        <Row>
+          <Col className="text-align-right mr-4">
+            <img src={IconeRostoCoberto} height="45"></img>
           </Col>
         </Row>
         {dados.item.map((item, indice) => {
@@ -382,111 +336,3 @@ const dados = {
     }
   ]
 };
-
-export const data = [
-  {
-    dia: "04-24",
-    acao: 100,
-    opcao: 150,
-    dinheiro: 220
-  },
-  {
-    dia: "04-25",
-    acao: 200,
-    opcao: 250,
-    dinheiro: 350
-  },
-  {
-    dia: "04-26",
-    acao: 300,
-    opcao: 350,
-    dinheiro: 450
-  },
-  {
-    dia: "04-27",
-    acao: 400,
-    opcao: 450,
-    dinheiro: 550
-  },
-  {
-    dia: "04-28",
-    acao: 420,
-    opcao: 550,
-    dinheiro: 650
-  },
-  {
-    dia: "04-29",
-    acao: 320,
-    opcao: 450,
-    dinheiro: 550
-  },
-  {
-    dia: "04-30",
-    acao: 220,
-    opcao: 350,
-    dinheiro: 450
-  },
-  {
-    dia: "05-01",
-    acao: 200,
-    opcao: 300,
-    dinheiro: 400
-  },
-  {
-    dia: "05-02",
-    acao: 150,
-    opcao: 250,
-    dinheiro: 330
-  },
-  {
-    dia: "05-03",
-    acao: 100,
-    opcao: 180,
-    dinheiro: 250
-  }
-];
-
-/*
-ResponsiveContainer width={"100%"} height={100}>
-              <LineChart
-                margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-                width={500}
-                height={100}
-                data={[
-                  { name: "Dia 1", x: x[0], y: y[0] },
-                  { name: "Dia 2", x: x[1], y: y[1] },
-                  { name: "Dia 3", x: x[2], y: y[2] },
-                  { name: "Dia 4", x: x[3], y: y[3] },
-                  { name: "Dia 5", x: x[4], y: y[4] },
-                  { name: "Dia 6", x: x[5], y: y[5] },
-                  { name: "Dia 7", x: x[6], y: y[6] },
-                  { name: "Dia 8", x: x[7], y: y[7] },
-                  { name: "Hoje", x: x[8], y: y[8] }
-                ]}
-              >
-                <Line type="monotone" dataKey="y" stroke="green" dot={false} />
-                <XAxis dataKey="x" height={20}></XAxis>
-                <YAxis width={25}></YAxis>
-                <CartesianGrid
-                  stroke="#333"
-                  strokeDasharray="4 4"
-                ></CartesianGrid>
-                <Tooltip></Tooltip>
-                <ReferenceLine
-                  x={x[4]}
-                  stroke="#388daf"
-                  strokeDasharray="4 4"
-                ></ReferenceLine>
-                <ReferenceArea
-                  x1={20}
-                  x2={40}
-                  y1={0}
-                  y2={100}
-                  fill="#444"
-                  fillOpacity={0.2}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-
-
-*/

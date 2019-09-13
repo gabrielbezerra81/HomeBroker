@@ -20,7 +20,7 @@
   border-bottom: 1px dashed var(--cor-borda);
   padding-top: 1rem;
   padding-bottom: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.1rem;
 }
 
 .divCheckbox {
@@ -66,10 +66,19 @@
 
 .tabelaCompraPosicao > thead > tr > th {
   border-right: 1px solid var(--cor-borda);
+  color: #8fb9a1;
 }
 
 .tabelaCompraPosicao > thead > tr > th:last-child {
   border-right: none;
+}
+
+.tabelaCompraPosicao > thead > tr > th:last-child > span:first-child {
+  color: #0790c9;
+}
+
+.tabelaCompraPosicao > thead > tr > th:last-child > span:last-child {
+  color: #a6736a;
 }
 
 .tabelaCompraPosicao td {
@@ -101,3 +110,44 @@
 .graficoVerde {
   background-color: #265626 !important;
 }
+
+.textosTitulos {
+  color: #8fb9a1;
+}
+
+.textoPorcentagemPositiva {
+  color: #40b44a;
+}
+
+.textoPorcentagemNegativa {
+  color: #ce202a;
+}
+
+.saldoOpPositivo {
+  color: #40b44a;
+}
+
+.saldoOpNegativo {
+  color: #ce202a;
+}
+
+.rangePositivo::-webkit-slider-runnable-track {
+  background-color: #8fb9a1 !important;
+}
+
+.rangeNegativo::-webkit-slider-runnable-track {
+  background-color: #a6736a !important;
+}
+
+.inputRange::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  background: #fff !important;
+  box-shadow: 0 0 1px 4px #666 !important;
+  height: 10px;
+  width: 10px;
+  margin-top: -1px;
+}
+
+/*
+box-shadow: 0 0 1px 3px #666 !important;
+*/

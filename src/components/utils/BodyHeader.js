@@ -39,7 +39,7 @@ export const BodyHeaderAtivo = ({ props }) => (
 );
 
 const renderSeta = valor => {
-  if (valor >= 0) return <ArrowUp fill="green" className="iconeSeta" />;
+  if (valor >= 0) return <ArrowUp fill="#138342" className="iconeSeta" />;
   else return <ArrowDown fill="red" className="iconeSeta" />;
 };
 

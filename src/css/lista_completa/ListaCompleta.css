@@ -27,6 +27,10 @@
   padding-right: 0.7rem !important;
 }
 
+.tableListaCompleta th {
+  color: #bd912e;
+}
+
 .tableListaCompleta tbody tr td:last-child {
   border-right: none;
 }
@@ -92,7 +96,7 @@ th .colunaDividida div {
 }
 
 .seletorAtivo:focus {
-  background-color: #0790C9 !important;
+  background-color: #324552 !important;
   outline: none !important;
 }
 

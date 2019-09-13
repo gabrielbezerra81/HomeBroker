@@ -20,7 +20,7 @@ import {
   Legend,
   ReferenceLine
 } from "recharts";
-import { data } from "components/forms/posicao_/Posicao";
+import { data } from "components/forms/posicao_/GraficoPatrimonio";
 
 export default class RelatorioDetalhado extends React.Component {
   componentDidMount() {
@@ -56,7 +56,7 @@ export default class RelatorioDetalhado extends React.Component {
 
   modalBody = props => {
     return (
-      <div className="bodyRelatorioDetalhado">  
+      <div className="bodyRelatorioDetalhado">
         <Row className="row1">
           <Col md={0}>
             <h6>TRAVA HORIZONTAL DE LINHA - THL</h6>

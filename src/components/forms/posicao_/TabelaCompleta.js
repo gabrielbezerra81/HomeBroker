@@ -1,20 +1,21 @@
 import React from "react";
 import { Row, Col, Table } from "react-bootstrap";
 import EmblemaSimples from "components/utils/EmblemaSimples";
+import { corSaldoOp } from "components/forms/posicao_/TabelaSimples";
 
 export default class TabelaCompleta extends React.Component {
   render() {
     return (
       <div>
-        <Row>
-          <Col md={12}>
+        <Row className="mb-1 textosTitulos">
+          <Col md={6}>
             <h5>{renderAtivos(this.props.dados)}</h5>
           </Col>
-        </Row>
-        <Row className="mb-1">
-          <Col md={6}></Col>
           <Col md={3} className="text-align-right">
-            <h6>{calculaResultado(this.props.dados.resultado)}</h6>
+            <div className="spaceAround">
+              {calculaResultado(this.props.dados.resultado)}
+              {calculaVariacao(this.props.dados.resultado.variacao)}
+            </div>
           </Col>
           <Col md={3} className="text-align-right">
             <h6>Início: {this.props.dados.dataInicio}</h6>
@@ -130,7 +131,7 @@ export default class TabelaCompleta extends React.Component {
                           })}
                           %
                         </div>
-                        <div>
+                        <div className={corSaldoOp(item.osc)}>
                           {item.saldoOp.toLocaleString("pt-BR", {
                             minimumFractionDigits: 2
                           })}
@@ -200,11 +201,21 @@ export const calculaResultado = resultado => {
   result += resultado.valor.toLocaleString("pt-BR", {
     minimumFractionDigits: 2
   });
-  if (resultado.variacao >= 0) result += " +";
-  else result += " -";
-  result +=
-    resultado.variacao.toLocaleString("pt-BR", { minimumFractionDigits: 2 }) +
-    "%";
 
-  return result;
+  return <h6 className="textosTitulos">{result}</h6>;
+};
+
+export const calculaVariacao = variacao => {
+  let result = "";
+  let classe = "";
+  if (variacao >= 0) {
+    result += " +";
+    classe = "textoPorcentagemPositiva";
+  } else {
+    result += " ";
+    classe = "textoPorcentagemNegativa";
+  }
+  result +=
+    variacao.toLocaleString("pt-BR", { minimumFractionDigits: 2 }) + "%";
+  return <h6 className={classe}>{result}</h6>;
 };

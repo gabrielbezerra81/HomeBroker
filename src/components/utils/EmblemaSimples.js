@@ -58,7 +58,9 @@ class EmblemaSimples extends React.Component {
             <div>
               <input
                 type="range"
-                className="custom-range"
+                className={`custom-range ${corInputRange(
+                  this.props.item.porcentagem
+                )} inputRange`}
                 id="customRange1"
                 min={this.props.item.stop}
                 max={this.props.item.gain}
@@ -85,8 +87,13 @@ export default EmblemaSimples;
 const renderSeta = valor => {
   valor = Number(valor);
   if (valor >= 0)
-    return <ArrowUp fill="green" className="iconeSeta setaEmblema mr-1" />;
+    return <ArrowUp fill="#138342" className="iconeSeta setaEmblema mr-1" />;
   else return <ArrowDown fill="red" className="iconeSeta setaEmblema mr-1" />;
+};
+
+const corInputRange = porcentagem => {
+  if (porcentagem >= 0) return "rangePositivo";
+  else return "rangeNegativo";
 };
 
 const renderValorPorcentagem = porcentagem => {

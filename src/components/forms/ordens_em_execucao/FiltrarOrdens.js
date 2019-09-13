@@ -60,7 +60,7 @@ class FiltrarOrdens extends React.Component {
               </Form.Group>
             </Col>
             <Col md={0}>
-              <Button variant="primary" size="sm">
+              <Button variant="primary" size="sm" className="botaoFiltrar">
                 <h6>Filtrar</h6>
               </Button>
             </Col>

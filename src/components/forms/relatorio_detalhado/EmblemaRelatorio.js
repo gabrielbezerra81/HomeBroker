@@ -112,7 +112,7 @@ export default EmblemaRelatorio;
 const renderSeta = valor => {
   valor = Number(valor);
   if (valor >= 0)
-    return <ArrowUp fill="green" className="iconeSeta setaEmblema mr-1" />;
+    return <ArrowUp fill="#138342" className="iconeSeta setaEmblema mr-1" />;
   else return <ArrowDown fill="red" className="iconeSeta setaEmblema mr-1" />;
 };
 

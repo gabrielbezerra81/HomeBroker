@@ -3,24 +3,25 @@ import { Row, Col, Table } from "react-bootstrap";
 import EmblemaSimples from "components/utils/EmblemaSimples";
 import {
   calculaTotal,
-  calculaResultado
+  calculaResultado,
+  calculaVariacao
 } from "components/forms/posicao_/TabelaCompleta";
 
 export default class TabelaSimples extends React.Component {
   render() {
     return (
       <div>
-        <Row>
-          <Col md={3}>
+        <Row className="mb-1 textosTitulos">
+          <Col md={6}>
             <h5>
               {this.props.dados.estrategia}: {this.props.dados.ativo}
             </h5>
           </Col>
-        </Row>
-        <Row className="mb-1">
-          <Col md={6}></Col>
           <Col md={3} className="text-align-right">
-            <h6>{calculaResultado(this.props.dados.resultado)}</h6>
+            <div className="spaceAround">
+              {calculaResultado(this.props.dados.resultado)}
+              {calculaVariacao(this.props.dados.resultado.variacao)}
+            </div>
           </Col>
           <Col md={3} className="text-align-right">
             <h6 className="textosTitulos">
@@ -109,7 +110,7 @@ export default class TabelaSimples extends React.Component {
                           })}
                           %
                         </div>
-                        <div>
+                        <div className={corSaldoOp(item.osc)}>
                           {item.saldoOp.toLocaleString("pt-BR", {
                             minimumFractionDigits: 2
                           })}
@@ -152,3 +153,8 @@ export default class TabelaSimples extends React.Component {
     );
   }
 }
+
+export const corSaldoOp = osc => {
+  if (osc >= 0) return "saldoOpPositivo";
+  else return "saldoOpNegativo";
+};

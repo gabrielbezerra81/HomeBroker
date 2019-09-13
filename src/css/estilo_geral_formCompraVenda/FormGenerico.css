@@ -187,5 +187,15 @@ table > tbody > tr:nth-child(odd) > th {
 }
 
 .spaceBetween {
+  display: flex;
   justify-content: space-between !important;
+}
+
+.spaceAround {
+  display: flex;
+  justify-content: space-around !important;
+}
+
+.bg-success {
+  background-color: #128f46 !important;
 }
