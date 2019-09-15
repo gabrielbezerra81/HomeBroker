@@ -87,12 +87,12 @@ a.botaoAddAba.active {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
-  border-right: 1px solid var(--cor-borda);
   padding: 0 0.5rem;
   flex: 2;
   justify-content: space-evenly;
   height: 53px;
   padding-bottom: 7px;
+  color: #be9117;
 }
 
 .divColunaDetalhes .form-label {
@@ -101,7 +101,7 @@ a.botaoAddAba.active {
 
 .divColunaDetalhes .textoValor {
   margin: 0 1rem;
-  color: var(--laranja-valorTotal);
+  color: #ff9a2c;
 }
 
 .textoLaranja {
@@ -110,11 +110,6 @@ a.botaoAddAba.active {
 
 .divColunaDetalhes.modoPreco {
   flex: 1 !important;
-}
-
-.divColunaDetalhes.book {
-  flex: 1 !important;
-  border-right: none !important;
 }
 
 .divFlexRowDetalhesAba {
@@ -131,12 +126,17 @@ a.botaoAddAba.active {
 .divFlexRowDetalhesAba button {
   flex: 1;
   max-width: 65px;
+  background-color: #008fca;
+  border-color: #008fca;
 }
 
 .tableMultileg {
-  background-color: var(--light-brackground-color);
   color: #ddd;
   padding: 20px;
+}
+
+.tableMultileg thead {
+  color: #be9117;
 }
 
 .tableMultileg tbody tr td {
@@ -146,11 +146,6 @@ a.botaoAddAba.active {
 .tableMultileg tbody tr td > .form-group {
   display: flex;
   justify-content: center;
-}
-
-.tableMultileg > tbody > tr:nth-child(odd) > td,
-.tableMultileg > tbody > tr:nth-child(odd) > th {
-  background-color: var(--brackground-color) !important;
 }
 
 .divCV {
@@ -192,4 +187,22 @@ a.botaoAddAba.active {
 
 .divColunaDetalhes select {
   font-size: 0.7rem !important;
+}
+
+.inputBackgroundTransparente {
+  background-color: transparent;
+}
+
+.inputAtivo {
+  height: 30px;
+  font-size: 0.8rem;
+  background-color: var(--background-color);
+  border-color: #4d4c4c !important;
+  color: var(--cor-texto) !important;
+  text-align: center;
+}
+
+.inputAtivo:focus {
+  background-color: var(--background-color);
+  box-shadow: 0 0 0px 3.5px var(--box-shadow-color);
 }

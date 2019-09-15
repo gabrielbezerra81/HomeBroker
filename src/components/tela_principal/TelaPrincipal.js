@@ -146,7 +146,7 @@ export default class TelaPrincipal extends React.Component {
                       "multilegAberto"
                     );
                   }}
-                  headerTitle="MULTILEG"
+                  headerTitle="MULTI ATIVOS"
                 />
               </Animate>
             </div>

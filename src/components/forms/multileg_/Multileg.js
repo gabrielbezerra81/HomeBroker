@@ -62,45 +62,6 @@ export default class Multileg extends React.Component {
                 </Nav.Item>
               </Col>
             </Nav>
-            <Col md={0}>
-              <div className="containerPrecoCustoModo">
-                <Col md={0} className="colPrecoCustoModo">
-                  <Form.Group>
-                    <Form.Label>Preço</Form.Label>
-                    <Form.Control
-                      className="textInput"
-                      type="number"
-                      step={0.01}
-                      //value={this.props.preco}
-                      onChange={event => false}
-                    />
-                  </Form.Group>
-                </Col>
-                <Col md={0} className="colPrecoCustoModo">
-                  <Form.Group>
-                    <Form.Label>Custo Unitário</Form.Label>
-                    <Form.Control
-                      className="textInput"
-                      type="number"
-                      step={0.01}
-                      //value={this.props.preco}
-                      onChange={event => false}
-                    />
-                  </Form.Group>
-                </Col>
-                <Col md={0} className="colPrecoCustoModo">
-                  <Form.Group>
-                    <Form.Label>Modo de Execução</Form.Label>
-                    <Form.Control
-                      className="textInput"
-                      type="text"
-                      // value=""
-                      // onChange={() => {}}
-                    />
-                  </Form.Group>
-                </Col>
-              </div>
-            </Col>
           </Row>
           <Row>
             <Col md={12}>

@@ -2,6 +2,9 @@ import React from "react";
 import { Table, Form, Button } from "react-bootstrap";
 import imgModeloEU from "img/modeloEU.png";
 import imgModeloUSA from "img/modeloUSA.png";
+import DatePicker from "react-datepicker";
+import { ReactComponent as ArrowDown } from "img/down-arrow.svg";
+import { ReactComponent as ArrowUp } from "img/up-arrow.svg";
 
 const capitalize = function(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -13,10 +16,19 @@ class AbaMultileg extends React.Component {
       <div className="containerAbaMultileg">
         <div className="divDetalhesAbaMultileg">
           <div className="divColunaDetalhes">
-            <h6>PETR4</h6>
-            <h6 className="textoValor">-27,43</h6>
             <Form.Group>
-              <Form.Label>Juros</Form.Label>
+              <Form.Control
+                className="inputAtivo"
+                type="text"
+                value="PETR4"
+                onChange={() => false}
+              />
+            </Form.Group>
+            <h5 className="textoValor">-27,43</h5>
+            {renderSeta(2)}
+            {renderValorPorcentagem(5.35)}
+            <Form.Group className="ml-4">
+              <Form.Label>Strike</Form.Label>
               <Form.Control
                 className="textInput"
                 type="number"
@@ -28,21 +40,20 @@ class AbaMultileg extends React.Component {
           </div>
           <div className="divColunaDetalhes modoPreco">
             <Form.Group>
-              <Form.Label>Modo de preços</Form.Label>
-              <Form.Control
-                className="textInput"
-                as="select"
-                //value={1}
-                //onChange={() => false}
-              >
-                <option value="live">Live</option>
-              </Form.Control>
+              <Form.Label>Vencimento</Form.Label>
+              <DatePicker
+                className="form-control textInput"
+                //selected={props.date}
+                //onChange={data => props.mudarDataAction(data, namespace)}
+                dateFormat="dd/MM/yyyy"
+                popperPlacement="top-start"
+              ></DatePicker>
             </Form.Group>
           </div>
           <div className="divColunaDetalhes">
             <div className="divFlexRowDetalhesAba">
-              <Form.Label>Agregar pernas</Form.Label>
-              <div>
+              <Form.Label>Incluir</Form.Label>
+              <div className="botoesIncluir">
                 <Button variant="primary" size="sm">
                   +Ativo
                 </Button>
@@ -54,22 +65,6 @@ class AbaMultileg extends React.Component {
                 </Button>
               </div>
             </div>
-          </div>
-          <div className="divColunaDetalhes">
-            <div className="divFlexRowDetalhesAba">
-              <Form.Label>Execução</Form.Label>
-              <div>
-                <Button variant="success" size="sm">
-                  Montar
-                </Button>
-                <Button variant="danger" size="sm">
-                  Reverter
-                </Button>
-              </div>
-            </div>
-          </div>
-          <div className="divColunaDetalhes book">
-            <h6>Book</h6>
           </div>
         </div>
         <Table
@@ -103,7 +98,7 @@ class AbaMultileg extends React.Component {
                   <td>
                     <Form.Group>
                       <Form.Control
-                        className="textInput formDespernamento"
+                        className="textInput formDespernamento "
                         type="number"
                         min={0}
                         step={100}
@@ -217,6 +212,32 @@ const renderModelo = modelo => {
       )}
     </td>
   );
+};
+
+const renderSeta = valor => {
+  valor = Number(valor);
+  if (valor >= 0)
+    return <ArrowUp fill="#138342" className="iconeSeta mr-1" height="16" />;
+  else return <ArrowDown fill="red" className="iconeSeta mr-1" height="16" />;
+};
+
+const renderValorPorcentagem = porcentagem => {
+  if (porcentagem > 0) {
+    porcentagem = porcentagem.toLocaleString("pt-BR", {
+      minimumFractionDigits: 2
+    });
+    return <h6 className="porcentagemPositiva">+{porcentagem}%</h6>;
+  } else if (porcentagem < 0) {
+    porcentagem = porcentagem.toLocaleString("pt-BR", {
+      minimumFractionDigits: 2
+    });
+    return <h6 className="porcentagemNegativa">{porcentagem}%</h6>;
+  } else {
+    porcentagem = porcentagem.toLocaleString("pt-BR", {
+      minimumFractionDigits: 2
+    });
+    return <h6>+{porcentagem}%</h6>;
+  }
 };
 
 const tabelaMultileg = [
