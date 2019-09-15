@@ -8,7 +8,7 @@
 }
 
 .tableBook {
-  background: var(--brackground-color);
+  background: var(--background-color);
   margin: 0;
   color: #ddd;
 }
@@ -19,7 +19,7 @@ th {
 
 .table-striped > tbody > tr:nth-child(odd) > td,
 .table-striped > tbody > tr:nth-child(odd) > th {
-  background-color: var(--light-brackground-color);
+  background-color: var(--light-background-color);
 }
 
 .operacoes .col {

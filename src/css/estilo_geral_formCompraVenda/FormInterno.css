@@ -1,5 +1,5 @@
 .divAsModalContainer {
-  background-color: var(--brackground-color);
+  background-color: var(--background-color);
   border-radius: 1rem;
   padding: 0rem 1rem;
   border: 0.2rem solid var(--cor-borda);
@@ -73,7 +73,7 @@
 
 .valorTotalText {
   text-align: center;
-  background-color: var(--light-brackground-color);
+  background-color: var(--light-background-color);
   margin-top: 0.5rem;
   margin-bottom: 0rem;
   padding: 0.2rem 0;
@@ -186,7 +186,7 @@
 }
 
 .tabelaGainReducao {
-  background: var(--brackground-color);
+  background: var(--background-color);
   margin: 0;
   color: #ddd;
   border-bottom: 1px dashed #ddd;
@@ -202,9 +202,9 @@
   border-top: 0px !important;
 }
 
-.rowTextoAtivoGainReducao{
+.rowTextoAtivoGainReducao {
   padding-top: 1rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px dashed #ddd;
-  margin-bottom: 0.2rem
+  margin-bottom: 0.2rem;
 }

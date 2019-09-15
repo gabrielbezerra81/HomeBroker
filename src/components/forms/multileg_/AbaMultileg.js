@@ -1,14 +1,23 @@
 import React from "react";
-import { Table, Form, Button } from "react-bootstrap";
+import { Table, Form, Button, InputGroup } from "react-bootstrap";
 import imgModeloEU from "img/modeloEU.png";
 import imgModeloUSA from "img/modeloUSA.png";
 import DatePicker from "react-datepicker";
 import { ReactComponent as ArrowDown } from "img/down-arrow.svg";
 import { ReactComponent as ArrowUp } from "img/up-arrow.svg";
+import { MDBCol, MDBIcon } from "mdbreact";
 
 const capitalize = function(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
+/*<Form.Group>
+  <Form.Control
+    className="inputAtivo"
+    type="text"
+    value="PETR4"
+    onChange={() => false}
+  />
+</Form.Group>; */
 
 class AbaMultileg extends React.Component {
   render() {
@@ -16,18 +25,25 @@ class AbaMultileg extends React.Component {
       <div className="containerAbaMultileg">
         <div className="divDetalhesAbaMultileg">
           <div className="divColunaDetalhes">
-            <Form.Group>
+            <InputGroup>
               <Form.Control
                 className="inputAtivo"
                 type="text"
                 value="PETR4"
                 onChange={() => false}
               />
-            </Form.Group>
+              <InputGroup.Append className="inputAtivoAppend">
+                <span className="input-group-text iconeProcurar divClicavel">
+                  <MDBIcon icon="search" />
+                </span>
+              </InputGroup.Append>
+            </InputGroup>
             <h5 className="textoValor">-27,43</h5>
             {renderSeta(2)}
             {renderValorPorcentagem(5.35)}
-            <Form.Group className="ml-4">
+          </div>
+          <div className="divColunaDetalhes">
+            <Form.Group>
               <Form.Label>Strike</Form.Label>
               <Form.Control
                 className="textInput"
@@ -37,14 +53,12 @@ class AbaMultileg extends React.Component {
                 onChange={() => false}
               />
             </Form.Group>
-          </div>
-          <div className="divColunaDetalhes modoPreco">
-            <Form.Group>
+            <Form.Group className="wrapperVencimento">
               <Form.Label>Vencimento</Form.Label>
               <DatePicker
                 className="form-control textInput"
                 //selected={props.date}
-                //onChange={data => props.mudarDataAction(data, namespace)}
+                onChange={() => false}
                 dateFormat="dd/MM/yyyy"
                 popperPlacement="top-start"
               ></DatePicker>
@@ -216,9 +230,8 @@ const renderModelo = modelo => {
 
 const renderSeta = valor => {
   valor = Number(valor);
-  if (valor >= 0)
-    return <ArrowUp fill="#138342" className="iconeSeta mr-1" height="16" />;
-  else return <ArrowDown fill="red" className="iconeSeta mr-1" height="16" />;
+  if (valor >= 0) return <ArrowUp fill="#138342" className="mr-1" width="35" />;
+  else return <ArrowDown fill="red" className="mr-1" width="35" />;
 };
 
 const renderValorPorcentagem = porcentagem => {

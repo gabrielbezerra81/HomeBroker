@@ -54,7 +54,7 @@
 }
 
 .colTextoPosicao {
-  background-color: var(--light-brackground-color);
+  background-color: var(--light-background-color);
 }
 
 .containerEmblemaRelatorio {
@@ -97,12 +97,12 @@
 }
 
 .tabela3Resultado {
-  background-color: var(--brackground-color) !important;
+  background-color: var(--background-color) !important;
 }
 
 .tabela3Resultado > tbody > tr:nth-child(odd) > td,
 .tabela3Resultado > tbody > tr:nth-child(odd) > th {
-  background-color: var(--light-brackground-color) !important;
+  background-color: var(--light-background-color) !important;
 }
 
 .tabela3Resultado td,

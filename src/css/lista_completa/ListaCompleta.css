@@ -9,7 +9,7 @@
 }
 
 .tableListaCompleta {
-  background-color: var(--light-brackground-color);
+  background-color: var(--light-background-color);
   color: #ddd;
   padding: 20px;
 }
@@ -192,11 +192,11 @@ th .colunaDividida div {
 }
 
 .tabelaExecutando {
-  background-color: var(--light-brackground-color);
+  background-color: var(--light-background-color);
   color: #ddd;
 }
 
 .tabelaExecutando > tbody > tr:nth-child(even) > td,
 .tabelaExecutando > tbody > tr:nth-child(even) > th {
-  background-color: var(--brackground-color) !important;
+  background-color: var(--background-color) !important;
 }

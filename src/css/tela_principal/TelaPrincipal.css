@@ -1,5 +1,5 @@
 .divTelaPrincipal {
-  background-color: var(--brackground-colors);
+  background-color: var(--background-colors);
   display: flex;
   height: 100%;
 }

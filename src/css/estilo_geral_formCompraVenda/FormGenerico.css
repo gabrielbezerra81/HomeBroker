@@ -1,6 +1,6 @@
 :root {
-  --brackground-color: #1d1d1d;
-  --light-brackground-color: rgb(38, 38, 38);
+  --background-color: #1d1d1d;
+  --light-background-color: rgb(38, 38, 38);
   --laranja-valorTotal: rgb(243, 148, 44);
   --cor-texto: #ddd;
   --cor-cinza-botoes: #444;
@@ -11,7 +11,7 @@
 }
 
 .mcontent {
-  background-color: var(--brackground-color);
+  background-color: var(--background-color);
   border-radius: 1rem;
   padding: 0.1rem 0rem;
   border: 0.4rem solid var(--cor-borda);
@@ -155,13 +155,13 @@ input[type="number"] {
 }
 
 table {
-  background-color: var(--light-brackground-color) !important;
+  background-color: var(--light-background-color) !important;
   color: #ddd !important;
 }
 
 table > tbody > tr:nth-child(odd) > td,
 table > tbody > tr:nth-child(odd) > th {
-  background-color: var(--brackground-color) !important;
+  background-color: var(--background-color) !important;
 }
 
 .flexJustifyCenter {
