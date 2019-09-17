@@ -269,8 +269,13 @@ a.botaoAddAba.active {
   color: #a5746b;
 }
 
+.colInputRange {
+  height: 15px;
+}
+
 .inputRangeMultileg {
   background-color: transparent !important;
+  height: 11px;
 }
 
 .inputRangeMultileg::-webkit-slider-runnable-track {
@@ -284,4 +289,14 @@ a.botaoAddAba.active {
   height: 8px;
   width: 8px;
   margin-top: 0px;
+}
+
+.rowTextoInputRange > div {
+  height: 14px;
+  color: var(--cor-texto);
+}
+
+#icone_config_complementar {
+  right: 20px;
+  top: 5px;
 }
