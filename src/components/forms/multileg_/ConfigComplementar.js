@@ -13,7 +13,7 @@ class ConfigComplementar extends React.Component {
               <h6>Hora inicial</h6>
             </Col>
             <Col md={6}>
-              <Form.Control type="number" className="textInput" />
+              <Form.Control type="time" className="textInput" />
             </Col>
           </Row>
           <Row className="mt-2 mb-2">
@@ -21,7 +21,7 @@ class ConfigComplementar extends React.Component {
               <h6>Hora Final</h6>
             </Col>
             <Col md={6}>
-              <Form.Control type="number" className="textInput" />
+              <Form.Control type="time" className="textInput" />
             </Col>
           </Row>
           <Row className="mt-2 mb-2">

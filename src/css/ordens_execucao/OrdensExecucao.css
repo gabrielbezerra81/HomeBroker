@@ -13,6 +13,13 @@
   padding-bottom: 1rem;
 }
 
+#ordens_execucao input,
+#ordens_execucao select {
+  background-color: #333;
+  border-color: #333;
+  color: var(--cor-texto) !important;
+}
+
 .tableOrdensExecucao {
   color: #ddd;
   border: none;
