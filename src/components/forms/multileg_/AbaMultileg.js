@@ -236,6 +236,69 @@ class AbaMultileg extends React.Component {
               </Table>
             </Col>
           </Row>
+          <Row className="ml-3 mr-3">
+            <Col>
+              <input
+                type="range"
+                className={`custom-range inputRangeMultileg`}
+                //value={item.valorAcao}
+              />
+            </Col>
+          </Row>
+          <Row className="mr-2 mb-2">
+            <Col md={4} className="ml-2">
+              <h6>Preço</h6>
+            </Col>
+            <Col className="mr-1">
+              <Form.Control
+                className="textInput"
+                type="number"
+                step={0.01}
+                //value={1}
+                onChange={() => false}
+              />
+            </Col>
+          </Row>
+          <Row className="mr-2 mb-2">
+            <Col md={4} className="ml-2">
+              <h6>Total</h6>
+            </Col>
+            <Col className="mr-1">
+              <Form.Control
+                className="textInput"
+                type="number"
+                step={0.01}
+                //value={1}
+                onChange={() => false}
+              />
+            </Col>
+          </Row>
+          <Row className="mr-2 mb-2">
+            <Col md={4} className="ml-2">
+              <h6>Validade</h6>
+            </Col>
+            <Col className="mr-1 wrapperVencimento">
+              <DatePicker
+                className="form-control textInput"
+                //selected={props.date}
+                onChange={() => false}
+                dateFormat="dd/MM/yyyy"
+                popperPlacement="top-start"
+              />
+            </Col>
+          </Row>
+          <Row className="mb-2">
+            <Col md={4} className="ml-4">
+              <Button variant="secondary" size="sm">
+                LIMPAR
+              </Button>
+            </Col>
+            <Col className="botoesIncluir mr-1">
+              <Button variant="primary" size="sm">
+                EXECUTAR
+              </Button>
+            </Col>
+          </Row>
         </div>
       </div>
     );

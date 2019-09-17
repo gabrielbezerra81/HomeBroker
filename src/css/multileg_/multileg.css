@@ -15,6 +15,10 @@
   color: var(--cor-texto) !important;
 }
 
+#multileg button {
+  padding-top: 0.1rem !important;
+}
+
 .navTabMultileg {
   height: 24px;
   text-align: center;
@@ -263,4 +267,21 @@ a.botaoAddAba.active {
 
 .textoVenda {
   color: #a5746b;
+}
+
+.inputRangeMultileg {
+  background-color: transparent !important;
+}
+
+.inputRangeMultileg::-webkit-slider-runnable-track {
+  background-color: #444 !important;
+}
+
+.inputRangeMultileg::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  background: #ffff00 !important;
+  box-shadow: 0 0 1px 2px #eaad15 !important;
+  height: 8px;
+  width: 8px;
+  margin-top: 0px;
 }

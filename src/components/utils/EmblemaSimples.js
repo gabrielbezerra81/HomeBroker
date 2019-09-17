@@ -61,7 +61,6 @@ class EmblemaSimples extends React.Component {
                 className={`custom-range ${corInputRange(
                   this.props.item.porcentagem
                 )} inputRange`}
-                id="customRange1"
                 min={this.props.item.stop}
                 max={this.props.item.gain}
                 value={(this.props.item.stop + this.props.item.gain) / 2}
