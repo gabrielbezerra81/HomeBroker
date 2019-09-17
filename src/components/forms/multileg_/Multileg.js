@@ -18,7 +18,7 @@ export default class Multileg extends React.Component {
       <DraggableModal
         id="multileg"
         renderModalBody={() => this.modalBody(this.props)}
-        renderDivFiltrarOrdens={false}
+        renderConfigComplementar={true}
         renderHeader={() =>
           modalHeaderSemBook(this.props, this.props.headerTitle, "border-green")
         }

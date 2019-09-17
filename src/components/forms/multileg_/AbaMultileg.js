@@ -43,7 +43,7 @@ class AbaMultileg extends React.Component {
                   onChange={() => false}
                 />
               </Form.Group>
-              <Form.Group className="wrapperVencimento">
+              <Form.Group className="wrapperVencimento ml-1">
                 <Form.Label>Vencimento</Form.Label>
                 <DatePicker
                   className="form-control textInput"

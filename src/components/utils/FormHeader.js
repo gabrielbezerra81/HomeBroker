@@ -105,3 +105,26 @@ export const modalHeaderSemBook = (props, headerTitle, headerClass) => (
     </div>
   </div>
 );
+
+export const modalHeaderLimpo = (props, titulo, name) => (
+  <div className="border-green mheader">
+    <h6 className="mtitle">{titulo}</h6>
+    <div className="wrapperIconesHeader">
+      <Button
+        variant="link"
+        className="iconesHeader"
+        onClick={event => props.fecharFormConfigurarAction(event)}
+        name={name}
+      >
+        <span className="fa-stack">
+          <MDBIcon icon="circle" className="fa-stack-2x" />
+          <MDBIcon
+            icon="times"
+            className="fa-stack-1x iconeFechar"
+            name={name}
+          />
+        </span>
+      </Button>
+    </div>
+  </div>
+);

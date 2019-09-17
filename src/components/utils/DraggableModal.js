@@ -5,6 +5,7 @@ import ConfigurarStopVenda from "components/forms/venda/venda_StartStop/Configur
 import { connect } from "react-redux";
 import FiltrarOrdens from "components/forms/ordens_em_execucao/FiltrarOrdens"; //posicaoFormCompraVenda
 import DivTopoPosicaoEmCustodia from "components/forms/lista_completa/DivTopoPosicaoEmCustodia";
+import ConfigComplementar from "components/forms/multileg_/ConfigComplementar";
 
 class BSModal extends Component {
   constructor(props) {
@@ -51,10 +52,14 @@ class BSModal extends Component {
           </div>
           {this.props.renderConfigForm &&
           this.props.id === "comprastartstop" ? (
-            <ConfigurarStop className="mcontent configDiv" />
+            <ConfigurarStop />
           ) : null}
           {this.props.renderConfigForm && this.props.id === "vendastartstop" ? (
-            <ConfigurarStopVenda className="mcontent configDiv" />
+            <ConfigurarStopVenda />
+          ) : null}
+          {this.props.renderConfigComplementar &&
+          this.props.id === "multileg" ? (
+            <ConfigComplementar />
           ) : null}
         </div>
       </Draggable>

@@ -1,6 +1,7 @@
 #multileg {
-  min-width: 1100px;
+  width: 1000px;
   margin-left: 5px;
+  height: 390px;
 }
 
 #multileg .mcontent {
@@ -103,6 +104,10 @@ a.botaoAddAba.active {
 .divDetalhesAbaMultileg {
   display: flex;
   flex-direction: row;
+}
+
+.divDetalhesAbaMultileg .divColunaDetalhes:nth-child(2) {
+  flex: 1;
 }
 
 .divColunaDetalhes {
@@ -299,4 +304,15 @@ a.botaoAddAba.active {
 #icone_config_complementar {
   right: 20px;
   top: 5px;
+}
+
+.config_complementar {
+  width: 331px;
+  position: relative;
+  left: 99.5%;
+  top: -379px;
+  padding-bottom: 0.5rem;
+}
+.bodyConfigComplementar h6 {
+  font-size: 0.9rem;
 }

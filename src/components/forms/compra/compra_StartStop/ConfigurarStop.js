@@ -20,40 +20,18 @@ import {
 } from "components/redux/actions/formInputActions";
 import { CalculoValorTotalAgendada } from "components/utils/CalculoValorTotal";
 import { fecharFormConfigurarAction } from "components/redux/reducers/MainAppReducer";
+import { modalHeaderLimpo } from "components/utils/FormHeader";
 
 class ConfigurarStop extends React.Component {
   render() {
     return (
       <div className="configDiv mcontent">
-        <div className="border-green mheader">
-          <h6 className="mtitle">CONFIGURAR STOP</h6>
-          {modalHeader(this.props)}
-        </div>
+        {modalHeaderLimpo(this.props, "CONFIGURAR STOP", "config_compra")}
         {modalBody(this.props)}
       </div>
     );
   }
 }
-
-const modalHeader = props => (
-  <div className="wrapperIconesHeader">
-    <Button
-      variant="link"
-      className="iconesHeader"
-      onClick={event => props.fecharFormConfigurarAction(event)}
-      name="config_compra"
-    >
-      <span className="fa-stack">
-        <MDBIcon icon="circle" className="fa-stack-2x" />
-        <MDBIcon
-          icon="times"
-          className="fa-stack-1x iconeFechar"
-          name="config_compra"
-        />
-      </span>
-    </Button>
-  </div>
-);
 
 const modalBody = props => (
   <div className="imgContainer imgConfigurar">
