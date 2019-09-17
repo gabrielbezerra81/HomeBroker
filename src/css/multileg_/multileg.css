@@ -1,11 +1,18 @@
 #multileg {
-  min-width: 950px;
+  min-width: 1100px;
   margin-left: 5px;
 }
 
 #multileg .mcontent {
   font-size: 0.75rem;
-  padding-bottom: 1rem;
+  padding: 0;
+}
+
+#multileg input,
+#multileg select {
+  background-color: #333;
+  border-color: #333;
+  color: var(--cor-texto) !important;
 }
 
 .navTabMultileg {
@@ -76,6 +83,17 @@ a.botaoAddAba.active {
 }
 
 .containerAbaMultileg {
+  display: flex;
+  color: #be9117;
+}
+
+.containerAbaMultileg > div:first-child {
+  flex: 8;
+  border-right: 1px solid var(--cor-borda);
+}
+
+.containerAbaMultileg > div:last-child {
+  flex: 2;
 }
 
 .divDetalhesAbaMultileg {
@@ -92,7 +110,6 @@ a.botaoAddAba.active {
   justify-content: space-evenly;
   height: 53px;
   padding-bottom: 7px;
-  color: #be9117;
 }
 
 .divColunaDetalhes .form-label {
@@ -135,7 +152,7 @@ a.botaoAddAba.active {
   color: #be9117;
 }
 
-.tableMultileg tbody tr td {
+.tableMultileg td {
   padding: 3px !important;
 }
 
@@ -192,7 +209,7 @@ a.botaoAddAba.active {
 .inputAtivo {
   height: 30px;
   font-size: 0.8rem;
-  background-color: var(--background-color);
+  background-color: var(--background-color) !important;
   border-color: #4d4c4c !important;
   color: var(--cor-texto) !important;
   text-align: center;
@@ -224,4 +241,26 @@ a.botaoAddAba.active {
 
 .wrapperVencimento > div {
   display: flex;
+}
+
+.tabelaBook {
+  color: #ddd;
+  padding: 20px;
+}
+
+.tabelaBook thead {
+  color: #be9117;
+}
+
+.tabelaBook td {
+  padding: 4px !important;
+}
+
+.textoCompra {
+  color: #098fc7;
+  margin-bottom: 7px;
+}
+
+.textoVenda {
+  color: #a5746b;
 }
