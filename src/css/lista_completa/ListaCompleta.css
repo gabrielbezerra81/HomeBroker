@@ -203,3 +203,7 @@ th .colunaDividida div {
 .tabelaExecutando > tbody > tr:nth-child(even) > th {
   background-color: var(--background-color) !important;
 }
+
+.iconeResumido path {
+  fill: var(--cor-texto) !important;
+}

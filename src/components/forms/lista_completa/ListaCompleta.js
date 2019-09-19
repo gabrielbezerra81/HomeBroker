@@ -6,6 +6,8 @@ import { modalHeaderSemBook } from "components/utils/FormHeader";
 import { iconeConfigAbrirFormulario } from "components/utils/IconesConfigFormInterno";
 import { MDBIcon } from "mdbreact";
 import EmblemaSimples from "components/utils/EmblemaSimples";
+import { ReactComponent as IconeResumido } from "img/rounded-rectangle.svg";
+import { ReactComponent as IconeAmpliado } from "img/check-box-empty.svg";
 
 export default class ListaCompleta extends React.Component {
   componentDidMount() {
@@ -96,12 +98,23 @@ export default class ListaCompleta extends React.Component {
           <Col>
             <div className="divSeletor">
               <div tabIndex={0} className="divClicavel seletorAtivo">
+                {" "}
+                <IconeAmpliado
+                  height="15"
+                  width="15"
+                  className="mr-1 iconeResumido"
+                ></IconeAmpliado>
                 <h6>AMPLIADO</h6>
               </div>
               <div tabIndex={0} className="divClicavel seletorAtivo">
+                <IconeResumido
+                  height="15"
+                  className="mr-1 iconeResumido"
+                ></IconeResumido>
                 <h6>RESUMIDO</h6>
               </div>
               <div tabIndex={0} className="divClicavel seletorAtivo">
+                <MDBIcon icon="list-ul" className="mr-1" />
                 <h6>LISTA</h6>
               </div>
               <div tabIndex={0} className="divClicavel seletorAtivo">
