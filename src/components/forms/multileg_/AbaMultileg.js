@@ -35,22 +35,30 @@ class AbaMultileg extends React.Component {
               <Form.Group>
                 <Form.Label>Strike</Form.Label>
                 <Form.Control
+                  as="select"
                   className="textInput"
-                  type="number"
-                  step={0.01}
-                  //value={1}
-                  onChange={() => false}
-                />
+                  //value={item.prioridade}
+                >
+                  {tabelaMultileg[0].strike.map((strike, indice) => (
+                    <option key={strike + indice} value={strike}>
+                      {strike}
+                    </option>
+                  ))}
+                </Form.Control>
               </Form.Group>
               <Form.Group className="wrapperVencimento ml-1">
                 <Form.Label>Vencimento</Form.Label>
-                <DatePicker
-                  className="form-control textInput"
-                  //selected={props.date}
-                  onChange={() => false}
-                  dateFormat="dd/MM/yyyy"
-                  popperPlacement="top-start"
-                ></DatePicker>
+                <Form.Control
+                  as="select"
+                  className="textInput"
+                  //value={item.prioridade}
+                >
+                  {tabelaMultileg[0].vencimento.map((vencimento, indice) => (
+                    <option key={vencimento + indice} value={vencimento}>
+                      {vencimento}
+                    </option>
+                  ))}
+                </Form.Control>
               </Form.Group>
             </div>
             <div className="divColunaDetalhes">
@@ -240,3 +248,34 @@ const renderValorPorcentagem = porcentagem => {
     return <h6>+{porcentagem}%</h6>;
   }
 };
+
+const tabelaMultileg = [
+  {
+    cv: "compra",
+    qtde: 1000,
+    serie: ["2019-08", "2019-07", "2019-06"],
+    strike: [26.32, 27.48, 28.48],
+    codigo: ["PETRH275", "PETRH275", "PETRH275"],
+    tipo: "call",
+    modelo: "EU",
+    despernamento: 100,
+    prioridade: -1,
+    cotacao: "15,25",
+    valor: "-40,00",
+    vencimento: ["9/10/19", "10/10/19", "11/10/19"]
+  },
+  {
+    cv: "venda",
+    qtde: 2000,
+    serie: ["2019-08", "2019-07", "2019-06"],
+    strike: [26.32, 27.48, 28.48],
+    codigo: ["PETRH275", "PETRH275", "PETRH275"],
+    tipo: "call",
+    modelo: "USA",
+    despernamento: 500,
+    prioridade: 2,
+    cotacao: "10,30",
+    valor: "-200,00",
+    vencimento: ["9/10/19", "10/10/19", "11/10/19"]
+  }
+];
