@@ -2,12 +2,14 @@ import React from "react";
 import { Table, Form } from "react-bootstrap";
 import imgModeloEU from "img/modeloEU.png";
 import imgModeloUSA from "img/modeloUSA2.svg";
+import { connect } from "react-redux";
+import { mudarTipoAction } from "components/redux/actions/menu_actions/MultilegActions";
 
 const capitalize = function(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-export default class TabelaMultileg extends React.Component {
+class TabelaMultileg extends React.Component {
   render() {
     return (
       <Table
@@ -95,7 +97,13 @@ export default class TabelaMultileg extends React.Component {
                   </Form.Group>
                 </td>
                 <td>
-                  <div className="divClicavel">{capitalize(item.tipo)}</div>
+                  <div
+                    className="divClicavel"
+                    tabIndex={0}
+                    onClick={() => this.props.mudarTipoAction(this.props.tipo)}
+                  >
+                    {capitalize(this.props.tipo)}
+                  </div>
                 </td>
                 {renderModelo(item.modelo)}
                 <td>
@@ -137,6 +145,15 @@ export default class TabelaMultileg extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  tipo: state.multilegReducer.tipo
+});
+
+export default connect(
+  mapStateToProps,
+  { mudarTipoAction }
+)(TabelaMultileg);
 
 const renderCV = cv => {
   return (

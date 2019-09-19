@@ -29,6 +29,7 @@ import Multileg from "components/forms/multileg_/Multileg";
 import ListaCompleta from "components/forms/lista_completa/ListaCompleta";
 import Posicao from "components/forms/posicao_/Posicao";
 import RelatorioDetalhado from "components/forms/relatorio_detalhado/RelatorioDetalhado";
+import MultilegReducer from "components/redux/reducers/menu_reducer/MultilegReducer";
 
 export const GlobalContext = React.createContext();
 export const localContext = React.createContext();
@@ -40,7 +41,8 @@ const combinedReducers = combineReducers({
 });
 
 const combinedAppPrincipal = combineReducers({
-  telaPrincipalReducer: TelaPrincipalReducer
+  telaPrincipalReducer: TelaPrincipalReducer,
+  multilegReducer: MultilegReducer
 });
 
 //Usada apenas para gerenciar os estados de mostrar ou não os formulários
