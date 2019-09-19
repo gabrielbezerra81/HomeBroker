@@ -56,7 +56,7 @@ export default class ListaCompleta extends React.Component {
           </Col>
         </Row>
         <Row className="rowHeaderListaCompleta mt-2">
-          <Col>
+          <Col md={2}>
             <InputGroup>
               <Form.Control
                 className="inputAtivo"
