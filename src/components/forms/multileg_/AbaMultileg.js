@@ -6,7 +6,6 @@ import { ReactComponent as ArrowUp } from "img/up-arrow.svg";
 import { MDBIcon } from "mdbreact";
 import TabelaMultileg from "components/forms/multileg_/TabelaMultileg";
 import IconeConfigGrafico from "components/utils/IconeConfigGrafico";
-import { iconeConfigAbrirFormulario } from "components/utils/IconesConfigFormInterno";
 
 class AbaMultileg extends React.Component {
   render() {

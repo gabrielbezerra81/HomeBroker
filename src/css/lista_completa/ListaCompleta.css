@@ -64,7 +64,7 @@ th .colunaDividida div {
   display: flex;
   border: 2px solid var(--cor-borda);
   border-radius: 22px;
-  height: 55px;
+  height: 38px;
 }
 
 .divSeletor > div {
@@ -101,8 +101,11 @@ th .colunaDividida div {
 }
 
 .formPosicao {
-  height: 38px !important;
-  font-size: 1rem !important;
+  font-size: 1rem;
+  background-color: #444;
+  border-color: #444;
+  color: var(--cor-texto);
+  height: 30px;
 }
 
 .divIconeConfigOrdernar {

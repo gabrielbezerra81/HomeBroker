@@ -1,6 +1,6 @@
 import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import { Row, Col, Form, Table } from "react-bootstrap";
+import { Row, Col, Form, Table, InputGroup } from "react-bootstrap";
 import DraggableModal from "components/utils/DraggableModal";
 import { modalHeaderSemBook } from "components/utils/FormHeader";
 import { iconeConfigAbrirFormulario } from "components/utils/IconesConfigFormInterno";
@@ -55,6 +55,21 @@ export default class ListaCompleta extends React.Component {
         </Row>
         <Row className="rowHeaderListaCompleta mt-2">
           <Col>
+            <InputGroup>
+              <Form.Control
+                className="inputAtivo"
+                type="text"
+                value="PESQUISAR"
+                onChange={() => false}
+              />
+              <InputGroup.Append className="inputAtivoAppend">
+                <span className="input-group-text iconeProcurar divClicavel">
+                  <MDBIcon icon="search" />
+                </span>
+              </InputGroup.Append>
+            </InputGroup>
+          </Col>
+          <Col>
             <Form.Group>
               <Form.Control as="select" className="textInput formPosicao">
                 <option value="posicao">Posição</option>
@@ -65,25 +80,16 @@ export default class ListaCompleta extends React.Component {
           <Col>
             <div className="divSeletor">
               <div tabIndex={0} className="divClicavel seletorAtivo">
-                <h6>ORIGINAL</h6>
+                <h6>DATA</h6>
               </div>
               <div tabIndex={0} className="divClicavel seletorAtivo">
-                <h6>SÍMBOLO</h6>
+                <h6>NOME</h6>
               </div>
               <div tabIndex={0} className="divClicavel seletorAtivo">
-                <h6>LÍQUIDO</h6>
+                <h6>LUCRO</h6>
               </div>
               <div tabIndex={0} className="divClicavel seletorAtivo">
-                <h6>ÚLTIMO</h6>
-              </div>
-              <div tabIndex={0} className="divClicavel seletorAtivo">
-                <h6>RANK</h6>
-              </div>
-              <div tabIndex={0} className="divClicavel seletorAtivo">
-                <h6>IMPL VOL</h6>
-              </div>
-              <div tabIndex={0} className="divClicavel seletorAtivo">
-                <h6>GANHOS ENCONTRO</h6>
+                <h6>VENCIMENTO</h6>
               </div>
             </div>
           </Col>
@@ -97,6 +103,9 @@ export default class ListaCompleta extends React.Component {
               </div>
               <div tabIndex={0} className="divClicavel seletorAtivo">
                 <h6>LISTA</h6>
+              </div>
+              <div tabIndex={0} className="divClicavel seletorAtivo">
+                <h6>DETALHADA</h6>
               </div>
             </div>
           </Col>
