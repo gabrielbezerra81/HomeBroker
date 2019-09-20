@@ -3,7 +3,10 @@ import { Table, Form } from "react-bootstrap";
 import imgModeloEU from "img/modeloEU.png";
 import imgModeloUSA from "img/modeloUSA2.svg";
 import { connect } from "react-redux";
-import { mudarTipoAction } from "components/redux/actions/menu_actions/MultilegActions";
+import {
+  mudarTipoAction,
+  modificarAtributoTabelaAction
+} from "components/redux/actions/menu_actions/MultilegActions";
 
 const capitalize = function(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -11,6 +14,7 @@ const capitalize = function(str) {
 
 class TabelaMultileg extends React.Component {
   render() {
+    const { indice } = this.props;
     return (
       <Table
         variant="dark"
@@ -36,111 +40,175 @@ class TabelaMultileg extends React.Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.tabelaMultileg.map((item, index) => {
-            return (
-              <tr key={index}>
-                {renderCV(item.cv)}
-                <td>
-                  <Form.Group>
-                    <Form.Control
-                      className="textInput formDespernamento "
-                      type="number"
-                      min={0}
-                      step={100}
-                      name="qtde"
-                      value={item.qtde}
-                    />
-                  </Form.Group>
-                </td>
-                <td>
-                  <Form.Group>
-                    <Form.Control
-                      as="select"
-                      className="textInput"
-                      value={item.serie[0]}
+          {this.props.multileg[this.props.indice].tabelaMultileg.map(
+            (item, indiceLinha) => {
+              return (
+                <tr key={indiceLinha}>
+                  {renderCV(item.cv)}
+                  <td>
+                    <Form.Group>
+                      <Form.Control
+                        className="textInput formDespernamento "
+                        type="number"
+                        min={0}
+                        step={100}
+                        name="qtde"
+                        value={item.qtde}
+                        onChange={event =>
+                          this.props.modificarAtributoTabelaAction(
+                            this.props.multileg,
+                            indice,
+                            "qtde",
+                            event.currentTarget.value,
+                            indiceLinha
+                          )
+                        }
+                      />
+                    </Form.Group>
+                  </td>
+                  <td>
+                    <Form.Group>
+                      <Form.Control
+                        as="select"
+                        className="textInput"
+                        value={item.serieSelecionada}
+                        onChange={event =>
+                          this.props.modificarAtributoTabelaAction(
+                            this.props.multileg,
+                            indice,
+                            "serieSelecionada",
+                            event.currentTarget.value,
+                            indiceLinha
+                          )
+                        }
+                      >
+                        {item.serie.map((serie, indice) => (
+                          <option key={serie + indice} value={serie}>
+                            {serie}
+                          </option>
+                        ))}
+                      </Form.Control>
+                    </Form.Group>
+                  </td>
+                  <td>
+                    <Form.Group>
+                      <Form.Control
+                        as="select"
+                        className="textInput"
+                        value={item.strikeSelecionado}
+                        onChange={event =>
+                          this.props.modificarAtributoTabelaAction(
+                            this.props.multileg,
+                            indice,
+                            "strikeSelecionado",
+                            event.currentTarget.value,
+                            indiceLinha
+                          )
+                        }
+                      >
+                        {item.strike.map((strike, indice) => (
+                          <option key={strike + indice} value={strike}>
+                            {strike}
+                          </option>
+                        ))}
+                      </Form.Control>
+                    </Form.Group>
+                  </td>
+                  <td>
+                    <Form.Group>
+                      <Form.Control
+                        as="select"
+                        className="textInput"
+                        value={item.codigoSelecionado}
+                        onChange={event =>
+                          this.props.modificarAtributoTabelaAction(
+                            this.props.multileg,
+                            indice,
+                            "codigoSelecionado",
+                            event.currentTarget.value,
+                            indiceLinha
+                          )
+                        }
+                      >
+                        {item.codigo.map((codigo, indice) => (
+                          <option key={codigo + indice} value={codigo}>
+                            {codigo}
+                          </option>
+                        ))}
+                      </Form.Control>
+                    </Form.Group>
+                  </td>
+                  <td>
+                    <div
+                      className="divClicavel"
+                      tabIndex={0}
+                      onClick={event =>
+                        this.props.modificarAtributoTabelaAction(
+                          this.props.multileg,
+                          indice,
+                          "tipo",
+                          item.tipo,
+                          indiceLinha
+                        )
+                      }
                     >
-                      {item.serie.map((serie, indice) => (
-                        <option key={serie + indice} value={serie}>
-                          {serie}
-                        </option>
-                      ))}
-                    </Form.Control>
-                  </Form.Group>
-                </td>
-                <td>
-                  <Form.Group>
-                    <Form.Control
-                      as="select"
-                      className="textInput"
-                      value={item.strike[0]}
-                    >
-                      {item.strike.map((strike, indice) => (
-                        <option key={strike + indice} value={strike}>
-                          {strike}
-                        </option>
-                      ))}
-                    </Form.Control>
-                  </Form.Group>
-                </td>
-                <td>
-                  <Form.Group>
-                    <Form.Control
-                      as="select"
-                      className="textInput"
-                      value={item.codigo[0]}
-                    >
-                      {item.codigo.map((codigo, indice) => (
-                        <option key={codigo + indice} value={codigo}>
-                          {codigo}
-                        </option>
-                      ))}
-                    </Form.Control>
-                  </Form.Group>
-                </td>
-                <td>
-                  <div
-                    className="divClicavel"
-                    tabIndex={0}
-                    onClick={() => this.props.mudarTipoAction(item.tipo)}
-                  >
-                    {capitalize(item.tipo)}
-                  </div>
-                </td>
-                {renderModelo(item.modelo)}
-                <td>
-                  <Form.Group>
-                    <Form.Control
-                      className="textInput formDespernamento"
-                      type="number"
-                      min={0}
-                      step={100}
-                      value={item.despernamento}
-                    />
-                  </Form.Group>
-                </td>
-                <td>
-                  <Form.Group>
-                    <Form.Control
-                      as="select"
-                      className="textInput formPrioridade"
-                      value={item.prioridade}
+                      {capitalize(item.tipo)}
+                    </div>
+                  </td>
+                  {renderModelo(item.modelo)}
+                  <td>
+                    <Form.Group>
+                      <Form.Control
+                        className="textInput formDespernamento"
+                        type="number"
+                        min={0}
+                        step={100}
+                        value={item.despernamento}
+                        onChange={event =>
+                          this.props.modificarAtributoTabelaAction(
+                            this.props.multileg,
+                            indice,
+                            "despernamento",
+                            event.currentTarget.value,
+                            indiceLinha
+                          )
+                        }
+                      />
+                    </Form.Group>
+                  </td>
+                  <td>
+                    <Form.Group>
+                      <Form.Control
+                        as="select"
+                        className="textInput formPrioridade"
+                        value={item.prioridade}
+                        onChange={event =>
+                          this.props.modificarAtributoTabelaAction(
+                            this.props.multileg,
+                            indice,
+                            "prioridade",
+                            event.currentTarget.value,
+                            indiceLinha
+                          )
+                        }
 
-                      //value={item.prioridade}
-                    >
-                      <option value={-1}>-1</option>
-                      <option value={0}>0</option>
-                      <option value={1}>1</option>
-                      <option value={2}>2</option>
-                      <option value={3}>3</option>
-                      <option value={4}>4</option>
-                    </Form.Control>
-                  </Form.Group>
-                </td>
-                <td>{item.cotacao}</td>
-                <td>{item.valor}</td>
-              </tr>
-            );
-          })}
+                        //value={item.prioridade}
+                      >
+                        <option value={-1}>-1</option>
+                        <option value={0}>0</option>
+                        <option value={1}>1</option>
+                        <option value={2}>2</option>
+                        <option value={3}>3</option>
+                        <option value={4}>4</option>
+                      </Form.Control>
+                    </Form.Group>
+                  </td>
+                  <td>{item.cotacao}</td>
+                  <td>{item.valor}</td>
+                </tr>
+              );
+            }
+          )}
         </tbody>
       </Table>
     );
@@ -148,12 +216,13 @@ class TabelaMultileg extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  tipo: state.multilegReducer.tipo
+  tipo: state.multilegReducer.tipo,
+  multileg: state.multilegReducer.multileg
 });
 
 export default connect(
   mapStateToProps,
-  { mudarTipoAction }
+  { mudarTipoAction, modificarAtributoTabelaAction }
 )(TabelaMultileg);
 
 const renderCV = cv => {

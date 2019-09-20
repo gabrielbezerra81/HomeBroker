@@ -61,6 +61,30 @@ export const modificarAtributoAction = (multileg, indice, atributo, valor) => {
   };
 };
 
+export const modificarAtributoTabelaAction = (
+  multileg,
+  indiceGeral,
+  atributo,
+  valor,
+  indiceLinha
+) => {
+  return dispatch => {
+    let abasMultileg = [...multileg];
+
+    if (atributo === "tipo") {
+      if (valor === "call")
+        abasMultileg[indiceGeral].tabelaMultileg[indiceLinha][atributo] = "put";
+      else if (valor === "put")
+        abasMultileg[indiceGeral].tabelaMultileg[indiceLinha][atributo] =
+          "call";
+    } else {
+      abasMultileg[indiceGeral].tabelaMultileg[indiceLinha][atributo] = valor;
+    }
+
+    dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
+  };
+};
+
 const aba = {
   ativo: "PETR3",
   valor: -27.44,

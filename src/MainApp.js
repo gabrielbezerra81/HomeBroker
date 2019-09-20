@@ -36,7 +36,6 @@ export class MainApp extends Component {
       this.props.divkey === "divOrdens" &&
       this.props.ordensAberto === true
     ) {
-      console.log(1);
       document.getElementById("divOrdens").style.zIndex = this.props.zIndex + 1;
       this.props.aumentarZindexAction("divOrdens", this.props.zIndex, true);
     }
@@ -190,8 +189,7 @@ export class MainApp extends Component {
               </div>
             </Row>
             <Row className="rowSpeciais">
-
-            <span className="mr-5">ESPECIAIS</span>
+              <span className="mr-5">ESPECIAIS</span>
               <div className="divBotaoFormulario">
                 <img
                   src={iconeMultileg}

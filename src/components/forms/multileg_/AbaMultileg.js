@@ -111,9 +111,7 @@ class AbaMultileg extends React.Component {
               </div>
             </div>
           </div>
-          <TabelaMultileg
-            tabelaMultileg={this.props.multileg[indice].tabelaMultileg}
-          ></TabelaMultileg>
+          <TabelaMultileg indice={indice}></TabelaMultileg>
         </div>
         <div>
           <Row>
