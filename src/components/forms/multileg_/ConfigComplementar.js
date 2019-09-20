@@ -1,12 +1,21 @@
 import React from "react";
 import { Row, Col, Button, Form } from "react-bootstrap";
 import { modalHeaderLimpo } from "components/utils/FormHeader";
+import { connect } from "react-redux";
+import { abrirFecharConfigComplAction } from "components/redux/actions/menu_actions/MultilegActions";
 
 class ConfigComplementar extends React.Component {
   render() {
     return (
       <div className="mcontent config_complementar">
-        {modalHeaderLimpo(this.props, "CONFIGURAÇÃO COMPLEMENTAR", "")}
+        {modalHeaderLimpo(
+          () =>
+            this.props.abrirFecharConfigComplAction(
+              this.props.configComplementarAberto
+            ),
+          "CONFIGURAÇÃO COMPLEMENTAR",
+          ""
+        )}
         <div className="p-1 pl-3 pr-3 bodyConfigComplementar">
           <Row className="mt-2 mb-2">
             <Col md={5}>
@@ -60,4 +69,11 @@ class ConfigComplementar extends React.Component {
   }
 }
 
-export default ConfigComplementar;
+const mapStateToProps = state => ({
+  configComplementarAberto: state.multilegReducer.configComplementarAberto
+});
+
+export default connect(
+  mapStateToProps,
+  { abrirFecharConfigComplAction }
+)(ConfigComplementar);

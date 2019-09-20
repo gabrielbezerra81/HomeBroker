@@ -36,7 +36,7 @@ class TabelaMultileg extends React.Component {
           </tr>
         </thead>
         <tbody>
-          {tabelaMultileg.map((item, index) => {
+          {this.props.tabelaMultileg.map((item, index) => {
             return (
               <tr key={index}>
                 {renderCV(item.cv)}
@@ -47,7 +47,8 @@ class TabelaMultileg extends React.Component {
                       type="number"
                       min={0}
                       step={100}
-                      //value={item.qtde}
+                      name="qtde"
+                      value={item.qtde}
                     />
                   </Form.Group>
                 </td>
@@ -56,7 +57,7 @@ class TabelaMultileg extends React.Component {
                     <Form.Control
                       as="select"
                       className="textInput"
-                      //value={item.prioridade}
+                      value={item.serie[0]}
                     >
                       {item.serie.map((serie, indice) => (
                         <option key={serie + indice} value={serie}>
@@ -71,7 +72,7 @@ class TabelaMultileg extends React.Component {
                     <Form.Control
                       as="select"
                       className="textInput"
-                      //value={item.prioridade}
+                      value={item.strike[0]}
                     >
                       {item.strike.map((strike, indice) => (
                         <option key={strike + indice} value={strike}>
@@ -86,7 +87,7 @@ class TabelaMultileg extends React.Component {
                     <Form.Control
                       as="select"
                       className="textInput"
-                      //value={item.prioridade}
+                      value={item.codigo[0]}
                     >
                       {item.codigo.map((codigo, indice) => (
                         <option key={codigo + indice} value={codigo}>
@@ -100,9 +101,9 @@ class TabelaMultileg extends React.Component {
                   <div
                     className="divClicavel"
                     tabIndex={0}
-                    onClick={() => this.props.mudarTipoAction(this.props.tipo)}
+                    onClick={() => this.props.mudarTipoAction(item.tipo)}
                   >
-                    {capitalize(this.props.tipo)}
+                    {capitalize(item.tipo)}
                   </div>
                 </td>
                 {renderModelo(item.modelo)}
@@ -113,7 +114,7 @@ class TabelaMultileg extends React.Component {
                       type="number"
                       min={0}
                       step={100}
-                      value="1000"
+                      value={item.despernamento}
                     />
                   </Form.Group>
                 </td>
@@ -122,7 +123,7 @@ class TabelaMultileg extends React.Component {
                     <Form.Control
                       as="select"
                       className="textInput formPrioridade"
-                      value="0"
+                      value={item.prioridade}
 
                       //value={item.prioridade}
                     >
@@ -189,7 +190,7 @@ const renderModelo = modelo => {
   );
 };
 
-const tabelaMultileg = [
+const a = [
   {
     cv: "compra",
     qtde: 1000,

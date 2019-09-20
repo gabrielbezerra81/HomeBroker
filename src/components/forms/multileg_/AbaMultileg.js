@@ -6,9 +6,15 @@ import { ReactComponent as ArrowUp } from "img/up-arrow.svg";
 import { MDBIcon } from "mdbreact";
 import TabelaMultileg from "components/forms/multileg_/TabelaMultileg";
 import IconeConfigGrafico from "components/utils/IconeConfigGrafico";
+import { connect } from "react-redux";
+import {
+  abrirFecharConfigComplAction,
+  modificarAtributoAction
+} from "components/redux/actions/menu_actions/MultilegActions";
 
 class AbaMultileg extends React.Component {
   render() {
+    const indice = this.props.indice;
     return (
       <div className="containerAbaMultileg">
         <div>
@@ -18,8 +24,15 @@ class AbaMultileg extends React.Component {
                 <Form.Control
                   className="inputAtivo"
                   type="text"
-                  value="PETR4"
-                  onChange={() => false}
+                  value={this.props.multileg[indice].ativo}
+                  onChange={event =>
+                    this.props.modificarAtributoAction(
+                      this.props.multileg,
+                      indice,
+                      "ativo",
+                      event.target.value
+                    )
+                  }
                 />
                 <InputGroup.Append className="inputAtivoAppend">
                   <span className="input-group-text iconeProcurar divClicavel">
@@ -27,9 +40,11 @@ class AbaMultileg extends React.Component {
                   </span>
                 </InputGroup.Append>
               </InputGroup>
-              <h5 className="textoValor">-27,43</h5>
-              {renderSeta(2)}
-              {renderValorPorcentagem(5.35)}
+              <h5 className="textoValor">
+                {this.props.multileg[indice].valor}
+              </h5>
+              {renderSeta(this.props.multileg[indice].variacao)}
+              {renderValorPorcentagem(this.props.multileg[indice].variacao)}
             </div>
             <div className="divColunaDetalhes">
               <Form.Group>
@@ -37,9 +52,17 @@ class AbaMultileg extends React.Component {
                 <Form.Control
                   as="select"
                   className="textInput"
-                  //value={item.prioridade}
+                  value={this.props.multileg[indice].strikeSelecionado}
+                  onChange={event =>
+                    this.props.modificarAtributoAction(
+                      this.props.multileg,
+                      indice,
+                      "strikeSelecionado",
+                      event.currentTarget.value
+                    )
+                  }
                 >
-                  {tabelaMultileg[0].strike.map((strike, indice) => (
+                  {this.props.multileg[indice].strike.map((strike, indice) => (
                     <option key={strike + indice} value={strike}>
                       {strike}
                     </option>
@@ -51,13 +74,23 @@ class AbaMultileg extends React.Component {
                 <Form.Control
                   as="select"
                   className="textInput"
-                  //value={item.prioridade}
+                  value={this.props.multileg[indice].vencimentoSelecionado}
+                  onChange={event =>
+                    this.props.modificarAtributoAction(
+                      this.props.multileg,
+                      indice,
+                      "vencimentoSelecionado",
+                      event.currentTarget.value
+                    )
+                  }
                 >
-                  {tabelaMultileg[0].vencimento.map((vencimento, indice) => (
-                    <option key={vencimento + indice} value={vencimento}>
-                      {vencimento}
-                    </option>
-                  ))}
+                  {this.props.multileg[indice].vencimento.map(
+                    (vencimento, indice) => (
+                      <option key={vencimento + indice} value={vencimento}>
+                        {vencimento}
+                      </option>
+                    )
+                  )}
                 </Form.Control>
               </Form.Group>
             </div>
@@ -78,7 +111,9 @@ class AbaMultileg extends React.Component {
               </div>
             </div>
           </div>
-          <TabelaMultileg></TabelaMultileg>
+          <TabelaMultileg
+            tabelaMultileg={this.props.multileg[indice].tabelaMultileg}
+          ></TabelaMultileg>
         </div>
         <div>
           <Row>
@@ -86,7 +121,11 @@ class AbaMultileg extends React.Component {
               <h6>Book</h6>
             </Col>
             <IconeConfigGrafico
-              handleShow={() => false}
+              handleShow={() =>
+                this.props.abrirFecharConfigComplAction(
+                  this.props.configComplementarAberto
+                )
+              }
               name="config_complementar"
               id="icone_config_complementar"
             />
@@ -222,7 +261,15 @@ class AbaMultileg extends React.Component {
   }
 }
 
-export default AbaMultileg;
+const mapStateToProps = state => ({
+  configComplementarAberto: state.multilegReducer.configComplementarAberto,
+  multileg: state.multilegReducer.multileg
+});
+
+export default connect(
+  mapStateToProps,
+  { abrirFecharConfigComplAction, modificarAtributoAction }
+)(AbaMultileg);
 
 const renderSeta = valor => {
   valor = Number(valor);
@@ -251,31 +298,31 @@ const renderValorPorcentagem = porcentagem => {
 
 const tabelaMultileg = [
   {
+    vencimento: ["9/10/19", "10/10/19", "11/10/19"],
+    strike: [26.32, 27.48, 28.48],
     cv: "compra",
     qtde: 1000,
     serie: ["2019-08", "2019-07", "2019-06"],
-    strike: [26.32, 27.48, 28.48],
     codigo: ["PETRH275", "PETRH275", "PETRH275"],
     tipo: "call",
     modelo: "EU",
     despernamento: 100,
     prioridade: -1,
     cotacao: "15,25",
-    valor: "-40,00",
-    vencimento: ["9/10/19", "10/10/19", "11/10/19"]
+    valor: "-40,00"
   },
   {
+    strike: [26.32, 27.48, 28.48],
+    vencimento: ["9/10/19", "10/10/19", "11/10/19"],
     cv: "venda",
     qtde: 2000,
     serie: ["2019-08", "2019-07", "2019-06"],
-    strike: [26.32, 27.48, 28.48],
     codigo: ["PETRH275", "PETRH275", "PETRH275"],
     tipo: "call",
     modelo: "USA",
     despernamento: 500,
     prioridade: 2,
     cotacao: "10,30",
-    valor: "-200,00",
-    vencimento: ["9/10/19", "10/10/19", "11/10/19"]
+    valor: "-200,00"
   }
 ];

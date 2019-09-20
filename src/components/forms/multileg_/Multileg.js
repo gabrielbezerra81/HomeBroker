@@ -18,7 +18,7 @@ export default class Multileg extends React.Component {
       <DraggableModal
         id="multileg"
         renderModalBody={() => this.modalBody(this.props)}
-        renderConfigComplementar={true}
+        renderConfigComplementar={this.props.configComplementarAberto}
         renderHeader={() =>
           modalHeaderSemBook(this.props, this.props.headerTitle, "border-green")
         }
@@ -34,17 +34,19 @@ export default class Multileg extends React.Component {
       <div className="bodyMultileg">
         <Tab.Container
           id="tabBarMultileg"
-          onSelect={this.handleSelect}
-          activeKey={this.state.abaAtual}
+          onSelect={key =>
+            this.props.selecionarAdicionarAbaAction(key, this.props.multileg)
+          }
+          activeKey={this.props.abaSelecionada}
         >
           <Row className="navTabMultileg">
             <Nav>
-              {this.state.tabs.map((tab, index) => {
+              {this.props.multileg.map((aba, index) => {
                 return (
                   <Col md={0} key={index}>
                     <Nav.Item>
                       <Nav.Link eventKey={`tab${index}`} className="abaNavTab">
-                        {tab.name}
+                        {"Sim " + (index + 1)}
                       </Nav.Link>
                     </Nav.Item>
                   </Col>
@@ -66,14 +68,14 @@ export default class Multileg extends React.Component {
           <Row>
             <Col md={12}>
               <Tab.Content>
-                {this.state.tabs.map((tab, index) => {
+                {this.props.multileg.map((aba, index) => {
                   return (
                     <Tab.Pane
                       eventKey={`tab${index}`}
                       className="abaNavTab"
                       key={index}
                     >
-                      <AbaMultileg />
+                      <AbaMultileg indice={index} />
                     </Tab.Pane>
                   );
                 })}
@@ -83,11 +85,6 @@ export default class Multileg extends React.Component {
         </Tab.Container>
       </div>
     );
-  };
-
-  state = {
-    tabs: [{ name: "Sim 1" }],
-    abaAtual: "tab0"
   };
 
   handleSelect = key => {

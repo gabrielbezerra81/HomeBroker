@@ -26,7 +26,11 @@ class ConfigurarStop extends React.Component {
   render() {
     return (
       <div className="configDiv mcontent">
-        {modalHeaderLimpo(this.props, "CONFIGURAR STOP", "config_compra")}
+        {modalHeaderLimpo(
+          event => this.props.fecharFormConfigurarAction(event),
+          "CONFIGURAR STOP",
+          "config_compra"
+        )}
         {modalBody(this.props)}
       </div>
     );

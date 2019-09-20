@@ -106,14 +106,14 @@ export const modalHeaderSemBook = (props, headerTitle, headerClass) => (
   </div>
 );
 
-export const modalHeaderLimpo = (props, titulo, name) => (
+export const modalHeaderLimpo = (funcaoFechar, titulo, name) => (
   <div className="border-green mheader">
     <h6 className="mtitle">{titulo}</h6>
     <div className="wrapperIconesHeader">
       <Button
         variant="link"
         className="iconesHeader"
-        onClick={event => props.fecharFormConfigurarAction(event)}
+        onClick={event => funcaoFechar(event)}
         name={name}
       >
         <span className="fa-stack">

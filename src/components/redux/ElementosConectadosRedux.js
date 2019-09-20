@@ -30,6 +30,7 @@ import ListaCompleta from "components/forms/lista_completa/ListaCompleta";
 import Posicao from "components/forms/posicao_/Posicao";
 import RelatorioDetalhado from "components/forms/relatorio_detalhado/RelatorioDetalhado";
 import MultilegReducer from "components/redux/reducers/menu_reducer/MultilegReducer";
+import { selecionarAdicionarAbaAction } from "components/redux/actions/menu_actions/MultilegActions";
 
 export const GlobalContext = React.createContext();
 export const localContext = React.createContext();
@@ -87,6 +88,12 @@ const mapStateToPropsAppPrincipal = state => ({
   relatorioDetalhadoAberto: state.telaPrincipalReducer.relatorioDetalhadoAberto,
   listaCompletaAberta: state.telaPrincipalReducer.listaCompletaAberta,
   multilegAberto: state.telaPrincipalReducer.multilegAberto
+});
+
+const mapStateToPropsMultileg = state => ({
+  configComplementarAberto: state.multilegReducer.configComplementarAberto,
+  multileg: state.multilegReducer.multileg,
+  abaSelecionada: state.multilegReducer.abaSelecionada
 });
 
 export const MainAppConectado = compose(
@@ -175,11 +182,17 @@ export const BarraLateralConectada = compose(
   )
 )(BarraLateral);
 
-export const MultilegConectado = connect(
-  mapStateToPropsGlobalStore,
-  { aumentarZindexAction },
-  null,
-  { context: GlobalContext }
+export const MultilegConectado = compose(
+  connect(
+    mapStateToPropsGlobalStore,
+    { aumentarZindexAction },
+    null,
+    { context: GlobalContext }
+  ),
+  connect(
+    mapStateToPropsMultileg,
+    { selecionarAdicionarAbaAction }
+  )
 )(Multileg);
 
 export const ListaCompletaConectada = connect(
