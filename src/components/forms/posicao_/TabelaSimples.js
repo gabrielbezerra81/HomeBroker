@@ -6,6 +6,7 @@ import {
   calculaResultado,
   calculaVariacao
 } from "components/forms/posicao_/TabelaCompleta";
+import { formatarNumDecimal } from "components/utils/Formatacoes";
 
 export default class TabelaSimples extends React.Component {
   render() {
@@ -87,11 +88,7 @@ export default class TabelaSimples extends React.Component {
                     <td>
                       <div className="colunaDividida">
                         <div>{item.precoExec.qtde}</div>
-                        <div>
-                          {item.precoExec.unit.toLocaleString("pt-BR", {
-                            minimumFractionDigits: 2
-                          })}
-                        </div>
+                        <div>{formatarNumDecimal(item.precoExec.unit)}</div>
                         <div className="colunaTotal">
                           {calculaTotal(item.precoExec)}
                         </div>
@@ -99,48 +96,21 @@ export default class TabelaSimples extends React.Component {
                     </td>
                     <td>
                       <div className="colunaDividida">
-                        <div>
-                          {item.atual.toLocaleString("pt-BR", {
-                            minimumFractionDigits: 2
-                          })}
-                        </div>
-                        <div>
-                          {item.osc.toLocaleString("pt-BR", {
-                            minimumFractionDigits: 2
-                          })}
-                          %
-                        </div>
+                        <div>{formatarNumDecimal(item.atual)}</div>
+                        <div>{formatarNumDecimal(item.osc)}%</div>
                         <div className={corSaldoOp(item.osc)}>
-                          {item.saldoOp.toLocaleString("pt-BR", {
-                            minimumFractionDigits: 2
-                          })}
+                          {formatarNumDecimal(item.saldoOp)}
                         </div>
                       </div>
                     </td>
                     <td>
                       <div className="colunaDividida">
                         <div>
-                          {(item.compra.qtde / 1000).toLocaleString("pt-BR", {
-                            minimumFractionDigits: 2
-                          })}
-                          k
+                          {formatarNumDecimal(item.compra.qtde / 1000)}k
                         </div>
-                        <div>
-                          {item.compra.preco.toLocaleString("pt-BR", {
-                            minimumFractionDigits: 2
-                          })}
-                        </div>
-                        <div>
-                          {item.venda.preco.toLocaleString("pt-BR", {
-                            minimumFractionDigits: 2
-                          })}
-                        </div>
-                        <div>
-                          {(item.venda.qtde / 1000).toLocaleString("pt-BR", {
-                            minimumFractionDigits: 2
-                          })}
-                          k
-                        </div>
+                        <div>{formatarNumDecimal(item.compra.preco)}</div>
+                        <div>{formatarNumDecimal(item.venda.preco)}</div>
+                        <div>{formatarNumDecimal(item.venda.qtde / 1000)}k</div>
                       </div>
                     </td>
                   </tr>

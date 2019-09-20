@@ -2,6 +2,7 @@ import React from "react";
 import { Row, Col, Table } from "react-bootstrap";
 import EmblemaSimples from "components/utils/EmblemaSimples";
 import { corSaldoOp } from "components/forms/posicao_/TabelaSimples";
+import { formatarNumDecimal } from "components/utils/Formatacoes";
 
 export default class TabelaCompleta extends React.Component {
   render() {
@@ -86,33 +87,17 @@ export default class TabelaCompleta extends React.Component {
                     <td>{item.qtde / 1000}k</td>
                     <td>{item.vcto}</td>
                     <td>{item.prazo} dias</td>
-                    <td>
-                      {item.strike.toLocaleString("pt-BR", {
-                        minimumFractionDigits: 2
-                      })}
-                    </td>
+                    <td>{formatarNumDecimal(item.strike)}</td>
                     <td>
                       <div className="colunaDividida">
-                        <div>
-                          {item.intr.toLocaleString("pt-BR", {
-                            minimumFractionDigits: 2
-                          })}
-                        </div>
-                        <div>
-                          {item.ext.toLocaleString("pt-BR", {
-                            minimumFractionDigits: 2
-                          })}
-                        </div>
+                        <div>{formatarNumDecimal(item.intr)}</div>
+                        <div>{formatarNumDecimal(item.ext)}</div>
                       </div>
                     </td>
                     <td>
                       <div className="colunaDividida">
                         <div>{item.precoExec.qtde}</div>
-                        <div>
-                          {item.precoExec.unit.toLocaleString("pt-BR", {
-                            minimumFractionDigits: 2
-                          })}
-                        </div>
+                        <div>{formatarNumDecimal(item.precoExec.unit)}</div>
                         <div className="colunaTotal">
                           {calculaTotal(item.precoExec)}
                         </div>
@@ -120,48 +105,21 @@ export default class TabelaCompleta extends React.Component {
                     </td>
                     <td>
                       <div className="colunaDividida">
-                        <div>
-                          {item.atual.toLocaleString("pt-BR", {
-                            minimumFractionDigits: 2
-                          })}
-                        </div>
-                        <div>
-                          {item.osc.toLocaleString("pt-BR", {
-                            minimumFractionDigits: 2
-                          })}
-                          %
-                        </div>
+                        <div>{formatarNumDecimal(item.atual)}</div>
+                        <div>{formatarNumDecimal(item.osc)}%</div>
                         <div className={corSaldoOp(item.osc)}>
-                          {item.saldoOp.toLocaleString("pt-BR", {
-                            minimumFractionDigits: 2
-                          })}
+                          {formatarNumDecimal(item.saldoOp)}
                         </div>
                       </div>
                     </td>
                     <td>
                       <div className="colunaDividida">
                         <div>
-                          {(item.compra.qtde / 1000).toLocaleString("pt-BR", {
-                            minimumFractionDigits: 2
-                          })}
-                          k
+                          {formatarNumDecimal(item.compra.qtde / 1000)}k
                         </div>
-                        <div>
-                          {item.compra.preco.toLocaleString("pt-BR", {
-                            minimumFractionDigits: 2
-                          })}
-                        </div>
-                        <div>
-                          {item.venda.preco.toLocaleString("pt-BR", {
-                            minimumFractionDigits: 2
-                          })}
-                        </div>
-                        <div>
-                          {(item.venda.qtde / 1000).toLocaleString("pt-BR", {
-                            minimumFractionDigits: 2
-                          })}
-                          k
-                        </div>
+                        <div>{formatarNumDecimal(item.compra.preco)}</div>
+                        <div>{formatarNumDecimal(item.venda.preco)}</div>
+                        <div>{formatarNumDecimal(item.venda.qtde / 1000)}k</div>
                       </div>
                     </td>
                   </tr>
@@ -191,16 +149,14 @@ export const calculaTotal = item => {
   let tipo = "";
   if (total >= 0) tipo = " (D)";
   else tipo = " (C)";
-  return total.toLocaleString("pt-BR", { minimumFractionDigits: 2 }) + tipo;
+  return formatarNumDecimal(total) + tipo;
 };
 
 export const calculaResultado = resultado => {
   let result = "Resultado: R$ ";
   if (resultado.valor >= 0) result += "+";
   else result += "-";
-  result += resultado.valor.toLocaleString("pt-BR", {
-    minimumFractionDigits: 2
-  });
+  result += formatarNumDecimal(resultado.valor);
 
   return <h6 className="textosTitulos">{result}</h6>;
 };
@@ -215,7 +171,6 @@ export const calculaVariacao = variacao => {
     result += " ";
     classe = "textoPorcentagemNegativa";
   }
-  result +=
-    variacao.toLocaleString("pt-BR", { minimumFractionDigits: 2 }) + "%";
+  result += formatarNumDecimal(variacao) + "%";
   return <h6 className={classe}>{result}</h6>;
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import DatePicker from "react-datepicker";
 import { Col, Row, Form } from "react-bootstrap";
-import { getformatedDate } from "components/utils/FormatacoesData";
+import { getformatedDate } from "components/utils/Formatacoes";
 
 export default (props, namespace) => (
   <Row className="rowFormValidade">

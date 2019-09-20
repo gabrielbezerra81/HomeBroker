@@ -1,6 +1,7 @@
 import React from "react";
 import { Table, ProgressBar } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
+import { formatarNumDecimal } from "components/utils/Formatacoes";
 
 export default class Tabela3Resultado extends React.Component {
   render() {
@@ -95,9 +96,7 @@ export default class Tabela3Resultado extends React.Component {
 
 const renderCV = (cv, data, valor) => {
   let tipo = " (D)";
-  valor = valor.toLocaleString("pt-BR", {
-    minimumFractionDigits: 2
-  });
+  valor = formatarNumDecimal(valor);
   return (
     <span>
       {cv === "compra" ? (

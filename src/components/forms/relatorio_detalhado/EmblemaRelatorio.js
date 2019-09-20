@@ -5,6 +5,7 @@ import { ReactComponent as ArrowUp } from "img/up-arrow.svg";
 import imgModeloEU from "img/modeloEU.png";
 import imgModeloUSA from "img/modeloUSA.png";
 import { ativoCompraVenda } from "components/forms/relatorio_detalhado/RelatorioDetalhado";
+import { formatarNumDecimal } from "components/utils/Formatacoes";
 
 class EmblemaRelatorio extends React.Component {
   render() {
@@ -65,11 +66,7 @@ class EmblemaRelatorio extends React.Component {
               <span>Últ.</span>
             </Col>
             <Col md={0} className="text-align-center">
-              <h3>
-                {this.props.item.valorAcao.toLocaleString("pt-BR", {
-                  minimumFractionDigits: 2
-                })}
-              </h3>
+              <h3>{formatarNumDecimal(this.props.item.valorAcao)}</h3>
             </Col>
             <Col md={0} className="text-align-center flexAlignEnd pb-1 ml-1">
               <div className="divSetaPorcentagem">
@@ -89,17 +86,9 @@ class EmblemaRelatorio extends React.Component {
             <div className="sliderTopo"></div>
           </div>
           <Row>
-            <Col md={3}>
-              {this.props.item.precoCompra.toLocaleString("pt-BR", {
-                minimumFractionDigits: 2
-              })}
-            </Col>
+            <Col md={3}>{formatarNumDecimal(this.props.item.precoCompra)}</Col>
             <Col md={6}></Col>
-            <Col md={3}>
-              {this.props.item.precoVenda.toLocaleString("pt-BR", {
-                minimumFractionDigits: 2
-              })}
-            </Col>
+            <Col md={3}>{formatarNumDecimal(this.props.item.precoVenda)}</Col>
           </Row>
         </div>
       </div>
@@ -118,19 +107,13 @@ const renderSeta = valor => {
 
 const renderValorPorcentagem = porcentagem => {
   if (porcentagem > 0) {
-    porcentagem = porcentagem.toLocaleString("pt-BR", {
-      minimumFractionDigits: 2
-    });
+    porcentagem = formatarNumDecimal(porcentagem);
     return <span className="porcentagemPositiva">+{porcentagem}%</span>;
   } else if (porcentagem < 0) {
-    porcentagem = porcentagem.toLocaleString("pt-BR", {
-      minimumFractionDigits: 2
-    });
+    porcentagem = formatarNumDecimal(porcentagem);
     return <span className="porcentagemNegativa">{porcentagem}%</span>;
   } else {
-    porcentagem = porcentagem.toLocaleString("pt-BR", {
-      minimumFractionDigits: 2
-    });
+    porcentagem = formatarNumDecimal(porcentagem);
     return <span>+{porcentagem}%</span>;
   }
 };

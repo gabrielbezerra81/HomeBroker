@@ -11,6 +11,7 @@ import {
   abrirFecharConfigComplAction,
   modificarAtributoAction
 } from "components/redux/actions/menu_actions/MultilegActions";
+import { formatarNumDecimal } from "components/utils/Formatacoes";
 
 class AbaMultileg extends React.Component {
   render() {
@@ -41,7 +42,7 @@ class AbaMultileg extends React.Component {
                 </InputGroup.Append>
               </InputGroup>
               <h5 className="textoValor">
-                {this.props.multileg[indice].valor}
+                {formatarNumDecimal(this.props.multileg[indice].valor)}
               </h5>
               {renderSeta(this.props.multileg[indice].variacao)}
               {renderValorPorcentagem(this.props.multileg[indice].variacao)}
@@ -153,18 +154,16 @@ class AbaMultileg extends React.Component {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>3,7K</td>
-                    <td>2,40</td>
-                    <td>2,50</td>
-                    <td>0,7K</td>
-                  </tr>
-                  <tr>
-                    <td>3,7K</td>
-                    <td>1,50</td>
-                    <td>1,60</td>
-                    <td>1,7K</td>
-                  </tr>
+                  {this.props.multileg[indice].tabelaMultileg.map(
+                    (item, indiceLinha) => (
+                      <tr key={indiceLinha}>
+                        <td>{formatarNumDecimal(item.compra.qtde / 1000)}K</td>
+                        <td>{formatarNumDecimal(item.compra.preco)}</td>
+                        <td>{formatarNumDecimal(item.venda.preco)}</td>
+                        <td>{formatarNumDecimal(item.venda.qtde / 1000)}K</td>
+                      </tr>
+                    )
+                  )}
                 </tbody>
               </Table>
             </Col>
@@ -277,50 +276,13 @@ const renderSeta = valor => {
 
 const renderValorPorcentagem = porcentagem => {
   if (porcentagem > 0) {
-    porcentagem = porcentagem.toLocaleString("pt-BR", {
-      minimumFractionDigits: 2
-    });
+    porcentagem = formatarNumDecimal(porcentagem);
     return <h6 className="porcentagemPositiva">+{porcentagem}%</h6>;
   } else if (porcentagem < 0) {
-    porcentagem = porcentagem.toLocaleString("pt-BR", {
-      minimumFractionDigits: 2
-    });
+    porcentagem = formatarNumDecimal(porcentagem);
     return <h6 className="porcentagemNegativa">{porcentagem}%</h6>;
   } else {
-    porcentagem = porcentagem.toLocaleString("pt-BR", {
-      minimumFractionDigits: 2
-    });
+    porcentagem = formatarNumDecimal(porcentagem);
     return <h6>+{porcentagem}%</h6>;
   }
 };
-
-const tabelaMultileg = [
-  {
-    vencimento: ["9/10/19", "10/10/19", "11/10/19"],
-    strike: [26.32, 27.48, 28.48],
-    cv: "compra",
-    qtde: 1000,
-    serie: ["2019-08", "2019-07", "2019-06"],
-    codigo: ["PETRH275", "PETRH275", "PETRH275"],
-    tipo: "call",
-    modelo: "EU",
-    despernamento: 100,
-    prioridade: -1,
-    cotacao: "15,25",
-    valor: "-40,00"
-  },
-  {
-    strike: [26.32, 27.48, 28.48],
-    vencimento: ["9/10/19", "10/10/19", "11/10/19"],
-    cv: "venda",
-    qtde: 2000,
-    serie: ["2019-08", "2019-07", "2019-06"],
-    codigo: ["PETRH275", "PETRH275", "PETRH275"],
-    tipo: "call",
-    modelo: "USA",
-    despernamento: 500,
-    prioridade: 2,
-    cotacao: "10,30",
-    valor: "-200,00"
-  }
-];

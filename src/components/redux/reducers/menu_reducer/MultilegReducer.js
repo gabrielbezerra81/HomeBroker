@@ -20,6 +20,9 @@ const INITIAL_STATE = {
       strikeSelecionado: "",
       vencimento: ["9/10/19", "10/10/19", "11/10/19"],
       vencimentoSelecionado: "",
+      preco: "",
+      total: "",
+      validade: "",
       tabelaMultileg: [
         {
           vencimento: ["9/10/19", "10/10/19", "11/10/19"],
@@ -35,7 +38,9 @@ const INITIAL_STATE = {
           despernamento: 1000,
           prioridade: 0,
           cotacao: "15,26",
-          valor: "-41,00"
+          valor: "-41,00",
+          compra: { qtde: 3700, preco: 2.4 },
+          venda: { qtde: 700, preco: 2.5 }
         },
         {
           strike: [26.32, 27.48, 28.48],
@@ -52,7 +57,9 @@ const INITIAL_STATE = {
           despernamento: 1000,
           prioridade: 0,
           cotacao: "10,35",
-          valor: "-201,00"
+          valor: "-201,00",
+          compra: { qtde: 3700, preco: 1.5 },
+          venda: { qtde: 1700, preco: 1.6 }
         }
       ]
     }

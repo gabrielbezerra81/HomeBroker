@@ -8,6 +8,7 @@ import { MDBIcon } from "mdbreact";
 import EmblemaSimples from "components/utils/EmblemaSimples";
 import { ReactComponent as IconeResumido } from "img/rounded-rectangle.svg";
 import { ReactComponent as IconeAmpliado } from "img/check-box-empty.svg";
+import { formatarNumDecimal } from "components/utils/Formatacoes";
 
 export default class ListaCompleta extends React.Component {
   componentDidMount() {
@@ -162,10 +163,7 @@ export default class ListaCompleta extends React.Component {
                   {ampliado ? (
                     <div className="divSetaPorcentagem">
                       <Col md={0} className="m-2">
-                        Resultado:{" "}
-                        {item.resultado.toLocaleString("pt-BR", {
-                          minimumFractionDigits: 2
-                        })}
+                        Resultado: {formatarNumDecimal(item.resultado)}
                       </Col>
                       <Col md={0} className="m-2">
                         {renderValorPorcentagem(item.porcentagemResultado)}
@@ -242,19 +240,14 @@ const renderAtivo = item => {
 
 const renderValorPorcentagem = porcentagem => {
   if (porcentagem > 0) {
-    porcentagem = porcentagem.toLocaleString("pt-BR", {
-      minimumFractionDigits: 2
-    });
+    porcentagem = formatarNumDecimal(porcentagem);
     return <span className="porcentagemPositiva">+{porcentagem}%</span>;
   } else if (porcentagem < 0) {
-    porcentagem = porcentagem.toLocaleString("pt-BR", {
-      minimumFractionDigits: 2
-    });
+    porcentagem = formatarNumDecimal(porcentagem);
     return <span className="porcentagemNegativa">{porcentagem}%</span>;
   } else {
-    porcentagem = porcentagem.toLocaleString("pt-BR", {
-      minimumFractionDigits: 2
-    });
+    porcentagem = formatarNumDecimal(porcentagem);
+
     return <span>+{porcentagem}%</span>;
   }
 };

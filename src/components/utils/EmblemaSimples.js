@@ -2,6 +2,7 @@ import React from "react";
 import { Row, Col } from "react-bootstrap";
 import { ReactComponent as ArrowDown } from "img/down-arrow.svg";
 import { ReactComponent as ArrowUp } from "img/up-arrow.svg";
+import { formatarNumDecimal } from "components/utils/Formatacoes";
 
 class EmblemaSimples extends React.Component {
   render() {
@@ -18,25 +19,15 @@ class EmblemaSimples extends React.Component {
           <div className="sliderTopo"></div>
         </div>
         <Row>
-          <Col md={3}>
-            {this.props.item.precoCompra.toLocaleString("pt-BR", {
-              minimumFractionDigits: 2
-            })}
-          </Col>
+          <Col md={3}>{formatarNumDecimal(this.props.item.precoCompra)}</Col>
           <Col md={5}></Col>
           <Col md={4} className="text-align-right">
-            {this.props.item.precoVenda.toLocaleString("pt-BR", {
-              minimumFractionDigits: 2
-            })}
+            {formatarNumDecimal(this.props.item.precoVenda)}
           </Col>
         </Row>
         <Row>
           <Col md={12} className="text-align-center">
-            <h3>
-              {this.props.item.valorAcao.toLocaleString("pt-BR", {
-                minimumFractionDigits: 2
-              })}
-            </h3>
+            <h3>{formatarNumDecimal(this.props.item.valorAcao)}</h3>
           </Col>
         </Row>
         <Row>
@@ -50,9 +41,7 @@ class EmblemaSimples extends React.Component {
         <div className="divSetaPorcentagem">
           <Col md={0}>
             STOP<br></br>
-            {this.props.item.stop.toLocaleString("pt-BR", {
-              minimumFractionDigits: 2
-            })}
+            {formatarNumDecimal(this.props.item.stop)}
           </Col>
           <Col md={8}>
             <div>
@@ -71,9 +60,7 @@ class EmblemaSimples extends React.Component {
           </Col>
           <Col md={0}>
             GAIN<br></br>
-            {this.props.item.gain.toLocaleString("pt-BR", {
-              minimumFractionDigits: 2
-            })}
+            {formatarNumDecimal(this.props.item.gain)}
           </Col>
         </div>
       </div>
@@ -97,19 +84,14 @@ const corInputRange = porcentagem => {
 
 const renderValorPorcentagem = porcentagem => {
   if (porcentagem > 0) {
-    porcentagem = porcentagem.toLocaleString("pt-BR", {
-      minimumFractionDigits: 2
-    });
+    porcentagem = formatarNumDecimal(porcentagem);
     return <span className="porcentagemPositiva">+{porcentagem}%</span>;
   } else if (porcentagem < 0) {
-    porcentagem = porcentagem.toLocaleString("pt-BR", {
-      minimumFractionDigits: 2
-    });
+    porcentagem = formatarNumDecimal(porcentagem);
     return <span className="porcentagemNegativa">{porcentagem}%</span>;
   } else {
-    porcentagem = porcentagem.toLocaleString("pt-BR", {
-      minimumFractionDigits: 2
-    });
+    porcentagem = formatarNumDecimal(porcentagem);
+
     return <span>+{porcentagem}%</span>;
   }
 };

@@ -84,3 +84,9 @@ export const getDiaEMes = () => {
   }
   return date.getDate() + " de " + mes;
 };
+
+export const formatarNumDecimal = function(num) {
+  return num.toLocaleString("pt-BR", {
+    minimumFractionDigits: 2
+  });
+};

@@ -6,7 +6,7 @@ import {
   validacaoCompraGainReducao,
   validacaoCompraStartStop
 } from "components/utils/Validacoes";
-import { getformatedDate } from "components/utils/FormatacoesData";
+import { getformatedDate } from "components/utils/Formatacoes";
 
 /*
 

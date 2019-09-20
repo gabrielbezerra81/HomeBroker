@@ -7,6 +7,7 @@ import TabelaCompleta from "components/forms/posicao_/TabelaCompleta";
 import TabelaSimples from "components/forms/posicao_/TabelaSimples";
 import GraficoPatrimonio from "components/forms/posicao_/GraficoPatrimonio";
 import IconeRostoCoberto from "img/rostoCoberto2.svg";
+import { formatarNumDecimal } from "components/utils/Formatacoes";
 
 export default class Posicao extends React.Component {
   componentDidMount() {
@@ -40,18 +41,8 @@ export default class Posicao extends React.Component {
           </Col>
           <Col md={2}>
             <h6>Valor</h6>
-            <h6>
-              R${" "}
-              {dados.dinheiro.toLocaleString("pt-BR", {
-                minimumFractionDigits: 2
-              })}
-            </h6>
-            <h6>
-              R${" "}
-              {dados.posicaoLiquida.toLocaleString("pt-BR", {
-                minimumFractionDigits: 2
-              })}
-            </h6>
+            <h6>R$ {formatarNumDecimal(dados.dinheiro)}</h6>
+            <h6>R$ {formatarNumDecimal(dados.posicaoLiquida)}</h6>
           </Col>
           <Col md={2}>
             <h6>Mudança do dia</h6>

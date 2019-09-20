@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
-import { getDiaSemana, getDiaEMes } from "components/utils/FormatacoesData";
+import { getDiaSemana, getDiaEMes } from "components/utils/Formatacoes";
 import { MDBIcon } from "mdbreact";
 import {
   logarUsuarioAction,
