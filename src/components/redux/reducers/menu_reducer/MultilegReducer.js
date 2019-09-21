@@ -4,13 +4,17 @@ import {
   ABRIR_FECHAR_CONFIG_COMPLEMENTAR,
   ADICIONAR_ABA,
   SELECIONAR_ABA,
-  MODIFICAR_ATRIBUTO_ABA
+  MODIFICAR_ATRIBUTO_ABA,
+  MODIFICAR_VARIAVEL_MULTILEG
 } from "constants/MenuActionTypes";
 
 const INITIAL_STATE = {
   configComplementarAberto: false,
   abaSelecionada: "tab0",
-  tipo: "put",
+  horaInicial: "",
+  horaFinal: "",
+  modoExec: "preço",
+  apregoarOferta: false,
   multileg: [
     {
       ativo: "PETR4",
@@ -83,6 +87,8 @@ export default (state = INITIAL_STATE, action) => {
     }
     case MODIFICAR_ATRIBUTO_ABA:
       return { ...state, multileg: action.payload };
+    case MODIFICAR_VARIAVEL_MULTILEG:
+      return { ...state, [action.payload.nome]: action.payload.valor };
     default:
       return state;
   }

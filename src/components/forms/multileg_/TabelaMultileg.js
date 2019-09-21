@@ -3,10 +3,7 @@ import { Table, Form } from "react-bootstrap";
 import imgModeloEU from "img/modeloEU.png";
 import imgModeloUSA from "img/modeloUSA2.svg";
 import { connect } from "react-redux";
-import {
-  mudarTipoAction,
-  modificarAtributoTabelaAction
-} from "components/redux/actions/menu_actions/MultilegActions";
+import { modificarAtributoTabelaAbaAction } from "components/redux/actions/menu_actions/MultilegActions";
 
 const capitalize = function(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -55,7 +52,7 @@ class TabelaMultileg extends React.Component {
                         name="qtde"
                         value={item.qtde}
                         onChange={event =>
-                          this.props.modificarAtributoTabelaAction(
+                          this.props.modificarAtributoTabelaAbaAction(
                             this.props.multileg,
                             indice,
                             "qtde",
@@ -73,7 +70,7 @@ class TabelaMultileg extends React.Component {
                         className="textInput"
                         value={item.serieSelecionada}
                         onChange={event =>
-                          this.props.modificarAtributoTabelaAction(
+                          this.props.modificarAtributoTabelaAbaAction(
                             this.props.multileg,
                             indice,
                             "serieSelecionada",
@@ -97,7 +94,7 @@ class TabelaMultileg extends React.Component {
                         className="textInput"
                         value={item.strikeSelecionado}
                         onChange={event =>
-                          this.props.modificarAtributoTabelaAction(
+                          this.props.modificarAtributoTabelaAbaAction(
                             this.props.multileg,
                             indice,
                             "strikeSelecionado",
@@ -121,7 +118,7 @@ class TabelaMultileg extends React.Component {
                         className="textInput"
                         value={item.codigoSelecionado}
                         onChange={event =>
-                          this.props.modificarAtributoTabelaAction(
+                          this.props.modificarAtributoTabelaAbaAction(
                             this.props.multileg,
                             indice,
                             "codigoSelecionado",
@@ -143,7 +140,7 @@ class TabelaMultileg extends React.Component {
                       className="divClicavel"
                       tabIndex={0}
                       onClick={event =>
-                        this.props.modificarAtributoTabelaAction(
+                        this.props.modificarAtributoTabelaAbaAction(
                           this.props.multileg,
                           indice,
                           "tipo",
@@ -165,7 +162,7 @@ class TabelaMultileg extends React.Component {
                         step={100}
                         value={item.despernamento}
                         onChange={event =>
-                          this.props.modificarAtributoTabelaAction(
+                          this.props.modificarAtributoTabelaAbaAction(
                             this.props.multileg,
                             indice,
                             "despernamento",
@@ -183,7 +180,7 @@ class TabelaMultileg extends React.Component {
                         className="textInput formPrioridade"
                         value={item.prioridade}
                         onChange={event =>
-                          this.props.modificarAtributoTabelaAction(
+                          this.props.modificarAtributoTabelaAbaAction(
                             this.props.multileg,
                             indice,
                             "prioridade",
@@ -216,13 +213,12 @@ class TabelaMultileg extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  tipo: state.multilegReducer.tipo,
   multileg: state.multilegReducer.multileg
 });
 
 export default connect(
   mapStateToProps,
-  { mudarTipoAction, modificarAtributoTabelaAction }
+  { modificarAtributoTabelaAbaAction }
 )(TabelaMultileg);
 
 const renderCV = cv => {

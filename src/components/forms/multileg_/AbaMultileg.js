@@ -9,7 +9,7 @@ import IconeConfigGrafico from "components/utils/IconeConfigGrafico";
 import { connect } from "react-redux";
 import {
   abrirFecharConfigComplAction,
-  modificarAtributoAction
+  modificarAtributoAbaAction
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 
@@ -27,7 +27,7 @@ class AbaMultileg extends React.Component {
                   type="text"
                   value={this.props.multileg[indice].ativo}
                   onChange={event =>
-                    this.props.modificarAtributoAction(
+                    this.props.modificarAtributoAbaAction(
                       this.props.multileg,
                       indice,
                       "ativo",
@@ -55,7 +55,7 @@ class AbaMultileg extends React.Component {
                   className="textInput"
                   value={this.props.multileg[indice].strikeSelecionado}
                   onChange={event =>
-                    this.props.modificarAtributoAction(
+                    this.props.modificarAtributoAbaAction(
                       this.props.multileg,
                       indice,
                       "strikeSelecionado",
@@ -77,7 +77,7 @@ class AbaMultileg extends React.Component {
                   className="textInput"
                   value={this.props.multileg[indice].vencimentoSelecionado}
                   onChange={event =>
-                    this.props.modificarAtributoAction(
+                    this.props.modificarAtributoAbaAction(
                       this.props.multileg,
                       indice,
                       "vencimentoSelecionado",
@@ -207,8 +207,15 @@ class AbaMultileg extends React.Component {
                 className="textInput"
                 type="number"
                 step={0.01}
-                //value={1}
-                onChange={() => false}
+                value={this.props.multileg[indice].preco}
+                onChange={event =>
+                  this.props.modificarAtributoAbaAction(
+                    this.props.multileg,
+                    indice,
+                    "preco",
+                    event.currentTarget.value
+                  )
+                }
               />
             </Col>
           </Row>
@@ -221,8 +228,15 @@ class AbaMultileg extends React.Component {
                 className="textInput"
                 type="number"
                 step={0.01}
-                //value={1}
-                onChange={() => false}
+                value={this.props.multileg[indice].total}
+                onChange={event =>
+                  this.props.modificarAtributoAbaAction(
+                    this.props.multileg,
+                    indice,
+                    "total",
+                    event.currentTarget.value
+                  )
+                }
               />
             </Col>
           </Row>
@@ -233,8 +247,15 @@ class AbaMultileg extends React.Component {
             <Col className="mr-1 wrapperVencimento">
               <DatePicker
                 className="form-control textInput"
-                //selected={props.date}
-                onChange={() => false}
+                selected={this.props.multileg[indice].validade}
+                onChange={data =>
+                  this.props.modificarAtributoAbaAction(
+                    this.props.multileg,
+                    indice,
+                    "validade",
+                    data
+                  )
+                }
                 dateFormat="dd/MM/yyyy"
                 popperPlacement="top-start"
               />
@@ -265,7 +286,7 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { abrirFecharConfigComplAction, modificarAtributoAction }
+  { abrirFecharConfigComplAction, modificarAtributoAbaAction }
 )(AbaMultileg);
 
 const renderSeta = valor => {

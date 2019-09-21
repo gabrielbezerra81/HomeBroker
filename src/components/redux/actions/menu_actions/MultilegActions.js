@@ -3,22 +3,9 @@ import {
   ABRIR_FECHAR_CONFIG_COMPLEMENTAR,
   ADICIONAR_ABA,
   SELECIONAR_ABA,
-  MODIFICAR_ATRIBUTO_ABA
+  MODIFICAR_ATRIBUTO_ABA,
+  MODIFICAR_VARIAVEL_MULTILEG
 } from "constants/MenuActionTypes";
-
-export const mudarTipoAction = tipo => {
-  return dispatch => {
-    let novo_tipo = "";
-
-    if (tipo === "call") novo_tipo = "put";
-    else if (tipo === "put") novo_tipo = "call";
-
-    dispatch({
-      type: MUDAR_TIPO,
-      payload: novo_tipo
-    });
-  };
-};
 
 export const abrirFecharConfigComplAction = configComplementarAberto => {
   return dispatch => {
@@ -52,7 +39,12 @@ export const selecionarAdicionarAbaAction = (key, multileg) => {
   };
 };
 
-export const modificarAtributoAction = (multileg, indice, atributo, valor) => {
+export const modificarAtributoAbaAction = (
+  multileg,
+  indice,
+  atributo,
+  valor
+) => {
   return dispatch => {
     let abasMultileg = [...multileg];
     abasMultileg[indice][atributo] = valor;
@@ -61,7 +53,7 @@ export const modificarAtributoAction = (multileg, indice, atributo, valor) => {
   };
 };
 
-export const modificarAtributoTabelaAction = (
+export const modificarAtributoTabelaAbaAction = (
   multileg,
   indiceGeral,
   atributo,
@@ -85,40 +77,65 @@ export const modificarAtributoTabelaAction = (
   };
 };
 
+export const modificarVariavelAction = (nome, valor) => {
+  console.log(nome);
+  console.log(valor);
+  return dispatch => {
+    dispatch({
+      type: MODIFICAR_VARIAVEL_MULTILEG,
+      payload: { nome: nome, valor: valor }
+    });
+  };
+};
+
 const aba = {
-  ativo: "PETR3",
+  ativo: "PETR4",
   valor: -27.44,
   variacao: 5.33,
   strike: [26.32, 27.48, 28.48],
+  strikeSelecionado: "",
   vencimento: ["9/10/19", "10/10/19", "11/10/19"],
+  vencimentoSelecionado: "",
+  preco: "",
+  total: "",
+  validade: "",
   tabelaMultileg: [
     {
       vencimento: ["9/10/19", "10/10/19", "11/10/19"],
       strike: [26.32, 27.48, 28.48],
+      strikeSelecionado: "",
       cv: "compra",
       qtde: 1000,
       serie: ["2019-08", "2019-07", "2019-06"],
+      serieSelecionada: "",
       codigo: ["PETRH275", "PETRH275", "PETRH275"],
       tipo: "call",
       modelo: "EU",
       despernamento: 1000,
       prioridade: 0,
       cotacao: "15,26",
-      valor: "-41,00"
+      valor: "-41,00",
+      compra: { qtde: 3700, preco: 2.4 },
+      venda: { qtde: 700, preco: 2.5 }
     },
     {
       strike: [26.32, 27.48, 28.48],
+      strikeSelecionado: "",
       vencimento: ["9/10/19", "10/10/19", "11/10/19"],
       cv: "venda",
       qtde: 2000,
       serie: ["2019-08", "2019-07", "2019-06"],
+      serieSelecionada: "",
       codigo: ["PETRH275", "PETRH275", "PETRH275"],
+      codigoSelecionado: "",
       tipo: "put",
       modelo: "USA",
       despernamento: 1000,
       prioridade: 0,
       cotacao: "10,35",
-      valor: "-201,00"
+      valor: "-201,00",
+      compra: { qtde: 3700, preco: 1.5 },
+      venda: { qtde: 1700, preco: 1.6 }
     }
   ]
 };
