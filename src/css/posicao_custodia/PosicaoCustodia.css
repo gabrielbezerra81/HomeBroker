@@ -1,11 +1,16 @@
-#lista_completa {
+#posicao_custodia {
   margin-left: 5px;
   width: 985px;
 }
 
-#lista_completa .mcontent {
+#posicao_custodia .mcontent {
   font-size: 0.75rem;
   margin-right: 0 !important;
+}
+
+.containerTipoLista {
+  margin-left: -8px;
+  margin-right: -7px;
 }
 
 .tableListaCompleta {
@@ -95,7 +100,7 @@ th .colunaDividida div {
   border-right: none;
 }
 
-.seletorAtivo:focus {
+.seletorAtivo {
   background-color: #324552 !important;
   outline: none !important;
 }

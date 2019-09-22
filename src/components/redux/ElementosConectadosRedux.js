@@ -26,12 +26,13 @@ import { abrirItemBarraLateralAction } from "components/redux/actions/TelaPrinci
 import OrdensExecucao from "components/forms/ordens_em_execucao/OrdensExecucao";
 import BarraLateral from "components/tela_principal/BarraLateral";
 import Multileg from "components/forms/multileg_/Multileg";
-import ListaCompleta from "components/forms/lista_completa/ListaCompleta";
-import Posicao from "components/forms/posicao_/Posicao";
+import PosicaoEmCustodia from "components/forms/posicao_custodia/PosicaoEmCustodia";
+import PosicaoDetalhada from "components/forms/posicao_custodia/posicao_detalhada/PosicaoDetalhada";
 import RelatorioDetalhado from "components/forms/relatorio_detalhado/RelatorioDetalhado";
 import MultilegReducer from "components/redux/reducers/menu_reducer/MultilegReducer";
 import PosicaoReducer from "components/redux/reducers/menu_reducer/PosicaoReducer";
 import { selecionarAdicionarAbaAction } from "components/redux/actions/menu_actions/MultilegActions";
+import { mudarVariavelPosicaoAction } from "components/redux/actions/menu_actions/PosicaoActions";
 
 export const GlobalContext = React.createContext();
 export const localContext = React.createContext();
@@ -96,6 +97,11 @@ const mapStateToPropsMultileg = state => ({
   configComplementarAberto: state.multilegReducer.configComplementarAberto,
   multileg: state.multilegReducer.multileg,
   abaSelecionada: state.multilegReducer.abaSelecionada
+});
+
+const mapStateToPropsPosicao = state => ({
+  ordenacao: state.posicaoReducer.ordenacao,
+  tipoVisualizacao: state.posicaoReducer.tipoVisualizacao
 });
 
 export const MainAppConectado = compose(
@@ -197,19 +203,25 @@ export const MultilegConectado = compose(
   )
 )(Multileg);
 
-export const ListaCompletaConectada = connect(
-  mapStateToPropsGlobalStore,
-  { aumentarZindexAction },
-  null,
-  { context: GlobalContext }
-)(ListaCompleta);
+export const PosicaoEmCustodiaConectada = compose(
+  connect(
+    mapStateToPropsGlobalStore,
+    { aumentarZindexAction },
+    null,
+    { context: GlobalContext }
+  ),
+  connect(
+    mapStateToPropsPosicao,
+    { mudarVariavelPosicaoAction }
+  )
+)(PosicaoEmCustodia);
 
-export const PosicaoConectada = connect(
+export const PosicaoDetalhadaConectada = connect(
   mapStateToPropsGlobalStore,
   { aumentarZindexAction },
   null,
   { context: GlobalContext }
-)(Posicao);
+)(PosicaoDetalhada);
 
 export const RelatorioDetalhadoConectado = connect(
   mapStateToPropsGlobalStore,

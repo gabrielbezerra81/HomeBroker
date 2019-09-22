@@ -1,22 +1,16 @@
 import React from "react";
 import { Row, Col, Table } from "react-bootstrap";
 import EmblemaSimples from "components/utils/EmblemaSimples";
-import {
-  calculaTotal,
-  calculaResultado,
-  calculaVariacao
-} from "components/forms/posicao_/TabelaCompleta";
+import { corSaldoOp } from "components/forms/posicao_custodia/posicao_detalhada/TabelaSimples";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 
-export default class TabelaSimples extends React.Component {
+export default class TabelaCompleta extends React.Component {
   render() {
     return (
       <div>
         <Row className="mb-1 textosTitulos">
           <Col md={6}>
-            <h5>
-              {this.props.dados.estrategia}: {this.props.dados.ativo}
-            </h5>
+            <h5>{renderAtivos(this.props.dados)}</h5>
           </Col>
           <Col md={3} className="text-align-right">
             <div className="spaceAround">
@@ -25,9 +19,7 @@ export default class TabelaSimples extends React.Component {
             </div>
           </Col>
           <Col md={3} className="text-align-right">
-            <h6 className="textosTitulos">
-              Início: {this.props.dados.dataInicio}
-            </h6>
+            <h6>Início: {this.props.dados.dataInicio}</h6>
           </Col>
         </Row>
         <Row className="rowCompra mb-3">
@@ -46,6 +38,10 @@ export default class TabelaSimples extends React.Component {
                 <tr>
                   <th>Código</th>
                   <th>Qtde</th>
+                  <th>Vcto</th>
+                  <th>Prazo</th>
+                  <th>Strike</th>
+                  <th>Análise</th>
                   <th>Preço Execução</th>
                   <th>Resultado</th>
                   <th className="colunaCompraVenda">
@@ -58,6 +54,10 @@ export default class TabelaSimples extends React.Component {
                 <tr>
                   <td></td>
                   <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>Intr/Ext</td>
                   <td>
                     <div className="colunaDividida">
                       <div>Qtde</div>
@@ -85,6 +85,15 @@ export default class TabelaSimples extends React.Component {
                   <tr key={index}>
                     <td>{item.codigo}</td>
                     <td>{item.qtde / 1000}k</td>
+                    <td>{item.vcto}</td>
+                    <td>{item.prazo} dias</td>
+                    <td>{formatarNumDecimal(item.strike)}</td>
+                    <td>
+                      <div className="colunaDividida">
+                        <div>{formatarNumDecimal(item.intr)}</div>
+                        <div>{formatarNumDecimal(item.ext)}</div>
+                      </div>
+                    </td>
                     <td>
                       <div className="colunaDividida">
                         <div>{item.precoExec.qtde}</div>
@@ -124,7 +133,44 @@ export default class TabelaSimples extends React.Component {
   }
 }
 
-export const corSaldoOp = osc => {
-  if (osc >= 0) return "saldoOpPositivo";
-  else return "saldoOpNegativo";
+const renderAtivos = dados => {
+  let ativos = `${dados.estrategia}: ${dados.ativo}`;
+  var codigos = "   ";
+  dados.operacoes.map(item => {
+    codigos += item.codigo + " | ";
+  });
+  ativos += codigos;
+
+  return ativos.substring(0, ativos.length - 2);
+};
+
+export const calculaTotal = item => {
+  let total = Number(item.qtde) * 1000 * Number(item.unit);
+  let tipo = "";
+  if (total >= 0) tipo = " (D)";
+  else tipo = " (C)";
+  return formatarNumDecimal(total) + tipo;
+};
+
+export const calculaResultado = resultado => {
+  let result = "Resultado: R$ ";
+  if (resultado.valor >= 0) result += "+";
+  else result += "-";
+  result += formatarNumDecimal(resultado.valor);
+
+  return <h6 className="textosTitulos">{result}</h6>;
+};
+
+export const calculaVariacao = variacao => {
+  let result = "";
+  let classe = "";
+  if (variacao >= 0) {
+    result += " +";
+    classe = "textoPorcentagemPositiva";
+  } else {
+    result += " ";
+    classe = "textoPorcentagemNegativa";
+  }
+  result += formatarNumDecimal(variacao) + "%";
+  return <h6 className={classe}>{result}</h6>;
 };

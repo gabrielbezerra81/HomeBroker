@@ -46,8 +46,11 @@ export default class BarraLateral extends React.Component {
           tabIndex={0}
           className="itemDivBarraLateral divClicavel"
           onClick={() => {
-            this.props.atualizarDivKeyAction("posicao");
-            this.props.abrirItemBarraLateralAction(this.props, "posicaoAberta");
+            this.props.atualizarDivKeyAction("posicao_custodia");
+            this.props.abrirItemBarraLateralAction(
+              this.props,
+              "listaCompletaAberta"
+            );
           }}
         >
           <Icones viewBox="5 190 45 52" className="iconesBarraLateral"></Icones>
@@ -71,7 +74,7 @@ export default class BarraLateral extends React.Component {
           tabIndex={0}
           className="itemDivBarraLateral divClicavel"
           onClick={() => {
-            this.props.atualizarDivKeyAction("lista_completa");
+            this.props.atualizarDivKeyAction("posicao_custodia");
             this.props.abrirItemBarraLateralAction(
               this.props,
               "listaCompletaAberta"

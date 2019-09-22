@@ -25,8 +25,8 @@ import "./tela_principal/TelaPrincipal.css";
 import "./tela_principal/MenuLateral.css";
 import "./ordens_execucao/OrdensExecucao.css";
 import "./multileg_/multileg.css";
-import "./lista_completa/ListaCompleta.css";
-import "./posicao_/Posicao.css";
+import "./posicao_custodia/PosicaoCustodia.css";
+import "./posicao_custodia/PosicaoDetalhada.css";
 import "./relatorio_detalhado/RelatorioDetalhado.css";
 
 import "./CustomCheckbox.css";

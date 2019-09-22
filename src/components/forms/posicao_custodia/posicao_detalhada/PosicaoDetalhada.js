@@ -1,38 +1,20 @@
 import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import { Row, Col } from "react-bootstrap";
-import DraggableModal from "components/utils/DraggableModal";
-import { modalHeaderSemBook } from "components/utils/FormHeader";
-import TabelaCompleta from "components/forms/posicao_/TabelaCompleta";
-import TabelaSimples from "components/forms/posicao_/TabelaSimples";
-import GraficoPatrimonio from "components/forms/posicao_/GraficoPatrimonio";
+import TabelaCompleta from "components/forms/posicao_custodia/posicao_detalhada/TabelaCompleta";
+import TabelaSimples from "components/forms/posicao_custodia/posicao_detalhada/TabelaSimples";
+import GraficoPatrimonio from "components/forms/posicao_custodia/posicao_detalhada/GraficoPatrimonio";
 import IconeRostoCoberto from "img/rostoCoberto2.svg";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 
-export default class Posicao extends React.Component {
-  componentDidMount() {
-    if (this.props.divkey !== "" && this.props.divkey === "posicao") {
-      document.getElementById("posicao").style.zIndex = this.props.zIndex + 1;
-      this.props.aumentarZindexAction("posicao", this.props.zIndex, true);
-    }
-  }
-
+export default class PosicaoDetalhada extends React.Component {
   render() {
-    return (
-      <DraggableModal
-        id="posicao"
-        renderModalBody={() => this.modalBody(this.props)}
-        renderDivFiltrarOrdens={false}
-        renderHeader={() =>
-          modalHeaderSemBook(this.props, this.props.headerTitle, "border-green")
-        }
-      />
-    );
+    return this.modalBody(this.props);
   }
 
   modalBody = props => {
     return (
-      <div className="bodyPosicao">
+      <div className="bodyPosicao mt-2">
         <Row>
           <Col md={2}>
             <h6>Balanço atual</h6>

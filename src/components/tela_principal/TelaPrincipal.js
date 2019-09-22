@@ -5,8 +5,7 @@ import {
   OrdensExecucaoConectada,
   BarraLateralConectada,
   MultilegConectado,
-  ListaCompletaConectada,
-  PosicaoConectada,
+  PosicaoEmCustodiaConectada,
   RelatorioDetalhadoConectado
 } from "components/redux/ElementosConectadosRedux";
 import BarraTopoTelaPrincipal from "components/tela_principal/BarraTopoTelaPrincipal";
@@ -54,30 +53,6 @@ export default class TelaPrincipal extends React.Component {
                 />
               </Animate>
               <Animate
-                show={this.props.posicaoAberta}
-                duration={100}
-                transitionOnMount
-                stayMounted={false}
-                start={startStyle}
-                onClick={() =>
-                  this.props.aumentarZindexAction(
-                    "posicao",
-                    this.props.zIndex,
-                    this.props.posicaoAberta
-                  )
-                }
-              >
-                <PosicaoConectada
-                  close={() => {
-                    this.props.abrirItemBarraLateralAction(
-                      this.props,
-                      "posicaoAberta"
-                    );
-                  }}
-                  headerTitle="ACOMPANHE SUAS ORDENS"
-                />
-              </Animate>
-              <Animate
                 show={this.props.relatorioDetalhadoAberto}
                 duration={100}
                 transitionOnMount
@@ -109,13 +84,13 @@ export default class TelaPrincipal extends React.Component {
                 start={startStyle}
                 onClick={() =>
                   this.props.aumentarZindexAction(
-                    "lista_completa",
+                    "posicao_custodia",
                     this.props.zIndex,
                     this.props.listaCompletaAberta
                   )
                 }
               >
-                <ListaCompletaConectada
+                <PosicaoEmCustodiaConectada
                   close={() => {
                     this.props.abrirItemBarraLateralAction(
                       this.props,

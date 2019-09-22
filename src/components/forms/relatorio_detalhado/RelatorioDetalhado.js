@@ -20,7 +20,7 @@ import {
   Legend,
   ReferenceLine
 } from "recharts";
-import { data } from "components/forms/posicao_/GraficoPatrimonio";
+import { data } from "components/forms/posicao_custodia/posicao_detalhada/GraficoPatrimonio";
 
 export default class RelatorioDetalhado extends React.Component {
   componentDidMount() {

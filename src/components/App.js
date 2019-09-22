@@ -49,7 +49,7 @@ export default class App extends React.Component {
       this.props.divkey !== "" &&
       this.props.divkey !== "divOrdens" &&
       this.props.divkey !== "ordens_execucao" &&
-      this.props.divkey !== "lista_completa" &&
+      this.props.divkey !== "posicao_custodia" &&
       this.props.divkey !== "multileg"
     )
       document.getElementById(this.props.divkey).style.zIndex =
@@ -63,7 +63,7 @@ export default class App extends React.Component {
       this.props.divkey !== "" &&
       this.props.divkey !== "divOrdens" &&
       this.props.divkey !== "ordens_execucao" &&
-      this.props.divkey !== "lista_completa" &&
+      this.props.divkey !== "posicao_custodia" &&
       this.props.divkey !== "multileg"
     )
       document.getElementById(this.props.divkey).style.zIndex =

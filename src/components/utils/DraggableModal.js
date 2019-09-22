@@ -4,7 +4,6 @@ import ConfigurarStop from "components/forms/compra/compra_StartStop/ConfigurarS
 import ConfigurarStopVenda from "components/forms/venda/venda_StartStop/ConfigurarStopVenda";
 import { connect } from "react-redux";
 import FiltrarOrdens from "components/forms/ordens_em_execucao/FiltrarOrdens"; //posicaoFormCompraVenda
-import DivTopoPosicaoEmCustodia from "components/forms/lista_completa/DivTopoPosicaoEmCustodia";
 import ConfigComplementar from "components/forms/multileg_/ConfigComplementar";
 
 class BSModal extends Component {
@@ -38,16 +37,8 @@ class BSModal extends Component {
           this.props.id === "ordens_execucao" ? (
             <FiltrarOrdens />
           ) : null}
-          {this.props.renderDivPosicaoEmCustodia &&
-          this.props.id === "lista_completa" ? (
-            <DivTopoPosicaoEmCustodia
-              header={this.props.renderHeader(this.resetPosition)}
-            />
-          ) : null}
           <div className="mcontent">
-            {this.props.renderDivPosicaoEmCustodia
-              ? null
-              : this.props.renderHeader(this.resetPosition)}
+            {this.props.renderHeader(this.resetPosition)}
             {this.props.renderModalBody()}
           </div>
           {this.props.renderConfigForm &&
