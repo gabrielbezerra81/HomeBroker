@@ -61,7 +61,7 @@ class FiltrarOrdens extends React.Component {
             </Col>
             <Col md={0}>
               <Button variant="primary" size="sm" className="botaoFiltrar">
-                <h6>Filtrar</h6>
+                <h6>Histórico de operações</h6>
               </Button>
             </Col>
           </Row>

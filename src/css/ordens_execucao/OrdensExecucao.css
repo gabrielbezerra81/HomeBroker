@@ -1,5 +1,5 @@
 #ordens_execucao {
-  width: 1400px;
+  width: 1060px;
   margin-top: 85px;
   margin-left: 5px;
 }
@@ -40,7 +40,7 @@
 }
 
 .divFiltrarOrdens {
-  width: 605px !important;
+  width: 750px !important;
   height: 80px !important;
   position: absolute;
   top: -85px;

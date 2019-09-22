@@ -53,13 +53,11 @@ const modalBody = props => (
             <th>Ativo</th>
             <th>Oferta</th>
             <th>Qtde Oferta</th>
-            <th>Qtde em Aberto</th>
             <th>Qtde Executada</th>
             <th>Qtde Cancelada</th>
             <th>Preço Disparo</th>
             <th>Preço Envio</th>
             <th>Preço Executado</th>
-            <th>Cotação</th>
             <th>Validade</th>
             <th>Roteador</th>
             <th>St</th>
@@ -108,14 +106,6 @@ const modalBody = props => (
                 ))}
               </td>
               <td>
-                {item.qtdeEmAberto.map((item, index5) => (
-                  <span key={index5}>
-                    {item}
-                    <br />
-                  </span>
-                ))}
-              </td>
-              <td>
                 {" "}
                 {item.qtdeExecutada.map((item, index6) => (
                   <span key={index6}>
@@ -149,7 +139,6 @@ const modalBody = props => (
                   </span>
                 ))}
               </td>
-              <td>{item.cotacao}</td>
               <td>{item.validade}</td>
               <td>{item.roteador}</td>
               <td>

@@ -49,7 +49,7 @@ export default class TelaPrincipal extends React.Component {
                       "ordensExecucaoAberto"
                     );
                   }}
-                  headerTitle="ORDENS EM EXECUÇÃO"
+                  headerTitle="HISTÓRICO DE OPERAÇÕES"
                 />
               </Animate>
               <Animate

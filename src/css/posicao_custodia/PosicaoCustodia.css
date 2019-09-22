@@ -1,6 +1,6 @@
 #posicao_custodia {
   margin-left: 5px;
-  width: 985px;
+  width: 1050px;
 }
 
 #posicao_custodia .mcontent {
@@ -127,7 +127,7 @@ th .colunaDividida div {
 .rowListagenItens {
   display: flex;
   flex-wrap: wrap;
-  width: 90%;
+  width: 887px;
   padding-left: 0.5px;
 }
 
