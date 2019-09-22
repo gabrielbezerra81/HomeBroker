@@ -127,7 +127,7 @@ th .colunaDividida div {
 .rowListagenItens {
   display: flex;
   flex-wrap: wrap;
-  width: 89.9%;
+  width: 90%;
   padding-left: 0.5px;
 }
 
