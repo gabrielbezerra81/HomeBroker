@@ -56,7 +56,7 @@ class GraficoCompraStartMovel extends React.Component {
             <Form.Control
               id="CotacaoAtualGrafico_CSM"
               className="inputGrafico"
-              value={this.props.cotacaoAtual}
+              value={this.props.dadosPesquisa.cotacaoAtual}
               onChange={() => false}
             />
             <Form.Control
@@ -163,7 +163,7 @@ const mapStateToProps = state => ({
   gainExec: state.compraStartMovelReducer.gainExec,
   stopDisparo: state.compraStartMovelReducer.stopDisparo,
   stopExec: state.compraStartMovelReducer.stopExec,
-  cotacaoAtual: state.compraStartMovelReducer.cotacaoAtual,
+  dadosPesquisa: state.compraStartMovelReducer.dadosPesquisa,
   inicioDisparo: state.compraStartMovelReducer.inicioDisparo,
   disparoMaisAjuste: state.compraStartMovelReducer.disparoMaisAjuste,
   stopMais1Ajuste: state.compraStartMovelReducer.stopMais1Ajuste,

@@ -20,6 +20,7 @@ import RowFormAssinatura from "components/utils/RowFormAssinatura";
 import { COMPRA_GAINREDUCAO_NAMESPACE } from "constants/ActionTypes";
 import TabelaGainReducao from "./TabelaGainReducao";
 import { compraGainReducaoAction } from "components/redux/actions/SubAppActions";
+import { pesquisarAtivoOnEnterAction } from "components/redux/actions/api_actions/boletasAPIActions";
 
 class FormInternoCompraGainReducao extends React.Component {
   render() {

@@ -53,16 +53,13 @@ class GraficoCompraGainReducao extends React.Component {
               className="inputGrafico TamanhoInputGrafico_GainReducao"
               value={this.props.gain}
               onChange={event =>
-                this.props.mudarGainAction(
-                  event,
-                  COMPRA_GAINREDUCAO_NAMESPACE
-                )
+                this.props.mudarGainAction(event, COMPRA_GAINREDUCAO_NAMESPACE)
               }
             />
             <Form.Control
               id="CotacaoAtualGrafico_CGR"
               className="inputGrafico"
-              value={this.props.cotacaoAtual}
+              value={this.props.dadosPesquisa.cotacaoAtual}
               onChange={() => false}
             />
           </Form>
@@ -78,7 +75,7 @@ class GraficoCompraGainReducao extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  cotacaoAtual: state.compraGainReducao.cotacaoAtual,
+  dadosPesquisa: state.compraGainReducao.dadosPesquisa,
   reducao1: state.compraGainReducao.reducao1,
   reducao2: state.compraGainReducao.reducao2,
   gain: state.compraGainReducao.gain

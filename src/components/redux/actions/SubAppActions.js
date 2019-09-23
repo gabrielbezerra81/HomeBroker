@@ -69,7 +69,7 @@ export const compraMercadoAction = (props, namespace) => {
       let body = {
         ativo: props.ativo,
         qtde: props.qtde,
-        cotacaoAtual: props.cotacaoAtual,
+        cotacaoAtual: props.dadosPesquisa.cotacaoAtual,
         gainDisparo: props.gainDisparo,
         gainExec: props.gainExec,
         stopDisparo: props.stopDisparo,

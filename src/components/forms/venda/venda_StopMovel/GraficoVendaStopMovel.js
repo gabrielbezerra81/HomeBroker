@@ -53,7 +53,7 @@ class GraficoVendaStopMovel extends React.Component {
             <Form.Control
               id="CotacaoAtualGrafico_VSM"
               className="inputGrafico"
-              value={this.props.cotacaoAtual}
+              value={this.props.dadosPesquisa.cotacaoAtual}
               onChange={() => false}
             />
             <Form.Control
@@ -160,7 +160,7 @@ const mapStateToProps = state => ({
   gainExec: state.vendaStopMovel.gainExec,
   stopDisparo: state.vendaStopMovel.stopDisparo,
   stopExec: state.vendaStopMovel.stopExec,
-  cotacaoAtual: state.vendaStopMovel.cotacaoAtual,
+  dadosPesquisa: state.vendaStopMovel.dadosPesquisa,
   inicioDisparo: state.vendaStopMovel.inicioDisparo,
   disparoMaisAjuste: state.vendaStopMovel.disparoMaisAjuste,
   stopMais1Ajuste: state.vendaStopMovel.stopMais1Ajuste,

@@ -31,9 +31,21 @@ import {
   MUDAR_INPUT_CONFIGURAR,
   MUDAR_QTDE
 } from "constants/ActionTypes";
+import { PESQUISAR_ATIVO_BOLETA_API } from "constants/ApiActionTypes";
 
 const INITIAL_STATE = {
-  resultadoAtivo: "PETR4, PETROBRAS",
+  dadosPesquisa: {
+    resultadoAtivo: "",
+    codigoEspecificacao: "",
+    cotacaoAtual: "2",
+    porcentagem: "",
+    ultimoHorario: "",
+    market: ""
+  },
+  //resultadoAtivo: "PETR4, PETROBRAS",
+  //porcentagem: "0.00",
+  //cotacaoAtual: "15.21",
+  //codigoEspecificacao: "",
   ativo: "",
   entradaDisparo: "",
   entradaExec: "",
@@ -42,11 +54,9 @@ const INITIAL_STATE = {
   gainExec: "",
   stopDisparo: "",
   stopExec: "",
-  cotacaoAtual: "15.21",
   validadeSelect: "hoje",
   date: new Date(),
   assinatura: "",
-  porcentagem: "0.00",
   preco: "",
   showConfigStop: true,
   checkSalvarAssinatura: true,
@@ -139,8 +149,10 @@ export default namespace => (state = INITIAL_STATE, action) => {
       return { ...state, tabelaOrdens: action.payload };
     case `${MUDAR_INPUT_CONFIGURAR}${namespace}`:
       return { ...state, [action.name]: formatarNumero(action.payload) };
-    case `a${MUDAR_QTDE}${namespace}`:
+    case `${MUDAR_QTDE}${namespace}`:
       return { ...state, qtde: action.payload.qtde, erro: action.payload.erro };
+    case `${PESQUISAR_ATIVO_BOLETA_API}${namespace}`:
+      return { ...state, dadosPesquisa: action.payload };
     default:
       return state;
   }

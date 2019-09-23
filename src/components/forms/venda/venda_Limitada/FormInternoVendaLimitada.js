@@ -21,6 +21,8 @@ import RowFormAssinatura from "components/utils/RowFormAssinatura";
 import { VENDA_LIMITADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalLimitada } from "components/utils/CalculoValorTotal";
 import { iconeConfigAbrirFormulario } from "components/utils/IconesConfigFormInterno";
+import RowAtivoQtdeBoletas from "components/utils/RowAtivoQtdeBoletas";
+import { pesquisarAtivoOnEnterAction } from "components/redux/actions/api_actions/boletasAPIActions";
 
 class FormInternoVendaLimitada extends React.Component {
   render() {
@@ -28,49 +30,7 @@ class FormInternoVendaLimitada extends React.Component {
       <Col className="colFormInterno">
         <div className="divAsModalContainer">
           <Form>
-            <Row>
-              <Col md={2} className="colLabelInput">
-                <h6 className="labelInput-verticalAlign">Ativo</h6>
-              </Col>
-              <Col className="formAtivo colTextInput">
-                <Form.Group>
-                  <Form.Label />
-                  <Form.Control
-                    className="textInput"
-                    type="text"
-                    placeholder=""
-                    name="ativo"
-                    value={this.props.ativo}
-                    onChange={event =>
-                      this.props.mudarAtivoAction(
-                        event,
-                        VENDA_LIMITADA_NAMESPACE
-                      )
-                    }
-                  />
-                </Form.Group>
-              </Col>
-
-              <Col className="colTextInput">
-                <Form.Group>
-                  <Form.Label>Qtde</Form.Label>
-                  <Form.Control
-                    className="textInput"
-                    type="number"
-                    step={100}
-                    min={0}
-                    value={this.props.qtde}
-                    onChange={event =>
-                      this.props.mudarQtdAction(event, VENDA_LIMITADA_NAMESPACE)
-                    }
-                    onBlur={() =>
-                      this.props.mostrarErroQtdeOnBlurAction(this.props.erro)
-                    }
-                    name="qtde"
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
+            {RowAtivoQtdeBoletas(this.props, VENDA_LIMITADA_NAMESPACE)}
 
             <Row>
               <Col md={2} className="colLabelInput">
@@ -259,6 +219,7 @@ export default connect(
     mudarAssinaturaAction,
     mudarPrecoAction,
     mudarCheckSalvarAssinaturaAction,
-    mostrarErroQtdeOnBlurAction
+    mostrarErroQtdeOnBlurAction,
+    pesquisarAtivoOnEnterAction
   }
 )(FormInternoVendaLimitada);

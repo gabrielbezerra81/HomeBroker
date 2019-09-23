@@ -1,3 +1,5 @@
+import { formatarNumDecimal } from "components/utils/Formatacoes";
+
 export const CalculoValorTotalAgendada = (disparo, execucao, qtde) => {
   let total = qtde * execucao;
   let stringValorTotal = "";
@@ -6,11 +8,11 @@ export const CalculoValorTotalAgendada = (disparo, execucao, qtde) => {
     if (execucao === "" && disparo !== "") {
       total = qtde * disparo;
       stringValorTotal = "VALOR APROXIMADO: R$ ";
-      return stringValorTotal + Number(total).toFixed(2);
+      return stringValorTotal + formatarNumDecimal(total);
     }
     if (execucao !== "") {
       stringValorTotal = "VALOR TOTAL: R$ ";
-      return stringValorTotal + Number(total).toFixed(2);
+      return stringValorTotal + formatarNumDecimal(total);
     }
   }
 
@@ -24,20 +26,19 @@ export const CalculoValorTotalLimitada = (preco, qtde) => {
     }
     let total = qtde * Number(preco);
 
-    return "VALOR TOTAL: R$ " + Number(total).toFixed(2);
+    return "VALOR TOTAL: R$ " + formatarNumDecimal(total);
   }
 
   return "";
 };
 
-export const CalculoValorAproximadoMercado = (qtde, cotacaoAtual) => {
-  if (cotacaoAtual !== "" && qtde !== "") {
-    while (cotacaoAtual.search(",") !== -1) {
-      cotacaoAtual = cotacaoAtual.replace(",", ".");
-    }
+export const CalculoValorAproximadoMercado = (qtde, dadosPesquisa) => {
+  if (dadosPesquisa && qtde !== "") {
+    let { cotacaoAtual } = dadosPesquisa;
+
     const total = qtde * Number(cotacaoAtual);
 
-    return "VALOR ESTIMADO: R$" + Number(total).toFixed(2);
+    return "VALOR ESTIMADO: R$ " + formatarNumDecimal(total);
   }
 
   return "";

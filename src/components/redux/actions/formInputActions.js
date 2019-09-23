@@ -364,7 +364,7 @@ export const mudarQtdAction = (event, namespace) => {
       erro = VALIDACAO_QTDE;
     }
     dispatch({
-      type: `a${MUDAR_QTDE}${namespace}`,
+      type: `${MUDAR_QTDE}${namespace}`,
       payload: { qtde: event.target.value, erro: erro }
     });
   };

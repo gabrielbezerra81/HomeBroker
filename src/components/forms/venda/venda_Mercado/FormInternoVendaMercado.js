@@ -20,6 +20,8 @@ import RowFormAssinatura from "components/utils/RowFormAssinatura";
 import { VENDA_MERCADO_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorAproximadoMercado } from "components/utils/CalculoValorTotal";
 import { iconeConfigAbrirFormulario } from "components/utils/IconesConfigFormInterno";
+import RowAtivoQtdeBoletas from "components/utils/RowAtivoQtdeBoletas";
+import { pesquisarAtivoOnEnterAction } from "components/redux/actions/api_actions/boletasAPIActions";
 
 class FormInternoVendaMercado extends React.Component {
   render() {
@@ -27,49 +29,7 @@ class FormInternoVendaMercado extends React.Component {
       <Col className="colFormInterno">
         <div className="divAsModalContainer">
           <Form>
-            <Row>
-              <Col md={2} className="colLabelInput">
-                <h6 className="labelInput-verticalAlign">Ativo</h6>
-              </Col>
-              <Col className="formAtivo colTextInput">
-                <Form.Group>
-                  <Form.Label />
-                  <Form.Control
-                    className="textInput"
-                    type="text"
-                    placeholder=""
-                    name="ativo"
-                    value={this.props.ativo}
-                    onChange={event =>
-                      this.props.mudarAtivoAction(
-                        event,
-                        VENDA_MERCADO_NAMESPACE
-                      )
-                    }
-                  />
-                </Form.Group>
-              </Col>
-
-              <Col className="colTextInput">
-                <Form.Group>
-                  <Form.Label>Qtde</Form.Label>
-                  <Form.Control
-                    className="textInput"
-                    type="number"
-                    step={100}
-                    min={0}
-                    value={this.props.qtde}
-                    onChange={event =>
-                      this.props.mudarQtdAction(event, VENDA_MERCADO_NAMESPACE)
-                    }
-                    onBlur={() =>
-                      this.props.mostrarErroQtdeOnBlurAction(this.props.erro)
-                    }
-                    name="qtde"
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
+            {RowAtivoQtdeBoletas(this.props, VENDA_MERCADO_NAMESPACE)}
           </Form>
 
           <Row>
@@ -77,7 +37,7 @@ class FormInternoVendaMercado extends React.Component {
               <h6 className="valorTotalText">
                 {CalculoValorAproximadoMercado(
                   this.props.qtde,
-                  this.props.cotacaoAtual
+                  this.props.dadosPesquisa
                 )}
               </h6>
             </Col>
@@ -222,7 +182,7 @@ const mapStateToProps = state => ({
   valorTotal: state.vendaMercadoReducer.valorTotal,
   assinatura: state.vendaMercadoReducer.assinatura,
   checkSalvarAssinatura: state.vendaMercadoReducer.checkSalvarAssinatura,
-  cotacaoAtual: state.vendaMercadoReducer.cotacaoAtual
+  dadosPesquisa: state.vendaMercadoReducer.dadosPesquisa
 });
 
 export default connect(
@@ -239,6 +199,7 @@ export default connect(
     mudarAtivoAction,
     mudarAssinaturaAction,
     mudarCheckSalvarAssinaturaAction,
-    mostrarErroQtdeOnBlurAction
+    mostrarErroQtdeOnBlurAction,
+    pesquisarAtivoOnEnterAction
   }
 )(FormInternoVendaMercado);

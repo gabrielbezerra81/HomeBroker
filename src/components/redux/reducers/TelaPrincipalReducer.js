@@ -14,7 +14,7 @@ const INITIAL_STATE = {
   ordensAberto: false,
   ordensExecucaoAberto: false,
   relatorioDetalhadoAberto: false,
-  listaCompletaAberta: true,
+  listaCompletaAberta: false,
   multilegAberto: false
 };
 

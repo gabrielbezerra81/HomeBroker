@@ -8,7 +8,9 @@ class BodyHeaderVendaStopMovel extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  dadosPesquisa: state.vendaStopMovel.dadosPesquisa
+});
 
 export default connect(
   mapStateToProps,

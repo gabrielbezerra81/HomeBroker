@@ -9,8 +9,7 @@ class BodyHeaderVendaGainReducao extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  porcentagem: state.vendaGainReducao.porcentagem,
-  cotacaoAtual: state.vendaGainReducao.cotacaoAtual
+  dadosPesquisa: state.vendaGainReducao.dadosPesquisa
 });
 
 export default connect(

@@ -23,7 +23,7 @@
 
 .mbody {
   padding: 0.5rem;
-  height: 369.36px !important;
+  min-height: 325.36px !important;
   align-items: flex-end;
   display: grid;
 }

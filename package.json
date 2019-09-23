@@ -33,7 +33,8 @@
     "react-switch": "^5.0.0",
     "recharts": "^1.7.1",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "superagent": "^5.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
