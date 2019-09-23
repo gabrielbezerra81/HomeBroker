@@ -31,6 +31,7 @@ import PosicaoDetalhada from "components/forms/posicao_custodia/posicao_detalhad
 import RelatorioDetalhado from "components/forms/relatorio_detalhado/RelatorioDetalhado";
 import MultilegReducer from "components/redux/reducers/menu_reducer/MultilegReducer";
 import PosicaoReducer from "components/redux/reducers/menu_reducer/PosicaoReducer";
+import OrdensExecucaoReducer from "components/redux/reducers/menu_reducer/OrdensExecReducer";
 import { selecionarAdicionarAbaAction } from "components/redux/actions/menu_actions/MultilegActions";
 import { mudarVariavelPosicaoAction } from "components/redux/actions/menu_actions/PosicaoActions";
 
@@ -46,7 +47,8 @@ const combinedReducers = combineReducers({
 const combinedAppPrincipal = combineReducers({
   telaPrincipalReducer: TelaPrincipalReducer,
   multilegReducer: MultilegReducer,
-  posicaoReducer: PosicaoReducer
+  posicaoReducer: PosicaoReducer,
+  ordensExecReducer: OrdensExecucaoReducer
 });
 
 //Usada apenas para gerenciar os estados de mostrar ou não os formulários
@@ -87,7 +89,6 @@ const mapStateToPropsLocal = state => ({});
 const mapStateToPropsAppPrincipal = state => ({
   ordensAberto: state.telaPrincipalReducer.ordensAberto,
   ordensExecucaoAberto: state.telaPrincipalReducer.ordensExecucaoAberto,
-  posicaoAberta: state.telaPrincipalReducer.posicaoAberta,
   relatorioDetalhadoAberto: state.telaPrincipalReducer.relatorioDetalhadoAberto,
   listaCompletaAberta: state.telaPrincipalReducer.listaCompletaAberta,
   multilegAberto: state.telaPrincipalReducer.multilegAberto
@@ -101,7 +102,14 @@ const mapStateToPropsMultileg = state => ({
 
 const mapStateToPropsPosicao = state => ({
   ordenacao: state.posicaoReducer.ordenacao,
-  tipoVisualizacao: state.posicaoReducer.tipoVisualizacao
+  tipoVisualizacao: state.posicaoReducer.tipoVisualizacao,
+  ativoPesquisa: state.posicaoReducer.ativoPesquisa,
+  inputSelect: state.posicaoReducer.inputSelect
+});
+
+const mapStateToPropsOrdensExec = state => ({
+  tabelaOrdensExecucao: state.ordensExecReducer.tabelaOrdensExecucao,
+  ativo: state.ordensExecReducer.ativo
 });
 
 export const MainAppConectado = compose(
@@ -170,11 +178,17 @@ const TelaPrincipalConectada = compose(
   )
 )(TelaPrincipal);
 
-export const OrdensExecucaoConectada = connect(
-  mapStateToPropsGlobalStore,
-  { aumentarZindexAction },
-  null,
-  { context: GlobalContext }
+export const OrdensExecucaoConectada = compose(
+  connect(
+    mapStateToPropsGlobalStore,
+    { aumentarZindexAction },
+    null,
+    { context: GlobalContext }
+  ),
+  connect(
+    mapStateToPropsOrdensExec,
+    {}
+  )
 )(OrdensExecucao);
 
 export const BarraLateralConectada = compose(

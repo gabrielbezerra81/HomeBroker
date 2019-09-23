@@ -113,6 +113,12 @@ th .colunaDividida div {
   height: 30px;
 }
 
+.formPosicao:focus {
+  background-color: #444;
+  border-color: #444;
+  color: var(--cor-texto);
+}
+
 .divIconeConfigOrdernar {
   display: flex;
   justify-content: center;

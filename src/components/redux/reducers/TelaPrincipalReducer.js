@@ -13,16 +13,9 @@ const INITIAL_STATE = {
   ativo: "Bender",
   ordensAberto: false,
   ordensExecucaoAberto: false,
-  posicaoAberta: false,
   relatorioDetalhadoAberto: false,
   listaCompletaAberta: true,
-  multilegAberto: false,
-  ativoFiltrarOrdens: "",
-  mercadoFiltrarOrdens: "",
-  contaFiltrarOrdens: "",
-  statusFiltrarOrdens: "",
-  dataFiltrarOrdens: "",
-  ofertaFiltrarOrdens: ""
+  multilegAberto: false
 };
 
 export default (state = INITIAL_STATE, action) => {

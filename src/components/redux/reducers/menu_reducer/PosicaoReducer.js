@@ -2,7 +2,9 @@ import { MUDAR_VARIAVEL_POSICAO_CUSTODIA } from "constants/MenuActionTypes";
 
 const INITIAL_STATE = {
   ordenacao: "",
-  tipoVisualizacao: "ampliado"
+  tipoVisualizacao: "ampliado",
+  ativoPesquisa: "PESQUISAR",
+  inputSelect: ""
 };
 
 export default (state = INITIAL_STATE, action) => {

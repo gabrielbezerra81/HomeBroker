@@ -63,8 +63,13 @@ export default class PosicaoEmCustodia extends React.Component {
               <Form.Control
                 className="inputAtivo"
                 type="text"
-                value="PESQUISAR"
-                onChange={() => false}
+                value={this.props.ativoPesquisa}
+                onChange={event =>
+                  this.props.mudarVariavelPosicaoAction(
+                    "ativoPesquisa",
+                    event.currentTarget.value
+                  )
+                }
               />
               <InputGroup.Append className="inputAtivoAppend">
                 <span className="input-group-text iconeProcurar divClicavel">
@@ -75,7 +80,18 @@ export default class PosicaoEmCustodia extends React.Component {
           </Col>
           <Col>
             <Form.Group>
-              <Form.Control as="select" className="textInput formPosicao">
+              <Form.Control
+                as="select"
+                className="textInput formPosicao"
+                value={this.props.inputSelect}
+                onChange={event =>
+                  this.props.mudarVariavelPosicaoAction(
+                    "inputSelect",
+                    event.currentTarget.value
+                  )
+                }
+              >
+                <option value="posicao">Posição</option>
                 <option value="posicao">Posição</option>
               </Form.Control>
             </Form.Group>
