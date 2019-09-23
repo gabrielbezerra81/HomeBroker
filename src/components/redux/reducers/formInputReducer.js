@@ -37,15 +37,11 @@ const INITIAL_STATE = {
   dadosPesquisa: {
     resultadoAtivo: "",
     codigoEspecificacao: "",
-    cotacaoAtual: "2",
+    cotacaoAtual: "",
     porcentagem: "",
     ultimoHorario: "",
     market: ""
   },
-  //resultadoAtivo: "PETR4, PETROBRAS",
-  //porcentagem: "0.00",
-  //cotacaoAtual: "15.21",
-  //codigoEspecificacao: "",
   ativo: "",
   entradaDisparo: "",
   entradaExec: "",

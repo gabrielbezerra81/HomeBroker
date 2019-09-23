@@ -34,7 +34,39 @@ export const BodyHeaderCompleto = ({ props }) => {
         </Row>
       );
     } else if (dadosPesquisa.market === "tipo2") {
-      return null;
+      return (
+        <Row className="rowBodyHeader">
+          <Col className="colAtivo1BodyHeader">
+            <h5>{props.dadosPesquisa.resultadoAtivo}</h5>
+          </Col>
+          <Col className="colAtivo2BodyHeader">
+            <h5>{props.dadosPesquisa.strike}</h5>
+          </Col>
+          <Col className="colAtivo2BodyHeader">
+            <h5>{props.dadosPesquisa.tipo}</h5>
+          </Col>
+          <Col className="colAtivo2BodyHeader">
+            <h5>{props.dadosPesquisa.model}</h5>
+          </Col>
+          <Col className="colAtivo2BodyHeader">
+            <h5>{props.dadosPesquisa.endBusiness}</h5>
+          </Col>
+          <Col className="colValorBodyHeader">
+            <h5>{formatarNumDecimal(props.dadosPesquisa.cotacaoAtual)}</h5>
+          </Col>
+          <Col className="colIconeSetaBodyHeader">
+            {renderSeta(props.dadosPesquisa.porcentagem)}
+          </Col>
+          <Col className="colPorcentagemBodyHeader">
+            {renderValorPorcentagem(props.dadosPesquisa.porcentagem)}
+          </Col>
+          <Col className="colDataBodyHeader">
+            <span className="dataBodyHeader">
+              {props.dadosPesquisa.ultimoHorario}
+            </span>
+          </Col>
+        </Row>
+      );
     } else return null;
   } else return null;
 };
