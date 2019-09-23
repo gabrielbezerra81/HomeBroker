@@ -23,9 +23,9 @@ export const BodyHeaderCompleto = ({ props }) => {
           <Col md={1} className="colIconeSetaBodyHeader">
             {renderSeta(props.dadosPesquisa.porcentagem)}
           </Col>
-          <Col md={1} className="colPorcentagemBodyHeader">
-            {renderValorPorcentagem(props.dadosPesquisa.porcentagem)}
-          </Col>
+
+          {renderValorPorcentagem(props.dadosPesquisa.porcentagem)}
+
           <Col md={2} className="colDataBodyHeader">
             <span className="dataBodyHeader">
               {props.dadosPesquisa.ultimoHorario}
@@ -36,35 +36,35 @@ export const BodyHeaderCompleto = ({ props }) => {
     } else if (dadosPesquisa.market === "tipo2") {
       return (
         <Row className="rowBodyHeader">
-          <Col className="colAtivo1BodyHeader">
+          <div className="colAtivo1BodyHeader">
             <h5>{props.dadosPesquisa.resultadoAtivo}</h5>
-          </Col>
-          <Col className="colAtivo2BodyHeader">
+          </div>
+          <div className="colAtivo2BodyHeader">
             <h5>{props.dadosPesquisa.strike}</h5>
-          </Col>
-          <Col className="colAtivo2BodyHeader">
+          </div>
+          <div className="colAtivo2BodyHeader">
             <h5>{props.dadosPesquisa.tipo}</h5>
-          </Col>
-          <Col className="colAtivo2BodyHeader">
+          </div>
+          <div className="colAtivo2BodyHeader">
             <h5>{props.dadosPesquisa.model}</h5>
-          </Col>
-          <Col className="colAtivo2BodyHeader">
+          </div>
+          <div className="colAtivo2BodyHeader">
             <h5>{props.dadosPesquisa.endBusiness}</h5>
-          </Col>
-          <Col className="colValorBodyHeader">
+          </div>
+          <div className="colValorBodyHeader">
             <h5>{formatarNumDecimal(props.dadosPesquisa.cotacaoAtual)}</h5>
-          </Col>
-          <Col className="colIconeSetaBodyHeader">
-            {renderSeta(props.dadosPesquisa.porcentagem)}
-          </Col>
-          <Col className="colPorcentagemBodyHeader">
+          </div>
+
+          {renderSeta(props.dadosPesquisa.porcentagem)}
+
+          <div className="colPorcentagemBodyHeader">
             {renderValorPorcentagem(props.dadosPesquisa.porcentagem)}
-          </Col>
-          <Col className="colDataBodyHeader">
+          </div>
+          <div className="colDataBodyHeader">
             <span className="dataBodyHeader">
               {props.dadosPesquisa.ultimoHorario}
             </span>
-          </Col>
+          </div>
         </Row>
       );
     } else return null;
@@ -87,9 +87,17 @@ export const BodyHeaderAtivo = ({ props }) => {
 };
 
 const renderSeta = valor => {
-  if (valor > 0) return <ArrowUp fill="#138342" className="iconeSeta" />;
-  else if (valor < 0) return <ArrowDown fill="red" className="iconeSeta" />;
+  let seta;
+
+  if (valor > 0) seta = <ArrowUp fill="#138342" className="iconeSeta" />;
+  else if (valor < 0) seta = <ArrowDown fill="red" className="iconeSeta" />;
   else return null;
+
+  return (
+    <Col md={1} className="colIconeSetaBodyHeader">
+      {seta}
+    </Col>
+  );
 };
 
 const renderValorPorcentagem = porcentagem => {

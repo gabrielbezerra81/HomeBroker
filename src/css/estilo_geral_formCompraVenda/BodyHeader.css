@@ -1,12 +1,13 @@
 .rowBodyHeader {
   text-align: center;
-  justify-content: center;
+  justify-content: space-evenly;
+  padding: 0 1rem;
 }
 
 .rowBodyHeaderCompraStartMovel {
   text-align: center;
   justify-content: flex-start;
-  padding-left: 1.5rem
+  padding-left: 1.5rem;
 }
 
 .rowBodyHeader h5 {
