@@ -29,7 +29,7 @@ export const pesquisarAtivoAPI = codigo => {
           strike: body.stock.strike,
           tipo: body.stock.type,
           model: body.stock.model,
-          endBusiness: new Date(body.stock.endBusiness).toLocaleDateString(),
+          vencimento: new Date(body.stock.endBusiness).toLocaleDateString(),
           symbol: body.stock.referenceStock.symbol,
           cotacaoAtual: body.ultimo,
           porcentagem: oscilacao,

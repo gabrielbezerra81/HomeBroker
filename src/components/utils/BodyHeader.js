@@ -38,35 +38,35 @@ export const BodyHeaderCompleto = ({ props }) => {
     } else if (dadosPesquisa.market === "tipo2") {
       return (
         <Row className="rowBodyHeader">
-          <div className="colAtivo1BodyHeader">
+          <Col md={0} className=" ml-3 mr-2">
             <h5>{props.dadosPesquisa.resultadoAtivo}</h5>
-          </div>
-          <div className="colAtivo2BodyHeader">
-            <h5>{props.dadosPesquisa.strike}</h5>
-          </div>
-          <div className="colAtivo2BodyHeader">
+          </Col>
+          <Col md={0} className="colStrikeVencimento mr-5">
+            <h5>({props.dadosPesquisa.strike})</h5>
+          </Col>
+          <Col md={0}>
             <h5>{props.dadosPesquisa.tipo}</h5>
-          </div>
-          <div className="colModeloBodyHeader">
+          </Col>
+          <Col md={0} className="colModeloBodyHeader">
             {renderModelo(props.dadosPesquisa.model)}
-          </div>
-          <div className="colAtivo2BodyHeader">
-            <h5>{props.dadosPesquisa.endBusiness}</h5>
-          </div>
-          <div className="colValorBodyHeader">
+          </Col>
+          <Col md={0} className="colStrikeVencimento">
+            <h5>({props.dadosPesquisa.vencimento})</h5>
+          </Col>
+          <Col className="colValorBodyHeader">
             <h5>{formatarNumDecimal(props.dadosPesquisa.cotacaoAtual)}</h5>
-          </div>
+          </Col>
 
           {renderSeta(props.dadosPesquisa.porcentagem)}
 
-          <div className="colPorcentagemBodyHeader">
+          <Col className="colPorcentagemBodyHeader">
             {renderValorPorcentagem(props.dadosPesquisa.porcentagem)}
-          </div>
-          <div className="colDataBodyHeader">
+          </Col>
+          <Col className="colDataBodyHeader">
             <h5 className="dataBodyHeader">
               {props.dadosPesquisa.ultimoHorario}
             </h5>
-          </div>
+          </Col>
         </Row>
       );
     } else return null;

@@ -93,3 +93,8 @@
 .colModeloBodyHeader img {
   vertical-align: unset;
 }
+
+.colStrikeVencimento h5 {
+  font-family: Calibri;
+  font-size: 10pt;
+}

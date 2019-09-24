@@ -35,12 +35,16 @@ import { PESQUISAR_ATIVO_BOLETA_API } from "constants/ApiActionTypes";
 
 const INITIAL_STATE = {
   dadosPesquisa: {
-    resultadoAtivo: "",
-    codigoEspecificacao: "",
-    cotacaoAtual: "",
-    porcentagem: "",
-    ultimoHorario: "",
-    market: ""
+    resultadoAtivo: "PETRG20",
+    strike: 19.02,
+    tipo: "CALL",
+    model: "AMERICAN",
+    vencimento: "19/07/2020",
+    cotacaoAtual: 9.27,
+    porcentagem: "0,00",
+    ultimoHorario: "15:26:53",
+    qtdeMultiplo100: true,
+    market: "tipo2"
   },
   ativo: "",
   entradaDisparo: "",
