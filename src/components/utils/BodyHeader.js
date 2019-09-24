@@ -1,9 +1,11 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
-import { ReactComponent as ArrowDown } from "../../img/down-arrow.svg";
-import { ReactComponent as ArrowUp } from "../../img/up-arrow.svg";
+import { ReactComponent as ArrowDown } from "img/down-arrow.svg";
+import { ReactComponent as ArrowUp } from "img/up-arrow.svg";
 import Clock from "./Clock";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
+import imgModeloEU from "img/modeloEU.png";
+import imgModeloUSA from "img/modeloUSA2.svg";
 
 export const BodyHeaderCompleto = ({ props }) => {
   if (props.dadosPesquisa) {
@@ -20,16 +22,16 @@ export const BodyHeaderCompleto = ({ props }) => {
           <Col md={1} className="colValorBodyHeader">
             <h5>{formatarNumDecimal(props.dadosPesquisa.cotacaoAtual)}</h5>
           </Col>
-          <Col md={1} className="colIconeSetaBodyHeader">
-            {renderSeta(props.dadosPesquisa.porcentagem)}
+
+          {renderSeta(props.dadosPesquisa.porcentagem)}
+
+          <Col className="colPorcentagemBodyHeader">
+            {renderValorPorcentagem(props.dadosPesquisa.porcentagem)}
           </Col>
-
-          {renderValorPorcentagem(props.dadosPesquisa.porcentagem)}
-
           <Col md={2} className="colDataBodyHeader">
-            <span className="dataBodyHeader">
+            <h5 className="dataBodyHeader">
               {props.dadosPesquisa.ultimoHorario}
-            </span>
+            </h5>
           </Col>
         </Row>
       );
@@ -45,8 +47,8 @@ export const BodyHeaderCompleto = ({ props }) => {
           <div className="colAtivo2BodyHeader">
             <h5>{props.dadosPesquisa.tipo}</h5>
           </div>
-          <div className="colAtivo2BodyHeader">
-            <h5>{props.dadosPesquisa.model}</h5>
+          <div className="colModeloBodyHeader">
+            {renderModelo(props.dadosPesquisa.model)}
           </div>
           <div className="colAtivo2BodyHeader">
             <h5>{props.dadosPesquisa.endBusiness}</h5>
@@ -61,9 +63,9 @@ export const BodyHeaderCompleto = ({ props }) => {
             {renderValorPorcentagem(props.dadosPesquisa.porcentagem)}
           </div>
           <div className="colDataBodyHeader">
-            <span className="dataBodyHeader">
+            <h5 className="dataBodyHeader">
               {props.dadosPesquisa.ultimoHorario}
-            </span>
+            </h5>
           </div>
         </Row>
       );
@@ -106,4 +108,16 @@ const renderValorPorcentagem = porcentagem => {
   } else if (porcentagem < 0) {
     return <h5 className="porcentagemNegativa">{porcentagem}%</h5>;
   } else return <h5>+{porcentagem}%</h5>;
+};
+
+const renderModelo = modelo => {
+  return (
+    <div>
+      {modelo === "EUROPEAN" ? (
+        <img src={imgModeloEU} alt="" className="imgModelo" />
+      ) : (
+        <img src={imgModeloUSA} alt="" className="imgModelo" />
+      )}
+    </div>
+  );
 };

@@ -2,6 +2,7 @@
   text-align: center;
   justify-content: space-evenly;
   padding: 0 1rem;
+  align-items: center;
 }
 
 .rowBodyHeaderCompraStartMovel {
@@ -11,11 +12,11 @@
 }
 
 .rowBodyHeader h5 {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 
 .rowBodyHeaderCompraStartMovel h5 {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 
 .colAtivo1BodyHeader {
@@ -29,6 +30,10 @@
 
 .colValorBodyHeader {
   padding-right: 0;
+}
+
+.colValorBodyHeader h5 {
+  font-size: 1.05rem;
 }
 
 .colIconeSetaBodyHeader {
@@ -83,4 +88,8 @@
 .react-switch-bg {
   height: 21px !important;
   width: 49px !important;
+}
+
+.colModeloBodyHeader img {
+  vertical-align: unset;
 }
