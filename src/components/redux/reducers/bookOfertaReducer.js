@@ -6,6 +6,7 @@ import {
   LIMPAR_FORMS
 } from "constants/ActionTypes";
 import { formatarNumero } from "./formInputReducer";
+import { LISTAR_BOOK_OFERTAS } from "constants/ApiActionTypes";
 
 const INITIAL_STATE = {
   qtde: "",
@@ -13,42 +14,8 @@ const INITIAL_STATE = {
   stopLoss: 0,
   gain: 0,
   inputHeader: "",
-  tabelaOfertasCompra: [
-    {
-      qtde: 9800,
-      valor: 26.7
-    },
-    {
-      qtde: 1000,
-      valor: 26.68
-    },
-    {
-      qtde: 10900,
-      valor: 26.66
-    },
-    {
-      qtde: 1000,
-      valor: 26.68
-    }
-  ],
-  tabelaOfertasVenda: [
-    {
-      qtde: 43300,
-      valor: 26.75
-    },
-    {
-      qtde: 9800,
-      valor: 26.74
-    },
-    {
-      qtde: 1000,
-      valor: 26.73
-    },
-    {
-      qtde: 10900,
-      valor: 26.72
-    }
-  ]
+  tabelaOfertasCompra: [],
+  tabelaOfertasVenda: []
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -63,6 +30,12 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, inputHeader: action.payload };
     case LIMPAR_FORMS:
       return { ...state, qtde: "" };
+    case LISTAR_BOOK_OFERTAS:
+      return {
+        ...state,
+        tabelaOfertasCompra: action.payload.tabelaOfertasCompra,
+        tabelaOfertasVenda: action.payload.tabelaOfertasVenda
+      };
     default:
       return state;
   }

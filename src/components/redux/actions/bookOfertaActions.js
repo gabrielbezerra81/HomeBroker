@@ -57,15 +57,6 @@ export const mudarGainAction = event => {
   };
 };
 
-export const onEnterInputHeader = () => {
-  return dispatch => {
-    dispatch({
-      type: "teste",
-      payload: "testando"
-    });
-  };
-};
-
 export const mudarInputHeaderAction = event => {
   return dispatch => {
     dispatch({

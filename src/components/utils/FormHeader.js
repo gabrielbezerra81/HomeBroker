@@ -47,19 +47,18 @@ export const bookHeader = (props, headerClass, resetPosition) => (
   <div className={`${headerClass} handle mheader`}>
     <Row>
       <Col md={10} className="colInputHeader">
-        <Form>
-          <Form.Control
-            type="text"
-            placeholder=""
-            className="inputHeader"
-            value={props.inputHeader}
-            onChange={event => props.mudarInputHeaderAction(event)}
-            onKeyPress={event => {
-              //event.preventDefault();
-              if (event.key === "Enter") props.onEnterInputHeader();
-            }}
-          />
-        </Form>
+        <Form.Control
+          type="text"
+          placeholder=""
+          className="inputHeader"
+          value={props.inputHeader}
+          onChange={event => props.mudarInputHeaderAction(event)}
+          onKeyPress={event => {
+            //event.preventDefault();
+            if (event.key === "Enter")
+              props.listarBookOfertaOnEnterAction(event.target.value);
+          }}
+        />
       </Col>
       <Col md={2} className="wrapperIconesHeader">
         <Button

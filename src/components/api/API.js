@@ -2,7 +2,8 @@ import request from "superagent";
 import {
   cors_anywhere,
   url_base,
-  url_pesquisarAtivoBoletas_codigo
+  url_pesquisarAtivoBoletas_codigo,
+  url_listarBookOfertas_codigo
 } from "components/api/url";
 
 export const pesquisarAtivoAPI = codigo => {
@@ -53,4 +54,29 @@ export const pesquisarAtivoAPI = codigo => {
     .catch(erro => {
       console.log(erro);
     });
+};
+
+export const listarBookOfertaAPI = codigo_ativo => {
+  return request
+    .get(cors_anywhere + url_base + url_listarBookOfertas_codigo + codigo_ativo)
+    .then(response => {
+      const { body } = response;
+      let tabelas = {
+        tabelaOfertasCompra: [],
+        tabelaOfertasVenda: []
+      };
+
+      body.bookOffers.forEach(item => {
+        if (item.type === "V") {
+          tabelas.tabelaOfertasVenda.push(item);
+        } else if (item.type === "C") {
+          tabelas.tabelaOfertasCompra.push(item);
+        }
+      });
+      tabelas.tabelaOfertasCompra.sort((a, b) => b.price - a.price);
+      tabelas.tabelaOfertasVenda.sort((a, b) => b.price - a.price);
+
+      return tabelas;
+    })
+    .catch(erro => console.log(erro));
 };

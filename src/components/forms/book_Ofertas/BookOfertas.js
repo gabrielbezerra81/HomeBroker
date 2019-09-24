@@ -5,13 +5,13 @@ import {
   mudarQtdAction,
   mudarStopLossAction,
   mudarGainAction,
-  onEnterInputHeader,
-  mostrarErroQtdeOnBlurAction,
-  mudarInputHeaderAction
+  mudarInputHeaderAction,
+  mostrarErroQtdeOnBlurAction
 } from "components/redux/actions/bookOfertaActions";
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import TabelaOfertas from "./TabelaOfertas";
 import { bookHeader } from "components/utils/FormHeader";
+import { listarBookOfertaOnEnterAction } from "components/redux/actions/api_actions/bookOfertaAPIActions";
 
 class BookOfertas extends React.Component {
   render() {
@@ -20,7 +20,9 @@ class BookOfertas extends React.Component {
         id="bookofertas"
         renderModalBody={() => modalBody(this.props)}
         headerClass="no-border"
-        renderHeader={(resetPosition) => bookHeader(this.props, "no-border",resetPosition)}
+        renderHeader={resetPosition =>
+          bookHeader(this.props, "no-border", resetPosition)
+        }
         closeButton={false}
       />
     );
@@ -111,8 +113,8 @@ export default connect(
     mudarQtdAction,
     mudarStopLossAction,
     mudarGainAction,
-    onEnterInputHeader,
+    mudarInputHeaderAction,
     mostrarErroQtdeOnBlurAction,
-    mudarInputHeaderAction
+    listarBookOfertaOnEnterAction
   }
 )(BookOfertas);

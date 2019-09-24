@@ -1,13 +1,14 @@
 import React from "react";
 import OperationIcon from "./OperationIcon";
 import { Table } from "react-bootstrap";
+import { formatarNumDecimal } from "components/utils/Formatacoes";
 
 class TabelaOfertas extends React.Component {
   renderItems(data, tipo) {
     return data.map((item, index) => (
       <tr className={tipo} key={index}>
-        <td>{item.qtde}</td>
-        <td>{item.valor}</td>
+        <td>{item.qtty}</td>
+        <td>{formatarNumDecimal(item.price)}</td>
         <td>
           <OperationIcon />
         </td>
