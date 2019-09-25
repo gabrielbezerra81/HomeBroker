@@ -1,5 +1,3 @@
-import { cloneDeep } from "lodash";
-
 const tiposOrdensTrigger = ["Compra Start Stop", "Venda Start Stop"];
 
 export const montaOrdemPrincipal = props => {
@@ -25,19 +23,36 @@ export const montaOrdemPrincipal = props => {
 
   //StartStop pode ter 2 ordens principais e até 4 ordens next
   if (tiposOrdensTrigger.includes(ordem.nome)) {
-    if (gainDisparo) json.offers.push(montaOfertaPrincipal(props, "start"));
-    if (stopDisparo) json.offers.push(montaOfertaPrincipal(props, "stop"));
+    montaOfertaPrincipal(props, "start", json);
+    montaOfertaPrincipal(props, "stop", json);
+    const {
+      gainDisparoConfig1,
+      gainExecConfig1,
+      stopDisparoConfig1,
+      stopExecConfig1,
+      gainDisparoConfig2,
+      gainExecConfig2,
+      stopDisparoConfig2,
+      stopExecConfig2
+    } = props;
+
+    montaOfertaNext(props, gainDisparoConfig1, gainExecConfig1, "gain", json);
+    montaOfertaNext(props, stopDisparoConfig1, stopExecConfig1, "stop", json);
+    montaOfertaNext(props, gainDisparoConfig2, gainExecConfig2, "gain", json);
+    montaOfertaNext(props, stopDisparoConfig2, stopExecConfig2, "stop", json);
   }
   //Demais ordens Limitada, A Mercado e Agendada com apenas 1 ordem principal e 2 ordens next
   else {
-    json.offers.push(montaOfertaPrincipal(props, ""));
+    const { gainExec, stopExec } = props;
+    montaOfertaPrincipal(props, "", json);
+    montaOfertaNext(props, gainDisparo, gainExec, "gain", json);
+    montaOfertaNext(props, stopDisparo, stopExec, "stop", json);
   }
-  json.next = [...montaOfertaNext(props)];
 
   return json;
 };
 
-const montaOfertaPrincipal = (props, startStop) => {
+const montaOfertaPrincipal = (props, startStop, json) => {
   const { validadeSelect, date, qtde, dadosPesquisa, ordem } = props;
 
   let ofertaPrincipal = {
@@ -68,30 +83,22 @@ const montaOfertaPrincipal = (props, startStop) => {
   if (tiposOrdensTrigger.includes(ordem.nome)) {
     //Ordem 1 Start
     if (startStop === "start") {
+      if (!props.gainDisparo) return;
       ofertaPrincipal.trigger = Number(props.gainDisparo);
       ofertaPrincipal.price = Number(props.gainExec);
 
       //Ordem 2 Stop
     } else if (startStop === "stop") {
+      if (!props.stopDisparo) return;
       ofertaPrincipal.trigger = Number(props.stopDisparo);
       ofertaPrincipal.price = Number(props.stopExec);
     }
   }
-  return ofertaPrincipal;
+  json.offers.push(ofertaPrincipal);
 };
 
-export const montaOfertaNext = props => {
-  const {
-    qtde,
-    dadosPesquisa,
-    ordem,
-    gainDisparo,
-    stopDisparo,
-    gainExec,
-    stopExec
-  } = props;
-
-  let next = [];
+export const montaOfertaNext = (props, disparo, execucao, tipo, json) => {
+  const { qtde, dadosPesquisa, ordem } = props;
 
   let ordemNext = {
     action: "Enable",
@@ -129,60 +136,29 @@ export const montaOfertaNext = props => {
     ofertaNext.offerType = "C";
     ofertaNext.orderType = "buyWait";
   }
-  let ordemNext2 = cloneDeep(ordemNext);
-  let ofertaNext2 = cloneDeep(ofertaNext);
 
-
-  if (tiposOrdensTrigger.includes(ordem.nome)) {
-    const {gainDisparoConfig1, gainExecConfig1,stopDisparoConfig1,stopExecConfig1,gainDisparoConfig2,gainExecConfig2,stopDisparoConfig2,stopExecConfig2} = props
-    let ordemNext3 = cloneDeep(ordemNext);
-    let ofertaNext3 = cloneDeep(ofertaNext);
-    let ordemNext4 = cloneDeep(ordemNext);
-    let ofertaNext4 = cloneDeep(ofertaNext);
-
-    helperMontarNext(gainDisparoConfig1, gainExecConfig1, ordem, ordemNext, ofertaNext, "gain", next);
-    helperMontarNext(stopDisparoConfig1, stopExecConfig1, ordem, ordemNext2, ofertaNext2, "st", next);
-    helperMontarNext(gainDisparoConfig2, gainExecConfig2, ordem, ordemNext3, ofertaNext3, "gain", next);
-    helperMontarNext(stopDisparoConfig2, stopExecConfig2, ordem, ordemNext4, ofertaNext4, "st", next);
-    
-  }else{
-    helperMontarNext(gainDisparo, gainExec, ordem, ordemNext, ofertaNext, "gain", next);
-    helperMontarNext(stopDisparo, stopExec, ordem, ordemNext2, ofertaNext2, "st", next);
-  }
-
-  return next;
-};
-
-const helperMontarNext = (
-  disparo,
-  execucao,
-  ordem,
-  ordemNext,
-  ofertaNext,
-  tipo,
-  next
-) => {
-  if(disparo){
+  if (disparo) {
     if (tipo === "gain") {
-    if (ordem.tipoOferta === "C")
-      ordemNext.order.tradeName.name = "Venda Stop Gain";
-    else if (ordem.tipoOferta === "V")
-      ordemNext.order.tradeName.name = "Compra Stop Gain";
+      if (ordem.tipoOferta === "C")
+        ordemNext.order.tradeName.name = "Venda Stop Gain";
+      else if (ordem.tipoOferta === "V")
+        ordemNext.order.tradeName.name = "Compra Stop Gain";
 
-    ofertaNext.trigger = Number(disparo);
-    if (execucao) ofertaNext.price = Number(execucao);
-    ordemNext.order.offers.push(ofertaNext);
-  } else if (tipo === "st") {
-    if (ordem.tipoOferta === "C")
-      ordemNext.order.tradeName.name = "Venda Stop Loss";
-    else if (ordem.tipoOferta === "V")
-      ordemNext.order.tradeName.name = "Compra Stop Loss";
+      ofertaNext.trigger = Number(disparo);
+      if (execucao) ofertaNext.price = Number(execucao);
+      ordemNext.order.offers.push(ofertaNext);
+    } else if (tipo === "stop") {
+      if (ordem.tipoOferta === "C")
+        ordemNext.order.tradeName.name = "Venda Stop Loss";
+      else if (ordem.tipoOferta === "V")
+        ordemNext.order.tradeName.name = "Compra Stop Loss";
 
-    ofertaNext.trigger = Number(disparo);
-    if (execucao) ofertaNext.price = Number(execucao);
-    ordemNext.order.offers.push(ofertaNext);
+      ofertaNext.trigger = Number(disparo);
+      if (execucao) ofertaNext.price = Number(execucao);
+      ordemNext.order.offers.push(ofertaNext);
+    }
+    json.next.push(ordemNext);
+    return ordemNext;
   }
-  next.push(ordemNext);
-}
-return null
+  return null;
 };

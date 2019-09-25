@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
+import { compose } from "redux";
 import { mostrarErroQtdeOnBlurAction } from "components/redux/actions/bookOfertaActions";
 import {
   mudarQtdAction,
@@ -24,6 +25,7 @@ import {
   pesquisarAtivoOnEnterAction,
   enviarOrdemAction
 } from "components/redux/actions/api_actions/boletasAPIActions";
+import { mapStateToPropsConfigStopVenda } from "components/forms/venda/venda_StartStop/ConfigurarStopVenda";
 
 class FormInternoVendaStartStop extends React.Component {
   render() {
@@ -164,7 +166,6 @@ class FormInternoVendaStartStop extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  qtde: state.vendaStartStopReducer.qtde,
   erro: state.vendaStartStopReducer.erro,
   gainDisparo: state.vendaStartStopReducer.gainDisparo,
   gainExec: state.vendaStartStopReducer.gainExec,
@@ -179,22 +180,28 @@ const mapStateToProps = state => ({
   dadosPesquisa: state.vendaStartStopReducer.dadosPesquisa
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    mudarQtdAction,
-    mudarGainDisparoAction,
-    mudarGainExecAction,
-    mudarStopDisparoAction,
-    mudarStopExecAction,
-    mudarValidadeSelectAction,
-    mudarDataAction,
-    limparAction,
-    mudarAtivoAction,
-    mudarAssinaturaAction,
-    mudarCheckSalvarAssinaturaAction,
-    mostrarErroQtdeOnBlurAction,
-    pesquisarAtivoOnEnterAction,
-    enviarOrdemAction
-  }
+export default compose(
+  connect(
+    mapStateToProps,
+    {
+      mudarQtdAction,
+      mudarGainDisparoAction,
+      mudarGainExecAction,
+      mudarStopDisparoAction,
+      mudarStopExecAction,
+      mudarValidadeSelectAction,
+      mudarDataAction,
+      limparAction,
+      mudarAtivoAction,
+      mudarAssinaturaAction,
+      mudarCheckSalvarAssinaturaAction,
+      mostrarErroQtdeOnBlurAction,
+      pesquisarAtivoOnEnterAction,
+      enviarOrdemAction
+    }
+  ),
+  connect(
+    mapStateToPropsConfigStopVenda,
+    {}
+  )
 )(FormInternoVendaStartStop);
