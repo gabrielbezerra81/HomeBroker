@@ -17,8 +17,13 @@ class VendaAgendada extends React.Component {
       <DraggableModal
         id="vendaagendada"
         renderModalBody={() => modalBody(this.props)}
-        renderHeader={(resetPosition) =>
-          modalHeader(this.props, this.props.headerTitle, "border-green",resetPosition)
+        renderHeader={resetPosition =>
+          modalHeader(
+            this.props,
+            this.props.headerTitle,
+            "border-green",
+            resetPosition
+          )
         }
       />
     );
@@ -29,7 +34,7 @@ const modalBody = props => (
   <div className="mbody">
     <BodyHeaderVendaAgendada />
     <Row>
-      <FormInternoVendaAgendada handleShow={props.handleShow}/>
+      <FormInternoVendaAgendada handleShow={props.handleShow} ordem={ordem} />
       <GraficoVendaAgendada handleShow={props.handleShow} />
     </Row>
   </div>
@@ -41,3 +46,9 @@ export default connect(
   mapStateToProps,
   {}
 )(VendaAgendada);
+
+const ordem = {
+  nome: "Venda Agendada",
+  tipoOrdem: "sellWait",
+  tipoOferta: "V"
+};

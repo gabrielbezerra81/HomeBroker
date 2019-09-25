@@ -19,8 +19,13 @@ class VendaLimitada extends React.Component {
         headerTitle={this.props.headerTitle}
         renderModalBody={() => modalBody(this.props)}
         headerClass="border-green"
-        renderHeader={(resetPosition) =>
-          modalHeader(this.props, this.props.headerTitle, "border-green",resetPosition)
+        renderHeader={resetPosition =>
+          modalHeader(
+            this.props,
+            this.props.headerTitle,
+            "border-green",
+            resetPosition
+          )
         }
       />
     );
@@ -31,7 +36,7 @@ const modalBody = props => (
   <div className="mbody">
     <BodyHeaderVendaLimitada />
     <Row>
-      <FormInternoVendaLimitada handleShow={props.handleShow}/>
+      <FormInternoVendaLimitada handleShow={props.handleShow} ordem={ordem} />
       <GraficoVendaLimitada handleShow={props.handleShow} />
     </Row>
   </div>
@@ -43,3 +48,9 @@ export default connect(
   mapStateToProps,
   {}
 )(VendaLimitada);
+
+const ordem = {
+  nome: "Venda Limitada",
+  tipoOrdem: "sellLimit",
+  tipoOferta: "V"
+};

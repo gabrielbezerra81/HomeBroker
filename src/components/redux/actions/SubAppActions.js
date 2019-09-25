@@ -34,8 +34,6 @@ export const compraAgendadaAction = (props, namespace) => {
         assinatura: props.assinatura
       };
 
-
-
       const jsonBody = JSON.stringify(body);
       console.log(jsonBody);
     }
@@ -146,11 +144,11 @@ export const compraGainReducaoAction = (props, namespace) => {
 
 const getValidade = (validadeSelect, data) => {
   switch (validadeSelect) {
-    case "hoje":
+    case "DAY":
       return getformatedDate(new Date());
-    case "dia":
+    case "SPECIFIED_DAY":
       return getformatedDate(data);
-    case "cancelar":
+    case "GTC":
       return "indefinida";
     default:
       return getformatedDate(new Date());

@@ -1,8 +1,7 @@
 import React from "react";
 import configurarStop from "img/venda/VendaConfigurar.png";
 import { connect } from "react-redux";
-import { Button, Form } from "react-bootstrap";
-import { MDBIcon } from "mdbreact";
+import { Form } from "react-bootstrap";
 import IconeConfigGrafico from "components/utils/IconeConfigGrafico";
 import { mostrarConfigurarStopAction } from "components/redux/actions/compraStartStopActions";
 import { VENDA_STARTSTOP_NAMESPACE } from "constants/ActionTypes";

@@ -1,6 +1,5 @@
 import React from "react";
-import { Table, ProgressBar } from "react-bootstrap";
-import { MDBIcon } from "mdbreact";
+import { Table } from "react-bootstrap";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 
 export default class Tabela3Resultado extends React.Component {

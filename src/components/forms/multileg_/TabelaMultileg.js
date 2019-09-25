@@ -254,34 +254,3 @@ const renderModelo = modelo => {
     </td>
   );
 };
-
-const a = [
-  {
-    cv: "compra",
-    qtde: 1000,
-    serie: ["2019-08", "2019-07", "2019-06"],
-    strike: [26.32, 27.48, 28.48],
-    codigo: ["PETRH275", "PETRH275", "PETRH275"],
-    tipo: "call",
-    modelo: "EU",
-    despernamento: 100,
-    prioridade: -1,
-    cotacao: "15,25",
-    valor: "-40,00",
-    vencimento: ["9/10/19", "10/10/19", "11/10/19"]
-  },
-  {
-    cv: "venda",
-    qtde: 2000,
-    serie: ["2019-08", "2019-07", "2019-06"],
-    strike: [26.32, 27.48, 28.48],
-    codigo: ["PETRH275", "PETRH275", "PETRH275"],
-    tipo: "call",
-    modelo: "USA",
-    despernamento: 500,
-    prioridade: 2,
-    cotacao: "10,30",
-    valor: "-200,00",
-    vencimento: ["9/10/19", "10/10/19", "11/10/19"]
-  }
-];

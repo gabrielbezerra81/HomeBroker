@@ -10,7 +10,6 @@ import {
 } from "components/redux/ElementosConectadosRedux";
 import BarraTopoTelaPrincipal from "components/tela_principal/BarraTopoTelaPrincipal";
 import { Animate } from "react-show";
-import Multileg from "components/forms/multileg_/Multileg";
 
 const startStyle = {
   opacity: 0,

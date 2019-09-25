@@ -35,16 +35,16 @@ import { PESQUISAR_ATIVO_BOLETA_API } from "constants/ApiActionTypes";
 
 const INITIAL_STATE = {
   dadosPesquisa: {
-    resultadoAtivo: "PETRG20",
+    resultadoAtivo: "",
     strike: 19.02,
-    tipo: "CALL",
-    model: "AMERICAN",
-    vencimento: "19/07/2020",
+    tipo: "",
+    model: "",
+    vencimento: "",
     cotacaoAtual: 9.27,
-    porcentagem: "0,00",
-    ultimoHorario: "15:26:53",
+    porcentagem: "",
+    ultimoHorario: "",
     qtdeMultiplo100: true,
-    market: "tipo2"
+    market: ""
   },
   ativo: "",
   entradaDisparo: "",
@@ -54,7 +54,7 @@ const INITIAL_STATE = {
   gainExec: "",
   stopDisparo: "",
   stopExec: "",
-  validadeSelect: "hoje",
+  validadeSelect: "DAY",
   date: new Date(),
   assinatura: "",
   preco: "",
@@ -183,6 +183,7 @@ export const formatarNumero = value => {
   return value;
 };
 
+/*
 const formatarPreco = value => {
   value = value.split(",").join("");
 
@@ -195,3 +196,4 @@ const formatarPreco = value => {
 
   return value;
 };
+*/

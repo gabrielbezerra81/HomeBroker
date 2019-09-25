@@ -1,7 +1,6 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
-import { MDBIcon } from "mdbreact";
 import imgCaraFeliz from "img/iconeCaraFeliz.png";
 import { abrirFecharMenuLateralAction } from "components/redux/actions/TelaPrincipalActions";
 import { ocultarDIV, mostrarDIV } from "components/utils/MostrarOcultarDiv";

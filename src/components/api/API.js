@@ -36,7 +36,8 @@ export const pesquisarAtivoAPI = codigo => {
           porcentagem: oscilacao,
           ultimoHorario: ultimoHorario,
           qtdeMultiplo100: qtdeMultiplo100,
-          market: "tipo2"
+          market: "tipo2",
+          ativo: body.stock.symbol
         };
       } else {
         dadosPesquisa = {
@@ -46,7 +47,8 @@ export const pesquisarAtivoAPI = codigo => {
           porcentagem: oscilacao,
           ultimoHorario: ultimoHorario,
           qtdeMultiplo100: qtdeMultiplo100,
-          market: "tipo1"
+          market: "tipo1",
+          ativo: body.stock.symbol
         };
       }
       return dadosPesquisa;

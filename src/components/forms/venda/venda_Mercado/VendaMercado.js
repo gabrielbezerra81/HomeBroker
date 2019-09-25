@@ -19,8 +19,13 @@ class VendaMercado extends React.Component {
         headerTitle={this.props.headerTitle}
         renderModalBody={() => modalBody(this.props)}
         headerClass="border-green"
-        renderHeader={(resetPosition) =>
-          modalHeader(this.props, this.props.headerTitle, "border-green",resetPosition)
+        renderHeader={resetPosition =>
+          modalHeader(
+            this.props,
+            this.props.headerTitle,
+            "border-green",
+            resetPosition
+          )
         }
       />
     );
@@ -31,7 +36,7 @@ const modalBody = props => (
   <div className="mbody">
     <BodyHeaderVendaMercado />
     <Row>
-      <FormInternoVendaMercado handleShow={props.handleShow}/>
+      <FormInternoVendaMercado handleShow={props.handleShow} ordem={ordem} />
       <GraficoVendaMercado handleShow={props.handleShow} />
     </Row>
   </div>
@@ -43,3 +48,9 @@ export default connect(
   mapStateToProps,
   {}
 )(VendaMercado);
+
+const ordem = {
+  nome: "Venda a Mercado",
+  tipoOrdem: "sell",
+  tipoOferta: "V"
+};

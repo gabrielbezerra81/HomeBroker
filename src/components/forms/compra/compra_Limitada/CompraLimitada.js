@@ -33,7 +33,7 @@ const modalBody = props => (
   <div className="mbody">
     <BodyHeaderCompraLimitada />
     <Row>
-      <FormInternoCompraLimitada handleShow={props.handleShow} />
+      <FormInternoCompraLimitada handleShow={props.handleShow} ordem={ordem} />
       <GraficoCompraLimitada handleShow={props.handleShow} />
     </Row>
   </div>
@@ -45,3 +45,9 @@ export default connect(
   mapStateToProps,
   {}
 )(CompraLimitada);
+
+const ordem = {
+  nome: "Compra Limitada",
+  tipoOrdem: "buyLimit",
+  tipoOferta: "C"
+};

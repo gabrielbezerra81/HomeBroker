@@ -137,7 +137,7 @@ const renderAtivos = dados => {
   let ativos = `${dados.estrategia}: ${dados.ativo}`;
   var codigos = "   ";
   dados.operacoes.map(item => {
-    codigos += item.codigo + " | ";
+    return (codigos += item.codigo + " | ");
   });
   ativos += codigos;
 

@@ -10,12 +10,14 @@ export default (props, namespace) => (
     </Col>
     <Form>
       <Col className="colValidadeCheck">
-        {props.validadeSelect !== "dia"
+        {props.validadeSelect !== "SPECIFIED_DAY"
           ? formSelect(props, "ATÉ O DIA", namespace)
           : null}{" "}
       </Col>
     </Form>
-    {props.validadeSelect === "dia" ? renderFormData(props, namespace) : null}
+    {props.validadeSelect === "SPECIFIED_DAY"
+      ? renderFormData(props, namespace)
+      : null}
   </Row>
 );
 
@@ -41,8 +43,8 @@ const formSelect = (props, opcao2, namespace) => (
     onChange={event => props.mudarValidadeSelectAction(event, namespace)}
     autoFocus
   >
-    <option value="hoje">HOJE</option>
-    <option value="dia">{opcao2}</option>
-    <option value="cancelar">ATÉ CANCELAR</option>
+    <option value="DAY">HOJE</option>
+    <option value="SPECIFIED_DAY">{opcao2}</option>
+    <option value="GTC">ATÉ CANCELAR</option>
   </Form.Control>
 );

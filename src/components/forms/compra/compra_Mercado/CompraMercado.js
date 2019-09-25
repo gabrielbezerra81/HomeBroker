@@ -33,7 +33,7 @@ const modalBody = props => (
   <div className="mbody">
     <BodyHeaderCompraMercado />
     <Row>
-      <FormInternoCompraMercado handleShow={props.handleShow} />
+      <FormInternoCompraMercado handleShow={props.handleShow} ordem={ordem} />
       <GraficoCompraMercado handleShow={props.handleShow} />
     </Row>
   </div>
@@ -45,3 +45,9 @@ export default connect(
   mapStateToProps,
   {}
 )(CompraMercado);
+
+const ordem = {
+  nome: "Compra a Mercado",
+  tipoOrdem: "buy",
+  tipoOferta: "C"
+};

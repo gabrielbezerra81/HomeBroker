@@ -31,7 +31,7 @@ const modalBody = props => (
   <div className="mbody">
     <BodyHeaderCompraAgendada />
     <Row>
-      <FormInternoCompraAgendada handleShow={props.handleShow} />
+      <FormInternoCompraAgendada handleShow={props.handleShow} ordem={ordem} />
       <GraficoCompraAgendada handleShow={props.handleShow} />
     </Row>
   </div>
@@ -43,3 +43,9 @@ export default connect(
   mapStateToProps,
   {}
 )(CompraAgendada);
+
+const ordem = {
+  nome: "Compra Agendada",
+  tipoOrdem: "buyWait",
+  tipoOferta: "C"
+};

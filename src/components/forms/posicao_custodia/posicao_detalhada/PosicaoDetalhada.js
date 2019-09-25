@@ -75,7 +75,7 @@ export default class PosicaoDetalhada extends React.Component {
         </Row>
         <Row>
           <Col className="text-align-right mr-4">
-            <img src={IconeRostoCoberto} height="45"></img>
+            <img src={IconeRostoCoberto} height="45" alt="rosto"></img>
           </Col>
         </Row>
         {dados.item.map((item, indice) => {

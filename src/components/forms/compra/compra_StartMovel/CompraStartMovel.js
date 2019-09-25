@@ -16,8 +16,13 @@ class CompraStarMovel extends React.Component {
         headerTitle={this.props.headerTitle}
         renderModalBody={() => modalBody()}
         headerClass="border-green"
-        renderHeader={(resetPosition) =>
-          modalHeader(this.props, this.props.headerTitle, "border-green",resetPosition)
+        renderHeader={resetPosition =>
+          modalHeader(
+            this.props,
+            this.props.headerTitle,
+            "border-green",
+            resetPosition
+          )
         }
       />
     );
@@ -28,7 +33,7 @@ const modalBody = () => (
   <div className="mbody">
     <BodyHeaderCompraStartMovel />
     <Row>
-      <FormInternoCompraStartMovel />
+      <FormInternoCompraStartMovel ordem={ordem} />
       <GraficoCompraStartMovel />
     </Row>
   </div>
@@ -40,3 +45,9 @@ export default connect(
   mapStateToProps,
   {}
 )(CompraStarMovel);
+
+const ordem = {
+  nome: "Compra Stop Movel",
+  tipoOrdem: "buyMovel",
+  tipoOferta: "C"
+};
