@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
+import { compose } from "redux";
 import { mostrarErroQtdeOnBlurAction } from "components/redux/actions/bookOfertaActions";
 import {
   mudarQtdAction,
@@ -21,7 +22,11 @@ import { COMPRA_STARTSTOP_NAMESPACE } from "constants/ActionTypes";
 import { compraStartStopAction } from "components/redux/actions/SubAppActions";
 import { iconeConfigAbrirFormulario } from "components/utils/IconesConfigFormInterno";
 import RowAtivoQtdeBoletas from "components/utils/RowAtivoQtdeBoletas";
-import { pesquisarAtivoOnEnterAction } from "components/redux/actions/api_actions/boletasAPIActions";
+import {
+  pesquisarAtivoOnEnterAction,
+  enviarOrdemAction
+} from "components/redux/actions/api_actions/boletasAPIActions";
+import { mapStateToPropsConfigurarStop } from "components/forms/compra/compra_StartStop/ConfigurarStop";
 
 class FormInternoCompraStartStop extends React.Component {
   render() {
@@ -149,12 +154,7 @@ class FormInternoCompraStartStop extends React.Component {
                 <Button
                   variant="primary"
                   size="sm"
-                  onClick={() =>
-                    this.props.compraStartStopAction(
-                      this.props,
-                      COMPRA_STARTSTOP_NAMESPACE
-                    )
-                  }
+                  onClick={() => this.props.enviarOrdemAction(this.props)}
                 >
                   <h6>Comprar</h6>
                 </Button>
@@ -168,7 +168,6 @@ class FormInternoCompraStartStop extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  qtde: state.compraStartStopReducer.qtde,
   erro: state.compraStartStopReducer.erro,
   gainDisparo: state.compraStartStopReducer.gainDisparo,
   gainExec: state.compraStartStopReducer.gainExec,
@@ -179,25 +178,33 @@ const mapStateToProps = state => ({
   valorTotal: state.compraStartStopReducer.valorTotal,
   ativo: state.compraStartStopReducer.ativo,
   assinatura: state.compraStartStopReducer.assinatura,
-  checkSalvarAssinatura: state.compraStartStopReducer.checkSalvarAssinatura
+  checkSalvarAssinatura: state.compraStartStopReducer.checkSalvarAssinatura,
+  dadosPesquisa: state.compraStartStopReducer.dadosPesquisa
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    mudarQtdAction,
-    mudarGainDisparoAction,
-    mudarGainExecAction,
-    mudarStopDisparoAction,
-    mudarStopExecAction,
-    mudarValidadeSelectAction,
-    mudarDataAction,
-    limparAction,
-    mudarAtivoAction,
-    mudarAssinaturaAction,
-    mudarCheckSalvarAssinaturaAction,
-    mostrarErroQtdeOnBlurAction,
-    compraStartStopAction,
-    pesquisarAtivoOnEnterAction
-  }
+export default compose(
+  connect(
+    mapStateToProps,
+    {
+      mudarQtdAction,
+      mudarGainDisparoAction,
+      mudarGainExecAction,
+      mudarStopDisparoAction,
+      mudarStopExecAction,
+      mudarValidadeSelectAction,
+      mudarDataAction,
+      limparAction,
+      mudarAtivoAction,
+      mudarAssinaturaAction,
+      mudarCheckSalvarAssinaturaAction,
+      mostrarErroQtdeOnBlurAction,
+      compraStartStopAction,
+      pesquisarAtivoOnEnterAction,
+      enviarOrdemAction
+    }
+  ),
+  connect(
+    mapStateToPropsConfigurarStop,
+    {}
+  )
 )(FormInternoCompraStartStop);

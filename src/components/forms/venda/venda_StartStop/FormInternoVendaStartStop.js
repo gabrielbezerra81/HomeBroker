@@ -20,7 +20,10 @@ import RowFormAssinatura from "components/utils/RowFormAssinatura";
 import { VENDA_STARTSTOP_NAMESPACE } from "constants/ActionTypes";
 import { iconeConfigAbrirFormulario } from "components/utils/IconesConfigFormInterno";
 import RowAtivoQtdeBoletas from "components/utils/RowAtivoQtdeBoletas";
-import { pesquisarAtivoOnEnterAction } from "components/redux/actions/api_actions/boletasAPIActions";
+import {
+  pesquisarAtivoOnEnterAction,
+  enviarOrdemAction
+} from "components/redux/actions/api_actions/boletasAPIActions";
 
 class FormInternoVendaStartStop extends React.Component {
   render() {
@@ -144,7 +147,11 @@ class FormInternoVendaStartStop extends React.Component {
                 </Button>
               </Col>
               <Col md={6}>
-                <Button variant="danger" size="sm" onClick={() => false}>
+                <Button
+                  variant="danger"
+                  size="sm"
+                  onClick={() => this.props.enviarOrdemAction(this.props)}
+                >
                   <h6>Vender</h6>
                 </Button>
               </Col>
@@ -168,7 +175,8 @@ const mapStateToProps = state => ({
   valorTotal: state.vendaStartStopReducer.valorTotal,
   ativo: state.vendaStartStopReducer.ativo,
   assinatura: state.vendaStartStopReducer.assinatura,
-  checkSalvarAssinatura: state.vendaStartStopReducer.checkSalvarAssinatura
+  checkSalvarAssinatura: state.vendaStartStopReducer.checkSalvarAssinatura,
+  dadosPesquisa: state.vendaStartStopReducer.dadosPesquisa
 });
 
 export default connect(
@@ -186,6 +194,7 @@ export default connect(
     mudarAssinaturaAction,
     mudarCheckSalvarAssinaturaAction,
     mostrarErroQtdeOnBlurAction,
-    pesquisarAtivoOnEnterAction
+    pesquisarAtivoOnEnterAction,
+    enviarOrdemAction
   }
 )(FormInternoVendaStartStop);

@@ -1,9 +1,6 @@
 import { pesquisarAtivoAPI } from "components/api/API";
 import { PESQUISAR_ATIVO_BOLETA_API } from "constants/ApiActionTypes";
-import {
-  montaOrdemPrincipal,
-  montaOfertaNext
-} from "components/utils/MontarOrdens";
+import { montaOrdemPrincipal } from "components/utils/MontarOrdens";
 
 export const pesquisarAtivoOnEnterAction = (codigo, namespace) => {
   return async dispatch => {

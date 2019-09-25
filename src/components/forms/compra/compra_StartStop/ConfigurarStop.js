@@ -196,7 +196,7 @@ const modalBody = props => (
   </div>
 );
 
-const mapStateToProps = state => ({
+export const mapStateToPropsConfigurarStop = state => ({
   qtde: state.compraStartStopReducer.qtde,
   gainDisparoConfig1: state.compraStartStopReducer.gainDisparoConfig1,
   gainExecConfig1: state.compraStartStopReducer.gainExecConfig1,
@@ -209,7 +209,7 @@ const mapStateToProps = state => ({
 });
 
 export default connect(
-  mapStateToProps,
+  mapStateToPropsConfigurarStop,
   {
     mudarGainDisparoAction,
     mudarGainExecAction,

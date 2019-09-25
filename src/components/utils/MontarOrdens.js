@@ -1,9 +1,4 @@
-const tiposOrdensTrigger = [
-  "Compra Start Stop",
-  "Compra Stop Movel",
-  "Venda Start Stop",
-  "Compra Stop Movel"
-];
+const tiposOrdensTrigger = ["Compra Start Stop", "Venda Start Stop"];
 
 export const montaOrdemPrincipal = props => {
   const { date, dadosPesquisa, ordem, gainDisparo, stopDisparo } = props;
@@ -28,6 +23,12 @@ export const montaOrdemPrincipal = props => {
 
   //StartStop pode ter 2 ordens principais e até 4 ordens next
   if (tiposOrdensTrigger.includes(ordem.nome)) {
+    const {
+      gainDisparoConfig1,
+      stopDisparoConfig1,
+      gainDisparoConfig2,
+      stopDisparoConfig2
+    } = props;
     if (gainDisparo) json.offers.push(montaOfertaPrincipal(props, "start"));
     if (stopDisparo) json.offers.push(montaOfertaPrincipal(props, "stop"));
   }
