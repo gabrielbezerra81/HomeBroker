@@ -22,7 +22,10 @@ import { VENDA_LIMITADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalLimitada } from "components/utils/CalculoValorTotal";
 import { iconeConfigAbrirFormulario } from "components/utils/IconesConfigFormInterno";
 import RowAtivoQtdeBoletas from "components/utils/RowAtivoQtdeBoletas";
-import { pesquisarAtivoOnEnterAction } from "components/redux/actions/api_actions/boletasAPIActions";
+import {
+  pesquisarAtivoOnEnterAction,
+  enviarOrdemAction
+} from "components/redux/actions/api_actions/boletasAPIActions";
 
 class FormInternoVendaLimitada extends React.Component {
   render() {
@@ -176,7 +179,11 @@ class FormInternoVendaLimitada extends React.Component {
                 </Button>
               </Col>
               <Col md={6}>
-                <Button variant="danger" size="sm" onClick={() => false}>
+                <Button
+                  variant="danger"
+                  size="sm"
+                  onClick={() => this.props.enviarOrdemAction(this.props)}
+                >
                   <h6>Vender</h6>
                 </Button>
               </Col>
@@ -201,7 +208,8 @@ const mapStateToProps = state => ({
   ativo: state.vendaLimitadaReducer.ativo,
   assinatura: state.vendaLimitadaReducer.assinatura,
   preco: state.vendaLimitadaReducer.preco,
-  checkSalvarAssinatura: state.vendaLimitadaReducer.checkSalvarAssinatura
+  checkSalvarAssinatura: state.vendaLimitadaReducer.checkSalvarAssinatura,
+  dadosPesquisa: state.vendaLimitadaReducer.dadosPesquisa
 });
 
 export default connect(
@@ -220,6 +228,7 @@ export default connect(
     mudarPrecoAction,
     mudarCheckSalvarAssinaturaAction,
     mostrarErroQtdeOnBlurAction,
-    pesquisarAtivoOnEnterAction
+    pesquisarAtivoOnEnterAction,
+    enviarOrdemAction
   }
 )(FormInternoVendaLimitada);

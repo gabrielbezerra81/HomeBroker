@@ -19,8 +19,6 @@ export const pesquisarAtivoOnEnterAction = (codigo, namespace) => {
 
 export const enviarOrdemAction = props => {
   let json = montaOrdemPrincipal(props);
-  //json.next.push(montaOfertaNext(props));
-  //json.next.push(montaOfertaNext(props));
   console.log("ordem", json);
 
   return dispatch => {};

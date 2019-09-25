@@ -21,7 +21,10 @@ import { VENDA_MERCADO_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorAproximadoMercado } from "components/utils/CalculoValorTotal";
 import { iconeConfigAbrirFormulario } from "components/utils/IconesConfigFormInterno";
 import RowAtivoQtdeBoletas from "components/utils/RowAtivoQtdeBoletas";
-import { pesquisarAtivoOnEnterAction } from "components/redux/actions/api_actions/boletasAPIActions";
+import {
+  pesquisarAtivoOnEnterAction,
+  enviarOrdemAction
+} from "components/redux/actions/api_actions/boletasAPIActions";
 
 class FormInternoVendaMercado extends React.Component {
   render() {
@@ -157,7 +160,11 @@ class FormInternoVendaMercado extends React.Component {
                 </Button>
               </Col>
               <Col md={6}>
-                <Button variant="danger" size="sm" onClick={() => false}>
+                <Button
+                  variant="danger"
+                  size="sm"
+                  onClick={() => this.props.enviarOrdemAction(this.props)}
+                >
                   <h6>Vender</h6>
                 </Button>
               </Col>
@@ -200,6 +207,7 @@ export default connect(
     mudarAssinaturaAction,
     mudarCheckSalvarAssinaturaAction,
     mostrarErroQtdeOnBlurAction,
-    pesquisarAtivoOnEnterAction
+    pesquisarAtivoOnEnterAction,
+    enviarOrdemAction
   }
 )(FormInternoVendaMercado);

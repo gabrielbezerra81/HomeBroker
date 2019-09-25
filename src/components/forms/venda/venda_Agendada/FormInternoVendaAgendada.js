@@ -23,7 +23,10 @@ import { VENDA_AGENDADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalAgendada } from "components/utils/CalculoValorTotal";
 import { iconeConfigAbrirFormulario } from "components/utils/IconesConfigFormInterno";
 import RowAtivoQtdeBoletas from "components/utils/RowAtivoQtdeBoletas";
-import { pesquisarAtivoOnEnterAction } from "components/redux/actions/api_actions/boletasAPIActions";
+import {
+  pesquisarAtivoOnEnterAction,
+  enviarOrdemAction
+} from "components/redux/actions/api_actions/boletasAPIActions";
 
 class FormInternoVendaAgendada extends React.Component {
   render() {
@@ -204,7 +207,7 @@ class FormInternoVendaAgendada extends React.Component {
                 <Button
                   variant="danger"
                   size="sm"
-                  onClick={() => this.props.comprarAgendadaAction()}
+                  onClick={() => this.props.enviarOrdemAction(this.props)}
                 >
                   <h6>Vender</h6>
                 </Button>
@@ -231,7 +234,8 @@ const mapStateToProps = state => ({
   entradaExec: state.vendaAgendadaReducer.entradaExec,
   ativo: state.vendaAgendadaReducer.ativo,
   assinatura: state.vendaAgendadaReducer.assinatura,
-  checkSalvarAssinatura: state.vendaAgendadaReducer.checkSalvarAssinatura
+  checkSalvarAssinatura: state.vendaAgendadaReducer.checkSalvarAssinatura,
+  dadosPesquisa: state.vendaAgendadaReducer.dadosPesquisa
 });
 
 export default connect(
@@ -251,6 +255,7 @@ export default connect(
     mudarAssinaturaAction,
     mudarCheckSalvarAssinaturaAction,
     mostrarErroQtdeOnBlurAction,
-    pesquisarAtivoOnEnterAction
+    pesquisarAtivoOnEnterAction,
+    enviarOrdemAction
   }
 )(FormInternoVendaAgendada);
