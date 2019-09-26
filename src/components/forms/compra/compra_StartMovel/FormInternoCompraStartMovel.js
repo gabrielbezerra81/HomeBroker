@@ -24,7 +24,10 @@ import RowFormValidade from "components/utils/RowFormValidade";
 import RowFormAssinatura from "components/utils/RowFormAssinatura";
 import { compraStartMovelAction } from "components/redux/actions/SubAppActions";
 import RowAtivoQtdeBoletas from "components/utils/RowAtivoQtdeBoletas";
-import { pesquisarAtivoOnEnterAction } from "components/redux/actions/api_actions/boletasAPIActions";
+import {
+  pesquisarAtivoOnEnterAction,
+  enviarOrdemAction
+} from "components/redux/actions/api_actions/boletasAPIActions";
 
 class FormInternoCompraStartMovel extends React.Component {
   render() {
@@ -184,12 +187,7 @@ class FormInternoCompraStartMovel extends React.Component {
                 <Button
                   variant="primary"
                   size="sm"
-                  onClick={() =>
-                    this.props.compraStartMovelAction(
-                      this.props,
-                      COMPRA_STARTMOVEL_NAMESPACE
-                    )
-                  }
+                  onClick={() => this.props.enviarOrdemAction(this.props)}
                 >
                   <h6>Comprar</h6>
                 </Button>
@@ -216,7 +214,8 @@ const mapStateToProps = state => ({
   validadeSelect: state.compraStartMovelReducer.validadeSelect,
   date: state.compraStartMovelReducer.date,
   assinatura: state.compraStartMovelReducer.assinatura,
-  checkSalvarAssinatura: state.compraStartMovelReducer.checkSalvarAssinatura
+  checkSalvarAssinatura: state.compraStartMovelReducer.checkSalvarAssinatura,
+  dadosPesquisa: state.compraStartMovelReducer.dadosPesquisa
 });
 
 export default connect(
@@ -237,7 +236,8 @@ export default connect(
     mudarCheckSalvarAssinaturaAction,
     limparAction,
     compraStartMovelAction,
-    pesquisarAtivoOnEnterAction
+    pesquisarAtivoOnEnterAction,
+    enviarOrdemAction
   }
 )(FormInternoCompraStartMovel);
 

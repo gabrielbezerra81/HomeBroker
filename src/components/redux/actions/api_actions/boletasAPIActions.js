@@ -1,4 +1,4 @@
-import { pesquisarAtivoAPI } from "components/api/API";
+import { pesquisarAtivoAPI, enviarOrdemAPI } from "components/api/API";
 import { PESQUISAR_ATIVO_BOLETA_API } from "constants/ApiActionTypes";
 import { montaOrdemPrincipal } from "components/utils/MontarOrdens";
 
@@ -15,8 +15,10 @@ export const pesquisarAtivoOnEnterAction = (codigo, namespace) => {
 };
 
 export const enviarOrdemAction = props => {
-  let json = montaOrdemPrincipal(props);
-  console.log("ordem", json);
+  return async dispatch => {
+    let json = [montaOrdemPrincipal(props)];
+    console.log("ordem", json);
 
-  return dispatch => {};
+    const resposta = await enviarOrdemAPI(json);
+  };
 };

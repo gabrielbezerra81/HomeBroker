@@ -188,6 +188,7 @@ export default connect(
     mudarCheckSalvarAssinaturaAction,
     mostrarErroQtdeOnBlurAction,
     adicionarItemTabelaGainReducaoAction,
-    compraGainReducaoAction
+    compraGainReducaoAction,
+    pesquisarAtivoOnEnterAction
   }
 )(FormInternoCompraGainReducao);

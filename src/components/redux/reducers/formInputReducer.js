@@ -55,7 +55,7 @@ const INITIAL_STATE = {
   stopDisparo: "",
   stopExec: "",
   validadeSelect: "DAY",
-  date: new Date(),
+  date: "",
   assinatura: "",
   preco: "",
   showConfigStop: true,

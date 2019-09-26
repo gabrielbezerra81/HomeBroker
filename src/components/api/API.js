@@ -3,7 +3,8 @@ import {
   cors_anywhere,
   url_base,
   url_pesquisarAtivoBoletas_codigo,
-  url_listarBookOfertas_codigo
+  url_listarBookOfertas_codigo,
+  url_enviarOrdem
 } from "components/api/url";
 
 export const pesquisarAtivoAPI = codigo => {
@@ -81,4 +82,19 @@ export const listarBookOfertaAPI = codigo_ativo => {
       return tabelas;
     })
     .catch(erro => console.log(erro));
+};
+
+export const enviarOrdemAPI = json => {
+  const jsonStringBody = JSON.stringify(json);
+
+  return request
+    .post(url_base + url_enviarOrdem)
+    .send(json)
+    .then(response => {
+      console.log("response", response);
+      console.log("body", response.body);
+    })
+    .catch(erro => {
+      console.log(erro.response);
+    });
 };

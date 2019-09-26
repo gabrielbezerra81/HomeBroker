@@ -23,7 +23,10 @@ import TabelaOrdens from "./TabelaOrdens";
 import RowFormValidade from "components/utils/RowFormValidade";
 import RowFormAssinatura from "components/utils/RowFormAssinatura";
 import RowAtivoQtdeBoletas from "components/utils/RowAtivoQtdeBoletas";
-import { pesquisarAtivoOnEnterAction } from "components/redux/actions/api_actions/boletasAPIActions";
+import {
+  pesquisarAtivoOnEnterAction,
+  enviarOrdemAction
+} from "components/redux/actions/api_actions/boletasAPIActions";
 
 class FormInternoVendaStopMovel extends React.Component {
   render() {
@@ -180,7 +183,11 @@ class FormInternoVendaStopMovel extends React.Component {
                 </Button>
               </Col>
               <Col md={6}>
-                <Button variant="danger" size="sm" onClick={() => false}>
+                <Button
+                  variant="danger"
+                  size="sm"
+                  onClick={() => this.props.enviarOrdemAction(this.props)}
+                >
                   <h6>Vender</h6>
                 </Button>
               </Col>
@@ -206,7 +213,8 @@ const mapStateToProps = state => ({
   validadeSelect: state.vendaStopMovel.validadeSelect,
   date: state.vendaStopMovel.date,
   assinatura: state.vendaStopMovel.assinatura,
-  checkSalvarAssinatura: state.vendaStopMovel.checkSalvarAssinatura
+  checkSalvarAssinatura: state.vendaStopMovel.checkSalvarAssinatura,
+  dadosPesquisa: state.vendaStopMovel.dadosPesquisa
 });
 
 export default connect(
@@ -226,6 +234,7 @@ export default connect(
     mudarAssinaturaAction,
     mudarCheckSalvarAssinaturaAction,
     limparAction,
-    pesquisarAtivoOnEnterAction
+    pesquisarAtivoOnEnterAction,
+    enviarOrdemAction
   }
 )(FormInternoVendaStopMovel);

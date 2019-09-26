@@ -1,4 +1,5 @@
-const tiposOrdensTrigger = ["Compra Start Stop", "Venda Start Stop"];
+const CVStartStop = ["Compra Start Stop", "Venda Start Stop"];
+const CVStopMovel = ["Compra Stop Movel", "Venda Stop Movel"];
 
 export const montaOrdemPrincipal = props => {
   const { date, dadosPesquisa, ordem, gainDisparo, stopDisparo } = props;
@@ -22,7 +23,7 @@ export const montaOrdemPrincipal = props => {
   json.tradeName.name = ordem.nome;
 
   //StartStop pode ter 2 ordens principais e até 4 ordens next
-  if (tiposOrdensTrigger.includes(ordem.nome)) {
+  if (CVStartStop.includes(ordem.nome)) {
     montaOfertaPrincipal(props, "start", json);
     montaOfertaPrincipal(props, "stop", json);
     const {
@@ -40,6 +41,7 @@ export const montaOrdemPrincipal = props => {
     montaOfertaNext(props, stopDisparoConfig1, stopExecConfig1, "stop", json);
     montaOfertaNext(props, gainDisparoConfig2, gainExecConfig2, "gain", json);
     montaOfertaNext(props, stopDisparoConfig2, stopExecConfig2, "stop", json);
+  } else if (CVStopMovel.includes(ordem.nome)) {
   }
   //Demais ordens Limitada, A Mercado e Agendada com apenas 1 ordem principal e 2 ordens next
   else {
@@ -52,7 +54,7 @@ export const montaOrdemPrincipal = props => {
   return json;
 };
 
-const montaOfertaPrincipal = (props, startStop, json) => {
+const montaOfertaPrincipal = (props, tipoAuxiliar, json) => {
   const { validadeSelect, date, qtde, dadosPesquisa, ordem } = props;
 
   let ofertaPrincipal = {
@@ -80,20 +82,24 @@ const montaOfertaPrincipal = (props, startStop, json) => {
   }
 
   //StartStop
-  if (tiposOrdensTrigger.includes(ordem.nome)) {
+  if (CVStartStop.includes(ordem.nome)) {
     //Ordem 1 Start
-    if (startStop === "start") {
+    if (tipoAuxiliar === "start") {
       if (!props.gainDisparo) return;
       ofertaPrincipal.trigger = Number(props.gainDisparo);
       ofertaPrincipal.price = Number(props.gainExec);
 
       //Ordem 2 Stop
-    } else if (startStop === "stop") {
+    } else if (tipoAuxiliar === "stop") {
       if (!props.stopDisparo) return;
       ofertaPrincipal.trigger = Number(props.stopDisparo);
       ofertaPrincipal.price = Number(props.stopExec);
     }
+  } else if (CVStopMovel.includes(ordem.nome)) {
+    if (tipoAuxiliar === "ajuste") {
+    }
   }
+
   json.offers.push(ofertaPrincipal);
 };
 
