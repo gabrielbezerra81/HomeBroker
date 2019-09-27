@@ -41,7 +41,16 @@ export const montaOrdemPrincipal = props => {
     montaOfertaNext(props, stopDisparoConfig1, stopExecConfig1, "stop", json);
     montaOfertaNext(props, gainDisparoConfig2, gainExecConfig2, "gain", json);
     montaOfertaNext(props, stopDisparoConfig2, stopExecConfig2, "stop", json);
-  } else if (CVStopMovel.includes(ordem.nome)) {
+  }
+  //CV Stop Movel
+  else if (CVStopMovel.includes(ordem.nome)) {
+    const { tabelaOrdens } = props;
+
+    montaOfertaPrincipal(props, "", json);
+    tabelaOrdens.map((item, index) => {
+      montaOfertaPrincipal(props, "ajusteOfertaAdicional", json, index);
+    });
+    montaOfertaPrincipal(props, "SegundaOrdem", json);
   }
   //Demais ordens Limitada, A Mercado e Agendada com apenas 1 ordem principal e 2 ordens next
   else {
@@ -54,35 +63,57 @@ export const montaOrdemPrincipal = props => {
   return json;
 };
 
-const montaOfertaPrincipal = (props, tipoAuxiliar, json) => {
+const montaOfertaPrincipal = (props, tipoAuxiliar, json, numAjuste = 0) => {
   const { validadeSelect, date, qtde, dadosPesquisa, ordem } = props;
 
   let ofertaPrincipal = {
     stock: {}
   };
+
+  ofertaPrincipal.status = "Nova";
+  ofertaPrincipal.enabled = true;
+
+  //2º Oferta e ofertas adicionais CV Stop Movel
+  if (
+    tipoAuxiliar === "ajusteOfertaAdicional" ||
+    tipoAuxiliar === "SegundaOrdem"
+  ) {
+    const { tabelaOrdens, inicioDisparo, ajustePadrao } = props;
+    ofertaPrincipal.orderType = "ajust";
+
+    if (tipoAuxiliar === "ajusteOfertaAdicional") {
+      ofertaPrincipal.priority = numAjuste;
+      ofertaPrincipal.trigger = Number(tabelaOrdens[numAjuste].disparo);
+      ofertaPrincipal.price = Number(tabelaOrdens[numAjuste].ajuste);
+    } else {
+      ofertaPrincipal.priority = tabelaOrdens.length;
+      ofertaPrincipal.trigger = Number(inicioDisparo);
+      ofertaPrincipal.price = Number(ajustePadrao);
+    }
+
+    json.offers.push(ofertaPrincipal);
+    return;
+  }
+
   //Dados ofertas Limitada, Mercado, Agendada, Start Stop, Stop Móvel
   ofertaPrincipal.stock.symbol = dadosPesquisa.ativo;
   ofertaPrincipal.expirationType = validadeSelect;
   ofertaPrincipal.expiration = date;
   ofertaPrincipal.qtty = Number(qtde);
-  ofertaPrincipal.status = "Nova";
-  ofertaPrincipal.enabled = true;
   ofertaPrincipal.orderType = ordem.tipoOrdem;
   ofertaPrincipal.offerType = ordem.tipoOferta;
 
-  //Obrigatorio para Limitada
+  //Limitada
   if (props.preco) ofertaPrincipal.price = Number(props.preco);
-
   //Agendada
-  if (props.entradaDisparo) {
+  else if (props.entradaDisparo) {
     ofertaPrincipal.trigger = Number(props.entradaDisparo);
     if (props.entradaExec) {
       ofertaPrincipal.price = Number(props.entradaExec);
     }
   }
-
   //StartStop
-  if (CVStartStop.includes(ordem.nome)) {
+  else if (CVStartStop.includes(ordem.nome)) {
     //Ordem 1 Start
     if (tipoAuxiliar === "start") {
       if (!props.gainDisparo) return;
@@ -95,9 +126,11 @@ const montaOfertaPrincipal = (props, tipoAuxiliar, json) => {
       ofertaPrincipal.trigger = Number(props.stopDisparo);
       ofertaPrincipal.price = Number(props.stopExec);
     }
-  } else if (CVStopMovel.includes(ordem.nome)) {
-    if (tipoAuxiliar === "ajuste") {
-    }
+  }
+  //CV Stop Movel 1ª ordem
+  else if (CVStopMovel.includes(ordem.nome)) {
+    ofertaPrincipal.trigger = Number(props.stopDisparo);
+    ofertaPrincipal.price = Number(props.stopExec);
   }
 
   json.offers.push(ofertaPrincipal);
