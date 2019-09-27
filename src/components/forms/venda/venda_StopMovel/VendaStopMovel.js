@@ -50,7 +50,7 @@ export default connect(
 )(VendaStopMovel);
 
 const ordem = {
-  nome: "Venda Stop Movel",
+  nome: "Venda Stop Móvel",
   tipoOrdem: "sellMovel",
   tipoOferta: "V"
 };

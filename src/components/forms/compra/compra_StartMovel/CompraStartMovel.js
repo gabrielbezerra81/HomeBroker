@@ -47,7 +47,7 @@ export default connect(
 )(CompraStarMovel);
 
 const ordem = {
-  nome: "Compra Stop Movel",
+  nome: "Compra Stop Móvel",
   tipoOrdem: "buyMovel",
   tipoOferta: "C"
 };

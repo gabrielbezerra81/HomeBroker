@@ -72,6 +72,7 @@ const montaOfertaPrincipal = (props, tipoAuxiliar, json, numAjuste = 0) => {
 
   ofertaPrincipal.status = "Nova";
   ofertaPrincipal.enabled = true;
+  ofertaPrincipal.stock.symbol = dadosPesquisa.ativo;
 
   //2º Oferta e ofertas adicionais CV Stop Movel
   if (
@@ -79,7 +80,7 @@ const montaOfertaPrincipal = (props, tipoAuxiliar, json, numAjuste = 0) => {
     tipoAuxiliar === "SegundaOrdem"
   ) {
     const { tabelaOrdens, inicioDisparo, ajustePadrao } = props;
-    ofertaPrincipal.orderType = "ajust";
+    ofertaPrincipal.orderType = "ajuste";
 
     if (tipoAuxiliar === "ajusteOfertaAdicional") {
       ofertaPrincipal.priority = numAjuste;
@@ -96,7 +97,6 @@ const montaOfertaPrincipal = (props, tipoAuxiliar, json, numAjuste = 0) => {
   }
 
   //Dados ofertas Limitada, Mercado, Agendada, Start Stop, Stop Móvel
-  ofertaPrincipal.stock.symbol = dadosPesquisa.ativo;
   ofertaPrincipal.expirationType = validadeSelect;
   ofertaPrincipal.expiration = date;
   ofertaPrincipal.qtty = Number(qtde);
