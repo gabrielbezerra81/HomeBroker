@@ -4,7 +4,9 @@ import {
   url_base,
   url_pesquisarAtivoBoletas_codigo,
   url_listarBookOfertas_codigo,
-  url_enviarOrdem
+  url_enviarOrdem,
+  url_pesquisarOpcoesVencimentos_codigo,
+  url_pesquisarStrikesVencimentos_codigo
 } from "components/api/url";
 
 export const pesquisarAtivoAPI = codigo => {
@@ -86,7 +88,6 @@ export const listarBookOfertaAPI = codigo_ativo => {
 
 export const enviarOrdemAPI = json => {
   const jsonStringBody = JSON.stringify(json);
-  console.log(jsonStringBody);
 
   return request
     .post(cors_anywhere + url_base + url_enviarOrdem)
@@ -99,4 +100,36 @@ export const enviarOrdemAPI = json => {
     .catch(erro => {
       console.log(erro.response);
     });
+};
+
+export const listarOrdensExecucao = () => {};
+
+export const pesquisarAtivoMultilegAPI = codigo_ativo => {
+  var dados = {
+    opcoes: [],
+    vencimentos: [],
+    cotacaoAtual: 0,
+    variacao: ""
+  };
+
+  return request
+    .get(
+      cors_anywhere +
+        url_base +
+        url_pesquisarOpcoesVencimentos_codigo +
+        codigo_ativo
+    )
+    .then(async response => {
+      const { body } = response;
+      dados.opcoes = [...body.options];
+      dados.vencimentos = [...body.expirations];
+      const dadosAtivo = await pesquisarAtivoAPI(codigo_ativo);
+      if (dadosAtivo) {
+        dados.cotacaoAtual = dadosAtivo.cotacaoAtual;
+        dados.variacao = dadosAtivo.porcentagem;
+
+        return dados;
+      }
+    })
+    .catch(erro => console.log(erro));
 };

@@ -12,6 +12,7 @@ import {
   modificarAtributoAbaAction
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
+import { pesquisarAtivoMultilegAction } from "components/redux/actions/api_actions/MenuAPIAction";
 
 class AbaMultileg extends React.Component {
   render() {
@@ -36,7 +37,15 @@ class AbaMultileg extends React.Component {
                   }
                 />
                 <InputGroup.Append className="inputAtivoAppend">
-                  <span className="input-group-text iconeProcurar divClicavel">
+                  <span
+                    className="input-group-text iconeProcurar divClicavel"
+                    onClick={() =>
+                      this.props.pesquisarAtivoMultilegAction(
+                        this.props,
+                        indice
+                      )
+                    }
+                  >
                     <MDBIcon icon="search" />
                   </span>
                 </InputGroup.Append>
@@ -63,11 +72,13 @@ class AbaMultileg extends React.Component {
                     )
                   }
                 >
-                  {this.props.multileg[indice].strike.map((strike, indice) => (
-                    <option key={strike + indice} value={strike}>
-                      {strike}
-                    </option>
-                  ))}
+                  {this.props.multileg[indice].opcoes.map((item, index) =>
+                    renderStrikeSymbol(
+                      item,
+                      index,
+                      this.props.multileg[indice].opcoes
+                    )
+                  )}
                 </Form.Control>
               </Form.Group>
               <Form.Group className="wrapperVencimento ml-1">
@@ -286,13 +297,18 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { abrirFecharConfigComplAction, modificarAtributoAbaAction }
+  {
+    abrirFecharConfigComplAction,
+    modificarAtributoAbaAction,
+    pesquisarAtivoMultilegAction
+  }
 )(AbaMultileg);
 
 const renderSeta = valor => {
   valor = Number(valor);
-  if (valor >= 0) return <ArrowUp fill="#138342" className="mr-1" width="35" />;
-  else return <ArrowDown fill="red" className="mr-1" width="35" />;
+  if (valor > 0) return <ArrowUp fill="#138342" className="mr-1" width="35" />;
+  else if (valor < 0)
+    return <ArrowDown fill="red" className="mr-1" width="35" />;
 };
 
 const renderValorPorcentagem = porcentagem => {
@@ -306,4 +322,23 @@ const renderValorPorcentagem = porcentagem => {
     porcentagem = formatarNumDecimal(porcentagem);
     return <h6>+{porcentagem}%</h6>;
   }
+};
+
+const renderStrikeSymbol = (item, indice, listaOpcoes) => {
+  if (indice % 2 === 0)
+    return (
+      <option key={indice} value={item.strike}>
+        {item.type === "CALL"
+          ? item.symbol +
+            " " +
+            item.strike +
+            " " +
+            listaOpcoes[indice + 1].symbol
+          : listaOpcoes[indice + 1].symbol +
+            " " +
+            item.strike +
+            " " +
+            item.symbol}
+      </option>
+    );
 };

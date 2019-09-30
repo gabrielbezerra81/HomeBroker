@@ -17,7 +17,6 @@ export const pesquisarAtivoOnEnterAction = (codigo, namespace) => {
 export const enviarOrdemAction = props => {
   return async dispatch => {
     let json = [montaOrdemPrincipal(props)];
-    console.log("ordem", json);
 
     const resposta = await enviarOrdemAPI(json);
   };

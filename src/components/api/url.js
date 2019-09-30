@@ -7,3 +7,10 @@ export const url_enviarOrdem = "order/list";
 
 //Book de ofertas
 export const url_listarBookOfertas_codigo = "book/";
+
+//Ordens em execução
+export const url_listarOrdensExecucao_ = "offer/working";
+
+//Multileg
+export const url_pesquisarOpcoesVencimentos_codigo = "stocks/options/expirations/";
+export const url_pesquisarStrikesVencimentos_codigo =  "stocks/strikes/expirations/"

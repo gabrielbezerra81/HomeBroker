@@ -7,6 +7,7 @@ import {
   MODIFICAR_ATRIBUTO_ABA,
   MODIFICAR_VARIAVEL_MULTILEG
 } from "constants/MenuActionTypes";
+import { PESQUISAR_ATIVO_MULTILEG_API } from "constants/ApiActionTypes";
 
 const INITIAL_STATE = {
   configComplementarAberto: false,
@@ -18,11 +19,11 @@ const INITIAL_STATE = {
   multileg: [
     {
       ativo: "PETR4",
-      valor: -27.44,
-      variacao: 5.33,
-      strike: [26.32, 27.48, 28.48],
+      valor: 0,
+      variacao: 0,
+      opcoes: [],
       strikeSelecionado: "",
-      vencimento: ["9/10/19", "10/10/19", "11/10/19"],
+      vencimento: [],
       vencimentoSelecionado: "",
       preco: "",
       total: "",
@@ -89,6 +90,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, multileg: action.payload };
     case MODIFICAR_VARIAVEL_MULTILEG:
       return { ...state, [action.payload.nome]: action.payload.valor };
+    case PESQUISAR_ATIVO_MULTILEG_API:
+      return { ...state, multileg: action.payload };
     default:
       return state;
   }

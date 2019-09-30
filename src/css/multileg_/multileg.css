@@ -107,7 +107,11 @@ a.botaoAddAba.active {
 }
 
 .divDetalhesAbaMultileg .divColunaDetalhes:nth-child(2) {
-  flex: 1;
+  flex: 7;
+}
+
+.divDetalhesAbaMultileg .divColunaDetalhes:nth-child(3) {
+  flex: 6;
 }
 
 .divColunaDetalhes {
@@ -115,7 +119,7 @@ a.botaoAddAba.active {
   flex-direction: row;
   align-items: flex-end;
   padding: 0 0.5rem;
-  flex: 2;
+  flex: 8;
   justify-content: space-evenly;
   height: 53px;
   padding-bottom: 7px;

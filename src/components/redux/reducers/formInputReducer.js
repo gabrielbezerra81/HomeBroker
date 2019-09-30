@@ -142,7 +142,7 @@ export default namespace => (state = INITIAL_STATE, action) => {
     case `${ADICIONAR_ITEM_TABELA_REDUCAO}${namespace}`:
       return { ...state, tabelaGainReducao: action.payload };
     case `${ADICIONA_ITEM_TABELA_ORDENS_VENDA}${namespace}`:
-      return { ...state, tabelaOrdens: action.payload };
+      return { ...state, tabelaOrdens: action.payload, ajusteAssimetrico: "" };
     case `${REMOVE_ITEM_TABELA_GAIN_REDUCAO}${namespace}`:
       return { ...state, tabelaGainReducao: action.payload };
     case `${REMOVE_ITEM_TABELA_ORDENS_MOVEL}${namespace}`:
