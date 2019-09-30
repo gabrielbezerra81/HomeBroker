@@ -5,6 +5,7 @@ import {
   MODIFICAR_ATRIBUTO_ABA,
   MODIFICAR_VARIAVEL_MULTILEG
 } from "constants/MenuActionTypes";
+import { cloneDeep } from "lodash";
 
 export const abrirFecharConfigComplAction = configComplementarAberto => {
   return dispatch => {
@@ -20,7 +21,7 @@ export const selecionarAdicionarAbaAction = (key, multileg) => {
     if (key === "adicionar") {
       let abasMultileg = [...multileg];
 
-      const novaAba = aba;
+      const novaAba = cloneDeep(aba);
       let abaAtual = "tab" + abasMultileg.length;
 
       abasMultileg.push(novaAba);
@@ -47,6 +48,7 @@ export const modificarAtributoAbaAction = (
   return dispatch => {
     let abasMultileg = [...multileg];
     abasMultileg[indice][atributo] = valor;
+    console.log(indice);
 
     dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
   };
@@ -88,12 +90,12 @@ export const modificarVariavelAction = (nome, valor) => {
 };
 
 const aba = {
-  ativo: "PETR4",
-  valor: -27.44,
-  variacao: 5.33,
-  strike: [26.32, 27.48, 28.48],
+  ativo: "",
+  valor: 0,
+  variacao: 0,
+  opcoes: [],
   strikeSelecionado: "",
-  vencimento: ["9/10/19", "10/10/19", "11/10/19"],
+  vencimento: [],
   vencimentoSelecionado: "",
   preco: "",
   total: "",
