@@ -188,7 +188,7 @@ a.botaoAddAba.active {
   height: 16px;
   padding-top: 2px;
   border-radius: 5px;
-  margin-top: 1px;
+  margin: 1px 1px 0 1px;
 }
 
 .cvCompra {
@@ -204,7 +204,7 @@ a.botaoAddAba.active {
 }
 
 .formDespernamento {
-  width: 100px;
+  width: 75px;
 }
 
 .imgModelo {

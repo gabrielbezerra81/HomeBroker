@@ -28,45 +28,7 @@ const INITIAL_STATE = {
       preco: "",
       total: "",
       validade: "",
-      tabelaMultileg: [
-        {
-          vencimento: ["9/10/19", "10/10/19", "11/10/19"],
-          strike: [26.32, 27.48, 28.48],
-          strikeSelecionado: "",
-          cv: "compra",
-          qtde: 1000,
-          serie: ["2019-08", "2019-07", "2019-06"],
-          serieSelecionada: "",
-          codigo: ["PETRH275", "PETRH275", "PETRH275"],
-          tipo: "call",
-          modelo: "EU",
-          despernamento: 1000,
-          prioridade: 0,
-          cotacao: "15,26",
-          valor: "-41,00",
-          compra: { qtde: 3700, preco: 2.4 },
-          venda: { qtde: 700, preco: 2.5 }
-        },
-        {
-          strike: [26.32, 27.48, 28.48],
-          strikeSelecionado: "",
-          vencimento: ["9/10/19", "10/10/19", "11/10/19"],
-          cv: "venda",
-          qtde: 2000,
-          serie: ["2019-08", "2019-07", "2019-06"],
-          serieSelecionada: "",
-          codigo: ["PETRH275", "PETRH275", "PETRH275"],
-          codigoSelecionado: "",
-          tipo: "put",
-          modelo: "USA",
-          despernamento: 1000,
-          prioridade: 0,
-          cotacao: "10,35",
-          valor: "-201,00",
-          compra: { qtde: 3700, preco: 1.5 },
-          venda: { qtde: 1700, preco: 1.6 }
-        }
-      ]
+      tabelaMultileg: []
     }
   ]
 };

@@ -9,7 +9,8 @@ import IconeConfigGrafico from "components/utils/IconeConfigGrafico";
 import { connect } from "react-redux";
 import {
   abrirFecharConfigComplAction,
-  modificarAtributoAbaAction
+  modificarAtributoAbaAction,
+  adicionarOfertaTabelaAction
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 import { pesquisarAtivoMultilegAction } from "components/redux/actions/api_actions/MenuAPIAction";
@@ -110,13 +111,31 @@ class AbaMultileg extends React.Component {
               <div className="divFlexRowDetalhesAba">
                 <Form.Label>Incluir</Form.Label>
                 <div className="botoesIncluir">
-                  <Button variant="primary" size="sm">
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    onClick={() =>
+                      this.props.adicionarOfertaTabelaAction(this.props, "acao")
+                    }
+                  >
                     +Ativo
                   </Button>
-                  <Button variant="primary" size="sm">
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    onClick={() =>
+                      this.props.adicionarOfertaTabelaAction(this.props, "call")
+                    }
+                  >
                     +Call
                   </Button>
-                  <Button variant="primary" size="sm">
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    onClick={() =>
+                      this.props.adicionarOfertaTabelaAction(this.props, "put")
+                    }
+                  >
                     +Put
                   </Button>
                 </div>
@@ -300,7 +319,8 @@ export default connect(
   {
     abrirFecharConfigComplAction,
     modificarAtributoAbaAction,
-    pesquisarAtivoMultilegAction
+    pesquisarAtivoMultilegAction,
+    adicionarOfertaTabelaAction
   }
 )(AbaMultileg);
 

@@ -8,6 +8,7 @@ import {
   excluirOfertaTabelaAction
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { MDBIcon } from "mdbreact";
+import { formatarNumDecimal } from "components/utils/Formatacoes";
 
 const capitalize = function(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -58,7 +59,7 @@ class TabelaMultileg extends React.Component {
                   >
                     <MDBIcon icon="times" className="saldoOpNegativo" />
                   </td>
-                  {renderCV(item.cv)}
+                  {renderCV(item.cv, this.props, indiceLinha)}
                   <td>
                     <Form.Group>
                       <Form.Control
@@ -120,11 +121,14 @@ class TabelaMultileg extends React.Component {
                           )
                         }
                       >
-                        {item.strike.map((strike, indice) => (
-                          <option key={strike + indice} value={strike}>
-                            {strike}
-                          </option>
-                        ))}
+                        {item.opcoes.map((itemStrike, indice) => {
+                          if (item.tipo)
+                            return (
+                              <option key={indice} value={itemStrike.strike}>
+                                {itemStrike.strike}
+                              </option>
+                            );
+                        })}
                       </Form.Control>
                     </Form.Group>
                   </td>
@@ -144,9 +148,9 @@ class TabelaMultileg extends React.Component {
                           )
                         }
                       >
-                        {item.codigo.map((codigo, indice) => (
-                          <option key={codigo + indice} value={codigo}>
-                            {codigo}
+                        {item.opcoes.map((item, indice) => (
+                          <option key={indice} value={item.symbol}>
+                            {item.symbol}
                           </option>
                         ))}
                       </Form.Control>
@@ -169,7 +173,7 @@ class TabelaMultileg extends React.Component {
                       {capitalize(item.tipo)}
                     </div>
                   </td>
-                  {renderModelo(item.modelo)}
+                  <td>{renderModelo(item.modelo)}</td>
                   <td>
                     <Form.Group>
                       <Form.Control
@@ -217,8 +221,8 @@ class TabelaMultileg extends React.Component {
                       </Form.Control>
                     </Form.Group>
                   </td>
-                  <td>{item.cotacao}</td>
-                  <td>{item.valor}</td>
+                  <td>{formatarNumDecimal(item.cotacao)}</td>
+                  <td>{formatarNumDecimal(item.qtde * item.cotacao)}</td>
                 </tr>
               );
             }
@@ -238,36 +242,63 @@ export default connect(
   { modificarAtributoTabelaAbaAction, excluirOfertaTabelaAction }
 )(TabelaMultileg);
 
-const renderCV = cv => {
+const renderCV = (cv, props, indiceLinha) => {
+  let cvCompra = "",
+    cvVenda = "";
+  if (cv === "compra") {
+    cvCompra = "cvCompra";
+  } else {
+    cvVenda = "cvVenda";
+  }
+
   return (
     <td>
-      {cv === "compra" ? (
-        <div className="divCV">
-          <h6 className="cvCompra"> C </h6>
-          <h6> V </h6>
-        </div>
-      ) : (
-        <div className="divCV">
-          <h6> C </h6>
-          <h6 className="cvVenda"> V </h6>
-        </div>
-      )}
+      <div className="divCV">
+        <h6
+          className={`${cvCompra} divClicavel`}
+          onClick={() =>
+            props.modificarAtributoTabelaAbaAction(
+              props.multileg,
+              props.indice,
+              "cv",
+              "compra",
+              indiceLinha
+            )
+          }
+        >
+          C
+        </h6>
+        <h6
+          className={`${cvVenda} divClicavel`}
+          onClick={() =>
+            props.modificarAtributoTabelaAbaAction(
+              props.multileg,
+              props.indice,
+              "cv",
+              "venda",
+              indiceLinha
+            )
+          }
+        >
+          V
+        </h6>
+      </div>
     </td>
   );
 };
 
 const renderModelo = modelo => {
-  return (
-    <td>
-      {modelo === "EU" ? (
-        <div>
-          <img src={imgModeloEU} alt="" className="imgModelo" />
-        </div>
-      ) : (
-        <div>
-          <img src={imgModeloUSA} alt="" className="imgModelo" />
-        </div>
-      )}
-    </td>
-  );
+  if (modelo === "EUROPEAN")
+    return (
+      <div>
+        <img src={imgModeloEU} alt="" className="imgModelo" />
+      </div>
+    );
+  else if (modelo === "AMERICAN")
+    return (
+      <div>
+        <img src={imgModeloUSA} alt="" className="imgModelo" />
+      </div>
+    );
+  else return null;
 };

@@ -10,7 +10,6 @@ import {
   pesquisarStrikesMultilegAction,
   encontrarNumMaisProximo
 } from "components/redux/actions/api_actions/MenuAPIAction";
-import { pesquisarStrikesMultilegAPI } from "components/api/API";
 
 export const abrirFecharConfigComplAction = configComplementarAberto => {
   return dispatch => {
@@ -115,8 +114,64 @@ export const excluirOfertaTabelaAction = (multileg, indiceAba, indiceLinha) => {
   };
 };
 
+export const adicionarOfertaTabelaAction = (props, tipoOferta) => {
+  return dispatch => {
+    let abasMultileg = [...props.multileg];
+    const indiceAba = props.indice;
+    let novaOferta = cloneDeep(oferta);
+    novaOferta.cotacao = abasMultileg[indiceAba].valor;
+
+    if (tipoOferta === "acao") {
+      novaOferta.opcoes = [{ symbol: "PETR4" }];
+    } else {
+      novaOferta.strikeSelecionado = abasMultileg[indiceAba].strikeSelecionado;
+      novaOferta.serie = [...abasMultileg[indiceAba].vencimento];
+      novaOferta.serieSelecionada =
+        abasMultileg[indiceAba].vencimentoSelecionado;
+      novaOferta.opcoes = [...abasMultileg[indiceAba].opcoes];
+
+      if (tipoOferta === "call") {
+        novaOferta.tipo = "call";
+      } else if (tipoOferta === "put") {
+        novaOferta.tipo = "put";
+      }
+      novaOferta.opcoes.forEach(item => {
+        if (
+          item.strike === novaOferta.strikeSelecionado &&
+          item.type === tipoOferta.toUpperCase()
+        ) {
+          novaOferta.modelo = item.model;
+          novaOferta.codigoSelecionado = item.symbol;
+          return;
+        }
+      });
+    }
+    abasMultileg[indiceAba].tabelaMultileg.push(novaOferta);
+
+    console.log(novaOferta);
+    dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
+  };
+};
+
+const oferta = {
+  opcoes: [],
+  strikeSelecionado: "",
+  cv: "compra",
+  qtde: 0,
+  serie: [],
+  serieSelecionada: "",
+  codigoSelecionado: "", //remover
+  tipo: "",
+  modelo: "",
+  despernamento: 1000,
+  prioridade: 0,
+  cotacao: 0,
+  compra: { qtde: 3700, preco: 2.4 },
+  venda: { qtde: 700, preco: 2.5 }
+};
+
 const aba = {
-  ativo: "",
+  ativo: "PETR4",
   valor: 0,
   variacao: 0,
   opcoes: [],
@@ -126,43 +181,5 @@ const aba = {
   preco: "",
   total: "",
   validade: "",
-  tabelaMultileg: [
-    {
-      vencimento: ["9/10/19", "10/10/19", "11/10/19"],
-      strike: [26.32, 27.48, 28.48],
-      strikeSelecionado: "",
-      cv: "compra",
-      qtde: 1000,
-      serie: ["2019-08", "2019-07", "2019-06"],
-      serieSelecionada: "",
-      codigo: ["PETRH275", "PETRH275", "PETRH275"],
-      tipo: "call",
-      modelo: "EU",
-      despernamento: 1000,
-      prioridade: 0,
-      cotacao: "15,26",
-      valor: "-41,00",
-      compra: { qtde: 3700, preco: 2.4 },
-      venda: { qtde: 700, preco: 2.5 }
-    },
-    {
-      strike: [26.32, 27.48, 28.48],
-      strikeSelecionado: "",
-      vencimento: ["9/10/19", "10/10/19", "11/10/19"],
-      cv: "venda",
-      qtde: 2000,
-      serie: ["2019-08", "2019-07", "2019-06"],
-      serieSelecionada: "",
-      codigo: ["PETRH275", "PETRH275", "PETRH275"],
-      codigoSelecionado: "",
-      tipo: "put",
-      modelo: "USA",
-      despernamento: 1000,
-      prioridade: 0,
-      cotacao: "10,35",
-      valor: "-201,00",
-      compra: { qtde: 3700, preco: 1.5 },
-      venda: { qtde: 1700, preco: 1.6 }
-    }
-  ]
+  tabelaMultileg: []
 };
