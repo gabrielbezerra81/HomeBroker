@@ -6,6 +6,8 @@ import {
   MODIFICAR_VARIAVEL_MULTILEG
 } from "constants/MenuActionTypes";
 import { cloneDeep } from "lodash";
+import { pesquisarStrikesMultilegAction } from "components/redux/actions/api_actions/MenuAPIAction";
+import { pesquisarStrikesMultilegAPI } from "components/api/API";
 
 export const abrirFecharConfigComplAction = configComplementarAberto => {
   return dispatch => {
@@ -45,10 +47,15 @@ export const modificarAtributoAbaAction = (
   atributo,
   valor
 ) => {
-  return dispatch => {
+  return async dispatch => {
     let abasMultileg = [...multileg];
     abasMultileg[indice][atributo] = valor;
-    console.log(indice);
+    if (atributo === "vencimentoSelecionado") {
+      const dados = await pesquisarStrikesMultilegAction(multileg, indice);
+      if (dados) {
+        abasMultileg[indice].opcoes = [...dados];
+      }
+    }
 
     dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
   };

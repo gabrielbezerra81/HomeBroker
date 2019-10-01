@@ -1,4 +1,7 @@
-import { pesquisarAtivoMultilegAPI } from "components/api/API";
+import {
+  pesquisarAtivoMultilegAPI,
+  pesquisarStrikesMultilegAPI
+} from "components/api/API";
 import { PESQUISAR_ATIVO_MULTILEG_API } from "constants/ApiActionTypes";
 
 export const pesquisarAtivoMultilegAction = (props, indice) => {
@@ -12,7 +15,18 @@ export const pesquisarAtivoMultilegAction = (props, indice) => {
       multileg[indice].vencimento = [...dados.vencimentos];
       multileg[indice].valor = dados.cotacaoAtual;
       multileg[indice].variacao = dados.variacao;
+      multileg[indice].vencimentoSelecionado = dados.vencimentos[0];
       dispatch({ type: PESQUISAR_ATIVO_MULTILEG_API, payload: multileg });
     }
   };
+};
+
+export const pesquisarStrikesMultilegAction = async (multileg, indice) => {
+  const codigo_ativo = multileg[indice].ativo;
+  const vencimento = multileg[indice].vencimentoSelecionado;
+  const dados = await pesquisarStrikesMultilegAPI(codigo_ativo, vencimento);
+  if (dados) {
+    return dados;
+  }
+  return async dispatch => {};
 };

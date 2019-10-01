@@ -14,3 +14,4 @@ export const url_listarOrdensExecucao_ = "offer/working";
 //Multileg
 export const url_pesquisarOpcoesVencimentos_codigo = "stocks/options/expirations/";
 export const url_pesquisarStrikesVencimentos_codigo =  "stocks/strikes/expirations/"
+export const url_pesquisarStrikes_codigo_vencimento = "stocks/findBySymbolAndEndDate/"

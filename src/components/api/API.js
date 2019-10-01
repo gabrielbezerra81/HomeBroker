@@ -6,7 +6,8 @@ import {
   url_listarBookOfertas_codigo,
   url_enviarOrdem,
   url_pesquisarOpcoesVencimentos_codigo,
-  url_pesquisarStrikesVencimentos_codigo
+  url_pesquisarStrikesVencimentos_codigo,
+  url_pesquisarStrikes_codigo_vencimento
 } from "components/api/url";
 
 export const pesquisarAtivoAPI = codigo => {
@@ -130,6 +131,22 @@ export const pesquisarAtivoMultilegAPI = codigo_ativo => {
 
         return dados;
       }
+    })
+    .catch(erro => console.log(erro));
+};
+
+export const pesquisarStrikesMultilegAPI = (codigo_ativo, vencimento) => {
+  return request
+    .get(
+      cors_anywhere +
+        url_base +
+        url_pesquisarStrikes_codigo_vencimento +
+        codigo_ativo +
+        "/" +
+        vencimento
+    )
+    .then(response => {
+      return response.body;
     })
     .catch(erro => console.log(erro));
 };
