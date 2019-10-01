@@ -11,6 +11,7 @@ export const pesquisarAtivoMultilegAction = (props, indice) => {
 
     const dados = await pesquisarAtivoMultilegAPI(codigo_ativo);
     if (dados) {
+      console.log(dados);
       multileg[indice].opcoes = [...dados.opcoes];
       multileg[indice].vencimento = [...dados.vencimentos];
       multileg[indice].valor = dados.cotacaoAtual;

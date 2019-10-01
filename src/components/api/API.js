@@ -17,13 +17,17 @@ export const pesquisarAtivoAPI = codigo => {
       const { body } = response;
       var dadosPesquisa;
       let oscilacao;
+      let cotacaoAtual = 0;
       let qtdeMultiplo100;
       let ultimoHorario = new Date(body.ultimoHorario).toLocaleTimeString();
 
       if (body.stock.market === "OddLot") qtdeMultiplo100 = false;
       else qtdeMultiplo100 = true;
 
+      oscilacao = body.oscilacao;
       if (!oscilacao) oscilacao = "0,00";
+      cotacaoAtual = body.ultimo;
+      if (!cotacaoAtual) cotacaoAtual = 0;
 
       if (
         body.stock.market === "EquityCall" ||
@@ -36,7 +40,7 @@ export const pesquisarAtivoAPI = codigo => {
           model: body.stock.model,
           vencimento: new Date(body.stock.endBusiness).toLocaleDateString(),
           symbol: body.stock.referenceStock.symbol,
-          cotacaoAtual: body.ultimo,
+          cotacaoAtual: cotacaoAtual,
           porcentagem: oscilacao,
           ultimoHorario: ultimoHorario,
           qtdeMultiplo100: qtdeMultiplo100,
@@ -47,7 +51,7 @@ export const pesquisarAtivoAPI = codigo => {
         dadosPesquisa = {
           resultadoAtivo: body.stock.symbol + ", " + body.stock.corporationName,
           codigoEspecificacao: body.stock.specificationCode,
-          cotacaoAtual: body.ultimo,
+          cotacaoAtual: cotacaoAtual,
           porcentagem: oscilacao,
           ultimoHorario: ultimoHorario,
           qtdeMultiplo100: qtdeMultiplo100,
