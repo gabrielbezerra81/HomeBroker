@@ -11,12 +11,15 @@ export const pesquisarAtivoMultilegAction = (props, indice) => {
 
     const dados = await pesquisarAtivoMultilegAPI(codigo_ativo);
     if (dados) {
-      console.log(dados);
       multileg[indice].opcoes = [...dados.opcoes];
       multileg[indice].vencimento = [...dados.vencimentos];
       multileg[indice].valor = dados.cotacaoAtual;
       multileg[indice].variacao = dados.variacao;
       multileg[indice].vencimentoSelecionado = dados.vencimentos[0];
+      multileg[indice].strikeSelecionado = encontrarNumMaisProximo(
+        dados.opcoes,
+        dados.cotacaoAtual
+      );
       dispatch({ type: PESQUISAR_ATIVO_MULTILEG_API, payload: multileg });
     }
   };
@@ -29,5 +32,17 @@ export const pesquisarStrikesMultilegAction = async (multileg, indice) => {
   if (dados) {
     return dados;
   }
-  return async dispatch => {};
+  return async dispatch => {
+    dispatch({ type: "" });
+  };
+};
+
+export const encontrarNumMaisProximo = (listaOpcoes, cotacao) => {
+  var maisProximo = listaOpcoes.reduce((prev, curr) =>
+    Math.abs(curr.strike - cotacao) < Math.abs(prev.strike - cotacao)
+      ? curr
+      : prev
+  );
+
+  return maisProximo.strike;
 };

@@ -3,7 +3,11 @@ import { Table, Form } from "react-bootstrap";
 import imgModeloEU from "img/modeloEU.png";
 import imgModeloUSA from "img/modeloUSA2.svg";
 import { connect } from "react-redux";
-import { modificarAtributoTabelaAbaAction } from "components/redux/actions/menu_actions/MultilegActions";
+import {
+  modificarAtributoTabelaAbaAction,
+  excluirOfertaTabelaAction
+} from "components/redux/actions/menu_actions/MultilegActions";
+import { MDBIcon } from "mdbreact";
 
 const capitalize = function(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -11,7 +15,7 @@ const capitalize = function(str) {
 
 class TabelaMultileg extends React.Component {
   render() {
-    const { indice } = this.props;
+    const indiceAba = this.props.indice;
     return (
       <Table
         variant="dark"
@@ -23,6 +27,7 @@ class TabelaMultileg extends React.Component {
       >
         <thead>
           <tr>
+            <th></th>
             <th>C/V</th>
             <th>Qtde.</th>
             <th>Série</th>
@@ -41,6 +46,18 @@ class TabelaMultileg extends React.Component {
             (item, indiceLinha) => {
               return (
                 <tr key={indiceLinha}>
+                  <td
+                    className="divClicavel"
+                    onClick={() =>
+                      this.props.excluirOfertaTabelaAction(
+                        this.props.multileg,
+                        indiceAba,
+                        indiceLinha
+                      )
+                    }
+                  >
+                    <MDBIcon icon="times" className="saldoOpNegativo" />
+                  </td>
                   {renderCV(item.cv)}
                   <td>
                     <Form.Group>
@@ -54,7 +71,7 @@ class TabelaMultileg extends React.Component {
                         onChange={event =>
                           this.props.modificarAtributoTabelaAbaAction(
                             this.props.multileg,
-                            indice,
+                            indiceAba,
                             "qtde",
                             event.currentTarget.value,
                             indiceLinha
@@ -72,7 +89,7 @@ class TabelaMultileg extends React.Component {
                         onChange={event =>
                           this.props.modificarAtributoTabelaAbaAction(
                             this.props.multileg,
-                            indice,
+                            indiceAba,
                             "serieSelecionada",
                             event.currentTarget.value,
                             indiceLinha
@@ -96,7 +113,7 @@ class TabelaMultileg extends React.Component {
                         onChange={event =>
                           this.props.modificarAtributoTabelaAbaAction(
                             this.props.multileg,
-                            indice,
+                            indiceAba,
                             "strikeSelecionado",
                             event.currentTarget.value,
                             indiceLinha
@@ -120,7 +137,7 @@ class TabelaMultileg extends React.Component {
                         onChange={event =>
                           this.props.modificarAtributoTabelaAbaAction(
                             this.props.multileg,
-                            indice,
+                            indiceAba,
                             "codigoSelecionado",
                             event.currentTarget.value,
                             indiceLinha
@@ -142,7 +159,7 @@ class TabelaMultileg extends React.Component {
                       onClick={event =>
                         this.props.modificarAtributoTabelaAbaAction(
                           this.props.multileg,
-                          indice,
+                          indiceAba,
                           "tipo",
                           item.tipo,
                           indiceLinha
@@ -164,7 +181,7 @@ class TabelaMultileg extends React.Component {
                         onChange={event =>
                           this.props.modificarAtributoTabelaAbaAction(
                             this.props.multileg,
-                            indice,
+                            indiceAba,
                             "despernamento",
                             event.currentTarget.value,
                             indiceLinha
@@ -182,7 +199,7 @@ class TabelaMultileg extends React.Component {
                         onChange={event =>
                           this.props.modificarAtributoTabelaAbaAction(
                             this.props.multileg,
-                            indice,
+                            indiceAba,
                             "prioridade",
                             event.currentTarget.value,
                             indiceLinha
@@ -218,7 +235,7 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { modificarAtributoTabelaAbaAction }
+  { modificarAtributoTabelaAbaAction, excluirOfertaTabelaAction }
 )(TabelaMultileg);
 
 const renderCV = cv => {

@@ -6,7 +6,10 @@ import {
   MODIFICAR_VARIAVEL_MULTILEG
 } from "constants/MenuActionTypes";
 import { cloneDeep } from "lodash";
-import { pesquisarStrikesMultilegAction } from "components/redux/actions/api_actions/MenuAPIAction";
+import {
+  pesquisarStrikesMultilegAction,
+  encontrarNumMaisProximo
+} from "components/redux/actions/api_actions/MenuAPIAction";
 import { pesquisarStrikesMultilegAPI } from "components/api/API";
 
 export const abrirFecharConfigComplAction = configComplementarAberto => {
@@ -49,11 +52,18 @@ export const modificarAtributoAbaAction = (
 ) => {
   return async dispatch => {
     let abasMultileg = [...multileg];
+
+    if (atributo === "ativo") valor = valor.toUpperCase();
+
     abasMultileg[indice][atributo] = valor;
     if (atributo === "vencimentoSelecionado") {
       const dados = await pesquisarStrikesMultilegAction(multileg, indice);
       if (dados) {
         abasMultileg[indice].opcoes = [...dados];
+        abasMultileg[indice].strikeSelecionado = encontrarNumMaisProximo(
+          dados,
+          abasMultileg[indice].valor
+        );
       }
     }
 
@@ -93,6 +103,15 @@ export const modificarVariavelAction = (nome, valor) => {
       type: MODIFICAR_VARIAVEL_MULTILEG,
       payload: { nome: nome, valor: valor }
     });
+  };
+};
+
+export const excluirOfertaTabelaAction = (multileg, indiceAba, indiceLinha) => {
+  return dispatch => {
+    let abasMultileg = [...multileg];
+    abasMultileg[indiceAba].tabelaMultileg.splice(indiceLinha, 1);
+
+    dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
   };
 };
 

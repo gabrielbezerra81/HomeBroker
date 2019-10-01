@@ -98,7 +98,7 @@ export const mudarAtivoAction = (event, namespace) => {
   return dispatch => {
     dispatch({
       type: `${MUDAR_ATIVO}${namespace}`,
-      payload: event.target.value
+      payload: event.target.value.toUpperCase()
     });
   };
 };
