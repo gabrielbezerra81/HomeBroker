@@ -171,6 +171,7 @@ export const adicionarOfertaTabelaAction = (props, tipoOferta) => {
         novaOferta.tipo = "put";
       }
       pesquisarSymbolModel_strike_tipo(novaOferta);
+      //Pesquisar book e preco ultimo do codigo
     }
     abasMultileg[indiceAba].tabelaMultileg.push(novaOferta);
 
