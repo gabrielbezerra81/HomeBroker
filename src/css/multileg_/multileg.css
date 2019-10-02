@@ -1,5 +1,5 @@
 #multileg {
-  width: 1050px;
+  width: 1170px;
   margin-left: 5px;
   height: 390px;
 }
@@ -165,6 +165,10 @@ a.botaoAddAba.active {
   color: #be9117;
 }
 
+.tableMultileg thead th:last-child{
+  min-width: 100px;
+}
+
 .tableMultileg td {
   padding: 3px !important;
 }
@@ -303,6 +307,7 @@ a.botaoAddAba.active {
 .rowTextoInputRange > div {
   height: 14px;
   color: var(--cor-texto);
+  text-align: center
 }
 
 #icone_config_complementar {

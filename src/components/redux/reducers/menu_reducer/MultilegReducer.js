@@ -29,6 +29,10 @@ const INITIAL_STATE = {
       preco: "",
       total: "",
       validade: "",
+      book: {
+        tabelaVenda: {},
+        tabelaCompra: {}
+      },
       tabelaMultileg: []
     }
   ]

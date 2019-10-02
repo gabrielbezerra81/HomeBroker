@@ -152,6 +152,8 @@ export const adicionarOfertaTabelaAction = (props, tipoOferta) => {
     let novaOferta = cloneDeep(oferta);
     novaOferta.cotacao = abasMultileg[indiceAba].valor;
     novaOferta.ativoAtual = abasMultileg[indiceAba].ativoAtual;
+    novaOferta.compra = abasMultileg[indiceAba].book.tabelaCompra;
+    novaOferta.venda = abasMultileg[indiceAba].book.tabelaVenda;
 
     if (tipoOferta === "acao") {
       novaOferta.opcoes = [{ symbol: abasMultileg[indiceAba].ativoAtual }];
@@ -190,8 +192,8 @@ const oferta = {
   prioridade: 0,
   cotacao: 0,
   ativoAtual: "",
-  compra: { qtde: 3700, preco: 2.4 },
-  venda: { qtde: 700, preco: 2.5 }
+  compra: {},
+  venda: {}
 };
 
 const aba = {

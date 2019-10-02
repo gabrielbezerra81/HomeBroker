@@ -1,26 +1,31 @@
 import {
   pesquisarAtivoMultilegAPI,
-  pesquisarStrikesMultilegAPI
+  pesquisarStrikesMultilegAPI,
+  listarBookOfertaAPI
 } from "components/api/API";
 import { PESQUISAR_ATIVO_MULTILEG_API } from "constants/ApiActionTypes";
 
 export const pesquisarAtivoMultilegAction = (props, indice) => {
   return async dispatch => {
     let multileg = [...props.multileg];
-    const codigo_ativo = multileg[indice].ativo;
+    let aba = multileg[indice];
+    const codigo_ativo = aba.ativo;
 
     const dados = await pesquisarAtivoMultilegAPI(codigo_ativo);
-    if (dados) {
-      multileg[indice].opcoes = [...dados.opcoes];
-      multileg[indice].vencimento = [...dados.vencimentos];
-      multileg[indice].valor = dados.cotacaoAtual;
-      multileg[indice].variacao = dados.variacao;
-      multileg[indice].vencimentoSelecionado = dados.vencimentos[0];
-      multileg[indice].strikeSelecionado = encontrarNumMaisProximo(
+    const book = await listarBookOfertaAPI(codigo_ativo);
+    if (dados && book) {
+      aba.opcoes = [...dados.opcoes];
+      aba.vencimento = [...dados.vencimentos];
+      aba.valor = dados.cotacaoAtual;
+      aba.variacao = dados.variacao;
+      aba.vencimentoSelecionado = dados.vencimentos[0];
+      aba.strikeSelecionado = encontrarNumMaisProximo(
         dados.opcoes,
         dados.cotacaoAtual
       );
-      multileg[indice].ativoAtual = codigo_ativo;
+      aba.ativoAtual = codigo_ativo;
+      aba.book.tabelaVenda = book.tabelaOfertasVenda[4];
+      aba.book.tabelaCompra = book.tabelaOfertasCompra[0];
       dispatch({ type: PESQUISAR_ATIVO_MULTILEG_API, payload: multileg });
     }
   };
