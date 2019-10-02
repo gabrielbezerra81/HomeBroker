@@ -83,13 +83,13 @@ class Book extends React.Component {
         </Row>
         <Row className="ml-1 mr-1 mb-2 rowTextoInputRange">
           <Col md={4}>
-            <span>{max}</span>
+            <span>{min}</span>
           </Col>
           <Col md={4}>
             <span>{(max + min) / 2}</span>
           </Col>
           <Col md={4}>
-            <span>{min}</span>
+            <span>{max}</span>
           </Col>
         </Row>
         <Row className="mr-2 mb-2">
