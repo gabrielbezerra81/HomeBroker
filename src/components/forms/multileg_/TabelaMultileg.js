@@ -116,13 +116,13 @@ class TabelaMultileg extends React.Component {
                             this.props.multileg,
                             indiceAba,
                             "strikeSelecionado",
-                            event.currentTarget.value,
+                            Number(event.currentTarget.value),
                             indiceLinha
                           )
                         }
                       >
                         {item.opcoes.map((itemStrike, indice) => {
-                          if (item.tipo)
+                          if (item.tipo && indice % 2 === 0)
                             return (
                               <option key={indice} value={itemStrike.strike}>
                                 {itemStrike.strike}
@@ -170,7 +170,7 @@ class TabelaMultileg extends React.Component {
                         )
                       }
                     >
-                      {capitalize(item.tipo)}
+                      {(item.tipo.toUpperCase())}
                     </div>
                   </td>
                   <td>{renderModelo(item.modelo)}</td>

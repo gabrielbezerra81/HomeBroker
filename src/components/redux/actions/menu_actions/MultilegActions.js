@@ -56,7 +56,10 @@ export const modificarAtributoAbaAction = (
 
     abasMultileg[indice][atributo] = valor;
     if (atributo === "vencimentoSelecionado") {
-      const dados = await pesquisarStrikesMultilegAction(multileg, indice);
+      const dados = await pesquisarStrikesMultilegAction(
+        multileg[indice].ativo,
+        multileg[indice].vencimentoSelecionado
+      );
       if (dados) {
         abasMultileg[indice].opcoes = [...dados];
         abasMultileg[indice].strikeSelecionado = encontrarNumMaisProximo(
@@ -77,26 +80,54 @@ export const modificarAtributoTabelaAbaAction = (
   valor,
   indiceLinha
 ) => {
-  return dispatch => {
+  return async dispatch => {
     let abasMultileg = [...multileg];
+    let linhaTabela = abasMultileg[indiceGeral].tabelaMultileg[indiceLinha];
 
     if (atributo === "tipo") {
-      if (valor === "call")
-        abasMultileg[indiceGeral].tabelaMultileg[indiceLinha][atributo] = "put";
-      else if (valor === "put")
-        abasMultileg[indiceGeral].tabelaMultileg[indiceLinha][atributo] =
-          "call";
-    } else {
-      abasMultileg[indiceGeral].tabelaMultileg[indiceLinha][atributo] = valor;
+      console.log("antes", linhaTabela[atributo]);
+      if (valor === "call") linhaTabela[atributo] = "put";
+      else if (valor === "put") linhaTabela[atributo] = "call";
+      pesquisarSymbolModel_strike_tipo(linhaTabela);
+      console.log("depois", linhaTabela[atributo]);
+      dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
+    } //
+    else {
+      linhaTabela[atributo] = valor;
+      //Se a série for alterada, pesquisa novamente os strikes e códigos
+      if (atributo === "serieSelecionada") {
+        const dados = await pesquisarStrikesMultilegAction(
+          linhaTabela.ativoAtual,
+          valor
+        );
+        if (dados) {
+          linhaTabela.opcoes = [...dados];
+          const pesquisa = linhaTabela.opcoes.find(
+            item => item.strike === linhaTabela.strikeSelecionado
+          );
+          if (!pesquisa) {
+            linhaTabela.strikeSelecionado = encontrarNumMaisProximo(
+              dados,
+              linhaTabela.cotacao
+            );
+          }
+          dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
+        }
+      } //
+      else if (atributo === "strikeSelecionado") {
+        pesquisarSymbolModel_strike_tipo(linhaTabela);
+        dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
+      } //
+      else if (atributo === "codigoSelecionado") {
+        pesquisarSerieStrikeModeloTipo_symbol(linhaTabela);
+        dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
+      } //
+      else dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
     }
-
-    dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
   };
 };
 
 export const modificarVariavelAction = (nome, valor) => {
-  console.log(nome);
-  console.log(valor);
   return dispatch => {
     dispatch({
       type: MODIFICAR_VARIAVEL_MULTILEG,
@@ -120,9 +151,11 @@ export const adicionarOfertaTabelaAction = (props, tipoOferta) => {
     const indiceAba = props.indice;
     let novaOferta = cloneDeep(oferta);
     novaOferta.cotacao = abasMultileg[indiceAba].valor;
+    novaOferta.ativoAtual = abasMultileg[indiceAba].ativoAtual;
 
     if (tipoOferta === "acao") {
-      novaOferta.opcoes = [{ symbol: "PETR4" }];
+      novaOferta.opcoes = [{ symbol: abasMultileg[indiceAba].ativoAtual }];
+      novaOferta.codigoSelecionado = abasMultileg[indiceAba].ativoAtual;
     } else {
       novaOferta.strikeSelecionado = abasMultileg[indiceAba].strikeSelecionado;
       novaOferta.serie = [...abasMultileg[indiceAba].vencimento];
@@ -135,20 +168,10 @@ export const adicionarOfertaTabelaAction = (props, tipoOferta) => {
       } else if (tipoOferta === "put") {
         novaOferta.tipo = "put";
       }
-      novaOferta.opcoes.forEach(item => {
-        if (
-          item.strike === novaOferta.strikeSelecionado &&
-          item.type === tipoOferta.toUpperCase()
-        ) {
-          novaOferta.modelo = item.model;
-          novaOferta.codigoSelecionado = item.symbol;
-          return;
-        }
-      });
+      pesquisarSymbolModel_strike_tipo(novaOferta);
     }
     abasMultileg[indiceAba].tabelaMultileg.push(novaOferta);
 
-    console.log(novaOferta);
     dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
   };
 };
@@ -160,12 +183,13 @@ const oferta = {
   qtde: 0,
   serie: [],
   serieSelecionada: "",
-  codigoSelecionado: "", //remover
+  codigoSelecionado: "",
   tipo: "",
   modelo: "",
   despernamento: 1000,
   prioridade: 0,
   cotacao: 0,
+  ativoAtual: "",
   compra: { qtde: 3700, preco: 2.4 },
   venda: { qtde: 700, preco: 2.5 }
 };
@@ -182,4 +206,30 @@ const aba = {
   total: "",
   validade: "",
   tabelaMultileg: []
+};
+
+const pesquisarSymbolModel_strike_tipo = objeto => {
+  objeto.opcoes.forEach(item => {
+    if (
+      item.strike === objeto.strikeSelecionado &&
+      item.type === objeto.tipo.toUpperCase()
+    ) {
+      objeto.codigoSelecionado = item.symbol;
+      objeto.modelo = item.model;
+      return;
+    }
+  });
+};
+
+const pesquisarSerieStrikeModeloTipo_symbol = objeto => {
+  objeto.opcoes.forEach(item => {
+    if (item.symbol === objeto.codigoSelecionado) {
+      objeto.modelo = item.model;
+      objeto.tipo = item.type.toLowerCase();
+      objeto.strikeSelecionado = item.strike;
+      objeto.serieSelecionada = item.strikeSelecionado;
+
+      return;
+    }
+  });
 };

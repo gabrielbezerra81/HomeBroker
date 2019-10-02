@@ -69,7 +69,7 @@ class AbaMultileg extends React.Component {
                       this.props.multileg,
                       indice,
                       "strikeSelecionado",
-                      event.currentTarget.value
+                      Number(event.currentTarget.value)
                     )
                   }
                 >

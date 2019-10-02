@@ -20,14 +20,16 @@ export const pesquisarAtivoMultilegAction = (props, indice) => {
         dados.opcoes,
         dados.cotacaoAtual
       );
+      multileg[indice].ativoAtual = codigo_ativo;
       dispatch({ type: PESQUISAR_ATIVO_MULTILEG_API, payload: multileg });
     }
   };
 };
 
-export const pesquisarStrikesMultilegAction = async (multileg, indice) => {
-  const codigo_ativo = multileg[indice].ativo;
-  const vencimento = multileg[indice].vencimentoSelecionado;
+export const pesquisarStrikesMultilegAction = async (
+  codigo_ativo,
+  vencimento
+) => {
   const dados = await pesquisarStrikesMultilegAPI(codigo_ativo, vencimento);
   if (dados) {
     return dados;

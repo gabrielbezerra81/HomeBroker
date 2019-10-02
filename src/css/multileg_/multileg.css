@@ -165,6 +165,10 @@ a.botaoAddAba.active {
   color: #be9117;
 }
 
+.tableMultileg thead th:nth-child(10) {
+  width: 90px;
+}
+
 .tableMultileg td {
   padding: 3px !important;
 }

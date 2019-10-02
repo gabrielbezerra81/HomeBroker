@@ -19,6 +19,7 @@ const INITIAL_STATE = {
   multileg: [
     {
       ativo: "PETR4",
+      ativoAtual: "",
       valor: 0,
       variacao: 0,
       opcoes: [],
