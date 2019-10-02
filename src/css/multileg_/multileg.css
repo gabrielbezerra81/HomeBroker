@@ -1,5 +1,5 @@
 #multileg {
-  width: 1025px;
+  width: 1050px;
   margin-left: 5px;
   height: 390px;
 }
@@ -163,10 +163,6 @@ a.botaoAddAba.active {
 
 .tableMultileg thead {
   color: #be9117;
-}
-
-.tableMultileg thead th:nth-child(10) {
-  width: 90px;
 }
 
 .tableMultileg td {
