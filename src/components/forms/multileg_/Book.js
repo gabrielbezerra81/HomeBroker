@@ -83,13 +83,13 @@ class Book extends React.Component {
         </Row>
         <Row className="ml-1 mr-1 mb-2 rowTextoInputRange">
           <Col md={4}>
-            <span>{min}</span>
+            <span>{formatarNumDecimal(min)}</span>
           </Col>
           <Col md={4}>
-            <span>{(max + min) / 2}</span>
+            <span>{formatarNumDecimal((max + min) / 2)}</span>
           </Col>
           <Col md={4}>
-            <span>{max}</span>
+            <span>{formatarNumDecimal(max)}</span>
           </Col>
         </Row>
         <Row className="mr-2 mb-2">
@@ -200,7 +200,7 @@ const calculoPrecoMax = props => {
         max -= oferta.compra.price * (oferta.qtde / mdc);
       }
     });
-
+  if (max < 0) max = max * -1;
   return max;
 };
 
@@ -222,7 +222,7 @@ const calculoPrecoMin = props => {
         min -= oferta.venda.price * (oferta.qtde / mdc);
       }
     });
-
+  if (min < 0) min = min * -1;
   return min;
 };
 
