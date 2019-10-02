@@ -6,7 +6,6 @@ import {
   url_listarBookOfertas_codigo,
   url_enviarOrdem,
   url_pesquisarOpcoesVencimentos_codigo,
-  url_pesquisarStrikesVencimentos_codigo,
   url_pesquisarStrikes_codigo_vencimento
 } from "components/api/url";
 

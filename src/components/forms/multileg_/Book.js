@@ -52,14 +52,28 @@ class Book extends React.Component {
               </thead>
               <tbody>
                 {this.props.multileg[indice].tabelaMultileg.map(
-                  (item, indiceLinha) => (
-                    <tr key={indiceLinha}>
-                      <td>{formatarNumDecimal(item.compra.qtty / 1000)}K</td>
-                      <td>{formatarNumDecimal(item.compra.price)}</td>
-                      <td>{formatarNumDecimal(item.venda.price)}</td>
-                      <td>{formatarNumDecimal(item.venda.qtty / 1000)}K</td>
-                    </tr>
-                  )
+                  (item, indiceLinha) => {
+                    if (item.compra && item.venda)
+                      return (
+                        <tr key={indiceLinha}>
+                          <td>
+                            {formatarNumDecimal(item.compra.qtty / 1000)}K
+                          </td>
+                          <td>{formatarNumDecimal(item.compra.price)}</td>
+                          <td>{formatarNumDecimal(item.venda.price)}</td>
+                          <td>{formatarNumDecimal(item.venda.qtty / 1000)}K</td>
+                        </tr>
+                      );
+                    else
+                      return (
+                        <tr key={indiceLinha}>
+                          <td />
+                          <td />
+                          <td />
+                          <td />
+                        </tr>
+                      );
+                  }
                 )}
               </tbody>
             </Table>

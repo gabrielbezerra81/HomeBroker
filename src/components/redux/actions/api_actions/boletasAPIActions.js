@@ -4,7 +4,9 @@ import { montaOrdemPrincipal } from "components/utils/MontarOrdens";
 
 export const pesquisarAtivoOnEnterAction = (codigo, namespace) => {
   return async dispatch => {
+    document.body.style.cursor = "wait";
     const dadosPesquisa = await pesquisarAtivoAPI(codigo);
+    document.body.style.cursor = "auto";
 
     if (dadosPesquisa)
       dispatch({

@@ -10,6 +10,7 @@ import {
   pesquisarStrikesMultilegAction,
   encontrarNumMaisProximo
 } from "components/redux/actions/api_actions/MenuAPIAction";
+import { listarBookOfertaAPI, pesquisarAtivoAPI } from "components/api/API";
 
 export const abrirFecharConfigComplAction = configComplementarAberto => {
   return dispatch => {
@@ -146,14 +147,12 @@ export const excluirOfertaTabelaAction = (multileg, indiceAba, indiceLinha) => {
 };
 
 export const adicionarOfertaTabelaAction = (props, tipoOferta) => {
-  return dispatch => {
+  return async dispatch => {
     let abasMultileg = [...props.multileg];
     const indiceAba = props.indice;
     let novaOferta = cloneDeep(oferta);
     novaOferta.cotacao = abasMultileg[indiceAba].valor;
     novaOferta.ativoAtual = abasMultileg[indiceAba].ativoAtual;
-    novaOferta.compra = abasMultileg[indiceAba].book.tabelaCompra;
-    novaOferta.venda = abasMultileg[indiceAba].book.tabelaVenda;
 
     if (tipoOferta === "acao") {
       novaOferta.opcoes = [{ symbol: abasMultileg[indiceAba].ativoAtual }];
@@ -171,11 +170,22 @@ export const adicionarOfertaTabelaAction = (props, tipoOferta) => {
         novaOferta.tipo = "put";
       }
       pesquisarSymbolModel_strike_tipo(novaOferta);
-      //Pesquisar book e preco ultimo do codigo
+      const dadosAtivo = await pesquisarAtivoAPI(novaOferta.codigoSelecionado);
+      if (dadosAtivo) {
+        novaOferta.cotacao = dadosAtivo.cotacaoAtual;
+      }
     }
-    abasMultileg[indiceAba].tabelaMultileg.push(novaOferta);
+    const book = await listarBookOfertaAPI(novaOferta.codigoSelecionado);
 
-    dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
+    if (book) {
+      novaOferta.venda =
+        book.tabelaOfertasVenda[book.tabelaOfertasVenda.length - 1];
+      novaOferta.compra = book.tabelaOfertasCompra[0];
+
+      abasMultileg[indiceAba].tabelaMultileg.push(novaOferta);
+
+      dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
+    }
   };
 };
 

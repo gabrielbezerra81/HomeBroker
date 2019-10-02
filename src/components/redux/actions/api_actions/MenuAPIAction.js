@@ -1,7 +1,6 @@
 import {
   pesquisarAtivoMultilegAPI,
-  pesquisarStrikesMultilegAPI,
-  listarBookOfertaAPI
+  pesquisarStrikesMultilegAPI
 } from "components/api/API";
 import { PESQUISAR_ATIVO_MULTILEG_API } from "constants/ApiActionTypes";
 
@@ -11,9 +10,10 @@ export const pesquisarAtivoMultilegAction = (props, indice) => {
     let aba = multileg[indice];
     const codigo_ativo = aba.ativo;
 
+    document.body.style.cursor = "wait";
     const dados = await pesquisarAtivoMultilegAPI(codigo_ativo);
-    const book = await listarBookOfertaAPI(codigo_ativo);
-    if (dados && book) {
+    document.body.style.cursor = "auto";
+    if (dados) {
       aba.opcoes = [...dados.opcoes];
       aba.vencimento = [...dados.vencimentos];
       aba.valor = dados.cotacaoAtual;
@@ -24,8 +24,6 @@ export const pesquisarAtivoMultilegAction = (props, indice) => {
         dados.cotacaoAtual
       );
       aba.ativoAtual = codigo_ativo;
-      aba.book.tabelaVenda = book.tabelaOfertasVenda[4];
-      aba.book.tabelaCompra = book.tabelaOfertasCompra[0];
       dispatch({ type: PESQUISAR_ATIVO_MULTILEG_API, payload: multileg });
     }
   };
@@ -35,7 +33,9 @@ export const pesquisarStrikesMultilegAction = async (
   codigo_ativo,
   vencimento
 ) => {
+  document.body.style.cursor = "wait";
   const dados = await pesquisarStrikesMultilegAPI(codigo_ativo, vencimento);
+  document.body.style.cursor = "auto";
   if (dados) {
     return dados;
   }

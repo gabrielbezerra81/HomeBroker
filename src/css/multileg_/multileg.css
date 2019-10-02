@@ -271,6 +271,7 @@ a.botaoAddAba.active {
 
 .tabelaBook td {
   padding: 4px !important;
+  height: 26px !important
 }
 
 .textoCompra {
