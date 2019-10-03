@@ -100,24 +100,59 @@ class Book extends React.Component {
             <input
               type="range"
               className={`custom-range inputRangeMultileg`}
-              value={
-                calculoPreco(this.props.multileg[indice], "ultimo")
-                  ? calculoPreco(this.props.multileg[indice], "ultimo")
-                  : ""
-              }
+              step="0.01"
+              min={min}
+              max={max}
+              value={this.props.multileg[indice].preco}
               readOnly
             />
           </Col>
         </Row>
         <Row className="ml-1 mr-1 mb-2 rowTextoInputRange">
           <Col md={4}>
-            <span>{formatarNumDecimal(min)}</span>
+            <span
+              onClick={() =>
+                this.props.modificarAtributoAbaAction(
+                  this.props.multileg,
+                  indice,
+                  "preco",
+                  Number(min).toFixed(2)
+                )
+              }
+              className="divClicavel"
+            >
+              {formatarNumDecimal(min)}
+            </span>
           </Col>
           <Col md={4}>
-            <span>{formatarNumDecimal((max + min) / 2)}</span>
+            <span
+              onClick={() =>
+                this.props.modificarAtributoAbaAction(
+                  this.props.multileg,
+                  indice,
+                  "preco",
+                  Number((max + min) / 2).toFixed(3)
+                )
+              }
+              className="divClicavel"
+            >
+              {formatarNumDecimal((max + min) / 2)}
+            </span>
           </Col>
           <Col md={4}>
-            <span>{formatarNumDecimal(max)}</span>
+            <span
+              onClick={() =>
+                this.props.modificarAtributoAbaAction(
+                  this.props.multileg,
+                  indice,
+                  "preco",
+                  Number(max).toFixed(2)
+                )
+              }
+              className="divClicavel"
+            >
+              {formatarNumDecimal(max)}
+            </span>
           </Col>
         </Row>
         <Row className="mr-2 mb-2">
