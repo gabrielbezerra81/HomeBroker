@@ -18,7 +18,7 @@ const INITIAL_STATE = {
   apregoarOferta: false,
   multileg: [
     {
-      ativo: "BBDC4",
+      ativo: "PETR4",
       ativoAtual: "",
       valor: 0,
       variacao: 0,

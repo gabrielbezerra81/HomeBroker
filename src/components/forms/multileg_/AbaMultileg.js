@@ -6,7 +6,6 @@ import { MDBIcon } from "mdbreact";
 import TabelaMultileg from "components/forms/multileg_/TabelaMultileg";
 import { connect } from "react-redux";
 import {
-  abrirFecharConfigComplAction,
   modificarAtributoAbaAction,
   adicionarOfertaTabelaAction
 } from "components/redux/actions/menu_actions/MultilegActions";
@@ -157,7 +156,6 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
-    abrirFecharConfigComplAction,
     modificarAtributoAbaAction,
     pesquisarAtivoMultilegAction,
     adicionarOfertaTabelaAction

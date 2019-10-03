@@ -165,7 +165,7 @@ a.botaoAddAba.active {
   color: #be9117;
 }
 
-.tableMultileg thead th:last-child{
+.tableMultileg thead th:last-child {
   min-width: 100px;
 }
 
@@ -271,7 +271,7 @@ a.botaoAddAba.active {
 
 .tabelaBook td {
   padding: 4px !important;
-  height: 26px !important
+  height: 26px !important;
 }
 
 .textoCompra {
@@ -308,7 +308,7 @@ a.botaoAddAba.active {
 .rowTextoInputRange > div {
   height: 14px;
   color: var(--cor-texto);
-  text-align: center
+  text-align: center;
 }
 
 #icone_config_complementar {

@@ -53,3 +53,6 @@ export const encontrarNumMaisProximo = (listaOpcoes, cotacao) => {
 
   return maisProximo.strike;
 };
+export const desgraça = () => {
+  return dispatch => {};
+};

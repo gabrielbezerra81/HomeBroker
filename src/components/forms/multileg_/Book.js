@@ -4,12 +4,17 @@ import { Table, Row, Col, Form, Button } from "react-bootstrap";
 import IconeConfigGrafico from "components/utils/IconeConfigGrafico";
 import DatePicker from "react-datepicker";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
+import {
+  abrirFecharConfigComplAction,
+  modificarAtributoAbaAction
+} from "components/redux/actions/menu_actions/MultilegActions";
+import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
 
 class Book extends React.Component {
   render() {
     const indice = this.props.indice,
-      max = calculoPrecoMax(this.props),
-      min = calculoPrecoMin(this.props);
+      max = calculoPreco(this.props.multileg[indice], "max"),
+      min = calculoPreco(this.props.multileg[indice], "min");
     return (
       <div>
         <Row>
@@ -92,7 +97,16 @@ class Book extends React.Component {
         </Row>
         <Row className="ml-3 mr-3">
           <Col className="colInputRange">
-            <input type="range" className={`custom-range inputRangeMultileg`} />
+            <input
+              type="range"
+              className={`custom-range inputRangeMultileg`}
+              value={
+                calculoPreco(this.props.multileg[indice], "ultimo")
+                  ? calculoPreco(this.props.multileg[indice], "ultimo")
+                  : ""
+              }
+              readOnly
+            />
           </Col>
         </Row>
         <Row className="ml-1 mr-1 mb-2 rowTextoInputRange">
@@ -193,60 +207,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {}
+  { abrirFecharConfigComplAction, modificarAtributoAbaAction }
 )(Book);
-
-const calculoPrecoMax = props => {
-  let max = 0;
-  let aba = props.multileg[props.indice];
-  let arrayQtde = [];
-
-  aba.tabelaMultileg.map((oferta, index) => {
-    arrayQtde.push(oferta.qtde);
-  });
-  const mdc = gcd(arrayQtde);
-
-  if (mdc > 0)
-    aba.tabelaMultileg.map((oferta, index) => {
-      if (oferta.cv === "compra") {
-        max += oferta.venda.price * (oferta.qtde / mdc);
-      } else if (oferta.cv === "venda") {
-        max -= oferta.compra.price * (oferta.qtde / mdc);
-      }
-    });
-  if (max < 0) max = max * -1;
-  return max;
-};
-
-const calculoPrecoMin = props => {
-  let min = 0;
-  let aba = props.multileg[props.indice];
-  let arrayQtde = [];
-
-  aba.tabelaMultileg.map((oferta, index) => {
-    arrayQtde.push(oferta.qtde);
-  });
-  const mdc = gcd(arrayQtde);
-
-  if (mdc > 0)
-    aba.tabelaMultileg.map((oferta, index) => {
-      if (oferta.cv === "compra") {
-        min += oferta.compra.price * (oferta.qtde / mdc);
-      } else if (oferta.cv === "venda") {
-        min -= oferta.venda.price * (oferta.qtde / mdc);
-      }
-    });
-  if (min < 0) min = min * -1;
-  return min;
-};
-
-var gcd2 = function(a, b) {
-  return !b ? a : gcd2(b, a % b);
-};
-var gcd = function(nums) {
-  var factor = nums[0];
-  for (var i = 1; i < nums.length; i++) {
-    factor = gcd2(factor, nums[i]);
-  }
-  return factor;
-};

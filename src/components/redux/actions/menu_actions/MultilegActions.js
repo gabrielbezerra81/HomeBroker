@@ -11,6 +11,8 @@ import {
   encontrarNumMaisProximo
 } from "components/redux/actions/api_actions/MenuAPIAction";
 import { listarBookOfertaAPI, pesquisarAtivoAPI } from "components/api/API";
+import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
+import { formatarNumDecimal } from "components/utils/Formatacoes";
 
 export const abrirFecharConfigComplAction = configComplementarAberto => {
   return dispatch => {
@@ -86,12 +88,9 @@ export const modificarAtributoTabelaAbaAction = (
     let linhaTabela = abasMultileg[indiceGeral].tabelaMultileg[indiceLinha];
 
     if (atributo === "tipo") {
-      console.log("antes", linhaTabela[atributo]);
       if (valor === "call") linhaTabela[atributo] = "put";
       else if (valor === "put") linhaTabela[atributo] = "call";
       pesquisarSymbolModel_strike_tipo(linhaTabela);
-      console.log("depois", linhaTabela[atributo]);
-      dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
     } //
     else {
       linhaTabela[atributo] = valor;
@@ -117,14 +116,15 @@ export const modificarAtributoTabelaAbaAction = (
       } //
       else if (atributo === "strikeSelecionado") {
         pesquisarSymbolModel_strike_tipo(linhaTabela);
-        dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
       } //
       else if (atributo === "codigoSelecionado") {
         pesquisarSerieStrikeModeloTipo_symbol(linhaTabela);
-        dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
       } //
-      else dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
     }
+    const aba = abasMultileg[indiceGeral];
+    aba.preco = calculoPreco(aba, "ultimo").toFixed(2);
+    if (atributo !== "serieSelecionada")
+      dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
   };
 };
 
@@ -148,6 +148,7 @@ export const excluirOfertaTabelaAction = (multileg, indiceAba, indiceLinha) => {
 
 export const adicionarOfertaTabelaAction = (props, tipoOferta) => {
   return async dispatch => {
+    document.body.style.cursor = "wait";
     let abasMultileg = [...props.multileg];
     const indiceAba = props.indice;
     let novaOferta = cloneDeep(oferta);
@@ -183,6 +184,10 @@ export const adicionarOfertaTabelaAction = (props, tipoOferta) => {
       novaOferta.compra = book.tabelaOfertasCompra[0];
 
       abasMultileg[indiceAba].tabelaMultileg.push(novaOferta);
+
+      document.body.style.cursor = "auto";
+      const aba = abasMultileg[indiceAba];
+      aba.preco = calculoPreco(aba, "ultimo").toFixed(2);
 
       dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
     }
