@@ -326,3 +326,18 @@ a.botaoAddAba.active {
 .bodyConfigComplementar h6 {
   font-size: 0.9rem;
 }
+
+.divBotoesInput {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-color: #aaa;
+  position: relative;
+  left: -5px;
+  border-radius: 4px;
+  color: #000;
+  padding: 2px 2px;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  font-size: 11px;
+}

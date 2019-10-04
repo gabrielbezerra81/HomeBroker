@@ -28,6 +28,7 @@ import {
   pesquisarAtivoOnEnterAction,
   enviarOrdemAction
 } from "components/redux/actions/api_actions/boletasAPIActions";
+import { formatarNumero } from "components/redux/reducers/formInputReducer";
 
 class FormInternoCompraAgendada extends React.Component {
   render() {
@@ -55,6 +56,7 @@ class FormInternoCompraAgendada extends React.Component {
                         COMPRA_AGENDADA_NAMESPACE
                       )
                     }
+                 
                   />
                 </Form.Group>
               </Col>
@@ -73,6 +75,7 @@ class FormInternoCompraAgendada extends React.Component {
                         COMPRA_AGENDADA_NAMESPACE
                       )
                     }
+                  
                   />
                 </Form.Group>
               </Col>
@@ -111,6 +114,7 @@ class FormInternoCompraAgendada extends React.Component {
                         COMPRA_AGENDADA_NAMESPACE
                       )
                     }
+             
                   />
                 </Form.Group>
               </Col>
@@ -129,6 +133,7 @@ class FormInternoCompraAgendada extends React.Component {
                         COMPRA_AGENDADA_NAMESPACE
                       )
                     }
+                 
                   />
                 </Form.Group>
               </Col>
@@ -159,6 +164,7 @@ class FormInternoCompraAgendada extends React.Component {
                         COMPRA_AGENDADA_NAMESPACE
                       )
                     }
+                
                   />
                 </Form.Group>
               </Col>
@@ -177,6 +183,7 @@ class FormInternoCompraAgendada extends React.Component {
                         COMPRA_AGENDADA_NAMESPACE
                       )
                     }
+                  
                   />
                 </Form.Group>
               </Col>

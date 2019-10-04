@@ -12,7 +12,6 @@ import {
 } from "components/redux/actions/api_actions/MenuAPIAction";
 import { listarBookOfertaAPI, pesquisarAtivoAPI } from "components/api/API";
 import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
-import { formatarNumDecimal } from "components/utils/Formatacoes";
 
 export const abrirFecharConfigComplAction = configComplementarAberto => {
   return dispatch => {
@@ -50,7 +49,8 @@ export const modificarAtributoAbaAction = (
   multileg,
   indice,
   atributo,
-  valor
+  valor,
+  eventKey = ""
 ) => {
   return async dispatch => {
     let abasMultileg = [...multileg];
@@ -123,6 +123,7 @@ export const modificarAtributoTabelaAbaAction = (
     }
     const aba = abasMultileg[indiceGeral];
     aba.preco = calculoPreco(aba, "ultimo").toFixed(2);
+
     if (atributo !== "serieSelecionada")
       dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
   };

@@ -17,6 +17,7 @@ import {
 } from "components/utils/TextoGrafico";
 import { COMPRA_AGENDADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalAgendada } from "components/utils/CalculoValorTotal";
+import { formatarNumero } from "components/redux/reducers/formInputReducer";
 
 class GraficoCompraAgendada extends React.Component {
   render() {
@@ -37,6 +38,7 @@ class GraficoCompraAgendada extends React.Component {
                   COMPRA_AGENDADA_NAMESPACE
                 )
               }
+           
             />
             <Form.Control
               type="number"
@@ -47,6 +49,7 @@ class GraficoCompraAgendada extends React.Component {
               onChange={event =>
                 this.props.mudarGainExecAction(event, COMPRA_AGENDADA_NAMESPACE)
               }
+           
             />
             <Form.Control
               type="number"
@@ -60,6 +63,7 @@ class GraficoCompraAgendada extends React.Component {
                   COMPRA_AGENDADA_NAMESPACE
                 )
               }
+           
             />
             <Form.Control
               type="number"
@@ -70,6 +74,7 @@ class GraficoCompraAgendada extends React.Component {
               onChange={event =>
                 this.props.mudarStopExecAction(event, COMPRA_AGENDADA_NAMESPACE)
               }
+            
             />
             <Form.Control
               id="CotacaoAtualGrafico_CA"

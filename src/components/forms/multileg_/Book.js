@@ -9,6 +9,7 @@ import {
   modificarAtributoAbaAction
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
+import { formatarNumero } from "components/redux/reducers/formInputReducer";
 
 class Book extends React.Component {
   render() {
@@ -104,7 +105,14 @@ class Book extends React.Component {
               min={min}
               max={max}
               value={this.props.multileg[indice].preco}
-              readOnly
+              onChange={event =>
+                this.props.modificarAtributoAbaAction(
+                  this.props.multileg,
+                  indice,
+                  "preco",
+                  event.currentTarget.value
+                )
+              }
             />
           </Col>
         </Row>
@@ -131,7 +139,7 @@ class Book extends React.Component {
                   this.props.multileg,
                   indice,
                   "preco",
-                  Number((max + min) / 2).toFixed(3)
+                  Number((max + min) / 2).toFixed(2)
                 )
               }
               className="divClicavel"
@@ -165,12 +173,20 @@ class Book extends React.Component {
               type="number"
               step={0.01}
               value={this.props.multileg[indice].preco}
-              onChange={event =>
+              onChange={event => {
                 this.props.modificarAtributoAbaAction(
                   this.props.multileg,
                   indice,
                   "preco",
-                  event.currentTarget.value
+                  event.target.value
+                );
+              }}
+              onBlur={() =>
+                this.props.modificarAtributoAbaAction(
+                  this.props.multileg,
+                  indice,
+                  "preco",
+                  Number(this.props.multileg[indice].preco).toFixed(2)
                 )
               }
             />
@@ -183,9 +199,8 @@ class Book extends React.Component {
           <Col className="mr-1">
             <Form.Control
               className="textInput"
-              type="number"
-              step={0.01}
-              value={this.props.multileg[indice].total}
+              type="text"
+              value={calcularTotal(this.props)}
               onChange={event =>
                 this.props.modificarAtributoAbaAction(
                   this.props.multileg,
@@ -194,6 +209,7 @@ class Book extends React.Component {
                   event.currentTarget.value
                 )
               }
+              readOnly
             />
           </Col>
         </Row>
@@ -244,3 +260,12 @@ export default connect(
   mapStateToProps,
   { abrirFecharConfigComplAction, modificarAtributoAbaAction }
 )(Book);
+
+const calcularTotal = props => {
+  let total = 0;
+  let aba = props.multileg[props.indice];
+  aba.tabelaMultileg.forEach(oferta => {
+    total += oferta.qtde * oferta.cotacao;
+  });
+  return "R$ " + formatarNumDecimal(total);
+};

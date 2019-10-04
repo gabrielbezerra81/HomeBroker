@@ -49,6 +49,7 @@ class AbaMultileg extends React.Component {
                   </span>
                 </InputGroup.Append>
               </InputGroup>
+
               <h5 className="textoValor">
                 {formatarNumDecimal(this.props.multileg[indice].valor)}
               </h5>
