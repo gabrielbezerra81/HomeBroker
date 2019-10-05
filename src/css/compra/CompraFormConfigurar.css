@@ -6,8 +6,9 @@
   padding-bottom: 0.5rem;
 }
 
-.configDiv input {
-  width: 57%;
+.configDiv .containerInputGrafico {
+  width: 57% !important;
+  color:#333
 }
 
 .configurarheader {
@@ -157,12 +158,12 @@ Inputs da primeira parte do gráfico
 */
 
 #GainDisparoGrafico_CONFIGURAR {
-  top: 13.5%;
+  top: 14%;
   left: 31%;
 }
 
 #GainExecGrafico_CONFIGURAR {
-  top: 17.2%;
+  top: 17.7%;
   left: 31%;
 }
 
@@ -179,7 +180,6 @@ Inputs da primeira parte do gráfico
 /*
 Inputs da segunda parte do gráfico
 */
-
 
 #GainDisparoGrafico2_CONFIGURAR {
   top: 61.2%;

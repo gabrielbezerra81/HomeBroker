@@ -261,7 +261,15 @@ export const mapStateToPropsInputsPreco = state => {
       stopDisparo: state.compraStartStopReducer.stopDisparo,
       stopExec: state.compraStartStopReducer.stopExec,
       dadosPesquisa: state.compraStartStopReducer.dadosPesquisa,
-      qtde: state.compraStartStopReducer.qtde
+      qtde: state.compraStartStopReducer.qtde,
+      gainDisparoConfig1: state.compraStartStopReducer.gainDisparoConfig1,
+      gainExecConfig1: state.compraStartStopReducer.gainExecConfig1,
+      stopDisparoConfig1: state.compraStartStopReducer.stopDisparoConfig1,
+      stopExecConfig1: state.compraStartStopReducer.stopExecConfig1,
+      gainDisparoConfig2: state.compraStartStopReducer.gainDisparoConfig2,
+      gainExecConfig2: state.compraStartStopReducer.gainExecConfig2,
+      stopDisparoConfig2: state.compraStartStopReducer.stopDisparoConfig2,
+      stopExecConfig2: state.compraStartStopReducer.stopExecConfig2
     },
     _COMPRA_STARTMOVEL: {
       gainDisparo: state.compraStartMovelReducer.gainDisparo,
@@ -272,13 +280,18 @@ export const mapStateToPropsInputsPreco = state => {
       inicioDisparo: state.compraStartMovelReducer.inicioDisparo,
       disparoMaisAjuste: state.compraStartMovelReducer.disparoMaisAjuste,
       stopMais1Ajuste: state.compraStartMovelReducer.stopMais1Ajuste,
-      stopAnteriorAjuste: state.compraStartMovelReducer.stopAnteriorAjuste
+      stopAnteriorAjuste: state.compraStartMovelReducer.stopAnteriorAjuste,
+      ajustePadrao: state.compraStartMovelReducer.ajustePadrao
     },
     _COMPRA_GAINREDUCAO: {
       dadosPesquisa: state.compraGainReducao.dadosPesquisa,
       reducao1: state.compraGainReducao.reducao1,
       reducao2: state.compraGainReducao.reducao2,
-      gain: state.compraGainReducao.gain
+      gain: state.compraGainReducao.gain,
+      gainDisparo: state.compraGainReducao.gainDisparo,
+      gainExec: state.compraGainReducao.gainExec,
+      qtde: state.compraGainReducao.qtde,
+      tabelaGainReducao: state.compraGainReducao.tabelaGainReducao
     },
     _VENDA_AGENDADA: {
       gainDisparo: state.vendaAgendadaReducer.gainDisparo,
@@ -311,7 +324,15 @@ export const mapStateToPropsInputsPreco = state => {
       stopDisparo: state.vendaStartStopReducer.stopDisparo,
       stopExec: state.vendaStartStopReducer.stopExec,
       dadosPesquisa: state.vendaStartStopReducer.dadosPesquisa,
-      qtde: state.vendaStartStopReducer.qtde
+      qtde: state.vendaStartStopReducer.qtde,
+      gainDisparoConfig1: state.vendaStartStopReducer.gainDisparoConfig1,
+      gainExecConfig1: state.vendaStartStopReducer.gainExecConfig1,
+      stopDisparoConfig1: state.vendaStartStopReducer.stopDisparoConfig1,
+      stopExecConfig1: state.vendaStartStopReducer.stopExecConfig1,
+      gainDisparoConfig2: state.vendaStartStopReducer.gainDisparoConfig2,
+      gainExecConfig2: state.vendaStartStopReducer.gainExecConfig2,
+      stopDisparoConfig2: state.vendaStartStopReducer.stopDisparoConfig2,
+      stopExecConfig2: state.vendaStartStopReducer.stopExecConfig2
     },
     _VENDA_STOPMOVEL: {
       gainDisparo: state.vendaStopMovel.gainDisparo,
@@ -322,13 +343,18 @@ export const mapStateToPropsInputsPreco = state => {
       inicioDisparo: state.vendaStopMovel.inicioDisparo,
       disparoMaisAjuste: state.vendaStopMovel.disparoMaisAjuste,
       stopMais1Ajuste: state.vendaStopMovel.stopMais1Ajuste,
-      stopAnteriorAjuste: state.vendaStopMovel.stopAnteriorAjuste
+      stopAnteriorAjuste: state.vendaStopMovel.stopAnteriorAjuste,
+      ajustePadrao: state.vendaStopMovel.ajustePadrao
     },
     _VENDA_GAINREDUCAO: {
       dadosPesquisa: state.vendaGainReducao.dadosPesquisa,
       reducao1: state.vendaGainReducao.reducao1,
       reducao2: state.vendaGainReducao.reducao2,
-      gain: state.vendaGainReducao.gain
+      gain: state.vendaGainReducao.gain,
+      gainDisparo: state.vendaGainReducao.gainDisparo,
+      gainExec: state.vendaGainReducao.gainExec,
+      qtde: state.vendaGainReducao.qtde,
+      tabelaGainReducao: state.vendaGainReducao.tabelaGainReducao
     }
   };
 };

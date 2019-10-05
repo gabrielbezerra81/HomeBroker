@@ -11,7 +11,8 @@ import {
   adicionarItemTabelaStopMovel,
   limparAction,
   mudarAssinaturaAction,
-  mudarCheckSalvarAssinaturaAction
+  mudarCheckSalvarAssinaturaAction,
+  mudarAtributoBoletaAction
 } from "components/redux/actions/formInputActions";
 import { VENDA_STOPMOVEL_NAMESPACE } from "constants/ActionTypes";
 import TabelaOrdens from "./TabelaOrdens";
@@ -22,6 +23,8 @@ import {
   pesquisarAtivoOnEnterAction,
   enviarOrdemAction
 } from "components/redux/actions/api_actions/boletasAPIActions";
+import InputFormatado from "components/utils/InputFormatado";
+import { RowInputsStopMovelConectada } from "components/utils/RowInputsFormatadosFormInterno";
 
 class FormInternoVendaStopMovel extends React.Component {
   render() {
@@ -31,89 +34,9 @@ class FormInternoVendaStopMovel extends React.Component {
           <Form>
             {RowAtivoQtdeBoletas(this.props, VENDA_STOPMOVEL_NAMESPACE)}
 
-            <Row>
-              <Col md={2} className="colLabelInput">
-                <h6 className="labelInput-verticalAlign">Início</h6>
-              </Col>
-              <Col className="colTextInput">
-                <Form.Group>
-                  <Form.Label>Disparo</Form.Label>
-                  <Form.Control
-                    className="textInput"
-                    type="number"
-                    step={0.01}
-                    name="disparo"
-                    value={this.props.inicioDisparo}
-                    onChange={event =>
-                      this.props.mudarInicioDisparoAction(
-                        event,
-                        VENDA_STOPMOVEL_NAMESPACE
-                      )
-                    }
-                  />
-                </Form.Group>
-              </Col>
-              <Col className="colTextInput">
-                <Form.Group>
-                  <Form.Label>Ajuste padrão</Form.Label>
-                  <Form.Control
-                    className="textInput"
-                    type="number"
-                    step={0.01}
-                    name="execucao"
-                    value={this.props.ajustePadrao}
-                    onChange={event =>
-                      this.props.mudarAjustePadraoAction(
-                        event,
-                        VENDA_STOPMOVEL_NAMESPACE
-                      )
-                    }
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col md={2} className="colLabelInput">
-                <h6 className="labelInput-verticalAlign">Stop</h6>
-              </Col>
-              <Col className="colTextInput">
-                <Form.Group>
-                  <Form.Label>Disparo</Form.Label>
-                  <Form.Control
-                    className="textInput"
-                    type="number"
-                    step={0.01}
-                    name="stopDisparo"
-                    value={this.props.stopDisparo}
-                    onChange={event =>
-                      this.props.mudarStopDisparoAction(
-                        event,
-                        VENDA_STOPMOVEL_NAMESPACE
-                      )
-                    }
-                  />
-                </Form.Group>
-              </Col>
-              <Col className="colTextInput">
-                <Form.Group>
-                  <Form.Label>Execução</Form.Label>
-                  <Form.Control
-                    className="textInput"
-                    type="number"
-                    step={0.01}
-                    name="stopExecucao"
-                    value={this.props.stopExec}
-                    onChange={event =>
-                      this.props.mudarStopExecAction(
-                        event,
-                        VENDA_STOPMOVEL_NAMESPACE
-                      )
-                    }
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
+            <RowInputsStopMovelConectada
+              namespace={VENDA_STOPMOVEL_NAMESPACE}
+            />
           </Form>
 
           {RowFormValidade(this.props, VENDA_STOPMOVEL_NAMESPACE)}
@@ -125,17 +48,15 @@ class FormInternoVendaStopMovel extends React.Component {
               <Col className="colTextInput colInputAjusteAssimetrico">
                 <Form.Group>
                   <Form.Label>Valor</Form.Label>
-                  <Form.Control
-                    className="textInput"
-                    type="number"
+                  <InputFormatado
+                    tipoInput="preco"
                     step={0.01}
-                    name="ajusteAssimétrico"
-                    pattern="0.00"
                     value={this.props.ajusteAssimetrico}
-                    onChange={event =>
-                      this.props.mudarAjusteAssimetricoAction(
-                        event,
-                        VENDA_STOPMOVEL_NAMESPACE
+                    onChange={valor =>
+                      this.props.mudarAtributoBoletaAction(
+                        valor,
+                        VENDA_STOPMOVEL_NAMESPACE,
+                        "ajusteAssimetrico"
                       )
                     }
                   />
@@ -225,6 +146,7 @@ export default connect(
     mudarCheckSalvarAssinaturaAction,
     limparAction,
     pesquisarAtivoOnEnterAction,
-    enviarOrdemAction
+    enviarOrdemAction,
+    mudarAtributoBoletaAction
   }
 )(FormInternoVendaStopMovel);

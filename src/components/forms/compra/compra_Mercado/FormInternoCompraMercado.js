@@ -22,6 +22,7 @@ import {
   pesquisarAtivoOnEnterAction,
   enviarOrdemAction
 } from "components/redux/actions/api_actions/boletasAPIActions";
+import { RowGainStopFormInternoConectada } from "components/utils/RowInputsFormatadosFormInterno";
 
 class FormInternoCompraMercado extends React.Component {
   render() {
@@ -43,103 +44,13 @@ class FormInternoCompraMercado extends React.Component {
             </Col>
           </Row>
 
-          <Form>
-            <Row>
-              <Col md={2} className="colLabelInput">
-                <h6 className="labelInput-verticalAlign">Gain</h6>
-              </Col>
-              <Col className="colTextInput">
-                <Form.Group>
-                  <Form.Label>Disparo</Form.Label>
-                  <Form.Control
-                    className="textInput"
-                    type="number"
-                    step={0.01}
-                    name="gainDisparo"
-                    value={this.props.gainDisparo}
-                    onChange={event =>
-                      this.props.mudarGainDisparoAction(
-                        event,
-                        COMPRA_MERCADO_NAMESPACE
-                      )
-                    }
-                  />
-                </Form.Group>
-              </Col>
-              <Col className="colTextInput">
-                <Form.Group>
-                  <Form.Label>Execução</Form.Label>
-                  <Form.Control
-                    className="textInput"
-                    type="number"
-                    step={0.01}
-                    name="gainExecucao"
-                    value={this.props.gainExec}
-                    onChange={event =>
-                      this.props.mudarGainExecAction(
-                        event,
-                        COMPRA_MERCADO_NAMESPACE
-                      )
-                    }
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={1} className="colIconeConfig">
-                {iconeConfigAbrirFormulario(
-                  this.props.handleShow,
-                  "compra_gainreducao"
-                )}
-              </Col>
-            </Row>
-
-            <Row>
-              <Col md={2} className="colLabelInput">
-                <h6 className="labelInput-verticalAlign">Stop</h6>
-              </Col>
-              <Col className="colTextInput">
-                <Form.Group>
-                  <Form.Label>Disparo</Form.Label>
-                  <Form.Control
-                    className="textInput"
-                    type="number"
-                    step={0.01}
-                    name="stopDisparo"
-                    value={this.props.stopDisparo}
-                    onChange={event =>
-                      this.props.mudarStopDisparoAction(
-                        event,
-                        COMPRA_MERCADO_NAMESPACE
-                      )
-                    }
-                  />
-                </Form.Group>
-              </Col>
-              <Col className="colTextInput">
-                <Form.Group>
-                  <Form.Label>Execução</Form.Label>
-                  <Form.Control
-                    className="textInput"
-                    type="number"
-                    step={0.01}
-                    name="stopExecucao"
-                    value={this.props.stopExec}
-                    onChange={event =>
-                      this.props.mudarStopExecAction(
-                        event,
-                        COMPRA_MERCADO_NAMESPACE
-                      )
-                    }
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={1} className="colIconeConfig">
-                {iconeConfigAbrirFormulario(
-                  this.props.handleShow,
-                  "venda_stop_movel"
-                )}
-              </Col>
-            </Row>
-          </Form>
+          <RowGainStopFormInternoConectada
+            namespace={COMPRA_MERCADO_NAMESPACE}
+            cv="compra"
+            handleShow={this.props.handleShow}
+            iconeConfigGain="compra_gainreducao"
+            iconeConfigStop="venda_stop_movel"
+          />
 
           {RowFormValidade(this.props, COMPRA_MERCADO_NAMESPACE)}
 

@@ -96,19 +96,19 @@ export const mudarCheckSalvarAssinaturaAction = (checked, namespace) => {
 };
 
 export const adicionarItemTabelaGainReducaoAction = (props, namespace) => {
-  const { gainDisparo, gainExec, qtde } = props;
+  const { gainDisparo, gainExec, qtde } = props[props.namespace];
 
-  let total = qtde * gainExec;
+  let total = Number(qtde) * Number(gainExec);
   if (gainExec === "0.00" || gainExec === "" || gainExec === "0") {
-    total = qtde * gainDisparo;
+    total = Number(qtde) * Number(gainDisparo);
   }
   const itemTabela = {
-    disparo: gainDisparo,
-    execucao: gainExec,
+    disparo: Number(gainDisparo),
+    execucao: Number(gainExec),
     qtde: parseInt(qtde),
     total: total
   };
-  let tabelaGainReducao = [...props.tabelaGainReducao];
+  let tabelaGainReducao = [...props[props.namespace].tabelaGainReducao];
   tabelaGainReducao.push(itemTabela);
   return dispatch => {
     dispatch({

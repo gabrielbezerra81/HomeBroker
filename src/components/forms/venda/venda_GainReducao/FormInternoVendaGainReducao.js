@@ -18,6 +18,7 @@ import RowFormAssinatura from "components/utils/RowFormAssinatura";
 import { VENDA_GAINREDUCAO_NAMESPACE } from "constants/ActionTypes";
 import TabelaGainReducao from "./TabelaGainReducao";
 import { pesquisarAtivoOnEnterAction } from "components/redux/actions/api_actions/boletasAPIActions";
+import { RowInputsGainReducaoConectada } from "components/utils/RowInputsFormatadosFormInterno";
 
 class FormInternoVendaGainReducao extends React.Component {
   render() {
@@ -32,84 +33,9 @@ class FormInternoVendaGainReducao extends React.Component {
             </Col>
           </Row>
           <Form className="item">
-            <Row>
-              <Col className="colTextInput">
-                <Form.Group>
-                  <Form.Label>Disparo</Form.Label>
-                  <Form.Control
-                    className="textInput"
-                    type="number"
-                    step={0.01}
-                    name="gainDisparo"
-                    value={this.props.gainDisparo}
-                    onChange={event =>
-                      this.props.mudarGainDisparoAction(
-                        event,
-                        VENDA_GAINREDUCAO_NAMESPACE
-                      )
-                    }
-                  />
-                </Form.Group>
-              </Col>
-              <Col className="colTextInput">
-                <Form.Group>
-                  <Form.Label>Execução</Form.Label>
-                  <Form.Control
-                    className="textInput"
-                    type="number"
-                    step={0.01}
-                    name="gainExecucao"
-                    value={this.props.gainExec}
-                    onChange={event =>
-                      this.props.mudarGainExecAction(
-                        event,
-                        VENDA_GAINREDUCAO_NAMESPACE
-                      )
-                    }
-                  />
-                </Form.Group>
-              </Col>
-              <Col className="colTextInput">
-                <Form.Group>
-                  <Form.Label>Qtde</Form.Label>
-                  <Form.Control
-                    className="textInput"
-                    type="number"
-                    step={100}
-                    min={0}
-                    value={this.props.qtde}
-                    onChange={event =>
-                      this.props.mudarQtdAction(
-                        event,
-                        VENDA_GAINREDUCAO_NAMESPACE
-                      )
-                    }
-                    name="qtde"
-                    onBlur={() =>
-                      this.props.mostrarErroQtdeOnBlurAction(this.props.erro)
-                    }
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={1} className="colIconeConfig">
-                <Button
-                  variant="link"
-                  className="operation-icons"
-                  onClick={() =>
-                    this.props.adicionarItemTabelaGainReducaoAction(
-                      this.props,
-                      VENDA_GAINREDUCAO_NAMESPACE
-                    )
-                  }
-                >
-                  <MDBIcon
-                    icon="plus-circle"
-                    size="2x"
-                    className="labelInput-verticalAlign"
-                  />
-                </Button>
-              </Col>
-            </Row>
+            <RowInputsGainReducaoConectada
+              namespace={VENDA_GAINREDUCAO_NAMESPACE}
+            />
           </Form>
           {RowFormValidade(this.props, VENDA_GAINREDUCAO_NAMESPACE)}
 

@@ -14,6 +14,7 @@ import { mudarInputConfigAction } from "components/redux/actions/formInputAction
 import { CalculoValorTotalAgendada } from "components/utils/CalculoValorTotal";
 import { fecharFormConfigurarAction } from "components/redux/reducers/MainAppReducer";
 import { modalHeaderLimpo } from "components/utils/FormHeader";
+import GraficoInputsConfigStartStop from "components/utils/GraficoInputsConfigStartStop";
 
 class ConfigurarStopVenda extends React.Component {
   render() {
@@ -85,96 +86,11 @@ const modalBody = props => (
       ),
       "ValorTotalGain2_CONFIGURAR_VENDA"
     )}
-    <Form>
-      <Form.Control
-        type="number"
-        step={0.01}
-        id="GainDisparoGrafico_CONFIGURAR_VENDA"
-        className="inputGrafico"
-        value={props.gainDisparoConfig1}
-        onChange={event =>
-          props.mudarInputConfigAction(event, VENDA_STARTSTOP_NAMESPACE)
-        }
-        name="gainDisparoConfig1"
-      />
-      <Form.Control
-        type="number"
-        step={0.01}
-        id="GainExecGrafico_CONFIGURAR_VENDA"
-        className="inputGrafico"
-        value={props.gainExecConfig1}
-        onChange={event =>
-          props.mudarInputConfigAction(event, VENDA_STARTSTOP_NAMESPACE)
-        }
-        name="gainExecConfig1"
-      />
-      <Form.Control
-        type="number"
-        step={0.01}
-        id="StopDisparoGrafico_CONFIGURAR_VENDA"
-        className="inputGrafico"
-        value={props.stopDisparoConfig1}
-        onChange={event =>
-          props.mudarInputConfigAction(event, VENDA_STARTSTOP_NAMESPACE)
-        }
-        name="stopDisparoConfig1"
-      />
-      <Form.Control
-        type="number"
-        step={0.01}
-        id="StopExecGrafico_CONFIGURAR_VENDA"
-        className="inputGrafico"
-        value={props.stopExecConfig1}
-        onChange={event =>
-          props.mudarInputConfigAction(event, VENDA_STARTSTOP_NAMESPACE)
-        }
-        name="stopExecConfig1"
-      />
-      <Form.Control
-        type="number"
-        step={0.01}
-        id="GainDisparoGrafico2_CONFIGURAR_VENDA"
-        className="inputGrafico"
-        value={props.gainDisparoConfig2}
-        onChange={event =>
-          props.mudarInputConfigAction(event, VENDA_STARTSTOP_NAMESPACE)
-        }
-        name="gainDisparoConfig2"
-      />
-      <Form.Control
-        type="number"
-        step={0.01}
-        id="GainExecGrafico2_CONFIGURAR_VENDA"
-        className="inputGrafico"
-        value={props.gainExecConfig2}
-        onChange={event =>
-          props.mudarInputConfigAction(event, VENDA_STARTSTOP_NAMESPACE)
-        }
-        name="gainExecConfig2"
-      />
-      <Form.Control
-        type="number"
-        step={0.01}
-        id="StopDisparoGrafico2_CONFIGURAR_VENDA"
-        className="inputGrafico"
-        value={props.stopDisparoConfig2}
-        onChange={event =>
-          props.mudarInputConfigAction(event, VENDA_STARTSTOP_NAMESPACE)
-        }
-        name="stopDisparoConfig2"
-      />
-      <Form.Control
-        type="number"
-        step={0.01}
-        id="StopExecGrafico2_CONFIGURAR_VENDA"
-        className="inputGrafico"
-        value={props.stopExecConfig2}
-        onChange={event =>
-          props.mudarInputConfigAction(event, VENDA_STARTSTOP_NAMESPACE)
-        }
-        name="stopExecConfig2"
-      />
-    </Form>
+    <GraficoInputsConfigStartStop
+      namespace={VENDA_STARTSTOP_NAMESPACE}
+      cv="venda"
+      posicionamento="_VENDA"
+    />
   </div>
 );
 

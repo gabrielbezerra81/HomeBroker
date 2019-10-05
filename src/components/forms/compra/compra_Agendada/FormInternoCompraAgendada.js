@@ -24,7 +24,7 @@ import {
   enviarOrdemAction
 } from "components/redux/actions/api_actions/boletasAPIActions";
 import InputFormatado from "components/utils/InputFormatado";
-import RowGainStopFormInterno from "components/utils/RowGainStopFormInterno";
+import { RowGainStopFormInternoConectada } from "components/utils/RowInputsFormatadosFormInterno";
 
 class FormInternoCompraAgendada extends React.Component {
   render() {
@@ -86,7 +86,7 @@ class FormInternoCompraAgendada extends React.Component {
             </Col>
           </Row>
 
-          <RowGainStopFormInterno
+          <RowGainStopFormInternoConectada
             namespace={COMPRA_AGENDADA_NAMESPACE}
             cv="compra"
             handleShow={this.props.handleShow}
