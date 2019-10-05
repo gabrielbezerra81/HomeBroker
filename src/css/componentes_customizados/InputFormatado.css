@@ -11,8 +11,9 @@
   flex-direction: column;
   height: 15px;
   justify-content: center;
-  position: relative;
-  right: 11px;
+  position: absolute;
+  right: 15px;
+  top: 1px;
 }
 
 .divRepetidor {

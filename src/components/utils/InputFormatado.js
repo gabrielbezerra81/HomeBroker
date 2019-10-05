@@ -16,7 +16,11 @@ class InputFormatado extends React.Component {
           precision={2}
           step={this.props.step}
           value={this.props.value}
-          onChange={(event, double, string) => this.props.onChange(double)}
+          onChange={
+            this.props.readOnly
+              ? null
+              : (event, double, string) => this.props.onChange(double)
+          }
           onBlur={this.props.onBlur}
           onKeyPress={this.props.onKeyPress}
           prefix={this.props.value < 0 ? "- " : ""}
@@ -30,7 +34,11 @@ class InputFormatado extends React.Component {
           decimalScale={0}
           className={`form-control textInput inputFormatado ${this.props.className}`}
           value={this.props.value}
-          onChange={event => this.props.onChange(event.target.value)}
+          onChange={
+            this.props.readOnly
+              ? null
+              : event => this.props.onChange(event.target.value)
+          }
           onBlur={this.props.onBlur}
           onKeyPress={this.props.onKeyPress}
         />
@@ -39,26 +47,28 @@ class InputFormatado extends React.Component {
     return (
       <div className="containerInput">
         {input}
-        <div className="divContainerBotoes">
-          <Repeatable
-            repeatDelay={600}
-            repeatInterval={50}
-            onPress={() => onUp(this.props)}
-            onHold={() => onUp(this.props)}
-            className="divRepetidor"
-          >
-            <MDBIcon icon="caret-up" className="divClicavel" />
-          </Repeatable>
-          <Repeatable
-            repeatDelay={600}
-            repeatInterval={50}
-            onPress={() => onDown(this.props)}
-            onHold={() => onDown(this.props)}
-            className="divRepetidor"
-          >
-            <MDBIcon icon="caret-down" className="divClicavel" />
-          </Repeatable>
-        </div>
+        {this.props.readOnly ? null : (
+          <div className="divContainerBotoes">
+            <Repeatable
+              repeatDelay={600}
+              repeatInterval={50}
+              onPress={() => onUp(this.props)}
+              onHold={() => onUp(this.props)}
+              className="divRepetidor"
+            >
+              <MDBIcon icon="caret-up" className="divClicavel" />
+            </Repeatable>
+            <Repeatable
+              repeatDelay={600}
+              repeatInterval={50}
+              onPress={() => onDown(this.props)}
+              onHold={() => onDown(this.props)}
+              className="divRepetidor"
+            >
+              <MDBIcon icon="caret-down" className="divClicavel" />
+            </Repeatable>
+          </div>
+        )}
       </div>
     );
   }
@@ -75,7 +85,6 @@ const onUp = props => {
 
 const onDown = props => {
   if (props.value > 0 || props.allowNegative) {
-    console.log("permitiu");
     let numero;
     numero = Number(Number(props.value) - props.step);
     if (props.tipoInput === "preco") numero = numero.toFixed(2);

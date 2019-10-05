@@ -189,19 +189,18 @@ class Book extends React.Component {
             <h6>Total</h6>
           </Col>
           <Col className="mr-1">
-            <Form.Control
-              className="textInput"
-              type="text"
+            <InputFormatado
+              tipoInput="preco"
               value={calcularTotal(this.props)}
-              onChange={event =>
+              readOnly
+              onChange={valor =>
                 this.props.modificarAtributoAbaAction(
                   this.props.multileg,
                   indice,
                   "total",
-                  event.currentTarget.value
+                  valor
                 )
               }
-              readOnly
             />
           </Col>
         </Row>

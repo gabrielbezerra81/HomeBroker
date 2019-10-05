@@ -14,6 +14,8 @@
   background-color: #333;
   border-color: #333;
   color: var(--cor-texto) !important;
+  font-size: 0.75rem;
+  box-sizing: content-box;
 }
 
 #multileg button {
@@ -230,6 +232,7 @@ a.botaoAddAba.active {
   border-color: #4d4c4c !important;
   color: var(--cor-texto) !important;
   text-align: center;
+  box-sizing: border-box !important;
 }
 
 .inputAtivo:focus {
@@ -258,6 +261,7 @@ a.botaoAddAba.active {
 
 .wrapperVencimento > div {
   display: flex;
+  width: 113.52px;
 }
 
 .tabelaBook {
