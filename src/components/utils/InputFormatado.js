@@ -51,7 +51,7 @@ class InputFormatado extends React.Component {
           <div className="divContainerBotoes">
             <Repeatable
               repeatDelay={600}
-              repeatInterval={50}
+              repeatInterval={40}
               onPress={() => onUp(this.props)}
               onHold={() => onUp(this.props)}
               className="divRepetidor"
@@ -60,7 +60,7 @@ class InputFormatado extends React.Component {
             </Repeatable>
             <Repeatable
               repeatDelay={600}
-              repeatInterval={50}
+              repeatInterval={40}
               onPress={() => onDown(this.props)}
               onHold={() => onDown(this.props)}
               className="divRepetidor"

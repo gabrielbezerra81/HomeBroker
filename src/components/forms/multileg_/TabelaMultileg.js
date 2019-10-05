@@ -9,6 +9,7 @@ import {
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { MDBIcon } from "mdbreact";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
+import InputFormatado from "components/utils/InputFormatado";
 
 const capitalize = function(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -62,22 +63,21 @@ class TabelaMultileg extends React.Component {
                   {renderCV(item.cv, this.props, indiceLinha)}
                   <td>
                     <Form.Group>
-                      <Form.Control
-                        className="textInput formDespernamento "
-                        type="number"
-                        min={0}
-                        step={100}
+                      <InputFormatado
                         name="qtde"
+                        tipoInput="quantidade"
+                        step={100}
                         value={item.qtde}
-                        onChange={event =>
+                        onChange={valor =>
                           this.props.modificarAtributoTabelaAbaAction(
                             this.props.multileg,
                             indiceAba,
                             "qtde",
-                            event.currentTarget.value,
+                            valor,
                             indiceLinha
                           )
                         }
+                        className="formDespernamento"
                       />
                     </Form.Group>
                   </td>
@@ -170,27 +170,27 @@ class TabelaMultileg extends React.Component {
                         )
                       }
                     >
-                      {(item.tipo.toUpperCase())}
+                      {item.tipo.toUpperCase()}
                     </div>
                   </td>
                   <td>{renderModelo(item.modelo)}</td>
                   <td>
                     <Form.Group>
-                      <Form.Control
-                        className="textInput formDespernamento"
-                        type="number"
-                        min={0}
+                      <InputFormatado
+                        name="qtde"
+                        tipoInput="quantidade"
                         step={100}
                         value={item.despernamento}
-                        onChange={event =>
+                        onChange={valor =>
                           this.props.modificarAtributoTabelaAbaAction(
                             this.props.multileg,
                             indiceAba,
                             "despernamento",
-                            event.currentTarget.value,
+                            valor,
                             indiceLinha
                           )
                         }
+                        className="formDespernamento"
                       />
                     </Form.Group>
                   </td>

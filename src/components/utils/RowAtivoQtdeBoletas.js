@@ -1,5 +1,6 @@
 import React from "react";
 import { Row, Col, Form } from "react-bootstrap";
+import InputFormatado from "components/utils/InputFormatado";
 
 export default (props, namespace) => {
   return (
@@ -30,13 +31,11 @@ export default (props, namespace) => {
       <Col className="colTextInput">
         <Form.Group>
           <Form.Label>Qtde</Form.Label>
-          <Form.Control
-            className="textInput"
-            type="number"
+          <InputFormatado
+            tipoInput="quantidade"
             step={100}
-            min={0}
             value={props.qtde}
-            onChange={event => props.mudarQtdAction(event, namespace)}
+            onChange={valor => props.mudarQtdAction(valor, namespace)}
             name="qtde"
             onBlur={() => qtdeMultiplo100(props)}
           />
@@ -47,7 +46,10 @@ export default (props, namespace) => {
 };
 
 const qtdeMultiplo100 = props => {
+  let erro = "";
+  if (Number(props.qtde.replace(".", "")) % 100 !== 0)
+    erro = "Quantidade deve ser múltiplo de 100";
   if (props.dadosPesquisa && props.dadosPesquisa.qtdeMultiplo100) {
-    return props.mostrarErroQtdeOnBlurAction(props.erro);
+    return props.mostrarErroQtdeOnBlurAction(erro);
   } else return false;
 };

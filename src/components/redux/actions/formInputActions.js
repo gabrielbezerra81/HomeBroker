@@ -357,15 +357,13 @@ export const mudarInputConfigAction = (event, namespace) => {
   };
 };
 
-export const mudarQtdAction = (event, namespace) => {
+export const mudarQtdAction = (valor, namespace) => {
   return dispatch => {
     let erro = "";
-    if (event.target.validationMessage) {
-      erro = VALIDACAO_QTDE;
-    }
+
     dispatch({
       type: `${MUDAR_QTDE}${namespace}`,
-      payload: { qtde: event.target.value, erro: erro }
+      payload: { qtde: valor, erro: erro }
     });
   };
 };

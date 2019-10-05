@@ -1,32 +1,32 @@
 .containerInput {
   display: flex;
+  position: relative;
 }
 
 .inputFormatado {
-  padding-right: 11px !important;
+  padding-right: 12px !important;
 }
 
 .divContainerBotoes {
   display: flex;
   flex-direction: column;
-  height: 15px;
-  justify-content: center;
+  height: 100%;
+  justify-content: space-between;
   position: absolute;
-  right: 15px;
-  top: 1px;
+  right: 0px;
+  top: 0px;
+  padding: 0.5px 0;
 }
 
 .divRepetidor {
-  height: 7.5px;
   display: flex;
-  flex: 1;
+  height: 35%;
 }
 
 .divRepetidor i {
-  height: 7.5px;
   cursor: context-menu !important;
   display: flex;
   align-items: center;
-  width: 11px;
+  width: 12px;
   justify-content: center;
 }

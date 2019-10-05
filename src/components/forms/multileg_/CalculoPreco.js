@@ -3,13 +3,14 @@ export const calculoPreco = (aba, tipo) => {
   let arrayQtde = [];
 
   aba.tabelaMultileg.map((oferta, index) => {
-    if (oferta.compra && oferta.venda) arrayQtde.push(oferta.qtde);
+    if ((oferta.compra && oferta.venda) || tipo === "ultimo")
+      arrayQtde.push(oferta.qtde);
   });
   const mdc = gcd(arrayQtde);
 
   if (mdc > 0)
     aba.tabelaMultileg.map((oferta, index) => {
-      if (oferta.compra && oferta.venda) {
+      if ((oferta.compra && oferta.venda) || tipo === "ultimo") {
         switch (tipo) {
           case "max":
             if (oferta.cv === "compra")
