@@ -48,7 +48,10 @@ class InputFormatado extends React.Component {
       );
 
     return (
-      <div className="containerInput">
+      <div
+        className={`containerInput ${this.props.inputGrafico}`}
+        id={this.props.id}
+      >
         {input}
         {this.props.readOnly ? null : (
           <div className="divContainerBotoes">
@@ -94,3 +97,5 @@ const onDown = props => {
     props.onChange(numero);
   }
 };
+
+//Fazer replace de todos os pontos em QTDE

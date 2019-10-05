@@ -5,10 +5,6 @@ import { compose } from "redux";
 import { mostrarErroQtdeOnBlurAction } from "components/redux/actions/bookOfertaActions";
 import {
   mudarQtdAction,
-  mudarGainDisparoAction,
-  mudarGainExecAction,
-  mudarStopDisparoAction,
-  mudarStopExecAction,
   mudarValidadeSelectAction,
   mudarDataAction,
   limparAction,
@@ -187,10 +183,6 @@ export default compose(
     mapStateToProps,
     {
       mudarQtdAction,
-      mudarGainDisparoAction,
-      mudarGainExecAction,
-      mudarStopDisparoAction,
-      mudarStopExecAction,
       mudarValidadeSelectAction,
       mudarDataAction,
       limparAction,

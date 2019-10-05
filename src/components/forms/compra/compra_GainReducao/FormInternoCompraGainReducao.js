@@ -5,8 +5,6 @@ import { connect } from "react-redux";
 import { mostrarErroQtdeOnBlurAction } from "components/redux/actions/bookOfertaActions";
 import {
   mudarQtdAction,
-  mudarGainDisparoAction,
-  mudarGainExecAction,
   mudarValidadeSelectAction,
   mudarDataAction,
   limparAction,
@@ -178,8 +176,6 @@ export default connect(
   mapStateToProps,
   {
     mudarQtdAction,
-    mudarGainDisparoAction,
-    mudarGainExecAction,
     mudarValidadeSelectAction,
     mudarDataAction,
     limparAction,

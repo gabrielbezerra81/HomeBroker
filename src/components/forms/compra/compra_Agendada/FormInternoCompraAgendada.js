@@ -3,16 +3,10 @@ import { Button, Form, Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
 import { mostrarErroQtdeOnBlurAction } from "components/redux/actions/bookOfertaActions";
 import {
-  mudarGainDisparoAction,
-  mudarGainExecAction,
-  mudarStopDisparoAction,
-  mudarStopExecAction,
   mudarValidadeSelectAction,
   mudarDataAction,
   limparAction,
   mudarAtivoAction,
-  mudarEntradaDisparoAction,
-  mudarEntradaExecAction,
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction,
   mudarQtdAction
@@ -245,16 +239,10 @@ export default connect(
   mapStateToProps,
   {
     mudarQtdAction,
-    mudarGainDisparoAction,
-    mudarGainExecAction,
-    mudarStopDisparoAction,
-    mudarStopExecAction,
     mudarValidadeSelectAction,
     mudarDataAction,
     limparAction,
     mudarAtivoAction,
-    mudarEntradaDisparoAction,
-    mudarEntradaExecAction,
     mudarAssinaturaAction,
     mudarCheckSalvarAssinaturaAction,
     mostrarErroQtdeOnBlurAction,

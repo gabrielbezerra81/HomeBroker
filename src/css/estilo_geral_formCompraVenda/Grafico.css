@@ -49,17 +49,6 @@
   font-weight: 500;
 }
 
-.inputGrafico {
-  width: 39%;
-  height: 11px;
-  position: absolute;
-  background-color: transparent;
-  border-color: transparent;
-  text-align: center;
-  font-size: 70%;
-  font-weight: 400;
-}
-
 .TamanhoInputGrafico_StartMovel {
   width: 16.3% !important;
 }

@@ -7,6 +7,21 @@
   padding-right: 12px !important;
 }
 
+.containerInputGrafico {
+  width: 39%;
+  height: 11px;
+  position: absolute !important;
+  background-color: transparent;
+  border-color: transparent;
+  text-align: center;
+  font-size: 70%;
+  font-weight: 400;
+}
+
+.containerInputGrafico input {
+  height: 11px;
+}
+
 .divContainerBotoes {
   display: flex;
   flex-direction: column;
@@ -29,4 +44,15 @@
   align-items: center;
   width: 12px;
   justify-content: center;
+}
+
+.inputGrafico {
+  width: 39%;
+  height: 11px;
+  position: absolute !important;
+  background-color: transparent;
+  border-color: transparent;
+  text-align: center;
+  font-size: 70%;
+  font-weight: 400;
 }

@@ -1,12 +1,7 @@
 import React from "react";
 import { Col, Form } from "react-bootstrap";
 import { connect } from "react-redux";
-import {
-  mudarGainDisparoAction,
-  mudarGainExecAction,
-  mudarStopDisparoAction,
-  mudarStopExecAction
-} from "components/redux/actions/formInputActions";
+
 import img from "img/venda/VendaAgendada.png";
 import IconeConfigGrafico from "components/utils/IconeConfigGrafico";
 import {
@@ -17,6 +12,7 @@ import {
 } from "components/utils/TextoGrafico";
 import { VENDA_LIMITADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalAgendada } from "components/utils/CalculoValorTotal";
+import GraficoInputs from "components/utils/GraficoInputs";
 
 class GraficoVendaLimitada extends React.Component {
   render() {
@@ -25,51 +21,10 @@ class GraficoVendaLimitada extends React.Component {
         <div className="imgContainer">
           <img src={img} className="imgChart" alt="" />
           <Form>
-            <Form.Control
-              type="number"
-              step={0.01}
-              id="GainDisparoGrafico_VA"
-              className="inputGrafico"
-              value={this.props.gainDisparo}
-              onChange={event =>
-                this.props.mudarGainDisparoAction(
-                  event,
-                  VENDA_LIMITADA_NAMESPACE
-                )
-              }
-            />
-            <Form.Control
-              type="number"
-              step={0.01}
-              id="GainExecGrafico_VA"
-              className="inputGrafico"
-              value={this.props.gainExec}
-              onChange={event =>
-                this.props.mudarGainExecAction(event, VENDA_LIMITADA_NAMESPACE)
-              }
-            />
-            <Form.Control
-              type="number"
-              step={0.01}
-              id="StopDisparoGrafico_VA"
-              className="inputGrafico"
-              value={this.props.stopDisparo}
-              onChange={event =>
-                this.props.mudarStopDisparoAction(
-                  event,
-                  VENDA_LIMITADA_NAMESPACE
-                )
-              }
-            />
-            <Form.Control
-              type="number"
-              step={0.01}
-              id="StopExecGrafico_VA"
-              className="inputGrafico"
-              value={this.props.stopExec}
-              onChange={event =>
-                this.props.mudarStopExecAction(event, VENDA_LIMITADA_NAMESPACE)
-              }
+            <GraficoInputs
+              namespace={VENDA_LIMITADA_NAMESPACE}
+              tipoBoleta="graficoTipoAgendada"
+              cv="VA"
             />
             <Form.Control
               id="CotacaoAtualGrafico_VA"
@@ -130,10 +85,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {
-    mudarGainDisparoAction,
-    mudarGainExecAction,
-    mudarStopDisparoAction,
-    mudarStopExecAction
-  }
+  {}
 )(GraficoVendaLimitada);

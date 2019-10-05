@@ -4,16 +4,11 @@ import { connect } from "react-redux";
 import { mostrarErroQtdeOnBlurAction } from "components/redux/actions/bookOfertaActions";
 import {
   mudarQtdAction,
-  mudarGainDisparoAction,
-  mudarGainExecAction,
-  mudarStopDisparoAction,
-  mudarStopExecAction,
   mudarValidadeSelectAction,
   mudarDataAction,
   limparAction,
   mudarAtivoAction,
   mudarAssinaturaAction,
-  mudarPrecoAction,
   mudarCheckSalvarAssinaturaAction
 } from "components/redux/actions/formInputActions";
 import RowFormValidade from "components/utils/RowFormValidade";
@@ -216,16 +211,11 @@ export default connect(
   mapStateToProps,
   {
     mudarQtdAction,
-    mudarGainDisparoAction,
-    mudarGainExecAction,
-    mudarStopDisparoAction,
-    mudarStopExecAction,
     mudarValidadeSelectAction,
     mudarDataAction,
     limparAction,
     mudarAtivoAction,
     mudarAssinaturaAction,
-    mudarPrecoAction,
     mudarCheckSalvarAssinaturaAction,
     mostrarErroQtdeOnBlurAction,
     pesquisarAtivoOnEnterAction,

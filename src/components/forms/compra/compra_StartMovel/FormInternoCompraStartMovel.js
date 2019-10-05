@@ -5,12 +5,7 @@ import { MDBIcon } from "mdbreact";
 import { mostrarErroQtdeOnBlurAction } from "components/redux/actions/bookOfertaActions";
 import {
   mudarQtdAction,
-  mudarStopDisparoAction,
-  mudarStopExecAction,
   mudarAtivoAction,
-  mudarInicioDisparoAction,
-  mudarAjustePadraoAction,
-  mudarAjusteAssimetricoAction,
   mudarValidadeSelectAction,
   mudarDataAction,
   adicionarItemTabelaStartMovel,
@@ -222,12 +217,7 @@ export default connect(
   mapStateToProps,
   {
     mudarQtdAction,
-    mudarStopDisparoAction,
-    mudarStopExecAction,
     mudarAtivoAction,
-    mudarInicioDisparoAction,
-    mudarAjustePadraoAction,
-    mudarAjusteAssimetricoAction,
     mudarValidadeSelectAction,
     mudarDataAction,
     mostrarErroQtdeOnBlurAction,

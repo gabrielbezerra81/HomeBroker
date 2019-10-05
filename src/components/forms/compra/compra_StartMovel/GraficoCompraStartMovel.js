@@ -1,16 +1,7 @@
 import React from "react";
 import { Col, Form } from "react-bootstrap";
 import { connect } from "react-redux";
-import {
-  mudarGainDisparoAction,
-  mudarGainExecAction,
-  mudarStopDisparoAction,
-  mudarStopExecAction,
-  mudarDisparo1AjusteAction,
-  mudarDisparoMaisAjusteAction,
-  mudarStopMaisPrimeiroAjusteAction,
-  mudarStopAnteriorAjusteAction
-} from "components/redux/actions/formInputActions";
+import {} from "components/redux/actions/formInputActions";
 import img from "img/compra/CompraStartMovel.png";
 import {
   LabelInputGrafico,
@@ -19,6 +10,7 @@ import {
   TextoMenorGrafico
 } from "components/utils/TextoGrafico";
 import { COMPRA_STARTMOVEL_NAMESPACE } from "constants/ActionTypes";
+import GraficoInputs from "components/utils/GraficoInputs";
 
 class GraficoCompraStartMovel extends React.Component {
   render() {
@@ -27,89 +19,10 @@ class GraficoCompraStartMovel extends React.Component {
         <div className="imgContainer">
           <img src={img} className="imgChart" alt="" />
           <Form>
-            <Form.Control
-              type="number"
-              step={0.01}
-              id="StopDisparoGrafico_CSM"
-              className="inputGrafico TamanhoInputGrafico_StartMovel"
-              value={this.props.stopDisparo}
-              onChange={event =>
-                this.props.mudarStopDisparoAction(
-                  event,
-                  COMPRA_STARTMOVEL_NAMESPACE
-                )
-              }
-            />
-            <Form.Control
-              type="number"
-              step={0.01}
-              id="StopExecGrafico_CSM"
-              className="inputGrafico TamanhoInputGrafico_StartMovel"
-              value={this.props.stopExec}
-              onChange={event =>
-                this.props.mudarStopExecAction(
-                  event,
-                  COMPRA_STARTMOVEL_NAMESPACE
-                )
-              }
-            />
-            <Form.Control
-              id="CotacaoAtualGrafico_CSM"
-              className="inputGrafico"
-              value={this.props.dadosPesquisa.cotacaoAtual}
-              onChange={() => false}
-            />
-            <Form.Control
-              type="number"
-              step={0.01}
-              id="Disparo1AjusteGrafico_CSM"
-              className="inputGrafico TamanhoInputGrafico_StartMovel"
-              value={this.props.inicioDisparo}
-              onChange={event =>
-                this.props.mudarDisparo1AjusteAction(
-                  event,
-                  COMPRA_STARTMOVEL_NAMESPACE
-                )
-              }
-            />
-            <Form.Control
-              type="number"
-              step={0.01}
-              id="DisparoMaisAjusteGrafico_CSM"
-              className="inputGrafico TamanhoInputGrafico_StartMovel"
-              value={this.props.disparoMaisAjuste}
-              onChange={event =>
-                this.props.mudarDisparoMaisAjusteAction(
-                  event,
-                  COMPRA_STARTMOVEL_NAMESPACE
-                )
-              }
-            />
-            <Form.Control
-              type="number"
-              step={0.01}
-              id="StopMais1AjusteGrafico_CSM"
-              className="inputGrafico TamanhoInputGrafico_StartMovel"
-              value={this.props.stopMais1Ajuste}
-              onChange={event =>
-                this.props.mudarStopMaisPrimeiroAjusteAction(
-                  event,
-                  COMPRA_STARTMOVEL_NAMESPACE
-                )
-              }
-            />
-            <Form.Control
-              type="number"
-              step={0.01}
-              id="StopAnteriorAjusteGrafico_CSM"
-              className="inputGrafico TamanhoInputGrafico_StartMovel"
-              value={this.props.stopAnteriorAjuste}
-              onChange={event =>
-                this.props.mudarStopAnteriorAjusteAction(
-                  event,
-                  COMPRA_STARTMOVEL_NAMESPACE
-                )
-              }
+            <GraficoInputs
+              namespace={COMPRA_STARTMOVEL_NAMESPACE}
+              tipoBoleta="tipoStartMovel"
+              cv="CSM"
             />
           </Form>
           {LabelInputGrafico("Disparo", "TextoGainDisparo_CSM")}
@@ -172,14 +85,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {
-    mudarGainDisparoAction,
-    mudarGainExecAction,
-    mudarStopDisparoAction,
-    mudarStopExecAction,
-    mudarDisparo1AjusteAction,
-    mudarDisparoMaisAjusteAction,
-    mudarStopMaisPrimeiroAjusteAction,
-    mudarStopAnteriorAjusteAction
-  }
+  {}
 )(GraficoCompraStartMovel);

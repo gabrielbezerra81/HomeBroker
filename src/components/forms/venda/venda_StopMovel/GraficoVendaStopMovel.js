@@ -1,16 +1,7 @@
 import React from "react";
 import { Col, Form } from "react-bootstrap";
 import { connect } from "react-redux";
-import {
-  mudarGainDisparoAction,
-  mudarGainExecAction,
-  mudarStopDisparoAction,
-  mudarStopExecAction,
-  mudarDisparo1AjusteAction,
-  mudarDisparoMaisAjusteAction,
-  mudarStopMaisPrimeiroAjusteAction,
-  mudarStopAnteriorAjusteAction
-} from "components/redux/actions/formInputActions";
+
 import img from "img/venda/VendaStopMovel.png";
 import {
   LabelInputGrafico,
@@ -19,6 +10,7 @@ import {
   TextoMenorGrafico
 } from "components/utils/TextoGrafico";
 import { VENDA_STOPMOVEL_NAMESPACE } from "constants/ActionTypes";
+import GraficoInputs from "components/utils/GraficoInputs";
 
 class GraficoVendaStopMovel extends React.Component {
   render() {
@@ -27,86 +19,10 @@ class GraficoVendaStopMovel extends React.Component {
         <div className="imgContainer">
           <img src={img} className="imgChart" alt="" />
           <Form>
-            <Form.Control
-              type="number"
-              step={0.01}
-              id="StopDisparoGrafico_VSM"
-              className="inputGrafico TamanhoInputGrafico_StartMovel"
-              value={this.props.stopDisparo}
-              onChange={event =>
-                this.props.mudarStopDisparoAction(
-                  event,
-                  VENDA_STOPMOVEL_NAMESPACE
-                )
-              }
-            />
-            <Form.Control
-              type="number"
-              step={0.01}
-              id="StopExecGrafico_VSM"
-              className="inputGrafico TamanhoInputGrafico_StartMovel"
-              value={this.props.stopExec}
-              onChange={event =>
-                this.props.mudarStopExecAction(event, VENDA_STOPMOVEL_NAMESPACE)
-              }
-            />
-            <Form.Control
-              id="CotacaoAtualGrafico_VSM"
-              className="inputGrafico"
-              value={this.props.dadosPesquisa.cotacaoAtual}
-              onChange={() => false}
-            />
-            <Form.Control
-              type="number"
-              step={0.01}
-              id="Disparo1AjusteGrafico_VSM"
-              className="inputGrafico TamanhoInputGrafico_StartMovel"
-              value={this.props.inicioDisparo}
-              onChange={event =>
-                this.props.mudarDisparo1AjusteAction(
-                  event,
-                  VENDA_STOPMOVEL_NAMESPACE
-                )
-              }
-            />
-            <Form.Control
-              type="number"
-              step={0.01}
-              id="DisparoMaisAjusteGrafico_VSM"
-              className="inputGrafico TamanhoInputGrafico_StartMovel"
-              value={this.props.disparoMaisAjuste}
-              onChange={event =>
-                this.props.mudarDisparoMaisAjusteAction(
-                  event,
-                  VENDA_STOPMOVEL_NAMESPACE
-                )
-              }
-            />
-            <Form.Control
-              type="number"
-              step={0.01}
-              id="StopMais1AjusteGrafico_VSM"
-              className="inputGrafico TamanhoInputGrafico_StartMovel"
-              value={this.props.stopMais1Ajuste}
-              onChange={event =>
-                this.props.mudarStopMaisPrimeiroAjusteAction(
-                  event,
-                  VENDA_STOPMOVEL_NAMESPACE
-                )
-              }
-            />
-            <Form.Control
-              type="number"
-              step={0.01}
-              id="StopAnteriorAjusteGrafico_VSM"
-              className="inputGrafico TamanhoInputGrafico_StartMovel"
-              value={this.props.stopAnteriorAjuste}
-              onChange={event =>
-                this.props.mudarStopAnteriorAjusteAction(
-                  event,
-                  VENDA_STOPMOVEL_NAMESPACE
-                )
-              }
+            <GraficoInputs
+              namespace={VENDA_STOPMOVEL_NAMESPACE}
+              tipoBoleta="tipoStartMovel"
+              cv="VSM"
             />
           </Form>
           {LabelInputGrafico("Disparo", "TextoGainDisparo_VSM")}
@@ -169,14 +85,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {
-    mudarGainDisparoAction,
-    mudarGainExecAction,
-    mudarStopDisparoAction,
-    mudarStopExecAction,
-    mudarDisparo1AjusteAction,
-    mudarDisparoMaisAjusteAction,
-    mudarStopMaisPrimeiroAjusteAction,
-    mudarStopAnteriorAjusteAction
-  }
+  {}
 )(GraficoVendaStopMovel);

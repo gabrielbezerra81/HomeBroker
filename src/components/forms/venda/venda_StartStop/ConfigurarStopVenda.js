@@ -10,13 +10,7 @@ import {
   TextoGainStopGrafico,
   TextoValorTotalGrafico
 } from "components/utils/TextoGrafico";
-import {
-  mudarGainDisparoAction,
-  mudarGainExecAction,
-  mudarStopDisparoAction,
-  mudarStopExecAction,
-  mudarInputConfigAction
-} from "components/redux/actions/formInputActions";
+import { mudarInputConfigAction } from "components/redux/actions/formInputActions";
 import { CalculoValorTotalAgendada } from "components/utils/CalculoValorTotal";
 import { fecharFormConfigurarAction } from "components/redux/reducers/MainAppReducer";
 import { modalHeaderLimpo } from "components/utils/FormHeader";
@@ -200,10 +194,6 @@ export default connect(
   mapStateToPropsConfigStopVenda,
   {
     mostrarConfigurarStopAction,
-    mudarGainDisparoAction,
-    mudarGainExecAction,
-    mudarStopDisparoAction,
-    mudarStopExecAction,
     fecharFormConfigurarAction,
     mudarInputConfigAction
   }
