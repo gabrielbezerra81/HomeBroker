@@ -19,6 +19,7 @@ class InputFormatado extends React.Component {
           onChange={(event, double, string) => this.props.onChange(double)}
           onBlur={this.props.onBlur}
           onKeyPress={this.props.onKeyPress}
+          prefix={this.props.value < 0 ? "- " : ""}
         />
       );
     else if (this.props.tipoInput === "quantidade")
@@ -73,7 +74,8 @@ const onUp = props => {
 };
 
 const onDown = props => {
-  if (props.value > 0) {
+  if (props.value > 0 || props.allowNegative) {
+    console.log("permitiu");
     let numero;
     numero = Number(Number(props.value) - props.step);
     if (props.tipoInput === "preco") numero = numero.toFixed(2);

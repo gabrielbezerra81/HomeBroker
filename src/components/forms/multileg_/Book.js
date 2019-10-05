@@ -169,6 +169,7 @@ class Book extends React.Component {
           </Col>
           <Col className="mr-1">
             <InputFormatado
+              allowNegative
               tipoInput="preco"
               step={0.01}
               value={this.props.multileg[indice].preco}
