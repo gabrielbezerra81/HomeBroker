@@ -29,4 +29,5 @@ import "./posicao_custodia/PosicaoCustodia.css";
 import "./posicao_custodia/PosicaoDetalhada.css";
 import "./relatorio_detalhado/RelatorioDetalhado.css";
 
-import "./CustomCheckbox.css";
+import "./componentes_customizados/CustomCheckbox.css";
+import "./componentes_customizados/InputFormatado.css";

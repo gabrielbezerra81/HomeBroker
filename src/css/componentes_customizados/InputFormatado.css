@@ -1,0 +1,29 @@
+.containerInput {
+  display: flex;
+}
+
+.divContainerBotoes {
+  display: flex;
+  flex-direction: column;
+  height: 15px;
+  justify-content: center;
+  position: relative;
+  right: 10px;
+  top: -3px;
+}
+
+.divRepetidor {
+  height: 7.5px;
+  display: flex;
+  flex: 1;
+}
+
+.divRepetidor i {
+  height: 5px;
+  vertical-align: text-top;
+  cursor: context-menu !important;
+}
+
+.divRepetidor:first-child{
+  margin-bottom: 1px
+}

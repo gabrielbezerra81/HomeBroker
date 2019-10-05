@@ -2533,6 +2533,11 @@ ccount@^1.0.3:
   resolved "https://registry.yarnpkg.com/ccount/-/ccount-1.0.4.tgz#9cf2de494ca84060a2a8d2854edd6dfb0445f386"
   integrity sha512-fpZ81yYfzentuieinmGnphk0pLkOTMm6MZdVqwd77ROvhko6iujLNGrHH5E7utq3ygWklwfmwuG+A7P+NpqT6w==
 
+chained-function@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/chained-function/-/chained-function-0.5.0.tgz#2564bbdfdf7803194bebf75a6b2bd041ede23b3a"
+  integrity sha1-JWS73994AxlL6/daayvQQe3iOzo=
+
 chalk@2.4.2, chalk@^2.0.0, chalk@^2.0.1, chalk@^2.1.0, chalk@^2.4.1, chalk@^2.4.2:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.2.tgz#cd42541677a54333cf541a49108c1432b44c9424"
@@ -8617,6 +8622,11 @@ react-interval-rerender@^1.0.1:
   dependencies:
     prop-types "^15.0.0"
 
+react-intl-number-input@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/react-intl-number-input/-/react-intl-number-input-0.4.0.tgz#5317b99749b8f4dd503e253289242f4ea5bbe569"
+  integrity sha512-qzhromIENxmIH034gRr+xciYt7Oj0RpmDCKfuzwXTizG3/LYxkVmp7A/fUHq/Mdmvj3KKLbc421KFgVZeI7BoQ==
+
 react-is@^16.3.2, react-is@^16.6.0, react-is@^16.6.3, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.6.tgz#5bbc1e2d29141c9fbdfed456343fe2bc430a6a16"
@@ -8691,6 +8701,14 @@ react-redux@^7.1.0:
     loose-envify "^1.4.0"
     prop-types "^15.7.2"
     react-is "^16.8.6"
+
+react-repeatable@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-repeatable/-/react-repeatable-2.0.1.tgz#0f063742ebefd97e073eb77e8223e53d856e7530"
+  integrity sha512-i4IA2s+1Fo59VtVN3lPi2sYUv3etug846YbT2gXBPNo+qfoAmoi2kDWY/truOqAxxza67wR67wqGEQYHVctDWw==
+  dependencies:
+    chained-function "^0.5.0"
+    prop-types "^15.6.0"
 
 react-resize-detector@^2.3.0:
   version "2.3.0"

@@ -56,7 +56,6 @@ class FormInternoCompraAgendada extends React.Component {
                         COMPRA_AGENDADA_NAMESPACE
                       )
                     }
-                 
                   />
                 </Form.Group>
               </Col>
@@ -75,7 +74,6 @@ class FormInternoCompraAgendada extends React.Component {
                         COMPRA_AGENDADA_NAMESPACE
                       )
                     }
-                  
                   />
                 </Form.Group>
               </Col>
@@ -114,7 +112,6 @@ class FormInternoCompraAgendada extends React.Component {
                         COMPRA_AGENDADA_NAMESPACE
                       )
                     }
-             
                   />
                 </Form.Group>
               </Col>
@@ -133,7 +130,6 @@ class FormInternoCompraAgendada extends React.Component {
                         COMPRA_AGENDADA_NAMESPACE
                       )
                     }
-                 
                   />
                 </Form.Group>
               </Col>
@@ -164,7 +160,6 @@ class FormInternoCompraAgendada extends React.Component {
                         COMPRA_AGENDADA_NAMESPACE
                       )
                     }
-                
                   />
                 </Form.Group>
               </Col>
@@ -183,7 +178,6 @@ class FormInternoCompraAgendada extends React.Component {
                         COMPRA_AGENDADA_NAMESPACE
                       )
                     }
-                  
                   />
                 </Form.Group>
               </Col>

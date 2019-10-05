@@ -49,8 +49,7 @@ export const modificarAtributoAbaAction = (
   multileg,
   indice,
   atributo,
-  valor,
-  eventKey = ""
+  valor
 ) => {
   return async dispatch => {
     let abasMultileg = [...multileg];

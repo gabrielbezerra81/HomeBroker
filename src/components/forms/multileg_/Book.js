@@ -9,7 +9,7 @@ import {
   modificarAtributoAbaAction
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
-import { formatarNumero } from "components/redux/reducers/formInputReducer";
+import InputFormatado from "components/utils/InputFormatado";
 
 class Book extends React.Component {
   render() {
@@ -110,7 +110,7 @@ class Book extends React.Component {
                   this.props.multileg,
                   indice,
                   "preco",
-                  event.currentTarget.value
+                  Number(event.currentTarget.value).toFixed(2)
                 )
               }
             />
@@ -168,25 +168,16 @@ class Book extends React.Component {
             <h6>Preço</h6>
           </Col>
           <Col className="mr-1">
-            <Form.Control
-              className="textInput"
-              type="number"
+            <InputFormatado
+              tipoInput="preco"
               step={0.01}
               value={this.props.multileg[indice].preco}
-              onChange={event => {
+              onChange={valor =>
                 this.props.modificarAtributoAbaAction(
                   this.props.multileg,
                   indice,
                   "preco",
-                  event.target.value
-                );
-              }}
-              onBlur={() =>
-                this.props.modificarAtributoAbaAction(
-                  this.props.multileg,
-                  indice,
-                  "preco",
-                  Number(this.props.multileg[indice].preco).toFixed(2)
+                  valor
                 )
               }
             />
