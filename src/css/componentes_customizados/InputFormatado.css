@@ -9,7 +9,6 @@
   justify-content: center;
   position: relative;
   right: 10px;
-  top: -3px;
 }
 
 .divRepetidor {
@@ -19,11 +18,8 @@
 }
 
 .divRepetidor i {
-  height: 5px;
-  vertical-align: text-top;
+  height: 7.5px;
   cursor: context-menu !important;
-}
-
-.divRepetidor:first-child{
-  margin-bottom: 1px
+  display: flex;
+  align-items: center;
 }
