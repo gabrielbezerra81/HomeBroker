@@ -12,7 +12,7 @@ class InputFormatado extends React.Component {
       input = (
         <CurrencyInput
           locale="pt-BR"
-          className={`form-control textInput ${this.props.className}`}
+          className={`form-control textInput inputFormatado ${this.props.className}`}
           precision={2}
           step={this.props.step}
           value={this.props.value}
@@ -27,7 +27,7 @@ class InputFormatado extends React.Component {
           thousandSeparator="."
           decimalSeparator=","
           decimalScale={0}
-          className={`form-control textInput ${this.props.className}`}
+          className={`form-control textInput inputFormatado ${this.props.className}`}
           value={this.props.value}
           onChange={event => this.props.onChange(event.target.value)}
           onBlur={this.props.onBlur}
@@ -41,7 +41,7 @@ class InputFormatado extends React.Component {
         <div className="divContainerBotoes">
           <Repeatable
             repeatDelay={600}
-            repeatInterval={60}
+            repeatInterval={50}
             onPress={() => onUp(this.props)}
             onHold={() => onUp(this.props)}
             className="divRepetidor"
@@ -50,7 +50,7 @@ class InputFormatado extends React.Component {
           </Repeatable>
           <Repeatable
             repeatDelay={600}
-            repeatInterval={60}
+            repeatInterval={50}
             onPress={() => onDown(this.props)}
             onHold={() => onDown(this.props)}
             className="divRepetidor"
