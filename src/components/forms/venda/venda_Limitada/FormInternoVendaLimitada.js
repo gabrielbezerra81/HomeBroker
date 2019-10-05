@@ -9,7 +9,8 @@ import {
   limparAction,
   mudarAtivoAction,
   mudarAssinaturaAction,
-  mudarCheckSalvarAssinaturaAction
+  mudarCheckSalvarAssinaturaAction,
+  mudarAtributoBoletaAction
 } from "components/redux/actions/formInputActions";
 import RowFormValidade from "components/utils/RowFormValidade";
 import RowFormAssinatura from "components/utils/RowFormAssinatura";
@@ -21,6 +22,7 @@ import {
   pesquisarAtivoOnEnterAction,
   enviarOrdemAction
 } from "components/redux/actions/api_actions/boletasAPIActions";
+import InputFormatado from "components/utils/InputFormatado";
 
 class FormInternoVendaLimitada extends React.Component {
   render() {
@@ -37,16 +39,15 @@ class FormInternoVendaLimitada extends React.Component {
               <Col className="colTextInput">
                 <Form.Group>
                   <Form.Label />
-                  <Form.Control
-                    className="textInput"
-                    type="number"
+                  <InputFormatado
+                    tipoInput="preco"
                     step={0.01}
-                    name="preco"
                     value={this.props.preco}
-                    onChange={event =>
-                      this.props.mudarPrecoAction(
-                        event,
-                        VENDA_LIMITADA_NAMESPACE
+                    onChange={valor =>
+                      this.props.mudarAtributoBoletaAction(
+                        valor,
+                        VENDA_LIMITADA_NAMESPACE,
+                        "preco"
                       )
                     }
                   />
@@ -219,6 +220,7 @@ export default connect(
     mudarCheckSalvarAssinaturaAction,
     mostrarErroQtdeOnBlurAction,
     pesquisarAtivoOnEnterAction,
-    enviarOrdemAction
+    enviarOrdemAction,
+    mudarAtributoBoletaAction
   }
 )(FormInternoVendaLimitada);

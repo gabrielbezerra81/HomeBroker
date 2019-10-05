@@ -9,7 +9,8 @@ import {
   mudarAtivoAction,
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction,
-  mudarQtdAction
+  mudarQtdAction,
+  mudarAtributoBoletaAction
 } from "components/redux/actions/formInputActions";
 import RowFormValidade from "components/utils/RowFormValidade";
 import RowFormAssinatura from "components/utils/RowFormAssinatura";
@@ -22,7 +23,8 @@ import {
   pesquisarAtivoOnEnterAction,
   enviarOrdemAction
 } from "components/redux/actions/api_actions/boletasAPIActions";
-import { formatarNumero } from "components/redux/reducers/formInputReducer";
+import InputFormatado from "components/utils/InputFormatado";
+import RowGainStopFormInterno from "components/utils/RowGainStopFormInterno";
 
 class FormInternoCompraAgendada extends React.Component {
   render() {
@@ -38,16 +40,15 @@ class FormInternoCompraAgendada extends React.Component {
               <Col className="colTextInput">
                 <Form.Group>
                   <Form.Label>Disparo</Form.Label>
-                  <Form.Control
-                    className="textInput"
-                    type="number"
+                  <InputFormatado
+                    tipoInput="preco"
                     step={0.01}
-                    name="disparo"
                     value={this.props.entradaDisparo}
-                    onChange={event =>
-                      this.props.mudarEntradaDisparoAction(
-                        event,
-                        COMPRA_AGENDADA_NAMESPACE
+                    onChange={valor =>
+                      this.props.mudarAtributoBoletaAction(
+                        valor,
+                        COMPRA_AGENDADA_NAMESPACE,
+                        "entradaDisparo"
                       )
                     }
                   />
@@ -56,16 +57,15 @@ class FormInternoCompraAgendada extends React.Component {
               <Col className="colTextInput">
                 <Form.Group>
                   <Form.Label>Execução</Form.Label>
-                  <Form.Control
-                    className="textInput"
-                    type="number"
+                  <InputFormatado
+                    tipoInput="preco"
                     step={0.01}
-                    name="execucao"
                     value={this.props.entradaExec}
-                    onChange={event =>
-                      this.props.mudarEntradaExecAction(
-                        event,
-                        COMPRA_AGENDADA_NAMESPACE
+                    onChange={valor =>
+                      this.props.mudarAtributoBoletaAction(
+                        valor,
+                        COMPRA_AGENDADA_NAMESPACE,
+                        "entradaExec"
                       )
                     }
                   />
@@ -86,103 +86,13 @@ class FormInternoCompraAgendada extends React.Component {
             </Col>
           </Row>
 
-          <Form>
-            <Row>
-              <Col md={2} className="colLabelInput">
-                <h6 className="labelInput-verticalAlign">Gain</h6>
-              </Col>
-              <Col className="colTextInput">
-                <Form.Group>
-                  <Form.Label>Disparo</Form.Label>
-                  <Form.Control
-                    className="textInput"
-                    type="number"
-                    step={0.01}
-                    name="gainDisparo"
-                    value={this.props.gainDisparo}
-                    onChange={event =>
-                      this.props.mudarGainDisparoAction(
-                        event,
-                        COMPRA_AGENDADA_NAMESPACE
-                      )
-                    }
-                  />
-                </Form.Group>
-              </Col>
-              <Col className="colTextInput">
-                <Form.Group>
-                  <Form.Label>Execução</Form.Label>
-                  <Form.Control
-                    className="textInput"
-                    type="number"
-                    step={0.01}
-                    name="gainExecucao"
-                    value={this.props.gainExec}
-                    onChange={event =>
-                      this.props.mudarGainExecAction(
-                        event,
-                        COMPRA_AGENDADA_NAMESPACE
-                      )
-                    }
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={1} className="colIconeConfig">
-                {iconeConfigAbrirFormulario(
-                  this.props.handleShow,
-                  "compra_gainreducao"
-                )}
-              </Col>
-            </Row>
-
-            <Row>
-              <Col md={2} className="colLabelInput">
-                <h6 className="labelInput-verticalAlign">Stop</h6>
-              </Col>
-              <Col className="colTextInput">
-                <Form.Group>
-                  <Form.Label>Disparo</Form.Label>
-                  <Form.Control
-                    className="textInput"
-                    type="number"
-                    step={0.01}
-                    name="stopDisparo"
-                    value={this.props.stopDisparo}
-                    onChange={event =>
-                      this.props.mudarStopDisparoAction(
-                        event,
-                        COMPRA_AGENDADA_NAMESPACE
-                      )
-                    }
-                  />
-                </Form.Group>
-              </Col>
-              <Col className="colTextInput">
-                <Form.Group>
-                  <Form.Label>Execução</Form.Label>
-                  <Form.Control
-                    className="textInput"
-                    type="number"
-                    step={0.01}
-                    name="stopExecucao"
-                    value={this.props.stopExec}
-                    onChange={event =>
-                      this.props.mudarStopExecAction(
-                        event,
-                        COMPRA_AGENDADA_NAMESPACE
-                      )
-                    }
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={1} className="colIconeConfig">
-                {iconeConfigAbrirFormulario(
-                  this.props.handleShow,
-                  "venda_stop_movel"
-                )}
-              </Col>
-            </Row>
-          </Form>
+          <RowGainStopFormInterno
+            namespace={COMPRA_AGENDADA_NAMESPACE}
+            cv="compra"
+            handleShow={this.props.handleShow}
+            iconeConfigGain="compra_gainreducao"
+            iconeConfigStop="venda_stop_movel"
+          />
 
           {RowFormValidade(this.props, COMPRA_AGENDADA_NAMESPACE)}
 
@@ -248,6 +158,7 @@ export default connect(
     mostrarErroQtdeOnBlurAction,
     compraAgendadaAction,
     pesquisarAtivoOnEnterAction,
-    enviarOrdemAction
+    enviarOrdemAction,
+    mudarAtributoBoletaAction
   }
 )(FormInternoCompraAgendada);
