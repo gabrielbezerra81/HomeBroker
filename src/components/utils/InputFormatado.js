@@ -24,6 +24,9 @@ class InputFormatado extends React.Component {
           onBlur={this.props.onBlur}
           onKeyPress={this.props.onKeyPress}
           prefix={this.props.value < 0 ? "- " : ""}
+          onFocus={event => {
+            if (this.props.autoSelect) event.target.select();
+          }}
         />
       );
     else if (this.props.tipoInput === "quantidade")
