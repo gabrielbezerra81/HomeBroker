@@ -10,6 +10,8 @@ import {
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
 import InputFormatado from "components/utils/InputFormatado";
+import NumberFormat from "react-number-format";
+import { formatarNumero } from "components/redux/reducers/formInputReducer";
 
 class Book extends React.Component {
   render() {
@@ -171,7 +173,7 @@ class Book extends React.Component {
             <InputFormatado
               allowNegative
               autoSelect
-              tipoInput="preco"
+              tipoInput="precoNegativo"
               step={0.01}
               value={this.props.multileg[indice].preco}
               onChange={valor =>

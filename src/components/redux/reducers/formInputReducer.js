@@ -107,9 +107,9 @@ export default namespace => (state = INITIAL_STATE, action) => {
   }
 };
 
-export const formatarNumero = value => {
+export const formatarNumero = (value, casaDecimal) => {
   if (!document.getSelection().toString()) {
-    value = value.split(".");
+    value = value.split(",");
     if (value[1] && value[1].length === 1) {
       //value[1] = value[1] * 10;
     }
@@ -117,23 +117,19 @@ export const formatarNumero = value => {
 
     if (value.length > 2) {
       value =
-        value.substring(0, value.length - 1) +
-        "." +
-        value.substring(value.length - 1, value.length);
-      if (value.length > 4) {
-        //value = value.substring(0, 1) + "." + value.substring(1, value.length);
-      }
+        value.substring(0, value.length - casaDecimal) +
+        "," +
+        value.substring(value.length - casaDecimal, value.length);
       return value;
     }
     if (value.length > 1) {
       value =
         value.substring(0, value.length - 1) +
-        "." +
+        "," +
         value.substring(value.length - 1, value.length);
       return value;
     }
   }
-
   return value;
 };
 

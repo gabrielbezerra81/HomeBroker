@@ -4,6 +4,7 @@ import CurrencyInput from "react-intl-number-input";
 import { MDBIcon } from "mdbreact";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 import Repeatable from "react-repeatable";
+import { formatarNumero } from "components/redux/reducers/formInputReducer";
 
 class InputFormatado extends React.Component {
   render() {
@@ -46,6 +47,27 @@ class InputFormatado extends React.Component {
           onKeyPress={this.props.onKeyPress}
         />
       );
+    else if (this.props.tipoInput === "precoNegativo")
+      input = (
+        <NumberFormat
+          className="form-control textInput"
+          thousandSeparator="."
+          decimalSeparator=","
+          value={this.props.value}
+          onChange={
+            this.props.readOnly
+              ? null
+              : event => this.props.onChange(event.target.value)
+          }
+          onKeyPress={event => {
+            if (event.key !== "-")
+              event.currentTarget.value = formatarNumero(
+                event.currentTarget.value,
+                1
+              );
+          }}
+        />
+      );
 
     return (
       <div
@@ -83,18 +105,44 @@ class InputFormatado extends React.Component {
 export default InputFormatado;
 
 const onUp = props => {
-  let numero;
-  numero = Number(Number(props.value) + props.step);
-  if (props.tipoInput === "preco") numero = numero.toFixed(2);
-  props.onChange(numero);
+  let valorAnterior = props.value;
+  let resultado;
+
+  //Tira todos os pontos e vírgulas do número e o transforma em um número decimal com ponto com separador
+  if (props.tipoInput === "precoNegativo")
+    valorAnterior = valorAnterior
+      .toString()
+      .split(".")
+      .join("")
+      .replace(",", ".");
+
+  resultado = Number(Number(valorAnterior) + Number(props.step));
+
+  if (props.tipoInput === "preco" || props.tipoInput == "precoNegativo")
+    resultado = Number(resultado).toFixed(2);
+  if (props.tipoInput === "precoNegativo")
+    resultado = resultado.toString().replace(".", ",");
+  props.onChange(resultado);
 };
 
 const onDown = props => {
-  if (props.value > 0 || props.allowNegative) {
-    let numero;
-    numero = Number(Number(props.value) - props.step);
-    if (props.tipoInput === "preco") numero = numero.toFixed(2);
-    props.onChange(numero);
+  let valorAnterior = props.value;
+  if (valorAnterior > 0 || props.allowNegative) {
+    let resultado;
+
+    if (props.tipoInput === "precoNegativo")
+      valorAnterior = valorAnterior
+        .toString()
+        .split(".")
+        .join("")
+        .replace(",", ".");
+
+    resultado = Number(Number(valorAnterior) - props.step);
+    if (props.tipoInput === "preco" || props.tipoInput == "precoNegativo")
+      resultado = resultado.toFixed(2);
+    if (props.tipoInput === "precoNegativo")
+      resultado = resultado.toString().replace(".", ",");
+    props.onChange(resultado);
   }
 };
 
