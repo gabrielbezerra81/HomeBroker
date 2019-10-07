@@ -18,6 +18,7 @@ const INITIAL_STATE = {
   apregoarOferta: false,
   multileg: [
     {
+      nomeAba: "Sim 1",
       ativo: "PETR4",
       ativoAtual: "",
       valor: 0,

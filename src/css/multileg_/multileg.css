@@ -33,7 +33,7 @@
 }
 
 .navTabMultileg a {
-  width: 60px;
+  width: 85px;
   height: 24px;
   font-size: 0.95rem;
   padding: 0;
@@ -344,4 +344,31 @@ a.botaoAddAba.active {
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
   font-size: 11px;
+}
+
+.containerTituloAba {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0 5px;
+}
+
+.containerTituloAba i {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.inputTituloAba {
+  height: 11px;
+  background-color: transparent !important;
+  border: none;
+  width: 54px;
+  border-radius: 0;
+  padding: 5px 0px 5px 4px;
+  text-align: center;
+  flex: 1;
+}
+
+.inputTituloAba:focus {
+  box-shadow: none;
 }

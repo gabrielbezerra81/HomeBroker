@@ -32,7 +32,11 @@ import RelatorioDetalhado from "components/forms/relatorio_detalhado/RelatorioDe
 import MultilegReducer from "components/redux/reducers/menu_reducer/MultilegReducer";
 import PosicaoReducer from "components/redux/reducers/menu_reducer/PosicaoReducer";
 import OrdensExecucaoReducer from "components/redux/reducers/menu_reducer/OrdensExecReducer";
-import { selecionarAdicionarAbaAction } from "components/redux/actions/menu_actions/MultilegActions";
+import {
+  selecionarAdicionarAbaAction,
+  modificarAtributoAbaAction,
+  excluirAbaMultilegAction
+} from "components/redux/actions/menu_actions/MultilegActions";
 import { mudarVariavelPosicaoAction } from "components/redux/actions/menu_actions/PosicaoActions";
 import { listarBookOfertaOnEnterAction } from "components/redux/actions/api_actions/bookOfertaAPIActions";
 import { mudarInputHeaderAction } from "components/redux/actions/bookOfertaActions";
@@ -219,7 +223,11 @@ export const MultilegConectado = compose(
   ),
   connect(
     mapStateToPropsMultileg,
-    { selecionarAdicionarAbaAction }
+    {
+      selecionarAdicionarAbaAction,
+      modificarAtributoAbaAction,
+      excluirAbaMultilegAction
+    }
   )
 )(Multileg);
 

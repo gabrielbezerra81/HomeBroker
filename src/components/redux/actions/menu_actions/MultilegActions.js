@@ -29,6 +29,7 @@ export const selecionarAdicionarAbaAction = (key, multileg) => {
       let abasMultileg = [...multileg];
 
       const novaAba = cloneDeep(aba);
+      novaAba.nomeAba = "Sim " + (abasMultileg.length + 1);
       let abaAtual = "tab" + abasMultileg.length;
 
       abasMultileg.push(novaAba);
@@ -43,6 +44,24 @@ export const selecionarAdicionarAbaAction = (key, multileg) => {
         payload: key
       });
     }
+  };
+};
+
+export const excluirAbaMultilegAction = (multileg, indiceAba) => {
+  return dispatch => {
+    let abasMultileg = [...multileg];
+
+    if (indiceAba > 0) {
+      const key = "tab" + (indiceAba - 1);
+      dispatch({
+        type: SELECIONAR_ABA,
+        payload: key
+      });
+    }
+
+    abasMultileg.splice(indiceAba, 1);
+
+    dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
   };
 };
 
@@ -219,6 +238,7 @@ const oferta = {
 };
 
 const aba = {
+  nomeAba: "",
   ativo: "PETR4",
   valor: 0,
   variacao: 0,

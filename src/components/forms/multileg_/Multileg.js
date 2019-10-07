@@ -1,9 +1,10 @@
 import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import { Tab, Row, Col, Nav } from "react-bootstrap";
+import { Tab, Row, Col, Nav, Form, Tabs } from "react-bootstrap";
 import DraggableModal from "components/utils/DraggableModal";
 import { modalHeaderSemBook } from "components/utils/FormHeader";
 import AbaMultileg from "components/forms/multileg_/AbaMultileg";
+import { MDBIcon } from "mdbreact";
 
 export default class Multileg extends React.Component {
   componentDidMount() {
@@ -34,9 +35,16 @@ export default class Multileg extends React.Component {
       <div className="bodyMultileg">
         <Tab.Container
           id="tabBarMultileg"
-          onSelect={key =>
-            this.props.selecionarAdicionarAbaAction(key, this.props.multileg)
-          }
+          onSelect={(key, event) => {
+            // @ts-ignore
+            const keysPressionadas = !arrayKeys.includes(event.key);
+            if (keysPressionadas)
+              this.props.selecionarAdicionarAbaAction(key, this.props.multileg);
+            else {
+              event.stopPropagation();
+              event.preventDefault();
+            }
+          }}
           activeKey={this.props.abaSelecionada}
         >
           <Row className="navTabMultileg">
@@ -46,7 +54,32 @@ export default class Multileg extends React.Component {
                   <Col md={0} key={index}>
                     <Nav.Item>
                       <Nav.Link eventKey={`tab${index}`} className="abaNavTab">
-                        {"Sim " + (index + 1)}
+                        <div className="containerTituloAba">
+                          <MDBIcon
+                            icon="times"
+                            className="saldoOpNegativo"
+                            onClick={e => {
+                              this.props.excluirAbaMultilegAction(
+                                this.props.multileg,
+                                index
+                              );
+                              e.stopPropagation();
+                            }}
+                          />
+                          <Form.Control
+                            type="text"
+                            value={aba.nomeAba}
+                            className="inputTituloAba"
+                            onChange={e => {
+                              this.props.modificarAtributoAbaAction(
+                                this.props.multileg,
+                                index,
+                                "nomeAba",
+                                e.target.value
+                              );
+                            }}
+                          />
+                        </div>
                       </Nav.Link>
                     </Nav.Item>
                   </Col>
@@ -107,3 +140,5 @@ export default class Multileg extends React.Component {
     }
   };
 }
+
+const arrayKeys = ["ArrowUp", "ArrowRight", "ArrowDown", "ArrowLeft"];
