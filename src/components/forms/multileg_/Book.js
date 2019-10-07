@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Table, Row, Col, Form, Button } from "react-bootstrap";
+import { Table, Row, Col, Button } from "react-bootstrap";
 import IconeConfigGrafico from "components/utils/IconeConfigGrafico";
 import DatePicker from "react-datepicker";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
@@ -10,7 +10,6 @@ import {
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
 import InputFormatado from "components/utils/InputFormatado";
-import NumberFormat from "react-number-format";
 import { formatarNumero } from "components/redux/reducers/formInputReducer";
 
 class Book extends React.Component {
@@ -126,7 +125,7 @@ class Book extends React.Component {
                   this.props.multileg,
                   indice,
                   "preco",
-                  Number(min).toFixed(2)
+                  formatarNumero(Number(min).toFixed(2), 2, ".", ",")
                 )
               }
               className="divClicavel"
@@ -141,7 +140,12 @@ class Book extends React.Component {
                   this.props.multileg,
                   indice,
                   "preco",
-                  Number((max + min) / 2).toFixed(2)
+                  formatarNumero(
+                    Number((max + min) / 2).toFixed(2),
+                    2,
+                    ".",
+                    ","
+                  )
                 )
               }
               className="divClicavel"
@@ -156,7 +160,7 @@ class Book extends React.Component {
                   this.props.multileg,
                   indice,
                   "preco",
-                  Number(max).toFixed(2)
+                  formatarNumero(Number(max).toFixed(2), 2, ".", ",")
                 )
               }
               className="divClicavel"

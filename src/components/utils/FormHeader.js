@@ -11,7 +11,7 @@ export const modalHeader = (props, headerTitle, headerClass, resetPosition) => (
         className="iconesHeader"
         onClick={event => {
           event.stopPropagation();
-          props.handleShow(event);
+          props.handleShow(event, props.ativo);
         }}
         name="book"
       >
@@ -52,7 +52,7 @@ export const bookHeader = (props, headerClass, resetPosition) => (
           placeholder=""
           className="inputHeader"
           value={props.inputHeader}
-          onChange={event => props.mudarInputHeaderAction(event)}
+          onChange={event => props.mudarInputHeaderAction(event.target.value)}
           onKeyPress={event => {
             //event.preventDefault();
             if (event.key === "Enter")

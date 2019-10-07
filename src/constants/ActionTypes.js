@@ -4,7 +4,7 @@ export const MUDAR_STOPLOSS_BOOK = "mudar_stoploss_book";
 export const MUDAR_GAIN_BOOK = "mudar_gain_book";
 export const MUDAR_INPUTHEADER_BOOK = "mudar_inputheader_book";
 
-export const MUDAR_ATRIBUTO_BOLETA = "mudar_atributo_boleta"
+export const MUDAR_ATRIBUTO_BOLETA = "mudar_atributo_boleta";
 
 export const MUDAR_GAIN_DISPARO = "mudar_gain_disparo";
 export const MUDAR_GAIN_EXEC = "mudar_gain_exec";
@@ -78,4 +78,5 @@ export const FECHAR_FORM = "fechar_form";
 //tela principal
 export const ABRIR_FECHAR_MENU_LATERAL = "abrir_fechar_menu_lateral";
 export const LOGAR_DESLOGAR_USUARIO = "logar_deslogar_usuario";
-export const ABRIR_FECHAR_ITEM_BARRA_LATERAL = "abrir_fechar_item_barra_lateral";
+export const ABRIR_FECHAR_ITEM_BARRA_LATERAL =
+  "abrir_fechar_item_barra_lateral";

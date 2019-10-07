@@ -34,6 +34,8 @@ import PosicaoReducer from "components/redux/reducers/menu_reducer/PosicaoReduce
 import OrdensExecucaoReducer from "components/redux/reducers/menu_reducer/OrdensExecReducer";
 import { selecionarAdicionarAbaAction } from "components/redux/actions/menu_actions/MultilegActions";
 import { mudarVariavelPosicaoAction } from "components/redux/actions/menu_actions/PosicaoActions";
+import { listarBookOfertaOnEnterAction } from "components/redux/actions/api_actions/bookOfertaAPIActions";
+import { mudarInputHeaderAction } from "components/redux/actions/bookOfertaActions";
 
 export const GlobalContext = React.createContext();
 export const localContext = React.createContext();
@@ -152,7 +154,11 @@ export const AppConectado = compose(
   ),
   connect(
     mapStateToPropsLocal,
-    { receberAppPropsAction }
+    {
+      receberAppPropsAction,
+      listarBookOfertaOnEnterAction,
+      mudarInputHeaderAction
+    }
   )
 )(App);
 

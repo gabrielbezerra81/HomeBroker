@@ -42,7 +42,8 @@ const modalBody = props => (
 );
 
 const mapStateToProps = state => ({
-  config_compra: state.SubAppReducer.config_compra
+  config_compra: state.SubAppReducer.config_compra,
+  ativo: state.compraStartStopReducer.ativo
 });
 
 export default connect(

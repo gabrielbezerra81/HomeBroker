@@ -17,7 +17,6 @@ import RowFormAssinatura from "components/utils/RowFormAssinatura";
 import { COMPRA_AGENDADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalAgendada } from "components/utils/CalculoValorTotal";
 import { compraAgendadaAction } from "components/redux/actions/SubAppActions";
-import { iconeConfigAbrirFormulario } from "components/utils/IconesConfigFormInterno";
 import RowAtivoQtdeBoletas from "components/utils/RowAtivoQtdeBoletas";
 import {
   pesquisarAtivoOnEnterAction,

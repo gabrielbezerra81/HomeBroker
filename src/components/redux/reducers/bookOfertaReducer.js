@@ -5,7 +5,6 @@ import {
   MUDAR_INPUTHEADER_BOOK,
   LIMPAR_FORMS
 } from "constants/ActionTypes";
-import { formatarNumero } from "./formInputReducer";
 import { LISTAR_BOOK_OFERTAS } from "constants/ApiActionTypes";
 
 const INITIAL_STATE = {

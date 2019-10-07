@@ -46,7 +46,8 @@ const modalBody = props => (
 );
 
 const mapStateToProps = state => ({
-  config_venda: state.SubAppReducer.config_venda
+  config_venda: state.SubAppReducer.config_venda,
+  ativo: state.vendaStartStopReducer.ativo
 });
 
 export default connect(

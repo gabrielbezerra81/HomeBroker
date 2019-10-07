@@ -44,6 +44,12 @@ const animate = (props, Componente) => {
 };
 
 export default class App extends React.Component {
+  componentWillMount() {
+    if (this.props.appkey !== 0 && this.props.codigoBook) {
+      this.props.mudarInputHeaderAction(this.props.codigoBook);
+      this.props.listarBookOfertaOnEnterAction(this.props.codigoBook);
+    }
+  }
   componentDidUpdate() {
     if (
       this.props.divkey !== "" &&
@@ -73,6 +79,10 @@ export default class App extends React.Component {
     this.props.receberAppPropsAction(this.props);
   }
 
+  handleShow = (event, ativo) => {
+    this.props.abrirFormAction(event, this.props, ativo);
+  };
+
   render() {
     return (
       <div className="App">
@@ -94,9 +104,7 @@ export default class App extends React.Component {
               }}
               headerTitle="COMPRA AGENDADA"
               name="compra_agendada"
-              handleShow={event => {
-                this.props.abrirFormAction(event, this.props);
-              }}
+              handleShow={this.handleShow}
             />
           )}
           {animate(
@@ -107,9 +115,7 @@ export default class App extends React.Component {
               }}
               headerTitle="COMPRA LIMITADA"
               name="compra_limitada"
-              handleShow={event => {
-                this.props.abrirFormAction(event, this.props);
-              }}
+              handleShow={this.handleShow}
             />
           )}
 
@@ -121,9 +127,7 @@ export default class App extends React.Component {
               }}
               headerTitle="COMPRA A MERCADO"
               name="compra_mercado"
-              handleShow={event => {
-                this.props.abrirFormAction(event, this.props);
-              }}
+              handleShow={this.handleShow}
             />
           )}
 
@@ -135,9 +139,7 @@ export default class App extends React.Component {
               }}
               headerTitle="COMPRA START STOP"
               name="compra_startstop"
-              handleShow={event => {
-                this.props.abrirFormAction(event, this.props);
-              }}
+              handleShow={this.handleShow}
             />
           )}
 
@@ -149,9 +151,7 @@ export default class App extends React.Component {
               }}
               headerTitle="COMPRA START MÓVEL"
               name="compra_startmovel"
-              handleShow={event => {
-                this.props.abrirFormAction(event, this.props);
-              }}
+              handleShow={this.handleShow}
             />
           )}
 
@@ -163,9 +163,7 @@ export default class App extends React.Component {
               }}
               headerTitle="GAIN / REDUÇÃO DE COMPRA"
               name="compra_gainreducao"
-              handleShow={event => {
-                this.props.abrirFormAction(event, this.props);
-              }}
+              handleShow={this.handleShow}
             />
           )}
 
@@ -177,9 +175,7 @@ export default class App extends React.Component {
               }}
               headerTitle="VENDA AGENDADA"
               name="venda_agendada"
-              handleShow={event => {
-                this.props.abrirFormAction(event, this.props);
-              }}
+              handleShow={this.handleShow}
             />
           )}
           {animate(
@@ -190,9 +186,7 @@ export default class App extends React.Component {
               }}
               headerTitle="VENDA LIMITADA"
               name="venda_limitada"
-              handleShow={event => {
-                this.props.abrirFormAction(event, this.props);
-              }}
+              handleShow={this.handleShow}
             />
           )}
           {animate(
@@ -203,9 +197,7 @@ export default class App extends React.Component {
               }}
               headerTitle="VENDA MERCADO"
               name="venda_mercado"
-              handleShow={event => {
-                this.props.abrirFormAction(event, this.props);
-              }}
+              handleShow={this.handleShow}
             />
           )}
           {animate(
@@ -216,9 +208,7 @@ export default class App extends React.Component {
               }}
               headerTitle="VENDA START STOP"
               name="venda_startstop"
-              handleShow={event => {
-                this.props.abrirFormAction(event, this.props);
-              }}
+              handleShow={this.handleShow}
             />
           )}
           {animate(
@@ -229,9 +219,7 @@ export default class App extends React.Component {
               }}
               headerTitle="VENDA STOP MÓVEL"
               name="venda_stop_movel"
-              handleShow={event => {
-                this.props.abrirFormAction(event, this.props);
-              }}
+              handleShow={this.handleShow}
             />
           )}
           {animate(
@@ -242,9 +230,7 @@ export default class App extends React.Component {
               }}
               headerTitle="GAIN / REDUÇÃO DE VENDA"
               name="venda_gainreducao"
-              handleShow={event => {
-                this.props.abrirFormAction(event, this.props);
-              }}
+              handleShow={this.handleShow}
             />
           )}
         </Row>

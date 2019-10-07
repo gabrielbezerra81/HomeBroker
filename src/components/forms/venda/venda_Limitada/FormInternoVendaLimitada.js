@@ -16,7 +16,6 @@ import RowFormValidade from "components/utils/RowFormValidade";
 import RowFormAssinatura from "components/utils/RowFormAssinatura";
 import { VENDA_LIMITADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalLimitada } from "components/utils/CalculoValorTotal";
-import { iconeConfigAbrirFormulario } from "components/utils/IconesConfigFormInterno";
 import RowAtivoQtdeBoletas from "components/utils/RowAtivoQtdeBoletas";
 import {
   pesquisarAtivoOnEnterAction,

@@ -47,7 +47,7 @@ export default (props, namespace) => {
 
 const qtdeMultiplo100 = props => {
   let erro = "";
-  if (Number(props.qtde.replace(".", "")) % 100 !== 0)
+  if (Number(props.qtde) % 100 !== 0)
     erro = "Quantidade deve ser múltiplo de 100";
   if (props.dadosPesquisa && props.dadosPesquisa.qtdeMultiplo100) {
     return props.mostrarErroQtdeOnBlurAction(erro);

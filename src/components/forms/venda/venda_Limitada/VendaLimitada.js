@@ -42,7 +42,9 @@ const modalBody = props => (
   </div>
 );
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  ativo: state.vendaLimitadaReducer.ativo
+});
 
 export default connect(
   mapStateToProps,

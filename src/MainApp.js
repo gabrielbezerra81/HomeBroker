@@ -231,6 +231,7 @@ export class SubApp extends Component {
         <AppConectado
           appkey={this.props.index}
           indiceShow={this.props.indiceShow}
+          codigoBook={this.props.codigoBook}
         />
       </Provider>
     );

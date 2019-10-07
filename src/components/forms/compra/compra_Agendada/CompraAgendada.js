@@ -37,7 +37,9 @@ const modalBody = props => (
   </div>
 );
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  ativo: state.compraAgendadaReducer.ativo
+});
 
 export default connect(
   mapStateToProps,

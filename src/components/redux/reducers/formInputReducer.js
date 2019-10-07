@@ -30,7 +30,7 @@ const INITIAL_STATE = {
     qtdeMultiplo100: true,
     market: ""
   },
-  ativo: "",
+  ativo: "PETR4",
   entradaDisparo: "",
   entradaExec: "",
   valorTotal: "",
@@ -107,29 +107,34 @@ export default namespace => (state = INITIAL_STATE, action) => {
   }
 };
 
-export const formatarNumero = (value, casaDecimal) => {
-  if (!document.getSelection().toString()) {
-    value = value.split(",");
-    if (value[1] && value[1].length === 1) {
-      //value[1] = value[1] * 10;
-    }
-    value = value.join("");
-
-    if (value.length > 2) {
-      value =
-        value.substring(0, value.length - casaDecimal) +
-        "," +
-        value.substring(value.length - casaDecimal, value.length);
-      return value;
-    }
-    if (value.length > 1) {
-      value =
-        value.substring(0, value.length - 1) +
-        "," +
-        value.substring(value.length - 1, value.length);
-      return value;
-    }
+export const formatarNumero = (
+  value,
+  casaDecimal,
+  separadorOrigem,
+  separadorResultado
+) => {
+  value = value.split(separadorOrigem);
+  if (value[1] && value[1].length === 1) {
+    //value[1] = value[1] * 10;
   }
+  value = value.join("");
+
+  if (value.length > 2) {
+    value =
+      value.substring(0, value.length - casaDecimal) +
+      separadorResultado +
+      value.substring(value.length - casaDecimal, value.length);
+
+    return value;
+  }
+  if (value.length > 1) {
+    value =
+      value.substring(0, value.length - 1) +
+      separadorResultado +
+      value.substring(value.length - 1, value.length);
+    return value;
+  }
+
   return value;
 };
 

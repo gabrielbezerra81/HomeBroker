@@ -14,8 +14,13 @@ class VendaGainReducao extends React.Component {
       <DraggableModal
         id="vendagainreducao"
         renderModalBody={() => modalBody()}
-        renderHeader={(resetPosition) =>
-          modalHeader(this.props, this.props.headerTitle, "border-green",resetPosition)
+        renderHeader={resetPosition =>
+          modalHeader(
+            this.props,
+            this.props.headerTitle,
+            "border-green",
+            resetPosition
+          )
         }
       />
     );
@@ -32,7 +37,9 @@ const modalBody = () => (
   </div>
 );
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  ativo: state.vendaGainReducao.ativo
+});
 
 export default connect(
   mapStateToProps,

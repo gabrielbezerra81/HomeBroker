@@ -42,7 +42,9 @@ const modalBody = () => (
   </div>
 );
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  ativo: state.vendaStopMovel.ativo
+});
 
 export default connect(
   mapStateToProps,

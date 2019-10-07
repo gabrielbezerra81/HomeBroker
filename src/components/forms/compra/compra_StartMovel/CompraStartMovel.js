@@ -39,7 +39,9 @@ const modalBody = () => (
   </div>
 );
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  ativo: state.compraStartMovelReducer.ativo
+});
 
 export default connect(
   mapStateToProps,

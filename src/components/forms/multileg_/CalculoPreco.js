@@ -30,6 +30,8 @@ export const calculoPreco = (aba, tipo) => {
             else if (oferta.cv === "venda")
               preco -= oferta.cotacao * (oferta.qtde / mdc);
             break;
+          default:
+            break;
         }
       }
     });

@@ -2,7 +2,6 @@ import React from "react";
 import NumberFormat from "react-number-format";
 import CurrencyInput from "react-intl-number-input";
 import { MDBIcon } from "mdbreact";
-import { formatarNumDecimal } from "components/utils/Formatacoes";
 import Repeatable from "react-repeatable";
 import { formatarNumero } from "components/redux/reducers/formInputReducer";
 
@@ -28,6 +27,10 @@ class InputFormatado extends React.Component {
           onFocus={event => {
             if (this.props.autoSelect) event.target.select();
           }}
+          onKeyUp={event => {
+            if (event.key === "ArrowUp") onUp(this.props);
+            else if (event.key === "ArrowDown") onDown(this.props);
+          }}
         />
       );
     else if (this.props.tipoInput === "quantidade")
@@ -45,6 +48,10 @@ class InputFormatado extends React.Component {
           }
           onBlur={this.props.onBlur}
           onKeyPress={this.props.onKeyPress}
+          onKeyUp={event => {
+            if (event.key === "ArrowUp") onUp(this.props);
+            else if (event.key === "ArrowDown") onDown(this.props);
+          }}
         />
       );
     else if (this.props.tipoInput === "precoNegativo")
@@ -63,8 +70,17 @@ class InputFormatado extends React.Component {
             if (event.key !== "-")
               event.currentTarget.value = formatarNumero(
                 event.currentTarget.value,
-                1
+                1,
+                ",",
+                ","
               );
+          }}
+          onFocus={event => {
+            if (this.props.autoSelect) event.target.select();
+          }}
+          onKeyUp={event => {
+            if (event.key === "ArrowUp") onUp(this.props);
+            else if (event.key === "ArrowDown") onDown(this.props);
           }}
         />
       );
@@ -80,7 +96,10 @@ class InputFormatado extends React.Component {
             <Repeatable
               repeatDelay={600}
               repeatInterval={40}
-              onPress={() => onUp(this.props)}
+              onPress={event => {
+                event.preventDefault();
+                onUp(this.props);
+              }}
               onHold={() => onUp(this.props)}
               className="divRepetidor"
             >
@@ -89,7 +108,10 @@ class InputFormatado extends React.Component {
             <Repeatable
               repeatDelay={600}
               repeatInterval={40}
-              onPress={() => onDown(this.props)}
+              onPress={event => {
+                event.preventDefault();
+                onDown(this.props);
+              }}
               onHold={() => onDown(this.props)}
               className="divRepetidor"
             >
@@ -118,7 +140,7 @@ const onUp = props => {
 
   resultado = Number(Number(valorAnterior) + Number(props.step));
 
-  if (props.tipoInput === "preco" || props.tipoInput == "precoNegativo")
+  if (props.tipoInput === "preco" || props.tipoInput === "precoNegativo")
     resultado = Number(resultado).toFixed(2);
   if (props.tipoInput === "precoNegativo")
     resultado = resultado.toString().replace(".", ",");
@@ -138,7 +160,7 @@ const onDown = props => {
         .replace(",", ".");
 
     resultado = Number(Number(valorAnterior) - props.step);
-    if (props.tipoInput === "preco" || props.tipoInput == "precoNegativo")
+    if (props.tipoInput === "preco" || props.tipoInput === "precoNegativo")
       resultado = resultado.toFixed(2);
     if (props.tipoInput === "precoNegativo")
       resultado = resultado.toString().replace(".", ",");

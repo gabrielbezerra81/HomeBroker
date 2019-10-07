@@ -57,11 +57,11 @@ export const mudarGainAction = event => {
   };
 };
 
-export const mudarInputHeaderAction = event => {
+export const mudarInputHeaderAction = valor => {
   return dispatch => {
     dispatch({
       type: MUDAR_INPUTHEADER_BOOK,
-      payload: event.target.value.toUpperCase()
+      payload: valor.toUpperCase()
     });
   };
 };

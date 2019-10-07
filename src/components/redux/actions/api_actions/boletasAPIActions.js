@@ -20,6 +20,6 @@ export const enviarOrdemAction = props => {
   return async dispatch => {
     let json = [montaOrdemPrincipal(props)];
 
-    const resposta = await enviarOrdemAPI(json);
+    await enviarOrdemAPI(json);
   };
 };

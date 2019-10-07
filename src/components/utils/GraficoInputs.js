@@ -224,6 +224,8 @@ class GraficoInputs extends React.Component {
             />
           </div>
         );
+      default:
+        return null;
     }
   }
 }

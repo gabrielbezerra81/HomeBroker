@@ -11,10 +11,6 @@ import { MDBIcon } from "mdbreact";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 import InputFormatado from "components/utils/InputFormatado";
 
-const capitalize = function(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-};
-
 class TabelaMultileg extends React.Component {
   render() {
     const indiceAba = this.props.indice;

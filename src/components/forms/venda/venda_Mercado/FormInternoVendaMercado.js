@@ -16,7 +16,6 @@ import RowFormValidade from "components/utils/RowFormValidade";
 import RowFormAssinatura from "components/utils/RowFormAssinatura";
 import { VENDA_MERCADO_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorAproximadoMercado } from "components/utils/CalculoValorTotal";
-import { iconeConfigAbrirFormulario } from "components/utils/IconesConfigFormInterno";
 import RowAtivoQtdeBoletas from "components/utils/RowAtivoQtdeBoletas";
 import {
   pesquisarAtivoOnEnterAction,

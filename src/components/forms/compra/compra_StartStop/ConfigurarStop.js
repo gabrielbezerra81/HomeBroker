@@ -2,7 +2,6 @@ import React from "react";
 // @ts-ignore
 import configurarStop from "img/compra/configurarStop.PNG";
 import { connect } from "react-redux";
-import { Form } from "react-bootstrap";
 import IconeConfigGrafico from "components/utils/IconeConfigGrafico";
 import { COMPRA_STARTSTOP_NAMESPACE } from "constants/ActionTypes";
 import {

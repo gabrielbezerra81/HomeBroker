@@ -94,36 +94,37 @@ export const aumentarZindexAction = (div_id, zIndex, show) => {
 };
 
 //Abrir formulário de maneira geral, decide entre criar novo sub-app e mostrar o form, ou apenas mostrar o form
-export const abrirFormAction = (event, props) => {
+export const abrirFormAction = (event, props, codigo_ativo = "") => {
   return dispatch => {
     let apps = [...props.apps];
     const name = event.target.getAttribute("name");
     let length = apps.length;
 
     if (length === 0) {
-      criarMostrarApp(name, props, dispatch);
+      criarMostrarApp(name, props, dispatch, codigo_ativo);
     } else {
       //percorrer array de show e ver se todos já estão abertos. Se sim, criar e mostrar um novo. Senão, apenas mostrar
       let show = [...props.show];
 
       let todosAbertos = show.every((element, index) => {
         if (element[name] === false) {
-          mostrarApp(name, index, props, dispatch);
+          mostrarApp(name, index, props, dispatch, codigo_ativo);
           return false;
         } else return true;
       });
 
       if (todosAbertos) {
-        criarMostrarApp(name, props, dispatch);
+        criarMostrarApp(name, props, dispatch, codigo_ativo);
       }
     }
   };
 };
 
 //Cria um sub-app e mostra o formulario desejado
-const criarMostrarApp = (name, props, dispatch) => {
+const criarMostrarApp = (name, props, dispatch, codigo_ativo) => {
   let apps = [...props.apps];
   let show = [...props.show];
+
   atualizarDivKeyAction2(`${name}${apps.length}`, dispatch);
   show.push({
     book: false,
@@ -155,13 +156,18 @@ const criarMostrarApp = (name, props, dispatch) => {
       index={apps.length}
       indiceShow={numeroApps - 1}
       context={props.context}
+      codigoBook={codigo_ativo}
     />
   );
   apps.push(sub);
   criarMostrarAppAction(apps, show, props.zIndex, dispatch);
 };
 
-const mostrarApp = (name, index, props, dispatch) => {
+const mostrarApp = (name, index, props, dispatch, codigo_ativo) => {
+  if (name === "book" && codigo_ativo) {
+    props.mudarInputHeaderAction(codigo_ativo);
+    props.listarBookOfertaOnEnterAction(codigo_ativo);
+  }
   let apps = [...props.apps];
   let show = [...props.show];
   atualizarDivKeyAction2(`${name}${index}`, dispatch);
