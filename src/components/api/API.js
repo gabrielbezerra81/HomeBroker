@@ -92,6 +92,7 @@ export const listarBookOfertaAPI = codigo_ativo => {
 
 export const enviarOrdemAPI = json => {
   const jsonStringBody = JSON.stringify(json);
+  console.log(jsonStringBody)
 
   return request
     .post(cors_anywhere + url_base + url_enviarOrdem)

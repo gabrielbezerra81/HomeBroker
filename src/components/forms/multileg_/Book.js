@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { Table, Row, Col, Button } from "react-bootstrap";
 import IconeConfigGrafico from "components/utils/IconeConfigGrafico";
-import DatePicker from "react-datepicker";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 import {
   abrirFecharConfigComplAction,
@@ -11,6 +10,8 @@ import {
 import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
 import InputFormatado from "components/utils/InputFormatado";
 import { formatarNumero } from "components/redux/reducers/formInputReducer";
+import RowValidade from "components/forms/multileg_/RowValidade";
+import { enviarOrdemMultilegAction } from "components/redux/actions/api_actions/MenuAPIAction";
 
 class Book extends React.Component {
   render() {
@@ -211,35 +212,32 @@ class Book extends React.Component {
             />
           </Col>
         </Row>
-        <Row className="mr-2 mb-2">
-          <Col md={4} className="ml-2">
-            <h6>Validade</h6>
-          </Col>
-          <Col className="mr-1 wrapperVencimento">
-            <DatePicker
-              className="form-control textInput"
-              selected={this.props.multileg[indice].validade}
-              onChange={data =>
+
+        {RowValidade(this.props, this.props.multileg[indice])}
+
+        <Row className="mb-2">
+          <Col md={4} className="ml-4">
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() =>
                 this.props.modificarAtributoAbaAction(
                   this.props.multileg,
                   indice,
-                  "validade",
-                  data
+                  "limpar",
+                  ""
                 )
               }
-              dateFormat="dd/MM/yyyy"
-              popperPlacement="top-start"
-            />
-          </Col>
-        </Row>
-        <Row className="mb-2">
-          <Col md={4} className="ml-4">
-            <Button variant="secondary" size="sm">
+            >
               LIMPAR
             </Button>
           </Col>
           <Col className="botoesIncluir mr-1">
-            <Button variant="primary" size="sm">
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => this.props.enviarOrdemMultilegAction(this.props)}
+            >
               EXECUTAR
             </Button>
           </Col>
@@ -256,7 +254,11 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { abrirFecharConfigComplAction, modificarAtributoAbaAction }
+  {
+    abrirFecharConfigComplAction,
+    modificarAtributoAbaAction,
+    enviarOrdemMultilegAction
+  }
 )(Book);
 
 const calcularTotal = props => {

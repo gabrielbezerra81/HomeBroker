@@ -12,12 +12,9 @@ export default (props, namespace) => (
       <Col className="colValidadeCheck">
         {props.validadeSelect !== "SPECIFIED_DAY"
           ? formSelect(props, "ATÉ O DIA", namespace)
-          : null}{" "}
+          : renderFormData(props, namespace)}
       </Col>
     </Form>
-    {props.validadeSelect === "SPECIFIED_DAY"
-      ? renderFormData(props, namespace)
-      : null}
   </Row>
 );
 

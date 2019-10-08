@@ -74,20 +74,26 @@ export const modificarAtributoAbaAction = (
   return async dispatch => {
     let abasMultileg = [...multileg];
 
-    if (atributo === "ativo") valor = valor.toUpperCase();
+    if (atributo === "limpar") {
+      abasMultileg[indice] = cloneDeep(aba);
+      abasMultileg[indice].nomeAba = "Sim " + (indice + 1);
+    } else {
+      if (atributo === "ativo") valor = valor.toUpperCase();
 
-    abasMultileg[indice][atributo] = valor;
-    if (atributo === "vencimentoSelecionado") {
-      const dados = await pesquisarStrikesMultilegAction(
-        multileg[indice].ativo,
-        multileg[indice].vencimentoSelecionado
-      );
-      if (dados) {
-        abasMultileg[indice].opcoes = [...dados];
-        abasMultileg[indice].strikeSelecionado = encontrarNumMaisProximo(
-          dados,
-          abasMultileg[indice].valor
+      abasMultileg[indice][atributo] = valor;
+
+      if (atributo === "vencimentoSelecionado") {
+        const dados = await pesquisarStrikesMultilegAction(
+          multileg[indice].ativo,
+          multileg[indice].vencimentoSelecionado
         );
+        if (dados) {
+          abasMultileg[indice].opcoes = [...dados];
+          abasMultileg[indice].strikeSelecionado = encontrarNumMaisProximo(
+            dados,
+            abasMultileg[indice].valor
+          );
+        }
       }
     }
 
@@ -239,7 +245,8 @@ const oferta = {
 
 const aba = {
   nomeAba: "",
-  ativo: "PETR4",
+  ativo: "",
+  ativoAtual: "",
   valor: 0,
   variacao: 0,
   opcoes: [],
@@ -248,7 +255,8 @@ const aba = {
   vencimentoSelecionado: "",
   preco: "",
   total: "",
-  validade: "",
+  validadeSelect: "DAY",
+  date: new Date(),
   tabelaMultileg: []
 };
 

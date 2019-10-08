@@ -67,7 +67,7 @@ class InputFormatado extends React.Component {
               : event => this.props.onChange(event.target.value)
           }
           onKeyPress={event => {
-            if (event.key !== "-")
+            if (event.key !== "-" && !document.getSelection().toString())
               event.currentTarget.value = formatarNumero(
                 event.currentTarget.value,
                 1,

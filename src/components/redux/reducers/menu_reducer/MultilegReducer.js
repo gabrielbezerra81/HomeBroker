@@ -29,7 +29,8 @@ const INITIAL_STATE = {
       vencimentoSelecionado: "",
       preco: "",
       total: "",
-      validade: "",
+      validadeSelect: "DAY",
+      date: new Date(),
       tabelaMultileg: []
     }
   ]

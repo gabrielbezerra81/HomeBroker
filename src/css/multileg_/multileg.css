@@ -322,9 +322,9 @@ a.botaoAddAba.active {
 
 .config_complementar {
   width: 331px;
-  position: relative;
+  position: absolute;
   left: 99.5%;
-  top: -379px;
+  top: 0px;
   padding-bottom: 0.5rem;
 }
 .bodyConfigComplementar h6 {
@@ -371,4 +371,20 @@ a.botaoAddAba.active {
 
 .inputTituloAba:focus {
   box-shadow: none;
+}
+
+.formDatepicker {
+  width: 100px !important;
+  margin-left: 1px !important;
+}
+
+.inputValidade {
+  width: 113.52px !important;
+}
+
+.inputDate {
+  position: relative;
+  top: -2px;
+  left: -3px;
+  width: 113.52px !important;
 }
