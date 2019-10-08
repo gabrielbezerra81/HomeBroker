@@ -1,6 +1,6 @@
 import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import { Tab, Row, Col, Nav, Form, Tabs } from "react-bootstrap";
+import { Tab, Row, Col, Nav, Form } from "react-bootstrap";
 import DraggableModal from "components/utils/DraggableModal";
 import { modalHeaderSemBook } from "components/utils/FormHeader";
 import AbaMultileg from "components/forms/multileg_/AbaMultileg";
@@ -37,12 +37,9 @@ export default class Multileg extends React.Component {
           id="tabBarMultileg"
           onSelect={(key, event) => {
             // @ts-ignore
-            const keysPressionadas = !arrayKeys.includes(event.key);
-            if (keysPressionadas)
+            const keysPressionadas = arrayKeys.includes(event.key);
+            if (!keysPressionadas) {
               this.props.selecionarAdicionarAbaAction(key, this.props.multileg);
-            else {
-              event.stopPropagation();
-              event.preventDefault();
             }
           }}
           activeKey={this.props.abaSelecionada}
@@ -53,7 +50,25 @@ export default class Multileg extends React.Component {
                 return (
                   <Col md={0} key={index}>
                     <Nav.Item>
-                      <Nav.Link eventKey={`tab${index}`} className="abaNavTab">
+                      <Nav.Link
+                        eventKey={`tab${index}`}
+                        className={`abaNavTab ${
+                          this.props.abaSelecionada === `tab${index}`
+                            ? "abaAtiva"
+                            : ""
+                        }`}
+                        active={false}
+                        onSelect={(key, event) => {
+                          const keysPressionadas = arrayKeys.includes(
+                            event.key
+                          );
+                          if (keysPressionadas) {
+                            event.stopPropagation();
+                            event.preventDefault();
+                            return key;
+                          }
+                        }}
+                      >
                         <div className="containerTituloAba">
                           <MDBIcon
                             icon="times"
@@ -106,7 +121,7 @@ export default class Multileg extends React.Component {
                     <Tab.Pane
                       eventKey={`tab${index}`}
                       className="abaNavTab"
-                      key={index}
+                      key={index + "tabpane"}
                     >
                       <AbaMultileg indice={index} />
                     </Tab.Pane>

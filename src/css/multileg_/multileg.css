@@ -40,12 +40,12 @@
   background-color: rgb(40, 40, 40);
   margin-right: 3px;
   color: var(--cor-texto);
-  border: none !important;
-  border-bottom: 1px solid var(--cor-borda) !important;
+  border: none;
+  border-bottom: 1px solid var(--cor-borda);
   text-align: center;
 }
 
-a.abaNavTab.active {
+.abaAtiva {
   color: var(--cor-texto) !important;
   background-color: rgb(40, 40, 40) !important;
   border: 1px solid var(--cor-borda) !important;
