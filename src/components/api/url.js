@@ -9,7 +9,7 @@ export const url_enviarOrdem = "order/list";
 export const url_listarBookOfertas_codigo = "book/";
 
 //Ordens em execução
-export const url_listarOrdensExecucao_ = "offer/working";
+export const url_listarOrdensExecucao_ = "order/working";
 
 //Multileg
 export const url_pesquisarOpcoesVencimentos_codigo = "stocks/options/expirations/";

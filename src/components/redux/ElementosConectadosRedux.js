@@ -40,6 +40,7 @@ import {
 import { mudarVariavelPosicaoAction } from "components/redux/actions/menu_actions/PosicaoActions";
 import { listarBookOfertaOnEnterAction } from "components/redux/actions/api_actions/bookOfertaAPIActions";
 import { mudarInputHeaderAction } from "components/redux/actions/bookOfertaActions";
+import { listarOrdensExecAction } from "components/redux/actions/menu_actions/OrdensExecActions";
 
 export const GlobalContext = React.createContext();
 export const localContext = React.createContext();
@@ -197,7 +198,7 @@ export const OrdensExecucaoConectada = compose(
   ),
   connect(
     mapStateToPropsOrdensExec,
-    {}
+    { listarOrdensExecAction }
   )
 )(OrdensExecucao);
 

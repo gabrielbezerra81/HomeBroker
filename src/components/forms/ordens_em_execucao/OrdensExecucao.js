@@ -15,6 +15,7 @@ export default class OrdensExecucao extends React.Component {
         true
       );
     }
+    this.props.listarOrdensExecAction();
   }
 
   render() {
@@ -39,7 +40,6 @@ const modalBody = props => (
         bordered={false}
         borderless
         className="tableOrdensExecucao text-center"
-        style={{ tableLayout: "fixed" }}
         responsive="lg"
       >
         <thead>
@@ -76,80 +76,91 @@ const modalBody = props => (
                   className="barraProgresso"
                 />
               </td>
-              <td>{item.cadastro}</td>
+              <td>
+                <span>{retornaData(item.cadastro)}</span>
+              </td>
               <td>{item.corretora}</td>
               <td>{item.conta}</td>
               <td>{item.operacao}</td>
               <td>{item.modoExec}</td>
+
               <td>
-                {item.ativo.map((item, index2) => (
+                {item.offers.map((oferta, index2) => (
                   <div key={index2}>
-                    {item}
+                    {oferta.ativo}
                     <br />
                   </div>
                 ))}
               </td>
               <td>
-                {item.oferta.map((item, index3) => (
-                  <span key={index3}>
-                    {item}
+                {item.offers.map((oferta, index2) => (
+                  <span key={index2}>
+                    {oferta.oferta}
                     <br />
                   </span>
                 ))}
               </td>
               <td>
-                {item.qtdeOferta.map((item, index4) => (
-                  <span key={index4}>
-                    {item}
+                {item.offers.map((oferta, index2) => (
+                  <span key={index2}>
+                    {oferta.qtdeOferta}
                     <br />
                   </span>
                 ))}
               </td>
               <td>
-                {" "}
-                {item.qtdeExecutada.map((item, index6) => (
-                  <span key={index6}>
-                    {item}
+                {item.offers.map((oferta, index2) => (
+                  <span key={index2}>
+                    {oferta.qtdeExecutada}
                     <br />
                   </span>
                 ))}
               </td>
               <td>
-                {item.qtdeCancelada.map((item, index7) => (
-                  <span key={index7}>
-                    {item}
+                {item.offers.map((oferta, index2) => (
+                  <span key={index2}>
+                    {oferta.qtdeCancelada}
                     <br />
                   </span>
                 ))}
               </td>
+
               <td>{item.precoDisparo}</td>
               <td>
-                {item.precoEnvio.map((item, index8) => (
-                  <span key={index8}>
-                    {item}
+                {item.offers.map((oferta, index2) => (
+                  <span key={index2}>
+                    {oferta.precoEnvio}
                     <br />
                   </span>
                 ))}
               </td>
               <td>
-                {item.precoExecutado.map((item, index9) => (
-                  <span key={index9}>
-                    {item}
+                {item.offers.map((oferta, index2) => (
+                  <span key={index2}>
+                    {oferta.precoExecutado}
                     <br />
                   </span>
                 ))}
               </td>
-              <td>{item.validade}</td>
+              <td>{retornaData(item.validade)}</td>
               <td>{item.roteador}</td>
               <td>
-                {item.st.map((item, index10) => (
-                  <span key={index10}>
-                    {item}
+                {item.offers.map((oferta, index2) => (
+                  <span key={index2}>
+                    {oferta.status}
                     <br />
                   </span>
                 ))}
               </td>
-              <td>{item.msg}</td>
+
+              <td>
+                {item.offers.map((oferta, index2) => (
+                  <span key={index2}>
+                    {oferta.msg}
+                    <br />
+                  </span>
+                ))}
+              </td>
             </tr>
           ))}
         </tbody>
@@ -157,3 +168,7 @@ const modalBody = props => (
     </Row>
   </div>
 );
+
+const retornaData = dataString => {
+  return new Date(dataString).toLocaleString();
+};

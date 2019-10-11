@@ -75,6 +75,7 @@ export const enviarOrdemMultilegAction = props => {
     json.expiration = abaMultileg.date;
     json.status = "Nova";
     json.priority = 0;
+    json.tradeName.name = "Multileg";
 
     abaMultileg.tabelaMultileg.map((oferta, index) => {
       let ofertaPrincipal = {
@@ -86,7 +87,10 @@ export const enviarOrdemMultilegAction = props => {
       ofertaPrincipal.qtty = oferta.qtde;
       ofertaPrincipal.priority = Number(oferta.prioridade);
       ofertaPrincipal.offerType = oferta.cv.charAt(0).toUpperCase();
-      ofertaPrincipal.orderType = "multileg";
+      //ofertaPrincipal.orderType = "multileg";
+      if (ofertaPrincipal.offerType === "C") ofertaPrincipal.orderType = "buy";
+      else if (ofertaPrincipal.offerType === "V")
+        ofertaPrincipal.orderType = "sell";
       ofertaPrincipal.expiration = abaMultileg.date;
       ofertaPrincipal.price = Number(
         abaMultileg.preco
@@ -99,8 +103,7 @@ export const enviarOrdemMultilegAction = props => {
       json.offers.push(ofertaPrincipal);
     });
 
-    let response = await enviarOrdemAPI([json]);
-    console.log(response);
+    enviarOrdemAPI([json]);
   };
 };
 

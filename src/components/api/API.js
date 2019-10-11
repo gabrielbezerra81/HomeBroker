@@ -6,7 +6,8 @@ import {
   url_listarBookOfertas_codigo,
   url_enviarOrdem,
   url_pesquisarOpcoesVencimentos_codigo,
-  url_pesquisarStrikes_codigo_vencimento
+  url_pesquisarStrikes_codigo_vencimento,
+  url_listarOrdensExecucao_
 } from "components/api/url";
 
 export const pesquisarAtivoAPI = codigo => {
@@ -92,7 +93,6 @@ export const listarBookOfertaAPI = codigo_ativo => {
 
 export const enviarOrdemAPI = json => {
   const jsonStringBody = JSON.stringify(json);
-  console.log(jsonStringBody)
 
   return request
     .post(cors_anywhere + url_base + url_enviarOrdem)
@@ -100,7 +100,7 @@ export const enviarOrdemAPI = json => {
     .send(jsonStringBody)
     .then(response => {
       console.log("response", response);
-      console.log("body", response.body);
+      if (response.status === 201) alert("Ordem enviada com sucesso");
     })
     .catch(erro => {
       console.log(erro.response);
@@ -153,4 +153,17 @@ export const pesquisarStrikesMultilegAPI = (codigo_ativo, vencimento) => {
       return response.body;
     })
     .catch(erro => console.log(erro));
+};
+
+export const listarOrdensExecAPI = () => {
+  return request
+    .get(cors_anywhere + url_base + url_listarOrdensExecucao_)
+    .then(response => {
+      const { body } = response;
+      return body;
+    })
+    .catch(erro => {
+      console.log(erro);
+      return [];
+    });
 };
