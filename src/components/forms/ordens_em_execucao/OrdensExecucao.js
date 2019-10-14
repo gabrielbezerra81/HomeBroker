@@ -15,6 +15,8 @@ export default class OrdensExecucao extends React.Component {
         true
       );
     }
+  }
+  componentWillMount() {
     this.props.listarOrdensExecAction();
   }
 

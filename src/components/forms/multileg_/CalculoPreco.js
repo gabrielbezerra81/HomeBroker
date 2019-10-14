@@ -2,14 +2,14 @@ export const calculoPreco = (aba, tipo) => {
   let preco = 0;
   let arrayQtde = [];
 
-  aba.tabelaMultileg.map((oferta, index) => {
+  aba.tabelaMultileg.forEach((oferta, index) => {
     if ((oferta.compra && oferta.venda) || tipo === "ultimo")
       arrayQtde.push(oferta.qtde);
   });
   const mdc = gcd(arrayQtde);
 
   if (mdc > 0)
-    aba.tabelaMultileg.map((oferta, index) => {
+    aba.tabelaMultileg.forEach((oferta, index) => {
       if ((oferta.compra && oferta.venda) || tipo === "ultimo") {
         switch (tipo) {
           case "max":

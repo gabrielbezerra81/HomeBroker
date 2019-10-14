@@ -47,7 +47,7 @@ export const montaOrdemPrincipal = props => {
     const { tabelaOrdens } = props;
 
     montaOfertaPrincipal(props, "", json);
-    tabelaOrdens.map((item, index) => {
+    tabelaOrdens.forEach((item, index) => {
       montaOfertaPrincipal(props, "ajusteOfertaAdicional", json, index);
     });
     montaOfertaPrincipal(props, "SegundaOrdem", json);

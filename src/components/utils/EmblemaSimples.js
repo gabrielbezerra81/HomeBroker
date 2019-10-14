@@ -54,6 +54,7 @@ class EmblemaSimples extends React.Component {
                 max={this.props.item.gain}
                 value={(this.props.item.stop + this.props.item.gain) / 2}
                 step={0.01}
+                onChange={() => false}
                 //value={item.valorAcao}
               />
             </div>

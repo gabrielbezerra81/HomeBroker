@@ -41,6 +41,7 @@ import { mudarVariavelPosicaoAction } from "components/redux/actions/menu_action
 import { listarBookOfertaOnEnterAction } from "components/redux/actions/api_actions/bookOfertaAPIActions";
 import { mudarInputHeaderAction } from "components/redux/actions/bookOfertaActions";
 import { listarOrdensExecAction } from "components/redux/actions/menu_actions/OrdensExecActions";
+import { listarPosicoesAction } from "components/redux/actions/menu_actions/PosicaoActions";
 
 export const GlobalContext = React.createContext();
 export const localContext = React.createContext();
@@ -241,7 +242,7 @@ export const PosicaoEmCustodiaConectada = compose(
   ),
   connect(
     mapStateToPropsPosicao,
-    { mudarVariavelPosicaoAction }
+    { mudarVariavelPosicaoAction, listarPosicoesAction }
   )
 )(PosicaoEmCustodia);
 

@@ -7,7 +7,8 @@ import {
   url_enviarOrdem,
   url_pesquisarOpcoesVencimentos_codigo,
   url_pesquisarStrikes_codigo_vencimento,
-  url_listarOrdensExecucao_
+  url_listarOrdensExecucao_,
+  url_listarPosicoes
 } from "components/api/url";
 
 export const pesquisarAtivoAPI = codigo => {
@@ -63,18 +64,28 @@ export const pesquisarAtivoAPI = codigo => {
     })
     .catch(erro => {
       console.log(erro);
+      return {
+        resultadoAtivo: "",
+        codigoEspecificacao: "",
+        cotacaoAtual: "",
+        porcentagem: "",
+        ultimoHorario: "",
+        qtdeMultiplo100: "",
+        market: "",
+        ativo: ""
+      };
     });
 };
 
 export const listarBookOfertaAPI = codigo_ativo => {
+  let tabelas = {
+    tabelaOfertasCompra: [],
+    tabelaOfertasVenda: []
+  };
   return request
     .get(cors_anywhere + url_base + url_listarBookOfertas_codigo + codigo_ativo)
     .then(response => {
       const { body } = response;
-      let tabelas = {
-        tabelaOfertasCompra: [],
-        tabelaOfertasVenda: []
-      };
 
       body.bookOffers.forEach(item => {
         if (item.type === "V") {
@@ -88,7 +99,10 @@ export const listarBookOfertaAPI = codigo_ativo => {
 
       return tabelas;
     })
-    .catch(erro => console.log(erro));
+    .catch(erro => {
+      console.log(erro);
+      return tabelas;
+    });
 };
 
 export const enviarOrdemAPI = json => {
@@ -107,13 +121,11 @@ export const enviarOrdemAPI = json => {
     });
 };
 
-export const listarOrdensExecucao = () => {};
-
 export const pesquisarAtivoMultilegAPI = codigo_ativo => {
   var dados = {
     opcoes: [],
     vencimentos: [],
-    cotacaoAtual: 0,
+    //cotacaoAtual: 0,
     variacao: ""
   };
 
@@ -136,7 +148,10 @@ export const pesquisarAtivoMultilegAPI = codigo_ativo => {
         return dados;
       }
     })
-    .catch(erro => console.log(erro));
+    .catch(erro => {
+      console.log(erro);
+      return dados;
+    });
 };
 
 export const pesquisarStrikesMultilegAPI = (codigo_ativo, vencimento) => {
@@ -152,12 +167,28 @@ export const pesquisarStrikesMultilegAPI = (codigo_ativo, vencimento) => {
     .then(response => {
       return response.body;
     })
-    .catch(erro => console.log(erro));
+    .catch(erro => {
+      console.log(erro);
+      return [];
+    });
 };
 
 export const listarOrdensExecAPI = () => {
   return request
     .get(cors_anywhere + url_base + url_listarOrdensExecucao_)
+    .then(response => {
+      const { body } = response;
+      return body;
+    })
+    .catch(erro => {
+      console.log(erro);
+      return [];
+    });
+};
+
+export const listarPosicoesAPI = () => {
+  return request
+    .get(cors_anywhere + url_base + url_listarPosicoes)
     .then(response => {
       const { body } = response;
       return body;

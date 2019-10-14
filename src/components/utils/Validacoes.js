@@ -1,12 +1,12 @@
-import { ALERTA_COMPRA, ALERTA_VENDA } from "../../constants/Erros";
+import { ALERTA_COMPRA } from "../../constants/Erros";
 
 const compararCompra = (disparo, execucao) => {
   if (execucao < disparo) return true;
 };
 
-const compararVenda = (disparo, execucao) => {
+/*const compararVenda = (disparo, execucao) => {
   if (execucao > disparo) return true;
-};
+};*/
 
 export const validacaoCompraAgenda = props => {
   const {

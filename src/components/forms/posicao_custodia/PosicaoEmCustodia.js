@@ -12,6 +12,9 @@ import PosicaoAmpliadaResumida from "components/forms/posicao_custodia/PosicaoAm
 import { PosicaoDetalhadaConectada } from "components/redux/ElementosConectadosRedux";
 
 export default class PosicaoEmCustodia extends React.Component {
+  componentWillMount() {
+    this.props.listarPosicoesAction();
+  }
   componentDidMount() {
     if (this.props.divkey !== "" && this.props.divkey === "posicao_custodia") {
       document.getElementById("posicao_custodia").style.zIndex =

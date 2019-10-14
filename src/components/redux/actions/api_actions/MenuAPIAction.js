@@ -77,7 +77,7 @@ export const enviarOrdemMultilegAction = props => {
     json.priority = 0;
     json.tradeName.name = "Multileg";
 
-    abaMultileg.tabelaMultileg.map((oferta, index) => {
+    abaMultileg.tabelaMultileg.forEach((oferta, index) => {
       let ofertaPrincipal = {
         stock: {}
       };
@@ -105,17 +105,4 @@ export const enviarOrdemMultilegAction = props => {
 
     enviarOrdemAPI([json]);
   };
-};
-
-let ordemNext = {
-  action: "Enable",
-  order: {
-    account: {},
-    stock: {},
-    tradeName: {},
-    offers: []
-  }
-};
-let ofertaNext = {
-  stock: {}
 };

@@ -4,7 +4,8 @@ const INITIAL_STATE = {
   ordenacao: "",
   tipoVisualizacao: "ampliado",
   ativoPesquisa: "PESQUISAR",
-  inputSelect: ""
+  inputSelect: "",
+  posicoesCustodia: []
 };
 
 export default (state = INITIAL_STATE, action) => {
