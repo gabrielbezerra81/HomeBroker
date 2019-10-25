@@ -10,7 +10,7 @@ class PosicaoAmpliadaResumida extends React.Component {
     return (
       <Row style={{ justifyContent: "center" }}>
         <div className="rowListagenItens">
-          {itensListaCompleta.map((item, index) => (
+          {this.props.posicoesCustodia.map((item, index) => (
             <div key={index} className="mt-2 ml-2 mr-2">
               <Row className="rowAtivosEmblema">
                 {renderAtivo(item)}
@@ -48,10 +48,10 @@ class PosicaoAmpliadaResumida extends React.Component {
                   <div>
                     <div className="divSetaPorcentagem">
                       <Col md={0} className="m-2">
-                        Resultado: {formatarNumDecimal(item.resultado)}
+                        Resultado: {formatarNumDecimal(item.total)}
                       </Col>
                       <Col md={0} className="m-2">
-                        {renderValorPorcentagem(item.porcentagemResultado)}
+                        {renderValorPorcentagem(item.variacaoGanho)}
                       </Col>
                     </div>
                     {item.executando.length > 0 ? (
@@ -103,7 +103,8 @@ class PosicaoAmpliadaResumida extends React.Component {
 
 const mapStateToPropsPosicao = state => ({
   ordenacao: state.posicaoReducer.ordenacao,
-  tipoVisualizacao: state.posicaoReducer.tipoVisualizacao
+  tipoVisualizacao: state.posicaoReducer.tipoVisualizacao,
+  posicoesCustodia: state.posicaoReducer.posicoesCustodia
 });
 
 export default connect(
@@ -172,6 +173,16 @@ const renderCV = (cv, valor) => {
 const itensListaCompleta = [
   {
     ativo: "PETR4",
+    precoCompra: 2.5,
+    precoVenda: 2.6,
+    cotacaoAtual: 2.55,
+    oscilacao: -5.36,
+    stopLoss: 0,
+    stopGain: 3.6,
+    total: 180,
+    variacaoGanho: 38.46,
+    qtde: "",
+    preco: "",
     custodiaCompra: [
       { ativo: "X280", qtde: 1000 },
       { ativo: "X290", qtde: 1000 }
@@ -180,14 +191,6 @@ const itensListaCompleta = [
       { ativo: "S272", qtde: 1000 },
       { ativo: "S290", qtde: 1000 }
     ],
-    precoCompra: 2.5,
-    precoVenda: 2.6,
-    valorAcao: 2.55,
-    porcentagem: -5.36,
-    stop: 0,
-    gain: 3.6,
-    resultado: 180,
-    porcentagemResultado: 38.46,
     executando: [
       { ativo: "S272", qtde: 1000, valor: "0,30", tipo: "compra" },
       { ativo: "T272", qtde: 1000, valor: "0,40", tipo: "venda" }
@@ -195,50 +198,21 @@ const itensListaCompleta = [
   },
   {
     ativo: "PETR4",
-    custodiaCompra: [
-      { ativo: "X280", qtde: 1000 },
-      { ativo: "X290", qtde: 1000 }
-    ],
-    custodiaVenda: [
-      { ativo: "S272", qtde: 1000 },
-      { ativo: "S290", qtde: 1000 }
-    ],
-    precoCompra: 28.22,
-    precoVenda: 28.31,
-    valorAcao: 28.4,
-    porcentagem: 2,
-    stop: 28.22,
-    gain: 28.31,
-    resultado: 180,
-    porcentagemResultado: 38.46,
-    executando: []
-  },
-  {
-    ativo: "PETR4",
-    custodiaCompra: [{ ativo: "PETR4", qtde: 1000 }],
-    custodiaVenda: [],
     precoCompra: 2.5,
     precoVenda: 2.6,
-    valorAcao: 2.55,
-    porcentagem: -5.36,
-    stop: 0,
-    gain: 3.6,
-    resultado: 180,
-    porcentagemResultado: 38.46,
-    executando: []
-  },
-  {
-    ativo: "PETR4",
+    cotacaoAtual: 2.55,
+    oscilacao: -5.36,
+    stopLoss: 0,
+    stopGain: 3.6,
+    total: 180,
+    variacaoGanho: 38.46,
+    qtde: "",
+    preco: "",
     custodiaCompra: [{ ativo: "PETR4", qtde: 1000 }],
     custodiaVenda: [],
-    precoCompra: 2.5,
-    precoVenda: 2.6,
-    valorAcao: 2.55,
-    porcentagem: -5.36,
-    stop: 0,
-    gain: 3.6,
-    resultado: 180,
-    porcentagemResultado: 38.46,
-    executando: []
+    executando: [
+      { ativo: "S272", qtde: 1000, valor: "0,30", tipo: "compra" },
+      { ativo: "T272", qtde: 1000, valor: "0,40", tipo: "venda" }
+    ]
   }
 ];

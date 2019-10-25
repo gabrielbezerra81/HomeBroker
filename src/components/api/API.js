@@ -10,10 +10,16 @@ import {
   url_listarOrdensExecucao_,
   url_listarPosicoes
 } from "components/api/url";
+import rxRequest from "universal-rx-request";
+import observify from "superagent-rxjs";
+import $ from "jquery";
+
+rxRequest.importRxExtensions();
 
 export const pesquisarAtivoAPI = codigo => {
   return request
     .get(cors_anywhere + url_base + url_pesquisarAtivoBoletas_codigo + codigo)
+    .retry(3)
     .then(response => {
       const { body } = response;
       var dadosPesquisa;
@@ -84,6 +90,7 @@ export const listarBookOfertaAPI = codigo_ativo => {
   };
   return request
     .get(cors_anywhere + url_base + url_listarBookOfertas_codigo + codigo_ativo)
+    .retry(3)
     .then(response => {
       const { body } = response;
 
@@ -110,6 +117,7 @@ export const enviarOrdemAPI = json => {
 
   return request
     .post(cors_anywhere + url_base + url_enviarOrdem)
+    .retry(2)
     .set({ "Content-Type": "application/json" })
     .send(jsonStringBody)
     .then(response => {
@@ -136,6 +144,7 @@ export const pesquisarAtivoMultilegAPI = codigo_ativo => {
         url_pesquisarOpcoesVencimentos_codigo +
         codigo_ativo
     )
+    .retry(3)
     .then(async response => {
       const { body } = response;
       dados.opcoes = [...body.options];
@@ -164,6 +173,7 @@ export const pesquisarStrikesMultilegAPI = (codigo_ativo, vencimento) => {
         "/" +
         vencimento
     )
+    .retry(3)
     .then(response => {
       return response.body;
     })
@@ -176,9 +186,19 @@ export const pesquisarStrikesMultilegAPI = (codigo_ativo, vencimento) => {
 export const listarOrdensExecAPI = () => {
   return request
     .get(cors_anywhere + url_base + url_listarOrdensExecucao_)
+    .retry(3)
     .then(response => {
       const { body } = response;
-      return body;
+      let ofertas = [];
+
+      body.forEach(oferta => {
+        ofertas.push(oferta);
+        oferta.nextOrders.forEach(ordemNext => {
+          ofertas.push(ordemNext);
+        });
+      });
+
+      return ofertas;
     })
     .catch(erro => {
       console.log(erro);
@@ -189,6 +209,7 @@ export const listarOrdensExecAPI = () => {
 export const listarPosicoesAPI = () => {
   return request
     .get(cors_anywhere + url_base + url_listarPosicoes)
+    .retry(3)
     .then(response => {
       const { body } = response;
       return body;
@@ -197,4 +218,52 @@ export const listarPosicoesAPI = () => {
       console.log(erro);
       return [];
     });
+};
+
+export const atualizarCotacaoAPI = (dispatch, abasMultileg, indice) => {
+  // observify(request);
+  // const observer = {
+  //   next: function(value) {
+  //     console.log("next ", value);
+  //   },
+  //   error: function(err) {
+  //     console.error("err ", err);
+  //   },
+  //   complete: function(a) {
+  //     console.log("complete ", a);
+  //   }
+  // };
+  const codigos = abasMultileg[indice].ativo;
+
+  var source = new EventSource(
+    "http://173.249.37.183:8090/symbols?symbols=" + codigos
+  );
+
+  source.onopen = function(event) {
+    console.log("open");
+  };
+
+  source.onmessage = function(event) {
+    if (typeof event.data !== "undefined") {
+      var dados = JSON.parse(event.data);
+      // abasMultileg[indice].valor = dados.ultimo;
+      // dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
+    }
+  };
+
+  // const observable = request
+  //   .get("http://173.249.37.183:8090/symbols?symbols=PETR4,VALE3")
+  //   .observify();
+  // const subscription = observable.subscribe(observer);
+
+  // return request
+  //   .get("http://173.249.37.183:8090/symbols?symbols=PETR4")
+  //   .then(response => {
+  //     console.log(response.body);
+  //     return response.body;
+  //   })
+  //   .catch(erro => {
+  //     console.log(erro);
+  //     //return [];
+  //   });
 };

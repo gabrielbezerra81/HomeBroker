@@ -10,7 +10,11 @@ import {
   pesquisarStrikesMultilegAction,
   encontrarNumMaisProximo
 } from "components/redux/actions/api_actions/MenuAPIAction";
-import { listarBookOfertaAPI, pesquisarAtivoAPI } from "components/api/API";
+import {
+  listarBookOfertaAPI,
+  pesquisarAtivoAPI,
+  atualizarCotacaoAPI
+} from "components/api/API";
 import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
 import { formatarNumero } from "components/redux/reducers/formInputReducer";
 
@@ -222,6 +226,15 @@ export const adicionarOfertaTabelaAction = (props, tipoOferta) => {
 
       dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
     }
+  };
+};
+
+export const atualizarCotacaoAction = props => {
+  return async dispatch => {
+    let abasMultileg = [...props.multileg];
+    const indice = props.indice;
+
+    atualizarCotacaoAPI(dispatch, abasMultileg, indice);
   };
 };
 

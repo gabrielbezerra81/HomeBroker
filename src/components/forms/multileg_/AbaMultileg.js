@@ -7,7 +7,8 @@ import TabelaMultileg from "components/forms/multileg_/TabelaMultileg";
 import { connect } from "react-redux";
 import {
   modificarAtributoAbaAction,
-  adicionarOfertaTabelaAction
+  adicionarOfertaTabelaAction,
+  atualizarCotacaoAction
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 import { pesquisarAtivoMultilegAction } from "components/redux/actions/api_actions/MenuAPIAction";
@@ -38,12 +39,13 @@ class AbaMultileg extends React.Component {
                 <InputGroup.Append className="inputAtivoAppend">
                   <span
                     className="input-group-text iconeProcurar divClicavel"
-                    onClick={() =>
+                    onClick={() => {
                       this.props.pesquisarAtivoMultilegAction(
                         this.props,
                         indice
-                      )
-                    }
+                      );
+                      this.props.atualizarCotacaoAction(this.props, indice);
+                    }}
                   >
                     <MDBIcon icon="search" />
                   </span>
@@ -159,7 +161,8 @@ export default connect(
   {
     modificarAtributoAbaAction,
     pesquisarAtivoMultilegAction,
-    adicionarOfertaTabelaAction
+    adicionarOfertaTabelaAction,
+    atualizarCotacaoAction
   }
 )(AbaMultileg);
 

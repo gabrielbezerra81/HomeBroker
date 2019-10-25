@@ -117,7 +117,7 @@ class TabelaMultileg extends React.Component {
                           )
                         }
                       >
-                        {item.opcoes.forEach((itemStrike, indice) => {
+                        {item.opcoes.map((itemStrike, indice) => {
                           if (item.tipo && indice % 2 === 0)
                             return (
                               <option key={indice} value={itemStrike.strike}>

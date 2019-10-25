@@ -21,7 +21,7 @@ export default class TabelaSimples extends React.Component {
           <Col md={3} className="text-align-right">
             <div className="spaceAround">
               {calculaResultado(this.props.dados.resultado)}
-              {calculaVariacao(this.props.dados.resultado.variacao)}
+              {calculaVariacao(this.props.dados.resultado.variacaoGanho)}
             </div>
           </Col>
           <Col md={3} className="text-align-right">

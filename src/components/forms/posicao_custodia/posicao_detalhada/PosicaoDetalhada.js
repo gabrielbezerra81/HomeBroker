@@ -99,13 +99,13 @@ const dados = {
       dataInicio: "25/06/2019",
       precoCompra: 2.5,
       precoVenda: 2.6,
-      valorAcao: 2.55,
-      porcentagem: 5.36,
-      stop: 0,
-      gain: 3.6,
+      cotacaoAtual: 2.55,
+      oscilacao: 5.36,
+      stopLoss: 0,
+      stopGain: 3.6,
       resultado: {
-        valor: 1800,
-        variacao: 30.46
+        total: 1800,
+        variacaoGanho: 30.46
       },
       operacoes: [
         {
@@ -135,13 +135,13 @@ const dados = {
       dataInicio: "25/06/2019",
       precoCompra: 0.18,
       precoVenda: 0.22,
-      valorAcao: 0.18,
-      porcentagem: 2.0,
-      stop: 0,
-      gain: 0.4,
+      cotacaoAtual: 0.18,
+      oscilacao: 2.0,
+      stopLoss: 0,
+      stopGain: 0.4,
       resultado: {
-        valor: 180,
-        variacao: 38.46
+        total: 180,
+        variacaoGanho: 38.46
       },
       operacoes: [
         {
@@ -224,13 +224,13 @@ const dados = {
       dataInicio: "25/06/2019",
       precoCompra: 0.18,
       precoVenda: 0.22,
-      valorAcao: 0.18,
-      porcentagem: 2.0,
-      stop: 0,
-      gain: 0.4,
+      cotacaoAtual: 0.18,
+      oscilacao: 2.0,
+      stopLoss: 0,
+      stopGain: 0.4,
       resultado: {
-        valor: 180,
-        variacao: 38.46
+        total: 180,
+        variacaoGanho: 38.46
       },
       operacoes: [
         {

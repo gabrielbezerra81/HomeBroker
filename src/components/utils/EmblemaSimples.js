@@ -27,32 +27,34 @@ class EmblemaSimples extends React.Component {
         </Row>
         <Row>
           <Col md={12} className="text-align-center">
-            <h3>{formatarNumDecimal(this.props.item.valorAcao)}</h3>
+            <h3>{formatarNumDecimal(this.props.item.cotacaoAtual)}</h3>
           </Col>
         </Row>
         <Row>
           <Col md={12} className="text-align-center">
             <div className="divSetaPorcentagem">
-              {renderSeta(this.props.item.porcentagem)}
-              {renderValorPorcentagem(this.props.item.porcentagem)}
+              {renderSeta(this.props.item.oscilacao)}
+              {renderValorPorcentagem(this.props.item.oscilacao)}
             </div>
           </Col>
         </Row>
         <div className="divSetaPorcentagem">
           <Col md={0}>
             STOP<br></br>
-            {formatarNumDecimal(this.props.item.stop)}
+            {formatarNumDecimal(this.props.item.stopLoss)}
           </Col>
           <Col md={8}>
             <div>
               <input
                 type="range"
                 className={`custom-range ${corInputRange(
-                  this.props.item.porcentagem
+                  this.props.item.oscilacao
                 )} inputRange`}
-                min={this.props.item.stop}
-                max={this.props.item.gain}
-                value={(this.props.item.stop + this.props.item.gain) / 2}
+                min={this.props.item.stopLoss}
+                max={this.props.item.stopGain}
+                value={
+                  (this.props.item.stopLoss + this.props.item.stopGain) / 2
+                }
                 step={0.01}
                 onChange={() => false}
                 //value={item.valorAcao}
@@ -61,7 +63,7 @@ class EmblemaSimples extends React.Component {
           </Col>
           <Col md={0}>
             GAIN<br></br>
-            {formatarNumDecimal(this.props.item.gain)}
+            {formatarNumDecimal(this.props.item.stopGain)}
           </Col>
         </div>
       </div>

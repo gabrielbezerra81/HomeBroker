@@ -15,7 +15,7 @@ export default class TabelaCompleta extends React.Component {
           <Col md={3} className="text-align-right">
             <div className="spaceAround">
               {calculaResultado(this.props.dados.resultado)}
-              {calculaVariacao(this.props.dados.resultado.variacao)}
+              {calculaVariacao(this.props.dados.resultado.variacaoGanho)}
             </div>
           </Col>
           <Col md={3} className="text-align-right">
@@ -154,9 +154,9 @@ export const calculaTotal = item => {
 
 export const calculaResultado = resultado => {
   let result = "Resultado: R$ ";
-  if (resultado.valor >= 0) result += "+";
+  if (resultado.total >= 0) result += "+";
   else result += "-";
-  result += formatarNumDecimal(resultado.valor);
+  result += formatarNumDecimal(resultado.total);
 
   return <h6 className="textosTitulos">{result}</h6>;
 };

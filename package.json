@@ -12,6 +12,7 @@
     "@fortawesome/react-fontawesome": "^0.1.4",
     "apexcharts": "^3.8.5",
     "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1",
     "lodash": "^4.17.15",
     "mdbreact": "^4.17.0",
     "pretty-checkbox": "^3.0.3",
@@ -36,7 +37,11 @@
     "recharts": "^1.7.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "superagent": "^5.1.0"
+    "rxjs": "^6.5.3",
+    "rxjs-compat": "^6.5.3",
+    "superagent": "^5.1.0",
+    "superagent-rxjs": "^2.2.3",
+    "universal-rx-request": "^1.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
