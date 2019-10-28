@@ -8,7 +8,8 @@ import { connect } from "react-redux";
 import {
   modificarAtributoAbaAction,
   adicionarOfertaTabelaAction,
-  atualizarCotacaoAction
+  atualizarCotacaoAction,
+  atualizarBookAction
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 import { pesquisarAtivoMultilegAction } from "components/redux/actions/api_actions/MenuAPIAction";
@@ -115,27 +116,36 @@ class AbaMultileg extends React.Component {
                   <Button
                     variant="primary"
                     size="sm"
-                    onClick={() =>
-                      this.props.adicionarOfertaTabelaAction(this.props, "acao")
-                    }
+                    onClick={() => {
+                      this.props.adicionarOfertaTabelaAction(
+                        this.props,
+                        "acao"
+                      );
+                      this.props.atualizarBookAction(this.props);
+                    }}
                   >
                     +Ativo
                   </Button>
                   <Button
                     variant="primary"
                     size="sm"
-                    onClick={() =>
-                      this.props.adicionarOfertaTabelaAction(this.props, "call")
-                    }
+                    onClick={() => {
+                      this.props.adicionarOfertaTabelaAction(
+                        this.props,
+                        "call"
+                      );
+                      this.props.atualizarBookAction(this.props);
+                    }}
                   >
                     +Call
                   </Button>
                   <Button
                     variant="primary"
                     size="sm"
-                    onClick={() =>
-                      this.props.adicionarOfertaTabelaAction(this.props, "put")
-                    }
+                    onClick={() => {
+                      this.props.adicionarOfertaTabelaAction(this.props, "put");
+                      this.props.atualizarBookAction(this.props);
+                    }}
                   >
                     +Put
                   </Button>
@@ -162,7 +172,8 @@ export default connect(
     modificarAtributoAbaAction,
     pesquisarAtivoMultilegAction,
     adicionarOfertaTabelaAction,
-    atualizarCotacaoAction
+    atualizarCotacaoAction,
+    atualizarBookAction
   }
 )(AbaMultileg);
 

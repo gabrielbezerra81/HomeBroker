@@ -104,7 +104,8 @@ const mapStateToProps = state => ({
   gain: state.bookOfertaReducer.gain,
   inputHeader: state.bookOfertaReducer.inputHeader,
   tabelaOfertasCompra: state.bookOfertaReducer.tabelaOfertasCompra,
-  tabelaOfertasVenda: state.bookOfertaReducer.tabelaOfertasVenda
+  tabelaOfertasVenda: state.bookOfertaReducer.tabelaOfertasVenda,
+  eventSource: state.bookOfertaReducer.eventSource
 });
 
 export default connect(

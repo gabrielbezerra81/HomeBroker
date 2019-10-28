@@ -14,7 +14,8 @@ const INITIAL_STATE = {
   gain: 0,
   inputHeader: "",
   tabelaOfertasCompra: [],
-  tabelaOfertasVenda: []
+  tabelaOfertasVenda: [],
+  eventSource: 'null'
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -35,6 +36,8 @@ export default (state = INITIAL_STATE, action) => {
         tabelaOfertasCompra: action.payload.tabelaOfertasCompra,
         tabelaOfertasVenda: action.payload.tabelaOfertasVenda
       };
+    case "nova":
+      return { ...state, eventSource: action.payload };
     default:
       return state;
   }

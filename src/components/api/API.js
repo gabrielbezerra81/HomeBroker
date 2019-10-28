@@ -10,9 +10,8 @@ import {
   url_listarOrdensExecucao_,
   url_listarPosicoes
 } from "components/api/url";
-import rxRequest from "universal-rx-request";
-
-rxRequest.importRxExtensions();
+import { MODIFICAR_ATRIBUTO_ABA } from "constants/MenuActionTypes";
+import { LISTAR_BOOK_OFERTAS } from "constants/ApiActionTypes";
 
 export const pesquisarAtivoAPI = codigo => {
   return request
@@ -218,19 +217,63 @@ export const listarPosicoesAPI = () => {
     });
 };
 
+export const atualizarBookAPI = (dispatch, props, codigos, tipo) => {
+  var source = new EventSource(
+    "http://173.249.37.183:8090/books/symbols?symbols=" + codigos
+  );
+
+  source.onopen = function(event) {
+    console.log("open");
+  };
+
+  source.onmessage = function(event) {
+    if (typeof event.data !== "undefined") {
+      let tabelas = {
+        tabelaOfertasCompra: [],
+        tabelaOfertasVenda: []
+      };
+
+      var dados = JSON.parse(event.data);
+
+      let bookNovo = [...dados.bookOffers];
+      let ativoRetornado = dados.symbol;
+      console.log("ativo retornado: ", ativoRetornado);
+
+      bookNovo.forEach(item => {
+        if (item.type === "V") {
+          tabelas.tabelaOfertasVenda.push(item);
+        } else if (item.type === "C") {
+          tabelas.tabelaOfertasCompra.push(item);
+        }
+      });
+      tabelas.tabelaOfertasCompra.sort((a, b) => b.price - a.price);
+      tabelas.tabelaOfertasVenda.sort((a, b) => b.price - a.price);
+
+      if (tipo === "book") {
+        dispatch({
+          type: LISTAR_BOOK_OFERTAS,
+          payload: tabelas
+        });
+      }
+
+      if (tipo === "multileg") {
+        const abasMultileg = [...props.multileg];
+        const indice = props.indice;
+        const tabelaOfertas = abasMultileg[indice].tabelaMultileg;
+        const ofertaAtual = tabelaOfertas[tabelaOfertas.length - 1];
+        console.log("codigo da oferta", ofertaAtual.codigoSelecionado);
+        ofertaAtual.compra = tabelas.tabelaOfertasCompra[0];
+        ofertaAtual.venda =
+          tabelas.tabelaOfertasVenda[tabelas.tabelaOfertasVenda.length - 1];
+
+        dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
+      }
+    }
+  };
+  return source;
+};
+
 export const atualizarCotacaoAPI = (dispatch, abasMultileg, indice) => {
-  // observify(request);
-  // const observer = {
-  //   next: function(value) {
-  //     console.log("next ", value);
-  //   },
-  //   error: function(err) {
-  //     console.error("err ", err);
-  //   },
-  //   complete: function(a) {
-  //     console.log("complete ", a);
-  //   }
-  // };
   const codigos = abasMultileg[indice].ativo;
 
   var source = new EventSource(
@@ -248,20 +291,4 @@ export const atualizarCotacaoAPI = (dispatch, abasMultileg, indice) => {
       // dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
     }
   };
-
-  // const observable = request
-  //   .get("http://173.249.37.183:8090/symbols?symbols=PETR4,VALE3")
-  //   .observify();
-  // const subscription = observable.subscribe(observer);
-
-  // return request
-  //   .get("http://173.249.37.183:8090/symbols?symbols=PETR4")
-  //   .then(response => {
-  //     console.log(response.body);
-  //     return response.body;
-  //   })
-  //   .catch(erro => {
-  //     console.log(erro);
-  //     //return [];
-  //   });
 };

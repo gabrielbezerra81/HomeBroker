@@ -56,7 +56,7 @@ export const bookHeader = (props, headerClass, resetPosition) => (
           onKeyPress={event => {
             //event.preventDefault();
             if (event.key === "Enter")
-              props.listarBookOfertaOnEnterAction(event.target.value);
+              props.listarBookOfertaOnEnterAction(event.target.value, props);
           }}
         />
       </Col>

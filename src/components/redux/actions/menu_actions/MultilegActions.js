@@ -13,7 +13,8 @@ import {
 import {
   listarBookOfertaAPI,
   pesquisarAtivoAPI,
-  atualizarCotacaoAPI
+  atualizarCotacaoAPI,
+  atualizarBookAPI
 } from "components/api/API";
 import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
 import { formatarNumero } from "components/redux/reducers/formInputReducer";
@@ -229,12 +230,24 @@ export const adicionarOfertaTabelaAction = (props, tipoOferta) => {
   };
 };
 
+export const atualizarBookAction = props => {
+  return dispatch => {
+    let abasMultileg = [...props.multileg];
+    const { indice } = props;
+    const tabelaOfertas = abasMultileg[indice].tabelaMultileg;
+    setTimeout(() => {
+      const codigo = tabelaOfertas[tabelaOfertas.length - 1].codigoSelecionado;
+      atualizarBookAPI(dispatch, props, codigo, "multileg");
+    }, 3000);
+  };
+};
+
 export const atualizarCotacaoAction = props => {
   return async dispatch => {
     let abasMultileg = [...props.multileg];
     const indice = props.indice;
 
-    atualizarCotacaoAPI(dispatch, abasMultileg, indice);
+    //atualizarCotacaoAPI(dispatch, abasMultileg, indice);
   };
 };
 
