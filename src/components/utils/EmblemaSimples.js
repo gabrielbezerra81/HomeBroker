@@ -9,9 +9,9 @@ class EmblemaSimples extends React.Component {
     return (
       <div className="itemListaCompleta">
         <Row>
-          <Col>COMPRA</Col>
+          <Col>Min</Col>
           <Col md={0}>Médio</Col>
-          <Col className="text-align-right">VENDA</Col>
+          <Col className="text-align-right">Max</Col>
         </Row>
         <div className="containerSliderTopo">
           <div className="sliderTopo"></div>
