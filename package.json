@@ -2,7 +2,7 @@
   "name": "homebroker",
   "version": "0.1.0",
   "engines": {
-    "node": "10.16.0",
+    "node": "12.13.0",
     "npm": "6.9"
   },
   "private": true,

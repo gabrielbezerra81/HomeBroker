@@ -14,6 +14,7 @@ class PosicaoAmpliadaResumida extends React.Component {
             <div key={index} className="mt-2 ml-2 mr-2">
               <Row className="rowAtivosEmblema">
                 {renderAtivo(item)}
+
                 {item.custodiaCompra.length > 0 ? (
                   <Col md={0}>
                     {item.custodiaCompra.map((itemCustodiaCompra, index2) => (
@@ -22,7 +23,7 @@ class PosicaoAmpliadaResumida extends React.Component {
                         className="itemCustodiaCompra"
                       >
                         {itemCustodiaCompra.ativo} (
-                        {itemCustodiaCompra.qtde / 1000}K)
+                        {itemCustodiaCompra.qtdeExecutada / 1000}K)
                       </h6>
                     ))}
                   </Col>
@@ -35,7 +36,7 @@ class PosicaoAmpliadaResumida extends React.Component {
                         className="itemCustodiaVenda"
                       >
                         {itemCustodiaVenda.ativo} (-
-                        {itemCustodiaVenda.qtde / 1000}K)
+                        {itemCustodiaVenda.qtdeExecutada / 1000}K)
                       </h6>
                     ))}
                   </Col>
@@ -71,17 +72,23 @@ class PosicaoAmpliadaResumida extends React.Component {
                             <tbody>
                               {item.executando.map((itemExecutando, index3) => (
                                 <tr key={index3}>
-                                  {itemExecutando.tipo === "compra" ? (
-                                    <td>{itemExecutando.qtde / 1000}K</td>
+                                  {itemExecutando.oferta === "C" ? (
+                                    <td>
+                                      +{itemExecutando.qtdeOferta / 1000}K
+                                    </td>
                                   ) : (
-                                    <td>-{itemExecutando.qtde / 1000}K</td>
+                                    <td>
+                                      -{itemExecutando.qtdeOferta / 1000}K
+                                    </td>
                                   )}
                                   <td>{itemExecutando.ativo}</td>
                                   <td>
                                     {renderCV(
-                                      itemExecutando.tipo,
-                                      itemExecutando.valor
-                                    )}{" "}
+                                      itemExecutando.oferta,
+                                      itemExecutando.precoEnvio,
+                                      itemExecutando.operacao,
+                                      index3
+                                    )}
                                   </td>
                                 </tr>
                               ))}
@@ -113,23 +120,16 @@ export default connect(
 )(PosicaoAmpliadaResumida);
 
 const renderAtivo = item => {
-  var ativo = item.ativo;
+  let mostrarAtivo = false;
+  let conteudo = item.ativo.map((ativo, ind) => {
+    if (ativo.stock.option) {
+      mostrarAtivo = true;
+      return <h6 key={`custodiaCompra${ind}`}>{ativo.symbol}</h6>;
+    }
+    return <span></span>;
+  });
 
-  if (
-    item.custodiaCompra.length > 0 &&
-    ativo === item.custodiaCompra[0].ativo
-  ) {
-    return (ativo = "");
-  }
-  if (item.custodiaVenda.length > 0 && ativo === item.custodiaVenda[0].ativo) {
-    return (ativo = "");
-  }
-
-  return (
-    <Col md={0}>
-      <h6>{ativo}</h6>
-    </Col>
-  );
+  return mostrarAtivo ? <Col md={0}>{conteudo}</Col> : null;
 };
 
 const renderValorPorcentagem = porcentagem => {
@@ -146,24 +146,30 @@ const renderValorPorcentagem = porcentagem => {
   }
 };
 
-const renderCV = (cv, valor) => {
+const renderCV = (cv, valor, operacao, indice) => {
   return (
     <span>
-      {cv === "compra" ? (
-        <div className="divCV">
+      {cv === "C" ? (
+        <div className="divCV emblemaExecutandoDivCV">
           <MDBIcon
             icon="circle"
             className="iconeStatusCirculo iconeStatusConectado"
           />
-          <span>{valor}</span>
+          {(operacao === "Multileg" && indice === 0) ||
+          operacao !== "Multileg" ? (
+            <span>{valor}</span>
+          ) : null}
         </div>
       ) : (
-        <div className="divCV">
+        <div className="divCV emblemaExecutandoDivCV">
           <MDBIcon
             icon="circle"
             className="iconeStatusCirculo iconeStatusDesconectado"
           />
-          <span>{valor}</span>
+          {(operacao === "Multileg" && indice === 0) ||
+          operacao !== "Multileg" ? (
+            <span>{valor}</span>
+          ) : null}
         </div>
       )}
     </span>

@@ -218,3 +218,12 @@ th .colunaDividida div {
 .iconeResumido path {
   fill: var(--cor-texto) !important;
 }
+
+.emblemaExecutandoDivCV {
+  height: 18px;
+  justify-content: flex-start !important;
+}
+
+.emblemaExecutandoDivCV > span {
+  flex: 1;
+}

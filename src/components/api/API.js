@@ -11,8 +11,6 @@ import {
   url_listarPosicoes
 } from "components/api/url";
 import rxRequest from "universal-rx-request";
-import observify from "superagent-rxjs";
-import $ from "jquery";
 
 rxRequest.importRxExtensions();
 
