@@ -237,7 +237,6 @@ export const atualizarBookAPI = (dispatch, props, codigos, tipo) => {
 
       let bookNovo = [...dados.bookOffers];
       let ativoRetornado = dados.symbol;
-      console.log("ativo retornado: ", ativoRetornado);
 
       bookNovo.forEach(item => {
         if (item.type === "V") {
@@ -260,11 +259,13 @@ export const atualizarBookAPI = (dispatch, props, codigos, tipo) => {
         const abasMultileg = [...props.multileg];
         const indice = props.indice;
         const tabelaOfertas = abasMultileg[indice].tabelaMultileg;
-        const ofertaAtual = tabelaOfertas[tabelaOfertas.length - 1];
-        console.log("codigo da oferta", ofertaAtual.codigoSelecionado);
-        ofertaAtual.compra = tabelas.tabelaOfertasCompra[0];
-        ofertaAtual.venda =
-          tabelas.tabelaOfertasVenda[tabelas.tabelaOfertasVenda.length - 1];
+        tabelaOfertas.forEach(oferta => {
+          if (oferta.codigoSelecionado === ativoRetornado) {
+            oferta.compra = tabelas.tabelaOfertasCompra[0];
+            oferta.venda =
+              tabelas.tabelaOfertasVenda[tabelas.tabelaOfertasVenda.length - 1];
+          }
+        });
 
         dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
       }

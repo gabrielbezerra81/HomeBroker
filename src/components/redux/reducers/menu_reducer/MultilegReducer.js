@@ -7,7 +7,10 @@ import {
   MODIFICAR_ATRIBUTO_ABA,
   MODIFICAR_VARIAVEL_MULTILEG
 } from "constants/MenuActionTypes";
-import { PESQUISAR_ATIVO_MULTILEG_API } from "constants/ApiActionTypes";
+import {
+  PESQUISAR_ATIVO_MULTILEG_API,
+  ATUALIZAR_SOURCE_EVENT_MULTILEG
+} from "constants/ApiActionTypes";
 
 const INITIAL_STATE = {
   configComplementarAberto: false,
@@ -33,7 +36,8 @@ const INITIAL_STATE = {
       date: new Date(),
       tabelaMultileg: []
     }
-  ]
+  ],
+  eventSource: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -57,6 +61,8 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, [action.payload.nome]: action.payload.valor };
     case PESQUISAR_ATIVO_MULTILEG_API:
       return { ...state, multileg: action.payload };
+    case ATUALIZAR_SOURCE_EVENT_MULTILEG:
+      return { ...state, eventSource: action.payload };
     default:
       return state;
   }

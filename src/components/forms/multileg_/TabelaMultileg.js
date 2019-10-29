@@ -48,7 +48,7 @@ class TabelaMultileg extends React.Component {
                     className="divClicavel"
                     onClick={() =>
                       this.props.excluirOfertaTabelaAction(
-                        this.props.multileg,
+                        this.props,
                         indiceAba,
                         indiceLinha
                       )

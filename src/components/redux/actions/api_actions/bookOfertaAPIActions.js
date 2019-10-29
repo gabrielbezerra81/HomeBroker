@@ -1,5 +1,8 @@
 import { listarBookOfertaAPI, atualizarBookAPI } from "components/api/API";
-import { LISTAR_BOOK_OFERTAS } from "constants/ApiActionTypes";
+import {
+  LISTAR_BOOK_OFERTAS,
+  ATUALIZAR_SOURCE_EVENT_BOOK_OFERTAS
+} from "constants/ApiActionTypes";
 
 export const listarBookOfertaOnEnterAction = (codigo_ativo, props) => {
   return async dispatch => {
@@ -12,7 +15,7 @@ export const listarBookOfertaOnEnterAction = (codigo_ativo, props) => {
     }
     setTimeout(() => {
       const source = atualizarBookAPI(dispatch, {}, codigo_ativo, "book");
-      dispatch({ type: "nova", payload: source });
+      dispatch({ type: ATUALIZAR_SOURCE_EVENT_BOOK_OFERTAS, payload: source });
     }, 3000);
 
     dispatch({

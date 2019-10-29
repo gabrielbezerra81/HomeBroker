@@ -80,3 +80,5 @@ export const ABRIR_FECHAR_MENU_LATERAL = "abrir_fechar_menu_lateral";
 export const LOGAR_DESLOGAR_USUARIO = "logar_deslogar_usuario";
 export const ABRIR_FECHAR_ITEM_BARRA_LATERAL =
   "abrir_fechar_item_barra_lateral";
+
+  

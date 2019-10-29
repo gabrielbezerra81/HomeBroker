@@ -5,7 +5,10 @@ import {
   MUDAR_INPUTHEADER_BOOK,
   LIMPAR_FORMS
 } from "constants/ActionTypes";
-import { LISTAR_BOOK_OFERTAS } from "constants/ApiActionTypes";
+import {
+  LISTAR_BOOK_OFERTAS,
+  ATUALIZAR_SOURCE_EVENT_BOOK_OFERTAS
+} from "constants/ApiActionTypes";
 
 const INITIAL_STATE = {
   qtde: "",
@@ -15,7 +18,7 @@ const INITIAL_STATE = {
   inputHeader: "",
   tabelaOfertasCompra: [],
   tabelaOfertasVenda: [],
-  eventSource: 'null'
+  eventSource: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -36,7 +39,7 @@ export default (state = INITIAL_STATE, action) => {
         tabelaOfertasCompra: action.payload.tabelaOfertasCompra,
         tabelaOfertasVenda: action.payload.tabelaOfertasVenda
       };
-    case "nova":
+    case ATUALIZAR_SOURCE_EVENT_BOOK_OFERTAS:
       return { ...state, eventSource: action.payload };
     default:
       return state;

@@ -18,6 +18,7 @@ import {
 } from "components/api/API";
 import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
 import { formatarNumero } from "components/redux/reducers/formInputReducer";
+import { ATUALIZAR_SOURCE_EVENT_MULTILEG } from "constants/ApiActionTypes";
 
 export const abrirFecharConfigComplAction = configComplementarAberto => {
   return dispatch => {
@@ -173,11 +174,12 @@ export const modificarVariavelAction = (nome, valor) => {
   };
 };
 
-export const excluirOfertaTabelaAction = (multileg, indiceAba, indiceLinha) => {
+export const excluirOfertaTabelaAction = (props, indiceAba, indiceLinha) => {
   return dispatch => {
-    let abasMultileg = [...multileg];
+    let abasMultileg = [...props.multileg];
     abasMultileg[indiceAba].tabelaMultileg.splice(indiceLinha, 1);
 
+    atualizarBookAction(dispatch, props);
     dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
   };
 };
@@ -209,7 +211,7 @@ export const adicionarOfertaTabelaAction = (props, tipoOferta) => {
       pesquisarSymbolModel_strike_tipo(novaOferta);
       const dadosAtivo = await pesquisarAtivoAPI(novaOferta.codigoSelecionado);
       if (dadosAtivo) {
-        novaOferta.cotacao = dadosAtivo.cotacaoAtual;
+        novaOferta.cotacao = Number(dadosAtivo.cotacaoAtual);
       }
     }
     const book = await listarBookOfertaAPI(novaOferta.codigoSelecionado);
@@ -225,21 +227,30 @@ export const adicionarOfertaTabelaAction = (props, tipoOferta) => {
       const aba = abasMultileg[indiceAba];
       aba.preco = calculoPreco(aba, "ultimo").toFixed(2);
 
+      atualizarBookAction(dispatch, props);
       dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
     }
   };
 };
 
-export const atualizarBookAction = props => {
-  return dispatch => {
-    let abasMultileg = [...props.multileg];
-    const { indice } = props;
-    const tabelaOfertas = abasMultileg[indice].tabelaMultileg;
-    setTimeout(() => {
-      const codigo = tabelaOfertas[tabelaOfertas.length - 1].codigoSelecionado;
-      atualizarBookAPI(dispatch, props, codigo, "multileg");
-    }, 3000);
-  };
+export const atualizarBookAction = (dispatch, props) => {
+  let abasMultileg = [...props.multileg];
+  const { indice } = props;
+  const tabelaOfertas = abasMultileg[indice].tabelaMultileg;
+  let codigos = "";
+
+  tabelaOfertas.forEach(oferta => {
+    codigos += oferta.codigoSelecionado + ",";
+  });
+  codigos = codigos.substring(0, codigos.length - 1);
+
+  if (props.eventSource) {
+    props.eventSource.close();
+  }
+  setTimeout(() => {
+    const newSource = atualizarBookAPI(dispatch, props, codigos, "multileg");
+    dispatch({ type: ATUALIZAR_SOURCE_EVENT_MULTILEG, payload: newSource });
+  }, 3000);
 };
 
 export const atualizarCotacaoAction = props => {

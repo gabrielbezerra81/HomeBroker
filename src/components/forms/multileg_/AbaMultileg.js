@@ -121,7 +121,6 @@ class AbaMultileg extends React.Component {
                         this.props,
                         "acao"
                       );
-                      this.props.atualizarBookAction(this.props);
                     }}
                   >
                     +Ativo
@@ -134,7 +133,6 @@ class AbaMultileg extends React.Component {
                         this.props,
                         "call"
                       );
-                      this.props.atualizarBookAction(this.props);
                     }}
                   >
                     +Call
@@ -144,7 +142,6 @@ class AbaMultileg extends React.Component {
                     size="sm"
                     onClick={() => {
                       this.props.adicionarOfertaTabelaAction(this.props, "put");
-                      this.props.atualizarBookAction(this.props);
                     }}
                   >
                     +Put
@@ -163,7 +160,8 @@ class AbaMultileg extends React.Component {
 
 const mapStateToProps = state => ({
   configComplementarAberto: state.multilegReducer.configComplementarAberto,
-  multileg: state.multilegReducer.multileg
+  multileg: state.multilegReducer.multileg,
+  eventSource: state.multilegReducer.eventSource
 });
 
 export default connect(
