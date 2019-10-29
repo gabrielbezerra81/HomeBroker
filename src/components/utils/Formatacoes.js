@@ -90,3 +90,10 @@ export const formatarNumDecimal = function(num) {
     minimumFractionDigits: 2
   });
 };
+
+export const formatarDataDaAPI = dataAPI => {
+  const arrayDate = dataAPI.split(" ");
+  const data = arrayDate[0].split("/");
+  const hora = arrayDate[1];
+  return new Date(`${data[1]}/${data[0]}/${data[2]} ${hora}`);
+};

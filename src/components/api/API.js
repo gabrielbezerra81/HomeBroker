@@ -15,6 +15,7 @@ import {
   LISTAR_BOOK_OFERTAS,
   PESQUISAR_ATIVO_BOLETA_API
 } from "constants/ApiActionTypes";
+import { formatarDataDaAPI } from "components/utils/Formatacoes";
 
 export const pesquisarAtivoAPI = codigo => {
   return request
@@ -26,7 +27,10 @@ export const pesquisarAtivoAPI = codigo => {
       let oscilacao;
       let cotacaoAtual = 0;
       let qtdeMultiplo100;
-      let ultimoHorario = new Date(body.ultimoHorario).toLocaleTimeString();
+
+      let ultimoHorario = formatarDataDaAPI(
+        body.ultimoHorario
+      ).toLocaleTimeString();
 
       if (body.stock.market === "OddLot") qtdeMultiplo100 = false;
       else qtdeMultiplo100 = true;
@@ -45,7 +49,9 @@ export const pesquisarAtivoAPI = codigo => {
           strike: body.stock.strike,
           tipo: body.stock.type,
           model: body.stock.model,
-          vencimento: new Date(body.stock.endBusiness).toLocaleDateString(),
+          vencimento: formatarDataDaAPI(
+            body.stock.endBusiness
+          ).toLocaleDateString(),
           symbol: body.stock.referenceStock.symbol,
           cotacaoAtual: cotacaoAtual,
           porcentagem: oscilacao,
@@ -54,6 +60,8 @@ export const pesquisarAtivoAPI = codigo => {
           market: "tipo2",
           ativo: body.stock.symbol
         };
+        console.log(dadosPesquisa);
+        console.log(body.stock.endBusiness);
       } else {
         dadosPesquisa = {
           resultadoAtivo: body.stock.symbol + ", " + body.stock.corporationName,

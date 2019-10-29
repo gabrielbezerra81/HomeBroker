@@ -3,6 +3,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Row, Table, ProgressBar } from "react-bootstrap";
 import DraggableModal from "components/utils/DraggableModal";
 import { modalHeaderSemBook } from "components/utils/FormHeader";
+import { formatarDataDaAPI } from "components/utils/Formatacoes";
 
 export default class OrdensExecucao extends React.Component {
   componentDidMount() {
@@ -77,7 +78,7 @@ const modalBody = props => (
 );
 
 const retornaData = dataString => {
-  return new Date(dataString).toLocaleString();
+  return formatarDataDaAPI(dataString).toLocaleString();
 };
 
 const renderOferta = (item, index) => (

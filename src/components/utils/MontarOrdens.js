@@ -16,7 +16,7 @@ export const montaOrdemPrincipal = props => {
   json.account.id = 1;
   json.enabled = true;
   json.multiStocks = false;
-  json.expiration = date;
+  json.expiration = date.toLocaleString();
   json.status = "Nova";
   json.priority = 0;
   json.stock.symbol = dadosPesquisa.ativo;
@@ -98,7 +98,7 @@ const montaOfertaPrincipal = (props, tipoAuxiliar, json, numAjuste = 0) => {
 
   //Dados ofertas Limitada, Mercado, Agendada, Start Stop, Stop Móvel
   ofertaPrincipal.expirationType = validadeSelect;
-  ofertaPrincipal.expiration = date;
+  ofertaPrincipal.expiration = date.toLocaleString();
   ofertaPrincipal.qtty = Number(qtde);
   ofertaPrincipal.orderType = ordem.tipoOrdem;
   ofertaPrincipal.offerType = ordem.tipoOferta;
@@ -156,14 +156,14 @@ export const montaOfertaNext = (props, disparo, execucao, tipo, json) => {
   ordemNext.order.account.id = 1;
   ordemNext.order.enabled = false;
   ordemNext.order.multiStocks = false;
-  ordemNext.order.expiration = "9999-01-01T00:00:00.000Z";
+  ordemNext.order.expiration = "9999-01-01T00:00:00.000Z".toLocaleString();
   ordemNext.order.status = "Suspensa";
   ordemNext.order.priority = 0;
   ordemNext.order.stock.symbol = dadosPesquisa.ativo;
   //Dados oferta
   ofertaNext.stock.symbol = dadosPesquisa.ativo;
   ofertaNext.expirationType = "GTC";
-  ofertaNext.expiration = "9999-01-01T00:00:00.000Z";
+  ofertaNext.expiration = "9999-01-01T00:00:00.000Z".toLocaleString();
   ofertaNext.qtty = Number(qtde);
   ofertaNext.status = "Suspensa";
   ofertaNext.enabled = false;
