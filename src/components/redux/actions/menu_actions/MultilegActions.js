@@ -14,7 +14,8 @@ import {
   listarBookOfertaAPI,
   pesquisarAtivoAPI,
   atualizarCotacaoAPI,
-  atualizarBookAPI
+  atualizarBookAPI,
+  travarDestravarClique
 } from "components/api/API";
 import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
 import { formatarNumero } from "components/redux/reducers/formInputReducer";
@@ -32,7 +33,7 @@ export const abrirFecharConfigComplAction = configComplementarAberto => {
 export const selecionarAdicionarAbaAction = (key, props) => {
   return dispatch => {
     if (key === "adicionar") {
-      let abasMultileg = [...props.multileg];
+      let abasMultileg = props.multileg;
 
       const novaAba = cloneDeep(aba);
       novaAba.nomeAba = "Sim " + (abasMultileg.length + 1);
@@ -66,11 +67,9 @@ export const excluirAbaMultilegAction = (props, indiceAba) => {
       });
     }
 
-    console.log("antes", abasMultileg.length);
     abasMultileg.splice(indiceAba, 1);
-    console.log("depois", abasMultileg.length);
 
-    //props.eventSourceCotacao.close();
+    props.eventSourceCotacao.close();
     dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
     atualizarCotacaoAction(dispatch, props, abasMultileg);
     //atualizarBookAction(dispatch, props);
@@ -193,7 +192,8 @@ export const excluirOfertaTabelaAction = (props, indiceAba, indiceLinha) => {
 
 export const adicionarOfertaTabelaAction = (props, tipoOferta) => {
   return async dispatch => {
-    document.body.style.cursor = "wait";
+    travarDestravarClique("travar", "multileg");
+
     let abasMultileg = [...props.multileg];
     const indiceAba = props.indice;
     let novaOferta = cloneDeep(oferta);
@@ -230,13 +230,13 @@ export const adicionarOfertaTabelaAction = (props, tipoOferta) => {
 
       abasMultileg[indiceAba].tabelaMultileg.push(novaOferta);
 
-      document.body.style.cursor = "auto";
       const aba = abasMultileg[indiceAba];
       aba.preco = calculoPreco(aba, "ultimo").toFixed(2);
 
       //atualizarBookAction(dispatch, props);
       atualizarCotacaoAction(dispatch, props, abasMultileg);
       dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
+      travarDestravarClique("destravar", "multileg");
     }
   };
 };
@@ -271,10 +271,8 @@ export const atualizarCotacaoAction = (dispatch, props, multileg) => {
     props.eventSourceCotacao.close();
     console.log("fechou");
   }
-
   let abasMultileg = multileg;
   let codigos = "";
-  console.log(abasMultileg.length);
 
   abasMultileg.forEach(aba => {
     if (!codigos.includes(aba.ativoAtual)) codigos += aba.ativoAtual + ",";
@@ -285,22 +283,20 @@ export const atualizarCotacaoAction = (dispatch, props, multileg) => {
     });
   });
 
-  setTimeout(() => {
-    codigos = codigos.substring(0, codigos.length - 1);
+  codigos = codigos.substring(0, codigos.length - 1);
 
-    const newSource = atualizarCotacaoAPI(
-      dispatch,
-      props,
-      codigos,
-      "multileg",
-      abasMultileg
-    );
-    dispatch({
-      type: ATUALIZAR_SOURCE_EVENT_MULTILEG,
-      payload: newSource,
-      nomeVariavel: "eventSourceCotacao"
-    });
-  }, 3000);
+  const newSource = atualizarCotacaoAPI(
+    dispatch,
+    props,
+    codigos,
+    "multileg",
+    abasMultileg
+  );
+  dispatch({
+    type: ATUALIZAR_SOURCE_EVENT_MULTILEG,
+    payload: newSource,
+    nomeVariavel: "eventSourceCotacao"
+  });
 };
 
 const oferta = {

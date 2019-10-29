@@ -35,7 +35,8 @@ import OrdensExecucaoReducer from "components/redux/reducers/menu_reducer/Ordens
 import {
   selecionarAdicionarAbaAction,
   modificarAtributoAbaAction,
-  excluirAbaMultilegAction
+  excluirAbaMultilegAction,
+  atualizarCotacaoAction
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { mudarVariavelPosicaoAction } from "components/redux/actions/menu_actions/PosicaoActions";
 import { listarBookOfertaOnEnterAction } from "components/redux/actions/api_actions/bookOfertaAPIActions";
@@ -43,9 +44,12 @@ import { mudarInputHeaderAction } from "components/redux/actions/bookOfertaActio
 import { listarOrdensExecAction } from "components/redux/actions/menu_actions/OrdensExecActions";
 import { listarPosicoesAction } from "components/redux/actions/menu_actions/PosicaoActions";
 
+// @ts-ignore
 export const GlobalContext = React.createContext();
+// @ts-ignore
 export const localContext = React.createContext();
 
+// @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const combinedReducers = combineReducers({
@@ -230,7 +234,8 @@ export const MultilegConectado = compose(
     {
       selecionarAdicionarAbaAction,
       modificarAtributoAbaAction,
-      excluirAbaMultilegAction
+      excluirAbaMultilegAction,
+      atualizarCotacaoAction
     }
   )
 )(Multileg);

@@ -295,8 +295,10 @@ export const atualizarCotacaoAPI = (
       const cotacaoAtual = dados.ultimo;
       const ativoRetornado = dados.symbol;
       console.log("chegou");
+      console.log(cotacaoAtual);
 
       if (tipo === "multileg") {
+        abasMultileg = [...abasMultileg];
         abasMultileg.forEach(aba => {
           if (aba.ativoAtual === ativoRetornado) {
             aba.valor = cotacaoAtual;
@@ -313,4 +315,15 @@ export const atualizarCotacaoAPI = (
     }
   };
   return source;
+};
+
+export const travarDestravarClique = (modo, id) => {
+  if (modo === "travar") {
+    document.body.style.cursor = "wait";
+    document.getElementById(id).style.pointerEvents = "none";
+  }
+  if (modo === "destravar") {
+    document.body.style.cursor = "auto";
+    document.getElementById(id).style.pointerEvents = "all";
+  }
 };

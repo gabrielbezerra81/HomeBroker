@@ -1,7 +1,8 @@
 import {
   pesquisarAtivoMultilegAPI,
   pesquisarStrikesMultilegAPI,
-  enviarOrdemAPI
+  enviarOrdemAPI,
+  travarDestravarClique
 } from "components/api/API";
 import { PESQUISAR_ATIVO_MULTILEG_API } from "constants/ApiActionTypes";
 import { atualizarCotacaoAction } from "components/redux/actions/menu_actions/MultilegActions";
@@ -12,9 +13,9 @@ export const pesquisarAtivoMultilegAction = (props, indice) => {
     let aba = multileg[indice];
     const codigo_ativo = aba.ativo;
 
-    document.body.style.cursor = "wait";
+    travarDestravarClique("travar", "multileg");
     const dados = await pesquisarAtivoMultilegAPI(codigo_ativo);
-    document.body.style.cursor = "auto";
+    travarDestravarClique("destravar", "multileg");
     if (dados) {
       aba.opcoes = [...dados.opcoes];
       aba.vencimento = [...dados.vencimentos];
@@ -26,8 +27,9 @@ export const pesquisarAtivoMultilegAction = (props, indice) => {
         dados.cotacaoAtual
       );
       aba.ativoAtual = codigo_ativo;
-      atualizarCotacaoAction(dispatch, props, multileg);
+
       dispatch({ type: PESQUISAR_ATIVO_MULTILEG_API, payload: multileg });
+      atualizarCotacaoAction(dispatch, props, multileg);
     }
   };
 };
@@ -36,9 +38,9 @@ export const pesquisarStrikesMultilegAction = async (
   codigo_ativo,
   vencimento
 ) => {
-  document.body.style.cursor = "wait";
+  travarDestravarClique("travar", "multileg");
   const dados = await pesquisarStrikesMultilegAPI(codigo_ativo, vencimento);
-  document.body.style.cursor = "auto";
+  travarDestravarClique("destravar", "multileg");
   if (dados) {
     return dados;
   }
