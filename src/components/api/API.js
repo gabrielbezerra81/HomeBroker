@@ -217,7 +217,13 @@ export const listarPosicoesAPI = () => {
     });
 };
 
-export const atualizarBookAPI = (dispatch, props, codigos, tipo) => {
+export const atualizarBookAPI = (
+  dispatch,
+  props,
+  codigos,
+  tipo,
+  abasMultileg
+) => {
   var source = new EventSource(
     "http://173.249.37.183:8090/books/symbols?symbols=" + codigos
   );
@@ -232,6 +238,7 @@ export const atualizarBookAPI = (dispatch, props, codigos, tipo) => {
         tabelaOfertasCompra: [],
         tabelaOfertasVenda: []
       };
+      console.log("chegou");
 
       var dados = JSON.parse(event.data);
 
@@ -256,15 +263,18 @@ export const atualizarBookAPI = (dispatch, props, codigos, tipo) => {
       }
 
       if (tipo === "multileg") {
-        const abasMultileg = [...props.multileg];
-        const indice = props.indice;
-        const tabelaOfertas = abasMultileg[indice].tabelaMultileg;
-        tabelaOfertas.forEach(oferta => {
-          if (oferta.codigoSelecionado === ativoRetornado) {
-            oferta.compra = tabelas.tabelaOfertasCompra[0];
-            oferta.venda =
-              tabelas.tabelaOfertasVenda[tabelas.tabelaOfertasVenda.length - 1];
-          }
+        abasMultileg = [...abasMultileg];
+        //const tabelaOfertas = abasMultileg[indice].tabelaMultileg;
+        abasMultileg.forEach(aba => {
+          aba.tabelaMultileg.forEach(oferta => {
+            if (oferta.codigoSelecionado === ativoRetornado) {
+              oferta.compra = tabelas.tabelaOfertasCompra[0];
+              oferta.venda =
+                tabelas.tabelaOfertasVenda[
+                  tabelas.tabelaOfertasVenda.length - 1
+                ];
+            }
+          });
         });
 
         dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
@@ -294,8 +304,6 @@ export const atualizarCotacaoAPI = (
       var dados = JSON.parse(event.data);
       const cotacaoAtual = dados.ultimo;
       const ativoRetornado = dados.symbol;
-      console.log("chegou");
-      console.log(cotacaoAtual);
 
       if (tipo === "multileg") {
         abasMultileg = [...abasMultileg];

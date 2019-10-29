@@ -42,6 +42,7 @@ export const selecionarAdicionarAbaAction = (key, props) => {
       abasMultileg.push(novaAba);
 
       atualizarCotacaoAction(dispatch, props, abasMultileg);
+      atualizarBookAction(dispatch, props, abasMultileg);
       dispatch({
         type: ADICIONAR_ABA,
         payload: { multileg: abasMultileg, abaSelecionada: abaAtual }
@@ -69,10 +70,11 @@ export const excluirAbaMultilegAction = (props, indiceAba) => {
 
     abasMultileg.splice(indiceAba, 1);
 
-    props.eventSourceCotacao.close();
+    if (props.eventSource) props.eventSource.close();
+    if (props.eventSourceCotacao) props.eventSourceCotacao.close();
     dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
     atualizarCotacaoAction(dispatch, props, abasMultileg);
-    //atualizarBookAction(dispatch, props);
+    atualizarBookAction(dispatch, props, abasMultileg);
   };
 };
 
@@ -184,7 +186,7 @@ export const excluirOfertaTabelaAction = (props, indiceAba, indiceLinha) => {
     let abasMultileg = [...props.multileg];
     abasMultileg[indiceAba].tabelaMultileg.splice(indiceLinha, 1);
 
-    //atualizarBookAction(dispatch, props);
+    atualizarBookAction(dispatch, props, abasMultileg);
     atualizarCotacaoAction(dispatch, props, abasMultileg);
     dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
   };
@@ -233,7 +235,7 @@ export const adicionarOfertaTabelaAction = (props, tipoOferta) => {
       const aba = abasMultileg[indiceAba];
       aba.preco = calculoPreco(aba, "ultimo").toFixed(2);
 
-      //atualizarBookAction(dispatch, props);
+      atualizarBookAction(dispatch, props, abasMultileg);
       atualizarCotacaoAction(dispatch, props, abasMultileg);
       dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
       travarDestravarClique("destravar", "multileg");
@@ -241,35 +243,39 @@ export const adicionarOfertaTabelaAction = (props, tipoOferta) => {
   };
 };
 
-export const atualizarBookAction = (dispatch, props) => {
+export const atualizarBookAction = (dispatch, props, multileg) => {
   if (props.eventSource) {
     props.eventSource.close();
   }
 
-  let abasMultileg = [...props.multileg];
-  const { indice } = props;
-  const tabelaOfertas = abasMultileg[indice].tabelaMultileg;
+  let abasMultileg = multileg;
   let codigos = "";
 
-  tabelaOfertas.forEach(oferta => {
-    codigos += oferta.codigoSelecionado + ",";
+  abasMultileg.forEach(aba => {
+    aba.tabelaMultileg.forEach(oferta => {
+      codigos += oferta.codigoSelecionado + ",";
+    });
   });
+
   codigos = codigos.substring(0, codigos.length - 1);
 
-  setTimeout(() => {
-    const newSource = atualizarBookAPI(dispatch, props, codigos, "multileg");
-    dispatch({
-      type: ATUALIZAR_SOURCE_EVENT_MULTILEG,
-      payload: newSource,
-      nomeVariavel: "eventSource"
-    });
-  }, 3000);
+  const newSource = atualizarBookAPI(
+    dispatch,
+    props,
+    codigos,
+    "multileg",
+    abasMultileg
+  );
+  dispatch({
+    type: ATUALIZAR_SOURCE_EVENT_MULTILEG,
+    payload: newSource,
+    nomeVariavel: "eventSource"
+  });
 };
 
 export const atualizarCotacaoAction = (dispatch, props, multileg) => {
   if (props.eventSourceCotacao) {
     props.eventSourceCotacao.close();
-    console.log("fechou");
   }
   let abasMultileg = multileg;
   let codigos = "";
