@@ -238,6 +238,7 @@ export const atualizarBookAPI = (
         tabelaOfertasCompra: [],
         tabelaOfertasVenda: []
       };
+      console.log("chegou");
 
       var dados = JSON.parse(event.data);
 
