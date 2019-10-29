@@ -29,10 +29,10 @@ export const abrirFecharConfigComplAction = configComplementarAberto => {
   };
 };
 
-export const selecionarAdicionarAbaAction = (key, multileg) => {
+export const selecionarAdicionarAbaAction = (key, props) => {
   return dispatch => {
     if (key === "adicionar") {
-      let abasMultileg = [...multileg];
+      let abasMultileg = [...props.multileg];
 
       const novaAba = cloneDeep(aba);
       novaAba.nomeAba = "Sim " + (abasMultileg.length + 1);
@@ -40,6 +40,7 @@ export const selecionarAdicionarAbaAction = (key, multileg) => {
 
       abasMultileg.push(novaAba);
 
+      atualizarCotacaoAction(dispatch, props, abasMultileg);
       dispatch({
         type: ADICIONAR_ABA,
         payload: { multileg: abasMultileg, abaSelecionada: abaAtual }
@@ -53,9 +54,9 @@ export const selecionarAdicionarAbaAction = (key, multileg) => {
   };
 };
 
-export const excluirAbaMultilegAction = (multileg, indiceAba) => {
+export const excluirAbaMultilegAction = (props, indiceAba) => {
   return dispatch => {
-    let abasMultileg = [...multileg];
+    let abasMultileg = [...props.multileg];
 
     if (indiceAba > 0) {
       const key = "tab" + (indiceAba - 1);
@@ -65,9 +66,14 @@ export const excluirAbaMultilegAction = (multileg, indiceAba) => {
       });
     }
 
+    console.log("antes", abasMultileg.length);
     abasMultileg.splice(indiceAba, 1);
+    console.log("depois", abasMultileg.length);
 
+    //props.eventSourceCotacao.close();
     dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
+    atualizarCotacaoAction(dispatch, props, abasMultileg);
+    //atualizarBookAction(dispatch, props);
   };
 };
 
@@ -179,7 +185,8 @@ export const excluirOfertaTabelaAction = (props, indiceAba, indiceLinha) => {
     let abasMultileg = [...props.multileg];
     abasMultileg[indiceAba].tabelaMultileg.splice(indiceLinha, 1);
 
-    atualizarBookAction(dispatch, props);
+    //atualizarBookAction(dispatch, props);
+    atualizarCotacaoAction(dispatch, props, abasMultileg);
     dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
   };
 };
@@ -227,13 +234,18 @@ export const adicionarOfertaTabelaAction = (props, tipoOferta) => {
       const aba = abasMultileg[indiceAba];
       aba.preco = calculoPreco(aba, "ultimo").toFixed(2);
 
-      atualizarBookAction(dispatch, props);
+      //atualizarBookAction(dispatch, props);
+      atualizarCotacaoAction(dispatch, props, abasMultileg);
       dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
     }
   };
 };
 
 export const atualizarBookAction = (dispatch, props) => {
+  if (props.eventSource) {
+    props.eventSource.close();
+  }
+
   let abasMultileg = [...props.multileg];
   const { indice } = props;
   const tabelaOfertas = abasMultileg[indice].tabelaMultileg;
@@ -244,22 +256,51 @@ export const atualizarBookAction = (dispatch, props) => {
   });
   codigos = codigos.substring(0, codigos.length - 1);
 
-  if (props.eventSource) {
-    props.eventSource.close();
-  }
   setTimeout(() => {
     const newSource = atualizarBookAPI(dispatch, props, codigos, "multileg");
-    dispatch({ type: ATUALIZAR_SOURCE_EVENT_MULTILEG, payload: newSource });
+    dispatch({
+      type: ATUALIZAR_SOURCE_EVENT_MULTILEG,
+      payload: newSource,
+      nomeVariavel: "eventSource"
+    });
   }, 3000);
 };
 
-export const atualizarCotacaoAction = props => {
-  return async dispatch => {
-    let abasMultileg = [...props.multileg];
-    const indice = props.indice;
+export const atualizarCotacaoAction = (dispatch, props, multileg) => {
+  if (props.eventSourceCotacao) {
+    props.eventSourceCotacao.close();
+    console.log("fechou");
+  }
 
-    //atualizarCotacaoAPI(dispatch, abasMultileg, indice);
-  };
+  let abasMultileg = multileg;
+  let codigos = "";
+  console.log(abasMultileg.length);
+
+  abasMultileg.forEach(aba => {
+    if (!codigos.includes(aba.ativoAtual)) codigos += aba.ativoAtual + ",";
+
+    aba.tabelaMultileg.forEach(oferta => {
+      if (!codigos.includes(oferta.codigoSelecionado))
+        codigos += oferta.codigoSelecionado + ",";
+    });
+  });
+
+  setTimeout(() => {
+    codigos = codigos.substring(0, codigos.length - 1);
+
+    const newSource = atualizarCotacaoAPI(
+      dispatch,
+      props,
+      codigos,
+      "multileg",
+      abasMultileg
+    );
+    dispatch({
+      type: ATUALIZAR_SOURCE_EVENT_MULTILEG,
+      payload: newSource,
+      nomeVariavel: "eventSourceCotacao"
+    });
+  }, 3000);
 };
 
 const oferta = {

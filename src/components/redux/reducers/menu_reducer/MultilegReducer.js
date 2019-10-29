@@ -37,7 +37,8 @@ const INITIAL_STATE = {
       tabelaMultileg: []
     }
   ],
-  eventSource: null
+  eventSource: null, //Book
+  eventSourceCotacao: null
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -62,7 +63,7 @@ export default (state = INITIAL_STATE, action) => {
     case PESQUISAR_ATIVO_MULTILEG_API:
       return { ...state, multileg: action.payload };
     case ATUALIZAR_SOURCE_EVENT_MULTILEG:
-      return { ...state, eventSource: action.payload };
+      return { ...state, [action.nomeVariavel]: action.payload };
     default:
       return state;
   }

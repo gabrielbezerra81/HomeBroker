@@ -4,6 +4,7 @@ import {
   enviarOrdemAPI
 } from "components/api/API";
 import { PESQUISAR_ATIVO_MULTILEG_API } from "constants/ApiActionTypes";
+import { atualizarCotacaoAction } from "components/redux/actions/menu_actions/MultilegActions";
 
 export const pesquisarAtivoMultilegAction = (props, indice) => {
   return async dispatch => {
@@ -25,6 +26,7 @@ export const pesquisarAtivoMultilegAction = (props, indice) => {
         dados.cotacaoAtual
       );
       aba.ativoAtual = codigo_ativo;
+      atualizarCotacaoAction(dispatch, props, multileg);
       dispatch({ type: PESQUISAR_ATIVO_MULTILEG_API, payload: multileg });
     }
   };

@@ -230,7 +230,9 @@ class TabelaMultileg extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  multileg: state.multilegReducer.multileg
+  multileg: state.multilegReducer.multileg,
+  eventSource: state.multilegReducer.eventSource,
+  eventSourceCotacao: state.multilegReducer.eventSourceCotacao
 });
 
 export default connect(

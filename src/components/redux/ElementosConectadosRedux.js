@@ -105,7 +105,9 @@ const mapStateToPropsAppPrincipal = state => ({
 const mapStateToPropsMultileg = state => ({
   configComplementarAberto: state.multilegReducer.configComplementarAberto,
   multileg: state.multilegReducer.multileg,
-  abaSelecionada: state.multilegReducer.abaSelecionada
+  abaSelecionada: state.multilegReducer.abaSelecionada,
+  eventSource: state.multilegReducer.eventSource,
+  eventSourceCotacao: state.multilegReducer.eventSourceCotacao
 });
 
 const mapStateToPropsPosicao = state => ({

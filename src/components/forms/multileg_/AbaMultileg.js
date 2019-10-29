@@ -8,7 +8,6 @@ import { connect } from "react-redux";
 import {
   modificarAtributoAbaAction,
   adicionarOfertaTabelaAction,
-  atualizarCotacaoAction,
   atualizarBookAction
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
@@ -45,7 +44,6 @@ class AbaMultileg extends React.Component {
                         this.props,
                         indice
                       );
-                      this.props.atualizarCotacaoAction(this.props, indice);
                     }}
                   >
                     <MDBIcon icon="search" />
@@ -161,7 +159,8 @@ class AbaMultileg extends React.Component {
 const mapStateToProps = state => ({
   configComplementarAberto: state.multilegReducer.configComplementarAberto,
   multileg: state.multilegReducer.multileg,
-  eventSource: state.multilegReducer.eventSource
+  eventSource: state.multilegReducer.eventSource,
+  eventSourceCotacao: state.multilegReducer.eventSourceCotacao
 });
 
 export default connect(
@@ -170,7 +169,6 @@ export default connect(
     modificarAtributoAbaAction,
     pesquisarAtivoMultilegAction,
     adicionarOfertaTabelaAction,
-    atualizarCotacaoAction,
     atualizarBookAction
   }
 )(AbaMultileg);

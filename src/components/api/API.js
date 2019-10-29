@@ -274,11 +274,15 @@ export const atualizarBookAPI = (dispatch, props, codigos, tipo) => {
   return source;
 };
 
-export const atualizarCotacaoAPI = (dispatch, abasMultileg, indice) => {
-  const codigos = abasMultileg[indice].ativo;
-
+export const atualizarCotacaoAPI = (
+  dispatch,
+  props,
+  codigos,
+  tipo,
+  abasMultileg
+) => {
   var source = new EventSource(
-    "http://173.249.37.183:8090/symbols?symbols=" + codigos
+    "http://173.249.37.183:8090/quotes/symbols?symbols=" + codigos
   );
 
   source.onopen = function(event) {
@@ -288,8 +292,25 @@ export const atualizarCotacaoAPI = (dispatch, abasMultileg, indice) => {
   source.onmessage = function(event) {
     if (typeof event.data !== "undefined") {
       var dados = JSON.parse(event.data);
-      // abasMultileg[indice].valor = dados.ultimo;
-      // dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
+      const cotacaoAtual = dados.ultimo;
+      const ativoRetornado = dados.symbol;
+      console.log("chegou");
+
+      if (tipo === "multileg") {
+        abasMultileg.forEach(aba => {
+          if (aba.ativoAtual === ativoRetornado) {
+            aba.valor = cotacaoAtual;
+          }
+          aba.tabelaMultileg.forEach(oferta => {
+            if (oferta.codigoSelecionado === ativoRetornado) {
+              oferta.cotacao = cotacaoAtual;
+            }
+          });
+        });
+
+        dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
+      }
     }
   };
+  return source;
 };

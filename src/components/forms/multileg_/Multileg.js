@@ -39,7 +39,7 @@ export default class Multileg extends React.Component {
             // @ts-ignore
             const keysPressionadas = arrayKeys.includes(event.key);
             if (!keysPressionadas) {
-              this.props.selecionarAdicionarAbaAction(key, this.props.multileg);
+              this.props.selecionarAdicionarAbaAction(key, this.props);
             }
           }}
           activeKey={this.props.abaSelecionada}
@@ -75,7 +75,7 @@ export default class Multileg extends React.Component {
                             className="saldoOpNegativo"
                             onClick={e => {
                               this.props.excluirAbaMultilegAction(
-                                this.props.multileg,
+                                this.props,
                                 index
                               );
                               e.stopPropagation();
