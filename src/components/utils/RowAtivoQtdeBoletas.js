@@ -21,7 +21,7 @@ export default (props, namespace) => {
             onKeyPress={event => {
               //event.preventDefault();
               if (event.key === "Enter") {
-                props.pesquisarAtivoOnEnterAction(props.ativo, namespace);
+                props.pesquisarAtivoOnEnterAction(props, namespace);
               }
             }}
           />

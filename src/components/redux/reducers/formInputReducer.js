@@ -13,7 +13,8 @@ import {
   REMOVE_ITEM_TABELA_ORDENS_MOVEL,
   MUDAR_INPUT_CONFIGURAR,
   MUDAR_QTDE,
-  MUDAR_ATRIBUTO_BOLETA
+  MUDAR_ATRIBUTO_BOLETA,
+  ATUALIZAR_EVENT_SOURCE_BOLETAS
 } from "constants/ActionTypes";
 import { PESQUISAR_ATIVO_BOLETA_API } from "constants/ApiActionTypes";
 
@@ -65,7 +66,8 @@ const INITIAL_STATE = {
   stopDisparoConfig2: "",
   stopExecConfig2: "",
   qtde: "",
-  erro: ""
+  erro: "",
+  eventSourceCotacao: null
 };
 
 export default namespace => (state = INITIAL_STATE, action) => {
@@ -102,6 +104,8 @@ export default namespace => (state = INITIAL_STATE, action) => {
       return { ...state, qtde: action.payload.qtde, erro: action.payload.erro };
     case `${PESQUISAR_ATIVO_BOLETA_API}${namespace}`:
       return { ...state, dadosPesquisa: action.payload };
+    case `${ATUALIZAR_EVENT_SOURCE_BOLETAS}${namespace}`:
+      return { ...state, eventSourceCotacao: action.payload };
     default:
       return state;
   }

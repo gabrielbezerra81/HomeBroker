@@ -11,7 +11,10 @@ import {
   url_listarPosicoes
 } from "components/api/url";
 import { MODIFICAR_ATRIBUTO_ABA } from "constants/MenuActionTypes";
-import { LISTAR_BOOK_OFERTAS } from "constants/ApiActionTypes";
+import {
+  LISTAR_BOOK_OFERTAS,
+  PESQUISAR_ATIVO_BOLETA_API
+} from "constants/ApiActionTypes";
 
 export const pesquisarAtivoAPI = codigo => {
   return request
@@ -288,7 +291,9 @@ export const atualizarCotacaoAPI = (
   props,
   codigos,
   tipo,
-  abasMultileg
+  abasMultileg = [],
+  namespace = "",
+  dadosPesquisa = null
 ) => {
   var source = new EventSource(
     "http://173.249.37.183:8090/quotes/symbols?symbols=" + codigos
@@ -304,7 +309,14 @@ export const atualizarCotacaoAPI = (
       const cotacaoAtual = dados.ultimo;
       const ativoRetornado = dados.symbol;
 
-      if (tipo === "multileg") {
+      if (tipo === "boletas" && dadosPesquisa) {
+        dadosPesquisa.cotacaoAtual = cotacaoAtual;
+        dispatch({
+          type: `${PESQUISAR_ATIVO_BOLETA_API}${namespace}`,
+          payload: { ...dadosPesquisa }
+        });
+      } //
+      else if (tipo === "multileg") {
         abasMultileg = [...abasMultileg];
         abasMultileg.forEach(aba => {
           if (aba.ativoAtual === ativoRetornado) {

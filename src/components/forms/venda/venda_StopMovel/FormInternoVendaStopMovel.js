@@ -130,7 +130,8 @@ const mapStateToProps = state => ({
   date: state.vendaStopMovel.date,
   assinatura: state.vendaStopMovel.assinatura,
   checkSalvarAssinatura: state.vendaStopMovel.checkSalvarAssinatura,
-  dadosPesquisa: state.vendaStopMovel.dadosPesquisa
+  dadosPesquisa: state.vendaStopMovel.dadosPesquisa,
+  eventSourceCotacao: state.vendaStopMovel.eventSourceCotacao
 });
 
 export default connect(
