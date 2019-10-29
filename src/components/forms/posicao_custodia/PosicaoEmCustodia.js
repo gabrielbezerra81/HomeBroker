@@ -13,7 +13,7 @@ import { PosicaoDetalhadaConectada } from "components/redux/ElementosConectadosR
 
 export default class PosicaoEmCustodia extends React.Component {
   componentWillMount() {
-    this.props.listarPosicoesAction();
+    this.props.listarPosicoesAction(this.props);
   }
   componentDidMount() {
     if (this.props.divkey !== "" && this.props.divkey === "posicao_custodia") {

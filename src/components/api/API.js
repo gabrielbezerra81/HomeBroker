@@ -8,9 +8,13 @@ import {
   url_pesquisarOpcoesVencimentos_codigo,
   url_pesquisarStrikes_codigo_vencimento,
   url_listarOrdensExecucao_,
-  url_listarPosicoes
+  url_listarPosicoes,
+  url_emblemaReativo_ids
 } from "components/api/url";
-import { MODIFICAR_ATRIBUTO_ABA } from "constants/MenuActionTypes";
+import {
+  MODIFICAR_ATRIBUTO_ABA,
+  MUDAR_VARIAVEL_POSICAO_CUSTODIA
+} from "constants/MenuActionTypes";
 import {
   LISTAR_BOOK_OFERTAS,
   PESQUISAR_ATIVO_BOLETA_API
@@ -339,6 +343,35 @@ export const atualizarCotacaoAPI = (
 
         dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
       }
+    }
+  };
+  return source;
+};
+
+export const atualizarEmblemasAPI = (dispatch, listaPosicoes, ids) => {
+  var source = new EventSource(url_emblemaReativo_ids + ids);
+
+  source.onopen = function(event) {
+    console.log("open");
+  };
+
+  source.onmessage = function(event) {
+    if (typeof event.data !== "undefined") {
+      var dados = JSON.parse(event.data);
+      listaPosicoes = [...listaPosicoes];
+
+      listaPosicoes.forEach(posicao => {
+        if (posicao.idEstrutura === dados.id) {
+          posicao.precoCompra = dados.min;
+          posicao.precoVenda = dados.max;
+          posicao.cotacaoAtual = dados.last;
+        }
+      });
+
+      dispatch({
+        type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
+        payload: { nome: "posicoesCustodia", valor: listaPosicoes }
+      });
     }
   };
   return source;

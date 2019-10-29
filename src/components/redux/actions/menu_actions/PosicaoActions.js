@@ -1,5 +1,5 @@
 import { MUDAR_VARIAVEL_POSICAO_CUSTODIA } from "constants/MenuActionTypes";
-import { listarPosicoesAPI } from "components/api/API";
+import { listarPosicoesAPI, atualizarEmblemasAPI } from "components/api/API";
 
 export const mudarVariavelPosicaoAction = (nome, valor) => {
   return dispatch => {
@@ -10,8 +10,11 @@ export const mudarVariavelPosicaoAction = (nome, valor) => {
   };
 };
 
-export const listarPosicoesAction = () => {
+export const listarPosicoesAction = props => {
   return async dispatch => {
+    if (props.eventSourceEmblema) {
+      props.eventSourceEmblema.close();
+    }
     const dados = await listarPosicoesAPI();
     var listaPosicoes = [];
     dados.forEach(grupoPosicao => {
@@ -36,7 +39,8 @@ export const listarPosicoesAction = () => {
           preco: 0, //itemLista.price,
           custodiaCompra: [],
           custodiaVenda: [],
-          executando: []
+          executando: [],
+          idEstrutura: operacao.structureId
         };
         operacao.ordersWorking.forEach(ordem => {
           ordem.offers.forEach(oferta => {
@@ -49,9 +53,26 @@ export const listarPosicoesAction = () => {
         listaPosicoes.push(posicao);
       });
     });
+    atualizarEmblemasAction(dispatch, listaPosicoes);
     dispatch({
       type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
       payload: { nome: "posicoesCustodia", valor: listaPosicoes }
     });
   };
+};
+
+const atualizarEmblemasAction = (dispatch, listaPosicoes) => {
+  let ids = "";
+
+  listaPosicoes.forEach(posicao => {
+    ids += posicao.idEstrutura + ",";
+  });
+  ids = ids.substring(0, ids.length - 1);
+
+  const newSource = atualizarEmblemasAPI(dispatch, listaPosicoes, ids);
+
+  dispatch({
+    type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
+    payload: { nome: "eventSourceEmblema", valor: newSource }
+  });
 };

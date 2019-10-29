@@ -18,3 +18,4 @@ export const url_pesquisarStrikes_codigo_vencimento = "stocks/findBySymbolAndEnd
 
 //Posição
 export const url_listarPosicoes = "position"
+export const url_emblemaReativo_ids = "http://173.249.37.183:8090/structures/ids?ids="

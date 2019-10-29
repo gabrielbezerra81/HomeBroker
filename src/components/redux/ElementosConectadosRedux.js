@@ -117,7 +117,8 @@ const mapStateToPropsPosicao = state => ({
   ordenacao: state.posicaoReducer.ordenacao,
   tipoVisualizacao: state.posicaoReducer.tipoVisualizacao,
   ativoPesquisa: state.posicaoReducer.ativoPesquisa,
-  inputSelect: state.posicaoReducer.inputSelect
+  inputSelect: state.posicaoReducer.inputSelect,
+  eventSourceEmblema: state.posicaoReducer.eventSourceEmblema
 });
 
 const mapStateToPropsOrdensExec = state => ({

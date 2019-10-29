@@ -5,7 +5,8 @@ const INITIAL_STATE = {
   tipoVisualizacao: "ampliado",
   ativoPesquisa: "PESQUISAR",
   inputSelect: "",
-  posicoesCustodia: []
+  posicoesCustodia: [],
+  eventSourceEmblema: null
 };
 
 export default (state = INITIAL_STATE, action) => {
