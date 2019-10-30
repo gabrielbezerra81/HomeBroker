@@ -23,7 +23,7 @@ import { formatarDataDaAPI } from "components/utils/Formatacoes";
 
 export const pesquisarAtivoAPI = codigo => {
   return request
-    .get(url_base + url_pesquisarAtivoBoletas_codigo + codigo)
+    .get(cors_anywhere + url_base + url_pesquisarAtivoBoletas_codigo + codigo)
     .retry(3)
     .then(response => {
       const { body } = response;
@@ -195,7 +195,7 @@ export const pesquisarStrikesMultilegAPI = (codigo_ativo, vencimento) => {
 
 export const listarOrdensExecAPI = () => {
   return request
-    .get( url_base + url_listarOrdensExecucao_)
+    .get(cors_anywhere + url_base + url_listarOrdensExecucao_)
     .retry(3)
     .then(response => {
       const { body } = response;
