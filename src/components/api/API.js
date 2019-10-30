@@ -64,8 +64,6 @@ export const pesquisarAtivoAPI = codigo => {
           market: "tipo2",
           ativo: body.stock.symbol
         };
-        console.log(dadosPesquisa);
-        console.log(body.stock.endBusiness);
       } else {
         dadosPesquisa = {
           resultadoAtivo: body.stock.symbol + ", " + body.stock.corporationName,
@@ -242,7 +240,6 @@ export const atualizarBookAPI = (
   var source = new EventSource(
     "http://173.249.37.183:8090/books/symbols?symbols=" + codigos
   );
-
   source.onopen = function(event) {
     console.log("open");
   };
@@ -255,6 +252,8 @@ export const atualizarBookAPI = (
       };
 
       var dados = JSON.parse(event.data);
+      
+      
 
       let bookNovo = [...dados.bookOffers];
       let ativoRetornado = dados.symbol;
@@ -268,6 +267,7 @@ export const atualizarBookAPI = (
       });
       tabelas.tabelaOfertasCompra.sort((a, b) => b.price - a.price);
       tabelas.tabelaOfertasVenda.sort((a, b) => b.price - a.price);
+      console.log(tabelas);
 
       if (tipo === "book") {
         dispatch({
@@ -279,6 +279,7 @@ export const atualizarBookAPI = (
       if (tipo === "multileg") {
         abasMultileg = [...abasMultileg];
         //const tabelaOfertas = abasMultileg[indice].tabelaMultileg;
+
         abasMultileg.forEach(aba => {
           aba.tabelaMultileg.forEach(oferta => {
             if (oferta.codigoSelecionado === ativoRetornado) {
