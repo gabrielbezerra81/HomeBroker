@@ -320,7 +320,11 @@ export const atualizarCotacaoAPI = (
       const ativoRetornado = dados.symbol;
 
       if (tipo === "boletas" && dadosPesquisa) {
+        console.log(dados);
         dadosPesquisa.cotacaoAtual = cotacaoAtual;
+        dadosPesquisa.ultimoHorario = formatarDataDaAPI(
+          dados.ultimoHorario
+        ).toLocaleTimeString();
         dispatch({
           type: `${PESQUISAR_ATIVO_BOLETA_API}${namespace}`,
           payload: { ...dadosPesquisa }
