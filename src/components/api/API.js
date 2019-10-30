@@ -23,7 +23,7 @@ import { formatarDataDaAPI } from "components/utils/Formatacoes";
 
 export const pesquisarAtivoAPI = codigo => {
   return request
-    .get(cors_anywhere + url_base + url_pesquisarAtivoBoletas_codigo + codigo)
+    .get(url_base + url_pesquisarAtivoBoletas_codigo + codigo)
     .retry(3)
     .then(response => {
       const { body } = response;
@@ -252,8 +252,6 @@ export const atualizarBookAPI = (
       };
 
       var dados = JSON.parse(event.data);
-      
-      
 
       let bookNovo = [...dados.bookOffers];
       let ativoRetornado = dados.symbol;
@@ -267,7 +265,6 @@ export const atualizarBookAPI = (
       });
       tabelas.tabelaOfertasCompra.sort((a, b) => b.price - a.price);
       tabelas.tabelaOfertasVenda.sort((a, b) => b.price - a.price);
-      console.log(tabelas);
 
       if (tipo === "book") {
         dispatch({
