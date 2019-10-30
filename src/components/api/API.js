@@ -195,7 +195,7 @@ export const pesquisarStrikesMultilegAPI = (codigo_ativo, vencimento) => {
 
 export const listarOrdensExecAPI = () => {
   return request
-    .get(cors_anywhere + url_base + url_listarOrdensExecucao_)
+    .get( url_base + url_listarOrdensExecucao_)
     .retry(3)
     .then(response => {
       const { body } = response;
