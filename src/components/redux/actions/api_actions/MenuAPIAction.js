@@ -29,7 +29,7 @@ export const pesquisarAtivoMultilegAction = (props, indice) => {
       aba.ativoAtual = codigo_ativo;
 
       dispatch({ type: PESQUISAR_ATIVO_MULTILEG_API, payload: multileg });
-      atualizarCotacaoAction(dispatch, props, multileg);
+      //atualizarCotacaoAction(dispatch, props, multileg);
     }
   };
 };

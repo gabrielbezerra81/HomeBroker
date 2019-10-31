@@ -17,7 +17,8 @@ import {
 } from "constants/MenuActionTypes";
 import {
   LISTAR_BOOK_OFERTAS,
-  PESQUISAR_ATIVO_BOLETA_API
+  PESQUISAR_ATIVO_BOLETA_API,
+  ATUALIZAR_SOURCE_EVENT_MULTILEG
 } from "constants/ApiActionTypes";
 import { formatarDataDaAPI } from "components/utils/Formatacoes";
 import { atualizarTabelaAntiga } from "components/redux/actions/api_actions/bookOfertaAPIActions";
@@ -143,12 +144,7 @@ export const enviarOrdemAPI = json => {
 };
 
 export const pesquisarAtivoMultilegAPI = codigo_ativo => {
-  var dados = {
-    opcoes: [],
-    vencimentos: [],
-    //cotacaoAtual: 0,
-    variacao: ""
-  };
+  var dados;
 
   return request
     .get(
@@ -159,6 +155,13 @@ export const pesquisarAtivoMultilegAPI = codigo_ativo => {
     )
     .retry(3)
     .then(async response => {
+      dados = {
+        opcoes: [],
+        vencimentos: [],
+        //cotacaoAtual: 0,
+        variacao: ""
+      };
+
       const { body } = response;
       dados.opcoes = [...body.options];
       dados.vencimentos = [...body.expirations];
@@ -233,13 +236,7 @@ export const listarPosicoesAPI = () => {
     });
 };
 
-export const atualizarBookAPI = (
-  dispatch,
-  props,
-  codigos,
-  tipo,
-  abasMultileg
-) => {
+export const atualizarBookAPI = (dispatch, props, codigos, tipo, multileg) => {
   var source = new EventSource(
     "http://173.249.37.183:8090/books/symbols?symbols=" + codigos
   );
@@ -249,6 +246,7 @@ export const atualizarBookAPI = (
 
   source.onmessage = function(event) {
     if (typeof event.data !== "undefined") {
+      console.log("chegou");
       let tabelas = {
         tabelaOfertasCompra: [],
         tabelaOfertasVenda: []
@@ -256,18 +254,19 @@ export const atualizarBookAPI = (
 
       var dados = JSON.parse(event.data);
 
-      let bookNovo = [...dados.bookOffers];
       let ativoRetornado = dados.symbol;
-
-      bookNovo.forEach(item => {
-        if (item.type === "V") {
-          tabelas.tabelaOfertasVenda.push(item);
-        } else if (item.type === "C") {
-          tabelas.tabelaOfertasCompra.push(item);
-        }
-      });
-      tabelas.tabelaOfertasCompra.sort((a, b) => b.price - a.price);
-      tabelas.tabelaOfertasVenda.sort((a, b) => b.price - a.price);
+      if (dados.bookOffers) {
+        let bookNovo = [...dados.bookOffers];
+        bookNovo.forEach(item => {
+          if (item.type === "V") {
+            tabelas.tabelaOfertasVenda.push(item);
+          } else if (item.type === "C") {
+            tabelas.tabelaOfertasCompra.push(item);
+          }
+        });
+        tabelas.tabelaOfertasCompra.sort((a, b) => b.price - a.price);
+        tabelas.tabelaOfertasVenda.sort((a, b) => b.price - a.price);
+      }
 
       if (tipo === "book") {
         dispatch({
@@ -276,23 +275,38 @@ export const atualizarBookAPI = (
         });
       }
 
-      if (tipo === "multileg") {
-        abasMultileg = [...abasMultileg];
-        //const tabelaOfertas = abasMultileg[indice].tabelaMultileg;
+      if (tipo === "multileg" && dados.bookOffers) {
+        let permitirDispatch = false;
+        let abasMultileg = [...multileg];
 
         abasMultileg.forEach(aba => {
           aba.tabelaMultileg.forEach(oferta => {
             if (oferta.codigoSelecionado === ativoRetornado) {
-              oferta.compra = tabelas.tabelaOfertasCompra[0];
-              oferta.venda =
+              const valorCompra = tabelas.tabelaOfertasCompra[0];
+              const valorVenda =
                 tabelas.tabelaOfertasVenda[
                   tabelas.tabelaOfertasVenda.length - 1
                 ];
+              if (oferta.compra !== valorCompra) {
+                oferta.compra = valorCompra;
+                permitirDispatch = true;
+              }
+              if (oferta.venda !== valorVenda) {
+                oferta.venda = valorVenda;
+                permitirDispatch = true;
+              }
             }
           });
         });
 
-        dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
+        if (permitirDispatch) {
+          dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
+        }
+        dispatch({
+          type: ATUALIZAR_SOURCE_EVENT_MULTILEG,
+          payload: source,
+          nomeVariavel: "eventSource"
+        });
       }
     }
   };
@@ -304,7 +318,7 @@ export const atualizarCotacaoAPI = (
   props,
   codigos,
   tipo,
-  abasMultileg = [],
+  multileg = [],
   namespace = "",
   dadosPesquisa = null
 ) => {
@@ -318,34 +332,52 @@ export const atualizarCotacaoAPI = (
 
   source.onmessage = function(event) {
     if (typeof event.data !== "undefined") {
+      console.log("chegou");
       var dados = JSON.parse(event.data);
       const cotacaoAtual = dados.ultimo;
       const ativoRetornado = dados.symbol;
 
       if (tipo === "boletas" && dadosPesquisa) {
-        dadosPesquisa.cotacaoAtual = cotacaoAtual;
-        dadosPesquisa.ultimoHorario = formatarDataDaAPI(
-          dados.ultimoHorario
-        ).toLocaleTimeString();
-        dispatch({
-          type: `${PESQUISAR_ATIVO_BOLETA_API}${namespace}`,
-          payload: { ...dadosPesquisa }
-        });
+        if (dadosPesquisa.cotacaoAtual !== cotacaoAtual) {
+          dadosPesquisa.cotacaoAtual = cotacaoAtual;
+          dadosPesquisa.ultimoHorario = formatarDataDaAPI(
+            dados.ultimoHorario
+          ).toLocaleTimeString();
+
+          dispatch({
+            type: `${PESQUISAR_ATIVO_BOLETA_API}${namespace}`,
+            payload: { ...dadosPesquisa }
+          });
+        }
       } //
       else if (tipo === "multileg") {
-        abasMultileg = [...abasMultileg];
+        let permitirDispatch = false;
+        const abasMultileg = [...multileg];
         abasMultileg.forEach(aba => {
           if (aba.ativoAtual === ativoRetornado) {
-            aba.valor = cotacaoAtual;
+            if (aba.valor !== cotacaoAtual) {
+              aba.valor = cotacaoAtual;
+              permitirDispatch = true;
+            }
           }
           aba.tabelaMultileg.forEach(oferta => {
             if (oferta.codigoSelecionado === ativoRetornado) {
-              oferta.cotacao = cotacaoAtual;
+              if (oferta.cotacao !== cotacaoAtual) {
+                oferta.cotacao = cotacaoAtual;
+                permitirDispatch = true;
+              }
             }
           });
         });
 
-        dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
+        if (permitirDispatch) {
+          dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
+        }
+        dispatch({
+          type: ATUALIZAR_SOURCE_EVENT_MULTILEG,
+          payload: source,
+          nomeVariavel: "eventSourceCotacao"
+        });
       }
     }
   };

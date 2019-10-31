@@ -7,6 +7,18 @@ import AbaMultileg from "components/forms/multileg_/AbaMultileg";
 import { MDBIcon } from "mdbreact";
 
 export default class Multileg extends React.Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    const multileg = this.props.multileg !== nextProps.multileg;
+    if (multileg) {
+      // Executar atualizar book e atualizar cotação
+      //this.props.atualizarBookAction(nextProps, nextProps.multileg);
+
+      this.props.atualizarCotacaoAction(nextProps, nextProps.multileg);
+    }
+
+    return multileg;
+  }
+
   componentDidMount() {
     if (this.props.divkey !== "" && this.props.divkey === "multileg") {
       document.getElementById("multileg").style.zIndex = this.props.zIndex + 1;
