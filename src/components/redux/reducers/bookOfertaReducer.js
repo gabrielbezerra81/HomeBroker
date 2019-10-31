@@ -16,8 +16,8 @@ const INITIAL_STATE = {
   stopLoss: 0,
   gain: 0,
   inputHeader: "",
-  tabelaOfertasCompra: [],
-  tabelaOfertasVenda: [],
+  tabelaOfertasCompra: new Array(5).fill({ price: "", qtty: "" }, 0, 5),
+  tabelaOfertasVenda: new Array(5).fill({ price: "", qtty: "" }, 0, 5),
   eventSource: null
 };
 

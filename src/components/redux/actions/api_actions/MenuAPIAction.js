@@ -76,7 +76,7 @@ export const enviarOrdemMultilegAction = props => {
     json.account.id = 1;
     json.enabled = true;
     json.multiStocks = true;
-    json.expiration = abaMultileg.date;
+    json.expiration = abaMultileg.date.toLocaleString();
     json.status = "Nova";
     json.priority = 0;
     json.tradeName.name = "Multileg";
@@ -95,7 +95,9 @@ export const enviarOrdemMultilegAction = props => {
       if (ofertaPrincipal.offerType === "C") ofertaPrincipal.orderType = "buy";
       else if (ofertaPrincipal.offerType === "V")
         ofertaPrincipal.orderType = "sell";
-      ofertaPrincipal.expiration = abaMultileg.date;
+
+      ofertaPrincipal.expiration = abaMultileg.date.toLocaleString();
+
       ofertaPrincipal.price = Number(
         abaMultileg.preco
           .split(".")

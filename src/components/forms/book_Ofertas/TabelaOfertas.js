@@ -8,7 +8,7 @@ class TabelaOfertas extends React.Component {
     return data.map((item, index) => (
       <tr className={tipo} key={index}>
         <td>{item.qtty}</td>
-        <td>{formatarNumDecimal(item.price)}</td>
+        <td>{item.price ? formatarNumDecimal(item.price) : ""}</td>
         <td>
           <OperationIcon />
         </td>

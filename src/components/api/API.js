@@ -20,6 +20,7 @@ import {
   PESQUISAR_ATIVO_BOLETA_API
 } from "constants/ApiActionTypes";
 import { formatarDataDaAPI } from "components/utils/Formatacoes";
+import { atualizarTabelaAntiga } from "components/redux/actions/api_actions/bookOfertaAPIActions";
 
 export const pesquisarAtivoAPI = codigo => {
   return request
@@ -271,7 +272,7 @@ export const atualizarBookAPI = (
       if (tipo === "book") {
         dispatch({
           type: LISTAR_BOOK_OFERTAS,
-          payload: tabelas
+          payload: atualizarTabelaAntiga(tabelas)
         });
       }
 

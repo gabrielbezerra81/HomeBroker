@@ -42,8 +42,14 @@ export const listarPosicoesAction = props => {
           executando: [],
           idEstrutura: operacao.structureId
         };
+        if (!operacao.ordersWorking) {
+          posicao.total = 0;
+        }
         operacao.ordersWorking.forEach(ordem => {
           ordem.offers.forEach(oferta => {
+            if (oferta.qtdeExecutada === 0) {
+              posicao.total = 0;
+            }
             posicao.executando.push(oferta);
             if (oferta.oferta === "C") posicao.custodiaCompra.push(oferta);
             else posicao.custodiaVenda.push(oferta);
