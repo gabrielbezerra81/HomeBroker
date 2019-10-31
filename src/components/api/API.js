@@ -133,9 +133,11 @@ export const enviarOrdemAPI = json => {
     .then(response => {
       console.log("response", response);
       if (response.status === 201) alert("Ordem enviada com sucesso");
+      else alert("Falha ao enviar ordem");
     })
     .catch(erro => {
       console.log(erro.response);
+      alert("Falha ao enviar ordem");
     });
 };
 
@@ -320,7 +322,6 @@ export const atualizarCotacaoAPI = (
       const ativoRetornado = dados.symbol;
 
       if (tipo === "boletas" && dadosPesquisa) {
-        console.log(dados);
         dadosPesquisa.cotacaoAtual = cotacaoAtual;
         dadosPesquisa.ultimoHorario = formatarDataDaAPI(
           dados.ultimoHorario
