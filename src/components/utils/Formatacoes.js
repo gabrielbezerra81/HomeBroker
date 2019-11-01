@@ -97,3 +97,10 @@ export const formatarDataDaAPI = dataAPI => {
   const hora = arrayDate[1];
   return new Date(`${data[1]}/${data[0]}/${data[2]} ${hora}`);
 };
+
+export const formatarVencimento = string => {
+  string = string.split("-");
+  string[2] = Number(Number(string[2]) + 1) + "";
+  let dateString = string.join("-");
+  return new Date(dateString).toLocaleDateString();
+};

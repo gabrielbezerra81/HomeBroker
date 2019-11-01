@@ -46,6 +46,9 @@ class InputFormatado extends React.Component {
               ? null
               : event => this.props.onChange(event.target.value)
           }
+          onFocus={event => {
+            if (this.props.autoSelect) event.target.select();
+          }}
           onBlur={this.props.onBlur}
           onKeyPress={this.props.onKeyPress}
           onKeyUp={event => {

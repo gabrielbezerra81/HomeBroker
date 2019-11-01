@@ -201,6 +201,7 @@ class Book extends React.Component {
               tipoInput="preco"
               value={calcularTotal(this.props)}
               readOnly
+              autoSelect
               onChange={valor =>
                 this.props.modificarAtributoAbaAction(
                   this.props.multileg,

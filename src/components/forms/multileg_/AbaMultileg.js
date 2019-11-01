@@ -10,7 +10,10 @@ import {
   adicionarOfertaTabelaAction,
   atualizarBookAction
 } from "components/redux/actions/menu_actions/MultilegActions";
-import { formatarNumDecimal } from "components/utils/Formatacoes";
+import {
+  formatarNumDecimal,
+  formatarVencimento
+} from "components/utils/Formatacoes";
 import { pesquisarAtivoMultilegAction } from "components/redux/actions/api_actions/MenuAPIAction";
 import Book from "components/forms/multileg_/Book";
 
@@ -100,7 +103,7 @@ class AbaMultileg extends React.Component {
                   {this.props.multileg[indice].vencimento.map(
                     (vencimento, indice) => (
                       <option key={vencimento + indice} value={vencimento}>
-                        {vencimento}
+                        {formatarVencimento(vencimento)}
                       </option>
                     )
                   )}

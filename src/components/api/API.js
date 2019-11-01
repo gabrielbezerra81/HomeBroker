@@ -159,7 +159,8 @@ export const pesquisarAtivoMultilegAPI = codigo_ativo => {
         opcoes: [],
         vencimentos: [],
         //cotacaoAtual: 0,
-        variacao: ""
+        variacao: "",
+        cotacaoAtual: 0
       };
 
       const { body } = response;
@@ -167,13 +168,14 @@ export const pesquisarAtivoMultilegAPI = codigo_ativo => {
       dados.vencimentos = [...body.expirations];
       const dadosAtivo = await pesquisarAtivoAPI(codigo_ativo);
       if (dadosAtivo) {
-        dados.cotacaoAtual = dadosAtivo.cotacaoAtual;
+        dados.cotacaoAtual = Number(dadosAtivo.cotacaoAtual);
         dados.variacao = dadosAtivo.porcentagem;
 
         return dados;
       }
     })
     .catch(erro => {
+      alert("Falha ao pesquisar ativo");
       console.log(erro);
       return dados;
     });

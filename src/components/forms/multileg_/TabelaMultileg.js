@@ -8,7 +8,10 @@ import {
   excluirOfertaTabelaAction
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { MDBIcon } from "mdbreact";
-import { formatarNumDecimal } from "components/utils/Formatacoes";
+import {
+  formatarNumDecimal,
+  formatarVencimento
+} from "components/utils/Formatacoes";
 import InputFormatado from "components/utils/InputFormatado";
 
 class TabelaMultileg extends React.Component {
@@ -64,6 +67,7 @@ class TabelaMultileg extends React.Component {
                         name="qtde"
                         tipoInput="quantidade"
                         step={100}
+                        autoSelect
                         value={item.qtde}
                         onChange={valor =>
                           props.modificarAtributoTabelaAbaAction(
@@ -96,7 +100,7 @@ class TabelaMultileg extends React.Component {
                       >
                         {item.serie.map((serie, indice) => (
                           <option key={serie + indice} value={serie}>
-                            {serie}
+                            {formatarVencimento(serie)}
                           </option>
                         ))}
                       </Form.Control>
