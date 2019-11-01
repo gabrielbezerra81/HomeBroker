@@ -277,38 +277,6 @@ export const atualizarBookAction = (dispatch, props, multileg) => {
   });
 };
 
-// export const atualizarCotacaoAction = (dispatch, props, multileg) => {
-//   if (props.eventSourceCotacao) {
-//     props.eventSourceCotacao.close();
-//   }
-//   let abasMultileg = multileg;
-//   let codigos = "";
-
-//   abasMultileg.forEach(aba => {
-//     if (!codigos.includes(aba.ativoAtual)) codigos += aba.ativoAtual + ",";
-
-//     aba.tabelaMultileg.forEach(oferta => {
-//       if (!codigos.includes(oferta.codigoSelecionado))
-//         codigos += oferta.codigoSelecionado + ",";
-//     });
-//   });
-
-//   codigos = codigos.substring(0, codigos.length - 1);
-
-//   const newSource = atualizarCotacaoAPI(
-//     dispatch,
-//     props,
-//     codigos,
-//     "multileg",
-//     abasMultileg
-//   );
-//   dispatch({
-//     type: ATUALIZAR_SOURCE_EVENT_MULTILEG,
-//     payload: newSource,
-//     nomeVariavel: "eventSourceCotacao"
-//   });
-// };
-
 const oferta = {
   opcoes: [],
   strikeSelecionado: "",
@@ -400,6 +368,102 @@ export const atualizarCotacaoAction = (props, multileg) => {
   };
 };
 
+export const validarOrdemMultileg = props => {
+  let abaMultileg = [...props.multileg][props.indice];
+  let valido = true;
+
+  abaMultileg.tabelaMultileg.forEach((oferta, index) => {
+    if (oferta.qtde === 0) {
+      valido = false;
+      alert('A quantidade deve ser maior que 0')
+    }
+  });
+
+  return valido;
+};
+
+export const montarOrdemMultileg = props => {
+  let abaMultileg = [...props.multileg][props.indice];
+
+  let json = {
+    account: {},
+    stock: {},
+    tradeName: {},
+    offers: [],
+    next: []
+  };
+  json.account.id = 1;
+  json.enabled = true;
+  json.multiStocks = true;
+  json.expiration = abaMultileg.date.toLocaleString();
+  json.status = "Nova";
+  json.priority = 0;
+  json.tradeName.name = "Multileg";
+
+  abaMultileg.tabelaMultileg.forEach((oferta, index) => {
+    let ofertaPrincipal = {
+      stock: {}
+    };
+
+    ofertaPrincipal.stock.symbol = oferta.codigoSelecionado;
+    ofertaPrincipal.limit = oferta.despernamento;
+    ofertaPrincipal.qtty = oferta.qtde;
+    ofertaPrincipal.priority = Number(oferta.prioridade);
+    ofertaPrincipal.offerType = oferta.cv.charAt(0).toUpperCase();
+    //ofertaPrincipal.orderType = "multileg";
+    if (ofertaPrincipal.offerType === "C") ofertaPrincipal.orderType = "buy";
+    else if (ofertaPrincipal.offerType === "V")
+      ofertaPrincipal.orderType = "sell";
+
+    ofertaPrincipal.expiration = abaMultileg.date.toLocaleString();
+
+    ofertaPrincipal.price = Number(
+      abaMultileg.preco
+        .split(".")
+        .join("")
+        .replace(",", ".")
+    );
+    ofertaPrincipal.expirationType = abaMultileg.validadeSelect;
+
+    json.offers.push(ofertaPrincipal);
+  });
+  return json;
+};
+
+//Formato antigo
+// export const atualizarCotacaoAction = (dispatch, props, multileg) => {
+//   if (props.eventSourceCotacao) {
+//     props.eventSourceCotacao.close();
+//   }
+//   let abasMultileg = multileg;
+//   let codigos = "";
+
+//   abasMultileg.forEach(aba => {
+//     if (!codigos.includes(aba.ativoAtual)) codigos += aba.ativoAtual + ",";
+
+//     aba.tabelaMultileg.forEach(oferta => {
+//       if (!codigos.includes(oferta.codigoSelecionado))
+//         codigos += oferta.codigoSelecionado + ",";
+//     });
+//   });
+
+//   codigos = codigos.substring(0, codigos.length - 1);
+
+//   const newSource = atualizarCotacaoAPI(
+//     dispatch,
+//     props,
+//     codigos,
+//     "multileg",
+//     abasMultileg
+//   );
+//   dispatch({
+//     type: ATUALIZAR_SOURCE_EVENT_MULTILEG,
+//     payload: newSource,
+//     nomeVariavel: "eventSourceCotacao"
+//   });
+// };
+
+//Formato novo
 // export const atualizarBookAction = (props, multileg) => {
 //   return dispatch => {
 //     if (props.eventSource) {

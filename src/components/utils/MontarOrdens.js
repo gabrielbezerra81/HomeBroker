@@ -1,6 +1,21 @@
 const CVStartStop = ["Compra Start Stop", "Venda Start Stop"];
 const CVStopMovel = ["Compra Stop Movel", "Venda Stop Movel"];
 
+export const validarOrdemBoleta = props => {
+  const { dadosPesquisa, qtde } = props;
+  let valido = true;
+
+  if (!dadosPesquisa.ativo) {
+    alert("Ordem inválida, ativo vazio");
+    valido = false;
+  }
+  if (Number(qtde) === 0) {
+    alert("Ordem inválida, a quantidade deve ser maior que 0");
+    valido = false;
+  }
+  return valido;
+};
+
 export const montaOrdemPrincipal = props => {
   const { date, dadosPesquisa, ordem, gainDisparo, stopDisparo } = props;
 

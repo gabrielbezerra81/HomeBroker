@@ -5,7 +5,11 @@ import {
   travarDestravarClique
 } from "components/api/API";
 import { PESQUISAR_ATIVO_MULTILEG_API } from "constants/ApiActionTypes";
-import { atualizarCotacaoAction } from "components/redux/actions/menu_actions/MultilegActions";
+import {
+  atualizarCotacaoAction,
+  montarOrdemMultileg,
+  validarOrdemMultileg
+} from "components/redux/actions/menu_actions/MultilegActions";
 
 export const pesquisarAtivoMultilegAction = (props, indice) => {
   return async dispatch => {
@@ -64,51 +68,8 @@ export const desgraça = () => {
 
 export const enviarOrdemMultilegAction = props => {
   return async dispatch => {
-    let abaMultileg = [...props.multileg][props.indice];
+    let json = montarOrdemMultileg(props);
 
-    let json = {
-      account: {},
-      stock: {},
-      tradeName: {},
-      offers: [],
-      next: []
-    };
-    json.account.id = 1;
-    json.enabled = true;
-    json.multiStocks = true;
-    json.expiration = abaMultileg.date.toLocaleString();
-    json.status = "Nova";
-    json.priority = 0;
-    json.tradeName.name = "Multileg";
-
-    abaMultileg.tabelaMultileg.forEach((oferta, index) => {
-      let ofertaPrincipal = {
-        stock: {}
-      };
-
-      ofertaPrincipal.stock.symbol = oferta.codigoSelecionado;
-      ofertaPrincipal.limit = oferta.despernamento;
-      ofertaPrincipal.qtty = oferta.qtde;
-      ofertaPrincipal.priority = Number(oferta.prioridade);
-      ofertaPrincipal.offerType = oferta.cv.charAt(0).toUpperCase();
-      //ofertaPrincipal.orderType = "multileg";
-      if (ofertaPrincipal.offerType === "C") ofertaPrincipal.orderType = "buy";
-      else if (ofertaPrincipal.offerType === "V")
-        ofertaPrincipal.orderType = "sell";
-
-      ofertaPrincipal.expiration = abaMultileg.date.toLocaleString();
-
-      ofertaPrincipal.price = Number(
-        abaMultileg.preco
-          .split(".")
-          .join("")
-          .replace(",", ".")
-      );
-      ofertaPrincipal.expirationType = abaMultileg.validadeSelect;
-
-      json.offers.push(ofertaPrincipal);
-    });
-
-    enviarOrdemAPI([json]);
+    if (validarOrdemMultileg(props)) enviarOrdemAPI([json]);
   };
 };

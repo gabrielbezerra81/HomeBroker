@@ -4,7 +4,10 @@ import {
   atualizarCotacaoAPI
 } from "components/api/API";
 import { PESQUISAR_ATIVO_BOLETA_API } from "constants/ApiActionTypes";
-import { montaOrdemPrincipal } from "components/utils/MontarOrdens";
+import {
+  montaOrdemPrincipal,
+  validarOrdemBoleta
+} from "components/utils/MontarOrdens";
 import { ATUALIZAR_EVENT_SOURCE_BOLETAS } from "constants/ActionTypes";
 
 export const pesquisarAtivoOnEnterAction = (props, namespace) => {
@@ -44,13 +47,15 @@ const atualizarCotacaoBoletaAction = (
     dadosPesquisa
   );
 
-  dispatch({ type: `${ATUALIZAR_EVENT_SOURCE_BOLETAS}${namespace}`, payload: newSource });
+  dispatch({
+    type: `${ATUALIZAR_EVENT_SOURCE_BOLETAS}${namespace}`,
+    payload: newSource
+  });
 };
 
 export const enviarOrdemAction = props => {
   return async dispatch => {
     let json = [montaOrdemPrincipal(props)];
-
-    await enviarOrdemAPI(json);
+    if (validarOrdemBoleta(props)) await enviarOrdemAPI(json);
   };
 };
