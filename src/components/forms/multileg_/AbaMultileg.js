@@ -16,6 +16,7 @@ import {
 } from "components/utils/Formatacoes";
 import { pesquisarAtivoMultilegAction } from "components/redux/actions/api_actions/MenuAPIAction";
 import Book from "components/forms/multileg_/Book";
+import { Dropdown } from "semantic-ui-react";
 
 class AbaMultileg extends React.Component {
   render() {
@@ -62,6 +63,31 @@ class AbaMultileg extends React.Component {
             </div>
             <div className="divColunaDetalhes">
               <Form.Group>
+                <Form.Label>Strike</Form.Label>{" "}
+                {/* <Select
+                  noOptionsMessage={() => ""}
+                  placeholder=""
+                  options={renderSerie(this.props)}
+                  styles={inputSelect}
+                /> */}
+                <Dropdown
+                  search
+                  fluid
+                  selection
+                  options={renderSerie(this.props)}
+                  value={this.props.multileg[indice].strikeSelecionado}
+                  onChange={(event, data) => {
+                    console.log(data);
+                    this.props.modificarAtributoAbaAction(
+                      this.props.multileg,
+                      indice,
+                      "strikeSelecionado",
+                      Number(data.value)
+                    );
+                  }}
+                />
+              </Form.Group>
+              {/* <Form.Group>
                 <Form.Label>Strike</Form.Label>
                 <Form.Control
                   as="select"
@@ -84,7 +110,7 @@ class AbaMultileg extends React.Component {
                     )
                   )}
                 </Form.Control>
-              </Form.Group>
+              </Form.Group> */}
               <Form.Group className="wrapperVencimento ml-1">
                 <Form.Label>Vencimento</Form.Label>
                 <Form.Control
@@ -196,11 +222,27 @@ const renderValorPorcentagem = porcentagem => {
   }
 };
 
+const renderSerie = props => {
+  const { indice } = props;
+  let listaSerie = [];
+
+  props.multileg[indice].opcoes.forEach((item, index) => {
+    let strikeSymbol = renderStrikeSymbol(
+      item,
+      index,
+      props.multileg[indice].opcoes
+    );
+    if (strikeSymbol) listaSerie.push(strikeSymbol);
+  });
+
+  return listaSerie;
+};
+
 const renderStrikeSymbol = (item, indice, listaOpcoes) => {
   if (indice % 2 === 0)
-    return (
-      <option key={indice} value={item.strike}>
-        {item.type === "CALL"
+    return {
+      text:
+        item.type === "CALL"
           ? item.symbol +
             " " +
             item.strike +
@@ -210,7 +252,79 @@ const renderStrikeSymbol = (item, indice, listaOpcoes) => {
             " " +
             item.strike +
             " " +
-            item.symbol}
-      </option>
-    );
+            item.symbol,
+      value: item.strike
+    };
+};
+
+{
+  /* <option key={indice} value={item.strike}>
+{item.type === "CALL"
+  ? item.symbol +
+    " " +
+    item.strike +
+    " " +
+    listaOpcoes[indice + 1].symbol
+  : listaOpcoes[indice + 1].symbol +
+    " " +
+    item.strike +
+    " " +
+    item.symbol}
+</option> */
+}
+
+const inputSelect = {
+  option: (provided, state) => ({
+    ...provided,
+    color: "#ddd",
+    fontSize: "0.7rem",
+    padding: "1px 8px"
+  }),
+  control: provided => ({
+    ...provided,
+    width: 185,
+    color: "blue",
+    backgroundColor: "#333",
+    borderColor: "#333",
+    minHeight: 17,
+    height: 17
+  }),
+  container: provided => ({
+    ...provided,
+    minHeight: 17,
+    height: 17
+  }),
+  input: provided => ({
+    ...provided,
+    minHeight: 17,
+    height: 17
+  }),
+  singleValue: provided => ({
+    ...provided,
+    color: "#ddd",
+    top: "80%",
+    marginLeft: "0",
+    marginRight: "0"
+  }),
+  menu: provided => ({
+    ...provided,
+    backgroundColor: "#333"
+  }),
+  menuList: provided => ({
+    ...provided,
+    backgroundColor: "#333",
+    borderColor: "#333",
+    borderRadius: 5
+  }),
+  valueContainer: provided => ({
+    ...provided,
+    minHeight: 17,
+    height: 17,
+    fontSize: "0.7rem"
+  }),
+  indicatorsContainer: provided => ({
+    ...provided,
+    minHeight: 15,
+    height: 13
+  })
 };

@@ -1,8 +1,10 @@
 import ReactDOM from "react-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import "@fortawesome/fontawesome-free/css/all.css";
 import { Helper } from "components/redux/ElementosConectadosRedux";
+
 
 ReactDOM.render(Helper(), document.getElementById("root"));
 
