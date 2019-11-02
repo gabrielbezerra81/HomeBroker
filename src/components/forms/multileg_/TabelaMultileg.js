@@ -39,7 +39,7 @@ class TabelaMultileg extends React.Component {
             <th>Modelo</th>
             <th>Despernamento Máx.</th>
             <th>Prioridade de Execução</th>
-            <th>Cotação</th>
+            <th>Ult.Neg.</th>
             <th>Valor</th>
           </tr>
         </thead>

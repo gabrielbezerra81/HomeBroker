@@ -36,7 +36,7 @@ export const selecionarAdicionarAbaAction = (key, props) => {
       let abasMultileg = [...props.multileg];
 
       const novaAba = cloneDeep(aba);
-      novaAba.nomeAba = "Sim " + (abasMultileg.length + 1);
+      novaAba.nomeAba = "Ordem " + (abasMultileg.length + 1);
       let abaAtual = "tab" + abasMultileg.length;
 
       abasMultileg.push(novaAba);
@@ -375,7 +375,7 @@ export const validarOrdemMultileg = props => {
   abaMultileg.tabelaMultileg.forEach((oferta, index) => {
     if (oferta.qtde === 0) {
       valido = false;
-      alert('A quantidade deve ser maior que 0')
+      alert("A quantidade deve ser maior que 0");
     }
   });
 
