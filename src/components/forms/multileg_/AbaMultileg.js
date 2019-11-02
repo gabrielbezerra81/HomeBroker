@@ -20,7 +20,8 @@ import { Dropdown } from "semantic-ui-react";
 
 class AbaMultileg extends React.Component {
   render() {
-    const indice = this.props.indice;
+    const { props } = this;
+    const { indice } = props;
     return (
       <div className="containerAbaMultileg">
         <div>
@@ -30,24 +31,26 @@ class AbaMultileg extends React.Component {
                 <Form.Control
                   className="inputAtivo"
                   type="text"
-                  value={this.props.multileg[indice].ativo}
+                  value={props.multileg[indice].ativo}
                   onChange={event =>
-                    this.props.modificarAtributoAbaAction(
-                      this.props.multileg,
+                    props.modificarAtributoAbaAction(
+                      props.multileg,
                       indice,
                       "ativo",
                       event.target.value
                     )
                   }
+                  onKeyPress={event => {
+                    //event.preventDefault();
+                    if (event.key === "Enter")
+                      props.pesquisarAtivoMultilegAction(props, indice);
+                  }}
                 />
                 <InputGroup.Append className="inputAtivoAppend">
                   <span
                     className="input-group-text iconeProcurar divClicavel"
                     onClick={() => {
-                      this.props.pesquisarAtivoMultilegAction(
-                        this.props,
-                        indice
-                      );
+                      props.pesquisarAtivoMultilegAction(props, indice);
                     }}
                   >
                     <MDBIcon icon="search" />
@@ -56,10 +59,10 @@ class AbaMultileg extends React.Component {
               </InputGroup>
 
               <h5 className="textoValor">
-                {formatarNumDecimal(this.props.multileg[indice].valor)}
+                {formatarNumDecimal(props.multileg[indice].valor)}
               </h5>
-              {renderSeta(this.props.multileg[indice].variacao)}
-              {renderValorPorcentagem(this.props.multileg[indice].variacao)}
+              {renderSeta(props.multileg[indice].variacao)}
+              {renderValorPorcentagem(props.multileg[indice].variacao)}
             </div>
             <div className="divColunaDetalhes">
               <Form.Group>
@@ -67,19 +70,19 @@ class AbaMultileg extends React.Component {
                 {/* <Select
                   noOptionsMessage={() => ""}
                   placeholder=""
-                  options={renderSerie(this.props)}
+                  options={renderSerie(props)}
                   styles={inputSelect}
                 /> */}
                 <Dropdown
                   search
                   fluid
                   selection
-                  options={renderSerie(this.props)}
-                  value={this.props.multileg[indice].strikeSelecionado}
+                  options={renderSerie(props)}
+                  value={props.multileg[indice].strikeSelecionado}
                   onChange={(event, data) => {
                     console.log(data);
-                    this.props.modificarAtributoAbaAction(
-                      this.props.multileg,
+                    props.modificarAtributoAbaAction(
+                      props.multileg,
                       indice,
                       "strikeSelecionado",
                       Number(data.value)
@@ -92,21 +95,21 @@ class AbaMultileg extends React.Component {
                 <Form.Control
                   as="select"
                   className="textInput"
-                  value={this.props.multileg[indice].strikeSelecionado}
+                  value={props.multileg[indice].strikeSelecionado}
                   onChange={event =>
-                    this.props.modificarAtributoAbaAction(
-                      this.props.multileg,
+                    props.modificarAtributoAbaAction(
+                      props.multileg,
                       indice,
                       "strikeSelecionado",
                       Number(event.currentTarget.value)
                     )
                   }
                 >
-                  {this.props.multileg[indice].opcoes.map((item, index) =>
+                  {props.multileg[indice].opcoes.map((item, index) =>
                     renderStrikeSymbol(
                       item,
                       index,
-                      this.props.multileg[indice].opcoes
+                      props.multileg[indice].opcoes
                     )
                   )}
                 </Form.Control>
@@ -116,17 +119,17 @@ class AbaMultileg extends React.Component {
                 <Form.Control
                   as="select"
                   className="textInput"
-                  value={this.props.multileg[indice].vencimentoSelecionado}
+                  value={props.multileg[indice].vencimentoSelecionado}
                   onChange={event =>
-                    this.props.modificarAtributoAbaAction(
-                      this.props.multileg,
+                    props.modificarAtributoAbaAction(
+                      props.multileg,
                       indice,
                       "vencimentoSelecionado",
                       event.currentTarget.value
                     )
                   }
                 >
-                  {this.props.multileg[indice].vencimento.map(
+                  {props.multileg[indice].vencimento.map(
                     (vencimento, indice) => (
                       <option key={vencimento + indice} value={vencimento}>
                         {formatarVencimento(vencimento)}
@@ -144,10 +147,7 @@ class AbaMultileg extends React.Component {
                     variant="primary"
                     size="sm"
                     onClick={() => {
-                      this.props.adicionarOfertaTabelaAction(
-                        this.props,
-                        "acao"
-                      );
+                      props.adicionarOfertaTabelaAction(props, "acao");
                     }}
                   >
                     +Ativo
@@ -156,10 +156,7 @@ class AbaMultileg extends React.Component {
                     variant="primary"
                     size="sm"
                     onClick={() => {
-                      this.props.adicionarOfertaTabelaAction(
-                        this.props,
-                        "call"
-                      );
+                      props.adicionarOfertaTabelaAction(props, "call");
                     }}
                   >
                     +Call
@@ -168,7 +165,7 @@ class AbaMultileg extends React.Component {
                     variant="primary"
                     size="sm"
                     onClick={() => {
-                      this.props.adicionarOfertaTabelaAction(this.props, "put");
+                      props.adicionarOfertaTabelaAction(props, "put");
                     }}
                   >
                     +Put
@@ -257,8 +254,9 @@ const renderStrikeSymbol = (item, indice, listaOpcoes) => {
     };
 };
 
+/*
 {
-  /* <option key={indice} value={item.strike}>
+   <option key={indice} value={item.strike}>
 {item.type === "CALL"
   ? item.symbol +
     " " +
@@ -270,61 +268,5 @@ const renderStrikeSymbol = (item, indice, listaOpcoes) => {
     item.strike +
     " " +
     item.symbol}
-</option> */
-}
-
-const inputSelect = {
-  option: (provided, state) => ({
-    ...provided,
-    color: "#ddd",
-    fontSize: "0.7rem",
-    padding: "1px 8px"
-  }),
-  control: provided => ({
-    ...provided,
-    width: 185,
-    color: "blue",
-    backgroundColor: "#333",
-    borderColor: "#333",
-    minHeight: 17,
-    height: 17
-  }),
-  container: provided => ({
-    ...provided,
-    minHeight: 17,
-    height: 17
-  }),
-  input: provided => ({
-    ...provided,
-    minHeight: 17,
-    height: 17
-  }),
-  singleValue: provided => ({
-    ...provided,
-    color: "#ddd",
-    top: "80%",
-    marginLeft: "0",
-    marginRight: "0"
-  }),
-  menu: provided => ({
-    ...provided,
-    backgroundColor: "#333"
-  }),
-  menuList: provided => ({
-    ...provided,
-    backgroundColor: "#333",
-    borderColor: "#333",
-    borderRadius: 5
-  }),
-  valueContainer: provided => ({
-    ...provided,
-    minHeight: 17,
-    height: 17,
-    fontSize: "0.7rem"
-  }),
-  indicatorsContainer: provided => ({
-    ...provided,
-    minHeight: 15,
-    height: 13
-  })
-};
+</option> 
+}*/

@@ -1,4 +1,4 @@
-import { VALIDACAO_QTDE } from "constants/Erros";
+import { VALIDACAO_QTDE } from "constants/AlertaErros";
 import {
   MUDAR_QTDE_BOOK,
   MUDAR_STOPLOSS_BOOK,

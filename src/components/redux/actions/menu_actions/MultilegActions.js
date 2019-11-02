@@ -20,6 +20,7 @@ import {
 import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
 import { formatarNumero } from "components/redux/reducers/formInputReducer";
 import { ATUALIZAR_SOURCE_EVENT_MULTILEG } from "constants/ApiActionTypes";
+import { erro_validar_qtde } from "constants/AlertaErros";
 
 export const abrirFecharConfigComplAction = configComplementarAberto => {
   return dispatch => {
@@ -358,13 +359,7 @@ export const atualizarCotacaoAction = (props, multileg) => {
 
     codigos = codigos.substring(0, codigos.length - 1);
 
-    const newSource = atualizarCotacaoAPI(
-      dispatch,
-      props,
-      codigos,
-      "multileg",
-      abasMultileg
-    );
+    atualizarCotacaoAPI(dispatch, props, codigos, "multileg", abasMultileg);
   };
 };
 
@@ -375,7 +370,7 @@ export const validarOrdemMultileg = props => {
   abaMultileg.tabelaMultileg.forEach((oferta, index) => {
     if (oferta.qtde === 0) {
       valido = false;
-      alert("A quantidade deve ser maior que 0");
+      alert(erro_validar_qtde);
     }
   });
 
@@ -415,7 +410,7 @@ export const montarOrdemMultileg = props => {
     else if (ofertaPrincipal.offerType === "V")
       ofertaPrincipal.orderType = "sell";
 
-    ofertaPrincipal.expiration = abaMultileg.date.toLocaleString();
+    ofertaPrincipal.expiration = abaMultileg.date.toLocaleString("pt-BR");
 
     ofertaPrincipal.price = Number(
       abaMultileg.preco

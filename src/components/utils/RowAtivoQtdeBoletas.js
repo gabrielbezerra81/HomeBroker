@@ -1,5 +1,6 @@
 import React from "react";
-import { Row, Col, Form } from "react-bootstrap";
+import { Row, Col, Form, InputGroup } from "react-bootstrap";
+import { MDBIcon } from "mdbreact";
 import InputFormatado from "components/utils/InputFormatado";
 
 export default (props, namespace) => {
@@ -9,8 +10,7 @@ export default (props, namespace) => {
         <h6 className="labelInput-verticalAlign">Ativo</h6>
       </Col>
       <Col className="formAtivo colTextInput">
-        <Form.Group>
-          <Form.Label />
+        <InputGroup>
           <Form.Control
             className="textInput"
             type="text"
@@ -25,7 +25,17 @@ export default (props, namespace) => {
               }
             }}
           />
-        </Form.Group>
+          <InputGroup.Append className="inputAtivoAppend">
+            <span
+              className="input-group-text iconeProcurar divClicavel iconePesquisarBoletas"
+              onClick={() =>
+                props.pesquisarAtivoOnEnterAction(props, namespace)
+              }
+            >
+              <MDBIcon icon="search" />
+            </span>
+          </InputGroup.Append>
+        </InputGroup>
       </Col>
 
       <Col className="colTextInput">

@@ -1,4 +1,4 @@
-import { ALERTA_COMPRA } from "../../constants/Erros";
+import { ALERTA_COMPRA } from "../../constants/AlertaErros";
 
 const compararCompra = (disparo, execucao) => {
   if (execucao < disparo) return true;

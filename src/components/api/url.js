@@ -1,5 +1,6 @@
 export const cors_anywhere = "https://cors-anywhere.herokuapp.com/";
 export const url_base = "http://173.249.37.183:8080/api/";
+export const url_base_reativa = "http://173.249.37.183:8090/"
 
 //Boletas de compra e venda
 export const url_pesquisarAtivoBoletas_codigo = "price/quote/";
@@ -18,4 +19,9 @@ export const url_pesquisarStrikes_codigo_vencimento = "stocks/findBySymbolAndEnd
 
 //Posição
 export const url_listarPosicoes = "position"
-export const url_emblemaReativo_ids = "http://173.249.37.183:8090/structures/ids?ids="
+
+
+//Reativos
+export const url_cotacaoReativa_codigos = "quotes/symbols?symbols="
+export const url_bookReativo_codigos = "books/symbols?symbols="
+export const url_emblemaReativo_ids = "structures/ids?ids="

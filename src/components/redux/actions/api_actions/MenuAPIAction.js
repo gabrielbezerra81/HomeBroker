@@ -6,7 +6,6 @@ import {
 } from "components/api/API";
 import { PESQUISAR_ATIVO_MULTILEG_API } from "constants/ApiActionTypes";
 import {
-  atualizarCotacaoAction,
   montarOrdemMultileg,
   validarOrdemMultileg
 } from "components/redux/actions/menu_actions/MultilegActions";

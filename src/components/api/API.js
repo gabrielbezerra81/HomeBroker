@@ -9,7 +9,10 @@ import {
   url_pesquisarStrikes_codigo_vencimento,
   url_listarOrdensExecucao_,
   url_listarPosicoes,
-  url_emblemaReativo_ids
+  url_emblemaReativo_ids,
+  url_base_reativa,
+  url_bookReativo_codigos,
+  url_cotacaoReativa_codigos
 } from "components/api/url";
 import {
   MODIFICAR_ATRIBUTO_ABA,
@@ -22,6 +25,11 @@ import {
 } from "constants/ApiActionTypes";
 import { formatarDataDaAPI } from "components/utils/Formatacoes";
 import { atualizarTabelaAntiga } from "components/redux/actions/api_actions/bookOfertaAPIActions";
+import {
+  erro_pesquisar_ativo,
+  sucesso_enviar_ordem,
+  erro_enviar_ordem
+} from "constants/AlertaErros";
 
 export const pesquisarAtivoAPI = codigo => {
   return request
@@ -81,6 +89,7 @@ export const pesquisarAtivoAPI = codigo => {
       return dadosPesquisa;
     })
     .catch(erro => {
+      alert(erro_pesquisar_ativo);
       console.log(erro);
       return {
         resultadoAtivo: "",
@@ -134,12 +143,12 @@ export const enviarOrdemAPI = json => {
     .send(jsonStringBody)
     .then(response => {
       console.log("response", response);
-      if (response.status === 201) alert("Ordem enviada com sucesso");
-      else alert("Falha ao enviar ordem");
+      if (response.status === 201) alert(sucesso_enviar_ordem);
+      else alert(erro_enviar_ordem);
     })
     .catch(erro => {
       console.log(erro.response);
-      alert("Falha ao enviar ordem");
+      alert(erro_enviar_ordem);
     });
 };
 
@@ -175,7 +184,7 @@ export const pesquisarAtivoMultilegAPI = codigo_ativo => {
       }
     })
     .catch(erro => {
-      alert("Falha ao pesquisar ativo");
+      alert(erro_pesquisar_ativo);
       console.log(erro);
       return dados;
     });
@@ -240,7 +249,7 @@ export const listarPosicoesAPI = () => {
 
 export const atualizarBookAPI = (dispatch, props, codigos, tipo, multileg) => {
   var source = new EventSource(
-    "http://173.249.37.183:8090/books/symbols?symbols=" + codigos
+    url_base_reativa + url_bookReativo_codigos + codigos
   );
   source.onopen = function(event) {
     console.log("open");
@@ -325,7 +334,7 @@ export const atualizarCotacaoAPI = (
   dadosPesquisa = null
 ) => {
   var source = new EventSource(
-    "http://173.249.37.183:8090/quotes/symbols?symbols=" + codigos
+    url_base_reativa + url_cotacaoReativa_codigos + codigos
   );
 
   source.onopen = function(event) {
@@ -387,7 +396,7 @@ export const atualizarCotacaoAPI = (
 };
 
 export const atualizarEmblemasAPI = (dispatch, listaPosicoes, ids) => {
-  var source = new EventSource(url_emblemaReativo_ids + ids);
+  var source = new EventSource(url_base_reativa + url_emblemaReativo_ids + ids);
 
   source.onopen = function(event) {
     console.log("open");
