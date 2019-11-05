@@ -7,7 +7,8 @@ import {
 import { PESQUISAR_ATIVO_MULTILEG_API } from "constants/ApiActionTypes";
 import {
   montarOrdemMultileg,
-  validarOrdemMultileg
+  validarOrdemMultileg,
+  atualizarCotacaoAction
 } from "components/redux/actions/menu_actions/MultilegActions";
 
 export const pesquisarAtivoMultilegAction = (props, indice) => {
@@ -32,7 +33,7 @@ export const pesquisarAtivoMultilegAction = (props, indice) => {
       aba.ativoAtual = codigo_ativo;
 
       dispatch({ type: PESQUISAR_ATIVO_MULTILEG_API, payload: multileg });
-      //atualizarCotacaoAction(dispatch, props, multileg);
+      atualizarCotacaoAction(dispatch, props, multileg);
     }
   };
 };

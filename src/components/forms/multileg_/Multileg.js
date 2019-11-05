@@ -8,17 +8,17 @@ import { MDBIcon } from "mdbreact";
 import _ from "lodash";
 
 export default class Multileg extends React.Component {
-  shouldComponentUpdate(nextProps, nextState) {
-    const multileg = this.props.multileg !== nextProps.multileg;
-    if (multileg) {
-      // Executar atualizar book e atualizar cotação
-      //this.props.atualizarBookAction(nextProps, nextProps.multileg);
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   const multileg = this.props.multileg !== nextProps.multileg;
+  //   if (multileg) {
+  //     // Executar atualizar book e atualizar cotação
+  //     //this.props.atualizarBookAction(nextProps, nextProps.multileg);
 
-      this.props.atualizarCotacaoAction(nextProps, nextProps.multileg);
-    }
+  //     this.props.atualizarCotacaoAction(nextProps, nextProps.multileg);
+  //   }
 
-    return !_.isEqual(nextProps, this.props);
-  }
+  //   return !_.isEqual(nextProps, this.props);
+  // }
 
   componentDidMount() {
     if (this.props.divkey !== "" && this.props.divkey === "multileg") {
