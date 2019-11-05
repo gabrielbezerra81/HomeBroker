@@ -134,7 +134,7 @@ const onUp = props => {
   let resultado;
 
   //Tira todos os pontos e vírgulas do número e o transforma em um número decimal com ponto com separador
-  if (props.tipoInput === "precoNegativo")
+  if (["precoNegativo", "quantidade"].includes(props.tipoInput))
     valorAnterior = valorAnterior
       .toString()
       .split(".")
@@ -155,7 +155,7 @@ const onDown = props => {
   if (valorAnterior > 0 || props.allowNegative) {
     let resultado;
 
-    if (props.tipoInput === "precoNegativo")
+    if (["precoNegativo", "quantidade"].includes(props.tipoInput))
       valorAnterior = valorAnterior
         .toString()
         .split(".")

@@ -34,7 +34,25 @@ const INITIAL_STATE = {
       total: "",
       validadeSelect: "DAY",
       date: new Date(),
-      tabelaMultileg: []
+      tabelaMultileg: [
+        {
+          opcoes: [],
+          strikeSelecionado: "",
+          cv: "compra",
+          qtde: 0,
+          serie: [],
+          serieSelecionada: "",
+          codigoSelecionado: "",
+          tipo: "",
+          modelo: "",
+          despernamento: 1000,
+          prioridade: 0,
+          cotacao: 0,
+          ativoAtual: "",
+          compra: null,
+          venda: null
+        }
+      ]
     }
   ],
   eventSource: null, //Book

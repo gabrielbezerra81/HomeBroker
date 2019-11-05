@@ -170,9 +170,9 @@ export const modificarAtributoTabelaAbaAction = (
     calculo = formatarNumero(calculo, 2, ".", ",");
     aba.preco = calculo;
 
-    atualizarBookAction(dispatch, props, abasMultileg);
-    atualizarCotacaoAction(dispatch, props, abasMultileg);
-    pesquisarAtivoAPI(linhaTabela.codigoSelecionado);
+    // atualizarBookAction(dispatch, props, abasMultileg);
+    // atualizarCotacaoAction(dispatch, props, abasMultileg);
+    // pesquisarAtivoAPI(linhaTabela.codigoSelecionado);
     if (atributo !== "serieSelecionada")
       dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
     travarDestravarClique("destravar", "multileg");
@@ -384,7 +384,6 @@ export const montarOrdemMultileg = props => {
 
   let json = {
     account: {},
-    stock: {},
     tradeName: {},
     offers: [],
     next: []

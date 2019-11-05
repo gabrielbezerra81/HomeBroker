@@ -22,7 +22,6 @@ export const validarOrdemBoleta = props => {
 export const montaOrdemPrincipal = props => {
   const {
     date,
-    dadosPesquisa,
     ordem,
     gainDisparo,
     stopDisparo,
@@ -31,7 +30,6 @@ export const montaOrdemPrincipal = props => {
 
   let json = {
     account: {},
-    stock: {},
     tradeName: {},
     offers: [],
     next: []
@@ -47,7 +45,6 @@ export const montaOrdemPrincipal = props => {
 
   json.status = "Nova";
   json.priority = 0;
-  json.stock.symbol = dadosPesquisa.ativo;
   json.tradeName.name = ordem.nome;
 
   //StartStop pode ter 2 ordens principais e até 4 ordens next
