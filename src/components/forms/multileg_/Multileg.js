@@ -5,6 +5,7 @@ import DraggableModal from "components/utils/DraggableModal";
 import { modalHeaderSemBook } from "components/utils/FormHeader";
 import AbaMultileg from "components/forms/multileg_/AbaMultileg";
 import { MDBIcon } from "mdbreact";
+import _ from "lodash";
 
 export default class Multileg extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
@@ -16,7 +17,7 @@ export default class Multileg extends React.Component {
       this.props.atualizarCotacaoAction(nextProps, nextProps.multileg);
     }
 
-    return multileg;
+    return !_.isEqual(nextProps, this.props);
   }
 
   componentDidMount() {

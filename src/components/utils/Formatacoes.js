@@ -102,5 +102,5 @@ export const formatarVencimento = string => {
   string = string.split("-");
   string[2] = Number(Number(string[2]) + 1) + "";
   let dateString = string.join("-");
-  return new Date(dateString).toLocaleDateString();
+  return new Date(dateString).toLocaleDateString("pt-BR");
 };

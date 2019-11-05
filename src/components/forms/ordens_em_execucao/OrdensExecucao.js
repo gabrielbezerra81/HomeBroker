@@ -81,101 +81,97 @@ const retornaData = dataString => {
   return formatarDataDaAPI(dataString).toLocaleString();
 };
 
-const renderOferta = (item, index) => (
-  <tr key={index}>
-    <td>
-      <ProgressBar
-        animated
-        variant="success"
-        now={item.progresso}
-        label={`${item.progresso}%`}
-        className="barraProgresso"
-      />
-    </td>
-    <td>
-      <span>{retornaData(item.cadastro)}</span>
-    </td>
-    <td>{item.corretora}</td>
-    <td>{item.conta}</td>
-    <td>{item.operacao}</td>
-    <td>{item.modoExec}</td>
+const renderOferta = (item, index) => {
+  let qtdeOferta = 0;
+  let qtdeExecutada = 0;
 
-    <td>
-      {item.offers.map((oferta, index2) => (
-        <div key={index2}>
-          {oferta.ativo}
-          <br />
-        </div>
-      ))}
-    </td>
-    <td>
-      {item.offers.map((oferta, index2) => (
-        <span key={index2}>
-          {oferta.oferta}
-          <br />
-        </span>
-      ))}
-    </td>
-    <td>
-      {item.offers.map((oferta, index2) => (
-        <span key={index2}>
-          {oferta.qtdeOferta}
-          <br />
-        </span>
-      ))}
-    </td>
-    <td>
-      {item.offers.map((oferta, index2) => (
-        <span key={index2}>
-          {oferta.qtdeExecutada}
-          <br />
-        </span>
-      ))}
-    </td>
-    <td>
-      {item.offers.map((oferta, index2) => (
-        <span key={index2}>
-          {oferta.qtdeCancelada}
-          <br />
-        </span>
-      ))}
-    </td>
+  item.offers.forEach(oferta => {
+    qtdeOferta += oferta.qtdeOferta;
+    qtdeExecutada += oferta.qtdeExecutada;
+  });
 
-    <td>{item.precoDisparo}</td>
-    <td>
-      {item.offers.map((oferta, index2) => (
-        <span key={index2}>
-          {oferta.precoEnvio}
-          <br />
-        </span>
-      ))}
-    </td>
-    <td>
-      {item.offers.map((oferta, index2) => (
-        <span key={index2}>
-          {oferta.precoExecutado}
-          <br />
-        </span>
-      ))}
-    </td>
-    <td>{retornaData(item.validade)}</td>
-    <td>{item.roteador}</td>
-    <td>
-      {item.offers.map((oferta, index2) => (
-        <span key={index2}>
-          {oferta.status}
-          <br />
-        </span>
-      ))}
-    </td>
+  return (
+    <tr key={index}>
+      <td>
+        <ProgressBar
+          animated
+          variant="success"
+          now={(qtdeExecutada / qtdeOferta) * 100}
+          label={(qtdeExecutada / qtdeOferta) * 100 + "%"}
+          className="barraProgresso"
+        />
+      </td>
+      <td>
+        <span>{retornaData(item.cadastro)}</span>
+      </td>
+      <td>{item.corretora}</td>
+      <td>{item.conta}</td>
+      <td>{item.operacao}</td>
+      <td>{item.modoExec}</td>
 
-    <td>
-      {item.offers.map((oferta, index2) => (
-        <span key={index2}>
-          {oferta.msg}
-          <br />
-        </span>
-      ))}
-    </td>
-  </tr>
-);
+      <td>
+        {item.offers.map((oferta, index2) => (
+          <div key={index2}>
+            {oferta.ativo}
+            <br />
+          </div>
+        ))}
+      </td>
+      <td>
+        {item.offers.map((oferta, index2) => (
+          <span key={index2}>
+            {oferta.oferta}
+            <br />
+          </span>
+        ))}
+      </td>
+      <td>{qtdeOferta}</td>
+      <td>{qtdeExecutada}</td>
+      <td>
+        {item.offers.map((oferta, index2) => (
+          <span key={index2}>
+            {oferta.qtdeCancelada}
+            <br />
+          </span>
+        ))}
+      </td>
+
+      <td>{item.precoDisparo}</td>
+      <td>
+        {item.offers.map((oferta, index2) => (
+          <span key={index2}>
+            {oferta.precoEnvio}
+            <br />
+          </span>
+        ))}
+      </td>
+      <td>
+        {item.offers.map((oferta, index2) => (
+          <span key={index2}>
+            {oferta.precoExecutado}
+            <br />
+          </span>
+        ))}
+      </td>
+      <td>{retornaData(item.validade)}</td>
+      <td>{item.roteador}</td>
+      <td>
+        {item.offers.map((oferta, index2) => (
+          <span key={index2}>
+            {oferta.status}
+            <br />
+          </span>
+        ))}
+      </td>
+
+      <td>
+        {item.offers.map((oferta, index2) => (
+          <span key={index2}>
+            {oferta.msg}
+            <br />
+          </span>
+        ))}
+      </td>
+    </tr>
+  );
+};
