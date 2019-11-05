@@ -21,6 +21,7 @@ import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
 import { formatarNumero } from "components/redux/reducers/formInputReducer";
 import { ATUALIZAR_SOURCE_EVENT_MULTILEG } from "constants/ApiActionTypes";
 import { erro_validar_qtde } from "constants/AlertaErros";
+import { getformatedDate } from "components/utils/Formatacoes";
 
 export const abrirFecharConfigComplAction = configComplementarAberto => {
   return dispatch => {
@@ -390,7 +391,11 @@ export const montarOrdemMultileg = props => {
   json.account.id = 1;
   json.enabled = true;
   json.multiStocks = true;
-  json.expiration = abaMultileg.date.toLocaleString();
+  if (abaMultileg.validadeSelect === "DAY")
+    json.expiration = getformatedDate(new Date()) + " 22:00:00";
+  else {
+    json.expiration = abaMultileg.date.toLocaleString("pt-BR");
+  }
   json.status = "Nova";
   json.priority = 0;
   json.tradeName.name = "Multileg";
@@ -410,7 +415,11 @@ export const montarOrdemMultileg = props => {
     else if (ofertaPrincipal.offerType === "V")
       ofertaPrincipal.orderType = "sell";
 
-    ofertaPrincipal.expiration = abaMultileg.date.toLocaleString("pt-BR");
+    if (abaMultileg.validadeSelect === "DAY")
+      ofertaPrincipal.expiration = getformatedDate(new Date()) + " 22:00:00";
+    else {
+      ofertaPrincipal.expiration = abaMultileg.date.toLocaleString("pt-BR");
+    }
 
     ofertaPrincipal.price = Number(
       abaMultileg.preco

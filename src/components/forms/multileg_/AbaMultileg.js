@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Button, InputGroup } from "react-bootstrap";
 import { ReactComponent as ArrowDown } from "img/down-arrow.svg";
+// @ts-ignore
 import { ReactComponent as ArrowUp } from "img/up-arrow.svg";
 import { MDBIcon } from "mdbreact";
 import TabelaMultileg from "components/forms/multileg_/TabelaMultileg";

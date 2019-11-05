@@ -1,4 +1,5 @@
 import { erro_validar_ativo, erro_validar_qtde } from "constants/AlertaErros";
+import { getformatedDate } from "components/utils/Formatacoes";
 
 const CVStartStop = ["Compra Start Stop", "Venda Start Stop"];
 const CVStopMovel = ["Compra Stop Movel", "Venda Stop Movel"];
@@ -19,7 +20,14 @@ export const validarOrdemBoleta = props => {
 };
 
 export const montaOrdemPrincipal = props => {
-  const { date, dadosPesquisa, ordem, gainDisparo, stopDisparo } = props;
+  const {
+    date,
+    dadosPesquisa,
+    ordem,
+    gainDisparo,
+    stopDisparo,
+    validadeSelect
+  } = props;
 
   let json = {
     account: {},
@@ -34,6 +42,9 @@ export const montaOrdemPrincipal = props => {
   json.enabled = true;
   json.multiStocks = false;
   json.expiration = date.toLocaleString("pt-BR");
+  if (validadeSelect === "DAY")
+    json.expiration = getformatedDate(new Date()) + " 22:00:00";
+
   json.status = "Nova";
   json.priority = 0;
   json.stock.symbol = dadosPesquisa.ativo;
@@ -116,6 +127,8 @@ const montaOfertaPrincipal = (props, tipoAuxiliar, json, numAjuste = 0) => {
   //Dados ofertas Limitada, Mercado, Agendada, Start Stop, Stop Móvel
   ofertaPrincipal.expirationType = validadeSelect;
   ofertaPrincipal.expiration = date.toLocaleString("pt-BR");
+  if (validadeSelect === "DAY")
+    ofertaPrincipal.expiration = getformatedDate(new Date()) + " 22:00:00";
   ofertaPrincipal.qtty = Number(qtde);
   ofertaPrincipal.orderType = ordem.tipoOrdem;
   ofertaPrincipal.offerType = ordem.tipoOferta;
