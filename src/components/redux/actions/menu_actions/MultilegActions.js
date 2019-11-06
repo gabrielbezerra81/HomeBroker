@@ -15,7 +15,8 @@ import {
   pesquisarAtivoAPI,
   atualizarCotacaoAPI,
   atualizarBookAPI,
-  travarDestravarClique
+  travarDestravarClique,
+  verificarMonitorarAtivo
 } from "components/api/API";
 import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
 import { formatarNumero } from "components/redux/reducers/formInputReducer";
@@ -172,7 +173,7 @@ export const modificarAtributoTabelaAbaAction = (
     aba.preco = calculo;
 
     if (codigoAnterior !== linhaTabela.codigoSelecionado) {
-      pesquisarAtivoAPI(linhaTabela.codigoSelecionado);
+      verificarMonitorarAtivo(linhaTabela.codigoSelecionado);
     }
 
     atualizarBookAction(dispatch, props, abasMultileg);
@@ -246,8 +247,10 @@ export const adicionarOfertaTabelaAction = (props, tipoOferta) => {
       const aba = abasMultileg[indiceAba];
       aba.preco = calculoPreco(aba, "ultimo").toFixed(2);
 
+      verificarMonitorarAtivo(novaOferta.codigoSelecionado);
       atualizarBookAction(dispatch, props, abasMultileg);
       atualizarCotacaoAction(dispatch, props, abasMultileg);
+
       dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
       travarDestravarClique("destravar", "multileg");
     }

@@ -2,7 +2,8 @@ import {
   pesquisarAtivoMultilegAPI,
   pesquisarStrikesMultilegAPI,
   enviarOrdemAPI,
-  travarDestravarClique
+  travarDestravarClique,
+  verificarMonitorarAtivo
 } from "components/api/API";
 import { PESQUISAR_ATIVO_MULTILEG_API } from "constants/ApiActionTypes";
 import {
@@ -16,6 +17,8 @@ export const pesquisarAtivoMultilegAction = (props, indice) => {
     let multileg = [...props.multileg];
     let aba = multileg[indice];
     const codigo_ativo = aba.ativo;
+
+    verificarMonitorarAtivo(codigo_ativo);
 
     travarDestravarClique("travar", "multileg");
     const dados = await pesquisarAtivoMultilegAPI(codigo_ativo);

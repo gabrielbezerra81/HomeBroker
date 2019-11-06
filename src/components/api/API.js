@@ -12,7 +12,9 @@ import {
   url_emblemaReativo_ids,
   url_base_reativa,
   url_bookReativo_codigos,
-  url_cotacaoReativa_codigos
+  url_cotacaoReativa_codigos,
+  url_listarAtivosMonitorados_,
+  url_monitorarAtivo_codigo
 } from "components/api/url";
 import {
   MODIFICAR_ATRIBUTO_ABA,
@@ -422,6 +424,26 @@ export const atualizarEmblemasAPI = (dispatch, listaPosicoes, ids) => {
     }
   };
   return source;
+};
+
+export const verificarMonitorarAtivo = codigo => {
+  request
+    .get(url_base + url_listarAtivosMonitorados_)
+    .then(response => {
+      const { body } = response;
+
+      if (!body.some(item => item.symbol === codigo)) {
+        request
+          .get(url_base + url_monitorarAtivo_codigo + codigo)
+          .then(() => console.log("adicionou"))
+          .catch(erro => {
+            console.log(erro);
+          });
+      }
+    })
+    .catch(erro => {
+      console.log(erro);
+    });
 };
 
 export const travarDestravarClique = (modo, id) => {

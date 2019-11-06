@@ -20,8 +20,11 @@ export const url_pesquisarStrikes_codigo_vencimento = "stocks/findBySymbolAndEnd
 //Posição
 export const url_listarPosicoes = "position"
 
-
 //Reativos
 export const url_cotacaoReativa_codigos = "quotes/symbols?symbols="
 export const url_bookReativo_codigos = "books/symbols?symbols="
 export const url_emblemaReativo_ids = "structures/ids?ids="
+
+//Monitorar e adicionar
+export const url_monitorarAtivo_codigo = "price/add/"
+export const url_listarAtivosMonitorados_ = "mt5/symbols"
