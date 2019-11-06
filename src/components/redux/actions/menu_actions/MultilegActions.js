@@ -127,6 +127,7 @@ export const modificarAtributoTabelaAbaAction = (
     travarDestravarClique("travar", "multileg");
     let abasMultileg = [...props.multileg];
     let linhaTabela = abasMultileg[indiceGeral].tabelaMultileg[indiceLinha];
+    const codigoAnterior = linhaTabela.codigoSelecionado;
 
     if (atributo === "tipo") {
       if (valor === "call") linhaTabela[atributo] = "put";
@@ -170,9 +171,12 @@ export const modificarAtributoTabelaAbaAction = (
     calculo = formatarNumero(calculo, 2, ".", ",");
     aba.preco = calculo;
 
-    // atualizarBookAction(dispatch, props, abasMultileg);
-    // atualizarCotacaoAction(dispatch, props, abasMultileg);
-    // pesquisarAtivoAPI(linhaTabela.codigoSelecionado);
+    if (codigoAnterior !== linhaTabela.codigoSelecionado) {
+      pesquisarAtivoAPI(linhaTabela.codigoSelecionado);
+    }
+
+    atualizarBookAction(dispatch, props, abasMultileg);
+    atualizarCotacaoAction(dispatch, props, abasMultileg);
     if (atributo !== "serieSelecionada")
       dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
     travarDestravarClique("destravar", "multileg");
