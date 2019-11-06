@@ -77,6 +77,7 @@ export const atualizarDivKeyAction2 = (divkey, dispatch) => {
 export const fecharFormAction = (props, divkey) => {
   let show = [...props.show];
   show[props.appkey][divkey] = false;
+
   return dispatch => {
     dispatch({ type: FECHAR_FORM, payload: show });
   };

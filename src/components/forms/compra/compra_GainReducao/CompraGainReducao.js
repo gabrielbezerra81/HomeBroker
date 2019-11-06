@@ -38,7 +38,8 @@ const modalBody = () => (
 );
 
 const mapStateToProps = state => ({
-  ativo: state.compraGainReducao.ativo
+  ativo: state.compraGainReducao.ativo,
+  eventSourceCotacao: state.compraGainReducao.eventSourceCotacao
 });
 
 export default connect(

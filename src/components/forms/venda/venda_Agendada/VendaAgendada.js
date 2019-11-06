@@ -41,7 +41,8 @@ const modalBody = props => (
 );
 
 const mapStateToProps = state => ({
-  ativo: state.vendaAgendadaReducer.ativo
+  ativo: state.vendaAgendadaReducer.ativo,
+  eventSourceCotacao: state.vendaAgendadaReducer.eventSourceCotacao
 });
 
 export default connect(

@@ -31,10 +31,22 @@ export const deslogarUsuarioAction = (event, props) => {
 };
 
 export const abrirItemBarraLateralAction = (props, nameVariavelReducer) => {
+  if (nameVariavelReducer === "multilegAberto") {
+    if (props.eventSourceBook_Multileg) props.eventSourceBook_Multileg.close();
+    if (props.eventSourceCotacao_Multileg)
+      props.eventSourceCotacao_Multileg.close();
+  } //
+  else if (nameVariavelReducer === "listaCompletaAberta") {
+    if (props.eventSourceEmblema_Posicao)
+      props.eventSourceEmblema_Posicao.close();
+  }
   return dispatch => {
     dispatch({
       type: ABRIR_FECHAR_ITEM_BARRA_LATERAL,
-      payload: { name: nameVariavelReducer, valor: !props[nameVariavelReducer] }
+      payload: {
+        name: nameVariavelReducer,
+        valor: !props[nameVariavelReducer]
+      }
     });
   };
 };

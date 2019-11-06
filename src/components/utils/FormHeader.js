@@ -28,6 +28,7 @@ export const modalHeader = (props, headerTitle, headerClass, resetPosition) => (
         onClick={() => {
           resetPosition();
           props.close();
+          if (props.eventSourceCotacao) props.eventSourceCotacao.close();
         }}
       >
         <span className="fa-stack">
@@ -67,6 +68,7 @@ export const bookHeader = (props, headerClass, resetPosition) => (
           onClick={() => {
             props.close();
             resetPosition();
+            if (props.eventSource) props.eventSource.close();
           }}
         >
           <span className="fa-stack">

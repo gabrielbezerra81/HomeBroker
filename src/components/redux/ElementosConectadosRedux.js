@@ -97,14 +97,19 @@ const mapStateToPropsGlobalStore = state => {
   };
 };
 
-const mapStateToPropsLocal = state => ({});
+const mapStateToPropsLocal = state => ({
+  eventSourceBook_Book: state.bookOfertaReducer.eventSource
+});
 
 const mapStateToPropsAppPrincipal = state => ({
   ordensAberto: state.telaPrincipalReducer.ordensAberto,
   ordensExecucaoAberto: state.telaPrincipalReducer.ordensExecucaoAberto,
   relatorioDetalhadoAberto: state.telaPrincipalReducer.relatorioDetalhadoAberto,
   listaCompletaAberta: state.telaPrincipalReducer.listaCompletaAberta,
-  multilegAberto: state.telaPrincipalReducer.multilegAberto
+  multilegAberto: state.telaPrincipalReducer.multilegAberto,
+  eventSourceBook_Multileg: state.multilegReducer.eventSource,
+  eventSourceCotacao_Multileg: state.multilegReducer.eventSourceCotacao,
+  eventSourceEmblema_Posicao: state.posicaoReducer.eventSourceEmblema
 });
 
 const mapStateToPropsMultileg = state => ({
