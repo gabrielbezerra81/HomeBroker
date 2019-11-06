@@ -12,13 +12,16 @@ import InputFormatado from "components/utils/InputFormatado";
 import { formatarNumero } from "components/redux/reducers/formInputReducer";
 import RowValidade from "components/forms/multileg_/RowValidade";
 import { enviarOrdemMultilegAction } from "components/redux/actions/api_actions/MenuAPIAction";
+import CurrencyInput from "react-intl-number-input";
+import NumberFormat from "react-number-format";
 
 class Book extends React.Component {
   render() {
     const { props } = this;
     const indice = props.indice,
       max = calculoPreco(props.multileg[indice], "max"),
-      min = calculoPreco(props.multileg[indice], "min");
+      min = calculoPreco(props.multileg[indice], "min"),
+      total = calcularTotal(props);
 
     const renderPlaceholder = renderPlaceholderPreco(props);
     return (
@@ -196,26 +199,32 @@ class Book extends React.Component {
             />
           </Col>
         </Row>
-        <Row className="mr-2 mb-2">
+        <Row className="mr-2">
           <Col md={4} className="ml-2">
             <h6>Total</h6>
           </Col>
-          <Col className="mr-1">
-            <InputFormatado
-              tipoInput="preco"
-              value={calcularTotal(props)}
+          <Col className="mr-1 text-align-center">
+            <NumberFormat
+              style={{ width: "112.28px" }}
+              className={`form-control textInput`}
+              thousandSeparator="."
+              decimalSeparator=","
               readOnly
-              autoSelect
-              onChange={valor =>
-                props.modificarAtributoAbaAction(
-                  props.multileg,
-                  indice,
-                  "total",
-                  valor
-                )
+              value={
+                total < 0
+                  ? formatarNumDecimal(total * -1)
+                  : formatarNumDecimal(total)
               }
             />
+            <span>
+              {total < 0
+                ? "Crédito de R$ " + formatarNumDecimal(total * -1)
+                : "Débito de R$ " + formatarNumDecimal(total)}
+            </span>
           </Col>
+        </Row>
+        <Row className="mr-2 mb-2">
+          <Col className="mr-1"></Col>
         </Row>
 
         {RowValidade(props, props.multileg[indice])}
@@ -270,9 +279,11 @@ const calcularTotal = props => {
   let total = 0;
   let aba = props.multileg[props.indice];
   aba.tabelaMultileg.forEach(oferta => {
-    total += oferta.qtde * oferta.cotacao;
+    if (oferta.cv === "compra") total += oferta.qtde * oferta.cotacao;
+    else total -= oferta.qtde * oferta.cotacao;
   });
-  return "R$ " + formatarNumDecimal(total);
+  console.log(total);
+  return total;
 };
 
 const renderPlaceholderPreco = props => {
