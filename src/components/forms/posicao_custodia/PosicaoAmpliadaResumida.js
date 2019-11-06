@@ -121,8 +121,10 @@ export default connect(
 
 const renderAtivo = item => {
   let mostrarAtivo = false;
-  let conteudo = item.ativo.map((ativo, ind) => {
-    if (ativo.stock.option) {
+  let conteudo = item.ativos.map((ativo, ind) => {
+    //Verifica se o ativo está em uma ordem execução, caso não esteja, será mostrado.
+    item.executando.some(oferta => oferta.ativo === ativo.symbol);
+    if (!item.executando.some(oferta => oferta.ativo === ativo.symbol)) {
       mostrarAtivo = true;
       return <h6 key={`custodiaCompra${ind}`}>{ativo.symbol}</h6>;
     }
@@ -175,4 +177,3 @@ const renderCV = (cv, valor, operacao, indice) => {
     </span>
   );
 };
-  

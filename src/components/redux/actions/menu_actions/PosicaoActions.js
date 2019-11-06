@@ -26,7 +26,7 @@ export const listarPosicoesAction = props => {
               Number(operacao.dealPrice)) *
             100;
         let posicao = {
-          ativo: operacao.ativos,
+          ativos: operacao.ativos,
           precoCompra: operacao.priceMin,
           precoVenda: operacao.priceMax,
           cotacaoAtual: operacao.lastPrice,

@@ -15,7 +15,7 @@ const INITIAL_STATE = {
   ordensExecucaoAberto: false,
   relatorioDetalhadoAberto: false,
   listaCompletaAberta: false,
-  multilegAberto: true
+  multilegAberto: false
 };
 
 export default (state = INITIAL_STATE, action) => {
