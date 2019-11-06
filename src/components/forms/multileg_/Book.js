@@ -15,9 +15,12 @@ import { enviarOrdemMultilegAction } from "components/redux/actions/api_actions/
 
 class Book extends React.Component {
   render() {
-    const indice = this.props.indice,
-      max = calculoPreco(this.props.multileg[indice], "max"),
-      min = calculoPreco(this.props.multileg[indice], "min");
+    const { props } = this;
+    const indice = props.indice,
+      max = calculoPreco(props.multileg[indice], "max"),
+      min = calculoPreco(props.multileg[indice], "min");
+
+    const renderPlaceholder = renderPlaceholderPreco(props);
     return (
       <div>
         <Row>
@@ -26,9 +29,7 @@ class Book extends React.Component {
           </Col>
           <IconeConfigGrafico
             handleShow={() =>
-              this.props.abrirFecharConfigComplAction(
-                this.props.configComplementarAberto
-              )
+              props.abrirFecharConfigComplAction(props.configComplementarAberto)
             }
             name="config_complementar"
             id="icone_config_complementar"
@@ -59,7 +60,7 @@ class Book extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                {this.props.multileg[indice].tabelaMultileg.map(
+                {props.multileg[indice].tabelaMultileg.map(
                   (item, indiceLinha) => (
                     <tr key={indiceLinha}>
                       <td>
@@ -108,10 +109,10 @@ class Book extends React.Component {
               step="0.01"
               min={min}
               max={max}
-              value={this.props.multileg[indice].preco}
+              value={props.multileg[indice].preco}
               onChange={event =>
-                this.props.modificarAtributoAbaAction(
-                  this.props.multileg,
+                props.modificarAtributoAbaAction(
+                  props.multileg,
                   indice,
                   "preco",
                   Number(event.currentTarget.value).toFixed(2)
@@ -124,8 +125,8 @@ class Book extends React.Component {
           <Col md={4}>
             <span
               onClick={() =>
-                this.props.modificarAtributoAbaAction(
-                  this.props.multileg,
+                props.modificarAtributoAbaAction(
+                  props.multileg,
                   indice,
                   "preco",
                   formatarNumero(Number(min).toFixed(2), 2, ".", ",")
@@ -139,8 +140,8 @@ class Book extends React.Component {
           <Col md={4}>
             <span
               onClick={() =>
-                this.props.modificarAtributoAbaAction(
-                  this.props.multileg,
+                props.modificarAtributoAbaAction(
+                  props.multileg,
                   indice,
                   "preco",
                   formatarNumero(
@@ -159,8 +160,8 @@ class Book extends React.Component {
           <Col md={4}>
             <span
               onClick={() =>
-                this.props.modificarAtributoAbaAction(
-                  this.props.multileg,
+                props.modificarAtributoAbaAction(
+                  props.multileg,
                   indice,
                   "preco",
                   formatarNumero(Number(max).toFixed(2), 2, ".", ",")
@@ -178,14 +179,15 @@ class Book extends React.Component {
           </Col>
           <Col className="mr-1">
             <InputFormatado
+              placeholder={renderPlaceholder ? "Informe as qtdes" : ""}
               allowNegative
               autoSelect
               tipoInput="precoNegativo"
               step={0.01}
-              value={this.props.multileg[indice].preco}
+              value={getPreco(props)}
               onChange={valor =>
-                this.props.modificarAtributoAbaAction(
-                  this.props.multileg,
+                props.modificarAtributoAbaAction(
+                  props.multileg,
                   indice,
                   "preco",
                   valor
@@ -201,12 +203,12 @@ class Book extends React.Component {
           <Col className="mr-1">
             <InputFormatado
               tipoInput="preco"
-              value={calcularTotal(this.props)}
+              value={calcularTotal(props)}
               readOnly
               autoSelect
               onChange={valor =>
-                this.props.modificarAtributoAbaAction(
-                  this.props.multileg,
+                props.modificarAtributoAbaAction(
+                  props.multileg,
                   indice,
                   "total",
                   valor
@@ -216,7 +218,7 @@ class Book extends React.Component {
           </Col>
         </Row>
 
-        {RowValidade(this.props, this.props.multileg[indice])}
+        {RowValidade(props, props.multileg[indice])}
 
         <Row className="mb-2">
           <Col md={4} className="ml-4">
@@ -224,8 +226,8 @@ class Book extends React.Component {
               variant="secondary"
               size="sm"
               onClick={() =>
-                this.props.modificarAtributoAbaAction(
-                  this.props.multileg,
+                props.modificarAtributoAbaAction(
+                  props.multileg,
                   indice,
                   "limpar",
                   ""
@@ -239,7 +241,7 @@ class Book extends React.Component {
             <Button
               variant="primary"
               size="sm"
-              onClick={() => this.props.enviarOrdemMultilegAction(this.props)}
+              onClick={() => props.enviarOrdemMultilegAction(props)}
             >
               EXECUTAR
             </Button>
@@ -271,4 +273,27 @@ const calcularTotal = props => {
     total += oferta.qtde * oferta.cotacao;
   });
   return "R$ " + formatarNumDecimal(total);
+};
+
+const renderPlaceholderPreco = props => {
+  let renderPlaceholder = false;
+  let tabelaMultileg = props.multileg[props.indice].tabelaMultileg;
+
+  tabelaMultileg.forEach(oferta => {
+    let qtde = oferta.qtde + "";
+    qtde = qtde.split(".").join("");
+    if (!qtde || qtde === "0") {
+      renderPlaceholder = true;
+    }
+  });
+
+  return renderPlaceholder;
+};
+
+const getPreco = props => {
+  let preco = props.multileg[props.indice].preco;
+
+  if (["0,00", "0.00"].includes(preco)) return "";
+
+  return preco;
 };

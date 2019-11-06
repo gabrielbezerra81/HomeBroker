@@ -11,6 +11,7 @@ class InputFormatado extends React.Component {
     if (this.props.tipoInput === "preco")
       input = (
         <CurrencyInput
+          placeholder={this.props.placeholder}
           locale="pt-BR"
           className={`form-control textInput inputFormatado ${this.props.className}`}
           precision={2}
@@ -36,6 +37,7 @@ class InputFormatado extends React.Component {
     else if (this.props.tipoInput === "quantidade")
       input = (
         <NumberFormat
+          placeholder={this.props.placeholder}
           thousandSeparator="."
           decimalSeparator=","
           decimalScale={0}
@@ -60,6 +62,7 @@ class InputFormatado extends React.Component {
     else if (this.props.tipoInput === "precoNegativo")
       input = (
         <NumberFormat
+          placeholder={this.props.placeholder}
           className="form-control textInput"
           thousandSeparator="."
           decimalSeparator=","
