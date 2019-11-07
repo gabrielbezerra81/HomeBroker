@@ -46,7 +46,9 @@ class InputFormatado extends React.Component {
           onChange={
             this.props.readOnly
               ? null
-              : event => this.props.onChange(event.target.value)
+              : event => {
+                  this.props.onChange(event.target.value.split(".").join(""));
+                }
           }
           onFocus={event => {
             if (this.props.autoSelect) event.target.select();
