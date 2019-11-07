@@ -3,7 +3,9 @@ import {
   pesquisarStrikesMultilegAPI,
   enviarOrdemAPI,
   travarDestravarClique,
-  verificarMonitorarAtivo
+  verificarMonitorarAtivoAPI,
+  criarAlertaOperacaoAPI,
+  criarPosicaoMultilegAPI
 } from "components/api/API";
 import { PESQUISAR_ATIVO_MULTILEG_API } from "constants/ApiActionTypes";
 import {
@@ -18,7 +20,7 @@ export const pesquisarAtivoMultilegAction = (props, indice) => {
     let aba = multileg[indice];
     const codigo_ativo = aba.ativo;
 
-    verificarMonitorarAtivo(codigo_ativo);
+    verificarMonitorarAtivoAPI(codigo_ativo);
 
     travarDestravarClique("travar", "multileg");
     const dados = await pesquisarAtivoMultilegAPI(codigo_ativo);
@@ -74,5 +76,21 @@ export const enviarOrdemMultilegAction = props => {
     let json = montarOrdemMultileg(props);
 
     if (validarOrdemMultileg(props)) enviarOrdemAPI([json]);
+  };
+};
+
+export const criarAlertaMultilegAction = props => {
+  return async dispatch => {
+    let json = montarOrdemMultileg(props);
+
+    if (validarOrdemMultileg(props)) criarAlertaOperacaoAPI([json]);
+  };
+};
+
+export const criarPosicaoMultilegAction = props => {
+  return async dispatch => {
+    let json = montarOrdemMultileg(props);
+
+    if (validarOrdemMultileg(props)) criarPosicaoMultilegAPI([json]);
   };
 };

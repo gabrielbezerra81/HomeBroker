@@ -11,7 +11,11 @@ import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
 import InputFormatado from "components/utils/InputFormatado";
 import { formatarNumero } from "components/redux/reducers/formInputReducer";
 import RowValidade from "components/forms/multileg_/RowValidade";
-import { enviarOrdemMultilegAction } from "components/redux/actions/api_actions/MenuAPIAction";
+import {
+  enviarOrdemMultilegAction,
+  criarAlertaMultilegAction,
+  criarPosicaoMultilegAction
+} from "components/redux/actions/api_actions/MenuAPIAction";
 import NumberFormat from "react-number-format";
 
 class Book extends React.Component {
@@ -263,7 +267,7 @@ class Book extends React.Component {
             <Button
               variant="primary"
               size="sm"
-              onClick={() => false}
+              onClick={() => props.criarAlertaMultilegAction(props)}
               block
             >
               ALERTA DE OPERAÇÃO
@@ -275,7 +279,7 @@ class Book extends React.Component {
             <Button
               variant="primary"
               size="sm"
-              onClick={() => false}
+              onClick={() => props.criarPosicaoMultilegAction(props)}
               block
             >
               CRIAR POSIÇÃO
@@ -297,7 +301,9 @@ export default connect(
   {
     abrirFecharConfigComplAction,
     modificarAtributoAbaAction,
-    enviarOrdemMultilegAction
+    enviarOrdemMultilegAction,
+    criarAlertaMultilegAction,
+    criarPosicaoMultilegAction
   }
 )(Book);
 

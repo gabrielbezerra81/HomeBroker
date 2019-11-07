@@ -2,7 +2,7 @@ import {
   pesquisarAtivoAPI,
   enviarOrdemAPI,
   atualizarCotacaoAPI,
-  verificarMonitorarAtivo
+  verificarMonitorarAtivoAPI
 } from "components/api/API";
 import { PESQUISAR_ATIVO_BOLETA_API } from "constants/ApiActionTypes";
 import {
@@ -17,7 +17,7 @@ export const pesquisarAtivoOnEnterAction = (props, namespace) => {
       props.eventSourceCotacao.close();
     }
 
-    verificarMonitorarAtivo(props.ativo);
+    verificarMonitorarAtivoAPI(props.ativo);
 
     document.body.style.cursor = "wait";
     const dadosPesquisa = await pesquisarAtivoAPI(props.ativo);

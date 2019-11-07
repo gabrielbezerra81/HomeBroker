@@ -32,7 +32,11 @@ import { atualizarTabelaAntiga } from "components/redux/actions/api_actions/book
 import {
   erro_pesquisar_ativo,
   sucesso_enviar_ordem,
-  erro_enviar_ordem
+  erro_enviar_ordem,
+  sucesso_criar_alerta,
+  erro_criar_alerta,
+  erro_criar_posicao,
+  sucesso_criar_posicao
 } from "constants/AlertaErros";
 
 export const pesquisarAtivoAPI = codigo => {
@@ -428,7 +432,7 @@ export const atualizarEmblemasAPI = (dispatch, listaPosicoes, ids) => {
   return source;
 };
 
-export const verificarMonitorarAtivo = codigo => {
+export const verificarMonitorarAtivoAPI = codigo => {
   request
     .get(url_base + url_listarAtivosMonitorados_)
     .then(response => {
@@ -448,21 +452,41 @@ export const verificarMonitorarAtivo = codigo => {
     });
 };
 
-export const criarPosicaoMultileg = () => {
+export const criarPosicaoMultilegAPI = json => {
+  const jsonStringBody = JSON.stringify(json);
+
   return request
-    .get(url_base + url_criarPosicaoMultileg_)
-    .then(response => {})
+    .post(cors_anywhere + url_base + url_criarPosicaoMultileg_)
+    .retry(2)
+    .set({ "Content-Type": "application/json" })
+    .send(jsonStringBody)
+    .then(response => {
+      console.log("response", response);
+      if (response.status === 201) alert(sucesso_criar_posicao);
+      else alert(erro_criar_posicao);
+    })
     .catch(erro => {
-      console.log(erro);
+      console.log(erro.response);
+      alert(erro_criar_posicao);
     });
 };
 
-export const criarAlertaOperacao = () => {
+export const criarAlertaOperacaoAPI = json => {
+  const jsonStringBody = JSON.stringify(json);
+
   return request
-    .get(url_base + url_criarAlertaOperacao_)
-    .then(response => {})
+    .post(cors_anywhere + url_base + url_criarAlertaOperacao_)
+    .retry(2)
+    .set({ "Content-Type": "application/json" })
+    .send(jsonStringBody)
+    .then(response => {
+      console.log("response", response);
+      if (response.status === 201) alert(sucesso_criar_alerta);
+      else alert(erro_criar_alerta);
+    })
     .catch(erro => {
-      console.log(erro);
+      console.log(erro.response);
+      alert(erro_criar_alerta);
     });
 };
 
