@@ -143,7 +143,7 @@ class AbaMultileg extends React.Component {
             <div className="divColunaDetalhes">
               <div className="divFlexRowDetalhesAba">
                 <Form.Label>Incluir</Form.Label>
-                <div className="botoesIncluir">
+                <div>
                   <Button
                     variant="primary"
                     size="sm"

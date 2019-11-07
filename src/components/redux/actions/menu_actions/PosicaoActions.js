@@ -42,15 +42,16 @@ export const listarPosicoesAction = props => {
           executando: [],
           idEstrutura: operacao.structureId
         };
-        if (!operacao.ordersWorking) {
+        if (operacao.ordersWorking.length === 0) {
           posicao.total = 0;
         }
+        posicao.executando = [...operacao.ordersWorking];
         operacao.ordersWorking.forEach(ordem => {
           ordem.offers.forEach(oferta => {
             if (oferta.qtdeExecutada === 0) {
               posicao.total = 0;
             }
-            posicao.executando.push(oferta);
+
             if (oferta.oferta === "C") posicao.custodiaCompra.push(oferta);
             else posicao.custodiaVenda.push(oferta);
           });
@@ -59,6 +60,7 @@ export const listarPosicoesAction = props => {
         listaPosicoes.push(posicao);
       });
     });
+    listaPosicoes.splice(1, 30);
     atualizarEmblemasAction(dispatch, listaPosicoes);
     dispatch({
       type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,

@@ -12,16 +12,15 @@ import InputFormatado from "components/utils/InputFormatado";
 import { formatarNumero } from "components/redux/reducers/formInputReducer";
 import RowValidade from "components/forms/multileg_/RowValidade";
 import { enviarOrdemMultilegAction } from "components/redux/actions/api_actions/MenuAPIAction";
-import CurrencyInput from "react-intl-number-input";
 import NumberFormat from "react-number-format";
 
 class Book extends React.Component {
   render() {
     const { props } = this;
     const indice = props.indice,
-      max = calculoPreco(props.multileg[indice], "max"),
+      total = calcularTotal(props),
       min = calculoPreco(props.multileg[indice], "min"),
-      total = calcularTotal(props);
+      max = calculoPreco(props.multileg[indice], "max");
 
     const renderPlaceholder = renderPlaceholderPreco(props);
     return (
@@ -137,27 +136,30 @@ class Book extends React.Component {
               }
               className="divClicavel"
             >
-              {formatarNumDecimal(min)}
+              {min ? formatarNumDecimal(min) : ""}
             </span>
           </Col>
           <Col md={4}>
             <span
-              onClick={() =>
-                props.modificarAtributoAbaAction(
-                  props.multileg,
-                  indice,
-                  "preco",
-                  formatarNumero(
-                    Number((max + min) / 2).toFixed(2),
-                    2,
-                    ".",
-                    ","
-                  )
-                )
+              onClick={
+                min && max
+                  ? () =>
+                      props.modificarAtributoAbaAction(
+                        props.multileg,
+                        indice,
+                        "preco",
+                        formatarNumero(
+                          Number((max + min) / 2).toFixed(2),
+                          2,
+                          ".",
+                          ","
+                        )
+                      )
+                  : () => false
               }
               className="divClicavel"
             >
-              {formatarNumDecimal((max + min) / 2)}
+              {min && max ? formatarNumDecimal((max + min) / 2) : ""}
             </span>
           </Col>
           <Col md={4}>
@@ -172,7 +174,7 @@ class Book extends React.Component {
               }
               className="divClicavel"
             >
-              {formatarNumDecimal(max)}
+              {max ? formatarNumDecimal(max) : ""}
             </span>
           </Col>
         </Row>
@@ -246,13 +248,37 @@ class Book extends React.Component {
               LIMPAR
             </Button>
           </Col>
-          <Col className="botoesIncluir mr-1">
+          <Col className="mr-1">
             <Button
               variant="primary"
               size="sm"
               onClick={() => props.enviarOrdemMultilegAction(props)}
             >
               EXECUTAR
+            </Button>
+          </Col>
+        </Row>
+        <Row className="mb-2">
+          <Col md={9} className="ml-4 pr-0">
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => false}
+              block
+            >
+              ALERTA DE OPERAÇÃO
+            </Button>
+          </Col>
+        </Row>
+        <Row className="mb-2">
+          <Col md={9} className="ml-4 pr-0">
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => false}
+              block
+            >
+              CRIAR POSIÇÃO
             </Button>
           </Col>
         </Row>
@@ -282,7 +308,6 @@ const calcularTotal = props => {
     if (oferta.cv === "compra") total += oferta.qtde * oferta.cotacao;
     else total -= oferta.qtde * oferta.cotacao;
   });
-  console.log(total);
   return total;
 };
 

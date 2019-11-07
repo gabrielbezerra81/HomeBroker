@@ -92,7 +92,7 @@ export const modificarAtributoAbaAction = (
 
     if (atributo === "limpar") {
       abasMultileg[indice] = cloneDeep(aba);
-      abasMultileg[indice].nomeAba = "Sim " + (indice + 1);
+      abasMultileg[indice].nomeAba = "Ordem " + (indice + 1);
     } else {
       if (atributo === "ativo") valor = valor.toUpperCase();
 

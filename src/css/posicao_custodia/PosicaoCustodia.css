@@ -212,7 +212,7 @@ th .colunaDividida div {
 
 .tabelaExecutando > tbody > tr:nth-child(even) > td,
 .tabelaExecutando > tbody > tr:nth-child(even) > th {
-  background-color: var(--background-color) !important;
+  background-color: rgb(35, 35, 35) !important;
 }
 
 .iconeResumido path {

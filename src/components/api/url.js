@@ -16,6 +16,8 @@ export const url_listarOrdensExecucao_ = "order/working";
 export const url_pesquisarOpcoesVencimentos_codigo = "stocks/options/expirations/";
 export const url_pesquisarStrikesVencimentos_codigo =  "stocks/strikes/expirations/"
 export const url_pesquisarStrikes_codigo_vencimento = "stocks/findBySymbolAndEndDate/"
+export const url_criarPosicaoMultileg_ = "position/list"
+export const url_criarAlertaOperacao_ = "advice/list"
 
 //Posição
 export const url_listarPosicoes = "position"

@@ -3,25 +3,25 @@ export const calculoPreco = (aba, tipo) => {
   let arrayQtde = [];
 
   aba.tabelaMultileg.forEach((oferta, index) => {
-    if ((oferta.compra && oferta.venda) || tipo === "ultimo")
+    if (oferta.compra || oferta.venda || tipo === "ultimo")
       arrayQtde.push(oferta.qtde);
   });
   const mdc = gcd(arrayQtde);
 
   if (mdc > 0)
     aba.tabelaMultileg.forEach((oferta, index) => {
-      if ((oferta.compra && oferta.venda) || tipo === "ultimo") {
+      if (oferta.compra || oferta.venda || tipo === "ultimo") {
         switch (tipo) {
           case "max":
-            if (oferta.cv === "compra")
+            if (oferta.cv === "compra" && oferta.venda)
               preco += oferta.venda.price * (oferta.qtde / mdc);
-            else if (oferta.cv === "venda")
+            else if (oferta.cv === "venda" && oferta.compra)
               preco -= oferta.compra.price * (oferta.qtde / mdc);
             break;
           case "min":
-            if (oferta.cv === "compra")
+            if (oferta.cv === "compra" && oferta.compra)
               preco += oferta.compra.price * (oferta.qtde / mdc);
-            else if (oferta.cv === "venda")
+            else if (oferta.cv === "venda" && oferta.venda)
               preco -= oferta.venda.price * (oferta.qtde / mdc);
             break;
           case "ultimo":

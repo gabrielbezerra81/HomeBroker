@@ -14,7 +14,9 @@ import {
   url_bookReativo_codigos,
   url_cotacaoReativa_codigos,
   url_listarAtivosMonitorados_,
-  url_monitorarAtivo_codigo
+  url_monitorarAtivo_codigo,
+  url_criarPosicaoMultileg_,
+  url_criarAlertaOperacao_
 } from "components/api/url";
 import {
   MODIFICAR_ATRIBUTO_ABA,
@@ -441,6 +443,24 @@ export const verificarMonitorarAtivo = codigo => {
           });
       }
     })
+    .catch(erro => {
+      console.log(erro);
+    });
+};
+
+export const criarPosicaoMultileg = () => {
+  return request
+    .get(url_base + url_criarPosicaoMultileg_)
+    .then(response => {})
+    .catch(erro => {
+      console.log(erro);
+    });
+};
+
+export const criarAlertaOperacao = () => {
+  return request
+    .get(url_base + url_criarAlertaOperacao_)
+    .then(response => {})
     .catch(erro => {
       console.log(erro);
     });

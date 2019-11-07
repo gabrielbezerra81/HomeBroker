@@ -69,27 +69,42 @@ class PosicaoAmpliadaResumida extends React.Component {
                             className="tabelaExecutando text-center mt-1"
                             style={{ tableLayout: "auto" }}
                           >
-                            <tbody>
-                              {item.executando.map((itemExecutando, index3) => (
+                            <tbody className="verticalAlignColunaTabela">
+                              {item.executando.map((ordem, index3) => (
                                 <tr key={index3}>
-                                  {itemExecutando.oferta === "C" ? (
-                                    <td>
-                                      +{itemExecutando.qtdeOferta / 1000}K
-                                    </td>
-                                  ) : (
-                                    <td>
-                                      -{itemExecutando.qtdeOferta / 1000}K
-                                    </td>
-                                  )}
-                                  <td>{itemExecutando.ativo}</td>
                                   <td>
-                                    {renderCV(
-                                      itemExecutando.oferta,
-                                      itemExecutando.precoEnvio,
-                                      itemExecutando.operacao,
-                                      index3
+                                    {ordem.offers.map((oferta, indice) =>
+                                      oferta.oferta === "C" ? (
+                                        <span key={indice}>
+                                          +{oferta.qtdeOferta / 1000}K
+                                          <br />
+                                        </span>
+                                      ) : (
+                                        <span key={indice}>
+                                          -{oferta.qtdeOferta / 1000}K
+                                          <br />
+                                        </span>
+                                      )
                                     )}
                                   </td>
+                                  <td>
+                                    {ordem.offers.map((oferta, indice) => (
+                                      <span key={indice}>
+                                        {oferta.ativo}
+                                        <br />
+                                      </span>
+                                    ))}
+                                  </td>
+                                  <td>
+                                    {ordem.offers.map((oferta, indice) =>
+                                      renderCV(
+                                        oferta.oferta,
+                                        oferta.operacao,
+                                        indice
+                                      )
+                                    )}
+                                  </td>
+                                  <td>{ordem.offers[0].precoEnvio}</td>
                                 </tr>
                               ))}
                             </tbody>
@@ -128,7 +143,7 @@ const renderAtivo = item => {
       mostrarAtivo = true;
       return <h6 key={`custodiaCompra${ind}`}>{ativo.symbol}</h6>;
     }
-    return <span></span>;
+    return <span key={`custodiaCompra${ind}`}></span>;
   });
 
   return mostrarAtivo ? <Col md={0}>{conteudo}</Col> : null;
@@ -148,19 +163,19 @@ const renderValorPorcentagem = porcentagem => {
   }
 };
 
-const renderCV = (cv, valor, operacao, indice) => {
+const renderCV = (cv, operacao, indice) => {
   return (
-    <span>
+    <span key={indice}>
       {cv === "C" ? (
         <div className="divCV emblemaExecutandoDivCV">
           <MDBIcon
             icon="circle"
             className="iconeStatusCirculo iconeStatusConectado"
           />
-          {(operacao === "Multileg" && indice === 0) ||
+          {/* {(operacao === "Multileg" && indice === 0) ||
           operacao !== "Multileg" ? (
             <span>{valor}</span>
-          ) : null}
+          ) : null} */}
         </div>
       ) : (
         <div className="divCV emblemaExecutandoDivCV">
@@ -168,10 +183,10 @@ const renderCV = (cv, valor, operacao, indice) => {
             icon="circle"
             className="iconeStatusCirculo iconeStatusDesconectado"
           />
-          {(operacao === "Multileg" && indice === 0) ||
+          {/* {(operacao === "Multileg" && indice === 0) ||
           operacao !== "Multileg" ? (
             <span>{valor}</span>
-          ) : null}
+          ) : null} */}
         </div>
       )}
     </span>
