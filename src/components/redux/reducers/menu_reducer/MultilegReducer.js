@@ -22,7 +22,7 @@ const INITIAL_STATE = {
   multileg: [
     {
       nomeAba: "Ordem 1",
-      ativo: "PETRW245",
+      ativo: "PETR4",
       ativoAtual: "",
       valor: 0,
       variacao: 0,
@@ -34,7 +34,9 @@ const INITIAL_STATE = {
       total: "",
       validadeSelect: "DAY",
       date: new Date(),
-      tabelaMultileg: []
+      tabelaMultileg: [
+       
+      ]
     }
   ],
   eventSource: null, //Book

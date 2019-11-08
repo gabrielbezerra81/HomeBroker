@@ -56,6 +56,7 @@ class Book extends React.Component {
               borderless
               striped
               className="tabelaBook text-center"
+              style={{ tableLayout: "fixed" }}
             >
               <thead>
                 <tr>
@@ -69,11 +70,7 @@ class Book extends React.Component {
                 {props.multileg[indice].tabelaMultileg.map(
                   (item, indiceLinha) => (
                     <tr key={indiceLinha}>
-                      <td>
-                        {item.compra
-                          ? formatarNumDecimal(item.compra.qtty / 1000) + "K"
-                          : null}
-                      </td>
+                      <td>{renderQtdeBook(item.compra)}</td>
                       <td>
                         {item.compra
                           ? formatarNumDecimal(item.compra.price)
@@ -84,11 +81,7 @@ class Book extends React.Component {
                           ? formatarNumDecimal(item.venda.price)
                           : null}
                       </td>
-                      <td>
-                        {item.venda
-                          ? formatarNumDecimal(item.venda.qtty / 1000) + "K"
-                          : null}
-                      </td>
+                      <td>{renderQtdeBook(item.venda)}</td>
                     </tr>
                   )
                 )}
@@ -338,4 +331,17 @@ const getPreco = props => {
   if (["0,00", "0.00"].includes(preco)) return "";
 
   return preco;
+};
+
+const renderQtdeBook = itemBook => {
+  if (itemBook) {
+    if (itemBook.qtty > 1000000000)
+      return formatarNumDecimal(itemBook.qtty / 1000000000) + "G";
+    else if (itemBook.qtty > 1000000)
+      return formatarNumDecimal(itemBook.qtty / 1000000) + "M";
+    else if (itemBook.qtty > 1000) {
+      return formatarNumDecimal(itemBook.qtty / 1000) + "K";
+    }
+  }
+  return null;
 };

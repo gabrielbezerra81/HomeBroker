@@ -125,7 +125,14 @@ const renderOferta = (item, index) => {
           </span>
         ))}
       </td>
-      <td>{qtdeOferta}</td>
+      <td>
+        {item.offers.map((oferta, index2) => (
+          <span key={index2}>
+            {oferta.qtdeOferta}
+            <br />
+          </span>
+        ))}
+      </td>
       <td>{qtdeExecutada}</td>
       <td>
         {item.offers.map((oferta, index2) => (
@@ -137,14 +144,7 @@ const renderOferta = (item, index) => {
       </td>
 
       <td>{item.precoDisparo}</td>
-      <td>
-        {item.offers.map((oferta, index2) => (
-          <span key={index2}>
-            {oferta.precoEnvio}
-            <br />
-          </span>
-        ))}
-      </td>
+      <td>{item.offers[0].precoEnvio}</td>
       <td>
         {item.offers.map((oferta, index2) => (
           <span key={index2}>
