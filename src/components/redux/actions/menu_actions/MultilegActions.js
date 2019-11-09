@@ -118,8 +118,9 @@ export const modificarAba = async (multileg, indice, atributo, valor) => {
     abasMultileg[indice][atributo] = valor;
 
     if (atributo === "vencimentoSelecionado") {
+      multileg[indice].ativo = multileg[indice].ativoAtual;
       const dados = await pesquisarStrikesMultilegAction(
-        multileg[indice].ativo,
+        multileg[indice].ativoAtual,
         multileg[indice].vencimentoSelecionado
       );
       if (dados) {
