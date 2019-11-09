@@ -35,7 +35,6 @@ export const calculoPreco = (aba, tipo) => {
         }
       }
     });
-  if (preco < 0) preco = preco * -1;
   return preco;
 };
 
