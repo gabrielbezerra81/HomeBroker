@@ -176,12 +176,14 @@ export const pesquisarAtivoMultilegAPI = codigo_ativo => {
         vencimentos: [],
         //cotacaoAtual: 0,
         variacao: "",
-        cotacaoAtual: 0
+        cotacaoAtual: 0,
+        ativoPrincipal: ""
       };
 
       const { body } = response;
       dados.opcoes = [...body.options];
       dados.vencimentos = [...body.expirations];
+      dados.ativoPrincipal = body.stock.symbol;
       const dadosAtivo = await pesquisarAtivoAPI(codigo_ativo);
       if (dadosAtivo) {
         dados.cotacaoAtual = Number(dadosAtivo.cotacaoAtual);

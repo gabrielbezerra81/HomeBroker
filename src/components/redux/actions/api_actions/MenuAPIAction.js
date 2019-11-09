@@ -45,7 +45,7 @@ export const pesquisaAtivo = async (abasMultileg, indice) => {
       dados.opcoes,
       dados.cotacaoAtual
     );
-    aba.ativoAtual = codigo_ativo;
+    aba.ativoAtual = dados.ativoPrincipal;
   }
 
   return multileg;
