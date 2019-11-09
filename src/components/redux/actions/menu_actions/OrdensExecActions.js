@@ -63,6 +63,7 @@ export const abrirOrdemNoMultilegAction = (props, item) => {
 
     let multileg = objMultileg.abasMultileg;
     const indiceAba = multileg.length - 1;
+    const arrayCodigos = [...new Set(item.offers.map(oferta => oferta.ativo))];
 
     try {
       for (const [indiceOferta, oferta] of item.offers.entries()) {
@@ -80,13 +81,11 @@ export const abrirOrdemNoMultilegAction = (props, item) => {
         const opcao = multileg[indiceAba].opcoes.filter(
           opcao => opcao.symbol === oferta.ativo
         );
-
+        let tipo = "";
+        if (opcao.length > 0) tipo = opcao[0].type.toLowerCase();
+        else tipo = "acao";
         //Adicionar oferta
-        multileg = await adicionarOferta(
-          multileg,
-          opcao[0].type.toLowerCase(),
-          indiceAba
-        );
+        multileg = await adicionarOferta(multileg, tipo, indiceAba);
         const ofertaNova = multileg[indiceAba].tabelaMultileg[indiceOferta];
         ofertaNova.qtde = oferta.qtdeOferta;
         ofertaNova.cv = oferta.oferta === "C" ? "compra" : "venda";
@@ -95,6 +94,7 @@ export const abrirOrdemNoMultilegAction = (props, item) => {
       calculo = formatarNumero(calculo, 2, ".", ",");
       multileg[indiceAba].preco = calculo;
     } catch (erro) {
+      console.log(erro);
       alert(erro_exportar_ordens_multileg);
     }
     // let ofertas = item.offers.map(oferta => {
