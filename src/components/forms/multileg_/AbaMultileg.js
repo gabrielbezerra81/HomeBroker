@@ -81,7 +81,6 @@ class AbaMultileg extends React.Component {
                   options={renderSerie(props)}
                   value={props.multileg[indice].strikeSelecionado}
                   onChange={(event, data) => {
-                    console.log(data);
                     props.modificarAtributoAbaAction(
                       props.multileg,
                       indice,
@@ -132,7 +131,10 @@ class AbaMultileg extends React.Component {
                 >
                   {props.multileg[indice].vencimento.map(
                     (vencimento, indice) => (
-                      <option key={vencimento + indice} value={vencimento}>
+                      <option
+                        key={vencimento + indice + Math.random()}
+                        value={vencimento}
+                      >
                         {formatarVencimento(vencimento)}
                       </option>
                     )
@@ -239,6 +241,7 @@ const renderSerie = props => {
 const renderStrikeSymbol = (item, indice, listaOpcoes) => {
   if (indice % 2 === 0)
     return {
+      key: Math.random(),
       text:
         item.type === "CALL"
           ? item.symbol +

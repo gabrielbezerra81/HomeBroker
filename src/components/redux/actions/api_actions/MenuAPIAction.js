@@ -36,14 +36,15 @@ export const pesquisaAtivo = async (abasMultileg, indice) => {
   const dados = await pesquisarAtivoMultilegAPI(codigo_ativo);
 
   if (dados) {
-    aba.opcoes = [...dados.opcoes];
+    aba.opcoes = [...dados.opcoes].sort((a, b) => a.strike - b.strike);
     aba.vencimento = [...dados.vencimentos];
     aba.valor = dados.cotacaoAtual;
     aba.variacao = dados.variacao;
-    aba.vencimentoSelecionado = dados.vencimentos[0];
+    aba.vencimentoSelecionado = aba.opcoes[0].expiration;
     aba.strikeSelecionado = encontrarNumMaisProximo(
       dados.opcoes,
-      dados.cotacaoAtual
+      dados.cotacaoAtual,
+      codigo_ativo
     );
     aba.ativoAtual = dados.ativoPrincipal;
   }
@@ -68,14 +69,18 @@ export const pesquisarStrikesMultilegAction = async (
   };
 };
 
-export const encontrarNumMaisProximo = (listaOpcoes, cotacao) => {
-  var maisProximo = listaOpcoes.reduce((prev, curr) =>
-    Math.abs(curr.strike - cotacao) < Math.abs(prev.strike - cotacao)
-      ? curr
-      : prev
-  );
-
-  return maisProximo.strike;
+export const encontrarNumMaisProximo = (listaOpcoes, cotacao, codigo_ativo) => {
+  if (listaOpcoes.length > 0) {
+    var maisProximo = listaOpcoes.reduce((prev, curr) =>
+      Math.abs(curr.strike - cotacao) < Math.abs(prev.strike - cotacao)
+        ? curr
+        : prev
+    );
+    return maisProximo.strike;
+  } else {
+    const opcao = listaOpcoes.filter(opcao => opcao.symbol === codigo_ativo);
+    return opcao.strike;
+  }
 };
 export const desgraça = () => {
   return dispatch => {};
