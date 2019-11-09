@@ -72,6 +72,8 @@
 
 .verticalAlignColunaTabela td {
   vertical-align: middle !important ;
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
 }
 
 .barraProgresso > .progress-bar {

@@ -68,9 +68,19 @@ const modalBody = props => (
           </tr>
         </thead>
         <tbody className="verticalAlignColunaTabela">
-          {props.tabelaOrdensExecucao.map((item, index) =>
-            renderOferta(item, index)
-          )}
+          {props.tabelaOrdensExecucao.map((item, index) => {
+            const ofertaPrincipal = renderOferta(
+              item,
+              index,
+              props,
+              "ofertaPrincipal"
+            );
+            const ordensNext = item.nextOrders.map((ordemNext, ind) =>
+              renderOferta(ordemNext, "ON" + ind, props, "ordemNext")
+            );
+
+            return [ofertaPrincipal, ...ordensNext];
+          })}
         </tbody>
       </Table>
     </Row>
@@ -81,7 +91,7 @@ const retornaData = dataString => {
   return formatarDataDaAPI(dataString).toLocaleString();
 };
 
-const renderOferta = (item, index) => {
+const renderOferta = (item, index, props, tipo) => {
   let qtdeOferta = 0;
   let qtdeExecutada = 0;
 
@@ -91,7 +101,19 @@ const renderOferta = (item, index) => {
   });
 
   return (
-    <tr key={index}>
+    <tr
+      key={index}
+      className={tipo === "ofertaPrincipal" ? "divClicavel" : ""}
+      onClick={
+        tipo === "ofertaPrincipal"
+          ? e => {
+              e.stopPropagation();
+              if (item.operacao === "Multileg")
+                props.abrirOrdemNoMultilegAction(props, item);
+            }
+          : () => false
+      }
+    >
       <td>
         <ProgressBar
           animated

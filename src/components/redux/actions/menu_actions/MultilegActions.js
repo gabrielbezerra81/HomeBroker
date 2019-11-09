@@ -33,22 +33,20 @@ export const abrirFecharConfigComplAction = configComplementarAberto => {
   };
 };
 
+////
+
 export const selecionarAdicionarAbaAction = (key, props) => {
   return dispatch => {
     if (key === "adicionar") {
-      let abasMultileg = [...props.multileg];
-
-      const novaAba = cloneDeep(aba);
-      novaAba.nomeAba = "Ordem " + (abasMultileg.length + 1);
-      let abaAtual = "tab" + abasMultileg.length;
-
-      abasMultileg.push(novaAba);
-
+      let multileg = adicionarAba(props);
       //atualizarCotacaoAction(dispatch, props, abasMultileg);
-      atualizarBookAction(dispatch, props, abasMultileg);
+      atualizarBookAction(dispatch, props, multileg.abasMultileg);
       dispatch({
         type: ADICIONAR_ABA,
-        payload: { multileg: abasMultileg, abaSelecionada: abaAtual }
+        payload: {
+          multileg: multileg.abasMultileg,
+          abaSelecionada: multileg.abaAtual
+        }
       });
     } else {
       dispatch({
@@ -58,6 +56,20 @@ export const selecionarAdicionarAbaAction = (key, props) => {
     }
   };
 };
+
+export const adicionarAba = props => {
+  let abasMultileg = [...props.multileg];
+
+  const novaAba = cloneDeep(aba);
+  novaAba.nomeAba = "Ordem " + (abasMultileg.length + 1);
+  let abaAtual = "tab" + abasMultileg.length;
+
+  abasMultileg.push(novaAba);
+
+  return { abasMultileg: abasMultileg, abaAtual: abaAtual };
+};
+
+////
 
 export const excluirAbaMultilegAction = (props, indiceAba) => {
   return dispatch => {
@@ -81,6 +93,8 @@ export const excluirAbaMultilegAction = (props, indiceAba) => {
   };
 };
 
+////
+
 export const modificarAtributoAbaAction = (
   multileg,
   indice,
@@ -88,34 +102,39 @@ export const modificarAtributoAbaAction = (
   valor
 ) => {
   return async dispatch => {
-    let abasMultileg = [...multileg];
-
-    if (atributo === "limpar") {
-      abasMultileg[indice] = cloneDeep(aba);
-      abasMultileg[indice].nomeAba = "Ordem " + (indice + 1);
-    } else {
-      if (atributo === "ativo") valor = valor.toUpperCase();
-
-      abasMultileg[indice][atributo] = valor;
-
-      if (atributo === "vencimentoSelecionado") {
-        const dados = await pesquisarStrikesMultilegAction(
-          multileg[indice].ativo,
-          multileg[indice].vencimentoSelecionado
-        );
-        if (dados) {
-          abasMultileg[indice].opcoes = [...dados];
-          abasMultileg[indice].strikeSelecionado = encontrarNumMaisProximo(
-            dados,
-            abasMultileg[indice].valor
-          );
-        }
-      }
-    }
-
+    const abasMultileg = await modificarAba(multileg, indice, atributo, valor);
     dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
   };
 };
+
+export const modificarAba = async (multileg, indice, atributo, valor) => {
+  let abasMultileg = [...multileg];
+  if (atributo === "limpar") {
+    abasMultileg[indice] = cloneDeep(aba);
+    abasMultileg[indice].nomeAba = "Ordem " + (indice + 1);
+  } else {
+    if (atributo === "ativo") valor = valor.toUpperCase();
+
+    abasMultileg[indice][atributo] = valor;
+
+    if (atributo === "vencimentoSelecionado") {
+      const dados = await pesquisarStrikesMultilegAction(
+        multileg[indice].ativo,
+        multileg[indice].vencimentoSelecionado
+      );
+      if (dados) {
+        abasMultileg[indice].opcoes = [...dados];
+        abasMultileg[indice].strikeSelecionado = encontrarNumMaisProximo(
+          dados,
+          abasMultileg[indice].valor
+        );
+      }
+    }
+  }
+  return abasMultileg;
+};
+
+////
 
 export const modificarAtributoTabelaAbaAction = (
   props,
@@ -165,9 +184,7 @@ export const modificarAtributoTabelaAbaAction = (
       } //
     }
     const aba = abasMultileg[indiceGeral];
-    let calculo = calculoPreco(aba, "ultimo")
-      .toFixed(2)
-      .toString();
+    let calculo = calculoPreco(aba, "ultimo").toFixed(2);
 
     calculo = formatarNumero(calculo, 2, ".", ",");
     aba.preco = calculo;
@@ -204,58 +221,73 @@ export const excluirOfertaTabelaAction = (props, indiceAba, indiceLinha) => {
   };
 };
 
+////
+
 export const adicionarOfertaTabelaAction = (props, tipoOferta) => {
   return async dispatch => {
     travarDestravarClique("travar", "multileg");
+    const abasMultileg = await adicionarOferta(
+      props.multileg,
+      tipoOferta,
+      props.indice
+    );
 
-    let abasMultileg = [...props.multileg];
-    const indiceAba = props.indice;
-    let novaOferta = cloneDeep(oferta);
-    novaOferta.cotacao = abasMultileg[indiceAba].valor;
-    novaOferta.ativoAtual = abasMultileg[indiceAba].ativoAtual;
+    atualizarBookAction(dispatch, props, abasMultileg);
+    atualizarCotacaoAction(dispatch, props, abasMultileg);
+    dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
 
-    if (tipoOferta === "acao") {
-      novaOferta.opcoes = [{ symbol: abasMultileg[indiceAba].ativoAtual }];
-      novaOferta.codigoSelecionado = abasMultileg[indiceAba].ativoAtual;
-    } else {
-      novaOferta.strikeSelecionado = abasMultileg[indiceAba].strikeSelecionado;
-      novaOferta.serie = [...abasMultileg[indiceAba].vencimento];
-      novaOferta.serieSelecionada =
-        abasMultileg[indiceAba].vencimentoSelecionado;
-      novaOferta.opcoes = [...abasMultileg[indiceAba].opcoes];
-
-      if (tipoOferta === "call") {
-        novaOferta.tipo = "call";
-      } else if (tipoOferta === "put") {
-        novaOferta.tipo = "put";
-      }
-      pesquisarSymbolModel_strike_tipo(novaOferta);
-      const dadosAtivo = await pesquisarAtivoAPI(novaOferta.codigoSelecionado);
-      if (dadosAtivo) {
-        novaOferta.cotacao = Number(dadosAtivo.cotacaoAtual);
-      }
-    }
-    const book = await listarBookOfertaAPI(novaOferta.codigoSelecionado);
-
-    if (book) {
-      novaOferta.venda =
-        book.tabelaOfertasVenda[book.tabelaOfertasVenda.length - 1];
-      novaOferta.compra = book.tabelaOfertasCompra[0];
-
-      abasMultileg[indiceAba].tabelaMultileg.push(novaOferta);
-
-      const aba = abasMultileg[indiceAba];
-      aba.preco = calculoPreco(aba, "ultimo").toFixed(2);
-
-      verificarMonitorarAtivoAPI(novaOferta.codigoSelecionado);
-      atualizarBookAction(dispatch, props, abasMultileg);
-      atualizarCotacaoAction(dispatch, props, abasMultileg);
-
-      dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
-      travarDestravarClique("destravar", "multileg");
-    }
+    travarDestravarClique("destravar", "multileg");
   };
 };
+
+export const adicionarOferta = async (multileg, tipoOferta, indice) => {
+  let abasMultileg = [...multileg];
+  const indiceAba = indice;
+  let novaOferta = cloneDeep(oferta);
+  novaOferta.cotacao = abasMultileg[indiceAba].valor;
+  novaOferta.ativoAtual = abasMultileg[indiceAba].ativoAtual;
+
+  if (tipoOferta === "acao") {
+    novaOferta.opcoes = [{ symbol: abasMultileg[indiceAba].ativoAtual }];
+    novaOferta.codigoSelecionado = abasMultileg[indiceAba].ativoAtual;
+  } else {
+    novaOferta.strikeSelecionado = abasMultileg[indiceAba].strikeSelecionado;
+    novaOferta.serie = [...abasMultileg[indiceAba].vencimento];
+    novaOferta.serieSelecionada = abasMultileg[indiceAba].vencimentoSelecionado;
+    novaOferta.opcoes = [...abasMultileg[indiceAba].opcoes];
+
+    if (tipoOferta === "call") {
+      novaOferta.tipo = "call";
+    } else if (tipoOferta === "put") {
+      novaOferta.tipo = "put";
+    }
+    pesquisarSymbolModel_strike_tipo(novaOferta);
+    const dadosAtivo = await pesquisarAtivoAPI(novaOferta.codigoSelecionado);
+    if (dadosAtivo) {
+      novaOferta.cotacao = Number(dadosAtivo.cotacaoAtual);
+    }
+  }
+  const book = await listarBookOfertaAPI(novaOferta.codigoSelecionado);
+
+  if (book) {
+    novaOferta.venda =
+      book.tabelaOfertasVenda[book.tabelaOfertasVenda.length - 1];
+    novaOferta.compra = book.tabelaOfertasCompra[0];
+
+    abasMultileg[indiceAba].tabelaMultileg.push(novaOferta);
+
+    const aba = abasMultileg[indiceAba];
+    let calculo = calculoPreco(aba, "ultimo").toFixed(2);
+    calculo = formatarNumero(calculo, 2, ".", ",");
+    aba.preco = calculo;
+
+    verificarMonitorarAtivoAPI(novaOferta.codigoSelecionado);
+  }
+
+  return abasMultileg;
+};
+
+////
 
 export const atualizarBookAction = (dispatch, props, multileg) => {
   if (props.eventSource) {
@@ -287,7 +319,7 @@ export const atualizarBookAction = (dispatch, props, multileg) => {
   });
 };
 
-const oferta = {
+export const oferta = {
   opcoes: [],
   strikeSelecionado: "",
   cv: "compra",
@@ -305,7 +337,7 @@ const oferta = {
   venda: {}
 };
 
-const aba = {
+export const aba = {
   nomeAba: "",
   ativo: "",
   ativoAtual: "",

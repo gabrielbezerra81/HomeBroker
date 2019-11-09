@@ -150,7 +150,6 @@ export const enviarOrdemAPI = json => {
     .set({ "Content-Type": "application/json" })
     .send(jsonStringBody)
     .then(response => {
-      console.log("response", response);
       if (response.status === 201) alert(sucesso_enviar_ordem);
       else alert(erro_enviar_ordem);
     })
@@ -228,9 +227,6 @@ export const listarOrdensExecAPI = () => {
 
       body.forEach(oferta => {
         ofertas.push(oferta);
-        oferta.nextOrders.forEach(ordemNext => {
-          ofertas.push(ordemNext);
-        });
       });
 
       return ofertas;

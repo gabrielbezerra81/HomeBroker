@@ -42,10 +42,11 @@ export class MainApp extends Component {
   }
 
   render() {
+    const { props } = this;
     return (
       <div>
         <Animate
-          show={this.props.ordensAberto}
+          show={props.ordensAberto}
           duration={100}
           preMount
           transitionOnMount
@@ -55,12 +56,8 @@ export class MainApp extends Component {
           <div
             className="divOrdens"
             id="divOrdens"
-            onMouseOver={() =>
-              this.props.mouseOverAction(this.props, "ordensAberto")
-            }
-            onMouseLeave={() =>
-              this.props.mouseLeaveAction(this.props, "ordensAberto")
-            }
+            onMouseOver={() => props.mouseOverAction(props, "ordensAberto")}
+            onMouseLeave={() => props.mouseLeaveAction(props, "ordensAberto")}
           >
             <Row className="rowOrdensTracejada">
               <img src={iconeCompra} alt="" />
@@ -68,9 +65,7 @@ export class MainApp extends Component {
                 <img
                   src={iconeCompraMercado}
                   alt=""
-                  onClick={event =>
-                    this.props.abrirFormAction(event, this.props)
-                  }
+                  onClick={event => props.abrirFormAction(event, props)}
                   name="compra_mercado"
                   className="divClicavel"
                 />
@@ -80,9 +75,7 @@ export class MainApp extends Component {
                 <img
                   src={iconeCompraLimitada}
                   alt=""
-                  onClick={event =>
-                    this.props.abrirFormAction(event, this.props)
-                  }
+                  onClick={event => props.abrirFormAction(event, props)}
                   name="compra_limitada"
                   className="divClicavel"
                 />
@@ -92,9 +85,7 @@ export class MainApp extends Component {
                 <img
                   src={iconeCompraAgendada}
                   alt=""
-                  onClick={event =>
-                    this.props.abrirFormAction(event, this.props)
-                  }
+                  onClick={event => props.abrirFormAction(event, props)}
                   name="compra_agendada"
                   className="divClicavel"
                 />
@@ -104,9 +95,7 @@ export class MainApp extends Component {
                 <img
                   src={iconeCompraStartStop}
                   alt=""
-                  onClick={event =>
-                    this.props.abrirFormAction(event, this.props)
-                  }
+                  onClick={event => props.abrirFormAction(event, props)}
                   name="compra_startstop"
                   className="divClicavel"
                 />
@@ -116,9 +105,7 @@ export class MainApp extends Component {
                 <img
                   src={iconeCompraStartMovel}
                   alt=""
-                  onClick={event =>
-                    this.props.abrirFormAction(event, this.props)
-                  }
+                  onClick={event => props.abrirFormAction(event, props)}
                   name="compra_startmovel"
                   className="divClicavel"
                 />
@@ -132,9 +119,7 @@ export class MainApp extends Component {
                   src={iconeVendaMercado}
                   alt=""
                   name="venda_mercado"
-                  onClick={event =>
-                    this.props.abrirFormAction(event, this.props)
-                  }
+                  onClick={event => props.abrirFormAction(event, props)}
                   className="divClicavel"
                 />
                 <span>A mercado</span>
@@ -144,9 +129,7 @@ export class MainApp extends Component {
                   src={iconeVendaLimitada}
                   alt=""
                   name="venda_limitada"
-                  onClick={event =>
-                    this.props.abrirFormAction(event, this.props)
-                  }
+                  onClick={event => props.abrirFormAction(event, props)}
                   className="divClicavel"
                 />
                 <span>Limitada</span>
@@ -156,9 +139,7 @@ export class MainApp extends Component {
                   src={iconeVendaAgendada}
                   alt=""
                   name="venda_agendada"
-                  onClick={event =>
-                    this.props.abrirFormAction(event, this.props)
-                  }
+                  onClick={event => props.abrirFormAction(event, props)}
                   className="divClicavel"
                 />
                 <span>Agendada</span>
@@ -168,9 +149,7 @@ export class MainApp extends Component {
                   src={iconeVendaStartStop}
                   alt=""
                   name="venda_startstop"
-                  onClick={event =>
-                    this.props.abrirFormAction(event, this.props)
-                  }
+                  onClick={event => props.abrirFormAction(event, props)}
                   className="divClicavel"
                 />
                 <span>Start/Stop</span>
@@ -180,9 +159,7 @@ export class MainApp extends Component {
                   src={iconeVendaStopMovel}
                   alt=""
                   name="venda_stop_movel"
-                  onClick={event =>
-                    this.props.abrirFormAction(event, this.props)
-                  }
+                  onClick={event => props.abrirFormAction(event, props)}
                   className="divClicavel"
                 />
                 <span>Stop Móvel</span>
@@ -195,11 +172,8 @@ export class MainApp extends Component {
                   src={iconeMultileg}
                   alt="Multileg"
                   onClick={() => {
-                    this.props.atualizarDivKeyAction("multileg");
-                    this.props.abrirItemBarraLateralAction(
-                      this.props,
-                      "multilegAberto"
-                    );
+                    props.atualizarDivKeyAction("multileg");
+                    props.abrirItemBarraLateralAction(props, "multilegAberto");
                   }}
                   className="divClicavel"
                 />
@@ -208,7 +182,7 @@ export class MainApp extends Component {
             </Row>
           </div>
         </Animate>
-        {this.props.apps.map(Subapp => Subapp)}
+        {props.apps.map(Subapp => Subapp)}
       </div>
     );
   }
@@ -226,12 +200,13 @@ export class SubApp extends Component {
     );
   }
   render() {
+    const { props } = this;
     return (
       <Provider store={this.store}>
         <AppConectado
-          appkey={this.props.index}
-          indiceShow={this.props.indiceShow}
-          codigoBook={this.props.codigoBook}
+          appkey={props.index}
+          indiceShow={props.indiceShow}
+          codigoBook={props.codigoBook}
         />
       </Provider>
     );

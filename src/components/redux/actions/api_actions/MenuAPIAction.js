@@ -14,34 +14,44 @@ import {
   atualizarCotacaoAction
 } from "components/redux/actions/menu_actions/MultilegActions";
 
+////
+
 export const pesquisarAtivoMultilegAction = (props, indice) => {
   return async dispatch => {
-    let multileg = [...props.multileg];
-    let aba = multileg[indice];
-    const codigo_ativo = aba.ativo;
-
-    verificarMonitorarAtivoAPI(codigo_ativo);
-
     travarDestravarClique("travar", "multileg");
-    const dados = await pesquisarAtivoMultilegAPI(codigo_ativo);
+    const multileg = await pesquisaAtivo(props.multileg, indice);
+    dispatch({ type: PESQUISAR_ATIVO_MULTILEG_API, payload: multileg });
+    atualizarCotacaoAction(dispatch, props, multileg);
     travarDestravarClique("destravar", "multileg");
-    if (dados) {
-      aba.opcoes = [...dados.opcoes];
-      aba.vencimento = [...dados.vencimentos];
-      aba.valor = dados.cotacaoAtual;
-      aba.variacao = dados.variacao;
-      aba.vencimentoSelecionado = dados.vencimentos[0];
-      aba.strikeSelecionado = encontrarNumMaisProximo(
-        dados.opcoes,
-        dados.cotacaoAtual
-      );
-      aba.ativoAtual = codigo_ativo;
-
-      dispatch({ type: PESQUISAR_ATIVO_MULTILEG_API, payload: multileg });
-      atualizarCotacaoAction(dispatch, props, multileg);
-    }
   };
 };
+
+export const pesquisaAtivo = async (abasMultileg, indice) => {
+  let multileg = [...abasMultileg];
+  let aba = multileg[indice];
+  const codigo_ativo = aba.ativo;
+
+  verificarMonitorarAtivoAPI(codigo_ativo);
+
+  const dados = await pesquisarAtivoMultilegAPI(codigo_ativo);
+
+  if (dados) {
+    aba.opcoes = [...dados.opcoes];
+    aba.vencimento = [...dados.vencimentos];
+    aba.valor = dados.cotacaoAtual;
+    aba.variacao = dados.variacao;
+    aba.vencimentoSelecionado = dados.vencimentos[0];
+    aba.strikeSelecionado = encontrarNumMaisProximo(
+      dados.opcoes,
+      dados.cotacaoAtual
+    );
+    aba.ativoAtual = codigo_ativo;
+  }
+
+  return multileg;
+};
+
+////
 
 export const pesquisarStrikesMultilegAction = async (
   codigo_ativo,

@@ -42,7 +42,10 @@ import {
 import { mudarVariavelPosicaoAction } from "components/redux/actions/menu_actions/PosicaoActions";
 import { listarBookOfertaOnEnterAction } from "components/redux/actions/api_actions/bookOfertaAPIActions";
 import { mudarInputHeaderAction } from "components/redux/actions/bookOfertaActions";
-import { listarOrdensExecAction } from "components/redux/actions/menu_actions/OrdensExecActions";
+import {
+  listarOrdensExecAction,
+  abrirOrdemNoMultilegAction
+} from "components/redux/actions/menu_actions/OrdensExecActions";
 import { listarPosicoesAction } from "components/redux/actions/menu_actions/PosicaoActions";
 
 // @ts-ignore
@@ -130,7 +133,11 @@ const mapStateToPropsPosicao = state => ({
 
 const mapStateToPropsOrdensExec = state => ({
   tabelaOrdensExecucao: state.ordensExecReducer.tabelaOrdensExecucao,
-  ativo: state.ordensExecReducer.ativo
+  ativo: state.ordensExecReducer.ativo,
+  multileg: state.multilegReducer.multileg,
+  eventSource: state.multilegReducer.eventSource,
+  eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
+  multilegAberto: state.telaPrincipalReducer.multilegAberto
 });
 
 export const MainAppConectado = compose(
@@ -206,13 +213,17 @@ const TelaPrincipalConectada = compose(
 export const OrdensExecucaoConectada = compose(
   connect(
     mapStateToPropsGlobalStore,
-    { aumentarZindexAction },
+    { aumentarZindexAction, atualizarDivKeyAction },
     null,
     { context: GlobalContext }
   ),
   connect(
     mapStateToPropsOrdensExec,
-    { listarOrdensExecAction }
+    {
+      listarOrdensExecAction,
+      abrirOrdemNoMultilegAction,
+      abrirItemBarraLateralAction
+    }
   )
 )(OrdensExecucao);
 

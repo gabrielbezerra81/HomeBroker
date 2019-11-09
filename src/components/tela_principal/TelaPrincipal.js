@@ -25,7 +25,7 @@ export default class TelaPrincipal extends React.Component {
           <BarraTopoTelaPrincipal />
           <div style={{ display: "flex", height: "100%" }}>
             <BarraLateralConectada />
-            <div>
+            <div id="menusTelaPrincipal">
               <MainAppConectado />
               <Animate
                 show={this.props.ordensExecucaoAberto}

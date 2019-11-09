@@ -18,3 +18,6 @@ export const erro_criar_posicao = "Falha ao criar posição";
 export const erro_validar_ativo = "Ordem inválida, pesquise um ativo";
 export const erro_validar_qtde =
   "Ordem inválida, a quantidade deve ser maior que 0";
+
+//Alertas
+export const erro_exportar_ordens_multileg = "Falha ao adicionar abas";
