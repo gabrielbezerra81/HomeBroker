@@ -100,23 +100,26 @@ export const encontrarNumMaisProximo = (
 export const enviarOrdemMultilegAction = props => {
   return async dispatch => {
     let json = montarOrdemMultileg(props);
-
-    if (validarOrdemMultileg(props)) enviarOrdemAPI([json]);
+    travarDestravarClique("travar", "multileg");
+    if (validarOrdemMultileg(props)) await enviarOrdemAPI([json]);
+    travarDestravarClique("destravar", "multileg");
   };
 };
 
 export const criarAlertaMultilegAction = props => {
   return async dispatch => {
     let json = montarOrdemMultileg(props);
-
-    if (validarOrdemMultileg(props)) criarAlertaOperacaoAPI([json]);
+    travarDestravarClique("travar", "multileg");
+    if (validarOrdemMultileg(props)) await criarAlertaOperacaoAPI([json]);
+    travarDestravarClique("destravar", "multileg");
   };
 };
 
 export const criarPosicaoMultilegAction = props => {
   return async dispatch => {
     let json = montarOrdemMultileg(props);
-
-    if (validarOrdemMultileg(props)) criarPosicaoMultilegAPI([json]);
+    travarDestravarClique("travar", "multileg");
+    if (validarOrdemMultileg(props)) await criarPosicaoMultilegAPI([json]);
+    travarDestravarClique("destravar", "multileg");
   };
 };

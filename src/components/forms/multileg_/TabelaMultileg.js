@@ -86,7 +86,7 @@ class TabelaMultileg extends React.Component {
                     <Form.Group>
                       <Form.Control
                         as="select"
-                        className="textInput"
+                        className="textInput inputSerie"
                         value={item.serieSelecionada}
                         onChange={event =>
                           props.modificarAtributoTabelaAbaAction(

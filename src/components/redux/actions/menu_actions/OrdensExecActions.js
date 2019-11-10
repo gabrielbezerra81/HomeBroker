@@ -63,7 +63,7 @@ export const abrirOrdemNoMultilegAction = (props, item) => {
 
     let multileg = objMultileg.abasMultileg;
     const indiceAba = multileg.length - 1;
-    const arrayCodigos = [...new Set(item.offers.map(oferta => oferta.ativo))];
+    //const arrayCodigos = [...new Set(item.offers.map(oferta => oferta.ativo))];
 
     try {
       for (const [indiceOferta, oferta] of item.offers.entries()) {

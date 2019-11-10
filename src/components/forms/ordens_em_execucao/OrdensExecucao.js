@@ -155,7 +155,14 @@ const renderOferta = (item, index, props, tipo) => {
           </span>
         ))}
       </td>
-      <td>{qtdeExecutada}</td>
+      <td>
+        {item.offers.map((oferta, index2) => (
+          <span key={index2}>
+            {oferta.qtdeExecutada}
+            <br />
+          </span>
+        ))}
+      </td>
       <td>
         {item.offers.map((oferta, index2) => (
           <span key={index2}>
