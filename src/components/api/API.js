@@ -16,7 +16,10 @@ import {
   url_listarAtivosMonitorados_,
   url_monitorarAtivo_codigo,
   url_criarPosicaoMultileg_,
-  url_criarAlertaOperacao_
+  url_criarAlertaOperacao_,
+  url_cancelarOrdemExec_id,
+  url_finalizarAMercado_id,
+  url_aumentarQtde_id_qtde
 } from "components/api/url";
 import {
   MODIFICAR_ATRIBUTO_ABA,
@@ -36,7 +39,13 @@ import {
   sucesso_criar_alerta,
   erro_criar_alerta,
   erro_criar_posicao,
-  sucesso_criar_posicao
+  sucesso_criar_posicao,
+  erro_cancelar_ordem,
+  sucesso_cancelar_ordem,
+  sucesso_finalizar_a_mercado,
+  erro_finalizar_a_mercado,
+  sucesso_modificar_ordemExec,
+  erro_modificar_ordemExec
 } from "constants/AlertaErros";
 
 export const pesquisarAtivoAPI = codigo => {
@@ -485,6 +494,42 @@ export const criarAlertaOperacaoAPI = json => {
     .catch(erro => {
       console.log(erro.response);
       alert(erro_criar_alerta);
+    });
+};
+
+export const cancelarOrdemExecAPI = id => {
+  return request
+    .get(url_base + url_cancelarOrdemExec_id + id)
+    .then(() => {
+      alert(sucesso_cancelar_ordem);
+    })
+    .catch(erro => {
+      console.log(erro);
+      alert(erro_cancelar_ordem);
+    });
+};
+
+export const finalizarAMercadoAPI = id => {
+  return request
+    .get(url_base + url_finalizarAMercado_id + id)
+    .then(() => {
+      alert(sucesso_finalizar_a_mercado);
+    })
+    .catch(erro => {
+      console.log(erro);
+      alert(erro_finalizar_a_mercado);
+    });
+};
+
+export const incrementarQtdeOrdemExecAPI = (id, qtde) => {
+  return request
+    .get(url_base + url_aumentarQtde_id_qtde + id + "/" + qtde)
+    .then(() => {
+      alert(sucesso_modificar_ordemExec);
+    })
+    .catch(erro => {
+      console.log(erro);
+      alert(erro_modificar_ordemExec);
     });
 };
 

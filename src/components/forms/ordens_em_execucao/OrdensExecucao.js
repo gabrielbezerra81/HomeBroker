@@ -4,6 +4,7 @@ import { Row, Table, ProgressBar } from "react-bootstrap";
 import DraggableModal from "components/utils/DraggableModal";
 import { modalHeaderSemBook } from "components/utils/FormHeader";
 import { formatarDataDaAPI } from "components/utils/Formatacoes";
+import { OpcoesOrdemExecConectada } from "components/redux/ElementosConectadosRedux";
 
 export default class OrdensExecucao extends React.Component {
   componentDidMount() {
@@ -37,6 +38,12 @@ export default class OrdensExecucao extends React.Component {
 
 const modalBody = props => (
   <div className="bodyOrdensExecucao">
+    {props.opcoesOrdemAberto ? (
+      <OpcoesOrdemExecConectada />
+    ) : (
+      <OpcoesOrdemExecConectada />
+    )}
+
     <Row>
       <Table
         variant="dark"
@@ -106,10 +113,9 @@ const renderOferta = (item, index, props, tipo) => {
       className={tipo === "ofertaPrincipal" ? "divClicavel" : ""}
       onClick={
         tipo === "ofertaPrincipal"
-          ? e => {
-              e.stopPropagation();
-              if (item.operacao === "Multileg")
-                props.abrirOrdemNoMultilegAction(props, item);
+          ? () => {
+              props.mudarVariavelOrdensExecAction("ordemAtual", item);
+              props.mudarVariavelOrdensExecAction("opcoesOrdemAberto", true);
             }
           : () => false
       }

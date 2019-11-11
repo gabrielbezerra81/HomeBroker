@@ -11,6 +11,9 @@ export const url_listarBookOfertas_codigo = "book/";
 
 //Ordens em execução
 export const url_listarOrdensExecucao_ = "order/working";
+export const url_cancelarOrdemExec_id = "order/cancel/"
+export const url_finalizarAMercado_id = "order/market/"
+export const url_aumentarQtde_id_qtde = "order/qtty/"
 
 //Multileg
 export const url_pesquisarOpcoesVencimentos_codigo = "stocks/options/expirations/";

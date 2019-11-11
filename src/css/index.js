@@ -24,6 +24,7 @@ import "./venda/VendaFormConfigurar.css";
 import "./tela_principal/TelaPrincipal.css";
 import "./tela_principal/MenuLateral.css";
 import "./ordens_execucao/OrdensExecucao.css";
+import "./ordens_execucao/OpcoesOrdemExec.css";
 import "./multileg_/multileg.css";
 import "./posicao_custodia/PosicaoCustodia.css";
 import "./posicao_custodia/PosicaoDetalhada.css";

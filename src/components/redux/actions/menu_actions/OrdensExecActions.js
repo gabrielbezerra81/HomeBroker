@@ -2,7 +2,13 @@ import {
   MUDAR_VARIAVEL_ORDENS_EXEC,
   ADICIONAR_ABA
 } from "constants/MenuActionTypes";
-import { listarOrdensExecAPI, travarDestravarClique } from "components/api/API";
+import {
+  listarOrdensExecAPI,
+  travarDestravarClique,
+  cancelarOrdemExecAPI,
+  finalizarAMercadoAPI,
+  incrementarQtdeOrdemExecAPI
+} from "components/api/API";
 import { LISTAR_ORDENS_EXECUCAO } from "constants/ApiActionTypes";
 import {
   atualizarCotacaoAction,
@@ -39,7 +45,7 @@ export const listarOrdensExecAction = () => {
   };
 };
 
-export const abrirOrdemNoMultilegAction = (props, item) => {
+export const abrirOrdemNoMultilegAction = (props, item, acao = "") => {
   return async dispatch => {
     travarDestravarClique("travar", "menusTelaPrincipal");
 
@@ -87,9 +93,18 @@ export const abrirOrdemNoMultilegAction = (props, item) => {
         //Adicionar oferta
         multileg = await adicionarOferta(multileg, tipo, indiceAba);
         const ofertaNova = multileg[indiceAba].tabelaMultileg[indiceOferta];
-        ofertaNova.qtde = oferta.qtdeOferta;
-        ofertaNova.cv = oferta.oferta === "C" ? "compra" : "venda";
+
+        //Ações possíveis do menu de ordens em execução
+        if (acao === "reabrir") {
+          const qtdeCancelada = oferta.qtdeOferta - oferta.qtdeExecutada;
+
+          ofertaNova.qtde = qtdeCancelada;
+        } else ofertaNova.qtde = oferta.qtdeOferta;
+        if (acao === "oposta")
+          ofertaNova.cv = oferta.oferta === "C" ? "venda" : "compra";
+        else ofertaNova.cv = oferta.oferta === "C" ? "compra" : "venda";
       }
+
       let calculo = calculoPreco(multileg[indiceAba], "ultimo").toFixed(2);
       calculo = formatarNumero(calculo, 2, ".", ",");
       multileg[indiceAba].preco = calculo;
@@ -97,26 +112,6 @@ export const abrirOrdemNoMultilegAction = (props, item) => {
       console.log(erro);
       alert(erro_exportar_ordens_multileg);
     }
-    // let ofertas = item.offers.map(oferta => {
-    //   const ofertaMultileg = {
-    //     opcoes: [], //Buscar na API
-    //     strikeSelecionado: "", //Buscar na API
-    //     cv: oferta.oferta === "C" ? "compra" : "venda",
-    //     qtde: oferta.qtdeOferta,
-    //     serie: [], //Buscar na API
-    //     serieSelecionada: "", //Buscar na API
-    //     codigoSelecionado: oferta.ativo,
-    //     tipo: "", //Buscar na API
-    //     modelo: "", //Buscar na API
-    //     despernamento: 1000,
-    //     prioridade: 0,
-    //     cotacao: 0, //Buscar na API
-    //     ativoAtual: oferta.ativo,
-    //     compra: {},
-    //     venda: {}
-    //   };
-    //   return ofertaMultileg;
-    // });
 
     //Disparar atualizações feitas com objeto multileg
     objMultileg.abasMultileg = multileg;
@@ -131,5 +126,23 @@ export const abrirOrdemNoMultilegAction = (props, item) => {
     atualizarCotacaoAction(dispatch, props, objMultileg.abasMultileg);
     atualizarBookAction(dispatch, props, objMultileg.abasMultileg);
     travarDestravarClique("destravar", "menusTelaPrincipal");
+  };
+};
+
+export const cancelarOrdemExecAction = id => {
+  return dispatch => {
+    cancelarOrdemExecAPI(id);
+  };
+};
+
+export const finalizarAMercadoAction = id => {
+  return dispatch => {
+    finalizarAMercadoAPI(id);
+  };
+};
+
+export const aumentarQtdeAction = (id, qtde) => {
+  return dispatch => {
+    incrementarQtdeOrdemExecAPI(id, qtde);
   };
 };

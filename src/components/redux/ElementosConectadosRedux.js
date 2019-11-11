@@ -44,9 +44,14 @@ import { listarBookOfertaOnEnterAction } from "components/redux/actions/api_acti
 import { mudarInputHeaderAction } from "components/redux/actions/bookOfertaActions";
 import {
   listarOrdensExecAction,
-  abrirOrdemNoMultilegAction
+  abrirOrdemNoMultilegAction,
+  mudarVariavelOrdensExecAction,
+  cancelarOrdemExecAction,
+  finalizarAMercadoAction,
+  aumentarQtdeAction
 } from "components/redux/actions/menu_actions/OrdensExecActions";
 import { listarPosicoesAction } from "components/redux/actions/menu_actions/PosicaoActions";
+import OpcoesOrdemExec from "components/forms/ordens_em_execucao/OpcoesOrdemExec";
 
 // @ts-ignore
 export const GlobalContext = React.createContext();
@@ -134,6 +139,12 @@ const mapStateToPropsPosicao = state => ({
 const mapStateToPropsOrdensExec = state => ({
   tabelaOrdensExecucao: state.ordensExecReducer.tabelaOrdensExecucao,
   ativo: state.ordensExecReducer.ativo,
+  opcoesOrdemAberto: state.ordensExecReducer.opcoesOrdemAberto,
+  ordemAtual: state.ordensExecReducer.ordemAtual
+});
+
+const mapStateToPropsOpcoesOrdemExec = state => ({
+  ...mapStateToPropsOrdensExec(state),
   multileg: state.multilegReducer.multileg,
   eventSource: state.multilegReducer.eventSource,
   eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
@@ -221,11 +232,31 @@ export const OrdensExecucaoConectada = compose(
     mapStateToPropsOrdensExec,
     {
       listarOrdensExecAction,
-      abrirOrdemNoMultilegAction,
-      abrirItemBarraLateralAction
+      abrirItemBarraLateralAction,
+      mudarVariavelOrdensExecAction
     }
   )
 )(OrdensExecucao);
+
+export const OpcoesOrdemExecConectada = compose(
+  connect(
+    mapStateToPropsGlobalStore,
+    { aumentarZindexAction, atualizarDivKeyAction },
+    null,
+    { context: GlobalContext }
+  ),
+  connect(
+    mapStateToPropsOpcoesOrdemExec,
+    {
+      abrirItemBarraLateralAction,
+      mudarVariavelOrdensExecAction,
+      abrirOrdemNoMultilegAction,
+      cancelarOrdemExecAction,
+      finalizarAMercadoAction,
+      aumentarQtdeAction
+    }
+  )
+)(OpcoesOrdemExec);
 
 export const BarraLateralConectada = compose(
   connect(

@@ -1,0 +1,11 @@
+.containerOpcoesOrdem {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-evenly;
+  position: absolute;
+  top: 550px;
+  width: 950px;
+  padding: 15px 5px !important;
+  border-width: 2px;
+}

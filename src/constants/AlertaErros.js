@@ -12,6 +12,12 @@ export const sucesso_criar_alerta = "Alerta criado com sucesso";
 export const erro_criar_alerta = "Falha ao criar alerta";
 export const sucesso_criar_posicao = "Posição criada com sucesso";
 export const erro_criar_posicao = "Falha ao criar posição";
+export const sucesso_cancelar_ordem = "Ordem cancelada com sucesso";
+export const erro_cancelar_ordem = "Falha ao cancelar ordem";
+export const sucesso_finalizar_a_mercado = "Ordem finalizada com sucesso";
+export const erro_finalizar_a_mercado = "Falha ao finalizar ordem";
+export const sucesso_modificar_ordemExec = "Ordem modificada com sucesso";
+export const erro_modificar_ordemExec = "Falha ao modificar ordem";
 
 //Alertas Validação
 

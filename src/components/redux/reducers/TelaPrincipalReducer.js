@@ -12,10 +12,10 @@ const INITIAL_STATE = {
   valorComprar: "3.500,00",
   ativo: "Bender",
   ordensAberto: false,
-  ordensExecucaoAberto: false,
+  ordensExecucaoAberto: true,
   relatorioDetalhadoAberto: false,
   listaCompletaAberta: false,
-  multilegAberto: true
+  multilegAberto: false
 };
 
 export default (state = INITIAL_STATE, action) => {

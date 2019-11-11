@@ -8,7 +8,9 @@ const INITIAL_STATE = {
   statusFiltrarOrdens: "",
   dataFiltrarOrdens: "",
   ofertaFiltrarOrdens: "",
-  tabelaOrdensExecucao: []
+  tabelaOrdensExecucao: [],
+  opcoesOrdemAberto: false,
+  ordemAtual: null
 };
 
 export default (state = INITIAL_STATE, action) => {
