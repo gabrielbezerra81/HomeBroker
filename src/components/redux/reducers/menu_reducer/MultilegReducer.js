@@ -34,9 +34,7 @@ const INITIAL_STATE = {
       total: "",
       validadeSelect: "DAY",
       date: new Date(),
-      tabelaMultileg: [
-       
-      ]
+      tabelaMultileg: []
     }
   ],
   eventSource: null, //Book

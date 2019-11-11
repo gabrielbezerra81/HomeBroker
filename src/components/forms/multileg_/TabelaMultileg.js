@@ -138,23 +138,42 @@ class TabelaMultileg extends React.Component {
                     <Form.Group>
                       <Form.Control
                         as="select"
-                        className="textInput"
+                        className="textInput inputCodigo"
                         value={item.codigoSelecionado}
-                        onChange={event =>
+                        onChange={e => {
                           props.modificarAtributoTabelaAbaAction(
                             props,
                             indiceAba,
                             "codigoSelecionado",
-                            event.currentTarget.value,
+                            e.currentTarget.value,
+                            indiceLinha
+                          );
+                        }}
+                        onFocus={() =>
+                          props.modificarAtributoTabelaAbaAction(
+                            props,
+                            indiceAba,
+                            "codigoAberto",
+                            true,
+                            indiceLinha
+                          )
+                        }
+                        onBlur={() =>
+                          props.modificarAtributoTabelaAbaAction(
+                            props,
+                            indiceAba,
+                            "codigoAberto",
+                            false,
                             indiceLinha
                           )
                         }
                       >
-                        {item.opcoes.map((item, indice) => (
-                          <option key={indice} value={item.symbol}>
-                            {item.symbol}
-                          </option>
-                        ))}
+                        {renderCodigoOferta(
+                          item.opcoes,
+                          props.multileg[indiceAba].tabelaMultileg[indiceLinha]
+                            .codigoAberto,
+                          item.tipo.toUpperCase()
+                        )}
                       </Form.Control>
                     </Form.Group>
                   </td>
@@ -305,4 +324,44 @@ const renderModelo = modelo => {
       </div>
     );
   else return null;
+};
+
+const renderCodigoOferta = (listaOpcoes, codigoAberto, tipoAtual) => {
+  let listaCodigos = [];
+
+  if (codigoAberto)
+    listaOpcoes.forEach((opcao, indice) => {
+      if (indice % 2 === 0) {
+        let codigo =
+          opcao.type === "CALL"
+            ? opcao.symbol +
+              " " +
+              opcao.strike +
+              " " +
+              listaOpcoes[indice + 1].symbol
+            : listaOpcoes[indice + 1].symbol +
+              " " +
+              opcao.strike +
+              " " +
+              opcao.symbol;
+        const callPut = codigo.split(" ");
+
+        let value = tipoAtual === "CALL" ? callPut[0] : callPut[2];
+
+        listaCodigos.push(
+          <option key={Math.random()} value={value}>
+            {codigo}
+          </option>
+        );
+      }
+    });
+  else {
+    return listaOpcoes.map(opcao => (
+      <option key={Math.random()} value={opcao.symbol}>
+        {opcao.symbol}
+      </option>
+    ));
+  }
+
+  return listaCodigos;
 };

@@ -68,12 +68,6 @@ class AbaMultileg extends React.Component {
             <div className="divColunaDetalhes">
               <Form.Group>
                 <Form.Label>Strike</Form.Label>{" "}
-                {/* <Select
-                  noOptionsMessage={() => ""}
-                  placeholder=""
-                  options={renderSerie(props)}
-                  styles={inputSelect}
-                /> */}
                 <Dropdown
                   search
                   fluid
@@ -90,30 +84,7 @@ class AbaMultileg extends React.Component {
                   }}
                 />
               </Form.Group>
-              {/* <Form.Group>
-                <Form.Label>Strike</Form.Label>
-                <Form.Control
-                  as="select"
-                  className="textInput"
-                  value={props.multileg[indice].strikeSelecionado}
-                  onChange={event =>
-                    props.modificarAtributoAbaAction(
-                      props.multileg,
-                      indice,
-                      "strikeSelecionado",
-                      Number(event.currentTarget.value)
-                    )
-                  }
-                >
-                  {props.multileg[indice].opcoes.map((item, index) =>
-                    renderStrikeSymbol(
-                      item,
-                      index,
-                      props.multileg[indice].opcoes
-                    )
-                  )}
-                </Form.Control>
-              </Form.Group> */}
+
               <Form.Group className="wrapperVencimento ml-1">
                 <Form.Label>Vencimento</Form.Label>
                 <Form.Control
@@ -257,20 +228,3 @@ const renderStrikeSymbol = (item, indice, listaOpcoes) => {
       value: item.strike
     };
 };
-
-/*
-{
-   <option key={indice} value={item.strike}>
-{item.type === "CALL"
-  ? item.symbol +
-    " " +
-    item.strike +
-    " " +
-    listaOpcoes[indice + 1].symbol
-  : listaOpcoes[indice + 1].symbol +
-    " " +
-    item.strike +
-    " " +
-    item.symbol}
-</option> 
-}*/

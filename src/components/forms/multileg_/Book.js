@@ -28,7 +28,7 @@ class Book extends React.Component {
 
     const renderPlaceholder = renderPlaceholderPreco(props);
     return (
-      <div>
+      <div className="divBook">
         <Row>
           <Col className="text-align-center mb-2">
             <h6>Book</h6>

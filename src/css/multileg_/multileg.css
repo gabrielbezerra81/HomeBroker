@@ -1,5 +1,5 @@
 #multileg {
-  width: 1170px;
+  width: 1255px;
   margin-left: 5px;
   height: 390px;
 }
@@ -21,10 +21,15 @@
 #multileg select {
   padding-left: 0;
   padding-right: 0;
+  text-align: center;
 }
 
 #multileg button {
   padding-top: 0.1rem !important;
+}
+
+.divBook {
+  max-width: 229.25px;
 }
 
 .navTabMultileg {
@@ -396,4 +401,9 @@ a.botaoAddAba.active {
 
 .inputSerie {
   width: 87px;
+}
+
+.inputCodigo {
+  width: 180px;
+  text-align-last: center;
 }
