@@ -19,7 +19,7 @@ export default class OrdensExecucao extends React.Component {
     }
   }
   componentWillMount() {
-    this.props.listarOrdensExecAction();
+    //this.props.listarOrdensExecAction();
   }
 
   render() {
@@ -38,7 +38,7 @@ export default class OrdensExecucao extends React.Component {
 
 const modalBody = props => (
   <div className="bodyOrdensExecucao">
-    {props.opcoesOrdemAberto ? <OpcoesOrdemExecConectada /> : null}
+    {props.opcoesOrdemAberto ? <OpcoesOrdemExecConectada /> : <OpcoesOrdemExecConectada />}
 
     <Row>
       <Table

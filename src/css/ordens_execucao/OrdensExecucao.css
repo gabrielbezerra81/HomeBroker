@@ -15,9 +15,9 @@
 
 #ordens_execucao input,
 #ordens_execucao select {
-  background-color: #333;
+  /* background-color: #333;
   border-color: #333;
-  color: var(--cor-texto) !important;
+  color: var(--cor-texto) !important; */
 }
 
 .tableOrdensExecucao {

@@ -4,8 +4,8 @@
   align-content: center;
   justify-content: space-evenly;
   position: relative;
-  left: 130px;
-  width: 800px;
+  left: 80px;
+  width: 900px;
   padding: 10px 5px !important;
   border-width: 0px;
   color: var(--cor-texto);
@@ -20,4 +20,26 @@
 
 .containerOpcoesOrdem > div:last-child {
   flex: 1;
+}
+
+span {
+  color: var(--cor-texto) !important;
+}
+
+.selectQtde > div {
+  background-color: #333 !important;
+  color: var(--cor-texto) !important;
+  width: 70px !important;
+  border: none;
+  height: 20px !important;
+  border-radius: 0 !important;
+}
+
+.selectQtde .ant-select-selection__rendered {
+  height: 20px !important;
+  line-height: 19px !important;
+}
+
+.selectQtde input {
+  height: 20px !important;
 }

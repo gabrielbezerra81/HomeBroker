@@ -5,7 +5,6 @@ import * as serviceWorker from "./serviceWorker";
 import "@fortawesome/fontawesome-free/css/all.css";
 import { Helper } from "components/redux/ElementosConectadosRedux";
 
-
 ReactDOM.render(Helper(), document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
