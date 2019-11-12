@@ -3,9 +3,21 @@
   flex-direction: row;
   align-content: center;
   justify-content: space-evenly;
-  position: absolute;
-  top: 550px;
-  width: 950px;
-  padding: 15px 5px !important;
-  border-width: 2px;
+  position: relative;
+  left: 130px;
+  width: 800px;
+  padding: 10px 5px !important;
+  border-width: 0px;
+  color: var(--cor-texto);
+}
+
+.containerOpcoesOrdem > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 4;
+}
+
+.containerOpcoesOrdem > div:last-child {
+  flex: 1;
 }
