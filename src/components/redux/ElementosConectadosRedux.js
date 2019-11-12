@@ -48,7 +48,7 @@ import {
   mudarVariavelOrdensExecAction,
   cancelarOrdemExecAction,
   finalizarAMercadoAction,
-  aumentarQtdeAction
+  aumentarQtdePrecoAction
 } from "components/redux/actions/menu_actions/OrdensExecActions";
 import { listarPosicoesAction } from "components/redux/actions/menu_actions/PosicaoActions";
 import OpcoesOrdemExec from "components/forms/ordens_em_execucao/OpcoesOrdemExec";
@@ -145,6 +145,9 @@ const mapStateToPropsOrdensExec = state => ({
 
 const mapStateToPropsOpcoesOrdemExec = state => ({
   ...mapStateToPropsOrdensExec(state),
+  selectQtdeAberto: state.ordensExecReducer.selectQtdeAberto,
+  selectPrecoAberto: state.ordensExecReducer.selectPrecoAberto,
+  sinalInputSelect: state.ordensExecReducer.sinalInputSelect,
   multileg: state.multilegReducer.multileg,
   eventSource: state.multilegReducer.eventSource,
   eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
@@ -165,18 +168,16 @@ export const MainAppConectado = compose(
     null,
     { context: GlobalContext }
   ),
-  connect(
-    mapStateToPropsAppPrincipal,
-    { mouseOverAction, mouseLeaveAction, abrirItemBarraLateralAction }
-  )
+  connect(mapStateToPropsAppPrincipal, {
+    mouseOverAction,
+    mouseLeaveAction,
+    abrirItemBarraLateralAction
+  })
 )(MainApp);
 
-export const SubAppConectado = connect(
-  mapStateToPropsGlobalStore,
-  {},
-  null,
-  { context: GlobalContext }
-)(SubApp);
+export const SubAppConectado = connect(mapStateToPropsGlobalStore, {}, null, {
+  context: GlobalContext
+})(SubApp);
 
 export const AppConectado = compose(
   connect(
@@ -189,14 +190,11 @@ export const AppConectado = compose(
     null,
     { context: GlobalContext }
   ),
-  connect(
-    mapStateToPropsLocal,
-    {
-      receberAppPropsAction,
-      listarBookOfertaOnEnterAction,
-      mudarInputHeaderAction
-    }
-  )
+  connect(mapStateToPropsLocal, {
+    receberAppPropsAction,
+    listarBookOfertaOnEnterAction,
+    mudarInputHeaderAction
+  })
 )(App);
 
 export const ModalHeaderConectado = connect(
@@ -215,10 +213,7 @@ const TelaPrincipalConectada = compose(
     null,
     { context: GlobalContext }
   ),
-  connect(
-    mapStateToPropsAppPrincipal,
-    { abrirItemBarraLateralAction }
-  )
+  connect(mapStateToPropsAppPrincipal, { abrirItemBarraLateralAction })
 )(TelaPrincipal);
 
 export const OrdensExecucaoConectada = compose(
@@ -228,14 +223,11 @@ export const OrdensExecucaoConectada = compose(
     null,
     { context: GlobalContext }
   ),
-  connect(
-    mapStateToPropsOrdensExec,
-    {
-      listarOrdensExecAction,
-      abrirItemBarraLateralAction,
-      mudarVariavelOrdensExecAction
-    }
-  )
+  connect(mapStateToPropsOrdensExec, {
+    listarOrdensExecAction,
+    abrirItemBarraLateralAction,
+    mudarVariavelOrdensExecAction
+  })
 )(OrdensExecucao);
 
 export const OpcoesOrdemExecConectada = compose(
@@ -245,62 +237,46 @@ export const OpcoesOrdemExecConectada = compose(
     null,
     { context: GlobalContext }
   ),
-  connect(
-    mapStateToPropsOpcoesOrdemExec,
-    {
-      abrirItemBarraLateralAction,
-      mudarVariavelOrdensExecAction,
-      abrirOrdemNoMultilegAction,
-      cancelarOrdemExecAction,
-      finalizarAMercadoAction,
-      aumentarQtdeAction
-    }
-  )
+  connect(mapStateToPropsOpcoesOrdemExec, {
+    abrirItemBarraLateralAction,
+    mudarVariavelOrdensExecAction,
+    abrirOrdemNoMultilegAction,
+    cancelarOrdemExecAction,
+    finalizarAMercadoAction,
+    aumentarQtdePrecoAction
+  })
 )(OpcoesOrdemExec);
 
 export const BarraLateralConectada = compose(
-  connect(
-    null,
-    { atualizarDivKeyAction },
-    null,
-    { context: GlobalContext }
-  ),
-  connect(
-    mapStateToPropsAppPrincipal,
-    { abrirItemBarraLateralAction, mouseOverAction, mouseLeaveAction }
-  )
+  connect(null, { atualizarDivKeyAction }, null, { context: GlobalContext }),
+  connect(mapStateToPropsAppPrincipal, {
+    abrirItemBarraLateralAction,
+    mouseOverAction,
+    mouseLeaveAction
+  })
 )(BarraLateral);
 
 export const MultilegConectado = compose(
-  connect(
-    mapStateToPropsGlobalStore,
-    { aumentarZindexAction },
-    null,
-    { context: GlobalContext }
-  ),
-  connect(
-    mapStateToPropsMultileg,
-    {
-      selecionarAdicionarAbaAction,
-      modificarAtributoAbaAction,
-      excluirAbaMultilegAction,
-      atualizarBookAction,
-      atualizarCotacaoAction
-    }
-  )
+  connect(mapStateToPropsGlobalStore, { aumentarZindexAction }, null, {
+    context: GlobalContext
+  }),
+  connect(mapStateToPropsMultileg, {
+    selecionarAdicionarAbaAction,
+    modificarAtributoAbaAction,
+    excluirAbaMultilegAction,
+    atualizarBookAction,
+    atualizarCotacaoAction
+  })
 )(Multileg);
 
 export const PosicaoEmCustodiaConectada = compose(
-  connect(
-    mapStateToPropsGlobalStore,
-    { aumentarZindexAction },
-    null,
-    { context: GlobalContext }
-  ),
-  connect(
-    mapStateToPropsPosicao,
-    { mudarVariavelPosicaoAction, listarPosicoesAction }
-  )
+  connect(mapStateToPropsGlobalStore, { aumentarZindexAction }, null, {
+    context: GlobalContext
+  }),
+  connect(mapStateToPropsPosicao, {
+    mudarVariavelPosicaoAction,
+    listarPosicoesAction
+  })
 )(PosicaoEmCustodia);
 
 export const PosicaoDetalhadaConectada = connect(

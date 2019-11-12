@@ -1,6 +1,5 @@
 import request from "superagent";
 import {
-  cors_anywhere,
   url_base,
   url_pesquisarAtivoBoletas_codigo,
   url_listarBookOfertas_codigo,
@@ -19,7 +18,8 @@ import {
   url_criarAlertaOperacao_,
   url_cancelarOrdemExec_id,
   url_finalizarAMercado_id,
-  url_aumentarQtde_id_qtde
+  url_aumentarQtde_id_qtde,
+  url_aumentarPreco_id_valor
 } from "components/api/url";
 import {
   MODIFICAR_ATRIBUTO_ABA,
@@ -50,7 +50,7 @@ import {
 
 export const pesquisarAtivoAPI = codigo => {
   return request
-    .get(cors_anywhere + url_base + url_pesquisarAtivoBoletas_codigo + codigo)
+    .get(url_base + url_pesquisarAtivoBoletas_codigo + codigo)
     .retry(3)
     .then(response => {
       const { body } = response;
@@ -127,7 +127,7 @@ export const listarBookOfertaAPI = codigo_ativo => {
     tabelaOfertasVenda: []
   };
   return request
-    .get(cors_anywhere + url_base + url_listarBookOfertas_codigo + codigo_ativo)
+    .get(url_base + url_listarBookOfertas_codigo + codigo_ativo)
     .retry(3)
     .then(response => {
       const { body } = response;
@@ -154,7 +154,7 @@ export const enviarOrdemAPI = json => {
   const jsonStringBody = JSON.stringify(json);
 
   return request
-    .post(cors_anywhere + url_base + url_enviarOrdem)
+    .post(url_base + url_enviarOrdem)
     .retry(2)
     .set({ "Content-Type": "application/json" })
     .send(jsonStringBody)
@@ -172,12 +172,7 @@ export const pesquisarAtivoMultilegAPI = codigo_ativo => {
   var dados;
 
   return request
-    .get(
-      cors_anywhere +
-        url_base +
-        url_pesquisarOpcoesVencimentos_codigo +
-        codigo_ativo
-    )
+    .get(url_base + url_pesquisarOpcoesVencimentos_codigo + codigo_ativo)
     .retry(3)
     .then(async response => {
       dados = {
@@ -211,8 +206,7 @@ export const pesquisarAtivoMultilegAPI = codigo_ativo => {
 export const pesquisarStrikesMultilegAPI = (codigo_ativo, vencimento) => {
   return request
     .get(
-      cors_anywhere +
-        url_base +
+      url_base +
         url_pesquisarStrikes_codigo_vencimento +
         codigo_ativo +
         "/" +
@@ -230,7 +224,7 @@ export const pesquisarStrikesMultilegAPI = (codigo_ativo, vencimento) => {
 
 export const listarOrdensExecAPI = () => {
   return request
-    .get(cors_anywhere + url_base + url_listarOrdensExecucao_)
+    .get(url_base + url_listarOrdensExecucao_)
     .retry(3)
     .then(response => {
       const { body } = response;
@@ -250,7 +244,7 @@ export const listarOrdensExecAPI = () => {
 
 export const listarPosicoesAPI = () => {
   return request
-    .get(cors_anywhere + url_base + url_listarPosicoes)
+    .get(url_base + url_listarPosicoes)
     .retry(3)
     .then(response => {
       const { body } = response;
@@ -463,7 +457,7 @@ export const criarPosicaoMultilegAPI = json => {
   const jsonStringBody = JSON.stringify(json);
 
   return request
-    .post(cors_anywhere + url_base + url_criarPosicaoMultileg_)
+    .post(url_base + url_criarPosicaoMultileg_)
     .retry(2)
     .set({ "Content-Type": "application/json" })
     .send(jsonStringBody)
@@ -482,7 +476,7 @@ export const criarAlertaOperacaoAPI = json => {
   const jsonStringBody = JSON.stringify(json);
 
   return request
-    .post(cors_anywhere + url_base + url_criarAlertaOperacao_)
+    .post(url_base + url_criarAlertaOperacao_)
     .retry(2)
     .set({ "Content-Type": "application/json" })
     .send(jsonStringBody)
@@ -524,6 +518,18 @@ export const finalizarAMercadoAPI = id => {
 export const incrementarQtdeOrdemExecAPI = (id, qtde) => {
   return request
     .get(url_base + url_aumentarQtde_id_qtde + id + "/" + qtde)
+    .then(() => {
+      alert(sucesso_modificar_ordemExec);
+    })
+    .catch(erro => {
+      console.log(erro);
+      alert(erro_modificar_ordemExec);
+    });
+};
+
+export const incrementarPrecoOrdemExecAPI = (id, preco) => {
+  return request
+    .get(url_base + url_aumentarPreco_id_valor + id + "/" + preco)
     .then(() => {
       alert(sucesso_modificar_ordemExec);
     })

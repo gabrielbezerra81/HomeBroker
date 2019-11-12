@@ -10,7 +10,10 @@ const INITIAL_STATE = {
   ofertaFiltrarOrdens: "",
   tabelaOrdensExecucao: [],
   opcoesOrdemAberto: false,
-  ordemAtual: null
+  ordemAtual: null,
+  selectQtdeAberto: false,
+  selectPrecoAberto: false,
+  sinalInputSelect: "+"
 };
 
 export default (state = INITIAL_STATE, action) => {

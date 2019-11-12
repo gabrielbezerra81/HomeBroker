@@ -4,22 +4,21 @@
   align-content: center;
   justify-content: space-evenly;
   position: relative;
-  left: 80px;
-  width: 900px;
+  left: 2.5%;
+  width: 95%;
   padding: 10px 5px !important;
   border-width: 0px;
   color: var(--cor-texto);
+}
+
+.containerOpcoesOrdem .input-group {
+  width: 203px;
 }
 
 .containerOpcoesOrdem > div {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 4;
-}
-
-.containerOpcoesOrdem > div:last-child {
-  flex: 1;
 }
 
 span {
@@ -33,6 +32,7 @@ span {
   border: none;
   height: 20px !important;
   border-radius: 0 !important;
+  text-align: center !important;
 }
 
 .selectQtde .ant-select-selection__rendered {
@@ -42,4 +42,14 @@ span {
 
 .selectQtde input {
   height: 20px !important;
+}
+
+.botoesInputSelect {
+  height: 20px;
+  width: 15px;
+  justify-content: center;
+  align-items: center;
+  color: var(--cor-texto);
+  font-size: 1.3rem;
+  padding-bottom: 10px;
 }

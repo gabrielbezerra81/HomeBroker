@@ -3,8 +3,13 @@
   line-height: 3 !important;
 }
 
+.ant-select-selection-selected-value {
+  width: 100% !important;
+}
+
 .ant-select-dropdown-menu-item {
   color: var(--cor-texto) !important;
+  background-color: #333 !important;
 }
 
 .ant-select-dropdown-menu-item-selected {

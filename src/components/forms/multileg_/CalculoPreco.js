@@ -6,7 +6,7 @@ export const calculoPreco = (aba, tipo) => {
     if (oferta.compra || oferta.venda || tipo === "ultimo")
       arrayQtde.push(oferta.qtde);
   });
-  const mdc = gcd(arrayQtde);
+  const mdc = calculoMDC(arrayQtde);
 
   if (mdc > 0)
     aba.tabelaMultileg.forEach((oferta, index) => {
@@ -38,10 +38,10 @@ export const calculoPreco = (aba, tipo) => {
   return preco;
 };
 
-var gcd2 = function(a, b) {
+const gcd2 = (a, b) => {
   return !b ? a : gcd2(b, a % b);
 };
-var gcd = function(nums) {
+export const calculoMDC = nums => {
   var factor = nums[0];
   for (var i = 1; i < nums.length; i++) {
     factor = gcd2(factor, nums[i]);

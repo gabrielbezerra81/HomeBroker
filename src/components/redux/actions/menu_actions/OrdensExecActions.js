@@ -7,7 +7,8 @@ import {
   travarDestravarClique,
   cancelarOrdemExecAPI,
   finalizarAMercadoAPI,
-  incrementarQtdeOrdemExecAPI
+  incrementarQtdeOrdemExecAPI,
+  incrementarPrecoOrdemExecAPI
 } from "components/api/API";
 import { LISTAR_ORDENS_EXECUCAO } from "constants/ApiActionTypes";
 import {
@@ -21,7 +22,10 @@ import {
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { pesquisaAtivo } from "components/redux/actions/api_actions/MenuAPIAction";
 import { erro_exportar_ordens_multileg } from "constants/AlertaErros";
-import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
+import {
+  calculoPreco,
+  calculoMDC
+} from "components/forms/multileg_/CalculoPreco";
 import { formatarNumero } from "components/redux/reducers/formInputReducer";
 
 export const mudarVariavelOrdensExecAction = (nome, valor) => {
@@ -141,8 +145,29 @@ export const finalizarAMercadoAction = id => {
   };
 };
 
-export const aumentarQtdeAction = (id, qtde) => {
+export const aumentarQtdePrecoAction = (ordemAtual, valorSomar, modo) => {
   return dispatch => {
-    incrementarQtdeOrdemExecAPI(id, qtde);
+    const { id } = ordemAtual;
+    const ofertas = [...ordemAtual.offers];
+    const arrayQtde = ofertas.map(oferta => oferta.qtdeOferta);
+    const mdc = calculoMDC(arrayQtde);
+
+    if (modo === "qtde") {
+      let acrescimo = 0;
+      ofertas.forEach(oferta => {
+        const unidade = oferta.qtdeOferta / mdc;
+        acrescimo += valorSomar * unidade;
+      });
+      incrementarQtdeOrdemExecAPI(id, acrescimo);
+    } //
+    else if (modo === "preco") {
+      let precoTotal = 0;
+      ofertas.forEach(oferta => {
+        const unidade = oferta.qtdeOferta / mdc;
+        precoTotal += oferta.precoEnvio * unidade;
+      });
+      precoTotal += valorSomar;
+      incrementarPrecoOrdemExecAPI(id, precoTotal);
+    }
   };
 };

@@ -27,3 +27,4 @@ export const erro_validar_qtde =
 
 //Alertas
 export const erro_exportar_ordens_multileg = "Falha ao adicionar abas";
+export const erro_opcoes_ordens_exec = "Selecione uma ordem";

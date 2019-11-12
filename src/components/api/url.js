@@ -14,6 +14,7 @@ export const url_listarOrdensExecucao_ = "order/working";
 export const url_cancelarOrdemExec_id = "order/cancel/"
 export const url_finalizarAMercado_id = "order/market/"
 export const url_aumentarQtde_id_qtde = "order/qtty/"
+export const url_aumentarPreco_id_valor = "order/price/"
 
 //Multileg
 export const url_pesquisarOpcoesVencimentos_codigo = "stocks/options/expirations/";
