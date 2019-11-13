@@ -139,7 +139,7 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
 export const abrirOrdensBoletaAction = (props, event) => {
   return async dispatch => {
     const { ordemAtual } = props;
-    let nome = "compra_mercado";
+    let nome = mapearOperacaoParaBoleta(ordemAtual.operacao);
 
     const dadosPesquisa = await pesquisarAtivoAPI(ordemAtual.offers[0].ativo);
 
@@ -186,15 +186,42 @@ export const aumentarQtdePrecoAction = (ordemAtual, valorSomar, modo) => {
   };
 };
 
-const boletas = [
-  "compra_mercado",
-  "compra_limitada",
-  "compra_agendada",
-  "compra_startstop",
-  "compra_startmovel",
-  "venda_mercado",
-  "venda_limitada",
-  "venda_agendada",
-  "venda_startstop",
-  "venda_stop_movel"
-];
+const mapearOperacaoParaBoleta = operacao => {
+  switch (operacao) {
+    case "Compra a Mercado":
+      return "compra_mercado";
+    case "com_lim":
+      return "compra_limitada";
+    case "com_age":
+      return "compra_agendada";
+    case "com_startstop":
+      return "compra_startstop";
+    case "com_startmovel":
+      return "compra_startmovel";
+    case "Venda a Mercado":
+      return "venda_mercado";
+    case "ven_lim":
+      return "venda_limitada";
+    case "ven_age":
+      return "venda_agendada";
+    case "ven_startstop":
+      return "venda_startstop";
+    case "ven_stopmovel":
+      return "venda_stop_movel";
+    default:
+      return "";
+  }
+};
+
+// const boletas = [
+//   "compra_mercado",
+//   "compra_limitada",
+//   "compra_agendada",
+//   "compra_startstop",
+//   "compra_startmovel",
+//   "venda_mercado",
+//   "venda_limitada",
+//   "venda_agendada",
+//   "venda_startstop",
+//   "venda_stop_movel"
+// ];
