@@ -54,10 +54,10 @@ const mapStateToProps = state => ({
   menuLateralAberto: state.telaPrincipalReducer.menuLateralAberto
 });
 
-export default connect(
-  mapStateToProps,
-  { logarUsuarioAction, deslogarUsuarioAction }
-)(MenuLateral);
+export default connect(mapStateToProps, {
+  logarUsuarioAction,
+  deslogarUsuarioAction
+})(MenuLateral);
 
 const renderDivLogin = props => {
   if (props.logado) {
@@ -93,7 +93,7 @@ const renderDivLogin = props => {
       <div
         tabIndex={0}
         className="divClicavel itemMenuLateral corAlternada"
-        onClick={event => props.logarUsuarioAction(event, props)}
+        onClick={() => props.logarUsuarioAction("", "passar")}
       >
         <Row className="botaoDeslogar">
           <Col md={0} className="colLogout">

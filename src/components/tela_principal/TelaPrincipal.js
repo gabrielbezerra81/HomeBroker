@@ -10,6 +10,7 @@ import {
 } from "components/redux/ElementosConectadosRedux";
 import BarraTopoTelaPrincipal from "components/tela_principal/BarraTopoTelaPrincipal";
 import { Animate } from "react-show";
+import TelaLogin from "components/tela_login/TelaLogin";
 
 const startStyle = {
   opacity: 0,
@@ -18,114 +19,121 @@ const startStyle = {
 
 export default class TelaPrincipal extends React.Component {
   render() {
+    const { props } = this;
     return (
-      <div className="divTelaPrincipal">
-        <MenuLateral />
-        <div className="conteudoMenuPrincipal">
-          <BarraTopoTelaPrincipal />
-          <div style={{ display: "flex", height: "100%" }}>
-            <BarraLateralConectada />
-            <div id="menusTelaPrincipal">
-              <MainAppConectado />
-              <Animate
-                show={this.props.ordensExecucaoAberto}
-                duration={100}
-                transitionOnMount
-                stayMounted={false}
-                start={startStyle}
-                onClick={() =>
-                  this.props.aumentarZindexAction(
-                    "ordens_execucao",
-                    this.props.zIndex,
-                    this.props.ordensExecucaoAberto
-                  )
-                }
-              >
-                <OrdensExecucaoConectada
-                  close={() => {
-                    this.props.abrirItemBarraLateralAction(
-                      this.props,
-                      "ordensExecucaoAberto"
-                    );
-                  }}
-                  headerTitle="HISTÓRICO DE OPERAÇÕES"
-                />
-              </Animate>
-              <Animate
-                show={this.props.relatorioDetalhadoAberto}
-                duration={100}
-                transitionOnMount
-                stayMounted={false}
-                start={startStyle}
-                onClick={() =>
-                  this.props.aumentarZindexAction(
-                    "relatorio_detalhado",
-                    this.props.zIndex,
-                    this.props.relatorioDetalhadoAberto
-                  )
-                }
-              >
-                <RelatorioDetalhadoConectado
-                  close={() => {
-                    this.props.abrirItemBarraLateralAction(
-                      this.props,
-                      "relatorioDetalhadoAberto"
-                    );
-                  }}
-                  headerTitle="RELATÓRIO DETALHADO"
-                />
-              </Animate>
-              <Animate
-                show={this.props.listaCompletaAberta}
-                duration={100}
-                transitionOnMount
-                stayMounted={false}
-                start={startStyle}
-                onClick={() =>
-                  this.props.aumentarZindexAction(
-                    "posicao_custodia",
-                    this.props.zIndex,
-                    this.props.listaCompletaAberta
-                  )
-                }
-              >
-                <PosicaoEmCustodiaConectada
-                  close={() => {
-                    this.props.abrirItemBarraLateralAction(
-                      this.props,
-                      "listaCompletaAberta"
-                    );
-                  }}
-                  headerTitle="POSIÇÃO EM CUSTÓDIA"
-                />
-              </Animate>
-              <Animate
-                show={this.props.multilegAberto}
-                duration={100}
-                transitionOnMount
-                stayMounted={false}
-                start={startStyle}
-                onClick={() =>
-                  this.props.aumentarZindexAction(
-                    "multileg",
-                    this.props.zIndex,
-                    this.props.multilegAberto
-                  )
-                }
-              >
-                <MultilegConectado
-                  close={() => {
-                    this.props.abrirItemBarraLateralAction(
-                      this.props,
-                      "multilegAberto"
-                    );
-                  }}
-                  headerTitle="MULTI ATIVOS"
-                />
-              </Animate>
+      <div>
+        {props.logado ? (
+          <div className="divTelaPrincipal">
+            <MenuLateral />
+            <div className="conteudoMenuPrincipal">
+              <BarraTopoTelaPrincipal />
+              <div style={{ display: "flex", height: "100%" }}>
+                <BarraLateralConectada />
+                <div id="menusTelaPrincipal">
+                  <MainAppConectado />
+                  <Animate
+                    show={props.ordensExecucaoAberto}
+                    duration={100}
+                    transitionOnMount
+                    stayMounted={false}
+                    start={startStyle}
+                    onClick={() =>
+                      props.aumentarZindexAction(
+                        "ordens_execucao",
+                        props.zIndex,
+                        props.ordensExecucaoAberto
+                      )
+                    }
+                  >
+                    <OrdensExecucaoConectada
+                      close={() => {
+                        props.abrirItemBarraLateralAction(
+                          props,
+                          "ordensExecucaoAberto"
+                        );
+                      }}
+                      headerTitle="HISTÓRICO DE OPERAÇÕES"
+                    />
+                  </Animate>
+                  <Animate
+                    show={props.relatorioDetalhadoAberto}
+                    duration={100}
+                    transitionOnMount
+                    stayMounted={false}
+                    start={startStyle}
+                    onClick={() =>
+                      props.aumentarZindexAction(
+                        "relatorio_detalhado",
+                        props.zIndex,
+                        props.relatorioDetalhadoAberto
+                      )
+                    }
+                  >
+                    <RelatorioDetalhadoConectado
+                      close={() => {
+                        props.abrirItemBarraLateralAction(
+                          props,
+                          "relatorioDetalhadoAberto"
+                        );
+                      }}
+                      headerTitle="RELATÓRIO DETALHADO"
+                    />
+                  </Animate>
+                  <Animate
+                    show={props.listaCompletaAberta}
+                    duration={100}
+                    transitionOnMount
+                    stayMounted={false}
+                    start={startStyle}
+                    onClick={() =>
+                      props.aumentarZindexAction(
+                        "posicao_custodia",
+                        props.zIndex,
+                        props.listaCompletaAberta
+                      )
+                    }
+                  >
+                    <PosicaoEmCustodiaConectada
+                      close={() => {
+                        props.abrirItemBarraLateralAction(
+                          props,
+                          "listaCompletaAberta"
+                        );
+                      }}
+                      headerTitle="POSIÇÃO EM CUSTÓDIA"
+                    />
+                  </Animate>
+                  <Animate
+                    show={props.multilegAberto}
+                    duration={100}
+                    transitionOnMount
+                    stayMounted={false}
+                    start={startStyle}
+                    onClick={() =>
+                      props.aumentarZindexAction(
+                        "multileg",
+                        props.zIndex,
+                        props.multilegAberto
+                      )
+                    }
+                  >
+                    <MultilegConectado
+                      close={() => {
+                        props.abrirItemBarraLateralAction(
+                          props,
+                          "multilegAberto"
+                        );
+                      }}
+                      headerTitle="MULTI ATIVOS"
+                    />
+                  </Animate>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <TelaLogin />
+        )}
       </div>
     );
   }
@@ -133,24 +141,24 @@ export default class TelaPrincipal extends React.Component {
 /*
 
 <Animate
-                show={this.props.ordensExecucaoAberto}
+                show={props.ordensExecucaoAberto}
                 duration={100}
                 transitionOnMount
                 stayMounted={false}
                 start={startStyle}
                 id="ordens_execucao"
                 onClick={() =>
-                  this.props.aumentarZindexAction(
+                  props.aumentarZindexAction(
                     "ordens_execucao",
-                    this.props.zIndex,
-                    this.props.ordensExecucaoAberto
+                    props.zIndex,
+                    props.ordensExecucaoAberto
                   )
                 }
               >
                 <OrdensExecucaoConectada
                   close={() => {
-                    this.props.abrirItemBarraLateralAction(
-                      this.props,
+                    props.abrirItemBarraLateralAction(
+                      props,
                       "ordensExecucaoAberto"
                     );
                   }}
@@ -158,24 +166,24 @@ export default class TelaPrincipal extends React.Component {
                 />
               </Animate>
               <Animate
-                show={this.props.multilegAberto}
+                show={props.multilegAberto}
                 duration={100}
                 transitionOnMount
                 stayMounted={false}
                 start={startStyle}
                 id="multileg"
                 onClick={() =>
-                  this.props.aumentarZindexAction(
+                  props.aumentarZindexAction(
                     "multileg",
-                    this.props.zIndex,
-                    this.props.multilegAberto
+                    props.zIndex,
+                    props.multilegAberto
                   )
                 }
               >
                 <MultilegConectado
                   close={() => {
-                    this.props.abrirItemBarraLateralAction(
-                      this.props,
+                    props.abrirItemBarraLateralAction(
+                      props,
                       "multilegAberto"
                     );
                   }}

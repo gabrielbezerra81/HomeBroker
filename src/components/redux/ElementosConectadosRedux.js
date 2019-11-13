@@ -115,6 +115,7 @@ const mapStateToPropsAppPrincipal = state => ({
   relatorioDetalhadoAberto: state.telaPrincipalReducer.relatorioDetalhadoAberto,
   listaCompletaAberta: state.telaPrincipalReducer.listaCompletaAberta,
   multilegAberto: state.telaPrincipalReducer.multilegAberto,
+  logado: state.telaPrincipalReducer.logado,
   eventSourceBook_Multileg: state.multilegReducer.eventSource,
   eventSourceCotacao_Multileg: state.multilegReducer.eventSourceCotacao,
   eventSourceEmblema_Posicao: state.posicaoReducer.eventSourceEmblema

@@ -29,6 +29,7 @@ import "./multileg_/multileg.css";
 import "./posicao_custodia/PosicaoCustodia.css";
 import "./posicao_custodia/PosicaoDetalhada.css";
 import "./relatorio_detalhado/RelatorioDetalhado.css";
+import "./tela_principal/TelaLogin.css"
 
 import "./componentes_customizados/CustomCheckbox.css";
 import "./componentes_customizados/InputFormatado.css";

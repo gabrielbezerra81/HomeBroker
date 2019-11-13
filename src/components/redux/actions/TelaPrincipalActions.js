@@ -1,8 +1,14 @@
 import {
   ABRIR_FECHAR_MENU_LATERAL,
   LOGAR_DESLOGAR_USUARIO,
-  ABRIR_FECHAR_ITEM_BARRA_LATERAL
+  ABRIR_FECHAR_ITEM_BARRA_LATERAL,
+  MUDAR_DADOS_LOGIN
 } from "constants/ActionTypes";
+import {
+  realizarLoginAPI,
+  autenticacaoTokenAPI,
+  buscarInformacoesUsuarioAPI
+} from "components/api/API";
 
 export const abrirFecharMenuLateralAction = (event, menuLateralAberto) => {
   return dispatch => {
@@ -12,12 +18,29 @@ export const abrirFecharMenuLateralAction = (event, menuLateralAberto) => {
   };
 };
 
-export const logarUsuarioAction = (event, props) => {
-  return dispatch => {
-    dispatch({
-      type: LOGAR_DESLOGAR_USUARIO,
-      payload: { usuarioConectado: "Gabriel Alencar", logado: true }
-    });
+export const logarUsuarioAction = (username, password) => {
+  return async dispatch => {
+    if (password === "passar")
+      dispatch({
+        type: LOGAR_DESLOGAR_USUARIO,
+        payload: { usuarioConectado: "Gabriel Alencar", logado: true }
+      });
+    else {
+      const token = await realizarLoginAPI(username, password);
+      //const auth = await autenticacaoTokenAPI(token);
+      const infoUsuario = await buscarInformacoesUsuarioAPI(token);
+
+      if (token && infoUsuario) {
+        dispatch({
+          type: MUDAR_DADOS_LOGIN,
+          payload: { nomeVariavel: "token", valor: token }
+        });
+        dispatch({
+          type: LOGAR_DESLOGAR_USUARIO,
+          payload: { usuarioConectado: infoUsuario.name, logado: true }
+        });
+      }
+    }
   };
 };
 
@@ -26,6 +49,10 @@ export const deslogarUsuarioAction = (event, props) => {
     dispatch({
       type: LOGAR_DESLOGAR_USUARIO,
       payload: { usuarioConectado: "Gabriel Alencar", logado: false }
+    });
+    dispatch({
+      type: MUDAR_DADOS_LOGIN,
+      payload: { nomeVariavel: "token", valor: null }
     });
   };
 };
@@ -65,6 +92,15 @@ export const mouseLeaveAction = (props, nameVariavelReducer) => {
     dispatch({
       type: ABRIR_FECHAR_ITEM_BARRA_LATERAL,
       payload: { name: nameVariavelReducer, valor: false }
+    });
+  };
+};
+
+export const mudarDadosLoginAction = (nomeVariavel, valor) => {
+  return dispatch => {
+    dispatch({
+      type: MUDAR_DADOS_LOGIN,
+      payload: { nomeVariavel: nomeVariavel, valor: valor }
     });
   };
 };

@@ -34,3 +34,8 @@ export const url_emblemaReativo_ids = "structures/ids?ids="
 //Monitorar e adicionar
 export const url_monitorarAtivo_codigo = "price/add/"
 export const url_listarAtivosMonitorados_ = "mt5/symbols"
+
+//Login
+export const url_realizarLogin_usuario_senha = "auth/signin"
+export const url_autenticacao_token = "test/user"
+export const url_informacoesUsuario_token = "auth/info"

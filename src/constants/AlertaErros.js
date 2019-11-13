@@ -18,6 +18,7 @@ export const sucesso_finalizar_a_mercado = "Ordem finalizada com sucesso";
 export const erro_finalizar_a_mercado = "Falha ao finalizar ordem";
 export const sucesso_modificar_ordemExec = "Ordem modificada com sucesso";
 export const erro_modificar_ordemExec = "Falha ao modificar ordem";
+export const erro_realizar_login = "Falha ao fazer login";
 
 //Alertas Validação
 

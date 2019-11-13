@@ -19,7 +19,10 @@ import {
   url_cancelarOrdemExec_id,
   url_finalizarAMercado_id,
   url_aumentarQtde_id_qtde,
-  url_aumentarPreco_id_valor
+  url_aumentarPreco_id_valor,
+  url_realizarLogin_usuario_senha,
+  url_autenticacao_token,
+  url_informacoesUsuario_token
 } from "components/api/url";
 import {
   MODIFICAR_ATRIBUTO_ABA,
@@ -45,7 +48,8 @@ import {
   sucesso_finalizar_a_mercado,
   erro_finalizar_a_mercado,
   sucesso_modificar_ordemExec,
-  erro_modificar_ordemExec
+  erro_modificar_ordemExec,
+  erro_realizar_login
 } from "constants/AlertaErros";
 import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
 import { formatarNumero } from "components/redux/reducers/formInputReducer";
@@ -544,6 +548,52 @@ export const incrementarPrecoOrdemExecAPI = (id, preco) => {
     .catch(erro => {
       console.log(erro);
       alert(erro_modificar_ordemExec);
+    });
+};
+
+export const realizarLoginAPI = (username, password) => {
+  let payload = { username: username, password: password };
+
+  return request
+    .post(url_base + url_realizarLogin_usuario_senha)
+    .set({ "Content-Type": "application/json" })
+    .send(JSON.stringify(payload))
+    .then(response => {
+      const { body } = response;
+      return body;
+    })
+    .catch(erro => {
+      console.log(erro);
+      alert(erro_realizar_login);
+      return null;
+    });
+};
+
+export const autenticacaoTokenAPI = token => {
+  return request
+    .get(url_base + url_autenticacao_token)
+    .set({ Authorization: `${token.tokenType} ${token.accessToken}` })
+    .then(response => {
+      return response.body;
+    })
+    .catch(erro => {
+      console.log(erro);
+      alert(erro_realizar_login);
+      return null;
+    });
+};
+
+export const buscarInformacoesUsuarioAPI = token => {
+  return request
+    .get(url_base + url_informacoesUsuario_token)
+    .set({ Authorization: `${token.tokenType} ${token.accessToken}` })
+    .then(response => {
+      return response.body;
+    })
+    .catch(erro => {
+      console.log(erro);
+      alert(erro_realizar_login);
+      return null;
     });
 };
 
