@@ -6,7 +6,6 @@ import {
 } from "constants/ActionTypes";
 import {
   realizarLoginAPI,
-  autenticacaoTokenAPI,
   buscarInformacoesUsuarioAPI
 } from "components/api/API";
 

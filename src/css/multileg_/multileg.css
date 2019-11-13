@@ -427,3 +427,8 @@ a.botaoAddAba.active {
   font-size: 0.73rem !important;
   padding: 5px 7px !important;
 }
+
+.inputGroupStrike {
+  display: flex;
+  flex-direction: column;
+}

@@ -48,7 +48,8 @@ import {
   mudarVariavelOrdensExecAction,
   cancelarOrdemExecAction,
   finalizarAMercadoAction,
-  aumentarQtdePrecoAction
+  aumentarQtdePrecoAction,
+  abrirOrdensBoletaAction
 } from "components/redux/actions/menu_actions/OrdensExecActions";
 import { listarPosicoesAction } from "components/redux/actions/menu_actions/PosicaoActions";
 import OpcoesOrdemExec from "components/forms/ordens_em_execucao/OpcoesOrdemExec";
@@ -234,7 +235,7 @@ export const OrdensExecucaoConectada = compose(
 export const OpcoesOrdemExecConectada = compose(
   connect(
     mapStateToPropsGlobalStore,
-    { aumentarZindexAction, atualizarDivKeyAction },
+    { aumentarZindexAction, atualizarDivKeyAction, abrirFormAction },
     null,
     { context: GlobalContext }
   ),
@@ -244,7 +245,8 @@ export const OpcoesOrdemExecConectada = compose(
     abrirOrdemNoMultilegAction,
     cancelarOrdemExecAction,
     finalizarAMercadoAction,
-    aumentarQtdePrecoAction
+    aumentarQtdePrecoAction,
+    abrirOrdensBoletaAction
   })
 )(OpcoesOrdemExec);
 

@@ -5,10 +5,7 @@ import { Button } from "react-bootstrap";
 class IconeConfigGrafico extends React.Component {
   render() {
     return (
-      <div
-        id={this.props.id}
-        className="wrapperIconeConfiguracaoGrafico"
-      >
+      <div id={this.props.id} className="wrapperIconeConfiguracaoGrafico">
         <Button
           variant="link"
           className="iconeConfiguracaoGrafico"
@@ -16,9 +13,9 @@ class IconeConfigGrafico extends React.Component {
             event.stopPropagation();
             this.props.handleShow(event);
           }}
-          name={this.props.name}
+          data-name={this.props.name}
         >
-          <MDBIcon icon="cog" size="2x" name={this.props.name} />
+          <MDBIcon icon="cog" size="2x" data-name={this.props.name} />
         </Button>
       </div>
     );

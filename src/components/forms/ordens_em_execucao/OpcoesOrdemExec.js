@@ -8,6 +8,7 @@ import iconeReabrir from "img/OrdensExecucao/iconeReabrir.svg";
 import iconeFecharMenuOpcoesOrdem from "img/OrdensExecucao/iconeFecharMenuOpcoesOrdem.svg";
 import InputSelectBotoes from "components/forms/ordens_em_execucao/InputSelectBotoes";
 import { erro_opcoes_ordens_exec } from "constants/AlertaErros";
+import { Button } from "react-bootstrap";
 
 export default class OpcoesOrdemExec extends React.Component {
   render() {
@@ -111,7 +112,11 @@ export default class OpcoesOrdemExec extends React.Component {
 const abrirFormOrdem = (event, props, acao) => {
   if (props.ordemAtual) {
     event.stopPropagation();
+
     if (props.ordemAtual.operacao === "Multileg")
-      props.abrirOrdemNoMultilegAction(props, props.ordemAtual, acao);
+      props.abrirOrdemNoMultilegAction(props, acao);
+    else {
+      props.abrirOrdensBoletaAction(props, event);
+    }
   } else alert(erro_opcoes_ordens_exec);
 };

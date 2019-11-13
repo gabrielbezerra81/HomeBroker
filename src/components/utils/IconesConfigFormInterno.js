@@ -10,13 +10,13 @@ export const iconeConfigAbrirFormulario = (handleShow, nomeFormulario) => (
       event.stopPropagation();
       handleShow(event);
     }}
-    name={nomeFormulario}
+    data-name={nomeFormulario}
   >
     <MDBIcon
       icon="cog"
       size="2x"
       className="labelInput-verticalAlign"
-      name={nomeFormulario}
+      data-name={nomeFormulario}
     />
   </Button>
 );

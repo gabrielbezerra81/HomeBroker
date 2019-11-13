@@ -17,12 +17,13 @@ import {
 } from "components/utils/Formatacoes";
 import { pesquisarAtivoMultilegAction } from "components/redux/actions/api_actions/MenuAPIAction";
 import Book from "components/forms/multileg_/Book";
-import { Dropdown } from "semantic-ui-react";
+import { Select } from "antd";
 
 class AbaMultileg extends React.Component {
   render() {
     const { props } = this;
     const { indice } = props;
+    const arrayStrike = renderSerie(props);
     return (
       <div className="containerAbaMultileg">
         <div>
@@ -66,23 +67,31 @@ class AbaMultileg extends React.Component {
               {renderValorPorcentagem(props.multileg[indice].variacao)}
             </div>
             <div className="divColunaDetalhes">
-              <Form.Group>
-                <Form.Label>Strike</Form.Label>{" "}
-                <Dropdown
-                  search
-                  fluid
-                  selection
-                  options={renderSerie(props)}
+              <Form.Group className="inputGroupStrike">
+                <Form.Label>Strike</Form.Label>
+                <Select
+                  size="small"
                   value={props.multileg[indice].strikeSelecionado}
-                  onChange={(event, data) => {
+                  showSearch
+                  optionFilterProp="children"
+                  notFoundContent={
+                    arrayStrike.length > 0
+                      ? "Código não encontrado"
+                      : "Pesquise um ativo"
+                  }
+                  className="inputCodigo"
+                  suffixIcon={<MDBIcon icon="caret-down" />}
+                  onChange={value => {
                     props.modificarAtributoAbaAction(
                       props.multileg,
                       indice,
                       "strikeSelecionado",
-                      Number(data.value)
+                      value
                     );
                   }}
-                />
+                >
+                  {arrayStrike}
+                </Select>
               </Form.Group>
 
               <Form.Group className="wrapperVencimento ml-1">
@@ -163,15 +172,12 @@ const mapStateToProps = state => ({
   eventSourceCotacao: state.multilegReducer.eventSourceCotacao
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    modificarAtributoAbaAction,
-    pesquisarAtivoMultilegAction,
-    adicionarOfertaTabelaAction,
-    atualizarBookAction
-  }
-)(AbaMultileg);
+export default connect(mapStateToProps, {
+  modificarAtributoAbaAction,
+  pesquisarAtivoMultilegAction,
+  adicionarOfertaTabelaAction,
+  atualizarBookAction
+})(AbaMultileg);
 
 const renderSeta = valor => {
   valor = Number(valor);
@@ -210,21 +216,24 @@ const renderSerie = props => {
 };
 
 const renderStrikeSymbol = (item, indice, listaOpcoes) => {
-  if (indice % 2 === 0)
-    return {
-      key: Math.random(),
-      text:
-        item.type === "CALL"
-          ? item.symbol +
-            " " +
-            item.strike +
-            " " +
-            listaOpcoes[indice + 1].symbol
-          : listaOpcoes[indice + 1].symbol +
-            " " +
-            item.strike +
-            " " +
-            item.symbol,
-      value: item.strike
-    };
+  if (indice % 2 === 0) {
+    const texto =
+      item.type === "CALL"
+        ? item.symbol + " " + item.strike + " " + listaOpcoes[indice + 1].symbol
+        : listaOpcoes[indice + 1].symbol +
+          " " +
+          item.strike +
+          " " +
+          item.symbol;
+
+    return (
+      <Select.Option
+        className="optionInputCodigo"
+        key={Math.random()}
+        value={item.strike}
+      >
+        {texto}
+      </Select.Option>
+    );
+  }
 };

@@ -8,7 +8,8 @@ import {
   cancelarOrdemExecAPI,
   finalizarAMercadoAPI,
   incrementarQtdeOrdemExecAPI,
-  incrementarPrecoOrdemExecAPI
+  incrementarPrecoOrdemExecAPI,
+  pesquisarAtivoAPI
 } from "components/api/API";
 import { LISTAR_ORDENS_EXECUCAO } from "constants/ApiActionTypes";
 import {
@@ -27,6 +28,7 @@ import {
   calculoMDC
 } from "components/forms/multileg_/CalculoPreco";
 import { formatarNumero } from "components/redux/reducers/formInputReducer";
+import { cloneDeep } from "@babel/types";
 
 export const mudarVariavelOrdensExecAction = (nome, valor) => {
   return dispatch => {
@@ -49,9 +51,10 @@ export const listarOrdensExecAction = () => {
   };
 };
 
-export const abrirOrdemNoMultilegAction = (props, item, acao = "") => {
+export const abrirOrdemNoMultilegAction = (props, acao = "") => {
   return async dispatch => {
     travarDestravarClique("travar", "menusTelaPrincipal");
+    const item = props.ordemAtual;
 
     let multilegAberto = props.multilegAberto;
 
@@ -133,6 +136,17 @@ export const abrirOrdemNoMultilegAction = (props, item, acao = "") => {
   };
 };
 
+export const abrirOrdensBoletaAction = (props, event) => {
+  return async dispatch => {
+    const { ordemAtual } = props;
+    let nome = "compra_mercado";
+
+    const dadosPesquisa = await pesquisarAtivoAPI(ordemAtual.offers[0].ativo);
+
+    props.abrirFormAction(event, props, "", nome);
+  };
+};
+
 export const cancelarOrdemExecAction = id => {
   return dispatch => {
     cancelarOrdemExecAPI(id);
@@ -171,3 +185,16 @@ export const aumentarQtdePrecoAction = (ordemAtual, valorSomar, modo) => {
     }
   };
 };
+
+const boletas = [
+  "compra_mercado",
+  "compra_limitada",
+  "compra_agendada",
+  "compra_startstop",
+  "compra_startmovel",
+  "venda_mercado",
+  "venda_limitada",
+  "venda_agendada",
+  "venda_startstop",
+  "venda_stop_movel"
+];

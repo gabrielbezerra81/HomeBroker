@@ -95,10 +95,20 @@ export const aumentarZindexAction = (div_id, zIndex, show) => {
 };
 
 //Abrir formulário de maneira geral, decide entre criar novo sub-app e mostrar o form, ou apenas mostrar o form
-export const abrirFormAction = (event, props, codigo_ativo = "") => {
+export const abrirFormAction = (
+  event,
+  props,
+  codigo_ativo = "",
+  nameOrdemExec = ""
+) => {
   return dispatch => {
     let apps = [...props.apps];
-    const name = event.target.getAttribute("name");
+    let name;
+    if (nameOrdemExec) {
+      name = nameOrdemExec;
+    } else {
+      name = event.currentTarget.getAttribute("data-name");
+    }
     let length = apps.length;
 
     if (length === 0) {
@@ -178,7 +188,7 @@ const mostrarApp = (name, index, props, dispatch, codigo_ativo) => {
 
 //Usado apenas na store local de cada sub-app para abrir os forms de configuração de start/stop movel
 export const abrirFormConfigurarAction = (event, props) => {
-  const name = event.target.getAttribute("name");
+  const name = event.target.getAttribute("data-name");
 
   return dispatch => {
     dispatch({

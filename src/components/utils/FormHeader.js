@@ -13,9 +13,9 @@ export const modalHeader = (props, headerTitle, headerClass, resetPosition) => (
           event.stopPropagation();
           props.handleShow(event, props.ativo);
         }}
-        name="book"
+        data-name="book"
       >
-        <MDBIcon icon="book" size="2x" name="book" />
+        <MDBIcon icon="book" size="2x" data-name="book" />
       </Button>
 
       <Button variant="link" className="iconesHeader">
@@ -93,11 +93,7 @@ export const modalHeaderSemBook = (props, headerTitle, headerClass) => (
         <MDBIcon icon="cog" size="2x" />
       </Button>
 
-      <Button
-        variant="link"
-        className="iconesHeader"
-        onClick={props.close}
-      >
+      <Button variant="link" className="iconesHeader" onClick={props.close}>
         <span className="fa-stack hoverIconeFechar iconesHeader">
           <MDBIcon icon="circle" className="fa-stack-2x" />
           <MDBIcon

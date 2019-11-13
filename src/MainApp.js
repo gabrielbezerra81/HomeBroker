@@ -26,6 +26,7 @@ const startStyle = {
   pointerEvents: "none"
 };
 
+// @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 //Possui o menu de ordens e encapsula todos os sub-apps.
@@ -66,7 +67,7 @@ export class MainApp extends Component {
                   src={iconeCompraMercado}
                   alt=""
                   onClick={event => props.abrirFormAction(event, props)}
-                  name="compra_mercado"
+                  data-name="compra_mercado"
                   className="divClicavel"
                 />
                 <span>A mercado</span>
@@ -76,7 +77,7 @@ export class MainApp extends Component {
                   src={iconeCompraLimitada}
                   alt=""
                   onClick={event => props.abrirFormAction(event, props)}
-                  name="compra_limitada"
+                  data-name="compra_limitada"
                   className="divClicavel"
                 />
                 <span>Limitada</span>
@@ -86,7 +87,7 @@ export class MainApp extends Component {
                   src={iconeCompraAgendada}
                   alt=""
                   onClick={event => props.abrirFormAction(event, props)}
-                  name="compra_agendada"
+                  data-name="compra_agendada"
                   className="divClicavel"
                 />
                 <span>Agendada</span>
@@ -96,7 +97,7 @@ export class MainApp extends Component {
                   src={iconeCompraStartStop}
                   alt=""
                   onClick={event => props.abrirFormAction(event, props)}
-                  name="compra_startstop"
+                  data-name="compra_startstop"
                   className="divClicavel"
                 />
                 <span>Start/Stop</span>
@@ -106,7 +107,8 @@ export class MainApp extends Component {
                   src={iconeCompraStartMovel}
                   alt=""
                   onClick={event => props.abrirFormAction(event, props)}
-                  name="compra_startmovel"
+                  data-
+                  data-name="compra_startmovel"
                   className="divClicavel"
                 />
                 <span>Start Móvel</span>
@@ -118,7 +120,7 @@ export class MainApp extends Component {
                 <img
                   src={iconeVendaMercado}
                   alt=""
-                  name="venda_mercado"
+                  data-name="venda_mercado"
                   onClick={event => props.abrirFormAction(event, props)}
                   className="divClicavel"
                 />
@@ -128,7 +130,8 @@ export class MainApp extends Component {
                 <img
                   src={iconeVendaLimitada}
                   alt=""
-                  name="venda_limitada"
+                  data-
+                  data-name="venda_limitada"
                   onClick={event => props.abrirFormAction(event, props)}
                   className="divClicavel"
                 />
@@ -138,7 +141,7 @@ export class MainApp extends Component {
                 <img
                   src={iconeVendaAgendada}
                   alt=""
-                  name="venda_agendada"
+                  data-name="venda_agendada"
                   onClick={event => props.abrirFormAction(event, props)}
                   className="divClicavel"
                 />
@@ -148,7 +151,7 @@ export class MainApp extends Component {
                 <img
                   src={iconeVendaStartStop}
                   alt=""
-                  name="venda_startstop"
+                  data-name="venda_startstop"
                   onClick={event => props.abrirFormAction(event, props)}
                   className="divClicavel"
                 />
@@ -158,7 +161,7 @@ export class MainApp extends Component {
                 <img
                   src={iconeVendaStopMovel}
                   alt=""
-                  name="venda_stop_movel"
+                  data-name="venda_stop_movel"
                   onClick={event => props.abrirFormAction(event, props)}
                   className="divClicavel"
                 />
@@ -203,7 +206,9 @@ export class SubApp extends Component {
     const { props } = this;
     return (
       <Provider store={this.store}>
-        <AppConectado
+        <
+  // @ts-ignore
+        AppConectado
           appkey={props.index}
           indiceShow={props.indiceShow}
           codigoBook={props.codigoBook}
