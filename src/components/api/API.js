@@ -47,6 +47,8 @@ import {
   sucesso_modificar_ordemExec,
   erro_modificar_ordemExec
 } from "constants/AlertaErros";
+import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
+import { formatarNumero } from "components/redux/reducers/formInputReducer";
 
 export const pesquisarAtivoAPI = codigo => {
   return request
@@ -388,6 +390,12 @@ export const atualizarCotacaoAPI = (
               }
             }
           });
+          if (permitirDispatch) {
+            let calculo = calculoPreco(aba, "ultimo").toFixed(2);
+
+            calculo = formatarNumero(calculo, 2, ".", ",");
+            aba.preco = calculo;
+          }
         });
 
         if (permitirDispatch) {

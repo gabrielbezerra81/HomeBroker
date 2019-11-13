@@ -1,5 +1,5 @@
 import React from "react";
-import "react-datepicker/dist/react-datepicker.css";
+
 import { connect } from "react-redux";
 import { Row } from "react-bootstrap";
 import DraggableModal from "components/utils/DraggableModal";
@@ -35,7 +35,9 @@ const modalBody = props => (
   <div className="mbody">
     <BodyHeaderCompraStartStop />
     <Row>
-      <FormInternoCompraStartStop handleShow={props.handleShow} ordem={ordem} />
+      <
+// @ts-ignore
+      FormInternoCompraStartStop handleShow={props.handleShow} ordem={ordem} />
       <GraficoCompraStartStop />
     </Row>
   </div>
@@ -47,10 +49,7 @@ const mapStateToProps = state => ({
   eventSourceCotacao: state.compraStartStopReducer.eventSourceCotacao
 });
 
-export default connect(
-  mapStateToProps,
-  {}
-)(CompraStartStop);
+export default connect(mapStateToProps, {})(CompraStartStop);
 
 const ordem = {
   nome: "Compra Start Stop",

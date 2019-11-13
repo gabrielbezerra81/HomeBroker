@@ -99,19 +99,35 @@ export const modificarAtributoAbaAction = (
   multileg,
   indice,
   atributo,
-  valor
+  valor,
+  props = null
 ) => {
   return async dispatch => {
-    const abasMultileg = await modificarAba(multileg, indice, atributo, valor);
+    const abasMultileg = await modificarAba(
+      multileg,
+      indice,
+      atributo,
+      valor,
+      props
+    );
     dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
   };
 };
 
-export const modificarAba = async (multileg, indice, atributo, valor) => {
+export const modificarAba = async (
+  multileg,
+  indice,
+  atributo,
+  valor,
+  props = null
+) => {
   let abasMultileg = [...multileg];
   if (atributo === "limpar") {
     abasMultileg[indice] = cloneDeep(aba);
     abasMultileg[indice].nomeAba = "Ordem " + (indice + 1);
+
+    if (props.eventSource) props.eventSource.close();
+    if (props.eventSourceCotacao) props.eventSourceCotacao.close();
   } else {
     if (atributo === "ativo") valor = valor.toUpperCase();
 
@@ -159,6 +175,7 @@ export const modificarAtributoTabelaAbaAction = (
       linhaTabela[atributo] = valor;
       //Se a série for alterada, pesquisa novamente os strikes e códigos
       if (atributo === "serieSelecionada") {
+        limparBook(linhaTabela);
         const dados = await pesquisarStrikesMultilegAction(
           linhaTabela.ativoAtual,
           valor
@@ -178,9 +195,11 @@ export const modificarAtributoTabelaAbaAction = (
         }
       } //
       else if (atributo === "strikeSelecionado") {
+        limparBook(linhaTabela);
         pesquisarSymbolModel_strike_tipo(linhaTabela);
       } //
       else if (atributo === "codigoSelecionado") {
+        limparBook(linhaTabela);
         pesquisarSerieStrikeModeloTipo_symbol(linhaTabela);
       } //
     }
@@ -507,6 +526,11 @@ export const atualizarCotacaoAction = (dispatch, props, multileg) => {
     payload: newSource,
     nomeVariavel: "eventSourceCotacao"
   });
+};
+
+const limparBook = oferta => {
+  oferta.compra = null;
+  oferta.venda = null;
 };
 
 //Formato novo

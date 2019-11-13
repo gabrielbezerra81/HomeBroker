@@ -61,3 +61,8 @@ div.dropdown:focus {
   background-color: #008fca;
   color: #fff;
 }
+
+.ui.dropdown.selected,
+.ui.dropdown .menu .selected.item {
+  background-color: #008fca;
+}

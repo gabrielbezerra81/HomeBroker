@@ -1,7 +1,6 @@
 import React from "react";
 import { InputGroup } from "react-bootstrap";
 import { Select } from "antd";
-import "antd/es/select/style/index.css";
 import { erro_opcoes_ordens_exec } from "constants/AlertaErros";
 
 export default class InputSelectBotoes extends React.Component {

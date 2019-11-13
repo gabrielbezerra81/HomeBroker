@@ -1,5 +1,5 @@
 import React from "react";
-import "react-datepicker/dist/react-datepicker.css";
+
 import { Row, Col } from "react-bootstrap";
 import TabelaCompleta from "components/forms/posicao_custodia/posicao_detalhada/TabelaCompleta";
 import TabelaSimples from "components/forms/posicao_custodia/posicao_detalhada/TabelaSimples";

@@ -238,7 +238,8 @@ class Book extends React.Component {
                   props.multileg,
                   indice,
                   "limpar",
-                  ""
+                  "",
+                  props
                 )
               }
             >
@@ -286,19 +287,18 @@ class Book extends React.Component {
 
 const mapStateToProps = state => ({
   configComplementarAberto: state.multilegReducer.configComplementarAberto,
-  multileg: state.multilegReducer.multileg
+  multileg: state.multilegReducer.multileg,
+  eventSource: state.multilegReducer.eventSource,
+  eventSourceCotacao: state.multilegReducer.eventSourceCotacao
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    abrirFecharConfigComplAction,
-    modificarAtributoAbaAction,
-    enviarOrdemMultilegAction,
-    criarAlertaMultilegAction,
-    criarPosicaoMultilegAction
-  }
-)(Book);
+export default connect(mapStateToProps, {
+  abrirFecharConfigComplAction,
+  modificarAtributoAbaAction,
+  enviarOrdemMultilegAction,
+  criarAlertaMultilegAction,
+  criarPosicaoMultilegAction
+})(Book);
 
 const calcularTotal = props => {
   let total = 0;

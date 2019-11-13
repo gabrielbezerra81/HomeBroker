@@ -1,5 +1,5 @@
 import React from "react";
-import "react-datepicker/dist/react-datepicker.css";
+
 import { Row, Col } from "react-bootstrap";
 import DraggableModal from "components/utils/DraggableModal";
 import { modalHeaderSemBook } from "components/utils/FormHeader";
@@ -217,7 +217,10 @@ const item = {
     { ativo: "X280", qtde: 1000 },
     { ativo: "X290", qtde: 1000 }
   ],
-  custodiaVenda: [{ ativo: "S272", qtde: 1000 }, { ativo: "S290", qtde: 1000 }],
+  custodiaVenda: [
+    { ativo: "S272", qtde: 1000 },
+    { ativo: "S290", qtde: 1000 }
+  ],
   precoCompra: 2.5,
   precoVenda: 2.6,
   valorAcao: 2.55,

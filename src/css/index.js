@@ -33,9 +33,11 @@ import "./relatorio_detalhado/RelatorioDetalhado.css";
 import "./componentes_customizados/CustomCheckbox.css";
 import "./componentes_customizados/InputFormatado.css";
 
+import "react-datepicker/dist/react-datepicker.css";
 import "semantic-ui-css/components/reset.css";
 import "semantic-ui-css/components/transition.css";
 import "semantic-ui-css/components/search.css";
 import "semantic-ui-dropdown/dropdown.css";
 import "./componentes_customizados/Dropdown.css";
 import "./componentes_customizados/SelectANTD.css";
+import "antd/es/select/style/index.css";

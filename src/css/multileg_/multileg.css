@@ -403,7 +403,27 @@ a.botaoAddAba.active {
   width: 87px;
 }
 
-.inputCodigo {
-  width: 180px;
-  text-align-last: center;
+.inputCodigo > div {
+  background-color: #333 !important;
+  color: var(--cor-texto) !important;
+  width: 175px !important;
+  border: none;
+  height: 17px !important;
+  text-align: center !important;
+  font-size: 0.73rem !important;
+}
+
+.inputCodigo .ant-select-selection__rendered {
+  height: 17px !important;
+  line-height: 16px !important;
+}
+
+.inputCodigo input {
+  height: 17px !important;
+  text-align: center !important;
+}
+
+.optionInputCodigo {
+  font-size: 0.73rem !important;
+  padding: 5px 7px !important;
 }

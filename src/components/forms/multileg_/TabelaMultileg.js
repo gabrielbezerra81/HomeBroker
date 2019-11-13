@@ -13,6 +13,7 @@ import {
   formatarVencimento
 } from "components/utils/Formatacoes";
 import InputFormatado from "components/utils/InputFormatado";
+import { Select } from "antd";
 
 class TabelaMultileg extends React.Component {
   render() {
@@ -135,47 +136,41 @@ class TabelaMultileg extends React.Component {
                     </Form.Group>
                   </td>
                   <td>
-                    <Form.Group>
-                      <Form.Control
-                        as="select"
-                        className="textInput inputCodigo"
-                        value={item.codigoSelecionado}
-                        onChange={e => {
-                          props.modificarAtributoTabelaAbaAction(
-                            props,
-                            indiceAba,
-                            "codigoSelecionado",
-                            e.currentTarget.value,
-                            indiceLinha
-                          );
-                        }}
-                        onFocus={() =>
-                          props.modificarAtributoTabelaAbaAction(
-                            props,
-                            indiceAba,
-                            "codigoAberto",
-                            true,
-                            indiceLinha
-                          )
-                        }
-                        onBlur={() =>
-                          props.modificarAtributoTabelaAbaAction(
-                            props,
-                            indiceAba,
-                            "codigoAberto",
-                            false,
-                            indiceLinha
-                          )
-                        }
-                      >
-                        {renderCodigoOferta(
-                          item.opcoes,
-                          props.multileg[indiceAba].tabelaMultileg[indiceLinha]
-                            .codigoAberto,
-                          item.tipo.toUpperCase()
-                        )}
-                      </Form.Control>
-                    </Form.Group>
+                    <Select
+                      size="small"
+                      value={item.codigoSelecionado}
+                      showSearch
+                      optionFilterProp="children"
+                      notFoundContent="Código não encontrado"
+                      className="inputCodigo"
+                      suffixIcon={<MDBIcon icon="caret-down" />}
+                      onChange={value => {
+                        props.modificarAtributoTabelaAbaAction(
+                          props,
+                          indiceAba,
+                          "codigoSelecionado",
+                          value,
+                          indiceLinha
+                        );
+                      }}
+                      onDropdownVisibleChange={open => {
+                        props.modificarAtributoTabelaAbaAction(
+                          props,
+                          indiceAba,
+                          "codigoAberto",
+                          open,
+                          indiceLinha
+                        );
+                      }}
+                    >
+                      {renderCodigoOferta(
+                        item.opcoes,
+                        props.multileg[indiceAba].tabelaMultileg[indiceLinha]
+                          .codigoAberto,
+                        item.tipo.toUpperCase(),
+                        item
+                      )}
+                    </Select>
                   </td>
                   <td>
                     <div
@@ -242,8 +237,14 @@ class TabelaMultileg extends React.Component {
                       </Form.Control>
                     </Form.Group>
                   </td>
-                  <td>{formatarNumDecimal(item.cotacao)}</td>
-                  <td>{formatarNumDecimal(item.qtde * item.cotacao)}</td>
+                  <td>
+                    {item.cotacao ? formatarNumDecimal(item.cotacao) : ""}
+                  </td>
+                  <td>
+                    {item.cotacao
+                      ? formatarNumDecimal(item.qtde * item.cotacao)
+                      : ""}
+                  </td>
                 </tr>
               );
             }
@@ -260,10 +261,10 @@ const mapStateToProps = state => ({
   eventSourceCotacao: state.multilegReducer.eventSourceCotacao
 });
 
-export default connect(
-  mapStateToProps,
-  { modificarAtributoTabelaAbaAction, excluirOfertaTabelaAction }
-)(TabelaMultileg);
+export default connect(mapStateToProps, {
+  modificarAtributoTabelaAbaAction,
+  excluirOfertaTabelaAction
+})(TabelaMultileg);
 
 const renderCV = (cv, props, indiceLinha) => {
   let cvCompra = "",
@@ -326,7 +327,7 @@ const renderModelo = modelo => {
   else return null;
 };
 
-const renderCodigoOferta = (listaOpcoes, codigoAberto, tipoAtual) => {
+const renderCodigoOferta = (listaOpcoes, codigoAberto, tipoAtual, item) => {
   let listaCodigos = [];
 
   if (codigoAberto)
@@ -349,17 +350,25 @@ const renderCodigoOferta = (listaOpcoes, codigoAberto, tipoAtual) => {
         let value = tipoAtual === "CALL" ? callPut[0] : callPut[2];
 
         listaCodigos.push(
-          <option key={Math.random()} value={value}>
+          <Select.Option
+            key={Math.random()}
+            value={value}
+            className="optionInputCodigo"
+          >
             {codigo}
-          </option>
+          </Select.Option>
         );
       }
     });
   else {
     return listaOpcoes.map(opcao => (
-      <option key={Math.random()} value={opcao.symbol}>
+      <Select.Option
+        key={Math.random()}
+        value={opcao.symbol}
+        className="optionInputCodigo"
+      >
         {opcao.symbol}
-      </option>
+      </Select.Option>
     ));
   }
 

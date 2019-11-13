@@ -1,5 +1,5 @@
 import React from "react";
-import "react-datepicker/dist/react-datepicker.css";
+
 import { connect } from "react-redux";
 import { Row } from "react-bootstrap";
 import DraggableModal from "components/utils/DraggableModal";
@@ -47,10 +47,7 @@ const mapStateToProps = state => ({
   eventSourceCotacao: state.vendaLimitadaReducer.eventSourceCotacao
 });
 
-export default connect(
-  mapStateToProps,
-  {}
-)(VendaLimitada);
+export default connect(mapStateToProps, {})(VendaLimitada);
 
 const ordem = {
   nome: "Venda Limitada",

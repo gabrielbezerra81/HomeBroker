@@ -5,7 +5,7 @@ import { MDBIcon } from "mdbreact";
 export const modalHeader = (props, headerTitle, headerClass, resetPosition) => (
   <div className={`${headerClass} handle mheader`}>
     <h6 className="mtitle">{headerTitle}</h6>
-    <div className="wrapperIconesHeader" name="book">
+    <div className="wrapperIconesHeader">
       <Button
         variant="link"
         className="iconesHeader"
@@ -71,7 +71,7 @@ export const bookHeader = (props, headerClass, resetPosition) => (
             if (props.eventSource) props.eventSource.close();
           }}
         >
-          <span className="fa-stack">
+          <span className="fa-stack hoverIconeFechar">
             <MDBIcon icon="circle" className="fa-stack-2x" />
             <MDBIcon
               icon="times"
@@ -88,13 +88,17 @@ export const bookHeader = (props, headerClass, resetPosition) => (
 export const modalHeaderSemBook = (props, headerTitle, headerClass) => (
   <div className={`${headerClass} handle mheader`}>
     <h6 className="mtitle">{headerTitle}</h6>
-    <div className="wrapperIconesHeader" name="book">
+    <div className="wrapperIconesHeader">
       <Button variant="link" className="iconesHeader">
         <MDBIcon icon="cog" size="2x" />
       </Button>
 
-      <Button variant="link" className="iconesHeader" onClick={props.close}>
-        <span className="fa-stack">
+      <Button
+        variant="link"
+        className="iconesHeader"
+        onClick={props.close}
+      >
+        <span className="fa-stack hoverIconeFechar iconesHeader">
           <MDBIcon icon="circle" className="fa-stack-2x" />
           <MDBIcon
             icon="times"

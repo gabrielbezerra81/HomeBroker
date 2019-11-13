@@ -52,4 +52,5 @@ span {
   color: var(--cor-texto);
   font-size: 1.3rem;
   padding-bottom: 10px;
+  z-index: 1;
 }

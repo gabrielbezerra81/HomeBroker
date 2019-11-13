@@ -8,6 +8,7 @@
   --cor-text-input: #bbb;
   --box-shadow-color: #0a51bd;
   --green: #0cc45b;
+  --cor-item-selected: #008fca;
 }
 
 .mcontent {
@@ -28,8 +29,8 @@
   display: grid;
 }
 
-.mbody .divRepetidor i{
-  color:#333
+.mbody .divRepetidor i {
+  color: #333;
 }
 
 .mheader {
@@ -203,4 +204,12 @@ table > tbody > tr:nth-child(odd) > th {
 
 .bg-success {
   background-color: #128f46 !important;
+}
+
+.fa-circle {
+  color: var(--cor-cinza-botoes);
+}
+
+.fa-stack:hover .fa-circle {
+  color: #195cc7;
 }

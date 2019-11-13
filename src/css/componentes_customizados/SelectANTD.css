@@ -1,3 +1,7 @@
+.ant-select-focused .ant-select-selection {
+  box-shadow: 0 0 0px 3.5px var(--box-shadow-color) !important;
+}
+
 .ant-select-search__field__wrap input {
   color: var(--cor-texto) !important;
   line-height: 3 !important;
@@ -14,12 +18,12 @@
 
 .ant-select-dropdown-menu-item-selected {
   color: var(--cor-texto) !important;
-  background-color: #888 !important;
+  background-color: var(--cor-item-selected) !important;
 }
 
 .ant-select-dropdown-menu-item:hover {
-  background-color: #888 !important;
+  background-color: var(--cor-item-selected) !important;
 }
 .ant-select-dropdown-menu-item-active:not(.ant-select-dropdown-menu-item-disabled) {
-  background-color: #888 !important;
+  background-color: var(--cor-item-selected) !important;
 }
