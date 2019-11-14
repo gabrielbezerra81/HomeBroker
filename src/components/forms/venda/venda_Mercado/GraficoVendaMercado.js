@@ -65,7 +65,7 @@ class GraficoVendaMercado extends React.Component {
           />
           <IconeConfigGrafico
             id="ConfigStopGrafico_VA"
-            name="venda_stop_movel"
+            name="venda_stopmovel"
             handleShow={this.props.handleShow}
           />
         </div>

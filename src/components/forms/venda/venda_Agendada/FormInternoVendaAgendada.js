@@ -89,7 +89,7 @@ class FormInternoVendaAgendada extends React.Component {
             cv="venda"
             handleShow={this.props.handleShow}
             iconeConfigGain="venda_gainreducao"
-            iconeConfigStop="venda_stop_movel"
+            iconeConfigStop="venda_stopmovel"
           />
 
           {RowFormValidade(this.props, VENDA_AGENDADA_NAMESPACE)}

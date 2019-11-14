@@ -161,7 +161,7 @@ export class MainApp extends Component {
                 <img
                   src={iconeVendaStopMovel}
                   alt=""
-                  data-name="venda_stop_movel"
+                  data-name="venda_stopmovel"
                   onClick={event => props.abrirFormAction(event, props)}
                   className="divClicavel"
                 />
@@ -206,8 +206,7 @@ export class SubApp extends Component {
     const { props } = this;
     return (
       <Provider store={this.store}>
-        <
-          // @ts-ignore
+        <// @ts-ignore
         AppConectado
           appkey={props.index}
           indiceShow={props.indiceShow}

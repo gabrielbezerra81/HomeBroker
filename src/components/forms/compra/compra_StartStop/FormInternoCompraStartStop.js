@@ -37,7 +37,7 @@ class FormInternoCompraStartStop extends React.Component {
             cv="compra"
             handleShow={this.props.handleShow}
             iconeConfigGain="compra_gainreducao"
-            iconeConfigStop="venda_stop_movel"
+            iconeConfigStop="venda_stopmovel"
           />
 
           {RowFormValidade(this.props, COMPRA_STARTSTOP_NAMESPACE)}

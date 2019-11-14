@@ -151,9 +151,11 @@ export const abrirOrdensBoletaAction = (props, event, acao) => {
       let nomeSplit = nome.split("_");
       if (nomeSplit[0] === "compra") nomeSplit[0] = "venda";
       else if (nomeSplit[0] === "venda") nomeSplit[0] = "compra";
+      if (nome === "compra_startmovel") nomeSplit[1] = "stopmovel";
 
       nome = nomeSplit.join("_");
     }
+    console.log(nome);
 
     const dados = {
       dadosOrdemExec: {
@@ -162,7 +164,7 @@ export const abrirOrdensBoletaAction = (props, event, acao) => {
         qtde: qtde,
         entradaDisparo: oferta.precoDisparo,
         entradaExec: oferta.precoEnvio,
-        preco: oferta.precoEnvio.toString(),
+        preco: oferta.precoEnvio ? oferta.precoEnvio.toString() : "",
         ...retornaDadosOferta(ordemAtual, nome)
       },
       ultimaBoletaAbertaOrdemExec: nome
@@ -222,7 +224,7 @@ const mapearOperacaoParaBoleta = operacao => {
       return "compra_agendada";
     case "Compra Start Stop":
       return "compra_startstop";
-    case "Compra Stop Movel":
+    case "Compra Stop Móvel":
       return "compra_startmovel";
     case "Venda a Mercado":
       return "venda_mercado";
@@ -232,8 +234,8 @@ const mapearOperacaoParaBoleta = operacao => {
       return "venda_agendada";
     case "Venda Start Stop":
       return "venda_startstop";
-    case "Venda Stop Movel":
-      return "venda_stop_movel";
+    case "Venda Stop Móvel":
+      return "venda_stopmovel";
     default:
       return "";
   }

@@ -63,7 +63,7 @@ const modalBody = props => (
     />
     <IconeConfigGrafico
       id="ConfigStop1Grafico_CONFIGURAR"
-      name="venda_stop_movel"
+      name="venda_stopmovel"
     />
     <IconeConfigGrafico
       id="ConfigGain2Grafico_CONFIGURAR"
@@ -71,7 +71,7 @@ const modalBody = props => (
     />
     <IconeConfigGrafico
       id="ConfigStop2Grafico_CONFIGURAR"
-      name="venda_stop_movel"
+      name="venda_stopmovel"
     />
     <GraficoInputsConfigStartStop
       namespace={COMPRA_STARTSTOP_NAMESPACE}

@@ -160,7 +160,7 @@ const criarMostrarApp = (name, props, dispatch, codigo_ativo) => {
     venda_limitada: false,
     venda_mercado: false,
     venda_startstop: false,
-    venda_stop_movel: false,
+    venda_stopmovel: false,
     venda_gainreducao: false,
     config_compra: false,
     config_venda: false

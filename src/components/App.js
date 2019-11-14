@@ -235,10 +235,10 @@ export default class App extends React.Component {
             props,
             <VendaStopMovel
               close={() => {
-                props.fecharFormAction(props, "venda_stop_movel");
+                props.fecharFormAction(props, "venda_stopmovel");
               }}
               headerTitle="VENDA STOP MÓVEL"
-              name="venda_stop_movel"
+              name="venda_stopmovel"
               handleShow={this.handleShow}
             />
           )}
