@@ -207,3 +207,33 @@ export const mudarQtdAction = (valor, namespace) => {
     });
   };
 };
+//todo
+export const montarBoletaFromOrdemExecAction = props => {
+  return dispatch => {
+    const dados = props.dadosOrdemExec;
+    let nomeBoleta = props.ultimaBoletaAbertaOrdemExec;
+
+    const namespace = `_${nomeBoleta.toUpperCase()}`;
+
+    dispatch({
+      type: `${MUDAR_ATRIBUTO_BOLETA}${namespace}`,
+      atributo: "dadosPesquisa",
+      valor: dados.dadosPesquisa
+    });
+    dispatch({
+      type: `${MUDAR_ATRIBUTO_BOLETA}${namespace}`,
+      atributo: "ativo",
+      valor: dados.ativo
+    });
+    dispatch({
+      type: `${MUDAR_ATRIBUTO_BOLETA}${namespace}`,
+      atributo: "qtde",
+      valor: dados.qtde
+    });
+
+    props.receberDadosOrdemExecMainReducerAction({
+      dadosOrdemExec: null,
+      ultimaBoletaAbertaOrdemExec: ""
+    });
+  };
+};

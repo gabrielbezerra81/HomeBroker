@@ -283,6 +283,7 @@ export const atualizarBookAPI = (dispatch, props, codigos, tipo, multileg) => {
       let ativoRetornado = dados.symbol;
       if (dados.bookOffers) {
         let bookNovo = [...dados.bookOffers];
+
         bookNovo.forEach(item => {
           if (item.type === "V") {
             tabelas.tabelaOfertasVenda.push(item);
@@ -293,7 +294,7 @@ export const atualizarBookAPI = (dispatch, props, codigos, tipo, multileg) => {
         tabelas.tabelaOfertasCompra.sort((a, b) => b.price - a.price);
         tabelas.tabelaOfertasVenda.sort((a, b) => b.price - a.price);
       }
-
+      
       if (tipo === "book") {
         dispatch({
           type: LISTAR_BOOK_OFERTAS,

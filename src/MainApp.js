@@ -207,7 +207,7 @@ export class SubApp extends Component {
     return (
       <Provider store={this.store}>
         <
-  // @ts-ignore
+          // @ts-ignore
         AppConectado
           appkey={props.index}
           indiceShow={props.indiceShow}

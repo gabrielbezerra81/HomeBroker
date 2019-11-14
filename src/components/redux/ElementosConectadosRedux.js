@@ -16,7 +16,8 @@ import {
   fecharFormAction,
   abrirFormAction,
   aumentarZindexAction,
-  receberAppPropsAction
+  receberAppPropsAction,
+  receberDadosOrdemExecMainReducerAction
 } from "components/redux/reducers/MainAppReducer";
 import {
   mouseOverAction,
@@ -53,11 +54,10 @@ import {
 } from "components/redux/actions/menu_actions/OrdensExecActions";
 import { listarPosicoesAction } from "components/redux/actions/menu_actions/PosicaoActions";
 import OpcoesOrdemExec from "components/forms/ordens_em_execucao/OpcoesOrdemExec";
+import { montarBoletaFromOrdemExecAction } from "components/redux/actions/formInputActions";
 
 // @ts-ignore
 export const GlobalContext = React.createContext();
-// @ts-ignore
-export const localContext = React.createContext();
 
 // @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -102,7 +102,10 @@ const mapStateToPropsGlobalStore = state => {
     apps: state.MainAppReducer.apps,
     show: state.MainAppReducer.show,
     divkey: state.MainAppReducer.divkey,
-    zIndex: state.MainAppReducer.zIndex
+    zIndex: state.MainAppReducer.zIndex,
+    dadosOrdemExec: state.MainAppReducer.dadosOrdemExec,
+    ultimaBoletaAbertaOrdemExec:
+      state.MainAppReducer.ultimaBoletaAbertaOrdemExec
   };
 };
 
@@ -187,7 +190,8 @@ export const AppConectado = compose(
     {
       aumentarZindexAction,
       fecharFormAction,
-      abrirFormAction
+      abrirFormAction,
+      receberDadosOrdemExecMainReducerAction
     },
     null,
     { context: GlobalContext }
@@ -195,7 +199,8 @@ export const AppConectado = compose(
   connect(mapStateToPropsLocal, {
     receberAppPropsAction,
     listarBookOfertaOnEnterAction,
-    mudarInputHeaderAction
+    mudarInputHeaderAction,
+    montarBoletaFromOrdemExecAction
   })
 )(App);
 
@@ -235,7 +240,12 @@ export const OrdensExecucaoConectada = compose(
 export const OpcoesOrdemExecConectada = compose(
   connect(
     mapStateToPropsGlobalStore,
-    { aumentarZindexAction, atualizarDivKeyAction, abrirFormAction },
+    {
+      aumentarZindexAction,
+      atualizarDivKeyAction,
+      abrirFormAction,
+      receberDadosOrdemExecMainReducerAction
+    },
     null,
     { context: GlobalContext }
   ),

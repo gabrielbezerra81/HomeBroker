@@ -3,6 +3,20 @@ import { Form } from "react-bootstrap";
 import { connect } from "react-redux";
 import InputFormatado from "components/utils/InputFormatado";
 import { mudarAtributoBoletaAction } from "components/redux/actions/formInputActions";
+import {
+  COMPRA_AGENDADA_NAMESPACE,
+  COMPRA_LIMITADA_NAMESPACE,
+  COMPRA_MERCADO_NAMESPACE,
+  COMPRA_STARTSTOP_NAMESPACE,
+  COMPRA_STARTMOVEL_NAMESPACE,
+  COMPRA_GAINREDUCAO_NAMESPACE,
+  VENDA_AGENDADA_NAMESPACE,
+  VENDA_LIMITADA_NAMESPACE,
+  VENDA_MERCADO_NAMESPACE,
+  VENDA_STARTSTOP_NAMESPACE,
+  VENDA_STOPMOVEL_NAMESPACE,
+  VENDA_GAINREDUCAO_NAMESPACE
+} from "constants/ActionTypes";
 
 class GraficoInputs extends React.Component {
   render() {
@@ -232,7 +246,7 @@ class GraficoInputs extends React.Component {
 
 export const mapStateToPropsInputsPreco = state => {
   return {
-    _COMPRA_AGENDADA: {
+    [COMPRA_AGENDADA_NAMESPACE]: {
       gainDisparo: state.compraAgendadaReducer.gainDisparo,
       gainExec: state.compraAgendadaReducer.gainExec,
       stopDisparo: state.compraAgendadaReducer.stopDisparo,
@@ -241,7 +255,7 @@ export const mapStateToPropsInputsPreco = state => {
       valorTotal: state.compraAgendadaReducer.valorTotal,
       qtde: state.compraAgendadaReducer.qtde
     },
-    _COMPRA_LIMITADA: {
+    [COMPRA_LIMITADA_NAMESPACE]: {
       gainDisparo: state.compraLimitadaReducer.gainDisparo,
       gainExec: state.compraLimitadaReducer.gainExec,
       stopDisparo: state.compraLimitadaReducer.stopDisparo,
@@ -249,7 +263,7 @@ export const mapStateToPropsInputsPreco = state => {
       dadosPesquisa: state.compraLimitadaReducer.dadosPesquisa,
       qtde: state.compraLimitadaReducer.qtde
     },
-    _COMPRA_MERCADO: {
+    [COMPRA_MERCADO_NAMESPACE]: {
       gainDisparo: state.compraMercadoReducer.gainDisparo,
       gainExec: state.compraMercadoReducer.gainExec,
       stopDisparo: state.compraMercadoReducer.stopDisparo,
@@ -257,7 +271,7 @@ export const mapStateToPropsInputsPreco = state => {
       dadosPesquisa: state.compraMercadoReducer.dadosPesquisa,
       qtde: state.compraMercadoReducer.qtde
     },
-    _COMPRA_STARTSTOP: {
+    [COMPRA_STARTSTOP_NAMESPACE]: {
       gainDisparo: state.compraStartStopReducer.gainDisparo,
       gainExec: state.compraStartStopReducer.gainExec,
       stopDisparo: state.compraStartStopReducer.stopDisparo,
@@ -273,7 +287,7 @@ export const mapStateToPropsInputsPreco = state => {
       stopDisparoConfig2: state.compraStartStopReducer.stopDisparoConfig2,
       stopExecConfig2: state.compraStartStopReducer.stopExecConfig2
     },
-    _COMPRA_STARTMOVEL: {
+    [COMPRA_STARTMOVEL_NAMESPACE]: {
       gainDisparo: state.compraStartMovelReducer.gainDisparo,
       gainExec: state.compraStartMovelReducer.gainExec,
       stopDisparo: state.compraStartMovelReducer.stopDisparo,
@@ -285,7 +299,7 @@ export const mapStateToPropsInputsPreco = state => {
       stopAnteriorAjuste: state.compraStartMovelReducer.stopAnteriorAjuste,
       ajustePadrao: state.compraStartMovelReducer.ajustePadrao
     },
-    _COMPRA_GAINREDUCAO: {
+    [COMPRA_GAINREDUCAO_NAMESPACE]: {
       dadosPesquisa: state.compraGainReducao.dadosPesquisa,
       reducao1: state.compraGainReducao.reducao1,
       reducao2: state.compraGainReducao.reducao2,
@@ -295,7 +309,7 @@ export const mapStateToPropsInputsPreco = state => {
       qtde: state.compraGainReducao.qtde,
       tabelaGainReducao: state.compraGainReducao.tabelaGainReducao
     },
-    _VENDA_AGENDADA: {
+    [VENDA_AGENDADA_NAMESPACE]: {
       gainDisparo: state.vendaAgendadaReducer.gainDisparo,
       gainExec: state.vendaAgendadaReducer.gainExec,
       stopDisparo: state.vendaAgendadaReducer.stopDisparo,
@@ -304,7 +318,7 @@ export const mapStateToPropsInputsPreco = state => {
       valorTotal: state.vendaAgendadaReducer.valorTotal,
       qtde: state.vendaAgendadaReducer.qtde
     },
-    _VENDA_LIMITADA: {
+    [VENDA_LIMITADA_NAMESPACE]: {
       gainDisparo: state.vendaLimitadaReducer.gainDisparo,
       gainExec: state.vendaLimitadaReducer.gainExec,
       stopDisparo: state.vendaLimitadaReducer.stopDisparo,
@@ -312,7 +326,7 @@ export const mapStateToPropsInputsPreco = state => {
       dadosPesquisa: state.vendaLimitadaReducer.dadosPesquisa,
       qtde: state.vendaLimitadaReducer.qtde
     },
-    _VENDA_MERCADO: {
+    [VENDA_MERCADO_NAMESPACE]: {
       gainDisparo: state.vendaMercadoReducer.gainDisparo,
       gainExec: state.vendaMercadoReducer.gainExec,
       stopDisparo: state.vendaMercadoReducer.stopDisparo,
@@ -320,7 +334,7 @@ export const mapStateToPropsInputsPreco = state => {
       dadosPesquisa: state.vendaMercadoReducer.dadosPesquisa,
       qtde: state.vendaMercadoReducer.qtde
     },
-    _VENDA_STARTSTOP: {
+    [VENDA_STARTSTOP_NAMESPACE]: {
       gainDisparo: state.vendaStartStopReducer.gainDisparo,
       gainExec: state.vendaStartStopReducer.gainExec,
       stopDisparo: state.vendaStartStopReducer.stopDisparo,
@@ -336,7 +350,7 @@ export const mapStateToPropsInputsPreco = state => {
       stopDisparoConfig2: state.vendaStartStopReducer.stopDisparoConfig2,
       stopExecConfig2: state.vendaStartStopReducer.stopExecConfig2
     },
-    _VENDA_STOPMOVEL: {
+    [VENDA_STOPMOVEL_NAMESPACE]: {
       gainDisparo: state.vendaStopMovel.gainDisparo,
       gainExec: state.vendaStopMovel.gainExec,
       stopDisparo: state.vendaStopMovel.stopDisparo,
@@ -348,7 +362,7 @@ export const mapStateToPropsInputsPreco = state => {
       stopAnteriorAjuste: state.vendaStopMovel.stopAnteriorAjuste,
       ajustePadrao: state.vendaStopMovel.ajustePadrao
     },
-    _VENDA_GAINREDUCAO: {
+    [VENDA_GAINREDUCAO_NAMESPACE]: {
       dadosPesquisa: state.vendaGainReducao.dadosPesquisa,
       reducao1: state.vendaGainReducao.reducao1,
       reducao2: state.vendaGainReducao.reducao2,
@@ -361,9 +375,6 @@ export const mapStateToPropsInputsPreco = state => {
   };
 };
 
-export default connect(
-  mapStateToPropsInputsPreco,
-  {
-    mudarAtributoBoletaAction
-  }
-)(GraficoInputs);
+export default connect(mapStateToPropsInputsPreco, {
+  mudarAtributoBoletaAction
+})(GraficoInputs);

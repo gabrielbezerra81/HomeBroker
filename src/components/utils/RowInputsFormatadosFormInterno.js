@@ -11,6 +11,10 @@ import { mostrarErroQtdeOnBlurAction } from "components/redux/actions/bookOferta
 import { iconeConfigAbrirFormulario } from "components/utils/IconesConfigFormInterno";
 import { mapStateToPropsInputsPreco } from "components/utils/GraficoInputs";
 import { MDBIcon } from "mdbreact";
+import {
+  COMPRA_STARTSTOP_NAMESPACE,
+  VENDA_STARTSTOP_NAMESPACE
+} from "constants/ActionTypes";
 
 class RowGainStopFormInterno extends React.Component {
   render() {
@@ -18,8 +22,8 @@ class RowGainStopFormInterno extends React.Component {
       <Row>
         <Col md={2} className="colLabelInput">
           <h6 className="labelInput-verticalAlign">
-            {this.props.namespace === "_COMPRA_STARTSTOP" ||
-            this.props.namespace === "_VENDA_STARTSTOP"
+            {this.props.namespace === COMPRA_STARTSTOP_NAMESPACE ||
+            this.props.namespace === VENDA_STARTSTOP_NAMESPACE
               ? "Start"
               : "Gain"}
           </h6>
@@ -226,10 +230,9 @@ class RowInputsStopMovel extends React.Component {
   }
 }
 
-export const RowInputsStopMovelConectada = connect(
-  mapStateToPropsInputsPreco,
-  { mudarAtributoBoletaAction }
-)(RowInputsStopMovel);
+export const RowInputsStopMovelConectada = connect(mapStateToPropsInputsPreco, {
+  mudarAtributoBoletaAction
+})(RowInputsStopMovel);
 
 class RowInputsGainReducao extends React.Component {
   render() {

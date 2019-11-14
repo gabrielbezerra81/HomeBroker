@@ -28,7 +28,6 @@ import {
   calculoMDC
 } from "components/forms/multileg_/CalculoPreco";
 import { formatarNumero } from "components/redux/reducers/formInputReducer";
-import { cloneDeep } from "@babel/types";
 
 export const mudarVariavelOrdensExecAction = (nome, valor) => {
   return dispatch => {
@@ -139,10 +138,21 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
 export const abrirOrdensBoletaAction = (props, event) => {
   return async dispatch => {
     const { ordemAtual } = props;
-    let nome = mapearOperacaoParaBoleta(ordemAtual.operacao);
+    let nome = mapearOperacaoParaBoleta(ordemAtual.formName);
 
+    const oferta = ordemAtual.offers[0];
     const dadosPesquisa = await pesquisarAtivoAPI(ordemAtual.offers[0].ativo);
 
+    const dados = {
+      dadosOrdemExec: {
+        dadosPesquisa: dadosPesquisa,
+        ativo: oferta.ativo,
+        qtde: oferta.qtdeOferta
+      },
+      ultimaBoletaAbertaOrdemExec: nome
+    };
+
+    props.receberDadosOrdemExecMainReducerAction(dados);
     props.abrirFormAction(event, props, "", nome);
   };
 };
@@ -190,23 +200,23 @@ const mapearOperacaoParaBoleta = operacao => {
   switch (operacao) {
     case "Compra a Mercado":
       return "compra_mercado";
-    case "com_lim":
+    case "Compra Limitada":
       return "compra_limitada";
-    case "com_age":
+    case "Compra Agendada":
       return "compra_agendada";
-    case "com_startstop":
+    case "Compra Start Duplo":
       return "compra_startstop";
-    case "com_startmovel":
+    case "Compra Stop Movel":
       return "compra_startmovel";
     case "Venda a Mercado":
       return "venda_mercado";
-    case "ven_lim":
+    case "Venda Limitada":
       return "venda_limitada";
-    case "ven_age":
+    case "Venda Agendada":
       return "venda_agendada";
-    case "ven_startstop":
+    case "Venda Start Duplo":
       return "venda_startstop";
-    case "ven_stopmovel":
+    case "Venda Stop Movel":
       return "venda_stop_movel";
     default:
       return "";

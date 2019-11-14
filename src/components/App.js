@@ -45,38 +45,56 @@ const animate = (props, Componente) => {
 
 export default class App extends React.Component {
   componentWillMount() {
-    if (this.props.appkey !== 0 && this.props.codigoBook) {
-      this.props.mudarInputHeaderAction(this.props.codigoBook);
-      this.props.listarBookOfertaOnEnterAction(this.props.codigoBook);
-    }
-  }
-  componentDidUpdate() {
-    if (
-      this.props.divkey !== "" &&
-      this.props.divkey !== "divOrdens" &&
-      this.props.divkey !== "ordens_execucao" &&
-      this.props.divkey !== "posicao_custodia" &&
-      this.props.divkey !== "multileg" &&
-      this.props.divkey !== "relatorio_detalhado"
-    )
-      document.getElementById(this.props.divkey).style.zIndex =
-        this.props.zIndex + 1;
+    const { props } = this;
 
-    this.props.receberAppPropsAction(this.props);
+    if (props.appkey !== 0 && props.codigoBook) {
+      props.mudarInputHeaderAction(props.codigoBook);
+      props.listarBookOfertaOnEnterAction(props.codigoBook);
+    }
+    //Disparar montagem de ordem vinda das ordens em execução ao criar App Local
+    if (props.dadosOrdemExec) props.montarBoletaFromOrdemExecAction(props);
+  }
+  componentDidUpdate(prevProps) {
+    const { props } = this;
+    if (
+      props.divkey !== "" &&
+      props.divkey !== "divOrdens" &&
+      props.divkey !== "ordens_execucao" &&
+      props.divkey !== "posicao_custodia" &&
+      props.divkey !== "multileg" &&
+      props.divkey !== "relatorio_detalhado" &&
+      document.getElementById(props.divkey)
+    )
+      document.getElementById(props.divkey).style.zIndex = props.zIndex + 1;
+
+    //Disparar montagem de ordem ao mostrar App Local
+    //1 - Filtra o subapp que deve ser alterado com a nova ordem em execução, pois ele terá seu estado "show" alterado.
+    //2 - Verifica se foi enviada uma ordem de execução para ser aberta nas boletas
+    if (
+      prevProps.show[props.appkey] !== props.show[props.appkey] &&
+      props.dadosOrdemExec
+    ) {
+      props.montarBoletaFromOrdemExecAction(props);
+    }
+
+    if (prevProps !== props) {
+      props.receberAppPropsAction(props);
+    }
   }
 
   componentDidMount() {
+    const { props } = this;
+
     if (
-      this.props.divkey !== "" &&
-      this.props.divkey !== "divOrdens" &&
-      this.props.divkey !== "ordens_execucao" &&
-      this.props.divkey !== "posicao_custodia" &&
-      this.props.divkey !== "multileg" &&
-      this.props.divkey !== "relatorio_detalhado"
+      props.divkey !== "" &&
+      props.divkey !== "divOrdens" &&
+      props.divkey !== "ordens_execucao" &&
+      props.divkey !== "posicao_custodia" &&
+      props.divkey !== "multileg" &&
+      props.divkey !== "relatorio_detalhado"
     )
-      document.getElementById(this.props.divkey).style.zIndex =
-        this.props.zIndex + 1;
-    this.props.receberAppPropsAction(this.props);
+      document.getElementById(props.divkey).style.zIndex = props.zIndex + 1;
+    props.receberAppPropsAction(props);
   }
 
   handleShow = (event, ativo) => {
@@ -84,23 +102,25 @@ export default class App extends React.Component {
   };
 
   render() {
+    const { props } = this;
+
     return (
       <div className="App">
         <Row className="appbody">
           {animate(
-            this.props,
+            props,
             <BookOfertas
               close={() => {
-                this.props.fecharFormAction(this.props, "book");
+                props.fecharFormAction(props, "book");
               }}
               name="book"
             />
           )}
           {animate(
-            this.props,
+            props,
             <CompraAgendada
               close={() => {
-                this.props.fecharFormAction(this.props, "compra_agendada");
+                props.fecharFormAction(props, "compra_agendada");
               }}
               headerTitle="COMPRA AGENDADA"
               name="compra_agendada"
@@ -108,10 +128,10 @@ export default class App extends React.Component {
             />
           )}
           {animate(
-            this.props,
+            props,
             <CompraLimitada
               close={() => {
-                this.props.fecharFormAction(this.props, "compra_limitada");
+                props.fecharFormAction(props, "compra_limitada");
               }}
               headerTitle="COMPRA LIMITADA"
               name="compra_limitada"
@@ -120,10 +140,10 @@ export default class App extends React.Component {
           )}
 
           {animate(
-            this.props,
+            props,
             <CompraMercado
               close={() => {
-                this.props.fecharFormAction(this.props, "compra_mercado");
+                props.fecharFormAction(props, "compra_mercado");
               }}
               headerTitle="COMPRA A MERCADO"
               name="compra_mercado"
@@ -132,10 +152,10 @@ export default class App extends React.Component {
           )}
 
           {animate(
-            this.props,
+            props,
             <CompraStartStop
               close={() => {
-                this.props.fecharFormAction(this.props, "compra_startstop");
+                props.fecharFormAction(props, "compra_startstop");
               }}
               headerTitle="COMPRA START STOP"
               name="compra_startstop"
@@ -144,10 +164,10 @@ export default class App extends React.Component {
           )}
 
           {animate(
-            this.props,
+            props,
             <CompraStartMovel
               close={() => {
-                this.props.fecharFormAction(this.props, "compra_startmovel");
+                props.fecharFormAction(props, "compra_startmovel");
               }}
               headerTitle="COMPRA START MÓVEL"
               name="compra_startmovel"
@@ -156,10 +176,10 @@ export default class App extends React.Component {
           )}
 
           {animate(
-            this.props,
+            props,
             <CompraGainReducao
               close={() => {
-                this.props.fecharFormAction(this.props, "compra_gainreducao");
+                props.fecharFormAction(props, "compra_gainreducao");
               }}
               headerTitle="GAIN / REDUÇÃO DE COMPRA"
               name="compra_gainreducao"
@@ -168,10 +188,10 @@ export default class App extends React.Component {
           )}
 
           {animate(
-            this.props,
+            props,
             <VendaAgendada
               close={() => {
-                this.props.fecharFormAction(this.props, "venda_agendada");
+                props.fecharFormAction(props, "venda_agendada");
               }}
               headerTitle="VENDA AGENDADA"
               name="venda_agendada"
@@ -179,10 +199,10 @@ export default class App extends React.Component {
             />
           )}
           {animate(
-            this.props,
+            props,
             <VendaLimitada
               close={() => {
-                this.props.fecharFormAction(this.props, "venda_limitada");
+                props.fecharFormAction(props, "venda_limitada");
               }}
               headerTitle="VENDA LIMITADA"
               name="venda_limitada"
@@ -190,10 +210,10 @@ export default class App extends React.Component {
             />
           )}
           {animate(
-            this.props,
+            props,
             <VendaMercado
               close={() => {
-                this.props.fecharFormAction(this.props, "venda_mercado");
+                props.fecharFormAction(props, "venda_mercado");
               }}
               headerTitle="VENDA MERCADO"
               name="venda_mercado"
@@ -201,10 +221,10 @@ export default class App extends React.Component {
             />
           )}
           {animate(
-            this.props,
+            props,
             <VendaStartStop
               close={() => {
-                this.props.fecharFormAction(this.props, "venda_startstop");
+                props.fecharFormAction(props, "venda_startstop");
               }}
               headerTitle="VENDA START STOP"
               name="venda_startstop"
@@ -212,10 +232,10 @@ export default class App extends React.Component {
             />
           )}
           {animate(
-            this.props,
+            props,
             <VendaStopMovel
               close={() => {
-                this.props.fecharFormAction(this.props, "venda_stop_movel");
+                props.fecharFormAction(props, "venda_stop_movel");
               }}
               headerTitle="VENDA STOP MÓVEL"
               name="venda_stop_movel"
@@ -223,10 +243,10 @@ export default class App extends React.Component {
             />
           )}
           {animate(
-            this.props,
+            props,
             <VendaGainReducao
               close={() => {
-                this.props.fecharFormAction(this.props, "venda_gainreducao");
+                props.fecharFormAction(props, "venda_gainreducao");
               }}
               headerTitle="GAIN / REDUÇÃO DE VENDA"
               name="venda_gainreducao"

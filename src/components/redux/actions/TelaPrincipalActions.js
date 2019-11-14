@@ -27,7 +27,10 @@ export const logarUsuarioAction = (username, password) => {
     else {
       const token = await realizarLoginAPI(username, password);
       //const auth = await autenticacaoTokenAPI(token);
-      const infoUsuario = await buscarInformacoesUsuarioAPI(token);
+      let infoUsuario;
+      if (token) {
+        infoUsuario = await buscarInformacoesUsuarioAPI(token);
+      }
 
       if (token && infoUsuario) {
         dispatch({

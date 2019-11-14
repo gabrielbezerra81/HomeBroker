@@ -11,12 +11,15 @@ import {
 } from "constants/ActionTypes";
 import React from "react";
 import { SubAppConectado } from "components/redux/ElementosConectadosRedux";
+import { MUDAR_ORDEM_EXEC_MAIN_REDUCER } from "constants/MenuActionTypes";
 
 const INITIAL_STATE = {
   apps: [],
   show: [],
   divkey: "",
-  zIndex: 100
+  zIndex: 100,
+  dadosOrdemExec: null,
+  ultimaBoletaAbertaOrdemExec: ""
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -43,6 +46,13 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, divkey: action.payload };
     case FECHAR_FORM:
       return { ...state, show: action.payload, divkey: "" };
+    //todo
+    case MUDAR_ORDEM_EXEC_MAIN_REDUCER:
+      return {
+        ...state,
+        dadosOrdemExec: action.payload.dadosOrdemExec,
+        ultimaBoletaAbertaOrdemExec: action.payload.ultimaBoletaAbertaOrdemExec
+      };
     default:
       return state;
   }
@@ -104,6 +114,7 @@ export const abrirFormAction = (
   return dispatch => {
     let apps = [...props.apps];
     let name;
+
     if (nameOrdemExec) {
       name = nameOrdemExec;
     } else {
@@ -131,7 +142,7 @@ export const abrirFormAction = (
   };
 };
 
-//Cria um sub-app e mostra o formulario desejado
+//Cria um sub-app e altera o estado de visibilidade da boleta escolhida
 const criarMostrarApp = (name, props, dispatch, codigo_ativo) => {
   let apps = [...props.apps];
   let show = [...props.show];
@@ -154,6 +165,7 @@ const criarMostrarApp = (name, props, dispatch, codigo_ativo) => {
     config_compra: false,
     config_venda: false
   });
+  //Faz o dispatch dos dados de visibilidade
   atualizarShowAction(show, dispatch);
   const length = show.length;
 
@@ -174,14 +186,17 @@ const criarMostrarApp = (name, props, dispatch, codigo_ativo) => {
   criarMostrarAppAction(apps, show, props.zIndex, dispatch);
 };
 
+//Muda o estado de visibilidade de uma determinada boleta no ultimo subApp criado
 const mostrarApp = (name, index, props, dispatch, codigo_ativo) => {
   if (name === "book" && codigo_ativo) {
     props.mudarInputHeaderAction(codigo_ativo);
     props.listarBookOfertaOnEnterAction(codigo_ativo);
   }
+
   let apps = [...props.apps];
   let show = [...props.show];
   atualizarDivKeyAction2(`${name}${index}`, dispatch);
+  show[index] = { ...show[index] };
   show[index][name] = true;
   mostrarAppAction(apps, show, props.zIndex, dispatch);
 };
@@ -222,5 +237,17 @@ export const aumentarZindex = (zIndex, dispatch) => {
 export const receberAppPropsAction = appProps => {
   return dispatch => {
     dispatch({ type: RECEBER_APPKEYLOCAL, payload: appProps });
+  };
+};
+
+export const receberDadosOrdemExecMainReducerAction = dados => {
+  return dispatch => {
+    dispatch({
+      type: MUDAR_ORDEM_EXEC_MAIN_REDUCER,
+      payload: {
+        dadosOrdemExec: dados.dadosOrdemExec,
+        ultimaBoletaAbertaOrdemExec: dados.ultimaBoletaAbertaOrdemExec
+      }
+    });
   };
 };
