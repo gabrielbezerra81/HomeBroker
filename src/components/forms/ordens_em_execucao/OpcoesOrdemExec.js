@@ -115,7 +115,7 @@ const abrirFormOrdem = (event, props, acao) => {
     if (props.ordemAtual.formName === "Multileg")
       props.abrirOrdemNoMultilegAction(props, acao);
     else {
-      props.abrirOrdensBoletaAction(props, event);
+      props.abrirOrdensBoletaAction(props, event, acao);
     }
   } else alert(erro_opcoes_ordens_exec);
 };

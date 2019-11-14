@@ -20,13 +20,7 @@ export const validarOrdemBoleta = props => {
 };
 
 export const montaOrdemPrincipal = props => {
-  const {
-    date,
-    ordem,
-    gainDisparo,
-    stopDisparo,
-    validadeSelect
-  } = props;
+  const { date, ordem, gainDisparo, stopDisparo, validadeSelect } = props;
 
   let json = {
     account: {},
@@ -46,6 +40,7 @@ export const montaOrdemPrincipal = props => {
   json.status = "Nova";
   json.priority = 0;
   json.tradeName.name = ordem.nome;
+  json.formName = ordem.nome;
 
   //StartStop pode ter 2 ordens principais e até 4 ordens next
   if (CVStartStop.includes(ordem.nome)) {

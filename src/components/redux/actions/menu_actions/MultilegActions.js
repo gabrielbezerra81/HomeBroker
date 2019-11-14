@@ -460,6 +460,7 @@ export const montarOrdemMultileg = props => {
   json.status = "Nova";
   json.priority = 0;
   json.tradeName.name = "Multileg";
+  json.formName = "Multileg";
 
   abaMultileg.tabelaMultileg.forEach((oferta, index) => {
     let ofertaPrincipal = {

@@ -135,19 +135,35 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
   };
 };
 
-export const abrirOrdensBoletaAction = (props, event) => {
+export const abrirOrdensBoletaAction = (props, event, acao) => {
   return async dispatch => {
     const { ordemAtual } = props;
-    let nome = mapearOperacaoParaBoleta(ordemAtual.formName);
+    let nome = mapearOperacaoParaBoleta(ordemAtual.operacao);
 
     const oferta = ordemAtual.offers[0];
     const dadosPesquisa = await pesquisarAtivoAPI(ordemAtual.offers[0].ativo);
+
+    let qtde = oferta.qtdeOferta;
+    if (acao === "reabrir") {
+      qtde = oferta.qtdeOferta - oferta.qtdeExecutada;
+    }
+    if (acao === "oposta") {
+      let nomeSplit = nome.split("_");
+      if (nomeSplit[0] === "compra") nomeSplit[0] = "venda";
+      else if (nomeSplit[0] === "venda") nomeSplit[0] = "compra";
+
+      nome = nomeSplit.join("_");
+    }
 
     const dados = {
       dadosOrdemExec: {
         dadosPesquisa: dadosPesquisa,
         ativo: oferta.ativo,
-        qtde: oferta.qtdeOferta
+        qtde: qtde,
+        entradaDisparo: oferta.precoDisparo,
+        entradaExec: oferta.precoEnvio,
+        preco: oferta.precoEnvio.toString(),
+        ...retornaDadosOferta(ordemAtual, nome)
       },
       ultimaBoletaAbertaOrdemExec: nome
     };
@@ -204,7 +220,7 @@ const mapearOperacaoParaBoleta = operacao => {
       return "compra_limitada";
     case "Compra Agendada":
       return "compra_agendada";
-    case "Compra Start Duplo":
+    case "Compra Start Stop":
       return "compra_startstop";
     case "Compra Stop Movel":
       return "compra_startmovel";
@@ -214,11 +230,50 @@ const mapearOperacaoParaBoleta = operacao => {
       return "venda_limitada";
     case "Venda Agendada":
       return "venda_agendada";
-    case "Venda Start Duplo":
+    case "Venda Start Stop":
       return "venda_startstop";
     case "Venda Stop Movel":
       return "venda_stop_movel";
     default:
       return "";
   }
+};
+
+const retornaDadosOferta = (ordemAtual, tipo) => {
+  const dadosOferta = {
+    gainDisparo: "",
+    gainExec: "",
+    stopDisparo: "",
+    stopExec: ""
+  };
+
+  if (["compra_startstop", "venda_startstop"].includes(tipo)) {
+    let oferta1, oferta2;
+
+    if (ordemAtual.offers[0]) {
+      oferta1 = ordemAtual.offers[0];
+      dadosOferta.gainDisparo = oferta1.precoDisparo;
+      dadosOferta.gainExec = oferta1.precoEnvio;
+    }
+
+    if (ordemAtual.offers[1]) {
+      oferta2 = ordemAtual.offers[1];
+      dadosOferta.stopDisparo = oferta2.precoDisparo;
+      dadosOferta.stopExec = oferta2.precoEnvio;
+    }
+  } //
+  else {
+    let next1, next2;
+    if (ordemAtual.nextOrders[0]) {
+      next1 = ordemAtual.nextOrders[0].offers[0];
+      dadosOferta.gainDisparo = next1.precoDisparo;
+      dadosOferta.gainExec = next1.precoEnvio;
+    }
+    if (ordemAtual.nextOrders[1]) {
+      next2 = ordemAtual.nextOrders[1].offers[0];
+      dadosOferta.stopDisparo = next2.precoDisparo;
+      dadosOferta.stopExec = next2.precoEnvio;
+    }
+  }
+  return dadosOferta;
 };
