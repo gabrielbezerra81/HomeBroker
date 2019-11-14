@@ -106,7 +106,14 @@ const renderOferta = (item, index, props, tipo) => {
   return (
     <tr
       key={index}
-      className={tipo === "ofertaPrincipal" ? "divClicavel" : ""}
+      className={
+        (tipo === "ofertaPrincipal" ? " divClicavel " : " ") +
+        (props.ordemAtual
+          ? item.id === props.ordemAtual.id
+            ? "ordemSelecionada"
+            : " "
+          : " ")
+      }
       onClick={
         tipo === "ofertaPrincipal"
           ? () => {
@@ -136,14 +143,14 @@ const renderOferta = (item, index, props, tipo) => {
       <td>
         {item.offers.map((oferta, index2) => (
           <div key={index2}>
-            {oferta.ativo}
+            <span className={classeOfertaVenda(oferta)}>{oferta.ativo}</span>
             <br />
           </div>
         ))}
       </td>
       <td>
         {item.offers.map((oferta, index2) => (
-          <span key={index2}>
+          <span key={index2} className={classeOfertaVenda(oferta)}>
             {oferta.oferta}
             <br />
           </span>
@@ -151,7 +158,7 @@ const renderOferta = (item, index, props, tipo) => {
       </td>
       <td>
         {item.offers.map((oferta, index2) => (
-          <span key={index2}>
+          <span key={index2} className={classeOfertaVenda(oferta)}>
             {oferta.qtdeOferta}
             <br />
           </span>
@@ -159,7 +166,7 @@ const renderOferta = (item, index, props, tipo) => {
       </td>
       <td>
         {item.offers.map((oferta, index2) => (
-          <span key={index2}>
+          <span key={index2} className={classeOfertaVenda(oferta)}>
             {oferta.qtdeExecutada}
             <br />
           </span>
@@ -167,7 +174,7 @@ const renderOferta = (item, index, props, tipo) => {
       </td>
       <td>
         {item.offers.map((oferta, index2) => (
-          <span key={index2}>
+          <span key={index2} className={classeOfertaVenda(oferta)}>
             {oferta.qtdeCancelada}
             <br />
           </span>
@@ -178,7 +185,7 @@ const renderOferta = (item, index, props, tipo) => {
       <td>{item.offers[0].precoEnvio}</td>
       <td>
         {item.offers.map((oferta, index2) => (
-          <span key={index2}>
+          <span key={index2} className={classeOfertaVenda(oferta)}>
             {oferta.precoExecutado}
             <br />
           </span>
@@ -205,4 +212,9 @@ const renderOferta = (item, index, props, tipo) => {
       </td>
     </tr>
   );
+};
+
+const classeOfertaVenda = oferta => {
+  if (oferta.oferta === "V") return "colunasOfertaVenda";
+  return "";
 };

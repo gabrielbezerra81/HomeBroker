@@ -30,13 +30,21 @@
   padding-left: 10px !important;
 }
 
+.tableOrdensExecucao td,
+.tableOrdensExecucao tbody td span {
+  color: rgb(131, 155, 181);
+}
+
+span.colunasOfertaVenda {
+  color: rgb(151, 105, 96) !important;
+}
+
 .bodyOrdensExecucao .row {
   margin: 0 0;
 }
 
 .bodyOrdensExecucao thead {
   background-color: var(--background-color);
-  color: #bbb532;
 }
 
 .divFiltrarOrdens {
@@ -72,8 +80,8 @@
 
 .verticalAlignColunaTabela td {
   vertical-align: middle !important ;
-  padding-top: 2px !important;
-  padding-bottom: 2px !important;
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
 }
 
 .barraProgresso > .progress-bar {
@@ -84,4 +92,9 @@
 .botaoFiltrar {
   background-color: #0790c9;
   border-color: #0790c9;
+}
+
+.ordemSelecionada {
+  border-top: 1px solid #999;
+  border-bottom: 1px solid #999;
 }

@@ -222,16 +222,3 @@ const mapearOperacaoParaBoleta = operacao => {
       return "";
   }
 };
-
-// const boletas = [
-//   "compra_mercado",
-//   "compra_limitada",
-//   "compra_agendada",
-//   "compra_startstop",
-//   "compra_startmovel",
-//   "venda_mercado",
-//   "venda_limitada",
-//   "venda_agendada",
-//   "venda_startstop",
-//   "venda_stop_movel"
-// ];

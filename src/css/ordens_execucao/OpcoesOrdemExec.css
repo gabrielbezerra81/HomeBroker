@@ -21,7 +21,7 @@
   align-items: center;
 }
 
-span {
+.containerOpcoesOrdem span {
   color: var(--cor-texto) !important;
 }
 
