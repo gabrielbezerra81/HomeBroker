@@ -5,6 +5,7 @@ import DraggableModal from "components/utils/DraggableModal";
 import { modalHeaderSemBook } from "components/utils/FormHeader";
 import { formatarDataDaAPI } from "components/utils/Formatacoes";
 import { OpcoesOrdemExecConectada } from "components/redux/ElementosConectadosRedux";
+import { Item } from "rc-menu";
 
 export default class OrdensExecucao extends React.Component {
   componentDidMount() {
@@ -23,6 +24,8 @@ export default class OrdensExecucao extends React.Component {
   }
 
   render() {
+    const a = { name: "gab", sobrenome: "ale" };
+
     return (
       <DraggableModal
         id="ordens_execucao"
@@ -38,8 +41,6 @@ export default class OrdensExecucao extends React.Component {
 
 const modalBody = props => (
   <div className="bodyOrdensExecucao">
-    {props.opcoesOrdemAberto ? <OpcoesOrdemExecConectada /> : null}
-
     <Row>
       <Table
         variant="dark"
@@ -81,8 +82,12 @@ const modalBody = props => (
             const ordensNext = item.nextOrders.map((ordemNext, ind) =>
               renderOferta(ordemNext, "ON" + ind, props, "ordemNext")
             );
+            const opcoesOrdem =
+              props.opcoesOrdemAberto && item.id === props.ordemAtual.id ? (
+                <OpcoesOrdemExecConectada />
+              ) : null;
 
-            return [ofertaPrincipal, ...ordensNext];
+            return [ofertaPrincipal, ...ordensNext, opcoesOrdem];
           })}
         </tbody>
       </Table>

@@ -215,55 +215,12 @@ export const montarBoletaFromOrdemExecAction = props => {
 
     const namespace = `_${nomeBoleta.toUpperCase()}`;
 
-    dispatch({
-      type: `${MUDAR_ATRIBUTO_BOLETA}${namespace}`,
-      atributo: "dadosPesquisa",
-      valor: dados.dadosPesquisa
-    });
-    dispatch({
-      type: `${MUDAR_ATRIBUTO_BOLETA}${namespace}`,
-      atributo: "ativo",
-      valor: dados.ativo
-    });
-    dispatch({
-      type: `${MUDAR_ATRIBUTO_BOLETA}${namespace}`,
-      atributo: "qtde",
-      valor: dados.qtde
-    });
-    dispatch({
-      type: `${MUDAR_ATRIBUTO_BOLETA}${namespace}`,
-      atributo: "entradaDisparo",
-      valor: dados.entradaDisparo
-    });
-    dispatch({
-      type: `${MUDAR_ATRIBUTO_BOLETA}${namespace}`,
-      atributo: "entradaExec",
-      valor: dados.entradaExec
-    });
-    dispatch({
-      type: `${MUDAR_ATRIBUTO_BOLETA}${namespace}`,
-      atributo: "gainDisparo",
-      valor: dados.gainDisparo
-    });
-    dispatch({
-      type: `${MUDAR_ATRIBUTO_BOLETA}${namespace}`,
-      atributo: "gainExec",
-      valor: dados.gainExec
-    });
-    dispatch({
-      type: `${MUDAR_ATRIBUTO_BOLETA}${namespace}`,
-      atributo: "stopDisparo",
-      valor: dados.stopDisparo
-    });
-    dispatch({
-      type: `${MUDAR_ATRIBUTO_BOLETA}${namespace}`,
-      atributo: "stopExec",
-      valor: dados.stopExec
-    });
-    dispatch({
-      type: `${MUDAR_ATRIBUTO_BOLETA}${namespace}`,
-      atributo: "preco",
-      valor: dados.preco
+    Object.keys(dados).forEach(prop => {
+      dispatch({
+        type: `${MUDAR_ATRIBUTO_BOLETA}${namespace}`,
+        atributo: prop,
+        valor: dados[prop]
+      });
     });
 
     props.receberDadosOrdemExecMainReducerAction({

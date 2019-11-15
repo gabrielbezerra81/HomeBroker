@@ -155,7 +155,6 @@ export const abrirOrdensBoletaAction = (props, event, acao) => {
 
       nome = nomeSplit.join("_");
     }
-    console.log(nome);
 
     const dados = {
       dadosOrdemExec: {
@@ -170,8 +169,10 @@ export const abrirOrdensBoletaAction = (props, event, acao) => {
       ultimaBoletaAbertaOrdemExec: nome
     };
 
-    props.receberDadosOrdemExecMainReducerAction(dados);
-    props.abrirFormAction(event, props, "", nome);
+    if (nome) {
+      props.receberDadosOrdemExecMainReducerAction(dados);
+      props.abrirFormAction(event, props, "", nome);
+    }
   };
 };
 
