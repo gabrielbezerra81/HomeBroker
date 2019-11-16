@@ -60,6 +60,7 @@ const modalBody = props => (
             <th>Qtde Cancelada</th>
             <th>Preço Disparo</th>
             <th>Preço Envio</th>
+            <th>Preço Limite</th>
             <th>Preço Executado</th>
             <th>Validade</th>
             <th>Roteador</th>
@@ -140,78 +141,22 @@ const renderOferta = (item, index, props, tipo) => {
       <td>{item.corretora}</td>
       <td>{item.conta}</td>
       <td>{item.operacao}</td>
-      <td>{item.modoExec}</td>
-
-      <td>
-        {item.offers.map((oferta, index2) => (
-          <div key={index2}>
-            <span className={classeOfertaVenda(oferta)}>{oferta.ativo}</span>
-            <br />
-          </div>
-        ))}
-      </td>
-      <td>
-        {item.offers.map((oferta, index2) => (
-          <span key={index2} className={classeOfertaVenda(oferta)}>
-            {oferta.oferta}
-            <br />
-          </span>
-        ))}
-      </td>
-      <td>
-        {item.offers.map((oferta, index2) => (
-          <span key={index2} className={classeOfertaVenda(oferta)}>
-            {oferta.qtdeOferta}
-            <br />
-          </span>
-        ))}
-      </td>
-      <td>
-        {item.offers.map((oferta, index2) => (
-          <span key={index2} className={classeOfertaVenda(oferta)}>
-            {oferta.qtdeExecutada}
-            <br />
-          </span>
-        ))}
-      </td>
-      <td>
-        {item.offers.map((oferta, index2) => (
-          <span key={index2} className={classeOfertaVenda(oferta)}>
-            {oferta.qtdeCancelada}
-            <br />
-          </span>
-        ))}
-      </td>
+      <td>{listarAtributoComposto(item.offers, "modoExec", "nao")}</td>
+      <td>{listarAtributoComposto(item.offers, "ativo", "sim")}</td>
+      <td>{listarAtributoComposto(item.offers, "oferta", "sim")}</td>
+      <td>{listarAtributoComposto(item.offers, "qtdeOferta", "sim")}</td>
+      <td>{listarAtributoComposto(item.offers, "qtdeExecutada", "sim")}</td>
+      <td>{listarAtributoComposto(item.offers, "qtdeCancelada", "sim")}</td>
 
       <td>{item.precoDisparo}</td>
       <td>{item.offers[0].precoEnvio}</td>
-      <td>
-        {item.offers.map((oferta, index2) => (
-          <span key={index2} className={classeOfertaVenda(oferta)}>
-            {oferta.precoExecutado}
-            <br />
-          </span>
-        ))}
-      </td>
+      <td>{listarAtributoComposto(item.offers, "precoLimite", "sim")}</td>
+      <td>{listarAtributoComposto(item.offers, "precoExecutado", "sim")}</td>
       <td>{retornaData(item.validade)}</td>
       <td>{item.roteador}</td>
-      <td>
-        {item.offers.map((oferta, index2) => (
-          <span key={index2}>
-            {oferta.status}
-            <br />
-          </span>
-        ))}
-      </td>
+      <td>{listarAtributoComposto(item.offers, "status", "nao")}</td>
 
-      <td>
-        {item.offers.map((oferta, index2) => (
-          <span key={index2}>
-            {oferta.msg}
-            <br />
-          </span>
-        ))}
-      </td>
+      <td>{listarAtributoComposto(item.offers, "msg", "nao")}</td>
     </tr>
   );
 };
@@ -220,3 +165,14 @@ const classeOfertaVenda = oferta => {
   if (oferta.oferta === "V") return "colunasOfertaVenda";
   return "";
 };
+
+const listarAtributoComposto = (listaOfertas, atributo, classeCor) =>
+  listaOfertas.map((oferta, index2) => (
+    <span
+      key={index2}
+      className={classeCor === "sim" ? classeOfertaVenda(oferta) : ""}
+    >
+      {oferta[atributo]}
+      <br />
+    </span>
+  ));
