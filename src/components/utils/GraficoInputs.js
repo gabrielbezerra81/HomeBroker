@@ -135,7 +135,7 @@ class GraficoInputs extends React.Component {
                 )
               }
             />
-            <InputFormatado
+            {/* <InputFormatado
               tipoInput="preco"
               step={0.01}
               id={`DisparoMaisAjusteGrafico_${this.props.cv}`}
@@ -148,9 +148,9 @@ class GraficoInputs extends React.Component {
                   "disparoMaisAjuste"
                 )
               }
-            />
+            /> */}
 
-            <InputFormatado
+            {/* <InputFormatado
               tipoInput="preco"
               step={0.01}
               id={`StopMais1AjusteGrafico_${this.props.cv}`}
@@ -163,8 +163,8 @@ class GraficoInputs extends React.Component {
                   "stopMais1Ajuste"
                 )
               }
-            />
-            <InputFormatado
+            /> */}
+            {/* <InputFormatado
               tipoInput="preco"
               step={0.01}
               id={`StopAnteriorAjusteGrafico_${this.props.cv}`}
@@ -177,7 +177,7 @@ class GraficoInputs extends React.Component {
                   "stopAnteriorAjuste"
                 )
               }
-            />
+            /> */}
           </div>
         );
       case "tipoGainReducao":

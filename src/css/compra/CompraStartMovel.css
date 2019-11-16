@@ -68,7 +68,7 @@ Inputs do grafico
 
 #TextoGainDisparo_CSM {
   top: 70.5%;
-  left: 23.5%;
+  left: 27%;
 }
 
 #TextoStopExecucao_CSM {
@@ -78,12 +78,12 @@ Inputs do grafico
 
 #TextoStopDisparo_CSM {
   top: 10%;
-  left: 23.2%;
+  left: 26%;
 }
 
 #TextoDisparoMaisAjuste_CSM {
-  top: 82%;
-  left: 54.5%;
+  top: 94%;
+  left: 55.5%;
 }
 
 #TextoCotacaoAtualGrafico_CSM {
@@ -100,7 +100,7 @@ Inputs do grafico
 
 #TextoStop_CSM {
   top: 8%;
-  left: 33%;
+  left: 37%;
 }
 
 #TextoMenorGrafico_Stop1ajuste_CSM {
@@ -109,23 +109,23 @@ Inputs do grafico
 }
 
 #TextoMenorGrafico_StopAnterior_CSM {
-  top: 58.5%;
-  left: 55.5%;
+  top: 47%;
+  left: 54.5%;
 }
 
 #TextoMenorGrafico_Ajuste1_CSM {
   top: 27.5%;
-  left: 68.3%;
+  left: 67%;
 }
 
 #TextoMenorGrafico_Ajuste2_CSM {
   top: 47.5%;
-  left: 68.3%;
+  left: 67%;
 }
 
 #TextoMenorGrafico_Ajuste3_CSM {
   top: 80%;
-  left: 68.3%;
+  left: 67%;
 }
 
 /*Valores dos textos dos 3 ajustes */

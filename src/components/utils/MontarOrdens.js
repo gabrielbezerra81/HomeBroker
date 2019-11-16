@@ -1,4 +1,8 @@
-import { erro_validar_ativo, erro_validar_qtde } from "constants/AlertaErros";
+import {
+  erro_validar_ativo,
+  erro_validar_qtde,
+  erro_validar_disparo_start_movel
+} from "constants/AlertaErros";
 import { getformatedDate } from "components/utils/Formatacoes";
 
 const CVStartStop = ["Compra Start Stop", "Venda Start Stop"];
@@ -15,6 +19,11 @@ export const validarOrdemBoleta = props => {
   if (Number(qtde) === 0) {
     alert(erro_validar_qtde);
     valido = false;
+  }
+
+  if (CVStopMovel.includes(props.ordem.nome)) {
+    if (props.inicioDisparo > props.stopDisparo)
+      alert(erro_validar_disparo_start_movel);
   }
   return valido;
 };
@@ -103,20 +112,22 @@ const montaOfertaPrincipal = (props, tipoAuxiliar, json, numAjuste = 0) => {
   ) {
     const { tabelaOrdens, inicioDisparo, ajustePadrao } = props;
 
-    if (tabelaOrdens[numAjuste].tipo === "real") {
-      ofertaPrincipal.orderType = "ajuste";
-      if (tipoAuxiliar === "ajusteOfertaAdicional") {
-        ofertaPrincipal.priority = numAjuste;
-        ofertaPrincipal.trigger = Number(tabelaOrdens[numAjuste].disparo);
-        ofertaPrincipal.price = Number(tabelaOrdens[numAjuste].ajuste);
-      } else {
-        ofertaPrincipal.priority = tabelaOrdens.length;
-        ofertaPrincipal.trigger = Number(inicioDisparo);
-        ofertaPrincipal.price = Number(ajustePadrao);
-      }
-
-      json.offers.push(ofertaPrincipal);
+    ofertaPrincipal.orderType = "ajuste";
+    if (
+      tipoAuxiliar === "ajusteOfertaAdicional" &&
+      tabelaOrdens[numAjuste].tipo === "real"
+    ) {
+      ofertaPrincipal.priority = numAjuste;
+      ofertaPrincipal.trigger = Number(tabelaOrdens[numAjuste].disparo);
+      ofertaPrincipal.price = Number(tabelaOrdens[numAjuste].ajuste);
+    } else {
+      ofertaPrincipal.priority = tabelaOrdens.length;
+      ofertaPrincipal.trigger = Number(inicioDisparo);
+      ofertaPrincipal.price = Number(ajustePadrao);
     }
+
+    json.offers.push(ofertaPrincipal);
+
     return;
   }
 

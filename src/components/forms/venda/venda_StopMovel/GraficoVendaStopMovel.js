@@ -25,9 +25,12 @@ class GraficoVendaStopMovel extends React.Component {
               cv="VSM"
             />
           </Form>
-          {LabelInputGrafico("Disparo", "TextoGainDisparo_VSM")}
-          {LabelInputGrafico("Disparo + ajuste", "TextoDisparoMaisAjuste_VSM")}
-          {LabelInputGrafico("Disparo", "TextoStopDisparo_VSM")}
+          {LabelInputGrafico("Disparo Móvel", "TextoGainDisparo_VSM")}
+          {LabelInputGrafico(
+            "Disparo Móvel + 1º ajuste",
+            "TextoDisparoMaisAjuste_VSM"
+          )}
+          {LabelInputGrafico("Disparo Stop", "TextoStopDisparo_VSM")}
           {LabelInputGrafico("Execução", "TextoStopExecucao_VSM")}
 
           {TextoGainStopGrafico("1º Ajuste", "TextoPrimeiroAjuste_VSM")}
@@ -36,16 +39,16 @@ class GraficoVendaStopMovel extends React.Component {
           {TextoCotacaoAtualGrafico("TextoCotacaoAtualGrafico_VSM")}
 
           {TextoMenorGrafico(
-            "Stop + 1 ajuste",
+            "Stop + 1º ajuste",
             "TextoMenorGrafico_Stop1ajuste_VSM"
           )}
           {TextoMenorGrafico(
-            "Stop anterior + ajuste",
+            "Stop anterior + 2º ajuste",
             "TextoMenorGrafico_StopAnterior_VSM"
           )}
-          {TextoMenorGrafico("Ajuste", "TextoMenorGrafico_Ajuste1_VSM")}
-          {TextoMenorGrafico("Ajuste", "TextoMenorGrafico_Ajuste2_VSM")}
-          {TextoMenorGrafico("Ajuste", "TextoMenorGrafico_Ajuste3_VSM")}
+          {TextoMenorGrafico("1º Ajuste", "TextoMenorGrafico_Ajuste1_VSM")}
+          {TextoMenorGrafico("2º Ajuste", "TextoMenorGrafico_Ajuste2_VSM")}
+          {TextoMenorGrafico("1º Ajuste", "TextoMenorGrafico_Ajuste3_VSM")}
 
           {renderTextos(this.props)}
         </div>
@@ -85,11 +88,19 @@ const renderTextos = props => {
   if (linha1) {
     ajuste1 = TextoMenorGrafico(
       Number(linha1.ajuste).toFixed(2),
+      "ValorAjuste1Grafico_VSM"
+    );
+    ajuste3 = TextoMenorGrafico(
+      Number(linha1.ajuste).toFixed(2),
       "ValorAjuste3Grafico_VSM"
     );
     stopMais1Ajuste = TextoMenorGrafico(
       Number(linha1.novoStop).toFixed(2),
       "StopMais1AjusteGrafico_VSM"
+    );
+    disparoMaisAjuste = TextoMenorGrafico(
+      Number(linha1.novoStop).toFixed(2),
+      "DisparoMaisAjusteGrafico_VSM"
     );
   }
   if (linha2) {
@@ -100,16 +111,6 @@ const renderTextos = props => {
     stopAnteriorAjuste = TextoMenorGrafico(
       Number(linha2.novoStop).toFixed(2),
       "StopAnteriorAjusteGrafico_VSM"
-    );
-  }
-  if (linha3) {
-    ajuste3 = TextoMenorGrafico(
-      Number(linha3.ajuste).toFixed(2),
-      "ValorAjuste1Grafico_VSM"
-    );
-    disparoMaisAjuste = TextoMenorGrafico(
-      Number(linha3.novoStop).toFixed(2),
-      "DisparoMaisAjusteGrafico_VSM"
     );
   }
 

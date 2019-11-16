@@ -6,7 +6,8 @@ import {
 } from "constants/ActionTypes";
 import {
   realizarLoginAPI,
-  buscarInformacoesUsuarioAPI
+  buscarInformacoesUsuarioAPI,
+  travarDestravarClique
 } from "components/api/API";
 import { navigate } from "@reach/router";
 
@@ -20,6 +21,7 @@ export const abrirFecharMenuLateralAction = (event, menuLateralAberto) => {
 
 export const logarUsuarioAction = (username, password) => {
   return async dispatch => {
+    travarDestravarClique("travar", "botaoLogar");
     if (password === "passar")
       dispatch({
         type: LOGAR_DESLOGAR_USUARIO,
@@ -34,11 +36,12 @@ export const logarUsuarioAction = (username, password) => {
       }
 
       if (token && infoUsuario) {
-        dispatch({
+        travarDestravarClique("destravar", "botaoLogar");
+        await dispatch({
           type: MUDAR_DADOS_LOGIN,
           payload: { nomeVariavel: "token", valor: token }
         });
-        dispatch({
+        await dispatch({
           type: LOGAR_DESLOGAR_USUARIO,
           payload: { usuarioConectado: infoUsuario.name, logado: true }
         });
@@ -52,7 +55,7 @@ export const deslogarUsuarioAction = (event, props) => {
   return async dispatch => {
     await dispatch({
       type: LOGAR_DESLOGAR_USUARIO,
-      payload: { usuarioConectado: "Gabriel Alencar", logado: false }
+      payload: { usuarioConectado: "", logado: false }
     });
     await dispatch({
       type: MUDAR_DADOS_LOGIN,

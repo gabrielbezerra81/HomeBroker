@@ -7,7 +7,6 @@ import {
   mudarDadosLoginAction
 } from "components/redux/actions/TelaPrincipalActions";
 import FloatingLabelInput from "react-floating-label-input";
-import FloatingLabel from "react-styled-floating-label";
 
 class TelaLogin extends React.Component {
   render() {
@@ -49,6 +48,7 @@ class TelaLogin extends React.Component {
               />
 
               <Button
+                id="botaoLogar"
                 variant="primary"
                 onClick={() =>
                   props.logarUsuarioAction(props.inputUsuario, props.inputSenha)

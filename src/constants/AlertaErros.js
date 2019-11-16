@@ -25,6 +25,8 @@ export const erro_realizar_login = "Falha ao fazer login";
 export const erro_validar_ativo = "Ordem inválida, pesquise um ativo";
 export const erro_validar_qtde =
   "Ordem inválida, a quantidade deve ser maior que 0";
+export const erro_validar_disparo_start_movel =
+  "O disparo móvel deve ser menor que o disparo stop";
 
 //Alertas
 export const erro_exportar_ordens_multileg = "Falha ao adicionar abas";

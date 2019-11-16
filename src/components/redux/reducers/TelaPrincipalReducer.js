@@ -30,7 +30,8 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         usuarioConectado: action.payload.usuarioConectado,
-        logado: action.payload.logado
+        logado: action.payload.logado,
+        menuLateralAberto: false
       };
     case ABRIR_FECHAR_ITEM_BARRA_LATERAL:
       return { ...state, [action.payload.name]: action.payload.valor };
