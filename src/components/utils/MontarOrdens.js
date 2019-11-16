@@ -166,6 +166,7 @@ const montaOfertaPrincipal = (props, tipoAuxiliar, json, numAjuste = 0) => {
   }
   //CV Stop Movel 1ª ordem
   else if (CVStopMovel.includes(ordem.nome)) {
+    ofertaPrincipal.priority = -1;
     ofertaPrincipal.trigger = Number(props.stopDisparo);
     ofertaPrincipal.price = Number(props.stopExec);
   }

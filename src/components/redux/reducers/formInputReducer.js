@@ -45,7 +45,7 @@ const INITIAL_STATE = {
   preco: "",
   showConfigStop: true,
   checkSalvarAssinatura: true,
-  inicioDisparo: 26,
+  inicioDisparo: 24,
   ajustePadrao: 0.1,
   disparo1Ajuste: "",
   disparoMaisAjuste: "",
