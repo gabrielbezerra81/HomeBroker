@@ -11,6 +11,7 @@ class InputFormatado extends React.Component {
     if (this.props.tipoInput === "preco")
       input = (
         <CurrencyInput
+          id={this.props.id}
           placeholder={this.props.placeholder}
           locale="pt-BR"
           className={`form-control textInput inputFormatado ${this.props.className}`}
@@ -177,3 +178,6 @@ const onDown = props => {
 };
 
 //Fazer replace de todos os pontos em QTDE
+export const boxShadowInput = classe => {
+  return document.activeElement.className.includes(classe) ? "inputFocado" : "";
+};

@@ -37,7 +37,7 @@ const INITIAL_STATE = {
   valorTotal: "",
   gainDisparo: "",
   gainExec: "",
-  stopDisparo: 25,
+  stopDisparo: "",
   stopExec: "",
   validadeSelect: "DAY",
   date: new Date(),
@@ -45,8 +45,8 @@ const INITIAL_STATE = {
   preco: "",
   showConfigStop: true,
   checkSalvarAssinatura: true,
-  inicioDisparo: 24,
-  ajustePadrao: 0.1,
+  inicioDisparo: "",
+  ajustePadrao: "",
   disparo1Ajuste: "",
   disparoMaisAjuste: "",
   stopMais1Ajuste: "",
@@ -66,7 +66,7 @@ const INITIAL_STATE = {
   gainExecConfig2: "",
   stopDisparoConfig2: "",
   stopExecConfig2: "",
-  qtde: 300,
+  qtde: "",
   erro: "",
   eventSourceCotacao: null
 };

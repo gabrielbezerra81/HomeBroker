@@ -84,7 +84,6 @@ const renderTextos = props => {
     disparoMaisAjuste;
   const linha1 = tabelaOrdens[0];
   const linha2 = tabelaOrdens[1];
-  const linha3 = tabelaOrdens[2];
 
   if (linha1) {
     ajuste1 = TextoMenorGrafico(

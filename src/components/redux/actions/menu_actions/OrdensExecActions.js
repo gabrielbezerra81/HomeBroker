@@ -244,10 +244,13 @@ const mapearOperacaoParaBoleta = operacao => {
 
 const retornaDadosOferta = (ordemAtual, tipo) => {
   const dadosOferta = {
+    inicioDisparo: "",
     gainDisparo: "",
     gainExec: "",
     stopDisparo: "",
-    stopExec: ""
+    stopExec: "",
+    ajustePadrao: "",
+    tabelaOrdens: []
   };
 
   if (["compra_startstop", "venda_startstop"].includes(tipo)) {
@@ -266,6 +269,46 @@ const retornaDadosOferta = (ordemAtual, tipo) => {
     }
   } //
   else if (["compra_startmovel", "venda_stopmovel"].includes(tipo)) {
+    const ofertaPrincipal = ordemAtual.offers[0];
+
+    const arrayAjustes = ordemAtual.offers.filter(
+      oferta => oferta.modoExec === "ajuste"
+    );
+    const segundaOrdem = arrayAjustes[arrayAjustes.length - 1];
+
+    dadosOferta.inicioDisparo = segundaOrdem.precoDisparo;
+    dadosOferta.ajustePadrao = segundaOrdem.precoEnvio;
+    dadosOferta.stopDisparo = ofertaPrincipal.precoDisparo;
+    dadosOferta.stopExec = ofertaPrincipal.precoEnvio;
+
+    arrayAjustes.pop();
+    arrayAjustes.forEach((ofertaAjuste, indice) => {
+      let novoStop, disparo, stopAtual;
+      const ajuste = ofertaAjuste.precoEnvio;
+
+      if (indice === 0) {
+        stopAtual = dadosOferta.stopDisparo;
+        disparo = ofertaAjuste.precoDisparo;
+      } else {
+        const linhaAnterior = dadosOferta.tabelaOrdens[indice - 1];
+        disparo =
+          tipo === "compra_startmovel"
+            ? linhaAnterior.disparo - ajuste
+            : linhaAnterior.disparo + ajuste;
+        stopAtual = linhaAnterior.novoStop;
+      }
+
+      novoStop =
+        tipo === "compra_startmovel" ? stopAtual - ajuste : stopAtual + ajuste;
+
+      dadosOferta.tabelaOrdens.push({
+        disparo: disparo,
+        stopAtual: stopAtual,
+        ajuste: ofertaAjuste.precoEnvio,
+        novoStop: novoStop,
+        tipo: "real"
+      });
+    });
   } //
   else {
     let next1, next2;

@@ -213,3 +213,10 @@ table > tbody > tr:nth-child(odd) > th {
 .fa-stack:hover .fa-circle {
   color: #195cc7;
 }
+
+.inputFocado {
+  box-shadow: 0 0 0px 3.5px var(--box-shadow-color);
+  z-index: 1 !important;
+  border-radius: 0.25rem;
+  transition: box-shadow 0.15s ease-in-out;
+}
