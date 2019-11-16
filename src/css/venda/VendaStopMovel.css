@@ -6,6 +6,10 @@
 #vendastopmovel .mbody {
   height: unset !important;
 }
+
+.itemSimulacaoVenda {
+  color: rgb(151, 105, 96);
+}
 /*
   Inputs do grafico
   */
@@ -33,18 +37,21 @@
 }
 
 #DisparoMaisAjusteGrafico_VSM {
-  top: 15.5%;
-  left: 56%;
+  top: 14.8%;
+  left: 54.5%;
+  color: black;
 }
 
 #StopMais1AjusteGrafico_VSM {
-  top: 59.9%;
-  left: 37.4%;
+  top: 59%;
+  left: 35.8%;
+  color: black;
 }
 
 #StopAnteriorAjusteGrafico_VSM {
-  top: 49%;
-  left: 56.5%;
+  top: 48.2%;
+  left: 55%;
+  color: black;
 }
 
 /*Textos do grafico*/

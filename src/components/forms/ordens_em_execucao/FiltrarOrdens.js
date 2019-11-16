@@ -149,7 +149,7 @@ const mapStateToProps = state => ({
   ofertaFiltrarOrdens: state.ordensExecReducer.ofertaFiltrarOrdens
 });
 
-export default connect(
-  mapStateToProps,
-  { mudarVariavelOrdensExecAction, filtrarHistoricoOpAction }
-)(FiltrarOrdens);
+export default connect(mapStateToProps, {
+  mudarVariavelOrdensExecAction,
+  filtrarHistoricoOpAction
+})(FiltrarOrdens);

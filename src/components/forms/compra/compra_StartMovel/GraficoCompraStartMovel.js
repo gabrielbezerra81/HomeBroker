@@ -14,6 +14,7 @@ import GraficoInputs from "components/utils/GraficoInputs";
 
 class GraficoCompraStartMovel extends React.Component {
   render() {
+    const { props } = this;
     return (
       <Col className="colGrafico">
         <div className="imgContainer">
@@ -26,7 +27,7 @@ class GraficoCompraStartMovel extends React.Component {
             />
           </Form>
           {LabelInputGrafico("Disparo", "TextoGainDisparo_CSM")}
-          {LabelInputGrafico("Disparo + ajuste", "TextoDisparoMaisAjuste_CSM")}
+          {LabelInputGrafico("Disparo - ajuste", "TextoDisparoMaisAjuste_CSM")}
           {LabelInputGrafico("Disparo", "TextoStopDisparo_CSM")}
           {LabelInputGrafico("Execução", "TextoStopExecucao_CSM")}
 
@@ -36,35 +37,18 @@ class GraficoCompraStartMovel extends React.Component {
           {TextoCotacaoAtualGrafico("TextoCotacaoAtualGrafico_CSM")}
 
           {TextoMenorGrafico(
-            "Stop + 1 ajuste",
+            "Stop - 1 ajuste",
             "TextoMenorGrafico_Stop1ajuste_CSM"
           )}
           {TextoMenorGrafico(
-            "Stop anterior + ajuste",
+            "Stop anterior - ajuste",
             "TextoMenorGrafico_StopAnterior_CSM"
           )}
           {TextoMenorGrafico("Ajuste", "TextoMenorGrafico_Ajuste1_CSM")}
           {TextoMenorGrafico("Ajuste", "TextoMenorGrafico_Ajuste2_CSM")}
           {TextoMenorGrafico("Ajuste", "TextoMenorGrafico_Ajuste3_CSM")}
 
-          {TextoMenorGrafico(
-            Number(this.props.stopMais1Ajuste - this.props.stopDisparo).toFixed(
-              2
-            ),
-            "ValorAjuste1Grafico_CSM"
-          )}
-          {TextoMenorGrafico(
-            Number(
-              this.props.stopAnteriorAjuste - this.props.stopMais1Ajuste
-            ).toFixed(2),
-            "ValorAjuste2Grafico_CSM"
-          )}
-          {TextoMenorGrafico(
-            Number(
-              this.props.disparoMaisAjuste - this.props.inicioDisparo
-            ).toFixed(2),
-            "ValorAjuste3Grafico_CSM"
-          )}
+          {renderTextos(props)}
         </div>
       </Col>
     );
@@ -80,10 +64,64 @@ const mapStateToProps = state => ({
   inicioDisparo: state.compraStartMovelReducer.inicioDisparo,
   disparoMaisAjuste: state.compraStartMovelReducer.disparoMaisAjuste,
   stopMais1Ajuste: state.compraStartMovelReducer.stopMais1Ajuste,
-  stopAnteriorAjuste: state.compraStartMovelReducer.stopAnteriorAjuste
+  stopAnteriorAjuste: state.compraStartMovelReducer.stopAnteriorAjuste,
+  tabelaOrdens: state.compraStartMovelReducer.tabelaOrdens
 });
 
-export default connect(
-  mapStateToProps,
-  {}
-)(GraficoCompraStartMovel);
+export default connect(mapStateToProps, {})(GraficoCompraStartMovel);
+
+const renderTextos = props => {
+  const { tabelaOrdens } = props;
+
+  let ajuste1,
+    ajuste2,
+    ajuste3,
+    stopMais1Ajuste,
+    stopAnteriorAjuste,
+    disparoMaisAjuste;
+  const linha1 = tabelaOrdens[0];
+  const linha2 = tabelaOrdens[1];
+  const linha3 = tabelaOrdens[2];
+
+  if (linha1) {
+    ajuste1 = TextoMenorGrafico(
+      Number(linha1.ajuste).toFixed(2),
+      "ValorAjuste1Grafico_CSM"
+    );
+    stopMais1Ajuste = TextoMenorGrafico(
+      Number(linha1.novoStop).toFixed(2),
+      "StopMais1AjusteGrafico_CSM"
+    );
+  }
+  if (linha2) {
+    ajuste2 = TextoMenorGrafico(
+      Number(linha2.ajuste).toFixed(2),
+      "ValorAjuste2Grafico_CSM"
+    );
+    stopAnteriorAjuste = TextoMenorGrafico(
+      Number(linha2.novoStop).toFixed(2),
+      "StopAnteriorAjusteGrafico_CSM"
+    );
+  }
+  if (linha3) {
+    ajuste3 = TextoMenorGrafico(
+      Number(linha3.ajuste).toFixed(2),
+      "ValorAjuste3Grafico_CSM"
+    );
+    disparoMaisAjuste = TextoMenorGrafico(
+      Number(linha3.novoStop).toFixed(2),
+      "DisparoMaisAjusteGrafico_CSM"
+    );
+  }
+
+  return (
+    <div>
+      {ajuste1}
+      {ajuste2}
+      {ajuste3}
+      {stopMais1Ajuste}
+      {stopAnteriorAjuste}
+      {disparoMaisAjuste}
+    </div>
+  );
+};

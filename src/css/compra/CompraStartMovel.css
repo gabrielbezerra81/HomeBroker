@@ -3,6 +3,10 @@
   min-width: 900px;
 }
 
+.itemSimulacaoCompra {
+  color: rgb(131, 155, 181);
+}
+
 #comprastartmovel .mbody {
   height: unset !important;
 }
@@ -11,12 +15,12 @@ Inputs do grafico
 */
 
 #StopDisparoGrafico_CSM {
-  top: 19%;
+  top: 15.4%;
   left: 30%;
 }
 
 #StopExecGrafico_CSM {
-  top: 15.4%;
+  top: 19%;
   left: 30%;
 }
 
@@ -33,18 +37,21 @@ Inputs do grafico
 }
 
 #DisparoMaisAjusteGrafico_CSM {
-  top: 88%;
-  left: 56.4%;
+  top: 87%;
+  left: 54.5%;
+  color: black;
 }
 
 #StopMais1AjusteGrafico_CSM {
-  top: 43.2%;
-  left: 37.5%;
+  top: 42.3%;
+  left: 36%;
+  color: black;
 }
 
 #StopAnteriorAjusteGrafico_CSM {
-  top: 54.3%;
-  left: 57.2%;
+  top: 53.2%;
+  left: 55.6%;
+  color: black;
 }
 
 /*Textos do grafico*/
@@ -65,12 +72,12 @@ Inputs do grafico
 }
 
 #TextoStopExecucao_CSM {
-  top: 10%;
-  left: 23.8%;
+  top: 22.5%;
+  left: 24.2%;
 }
 
 #TextoStopDisparo_CSM {
-  top: 22.5%;
+  top: 10%;
   left: 23.2%;
 }
 

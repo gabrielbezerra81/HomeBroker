@@ -10,10 +10,24 @@ import InputSelectBotoes from "components/forms/ordens_em_execucao/InputSelectBo
 import { erro_opcoes_ordens_exec } from "constants/AlertaErros";
 
 export default class OpcoesOrdemExec extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    return (
+      this.props !== nextProps &&
+      this.props.divkey === nextProps.divkey &&
+      this.props.zIndex === nextProps.zIndex
+    );
+  }
+  componentDidMount() {
+    const { props } = this;
+
+    document.getElementById(props.id).style.zIndex = props.zIndex + 1;
+    props.aumentarZindexAction(props.id, props.zIndex, true);
+  }
+
   render() {
     const { props } = this;
     return (
-      <div className="containerOpcoesOrdem mcontent">
+      <div className="containerOpcoesOrdem mcontent" id={props.id}>
         <div
           className="divClicavel"
           tabIndex={0}
@@ -23,7 +37,7 @@ export default class OpcoesOrdemExec extends React.Component {
             else alert(erro_opcoes_ordens_exec);
           }}
         >
-          <img src={iconeCancelarOrdem} width="40" alt=""></img>
+          <img src={iconeCancelarOrdem} width="27" alt=""></img>
           <h6>Cancelar Ordem</h6>
         </div>
 
@@ -32,7 +46,7 @@ export default class OpcoesOrdemExec extends React.Component {
           tabIndex={0}
           onClick={e => abrirFormOrdem(e, props, "")}
         >
-          <img src={iconeEditarOrdem} width="40" alt=""></img>
+          <img src={iconeEditarOrdem} width="27" alt=""></img>
           <h6>Editar Ordem</h6>
         </div>
         <InputSelectBotoes
@@ -63,7 +77,7 @@ export default class OpcoesOrdemExec extends React.Component {
             else alert(erro_opcoes_ordens_exec);
           }}
         >
-          <img src={iconeFinalizarAMercado} width="40" alt=""></img>
+          <img src={iconeFinalizarAMercado} width="27" alt=""></img>
           <h6>Finalizar a Mercado</h6>
         </div>
 
@@ -72,7 +86,7 @@ export default class OpcoesOrdemExec extends React.Component {
           tabIndex={0}
           onClick={e => abrirFormOrdem(e, props, "duplicar")}
         >
-          <img src={iconeDuplicarOrdem} width="40" alt=""></img>
+          <img src={iconeDuplicarOrdem} width="27" alt=""></img>
           <h6>Duplicar Ordem</h6>
         </div>
 
@@ -81,7 +95,7 @@ export default class OpcoesOrdemExec extends React.Component {
           tabIndex={0}
           onClick={e => abrirFormOrdem(e, props, "oposta")}
         >
-          <img src={iconeOrdemOposta} width="40" alt=""></img>
+          <img src={iconeOrdemOposta} width="27" alt=""></img>
           <h6>Ordem Oposta</h6>
         </div>
 
@@ -90,7 +104,7 @@ export default class OpcoesOrdemExec extends React.Component {
           tabIndex={0}
           onClick={e => abrirFormOrdem(e, props, "reabrir")}
         >
-          <img src={iconeReabrir} width="40" alt=""></img>
+          <img src={iconeReabrir} width="27" alt=""></img>
           <h6>Reabrir</h6>
         </div>
         <div
@@ -101,7 +115,7 @@ export default class OpcoesOrdemExec extends React.Component {
             props.mudarVariavelOrdensExecAction("ordemAtual", null);
           }}
         >
-          <img src={iconeFecharMenuOpcoesOrdem} width="40" alt=""></img>
+          <img src={iconeFecharMenuOpcoesOrdem} width="27" alt=""></img>
         </div>
       </div>
     );

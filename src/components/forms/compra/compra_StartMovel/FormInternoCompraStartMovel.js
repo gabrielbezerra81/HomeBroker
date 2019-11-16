@@ -29,17 +29,18 @@ import { RowInputsStopMovelConectada } from "components/utils/RowInputsFormatado
 
 class FormInternoCompraStartMovel extends React.Component {
   render() {
+    const { props } = this;
     return (
       <Col className="colFormInterno">
         <div className="divAsModalContainer formInternoCompraStartMovel">
           <Form>
-            {RowAtivoQtdeBoletas(this.props, COMPRA_STARTMOVEL_NAMESPACE)}
+            {RowAtivoQtdeBoletas(props, COMPRA_STARTMOVEL_NAMESPACE)}
 
             <RowInputsStopMovelConectada
               namespace={COMPRA_STARTMOVEL_NAMESPACE}
             />
           </Form>
-          {RowFormValidade(this.props, COMPRA_STARTMOVEL_NAMESPACE)}
+          {RowFormValidade(props, COMPRA_STARTMOVEL_NAMESPACE)}
 
           <Form>
             <Row className="rowTextoAjusteAssimetrico">
@@ -52,9 +53,9 @@ class FormInternoCompraStartMovel extends React.Component {
                   <InputFormatado
                     tipoInput="preco"
                     step={0.01}
-                    value={this.props.ajusteAssimetrico}
+                    value={props.ajusteAssimetrico}
                     onChange={valor =>
-                      this.props.mudarAtributoBoletaAction(
+                      props.mudarAtributoBoletaAction(
                         valor,
                         COMPRA_STARTMOVEL_NAMESPACE,
                         "ajusteAssimetrico"
@@ -67,8 +68,8 @@ class FormInternoCompraStartMovel extends React.Component {
                 <Button
                   variant="link"
                   onClick={() =>
-                    this.props.adicionarItemTabelaStartMovel(
-                      this.props,
+                    props.adicionarItemTabelaStartMovel(
+                      props,
                       COMPRA_STARTMOVEL_NAMESPACE
                     )
                   }
@@ -81,31 +82,49 @@ class FormInternoCompraStartMovel extends React.Component {
           </Form>
           <Row className="rowTabelaOrdens">
             <Col className="colTabelaOrdens">
-              <TabelaOrdens tableDataOrdens={this.props.tabelaOrdens} />
+              <TabelaOrdens
+                tableDataOrdens={props.tabelaOrdens}
+                tableDataOrdensSimulacao={props.tabelaOrdensSimulacao}
+              />
             </Col>
           </Row>
 
           <div className="customFooter footerSemBorda">
-            {RowFormAssinatura(this.props, COMPRA_STARTMOVEL_NAMESPACE)}
+            {RowFormAssinatura(props, COMPRA_STARTMOVEL_NAMESPACE)}{" "}
             <Row>
-              <Col md={3}>
+              <Col md={4}>
                 <Button
                   variant="secondary"
                   size="sm"
                   onClick={() =>
-                    this.props.limparAction(COMPRA_STARTMOVEL_NAMESPACE)
+                    props.limparAction(COMPRA_STARTMOVEL_NAMESPACE)
                   }
                 >
                   <h6>Limpar</h6>
                 </Button>
               </Col>
-              <Col md={6}>
+              <Col md={4}>
                 <Button
                   variant="primary"
                   size="sm"
-                  onClick={() => this.props.enviarOrdemAction(this.props)}
+                  onClick={() => props.enviarOrdemAction(props)}
                 >
                   <h6>Comprar</h6>
+                </Button>
+              </Col>
+              <Col md={4}>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={() =>
+                    props.adicionarItemTabelaStartMovel(
+                      props,
+                      COMPRA_STARTMOVEL_NAMESPACE,
+                      "simulacao"
+                    )
+                  }
+                >
+                  <h6>Simular</h6>
                 </Button>
               </Col>
             </Row>
@@ -132,34 +151,22 @@ const mapStateToProps = state => ({
   assinatura: state.compraStartMovelReducer.assinatura,
   checkSalvarAssinatura: state.compraStartMovelReducer.checkSalvarAssinatura,
   dadosPesquisa: state.compraStartMovelReducer.dadosPesquisa,
-  eventSourceCotacao: state.compraStartMovelReducer.eventSourceCotacao
+  eventSourceCotacao: state.compraStartMovelReducer.eventSourceCotacao,
+  tabelaOrdensSimulacao: state.compraStartMovelReducer.tabelaOrdensSimulacao
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    mudarQtdAction,
-    mudarAtivoAction,
-    mudarValidadeSelectAction,
-    mudarDataAction,
-    mostrarErroQtdeOnBlurAction,
-    adicionarItemTabelaStartMovel,
-    mudarAssinaturaAction,
-    mudarCheckSalvarAssinaturaAction,
-    limparAction,
-    compraStartMovelAction,
-    pesquisarAtivoOnEnterAction,
-    enviarOrdemAction,
-    mudarAtributoBoletaAction
-  }
-)(FormInternoCompraStartMovel);
-
-/**
- * 
-          <div className="customFooter">
-            <Row>
-              <Col md={3} />
-              <Col md={6} />
-            </Row>
-          </div>
- */
+export default connect(mapStateToProps, {
+  mudarQtdAction,
+  mudarAtivoAction,
+  mudarValidadeSelectAction,
+  mudarDataAction,
+  mostrarErroQtdeOnBlurAction,
+  adicionarItemTabelaStartMovel,
+  mudarAssinaturaAction,
+  mudarCheckSalvarAssinaturaAction,
+  limparAction,
+  compraStartMovelAction,
+  pesquisarAtivoOnEnterAction,
+  enviarOrdemAction,
+  mudarAtributoBoletaAction
+})(FormInternoCompraStartMovel);

@@ -11,7 +11,7 @@ export default class InputSelectBotoes extends React.Component {
     return (
       <InputGroup>
         <InputGroup.Prepend>
-          <h6
+          <span
             className="input-group-text iconeProcurar divClicavel botoesInputSelect"
             onClick={() => {
               props.changeVar(props.nomeOpen, !props.open);
@@ -19,7 +19,7 @@ export default class InputSelectBotoes extends React.Component {
             }}
           >
             -
-          </h6>
+          </span>
         </InputGroup.Prepend>
 
         <Select
@@ -40,7 +40,7 @@ export default class InputSelectBotoes extends React.Component {
         </Select>
 
         <InputGroup.Append>
-          <h6
+          <span
             className="input-group-text iconeProcurar divClicavel botoesInputSelect"
             onClick={() => {
               props.changeVar(props.nomeOpen, !props.open);
@@ -48,7 +48,7 @@ export default class InputSelectBotoes extends React.Component {
             }}
           >
             +
-          </h6>
+          </span>
         </InputGroup.Append>
       </InputGroup>
     );

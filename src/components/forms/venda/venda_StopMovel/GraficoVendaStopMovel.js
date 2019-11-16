@@ -47,24 +47,7 @@ class GraficoVendaStopMovel extends React.Component {
           {TextoMenorGrafico("Ajuste", "TextoMenorGrafico_Ajuste2_VSM")}
           {TextoMenorGrafico("Ajuste", "TextoMenorGrafico_Ajuste3_VSM")}
 
-          {TextoMenorGrafico(
-            Number(
-              this.props.disparoMaisAjuste - this.props.inicioDisparo
-            ).toFixed(2),
-            "ValorAjuste1Grafico_VSM"
-          )}
-          {TextoMenorGrafico(
-            Number(
-              this.props.stopAnteriorAjuste - this.props.stopMais1Ajuste
-            ).toFixed(2),
-            "ValorAjuste2Grafico_VSM"
-          )}
-          {TextoMenorGrafico(
-            Number(this.props.stopMais1Ajuste - this.props.stopDisparo).toFixed(
-              2
-            ),
-            "ValorAjuste3Grafico_VSM"
-          )}
+          {renderTextos(this.props)}
         </div>
       </Col>
     );
@@ -80,10 +63,64 @@ const mapStateToProps = state => ({
   inicioDisparo: state.vendaStopMovel.inicioDisparo,
   disparoMaisAjuste: state.vendaStopMovel.disparoMaisAjuste,
   stopMais1Ajuste: state.vendaStopMovel.stopMais1Ajuste,
-  stopAnteriorAjuste: state.vendaStopMovel.stopAnteriorAjuste
+  stopAnteriorAjuste: state.vendaStopMovel.stopAnteriorAjuste,
+  tabelaOrdens: state.vendaStopMovel.tabelaOrdens
 });
 
-export default connect(
-  mapStateToProps,
-  {}
-)(GraficoVendaStopMovel);
+export default connect(mapStateToProps, {})(GraficoVendaStopMovel);
+
+const renderTextos = props => {
+  const { tabelaOrdens } = props;
+
+  let ajuste1,
+    ajuste2,
+    ajuste3,
+    stopMais1Ajuste,
+    stopAnteriorAjuste,
+    disparoMaisAjuste;
+  const linha1 = tabelaOrdens[0];
+  const linha2 = tabelaOrdens[1];
+  const linha3 = tabelaOrdens[2];
+
+  if (linha1) {
+    ajuste1 = TextoMenorGrafico(
+      Number(linha1.ajuste).toFixed(2),
+      "ValorAjuste3Grafico_VSM"
+    );
+    stopMais1Ajuste = TextoMenorGrafico(
+      Number(linha1.novoStop).toFixed(2),
+      "StopMais1AjusteGrafico_VSM"
+    );
+  }
+  if (linha2) {
+    ajuste2 = TextoMenorGrafico(
+      Number(linha2.ajuste).toFixed(2),
+      "ValorAjuste2Grafico_VSM"
+    );
+    stopAnteriorAjuste = TextoMenorGrafico(
+      Number(linha2.novoStop).toFixed(2),
+      "StopAnteriorAjusteGrafico_VSM"
+    );
+  }
+  if (linha3) {
+    ajuste3 = TextoMenorGrafico(
+      Number(linha3.ajuste).toFixed(2),
+      "ValorAjuste1Grafico_VSM"
+    );
+    disparoMaisAjuste = TextoMenorGrafico(
+      Number(linha3.novoStop).toFixed(2),
+      "DisparoMaisAjusteGrafico_VSM"
+    );
+  }
+
+  return (
+    <div>
+      {ajuste1}
+      {stopMais1Ajuste}
+      {ajuste2}
+      {stopAnteriorAjuste}
+      {ajuste3}
+      {disparoMaisAjuste}
+    </div>
+  );
+};

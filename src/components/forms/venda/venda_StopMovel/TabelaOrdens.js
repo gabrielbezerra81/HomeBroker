@@ -11,7 +11,10 @@ import { removerItemTabelaAction } from "components/redux/actions/formInputActio
 class TabelaOrdens extends React.Component {
   renderItems(tableData) {
     return tableData.map((item, index) => (
-      <tr key={index}>
+      <tr
+        key={index}
+        className={item.tipo === "simulacao" ? "itemSimulacaoVenda" : ""}
+      >
         <td>{index + 1}º</td>
         <td>{Number(item.disparo).toFixed(2)}</td>
         <td>{Number(item.stopAtual).toFixed(2)}</td>
@@ -55,7 +58,10 @@ class TabelaOrdens extends React.Component {
             <th />
           </tr>
         </thead>
-        <tbody>{this.renderItems(this.props.tableDataOrdens)}</tbody>
+        <tbody>
+          {this.renderItems(this.props.tableDataOrdens)}
+          {this.renderItems(this.props.tableDataOrdensSimulacao)}
+        </tbody>
       </Table>
     );
   }
@@ -63,7 +69,6 @@ class TabelaOrdens extends React.Component {
 
 const mapStateToProps = state => ({});
 
-export default connect(
-  mapStateToProps,
-  { removerItemTabelaAction }
-)(TabelaOrdens);
+export default connect(mapStateToProps, { removerItemTabelaAction })(
+  TabelaOrdens
+);

@@ -2,24 +2,35 @@
   display: flex;
   flex-direction: row;
   align-content: center;
-  justify-content: space-evenly;
+  justify-content: space-around;
   position: absolute;
   left: 1%;
   width: 97%;
   padding: 15px 5px !important;
   border-width: 2px;
   color: var(--cor-texto);
-  margin-top: 0px;
+  margin-top: 4px;
 }
 
 .containerOpcoesOrdem .input-group {
-  width: 203px;
+  width: 122px;
 }
 
 .containerOpcoesOrdem > div {
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
+  padding: 0 0;
+}
+
+.containerOpcoesOrdem > div > h6 {
+  inline-size: min-content;
+  margin: 0 5px;
+}
+
+.containerOpcoesOrdem > div:nth-child(5) > h6 {
+  inline-size: fit-content;
+  max-width: 73px;
 }
 
 .containerOpcoesOrdem span {
@@ -54,4 +65,5 @@
   font-size: 1.3rem;
   padding-bottom: 10px;
   z-index: 1;
+  font-weight: 500;
 }

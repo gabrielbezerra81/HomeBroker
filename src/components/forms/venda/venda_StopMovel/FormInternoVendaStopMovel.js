@@ -28,18 +28,19 @@ import { RowInputsStopMovelConectada } from "components/utils/RowInputsFormatado
 
 class FormInternoVendaStopMovel extends React.Component {
   render() {
+    const { props } = this;
     return (
       <Col className="colFormInterno">
         <div className="divAsModalContainer formInternoCompraStartMovel">
           <Form>
-            {RowAtivoQtdeBoletas(this.props, VENDA_STOPMOVEL_NAMESPACE)}
+            {RowAtivoQtdeBoletas(props, VENDA_STOPMOVEL_NAMESPACE)}
 
             <RowInputsStopMovelConectada
               namespace={VENDA_STOPMOVEL_NAMESPACE}
             />
           </Form>
 
-          {RowFormValidade(this.props, VENDA_STOPMOVEL_NAMESPACE)}
+          {RowFormValidade(props, VENDA_STOPMOVEL_NAMESPACE)}
           <Form>
             <Row className="rowTextoAjusteAssimetrico">
               <Col md={7} className="colTextoAjusteAssimetrico">
@@ -51,9 +52,9 @@ class FormInternoVendaStopMovel extends React.Component {
                   <InputFormatado
                     tipoInput="preco"
                     step={0.01}
-                    value={this.props.ajusteAssimetrico}
+                    value={props.ajusteAssimetrico}
                     onChange={valor =>
-                      this.props.mudarAtributoBoletaAction(
+                      props.mudarAtributoBoletaAction(
                         valor,
                         VENDA_STOPMOVEL_NAMESPACE,
                         "ajusteAssimetrico"
@@ -66,8 +67,8 @@ class FormInternoVendaStopMovel extends React.Component {
                 <Button
                   variant="link"
                   onClick={() =>
-                    this.props.adicionarItemTabelaStopMovel(
-                      this.props,
+                    props.adicionarItemTabelaStopMovel(
+                      props,
                       VENDA_STOPMOVEL_NAMESPACE
                     )
                   }
@@ -81,30 +82,46 @@ class FormInternoVendaStopMovel extends React.Component {
 
           <Row className="rowTabelaOrdens">
             <Col className="colTabelaOrdens">
-              <TabelaOrdens tableDataOrdens={this.props.tabelaOrdens} />
+              <TabelaOrdens
+                tableDataOrdens={props.tabelaOrdens}
+                tableDataOrdensSimulacao={props.tabelaOrdensSimulacao}
+              />
             </Col>
           </Row>
           <div className="customFooter footerSemBorda">
-            {RowFormAssinatura(this.props, VENDA_STOPMOVEL_NAMESPACE)}
+            {RowFormAssinatura(props, VENDA_STOPMOVEL_NAMESPACE)}
             <Row>
-              <Col md={3}>
+              <Col md={4}>
                 <Button
                   variant="secondary"
                   size="sm"
-                  onClick={() =>
-                    this.props.limparAction(VENDA_STOPMOVEL_NAMESPACE)
-                  }
+                  onClick={() => props.limparAction(VENDA_STOPMOVEL_NAMESPACE)}
                 >
                   <h6>Limpar</h6>
                 </Button>
               </Col>
-              <Col md={6}>
+              <Col md={4}>
                 <Button
                   variant="danger"
                   size="sm"
-                  onClick={() => this.props.enviarOrdemAction(this.props)}
+                  onClick={() => props.enviarOrdemAction(props)}
                 >
                   <h6>Vender</h6>
+                </Button>
+              </Col>
+              <Col md={4}>
+                <Button
+                  variant="danger"
+                  size="sm"
+                  onClick={() =>
+                    props.adicionarItemTabelaStopMovel(
+                      props,
+                      VENDA_STOPMOVEL_NAMESPACE,
+                      "simulacao"
+                    )
+                  }
+                >
+                  <h6>Simular</h6>
                 </Button>
               </Col>
             </Row>
@@ -131,23 +148,21 @@ const mapStateToProps = state => ({
   assinatura: state.vendaStopMovel.assinatura,
   checkSalvarAssinatura: state.vendaStopMovel.checkSalvarAssinatura,
   dadosPesquisa: state.vendaStopMovel.dadosPesquisa,
-  eventSourceCotacao: state.vendaStopMovel.eventSourceCotacao
+  eventSourceCotacao: state.vendaStopMovel.eventSourceCotacao,
+  tabelaOrdensSimulacao: state.vendaStopMovel.tabelaOrdensSimulacao
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    mudarQtdAction,
-    mudarAtivoAction,
-    mudarValidadeSelectAction,
-    mudarDataAction,
-    mostrarErroQtdeOnBlurAction,
-    adicionarItemTabelaStopMovel,
-    mudarAssinaturaAction,
-    mudarCheckSalvarAssinaturaAction,
-    limparAction,
-    pesquisarAtivoOnEnterAction,
-    enviarOrdemAction,
-    mudarAtributoBoletaAction
-  }
-)(FormInternoVendaStopMovel);
+export default connect(mapStateToProps, {
+  mudarQtdAction,
+  mudarAtivoAction,
+  mudarValidadeSelectAction,
+  mudarDataAction,
+  mostrarErroQtdeOnBlurAction,
+  adicionarItemTabelaStopMovel,
+  mudarAssinaturaAction,
+  mudarCheckSalvarAssinaturaAction,
+  limparAction,
+  pesquisarAtivoOnEnterAction,
+  enviarOrdemAction,
+  mudarAtributoBoletaAction
+})(FormInternoVendaStopMovel);

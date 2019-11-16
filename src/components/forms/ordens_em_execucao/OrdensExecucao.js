@@ -1,11 +1,9 @@
 import React from "react";
-
 import { Row, Table, ProgressBar } from "react-bootstrap";
 import DraggableModal from "components/utils/DraggableModal";
 import { modalHeaderSemBook } from "components/utils/FormHeader";
 import { formatarDataDaAPI } from "components/utils/Formatacoes";
 import { OpcoesOrdemExecConectada } from "components/redux/ElementosConectadosRedux";
-import { Item } from "rc-menu";
 
 export default class OrdensExecucao extends React.Component {
   componentDidMount() {
@@ -24,8 +22,6 @@ export default class OrdensExecucao extends React.Component {
   }
 
   render() {
-    const a = { name: "gab", sobrenome: "ale" };
-
     return (
       <DraggableModal
         id="ordens_execucao"
@@ -84,7 +80,8 @@ const modalBody = props => (
             );
             const opcoesOrdem =
               props.opcoesOrdemAberto && item.id === props.ordemAtual.id ? (
-                <OpcoesOrdemExecConectada />
+                // @ts-ignore
+                <OpcoesOrdemExecConectada id="opcoes_ordens" />
               ) : null;
 
             return [ofertaPrincipal, ...ordensNext, opcoesOrdem];
@@ -110,7 +107,7 @@ const renderOferta = (item, index, props, tipo) => {
 
   return (
     <tr
-      key={index}
+      key={Math.random()}
       className={
         (tipo === "ofertaPrincipal" ? " divClicavel " : " ") +
         (props.ordemAtual

@@ -12,6 +12,7 @@ Icone Ordens
 
 export default class BarraLateral extends React.Component {
   render() {
+    const { props } = this;
     return (
       <div className="divBarraLateral">
         <div
@@ -19,11 +20,14 @@ export default class BarraLateral extends React.Component {
           className="itemDivBarraLateral divClicavel"
           onMouseOver={() => {
             this.props.atualizarDivKeyAction("divOrdens");
-            this.props.mouseOverAction(this.props, "ordensAberto");
+
+            if (!props.ordensAberto)
+              this.props.mouseOverAction(this.props, "ordensAberto");
           }}
-          onMouseLeave={() =>
-            this.props.mouseLeaveAction(this.props, "ordensAberto")
-          }
+          onMouseLeave={() => {
+            if (props.ordensAberto)
+              this.props.mouseLeaveAction(this.props, "ordensAberto");
+          }}
         >
           <Icones viewBox="9 0 41 45" className="iconesBarraLateral"></Icones>
           <h6>ORDENS</h6>

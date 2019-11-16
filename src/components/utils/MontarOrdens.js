@@ -2,7 +2,7 @@ import { erro_validar_ativo, erro_validar_qtde } from "constants/AlertaErros";
 import { getformatedDate } from "components/utils/Formatacoes";
 
 const CVStartStop = ["Compra Start Stop", "Venda Start Stop"];
-const CVStopMovel = ["Compra Stop Movel", "Venda Stop Movel"];
+const CVStopMovel = ["Compra Stop Móvel", "Venda Stop Móvel"];
 
 export const validarOrdemBoleta = props => {
   const { dadosPesquisa, qtde } = props;
@@ -67,6 +67,7 @@ export const montaOrdemPrincipal = props => {
     const { tabelaOrdens } = props;
 
     montaOfertaPrincipal(props, "", json);
+
     tabelaOrdens.forEach((item, index) => {
       montaOfertaPrincipal(props, "ajusteOfertaAdicional", json, index);
     });
@@ -95,24 +96,27 @@ const montaOfertaPrincipal = (props, tipoAuxiliar, json, numAjuste = 0) => {
   ofertaPrincipal.stock.symbol = dadosPesquisa.ativo;
 
   //2º Oferta e ofertas adicionais CV Stop Movel
+
   if (
     tipoAuxiliar === "ajusteOfertaAdicional" ||
     tipoAuxiliar === "SegundaOrdem"
   ) {
     const { tabelaOrdens, inicioDisparo, ajustePadrao } = props;
-    ofertaPrincipal.orderType = "ajuste";
 
-    if (tipoAuxiliar === "ajusteOfertaAdicional") {
-      ofertaPrincipal.priority = numAjuste;
-      ofertaPrincipal.trigger = Number(tabelaOrdens[numAjuste].disparo);
-      ofertaPrincipal.price = Number(tabelaOrdens[numAjuste].ajuste);
-    } else {
-      ofertaPrincipal.priority = tabelaOrdens.length;
-      ofertaPrincipal.trigger = Number(inicioDisparo);
-      ofertaPrincipal.price = Number(ajustePadrao);
+    if (tabelaOrdens[numAjuste].tipo === "real") {
+      ofertaPrincipal.orderType = "ajuste";
+      if (tipoAuxiliar === "ajusteOfertaAdicional") {
+        ofertaPrincipal.priority = numAjuste;
+        ofertaPrincipal.trigger = Number(tabelaOrdens[numAjuste].disparo);
+        ofertaPrincipal.price = Number(tabelaOrdens[numAjuste].ajuste);
+      } else {
+        ofertaPrincipal.priority = tabelaOrdens.length;
+        ofertaPrincipal.trigger = Number(inicioDisparo);
+        ofertaPrincipal.price = Number(ajustePadrao);
+      }
+
+      json.offers.push(ofertaPrincipal);
     }
-
-    json.offers.push(ofertaPrincipal);
     return;
   }
 

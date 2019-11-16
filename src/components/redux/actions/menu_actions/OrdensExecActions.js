@@ -265,6 +265,8 @@ const retornaDadosOferta = (ordemAtual, tipo) => {
       dadosOferta.stopExec = oferta2.precoEnvio;
     }
   } //
+  else if (["compra_startmovel", "venda_stopmovel"].includes(tipo)) {
+  } //
   else {
     let next1, next2;
     if (ordemAtual.nextOrders[0]) {

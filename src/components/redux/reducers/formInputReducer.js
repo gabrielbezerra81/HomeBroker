@@ -37,7 +37,7 @@ const INITIAL_STATE = {
   valorTotal: "",
   gainDisparo: "",
   gainExec: "",
-  stopDisparo: "",
+  stopDisparo: 25,
   stopExec: "",
   validadeSelect: "DAY",
   date: new Date(),
@@ -45,8 +45,8 @@ const INITIAL_STATE = {
   preco: "",
   showConfigStop: true,
   checkSalvarAssinatura: true,
-  inicioDisparo: "",
-  ajustePadrao: "",
+  inicioDisparo: 26,
+  ajustePadrao: 0.1,
   disparo1Ajuste: "",
   disparoMaisAjuste: "",
   stopMais1Ajuste: "",
@@ -56,6 +56,7 @@ const INITIAL_STATE = {
   gain: "",
   ajusteAssimetrico: "",
   tabelaOrdens: [],
+  tabelaOrdensSimulacao: [],
   tabelaGainReducao: [],
   gainDisparoConfig1: "",
   gainExecConfig1: "",
@@ -65,7 +66,7 @@ const INITIAL_STATE = {
   gainExecConfig2: "",
   stopDisparoConfig2: "",
   stopExecConfig2: "",
-  qtde: "",
+  qtde: 300,
   erro: "",
   eventSourceCotacao: null
 };
@@ -93,7 +94,11 @@ export default namespace => (state = INITIAL_STATE, action) => {
     case `${ADICIONAR_ITEM_TABELA_REDUCAO}${namespace}`:
       return { ...state, tabelaGainReducao: action.payload };
     case `${ADICIONA_ITEM_TABELA_ORDENS_VENDA}${namespace}`:
-      return { ...state, tabelaOrdens: action.payload, ajusteAssimetrico: "" };
+      return {
+        ...state,
+        [action.payload.nome]: action.payload.valor,
+        ajusteAssimetrico: ""
+      };
     case `${REMOVE_ITEM_TABELA_GAIN_REDUCAO}${namespace}`:
       return { ...state, tabelaGainReducao: action.payload };
     case `${REMOVE_ITEM_TABELA_ORDENS_MOVEL}${namespace}`:

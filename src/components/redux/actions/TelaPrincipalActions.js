@@ -8,6 +8,7 @@ import {
   realizarLoginAPI,
   buscarInformacoesUsuarioAPI
 } from "components/api/API";
+import { navigate } from "@reach/router";
 
 export const abrirFecharMenuLateralAction = (event, menuLateralAberto) => {
   return dispatch => {
@@ -41,21 +42,23 @@ export const logarUsuarioAction = (username, password) => {
           type: LOGAR_DESLOGAR_USUARIO,
           payload: { usuarioConectado: infoUsuario.name, logado: true }
         });
+        navigate("/home");
       }
     }
   };
 };
 
 export const deslogarUsuarioAction = (event, props) => {
-  return dispatch => {
-    dispatch({
+  return async dispatch => {
+    await dispatch({
       type: LOGAR_DESLOGAR_USUARIO,
       payload: { usuarioConectado: "Gabriel Alencar", logado: false }
     });
-    dispatch({
+    await dispatch({
       type: MUDAR_DADOS_LOGIN,
       payload: { nomeVariavel: "token", valor: null }
     });
+    navigate("/");
   };
 };
 

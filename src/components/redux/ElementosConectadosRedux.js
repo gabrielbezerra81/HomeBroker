@@ -55,6 +55,8 @@ import {
 import { listarPosicoesAction } from "components/redux/actions/menu_actions/PosicaoActions";
 import OpcoesOrdemExec from "components/forms/ordens_em_execucao/OpcoesOrdemExec";
 import { montarBoletaFromOrdemExecAction } from "components/redux/actions/formInputActions";
+import { Router } from "@reach/router";
+import TelaLogin from "components/tela_login/TelaLogin";
 
 // @ts-ignore
 export const GlobalContext = React.createContext();
@@ -91,10 +93,17 @@ export const Helper = () => {
   return (
     <Provider store={globalStore} context={GlobalContext}>
       <Provider store={storeAppPrincipal}>
-        <TelaPrincipalConectada />
+        <Router>
+          <TelaLogin path="/" />
+          <Home path="/home" />
+        </Router>
       </Provider>
     </Provider>
   );
+};
+
+let Home = ({ path }) => {
+  return <TelaPrincipalConectada />;
 };
 
 const mapStateToPropsGlobalStore = state => {
@@ -102,12 +111,15 @@ const mapStateToPropsGlobalStore = state => {
     apps: state.MainAppReducer.apps,
     show: state.MainAppReducer.show,
     divkey: state.MainAppReducer.divkey,
-    zIndex: state.MainAppReducer.zIndex,
-    dadosOrdemExec: state.MainAppReducer.dadosOrdemExec,
-    ultimaBoletaAbertaOrdemExec:
-      state.MainAppReducer.ultimaBoletaAbertaOrdemExec
+    zIndex: state.MainAppReducer.zIndex
   };
 };
+
+const mapStateToPropsGlobalStore_App = state => ({
+  ...mapStateToPropsGlobalStore(state),
+  dadosOrdemExec: state.MainAppReducer.dadosOrdemExec,
+  ultimaBoletaAbertaOrdemExec: state.MainAppReducer.ultimaBoletaAbertaOrdemExec
+});
 
 const mapStateToPropsLocal = state => ({
   eventSourceBook_Book: state.bookOfertaReducer.eventSource
@@ -186,7 +198,7 @@ export const SubAppConectado = connect(mapStateToPropsGlobalStore, {}, null, {
 
 export const AppConectado = compose(
   connect(
-    mapStateToPropsGlobalStore,
+    mapStateToPropsGlobalStore_App,
     {
       aumentarZindexAction,
       fecharFormAction,
