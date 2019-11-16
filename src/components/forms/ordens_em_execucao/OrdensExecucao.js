@@ -148,7 +148,7 @@ const renderOferta = (item, index, props, tipo) => {
       <td>{listarAtributoComposto(item.offers, "qtdeExecutada", "sim")}</td>
       <td>{listarAtributoComposto(item.offers, "qtdeCancelada", "sim")}</td>
 
-      <td>{item.precoDisparo}</td>
+      <td>{listarAtributoComposto(item.offers, "precoDisparo", "sim")}</td>
       <td>{item.offers[0].precoEnvio}</td>
       <td>{listarAtributoComposto(item.offers, "precoLimite", "sim")}</td>
       <td>{listarAtributoComposto(item.offers, "precoExecutado", "sim")}</td>
