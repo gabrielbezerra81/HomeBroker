@@ -15,7 +15,12 @@ class TabelaOrdens extends React.Component {
         key={index}
         className={item.tipo === "simulacao" ? "itemSimulacaoVenda" : ""}
       >
-        <td>{index + 1}º</td>
+        <td>
+          {item.tipo === "real"
+            ? index + 1
+            : this.props.tableDataOrdens.length + index + 1}
+          º
+        </td>
         <td>{Number(item.disparo).toFixed(2)}</td>
         <td>{Number(item.stopAtual).toFixed(2)}</td>
         <td>{Number(item.ajuste).toFixed(2)}</td>
@@ -28,7 +33,8 @@ class TabelaOrdens extends React.Component {
                 REMOVE_ITEM_TABELA_ORDENS_MOVEL,
                 tableData,
                 index,
-                VENDA_STOPMOVEL_NAMESPACE
+                VENDA_STOPMOVEL_NAMESPACE,
+                item.tipo
               )
             }
             className="operation-icons"

@@ -9,7 +9,8 @@ import {
   ADICIONA_ITEM_TABELA_ORDENS_VENDA,
   MUDAR_INPUT_CONFIGURAR,
   MUDAR_QTDE,
-  MUDAR_ATRIBUTO_BOLETA
+  MUDAR_ATRIBUTO_BOLETA,
+  REMOVE_ITEM_TABELA_ORDENS_MOVEL
 } from "constants/ActionTypes";
 import { cloneDeep } from "lodash";
 
@@ -107,53 +108,24 @@ export const adicionarItemTabelaStopMovel = (
   namespace,
   tipo = "real"
 ) => {
-  let tabelaOrdens;
-  let itemTabela;
-  let { inicioDisparo, ajusteAssimetrico, stopDisparo, ajustePadrao } = props;
-
-  let atributo = "";
-  let ajuste = 0;
-  if (tipo === "real") {
-    atributo = "tabelaOrdens";
-    ajuste = ajusteAssimetrico;
-    tabelaOrdens = [...props.tabelaOrdens];
-  } else {
-    atributo = "tabelaOrdensSimulacao";
-    ajuste = ajustePadrao;
-    tabelaOrdens = [...props.tabelaOrdensSimulacao];
-  }
-  const tamanhoInicial = tabelaOrdens.length;
-  //
-  if (tipo === "simulacao" || tamanhoInicial === 0) {
-    itemTabela = cloneDeep(itemTabelaMovel);
-    itemTabela.disparo = inicioDisparo;
-    itemTabela.stopAtual = stopDisparo;
-    itemTabela.ajuste = ajuste;
-    itemTabela.novoStop = Number(stopDisparo) + Number(ajuste);
-    itemTabela.tipo = tipo;
-
-    tabelaOrdens.push(itemTabela);
-  }
-  if (tipo === "simulacao" || tamanhoInicial !== 0) {
-    itemTabela = cloneDeep(itemTabelaMovel);
-    itemTabela.tipo = tipo;
-    adicionaSegundoAjusteStartMovel(tabelaOrdens, itemTabela, ajuste, "venda");
-    if (tipo === "simulacao") {
-      itemTabela = cloneDeep(itemTabela);
-      adicionaSegundoAjusteStartMovel(
-        tabelaOrdens,
-        itemTabela,
-        ajuste,
-        "venda"
-      );
-    }
-  }
+  let retorno_tabela_ordens = montaTabelaOrdensStartStopMovel(
+    props,
+    tipo,
+    "venda"
+  );
+  const atributo = retorno_tabela_ordens.atributo;
+  const tabelaOrdens = retorno_tabela_ordens.tabela;
 
   return dispatch => {
     dispatch({
       type: `${ADICIONA_ITEM_TABELA_ORDENS_VENDA}${namespace}`,
       payload: { nome: atributo, valor: tabelaOrdens }
     });
+    if (tipo === "real")
+      dispatch({
+        type: `${ADICIONA_ITEM_TABELA_ORDENS_VENDA}${namespace}`,
+        payload: { nome: "tabelaOrdensSimulacao", valor: [] }
+      });
   };
 };
 
@@ -162,7 +134,29 @@ export const adicionarItemTabelaStartMovel = (
   namespace,
   tipo = "real"
 ) => {
-  let tabelaOrdens;
+  let retorno_tabela_ordens = montaTabelaOrdensStartStopMovel(
+    props,
+    tipo,
+    "compra"
+  );
+  const atributo = retorno_tabela_ordens.atributo;
+  const tabelaOrdens = retorno_tabela_ordens.tabela;
+
+  return dispatch => {
+    dispatch({
+      type: `${ADICIONA_ITEM_TABELA_ORDENS_VENDA}${namespace}`,
+      payload: { nome: atributo, valor: tabelaOrdens }
+    });
+    if (tipo === "real")
+      dispatch({
+        type: `${ADICIONA_ITEM_TABELA_ORDENS_VENDA}${namespace}`,
+        payload: { nome: "tabelaOrdensSimulacao", valor: [] }
+      });
+  };
+};
+
+const montaTabelaOrdensStartStopMovel = (props, tipo, cv) => {
+  let tabela;
   let itemTabela;
   let { inicioDisparo, ajusteAssimetrico, stopDisparo, ajustePadrao } = props;
 
@@ -171,50 +165,55 @@ export const adicionarItemTabelaStartMovel = (
   if (tipo === "real") {
     atributo = "tabelaOrdens";
     ajuste = ajusteAssimetrico;
-    tabelaOrdens = [...props.tabelaOrdens];
+    tabela = [...props.tabelaOrdens];
   } else {
     atributo = "tabelaOrdensSimulacao";
     ajuste = ajustePadrao;
-    tabelaOrdens = [...props.tabelaOrdensSimulacao];
+    tabela = [...props.tabelaOrdensSimulacao];
   }
-  const tamanhoInicial = tabelaOrdens.length;
+  const tabelaReais = props.tabelaOrdens;
+  const numOrdensReais = tabelaReais.length;
+  const novoStop =
+    cv === "compra"
+      ? Number(stopDisparo) - Number(ajuste)
+      : Number(stopDisparo) + Number(ajuste);
   //
-  if (tipo === "simulacao" || tamanhoInicial === 0) {
+  if (numOrdensReais === 0 && tabela.length === 0) {
     itemTabela = cloneDeep(itemTabelaMovel);
     itemTabela.disparo = inicioDisparo;
     itemTabela.stopAtual = stopDisparo;
     itemTabela.ajuste = ajuste;
-    itemTabela.novoStop = Number(stopDisparo) - Number(ajuste);
+    itemTabela.novoStop = novoStop;
     itemTabela.tipo = tipo;
 
-    tabelaOrdens.push(itemTabela);
-  }
-  if (tipo === "simulacao" || tamanhoInicial !== 0) {
+    tabela.push(itemTabela);
+  } else if (tipo === "simulacao") {
     itemTabela = cloneDeep(itemTabelaMovel);
     itemTabela.tipo = tipo;
-    adicionaSegundoAjusteStartMovel(tabelaOrdens, itemTabela, ajuste, "compra");
+    adicionaAjustes(tabela, itemTabela, ajuste, cv, tabelaReais);
+  }
+  if (numOrdensReais !== 0 || tipo === "simulacao") {
+    itemTabela = cloneDeep(itemTabelaMovel);
+    itemTabela.tipo = tipo;
+    adicionaAjustes(tabela, itemTabela, ajuste, cv, tabelaReais);
     if (tipo === "simulacao") {
       itemTabela = cloneDeep(itemTabela);
-      adicionaSegundoAjusteStartMovel(
-        tabelaOrdens,
-        itemTabela,
-        ajuste,
-        "compra"
-      );
+      adicionaAjustes(tabela, itemTabela, ajuste, cv, tabelaReais);
     }
   }
 
-  return dispatch => {
-    dispatch({
-      type: `${ADICIONA_ITEM_TABELA_ORDENS_VENDA}${namespace}`,
-      payload: { nome: atributo, valor: tabelaOrdens }
-    });
-  };
+  return { tabela: tabela, atributo: atributo };
 };
 
-const adicionaSegundoAjusteStartMovel = (tabela, itemTabela, ajuste, cv) => {
+const adicionaAjustes = (tabela, itemTabela, ajuste, cv, tabelaReais) => {
   const tamanho = tabela.length;
-  const ultimoItem = tabela[tamanho - 1];
+  const numOrdensReais = tabelaReais.length;
+  let ultimoItem;
+  if (tamanho === 0) {
+    ultimoItem = tabelaReais[numOrdensReais - 1];
+  } else {
+    ultimoItem = tabela[tamanho - 1];
+  }
 
   if (cv === "compra") {
     itemTabela.disparo = Number(ultimoItem.disparo) - Number(ultimoItem.ajuste);
@@ -235,15 +234,38 @@ export const removerItemTabelaAction = (
   actionType,
   tabela,
   index,
-  namespace
+  namespace,
+  tipoOrdem = ""
 ) => {
   let novaTabela = [...tabela];
   novaTabela.splice(index, 1);
   return dispatch => {
-    dispatch({
-      type: `${actionType}${namespace}`,
-      payload: novaTabela
-    });
+    if (actionType === REMOVE_ITEM_TABELA_ORDENS_MOVEL) {
+      if (tipoOrdem === "real") {
+        //Remove a simulação se adicionar novos ajustes
+        dispatch({
+          type: `${ADICIONA_ITEM_TABELA_ORDENS_VENDA}${namespace}`,
+          payload: { nome: "tabelaOrdensSimulacao", valor: [] }
+        });
+        //Atualiza a tabela com os novos ajustes
+        dispatch({
+          type: `${actionType}${namespace}`,
+          payload: novaTabela
+        });
+      } else {
+        //Remove um elemento da simulação
+        dispatch({
+          type: `${ADICIONA_ITEM_TABELA_ORDENS_VENDA}${namespace}`,
+          payload: { nome: "tabelaOrdensSimulacao", valor: novaTabela }
+        });
+      }
+    }
+    //Remove um elemento de tabela para outros tipos de action (Gain redução)
+    else
+      dispatch({
+        type: `${actionType}${namespace}`,
+        payload: novaTabela
+      });
   };
 };
 
