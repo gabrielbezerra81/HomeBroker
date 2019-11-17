@@ -98,3 +98,7 @@ span.colunasOfertaVenda {
   border-top: 1px solid #999;
   border-bottom: 1px solid #999;
 }
+
+.rowTabelaOrdensExec:hover {
+  opacity: 1;
+}

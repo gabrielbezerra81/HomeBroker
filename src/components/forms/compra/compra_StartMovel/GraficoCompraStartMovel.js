@@ -99,7 +99,7 @@ const renderTextos = props => {
       "StopMais1AjusteGrafico_CSM"
     );
     disparoMaisAjuste = TextoMenorGrafico(
-      Number(linha1.novoStop).toFixed(2),
+      Number(props.inicioDisparo - linha1.ajuste).toFixed(2),
       "DisparoMaisAjusteGrafico_CSM"
     );
   }

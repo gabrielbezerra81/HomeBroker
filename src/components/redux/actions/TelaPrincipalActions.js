@@ -46,6 +46,8 @@ export const logarUsuarioAction = (username, password) => {
           payload: { usuarioConectado: infoUsuario.name, logado: true }
         });
         navigate("/home");
+      } else {
+        travarDestravarClique("destravar", "botaoLogar");
       }
     }
   };

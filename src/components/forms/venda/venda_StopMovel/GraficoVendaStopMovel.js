@@ -98,7 +98,7 @@ const renderTextos = props => {
       "StopMais1AjusteGrafico_VSM"
     );
     disparoMaisAjuste = TextoMenorGrafico(
-      Number(linha1.novoStop).toFixed(2),
+      Number(props.inicioDisparo + linha1.ajuste).toFixed(2),
       "DisparoMaisAjusteGrafico_VSM"
     );
   }

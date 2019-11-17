@@ -121,9 +121,20 @@ const montaOfertaPrincipal = (props, tipoAuxiliar, json, numAjuste = 0) => {
       ofertaPrincipal.trigger = Number(tabelaOrdens[numAjuste].disparo);
       ofertaPrincipal.price = Number(tabelaOrdens[numAjuste].ajuste);
     } else {
-      ofertaPrincipal.priority = tabelaOrdens.length;
-      ofertaPrincipal.trigger = Number(inicioDisparo);
-      ofertaPrincipal.price = Number(ajustePadrao);
+      const ajusteP = Number(ajustePadrao);
+      const tamTabela = tabelaOrdens.length;
+      let disparo = 0;
+      ofertaPrincipal.priority = tamTabela;
+      ofertaPrincipal.price = ajusteP;
+
+      if (tamTabela === 0) disparo = Number(inicioDisparo);
+      else {
+        const ultimaLinha = tabelaOrdens[tamTabela - 1];
+        if (ordem.tipoOferta === "C")
+          disparo = ultimaLinha.disparo - ultimaLinha.ajuste;
+        else disparo = ultimaLinha.disparo + ultimaLinha.ajuste;
+      }
+      ofertaPrincipal.trigger = Number(disparo.toFixed(2));
     }
 
     json.offers.push(ofertaPrincipal);

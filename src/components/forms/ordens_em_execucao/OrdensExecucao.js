@@ -110,7 +110,9 @@ const renderOferta = (item, index, props, tipo) => {
     <tr
       key={Math.random()}
       className={
-        (tipo === "ofertaPrincipal" ? " divClicavel " : " ") +
+        (tipo === "ofertaPrincipal"
+          ? " divClicavel rowTabelaOrdensExec"
+          : " ") +
         (props.ordemAtual
           ? item.id === props.ordemAtual.id
             ? "ordemSelecionada"
@@ -170,13 +172,24 @@ const classeOfertaVenda = oferta => {
   return "";
 };
 
-const listarAtributoComposto = (listaOfertas, atributo, classeCor) =>
-  listaOfertas.map((oferta, index2) => (
-    <span
-      key={index2}
-      className={classeCor === "sim" ? classeOfertaVenda(oferta) : ""}
-    >
-      {oferta[atributo]}
-      <br />
-    </span>
-  ));
+const listarAtributoComposto = (listaOfertas, atributo, classeCor) => {
+  return listaOfertas.map((oferta, index2) => {
+    if (
+      oferta.modoExec === "ajuste" &&
+      ["qtdeOferta", "qtdeExecutada", "precoExecutado", "modoExec"].includes(
+        atributo
+      )
+    )
+      return null;
+
+    return (
+      <span
+        key={index2}
+        className={classeCor === "sim" ? classeOfertaVenda(oferta) : ""}
+      >
+        {oferta[atributo]}
+        <br />
+      </span>
+    );
+  });
+};

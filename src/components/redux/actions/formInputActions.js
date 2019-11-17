@@ -217,12 +217,12 @@ const adicionaSegundoAjusteStartMovel = (tabela, itemTabela, ajuste, cv) => {
   const ultimoItem = tabela[tamanho - 1];
 
   if (cv === "compra") {
-    itemTabela.disparo = Number(ultimoItem.disparo) - Number(ajuste);
+    itemTabela.disparo = Number(ultimoItem.disparo) - Number(ultimoItem.ajuste);
     itemTabela.stopAtual = Number(ultimoItem.novoStop);
     itemTabela.ajuste = ajuste;
     itemTabela.novoStop = Number(ultimoItem.novoStop) - Number(ajuste);
   } else {
-    itemTabela.disparo = Number(ultimoItem.disparo) + Number(ajuste);
+    itemTabela.disparo = Number(ultimoItem.disparo) + Number(ultimoItem.ajuste);
     itemTabela.stopAtual = Number(ultimoItem.novoStop);
     itemTabela.ajuste = ajuste;
     itemTabela.novoStop = Number(ultimoItem.novoStop) + Number(ajuste);

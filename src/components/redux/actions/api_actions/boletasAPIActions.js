@@ -61,6 +61,6 @@ export const enviarOrdemAction = props => {
   return async dispatch => {
     let json = [montaOrdemPrincipal(props)];
     console.log(JSON.stringify(json));
-    if (validarOrdemBoleta(props)) await enviarOrdemAPI(json);
+    //if (validarOrdemBoleta(props)) await enviarOrdemAPI(json);
   };
 };
