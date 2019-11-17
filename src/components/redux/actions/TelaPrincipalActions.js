@@ -7,7 +7,8 @@ import {
 import {
   realizarLoginAPI,
   buscarInformacoesUsuarioAPI,
-  travarDestravarClique
+  travarDestravarClique,
+  realizarCadastroAPI
 } from "components/api/API";
 import { navigate } from "@reach/router";
 
@@ -49,6 +50,27 @@ export const logarUsuarioAction = (username, password) => {
       } else {
         travarDestravarClique("destravar", "botaoLogar");
       }
+    }
+  };
+};
+
+export const cadastrarUsuarioAction = props => {
+  return async dispatch => {
+    travarDestravarClique("travar", "botaoCadastrar");
+    const role = ["ROLE_USER"];
+
+    const retornoCadastro = await realizarCadastroAPI(
+      props.nomeCadastro,
+      props.usernameCadastro,
+      props.emailCadastro,
+      role,
+      props.senhaCadastro
+    );
+    console.log(retornoCadastro);
+
+    travarDestravarClique("destravar", "botaoCadastrar");
+    if (retornoCadastro) {
+      navigate("/");
     }
   };
 };

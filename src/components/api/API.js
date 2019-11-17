@@ -22,7 +22,8 @@ import {
   url_aumentarPreco_id_valor,
   url_realizarLogin_usuario_senha,
   url_autenticacao_token,
-  url_informacoesUsuario_token
+  url_informacoesUsuario_token,
+  url_realizarCadastro_dados
 } from "components/api/url";
 import {
   MODIFICAR_ATRIBUTO_ABA,
@@ -49,7 +50,8 @@ import {
   erro_finalizar_a_mercado,
   sucesso_modificar_ordemExec,
   erro_modificar_ordemExec,
-  erro_realizar_login
+  erro_realizar_login,
+  erro_realizar_cadastro
 } from "constants/AlertaErros";
 import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
 import { formatarNumero } from "components/redux/reducers/formInputReducer";
@@ -294,7 +296,7 @@ export const atualizarBookAPI = (dispatch, props, codigos, tipo, multileg) => {
         tabelas.tabelaOfertasCompra.sort((a, b) => b.price - a.price);
         tabelas.tabelaOfertasVenda.sort((a, b) => b.price - a.price);
       }
-      
+
       if (tipo === "book") {
         dispatch({
           type: LISTAR_BOOK_OFERTAS,
@@ -566,6 +568,30 @@ export const realizarLoginAPI = (username, password) => {
     .catch(erro => {
       console.log(erro);
       alert(erro_realizar_login);
+      return null;
+    });
+};
+
+export const realizarCadastroAPI = (nome, username, email, role, password) => {
+  let payload = {
+    name: nome,
+    username: username,
+    email: email,
+    role: role,
+    password: password
+  };
+
+  return request
+    .post(url_base + url_realizarCadastro_dados)
+    .set({ "Content-Type": "application/json" })
+    .send(JSON.stringify(payload))
+    .then(response => {
+      const { body } = response;
+      return body;
+    })
+    .catch(erro => {
+      console.log(erro);
+      alert(erro_realizar_cadastro);
       return null;
     });
 };

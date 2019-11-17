@@ -1,23 +1,42 @@
 .containerTelaCadastro {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100vw;
-  }
-  
-  .conteudoCadastro {
-    background-color: #fff;
-    height: 500px;
-    width: 700px;
-    padding: 20px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-direction: column;
-  }
-  
-  .containerTelaCadastro .btn-primary{
-      max-height: unset;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  z-index: 999;
+
+  flex-direction: column;
+  color: #fff;
+}
+
+.containerTelaCadastro > div {
+  display: flex;
+  align-items: center;
+}
+
+.conteudoCadastro {
+  height: 500px;
+  width: 400px;
+  padding: 20px 40px 10px 40px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  border: 2px solid #008fca;
+  border-radius: 1px;
+  color: #fff;
+}
+
+.divCadastro {
+  flex: 6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.containerTelaCadastro .btn-primary {
+  max-height: unset;
+}

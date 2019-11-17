@@ -8,12 +8,13 @@ import {
 } from "components/redux/actions/TelaPrincipalActions";
 import FloatingLabelInput from "react-floating-label-input";
 import backgrondLogin from "img/backgrounds/background_login.jpg";
+import { navigate } from "@reach/router";
 
 class TelaLogin extends React.Component {
   render() {
     const { props } = this;
     return (
-      <div className="backgroundLogin">
+      <div className="backgroundLoginCadastro">
         <div className="containerTelaLogin">
           <div className="divBemVindo">
             <h3>Seja bem-vindo!</h3>
@@ -66,7 +67,11 @@ class TelaLogin extends React.Component {
                   <MDBIcon icon="lock" className="mr-1" />
                   <h6 className="ml-1">Esqueci minha senha</h6>
                 </div>
-                <Button variant="primary" className="flexJustifyCenter">
+                <Button
+                  variant="primary"
+                  className="flexJustifyCenter"
+                  onClick={() => navigate("/cadastro")}
+                >
                   <h6 className="ml-1">Cadastre-se</h6>
                 </Button>
               </div>

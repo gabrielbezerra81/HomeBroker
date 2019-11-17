@@ -19,7 +19,11 @@ const INITIAL_STATE = {
   multilegAberto: false,
   inputUsuario: "gabrielAB",
   inputSenha: "123456789",
-  token: null
+  token: null,
+  nomeCadastro: "Gabriel",
+  usernameCadastro: "gabrielAB",
+  emailCadastro: "gabrielAB@gmail.com",
+  senhaCadastro: "123456789"
 };
 
 export default (state = INITIAL_STATE, action) => {

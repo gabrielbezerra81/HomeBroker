@@ -39,3 +39,6 @@ export const url_listarAtivosMonitorados_ = "mt5/symbols"
 export const url_realizarLogin_usuario_senha = "auth/signin"
 export const url_autenticacao_token = "test/user"
 export const url_informacoesUsuario_token = "auth/info"
+
+//Cadastro 
+export const url_realizarCadastro_dados = "auth/signup"

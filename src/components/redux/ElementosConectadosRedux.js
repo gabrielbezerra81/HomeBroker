@@ -57,6 +57,7 @@ import OpcoesOrdemExec from "components/forms/ordens_em_execucao/OpcoesOrdemExec
 import { montarBoletaFromOrdemExecAction } from "components/redux/actions/formInputActions";
 import { Router } from "@reach/router";
 import TelaLogin from "components/tela_login/TelaLogin";
+import TelaCadastro from "components/tela_login/TelaCadastro";
 
 // @ts-ignore
 export const GlobalContext = React.createContext();
@@ -95,6 +96,7 @@ export const Helper = () => {
       <Provider store={storeAppPrincipal}>
         <Router>
           <TelaLogin path="/" />
+          <TelaCadastro path="/cadastro" />
           <Home path="/home" />
         </Router>
       </Provider>
