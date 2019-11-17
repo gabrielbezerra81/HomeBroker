@@ -1,4 +1,25 @@
+.backgroundLogin {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+
+.backgroundLogin::after {
+  background-image: url("../../img/backgrounds/background_login.jpg");
+  content: "";
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 100vh;
+  width: 100vw;
+  z-index: 99;
+  background-size: contain;
+  opacity: 0.2;
+}
+
 .containerTelaLogin {
+  position: fixed;
+  z-index: 999;
   display: flex;
   justify-content: center;
   align-items: center;
