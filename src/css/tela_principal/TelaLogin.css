@@ -13,7 +13,7 @@
   height: 100vh;
   width: 100vw;
   z-index: 99;
-  background-size: contain;
+  background-size: 100% 100%;
   opacity: 0.2;
 }
 
@@ -27,6 +27,12 @@
   width: 100vw;
   flex-direction: column;
   color: #fff;
+  font-weight: 400 !important;
+}
+
+.containerTelaLogin h3,
+.containerTelaLogin h4 {
+  font-weight: 400;
 }
 
 .containerTelaLogin div {
@@ -61,6 +67,11 @@
   justify-content: space-evenly;
   padding: 0 50px;
   display: flex;
+}
+
+.divFooter h6,
+.divFooter h5 {
+  font-weight: 400;
 }
 
 .conteudoLogin {
