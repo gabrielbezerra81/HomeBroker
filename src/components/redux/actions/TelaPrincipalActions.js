@@ -66,7 +66,6 @@ export const cadastrarUsuarioAction = props => {
       role,
       props.senhaCadastro
     );
-    console.log(retornoCadastro);
 
     travarDestravarClique("destravar", "botaoCadastrar");
     if (retornoCadastro) {

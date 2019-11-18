@@ -25,6 +25,11 @@ class Book extends React.Component {
       total = calcularTotal(props),
       min = calculoPreco(props.multileg[indice], "min"),
       max = calculoPreco(props.multileg[indice], "max");
+    const condicaoMed =
+      (min && max) ||
+      (min === 0 && max) ||
+      (min && max === 0) ||
+      (min === 0 && max === 0);
 
     const renderPlaceholder = renderPlaceholderPreco(props);
     return (
@@ -133,13 +138,13 @@ class Book extends React.Component {
               }
               className="divClicavel"
             >
-              {min ? formatarNumDecimal(min) : ""}
+              {min || min === 0 ? formatarNumDecimal(min) : ""}
             </span>
           </Col>
           <Col md={4}>
             <span
               onClick={
-                min && max
+                condicaoMed
                   ? () =>
                       props.modificarAtributoAbaAction(
                         props.multileg,
@@ -156,7 +161,7 @@ class Book extends React.Component {
               }
               className="divClicavel"
             >
-              {min && max ? formatarNumDecimal((max + min) / 2) : ""}
+              {condicaoMed ? formatarNumDecimal((max + min) / 2) : ""}
             </span>
           </Col>
           <Col md={4}>
@@ -171,7 +176,7 @@ class Book extends React.Component {
               }
               className="divClicavel"
             >
-              {max ? formatarNumDecimal(max) : ""}
+              {max || max === 0 ? formatarNumDecimal(max) : ""}
             </span>
           </Col>
         </Row>
@@ -328,7 +333,7 @@ const renderPlaceholderPreco = props => {
 const getPreco = props => {
   let preco = props.multileg[props.indice].preco;
 
-  if (["0,00", "0.00"].includes(preco)) return "";
+  if (["0.00"].includes(preco)) return "";
 
   return preco;
 };

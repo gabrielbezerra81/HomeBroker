@@ -44,6 +44,7 @@ class TelaLogin extends React.Component {
                   }`}
                   id="inputSenhaFlutuante"
                   label="Senha"
+                  autoComplete="current-password"
                   value={props.inputSenha}
                   onChange={e =>
                     props.mudarDadosLoginAction("inputSenha", e.target.value)

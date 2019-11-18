@@ -585,14 +585,13 @@ export const realizarCadastroAPI = (nome, username, email, role, password) => {
     .post(url_base + url_realizarCadastro_dados)
     .set({ "Content-Type": "application/json" })
     .send(JSON.stringify(payload))
-    .then(response => {
-      const { body } = response;
-      return body;
+    .then(() => {
+      return true;
     })
     .catch(erro => {
       console.log(erro);
       alert(erro_realizar_cadastro);
-      return null;
+      return false;
     });
 };
 

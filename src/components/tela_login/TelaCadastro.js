@@ -61,6 +61,7 @@ class TelaCadastro extends React.Component {
                   id="inputEmailFlutuante"
                   label="Senha"
                   name="password"
+                  autoComplete="current-password"
                   type="password"
                   value={props.senhaCadastro}
                   onChange={e =>

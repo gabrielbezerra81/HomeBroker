@@ -93,7 +93,7 @@ const renderDivLogin = props => {
       <div
         tabIndex={0}
         className="divClicavel itemMenuLateral corAlternada"
-        onClick={() => props.logarUsuarioAction("", "passar")}
+        onClick={event => props.deslogarUsuarioAction(event, props)}
       >
         <Row className="botaoDeslogar">
           <Col md={0} className="colLogout">
