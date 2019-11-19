@@ -272,12 +272,14 @@ const retornaDadosOferta = (ordemAtual, tipo) => {
     const ofertaPrincipal = ordemAtual.offers[0];
 
     const arrayAjustes = ordemAtual.offers.filter(
-      oferta => oferta.modoExec === "ajuste"
+      (oferta, index) => index !== 0
     );
     const segundaOrdem = arrayAjustes[arrayAjustes.length - 1];
 
-    dadosOferta.inicioDisparo = segundaOrdem.precoDisparo;
-    dadosOferta.ajustePadrao = segundaOrdem.precoEnvio;
+    if (segundaOrdem) {
+      dadosOferta.inicioDisparo = segundaOrdem.precoDisparo;
+      dadosOferta.ajustePadrao = segundaOrdem.precoEnvio;
+    }
     dadosOferta.stopDisparo = ofertaPrincipal.precoDisparo;
     dadosOferta.stopExec = ofertaPrincipal.precoEnvio;
 
@@ -293,8 +295,8 @@ const retornaDadosOferta = (ordemAtual, tipo) => {
         const linhaAnterior = dadosOferta.tabelaOrdens[indice - 1];
         disparo =
           tipo === "compra_startmovel"
-            ? linhaAnterior.disparo - ajuste
-            : linhaAnterior.disparo + ajuste;
+            ? linhaAnterior.disparo - linhaAnterior.ajuste
+            : linhaAnterior.disparo + linhaAnterior.ajuste;
         stopAtual = linhaAnterior.novoStop;
       }
 
