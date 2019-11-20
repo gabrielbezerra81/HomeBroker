@@ -6,6 +6,11 @@ import { formatarDataDaAPI } from "components/utils/Formatacoes";
 import { OpcoesOrdemExecConectada } from "components/redux/ElementosConectadosRedux";
 
 export default class OrdensExecucao extends React.Component {
+  componentWillUnmount() {
+    if (this.props.eventSourceOrdensExec) {
+      this.props.eventSourceOrdensExec.close();
+    }
+  }
   componentDidMount() {
     if (this.props.divkey !== "" && this.props.divkey === "ordens_execucao") {
       document.getElementById("ordens_execucao").style.zIndex =
@@ -16,10 +21,15 @@ export default class OrdensExecucao extends React.Component {
         true
       );
     }
-    this.props.listarOrdensExecAction();
-    this.props.atualizarOrdensExecAction(this.props, 1);
+    this.props.listarOrdensExecAction(this.props);
   }
-  componentWillMount() {}
+  componentDidUpdate(prevProps) {
+    if (this.props.eventSourceOrdensExec) {
+      if (prevProps.tabelaOrdensExecucao !== this.props.tabelaOrdensExecucao) {
+        this.props.atualizarOrdensExecAction(this.props, 1);
+      }
+    }
+  }
 
   render() {
     return (

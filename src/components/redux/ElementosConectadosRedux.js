@@ -138,7 +138,8 @@ const mapStateToPropsAppPrincipal = state => ({
   eventSourceBook_Multileg: state.multilegReducer.eventSource,
   eventSourceCotacao_Multileg: state.multilegReducer.eventSourceCotacao,
   eventSourceEmblema_Posicao: state.posicaoReducer.eventSourceEmblema,
-  eventSourceOrdensExec_OrdensExec: state.ordensExecReducer.eventSourceOrdensExec
+  eventSourceOrdensExec_OrdensExec:
+    state.ordensExecReducer.eventSourceOrdensExec
 });
 
 const mapStateToPropsMultileg = state => ({

@@ -33,7 +33,8 @@ import {
 import {
   LISTAR_BOOK_OFERTAS,
   PESQUISAR_ATIVO_BOLETA_API,
-  ATUALIZAR_SOURCE_EVENT_MULTILEG
+  ATUALIZAR_SOURCE_EVENT_MULTILEG,
+  LISTAR_ORDENS_EXECUCAO
 } from "constants/ApiActionTypes";
 import { formatarDataDaAPI } from "components/utils/Formatacoes";
 import { atualizarTabelaAntiga } from "components/redux/actions/api_actions/bookOfertaAPIActions";
@@ -265,10 +266,16 @@ export const listarPosicoesAPI = () => {
     });
 };
 
-export const atualizarOrdensExecAPI = (dispatch, idUsuario) => {
+export const atualizarOrdensExecAPI = (
+  dispatch,
+  idUsuario,
+  listaOrdensExec,
+  props
+) => {
   var source = new EventSource(
     url_base_reativa + url_ordensExecReativas_idUser + idUsuario
   );
+
   source.onopen = function(event) {
     console.log("open");
   };
@@ -277,7 +284,17 @@ export const atualizarOrdensExecAPI = (dispatch, idUsuario) => {
     if (typeof event.data !== "undefined") {
       var dados = JSON.parse(event.data);
 
-      console.log("ordens", dados);
+      const indice = listaOrdensExec.findIndex(ordem => ordem.id === dados.id);
+
+      const novaTabela = [...listaOrdensExec];
+      if (indice !== -1) {
+        novaTabela[indice] = dados;
+        dispatch({ type: LISTAR_ORDENS_EXECUCAO, payload: novaTabela });
+      } else {
+        novaTabela.unshift(dados);
+
+        dispatch({ type: LISTAR_ORDENS_EXECUCAO, payload: novaTabela });
+      }
     }
   };
 
@@ -450,6 +467,7 @@ export const atualizarEmblemasAPI = (dispatch, listaPosicoes, ids) => {
     if (typeof event.data !== "undefined") {
       var dados = JSON.parse(event.data);
       listaPosicoes = [...listaPosicoes];
+      console.log(dados);
 
       listaPosicoes.forEach(posicao => {
         if (posicao.idEstrutura === dados.id) {
@@ -465,6 +483,7 @@ export const atualizarEmblemasAPI = (dispatch, listaPosicoes, ids) => {
       });
     }
   };
+
   return source;
 };
 

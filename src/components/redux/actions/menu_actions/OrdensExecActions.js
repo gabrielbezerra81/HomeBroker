@@ -43,11 +43,12 @@ export const filtrarHistoricoOpAction = () => {
   return dispatch => {};
 };
 
-export const listarOrdensExecAction = () => {
+export const listarOrdensExecAction = props => {
   return async dispatch => {
     const ordensExec = await listarOrdensExecAPI();
 
     dispatch({ type: LISTAR_ORDENS_EXECUCAO, payload: ordensExec });
+    atualizarOrdensExec(dispatch, props, 1, ordensExec);
   };
 };
 
@@ -331,14 +332,24 @@ const retornaDadosOferta = (ordemAtual, tipo) => {
 
 export const atualizarOrdensExecAction = (props, idUsuario) => {
   return dispatch => {
-    const eventSource = atualizarOrdensExecAPI(dispatch, idUsuario);
-    if (props.eventSourceOrdensExec) {
-      props.eventSourceOrdensExec.close();
-    }
-
-    dispatch({
-      type: MUDAR_VARIAVEL_ORDENS_EXEC,
-      payload: { nome: "eventSourceOrdensExec", valor: eventSource }
-    });
+    atualizarOrdensExec(dispatch, props, idUsuario, props.tabelaOrdensExecucao);
   };
+};
+
+const atualizarOrdensExec = (dispatch, props, idUsuario, listaOrdensExec) => {
+  if (props.eventSourceOrdensExec) {
+    props.eventSourceOrdensExec.close();
+    console.log("fechou");
+  }
+  const eventSource = atualizarOrdensExecAPI(
+    dispatch,
+    idUsuario,
+    listaOrdensExec,
+    props
+  );
+
+  dispatch({
+    type: MUDAR_VARIAVEL_ORDENS_EXEC,
+    payload: { nome: "eventSourceOrdensExec", valor: eventSource }
+  });
 };

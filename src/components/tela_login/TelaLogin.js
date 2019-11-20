@@ -7,7 +7,6 @@ import {
   mudarDadosLoginAction
 } from "components/redux/actions/TelaPrincipalActions";
 import FloatingLabelInput from "react-floating-label-input";
-import backgrondLogin from "img/backgrounds/background_login.jpg";
 import { navigate } from "@reach/router";
 
 class TelaLogin extends React.Component {
