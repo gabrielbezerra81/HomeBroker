@@ -23,7 +23,8 @@ import {
   url_realizarLogin_usuario_senha,
   url_autenticacao_token,
   url_informacoesUsuario_token,
-  url_realizarCadastro_dados
+  url_realizarCadastro_dados,
+  url_ordensExecReativas_idUser
 } from "components/api/url";
 import {
   MODIFICAR_ATRIBUTO_ABA,
@@ -262,6 +263,25 @@ export const listarPosicoesAPI = () => {
       console.log(erro);
       return [];
     });
+};
+
+export const atualizarOrdensExecAPI = (dispatch, idUsuario) => {
+  var source = new EventSource(
+    url_base_reativa + url_ordensExecReativas_idUser + idUsuario
+  );
+  source.onopen = function(event) {
+    console.log("open");
+  };
+
+  source.onmessage = function(event) {
+    if (typeof event.data !== "undefined") {
+      var dados = JSON.parse(event.data);
+
+      console.log("ordens", dados);
+    }
+  };
+
+  return source;
 };
 
 export const atualizarBookAPI = (dispatch, props, codigos, tipo, multileg) => {

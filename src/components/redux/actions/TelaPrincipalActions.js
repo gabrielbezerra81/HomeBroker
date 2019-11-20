@@ -97,6 +97,10 @@ export const abrirItemBarraLateralAction = (props, nameVariavelReducer) => {
   else if (nameVariavelReducer === "listaCompletaAberta") {
     if (props.eventSourceEmblema_Posicao)
       props.eventSourceEmblema_Posicao.close();
+  } else if (nameVariavelReducer === "ordensExecucaoAberto") {
+    if (props.eventSourceOrdensExec_OrdensExec) {
+      props.eventSourceOrdensExec_OrdensExec.close();
+    }
   }
   return dispatch => {
     dispatch({

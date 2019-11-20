@@ -16,10 +16,10 @@ export default class OrdensExecucao extends React.Component {
         true
       );
     }
-  }
-  componentWillMount() {
     this.props.listarOrdensExecAction();
+    this.props.atualizarOrdensExecAction(this.props, 1);
   }
+  componentWillMount() {}
 
   render() {
     return (
@@ -176,9 +176,7 @@ const listarAtributoComposto = (listaOfertas, atributo, classeCor) => {
   return listaOfertas.map((oferta, index2) => {
     if (
       oferta.modoExec === "ajuste" &&
-      ["qtdeOferta", "qtdeExecutada", "precoExecutado", "modoExec"].includes(
-        atributo
-      )
+      ["qtdeOferta", "qtdeExecutada", "precoExecutado"].includes(atributo)
     )
       return null;
 

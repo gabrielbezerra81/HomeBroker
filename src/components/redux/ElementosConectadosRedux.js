@@ -50,7 +50,8 @@ import {
   cancelarOrdemExecAction,
   finalizarAMercadoAction,
   aumentarQtdePrecoAction,
-  abrirOrdensBoletaAction
+  abrirOrdensBoletaAction,
+  atualizarOrdensExecAction
 } from "components/redux/actions/menu_actions/OrdensExecActions";
 import { listarPosicoesAction } from "components/redux/actions/menu_actions/PosicaoActions";
 import OpcoesOrdemExec from "components/forms/ordens_em_execucao/OpcoesOrdemExec";
@@ -136,7 +137,8 @@ const mapStateToPropsAppPrincipal = state => ({
   logado: state.telaPrincipalReducer.logado,
   eventSourceBook_Multileg: state.multilegReducer.eventSource,
   eventSourceCotacao_Multileg: state.multilegReducer.eventSourceCotacao,
-  eventSourceEmblema_Posicao: state.posicaoReducer.eventSourceEmblema
+  eventSourceEmblema_Posicao: state.posicaoReducer.eventSourceEmblema,
+  eventSourceOrdensExec_OrdensExec: state.ordensExecReducer.eventSourceOrdensExec
 });
 
 const mapStateToPropsMultileg = state => ({
@@ -159,7 +161,8 @@ const mapStateToPropsOrdensExec = state => ({
   tabelaOrdensExecucao: state.ordensExecReducer.tabelaOrdensExecucao,
   ativo: state.ordensExecReducer.ativo,
   opcoesOrdemAberto: state.ordensExecReducer.opcoesOrdemAberto,
-  ordemAtual: state.ordensExecReducer.ordemAtual
+  ordemAtual: state.ordensExecReducer.ordemAtual,
+  eventSourceOrdensExec: state.ordensExecReducer.eventSourceOrdensExec
 });
 
 const mapStateToPropsOpcoesOrdemExec = state => ({
@@ -247,7 +250,8 @@ export const OrdensExecucaoConectada = compose(
   connect(mapStateToPropsOrdensExec, {
     listarOrdensExecAction,
     abrirItemBarraLateralAction,
-    mudarVariavelOrdensExecAction
+    mudarVariavelOrdensExecAction,
+    atualizarOrdensExecAction
   })
 )(OrdensExecucao);
 

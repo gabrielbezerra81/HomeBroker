@@ -13,7 +13,8 @@ const INITIAL_STATE = {
   ordemAtual: null,
   selectQtdeAberto: false,
   selectPrecoAberto: false,
-  sinalInputSelect: "+"
+  sinalInputSelect: "+",
+  eventSourceOrdensExec: null
 };
 
 export default (state = INITIAL_STATE, action) => {

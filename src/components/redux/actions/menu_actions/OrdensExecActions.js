@@ -9,7 +9,8 @@ import {
   finalizarAMercadoAPI,
   incrementarQtdeOrdemExecAPI,
   incrementarPrecoOrdemExecAPI,
-  pesquisarAtivoAPI
+  pesquisarAtivoAPI,
+  atualizarOrdensExecAPI
 } from "components/api/API";
 import { LISTAR_ORDENS_EXECUCAO } from "constants/ApiActionTypes";
 import {
@@ -326,4 +327,18 @@ const retornaDadosOferta = (ordemAtual, tipo) => {
     }
   }
   return dadosOferta;
+};
+
+export const atualizarOrdensExecAction = (props, idUsuario) => {
+  return dispatch => {
+    const eventSource = atualizarOrdensExecAPI(dispatch, idUsuario);
+    if (props.eventSourceOrdensExec) {
+      props.eventSourceOrdensExec.close();
+    }
+
+    dispatch({
+      type: MUDAR_VARIAVEL_ORDENS_EXEC,
+      payload: { nome: "eventSourceOrdensExec", valor: eventSource }
+    });
+  };
 };
