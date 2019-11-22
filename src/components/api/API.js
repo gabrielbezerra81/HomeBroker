@@ -24,7 +24,8 @@ import {
   url_autenticacao_token,
   url_informacoesUsuario_token,
   url_realizarCadastro_dados,
-  url_ordensExecReativas_idUser
+  url_ordensExecReativas_idUser,
+  url_posicaoReativa_idUser
 } from "components/api/url";
 import {
   MODIFICAR_ATRIBUTO_ABA,
@@ -57,6 +58,10 @@ import {
 } from "constants/AlertaErros";
 import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
 import { formatarNumero } from "components/redux/reducers/formInputReducer";
+import {
+  adicionaPosicao,
+  atualizarEmblemas
+} from "components/redux/actions/menu_actions/PosicaoActions";
 
 export const pesquisarAtivoAPI = codigo => {
   return request
@@ -467,20 +472,65 @@ export const atualizarEmblemasAPI = (dispatch, listaPosicoes, ids) => {
     if (typeof event.data !== "undefined") {
       var dados = JSON.parse(event.data);
       listaPosicoes = [...listaPosicoes];
-      console.log(dados);
 
-      listaPosicoes.forEach(posicao => {
-        if (posicao.idEstrutura === dados.id) {
-          posicao.precoCompra = dados.min;
-          posicao.precoVenda = dados.max;
-          posicao.cotacaoAtual = dados.last;
-        }
-      });
+      const posicao = listaPosicoes.filter(
+        posicao => posicao.idEstrutura === dados.id
+      );
 
-      dispatch({
-        type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-        payload: { nome: "posicoesCustodia", valor: listaPosicoes }
-      });
+      if (posicao.length > 0) {
+        posicao[0].precoCompra = dados.min;
+        posicao[0].precoVenda = dados.max;
+        posicao[0].cotacaoAtual = dados.last;
+
+        dispatch({
+          type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
+          payload: { nome: "posicoesCustodia", valor: listaPosicoes }
+        });
+      }
+    }
+  };
+
+  return source;
+};
+
+export const atualizarPosicaoAPI = (dispatch, listaPosicoes, idUsuario) => {
+  var source = new EventSource(
+    url_base_reativa + url_posicaoReativa_idUser + idUsuario
+  );
+
+  source.onopen = function(event) {
+    console.log("open");
+  };
+
+  source.onmessage = function(event) {
+    if (typeof event.data !== "undefined") {
+      var grupoPosicao = JSON.parse(event.data);
+      listaPosicoes = [...listaPosicoes];
+
+      const listaFiltrada = listaPosicoes.filter(
+        posicao =>
+          posicao.agrupadorPrincipal === grupoPosicao.agrupadorPrincipal
+      );
+
+      if (listaFiltrada.length > 0) {
+        const posicao = listaFiltrada[0];
+        const posicaoAtualizada = adicionaPosicao(grupoPosicao)[0];
+        posicaoAtualizada.precoCompra = posicao.precoCompra;
+        posicaoAtualizada.precoVenda = posicao.precoVenda;
+        posicaoAtualizada.cotacaoAtual = posicao.cotacaoAtual;
+
+        dispatch({
+          type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
+          payload: { nome: "posicoesCustodia", valor: listaPosicoes }
+        });
+      } else {
+        const novaPosicao = adicionaPosicao(grupoPosicao);
+        listaPosicoes.push(...novaPosicao);
+        dispatch({
+          type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
+          payload: { nome: "posicoesCustodia", valor: listaPosicoes }
+        });
+      }
     }
   };
 

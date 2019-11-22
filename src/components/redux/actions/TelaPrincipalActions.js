@@ -94,10 +94,14 @@ export const abrirItemBarraLateralAction = (props, nameVariavelReducer) => {
     if (props.eventSourceCotacao_Multileg)
       props.eventSourceCotacao_Multileg.close();
   } //
+  // Posição
   else if (nameVariavelReducer === "listaCompletaAberta") {
     if (props.eventSourceEmblema_Posicao)
       props.eventSourceEmblema_Posicao.close();
-  } else if (nameVariavelReducer === "ordensExecucaoAberto") {
+    if (props.eventSourcePosicao_Posicao)
+      props.eventSourcePosicao_Posicao.close();
+  } //
+  else if (nameVariavelReducer === "ordensExecucaoAberto") {
     if (props.eventSourceOrdensExec_OrdensExec) {
       props.eventSourceOrdensExec_OrdensExec.close();
     }

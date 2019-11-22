@@ -6,7 +6,8 @@ const INITIAL_STATE = {
   ativoPesquisa: "PESQUISAR",
   inputSelect: "",
   posicoesCustodia: [],
-  eventSourceEmblema: null
+  eventSourceEmblema: null,
+  eventSourcePosicao: null
 };
 
 export default (state = INITIAL_STATE, action) => {

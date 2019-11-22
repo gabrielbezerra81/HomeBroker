@@ -12,9 +12,6 @@ import PosicaoAmpliadaResumida from "components/forms/posicao_custodia/PosicaoAm
 import { PosicaoDetalhadaConectada } from "components/redux/ElementosConectadosRedux";
 
 export default class PosicaoEmCustodia extends React.Component {
-  componentWillMount() {
-    this.props.listarPosicoesAction(this.props);
-  }
   componentDidMount() {
     if (this.props.divkey !== "" && this.props.divkey === "posicao_custodia") {
       document.getElementById("posicao_custodia").style.zIndex =
@@ -24,6 +21,19 @@ export default class PosicaoEmCustodia extends React.Component {
         this.props.zIndex,
         true
       );
+    }
+    this.props.listarPosicoesAction(this.props);
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props.eventSourceEmblema) {
+      if (prevProps.posicoesCustodia !== this.props.posicoesCustodia) {
+        this.props.atualizarEmblemasAction(this.props);
+      }
+    }
+    if (this.props.eventSourcePosicao) {
+      if (prevProps.posicoesCustodia !== this.props.posicoesCustodia) {
+        this.props.atualizarPosicaoAction(this.props);
+      }
     }
   }
 
@@ -39,9 +49,6 @@ export default class PosicaoEmCustodia extends React.Component {
       />
     );
   }
-  /*
- 
-  */
 
   modalBody = props => {
     return (
@@ -242,7 +249,7 @@ const visualizacaoPosicao = tipoVisualizacao => {
     tipoVisualizacao === "ampliado" ||
     tipoVisualizacao === "resumido"
   ) {
-    return <PosicaoAmpliadaResumida />;
+    return <PosicaoAmpliadaResumida emblemaMaior={true} />;
   } else if (tipoVisualizacao === "detalhada") {
     return <PosicaoDetalhadaConectada />;
   }

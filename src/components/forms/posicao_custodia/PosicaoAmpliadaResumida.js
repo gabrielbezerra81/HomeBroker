@@ -51,7 +51,10 @@ class PosicaoAmpliadaResumida extends React.Component {
               </Row>
 
               <div className="mcontent containerEmblema">
-                <EmblemaSimples item={item}></EmblemaSimples>
+                <EmblemaSimples
+                  item={item}
+                  emblemaMaior={props.emblemaMaior}
+                ></EmblemaSimples>
                 {props.tipoVisualizacao === "ampliado" ? (
                   <div>
                     <div className="divSetaPorcentagem">
@@ -136,10 +139,7 @@ const mapStateToPropsPosicao = state => ({
   posicoesCustodia: state.posicaoReducer.posicoesCustodia
 });
 
-export default connect(
-  mapStateToPropsPosicao,
-  {}
-)(PosicaoAmpliadaResumida);
+export default connect(mapStateToPropsPosicao, {})(PosicaoAmpliadaResumida);
 
 const renderAtivo = item => {
   let mostrarAtivo = false;

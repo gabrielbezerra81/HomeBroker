@@ -7,7 +7,7 @@ import { formatarNumDecimal } from "components/utils/Formatacoes";
 class EmblemaSimples extends React.Component {
   render() {
     return (
-      <div className="itemListaCompleta">
+      <div className={this.props.emblemaMaior ? "" : "itemListaCompleta"}>
         <Row>
           <Col>Min</Col>
           <Col md={0}>Médio</Col>

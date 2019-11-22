@@ -1,6 +1,6 @@
 #posicao_custodia {
   margin-left: 5px;
-  width: 1050px;
+  width: 1070px;
 }
 
 #posicao_custodia .mcontent {
@@ -133,7 +133,7 @@ th .colunaDividida div {
 .rowListagenItens {
   display: flex;
   flex-wrap: wrap;
-  width: 887px;
+  width: 1040px;
   padding-left: 0.5px;
 }
 
@@ -156,12 +156,12 @@ th .colunaDividida div {
 
 .itemCustodiaCompra {
   color: #008fca;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
 }
 
 .itemCustodiaVenda {
   color: #a67269;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
 }
 
 .containerEmblema {
@@ -208,6 +208,7 @@ th .colunaDividida div {
 .tabelaExecutando {
   background-color: var(--light-background-color);
   color: #ddd;
+  margin-bottom: 0;
 }
 
 .tabelaExecutando > tbody > tr:nth-child(even) > td,

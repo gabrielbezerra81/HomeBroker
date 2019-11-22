@@ -339,7 +339,6 @@ export const atualizarOrdensExecAction = (props, idUsuario) => {
 const atualizarOrdensExec = (dispatch, props, idUsuario, listaOrdensExec) => {
   if (props.eventSourceOrdensExec) {
     props.eventSourceOrdensExec.close();
-    console.log("fechou");
   }
   const eventSource = atualizarOrdensExecAPI(
     dispatch,
