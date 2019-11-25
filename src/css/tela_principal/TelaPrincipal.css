@@ -11,6 +11,16 @@
   flex-direction: column;
 }
 
+#menusTelaPrincipal {
+  margin-left: 85px;
+  margin-top: 30px;
+}
+
+/*Menus de posição, multileg e histórico*/
+#menusTelaPrincipal > div > div {
+  margin-bottom: 1rem;
+}
+
 .divBarraTopo {
   background-image: linear-gradient(#444, #333, #222);
   width: 100%;
@@ -18,7 +28,8 @@
   border-bottom: #888 1px solid;
   border-top: #888 1px solid;
   color: #ddd;
-  padding-right: 28vw;
+  position: fixed;
+  z-index: 99999999;
 }
 
 .divBarraTopo > .row {
@@ -59,6 +70,9 @@
   display: flex;
   flex-direction: column;
   padding: 2rem 0rem 0rem 0.25rem;
+  position: fixed;
+  height: 100%;
+  margin-top: 45px;
 }
 
 .itemDivBarraLateral {

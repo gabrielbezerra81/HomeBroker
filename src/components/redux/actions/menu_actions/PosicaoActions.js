@@ -18,19 +18,31 @@ export const listarPosicoesAction = props => {
   return async dispatch => {
     const dados = await listarPosicoesAPI();
     var listaPosicoes = [];
+    var arrayPrecos = [];
     dados.forEach(grupoPosicao => {
       const posicao = adicionaPosicao(grupoPosicao);
+      const preco = {
+        precoCompra: posicao[0].precoCompra,
+        precoVenda: posicao[0].precoVenda,
+        cotacaoAtual: posicao[0].cotacaoAtual,
+        idEstrutura: posicao[0].idEstrutura
+      };
+      arrayPrecos.push(preco);
       listaPosicoes.push(...posicao);
     });
-    
-    //listaPosicoes.splice(0, 27);
+    // listaPosicoes.splice(0, 19);
+    // arrayPrecos.splice(0, 19);
 
     atualizarPosicao(dispatch, listaPosicoes, props, 1);
-    atualizarEmblemas(dispatch, listaPosicoes, props);
+    atualizarEmblemas(dispatch, listaPosicoes, props, arrayPrecos);
 
     dispatch({
       type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
       payload: { nome: "posicoesCustodia", valor: listaPosicoes }
+    });
+    dispatch({
+      type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
+      payload: { nome: "arrayPrecos", valor: arrayPrecos }
     });
   };
 };
@@ -82,11 +94,21 @@ export const adicionaPosicao = grupoPosicao => {
 
 export const atualizarEmblemasAction = props => {
   return dispatch => {
-    atualizarEmblemas(dispatch, props.posicoesCustodia, props);
+    atualizarEmblemas(
+      dispatch,
+      props.posicoesCustodia,
+      props,
+      props.arrayPrecos
+    );
   };
 };
 
-const atualizarEmblemas = (dispatch, listaPosicoes, props) => {
+export const atualizarEmblemas = (
+  dispatch,
+  listaPosicoes,
+  props,
+  arrayPrecos
+) => {
   let ids = "";
 
   if (props.eventSourceEmblema) {
@@ -98,7 +120,7 @@ const atualizarEmblemas = (dispatch, listaPosicoes, props) => {
   });
   ids = ids.substring(0, ids.length - 1);
 
-  const newSource = atualizarEmblemasAPI(dispatch, listaPosicoes, ids);
+  const newSource = atualizarEmblemasAPI(dispatch, arrayPrecos, ids);
 
   dispatch({
     type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
@@ -117,7 +139,12 @@ const atualizarPosicao = (dispatch, listaPosicoes, props, idUsuario) => {
     props.eventSourcePosicao.close();
   }
 
-  const newSource = atualizarPosicaoAPI(dispatch, listaPosicoes, idUsuario);
+  const newSource = atualizarPosicaoAPI(
+    dispatch,
+    listaPosicoes,
+    idUsuario,
+    props
+  );
 
   dispatch({
     type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,

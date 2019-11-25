@@ -58,10 +58,7 @@ import {
 } from "constants/AlertaErros";
 import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
 import { formatarNumero } from "components/redux/reducers/formInputReducer";
-import {
-  adicionaPosicao,
-  atualizarEmblemas
-} from "components/redux/actions/menu_actions/PosicaoActions";
+import { adicionaPosicao } from "components/redux/actions/menu_actions/PosicaoActions";
 
 export const pesquisarAtivoAPI = codigo => {
   return request
@@ -461,7 +458,7 @@ export const atualizarCotacaoAPI = (
   return source;
 };
 
-export const atualizarEmblemasAPI = (dispatch, listaPosicoes, ids) => {
+export const atualizarEmblemasAPI = (dispatch, listaPrecos, ids) => {
   var source = new EventSource(url_base_reativa + url_emblemaReativo_ids + ids);
 
   source.onopen = function(event) {
@@ -471,29 +468,48 @@ export const atualizarEmblemasAPI = (dispatch, listaPosicoes, ids) => {
   source.onmessage = function(event) {
     if (typeof event.data !== "undefined") {
       var dados = JSON.parse(event.data);
-      listaPosicoes = [...listaPosicoes];
+      listaPrecos = [...listaPrecos];
 
-      const posicao = listaPosicoes.filter(
+      const indice = listaPrecos.findIndex(
         posicao => posicao.idEstrutura === dados.id
       );
+      let permitirDispatch = false;
 
-      if (posicao.length > 0) {
-        posicao[0].precoCompra = dados.min;
-        posicao[0].precoVenda = dados.max;
-        posicao[0].cotacaoAtual = dados.last;
+      if (indice !== -1) {
+        listaPrecos[indice].precoCompra = dados.min;
+        listaPrecos[indice].precoVenda = dados.max;
+        listaPrecos[indice].cotacaoAtual = dados.last;
 
+        permitirDispatch = true;
+      } //
+      else {
+        const preco = {
+          precoCompra: dados.min,
+          precoVenda: dados.max,
+          cotacaoAtual: dados.last,
+          idEstrutura: dados.id
+        };
+        listaPrecos.push(preco);
+        permitirDispatch = true;
+      }
+
+      if (permitirDispatch)
         dispatch({
           type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-          payload: { nome: "posicoesCustodia", valor: listaPosicoes }
+          payload: { nome: "arrayPrecos", valor: listaPrecos }
         });
-      }
     }
   };
 
   return source;
 };
 
-export const atualizarPosicaoAPI = (dispatch, listaPosicoes, idUsuario) => {
+export const atualizarPosicaoAPI = (
+  dispatch,
+  listaPosicoes,
+  idUsuario,
+  props
+) => {
   var source = new EventSource(
     url_base_reativa + url_posicaoReativa_idUser + idUsuario
   );
@@ -507,30 +523,27 @@ export const atualizarPosicaoAPI = (dispatch, listaPosicoes, idUsuario) => {
       var grupoPosicao = JSON.parse(event.data);
       listaPosicoes = [...listaPosicoes];
 
-      const listaFiltrada = listaPosicoes.filter(
+      const indice = listaPosicoes.findIndex(
         posicao =>
           posicao.agrupadorPrincipal === grupoPosicao.agrupadorPrincipal
       );
+      let permitirDispatch = false;
 
-      if (listaFiltrada.length > 0) {
-        const posicao = listaFiltrada[0];
+      if (indice !== -1) {
         const posicaoAtualizada = adicionaPosicao(grupoPosicao)[0];
-        posicaoAtualizada.precoCompra = posicao.precoCompra;
-        posicaoAtualizada.precoVenda = posicao.precoVenda;
-        posicaoAtualizada.cotacaoAtual = posicao.cotacaoAtual;
-
-        dispatch({
-          type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-          payload: { nome: "posicoesCustodia", valor: listaPosicoes }
-        });
-      } else {
+        listaPosicoes[indice] = posicaoAtualizada;
+        permitirDispatch = true;
+      } //
+      else {
         const novaPosicao = adicionaPosicao(grupoPosicao);
         listaPosicoes.push(...novaPosicao);
+        permitirDispatch = true;
+      }
+      if (permitirDispatch)
         dispatch({
           type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
           payload: { nome: "posicoesCustodia", valor: listaPosicoes }
         });
-      }
     }
   };
 

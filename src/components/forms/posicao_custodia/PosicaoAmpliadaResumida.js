@@ -53,6 +53,7 @@ class PosicaoAmpliadaResumida extends React.Component {
               <div className="mcontent containerEmblema">
                 <EmblemaSimples
                   item={item}
+                  precosEmblema={encontrarPrecosEmblema(props, item)}
                   emblemaMaior={props.emblemaMaior}
                 ></EmblemaSimples>
                 {props.tipoVisualizacao === "ampliado" ? (
@@ -136,7 +137,8 @@ class PosicaoAmpliadaResumida extends React.Component {
 const mapStateToPropsPosicao = state => ({
   ordenacao: state.posicaoReducer.ordenacao,
   tipoVisualizacao: state.posicaoReducer.tipoVisualizacao,
-  posicoesCustodia: state.posicaoReducer.posicoesCustodia
+  posicoesCustodia: state.posicaoReducer.posicoesCustodia,
+  arrayPrecos: state.posicaoReducer.arrayPrecos
 });
 
 export default connect(mapStateToPropsPosicao, {})(PosicaoAmpliadaResumida);
@@ -237,4 +239,12 @@ const calculaAlturaRowAtivos = posicoesCustodia => {
   });
 
   return arrayStyles;
+};
+
+const encontrarPrecosEmblema = (props, posicao) => {
+  const precosEmblema = props.arrayPrecos.filter(
+    preco => preco.idEstrutura === posicao.idEstrutura
+  );
+
+  return precosEmblema[0];
 };

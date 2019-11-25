@@ -118,10 +118,10 @@ const renderOferta = (item, index, props, tipo) => {
 
   return (
     <tr
-      key={Math.random()}
+      key={index + "ordens"}
       className={
         (tipo === "ofertaPrincipal"
-          ? " divClicavel rowTabelaOrdensExec"
+          ? " divClicavel rowTabelaOrdensExec "
           : " ") +
         (props.ordemAtual
           ? item.id === props.ordemAtual.id

@@ -7,7 +7,8 @@ const INITIAL_STATE = {
   inputSelect: "",
   posicoesCustodia: [],
   eventSourceEmblema: null,
-  eventSourcePosicao: null
+  eventSourcePosicao: null,
+  arrayPrecos: []
 };
 
 export default (state = INITIAL_STATE, action) => {

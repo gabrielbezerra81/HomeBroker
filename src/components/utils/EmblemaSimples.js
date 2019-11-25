@@ -6,8 +6,11 @@ import { formatarNumDecimal } from "components/utils/Formatacoes";
 
 class EmblemaSimples extends React.Component {
   render() {
+    const { props } = this;
+    const precos = props.precosEmblema ? props.precosEmblema : props.item;
+
     return (
-      <div className={this.props.emblemaMaior ? "" : "itemListaCompleta"}>
+      <div className={props.emblemaMaior ? "" : "itemListaCompleta"}>
         <Row>
           <Col>Min</Col>
           <Col md={0}>Médio</Col>
@@ -19,42 +22,40 @@ class EmblemaSimples extends React.Component {
           <div className="sliderTopo"></div>
         </div>
         <Row>
-          <Col md={3}>{formatarNumDecimal(this.props.item.precoCompra)}</Col>
+          <Col md={3}>{formatarNumDecimal(precos.precoCompra)}</Col>
           <Col md={5}></Col>
           <Col md={4} className="text-align-right">
-            {formatarNumDecimal(this.props.item.precoVenda)}
+            {formatarNumDecimal(precos.precoVenda)}
           </Col>
         </Row>
         <Row>
           <Col md={12} className="text-align-center">
-            <h3>{formatarNumDecimal(this.props.item.cotacaoAtual)}</h3>
+            <h3>{formatarNumDecimal(precos.cotacaoAtual)}</h3>
           </Col>
         </Row>
         <Row>
           <Col md={12} className="text-align-center">
             <div className="divSetaPorcentagem">
-              {renderSeta(this.props.item.oscilacao)}
-              {renderValorPorcentagem(this.props.item.oscilacao)}
+              {renderSeta(props.item.oscilacao)}
+              {renderValorPorcentagem(props.item.oscilacao)}
             </div>
           </Col>
         </Row>
         <div className="divSetaPorcentagem">
           <Col md={0}>
             STOP<br></br>
-            {formatarNumDecimal(this.props.item.stopLoss)}
+            {formatarNumDecimal(props.item.stopLoss)}
           </Col>
           <Col md={8}>
             <div>
               <input
                 type="range"
                 className={`custom-range ${corInputRange(
-                  this.props.item.oscilacao
+                  props.item.oscilacao
                 )} inputRange`}
-                min={this.props.item.stopLoss}
-                max={this.props.item.stopGain}
-                value={
-                  (this.props.item.stopLoss + this.props.item.stopGain) / 2
-                }
+                min={props.item.stopLoss}
+                max={props.item.stopGain}
+                value={(props.item.stopLoss + props.item.stopGain) / 2}
                 step={0.01}
                 onChange={() => false}
                 //value={item.valorAcao}
@@ -63,7 +64,7 @@ class EmblemaSimples extends React.Component {
           </Col>
           <Col md={0}>
             GAIN<br></br>
-            {formatarNumDecimal(this.props.item.stopGain)}
+            {formatarNumDecimal(props.item.stopGain)}
           </Col>
         </div>
       </div>

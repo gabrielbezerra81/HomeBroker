@@ -161,7 +161,9 @@ const mapStateToPropsPosicao = state => ({
   ativoPesquisa: state.posicaoReducer.ativoPesquisa,
   inputSelect: state.posicaoReducer.inputSelect,
   eventSourceEmblema: state.posicaoReducer.eventSourceEmblema,
-  eventSourcePosicao: state.posicaoReducer.eventSourcePosicao
+  eventSourcePosicao: state.posicaoReducer.eventSourcePosicao,
+  arrayPrecos: state.posicaoReducer.arrayPrecos,
+  posicoesCustodia: state.posicaoReducer.posicoesCustodia
 });
 
 const mapStateToPropsOrdensExec = state => ({
