@@ -1,5 +1,5 @@
 import React from "react";
-import { Provider, connect } from "react-redux";
+import { Provider, connect, useSelector } from "react-redux";
 import ReduxThunk from "redux-thunk";
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import { MainApp, SubApp } from "MainApp";
@@ -60,7 +60,7 @@ import {
 } from "components/redux/actions/menu_actions/PosicaoActions";
 import OpcoesOrdemExec from "components/forms/ordens_em_execucao/OpcoesOrdemExec";
 import { montarBoletaFromOrdemExecAction } from "components/redux/actions/formInputActions";
-import { Router } from "@reach/router";
+import { Router, Redirect } from "@reach/router";
 import TelaLogin from "components/tela_login/TelaLogin";
 import TelaCadastro from "components/tela_login/TelaCadastro";
 
@@ -110,7 +110,10 @@ export const Helper = () => {
 };
 
 let Home = ({ path }) => {
-  return <TelaPrincipalConectada />;
+  const logado = useSelector(state => state.telaPrincipalReducer.logado);
+  if (logado) return <TelaPrincipalConectada />;
+
+  return <Redirect to="/" noThrow />;
 };
 
 const mapStateToPropsGlobalStore = state => {
