@@ -23,8 +23,8 @@ class Book extends React.Component {
     const { props } = this;
     const indice = props.indice,
       total = calcularTotal(props),
-      min = calculoPreco(props.multileg[indice], "min"),
-      max = calculoPreco(props.multileg[indice], "max");
+      min = calculoPreco(props.multileg[indice], "min", props.booksMultileg),
+      max = calculoPreco(props.multileg[indice], "max", props.booksMultileg);
     const condicaoMed =
       (min && max) ||
       (min === 0 && max) ||
@@ -73,22 +73,30 @@ class Book extends React.Component {
               </thead>
               <tbody>
                 {props.multileg[indice].tabelaMultileg.map(
-                  (item, indiceLinha) => (
-                    <tr key={indiceLinha}>
-                      <td>{renderQtdeBook(item.compra)}</td>
-                      <td>
-                        {item.compra
-                          ? formatarNumDecimal(item.compra.price)
-                          : null}
-                      </td>
-                      <td>
-                        {item.venda
-                          ? formatarNumDecimal(item.venda.price)
-                          : null}
-                      </td>
-                      <td>{renderQtdeBook(item.venda)}</td>
-                    </tr>
-                  )
+                  (item, indiceLinha) => {
+                    const book = buscaBook(
+                      props.booksMultileg,
+                      item.codigoSelecionado
+                    );
+                    if (book)
+                      return (
+                        <tr key={indiceLinha}>
+                          <td>{renderQtdeBook(book.compra)}</td>
+                          <td>
+                            {book.compra
+                              ? formatarNumDecimal(book.compra.price)
+                              : null}
+                          </td>
+                          <td>
+                            {book.venda
+                              ? formatarNumDecimal(book.venda.price)
+                              : null}
+                          </td>
+                          <td>{renderQtdeBook(book.venda)}</td>
+                        </tr>
+                      );
+                    return null;
+                  }
                 )}
               </tbody>
             </Table>
@@ -294,7 +302,8 @@ const mapStateToProps = state => ({
   configComplementarAberto: state.multilegReducer.configComplementarAberto,
   multileg: state.multilegReducer.multileg,
   eventSource: state.multilegReducer.eventSource,
-  eventSourceCotacao: state.multilegReducer.eventSourceCotacao
+  eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
+  booksMultileg: state.multilegReducer.booksMultileg
 });
 
 export default connect(mapStateToProps, {
@@ -344,9 +353,13 @@ const renderQtdeBook = itemBook => {
       return formatarNumDecimal(itemBook.qtty / 1000000000) + "G";
     else if (itemBook.qtty > 1000000)
       return formatarNumDecimal(itemBook.qtty / 1000000) + "M";
-    else if (itemBook.qtty > 1000) {
+    else if (itemBook.qtty < 1000000) {
       return formatarNumDecimal(itemBook.qtty / 1000) + "K";
     }
   }
   return null;
+};
+
+export const buscaBook = (booksMultileg, codigoOferta) => {
+  return booksMultileg.find(book => book.codigo === codigoOferta);
 };

@@ -40,7 +40,6 @@ export const selecionarAdicionarAbaAction = (key, props) => {
     if (key === "adicionar") {
       let multileg = adicionarAba(props);
       //atualizarCotacaoAction(dispatch, props, abasMultileg);
-      atualizarBookAction(dispatch, props, multileg.abasMultileg);
       dispatch({
         type: ADICIONAR_ABA,
         payload: {
@@ -88,8 +87,7 @@ export const excluirAbaMultilegAction = (props, indiceAba) => {
     if (props.eventSource) props.eventSource.close();
     if (props.eventSourceCotacao) props.eventSourceCotacao.close();
     dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
-    atualizarCotacaoAction(dispatch, props, abasMultileg);
-    atualizarBookAction(dispatch, props, abasMultileg);
+    // atualizarCotacaoAction(dispatch, props, abasMultileg);
   };
 };
 
@@ -175,7 +173,6 @@ export const modificarAtributoTabelaAbaAction = (
       linhaTabela[atributo] = valor;
       //Se a série for alterada, pesquisa novamente os strikes e códigos
       if (atributo === "serieSelecionada") {
-        limparBook(linhaTabela);
         const dados = await pesquisarStrikesMultilegAction(
           linhaTabela.ativoAtual,
           valor
@@ -195,26 +192,31 @@ export const modificarAtributoTabelaAbaAction = (
         }
       } //
       else if (atributo === "strikeSelecionado") {
-        limparBook(linhaTabela);
         pesquisarSymbolModel_strike_tipo(linhaTabela);
       } //
       else if (atributo === "codigoSelecionado") {
-        limparBook(linhaTabela);
         pesquisarSerieStrikeModeloTipo_symbol(linhaTabela);
       } //
     }
     const aba = abasMultileg[indiceGeral];
-    let calculo = calculoPreco(aba, "ultimo").toFixed(2);
+    let calculo = calculoPreco(aba, "ultimo", []).toFixed(2);
 
     calculo = formatarNumero(calculo, 2, ".", ",");
     aba.preco = calculo;
 
     if (codigoAnterior !== linhaTabela.codigoSelecionado) {
       verificarMonitorarAtivoAPI(linhaTabela.codigoSelecionado);
+      //Se o código mudar, deve ser verificado se o novo código já está presente nos books
+      const booksMultileg = [...props.booksMultileg];
+      AdicionaCodigoBooksMultileg(booksMultileg, linhaTabela.codigoSelecionado);
+      dispatch({
+        type: MODIFICAR_VARIAVEL_MULTILEG,
+        payload: { nome: "booksMultileg", valor: booksMultileg }
+      });
+      atualizarBookAction(dispatch, props, booksMultileg);
     }
 
-    atualizarBookAction(dispatch, props, abasMultileg);
-    atualizarCotacaoAction(dispatch, props, abasMultileg);
+    // atualizarCotacaoAction(dispatch, props, abasMultileg);
     if (atributo !== "serieSelecionada")
       dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
     travarDestravarClique("destravar", "multileg");
@@ -235,8 +237,7 @@ export const excluirOfertaTabelaAction = (props, indiceAba, indiceLinha) => {
     let abasMultileg = [...props.multileg];
     abasMultileg[indiceAba].tabelaMultileg.splice(indiceLinha, 1);
 
-    atualizarBookAction(dispatch, props, abasMultileg);
-    atualizarCotacaoAction(dispatch, props, abasMultileg);
+    // atualizarCotacaoAction(dispatch, props, abasMultileg);
     dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
   };
 };
@@ -246,22 +247,33 @@ export const excluirOfertaTabelaAction = (props, indiceAba, indiceLinha) => {
 export const adicionarOfertaTabelaAction = (props, tipoOferta) => {
   return async dispatch => {
     travarDestravarClique("travar", "multileg");
-    const abasMultileg = await adicionarOferta(
+    const dados = await adicionarOferta(
       props.multileg,
       tipoOferta,
-      props.indice
+      props.indice,
+      props.booksMultileg
     );
 
-    atualizarBookAction(dispatch, props, abasMultileg);
-    atualizarCotacaoAction(dispatch, props, abasMultileg);
-    dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
+    atualizarBookAction(dispatch, props, dados.booksMultileg);
+    // atualizarCotacaoAction(dispatch, props, dados.abasMultileg);
+    dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: dados.abasMultileg });
+    dispatch({
+      type: MODIFICAR_VARIAVEL_MULTILEG,
+      payload: { nome: "booksMultileg", valor: dados.booksMultileg }
+    });
 
     travarDestravarClique("destravar", "multileg");
   };
 };
 
-export const adicionarOferta = async (multileg, tipoOferta, indice) => {
+export const adicionarOferta = async (
+  multileg,
+  tipoOferta,
+  indice,
+  booksMultileg
+) => {
   let abasMultileg = [...multileg];
+  booksMultileg = [...booksMultileg];
   const indiceAba = indice;
   let novaOferta = cloneDeep(oferta);
   novaOferta.cotacao = abasMultileg[indiceAba].valor;
@@ -287,40 +299,50 @@ export const adicionarOferta = async (multileg, tipoOferta, indice) => {
       novaOferta.cotacao = Number(dadosAtivo.cotacaoAtual);
     }
   }
-  const book = await listarBookOfertaAPI(novaOferta.codigoSelecionado);
 
-  if (book) {
-    novaOferta.venda =
-      book.tabelaOfertasVenda[book.tabelaOfertasVenda.length - 1];
-    novaOferta.compra = book.tabelaOfertasCompra[0];
+  const bookJaAdicionado = booksMultileg.find(
+    book => book.codigo === novaOferta.codigoSelecionado
+  );
+  //Verifica se o book já foi inserindo, agilizando novas adições de ofertas sem esperar a API
+  if (!bookJaAdicionado) {
+    const book = await listarBookOfertaAPI(novaOferta.codigoSelecionado);
+    if (book) {
+      const bookCompra = book.tabelaOfertasCompra[0];
+      const bookVenda =
+        book.tabelaOfertasVenda[book.tabelaOfertasVenda.length - 1];
 
-    abasMultileg[indiceAba].tabelaMultileg.push(novaOferta);
-
-    const aba = abasMultileg[indiceAba];
-    let calculo = calculoPreco(aba, "ultimo").toFixed(2);
-    calculo = formatarNumero(calculo, 2, ".", ",");
-    aba.preco = calculo;
-
-    verificarMonitorarAtivoAPI(novaOferta.codigoSelecionado);
+      AdicionaCodigoBooksMultileg(
+        booksMultileg,
+        novaOferta.codigoSelecionado,
+        bookCompra,
+        bookVenda
+      );
+    }
   }
 
-  return abasMultileg;
+  abasMultileg[indiceAba].tabelaMultileg.push(novaOferta);
+
+  const aba = abasMultileg[indiceAba];
+  let calculo = calculoPreco(aba, "ultimo", []).toFixed(2);
+  calculo = formatarNumero(calculo, 2, ".", ",");
+  aba.preco = calculo;
+
+  verificarMonitorarAtivoAPI(novaOferta.codigoSelecionado);
+
+  return { abasMultileg, booksMultileg };
 };
 
 ////
 
-export const atualizarBookAction = (dispatch, props, multileg) => {
+export const atualizarBookAction = (dispatch, props, booksMultileg) => {
   if (props.eventSource) {
     props.eventSource.close();
   }
 
-  let abasMultileg = multileg;
   let codigos = "";
 
-  abasMultileg.forEach(aba => {
-    aba.tabelaMultileg.forEach(oferta => {
-      codigos += oferta.codigoSelecionado + ",";
-    });
+  booksMultileg.forEach(book => {
+    codigos += book.codigo + ",";
   });
 
   codigos = codigos.substring(0, codigos.length - 1);
@@ -330,7 +352,7 @@ export const atualizarBookAction = (dispatch, props, multileg) => {
     props,
     codigos,
     "multileg",
-    abasMultileg
+    booksMultileg
   );
   dispatch({
     type: ATUALIZAR_SOURCE_EVENT_MULTILEG,
@@ -353,9 +375,7 @@ export const oferta = {
   despernamento: 1000,
   prioridade: 0,
   cotacao: 0,
-  ativoAtual: "",
-  compra: {},
-  venda: {}
+  ativoAtual: ""
 };
 
 export const aba = {
@@ -401,30 +421,6 @@ const pesquisarSerieStrikeModeloTipo_symbol = objeto => {
     }
   });
 };
-
-// export const atualizarCotacaoAction = (props, multileg) => {
-//   return dispatch => {
-//     if (props.eventSourceCotacao) {
-//       console.log("fechou");
-//       props.eventSourceCotacao.close();
-//     }
-//     let codigos = "";
-//     const abasMultileg = [...multileg];
-
-//     abasMultileg.forEach(aba => {
-//       if (!codigos.includes(aba.ativoAtual)) codigos += aba.ativoAtual + ",";
-
-//       aba.tabelaMultileg.forEach(oferta => {
-//         if (!codigos.includes(oferta.codigoSelecionado))
-//           codigos += oferta.codigoSelecionado + ",";
-//       });
-//     });
-
-//     codigos = codigos.substring(0, codigos.length - 1);
-
-//     atualizarCotacaoAPI(dispatch, props, codigos, "multileg", abasMultileg);
-//   };
-// };
 
 export const validarOrdemMultileg = props => {
   let abaMultileg = [...props.multileg][props.indice];
@@ -529,9 +525,23 @@ export const atualizarCotacaoAction = (dispatch, props, multileg) => {
   });
 };
 
-const limparBook = oferta => {
-  oferta.compra = null;
-  oferta.venda = null;
+const AdicionaCodigoBooksMultileg = (
+  booksMultileg,
+  novoCodigo,
+  bookCompra = null,
+  bookVenda = null
+) => {
+  const bookJaAdicionado = booksMultileg.find(
+    book => book.codigo === novoCodigo
+  );
+
+  if (!bookJaAdicionado) {
+    booksMultileg.push({
+      codigo: novoCodigo,
+      compra: bookCompra,
+      venda: bookVenda
+    });
+  }
 };
 
 //Formato novo
@@ -559,5 +569,29 @@ const limparBook = oferta => {
 //       "multileg",
 //       abasMultileg
 //     );
+//   };
+// };
+
+// export const atualizarCotacaoAction = (props, multileg) => {
+//   return dispatch => {
+//     if (props.eventSourceCotacao) {
+//       console.log("fechou");
+//       props.eventSourceCotacao.close();
+//     }
+//     let codigos = "";
+//     const abasMultileg = [...multileg];
+
+//     abasMultileg.forEach(aba => {
+//       if (!codigos.includes(aba.ativoAtual)) codigos += aba.ativoAtual + ",";
+
+//       aba.tabelaMultileg.forEach(oferta => {
+//         if (!codigos.includes(oferta.codigoSelecionado))
+//           codigos += oferta.codigoSelecionado + ",";
+//       });
+//     });
+
+//     codigos = codigos.substring(0, codigos.length - 1);
+
+//     atualizarCotacaoAPI(dispatch, props, codigos, "multileg", abasMultileg);
 //   };
 // };

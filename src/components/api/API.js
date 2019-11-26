@@ -29,7 +29,8 @@ import {
 } from "components/api/url";
 import {
   MODIFICAR_ATRIBUTO_ABA,
-  MUDAR_VARIAVEL_POSICAO_CUSTODIA
+  MUDAR_VARIAVEL_POSICAO_CUSTODIA,
+  MODIFICAR_VARIAVEL_MULTILEG
 } from "constants/MenuActionTypes";
 import {
   LISTAR_BOOK_OFERTAS,
@@ -303,7 +304,13 @@ export const atualizarOrdensExecAPI = (
   return source;
 };
 
-export const atualizarBookAPI = (dispatch, props, codigos, tipo, multileg) => {
+export const atualizarBookAPI = (
+  dispatch,
+  props,
+  codigos,
+  tipo,
+  booksMultileg
+) => {
   var source = new EventSource(
     url_base_reativa + url_bookReativo_codigos + codigos
   );
@@ -345,30 +352,30 @@ export const atualizarBookAPI = (dispatch, props, codigos, tipo, multileg) => {
 
       if (tipo === "multileg" && dados.bookOffers) {
         let permitirDispatch = false;
-        let abasMultileg = [...multileg];
+        let novosBooks = [...booksMultileg];
 
-        abasMultileg.forEach(aba => {
-          aba.tabelaMultileg.forEach(oferta => {
-            if (oferta.codigoSelecionado === ativoRetornado) {
-              const valorCompra = tabelas.tabelaOfertasCompra[0];
-              const valorVenda =
-                tabelas.tabelaOfertasVenda[
-                  tabelas.tabelaOfertasVenda.length - 1
-                ];
-              if (oferta.compra !== valorCompra) {
-                oferta.compra = valorCompra;
-                permitirDispatch = true;
-              }
-              if (oferta.venda !== valorVenda) {
-                oferta.venda = valorVenda;
-                permitirDispatch = true;
-              }
+        novosBooks.forEach(book => {
+          if (book.codigo === ativoRetornado) {
+            const valorCompra = tabelas.tabelaOfertasCompra[0];
+            const valorVenda =
+              tabelas.tabelaOfertasVenda[tabelas.tabelaOfertasVenda.length - 1];
+
+            if (!book.compra || book.compra.price !== valorCompra.price) {
+              book.compra = valorCompra;
+              permitirDispatch = true;
             }
-          });
+            if (!book.venda || book.venda.price !== valorVenda.price) {
+              book.venda = valorVenda;
+              permitirDispatch = true;
+            }
+          }
         });
 
         if (permitirDispatch) {
-          dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
+          dispatch({
+            type: MODIFICAR_VARIAVEL_MULTILEG,
+            payload: { nome: "booksMultileg", valor: novosBooks }
+          });
         }
         dispatch({
           type: ATUALIZAR_SOURCE_EVENT_MULTILEG,
@@ -437,21 +444,21 @@ export const atualizarCotacaoAPI = (
             }
           });
           if (permitirDispatch) {
-            let calculo = calculoPreco(aba, "ultimo").toFixed(2);
+            let calculo = calculoPreco(aba, "ultimo", []).toFixed(2);
 
             calculo = formatarNumero(calculo, 2, ".", ",");
             aba.preco = calculo;
           }
         });
 
-        if (permitirDispatch) {
-          dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
-        }
-        dispatch({
-          type: ATUALIZAR_SOURCE_EVENT_MULTILEG,
-          payload: source,
-          nomeVariavel: "eventSourceCotacao"
-        });
+        // if (permitirDispatch) {
+        //   dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
+        // }
+        // dispatch({
+        //   type: ATUALIZAR_SOURCE_EVENT_MULTILEG,
+        //   payload: source,
+        //   nomeVariavel: "eventSourceCotacao"
+        // });
       }
     }
   };

@@ -1,28 +1,39 @@
-export const calculoPreco = (aba, tipo) => {
+import { buscaBook } from "components/forms/multileg_/Book";
+
+export const calculoPreco = (
+  aba,
+  tipo,
+  booksMultileg = [],
+  cotacoesMultileg = []
+) => {
   let preco = 0;
   let arrayQtde = [];
 
   aba.tabelaMultileg.forEach((oferta, index) => {
-    if (oferta.compra || oferta.venda || tipo === "ultimo")
+    let book = buscaBook(booksMultileg, oferta.codigoSelecionado);
+    book = book ? book : [];
+    if (book.compra || book.venda || tipo === "ultimo")
       arrayQtde.push(oferta.qtde);
   });
   const mdc = calculoMDC(arrayQtde);
 
   if (mdc > 0)
     aba.tabelaMultileg.forEach((oferta, index) => {
-      if (oferta.compra || oferta.venda || tipo === "ultimo") {
+      let book = buscaBook(booksMultileg, oferta.codigoSelecionado);
+      book = book ? book : [];
+      if (book.compra || book.venda || tipo === "ultimo") {
         switch (tipo) {
           case "max":
-            if (oferta.cv === "compra" && oferta.venda)
-              preco += oferta.venda.price * (oferta.qtde / mdc);
-            else if (oferta.cv === "venda" && oferta.compra)
-              preco -= oferta.compra.price * (oferta.qtde / mdc);
+            if (oferta.cv === "compra" && book.venda)
+              preco += book.venda.price * (oferta.qtde / mdc);
+            else if (oferta.cv === "venda" && book.compra)
+              preco -= book.compra.price * (oferta.qtde / mdc);
             break;
           case "min":
-            if (oferta.cv === "compra" && oferta.compra)
-              preco += oferta.compra.price * (oferta.qtde / mdc);
-            else if (oferta.cv === "venda" && oferta.venda)
-              preco -= oferta.venda.price * (oferta.qtde / mdc);
+            if (oferta.cv === "compra" && book.compra)
+              preco += book.compra.price * (oferta.qtde / mdc);
+            else if (oferta.cv === "venda" && book.venda)
+              preco -= book.venda.price * (oferta.qtde / mdc);
             break;
           case "ultimo":
             if (oferta.cv === "compra")

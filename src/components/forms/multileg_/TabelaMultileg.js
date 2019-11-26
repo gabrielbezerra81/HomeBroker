@@ -258,7 +258,8 @@ class TabelaMultileg extends React.Component {
 const mapStateToProps = state => ({
   multileg: state.multilegReducer.multileg,
   eventSource: state.multilegReducer.eventSource,
-  eventSourceCotacao: state.multilegReducer.eventSourceCotacao
+  eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
+  booksMultileg: state.multilegReducer.booksMultileg
 });
 
 export default connect(mapStateToProps, {
@@ -330,7 +331,18 @@ const renderModelo = modelo => {
 const renderCodigoOferta = (listaOpcoes, codigoAberto, tipoAtual, item) => {
   let listaCodigos = [];
 
-  if (codigoAberto)
+  if (listaOpcoes.length === 1) {
+    listaCodigos.push(
+      <Select.Option
+        key={Math.random()}
+        value={listaOpcoes[0].symbol}
+        className="optionInputCodigo"
+      >
+        {listaOpcoes[0].symbol}
+      </Select.Option>
+    );
+  } //
+  else if (codigoAberto)
     listaOpcoes.forEach((opcao, indice) => {
       if (indice % 2 === 0) {
         let codigo =

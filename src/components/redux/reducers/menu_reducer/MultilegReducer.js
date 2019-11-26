@@ -38,7 +38,9 @@ const INITIAL_STATE = {
     }
   ],
   eventSource: null, //Book
-  eventSourceCotacao: null
+  eventSourceCotacao: null,
+  booksMultileg: [],
+  cotacoesMultileg: []
 };
 
 export default (state = INITIAL_STATE, action) => {

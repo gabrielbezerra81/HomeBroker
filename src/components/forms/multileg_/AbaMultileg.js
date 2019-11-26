@@ -8,8 +8,7 @@ import TabelaMultileg from "components/forms/multileg_/TabelaMultileg";
 import { connect } from "react-redux";
 import {
   modificarAtributoAbaAction,
-  adicionarOfertaTabelaAction,
-  atualizarBookAction
+  adicionarOfertaTabelaAction
 } from "components/redux/actions/menu_actions/MultilegActions";
 import {
   formatarNumDecimal,
@@ -169,14 +168,14 @@ const mapStateToProps = state => ({
   configComplementarAberto: state.multilegReducer.configComplementarAberto,
   multileg: state.multilegReducer.multileg,
   eventSource: state.multilegReducer.eventSource,
-  eventSourceCotacao: state.multilegReducer.eventSourceCotacao
+  eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
+  booksMultileg: state.multilegReducer.booksMultileg
 });
 
 export default connect(mapStateToProps, {
   modificarAtributoAbaAction,
   pesquisarAtivoMultilegAction,
-  adicionarOfertaTabelaAction,
-  atualizarBookAction
+  adicionarOfertaTabelaAction
 })(AbaMultileg);
 
 const renderSeta = valor => {

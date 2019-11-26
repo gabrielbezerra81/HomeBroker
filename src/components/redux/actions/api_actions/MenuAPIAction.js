@@ -21,7 +21,7 @@ export const pesquisarAtivoMultilegAction = (props, indice) => {
     travarDestravarClique("travar", "multileg");
     const multileg = await pesquisaAtivo(props.multileg, indice);
     dispatch({ type: PESQUISAR_ATIVO_MULTILEG_API, payload: multileg });
-    atualizarCotacaoAction(dispatch, props, multileg);
+    // atualizarCotacaoAction(dispatch, props, multileg);
     travarDestravarClique("destravar", "multileg");
   };
 };

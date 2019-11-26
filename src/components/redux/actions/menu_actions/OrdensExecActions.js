@@ -1,6 +1,7 @@
 import {
   MUDAR_VARIAVEL_ORDENS_EXEC,
-  ADICIONAR_ABA
+  ADICIONAR_ABA,
+  MODIFICAR_VARIAVEL_MULTILEG
 } from "constants/MenuActionTypes";
 import {
   listarOrdensExecAPI,
@@ -76,6 +77,7 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
     let objMultileg = adicionarAba(props);
 
     let multileg = objMultileg.abasMultileg;
+    let booksMultileg = props.booksMultileg;
     const indiceAba = multileg.length - 1;
     //const arrayCodigos = [...new Set(item.offers.map(oferta => oferta.ativo))];
 
@@ -99,7 +101,15 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
         if (opcao.length > 0) tipo = opcao[0].type.toLowerCase();
         else tipo = "acao";
         //Adicionar oferta
-        multileg = await adicionarOferta(multileg, tipo, indiceAba);
+        const dadosMultileg = await adicionarOferta(
+          multileg,
+          tipo,
+          indiceAba,
+          booksMultileg
+        );
+        multileg = dadosMultileg.abasMultileg;
+        booksMultileg = dadosMultileg.booksMultileg;
+
         const ofertaNova = multileg[indiceAba].tabelaMultileg[indiceOferta];
 
         //Ações possíveis do menu de ordens em execução
@@ -113,7 +123,7 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
         else ofertaNova.cv = oferta.oferta === "C" ? "compra" : "venda";
       }
 
-      let calculo = calculoPreco(multileg[indiceAba], "ultimo").toFixed(2);
+      let calculo = calculoPreco(multileg[indiceAba], "ultimo", []).toFixed(2);
       calculo = formatarNumero(calculo, 2, ".", ",");
       multileg[indiceAba].preco = calculo;
     } catch (erro) {
@@ -131,8 +141,12 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
         abaSelecionada: objMultileg.abaAtual
       }
     });
-    atualizarCotacaoAction(dispatch, props, objMultileg.abasMultileg);
-    atualizarBookAction(dispatch, props, objMultileg.abasMultileg);
+    dispatch({
+      type: MODIFICAR_VARIAVEL_MULTILEG,
+      payload: { nome: "booksMultileg", valor: booksMultileg }
+    });
+    // atualizarCotacaoAction(dispatch, props, objMultileg.abasMultileg);
+    atualizarBookAction(dispatch, props, booksMultileg);
     travarDestravarClique("destravar", "menusTelaPrincipal");
   };
 };
