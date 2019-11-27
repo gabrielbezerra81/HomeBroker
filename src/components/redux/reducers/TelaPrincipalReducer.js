@@ -8,7 +8,7 @@ import {
 const INITIAL_STATE = {
   usuarioConectado: "Gabriel Alencar",
   menuLateralAberto: false,
-  logado: true,
+  logado: false,
   valorLiquido: "15.000,00",
   valorComprar: "3.500,00",
   ativo: "Bender",
@@ -16,7 +16,7 @@ const INITIAL_STATE = {
   ordensExecucaoAberto: false,
   relatorioDetalhadoAberto: false,
   listaCompletaAberta: false,
-  multilegAberto: true,
+  multilegAberto: false,
   inputUsuario: "gabrielAB",
   inputSenha: "123456789",
   token: null,
