@@ -14,11 +14,13 @@ import {
 } from "components/utils/Formatacoes";
 import InputFormatado from "components/utils/InputFormatado";
 import { Select } from "antd";
+import { buscaCotacao } from "components/forms/multileg_/AbaMultileg";
 
 class TabelaMultileg extends React.Component {
   render() {
     const { props } = this;
     const indiceAba = props.indice;
+
     return (
       <Table
         variant="dark"
@@ -237,9 +239,7 @@ class TabelaMultileg extends React.Component {
                       </Form.Control>
                     </Form.Group>
                   </td>
-                  <td>
-                    {item.cotacao ? formatarNumDecimal(item.cotacao) : ""}
-                  </td>
+                  <td>{renderCotacao(props, item)}</td>
                   <td>
                     {item.cotacao
                       ? formatarNumDecimal(item.qtde * item.cotacao)
@@ -259,7 +259,8 @@ const mapStateToProps = state => ({
   multileg: state.multilegReducer.multileg,
   eventSource: state.multilegReducer.eventSource,
   eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
-  booksMultileg: state.multilegReducer.booksMultileg
+  booksMultileg: state.multilegReducer.booksMultileg,
+  cotacoesMultileg: state.multilegReducer.cotacoesMultileg
 });
 
 export default connect(mapStateToProps, {
@@ -385,4 +386,14 @@ const renderCodigoOferta = (listaOpcoes, codigoAberto, tipoAtual, item) => {
   }
 
   return listaCodigos;
+};
+
+const renderCotacao = (props, oferta) => {
+  const cotacao = buscaCotacao(
+    props.cotacoesMultileg,
+    oferta.codigoSelecionado
+  );
+
+  if (cotacao) return formatarNumDecimal(cotacao);
+  return "";
 };

@@ -28,7 +28,6 @@ import {
   url_posicaoReativa_idUser
 } from "components/api/url";
 import {
-  MODIFICAR_ATRIBUTO_ABA,
   MUDAR_VARIAVEL_POSICAO_CUSTODIA,
   MODIFICAR_VARIAVEL_MULTILEG
 } from "constants/MenuActionTypes";
@@ -393,7 +392,7 @@ export const atualizarCotacaoAPI = (
   props,
   codigos,
   tipo,
-  multileg = [],
+  cotacoesMultileg = [],
   namespace = "",
   dadosPesquisa = null
 ) => {
@@ -427,38 +426,29 @@ export const atualizarCotacaoAPI = (
       } //
       else if (tipo === "multileg") {
         let permitirDispatch = false;
-        const abasMultileg = [...multileg];
-        abasMultileg.forEach(aba => {
-          if (aba.ativoAtual === ativoRetornado) {
-            if (aba.valor !== cotacaoAtual) {
-              aba.valor = cotacaoAtual;
-              permitirDispatch = true;
-            }
-          }
-          aba.tabelaMultileg.forEach(oferta => {
-            if (oferta.codigoSelecionado === ativoRetornado) {
-              if (oferta.cotacao !== cotacaoAtual) {
-                oferta.cotacao = cotacaoAtual;
-                permitirDispatch = true;
-              }
-            }
+        cotacoesMultileg = [...cotacoesMultileg];
+        const indice = cotacoesMultileg.findIndex(
+          cotacao => cotacao.codigo === ativoRetornado
+        );
+        if (indice !== -1 && cotacoesMultileg[indice].valor !== cotacaoAtual) {
+          cotacoesMultileg[indice].valor = cotacaoAtual;
+          permitirDispatch = true;
+        }
+
+        if (permitirDispatch) {
+          // let calculo = calculoPreco(aba, "ultimo", []).toFixed(2);
+          // calculo = formatarNumero(calculo, 2, ".", ",");
+          // aba.preco = calculo;
+          dispatch({
+            type: MODIFICAR_VARIAVEL_MULTILEG,
+            payload: { nome: "cotacoesMultileg", valor: cotacoesMultileg }
           });
-          if (permitirDispatch) {
-            let calculo = calculoPreco(aba, "ultimo", []).toFixed(2);
-
-            calculo = formatarNumero(calculo, 2, ".", ",");
-            aba.preco = calculo;
-          }
+        }
+        dispatch({
+          type: ATUALIZAR_SOURCE_EVENT_MULTILEG,
+          payload: source,
+          nomeVariavel: "eventSourceCotacao"
         });
-
-        // if (permitirDispatch) {
-        //   dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: abasMultileg });
-        // }
-        // dispatch({
-        //   type: ATUALIZAR_SOURCE_EVENT_MULTILEG,
-        //   payload: source,
-        //   nomeVariavel: "eventSourceCotacao"
-        // });
       }
     }
   };

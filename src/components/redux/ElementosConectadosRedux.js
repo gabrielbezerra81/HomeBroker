@@ -155,8 +155,7 @@ const mapStateToPropsMultileg = state => ({
   multileg: state.multilegReducer.multileg,
   abaSelecionada: state.multilegReducer.abaSelecionada,
   eventSource: state.multilegReducer.eventSource,
-  eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
-  cotacoesMultileg: state.multilegReducer.cotacoesMultileg
+  eventSourceCotacao: state.multilegReducer.eventSourceCotacao
 });
 
 const mapStateToPropsPosicao = state => ({
@@ -187,7 +186,8 @@ const mapStateToPropsOpcoesOrdemExec = state => ({
   eventSource: state.multilegReducer.eventSource,
   eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
   multilegAberto: state.telaPrincipalReducer.multilegAberto,
-  booksMultileg: state.multilegReducer.booksMultileg
+  booksMultileg: state.multilegReducer.booksMultileg,
+  cotacoesMultileg: state.multilegReducer.cotacoesMultileg
 });
 
 export const MainAppConectado = compose(

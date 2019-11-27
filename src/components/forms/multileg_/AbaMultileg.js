@@ -23,6 +23,11 @@ class AbaMultileg extends React.Component {
     const { props } = this;
     const { indice } = props;
     const arrayStrike = renderSerie(props);
+
+    const cotacao = buscaCotacao(
+      props.cotacoesMultileg,
+      props.multileg[indice].ativo
+    );
     return (
       <div className="containerAbaMultileg">
         <div>
@@ -60,7 +65,7 @@ class AbaMultileg extends React.Component {
               </InputGroup>
 
               <h5 className="textoValor">
-                {formatarNumDecimal(props.multileg[indice].valor)}
+                {cotacao ? formatarNumDecimal(cotacao) : ""}
               </h5>
               {renderSeta(props.multileg[indice].variacao)}
               {renderValorPorcentagem(props.multileg[indice].variacao)}
@@ -104,7 +109,8 @@ class AbaMultileg extends React.Component {
                       props.multileg,
                       indice,
                       "vencimentoSelecionado",
-                      event.currentTarget.value
+                      event.currentTarget.value,
+                      props
                     )
                   }
                 >
@@ -169,7 +175,8 @@ const mapStateToProps = state => ({
   multileg: state.multilegReducer.multileg,
   eventSource: state.multilegReducer.eventSource,
   eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
-  booksMultileg: state.multilegReducer.booksMultileg
+  booksMultileg: state.multilegReducer.booksMultileg,
+  cotacoesMultileg: state.multilegReducer.cotacoesMultileg
 });
 
 export default connect(mapStateToProps, {
@@ -235,4 +242,11 @@ const renderStrikeSymbol = (item, indice, listaOpcoes) => {
       </Select.Option>
     );
   }
+};
+
+export const buscaCotacao = (cotacoesMultileg, codigo) => {
+  const cotacao = cotacoesMultileg.find(cotacao => cotacao.codigo === codigo);
+
+  if (cotacao) return cotacao.valor;
+  return "0,00";
 };

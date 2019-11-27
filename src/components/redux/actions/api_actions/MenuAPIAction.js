@@ -11,22 +11,32 @@ import { PESQUISAR_ATIVO_MULTILEG_API } from "constants/ApiActionTypes";
 import {
   montarOrdemMultileg,
   validarOrdemMultileg,
-  atualizarCotacaoAction
+  atualizarCotacaoAction,
+  adicionaCotacoesMultileg
 } from "components/redux/actions/menu_actions/MultilegActions";
+import { MODIFICAR_VARIAVEL_MULTILEG } from "constants/MenuActionTypes";
 
 ////
 
 export const pesquisarAtivoMultilegAction = (props, indice) => {
   return async dispatch => {
     travarDestravarClique("travar", "multileg");
-    const multileg = await pesquisaAtivo(props.multileg, indice);
-    dispatch({ type: PESQUISAR_ATIVO_MULTILEG_API, payload: multileg });
-    // atualizarCotacaoAction(dispatch, props, multileg);
+    const dados = await pesquisaAtivo(
+      props.multileg,
+      indice,
+      props.cotacoesMultileg
+    );
+    dispatch({ type: PESQUISAR_ATIVO_MULTILEG_API, payload: dados.multileg });
+    dispatch({
+      type: MODIFICAR_VARIAVEL_MULTILEG,
+      payload: { nome: "cotacoesMultileg", valor: dados.cotacoesMultileg }
+    });
+    atualizarCotacaoAction(dispatch, props, dados.cotacoesMultileg);
     travarDestravarClique("destravar", "multileg");
   };
 };
 
-export const pesquisaAtivo = async (abasMultileg, indice) => {
+export const pesquisaAtivo = async (abasMultileg, indice, cotacoesMultileg) => {
   let multileg = [...abasMultileg];
   let aba = multileg[indice];
   const codigo_ativo = aba.ativo;
@@ -36,11 +46,14 @@ export const pesquisaAtivo = async (abasMultileg, indice) => {
   const dados = await pesquisarAtivoMultilegAPI(codigo_ativo);
 
   if (dados) {
+    const cotacaoAtual = dados.cotacaoAtual;
+
+    adicionaCotacoesMultileg(cotacoesMultileg, codigo_ativo, cotacaoAtual);
     const AtivoOpcao = codigo_ativo !== dados.ativoPrincipal ? true : false;
 
     aba.opcoes = [...dados.opcoes].sort((a, b) => a.strike - b.strike);
     aba.vencimento = [...dados.vencimentos];
-    aba.valor = dados.cotacaoAtual;
+    aba.valor = cotacaoAtual;
     aba.variacao = dados.variacao;
     aba.vencimentoSelecionado = aba.opcoes[0].expiration;
     aba.strikeSelecionado = encontrarNumMaisProximo(
@@ -52,7 +65,7 @@ export const pesquisaAtivo = async (abasMultileg, indice) => {
     aba.ativoAtual = dados.ativoPrincipal;
   }
 
-  return multileg;
+  return { multileg, cotacoesMultileg };
 };
 
 ////

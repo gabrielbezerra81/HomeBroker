@@ -78,21 +78,29 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
 
     let multileg = objMultileg.abasMultileg;
     let booksMultileg = props.booksMultileg;
+    let cotacoesMultileg = props.cotacoesMultileg;
     const indiceAba = multileg.length - 1;
     //const arrayCodigos = [...new Set(item.offers.map(oferta => oferta.ativo))];
 
     try {
       for (const [indiceOferta, oferta] of item.offers.entries()) {
         //Alterar ativo
-        multileg = await modificarAba(
+        const dadosModificados = await modificarAba(
           multileg,
           indiceAba,
           "ativo",
           oferta.ativo
         );
+        multileg = dadosModificados.abasMultileg;
 
         //Pesquisar ativo
-        multileg = await pesquisaAtivo(multileg, indiceAba);
+        const retornoPesquisa = await pesquisaAtivo(
+          multileg,
+          indiceAba,
+          cotacoesMultileg
+        );
+        multileg = retornoPesquisa.multileg;
+        cotacoesMultileg = retornoPesquisa.cotacoesMultileg;
 
         const opcao = multileg[indiceAba].opcoes.filter(
           opcao => opcao.symbol === oferta.ativo
@@ -105,10 +113,12 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
           multileg,
           tipo,
           indiceAba,
-          booksMultileg
+          booksMultileg,
+          cotacoesMultileg
         );
         multileg = dadosMultileg.abasMultileg;
         booksMultileg = dadosMultileg.booksMultileg;
+        cotacoesMultileg = dadosMultileg.cotacoesMultileg;
 
         const ofertaNova = multileg[indiceAba].tabelaMultileg[indiceOferta];
 
@@ -123,7 +133,12 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
         else ofertaNova.cv = oferta.oferta === "C" ? "compra" : "venda";
       }
 
-      let calculo = calculoPreco(multileg[indiceAba], "ultimo", []).toFixed(2);
+      let calculo = calculoPreco(
+        multileg[indiceAba],
+        "ultimo",
+        [],
+        cotacoesMultileg
+      ).toFixed(2);
       calculo = formatarNumero(calculo, 2, ".", ",");
       multileg[indiceAba].preco = calculo;
     } catch (erro) {
@@ -144,6 +159,10 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
     dispatch({
       type: MODIFICAR_VARIAVEL_MULTILEG,
       payload: { nome: "booksMultileg", valor: booksMultileg }
+    });
+    dispatch({
+      type: MODIFICAR_VARIAVEL_MULTILEG,
+      payload: { nome: "cotacoesMultileg", valor: cotacoesMultileg }
     });
     // atualizarCotacaoAction(dispatch, props, objMultileg.abasMultileg);
     atualizarBookAction(dispatch, props, booksMultileg);

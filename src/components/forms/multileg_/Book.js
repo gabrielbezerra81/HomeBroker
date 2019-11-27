@@ -19,6 +19,10 @@ import {
 import NumberFormat from "react-number-format";
 
 class Book extends React.Component {
+  componentDidUpdate() {
+    atualizarPrecoDinamicante(this.props);
+  }
+
   render() {
     const { props } = this;
     const indice = props.indice,
@@ -362,4 +366,25 @@ const renderQtdeBook = itemBook => {
 
 export const buscaBook = (booksMultileg, codigoOferta) => {
   return booksMultileg.find(book => book.codigo === codigoOferta);
+};
+
+const atualizarPrecoDinamicante = props => {
+  const aba = props.multileg[props.indice];
+  const preco = aba.preco;
+
+  let novoPreco = calculoPreco(
+    aba,
+    "ultimo",
+    [],
+    props.cotacoesMultileg
+  ).toFixed(2);
+  novoPreco = formatarNumero(novoPreco, 2, ".", ",");
+
+  if (preco !== novoPreco)
+    props.modificarAtributoAbaAction(
+      props.multileg,
+      props.indice,
+      "preco",
+      novoPreco
+    );
 };
