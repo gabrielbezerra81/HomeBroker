@@ -190,7 +190,6 @@ export const modificarAtributoTabelaAbaAction = (
           const cotacaoAnterior = cotacoesMultileg.find(
             cotacao => cotacao.codigo === codigoAnterior
           );
-          console.log(cotacaoAnterior);
 
           if (!pesquisa) {
             linhaTabela.strikeSelecionado = encontrarNumMaisProximo(

@@ -307,7 +307,8 @@ const mapStateToProps = state => ({
   multileg: state.multilegReducer.multileg,
   eventSource: state.multilegReducer.eventSource,
   eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
-  booksMultileg: state.multilegReducer.booksMultileg
+  booksMultileg: state.multilegReducer.booksMultileg,
+  cotacoesMultileg: state.multilegReducer.cotacoesMultileg
 });
 
 export default connect(mapStateToProps, {
