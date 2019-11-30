@@ -3,7 +3,8 @@ import {
   listarPosicoesAPI,
   atualizarEmblemasAPI,
   atualizarPosicaoAPI,
-  pesquisarAtivoAPI
+  pesquisarAtivoAPI,
+  atualizarCotacaoAPI
 } from "components/api/API";
 
 export const mudarVariavelPosicaoAction = (nome, valor) => {
@@ -39,6 +40,7 @@ export const listarPosicoesAction = props => {
 
     atualizarPosicao(dispatch, listaPosicoes, props, 1);
     atualizarEmblemas(dispatch, listaPosicoes, props, arrayPrecos);
+    atualizarCotacoes(dispatch, listaPosicoes, props, arrayCotacoes);
 
     dispatch({
       type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
@@ -103,6 +105,8 @@ export const adicionaPosicao = grupoPosicao => {
 // Atualiza min, max e ult
 export const atualizarEmblemasAction = props => {
   return dispatch => {
+    console.log(props.posicoesCustodia.length);
+    console.log(props.arrayPrecos.length);
     atualizarEmblemas(
       dispatch,
       props.posicoesCustodia,
@@ -162,7 +166,7 @@ const atualizarPosicao = (dispatch, listaPosicoes, props, idUsuario) => {
   });
 };
 
-const montaArrayCotacoes = async listaPosicoes => {
+const montaArrayCotacoes = async (listaPosicoes, tipoRetorno = "completo") => {
   let arrayCodigos = [];
   listaPosicoes.forEach(posicao => {
     posicao.ativos.forEach(ativo => {
@@ -171,6 +175,7 @@ const montaArrayCotacoes = async listaPosicoes => {
       }
     });
   });
+  if (tipoRetorno === "codigos") return arrayCodigos;
 
   for (var [indice] in arrayCodigos) {
     const ativo = arrayCodigos[indice];
@@ -181,4 +186,48 @@ const montaArrayCotacoes = async listaPosicoes => {
     }
   }
   return arrayCodigos;
+};
+
+export const atualizarCotacoesAction = props => {
+  return dispatch => {
+    atualizarCotacoes(
+      dispatch,
+      props.posicoesCustodia,
+      props,
+      props.arrayCotacoes
+    );
+  };
+};
+
+const atualizarCotacoes = async (
+  dispatch,
+  listaPosicoes,
+  props,
+  arrayCotacoes
+) => {
+  let codigos = "";
+  const arrayCodigos = await montaArrayCotacoes(listaPosicoes, "codigos");
+
+  if (props.eventSourceCotacoes) {
+    props.eventSourceCotacoes.close();
+  }
+
+  arrayCodigos.forEach(ativo => {
+    codigos += ativo.codigo + ",";
+  });
+
+  codigos = codigos.substring(0, codigos.length - 1);
+
+  const newSource = atualizarCotacaoAPI(
+    dispatch,
+    props,
+    codigos,
+    "posicao",
+    arrayCotacoes
+  );
+
+  dispatch({
+    type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
+    payload: { nome: "arrayCotacoes", valor: newSource }
+  });
 };

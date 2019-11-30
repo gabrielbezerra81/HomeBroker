@@ -100,6 +100,8 @@ export const abrirItemBarraLateralAction = (props, nameVariavelReducer) => {
       props.eventSourceEmblema_Posicao.close();
     if (props.eventSourcePosicao_Posicao)
       props.eventSourcePosicao_Posicao.close();
+    if (props.eventSourceCotacoes_Posicao)
+      props.eventSourceCotacoes_Posicao.close();
   } //
   else if (nameVariavelReducer === "ordensExecucaoAberto") {
     if (props.eventSourceOrdensExec_OrdensExec) {

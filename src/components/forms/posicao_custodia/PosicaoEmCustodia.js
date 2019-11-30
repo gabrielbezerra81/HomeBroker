@@ -29,7 +29,14 @@ export default class PosicaoEmCustodia extends React.Component {
     if (props.eventSourcePosicao && props.eventSourceEmblema) {
       if (props.posicoesCustodia.length !== props.arrayPrecos.length) {
         if (prevProps.posicoesCustodia !== props.posicoesCustodia) {
-          props.atualizarEmblemasAction(props);
+          if (
+            props.posicoesCustodia.length > 0 &&
+            props.arrayPrecos.length > 0 &&
+            props.arrayCotacoes.length > 0
+          ) {
+            props.atualizarEmblemasAction(props);
+            props.atualizarCotacoesAction(props);
+          }
         }
       }
     }

@@ -449,6 +449,31 @@ export const atualizarCotacaoAPI = (
         });
       } //
       else if (tipo === "posicao") {
+        arrayCotacoes = [...arrayCotacoes];
+
+        const indice = arrayCotacoes.findIndex(
+          ativo => ativo.codigo === ativoRetornado
+        );
+        let permitirDispatch = false;
+
+        if (indice !== -1 && arrayCotacoes[indice].cotacao !== cotacaoAtual) {
+          arrayCotacoes[indice].cotacao = cotacaoAtual;
+          permitirDispatch = true;
+        } //
+        else {
+          const ativo = {
+            codigo: ativoRetornado,
+            cotacao: cotacaoAtual
+          };
+          arrayCotacoes.push(ativo);
+          permitirDispatch = true;
+        }
+
+        if (permitirDispatch)
+          dispatch({
+            type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
+            payload: { nome: "arrayCotacoes", valor: arrayCotacoes }
+          });
       }
     }
   };

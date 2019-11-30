@@ -8,6 +8,7 @@ const INITIAL_STATE = {
   posicoesCustodia: [],
   eventSourceEmblema: null,
   eventSourcePosicao: null,
+  eventSourceCotacoes: null,
   arrayPrecos: [],
   arrayCotacoes: []
 };

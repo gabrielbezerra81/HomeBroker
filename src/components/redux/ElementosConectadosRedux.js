@@ -56,7 +56,8 @@ import {
 import {
   listarPosicoesAction,
   atualizarEmblemasAction,
-  atualizarPosicaoAction
+  atualizarPosicaoAction,
+  atualizarCotacoesAction
 } from "components/redux/actions/menu_actions/PosicaoActions";
 import OpcoesOrdemExec from "components/forms/ordens_em_execucao/OpcoesOrdemExec";
 import { montarBoletaFromOrdemExecAction } from "components/redux/actions/formInputActions";
@@ -146,6 +147,7 @@ const mapStateToPropsAppPrincipal = state => ({
   eventSourceCotacao_Multileg: state.multilegReducer.eventSourceCotacao,
   eventSourcePosicao_Posicao: state.posicaoReducer.eventSourcePosicao,
   eventSourceEmblema_Posicao: state.posicaoReducer.eventSourceEmblema,
+  eventSourceCotacoes_Posicao: state.posicaoReducer.eventSourceCotacoes,
   eventSourceOrdensExec_OrdensExec:
     state.ordensExecReducer.eventSourceOrdensExec
 });
@@ -167,7 +169,8 @@ const mapStateToPropsPosicao = state => ({
   eventSourcePosicao: state.posicaoReducer.eventSourcePosicao,
   arrayPrecos: state.posicaoReducer.arrayPrecos,
   posicoesCustodia: state.posicaoReducer.posicoesCustodia,
-  arrayCotacoes: state.posicaoReducer.arrayCotacoes
+  arrayCotacoes: state.posicaoReducer.arrayCotacoes,
+  eventSourceCotacoes: state.posicaoReducer.eventSourceCotacoes
 });
 
 const mapStateToPropsOrdensExec = state => ({
@@ -323,7 +326,8 @@ export const PosicaoEmCustodiaConectada = compose(
     mudarVariavelPosicaoAction,
     listarPosicoesAction,
     atualizarEmblemasAction,
-    atualizarPosicaoAction
+    atualizarPosicaoAction,
+    atualizarCotacoesAction
   })
 )(PosicaoEmCustodia);
 

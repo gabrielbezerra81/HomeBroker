@@ -47,22 +47,23 @@ class PosicaoEmLista extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {props.posicoesCustodia.map((item, index) => (
-              <tr key={index} className="verticalAlignColunaTabela">
-                {listarAtributoComposto(props, item, "symbol")}
-                {listarAtributoComposto(
-                  props,
-                  item,
-                  "qtdeComposta",
-                  "colunaDividida"
-                )}
-                {listarAtributoComposto(props, item, "dealPrice")}
-                {listarAtributoComposto(props, item, "total")}
-                {listarAtributoComposto(props, item, "precoUlt")}
-                {listarAtributoComposto(props, item, "totalAtual")}
-                {listarAtributoComposto(props, item, "resultado")}
-                <td></td>
-                {/* <td>{item.precoMedio}</td>
+            {props.arrayCotacoes.length > 0
+              ? props.posicoesCustodia.map((item, index) => (
+                  <tr key={index} className="verticalAlignColunaTabela">
+                    {listarAtributoComposto(props, item, "symbol")}
+                    {listarAtributoComposto(
+                      props,
+                      item,
+                      "qtdeComposta",
+                      "colunaDividida"
+                    )}
+                    {listarAtributoComposto(props, item, "dealPrice")}
+                    {listarAtributoComposto(props, item, "total")}
+                    {listarAtributoComposto(props, item, "precoUlt")}
+                    {listarAtributoComposto(props, item, "totalAtual")}
+                    {listarAtributoComposto(props, item, "resultado")}
+                    <td></td>
+                    {/* <td>{item.precoMedio}</td>
                 <td>{item.valorTotal}</td>
                 <td>{item.precoUlt}</td>
                 <td>{item.totalAtual}</td>
@@ -73,10 +74,11 @@ class PosicaoEmLista extends React.Component {
                   {renderCV(item.operacoesDia.emAberto.tipo)}
                   <div>{item.operacoesDia.emAberto.valor}</div>
                 </td> */}
-                <td>{formatarNumDecimal(item.stopLoss)}</td>
-                <td>{formatarNumDecimal(item.stopGain)}</td>
-              </tr>
-            ))}
+                    <td>{formatarNumDecimal(item.stopLoss)}</td>
+                    <td>{formatarNumDecimal(item.stopGain)}</td>
+                  </tr>
+                ))
+              : null}
           </tbody>
         </Table>
       </div>
