@@ -1,3 +1,4 @@
+import { cloneDeep } from "lodash";
 import {
   ABRIR_FECHAR_CONFIG_COMPLEMENTAR,
   ADICIONAR_ABA,
@@ -5,7 +6,6 @@ import {
   MODIFICAR_ATRIBUTO_ABA,
   MODIFICAR_VARIAVEL_MULTILEG
 } from "constants/MenuActionTypes";
-import { cloneDeep } from "lodash";
 import {
   pesquisarStrikesMultilegAction,
   encontrarNumMaisProximo
@@ -584,6 +584,17 @@ export const adicionaCotacoesMultileg = (
 
 const verificaCotacaoJaAdd = (cotacoesMultileg, novoCodigo) => {
   return cotacoesMultileg.find(cotacao => cotacao.codigo === novoCodigo);
+};
+
+export const buscaCotacao = (cotacoesMultileg, codigo) => {
+  const cotacao = cotacoesMultileg.find(cotacao => cotacao.codigo === codigo);
+
+  if (cotacao) return cotacao.valor;
+  return "0,00";
+};
+
+export const buscaBook = (booksMultileg, codigoOferta) => {
+  return booksMultileg.find(book => book.codigo === codigoOferta);
 };
 
 //Formato novo

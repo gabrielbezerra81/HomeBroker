@@ -1,4 +1,7 @@
 import request from "superagent";
+import { formatarDataDaAPI } from "components/utils/Formatacoes";
+import { atualizarTabelaAntiga } from "components/redux/actions/api_actions/bookOfertaAPIActions";
+import { adicionaPosicao } from "components/redux/actions/menu_actions/PosicaoActions";
 import {
   url_base,
   url_pesquisarAtivoBoletas_codigo,
@@ -37,8 +40,6 @@ import {
   ATUALIZAR_SOURCE_EVENT_MULTILEG,
   LISTAR_ORDENS_EXECUCAO
 } from "constants/ApiActionTypes";
-import { formatarDataDaAPI } from "components/utils/Formatacoes";
-import { atualizarTabelaAntiga } from "components/redux/actions/api_actions/bookOfertaAPIActions";
 import {
   erro_pesquisar_ativo,
   sucesso_enviar_ordem,
@@ -56,9 +57,6 @@ import {
   erro_realizar_login,
   erro_realizar_cadastro
 } from "constants/AlertaErros";
-import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
-import { formatarNumero } from "components/redux/reducers/formInputReducer";
-import { adicionaPosicao } from "components/redux/actions/menu_actions/PosicaoActions";
 
 export const pesquisarAtivoAPI = codigo => {
   return request
@@ -391,9 +389,9 @@ export const atualizarCotacaoAPI = (
   dispatch,
   props,
   codigos,
-  tipo,
-  cotacoesMultileg = [],
-  namespace = "",
+  tipo, // Quem disparou a função, ex: multileg, posição, boleta de compra e venda
+  arrayCotacoes = [], // Usado para o multileg ou para posição
+  namespace = "", // Usado para disparar atualização para a boleta de compra e venda correta
   dadosPesquisa = null
 ) => {
   var source = new EventSource(
@@ -426,12 +424,12 @@ export const atualizarCotacaoAPI = (
       } //
       else if (tipo === "multileg") {
         let permitirDispatch = false;
-        cotacoesMultileg = [...cotacoesMultileg];
-        const indice = cotacoesMultileg.findIndex(
+        arrayCotacoes = [...arrayCotacoes];
+        const indice = arrayCotacoes.findIndex(
           cotacao => cotacao.codigo === ativoRetornado
         );
-        if (indice !== -1 && cotacoesMultileg[indice].valor !== cotacaoAtual) {
-          cotacoesMultileg[indice].valor = cotacaoAtual;
+        if (indice !== -1 && arrayCotacoes[indice].valor !== cotacaoAtual) {
+          arrayCotacoes[indice].valor = cotacaoAtual;
           permitirDispatch = true;
         }
 
@@ -441,7 +439,7 @@ export const atualizarCotacaoAPI = (
           // aba.preco = calculo;
           dispatch({
             type: MODIFICAR_VARIAVEL_MULTILEG,
-            payload: { nome: "cotacoesMultileg", valor: cotacoesMultileg }
+            payload: { nome: "cotacoesMultileg", valor: arrayCotacoes }
           });
         }
         dispatch({
@@ -449,6 +447,8 @@ export const atualizarCotacaoAPI = (
           payload: source,
           nomeVariavel: "eventSourceCotacao"
         });
+      } //
+      else if (tipo === "posicao") {
       }
     }
   };

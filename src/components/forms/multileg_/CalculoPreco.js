@@ -1,5 +1,7 @@
-import { buscaBook } from "components/forms/multileg_/Book";
-import { buscaCotacao } from "components/forms/multileg_/AbaMultileg";
+import {
+  buscaBook,
+  buscaCotacao
+} from "components/redux/actions/menu_actions/MultilegActions";
 
 export const calculoPreco = (
   aba,

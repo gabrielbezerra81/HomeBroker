@@ -1,9 +1,15 @@
 import React from "react";
 import { Table } from "react-bootstrap";
 import { connect } from "react-redux";
+import { formatarNumDecimal } from "components/utils/Formatacoes";
 
 class PosicaoEmLista extends React.Component {
   render() {
+    const { props } = this;
+
+    const tabelaPosicao = [];
+    if (props.posicoesCustodia[0])
+      tabelaPosicao.push(props.posicoesCustodia[0]);
     return (
       <div className="mt-4 containerTipoLista">
         <Table
@@ -41,14 +47,22 @@ class PosicaoEmLista extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {tabelaPosicao.map((item, index) => (
-              <tr key={index}>
-                <td>{item.ativo}</td>
-                <td className="colunaDividida">
-                  <div>{item.qtdeInicial}</div>
-                  <div>{item.qtdeAtual}</div>
-                </td>
-                <td>{item.precoMedio}</td>
+            {props.posicoesCustodia.map((item, index) => (
+              <tr key={index} className="verticalAlignColunaTabela">
+                {listarAtributoComposto(props, item, "symbol")}
+                {listarAtributoComposto(
+                  props,
+                  item,
+                  "qtdeComposta",
+                  "colunaDividida"
+                )}
+                {listarAtributoComposto(props, item, "dealPrice")}
+                {listarAtributoComposto(props, item, "total")}
+                {listarAtributoComposto(props, item, "precoUlt")}
+                {listarAtributoComposto(props, item, "totalAtual")}
+                {listarAtributoComposto(props, item, "resultado")}
+                <td></td>
+                {/* <td>{item.precoMedio}</td>
                 <td>{item.valorTotal}</td>
                 <td>{item.precoUlt}</td>
                 <td>{item.totalAtual}</td>
@@ -58,9 +72,9 @@ class PosicaoEmLista extends React.Component {
                   <div>{item.operacoesDia.executadas.valor}</div>
                   {renderCV(item.operacoesDia.emAberto.tipo)}
                   <div>{item.operacoesDia.emAberto.valor}</div>
-                </td>
-                <td>{item.stopLoss}</td>
-                <td>{item.stopGain}</td>
+                </td> */}
+                <td>{formatarNumDecimal(item.stopLoss)}</td>
+                <td>{formatarNumDecimal(item.stopGain)}</td>
               </tr>
             ))}
           </tbody>
@@ -70,12 +84,12 @@ class PosicaoEmLista extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  posicoesCustodia: state.posicaoReducer.posicoesCustodia,
+  arrayCotacoes: state.posicaoReducer.arrayCotacoes
+});
 
-export default connect(
-  mapStateToProps,
-  {}
-)(PosicaoEmLista);
+export default connect(mapStateToProps, {})(PosicaoEmLista);
 
 const renderCV = cv => {
   return (
@@ -89,53 +103,57 @@ const renderCV = cv => {
   );
 };
 
-const tabelaPosicao = [
-  {
-    ativo: "BGIV19",
-    qtdeInicial: 0,
-    qtdeAtual: 1000,
-    precoMedio: "0,00",
-    valorTotal: "0,00",
-    precoUlt: "25,65",
-    totalAtual: "2458,20",
-    resultado: "20",
-    operacoesDia: {
-      executadas: { valor: 1000, tipo: "compra" },
-      emAberto: { valor: 4000, tipo: "venda" }
-    },
-    stopLoss: "26,78",
-    stopGain: "28,20"
-  },
-  {
-    ativo: "BGIV19",
-    qtdeInicial: 0,
-    qtdeAtual: 1000,
-    precoMedio: "0,00",
-    valorTotal: "0,00",
-    precoUlt: "25,65",
-    totalAtual: "2458,20",
-    resultado: "20",
-    operacoesDia: {
-      executadas: { valor: 2000, tipo: "compra" },
-      emAberto: { valor: 5000, tipo: "venda" }
-    },
-    stopLoss: "26,78",
-    stopGain: "28,20"
-  },
-  {
-    ativo: "BGIV19",
-    qtdeInicial: 0,
-    qtdeAtual: 1000,
-    precoMedio: "0,00",
-    valorTotal: "0,00",
-    precoUlt: "25,65",
-    totalAtual: "2458,20",
-    resultado: "20",
-    operacoesDia: {
-      executadas: { valor: 3000, tipo: "compra" },
-      emAberto: { valor: 6000, tipo: "venda" }
-    },
-    stopLoss: "26,78",
-    stopGain: "28,20"
+const listarAtributoComposto = (
+  props,
+  posicao,
+  atributo,
+  classeColunaDividida = ""
+) => {
+  let colunaTabela = posicao.ativos.map((oferta, index2) => {
+    return (
+      <div key={index2} className={classeColunaDividida}>
+        {renderConteudoAtributoComposto(props, posicao, oferta, atributo)}
+      </div>
+    );
+  });
+
+  return <td>{colunaTabela}</td>;
+};
+
+let renderConteudoAtributoComposto = (props, posicao, oferta, atributo) => {
+  let conteudo;
+
+  switch (atributo) {
+    case "qtdeComposta":
+      conteudo = [
+        <div key={Math.random()}>
+          {formatarNumDecimal(oferta.qtdeInicial || "")}
+        </div>,
+        <div key={Math.random()}>{formatarNumDecimal(oferta.qtty || 0)}</div>
+      ];
+      break;
+    case "precoUlt":
+      const ativo = props.arrayCotacoes.find(
+        ativo => ativo.codigo === oferta.symbol
+      );
+      const cotacao = ativo ? formatarNumDecimal(ativo.cotacao) : "";
+      conteudo = <div>{cotacao}</div>;
+      break;
+    case "totalAtual":
+      const total = oferta.qtty * posicao.cotacaoAtual;
+      conteudo = <div>{formatarNumDecimal(total || 0)}</div>;
+      break;
+    case "resultado":
+      const resultado =
+        ((oferta.qtty * posicao.cotacaoAtual - oferta.total) / oferta.total) *
+          100 || 0;
+      conteudo = <div>{formatarNumDecimal(resultado)}</div>;
+      break;
+    default:
+      let valor = oferta[atributo];
+      if (atributo !== "symbol") valor = formatarNumDecimal(valor || 0);
+      conteudo = <div>{valor}</div>;
   }
-];
+
+  return conteudo;
+};

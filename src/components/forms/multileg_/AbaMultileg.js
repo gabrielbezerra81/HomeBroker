@@ -8,7 +8,8 @@ import TabelaMultileg from "components/forms/multileg_/TabelaMultileg";
 import { connect } from "react-redux";
 import {
   modificarAtributoAbaAction,
-  adicionarOfertaTabelaAction
+  adicionarOfertaTabelaAction,
+  buscaCotacao
 } from "components/redux/actions/menu_actions/MultilegActions";
 import {
   formatarNumDecimal,
@@ -242,11 +243,4 @@ const renderStrikeSymbol = (item, indice, listaOpcoes) => {
       </Select.Option>
     );
   }
-};
-
-export const buscaCotacao = (cotacoesMultileg, codigo) => {
-  const cotacao = cotacoesMultileg.find(cotacao => cotacao.codigo === codigo);
-
-  if (cotacao) return cotacao.valor;
-  return "0,00";
 };

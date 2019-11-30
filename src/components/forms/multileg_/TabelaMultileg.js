@@ -5,7 +5,8 @@ import imgModeloUSA from "img/modeloUSA2.svg";
 import { connect } from "react-redux";
 import {
   modificarAtributoTabelaAbaAction,
-  excluirOfertaTabelaAction
+  excluirOfertaTabelaAction,
+  buscaCotacao
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { MDBIcon } from "mdbreact";
 import {
@@ -14,7 +15,6 @@ import {
 } from "components/utils/Formatacoes";
 import InputFormatado from "components/utils/InputFormatado";
 import { Select } from "antd";
-import { buscaCotacao } from "components/forms/multileg_/AbaMultileg";
 
 class TabelaMultileg extends React.Component {
   render() {

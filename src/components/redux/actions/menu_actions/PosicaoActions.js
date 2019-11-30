@@ -2,7 +2,8 @@ import { MUDAR_VARIAVEL_POSICAO_CUSTODIA } from "constants/MenuActionTypes";
 import {
   listarPosicoesAPI,
   atualizarEmblemasAPI,
-  atualizarPosicaoAPI
+  atualizarPosicaoAPI,
+  pesquisarAtivoAPI
 } from "components/api/API";
 
 export const mudarVariavelPosicaoAction = (nome, valor) => {
@@ -19,6 +20,8 @@ export const listarPosicoesAction = props => {
     const dados = await listarPosicoesAPI();
     var listaPosicoes = [];
     var arrayPrecos = [];
+    var arrayCotacoes = [];
+
     dados.forEach(grupoPosicao => {
       const posicao = adicionaPosicao(grupoPosicao);
       const preco = {
@@ -32,6 +35,7 @@ export const listarPosicoesAction = props => {
     });
     // listaPosicoes.splice(0, 19);
     // arrayPrecos.splice(0, 19);
+    arrayCotacoes = await montaArrayCotacoes(listaPosicoes);
 
     atualizarPosicao(dispatch, listaPosicoes, props, 1);
     atualizarEmblemas(dispatch, listaPosicoes, props, arrayPrecos);
@@ -43,6 +47,10 @@ export const listarPosicoesAction = props => {
     dispatch({
       type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
       payload: { nome: "arrayPrecos", valor: arrayPrecos }
+    });
+    dispatch({
+      type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
+      payload: { nome: "arrayCotacoes", valor: arrayCotacoes }
     });
   };
 };
@@ -92,6 +100,7 @@ export const adicionaPosicao = grupoPosicao => {
   });
 };
 
+// Atualiza min, max e ult
 export const atualizarEmblemasAction = props => {
   return dispatch => {
     atualizarEmblemas(
@@ -128,6 +137,7 @@ export const atualizarEmblemas = (
   });
 };
 
+// Atualiza demais campos de posição
 export const atualizarPosicaoAction = props => {
   return dispatch => {
     atualizarPosicao(dispatch, props.posicoesCustodia, props, 1);
@@ -150,4 +160,25 @@ const atualizarPosicao = (dispatch, listaPosicoes, props, idUsuario) => {
     type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
     payload: { nome: "eventSourcePosicao", valor: newSource }
   });
+};
+
+const montaArrayCotacoes = async listaPosicoes => {
+  let arrayCodigos = [];
+  listaPosicoes.forEach(posicao => {
+    posicao.ativos.forEach(ativo => {
+      if (!arrayCodigos.some(item => item.codigo === ativo.symbol)) {
+        arrayCodigos.push({ codigo: ativo.symbol });
+      }
+    });
+  });
+
+  for (var [indice] in arrayCodigos) {
+    const ativo = arrayCodigos[indice];
+    const dadosAtivo = await pesquisarAtivoAPI(ativo.codigo);
+    if (dadosAtivo) {
+      const cotacao = dadosAtivo.cotacaoAtual;
+      ativo.cotacao = cotacao;
+    }
+  }
+  return arrayCodigos;
 };

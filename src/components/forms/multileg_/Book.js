@@ -5,7 +5,9 @@ import IconeConfigGrafico from "components/utils/IconeConfigGrafico";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 import {
   abrirFecharConfigComplAction,
-  modificarAtributoAbaAction
+  modificarAtributoAbaAction,
+  buscaBook,
+  buscaCotacao
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
 import InputFormatado from "components/utils/InputFormatado";
@@ -19,8 +21,12 @@ import {
 import NumberFormat from "react-number-format";
 
 class Book extends React.Component {
-  componentDidUpdate() {
-    atualizarPrecoDinamicante(this.props);
+  componentDidUpdate(prevProps) {
+    if (prevProps.cotacoesMultileg !== this.props.cotacoesMultileg) {
+      console.log("prev", prevProps.cotacoesMultileg);
+      console.log("curr", this.props.cotacoesMultileg);
+      atualizarPrecoDinamicante(this.props);
+    }
   }
 
   render() {
@@ -322,9 +328,14 @@ export default connect(mapStateToProps, {
 const calcularTotal = props => {
   let total = 0;
   let aba = props.multileg[props.indice];
+
   aba.tabelaMultileg.forEach(oferta => {
-    if (oferta.cv === "compra") total += oferta.qtde * oferta.cotacao;
-    else total -= oferta.qtde * oferta.cotacao;
+    const cotacao = buscaCotacao(
+      props.cotacoesMultileg,
+      oferta.codigoSelecionado
+    );
+    if (oferta.cv === "compra") total += oferta.qtde * cotacao;
+    else total -= oferta.qtde * cotacao;
   });
   return total;
 };
@@ -363,10 +374,6 @@ const renderQtdeBook = itemBook => {
     }
   }
   return null;
-};
-
-export const buscaBook = (booksMultileg, codigoOferta) => {
-  return booksMultileg.find(book => book.codigo === codigoOferta);
 };
 
 const atualizarPrecoDinamicante = props => {
