@@ -144,7 +144,7 @@ export const modificarAba = async (
         abasMultileg[indice].opcoes = [...dados];
         abasMultileg[indice].strikeSelecionado = encontrarNumMaisProximo(
           dados,
-          cotacao
+          abasMultileg[indice].strikeSelecionado
         );
       }
     }
@@ -194,7 +194,7 @@ export const modificarAtributoTabelaAbaAction = (
           if (!pesquisa) {
             linhaTabela.strikeSelecionado = encontrarNumMaisProximo(
               dados,
-              cotacaoAnterior.valor //todo
+              linhaTabela.strikeSelecionado //todo
             );
           }
           pesquisarSymbolModel_strike_tipo(linhaTabela);

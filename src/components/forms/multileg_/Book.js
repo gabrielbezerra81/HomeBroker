@@ -131,15 +131,18 @@ class Book extends React.Component {
               step="0.01"
               min={min}
               max={max}
-              value={props.multileg[indice].preco}
-              onChange={event =>
+              value={Number(props.multileg[indice].preco.replace(",", "."))}
+              onChange={event => {
+                console.log(
+                  Number(formatarNumDecimal(event.currentTarget.value))
+                );
                 props.modificarAtributoAbaAction(
                   props.multileg,
                   indice,
                   "preco",
-                  Number(event.currentTarget.value).toFixed(2)
-                )
-              }
+                  formatarNumDecimal(Number(event.currentTarget.value))
+                );
+              }}
             />
           </Col>
         </Row>

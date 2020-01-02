@@ -133,7 +133,10 @@ const renderOferta = (item, index, props, tipo) => {
         tipo === "ofertaPrincipal"
           ? () => {
               props.mudarVariavelOrdensExecAction("ordemAtual", item);
-              props.mudarVariavelOrdensExecAction("opcoesOrdemAberto", true);
+              props.mudarVariavelOrdensExecAction(
+                "opcoesOrdemAberto",
+                !props.opcoesOrdemAberto
+              );
             }
           : () => false
       }
