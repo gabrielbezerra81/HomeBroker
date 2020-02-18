@@ -75,6 +75,7 @@ class AbaMultileg extends React.Component {
               <Form.Group className="inputGroupStrike">
                 <Form.Label>Strike</Form.Label>
                 <Select
+                  dropdownClassName="inputCodigoDropdown"
                   size="small"
                   value={props.multileg[indice].strikeSelecionado}
                   showSearch

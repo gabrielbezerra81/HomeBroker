@@ -93,12 +93,8 @@ export const encontrarNumMaisProximo = (
 ) => {
   if (listaOpcoes.length > 0) {
     if (opcaoBool) {
-      {
-        const opcao = listaOpcoes.filter(
-          opcao => opcao.symbol === codigo_ativo
-        );
-        return opcao[0].strike;
-      }
+      const opcao = listaOpcoes.filter(opcao => opcao.symbol === codigo_ativo);
+      return opcao[0].strike;
     } else {
       var maisProximo = listaOpcoes.reduce((prev, curr) =>
         Math.abs(curr.strike - cotacao) < Math.abs(prev.strike - cotacao)

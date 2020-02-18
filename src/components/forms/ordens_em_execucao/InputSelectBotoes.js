@@ -24,6 +24,7 @@ export default class InputSelectBotoes extends React.Component {
 
         <Select
           size="small"
+          dropdownClassName="inputCodigoDropdown"
           value={placeholder}
           open={props.open}
           placeholder={placeholder}

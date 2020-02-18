@@ -140,6 +140,7 @@ class TabelaMultileg extends React.Component {
                   <td>
                     <Select
                       size="small"
+                      dropdownClassName="inputCodigoDropdown"
                       value={item.codigoSelecionado}
                       showSearch
                       optionFilterProp="children"

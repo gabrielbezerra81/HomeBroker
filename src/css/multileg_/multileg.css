@@ -423,6 +423,10 @@ a.botaoAddAba.active {
   text-align: center !important;
 }
 
+.inputCodigoDropdown {
+  background-color: #333 !important;
+}
+
 .optionInputCodigo {
   font-size: 0.73rem !important;
   padding: 5px 7px !important;
