@@ -212,7 +212,7 @@ class Book extends React.Component {
               autoSelect
               tipoInput="precoNegativo"
               step={0.01}
-              value={getPreco(props)}
+              value={renderPlaceholder ? "" : getPreco(props)}
               onChange={valor =>
                 props.modificarAtributoAbaAction(
                   props.multileg,
@@ -228,7 +228,7 @@ class Book extends React.Component {
           <Col md={4} className="ml-2">
             <h6>Total</h6>
           </Col>
-          <Col className="mr-1 text-align-center">
+          <Col className="mr-0 text-align-center">
             <NumberFormat
               style={{ width: "112.28px" }}
               className={`form-control textInput`}
@@ -236,13 +236,17 @@ class Book extends React.Component {
               decimalSeparator=","
               readOnly
               value={
-                total < 0
+                renderPlaceholder
+                  ? ""
+                  : total < 0
                   ? formatarNumDecimal(total * -1)
                   : formatarNumDecimal(total)
               }
             />
             <span>
-              {total < 0
+              {renderPlaceholder
+                ? "Débito de R$ 0,00"
+                : total < 0
                 ? "Crédito de R$ " + formatarNumDecimal(total * -1)
                 : "Débito de R$ " + formatarNumDecimal(total)}
             </span>
@@ -350,7 +354,7 @@ const renderPlaceholderPreco = props => {
   tabelaMultileg.forEach(oferta => {
     let qtde = oferta.qtde + "";
     qtde = qtde.split(".").join("");
-    if (!qtde || qtde === "0") {
+    if (qtde === "" || qtde === "0") {
       renderPlaceholder = true;
     }
   });
