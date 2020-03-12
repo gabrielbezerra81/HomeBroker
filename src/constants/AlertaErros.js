@@ -28,6 +28,8 @@ export const erro_validar_qtde =
   "Ordem inválida, a quantidade deve ser maior que 0";
 export const erro_validar_disparo_start_movel =
   "O disparo móvel deve ser menor que o disparo stop";
+export const erro_validar_codigo_duplicado_multileg =
+  "Ativos duplicados na ordem";
 
 //Alertas
 export const erro_exportar_ordens_multileg = "Falha ao adicionar abas";

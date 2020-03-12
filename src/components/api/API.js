@@ -306,7 +306,7 @@ export const atualizarBookAPI = (
   props,
   codigos,
   tipo,
-  booksMultileg
+  rembook //booksMultileg
 ) => {
   var source = new EventSource(
     url_base_reativa + url_bookReativo_codigos + codigos
@@ -349,7 +349,7 @@ export const atualizarBookAPI = (
 
       if (tipo === "multileg" && dados.bookOffers) {
         let permitirDispatch = false;
-        let novosBooks = [...booksMultileg];
+        let novosBooks = [...rembook];
 
         novosBooks.forEach(book => {
           if (book.codigo === ativoRetornado) {
@@ -371,7 +371,7 @@ export const atualizarBookAPI = (
         if (permitirDispatch) {
           dispatch({
             type: MODIFICAR_VARIAVEL_MULTILEG,
-            payload: { nome: "booksMultileg", valor: novosBooks }
+            payload: { nome: "rembook", valor: novosBooks }
           });
         }
         dispatch({
@@ -428,8 +428,20 @@ export const atualizarCotacaoAPI = (
         const indice = arrayCotacoes.findIndex(
           cotacao => cotacao.codigo === ativoRetornado
         );
-        if (indice !== -1 && arrayCotacoes[indice].valor !== cotacaoAtual) {
+
+        if (indice !== -1) {
+          //&& arrayCotacoes[indice].valor !== cotacaoAtual => condição da cotação antiga ser diferente da nova
           arrayCotacoes[indice].valor = cotacaoAtual;
+          arrayCotacoes[indice].compra = {
+            price: dados.compra,
+            qtty: dados.compraQtde,
+            type: "C"
+          };
+          arrayCotacoes[indice].venda = {
+            price: dados.venda,
+            qtty: dados.vendaQtde,
+            type: "V"
+          };
           permitirDispatch = true;
         }
 

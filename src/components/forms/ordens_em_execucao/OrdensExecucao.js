@@ -119,25 +119,10 @@ const renderOferta = (item, index, props, tipo) => {
   return (
     <tr
       key={index + "ordens"}
-      className={
-        (tipo === "ofertaPrincipal"
-          ? " divClicavel rowTabelaOrdensExec "
-          : " ") +
-        (props.ordemAtual
-          ? item.id === props.ordemAtual.id
-            ? "ordemSelecionada"
-            : " "
-          : " ")
-      }
+      className={classeOrdem(tipo, props, item)}
       onClick={
         tipo === "ofertaPrincipal"
-          ? () => {
-              props.mudarVariavelOrdensExecAction("ordemAtual", item);
-              props.mudarVariavelOrdensExecAction(
-                "opcoesOrdemAberto",
-                !props.opcoesOrdemAberto
-              );
-            }
+          ? () => abrirOpcoesOrdem(props, item)
           : () => false
       }
     >
@@ -203,4 +188,31 @@ const listarAtributoComposto = (listaOfertas, atributo, classeCor) => {
       </span>
     );
   });
+};
+
+const classeOrdem = (tipo, props, item) => {
+  let classe = "";
+
+  if (tipo === "ofertaPrincipal") classe += " divClicavel rowTabelaOrdensExec ";
+  else classe += " ";
+
+  if (props.ordemAtual) {
+    if (item.id === props.ordemAtual.id) classe += "ordemSelecionada";
+    else classe += " ";
+  } else classe += " ";
+
+  return classe;
+};
+
+const abrirOpcoesOrdem = (props, item) => {
+  props.mudarVariavelOrdensExecAction("ordemAtual", item);
+
+  if (props.ordemAtual) {
+    if (props.ordemAtual.id === item.id)
+      props.mudarVariavelOrdensExecAction(
+        "opcoesOrdemAberto",
+        !props.opcoesOrdemAberto
+      );
+    else props.mudarVariavelOrdensExecAction("opcoesOrdemAberto", true);
+  } else props.mudarVariavelOrdensExecAction("opcoesOrdemAberto", true);
 };

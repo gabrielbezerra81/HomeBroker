@@ -23,8 +23,8 @@ import NumberFormat from "react-number-format";
 class Book extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.cotacoesMultileg !== this.props.cotacoesMultileg) {
-      console.log("prev", prevProps.cotacoesMultileg);
-      console.log("curr", this.props.cotacoesMultileg);
+      // console.log("prev", prevProps.cotacoesMultileg);
+      // console.log("curr", this.props.cotacoesMultileg);
       atualizarPrecoDinamicante(this.props);
     }
   }
@@ -33,8 +33,8 @@ class Book extends React.Component {
     const { props } = this;
     const indice = props.indice,
       total = calcularTotal(props),
-      min = calculoPreco(props.multileg[indice], "min", props.booksMultileg),
-      max = calculoPreco(props.multileg[indice], "max", props.booksMultileg);
+      min = calculoPreco(props.multileg[indice], "min", props.cotacoesMultileg),
+      max = calculoPreco(props.multileg[indice], "max", props.cotacoesMultileg);
     const condicaoMed =
       (min && max) ||
       (min === 0 && max) ||
@@ -85,7 +85,7 @@ class Book extends React.Component {
                 {props.multileg[indice].tabelaMultileg.map(
                   (item, indiceLinha) => {
                     const book = buscaBook(
-                      props.booksMultileg,
+                      props.cotacoesMultileg,
                       item.codigoSelecionado
                     );
                     if (book)
@@ -320,7 +320,6 @@ const mapStateToProps = state => ({
   multileg: state.multilegReducer.multileg,
   eventSource: state.multilegReducer.eventSource,
   eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
-  booksMultileg: state.multilegReducer.booksMultileg,
   cotacoesMultileg: state.multilegReducer.cotacoesMultileg
 });
 

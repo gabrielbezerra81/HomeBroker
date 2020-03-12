@@ -37,8 +37,7 @@ import {
   selecionarAdicionarAbaAction,
   modificarAtributoAbaAction,
   excluirAbaMultilegAction,
-  atualizarCotacaoAction,
-  atualizarBookAction
+  atualizarCotacaoAction
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { mudarVariavelPosicaoAction } from "components/redux/actions/menu_actions/PosicaoActions";
 import { listarBookOfertaOnEnterAction } from "components/redux/actions/api_actions/bookOfertaAPIActions";
@@ -190,7 +189,6 @@ const mapStateToPropsOpcoesOrdemExec = state => ({
   eventSource: state.multilegReducer.eventSource,
   eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
   multilegAberto: state.telaPrincipalReducer.multilegAberto,
-  booksMultileg: state.multilegReducer.booksMultileg,
   cotacoesMultileg: state.multilegReducer.cotacoesMultileg
 });
 
@@ -313,7 +311,7 @@ export const MultilegConectado = compose(
     selecionarAdicionarAbaAction,
     modificarAtributoAbaAction,
     excluirAbaMultilegAction,
-    atualizarBookAction,
+    // atualizarBookAction,
     atualizarCotacaoAction
   })
 )(Multileg);

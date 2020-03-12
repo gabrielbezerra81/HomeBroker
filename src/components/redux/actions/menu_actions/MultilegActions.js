@@ -21,7 +21,10 @@ import {
 import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
 import { formatarNumero } from "components/redux/reducers/formInputReducer";
 import { ATUALIZAR_SOURCE_EVENT_MULTILEG } from "constants/ApiActionTypes";
-import { erro_validar_qtde } from "constants/AlertaErros";
+import {
+  erro_validar_qtde,
+  erro_validar_codigo_duplicado_multileg
+} from "constants/AlertaErros";
 import { getformatedDate } from "components/utils/Formatacoes";
 
 export const abrirFecharConfigComplAction = configComplementarAberto => {
@@ -212,21 +215,14 @@ export const modificarAtributoTabelaAbaAction = (
     if (codigoAnterior !== linhaTabela.codigoSelecionado) {
       verificarMonitorarAtivoAPI(linhaTabela.codigoSelecionado);
       //Se o código mudar, deve ser verificado se o novo código já está presente nos books
-      const booksMultileg = [...props.booksMultileg];
       cotacoesMultileg = [...props.cotacoesMultileg];
 
-      AdicionaCodigoBooksMultileg(booksMultileg, linhaTabela.codigoSelecionado);
       adicionaCotacoesMultileg(cotacoesMultileg, linhaTabela.codigoSelecionado);
-      dispatch({
-        type: MODIFICAR_VARIAVEL_MULTILEG,
-        payload: { nome: "booksMultileg", valor: booksMultileg }
-      });
       dispatch({
         type: MODIFICAR_VARIAVEL_MULTILEG,
         payload: { nome: "cotacoesMultileg", valor: cotacoesMultileg }
       });
       atualizarCotacaoAction(dispatch, props, cotacoesMultileg);
-      atualizarBookAction(dispatch, props, booksMultileg);
     }
     const aba = abasMultileg[indiceGeral];
     let calculo = calculoPreco(aba, "ultimo", [], cotacoesMultileg).toFixed(2);
@@ -267,17 +263,11 @@ export const adicionarOfertaTabelaAction = (props, tipoOferta) => {
       props.multileg,
       tipoOferta,
       props.indice,
-      props.booksMultileg,
       props.cotacoesMultileg
     );
 
-    atualizarBookAction(dispatch, props, dados.booksMultileg);
     atualizarCotacaoAction(dispatch, props, dados.cotacoesMultileg);
     dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: dados.abasMultileg });
-    dispatch({
-      type: MODIFICAR_VARIAVEL_MULTILEG,
-      payload: { nome: "booksMultileg", valor: dados.booksMultileg }
-    });
     dispatch({
       type: MODIFICAR_VARIAVEL_MULTILEG,
       payload: { nome: "cotacoesMultileg", valor: dados.cotacoesMultileg }
@@ -291,11 +281,9 @@ export const adicionarOferta = async (
   multileg,
   tipoOferta,
   indice,
-  booksMultileg,
   cotacoesMultileg
 ) => {
   let abasMultileg = [...multileg];
-  booksMultileg = [...booksMultileg];
   cotacoesMultileg = [...cotacoesMultileg];
 
   const indiceAba = indice;
@@ -330,21 +318,21 @@ export const adicionarOferta = async (
   adicionaCotacoesMultileg(cotacoesMultileg, novoCodigo, cotacao);
 
   //Verifica se o book já foi inserindo, agilizando novas adições de ofertas sem esperar a API
-  if (!verificaBookJaAdd(booksMultileg, novoCodigo)) {
-    const book = await listarBookOfertaAPI(novaOferta.codigoSelecionado);
-    if (book) {
-      const bookCompra = book.tabelaOfertasCompra[0];
-      const bookVenda =
-        book.tabelaOfertasVenda[book.tabelaOfertasVenda.length - 1];
+  // if (!verificaBookJaAdd(cotacoesMultileg, novoCodigo)) {
+  //   const book = await listarBookOfertaAPI(novaOferta.codigoSelecionado);
+  //   if (book) {
+  //     const bookCompra = book.tabelaOfertasCompra[0];
+  //     const bookVenda =
+  //       book.tabelaOfertasVenda[book.tabelaOfertasVenda.length - 1];
 
-      AdicionaCodigoBooksMultileg(
-        booksMultileg,
-        novaOferta.codigoSelecionado,
-        bookCompra,
-        bookVenda
-      );
-    }
-  }
+  //     AdicionaCodigoBooksMultileg(
+  //       cotacoesMultileg,
+  //       novaOferta.codigoSelecionado,
+  //       bookCompra,
+  //       bookVenda
+  //     );
+  //   }
+  // }
 
   abasMultileg[indiceAba].tabelaMultileg.push(novaOferta);
 
@@ -355,36 +343,7 @@ export const adicionarOferta = async (
 
   verificarMonitorarAtivoAPI(novaOferta.codigoSelecionado);
 
-  return { abasMultileg, booksMultileg, cotacoesMultileg };
-};
-
-////
-
-export const atualizarBookAction = (dispatch, props, booksMultileg) => {
-  if (props.eventSource) {
-    props.eventSource.close();
-  }
-
-  let codigos = "";
-
-  booksMultileg.forEach(book => {
-    codigos += book.codigo + ",";
-  });
-
-  codigos = codigos.substring(0, codigos.length - 1);
-
-  const newSource = atualizarBookAPI(
-    dispatch,
-    props,
-    codigos,
-    "multileg",
-    booksMultileg
-  );
-  dispatch({
-    type: ATUALIZAR_SOURCE_EVENT_MULTILEG,
-    payload: newSource,
-    nomeVariavel: "eventSource"
-  });
+  return { abasMultileg, cotacoesMultileg };
 };
 
 export const oferta = {
@@ -450,12 +409,31 @@ export const validarOrdemMultileg = props => {
   let abaMultileg = [...props.multileg][props.indice];
   let valido = true;
 
-  abaMultileg.tabelaMultileg.forEach((oferta, index) => {
-    if (oferta.qtde === 0) {
-      valido = false;
-      alert(erro_validar_qtde);
-    }
-  });
+  const qtde0 = abaMultileg.tabelaMultileg.some(
+    (oferta, index) => oferta.qtde === 0
+  );
+  if (qtde0) {
+    valido = false;
+    alert(erro_validar_qtde);
+  }
+
+  const codigos = abaMultileg.tabelaMultileg.map(
+    oferta => oferta.codigoSelecionado
+  );
+
+  if (new Set(codigos).size !== codigos.length) {
+    valido = false;
+    const repetidos = encontrarCodigosRepetidos(codigos);
+    let codigos_erro = "";
+
+    repetidos.forEach(repetido => {
+      if (!codigos_erro.includes(repetido)) codigos_erro += repetido + ", ";
+    });
+
+    codigos_erro = codigos_erro.substring(0, codigos_erro.length - 2);
+
+    alert(`${erro_validar_codigo_duplicado_multileg}: ${codigos_erro}`);
+  }
 
   return valido;
 };
@@ -543,27 +521,6 @@ export const atualizarCotacaoAction = (dispatch, props, cotacoesMultileg) => {
   });
 };
 
-const AdicionaCodigoBooksMultileg = (
-  booksMultileg,
-  novoCodigo,
-  bookCompra = null,
-  bookVenda = null
-) => {
-  const bookJaAdicionado = verificaBookJaAdd(booksMultileg, novoCodigo);
-
-  if (!bookJaAdicionado) {
-    booksMultileg.push({
-      codigo: novoCodigo,
-      compra: bookCompra,
-      venda: bookVenda
-    });
-  }
-};
-
-const verificaBookJaAdd = (booksMultileg, novoCodigo) => {
-  return booksMultileg.find(book => book.codigo === novoCodigo);
-};
-
 export const adicionaCotacoesMultileg = (
   cotacoesMultileg,
   novoCodigo,
@@ -577,7 +534,17 @@ export const adicionaCotacoesMultileg = (
   if (!cotacaoJaAdicionada) {
     cotacoesMultileg.push({
       codigo: novoCodigo,
-      valor: valorCotacao
+      valor: valorCotacao,
+      compra: {
+        price: "",
+        qtty: "",
+        type: "C"
+      },
+      venda: {
+        price: "",
+        qtty: "",
+        type: "V"
+      }
     });
   }
 };
@@ -648,3 +615,10 @@ export const buscaBook = (booksMultileg, codigoOferta) => {
 //     atualizarCotacaoAPI(dispatch, props, codigos, "multileg", abasMultileg);
 //   };
 // };
+
+const encontrarCodigosRepetidos = array => {
+  return array.reduce(function(acc, el, i, arr) {
+    if (arr.indexOf(el) !== i && acc.indexOf(el) < 0) acc.push(el);
+    return acc;
+  }, []);
+};

@@ -39,7 +39,6 @@ const INITIAL_STATE = {
   ],
   eventSource: null, //Book
   eventSourceCotacao: null,
-  booksMultileg: [],
   cotacoesMultileg: []
 };
 

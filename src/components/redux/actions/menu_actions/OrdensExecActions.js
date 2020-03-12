@@ -16,8 +16,8 @@ import {
 import { LISTAR_ORDENS_EXECUCAO } from "constants/ApiActionTypes";
 import {
   atualizarCotacaoAction,
-  adicionarOferta,
-  atualizarBookAction
+  adicionarOferta
+  // atualizarBookAction
 } from "components/redux/actions/menu_actions/MultilegActions";
 import {
   adicionarAba,
@@ -77,7 +77,6 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
     let objMultileg = adicionarAba(props);
 
     let multileg = objMultileg.abasMultileg;
-    let booksMultileg = props.booksMultileg;
     let cotacoesMultileg = props.cotacoesMultileg;
     const indiceAba = multileg.length - 1;
     //const arrayCodigos = [...new Set(item.offers.map(oferta => oferta.ativo))];
@@ -113,11 +112,9 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
           multileg,
           tipo,
           indiceAba,
-          booksMultileg,
           cotacoesMultileg
         );
         multileg = dadosMultileg.abasMultileg;
-        booksMultileg = dadosMultileg.booksMultileg;
         cotacoesMultileg = dadosMultileg.cotacoesMultileg;
 
         const ofertaNova = multileg[indiceAba].tabelaMultileg[indiceOferta];
@@ -156,16 +153,12 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
         abaSelecionada: objMultileg.abaAtual
       }
     });
-    dispatch({
-      type: MODIFICAR_VARIAVEL_MULTILEG,
-      payload: { nome: "booksMultileg", valor: booksMultileg }
-    });
+
     dispatch({
       type: MODIFICAR_VARIAVEL_MULTILEG,
       payload: { nome: "cotacoesMultileg", valor: cotacoesMultileg }
     });
-    // atualizarCotacaoAction(dispatch, props, objMultileg.abasMultileg);
-    atualizarBookAction(dispatch, props, booksMultileg);
+    atualizarCotacaoAction(dispatch, props, cotacoesMultileg);
     travarDestravarClique("destravar", "menusTelaPrincipal");
   };
 };
