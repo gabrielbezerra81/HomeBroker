@@ -6,7 +6,8 @@ import {
   BarraLateralConectada,
   MultilegConectado,
   PosicaoEmCustodiaConectada,
-  RelatorioDetalhadoConectado
+  RelatorioDetalhadoConectado,
+  TelaTHLConectada
 } from "components/redux/ElementosConectadosRedux";
 import BarraTopoTelaPrincipal from "components/tela_principal/BarraTopoTelaPrincipal";
 import { Animate } from "react-show";
@@ -23,7 +24,6 @@ export default class TelaPrincipal extends React.Component {
       <div>
         <div className="divTelaPrincipal">
           <MenuLateral />
-
           <div className="conteudoMenuPrincipal">
             <BarraTopoTelaPrincipal />
             <div style={{ display: "flex", height: "100%" }}>
@@ -124,6 +124,28 @@ export default class TelaPrincipal extends React.Component {
                       );
                     }}
                     headerTitle="MULTI ATIVOS"
+                  />
+                </Animate>
+                {/* THL */}
+                <Animate
+                  show={props.thlAberta}
+                  duration={100}
+                  transitionOnMount
+                  stayMounted={false}
+                  start={startStyle}
+                  onClick={() =>
+                    props.aumentarZindexAction(
+                      "thl",
+                      props.zIndex,
+                      props.thlAberta
+                    )
+                  }
+                >
+                  <TelaTHLConectada
+                    close={() => {
+                      props.abrirItemBarraLateralAction(props, "thlAberta");
+                    }}
+                    headerTitle="VENCIMENTOS"
                   />
                 </Animate>
               </div>

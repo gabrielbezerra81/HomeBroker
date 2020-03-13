@@ -31,6 +31,7 @@ import "./posicao_custodia/PosicaoDetalhada.css";
 import "./relatorio_detalhado/RelatorioDetalhado.css";
 import "./tela_principal/TelaLogin.css";
 import "./tela_principal/TelaCadastro.css";
+import "./tela_thl/thl.css";
 
 import "./componentes_customizados/CustomCheckbox.css";
 import "./componentes_customizados/InputFormatado.css";

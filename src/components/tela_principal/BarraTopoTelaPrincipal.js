@@ -5,7 +5,7 @@ import imgCaraFeliz from "img/iconeCaraFeliz.png";
 import { abrirFecharMenuLateralAction } from "components/redux/actions/TelaPrincipalActions";
 import { ocultarDIV, mostrarDIV } from "components/utils/MostrarOcultarDiv";
 import { Animate } from "react-show";
-import { ReactComponent as IconeAbrirMenu } from "img/IconeAbrirMenu.svg";
+import { ReactComponent as IconeAbrirMenu } from "img/more.svg";
 import { ReactComponent as IconeHome } from "img/IconeHome.svg";
 
 const startStyle = {
@@ -37,7 +37,12 @@ class BarraTopoTelaPrincipal extends React.Component {
                 }
               }}
             >
-              <IconeAbrirMenu className="ml-2" fill="#aaa" height="40"></IconeAbrirMenu>
+              <IconeAbrirMenu
+                className="ml-2"
+                fill="#aaa"
+                height="35"
+                width="35"
+              ></IconeAbrirMenu>
             </div>
           </Col>
           <Col md={0}>
@@ -93,7 +98,6 @@ const mapStateToProps = state => ({
   logado: state.telaPrincipalReducer.logado
 });
 
-export default connect(
-  mapStateToProps,
-  { abrirFecharMenuLateralAction }
-)(BarraTopoTelaPrincipal);
+export default connect(mapStateToProps, { abrirFecharMenuLateralAction })(
+  BarraTopoTelaPrincipal
+);

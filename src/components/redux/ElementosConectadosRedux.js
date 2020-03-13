@@ -63,6 +63,7 @@ import { montarBoletaFromOrdemExecAction } from "components/redux/actions/formIn
 import { Router, Redirect } from "@reach/router";
 import TelaLogin from "components/tela_login/TelaLogin";
 import TelaCadastro from "components/tela_login/TelaCadastro";
+import Tela_THL from "components/forms/thl/Tela_THL";
 
 // @ts-ignore
 export const GlobalContext = React.createContext();
@@ -141,6 +142,7 @@ const mapStateToPropsAppPrincipal = state => ({
   relatorioDetalhadoAberto: state.telaPrincipalReducer.relatorioDetalhadoAberto,
   listaCompletaAberta: state.telaPrincipalReducer.listaCompletaAberta,
   multilegAberto: state.telaPrincipalReducer.multilegAberto,
+  thlAberta: state.telaPrincipalReducer.thlAberta,
   logado: state.telaPrincipalReducer.logado,
   eventSourceBook_Multileg: state.multilegReducer.eventSource,
   eventSourceCotacao_Multileg: state.multilegReducer.eventSourceCotacao,
@@ -295,7 +297,14 @@ export const OpcoesOrdemExecConectada = compose(
 )(OpcoesOrdemExec);
 
 export const BarraLateralConectada = compose(
-  connect(null, { atualizarDivKeyAction }, null, { context: GlobalContext }),
+  connect(
+    mapStateToPropsGlobalStore,
+    { atualizarDivKeyAction, abrirFormAction },
+    null,
+    {
+      context: GlobalContext
+    }
+  ),
   connect(mapStateToPropsAppPrincipal, {
     abrirItemBarraLateralAction,
     mouseOverAction,
@@ -342,3 +351,10 @@ export const RelatorioDetalhadoConectado = connect(
   null,
   { context: GlobalContext }
 )(RelatorioDetalhado);
+
+export const TelaTHLConectada = connect(
+  mapStateToPropsGlobalStore,
+  { aumentarZindexAction },
+  null,
+  { context: GlobalContext }
+)(Tela_THL);

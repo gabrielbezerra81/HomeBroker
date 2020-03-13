@@ -1,7 +1,7 @@
 import React from "react";
 import {} from "react-bootstrap";
 import iconeListaCompleta from "img/iconeListaCompleta.png";
-import { ReactComponent as Icones } from "img/Icones.svg";
+import { ReactComponent as Icones } from "img/IconesBarraLateral.svg";
 
 /*
 <img src={iconeAbrirOrdens} alt="Ordens" />
@@ -18,6 +18,29 @@ export default class BarraLateral extends React.Component {
         <div
           tabIndex={0}
           className="itemDivBarraLateral divClicavel"
+          onClick={event => {
+            this.props.abrirFormAction(event, this.props);
+          }}
+          data-name="book"
+        >
+          <Icones viewBox="9 0 36 39" className="iconesBarraLateral"></Icones>
+          <h6>BOOK</h6>
+        </div>
+        <div
+          tabIndex={0}
+          className="itemDivBarraLateral divClicavel"
+          onClick={() => {
+            this.props.atualizarDivKeyAction("thl");
+            this.props.abrirItemBarraLateralAction(this.props, "thlAberta");
+          }}
+        >
+          <Icones viewBox="7 70 42 49" className="iconesBarraLateral"></Icones>
+          <h6>ANÁLISE</h6>
+        </div>
+
+        <div
+          tabIndex={0}
+          className="itemDivBarraLateral divClicavel"
           onMouseOver={() => {
             this.props.atualizarDivKeyAction("divOrdens");
 
@@ -29,7 +52,10 @@ export default class BarraLateral extends React.Component {
               this.props.mouseLeaveAction(this.props, "ordensAberto");
           }}
         >
-          <Icones viewBox="9 0 41 45" className="iconesBarraLateral"></Icones>
+          <Icones
+            viewBox="11 145 41 45"
+            className="iconesBarraLateral"
+          ></Icones>
           <h6>ORDENS</h6>
         </div>
         <div
@@ -43,7 +69,10 @@ export default class BarraLateral extends React.Component {
             );
           }}
         >
-          <Icones viewBox="11 97 35 43" className="iconesBarraLateral"></Icones>
+          <Icones
+            viewBox="11 233 36 43"
+            className="iconesBarraLateral"
+          ></Icones>
           <h6>ORDENS EM EXECUÇÃO</h6>
         </div>
         <div
@@ -57,7 +86,7 @@ export default class BarraLateral extends React.Component {
             );
           }}
         >
-          <Icones viewBox="5 190 45 52" className="iconesBarraLateral"></Icones>
+          <Icones viewBox="5 326 41 52" className="iconesBarraLateral"></Icones>
           <h6>POSIÇÃO</h6>
         </div>
         <div
@@ -71,7 +100,7 @@ export default class BarraLateral extends React.Component {
             );
           }}
         >
-          <Icones viewBox="8 277 41 52" className="iconesBarraLateral"></Icones>
+          <Icones viewBox="8 407 41 52" className="iconesBarraLateral"></Icones>
           <h6>HISTÓRICO</h6>
         </div>
         <div

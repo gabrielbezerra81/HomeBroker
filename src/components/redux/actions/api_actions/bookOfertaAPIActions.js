@@ -12,7 +12,7 @@ export const listarBookOfertaOnEnterAction = (codigo_ativo, props) => {
 
     const tabelas = atualizarTabelaAntiga(tabelasAPI);
     if (props) {
-      props.eventSource.close();
+      if (props.eventSource) props.eventSource.close();
     }
     setTimeout(() => {
       const source = atualizarBookAPI(dispatch, {}, codigo_ativo, "book");

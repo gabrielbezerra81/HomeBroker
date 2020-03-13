@@ -44,7 +44,7 @@ export default class Multileg extends React.Component {
 
   modalBody = props => {
     return (
-      <div className="bodyMultileg">
+      <div>
         <Tab.Container
           id="tabBarMultileg"
           onSelect={(key, event) => {
