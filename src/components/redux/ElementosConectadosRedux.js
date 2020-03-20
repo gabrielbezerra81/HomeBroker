@@ -6,7 +6,6 @@ import { MainApp, SubApp } from "MainApp";
 import App from "components/App";
 import { modalHeader } from "components/utils/FormHeader";
 import MainAppReducer from "components/redux/reducers/MainAppReducer";
-import TelaPrincipalReducer from "components/redux/reducers/TelaPrincipalReducer";
 import TelaPrincipal from "components/tela_principal/TelaPrincipal";
 import {
   criarMostrarAppAction,
@@ -30,9 +29,6 @@ import Multileg from "components/forms/multileg_/Multileg";
 import PosicaoEmCustodia from "components/forms/posicao_custodia/PosicaoEmCustodia";
 import PosicaoDetalhada from "components/forms/posicao_custodia/posicao_detalhada/PosicaoDetalhada";
 import RelatorioDetalhado from "components/forms/relatorio_detalhado/RelatorioDetalhado";
-import MultilegReducer from "components/redux/reducers/menu_reducer/MultilegReducer";
-import PosicaoReducer from "components/redux/reducers/menu_reducer/PosicaoReducer";
-import OrdensExecucaoReducer from "components/redux/reducers/menu_reducer/OrdensExecReducer";
 import {
   selecionarAdicionarAbaAction,
   modificarAtributoAbaAction,
@@ -64,6 +60,8 @@ import { Router, Redirect } from "@reach/router";
 import TelaLogin from "components/tela_login/TelaLogin";
 import TelaCadastro from "components/tela_login/TelaCadastro";
 import Tela_THL from "components/forms/thl/Tela_THL";
+import { combinedReducersAppPrincipal } from "components/redux/reducers";
+import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
 
 // @ts-ignore
 export const GlobalContext = React.createContext();
@@ -75,13 +73,6 @@ const combinedReducers = combineReducers({
   MainAppReducer: MainAppReducer
 });
 
-const combinedAppPrincipal = combineReducers({
-  telaPrincipalReducer: TelaPrincipalReducer,
-  multilegReducer: MultilegReducer,
-  posicaoReducer: PosicaoReducer,
-  ordensExecReducer: OrdensExecucaoReducer
-});
-
 //Usada apenas para gerenciar os estados de mostrar ou não os formulários
 const globalStore = createStore(
   combinedReducers,
@@ -91,7 +82,7 @@ const globalStore = createStore(
 
 //Usado para todos os outros dados gerais como os da tela principal
 const storeAppPrincipal = createStore(
-  combinedAppPrincipal,
+  combinedReducersAppPrincipal,
   {},
   composeEnhancers(applyMiddleware(ReduxThunk))
 );
@@ -192,6 +183,11 @@ const mapStateToPropsOpcoesOrdemExec = state => ({
   eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
   multilegAberto: state.telaPrincipalReducer.multilegAberto,
   cotacoesMultileg: state.multilegReducer.cotacoesMultileg
+});
+
+const mapStateToPropsTelaTHL = state => ({
+  ativoPesquisa: state.THLReducer.ativoPesquisa,
+  vencimentosTHL: state.THLReducer.vencimentosTHL
 });
 
 export const MainAppConectado = compose(
@@ -352,9 +348,9 @@ export const RelatorioDetalhadoConectado = connect(
   { context: GlobalContext }
 )(RelatorioDetalhado);
 
-export const TelaTHLConectada = connect(
-  mapStateToPropsGlobalStore,
-  { aumentarZindexAction },
-  null,
-  { context: GlobalContext }
+export const TelaTHLConectada = compose(
+  connect(mapStateToPropsTelaTHL, { mudarVariavelTHLAction }),
+  connect(mapStateToPropsGlobalStore, { aumentarZindexAction }, null, {
+    context: GlobalContext
+  })
 )(Tela_THL);

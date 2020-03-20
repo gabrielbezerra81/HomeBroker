@@ -145,7 +145,7 @@ export default class TelaPrincipal extends React.Component {
                     close={() => {
                       props.abrirItemBarraLateralAction(props, "thlAberta");
                     }}
-                    headerTitle="VENCIMENTOS"
+                    headerTitle=""
                   />
                 </Animate>
               </div>

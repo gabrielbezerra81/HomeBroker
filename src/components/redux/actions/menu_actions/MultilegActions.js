@@ -19,7 +19,7 @@ import {
   verificarMonitorarAtivoAPI
 } from "components/api/API";
 import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
-import { formatarNumero } from "components/redux/reducers/formInputReducer";
+import { formatarNumero } from "components/redux/reducers/boletas_reducer/formInputReducer";
 import { ATUALIZAR_SOURCE_EVENT_MULTILEG } from "constants/ApiActionTypes";
 import {
   erro_validar_qtde,

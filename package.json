@@ -29,6 +29,7 @@
     "react-intl-number-input": "^0.4.0",
     "react-number-format": "^4.3.1",
     "react-overlays": "^2.1.1",
+    "react-perfect-scrollbar": "^1.5.8",
     "react-redux": "^7.2.0",
     "react-repeatable": "^2.0.1",
     "react-router-dom": "^5.1.2",

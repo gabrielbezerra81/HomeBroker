@@ -11,7 +11,7 @@ import {
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
 import InputFormatado from "components/utils/InputFormatado";
-import { formatarNumero } from "components/redux/reducers/formInputReducer";
+import { formatarNumero } from "components/redux/reducers/boletas_reducer/formInputReducer";
 import RowValidade from "components/forms/multileg_/RowValidade";
 import {
   enviarOrdemMultilegAction,
