@@ -3,6 +3,11 @@
   margin-left: 5px;
 }
 
+.containerTHL {
+  display: flex;
+  align-items: center;
+}
+
 .containerMapaCalor {
   width: 70px;
   padding-left: 5px;
@@ -56,9 +61,13 @@
 }
 
 .tabelaVencimentos td {
-  font-size: 0.8rem;
-  padding-left: 4px !important;
-  padding-right: 4px !important;
+  font-size: 0.7rem;
+  padding: 0 !important;
+  height: 0 !important;
+}
+
+.tabelaVencimentos tbody tr:first-child td {
+  padding: 0px 5px !important;
 }
 
 .tabelaVencimentos td,
@@ -71,10 +80,6 @@
 .tabelaVencimentos td:nth-child(2),
 .tabelaVencimentos th:nth-child(2) {
   border-style: solid;
-}
-
-.tabelaVencimentos th {
-  border-top: 0;
 }
 
 .tabelaVencimentos th:first-child {
@@ -97,10 +102,6 @@
   border-right: 0;
 }
 
-.tabelaVencimentos td:nth-child(2) {
-  padding: 0 !important;
-}
-
 .tabelaVencimentos tr:first-child .colunaPrecoLinha div {
   padding: 4px 0.8px;
 }
@@ -109,12 +110,88 @@
   border-right: 1px solid var(--cor-borda);
 }
 
-.tabelaVencimentos .colunaPrecoLinha div {
-  padding: 4px 0.8px;
-  height: 29px;
+.colunaPrecoLinha {
+  height: 100%;
 }
 
-.tabelaVencimentos .colunaPrecoLinha div:first-child {
+.tabelaVencimentos .colunaPrecoLinha > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 10px !important;
+  width: 50%;
+  min-width: 70px;
+}
+
+.precoLinhaMontar {
+  color: #008fca;
+}
+
+.precoLinhaDesmontar {
+  color: #eaad15;
+}
+
+.tabelaVencimentos .colunaPrecoLinha > div:first-child {
   border-right: 1px dashed var(--cor-borda);
   padding: 4px 0.8px;
+}
+
+.containerColunaMes {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+.containerColunaMes > div {
+  padding: 6px 5px !important;
+}
+
+.itemAtivoQtdeVazio {
+  min-width: 164px;
+}
+
+.itemAtivosQtde {
+  background-color: #b7b7b7;
+  border-radius: 5px;
+  padding: 2px 6px 2px 2px;
+  display: flex;
+  align-items: center;
+}
+
+.itemAtivos {
+  background-color: #222;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  padding: 1px 5px;
+  color: #b7b7b7;
+  min-width: 118px;
+  display: flex;
+  align-items: center;
+}
+
+.itemQtde {
+  padding: 1px 5px;
+  color: #314452;
+}
+
+.bookAtivoTHL {
+  display: flex;
+  justify-content: space-evenly;
+  color: #aa88bc;
+}
+
+.imgModeloTHL {
+  height: 16px;
+}
+
+.containerPrecoMontDesmont {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 10px;
+  border-left: 1px dashed var(--cor-borda);
+  padding-left: 5px;
+  color: #fff;
+  min-width: 47px;
 }

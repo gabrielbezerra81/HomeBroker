@@ -4,6 +4,9 @@ import { MDBIcon } from "mdbreact";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import DraggableModal from "components/utils/DraggableModal";
 import { modalHeaderSemBook } from "components/utils/FormHeader";
+import imgModeloEU from "img/modeloEU.png";
+import { ReactComponent as ImgModeloUSA } from "img/modeloUSA2.svg";
+import { ReactComponent as Termometro } from "img/termometro.svg";
 
 class Tela_THL extends React.Component {
   componentDidMount() {
@@ -28,7 +31,7 @@ class Tela_THL extends React.Component {
 
   modalBody = props => {
     return (
-      <div className="flexRow">
+      <div className="containerTHL">
         {mapaCalor(props)}
         {vencimentos(props)}
       </div>
@@ -37,7 +40,11 @@ class Tela_THL extends React.Component {
 }
 
 const mapaCalor = props => {
-  return <div className="containerMapaCalor"></div>;
+  return (
+    <div className="containerMapaCalor">
+      <Termometro></Termometro>
+    </div>
+  );
 };
 
 const vencimentos = props => {
@@ -166,8 +173,13 @@ const renderConteudoTabelaVencimentos = (props, strikes) => {
           <td>{linha.strikeLine}</td>
           <td>
             <div className="colunaDividida colunaPrecoLinha">
-              <div></div>
-              <div></div>
+              <div>
+                <div className="precoLinhaMontar">0,68 | 3k</div>
+                <div className="precoLinhaDesmontar">0,66 | 3k</div>
+              </div>
+              <div>
+                <div className="precoLinhaMontar">0,34 | 2 meses</div>
+              </div>
             </div>
           </td>
           {meses.map(mes => {
@@ -197,14 +209,54 @@ const renderConteudoMes = itemColuna => {
   const conteudo = `${itemColuna.symbol}(${itemColuna.strike})`;
 
   return (
-    <div>
-      <div className="flexJustifyCenter">
-        <div className="mr-2">{conteudo}</div>
-        <div>{300}</div>
+    <div className="containerColunaMes">
+      <div>
+        <div className="itemAtivosQtde">
+          <div className="mr-1 itemAtivos">
+            {renderModelo(itemColuna.modelo)}
+            {conteudo}
+          </div>
+          <div className="itemQtde">{300}</div>
+        </div>
+        <div className="bookAtivoTHL">
+          <div>0,35 | 10k</div>
+          <div>0,36 | 3k</div>
+        </div>
+      </div>
+
+      <div className="containerPrecoMontDesmont">
+        <div>0,37 | 5k</div>
+        <div>0,34 | 3k</div>
       </div>
     </div>
   );
 };
+
+const renderModelo = modelo => {
+  return (
+    <div className="mr-1">
+      {modelo === "EUROPEAN" ? (
+        <img src={imgModeloEU} alt="" className="imgModeloTHL" />
+      ) : (
+        <ImgModeloUSA
+          viewBox="6 -1 17 17"
+          className="imgModeloTHL"
+        ></ImgModeloUSA>
+      )}
+    </div>
+  );
+};
+
+const colunaVazia = (
+  <div className="containerColunaMes">
+    <div className="itemAtivoQtdeVazio"></div>
+
+    <div className="containerPrecoMontDesmont">
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+);
 
 const meses = [
   "01",
