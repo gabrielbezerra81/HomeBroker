@@ -39,4 +39,5 @@ import "./componentes_customizados/InputFormatado.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "./componentes_customizados/SelectANTD.css";
 import "antd/es/select/style/index.css";
-import 'react-perfect-scrollbar/dist/css/styles.css';
+import "antd/es/radio/style/index.css";
+import "react-perfect-scrollbar/dist/css/styles.css";

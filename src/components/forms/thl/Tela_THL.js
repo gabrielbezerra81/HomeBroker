@@ -1,12 +1,20 @@
 import React from "react";
 import { Form, InputGroup, Table } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
+import { Radio, Input } from "antd";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import DraggableModal from "components/utils/DraggableModal";
 import { modalHeaderSemBook } from "components/utils/FormHeader";
 import imgModeloEU from "img/modeloEU.png";
 import { ReactComponent as ImgModeloUSA } from "img/modeloUSA2.svg";
 import { ReactComponent as Termometro } from "img/termometro.svg";
+// import $ from "jquery";
+
+// import "fixed-header-table/css/defaultTheme.css";
+
+// window.jQuery = require("jquery");
+// window.$ = window.jQuery;
+// require("fixed-header-table");
 
 class Tela_THL extends React.Component {
   componentDidMount() {
@@ -42,9 +50,32 @@ class Tela_THL extends React.Component {
 const mapaCalor = props => {
   return (
     <div className="containerMapaCalor">
+      <div>{45}</div>
       <Termometro></Termometro>
+      <div>{35}</div>
+      <Radio.Group
+        className="radioMapaCalor"
+        size="small"
+        defaultValue="semcor"
+      >
+        <Radio style={radioStyle} value={"semcor"}>
+          Sem cor
+        </Radio>
+        <Radio style={radioStyle} value={"montar"}>
+          Montar
+        </Radio>
+        <Radio style={radioStyle} value={"desmontar"}>
+          Desmontar
+        </Radio>
+      </Radio.Group>
     </div>
   );
+};
+
+const radioStyle = {
+  display: "block",
+  height: "30px",
+  lineHeight: "30px"
 };
 
 const vencimentos = props => {
@@ -76,12 +107,14 @@ const vencimentos = props => {
         options={{ maxScrollbarLength: 40 }}
         id="scrollTabelaVencimento"
         onXReachEnd={() => false}
+        className="wrapper"
       >
         <div className="containerTabela">
           <Table
             variant="dark"
             className="text-center tabelaVencimentos"
             bordered
+            id="tabela"
           >
             <thead>
               <tr>
@@ -93,6 +126,7 @@ const vencimentos = props => {
                 <th colSpan="12">2020</th>
               </tr>
             </thead>
+
             <tbody className="verticalAlignColunaTabela">
               <tr>
                 <td></td>
@@ -102,6 +136,7 @@ const vencimentos = props => {
                     <div>Mensal</div>
                   </div>
                 </td>
+                <td></td>
                 <td>Janeiro</td>
                 <td>Fevereiro</td>
                 <td>Março</td>
@@ -140,7 +175,7 @@ const filtrarStrikes = arrayVencimentos => {
 const renderConteudoTabelaVencimentos = (props, strikes) => {
   const conteudoTabelaVencimentos = strikes.map((strike, index) => {
     const linhaStrike = (
-      <tr key={`strikeLine${index}`}>
+      <tr key={`strikeLine${index}`} className="linhasStrike">
         <td>{strike}</td>
         <td>
           <div className="colunaDividida colunaPrecoLinha">
@@ -148,6 +183,7 @@ const renderConteudoTabelaVencimentos = (props, strikes) => {
             <div></div>
           </div>
         </td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -182,6 +218,7 @@ const renderConteudoTabelaVencimentos = (props, strikes) => {
               </div>
             </div>
           </td>
+          <td></td>
           {meses.map(mes => {
             const itemColuna = linha.stocks.find(
               itemColuna => itemColuna.vencimento.split("/")[1] === mes
