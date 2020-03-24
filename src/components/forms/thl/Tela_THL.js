@@ -1,13 +1,13 @@
 import React from "react";
 import { Form, InputGroup, Table } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
-import { Radio, Input } from "antd";
+import { Radio } from "antd";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import DraggableModal from "components/utils/DraggableModal";
 import { modalHeaderSemBook } from "components/utils/FormHeader";
 import imgModeloEU from "img/modeloEU.png";
 import { ReactComponent as ImgModeloUSA } from "img/modeloUSA2.svg";
-import { ReactComponent as Termometro } from "img/termometro.svg";
+import termometro from "img/termometro.svg";
 // import $ from "jquery";
 
 // import "fixed-header-table/css/defaultTheme.css";
@@ -51,7 +51,7 @@ const mapaCalor = props => {
   return (
     <div className="containerMapaCalor">
       <div>{45}</div>
-      <Termometro></Termometro>
+      <img src={termometro} alt="Mapa de calor"></img>
       <div>{35}</div>
       <Radio.Group
         className="radioMapaCalor"
