@@ -290,7 +290,9 @@ const thlData = [
 
 const INITIAL_STATE = {
   ativoPesquisa: "petr4",
-  vencimentosTHL: thlData
+  vencimentosTHL: thlData,
+  faixasMapaCalor: null,
+  seletorMapaCalor: "montar"
 };
 
 export default (state = INITIAL_STATE, action) => {

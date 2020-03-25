@@ -22,6 +22,21 @@ class Tela_THL extends React.Component {
       document.getElementById("thl").style.zIndex = this.props.zIndex + 1;
       this.props.aumentarZindexAction("thl", this.props.zIndex, true);
     }
+
+    if (this.props.seletorMapaCalor === "montar")
+      calculaMapaCalor(valoresMapaMontar, this.props);
+    else if (this.props.seletorMapaCalor === "desmontar")
+      calculaMapaCalor(valoresMapaDesmontar, this.props);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.seletorMapaCalor !== prevProps.seletorMapaCalor) {
+      if (this.props.seletorMapaCalor === "montar")
+        calculaMapaCalor(valoresMapaMontar, this.props);
+      else if (this.props.seletorMapaCalor === "desmontar")
+        calculaMapaCalor(valoresMapaDesmontar, this.props);
+      else this.props.mudarVariavelTHLAction("faixasMapaCalor", null);
+    }
   }
 
   render() {
@@ -50,13 +65,31 @@ class Tela_THL extends React.Component {
 const mapaCalor = props => {
   return (
     <div className="containerMapaCalor">
-      <div>{45}</div>
+      {props.seletorMapaCalor !== "semcor" && props.faixasMapaCalor ? (
+        <div>
+          <div id="faixa4MapaCalor">{props.faixasMapaCalor[3]}</div>
+          <div id="faixa3MapaCalor">{props.faixasMapaCalor[2]}</div>
+          <div id="faixa2MapaCalor">{props.faixasMapaCalor[1]}</div>
+        </div>
+      ) : null}
+      {props.seletorMapaCalor !== "semcor" ? (
+        <div className="labelMinMax">{45}</div>
+      ) : (
+        <div className="divMapaSemCor"></div>
+      )}
       <img src={termometro} alt="Mapa de calor"></img>
-      <div>{35}</div>
+      {props.seletorMapaCalor !== "semcor" ? (
+        <div className="labelMinMax">{35}</div>
+      ) : (
+        <div className="divMapaSemCor"></div>
+      )}
       <Radio.Group
         className="radioMapaCalor"
         size="small"
-        defaultValue="semcor"
+        value={props.seletorMapaCalor}
+        onChange={e =>
+          props.mudarVariavelTHLAction("seletorMapaCalor", e.target.value)
+        }
       >
         <Radio style={radioStyle} value={"semcor"}>
           Sem cor
@@ -173,9 +206,9 @@ const filtrarStrikes = arrayVencimentos => {
 };
 
 const renderConteudoTabelaVencimentos = (props, strikes) => {
-  const conteudoTabelaVencimentos = strikes.map((strike, index) => {
+  const conteudoTabelaVencimentos = strikes.map((strike, indiceStrike) => {
     const linhaStrike = (
-      <tr key={`strikeLine${index}`} className="linhasStrike">
+      <tr key={`strikeLine${indiceStrike}`} className="linhasStrike">
         <td>{strike}</td>
         <td>
           <div className="colunaDividida colunaPrecoLinha">
@@ -203,9 +236,9 @@ const renderConteudoTabelaVencimentos = (props, strikes) => {
       linhaVencimentos => parseInt(linhaVencimentos.strikeLine) === strike
     );
 
-    const linhaVencimentos = vencimentosStrike.map((linha, index) => {
+    const linhaVencimentos = vencimentosStrike.map((linha, indiceLinha) => {
       return (
-        <tr key={`linhaVenc${index}`}>
+        <tr key={`linhaVenc${indiceLinha}`}>
           <td>{linha.strikeLine}</td>
           <td>
             <div className="colunaDividida colunaPrecoLinha">
@@ -219,19 +252,19 @@ const renderConteudoTabelaVencimentos = (props, strikes) => {
             </div>
           </td>
           <td></td>
-          {meses.map(mes => {
+          {meses.map((mes, indiceMes) => {
             const itemColuna = linha.stocks.find(
               itemColuna => itemColuna.vencimento.split("/")[1] === mes
             );
             if (itemColuna) {
               return (
-                <td key={`colunaVenc${index}`}>
+                <td key={`${indiceLinha}|colunaVenc${indiceMes}`}>
                   {renderConteudoMes(itemColuna)}
                 </td>
               );
             }
 
-            return <td key={`colunaVenc${index}`}></td>;
+            return <td key={`${indiceLinha}|colunaVenc${indiceMes}`}></td>;
           })}
         </tr>
       );
@@ -294,6 +327,41 @@ const colunaVazia = (
     </div>
   </div>
 );
+
+// Se selecionar montar ou desmontar, pega um conjunto de valores e faz o calculo das faixas do termometro
+// Calcula 5 faixas de valores
+const calculaMapaCalor = (arrayValores, props) => {
+  const faixas = [0, 0, 0, 0, 0];
+
+  let valores = arrayValores.sort();
+  faixas[0] = valores[0] + ""; // faixa 1 32
+  faixas[4] = valores[valores.length - 1] + ""; // faixa 5 40
+  valores = valores.map(valor => {
+    if (valor < 1) return valor * 100;
+    return valor;
+  });
+
+  let intervalo = valores[valores.length - 1] - 1 - (valores[0] + 1) + 1; // intervalo de 7
+  intervalo = intervalo / 3; // 2.33 -> inteiro 2
+  faixas[1] = `${(valores[0] + 1) / 100}-${(valores[0] + // faixa 2 de 33 a 34
+    Math.floor(intervalo)) /
+    100}`;
+  faixas[3] = `${(valores[valores.length - 1] - Math.floor(intervalo)) / // faixa 4 38 a 39
+    100}-${(valores[valores.length - 1] - 1) / 100}`;
+
+  if ((intervalo * 3) % 3 === 0) intervalo += 1;
+  faixas[2] = `${(valores[0] + Math.ceil(intervalo)) / 100}-${(valores[ // faixa 3 de 35 a 37
+    valores.length - 1
+  ] -
+    Math.ceil(intervalo)) /
+    100}`;
+
+  props.mudarVariavelTHLAction("faixasMapaCalor", faixas);
+};
+
+const valoresMapaMontar = [0.4, 0.32];
+
+const valoresMapaDesmontar = [0.36, 0.32];
 
 const meses = [
   "01",

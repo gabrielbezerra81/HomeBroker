@@ -298,7 +298,7 @@ tbody::before {
   flex-direction: column;
   justify-content: center;
   margin-left: 10px;
-  border-left: 1px dashed var(--cor-borda);
+  border-left: 1px dashed var(--cor-borda-discreta);
   padding-left: 5px;
   color: var(--cor-texto);
   min-width: 47px;
@@ -314,6 +314,14 @@ tbody::before {
   font-size: 0.7rem;
 }
 
+.containerMapaCalor img {
+  margin-right: 10px;
+}
+
+.labelMinMax {
+  margin-right: 10px;
+}
+
 .containerMapaCalor label {
   vertical-align: sub;
 }
@@ -321,4 +329,26 @@ tbody::before {
 .radioMapaCalor label {
   margin-left: 30px;
   color: var(--cor-texto);
+}
+
+.divMapaSemCor {
+  height: 16px;
+}
+
+#faixa4MapaCalor {
+  position: absolute;
+  top: 307px;
+  left: 60px;
+}
+
+#faixa3MapaCalor {
+  position: absolute;
+  top: 337px;
+  left: 60px;
+}
+
+#faixa2MapaCalor {
+  position: absolute;
+  top: 370px;
+  left: 60px;
 }
