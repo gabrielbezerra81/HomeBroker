@@ -87,7 +87,7 @@ const vencimentos = props => {
         </InputGroup>
       </div>
       <PerfectScrollbar
-        options={{ maxScrollbarLength: 40 }}
+        options={{ maxScrollbarLength: 40, suppressScrollY: true }}
         id="scrollTabelaVencimento"
         onXReachEnd={() => false}
         className="wrapper"
@@ -138,9 +138,7 @@ const vencimentos = props => {
           </Table>
         </div>
       </PerfectScrollbar>
-      <div>
-        <h1>THL</h1>
-      </div>
+      <div></div>
     </div>
   );
 };

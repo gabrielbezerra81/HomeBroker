@@ -1,40 +1,58 @@
 #thl {
-  width: 1200px;
+  width: 1190px;
   margin-left: 5px;
+  resize: horizontal;
+  overflow: auto;
+  min-width: 600px; /*  */
+}
+
+#thl .mcontent {
+  /* overflow: hidden;
+  resize: horizontal;
+  min-width: 800px; */
+  margin-right: 0;
+  height: 700px; /*  */
+  padding-bottom: 20px;
 }
 
 .containerTHL {
   display: flex;
   align-items: center;
+  height: 100%;
 }
 
 .containerVencimentos {
-  padding-top: 15px;
+  /* padding-top: 15px;
   padding-right: 3px;
-  flex: 1;
+  flex: 1; */
+  height: 100%;
 }
 
 .containerPesquisaAtivo {
   width: 180px;
+  position: fixed; /*  */
+  top: 45px;
 }
 
 #scrollTabelaVencimento {
-  position: relative;
   border: 1px solid var(--cor-borda);
   margin-top: 0.5rem;
   border-radius: 6px;
-  /* margin-left: 5em; */
-  /* height: 45vh; */
+  position: fixed; /*  */
+  height: 600px; /*  */
+  min-width: 482px;
+  width: calc(100% - 118px); /* 120px de diferença pro mcontent */
+  top: 75px;
 }
 
 #scrollTabelaVencimento .ps__rail-x {
   opacity: 1;
   background: #5c5c5c;
   height: 3px;
-  margin: 0 35%;
-  position: fixed;
-  bottom: 50px !important;
-  left: 110px !important;
+  margin: 0 calc((100% - 200px) / 2);
+  position: relative;
+  bottom: 8px !important;
+  /* left: 110px !important; */
 }
 
 #scrollTabelaVencimento .ps__thumb-x {
@@ -45,7 +63,6 @@
 }
 
 .containerTabela {
-  width: 1050px;
   white-space: nowrap;
   margin-bottom: 15px;
 }
@@ -61,9 +78,10 @@
 .tabelaVencimentos thead {
   position: fixed;
   background-color: var(--light-background-color);
-  width: 1070px;
+  /* max-width: 1050px; */
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
+  width: calc(100% - 120px);
 }
 
 /* espaço antes do cabeçalho fixo */
@@ -75,17 +93,19 @@ tbody::before {
 
 /* tamanho minimo da coluna strike */
 .tabelaVencimentos tr td:first-child {
-  min-width: 46px;
+  min-width: 47px;
 }
 
 /* tamanho minimo do cabeçalho preço da linha */
 .tabelaVencimentos tr:nth-child(2) th:nth-child(2) {
-  min-width: 162px;
+  min-width: 161px;
 }
 
 /* tamanho minimo da coluna 'ano' */
 .tabelaVencimentos tr:nth-child(2) th:nth-child(3) {
-  min-width: 863px;
+  /* min-width: 863px;
+  max-width: 863px; */
+  width: 100%;
 }
 
 /* cabeçalho vencimentos */
@@ -218,6 +238,13 @@ tbody::before {
   border-right: 1px solid var(--cor-borda);
 }
 
+/* primeira coluna Strike, ultimas colunas cabeçalho e ultimas colunas do ultimo mês */
+.tabelaVencimentos tr th:first-child,
+.tabelaVencimentos tr th:last-child,
+.tabelaVencimentos tr td:last-child {
+  border-right: none !important;
+}
+
 .colunaPrecoLinha {
   height: 100%;
 }
@@ -345,19 +372,19 @@ tbody::before {
 
 #faixa4MapaCalor {
   position: absolute;
-  top: 307px;
+  top: 296px;
   left: 60px;
 }
 
 #faixa3MapaCalor {
   position: absolute;
-  top: 337px;
+  top: 324px;
   left: 60px;
 }
 
 #faixa2MapaCalor {
   position: absolute;
-  top: 370px;
+  top: 352px;
   left: 60px;
 }
 
