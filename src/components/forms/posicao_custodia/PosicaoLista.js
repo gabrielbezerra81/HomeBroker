@@ -93,17 +93,17 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {})(PosicaoEmLista);
 
-const renderCV = cv => {
-  return (
-    <div className="divCV">
-      {cv === "compra" ? (
-        <h6 className="cvCompra"> C </h6>
-      ) : (
-        <h6 className="cvVenda"> V </h6>
-      )}
-    </div>
-  );
-};
+// const renderCV = cv => {
+//   return (
+//     <div className="divCV">
+//       {cv === "compra" ? (
+//         <h6 className="cvCompra"> C </h6>
+//       ) : (
+//         <h6 className="cvVenda"> V </h6>
+//       )}
+//     </div>
+//   );
+// };
 
 const listarAtributoComposto = (
   props,

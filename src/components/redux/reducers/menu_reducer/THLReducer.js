@@ -292,7 +292,7 @@ const INITIAL_STATE = {
   ativoPesquisa: "petr4",
   vencimentosTHL: thlData,
   faixasMapaCalor: null,
-  seletorMapaCalor: "montar"
+  seletorMapaCalor: "semcor"
 };
 
 export default (state = INITIAL_STATE, action) => {

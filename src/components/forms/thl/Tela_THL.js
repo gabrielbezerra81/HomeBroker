@@ -1,13 +1,12 @@
 import React from "react";
 import { Form, InputGroup, Table } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
-import { Radio } from "antd";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import DraggableModal from "components/utils/DraggableModal";
 import { modalHeaderSemBook } from "components/utils/FormHeader";
 import imgModeloEU from "img/modeloEU.png";
 import { ReactComponent as ImgModeloUSA } from "img/modeloUSA2.svg";
-import termometro from "img/termometro.svg";
+import MapaCalor from "components/forms/thl/MapaCalor";
 // import $ from "jquery";
 
 // import "fixed-header-table/css/defaultTheme.css";
@@ -55,61 +54,12 @@ class Tela_THL extends React.Component {
   modalBody = props => {
     return (
       <div className="containerTHL">
-        {mapaCalor(props)}
+        {<MapaCalor props={props}></MapaCalor>}
         {vencimentos(props)}
       </div>
     );
   };
 }
-
-const mapaCalor = props => {
-  return (
-    <div className="containerMapaCalor">
-      {props.seletorMapaCalor !== "semcor" && props.faixasMapaCalor ? (
-        <div>
-          <div id="faixa4MapaCalor">{props.faixasMapaCalor[3]}</div>
-          <div id="faixa3MapaCalor">{props.faixasMapaCalor[2]}</div>
-          <div id="faixa2MapaCalor">{props.faixasMapaCalor[1]}</div>
-        </div>
-      ) : null}
-      {props.seletorMapaCalor !== "semcor" ? (
-        <div className="labelMinMax">{45}</div>
-      ) : (
-        <div className="divMapaSemCor"></div>
-      )}
-      <img src={termometro} alt="Mapa de calor"></img>
-      {props.seletorMapaCalor !== "semcor" ? (
-        <div className="labelMinMax">{35}</div>
-      ) : (
-        <div className="divMapaSemCor"></div>
-      )}
-      <Radio.Group
-        className="radioMapaCalor"
-        size="small"
-        value={props.seletorMapaCalor}
-        onChange={e =>
-          props.mudarVariavelTHLAction("seletorMapaCalor", e.target.value)
-        }
-      >
-        <Radio style={radioStyle} value={"semcor"}>
-          Sem cor
-        </Radio>
-        <Radio style={radioStyle} value={"montar"}>
-          Montar
-        </Radio>
-        <Radio style={radioStyle} value={"desmontar"}>
-          Desmontar
-        </Radio>
-      </Radio.Group>
-    </div>
-  );
-};
-
-const radioStyle = {
-  display: "block",
-  height: "30px",
-  lineHeight: "30px"
-};
 
 const vencimentos = props => {
   const strikes = filtrarStrikes(props.vencimentosTHL);
@@ -170,18 +120,18 @@ const vencimentos = props => {
                   </div>
                 </td>
                 <td></td>
-                <td>Janeiro</td>
-                <td>Fevereiro</td>
-                <td>Março</td>
-                <td>Abril</td>
-                <td>Maio</td>
-                <td>Junho</td>
-                <td>Julho</td>
-                <td>Agosto</td>
-                <td>Setembro</td>
-                <td>Outubro</td>
-                <td>Novembro</td>
-                <td>Dezembro</td>
+                <td>{renderColunaNomeMes("01", props)}</td>
+                <td>{renderColunaNomeMes("02", props)}</td>
+                <td>{renderColunaNomeMes("03", props)}</td>
+                <td>{renderColunaNomeMes("04", props)}</td>
+                <td>{renderColunaNomeMes("05", props)}</td>
+                <td>{renderColunaNomeMes("06", props)}</td>
+                <td>{renderColunaNomeMes("07", props)}</td>
+                <td>{renderColunaNomeMes("08", props)}</td>
+                <td>{renderColunaNomeMes("09", props)}</td>
+                <td>{renderColunaNomeMes("10", props)}</td>
+                <td>{renderColunaNomeMes("11", props)}</td>
+                <td>{renderColunaNomeMes("12", props)}</td>
               </tr>
               {renderConteudoTabelaVencimentos(props, strikes)}
             </tbody>
@@ -217,18 +167,18 @@ const renderConteudoTabelaVencimentos = (props, strikes) => {
           </div>
         </td>
         <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>{renderColunaNomeMes("01", props, true)}</td>
+        <td>{renderColunaNomeMes("02", props, true)}</td>
+        <td>{renderColunaNomeMes("03", props, true)}</td>
+        <td>{renderColunaNomeMes("04", props, true)}</td>
+        <td>{renderColunaNomeMes("05", props, true)}</td>
+        <td>{renderColunaNomeMes("06", props, true)}</td>
+        <td>{renderColunaNomeMes("07", props, true)}</td>
+        <td>{renderColunaNomeMes("08", props, true)}</td>
+        <td>{renderColunaNomeMes("09", props, true)}</td>
+        <td>{renderColunaNomeMes("10", props, true)}</td>
+        <td>{renderColunaNomeMes("11", props, true)}</td>
+        <td>{renderColunaNomeMes("12", props, true)}</td>
       </tr>
     );
 
@@ -263,8 +213,13 @@ const renderConteudoTabelaVencimentos = (props, strikes) => {
                 </td>
               );
             }
+            const possuiVencimento = verificarMesPossuiVencimento(props, mes);
 
-            return <td key={`${indiceLinha}|colunaVenc${indiceMes}`}></td>;
+            return (
+              <td key={`${indiceLinha}|colunaVenc${indiceMes}`}>
+                {possuiVencimento ? colunaVazia : null}
+              </td>
+            );
           })}
         </tr>
       );
@@ -277,16 +232,21 @@ const renderConteudoTabelaVencimentos = (props, strikes) => {
 
 const renderConteudoMes = itemColuna => {
   const conteudo = `${itemColuna.symbol}(${itemColuna.strike})`;
+  const custodia = verificaAtivoCustodia(itemColuna);
 
   return (
     <div className="containerColunaMes">
       <div>
-        <div className="itemAtivosQtde">
-          <div className="mr-1 itemAtivos">
+        <div
+          className={`itemAtivosQtde ${
+            custodia ? "itemAtivosQtdeCustodia" : ""
+          }`}
+        >
+          <div className="itemAtivos">
             {renderModelo(itemColuna.modelo)}
             {conteudo}
           </div>
-          <div className="itemQtde">{300}</div>
+          {custodia ? <div className="itemQtde">{300}</div> : null}
         </div>
         <div className="bookAtivoTHL">
           <div>0,35 | 10k</div>
@@ -319,8 +279,9 @@ const renderModelo = modelo => {
 
 const colunaVazia = (
   <div className="containerColunaMes">
-    <div className="itemAtivoQtdeVazio"></div>
-
+    <div>
+      <div className="itemAtivosQtde"></div>
+    </div>
     <div className="containerPrecoMontDesmont">
       <div></div>
       <div></div>
@@ -359,9 +320,44 @@ const calculaMapaCalor = (arrayValores, props) => {
   props.mudarVariavelTHLAction("faixasMapaCalor", faixas);
 };
 
-const valoresMapaMontar = [0.4, 0.32];
+const verificaAtivoCustodia = itemColuna => {
+  let custodia = false;
 
-const valoresMapaDesmontar = [0.36, 0.32];
+  return custodia;
+};
+
+const renderColunaNomeMes = (mes, props, textoVazio = false) => {
+  let nomeMes = "";
+
+  // Texto com o nome do mês nas colunas de mês ou vazio nas linhas de Strike
+  if (!textoVazio) {
+    nomeMes = mesesExtenso[Number(mes) - 1];
+  }
+  if (!verificarMesPossuiVencimento(props, mes)) return nomeMes;
+  return (
+    <div style={{ display: "flex" }}>
+      <div className="divNomeMes">{nomeMes}</div>
+      <div className="containerPrecoMontDesmont">
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  );
+};
+
+const verificarMesPossuiVencimento = (props, mes) => {
+  const stocks = [];
+
+  props.vencimentosTHL.forEach(linha => {
+    linha.stocks.forEach(stock => {
+      stocks.push(stock);
+    });
+  });
+
+  return stocks.some(stock => stock.vencimento.split("/")[1] === mes);
+};
+
+export default Tela_THL;
 
 const meses = [
   "01",
@@ -378,4 +374,21 @@ const meses = [
   "12"
 ];
 
-export default Tela_THL;
+const mesesExtenso = [
+  "Janeiro",
+  "Fevereiro",
+  "Março",
+  "Abril",
+  "Maio",
+  "Junho",
+  "Julho",
+  "Agosto",
+  "Setembro",
+  "Outubro",
+  "Novembro",
+  "Dezembro"
+];
+
+const valoresMapaMontar = [0.4, 0.32];
+
+const valoresMapaDesmontar = [0.36, 0.32];
