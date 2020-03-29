@@ -32,8 +32,10 @@
   border-radius: 6px;
   position: fixed; /*  */
   height: 600px; /*  */
-  min-width: 482px;
-  width: calc(100% - 118px); /* 120px de diferença pro mcontent */
+  min-width: 467px;
+  width: calc(
+    100% - 133px
+  ); /* 120px de diferença pro mcontent + 15px scrollbar y */
   top: 75px;
 }
 
@@ -51,35 +53,24 @@
 #scrollTabelaVencimento .ps__thumb-x {
   height: 8px;
   margin-bottom: -4px;
-  /* background: #fff; */
-  position: relative;
 }
 
 #scrollTabelaVencimento .ps__rail-y {
-  /* opacity: 1;
-  background: #5c5c5c;
-  width: 3px;
-
-  position: fixed;
+  margin: 210px 0;
   top: 83px !important;
-
-  right: 45px !important;
-    */
-  /* margin-bottom: 150px;
-  margin-top: 150px; */
-  z-index: 999;
+  position: fixed;
+  width: 3px;
+  background: #5c5c5c;
+  opacity: 1;
+  right: 13px !important;
 }
 
 #scrollTabelaVencimento .ps__thumb-y {
-  /* width: 8px; */
-  /* 
-  margin-bottom: -4px; */
-  /* background: #fff; */
-  /* position: relative; */
+  width: 8px;
+  margin-right: -4px;
 }
 
 .containerTabela {
-  /* margin-bottom: 15px; */
 }
 
 .tabelaVencimentos {
@@ -105,7 +96,7 @@
 
 .tabelaVencimentos thead tr:first-child th {
   position: fixed;
-  width: calc(100% - 120px);
+  width: calc(100% - 135px);
   z-index: 2;
   background-color: var(--light-background-color);
   left: 110px;
@@ -166,8 +157,17 @@ tbody::before {
 .tabelaVencimentos tbody tr:nth-child(1n + 2) td:nth-child(2) {
   position: -webkit-sticky; /* for Safari */
   position: sticky;
-  background-color: var(--light-background-color) !important;
   top: 0px; /* Para elementos móveis verticalmente nao é necessario Top, pois vão subir e se esconder atras do cabeçalho */
+}
+
+.tabelaVencimentos tbody tr:nth-child(even) td:nth-child(1),
+.tabelaVencimentos tbody tr:nth-child(even) td:nth-child(2) {
+  background-color: var(--light-background-color) !important;
+}
+
+.tabelaVencimentos tbody tr:nth-child(odd) td:nth-child(1),
+.tabelaVencimentos tbody tr:nth-child(odd) td:nth-child(2) {
+  background-color: var(--background-color) !important;
 }
 
 .tabelaVencimentos tbody tr:first-child td {
@@ -225,24 +225,8 @@ tbody::before {
   border-right: none !important;
 }
 
-.tabelaVencimentos th:first-child {
-  border-left: 0;
-}
-
-.tabelaVencimentos th:last-child {
-  border-right: 0;
-}
-
 .tabelaVencimentos td {
   border-bottom: 0;
-}
-
-.tabelaVencimentos td:first-child {
-  border-left: 0;
-}
-
-.tabelaVencimentos td:last-child {
-  border-right: 0;
 }
 
 .tabelaVencimentos tr:first-child .colunaPrecoLinha div {
