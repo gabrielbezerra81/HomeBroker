@@ -2,6 +2,7 @@ import React from "react";
 import { Form, InputGroup, Table } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import PerfectScrollbar from "react-perfect-scrollbar";
+import ReactResizeDetector from "react-resize-detector";
 import DraggableModal from "components/utils/DraggableModal";
 import { modalHeaderSemBook } from "components/utils/FormHeader";
 import imgModeloEU from "img/modeloEU.png";
@@ -42,26 +43,32 @@ class Tela_THL extends React.Component {
     return (
       <DraggableModal
         id="thl"
-        renderModalBody={() => this.modalBody(this.props)}
+        renderModalBody={() => this.modalBody(this.props, this)}
         renderConfigComplementar={this.props.configComplementarAberto}
         renderHeader={() =>
           modalHeaderSemBook(this.props, this.props.headerTitle, "border-green")
         }
-      />
+      ></DraggableModal>
     );
   }
 
-  modalBody = props => {
+  modalBody = (props, thiss) => {
     return (
       <div className="containerTHL">
         {<MapaCalor props={props}></MapaCalor>}
-        {vencimentos(props)}
+        {vencimentos(props, thiss)}
+        <ReactResizeDetector
+          handleWidth
+          onResize={(w, h) => {
+            thiss._scrollBarRef.updateScroll();
+          }}
+        />
       </div>
     );
   };
 }
 
-const vencimentos = props => {
+const vencimentos = (props, thiss) => {
   const strikes = filtrarStrikes(props.vencimentosTHL);
 
   return (
@@ -80,19 +87,34 @@ const vencimentos = props => {
             }
           />
           <InputGroup.Append className="inputAtivoAppend">
-            <span className="input-group-text iconeProcurar divClicavel">
+            <span
+              className="input-group-text iconeProcurar divClicavel"
+              onClick={() => props.pesquisarAtivoTHLAction(props.ativoPesquisa)}
+            >
               <MDBIcon icon="search" />
             </span>
           </InputGroup.Append>
         </InputGroup>
       </div>
       <PerfectScrollbar
-        options={{ maxScrollbarLength: 40, suppressScrollY: true }}
+        ref={ref => {
+          thiss._scrollBarRef = ref;
+        }}
+        options={{
+          maxScrollbarLength: 40,
+          minScrollbarLength: 40,
+          suppressScrollY: false
+        }}
         id="scrollTabelaVencimento"
-        onXReachEnd={() => false}
-        className="wrapper"
+        className="wrapper containerTabela"
+        onYReachEnd={a => {
+          a.scrollTop = 247;
+        }}
+        onScrollDown={a => {
+          if (a.scrollTop >= 247) a.scrollTop = 247;
+        }}
       >
-        <div className="containerTabela">
+        <div className="">
           <Table
             variant="dark"
             className="text-center tabelaVencimentos"
@@ -106,7 +128,9 @@ const vencimentos = props => {
               <tr>
                 <th>Strike</th>
                 <th>Preço da linha</th>
-                <th colSpan="12">2020</th>
+                <th colSpan="12">
+                  <div style={{ paddingLeft: "5px" }}>2020</div>
+                </th>
               </tr>
             </thead>
 
@@ -119,7 +143,7 @@ const vencimentos = props => {
                     <div>Mensal</div>
                   </div>
                 </td>
-                <td></td>
+                {/* <td></td> */}
                 <td>{renderColunaNomeMes("01", props)}</td>
                 <td>{renderColunaNomeMes("02", props)}</td>
                 <td>{renderColunaNomeMes("03", props)}</td>
@@ -157,14 +181,16 @@ const renderConteudoTabelaVencimentos = (props, strikes) => {
   const conteudoTabelaVencimentos = strikes.map((strike, indiceStrike) => {
     const linhaStrike = (
       <tr key={`strikeLine${indiceStrike}`} className="linhasStrike">
-        <td>{strike}</td>
+        <td className="divClicavel" tabIndex={0}>
+          {strike}
+        </td>
         <td>
           <div className="colunaDividida colunaPrecoLinha">
             <div></div>
             <div></div>
           </div>
         </td>
-        <td></td>
+        {/* <td></td> */}
         <td>{renderColunaNomeMes("01", props, true)}</td>
         <td>{renderColunaNomeMes("02", props, true)}</td>
         <td>{renderColunaNomeMes("03", props, true)}</td>
@@ -199,7 +225,7 @@ const renderConteudoTabelaVencimentos = (props, strikes) => {
               </div>
             </div>
           </td>
-          <td></td>
+          {/* <td></td> */}
           {meses.map((mes, indiceMes) => {
             const itemColuna = linha.stocks.find(
               itemColuna => itemColuna.vencimento.split("/")[1] === mes
@@ -240,21 +266,29 @@ const renderConteudoMes = itemColuna => {
             custodia ? "itemAtivosQtdeCustodia" : ""
           }`}
         >
-          <div className="itemAtivos">
+          <div className="itemAtivos divClicavel" tabIndex={0}>
             {renderModelo(itemColuna.modelo)}
             {conteudo}
           </div>
           {custodia ? <div className="itemQtde">{300}</div> : null}
         </div>
         <div className="bookAtivoTHL">
-          <div>0,35 | 10k</div>
-          <div>0,36 | 3k</div>
+          <div className="divClicavel" tabIndex={0}>
+            0,35 | 10k
+          </div>
+          <div className="divClicavel" tabIndex={0}>
+            0,36 | 3k
+          </div>
         </div>
       </div>
 
       <div className="containerPrecoMontDesmont">
-        <div>0,37 | 5k</div>
-        <div>0,34 | 3k</div>
+        <div className="divClicavel" tabIndex={0}>
+          0,37 | 5k
+        </div>
+        <div className="divClicavel" tabIndex={0}>
+          0,34 | 3k
+        </div>
       </div>
     </div>
   );

@@ -28,7 +28,8 @@ import {
   url_informacoesUsuario_token,
   url_realizarCadastro_dados,
   url_ordensExecReativas_idUser,
-  url_posicaoReativa_idUser
+  url_posicaoReativa_idUser,
+  url_pesquisarListaStrike_codigo
 } from "components/api/url";
 import {
   MUDAR_VARIAVEL_POSICAO_CUSTODIA,
@@ -756,6 +757,18 @@ export const buscarInformacoesUsuarioAPI = token => {
       console.log(erro);
       alert(erro_realizar_login);
       return null;
+    });
+};
+
+export const pesquisarListaStrikeTHLAPI = ativo => {
+  return request
+    .get(url_base + url_pesquisarListaStrike_codigo + ativo)
+    .retry(3)
+    .then(response => response.body)
+    .catch(erro => {
+      console.log(erro);
+      alert(erro_pesquisar_ativo);
+      return [];
     });
 };
 

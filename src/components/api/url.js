@@ -44,3 +44,6 @@ export const url_informacoesUsuario_token = "auth/info"
 
 //Cadastro 
 export const url_realizarCadastro_dados = "auth/signup"
+
+//THL
+export const url_pesquisarListaStrike_codigo = "stocks/strikes/integer/"

@@ -1,15 +1,14 @@
 #thl {
-  width: 1190px;
+  /* width: calc(100% - 95px); */
+  width: 1200px;
   margin-left: 5px;
   resize: horizontal;
   overflow: auto;
   min-width: 600px; /*  */
+  overflow-y: hidden;
 }
 
 #thl .mcontent {
-  /* overflow: hidden;
-  resize: horizontal;
-  min-width: 800px; */
   margin-right: 0;
   height: 700px; /*  */
   padding-bottom: 20px;
@@ -18,13 +17,6 @@
 .containerTHL {
   display: flex;
   align-items: center;
-  height: 100%;
-}
-
-.containerVencimentos {
-  /* padding-top: 15px;
-  padding-right: 3px;
-  flex: 1; */
   height: 100%;
 }
 
@@ -49,22 +41,45 @@
   opacity: 1;
   background: #5c5c5c;
   height: 3px;
-  margin: 0 calc((100% - 200px) / 2);
-  position: relative;
-  bottom: 8px !important;
-  /* left: 110px !important; */
+  margin: 0 calc((100% - 300px) / 2);
+  position: fixed;
+  bottom: 12px !important;
+  left: 110px !important;
+  z-index: 999;
 }
 
 #scrollTabelaVencimento .ps__thumb-x {
   height: 8px;
   margin-bottom: -4px;
-  background: #fff;
-  position: absolute;
+  /* background: #fff; */
+  position: relative;
+}
+
+#scrollTabelaVencimento .ps__rail-y {
+  /* opacity: 1;
+  background: #5c5c5c;
+  width: 3px;
+
+  position: fixed;
+  top: 83px !important;
+
+  right: 45px !important;
+    */
+  /* margin-bottom: 150px;
+  margin-top: 150px; */
+  z-index: 999;
+}
+
+#scrollTabelaVencimento .ps__thumb-y {
+  /* width: 8px; */
+  /* 
+  margin-bottom: -4px; */
+  /* background: #fff; */
+  /* position: relative; */
 }
 
 .containerTabela {
-  white-space: nowrap;
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
 }
 
 .tabelaVencimentos {
@@ -76,19 +91,45 @@
 
 /* cabeçalho fixo */
 .tabelaVencimentos thead {
-  position: fixed;
-  background-color: var(--light-background-color);
-  /* max-width: 1050px; */
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
+  z-index: 2;
+}
+
+.tabelaVencimentos thead th {
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 2;
+  background-color: var(--light-background-color);
+}
+
+.tabelaVencimentos thead tr:first-child th {
+  position: fixed;
   width: calc(100% - 120px);
+  z-index: 2;
+  background-color: var(--light-background-color);
+  left: 110px;
+}
+
+thead th:first-child {
+  left: 0;
+  z-index: 2;
+}
+
+thead th:nth-child(3) {
+  z-index: 1;
+}
+
+.tabelaVencimentos tbody {
+  overflow-y: hidden;
+  max-height: 500px;
 }
 
 /* espaço antes do cabeçalho fixo */
 tbody::before {
   content: "";
   display: table-row;
-  height: 59px;
+  height: 30px;
 }
 
 /* tamanho minimo da coluna strike */
@@ -96,16 +137,14 @@ tbody::before {
   min-width: 47px;
 }
 
-/* tamanho minimo do cabeçalho preço da linha */
+/* cabeçalho coluna 2 preço da linha */
 .tabelaVencimentos tr:nth-child(2) th:nth-child(2) {
-  min-width: 161px;
+  z-index: 2;
 }
 
-/* tamanho minimo da coluna 'ano' */
+/* coluna 'ano' */
 .tabelaVencimentos tr:nth-child(2) th:nth-child(3) {
-  /* min-width: 863px;
-  max-width: 863px; */
-  width: 100%;
+  text-align: start;
 }
 
 /* cabeçalho vencimentos */
@@ -114,59 +153,45 @@ tbody::before {
   border-top-left-radius: 4px;
 }
 
+.tabelaVencimentos tr:nth-child(2) th:nth-child(2) {
+  left: 47px;
+}
+
+.tabelaVencimentos tr:nth-child(2) th {
+  top: 30px;
+}
+
 /* colunas strike e preço das linhas fixas */
+.tabelaVencimentos tbody tr:nth-child(1n + 2) td:nth-child(1),
+.tabelaVencimentos tbody tr:nth-child(1n + 2) td:nth-child(2) {
+  position: -webkit-sticky; /* for Safari */
+  position: sticky;
+  background-color: var(--light-background-color) !important;
+  top: 0px; /* Para elementos móveis verticalmente nao é necessario Top, pois vão subir e se esconder atras do cabeçalho */
+}
 
-/* colunas de dados fixas */
-.tabelaVencimentos tbody tr td:nth-child(1),
-.tabelaVencimentos tbody tr td:nth-child(2) {
-  position: fixed;
+.tabelaVencimentos tbody tr:first-child td {
+  position: -webkit-sticky; /* for Safari */
+  position: sticky;
   background-color: var(--light-background-color);
+  top: 60px;
+  z-index: 2;
+  border-bottom: 1px solid var(--cor-borda) !important;
 }
 
-/* coluna de dados Strike */
+.tabelaVencimentos tbody tr:first-child td:nth-child(1n + 3) {
+  left: 0px;
+  z-index: 1;
+}
+
 .tabelaVencimentos tbody tr td:nth-child(1) {
-  min-height: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  left: 0px;
 }
 
-/* primeira coluna vazia Strike */
-.tabelaVencimentos tbody tr:first-child td:nth-child(1) {
-  min-height: 22px;
-}
-
-/* colunas apenas com o Strike */
-.tabelaVencimentos .linhasStrike td:first-child {
-  min-height: 17px;
-}
-
-/* cabeçalho colunas de dados preço da linha */
-.tabelaVencimentos tbody tr:first-child td:nth-child(2) {
-  min-width: 162px;
-  min-height: 22px;
-  left: 156px;
-}
-
-/* altura colunas de dados preço da linha */
 .tabelaVencimentos tbody tr td:nth-child(2) {
-  min-width: 162px;
-  min-height: 52px;
-  left: 156px;
-  overflow-y: hidden;
+  left: 47px;
 }
-
-.linhasStrike::after {
-  content: "";
-  display: block;
-  height: 17px;
-}
-
-.tabelaVencimentos tbody tr td:nth-child(3)::before {
-  content: "";
-  display: block;
-  width: 197px;
-}
+/* posicionamento sticky */
 
 .tabelaVencimentos tbody tr:first-child td {
   font-size: 0.9rem;
@@ -195,19 +220,9 @@ tbody::before {
   border-left-width: 1px;
 }
 
-.tabelaVencimentos tr:first-child th:nth-child(1) {
-  position: relative;
-}
-
 .tabelaVencimentos th:nth-child(1),
 .tabelaVencimentos td:nth-child(1) {
-  border-right: none;
-  /* margin-top: -1px;
-  position: fixed;
-  left: 110px;
-  width: 74px;
-  top: auto;
-  border-top-width: 1px; */
+  border-right: none !important;
 }
 
 .tabelaVencimentos th:first-child {
@@ -254,7 +269,7 @@ tbody::before {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 6px 10px !important;
+  padding: 0 10px !important;
   width: 50%;
   min-width: 70px;
 }
@@ -393,4 +408,8 @@ tbody::before {
   width: 100%;
   max-width: 166px;
   min-height: 16px;
+}
+
+.linhasStrike .divClicavel {
+  outline: none !important;
 }

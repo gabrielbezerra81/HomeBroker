@@ -85,7 +85,7 @@
   transform: translateZ(0) scale(1, 1) !important;
   -webkit-transform-style: preserve-3d;
   -webkit-backface-visibility: hidden;*/
-  will-change: opacity;
+  /*  z-index: 1; */
 }
 
 .divClicavel:hover {

@@ -60,10 +60,7 @@ class BSModal extends Component {
 
 const mapStateToProps = state => ({});
 
-export default connect(
-  mapStateToProps,
-  {}
-)(BSModal);
+export default connect(mapStateToProps, {})(BSModal);
 
 /*
 const aplicarPosicao = id => {

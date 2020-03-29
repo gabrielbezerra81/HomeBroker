@@ -61,7 +61,10 @@ import TelaLogin from "components/tela_login/TelaLogin";
 import TelaCadastro from "components/tela_login/TelaCadastro";
 import Tela_THL from "components/forms/thl/Tela_THL";
 import { combinedReducersAppPrincipal } from "components/redux/reducers";
-import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
+import {
+  mudarVariavelTHLAction,
+  pesquisarAtivoTHLAction
+} from "components/redux/actions/menu_actions/THLActions";
 
 // @ts-ignore
 export const GlobalContext = React.createContext();
@@ -189,7 +192,8 @@ const mapStateToPropsTelaTHL = state => ({
   ativoPesquisa: state.THLReducer.ativoPesquisa,
   vencimentosTHL: state.THLReducer.vencimentosTHL,
   faixasMapaCalor: state.THLReducer.faixasMapaCalor,
-  seletorMapaCalor: state.THLReducer.seletorMapaCalor
+  seletorMapaCalor: state.THLReducer.seletorMapaCalor,
+  listaStrikes: state.THLReducer.listaStrikes
 });
 
 export const MainAppConectado = compose(
@@ -351,7 +355,10 @@ export const RelatorioDetalhadoConectado = connect(
 )(RelatorioDetalhado);
 
 export const TelaTHLConectada = compose(
-  connect(mapStateToPropsTelaTHL, { mudarVariavelTHLAction }),
+  connect(mapStateToPropsTelaTHL, {
+    mudarVariavelTHLAction,
+    pesquisarAtivoTHLAction
+  }),
   connect(mapStateToPropsGlobalStore, { aumentarZindexAction }, null, {
     context: GlobalContext
   })
