@@ -107,12 +107,6 @@ const vencimentos = (props, thiss) => {
         }}
         id="scrollTabelaVencimento"
         className="wrapper containerTabela"
-        onYReachEnd={a => {
-          a.scrollTop = 247;
-        }}
-        onScrollDown={a => {
-          if (a.scrollTop >= 247) a.scrollTop = 247;
-        }}
       >
         <div className="">
           <Table
