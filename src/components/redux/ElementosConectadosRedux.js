@@ -190,10 +190,11 @@ const mapStateToPropsOpcoesOrdemExec = state => ({
 
 const mapStateToPropsTelaTHL = state => ({
   ativoPesquisa: state.THLReducer.ativoPesquisa,
-  vencimentosTHL: state.THLReducer.vencimentosTHL,
+  opcoesStrike: state.THLReducer.opcoesStrike,
   faixasMapaCalor: state.THLReducer.faixasMapaCalor,
   seletorMapaCalor: state.THLReducer.seletorMapaCalor,
-  listaStrikes: state.THLReducer.listaStrikes
+  listaStrikes: state.THLReducer.listaStrikes,
+  strikeSelecionado: state.THLReducer.strikeSelecionado
 });
 
 export const MainAppConectado = compose(

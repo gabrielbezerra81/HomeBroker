@@ -221,3 +221,14 @@ table > tbody > tr:nth-child(odd) > th {
   border-radius: 0.25rem;
   transition: box-shadow 0.15s ease-in-out;
 }
+
+.containerTabelaRedonda {
+  border: 1px solid var(--cor-borda) !important;
+  border-radius: 6px;
+}
+
+.containerTabelaRedonda table {
+  border-style: hidden !important;
+  border-radius: 6px;
+  margin-bottom: 0;
+}

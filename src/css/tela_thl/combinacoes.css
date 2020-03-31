@@ -1,0 +1,67 @@
+.containerCombinacoesTHL {
+  position: fixed;
+  bottom: 40px;
+  width: calc(100% - 133px);
+}
+
+.tabelaCombinacoes {
+  border-color: var(--cor-borda) !important;
+  overflow: visible;
+}
+
+.tabelaCombinacoes .react-bs-container-header,
+.tabelaCombinacoes thead,
+.tabelaCombinacoes th {
+  overflow: visible !important;
+}
+
+.tabelaCombinacoes .react-bs-container-header {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.tabelaCombinacoes .react-bs-container-body {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.tabelaCombinacoes th,
+.tabelaCombinacoes td {
+  border-color: var(--cor-borda) !important;
+  text-align: center !important;
+}
+
+.tabelaCombinacoes td {
+  padding: 5px 3px !important;
+  font-size: 0.7rem;
+  vertical-align: middle;
+}
+
+.tabelaCombinacoes th {
+  border-bottom-width: 2px !important;
+}
+
+.tabelaCombinacoes input,
+.tabelaCombinacoes select {
+  height: 20px;
+  background-color: #333;
+  border-color: #333;
+  color: var(--cor-texto) !important;
+  font-size: 0.7rem;
+  text-align: center !important;
+}
+
+.tabelaCombinacoes select {
+  padding: 0;
+  text-align-last: right;
+}
+
+.tabelaCombinacoes input:focus,
+.tabelaCombinacoes select:focus {
+  background-color: #333;
+  border-color: #333;
+}
+
+.tabelaCombinacoes select option {
+  color: var(--cor-texto) !important;
+}

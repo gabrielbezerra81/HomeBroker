@@ -32,6 +32,7 @@ import "./relatorio_detalhado/RelatorioDetalhado.css";
 import "./tela_principal/TelaLogin.css";
 import "./tela_principal/TelaCadastro.css";
 import "./tela_thl/thl.css";
+import "./tela_thl/combinacoes.css";
 
 import "./componentes_customizados/CustomCheckbox.css";
 import "./componentes_customizados/InputFormatado.css";
@@ -41,3 +42,4 @@ import "./componentes_customizados/SelectANTD.css";
 import "antd/es/select/style/index.css";
 import "antd/es/radio/style/index.css";
 import "react-perfect-scrollbar/dist/css/styles.css";
+import "react-bootstrap-table/dist/react-bootstrap-table-all.min.css";

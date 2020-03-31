@@ -1,16 +1,19 @@
+/* Abrange a tela thl, tabela de vencimento e mapa de calor */
+
 #thl {
   /* width: calc(100% - 95px); */
   width: 1200px;
   margin-left: 5px;
   resize: horizontal;
   overflow: auto;
-  min-width: 600px; /*  */
+  min-width: 967px; /*  */
   overflow-y: hidden;
+  
 }
 
 #thl .mcontent {
   margin-right: 0;
-  height: 700px; /*  */
+  height: 860px; /*  */
   padding-bottom: 20px;
 }
 
@@ -31,7 +34,7 @@
   margin-top: 0.5rem;
   border-radius: 6px;
   position: fixed; /*  */
-  height: 600px; /*  */
+  height: 540px; /*  */
   min-width: 467px;
   width: calc(
     100% - 133px
@@ -43,9 +46,9 @@
   opacity: 1;
   background: #5c5c5c;
   height: 3px;
-  margin: 0 calc((100% - 300px) / 2);
+  margin: 0 calc((100% - 310px) / 2);
   position: fixed;
-  bottom: 12px !important;
+  bottom: 230px !important;
   left: 110px !important;
   z-index: 999;
 }
@@ -56,7 +59,7 @@
 }
 
 #scrollTabelaVencimento .ps__rail-y {
-  margin: 210px 0;
+  margin: 180px 0;
   top: 83px !important;
   position: fixed;
   width: 3px;
@@ -117,7 +120,7 @@ thead th:nth-child(3) {
 }
 
 /* espaço antes do cabeçalho fixo */
-tbody::before {
+.tabelaVencimentos tbody::before {
   content: "";
   display: table-row;
   height: 30px;
@@ -321,11 +324,15 @@ tbody::before {
 .bookAtivoTHL {
   display: flex;
   justify-content: space-evenly;
+}
+
+.corTextoBook {
   color: #aa88bc;
 }
 
 .imgModeloTHL {
-  height: 16px;
+  height: 15px;
+  vertical-align: text-top;
 }
 
 .containerPrecoMontDesmont {

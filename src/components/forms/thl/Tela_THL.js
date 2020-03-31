@@ -8,6 +8,7 @@ import { modalHeaderSemBook } from "components/utils/FormHeader";
 import imgModeloEU from "img/modeloEU.png";
 import { ReactComponent as ImgModeloUSA } from "img/modeloUSA2.svg";
 import MapaCalor from "components/forms/thl/MapaCalor";
+import Combinacoes from "components/forms/thl/Combinacoes";
 // import $ from "jquery";
 
 // import "fixed-header-table/css/defaultTheme.css";
@@ -69,7 +70,7 @@ class Tela_THL extends React.Component {
 }
 
 const vencimentos = (props, thiss) => {
-  const strikes = filtrarStrikes(props.vencimentosTHL);
+  const strikes = filtrarStrikes(props.opcoesStrike);
 
   return (
     <div className="containerVencimentos">
@@ -156,7 +157,8 @@ const vencimentos = (props, thiss) => {
           </Table>
         </div>
       </PerfectScrollbar>
-      <div></div>
+
+      <Combinacoes props={props}></Combinacoes>
     </div>
   );
 };
@@ -200,7 +202,7 @@ const renderConteudoTabelaVencimentos = (props, strikes) => {
       </tr>
     );
 
-    const vencimentosStrike = props.vencimentosTHL.filter(
+    const vencimentosStrike = props.opcoesStrike.filter(
       linhaVencimentos => parseInt(linhaVencimentos.strikeLine) === strike
     );
 
@@ -266,7 +268,7 @@ const renderConteudoMes = itemColuna => {
           </div>
           {custodia ? <div className="itemQtde">{300}</div> : null}
         </div>
-        <div className="bookAtivoTHL">
+        <div className="bookAtivoTHL corTextoBook">
           <div className="divClicavel" tabIndex={0}>
             0,35 | 10k
           </div>
@@ -374,7 +376,7 @@ const renderColunaNomeMes = (mes, props, textoVazio = false) => {
 const verificarMesPossuiVencimento = (props, mes) => {
   const stocks = [];
 
-  props.vencimentosTHL.forEach(linha => {
+  props.opcoesStrike.forEach(linha => {
     linha.stocks.forEach(stock => {
       stocks.push(stock);
     });

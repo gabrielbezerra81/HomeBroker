@@ -395,7 +395,7 @@ const thlData = [
 
 const INITIAL_STATE = {
   ativoPesquisa: "petr4",
-  vencimentosTHL: thlData,
+  opcoesStrike: thlData,
   faixasMapaCalor: null,
   seletorMapaCalor: "semcor",
   listaStrikes: [
@@ -432,7 +432,8 @@ const INITIAL_STATE = {
     40.0,
     41.0,
     44.0
-  ]
+  ],
+  strikeSelecionado: "28"
 };
 
 export default (state = INITIAL_STATE, action) => {
