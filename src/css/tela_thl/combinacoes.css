@@ -1,22 +1,20 @@
 .containerCombinacoesTHL {
-  height: 785px;
-  display: flex;
-  align-items: flex-end;
   margin-right: 17px;
   margin-left: 103px;
-  margin-top: 25px;
+  border-bottom: 1px solid var(--cor-borda) !important;
+  border-radius: 5px;
 }
 
 .tabelaCombinacoes {
-  border-color: var(--cor-borda) !important;
+  border: none !important;
 }
 
-.tabelaCombinacoes div {
-  overflow: visible !important;
+.tabelaCombinacoes table {
+  height: 100%;
 }
+
 .tabelaCombinacoes th {
   border-bottom-width: 2px !important;
-  overflow: visible !important;
 }
 
 .tabelaCombinacoes .react-bs-container-header {
@@ -43,12 +41,22 @@
 }
 
 /* Container dos inputs de filtro */
-.tabelaCombinacoes th > div:not(.colunaDividida) {
+.tabelaCombinacoes th > div:not(.colunaDividida):not(.divLabelColuna) {
+  /* position: absolute;
+  margin: 0 auto;
+  top: 0px;
+  padding-right: 5px;
+  width: 100%; */
   position: absolute;
   margin: 0 auto;
-  top: -24px;
-  padding-right: 5px;
+  top: 0px;
   width: 100%;
+  height: calc(100% - 28px);
+  background-color: var(--background-color);
+  display: flex;
+  align-items: flex-end;
+  padding: 0px 3px 3px 3px;
+  justify-content: center;
 }
 
 .tabelaCombinacoes input,
@@ -59,7 +67,6 @@
   color: var(--cor-texto) !important;
   font-size: 0.7rem;
   text-align: center !important;
-  position: relative;
   width: 100% !important;
   max-width: 100px;
 }
@@ -108,17 +115,62 @@
 }
 
 /* input valor para filtrar de montagem e desmontagem*/
+
+div.filter.number-filter {
+  flex-direction: column-reverse;
+  height: 43px;
+  justify-content: space-between;
+}
+
 .number-filter-input.form-control {
-  top: -23px;
   margin-left: 0 !important;
-  position: absolute;
-  margin: 0 calc((100% - 125px) / 2) !important;
+  /* position: absolute; */
+  /* margin: 0 calc((100% - 125px) / 2) !important; */
 }
 
 /* inputSelect  Montagem e desmontagem */
 .colunaMontagemDesmontagem .number-filter-input.form-control,
 .colunaMontagemDesmontagem .number-filter-comparator.form-control {
+  min-width: 120px;
   max-width: 120px;
   display: block;
   margin: 0 auto;
 }
+
+/* Posicionamento de inputs acima do thead e configuração do th*/
+.divLabelColuna {
+  border: 1px solid var(--cor-borda);
+  border-left: none;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 69px;
+}
+
+.divLabelColuna .colunaDividida {
+  width: 100%;
+}
+
+.tabelaCombinacoes th:first-child .divLabelColuna {
+  border-top-left-radius: 5px;
+  border-left: 1px solid var(--cor-borda);
+}
+
+.tabelaCombinacoes th:last-child .divLabelColuna {
+  border-top-right-radius: 5px;
+}
+
+.tabelaCombinacoes th {
+  padding: 0 !important;
+  border: none !important;
+}
+
+.tabelaCombinacoes td:first-child {
+  border-left: 1px solid var(--cor-borda) !important;
+}
+
+.tabelaCombinacoes td:last-child {
+  border-right: 1px solid var(--cor-borda) !important;
+}
+/* Posicionamento de inputs acima do thead */

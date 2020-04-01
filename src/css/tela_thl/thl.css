@@ -2,7 +2,7 @@
 
 #thl {
   /* width: calc(100% - 95px); */
-  width: 1200px;
+  width: 1210px;
   margin-left: 5px;
   resize: horizontal;
   min-width: 607px; /*  */
@@ -11,10 +11,8 @@
 
 #thl .mcontent {
   margin-right: 0;
-  height: 860px; /*  */
-  padding-bottom: 20px;
-  overflow-y: hidden;
-  overflow-x: auto;
+  padding-bottom: 15px;
+  overflow: auto;
 }
 
 #thl .mheader {
@@ -33,7 +31,7 @@
   width: calc(
     100% - 133px
   ); /* 120px de diferença pro mcontent + 15px scrollbar y */
-  top: 75px;
+  top: 67px;
   margin-left: 103px;
 }
 
@@ -43,7 +41,7 @@
   height: 3px;
   margin: 0 calc((100% - 310px) / 2);
   position: fixed;
-  bottom: 230px !important;
+  top: 622px !important;
   left: 110px !important;
   z-index: 999;
 }
@@ -69,12 +67,13 @@
 }
 
 .containerTHL {
+  padding-top: 614px;
 }
 
 .containerPesquisaAtivo {
   width: 180px;
   position: fixed; /*  */
-  top: 45px;
+  top: 41px;
   margin-left: 103px;
 }
 

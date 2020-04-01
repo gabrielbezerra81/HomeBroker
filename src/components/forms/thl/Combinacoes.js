@@ -45,6 +45,46 @@ const combinacoes = [
     },
     vencimento: "22/10/2019",
     prazo: "21 Dias"
+  },
+  {
+    id: 3,
+    estrategia: "THL",
+    grupo: "19,55",
+    acaoUlt: { acao: "PETR4", ult: "Ult" },
+    spread: "10,50",
+    codigos: "",
+    montagem: {
+      valor: "2,00",
+      bookVenda: { valor: "0,60", qtde: 1000 },
+      bookCompra: { valor: "0,60", qtde: 100 }
+    },
+    desmontagem: {
+      valor: "1,10",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 10000 }
+    },
+    vencimento: "22/10/2019",
+    prazo: "21 Dias"
+  },
+  {
+    id: 4,
+    estrategia: "THL",
+    grupo: "19,55",
+    acaoUlt: { acao: "PETR4", ult: "Ult" },
+    spread: "10,50",
+    codigos: "",
+    montagem: {
+      valor: "2,00",
+      bookVenda: { valor: "0,60", qtde: 1000 },
+      bookCompra: { valor: "0,60", qtde: 100 }
+    },
+    desmontagem: {
+      valor: "1,10",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 10000 }
+    },
+    vencimento: "22/10/2019",
+    prazo: "21 Dias"
   }
 ];
 
@@ -59,6 +99,8 @@ export default ({ props }) => {
         tableContainerClass="tabelaCombinacoes"
         striped
         options={{ noDataText: "Nenhum resultado foi encontrado" }}
+        scrollTop={"Bottom"}
+        height="237px"
       >
         <TableHeaderColumn
           dataField="estrategia"
@@ -66,10 +108,10 @@ export default ({ props }) => {
           filter={filterTexto}
           data
         >
-          Estratégia
+          <div className="divLabelColuna">Estratégia</div>
         </TableHeaderColumn>
         <TableHeaderColumn dataField="grupo" filter={filterTexto} width="75">
-          Grupo
+          <div className="divLabelColuna">Grupo</div>
         </TableHeaderColumn>
         <TableHeaderColumn
           width="90"
@@ -79,9 +121,11 @@ export default ({ props }) => {
           className="colunaAcaoUlt"
           dataFormat={renderColunaAcaoUlt}
         >
-          <div className="colunaDividida">
-            <div>Acão</div>
-            <div>Ult</div>
+          <div className="divLabelColuna">
+            <div className="colunaDividida">
+              <div>Acão</div>
+              <div>Ult</div>
+            </div>
           </div>
         </TableHeaderColumn>
         <TableHeaderColumn
@@ -93,14 +137,15 @@ export default ({ props }) => {
             getElement: filtrarNumeros
           }}
         >
-          Spread
+          <div className="divLabelColuna">Spread</div>
         </TableHeaderColumn>
         <TableHeaderColumn
           dataField="codigos"
           width="220"
           dataFormat={renderColunaCodigos}
+          filter={{ type: "TextFilter", placeholder: " " }}
         >
-          Códigos
+          <div className="divLabelColuna">Códigos</div>
         </TableHeaderColumn>
         <TableHeaderColumn
           dataField="montagem"
@@ -110,7 +155,7 @@ export default ({ props }) => {
           filter={{ ...filterNumeroIgual }}
           className="colunaMontagemDesmontagem"
         >
-          Montagem
+          <div className="divLabelColuna">Montagem</div>
         </TableHeaderColumn>
         <TableHeaderColumn
           dataField="desmontagem"
@@ -120,7 +165,7 @@ export default ({ props }) => {
           filter={filterNumeroIgual}
           className="colunaMontagemDesmontagem"
         >
-          Desmontagem
+          <div className="divLabelColuna">Desmontagem</div>
         </TableHeaderColumn>
         <TableHeaderColumn
           dataField="vencimento"
@@ -132,7 +177,7 @@ export default ({ props }) => {
             withoutEmptyOption: true
           }}
         >
-          Vencimento
+          <div className="divLabelColuna">Vencimento</div>
         </TableHeaderColumn>
         <TableHeaderColumn
           dataField="prazo"
@@ -144,7 +189,7 @@ export default ({ props }) => {
             withoutEmptyOption: true
           }}
         >
-          Prazo
+          <div className="divLabelColuna">Prazo</div>
         </TableHeaderColumn>
       </BootstrapTable>
     </div>

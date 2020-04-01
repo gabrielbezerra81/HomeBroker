@@ -51,9 +51,43 @@ export default class FiltroNumericoSeletor extends React.Component {
     const select = this.state.select;
     const minNumber = this.state.minNumber;
     const maxNumber = this.state.maxNumber;
+    const height = select === "<>" || select === "><" ? "100%" : "43px";
 
     return (
-      <div style={{ position: "relative" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          height: height,
+          justifyContent: "space-between"
+        }}
+      >
+        {select === "<>" || select === "><" ? (
+          <FormControl
+            ref="toInput"
+            type="number"
+            placeholder="max"
+            className="form-control inputMaxRange"
+            value={maxNumber}
+            onChange={e => {
+              this.setState({ maxNumber: e.target.value }, () => {
+                this.filter(e);
+              });
+            }}
+          ></FormControl>
+        ) : null}
+        <FormControl
+          ref="fromInput"
+          type="number"
+          placeholder={select === "<>" || select === "><" ? "min" : "valor"}
+          className="form-control inputMinRange"
+          value={minNumber}
+          onChange={e => {
+            this.setState({ minNumber: e.target.value }, () => {
+              this.filter(e);
+            });
+          }}
+        ></FormControl>
         <FormControl
           ref="selectComparator"
           as="select"
@@ -71,32 +105,6 @@ export default class FiltroNumericoSeletor extends React.Component {
           <option>{`>`}</option>
           <option>=</option>
         </FormControl>
-        <FormControl
-          ref="fromInput"
-          type="number"
-          placeholder={select === "<>" || select === "><" ? "min" : "valor"}
-          className="form-control inputMinRange"
-          value={minNumber}
-          onChange={e => {
-            this.setState({ minNumber: e.target.value }, () => {
-              this.filter(e);
-            });
-          }}
-        ></FormControl>
-        {select === "<>" || select === "><" ? (
-          <FormControl
-            ref="toInput"
-            type="number"
-            placeholder="max"
-            className="form-control inputMaxRange"
-            value={maxNumber}
-            onChange={e => {
-              this.setState({ maxNumber: e.target.value }, () => {
-                this.filter(e);
-              });
-            }}
-          ></FormControl>
-        ) : null}
       </div>
     );
   }
