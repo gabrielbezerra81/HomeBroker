@@ -9,20 +9,20 @@ export default ({ props }) => {
   return (
     <div className="containerMapaCalor">
       {state.seletorMapaCalor !== "semcor" && state.faixasMapaCalor ? (
-        <div>
-          <div id="faixa4MapaCalor">{props.faixasMapaCalor[3]}</div>
-          <div id="faixa3MapaCalor">{props.faixasMapaCalor[2]}</div>
-          <div id="faixa2MapaCalor">{props.faixasMapaCalor[1]}</div>
+        <div className="faixasTemperatura">
+          <div>{props.faixasMapaCalor[3]}</div>
+          <div>{props.faixasMapaCalor[2]}</div>
+          <div>{props.faixasMapaCalor[1]}</div>
         </div>
       ) : null}
-      {state.seletorMapaCalor !== "semcor" ? (
-        <div className="labelMinMax">{45}</div>
+      {state.seletorMapaCalor !== "semcor" && state.faixasMapaCalor ? (
+        <div className="labelMinMax">{props.faixasMapaCalor[4]}</div>
       ) : (
         <div className="divMapaSemCor"></div>
       )}
       <img src={termometro} alt="Mapa de calor"></img>
-      {state.seletorMapaCalor !== "semcor" ? (
-        <div className="labelMinMax">{35}</div>
+      {state.seletorMapaCalor !== "semcor" && state.faixasMapaCalor ? (
+        <div className="labelMinMax">{props.faixasMapaCalor[0]}</div>
       ) : (
         <div className="divMapaSemCor"></div>
       )}

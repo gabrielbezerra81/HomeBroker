@@ -5,7 +5,7 @@
   width: 1200px;
   margin-left: 5px;
   resize: horizontal;
-  min-width: 967px; /*  */
+  min-width: 607px; /*  */
   overflow: auto;
 }
 
@@ -13,7 +13,6 @@
   margin-right: 0;
   height: 860px; /*  */
   padding-bottom: 20px;
-
   overflow-y: hidden;
   overflow-x: auto;
 }
@@ -22,19 +21,6 @@
   position: fixed;
   width: calc(100% - 12px);
   padding-right: 1px;
-}
-
-.containerTHL {
-  display: flex;
-  align-items: center;
-  height: 100%;
-}
-
-.containerPesquisaAtivo {
-  width: 180px;
-  position: fixed; /*  */
-  top: 45px;
-  margin-left: 103px;
 }
 
 #scrollTabelaVencimento {
@@ -82,9 +68,17 @@
   margin-right: -4px;
 }
 
+.containerTHL {
+}
+
+.containerPesquisaAtivo {
+  width: 180px;
+  position: fixed; /*  */
+  top: 45px;
+  margin-left: 103px;
+}
+
 .containerVencimentos {
-  height: 100%;
-  position: relative;
 }
 
 .containerTabela {
@@ -369,6 +363,7 @@ thead th:nth-child(3) {
   align-items: center;
   font-size: 0.7rem;
   position: fixed;
+  bottom: calc(50% - 128px);
 }
 
 .containerMapaCalor img {
@@ -392,22 +387,15 @@ thead th:nth-child(3) {
   height: 16px;
 }
 
-#faixa4MapaCalor {
+.faixasTemperatura {
+  justify-content: space-between;
+  left: 49px;
+  flex-direction: column;
+  display: flex;
   position: absolute;
-  top: 296px;
-  left: 60px;
-}
-
-#faixa3MapaCalor {
-  position: absolute;
-  top: 324px;
-  left: 60px;
-}
-
-#faixa2MapaCalor {
-  position: absolute;
-  top: 352px;
-  left: 60px;
+  top: 54px;
+  height: 73px;
+  white-space: nowrap;
 }
 
 .divNomeMes {
