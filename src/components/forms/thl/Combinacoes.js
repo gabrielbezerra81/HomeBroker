@@ -1,21 +1,28 @@
 import React from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
-// import { Table } from "react-bootstrap";
+import FiltroNumericoSeletor from "./FiltroNumericoSeletor";
 import imgModeloEU from "img/modeloEU.png";
 import { ReactComponent as ImgModeloUSA } from "img/modeloUSA2.svg";
 
-var combinacoes = [
+const combinacoes = [
   {
     id: 1,
     estrategia: "THL",
     grupo: "19,55",
-    acao: "PETR4",
-    ult: "Ult",
+    acaoUlt: { acao: "PETR4", ult: "Ult" },
     spread: "10,50",
     codigos: "",
-    montagem: "",
-    desmontagem: "",
+    montagem: {
+      valor: "0,00",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 1000 }
+    },
+    desmontagem: {
+      valor: "1,00",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 10000 }
+    },
     vencimento: "21/10/2019",
     prazo: "21 Dias"
   },
@@ -23,19 +30,26 @@ var combinacoes = [
     id: 2,
     estrategia: "THL",
     grupo: "19,55",
-    acao: "PETR4",
-    ult: "Ult",
+    acaoUlt: { acao: "PETR4", ult: "Ult" },
     spread: "10,50",
     codigos: "",
-    montagem: "",
-    desmontagem: "",
+    montagem: {
+      valor: "2,00",
+      bookVenda: { valor: "0,60", qtde: 1000 },
+      bookCompra: { valor: "0,60", qtde: 100 }
+    },
+    desmontagem: {
+      valor: "1,10",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 10000 }
+    },
     vencimento: "22/10/2019",
     prazo: "21 Dias"
   }
 ];
 
 export default ({ props }) => {
-  const state = useSelector(state => state.THLReducer);
+  // const state = useSelector(state => state.THLReducer);
 
   return (
     <div className="containerCombinacoesTHL">
@@ -54,14 +68,33 @@ export default ({ props }) => {
         >
           Estratégia
         </TableHeaderColumn>
-        <TableHeaderColumn dataField="grupo" filter={filterTexto}>
+        <TableHeaderColumn dataField="grupo" filter={filterTexto} width="75">
           Grupo
         </TableHeaderColumn>
-        <TableHeaderColumn dataField="acao" filter={filterTexto}>
-          Acão
+        <TableHeaderColumn
+          width="90"
+          dataField="acaoUlt"
+          filterValue={cell => `${cell.acao}${cell.ult}`}
+          filter={filterTexto}
+          className="colunaAcaoUlt"
+          dataFormat={renderColunaAcaoUlt}
+        >
+          <div className="colunaDividida">
+            <div>Acão</div>
+            <div>Ult</div>
+          </div>
         </TableHeaderColumn>
-        <TableHeaderColumn dataField="ult">Ult</TableHeaderColumn>
-        <TableHeaderColumn dataField="spread">Spread</TableHeaderColumn>
+        <TableHeaderColumn
+          dataField="spread"
+          width="65"
+          filterValue={cell => Number(cell.replace(",", "."))}
+          filter={{
+            type: "CustomFilter",
+            getElement: filtrarNumeros
+          }}
+        >
+          Spread
+        </TableHeaderColumn>
         <TableHeaderColumn
           dataField="codigos"
           width="220"
@@ -73,6 +106,9 @@ export default ({ props }) => {
           dataField="montagem"
           dataFormat={renderColunaMontagem}
           width="170"
+          filterValue={cell => Number(cell.valor.replace(",", "."))}
+          filter={{ ...filterNumeroIgual }}
+          className="colunaMontagemDesmontagem"
         >
           Montagem
         </TableHeaderColumn>
@@ -80,6 +116,9 @@ export default ({ props }) => {
           dataField="desmontagem"
           dataFormat={renderColunaMontagem}
           width="170"
+          filterValue={cell => Number(cell.valor.replace(",", "."))}
+          filter={filterNumeroIgual}
+          className="colunaMontagemDesmontagem"
         >
           Desmontagem
         </TableHeaderColumn>
@@ -112,17 +151,24 @@ export default ({ props }) => {
   );
 };
 
-const options = (combinacoes, atributo) => {
-  let opcoes = { "": "" };
-
-  combinacoes.forEach(comb => {
-    opcoes[comb[atributo]] = comb[atributo];
-  });
-
-  return opcoes;
+const renderColunaAcaoUlt = (cell, row) => {
+  return (
+    <div className="colunaAcaoUlt">
+      <div className="colunaDividida">
+        <div>{cell.acao}</div>
+        <div>{cell.ult}</div>
+      </div>
+    </div>
+  );
 };
 
 const filterTexto = { type: "TextFilter", delay: 250, placeholder: " " };
+const filterNumeroIgual = {
+  type: "NumberFilter",
+  placeholder: " ",
+  numberComparators: ["="],
+  withoutEmptyComparatorOption: true
+};
 
 const renderColunaCodigos = (cell, row) => {
   return (
@@ -132,14 +178,14 @@ const renderColunaCodigos = (cell, row) => {
         <div>Strike</div>
       </div>
       <div className="mr-1">
-        <div className="flexAlignEnd">
+        <div className="flexAlignEnd codigoColunaModelo">
           <div>B319</div>
           {renderModelo("EUROPEAN")}
         </div>
         <div>19,55</div>
       </div>
       <div>
-        <div className="flexAlignEnd">
+        <div className="flexAlignEnd  codigoColunaModelo">
           <div>C479</div>
           {renderModelo("USA")}
         </div>
@@ -152,10 +198,14 @@ const renderColunaCodigos = (cell, row) => {
 const renderColunaMontagem = (cell, row) => {
   return (
     <div>
-      <div>R$ 0,00</div>
+      <div>R$ {cell.valor}</div>
       <div className="colunaDividida corTextoBook">
-        <div className="mr-2">0,70 | 10K</div>
-        <div>0,70 | 10K</div>
+        <div className="mr-2">
+          {cell.bookVenda.valor} | {cell.bookVenda.qtde}
+        </div>
+        <div>
+          {cell.bookCompra.valor} | {cell.bookCompra.qtde}
+        </div>
       </div>
     </div>
   );
@@ -173,6 +223,24 @@ const renderModelo = modelo => {
         ></ImgModeloUSA>
       )}
     </div>
+  );
+};
+
+const options = (combinacoes, atributo) => {
+  let opcoes = { "": "" };
+
+  combinacoes.forEach(comb => {
+    opcoes[comb[atributo]] = comb[atributo];
+  });
+
+  return opcoes;
+};
+
+const filtrarNumeros = (filterHandler, customFilterParameters) => {
+  return (
+    <FiltroNumericoSeletor
+      filterHandler={filterHandler}
+    ></FiltroNumericoSeletor>
   );
 };
 

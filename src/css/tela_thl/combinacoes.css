@@ -1,17 +1,20 @@
 .containerCombinacoesTHL {
-  position: fixed;
-  bottom: 40px;
-  width: calc(100% - 133px);
+  position: absolute;
+  bottom: 0px;
+  /* width: calc(100% - 133px); */
+  margin-right: 5px;
+  margin-left: 103px;
 }
 
 .tabelaCombinacoes {
   border-color: var(--cor-borda) !important;
-  overflow: visible;
 }
 
-.tabelaCombinacoes .react-bs-container-header,
-.tabelaCombinacoes thead,
+.tabelaCombinacoes div {
+  overflow: visible !important;
+}
 .tabelaCombinacoes th {
+  border-bottom-width: 2px !important;
   overflow: visible !important;
 }
 
@@ -29,6 +32,7 @@
 .tabelaCombinacoes td {
   border-color: var(--cor-borda) !important;
   text-align: center !important;
+  position: relative;
 }
 
 .tabelaCombinacoes td {
@@ -37,8 +41,13 @@
   vertical-align: middle;
 }
 
-.tabelaCombinacoes th {
-  border-bottom-width: 2px !important;
+/* Container dos inputs de filtro */
+.tabelaCombinacoes th > div:not(.colunaDividida) {
+  position: absolute;
+  margin: 0 auto;
+  top: -24px;
+  padding-right: 5px;
+  width: 100%;
 }
 
 .tabelaCombinacoes input,
@@ -49,11 +58,9 @@
   color: var(--cor-texto) !important;
   font-size: 0.7rem;
   text-align: center !important;
-}
-
-.tabelaCombinacoes select {
-  padding: 0;
-  text-align-last: right;
+  position: relative;
+  width: 100% !important;
+  max-width: 100px;
 }
 
 .tabelaCombinacoes input:focus,
@@ -64,4 +71,53 @@
 
 .tabelaCombinacoes select option {
   color: var(--cor-texto) !important;
+}
+
+.tabelaCombinacoes select {
+  padding: 0;
+  text-align-last: right;
+}
+
+.colunaAcaoUlt .colunaDividida div {
+  padding: 0 !important;
+  width: 50%;
+}
+
+.colunaAcaoUlt .colunaDividida div:first-child {
+  border-right: 1px solid var(--cor-borda);
+}
+.codigoColunaModelo div:first-child {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 0px 0 10px;
+}
+
+.codigoColunaModelo div:last-child {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 0.4rem;
+}
+
+.inputMinRange {
+  top: -43px !important;
+}
+
+.inputMaxRange {
+  top: -86px !important;
+}
+
+/* input valor para filtrar de montagem e desmontagem*/
+.number-filter-input.form-control {
+  top: -23px;
+  margin-left: 0 !important;
+  position: absolute;
+  margin: 0 calc((100% - 125px) / 2) !important;
+}
+
+/* inputSelect  Montagem e desmontagem */
+.colunaMontagemDesmontagem .number-filter-input.form-control,
+.colunaMontagemDesmontagem .number-filter-comparator.form-control {
+  max-width: 120px;
+  display: block;
+  margin: 0 auto;
 }

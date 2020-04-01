@@ -5,16 +5,23 @@
   width: 1200px;
   margin-left: 5px;
   resize: horizontal;
-  overflow: auto;
   min-width: 967px; /*  */
-  overflow-y: hidden;
-  
+  overflow: auto;
 }
 
 #thl .mcontent {
   margin-right: 0;
   height: 860px; /*  */
   padding-bottom: 20px;
+
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
+#thl .mheader {
+  position: fixed;
+  width: calc(100% - 12px);
+  padding-right: 1px;
 }
 
 .containerTHL {
@@ -27,6 +34,7 @@
   width: 180px;
   position: fixed; /*  */
   top: 45px;
+  margin-left: 103px;
 }
 
 #scrollTabelaVencimento {
@@ -40,6 +48,7 @@
     100% - 133px
   ); /* 120px de diferença pro mcontent + 15px scrollbar y */
   top: 75px;
+  margin-left: 103px;
 }
 
 #scrollTabelaVencimento .ps__rail-x {
@@ -71,6 +80,11 @@
 #scrollTabelaVencimento .ps__thumb-y {
   width: 8px;
   margin-right: -4px;
+}
+
+.containerVencimentos {
+  height: 100%;
+  position: relative;
 }
 
 .containerTabela {
@@ -354,6 +368,7 @@ thead th:nth-child(3) {
   flex-direction: column;
   align-items: center;
   font-size: 0.7rem;
+  position: fixed;
 }
 
 .containerMapaCalor img {
