@@ -12,7 +12,10 @@ const combinacoes = [
     grupo: "19,55",
     acaoUlt: { acao: "PETR4", ult: "Ult" },
     spread: "10,50",
-    codigos: "",
+    codigos: [
+      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
+      { symbol: "PETRE279", strike: 27.97, model: "EUROPEAN" }
+    ],
     montagem: {
       valor: "0,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
@@ -32,18 +35,21 @@ const combinacoes = [
     grupo: "19,55",
     acaoUlt: { acao: "PETR4", ult: "Ult" },
     spread: "10,50",
-    codigos: "",
+    codigos: [
+      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+    ],
     montagem: {
-      valor: "2,00",
-      bookVenda: { valor: "0,60", qtde: 1000 },
-      bookCompra: { valor: "0,60", qtde: 100 }
+      valor: "0,00",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 1000 }
     },
     desmontagem: {
-      valor: "1,10",
+      valor: "2,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
       bookCompra: { valor: "0,70", qtde: 10000 }
     },
-    vencimento: "22/10/2019",
+    vencimento: "21/10/2019",
     prazo: "21 Dias"
   },
   {
@@ -52,18 +58,21 @@ const combinacoes = [
     grupo: "19,55",
     acaoUlt: { acao: "PETR4", ult: "Ult" },
     spread: "10,50",
-    codigos: "",
+    codigos: [
+      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+    ],
     montagem: {
-      valor: "2,00",
-      bookVenda: { valor: "0,60", qtde: 1000 },
-      bookCompra: { valor: "0,60", qtde: 100 }
+      valor: "0,00",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 1000 }
     },
     desmontagem: {
-      valor: "1,10",
+      valor: "2,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
       bookCompra: { valor: "0,70", qtde: 10000 }
     },
-    vencimento: "22/10/2019",
+    vencimento: "21/10/2019",
     prazo: "21 Dias"
   },
   {
@@ -72,18 +81,67 @@ const combinacoes = [
     grupo: "19,55",
     acaoUlt: { acao: "PETR4", ult: "Ult" },
     spread: "10,50",
-    codigos: "",
+    codigos: [
+      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+    ],
     montagem: {
-      valor: "2,00",
-      bookVenda: { valor: "0,60", qtde: 1000 },
-      bookCompra: { valor: "0,60", qtde: 100 }
+      valor: "0,00",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 1000 }
     },
     desmontagem: {
-      valor: "1,10",
+      valor: "2,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
       bookCompra: { valor: "0,70", qtde: 10000 }
     },
-    vencimento: "22/10/2019",
+    vencimento: "21/10/2019",
+    prazo: "21 Dias"
+  },
+  {
+    id: 5,
+    estrategia: "THL",
+    grupo: "19,55",
+    acaoUlt: { acao: "PETR4", ult: "Ult" },
+    spread: "10,50",
+    codigos: [
+      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+    ],
+    montagem: {
+      valor: "0,00",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 1000 }
+    },
+    desmontagem: {
+      valor: "2,00",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 10000 }
+    },
+    vencimento: "21/10/2019",
+    prazo: "21 Dias"
+  },
+  {
+    id: 6,
+    estrategia: "THL",
+    grupo: "19,55",
+    acaoUlt: { acao: "PETR4", ult: "Ult" },
+    spread: "10,50",
+    codigos: [
+      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+    ],
+    montagem: {
+      valor: "0,00",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 1000 }
+    },
+    desmontagem: {
+      valor: "2,00",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 10000 }
+    },
+    vencimento: "21/10/2019",
     prazo: "21 Dias"
   }
 ];
@@ -100,7 +158,7 @@ export default ({ props }) => {
         striped
         options={{ noDataText: "Nenhum resultado foi encontrado" }}
         scrollTop={"Bottom"}
-        height="237px"
+        height="287px"
       >
         <TableHeaderColumn
           dataField="estrategia"
@@ -134,7 +192,8 @@ export default ({ props }) => {
           filterValue={cell => Number(cell.replace(",", "."))}
           filter={{
             type: "CustomFilter",
-            getElement: filtrarNumeros
+            getElement: (filterHandler, customParam) =>
+              filtrarNumeros(filterHandler, customParam, "simples")
           }}
         >
           <div className="divLabelColuna">Spread</div>
@@ -143,7 +202,11 @@ export default ({ props }) => {
           dataField="codigos"
           width="220"
           dataFormat={renderColunaCodigos}
-          filter={{ type: "TextFilter", placeholder: " " }}
+          filter={{
+            type: "CustomFilter",
+            getElement: (filterHandler, customParam) =>
+              filtrarNumeros(filterHandler, customParam, "compostoArray")
+          }}
         >
           <div className="divLabelColuna">Códigos</div>
         </TableHeaderColumn>
@@ -152,7 +215,11 @@ export default ({ props }) => {
           dataFormat={renderColunaMontagem}
           width="170"
           filterValue={cell => Number(cell.valor.replace(",", "."))}
-          filter={{ ...filterNumeroIgual }}
+          filter={{
+            type: "CustomFilter",
+            getElement: (filterHandler, customParam) =>
+              filtrarNumeros(filterHandler, customParam, "simples")
+          }}
           className="colunaMontagemDesmontagem"
         >
           <div className="divLabelColuna">Montagem</div>
@@ -162,7 +229,11 @@ export default ({ props }) => {
           dataFormat={renderColunaMontagem}
           width="170"
           filterValue={cell => Number(cell.valor.replace(",", "."))}
-          filter={filterNumeroIgual}
+          filter={{
+            type: "CustomFilter",
+            getElement: (filterHandler, customParam) =>
+              filtrarNumeros(filterHandler, customParam, "simples")
+          }}
           className="colunaMontagemDesmontagem"
         >
           <div className="divLabelColuna">Desmontagem</div>
@@ -208,18 +279,12 @@ const renderColunaAcaoUlt = (cell, row) => {
 };
 
 const filterTexto = { type: "TextFilter", delay: 250, placeholder: " " };
-const filterNumeroIgual = {
-  type: "NumberFilter",
-  placeholder: " ",
-  numberComparators: ["="],
-  withoutEmptyComparatorOption: true
-};
 
 const renderColunaCodigos = (cell, row) => {
   return (
     <div className="colunaDividida">
       <div className="mr-1">
-        <div>PETR</div>
+        <div>{row.acaoUlt.acao.slice(0, row.acaoUlt.acao.length - 1)}</div>
         <div>Strike</div>
       </div>
       <div className="mr-1">
@@ -281,10 +346,11 @@ const options = (combinacoes, atributo) => {
   return opcoes;
 };
 
-const filtrarNumeros = (filterHandler, customFilterParameters) => {
+const filtrarNumeros = (filterHandler, customFilterParameters, tipo) => {
   return (
     <FiltroNumericoSeletor
       filterHandler={filterHandler}
+      tipo={tipo}
     ></FiltroNumericoSeletor>
   );
 };
