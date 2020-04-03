@@ -1,12 +1,11 @@
 .divTelaPrincipal {
   background-color: var(--background-colors);
   display: flex;
-  height: 100%;
+  height: 100vh;
 }
 
 .conteudoMenuPrincipal {
   flex: 10;
-  border-left: 1px solid #888;
   display: flex;
   flex-direction: column;
 }
@@ -14,6 +13,10 @@
 #menusTelaPrincipal {
   margin-left: 85px;
   margin-top: 30px;
+}
+
+.menuLateralAfastado {
+  margin-left: 217px !important;
 }
 
 /*Menus de posição, multileg e histórico*/
@@ -73,6 +76,11 @@
   position: fixed;
   height: 100%;
   margin-top: 45px;
+  margin-left: 0;
+}
+
+.divBarraLateralAfastada {
+  margin-left: 132px !important;
 }
 
 .itemDivBarraLateral {

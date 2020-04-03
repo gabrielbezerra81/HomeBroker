@@ -14,7 +14,7 @@ export default class BarraLateral extends React.Component {
   render() {
     const { props } = this;
     return (
-      <div className="divBarraLateral">
+      <div className="divBarraLateral" id="divBarraLateral">
         <div
           tabIndex={0}
           className="itemDivBarraLateral divClicavel"
