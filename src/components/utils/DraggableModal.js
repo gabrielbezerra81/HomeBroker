@@ -5,7 +5,7 @@ import ConfigurarStopVenda from "components/forms/venda/venda_StartStop/Configur
 import { connect } from "react-redux";
 import FiltrarOrdens from "components/forms/ordens_em_execucao/FiltrarOrdens"; //posicaoFormCompraVenda
 import ConfigComplementar from "components/forms/multileg_/ConfigComplementar";
-
+import { Resizable } from "re-resizable";
 class BSModal extends Component {
   constructor(props) {
     super(props);
@@ -19,6 +19,28 @@ class BSModal extends Component {
   }
 
   render() {
+    const formulario = (
+      <div id={this.props.id} className={` ${this.props.classConfigAberto}`}>
+        {this.props.renderDivFiltrarOrdens &&
+        this.props.id === "ordens_execucao" ? (
+          <FiltrarOrdens />
+        ) : null}
+        <div className="mcontent">
+          {this.props.renderHeader(this.resetPosition)}
+          {this.props.renderModalBody()}
+        </div>
+        {this.props.renderConfigForm && this.props.id === "comprastartstop" ? (
+          <ConfigurarStop />
+        ) : null}
+        {this.props.renderConfigForm && this.props.id === "vendastartstop" ? (
+          <ConfigurarStopVenda />
+        ) : null}
+        {this.props.renderConfigComplementar && this.props.id === "multileg" ? (
+          <ConfigComplementar />
+        ) : null}
+      </div>
+    );
+
     return (
       <Draggable
         enableUserSelectHack={false}
@@ -32,27 +54,21 @@ class BSModal extends Component {
           });
         }}
       >
-        <div id={this.props.id} className={` ${this.props.classConfigAberto}`}>
-          {this.props.renderDivFiltrarOrdens &&
-          this.props.id === "ordens_execucao" ? (
-            <FiltrarOrdens />
-          ) : null}
-          <div className="mcontent">
-            {this.props.renderHeader(this.resetPosition)}
-            {this.props.renderModalBody()}
-          </div>
-          {this.props.renderConfigForm &&
-          this.props.id === "comprastartstop" ? (
-            <ConfigurarStop />
-          ) : null}
-          {this.props.renderConfigForm && this.props.id === "vendastartstop" ? (
-            <ConfigurarStopVenda />
-          ) : null}
-          {this.props.renderConfigComplementar &&
-          this.props.id === "multileg" ? (
-            <ConfigComplementar />
-          ) : null}
-        </div>
+        {this.props.id === "thl" ? (
+          <Resizable
+            defaultSize={{
+              width: 1210
+            }}
+            minWidth="607"
+            minHeight="1205"
+            maxHeight="1205"
+            style={{ position: "absolute" }}
+          >
+            {formulario}
+          </Resizable>
+        ) : (
+          formulario
+        )}
       </Draggable>
     );
   }

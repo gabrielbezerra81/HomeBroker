@@ -9,7 +9,6 @@ import imgModeloEU from "img/modeloEU.png";
 import { ReactComponent as ImgModeloUSA } from "img/modeloUSA2.svg";
 import MapaCalor from "components/forms/thl/MapaCalor";
 import Combinacoes from "components/forms/thl/Combinacoes";
-// import $ from "jquery";
 
 // import "fixed-header-table/css/defaultTheme.css";
 
@@ -56,7 +55,7 @@ class Tela_THL extends React.Component {
   modalBody = (props, thiss) => {
     return (
       <div className="containerTHL">
-        {<MapaCalor props={props}></MapaCalor>}
+        <MapaCalor props={props}></MapaCalor>
         {vencimentos(props, thiss)}
         <ReactResizeDetector
           handleWidth
@@ -251,7 +250,7 @@ const renderConteudoTabelaVencimentos = (props, strikes) => {
 };
 
 const renderConteudoMes = itemColuna => {
-  const conteudo = `${itemColuna.symbol}(${itemColuna.strike})`;
+  const ativoStrike = `${itemColuna.symbol.slice(4)}(${itemColuna.strike})`;
   const custodia = verificaAtivoCustodia(itemColuna);
 
   return (
@@ -264,7 +263,7 @@ const renderConteudoMes = itemColuna => {
         >
           <div className="itemAtivos divClicavel" tabIndex={0}>
             {renderModelo(itemColuna.modelo)}
-            {conteudo}
+            {ativoStrike}
           </div>
           {custodia ? <div className="itemQtde">{300}</div> : null}
         </div>

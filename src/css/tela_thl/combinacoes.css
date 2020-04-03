@@ -5,6 +5,19 @@
   border-radius: 5px;
 }
 
+#scrollbarTabelaCombinacoes {
+  max-height: 550px;
+  width: 100%;
+}
+
+#scrollbarTabelaCombinacoes .ps__rail-x {
+  margin: 0 1px;
+}
+
+#scrollbarTabelaCombinacoes .ps__rail-y {
+  margin-top: 120px;
+}
+
 .tabelaCombinacoes {
   border: none !important;
 }
@@ -13,14 +26,11 @@
   position: sticky;
   top: 0;
   z-index: 1;
+  min-width: 1056px;
 }
 
 .tabelaCombinacoes .react-bs-container-body {
-  overflow: hidden !important;
-}
-
-.tabelaCombinacoes table {
-  height: 100%;
+  overflow: visible !important;
 }
 
 .tabelaCombinacoes th {

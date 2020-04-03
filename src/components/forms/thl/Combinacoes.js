@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // import { useSelector } from "react-redux";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import FiltroNumericoSeletor from "./FiltroNumericoSeletor";
@@ -144,18 +144,228 @@ const combinacoes = [
     },
     vencimento: "21/10/2019",
     prazo: "21 Dias"
+  },
+  {
+    id: 7,
+    estrategia: "THL",
+    grupo: "19,55",
+    acaoUlt: { acao: "PETR4", ult: "Ult" },
+    spread: "10,50",
+    codigos: [
+      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+    ],
+    montagem: {
+      valor: "0,00",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 1000 }
+    },
+    desmontagem: {
+      valor: "2,00",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 10000 }
+    },
+    vencimento: "21/10/2019",
+    prazo: "21 Dias"
+  },
+  {
+    id: 8,
+    estrategia: "THL",
+    grupo: "19,55",
+    acaoUlt: { acao: "PETR4", ult: "Ult" },
+    spread: "10,50",
+    codigos: [
+      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+    ],
+    montagem: {
+      valor: "0,00",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 1000 }
+    },
+    desmontagem: {
+      valor: "7,00",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 10000 }
+    },
+    vencimento: "21/10/2019",
+    prazo: "21 Dias"
+  },
+  {
+    id: 9,
+    estrategia: "THL",
+    grupo: "19,55",
+    acaoUlt: { acao: "PETR4", ult: "Ult" },
+    spread: "10,50",
+    codigos: [
+      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+    ],
+    montagem: {
+      valor: "0,00",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 1000 }
+    },
+    desmontagem: {
+      valor: "6,00",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 10000 }
+    },
+    vencimento: "21/10/2019",
+    prazo: "21 Dias"
+  },
+  {
+    id: 10,
+    estrategia: "THL",
+    grupo: "19,55",
+    acaoUlt: { acao: "PETR4", ult: "Ult" },
+    spread: "10,50",
+    codigos: [
+      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+    ],
+    montagem: {
+      valor: "0,00",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 1000 }
+    },
+    desmontagem: {
+      valor: "5,00",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 10000 }
+    },
+    vencimento: "21/10/2019",
+    prazo: "21 Dias"
+  },
+  {
+    id: 11,
+    estrategia: "THL",
+    grupo: "19,55",
+    acaoUlt: { acao: "PETR4", ult: "Ult" },
+    spread: "10,50",
+    codigos: [
+      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+    ],
+    montagem: {
+      valor: "0,00",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 1000 }
+    },
+    desmontagem: {
+      valor: "4,00",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 10000 }
+    },
+    vencimento: "21/10/2019",
+    prazo: "21 Dias"
+  },
+  {
+    id: 12,
+    estrategia: "THL",
+    grupo: "19,55",
+    acaoUlt: { acao: "PETR4", ult: "Ult" },
+    spread: "10,50",
+    codigos: [
+      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+    ],
+    montagem: {
+      valor: "0,00",
+      bookVenda: { valor: "0,60", qtde: 10000 },
+      bookCompra: { valor: "0,60", qtde: 1000 }
+    },
+    desmontagem: {
+      valor: "3,00",
+      bookVenda: { valor: "0,60", qtde: 10000 },
+      bookCompra: { valor: "0,60", qtde: 10000 }
+    },
+    vencimento: "21/10/2019",
+    prazo: "21 Dias"
+  },
+  {
+    id: 13,
+    estrategia: "THL",
+    grupo: "19,55",
+    acaoUlt: { acao: "PETR4", ult: "Ult" },
+    spread: "10,50",
+    codigos: [
+      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+    ],
+    montagem: {
+      valor: "0,00",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 1000 }
+    },
+    desmontagem: {
+      valor: "2,00",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 10000 }
+    },
+    vencimento: "21/10/2019",
+    prazo: "21 Dias"
+  },
+  {
+    id: 14,
+    estrategia: "THL",
+    grupo: "19,55",
+    acaoUlt: { acao: "PETR4", ult: "Ult" },
+    spread: "10,50",
+    codigos: [
+      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+    ],
+    montagem: {
+      valor: "0,00",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 1000 }
+    },
+    desmontagem: {
+      valor: "2,00",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 10000 }
+    },
+    vencimento: "21/10/2019",
+    prazo: "21 Dias"
+  },
+  {
+    id: 15,
+    estrategia: "THL",
+    grupo: "19,55",
+    acaoUlt: { acao: "PETR4", ult: "Ult" },
+    spread: "10,50",
+    codigos: [
+      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+    ],
+    montagem: {
+      valor: "0,00",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 1000 }
+    },
+    desmontagem: {
+      valor: "2,00",
+      bookVenda: { valor: "0,70", qtde: 10000 },
+      bookCompra: { valor: "0,70", qtde: 10000 }
+    },
+    vencimento: "21/10/2019",
+    prazo: "21 Dias"
   }
 ];
 
 export default ({ props }) => {
   // const state = useSelector(state => state.THLReducer);
+  const [scrollbarRef, setScrollbarRef] = useState("");
 
   return (
     <div className="containerCombinacoesTHL">
       <PerfectScrollbar
-        id="scrollbar"
+        id="scrollbarTabelaCombinacoes"
         options={{ wheelPropagation: false }}
-        style={{ height: "250px" }}
+        ref={ref => {
+          setScrollbarRef(ref);
+        }}
       >
         <BootstrapTable
           data={combinacoes}
@@ -197,7 +407,12 @@ export default ({ props }) => {
             filter={{
               type: "CustomFilter",
               getElement: (filterHandler, customParam) =>
-                filtrarNumeros(filterHandler, customParam, "simples")
+                filtrarNumeros(
+                  filterHandler,
+                  customParam,
+                  "simples",
+                  scrollbarRef
+                )
             }}
           >
             <div className="divLabelColuna">Spread</div>
@@ -209,7 +424,12 @@ export default ({ props }) => {
             filter={{
               type: "CustomFilter",
               getElement: (filterHandler, customParam) =>
-                filtrarNumeros(filterHandler, customParam, "compostoArray")
+                filtrarNumeros(
+                  filterHandler,
+                  customParam,
+                  "compostoArray",
+                  scrollbarRef
+                )
             }}
           >
             <div className="divLabelColuna">Códigos</div>
@@ -222,7 +442,12 @@ export default ({ props }) => {
             filter={{
               type: "CustomFilter",
               getElement: (filterHandler, customParam) =>
-                filtrarNumeros(filterHandler, customParam, "simples")
+                filtrarNumeros(
+                  filterHandler,
+                  customParam,
+                  "simples",
+                  scrollbarRef
+                )
             }}
             className="colunaMontagemDesmontagem"
           >
@@ -236,7 +461,12 @@ export default ({ props }) => {
             filter={{
               type: "CustomFilter",
               getElement: (filterHandler, customParam) =>
-                filtrarNumeros(filterHandler, customParam, "simples")
+                filtrarNumeros(
+                  filterHandler,
+                  customParam,
+                  "simples",
+                  scrollbarRef
+                )
             }}
             className="colunaMontagemDesmontagem"
           >
@@ -351,11 +581,12 @@ const options = (combinacoes, atributo) => {
   return opcoes;
 };
 
-const filtrarNumeros = (filterHandler, customFilterParameters, tipo) => {
+const filtrarNumeros = (filterHandler, customFilterParameters, tipo, ref) => {
   return (
     <FiltroNumericoSeletor
       filterHandler={filterHandler}
       tipo={tipo}
+      scrollbarRef={ref}
     ></FiltroNumericoSeletor>
   );
 };

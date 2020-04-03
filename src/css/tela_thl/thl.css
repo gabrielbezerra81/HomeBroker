@@ -2,17 +2,15 @@
 
 #thl {
   /* width: calc(100% - 95px); */
-  width: 1210px;
+  /* width: 1210px; */
   margin-left: 5px;
-  resize: horizontal;
-  min-width: 607px; /*  */
-  overflow: auto;
+  /* resize: horizontal; */
+  overflow: hidden;
 }
 
 #thl .mcontent {
   margin-right: 0;
   padding-bottom: 15px;
-  overflow: auto;
 }
 
 #thl .mheader {
@@ -27,10 +25,9 @@
   border-radius: 6px;
   position: fixed; /*  */
   height: 540px; /*  */
-  min-width: 467px;
   width: calc(
-    100% - 133px
-  ); /* 120px de diferença pro mcontent + 15px scrollbar y */
+    100% - 138px
+  ); /* 120px de diferença pro mcontent + 15px scrollbar y + 5*/
   top: 67px;
   margin-left: 103px;
 }
@@ -77,11 +74,11 @@
   margin-left: 103px;
 }
 
-.containerVencimentos {
+/* .containerVencimentos {
 }
 
 .containerTabela {
-}
+} */
 
 .tabelaVencimentos {
   margin-bottom: 0;
@@ -122,8 +119,8 @@ thead th:nth-child(3) {
 }
 
 .tabelaVencimentos tbody {
-  overflow-y: hidden;
-  max-height: 500px;
+  overflow-y: hidden !important;
+  max-height: 500px !important;
 }
 
 /* espaço antes do cabeçalho fixo */

@@ -23,6 +23,10 @@ export default class FiltroNumericoSeletor extends React.Component {
     };
   }
 
+  componentDidUpdate() {
+    this.props.scrollbarRef.updateScroll();
+  }
+
   filter(event) {
     let condicao;
 
