@@ -2,9 +2,7 @@
 
 #thl {
   /* width: calc(100% - 95px); */
-  /* width: 1210px; */
   margin-left: 5px;
-  /* resize: horizontal; */
   overflow: hidden;
 }
 
@@ -103,10 +101,10 @@
 
 .tabelaVencimentos thead tr:first-child th {
   position: fixed;
-  width: calc(100% - 135px);
+  width: calc(100% - 140px);
   z-index: 2;
   background-color: var(--light-background-color);
-  left: 110px;
+  left: 115px;
 }
 
 thead th:first-child {
@@ -360,7 +358,7 @@ thead th:nth-child(3) {
   align-items: center;
   font-size: 0.7rem;
   position: fixed;
-  bottom: calc(50% - 128px);
+  top: calc(0% + 67px + 270px - 128px);
 }
 
 .containerMapaCalor img {
