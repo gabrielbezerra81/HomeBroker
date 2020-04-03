@@ -226,8 +226,9 @@ thead th:nth-child(3) {
 
 .tabelaVencimentos td:nth-child(2),
 .tabelaVencimentos th:nth-child(2) {
-  border-style: solid;
+  border-style: solid !important;
   border-left-width: 1px;
+  border-color: var(--cor-borda) !important;
 }
 
 .tabelaVencimentos th:nth-child(1),

@@ -4,6 +4,7 @@ import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import FiltroNumericoSeletor from "./FiltroNumericoSeletor";
 import imgModeloEU from "img/modeloEU.png";
 import { ReactComponent as ImgModeloUSA } from "img/modeloUSA2.svg";
+import PerfectScrollbar from "react-perfect-scrollbar";
 
 const combinacoes = [
   {
@@ -151,118 +152,122 @@ export default ({ props }) => {
 
   return (
     <div className="containerCombinacoesTHL">
-      <BootstrapTable
-        data={combinacoes}
-        keyField="id"
-        tableContainerClass="tabelaCombinacoes"
-        striped
-        options={{ noDataText: "Nenhum resultado foi encontrado" }}
-        scrollTop={"Bottom"}
-        height="287px"
+      <PerfectScrollbar
+        id="scrollbar"
+        options={{ wheelPropagation: false }}
+        style={{ height: "250px" }}
       >
-        <TableHeaderColumn
-          dataField="estrategia"
-          width="90"
-          filter={filterTexto}
-          data
+        <BootstrapTable
+          data={combinacoes}
+          keyField="id"
+          tableContainerClass="tabelaCombinacoes"
+          striped
+          options={{ noDataText: "Nenhum resultado foi encontrado" }}
         >
-          <div className="divLabelColuna">Estratégia</div>
-        </TableHeaderColumn>
-        <TableHeaderColumn dataField="grupo" filter={filterTexto} width="75">
-          <div className="divLabelColuna">Grupo</div>
-        </TableHeaderColumn>
-        <TableHeaderColumn
-          width="90"
-          dataField="acaoUlt"
-          filterValue={cell => `${cell.acao}${cell.ult}`}
-          filter={filterTexto}
-          className="colunaAcaoUlt"
-          dataFormat={renderColunaAcaoUlt}
-        >
-          <div className="divLabelColuna">
-            <div className="colunaDividida">
-              <div>Acão</div>
-              <div>Ult</div>
+          <TableHeaderColumn
+            dataField="estrategia"
+            width="90"
+            filter={filterTexto}
+            data
+          >
+            <div className="divLabelColuna">Estratégia</div>
+          </TableHeaderColumn>
+          <TableHeaderColumn dataField="grupo" filter={filterTexto} width="75">
+            <div className="divLabelColuna">Grupo</div>
+          </TableHeaderColumn>
+          <TableHeaderColumn
+            width="90"
+            dataField="acaoUlt"
+            filterValue={cell => `${cell.acao}${cell.ult}`}
+            filter={filterTexto}
+            className="colunaAcaoUlt"
+            dataFormat={renderColunaAcaoUlt}
+          >
+            <div className="divLabelColuna">
+              <div className="colunaDividida">
+                <div>Acão</div>
+                <div>Ult</div>
+              </div>
             </div>
-          </div>
-        </TableHeaderColumn>
-        <TableHeaderColumn
-          dataField="spread"
-          width="65"
-          filterValue={cell => Number(cell.replace(",", "."))}
-          filter={{
-            type: "CustomFilter",
-            getElement: (filterHandler, customParam) =>
-              filtrarNumeros(filterHandler, customParam, "simples")
-          }}
-        >
-          <div className="divLabelColuna">Spread</div>
-        </TableHeaderColumn>
-        <TableHeaderColumn
-          dataField="codigos"
-          width="220"
-          dataFormat={renderColunaCodigos}
-          filter={{
-            type: "CustomFilter",
-            getElement: (filterHandler, customParam) =>
-              filtrarNumeros(filterHandler, customParam, "compostoArray")
-          }}
-        >
-          <div className="divLabelColuna">Códigos</div>
-        </TableHeaderColumn>
-        <TableHeaderColumn
-          dataField="montagem"
-          dataFormat={renderColunaMontagem}
-          width="170"
-          filterValue={cell => Number(cell.valor.replace(",", "."))}
-          filter={{
-            type: "CustomFilter",
-            getElement: (filterHandler, customParam) =>
-              filtrarNumeros(filterHandler, customParam, "simples")
-          }}
-          className="colunaMontagemDesmontagem"
-        >
-          <div className="divLabelColuna">Montagem</div>
-        </TableHeaderColumn>
-        <TableHeaderColumn
-          dataField="desmontagem"
-          dataFormat={renderColunaMontagem}
-          width="170"
-          filterValue={cell => Number(cell.valor.replace(",", "."))}
-          filter={{
-            type: "CustomFilter",
-            getElement: (filterHandler, customParam) =>
-              filtrarNumeros(filterHandler, customParam, "simples")
-          }}
-          className="colunaMontagemDesmontagem"
-        >
-          <div className="divLabelColuna">Desmontagem</div>
-        </TableHeaderColumn>
-        <TableHeaderColumn
-          dataField="vencimento"
-          width="95"
-          filter={{
-            type: "SelectFilter",
-            options: options(combinacoes, "vencimento"),
-            selectText: "",
-            withoutEmptyOption: true
-          }}
-        >
-          <div className="divLabelColuna">Vencimento</div>
-        </TableHeaderColumn>
-        <TableHeaderColumn
-          dataField="prazo"
-          width="80"
-          filter={{
-            type: "SelectFilter",
-            options: options(combinacoes, "prazo"),
-            selectText: "",
-            withoutEmptyOption: true
-          }}
-        >
-          <div className="divLabelColuna">Prazo</div>
-        </TableHeaderColumn>
-      </BootstrapTable>
+          </TableHeaderColumn>
+          <TableHeaderColumn
+            dataField="spread"
+            width="65"
+            filterValue={cell => Number(cell.replace(",", "."))}
+            filter={{
+              type: "CustomFilter",
+              getElement: (filterHandler, customParam) =>
+                filtrarNumeros(filterHandler, customParam, "simples")
+            }}
+          >
+            <div className="divLabelColuna">Spread</div>
+          </TableHeaderColumn>
+          <TableHeaderColumn
+            dataField="codigos"
+            width="220"
+            dataFormat={renderColunaCodigos}
+            filter={{
+              type: "CustomFilter",
+              getElement: (filterHandler, customParam) =>
+                filtrarNumeros(filterHandler, customParam, "compostoArray")
+            }}
+          >
+            <div className="divLabelColuna">Códigos</div>
+          </TableHeaderColumn>
+          <TableHeaderColumn
+            dataField="montagem"
+            dataFormat={renderColunaMontagem}
+            width="170"
+            filterValue={cell => Number(cell.valor.replace(",", "."))}
+            filter={{
+              type: "CustomFilter",
+              getElement: (filterHandler, customParam) =>
+                filtrarNumeros(filterHandler, customParam, "simples")
+            }}
+            className="colunaMontagemDesmontagem"
+          >
+            <div className="divLabelColuna">Montagem</div>
+          </TableHeaderColumn>
+          <TableHeaderColumn
+            dataField="desmontagem"
+            dataFormat={renderColunaMontagem}
+            width="170"
+            filterValue={cell => Number(cell.valor.replace(",", "."))}
+            filter={{
+              type: "CustomFilter",
+              getElement: (filterHandler, customParam) =>
+                filtrarNumeros(filterHandler, customParam, "simples")
+            }}
+            className="colunaMontagemDesmontagem"
+          >
+            <div className="divLabelColuna">Desmontagem</div>
+          </TableHeaderColumn>
+          <TableHeaderColumn
+            dataField="vencimento"
+            width="95"
+            filter={{
+              type: "SelectFilter",
+              options: options(combinacoes, "vencimento"),
+              selectText: "",
+              withoutEmptyOption: true
+            }}
+          >
+            <div className="divLabelColuna">Vencimento</div>
+          </TableHeaderColumn>
+          <TableHeaderColumn
+            dataField="prazo"
+            width="80"
+            filter={{
+              type: "SelectFilter",
+              options: options(combinacoes, "prazo"),
+              selectText: "",
+              withoutEmptyOption: true
+            }}
+          >
+            <div className="divLabelColuna">Prazo</div>
+          </TableHeaderColumn>
+        </BootstrapTable>
+      </PerfectScrollbar>
     </div>
   );
 };

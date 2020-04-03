@@ -9,6 +9,16 @@
   border: none !important;
 }
 
+.tabelaCombinacoes .react-bs-container-header.table-header-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.tabelaCombinacoes .react-bs-container-body {
+  overflow: hidden !important;
+}
+
 .tabelaCombinacoes table {
   height: 100%;
 }
@@ -140,12 +150,14 @@ div.filter.number-filter {
 /* Posicionamento de inputs acima do thead e configuração do th*/
 .divLabelColuna {
   border: 1px solid var(--cor-borda);
-  border-left: none;
+  border-right: none;
   height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 92px;
+  /* width: 100%; */
+  /* margin: 92px 0px 0 -1px !important; */
 }
 
 .divLabelColuna .colunaDividida {
@@ -154,6 +166,14 @@ div.filter.number-filter {
 
 .tabelaCombinacoes th:first-child .divLabelColuna {
   border-top-left-radius: 5px;
+}
+
+.tabelaCombinacoes th:nth-child(1n + 6) .divLabelColuna {
+  border-right: 1px solid var(--cor-borda);
+  border-left: none;
+}
+
+.tabelaCombinacoes th:nth-child(6) .divLabelColuna {
   border-left: 1px solid var(--cor-borda);
 }
 
