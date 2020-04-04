@@ -1,5 +1,6 @@
 import React from "react";
 import { FormControl } from "react-bootstrap";
+import { Select } from "antd";
 
 export default class FiltroNumericoSeletor extends React.Component {
   constructor(props) {
@@ -8,7 +9,7 @@ export default class FiltroNumericoSeletor extends React.Component {
     this.filter = this.filter.bind(this);
 
     this.state = {
-      select: "",
+      select: "=",
       minNumber: "",
       maxNumber: "",
       //
@@ -19,7 +20,7 @@ export default class FiltroNumericoSeletor extends React.Component {
       codigo2: "",
       strike2Min: "",
       strike2Max: "",
-      select2: ""
+      select2: "=",
     };
   }
 
@@ -101,7 +102,7 @@ export default class FiltroNumericoSeletor extends React.Component {
     const select = this.state.select;
     const minNumber = this.state.minNumber;
     const maxNumber = this.state.maxNumber;
-    const height = select === "<>" || select === "><" ? "66px" : "43px";
+    const height = select === "<>" || select === "><" ? "43px" : "20px";
 
     return (
       <div
@@ -109,7 +110,7 @@ export default class FiltroNumericoSeletor extends React.Component {
           display: "flex",
           flexDirection: "column",
           height: height,
-          justifyContent: "space-between"
+          justifyContent: "space-between",
         }}
       >
         {select === "<>" || select === "><" ? (
@@ -119,42 +120,46 @@ export default class FiltroNumericoSeletor extends React.Component {
             placeholder="max"
             className="form-control inputMaxRange"
             value={maxNumber}
-            onChange={e => {
+            onChange={(e) => {
               this.setState({ maxNumber: e.target.value }, () => {
                 this.filter(e);
               });
             }}
           ></FormControl>
         ) : null}
-        <FormControl
-          ref="fromInput"
-          type="number"
-          placeholder={select === "<>" || select === "><" ? "min" : "valor"}
-          className="form-control inputMinRange"
-          value={minNumber}
-          onChange={e => {
-            this.setState({ minNumber: e.target.value }, () => {
-              this.filter(e);
-            });
-          }}
-        ></FormControl>
-        <FormControl
-          ref="selectComparator"
-          as="select"
-          value={select}
-          onChange={e =>
-            this.setState({ select: e.target.value }, () => {
-              this.filter(e);
-            })
-          }
-        >
-          <option></option>
-          <option>{`><`}</option>
-          <option>{`<>`}</option>
-          <option>{`<`}</option>
-          <option>{`>`}</option>
-          <option>=</option>
-        </FormControl>
+        <div style={{ position: "relative" }}>
+          <FormControl
+            ref="fromInput"
+            type="number"
+            placeholder={select === "<>" || select === "><" ? "min" : "valor"}
+            className="form-control inputMinRange"
+            value={minNumber}
+            onChange={(e) => {
+              this.setState({ minNumber: e.target.value }, () => {
+                this.filter(e);
+              });
+            }}
+          ></FormControl>
+          <Select
+            size="small"
+            dropdownClassName="inputCodigoDropdown selectOperacaoFiltroDropdown"
+            value={select}
+            className="selectOperacaoFiltro"
+            style={{ height: "20px !important" }}
+            suffixIcon={<div style={{ color: "#ddd" }}>{select}</div>}
+            onChange={(value) =>
+              this.setState({ select: value }, () => {
+                this.filter(value);
+              })
+            }
+          >
+            <Select.Option value={"><"}>{"><"}</Select.Option>
+            <Select.Option value={"<>"}>{"<>"}</Select.Option>
+            <Select.Option value={"<"}>{"<"}</Select.Option>
+            <Select.Option value={">"}>{">"}</Select.Option>
+            <Select.Option value={"="}>=</Select.Option>
+          </Select>
+        </div>
       </div>
     );
   }
@@ -227,7 +232,7 @@ export default class FiltroNumericoSeletor extends React.Component {
     const strikeMin = this.state[strikeMinLabel];
     const strikeMax = this.state[strikeMaxLabel];
     const codigo = this.state[codigoLabel];
-    const height = ["><", "<>"].includes(select) ? "100%" : "66px"; //43 px
+    const height = ["><", "<>"].includes(select) ? "66px" : "43px"; //43 px
 
     return (
       <div
@@ -237,7 +242,8 @@ export default class FiltroNumericoSeletor extends React.Component {
           height: height,
           justifyContent: "space-between",
           marginLeft: "2px",
-          marginRight: "2px"
+          marginRight: "2px",
+          position: "relative",
         }}
       >
         {select === "<>" || select === "><" ? (
@@ -247,30 +253,67 @@ export default class FiltroNumericoSeletor extends React.Component {
             placeholder="max"
             className="form-control inputMaxRange"
             value={strikeMax}
-            onChange={e => {
+            onChange={(e) => {
               this.setState({ [strikeMaxLabel]: e.target.value }, () => {
                 this.filter(e);
               });
             }}
           ></FormControl>
         ) : null}
+        <div style={{ position: "relative" }}>
+          <FormControl
+            ref="fromInput"
+            type="number"
+            placeholder={select === "<>" || select === "><" ? "min" : "valor"}
+            className="form-control inputMinRange"
+            value={strikeMin}
+            onChange={(e) => {
+              this.setState({ [strikeMinLabel]: e.target.value }, () => {
+                this.filter(e);
+              });
+            }}
+          ></FormControl>
+          <Select
+            size="small"
+            dropdownClassName="inputCodigoDropdown selectOperacaoFiltroDropdown"
+            value={select}
+            className="selectOperacaoFiltro"
+            style={{ height: "20px !important" }}
+            suffixIcon={<div style={{ color: "#ddd" }}>{select}</div>}
+            onChange={(value) =>
+              this.setState({ [selectLabel]: value }, () => {
+                this.filter(value);
+              })
+            }
+          >
+            <Select.Option value={"><"}>{"><"}</Select.Option>
+            <Select.Option value={"<>"}>{"<>"}</Select.Option>
+            <Select.Option value={"<"}>{"<"}</Select.Option>
+            <Select.Option value={">"}>{">"}</Select.Option>
+            <Select.Option value={"="}>=</Select.Option>
+          </Select>
+        </div>
+
         <FormControl
-          ref="fromInput"
-          type="number"
-          placeholder={select === "<>" || select === "><" ? "min" : "valor"}
-          className="form-control inputMinRange"
-          value={strikeMin}
-          onChange={e => {
-            this.setState({ [strikeMinLabel]: e.target.value }, () => {
+          type="text"
+          placeholder="código"
+          value={codigo}
+          onChange={(e) => {
+            this.setState({ [codigoLabel]: e.target.value }, () => {
               this.filter(e);
             });
           }}
         ></FormControl>
-        <FormControl
+      </div>
+    );
+  };
+}
+
+/* <FormControl
           ref="selectComparator"
           as="select"
           value={select}
-          onChange={e =>
+          onChange={(e) =>
             this.setState({ [selectLabel]: e.target.value }, () => {
               this.filter(e);
             })
@@ -282,18 +325,4 @@ export default class FiltroNumericoSeletor extends React.Component {
           <option>{`<`}</option>
           <option>{`>`}</option>
           <option>=</option>
-        </FormControl>
-        <FormControl
-          type="text"
-          placeholder="código"
-          value={codigo}
-          onChange={e => {
-            this.setState({ [codigoLabel]: e.target.value }, () => {
-              this.filter(e);
-            });
-          }}
-        ></FormControl>
-      </div>
-    );
-  };
-}
+        </FormControl> */

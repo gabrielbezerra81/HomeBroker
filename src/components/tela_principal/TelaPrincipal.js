@@ -1,5 +1,5 @@
 import React from "react";
-import MenuLateral from "components/tela_principal/MenuLateral";
+import MenuLateralUsuario from "components/tela_principal/MenuLateralUsuario";
 import {
   MainAppConectado,
   OrdensExecucaoConectada,
@@ -23,7 +23,7 @@ export default class TelaPrincipal extends React.Component {
     return (
       <div>
         <div className="divTelaPrincipal">
-          <MenuLateral />
+          <MenuLateralUsuario />
           <div className="conteudoMenuPrincipal">
             <BarraTopoTelaPrincipal />
             <div style={{ display: "flex", height: "100%" }}>

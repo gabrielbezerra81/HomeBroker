@@ -5,16 +5,16 @@ import { getDiaSemana, getDiaEMes } from "components/utils/Formatacoes";
 import { MDBIcon } from "mdbreact";
 import {
   logarUsuarioAction,
-  deslogarUsuarioAction
+  deslogarUsuarioAction,
 } from "components/redux/actions/TelaPrincipalActions";
 import { Animate } from "react-show";
 
 const startStyle = {
   opacity: 0,
-  pointerEvents: "none"
+  pointerEvents: "none",
 };
 
-class MenuLateral extends React.Component {
+class MenuLateralUsuario extends React.Component {
   render() {
     return (
       <div className="divMenuLateral hide" id="divMenuLateral">
@@ -48,23 +48,23 @@ class MenuLateral extends React.Component {
     );
   }
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   usuarioConectado: state.telaPrincipalReducer.usuarioConectado,
   logado: state.telaPrincipalReducer.logado,
-  menuLateralAberto: state.telaPrincipalReducer.menuLateralAberto
+  menuLateralAberto: state.telaPrincipalReducer.menuLateralAberto,
 });
 
 export default connect(mapStateToProps, {
   logarUsuarioAction,
-  deslogarUsuarioAction
-})(MenuLateral);
+  deslogarUsuarioAction,
+})(MenuLateralUsuario);
 
-const renderDivLogin = props => {
+const renderDivLogin = (props) => {
   if (props.logado) {
     return (
       <div
         className="divClicavel itemMenuLateral corAlternada"
-        onClick={event => props.deslogarUsuarioAction(event, props)}
+        onClick={(event) => props.deslogarUsuarioAction(event, props)}
         tabIndex={0}
       >
         <Row className="botaoDeslogar">
@@ -93,7 +93,7 @@ const renderDivLogin = props => {
       <div
         tabIndex={0}
         className="divClicavel itemMenuLateral corAlternada"
-        onClick={event => props.deslogarUsuarioAction(event, props)}
+        onClick={(event) => props.deslogarUsuarioAction(event, props)}
       >
         <Row className="botaoDeslogar">
           <Col md={0} className="colLogout">

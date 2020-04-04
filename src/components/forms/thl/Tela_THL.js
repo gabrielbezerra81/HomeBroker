@@ -8,7 +8,7 @@ import { modalHeaderSemBook } from "components/utils/FormHeader";
 import imgModeloEU from "img/modeloEU.png";
 import { ReactComponent as ImgModeloUSA } from "img/modeloUSA2.svg";
 import MapaCalor from "components/forms/thl/MapaCalor";
-import Combinacoes from "components/forms/thl/Combinacoes";
+import TabelaCombinacoes from "components/forms/thl/TabelaCombinacoes";
 
 // import "fixed-header-table/css/defaultTheme.css";
 
@@ -79,7 +79,7 @@ const vencimentos = (props, thiss) => {
             className="inputAtivo"
             type="text"
             value={props.ativoPesquisa.toUpperCase()}
-            onChange={event =>
+            onChange={(event) =>
               props.mudarVariavelTHLAction(
                 "ativoPesquisa",
                 event.currentTarget.value
@@ -97,13 +97,13 @@ const vencimentos = (props, thiss) => {
         </InputGroup>
       </div>
       <PerfectScrollbar
-        ref={ref => {
+        ref={(ref) => {
           thiss._scrollBarRef = ref;
         }}
         options={{
           maxScrollbarLength: 40,
           minScrollbarLength: 40,
-          suppressScrollY: false
+          suppressScrollY: false,
         }}
         id="scrollTabelaVencimento"
         className="wrapper containerTabela"
@@ -157,18 +157,18 @@ const vencimentos = (props, thiss) => {
         </div>
       </PerfectScrollbar>
 
-      <Combinacoes props={props}></Combinacoes>
+      <TabelaCombinacoes props={props} />
     </div>
   );
 };
 
-const filtrarStrikes = arrayVencimentos => {
+const filtrarStrikes = (arrayVencimentos) => {
   return [
     ...new Set(
-      arrayVencimentos.map(linhaVencimento =>
+      arrayVencimentos.map((linhaVencimento) =>
         parseInt(linhaVencimento.strikeLine)
       )
-    )
+    ),
   ];
 };
 
@@ -202,7 +202,7 @@ const renderConteudoTabelaVencimentos = (props, strikes) => {
     );
 
     const vencimentosStrike = props.opcoesStrike.filter(
-      linhaVencimentos => parseInt(linhaVencimentos.strikeLine) === strike
+      (linhaVencimentos) => parseInt(linhaVencimentos.strikeLine) === strike
     );
 
     const linhaVencimentos = vencimentosStrike.map((linha, indiceLinha) => {
@@ -223,7 +223,7 @@ const renderConteudoTabelaVencimentos = (props, strikes) => {
           {/* <td></td> */}
           {meses.map((mes, indiceMes) => {
             const itemColuna = linha.stocks.find(
-              itemColuna => itemColuna.vencimento.split("/")[1] === mes
+              (itemColuna) => itemColuna.vencimento.split("/")[1] === mes
             );
             if (itemColuna) {
               return (
@@ -249,7 +249,7 @@ const renderConteudoTabelaVencimentos = (props, strikes) => {
   return conteudoTabelaVencimentos;
 };
 
-const renderConteudoMes = itemColuna => {
+const renderConteudoMes = (itemColuna) => {
   const ativoStrike = `${itemColuna.symbol.slice(4)}(${itemColuna.strike})`;
   const custodia = verificaAtivoCustodia(itemColuna);
 
@@ -289,7 +289,7 @@ const renderConteudoMes = itemColuna => {
   );
 };
 
-const renderModelo = modelo => {
+const renderModelo = (modelo) => {
   return (
     <div className="mr-1">
       {modelo === "EUROPEAN" ? (
@@ -324,30 +324,34 @@ const calculaMapaCalor = (arrayValores, props) => {
   let valores = arrayValores.sort();
   faixas[0] = valores[0] + ""; // faixa 1 32
   faixas[4] = valores[valores.length - 1] + ""; // faixa 5 40
-  valores = valores.map(valor => {
+  valores = valores.map((valor) => {
     if (valor < 1) return valor * 100;
     return valor;
   });
 
   let intervalo = valores[valores.length - 1] - 1 - (valores[0] + 1) + 1; // intervalo de 7
   intervalo = intervalo / 3; // 2.33 -> inteiro 2
-  faixas[1] = `${(valores[0] + 1) / 100}-${(valores[0] + // faixa 2 de 33 a 34
-    Math.floor(intervalo)) /
-    100}`;
-  faixas[3] = `${(valores[valores.length - 1] - Math.floor(intervalo)) / // faixa 4 38 a 39
-    100}-${(valores[valores.length - 1] - 1) / 100}`;
+  faixas[1] = `${(valores[0] + 1) / 100}-${
+    (valores[0] + // faixa 2 de 33 a 34
+      Math.floor(intervalo)) /
+    100
+  }`;
+  faixas[3] = `${
+    (valores[valores.length - 1] - Math.floor(intervalo)) / // faixa 4 38 a 39
+    100
+  }-${(valores[valores.length - 1] - 1) / 100}`;
 
   if ((intervalo * 3) % 3 === 0) intervalo += 1;
-  faixas[2] = `${(valores[0] + Math.ceil(intervalo)) / 100}-${(valores[ // faixa 3 de 35 a 37
-    valores.length - 1
-  ] -
-    Math.ceil(intervalo)) /
-    100}`;
+  faixas[2] = `${(valores[0] + Math.ceil(intervalo)) / 100}-${
+    (valores[valores.length - 1] - // faixa 3 de 35 a 37
+      Math.ceil(intervalo)) /
+    100
+  }`;
 
   props.mudarVariavelTHLAction("faixasMapaCalor", faixas);
 };
 
-const verificaAtivoCustodia = itemColuna => {
+const verificaAtivoCustodia = (itemColuna) => {
   let custodia = false;
 
   return custodia;
@@ -375,13 +379,13 @@ const renderColunaNomeMes = (mes, props, textoVazio = false) => {
 const verificarMesPossuiVencimento = (props, mes) => {
   const stocks = [];
 
-  props.opcoesStrike.forEach(linha => {
-    linha.stocks.forEach(stock => {
+  props.opcoesStrike.forEach((linha) => {
+    linha.stocks.forEach((stock) => {
       stocks.push(stock);
     });
   });
 
-  return stocks.some(stock => stock.vencimento.split("/")[1] === mes);
+  return stocks.some((stock) => stock.vencimento.split("/")[1] === mes);
 };
 
 export default Tela_THL;
@@ -398,7 +402,7 @@ const meses = [
   "09",
   "10",
   "11",
-  "12"
+  "12",
 ];
 
 const mesesExtenso = [
@@ -413,7 +417,7 @@ const mesesExtenso = [
   "Setembro",
   "Outubro",
   "Novembro",
-  "Dezembro"
+  "Dezembro",
 ];
 
 const valoresMapaMontar = [0.4, 0.32];

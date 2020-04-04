@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 // import { useSelector } from "react-redux";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
+import PerfectScrollbar from "react-perfect-scrollbar";
 import FiltroNumericoSeletor from "./FiltroNumericoSeletor";
 import imgModeloEU from "img/modeloEU.png";
 import { ReactComponent as ImgModeloUSA } from "img/modeloUSA2.svg";
-import PerfectScrollbar from "react-perfect-scrollbar";
 
 const combinacoes = [
   {
@@ -15,20 +15,20 @@ const combinacoes = [
     spread: "10,50",
     codigos: [
       { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE279", strike: 27.97, model: "EUROPEAN" }
+      { symbol: "PETRE279", strike: 27.97, model: "EUROPEAN" },
     ],
     montagem: {
       valor: "0,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 }
+      bookCompra: { valor: "0,70", qtde: 1000 },
     },
     desmontagem: {
       valor: "1,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 }
+      bookCompra: { valor: "0,70", qtde: 10000 },
     },
     vencimento: "21/10/2019",
-    prazo: "21 Dias"
+    prazo: "21 Dias",
   },
   {
     id: 2,
@@ -38,20 +38,20 @@ const combinacoes = [
     spread: "10,50",
     codigos: [
       { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
     ],
     montagem: {
       valor: "0,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 }
+      bookCompra: { valor: "0,70", qtde: 1000 },
     },
     desmontagem: {
       valor: "2,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 }
+      bookCompra: { valor: "0,70", qtde: 10000 },
     },
     vencimento: "21/10/2019",
-    prazo: "21 Dias"
+    prazo: "21 Dias",
   },
   {
     id: 3,
@@ -61,20 +61,20 @@ const combinacoes = [
     spread: "10,50",
     codigos: [
       { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
     ],
     montagem: {
       valor: "0,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 }
+      bookCompra: { valor: "0,70", qtde: 1000 },
     },
     desmontagem: {
       valor: "2,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 }
+      bookCompra: { valor: "0,70", qtde: 10000 },
     },
     vencimento: "21/10/2019",
-    prazo: "21 Dias"
+    prazo: "21 Dias",
   },
   {
     id: 4,
@@ -84,20 +84,20 @@ const combinacoes = [
     spread: "10,50",
     codigos: [
       { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
     ],
     montagem: {
       valor: "0,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 }
+      bookCompra: { valor: "0,70", qtde: 1000 },
     },
     desmontagem: {
       valor: "2,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 }
+      bookCompra: { valor: "0,70", qtde: 10000 },
     },
     vencimento: "21/10/2019",
-    prazo: "21 Dias"
+    prazo: "21 Dias",
   },
   {
     id: 5,
@@ -107,20 +107,20 @@ const combinacoes = [
     spread: "10,50",
     codigos: [
       { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
     ],
     montagem: {
       valor: "0,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 }
+      bookCompra: { valor: "0,70", qtde: 1000 },
     },
     desmontagem: {
       valor: "2,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 }
+      bookCompra: { valor: "0,70", qtde: 10000 },
     },
     vencimento: "21/10/2019",
-    prazo: "21 Dias"
+    prazo: "21 Dias",
   },
   {
     id: 6,
@@ -130,20 +130,20 @@ const combinacoes = [
     spread: "10,50",
     codigos: [
       { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
     ],
     montagem: {
       valor: "0,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 }
+      bookCompra: { valor: "0,70", qtde: 1000 },
     },
     desmontagem: {
       valor: "2,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 }
+      bookCompra: { valor: "0,70", qtde: 10000 },
     },
     vencimento: "21/10/2019",
-    prazo: "21 Dias"
+    prazo: "21 Dias",
   },
   {
     id: 7,
@@ -153,20 +153,20 @@ const combinacoes = [
     spread: "10,50",
     codigos: [
       { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
     ],
     montagem: {
       valor: "0,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 }
+      bookCompra: { valor: "0,70", qtde: 1000 },
     },
     desmontagem: {
       valor: "2,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 }
+      bookCompra: { valor: "0,70", qtde: 10000 },
     },
     vencimento: "21/10/2019",
-    prazo: "21 Dias"
+    prazo: "21 Dias",
   },
   {
     id: 8,
@@ -176,20 +176,20 @@ const combinacoes = [
     spread: "10,50",
     codigos: [
       { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
     ],
     montagem: {
       valor: "0,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 }
+      bookCompra: { valor: "0,70", qtde: 1000 },
     },
     desmontagem: {
       valor: "7,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 }
+      bookCompra: { valor: "0,70", qtde: 10000 },
     },
     vencimento: "21/10/2019",
-    prazo: "21 Dias"
+    prazo: "21 Dias",
   },
   {
     id: 9,
@@ -199,20 +199,20 @@ const combinacoes = [
     spread: "10,50",
     codigos: [
       { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
     ],
     montagem: {
       valor: "0,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 }
+      bookCompra: { valor: "0,70", qtde: 1000 },
     },
     desmontagem: {
       valor: "6,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 }
+      bookCompra: { valor: "0,70", qtde: 10000 },
     },
     vencimento: "21/10/2019",
-    prazo: "21 Dias"
+    prazo: "21 Dias",
   },
   {
     id: 10,
@@ -222,20 +222,20 @@ const combinacoes = [
     spread: "10,50",
     codigos: [
       { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
     ],
     montagem: {
       valor: "0,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 }
+      bookCompra: { valor: "0,70", qtde: 1000 },
     },
     desmontagem: {
       valor: "5,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 }
+      bookCompra: { valor: "0,70", qtde: 10000 },
     },
     vencimento: "21/10/2019",
-    prazo: "21 Dias"
+    prazo: "21 Dias",
   },
   {
     id: 11,
@@ -245,20 +245,20 @@ const combinacoes = [
     spread: "10,50",
     codigos: [
       { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
     ],
     montagem: {
       valor: "0,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 }
+      bookCompra: { valor: "0,70", qtde: 1000 },
     },
     desmontagem: {
       valor: "4,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 }
+      bookCompra: { valor: "0,70", qtde: 10000 },
     },
     vencimento: "21/10/2019",
-    prazo: "21 Dias"
+    prazo: "21 Dias",
   },
   {
     id: 12,
@@ -268,20 +268,20 @@ const combinacoes = [
     spread: "10,50",
     codigos: [
       { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
     ],
     montagem: {
       valor: "0,00",
       bookVenda: { valor: "0,60", qtde: 10000 },
-      bookCompra: { valor: "0,60", qtde: 1000 }
+      bookCompra: { valor: "0,60", qtde: 1000 },
     },
     desmontagem: {
       valor: "3,00",
       bookVenda: { valor: "0,60", qtde: 10000 },
-      bookCompra: { valor: "0,60", qtde: 10000 }
+      bookCompra: { valor: "0,60", qtde: 10000 },
     },
     vencimento: "21/10/2019",
-    prazo: "21 Dias"
+    prazo: "21 Dias",
   },
   {
     id: 13,
@@ -291,20 +291,20 @@ const combinacoes = [
     spread: "10,50",
     codigos: [
       { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
     ],
     montagem: {
       valor: "0,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 }
+      bookCompra: { valor: "0,70", qtde: 1000 },
     },
     desmontagem: {
       valor: "2,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 }
+      bookCompra: { valor: "0,70", qtde: 10000 },
     },
     vencimento: "21/10/2019",
-    prazo: "21 Dias"
+    prazo: "21 Dias",
   },
   {
     id: 14,
@@ -314,20 +314,20 @@ const combinacoes = [
     spread: "10,50",
     codigos: [
       { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
     ],
     montagem: {
       valor: "0,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 }
+      bookCompra: { valor: "0,70", qtde: 1000 },
     },
     desmontagem: {
       valor: "2,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 }
+      bookCompra: { valor: "0,70", qtde: 10000 },
     },
     vencimento: "21/10/2019",
-    prazo: "21 Dias"
+    prazo: "21 Dias",
   },
   {
     id: 15,
@@ -337,21 +337,21 @@ const combinacoes = [
     spread: "10,50",
     codigos: [
       { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" }
+      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
     ],
     montagem: {
       valor: "0,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 }
+      bookCompra: { valor: "0,70", qtde: 1000 },
     },
     desmontagem: {
       valor: "2,00",
       bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 }
+      bookCompra: { valor: "0,70", qtde: 10000 },
     },
     vencimento: "21/10/2019",
-    prazo: "21 Dias"
-  }
+    prazo: "21 Dias",
+  },
 ];
 
 export default ({ props }) => {
@@ -363,7 +363,7 @@ export default ({ props }) => {
       <PerfectScrollbar
         id="scrollbarTabelaCombinacoes"
         options={{ wheelPropagation: false }}
-        ref={ref => {
+        ref={(ref) => {
           setScrollbarRef(ref);
         }}
       >
@@ -386,9 +386,9 @@ export default ({ props }) => {
             <div className="divLabelColuna">Grupo</div>
           </TableHeaderColumn>
           <TableHeaderColumn
-            width="90"
+            width="85"
             dataField="acaoUlt"
-            filterValue={cell => `${cell.acao}${cell.ult}`}
+            filterValue={(cell) => `${cell.acao}${cell.ult}`}
             filter={filterTexto}
             className="colunaAcaoUlt"
             dataFormat={renderColunaAcaoUlt}
@@ -402,8 +402,8 @@ export default ({ props }) => {
           </TableHeaderColumn>
           <TableHeaderColumn
             dataField="spread"
-            width="65"
-            filterValue={cell => Number(cell.replace(",", "."))}
+            width="70"
+            filterValue={(cell) => Number(cell.replace(",", "."))}
             filter={{
               type: "CustomFilter",
               getElement: (filterHandler, customParam) =>
@@ -412,7 +412,7 @@ export default ({ props }) => {
                   customParam,
                   "simples",
                   scrollbarRef
-                )
+                ),
             }}
           >
             <div className="divLabelColuna">Spread</div>
@@ -429,7 +429,7 @@ export default ({ props }) => {
                   customParam,
                   "compostoArray",
                   scrollbarRef
-                )
+                ),
             }}
           >
             <div className="divLabelColuna">Códigos</div>
@@ -438,7 +438,7 @@ export default ({ props }) => {
             dataField="montagem"
             dataFormat={renderColunaMontagem}
             width="170"
-            filterValue={cell => Number(cell.valor.replace(",", "."))}
+            filterValue={(cell) => Number(cell.valor.replace(",", "."))}
             filter={{
               type: "CustomFilter",
               getElement: (filterHandler, customParam) =>
@@ -447,7 +447,7 @@ export default ({ props }) => {
                   customParam,
                   "simples",
                   scrollbarRef
-                )
+                ),
             }}
             className="colunaMontagemDesmontagem"
           >
@@ -457,7 +457,7 @@ export default ({ props }) => {
             dataField="desmontagem"
             dataFormat={renderColunaMontagem}
             width="170"
-            filterValue={cell => Number(cell.valor.replace(",", "."))}
+            filterValue={(cell) => Number(cell.valor.replace(",", "."))}
             filter={{
               type: "CustomFilter",
               getElement: (filterHandler, customParam) =>
@@ -466,7 +466,7 @@ export default ({ props }) => {
                   customParam,
                   "simples",
                   scrollbarRef
-                )
+                ),
             }}
             className="colunaMontagemDesmontagem"
           >
@@ -479,7 +479,7 @@ export default ({ props }) => {
               type: "SelectFilter",
               options: options(combinacoes, "vencimento"),
               selectText: "",
-              withoutEmptyOption: true
+              withoutEmptyOption: true,
             }}
           >
             <div className="divLabelColuna">Vencimento</div>
@@ -491,7 +491,7 @@ export default ({ props }) => {
               type: "SelectFilter",
               options: options(combinacoes, "prazo"),
               selectText: "",
-              withoutEmptyOption: true
+              withoutEmptyOption: true,
             }}
           >
             <div className="divLabelColuna">Prazo</div>
@@ -556,7 +556,7 @@ const renderColunaMontagem = (cell, row) => {
   );
 };
 
-const renderModelo = modelo => {
+const renderModelo = (modelo) => {
   return (
     <div>
       {modelo === "EUROPEAN" ? (
@@ -574,7 +574,7 @@ const renderModelo = modelo => {
 const options = (combinacoes, atributo) => {
   let opcoes = { "": "" };
 
-  combinacoes.forEach(comb => {
+  combinacoes.forEach((comb) => {
     opcoes[comb[atributo]] = comb[atributo];
   });
 

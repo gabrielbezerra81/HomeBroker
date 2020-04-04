@@ -22,7 +22,7 @@ import "./venda/VendaGainReducao.css";
 import "./venda/VendaFormConfigurar.css";
 
 import "./tela_principal/TelaPrincipal.css";
-import "./tela_principal/MenuLateral.css";
+import "./tela_principal/MenuLateralUsuario.css";
 import "./ordens_execucao/OrdensExecucao.css";
 import "./ordens_execucao/OpcoesOrdemExec.css";
 import "./multileg_/multileg.css";

@@ -86,9 +86,20 @@
   border-color: #333;
   color: var(--cor-texto) !important;
   font-size: 0.7rem;
-  text-align: center !important;
+  /* text-align: center !important; */
   width: 100% !important;
   max-width: 100px;
+  padding-left: 3px !important;
+}
+
+.tabelaCombinacoes input::-webkit-outer-spin-button,
+.tabelaCombinacoes input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.tabelaCombinacoes input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 .tabelaCombinacoes input:focus,
@@ -165,9 +176,8 @@ div.filter.number-filter {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 92px;
+  margin-top: 72px;
   /* width: 100%; */
-  /* margin: 92px 0px 0 -1px !important; */
 }
 
 .divLabelColuna .colunaDividida {
@@ -204,3 +214,37 @@ div.filter.number-filter {
   border-right: 1px solid var(--cor-borda) !important;
 }
 /* Posicionamento de inputs acima do thead */
+
+.selectOperacaoFiltro {
+  position: absolute !important;
+  bottom: 0px;
+  right: 0px;
+}
+
+.selectOperacaoFiltro > div {
+  height: 20px !important;
+  background-color: #333 !important;
+  color: var(--cor-texto) !important;
+  width: 25px !important;
+  border: none;
+  text-align: center !important;
+  font-size: 0.73rem !important;
+}
+
+.selectOperacaoFiltro .ant-select-selection__rendered {
+  height: 20px !important;
+  line-height: 20px !important;
+}
+
+.selectOperacaoFiltro .ant-select-arrow {
+  width: 100%;
+  right: 0 !important;
+}
+
+.selectOperacaoFiltroDropdown {
+  width: 50px !important;
+}
+
+#thl .ant-select-focused .ant-select-selection {
+  box-shadow: 0 0 0px 3px #1f3b69c9 !important;
+}
