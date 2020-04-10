@@ -17,7 +17,7 @@ import {
   enviarOrdemMultilegAction,
   criarAlertaMultilegAction,
   criarPosicaoMultilegAction
-} from "components/redux/actions/api_actions/MenuAPIAction";
+} from "components/redux/actions/api_actions/MultilegAPIAction";
 import NumberFormat from "react-number-format";
 
 class Book extends React.Component {

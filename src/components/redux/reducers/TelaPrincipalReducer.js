@@ -2,7 +2,7 @@ import {
   ABRIR_FECHAR_MENU_LATERAL,
   LOGAR_DESLOGAR_USUARIO,
   ABRIR_FECHAR_ITEM_BARRA_LATERAL,
-  MUDAR_DADOS_LOGIN
+  MUDAR_DADOS_LOGIN,
 } from "constants/ActionTypes";
 
 const INITIAL_STATE = {
@@ -24,7 +24,7 @@ const INITIAL_STATE = {
   nomeCadastro: "Gabriel",
   usernameCadastro: "gabrielAB",
   emailCadastro: "gabrielAB@gmail.com",
-  senhaCadastro: "123456789"
+  senhaCadastro: "123456789",
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -36,7 +36,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         usuarioConectado: action.payload.usuarioConectado,
         logado: action.payload.logado,
-        menuLateralAberto: false
+        menuLateralAberto: false,
       };
     case ABRIR_FECHAR_ITEM_BARRA_LATERAL:
       return { ...state, [action.payload.name]: action.payload.valor };

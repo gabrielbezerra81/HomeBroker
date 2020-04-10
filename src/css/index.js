@@ -42,4 +42,3 @@ import "./componentes_customizados/SelectANTD.css";
 import "antd/es/select/style/index.css";
 import "antd/es/radio/style/index.css";
 import "react-perfect-scrollbar/dist/css/styles.css";
-import "react-bootstrap-table/dist/react-bootstrap-table-all.min.css";

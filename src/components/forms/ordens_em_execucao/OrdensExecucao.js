@@ -26,7 +26,10 @@ export default class OrdensExecucao extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.props.eventSourceOrdensExec) {
       if (prevProps.tabelaOrdensExecucao !== this.props.tabelaOrdensExecucao) {
-        this.props.atualizarOrdensExecAction(this.props, 1);
+        this.props.atualizarOrdensExecAction(
+          this.props,
+          this.props.token.accessToken
+        );
       }
     }
   }
@@ -45,7 +48,7 @@ export default class OrdensExecucao extends React.Component {
   }
 }
 
-const modalBody = props => (
+const modalBody = (props) => (
   <div className="bodyOrdensExecucao">
     <Row>
       <Table
@@ -103,7 +106,7 @@ const modalBody = props => (
   </div>
 );
 
-const retornaData = dataString => {
+const retornaData = (dataString) => {
   return formatarDataDaAPI(dataString).toLocaleString();
 };
 
@@ -111,7 +114,7 @@ const renderOferta = (item, index, props, tipo) => {
   let qtdeOferta = 0;
   let qtdeExecutada = 0;
 
-  item.offers.forEach(oferta => {
+  item.offers.forEach((oferta) => {
     qtdeOferta += oferta.qtdeOferta;
     qtdeExecutada += oferta.qtdeExecutada;
   });
@@ -165,7 +168,7 @@ const renderOferta = (item, index, props, tipo) => {
   );
 };
 
-const classeOfertaVenda = oferta => {
+const classeOfertaVenda = (oferta) => {
   if (oferta.oferta === "V") return "colunasOfertaVenda";
   return "";
 };

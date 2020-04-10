@@ -4,61 +4,63 @@ import {
   atualizarEmblemasAPI,
   atualizarPosicaoAPI,
   pesquisarAtivoAPI,
-  atualizarCotacaoAPI
+  atualizarCotacaoAPI,
 } from "components/api/API";
 
 export const mudarVariavelPosicaoAction = (nome, valor) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-      payload: { nome, valor }
+      payload: { nome, valor },
     });
   };
 };
 
-export const listarPosicoesAction = props => {
-  return async dispatch => {
-    const dados = await listarPosicoesAPI();
-    var listaPosicoes = [];
-    var arrayPrecos = [];
-    var arrayCotacoes = [];
+export const listarPosicoesAction = (props) => {
+  return async (dispatch) => {
+    if (props.token) {
+      const dados = await listarPosicoesAPI(props.token);
+      var listaPosicoes = [];
+      var arrayPrecos = [];
+      var arrayCotacoes = [];
 
-    dados.forEach(grupoPosicao => {
-      const posicao = adicionaPosicao(grupoPosicao);
-      const preco = {
-        precoCompra: posicao[0].precoCompra,
-        precoVenda: posicao[0].precoVenda,
-        cotacaoAtual: posicao[0].cotacaoAtual,
-        idEstrutura: posicao[0].idEstrutura
-      };
-      arrayPrecos.push(preco);
-      listaPosicoes.push(...posicao);
-    });
-    // listaPosicoes.splice(0, 19);
-    // arrayPrecos.splice(0, 19);
-    arrayCotacoes = await montaArrayCotacoes(listaPosicoes);
+      dados.forEach((grupoPosicao) => {
+        const posicao = adicionaPosicao(grupoPosicao);
+        const preco = {
+          precoCompra: posicao[0].precoCompra,
+          precoVenda: posicao[0].precoVenda,
+          cotacaoAtual: posicao[0].cotacaoAtual,
+          idEstrutura: posicao[0].idEstrutura,
+        };
+        arrayPrecos.push(preco);
+        listaPosicoes.push(...posicao);
+      });
+      // listaPosicoes.splice(0, 19);
+      // arrayPrecos.splice(0, 19);
+      arrayCotacoes = await montaArrayCotacoes(listaPosicoes);
 
-    atualizarPosicao(dispatch, listaPosicoes, props, 1);
-    atualizarEmblemas(dispatch, listaPosicoes, props, arrayPrecos);
-    atualizarCotacoes(dispatch, listaPosicoes, props, arrayCotacoes);
+      atualizarPosicao(dispatch, listaPosicoes, props, props.token.accessToken);
+      atualizarEmblemas(dispatch, listaPosicoes, props, arrayPrecos);
+      atualizarCotacoes(dispatch, listaPosicoes, props, arrayCotacoes);
 
-    dispatch({
-      type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-      payload: { nome: "posicoesCustodia", valor: listaPosicoes }
-    });
-    dispatch({
-      type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-      payload: { nome: "arrayPrecos", valor: arrayPrecos }
-    });
-    dispatch({
-      type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-      payload: { nome: "arrayCotacoes", valor: arrayCotacoes }
-    });
+      dispatch({
+        type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
+        payload: { nome: "posicoesCustodia", valor: listaPosicoes },
+      });
+      dispatch({
+        type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
+        payload: { nome: "arrayPrecos", valor: arrayPrecos },
+      });
+      dispatch({
+        type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
+        payload: { nome: "arrayCotacoes", valor: arrayCotacoes },
+      });
+    }
   };
 };
 
-export const adicionaPosicao = grupoPosicao => {
-  return grupoPosicao.operacoes.map(operacao => {
+export const adicionaPosicao = (grupoPosicao) => {
+  return grupoPosicao.operacoes.map((operacao) => {
     let variacaoGanho = 0;
     if (operacao.dealPrice)
       variacaoGanho =
@@ -81,14 +83,14 @@ export const adicionaPosicao = grupoPosicao => {
       custodiaVenda: [],
       executando: [],
       idEstrutura: operacao.structureId,
-      agrupadorPrincipal: grupoPosicao.agrupadorPrincipal
+      agrupadorPrincipal: grupoPosicao.agrupadorPrincipal,
     };
     if (operacao.ordersWorking.length === 0) {
       posicao.total = 0;
     }
     posicao.executando = [...operacao.ordersWorking];
-    operacao.ordersWorking.forEach(ordem => {
-      ordem.offers.forEach(oferta => {
+    operacao.ordersWorking.forEach((ordem) => {
+      ordem.offers.forEach((oferta) => {
         if (oferta.qtdeExecutada === 0) {
           posicao.total = 0;
         }
@@ -103,8 +105,8 @@ export const adicionaPosicao = grupoPosicao => {
 };
 
 // Atualiza min, max e ult
-export const atualizarEmblemasAction = props => {
-  return dispatch => {
+export const atualizarEmblemasAction = (props) => {
+  return (dispatch) => {
     console.log(props.posicoesCustodia.length);
     console.log(props.arrayPrecos.length);
     atualizarEmblemas(
@@ -128,7 +130,7 @@ export const atualizarEmblemas = (
     props.eventSourceEmblema.close();
   }
 
-  listaPosicoes.forEach(posicao => {
+  listaPosicoes.forEach((posicao) => {
     ids += posicao.idEstrutura + ",";
   });
   ids = ids.substring(0, ids.length - 1);
@@ -137,14 +139,19 @@ export const atualizarEmblemas = (
 
   dispatch({
     type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-    payload: { nome: "eventSourceEmblema", valor: newSource }
+    payload: { nome: "eventSourceEmblema", valor: newSource },
   });
 };
 
 // Atualiza demais campos de posição
-export const atualizarPosicaoAction = props => {
-  return dispatch => {
-    atualizarPosicao(dispatch, props.posicoesCustodia, props, 1);
+export const atualizarPosicaoAction = (props) => {
+  return (dispatch) => {
+    atualizarPosicao(
+      dispatch,
+      props.posicoesCustodia,
+      props,
+      props.token.accessToken
+    );
   };
 };
 
@@ -162,15 +169,15 @@ const atualizarPosicao = (dispatch, listaPosicoes, props, idUsuario) => {
 
   dispatch({
     type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-    payload: { nome: "eventSourcePosicao", valor: newSource }
+    payload: { nome: "eventSourcePosicao", valor: newSource },
   });
 };
 
 const montaArrayCotacoes = async (listaPosicoes, tipoRetorno = "completo") => {
   let arrayCodigos = [];
-  listaPosicoes.forEach(posicao => {
-    posicao.ativos.forEach(ativo => {
-      if (!arrayCodigos.some(item => item.codigo === ativo.symbol)) {
+  listaPosicoes.forEach((posicao) => {
+    posicao.ativos.forEach((ativo) => {
+      if (!arrayCodigos.some((item) => item.codigo === ativo.symbol)) {
         arrayCodigos.push({ codigo: ativo.symbol });
       }
     });
@@ -188,8 +195,8 @@ const montaArrayCotacoes = async (listaPosicoes, tipoRetorno = "completo") => {
   return arrayCodigos;
 };
 
-export const atualizarCotacoesAction = props => {
-  return dispatch => {
+export const atualizarCotacoesAction = (props) => {
+  return (dispatch) => {
     atualizarCotacoes(
       dispatch,
       props.posicoesCustodia,
@@ -212,7 +219,7 @@ const atualizarCotacoes = async (
     props.eventSourceCotacoes.close();
   }
 
-  arrayCodigos.forEach(ativo => {
+  arrayCodigos.forEach((ativo) => {
     codigos += ativo.codigo + ",";
   });
 
@@ -228,6 +235,6 @@ const atualizarCotacoes = async (
 
   dispatch({
     type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-    payload: { nome: "arrayCotacoes", valor: newSource }
+    payload: { nome: "arrayCotacoes", valor: newSource },
   });
 };

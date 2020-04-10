@@ -18,7 +18,7 @@ export default class BarraLateral extends React.Component {
         <div
           tabIndex={0}
           className="itemDivBarraLateral divClicavel"
-          onClick={event => {
+          onClick={(event) => {
             this.props.abrirFormAction(event, this.props);
           }}
           data-name="book"

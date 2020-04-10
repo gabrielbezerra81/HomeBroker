@@ -7,7 +7,14 @@
 
 #scrollbarTabelaCombinacoes {
   max-height: 550px;
+  height: 550px;
   width: 100%;
+
+  /* height: 496px;
+  width: 100%; */
+  /* overflow: hidden; */
+  /* max-height: 100vh; */
+  /* position: relative; */
 }
 
 #scrollbarTabelaCombinacoes .ps__rail-x {
@@ -30,7 +37,7 @@
 }
 
 .tabelaCombinacoes .react-bs-container-body {
-  overflow: visible !important;
+  /* overflow: visible !important; */
 }
 
 .tabelaCombinacoes th {
@@ -57,7 +64,7 @@
 .tabelaCombinacoes td {
   padding: 5px 3px !important;
   font-size: 0.7rem;
-  vertical-align: middle;
+  vertical-align: middle !important;
 }
 
 /* Container dos inputs de filtro */
@@ -115,6 +122,20 @@
 .tabelaCombinacoes select {
   padding: 0;
   text-align-last: right;
+}
+
+.headerAcaoUlt {
+}
+
+.colunaAcaoUlt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.colunaAcaoUlt > div {
+  width: 100%;
 }
 
 .colunaAcaoUlt .colunaDividida div {
@@ -247,4 +268,83 @@ div.filter.number-filter {
 
 #thl .ant-select-focused .ant-select-selection {
   box-shadow: 0 0 0px 3px #1f3b69c9 !important;
+}
+
+.containerTabelaComb {
+  height: 496px;
+  width: 100%;
+  overflow: auto;
+  max-height: 100vh;
+  position: relative;
+}
+
+.containerTabelaComb > div {
+  min-width: 1072px !important;
+}
+
+.linha-par {
+  background-color: var(--background-color);
+}
+
+.containerTabelaComb > div > div:nth-child(2) > div:nth-child(2) {
+}
+
+.containerTabelaComb
+  > div
+  > div:nth-child(2)
+  > div:nth-child(2)::-webkit-scrollbar,
+.containerTabelaComb::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.containerTabelaComb
+  > div
+  > div:nth-child(2)
+  > div:nth-child(2)::-webkit-scrollbar-track,
+.containerTabelaComb::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: #222;
+}
+
+.containerTabelaComb
+  > div
+  > div:nth-child(2)
+  > div:nth-child(2)::-webkit-scrollbar-thumb,
+.containerTabelaComb::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: #444;
+}
+
+.tabelaCombinacoes th,
+.tabelaCombinacoes td {
+  border-right: 1px solid var(--cor-borda) !important;
+}
+
+.table-header-row {
+  width: calc(100% - 12px) !important;
+}
+
+.tabelaCombinacoes {
+  margin-bottom: 0;
+}
+
+.tabelaCombinacoes > tbody > td,
+.tabelaCombinacoes > th {
+  background-color: unset !important;
+}
+
+.tabelaCombinacoes thead tr th {
+  border-top: 1px solid var(--cor-borda) !important;
+  border-bottom: 1px solid var(--cor-borda) !important;
+}
+
+.tabelaCombinacoes thead tr th:first-child {
+  border-left: 1px solid var(--cor-borda) !important;
+  border-top-left-radius: 5px !important;
+}
+
+.tabelaCombinacoes thead tr th:last-child {
+  border-top-right-radius: 5px !important;
 }

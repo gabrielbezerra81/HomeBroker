@@ -16,11 +16,11 @@ import {
   abrirFormAction,
   aumentarZindexAction,
   receberAppPropsAction,
-  receberDadosOrdemExecMainReducerAction
+  receberDadosOrdemExecMainReducerAction,
 } from "components/redux/reducers/MainAppReducer";
 import {
   mouseOverAction,
-  mouseLeaveAction
+  mouseLeaveAction,
 } from "components/redux/actions/TelaPrincipalActions";
 import { abrirItemBarraLateralAction } from "components/redux/actions/TelaPrincipalActions";
 import OrdensExecucao from "components/forms/ordens_em_execucao/OrdensExecucao";
@@ -33,7 +33,7 @@ import {
   selecionarAdicionarAbaAction,
   modificarAtributoAbaAction,
   excluirAbaMultilegAction,
-  atualizarCotacaoAction
+  atualizarCotacaoAction,
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { mudarVariavelPosicaoAction } from "components/redux/actions/menu_actions/PosicaoActions";
 import { listarBookOfertaOnEnterAction } from "components/redux/actions/api_actions/bookOfertaAPIActions";
@@ -46,13 +46,13 @@ import {
   finalizarAMercadoAction,
   aumentarQtdePrecoAction,
   abrirOrdensBoletaAction,
-  atualizarOrdensExecAction
+  atualizarOrdensExecAction,
 } from "components/redux/actions/menu_actions/OrdensExecActions";
 import {
   listarPosicoesAction,
   atualizarEmblemasAction,
   atualizarPosicaoAction,
-  atualizarCotacoesAction
+  atualizarCotacoesAction,
 } from "components/redux/actions/menu_actions/PosicaoActions";
 import OpcoesOrdemExec from "components/forms/ordens_em_execucao/OpcoesOrdemExec";
 import { montarBoletaFromOrdemExecAction } from "components/redux/actions/formInputActions";
@@ -63,7 +63,7 @@ import Tela_THL from "components/forms/thl/Tela_THL";
 import { combinedReducersAppPrincipal } from "components/redux/reducers";
 import {
   mudarVariavelTHLAction,
-  pesquisarAtivoTHLAction
+  pesquisarAtivoTHLAction,
 } from "components/redux/actions/menu_actions/THLActions";
 
 // @ts-ignore
@@ -73,7 +73,7 @@ export const GlobalContext = React.createContext();
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const combinedReducers = combineReducers({
-  MainAppReducer: MainAppReducer
+  MainAppReducer: MainAppReducer,
 });
 
 //Usada apenas para gerenciar os estados de mostrar ou não os formulários
@@ -105,32 +105,32 @@ export const Helper = () => {
 };
 
 let Home = ({ path }) => {
-  const logado = useSelector(state => state.telaPrincipalReducer.logado);
+  const logado = useSelector((state) => state.telaPrincipalReducer.logado);
   if (logado) return <TelaPrincipalConectada />;
 
   return <Redirect to="/" noThrow />;
 };
 
-const mapStateToPropsGlobalStore = state => {
+const mapStateToPropsGlobalStore = (state) => {
   return {
     apps: state.MainAppReducer.apps,
     show: state.MainAppReducer.show,
     divkey: state.MainAppReducer.divkey,
-    zIndex: state.MainAppReducer.zIndex
+    zIndex: state.MainAppReducer.zIndex,
   };
 };
 
-const mapStateToPropsGlobalStore_App = state => ({
+const mapStateToPropsGlobalStore_App = (state) => ({
   ...mapStateToPropsGlobalStore(state),
   dadosOrdemExec: state.MainAppReducer.dadosOrdemExec,
-  ultimaBoletaAbertaOrdemExec: state.MainAppReducer.ultimaBoletaAbertaOrdemExec
+  ultimaBoletaAbertaOrdemExec: state.MainAppReducer.ultimaBoletaAbertaOrdemExec,
 });
 
-const mapStateToPropsLocal = state => ({
-  eventSourceBook_Book: state.bookOfertaReducer.eventSource
+const mapStateToPropsLocal = (state) => ({
+  eventSourceBook_Book: state.bookOfertaReducer.eventSource,
 });
 
-const mapStateToPropsAppPrincipal = state => ({
+const mapStateToPropsAppPrincipal = (state) => ({
   ordensAberto: state.telaPrincipalReducer.ordensAberto,
   ordensExecucaoAberto: state.telaPrincipalReducer.ordensExecucaoAberto,
   relatorioDetalhadoAberto: state.telaPrincipalReducer.relatorioDetalhadoAberto,
@@ -144,18 +144,18 @@ const mapStateToPropsAppPrincipal = state => ({
   eventSourceEmblema_Posicao: state.posicaoReducer.eventSourceEmblema,
   eventSourceCotacoes_Posicao: state.posicaoReducer.eventSourceCotacoes,
   eventSourceOrdensExec_OrdensExec:
-    state.ordensExecReducer.eventSourceOrdensExec
+    state.ordensExecReducer.eventSourceOrdensExec,
 });
 
-const mapStateToPropsMultileg = state => ({
+const mapStateToPropsMultileg = (state) => ({
   configComplementarAberto: state.multilegReducer.configComplementarAberto,
   multileg: state.multilegReducer.multileg,
   abaSelecionada: state.multilegReducer.abaSelecionada,
   eventSource: state.multilegReducer.eventSource,
-  eventSourceCotacao: state.multilegReducer.eventSourceCotacao
+  eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
 });
 
-const mapStateToPropsPosicao = state => ({
+const mapStateToPropsPosicao = (state) => ({
   ordenacao: state.posicaoReducer.ordenacao,
   tipoVisualizacao: state.posicaoReducer.tipoVisualizacao,
   ativoPesquisa: state.posicaoReducer.ativoPesquisa,
@@ -165,18 +165,20 @@ const mapStateToPropsPosicao = state => ({
   arrayPrecos: state.posicaoReducer.arrayPrecos,
   posicoesCustodia: state.posicaoReducer.posicoesCustodia,
   arrayCotacoes: state.posicaoReducer.arrayCotacoes,
-  eventSourceCotacoes: state.posicaoReducer.eventSourceCotacoes
+  eventSourceCotacoes: state.posicaoReducer.eventSourceCotacoes,
+  token: state.telaPrincipalReducer.token,
 });
 
-const mapStateToPropsOrdensExec = state => ({
+const mapStateToPropsOrdensExec = (state) => ({
   tabelaOrdensExecucao: state.ordensExecReducer.tabelaOrdensExecucao,
   ativo: state.ordensExecReducer.ativo,
   opcoesOrdemAberto: state.ordensExecReducer.opcoesOrdemAberto,
   ordemAtual: state.ordensExecReducer.ordemAtual,
-  eventSourceOrdensExec: state.ordensExecReducer.eventSourceOrdensExec
+  eventSourceOrdensExec: state.ordensExecReducer.eventSourceOrdensExec,
+  token: state.telaPrincipalReducer.token,
 });
 
-const mapStateToPropsOpcoesOrdemExec = state => ({
+const mapStateToPropsOpcoesOrdemExec = (state) => ({
   ...mapStateToPropsOrdensExec(state),
   selectQtdeAberto: state.ordensExecReducer.selectQtdeAberto,
   selectPrecoAberto: state.ordensExecReducer.selectPrecoAberto,
@@ -185,16 +187,16 @@ const mapStateToPropsOpcoesOrdemExec = state => ({
   eventSource: state.multilegReducer.eventSource,
   eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
   multilegAberto: state.telaPrincipalReducer.multilegAberto,
-  cotacoesMultileg: state.multilegReducer.cotacoesMultileg
+  cotacoesMultileg: state.multilegReducer.cotacoesMultileg,
 });
 
-const mapStateToPropsTelaTHL = state => ({
+const mapStateToPropsTelaTHL = (state) => ({
   ativoPesquisa: state.THLReducer.ativoPesquisa,
   opcoesStrike: state.THLReducer.opcoesStrike,
   faixasMapaCalor: state.THLReducer.faixasMapaCalor,
   seletorMapaCalor: state.THLReducer.seletorMapaCalor,
   listaStrikes: state.THLReducer.listaStrikes,
-  strikeSelecionado: state.THLReducer.strikeSelecionado
+  strikeSelecionado: state.THLReducer.strikeSelecionado,
 });
 
 export const MainAppConectado = compose(
@@ -206,7 +208,7 @@ export const MainAppConectado = compose(
       atualizarShowAction,
       atualizarDivKeyAction,
       abrirFormAction,
-      aumentarZindexAction
+      aumentarZindexAction,
     },
     null,
     { context: GlobalContext }
@@ -214,12 +216,12 @@ export const MainAppConectado = compose(
   connect(mapStateToPropsAppPrincipal, {
     mouseOverAction,
     mouseLeaveAction,
-    abrirItemBarraLateralAction
+    abrirItemBarraLateralAction,
   })
 )(MainApp);
 
 export const SubAppConectado = connect(mapStateToPropsGlobalStore, {}, null, {
-  context: GlobalContext
+  context: GlobalContext,
 })(SubApp);
 
 export const AppConectado = compose(
@@ -229,7 +231,7 @@ export const AppConectado = compose(
       aumentarZindexAction,
       fecharFormAction,
       abrirFormAction,
-      receberDadosOrdemExecMainReducerAction
+      receberDadosOrdemExecMainReducerAction,
     },
     null,
     { context: GlobalContext }
@@ -238,7 +240,7 @@ export const AppConectado = compose(
     receberAppPropsAction,
     listarBookOfertaOnEnterAction,
     mudarInputHeaderAction,
-    montarBoletaFromOrdemExecAction
+    montarBoletaFromOrdemExecAction,
   })
 )(App);
 
@@ -253,7 +255,7 @@ const TelaPrincipalConectada = compose(
   connect(
     mapStateToPropsGlobalStore,
     {
-      aumentarZindexAction
+      aumentarZindexAction,
     },
     null,
     { context: GlobalContext }
@@ -272,7 +274,7 @@ export const OrdensExecucaoConectada = compose(
     listarOrdensExecAction,
     abrirItemBarraLateralAction,
     mudarVariavelOrdensExecAction,
-    atualizarOrdensExecAction
+    atualizarOrdensExecAction,
   })
 )(OrdensExecucao);
 
@@ -283,7 +285,7 @@ export const OpcoesOrdemExecConectada = compose(
       aumentarZindexAction,
       atualizarDivKeyAction,
       abrirFormAction,
-      receberDadosOrdemExecMainReducerAction
+      receberDadosOrdemExecMainReducerAction,
     },
     null,
     { context: GlobalContext }
@@ -295,7 +297,7 @@ export const OpcoesOrdemExecConectada = compose(
     cancelarOrdemExecAction,
     finalizarAMercadoAction,
     aumentarQtdePrecoAction,
-    abrirOrdensBoletaAction
+    abrirOrdensBoletaAction,
   })
 )(OpcoesOrdemExec);
 
@@ -305,39 +307,39 @@ export const BarraLateralConectada = compose(
     { atualizarDivKeyAction, abrirFormAction },
     null,
     {
-      context: GlobalContext
+      context: GlobalContext,
     }
   ),
   connect(mapStateToPropsAppPrincipal, {
     abrirItemBarraLateralAction,
     mouseOverAction,
-    mouseLeaveAction
+    mouseLeaveAction,
   })
 )(BarraLateral);
 
 export const MultilegConectado = compose(
   connect(mapStateToPropsGlobalStore, { aumentarZindexAction }, null, {
-    context: GlobalContext
+    context: GlobalContext,
   }),
   connect(mapStateToPropsMultileg, {
     selecionarAdicionarAbaAction,
     modificarAtributoAbaAction,
     excluirAbaMultilegAction,
     // atualizarBookAction,
-    atualizarCotacaoAction
+    atualizarCotacaoAction,
   })
 )(Multileg);
 
 export const PosicaoEmCustodiaConectada = compose(
   connect(mapStateToPropsGlobalStore, { aumentarZindexAction }, null, {
-    context: GlobalContext
+    context: GlobalContext,
   }),
   connect(mapStateToPropsPosicao, {
     mudarVariavelPosicaoAction,
     listarPosicoesAction,
     atualizarEmblemasAction,
     atualizarPosicaoAction,
-    atualizarCotacoesAction
+    atualizarCotacoesAction,
   })
 )(PosicaoEmCustodia);
 
@@ -358,9 +360,9 @@ export const RelatorioDetalhadoConectado = connect(
 export const TelaTHLConectada = compose(
   connect(mapStateToPropsTelaTHL, {
     mudarVariavelTHLAction,
-    pesquisarAtivoTHLAction
+    pesquisarAtivoTHLAction,
   }),
   connect(mapStateToPropsGlobalStore, { aumentarZindexAction }, null, {
-    context: GlobalContext
+    context: GlobalContext,
   })
 )(Tela_THL);

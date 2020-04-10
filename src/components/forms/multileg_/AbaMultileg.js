@@ -15,7 +15,7 @@ import {
   formatarNumDecimal,
   formatarVencimento
 } from "components/utils/Formatacoes";
-import { pesquisarAtivoMultilegAction } from "components/redux/actions/api_actions/MenuAPIAction";
+import { pesquisarAtivoMultilegAction } from "components/redux/actions/api_actions/MultilegAPIAction";
 import Book from "components/forms/multileg_/Book";
 import { Select } from "antd";
 

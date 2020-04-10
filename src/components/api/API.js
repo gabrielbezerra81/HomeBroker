@@ -29,17 +29,17 @@ import {
   url_realizarCadastro_dados,
   url_ordensExecReativas_idUser,
   url_posicaoReativa_idUser,
-  url_pesquisarListaStrike_codigo
+  url_pesquisarListaStrike_codigo,
 } from "components/api/url";
 import {
   MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-  MODIFICAR_VARIAVEL_MULTILEG
+  MODIFICAR_VARIAVEL_MULTILEG,
 } from "constants/MenuActionTypes";
 import {
   LISTAR_BOOK_OFERTAS,
   PESQUISAR_ATIVO_BOLETA_API,
   ATUALIZAR_SOURCE_EVENT_MULTILEG,
-  LISTAR_ORDENS_EXECUCAO
+  LISTAR_ORDENS_EXECUCAO,
 } from "constants/ApiActionTypes";
 import {
   erro_pesquisar_ativo,
@@ -56,14 +56,14 @@ import {
   sucesso_modificar_ordemExec,
   erro_modificar_ordemExec,
   erro_realizar_login,
-  erro_realizar_cadastro
+  erro_realizar_cadastro,
 } from "constants/AlertaErros";
 
-export const pesquisarAtivoAPI = codigo => {
+export const pesquisarAtivoAPI = (codigo) => {
   return request
     .get(url_base + url_pesquisarAtivoBoletas_codigo + codigo)
     .retry(3)
-    .then(response => {
+    .then((response) => {
       const { body } = response;
       var dadosPesquisa;
       let oscilacao;
@@ -100,7 +100,7 @@ export const pesquisarAtivoAPI = codigo => {
           ultimoHorario: ultimoHorario,
           qtdeMultiplo100: qtdeMultiplo100,
           market: "tipo2",
-          ativo: body.stock.symbol
+          ativo: body.stock.symbol,
         };
       } else {
         dadosPesquisa = {
@@ -111,12 +111,12 @@ export const pesquisarAtivoAPI = codigo => {
           ultimoHorario: ultimoHorario,
           qtdeMultiplo100: qtdeMultiplo100,
           market: "tipo1",
-          ativo: body.stock.symbol
+          ativo: body.stock.symbol,
         };
       }
       return dadosPesquisa;
     })
-    .catch(erro => {
+    .catch((erro) => {
       alert(erro_pesquisar_ativo);
       console.log(erro);
       return {
@@ -127,23 +127,23 @@ export const pesquisarAtivoAPI = codigo => {
         ultimoHorario: "",
         qtdeMultiplo100: "",
         market: "",
-        ativo: ""
+        ativo: "",
       };
     });
 };
 
-export const listarBookOfertaAPI = codigo_ativo => {
+export const listarBookOfertaAPI = (codigo_ativo) => {
   let tabelas = {
     tabelaOfertasCompra: [],
-    tabelaOfertasVenda: []
+    tabelaOfertasVenda: [],
   };
   return request
     .get(url_base + url_listarBookOfertas_codigo + codigo_ativo)
     .retry(3)
-    .then(response => {
+    .then((response) => {
       const { body } = response;
 
-      body.bookOffers.forEach(item => {
+      body.bookOffers.forEach((item) => {
         if (item.type === "V") {
           tabelas.tabelaOfertasVenda.push(item);
         } else if (item.type === "C") {
@@ -155,13 +155,13 @@ export const listarBookOfertaAPI = codigo_ativo => {
 
       return tabelas;
     })
-    .catch(erro => {
+    .catch((erro) => {
       console.log(erro);
       return tabelas;
     });
 };
 
-export const enviarOrdemAPI = json => {
+export const enviarOrdemAPI = (json) => {
   const jsonStringBody = JSON.stringify(json);
 
   return request
@@ -169,30 +169,30 @@ export const enviarOrdemAPI = json => {
     .retry(2)
     .set({ "Content-Type": "application/json" })
     .send(jsonStringBody)
-    .then(response => {
+    .then((response) => {
       if (response.status === 201) alert(sucesso_enviar_ordem);
       else alert(erro_enviar_ordem);
     })
-    .catch(erro => {
+    .catch((erro) => {
       console.log(erro.response);
       alert(erro_enviar_ordem);
     });
 };
 
-export const pesquisarAtivoMultilegAPI = codigo_ativo => {
+export const pesquisarAtivoMultilegAPI = (codigo_ativo) => {
   var dados;
 
   return request
     .get(url_base + url_pesquisarOpcoesVencimentos_codigo + codigo_ativo)
     .retry(3)
-    .then(async response => {
+    .then(async (response) => {
       dados = {
         opcoes: [],
         vencimentos: [],
         //cotacaoAtual: 0,
         variacao: "",
         cotacaoAtual: 0,
-        ativoPrincipal: ""
+        ativoPrincipal: "",
       };
 
       const { body } = response;
@@ -207,10 +207,10 @@ export const pesquisarAtivoMultilegAPI = codigo_ativo => {
         return dados;
       }
     })
-    .catch(erro => {
+    .catch((erro) => {
       alert(erro_pesquisar_ativo);
       console.log(erro);
-      return dados;
+      return null;
     });
 };
 
@@ -224,44 +224,46 @@ export const pesquisarStrikesMultilegAPI = (codigo_ativo, vencimento) => {
         vencimento
     )
     .retry(3)
-    .then(response => {
+    .then((response) => {
       return response.body;
     })
-    .catch(erro => {
+    .catch((erro) => {
       console.log(erro);
       return [];
     });
 };
 
-export const listarOrdensExecAPI = () => {
+export const listarOrdensExecAPI = (idToken) => {
   return request
     .get(url_base + url_listarOrdensExecucao_)
     .retry(3)
-    .then(response => {
+    .set({ Authorization: `${idToken.tokenType} ${idToken.accessToken}` })
+    .then((response) => {
       const { body } = response;
       let ofertas = [];
 
-      body.forEach(oferta => {
+      body.forEach((oferta) => {
         ofertas.push(oferta);
       });
 
       return ofertas;
     })
-    .catch(erro => {
+    .catch((erro) => {
       console.log(erro);
       return [];
     });
 };
 
-export const listarPosicoesAPI = () => {
+export const listarPosicoesAPI = (idToken) => {
   return request
     .get(url_base + url_listarPosicoes)
+    .set({ Authorization: `${idToken.tokenType} ${idToken.accessToken}` })
     .retry(3)
-    .then(response => {
+    .then((response) => {
       const { body } = response;
       return body;
     })
-    .catch(erro => {
+    .catch((erro) => {
       console.log(erro);
       return [];
     });
@@ -277,15 +279,17 @@ export const atualizarOrdensExecAPI = (
     url_base_reativa + url_ordensExecReativas_idUser + idUsuario
   );
 
-  source.onopen = function(event) {
+  source.onopen = function (event) {
     console.log("open");
   };
 
-  source.onmessage = function(event) {
+  source.onmessage = function (event) {
     if (typeof event.data !== "undefined") {
       var dados = JSON.parse(event.data);
 
-      const indice = listaOrdensExec.findIndex(ordem => ordem.id === dados.id);
+      const indice = listaOrdensExec.findIndex(
+        (ordem) => ordem.id === dados.id
+      );
 
       const novaTabela = [...listaOrdensExec];
       if (indice !== -1) {
@@ -312,16 +316,16 @@ export const atualizarBookAPI = (
   var source = new EventSource(
     url_base_reativa + url_bookReativo_codigos + codigos
   );
-  source.onopen = function(event) {
+  source.onopen = function (event) {
     console.log("open");
   };
 
-  source.onmessage = function(event) {
+  source.onmessage = function (event) {
     if (typeof event.data !== "undefined") {
       console.log("chegou");
       let tabelas = {
         tabelaOfertasCompra: [],
-        tabelaOfertasVenda: []
+        tabelaOfertasVenda: [],
       };
 
       var dados = JSON.parse(event.data);
@@ -330,7 +334,7 @@ export const atualizarBookAPI = (
       if (dados.bookOffers) {
         let bookNovo = [...dados.bookOffers];
 
-        bookNovo.forEach(item => {
+        bookNovo.forEach((item) => {
           if (item.type === "V") {
             tabelas.tabelaOfertasVenda.push(item);
           } else if (item.type === "C") {
@@ -344,7 +348,7 @@ export const atualizarBookAPI = (
       if (tipo === "book") {
         dispatch({
           type: LISTAR_BOOK_OFERTAS,
-          payload: atualizarTabelaAntiga(tabelas)
+          payload: atualizarTabelaAntiga(tabelas),
         });
       }
 
@@ -352,7 +356,7 @@ export const atualizarBookAPI = (
         let permitirDispatch = false;
         let novosBooks = [...rembook];
 
-        novosBooks.forEach(book => {
+        novosBooks.forEach((book) => {
           if (book.codigo === ativoRetornado) {
             const valorCompra = tabelas.tabelaOfertasCompra[0];
             const valorVenda =
@@ -372,13 +376,13 @@ export const atualizarBookAPI = (
         if (permitirDispatch) {
           dispatch({
             type: MODIFICAR_VARIAVEL_MULTILEG,
-            payload: { nome: "rembook", valor: novosBooks }
+            payload: { nome: "rembook", valor: novosBooks },
           });
         }
         dispatch({
           type: ATUALIZAR_SOURCE_EVENT_MULTILEG,
           payload: source,
-          nomeVariavel: "eventSource"
+          nomeVariavel: "eventSource",
         });
       }
     }
@@ -399,11 +403,11 @@ export const atualizarCotacaoAPI = (
     url_base_reativa + url_cotacaoReativa_codigos + codigos
   );
 
-  source.onopen = function(event) {
+  source.onopen = function (event) {
     console.log("open");
   };
 
-  source.onmessage = function(event) {
+  source.onmessage = function (event) {
     if (typeof event.data !== "undefined") {
       console.log("chegou");
       var dados = JSON.parse(event.data);
@@ -419,7 +423,7 @@ export const atualizarCotacaoAPI = (
 
           dispatch({
             type: `${PESQUISAR_ATIVO_BOLETA_API}${namespace}`,
-            payload: { ...dadosPesquisa }
+            payload: { ...dadosPesquisa },
           });
         }
       } //
@@ -427,7 +431,7 @@ export const atualizarCotacaoAPI = (
         let permitirDispatch = false;
         arrayCotacoes = [...arrayCotacoes];
         const indice = arrayCotacoes.findIndex(
-          cotacao => cotacao.codigo === ativoRetornado
+          (cotacao) => cotacao.codigo === ativoRetornado
         );
 
         if (indice !== -1) {
@@ -436,12 +440,12 @@ export const atualizarCotacaoAPI = (
           arrayCotacoes[indice].compra = {
             price: dados.compra,
             qtty: dados.compraQtde,
-            type: "C"
+            type: "C",
           };
           arrayCotacoes[indice].venda = {
             price: dados.venda,
             qtty: dados.vendaQtde,
-            type: "V"
+            type: "V",
           };
           permitirDispatch = true;
         }
@@ -452,20 +456,20 @@ export const atualizarCotacaoAPI = (
           // aba.preco = calculo;
           dispatch({
             type: MODIFICAR_VARIAVEL_MULTILEG,
-            payload: { nome: "cotacoesMultileg", valor: arrayCotacoes }
+            payload: { nome: "cotacoesMultileg", valor: arrayCotacoes },
           });
         }
         dispatch({
           type: ATUALIZAR_SOURCE_EVENT_MULTILEG,
           payload: source,
-          nomeVariavel: "eventSourceCotacao"
+          nomeVariavel: "eventSourceCotacao",
         });
       } //
       else if (tipo === "posicao") {
         arrayCotacoes = [...arrayCotacoes];
 
         const indice = arrayCotacoes.findIndex(
-          ativo => ativo.codigo === ativoRetornado
+          (ativo) => ativo.codigo === ativoRetornado
         );
         let permitirDispatch = false;
 
@@ -476,7 +480,7 @@ export const atualizarCotacaoAPI = (
         else {
           const ativo = {
             codigo: ativoRetornado,
-            cotacao: cotacaoAtual
+            cotacao: cotacaoAtual,
           };
           arrayCotacoes.push(ativo);
           permitirDispatch = true;
@@ -485,7 +489,7 @@ export const atualizarCotacaoAPI = (
         if (permitirDispatch)
           dispatch({
             type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-            payload: { nome: "arrayCotacoes", valor: arrayCotacoes }
+            payload: { nome: "arrayCotacoes", valor: arrayCotacoes },
           });
       }
     }
@@ -496,17 +500,17 @@ export const atualizarCotacaoAPI = (
 export const atualizarEmblemasAPI = (dispatch, listaPrecos, ids) => {
   var source = new EventSource(url_base_reativa + url_emblemaReativo_ids + ids);
 
-  source.onopen = function(event) {
+  source.onopen = function (event) {
     console.log("open");
   };
 
-  source.onmessage = function(event) {
+  source.onmessage = function (event) {
     if (typeof event.data !== "undefined") {
       var dados = JSON.parse(event.data);
       listaPrecos = [...listaPrecos];
 
       const indice = listaPrecos.findIndex(
-        posicao => posicao.idEstrutura === dados.id
+        (posicao) => posicao.idEstrutura === dados.id
       );
       let permitirDispatch = false;
 
@@ -522,7 +526,7 @@ export const atualizarEmblemasAPI = (dispatch, listaPrecos, ids) => {
           precoCompra: dados.min,
           precoVenda: dados.max,
           cotacaoAtual: dados.last,
-          idEstrutura: dados.id
+          idEstrutura: dados.id,
         };
         listaPrecos.push(preco);
         permitirDispatch = true;
@@ -531,7 +535,7 @@ export const atualizarEmblemasAPI = (dispatch, listaPrecos, ids) => {
       if (permitirDispatch)
         dispatch({
           type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-          payload: { nome: "arrayPrecos", valor: listaPrecos }
+          payload: { nome: "arrayPrecos", valor: listaPrecos },
         });
     }
   };
@@ -549,17 +553,17 @@ export const atualizarPosicaoAPI = (
     url_base_reativa + url_posicaoReativa_idUser + idUsuario
   );
 
-  source.onopen = function(event) {
+  source.onopen = function (event) {
     console.log("open");
   };
 
-  source.onmessage = function(event) {
+  source.onmessage = function (event) {
     if (typeof event.data !== "undefined") {
       var grupoPosicao = JSON.parse(event.data);
       listaPosicoes = [...listaPosicoes];
 
       const indice = listaPosicoes.findIndex(
-        posicao =>
+        (posicao) =>
           posicao.agrupadorPrincipal === grupoPosicao.agrupadorPrincipal
       );
       let permitirDispatch = false;
@@ -577,7 +581,7 @@ export const atualizarPosicaoAPI = (
       if (permitirDispatch)
         dispatch({
           type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-          payload: { nome: "posicoesCustodia", valor: listaPosicoes }
+          payload: { nome: "posicoesCustodia", valor: listaPosicoes },
         });
     }
   };
@@ -585,27 +589,27 @@ export const atualizarPosicaoAPI = (
   return source;
 };
 
-export const verificarMonitorarAtivoAPI = codigo => {
+export const verificarMonitorarAtivoAPI = (codigo) => {
   request
     .get(url_base + url_listarAtivosMonitorados_)
-    .then(response => {
+    .then((response) => {
       const { body } = response;
 
-      if (!body.some(item => item.symbol === codigo)) {
+      if (!body.some((item) => item.symbol === codigo)) {
         request
           .get(url_base + url_monitorarAtivo_codigo + codigo)
           .then(() => console.log("adicionou"))
-          .catch(erro => {
+          .catch((erro) => {
             console.log(erro);
           });
       }
     })
-    .catch(erro => {
+    .catch((erro) => {
       console.log(erro);
     });
 };
 
-export const criarPosicaoMultilegAPI = json => {
+export const criarPosicaoMultilegAPI = (json) => {
   const jsonStringBody = JSON.stringify(json);
 
   return request
@@ -613,18 +617,18 @@ export const criarPosicaoMultilegAPI = json => {
     .retry(2)
     .set({ "Content-Type": "application/json" })
     .send(jsonStringBody)
-    .then(response => {
+    .then((response) => {
       console.log("response", response);
       if (response.status === 201) alert(sucesso_criar_posicao);
       else alert(erro_criar_posicao);
     })
-    .catch(erro => {
+    .catch((erro) => {
       console.log(erro.response);
       alert(erro_criar_posicao);
     });
 };
 
-export const criarAlertaOperacaoAPI = json => {
+export const criarAlertaOperacaoAPI = (json) => {
   const jsonStringBody = JSON.stringify(json);
 
   return request
@@ -632,36 +636,36 @@ export const criarAlertaOperacaoAPI = json => {
     .retry(2)
     .set({ "Content-Type": "application/json" })
     .send(jsonStringBody)
-    .then(response => {
+    .then((response) => {
       console.log("response", response);
       if (response.status === 201) alert(sucesso_criar_alerta);
       else alert(erro_criar_alerta);
     })
-    .catch(erro => {
+    .catch((erro) => {
       console.log(erro.response);
       alert(erro_criar_alerta);
     });
 };
 
-export const cancelarOrdemExecAPI = id => {
+export const cancelarOrdemExecAPI = (id) => {
   return request
     .get(url_base + url_cancelarOrdemExec_id + id)
     .then(() => {
       alert(sucesso_cancelar_ordem);
     })
-    .catch(erro => {
+    .catch((erro) => {
       console.log(erro);
       alert(erro_cancelar_ordem);
     });
 };
 
-export const finalizarAMercadoAPI = id => {
+export const finalizarAMercadoAPI = (id) => {
   return request
     .get(url_base + url_finalizarAMercado_id + id)
     .then(() => {
       alert(sucesso_finalizar_a_mercado);
     })
-    .catch(erro => {
+    .catch((erro) => {
       console.log(erro);
       alert(erro_finalizar_a_mercado);
     });
@@ -673,7 +677,7 @@ export const incrementarQtdeOrdemExecAPI = (id, qtde) => {
     .then(() => {
       alert(sucesso_modificar_ordemExec);
     })
-    .catch(erro => {
+    .catch((erro) => {
       console.log(erro);
       alert(erro_modificar_ordemExec);
     });
@@ -685,7 +689,7 @@ export const incrementarPrecoOrdemExecAPI = (id, preco) => {
     .then(() => {
       alert(sucesso_modificar_ordemExec);
     })
-    .catch(erro => {
+    .catch((erro) => {
       console.log(erro);
       alert(erro_modificar_ordemExec);
     });
@@ -698,11 +702,11 @@ export const realizarLoginAPI = (username, password) => {
     .post(url_base + url_realizarLogin_usuario_senha)
     .set({ "Content-Type": "application/json" })
     .send(JSON.stringify(payload))
-    .then(response => {
+    .then((response) => {
       const { body } = response;
       return body;
     })
-    .catch(erro => {
+    .catch((erro) => {
       console.log(erro);
       alert(erro_realizar_login);
       return null;
@@ -715,7 +719,7 @@ export const realizarCadastroAPI = (nome, username, email, role, password) => {
     username: username,
     email: email,
     role: role,
-    password: password
+    password: password,
   };
 
   return request
@@ -725,47 +729,47 @@ export const realizarCadastroAPI = (nome, username, email, role, password) => {
     .then(() => {
       return true;
     })
-    .catch(erro => {
+    .catch((erro) => {
       console.log(erro);
       alert(erro_realizar_cadastro);
       return false;
     });
 };
 
-export const autenticacaoTokenAPI = token => {
+export const autenticacaoTokenAPI = (token) => {
   return request
     .get(url_base + url_autenticacao_token)
     .set({ Authorization: `${token.tokenType} ${token.accessToken}` })
-    .then(response => {
+    .then((response) => {
       return response.body;
     })
-    .catch(erro => {
+    .catch((erro) => {
       console.log(erro);
       alert(erro_realizar_login);
       return null;
     });
 };
 
-export const buscarInformacoesUsuarioAPI = token => {
+export const buscarInformacoesUsuarioAPI = (token) => {
   return request
     .get(url_base + url_informacoesUsuario_token)
     .set({ Authorization: `${token.tokenType} ${token.accessToken}` })
-    .then(response => {
+    .then((response) => {
       return response.body;
     })
-    .catch(erro => {
+    .catch((erro) => {
       console.log(erro);
       alert(erro_realizar_login);
       return null;
     });
 };
 
-export const pesquisarListaStrikeTHLAPI = ativo => {
+export const pesquisarListaStrikeTHLAPI = (ativo) => {
   return request
     .get(url_base + url_pesquisarListaStrike_codigo + ativo)
     .retry(3)
-    .then(response => response.body)
-    .catch(erro => {
+    .then((response) => response.body)
+    .catch((erro) => {
       console.log(erro);
       alert(erro_pesquisar_ativo);
       return [];

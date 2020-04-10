@@ -1,595 +1,156 @@
-import React, { useState } from "react";
-// import { useSelector } from "react-redux";
-import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
-import PerfectScrollbar from "react-perfect-scrollbar";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { WindowTable } from "window-table";
+import InfiniteScroll from "react-infinite-scroller";
+import $ from "jquery";
 import FiltroNumericoSeletor from "./FiltroNumericoSeletor";
-import imgModeloEU from "img/modeloEU.png";
-import { ReactComponent as ImgModeloUSA } from "img/modeloUSA2.svg";
-
-const combinacoes = [
-  {
-    id: 1,
-    estrategia: "THL",
-    grupo: "19,55",
-    acaoUlt: { acao: "PETR4", ult: "Ult" },
-    spread: "10,50",
-    codigos: [
-      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE279", strike: 27.97, model: "EUROPEAN" },
-    ],
-    montagem: {
-      valor: "0,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 },
-    },
-    desmontagem: {
-      valor: "1,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 },
-    },
-    vencimento: "21/10/2019",
-    prazo: "21 Dias",
-  },
-  {
-    id: 2,
-    estrategia: "THL",
-    grupo: "19,55",
-    acaoUlt: { acao: "PETR4", ult: "Ult" },
-    spread: "10,50",
-    codigos: [
-      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
-    ],
-    montagem: {
-      valor: "0,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 },
-    },
-    desmontagem: {
-      valor: "2,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 },
-    },
-    vencimento: "21/10/2019",
-    prazo: "21 Dias",
-  },
-  {
-    id: 3,
-    estrategia: "THL",
-    grupo: "19,55",
-    acaoUlt: { acao: "PETR4", ult: "Ult" },
-    spread: "10,50",
-    codigos: [
-      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
-    ],
-    montagem: {
-      valor: "0,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 },
-    },
-    desmontagem: {
-      valor: "2,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 },
-    },
-    vencimento: "21/10/2019",
-    prazo: "21 Dias",
-  },
-  {
-    id: 4,
-    estrategia: "THL",
-    grupo: "19,55",
-    acaoUlt: { acao: "PETR4", ult: "Ult" },
-    spread: "10,50",
-    codigos: [
-      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
-    ],
-    montagem: {
-      valor: "0,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 },
-    },
-    desmontagem: {
-      valor: "2,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 },
-    },
-    vencimento: "21/10/2019",
-    prazo: "21 Dias",
-  },
-  {
-    id: 5,
-    estrategia: "THL",
-    grupo: "19,55",
-    acaoUlt: { acao: "PETR4", ult: "Ult" },
-    spread: "10,50",
-    codigos: [
-      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
-    ],
-    montagem: {
-      valor: "0,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 },
-    },
-    desmontagem: {
-      valor: "2,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 },
-    },
-    vencimento: "21/10/2019",
-    prazo: "21 Dias",
-  },
-  {
-    id: 6,
-    estrategia: "THL",
-    grupo: "19,55",
-    acaoUlt: { acao: "PETR4", ult: "Ult" },
-    spread: "10,50",
-    codigos: [
-      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
-    ],
-    montagem: {
-      valor: "0,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 },
-    },
-    desmontagem: {
-      valor: "2,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 },
-    },
-    vencimento: "21/10/2019",
-    prazo: "21 Dias",
-  },
-  {
-    id: 7,
-    estrategia: "THL",
-    grupo: "19,55",
-    acaoUlt: { acao: "PETR4", ult: "Ult" },
-    spread: "10,50",
-    codigos: [
-      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
-    ],
-    montagem: {
-      valor: "0,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 },
-    },
-    desmontagem: {
-      valor: "2,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 },
-    },
-    vencimento: "21/10/2019",
-    prazo: "21 Dias",
-  },
-  {
-    id: 8,
-    estrategia: "THL",
-    grupo: "19,55",
-    acaoUlt: { acao: "PETR4", ult: "Ult" },
-    spread: "10,50",
-    codigos: [
-      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
-    ],
-    montagem: {
-      valor: "0,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 },
-    },
-    desmontagem: {
-      valor: "7,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 },
-    },
-    vencimento: "21/10/2019",
-    prazo: "21 Dias",
-  },
-  {
-    id: 9,
-    estrategia: "THL",
-    grupo: "19,55",
-    acaoUlt: { acao: "PETR4", ult: "Ult" },
-    spread: "10,50",
-    codigos: [
-      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
-    ],
-    montagem: {
-      valor: "0,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 },
-    },
-    desmontagem: {
-      valor: "6,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 },
-    },
-    vencimento: "21/10/2019",
-    prazo: "21 Dias",
-  },
-  {
-    id: 10,
-    estrategia: "THL",
-    grupo: "19,55",
-    acaoUlt: { acao: "PETR4", ult: "Ult" },
-    spread: "10,50",
-    codigos: [
-      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
-    ],
-    montagem: {
-      valor: "0,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 },
-    },
-    desmontagem: {
-      valor: "5,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 },
-    },
-    vencimento: "21/10/2019",
-    prazo: "21 Dias",
-  },
-  {
-    id: 11,
-    estrategia: "THL",
-    grupo: "19,55",
-    acaoUlt: { acao: "PETR4", ult: "Ult" },
-    spread: "10,50",
-    codigos: [
-      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
-    ],
-    montagem: {
-      valor: "0,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 },
-    },
-    desmontagem: {
-      valor: "4,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 },
-    },
-    vencimento: "21/10/2019",
-    prazo: "21 Dias",
-  },
-  {
-    id: 12,
-    estrategia: "THL",
-    grupo: "19,55",
-    acaoUlt: { acao: "PETR4", ult: "Ult" },
-    spread: "10,50",
-    codigos: [
-      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
-    ],
-    montagem: {
-      valor: "0,00",
-      bookVenda: { valor: "0,60", qtde: 10000 },
-      bookCompra: { valor: "0,60", qtde: 1000 },
-    },
-    desmontagem: {
-      valor: "3,00",
-      bookVenda: { valor: "0,60", qtde: 10000 },
-      bookCompra: { valor: "0,60", qtde: 10000 },
-    },
-    vencimento: "21/10/2019",
-    prazo: "21 Dias",
-  },
-  {
-    id: 13,
-    estrategia: "THL",
-    grupo: "19,55",
-    acaoUlt: { acao: "PETR4", ult: "Ult" },
-    spread: "10,50",
-    codigos: [
-      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
-    ],
-    montagem: {
-      valor: "0,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 },
-    },
-    desmontagem: {
-      valor: "2,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 },
-    },
-    vencimento: "21/10/2019",
-    prazo: "21 Dias",
-  },
-  {
-    id: 14,
-    estrategia: "THL",
-    grupo: "19,55",
-    acaoUlt: { acao: "PETR4", ult: "Ult" },
-    spread: "10,50",
-    codigos: [
-      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
-    ],
-    montagem: {
-      valor: "0,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 },
-    },
-    desmontagem: {
-      valor: "2,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 },
-    },
-    vencimento: "21/10/2019",
-    prazo: "21 Dias",
-  },
-  {
-    id: 15,
-    estrategia: "THL",
-    grupo: "19,55",
-    acaoUlt: { acao: "PETR4", ult: "Ult" },
-    spread: "10,50",
-    codigos: [
-      { symbol: "PETRD281", strike: 27.2, model: "AMERICAN" },
-      { symbol: "PETRE277", strike: 27.72, model: "AMERICAN" },
-    ],
-    montagem: {
-      valor: "0,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 1000 },
-    },
-    desmontagem: {
-      valor: "2,00",
-      bookVenda: { valor: "0,70", qtde: 10000 },
-      bookCompra: { valor: "0,70", qtde: 10000 },
-    },
-    vencimento: "21/10/2019",
-    prazo: "21 Dias",
-  },
-];
+import { comb300 } from "./tableData";
+import InfiniteScroll2 from "react-infinite-scroll-component";
+import {
+  ColunaAcaoUlt,
+  ColunaCodigos,
+  ColunaMontagem,
+  ColunaTextoComum,
+  HeaderColunaAcaoUlt,
+} from "components/forms/thl/ColunasTabelaComb";
 
 export default ({ props }) => {
-  // const state = useSelector(state => state.THLReducer);
-  const [scrollbarRef, setScrollbarRef] = useState("");
+  useEffect(() => {
+    var parent = document.getElementById("tabelaCombinacoes").childNodes[1];
+    var scrollDiv = parent.lastChild;
+
+    $(scrollDiv).on("wheel", function (e) {
+      var event = e.originalEvent,
+        d = -event.deltaY || -event.detail;
+
+      this.scrollTop += (d < 0 ? 1 : -1) * 30;
+
+      e.preventDefault();
+    });
+  });
+
+  const state = useSelector((state) => state.THLReducer);
+
+  // const [scrollbarRef, setScrollbarRef] = useState("");
+  // const [tableData, setTableData] = useState(comb300.slice(0, 40));
+  // const [hasMore, setHasMore] = useState(true);
 
   return (
     <div className="containerCombinacoesTHL">
-      <PerfectScrollbar
-        id="scrollbarTabelaCombinacoes"
-        options={{ wheelPropagation: false }}
-        ref={(ref) => {
-          setScrollbarRef(ref);
-        }}
-      >
-        <BootstrapTable
-          data={combinacoes}
-          keyField="id"
-          tableContainerClass="tabelaCombinacoes"
-          striped
-          options={{ noDataText: "Nenhum resultado foi encontrado" }}
-        >
-          <TableHeaderColumn
-            dataField="estrategia"
-            width="90"
-            filter={filterTexto}
-            data
-          >
-            <div className="divLabelColuna">Estratégia</div>
-          </TableHeaderColumn>
-          <TableHeaderColumn dataField="grupo" filter={filterTexto} width="75">
-            <div className="divLabelColuna">Grupo</div>
-          </TableHeaderColumn>
-          <TableHeaderColumn
-            width="85"
-            dataField="acaoUlt"
-            filterValue={(cell) => `${cell.acao}${cell.ult}`}
-            filter={filterTexto}
-            className="colunaAcaoUlt"
-            dataFormat={renderColunaAcaoUlt}
-          >
-            <div className="divLabelColuna">
-              <div className="colunaDividida">
-                <div>Acão</div>
-                <div>Ult</div>
-              </div>
+      {/* <InfiniteScroll
+          pageStart={0}
+          loadMore={() =>
+            fetchMoreData(tableData, hasMore, setTableData, setHasMore)
+          }
+          hasMore={hasMore}
+          loader={
+            <div className="loader" key={0}>
+              Loading ...
             </div>
-          </TableHeaderColumn>
-          <TableHeaderColumn
-            dataField="spread"
-            width="70"
-            filterValue={(cell) => Number(cell.replace(",", "."))}
-            filter={{
-              type: "CustomFilter",
-              getElement: (filterHandler, customParam) =>
-                filtrarNumeros(
-                  filterHandler,
-                  customParam,
-                  "simples",
-                  scrollbarRef
-                ),
-            }}
-          >
-            <div className="divLabelColuna">Spread</div>
-          </TableHeaderColumn>
-          <TableHeaderColumn
-            dataField="codigos"
-            width="220"
-            dataFormat={renderColunaCodigos}
-            filter={{
-              type: "CustomFilter",
-              getElement: (filterHandler, customParam) =>
-                filtrarNumeros(
-                  filterHandler,
-                  customParam,
-                  "compostoArray",
-                  scrollbarRef
-                ),
-            }}
-          >
-            <div className="divLabelColuna">Códigos</div>
-          </TableHeaderColumn>
-          <TableHeaderColumn
-            dataField="montagem"
-            dataFormat={renderColunaMontagem}
-            width="170"
-            filterValue={(cell) => Number(cell.valor.replace(",", "."))}
-            filter={{
-              type: "CustomFilter",
-              getElement: (filterHandler, customParam) =>
-                filtrarNumeros(
-                  filterHandler,
-                  customParam,
-                  "simples",
-                  scrollbarRef
-                ),
-            }}
-            className="colunaMontagemDesmontagem"
-          >
-            <div className="divLabelColuna">Montagem</div>
-          </TableHeaderColumn>
-          <TableHeaderColumn
-            dataField="desmontagem"
-            dataFormat={renderColunaMontagem}
-            width="170"
-            filterValue={(cell) => Number(cell.valor.replace(",", "."))}
-            filter={{
-              type: "CustomFilter",
-              getElement: (filterHandler, customParam) =>
-                filtrarNumeros(
-                  filterHandler,
-                  customParam,
-                  "simples",
-                  scrollbarRef
-                ),
-            }}
-            className="colunaMontagemDesmontagem"
-          >
-            <div className="divLabelColuna">Desmontagem</div>
-          </TableHeaderColumn>
-          <TableHeaderColumn
-            dataField="vencimento"
-            width="95"
-            filter={{
-              type: "SelectFilter",
-              options: options(combinacoes, "vencimento"),
-              selectText: "",
-              withoutEmptyOption: true,
-            }}
-          >
-            <div className="divLabelColuna">Vencimento</div>
-          </TableHeaderColumn>
-          <TableHeaderColumn
-            dataField="prazo"
-            width="80"
-            filter={{
-              type: "SelectFilter",
-              options: options(combinacoes, "prazo"),
-              selectText: "",
-              withoutEmptyOption: true,
-            }}
-          >
-            <div className="divLabelColuna">Prazo</div>
-          </TableHeaderColumn>
-        </BootstrapTable>
-      </PerfectScrollbar>
+          }
+          useWindow={false}
+          // getScrollParent={() => scrollbarRef}
+        > */}
+      <div className="containerTabelaComb">
+        <Html5Table
+          className="tabelaCombinacoes"
+          id="tabelaCombinacoes"
+          data={tableData}
+          columns={columns}
+        />
+      </div>
+      {/* </InfiniteScroll> */}
     </div>
   );
 };
 
-const renderColunaAcaoUlt = (cell, row) => {
+const tableData = comb300; //.filter((row) => row.id < 50);
+
+const Html5Table = (props) => {
   return (
-    <div className="colunaAcaoUlt">
-      <div className="colunaDividida">
-        <div>{cell.acao}</div>
-        <div>{cell.ult}</div>
-      </div>
-    </div>
+    <WindowTable
+      className="table"
+      Cell="td"
+      HeaderCell="th"
+      Header="thead"
+      HeaderRow="tr"
+      // Row="tr"
+      Row={(props) => StripedRow(props)}
+      Body="tbody"
+      Table="table"
+      overscanCount={2}
+      // rowClassName={(index) => (index % 2 === 0 ? "linha-par" : "linha-impar")}
+      {...props}
+    />
   );
 };
 
-const filterTexto = { type: "TextFilter", delay: 250, placeholder: " " };
+const columns = [
+  {
+    key: "estrategia",
+    width: 90,
+    title: "Estratégia",
+    Component: ColunaTextoComum,
+  },
+  { key: "grupo", width: 75, title: "Grupo", Component: ColunaTextoComum },
+  {
+    key: "acaoUlt",
+    width: 85,
+    title: "Acão | Ult",
+    Component: ColunaAcaoUlt,
+    HeaderCell: HeaderColunaAcaoUlt,
+  },
+  { key: "spread", width: 70, title: "Spread", Component: ColunaTextoComum },
+  { key: "codigos", width: 220, title: "Códigos", Component: ColunaCodigos },
+  { key: "montagem", width: 170, title: "Montagem", Component: ColunaMontagem },
+  {
+    key: "desmontagem",
+    width: 170,
+    title: "Desmontagem",
+    Component: ColunaMontagem,
+  },
+  {
+    key: "vencimento",
+    width: 95,
+    title: "Vencimento",
+    Component: ColunaTextoComum,
+  },
+  { key: "prazo", width: 80, title: "Prazo", Component: ColunaTextoComum },
+];
 
-const renderColunaCodigos = (cell, row) => {
+const StripedRow = (props) => {
   return (
-    <div className="colunaDividida">
-      <div className="mr-1">
-        <div>{row.acaoUlt.acao.slice(0, row.acaoUlt.acao.length - 1)}</div>
-        <div>Strike</div>
-      </div>
-      <div className="mr-1">
-        <div className="flexAlignEnd codigoColunaModelo">
-          <div>B319</div>
-          {renderModelo("EUROPEAN")}
-        </div>
-        <div>19,55</div>
-      </div>
-      <div>
-        <div className="flexAlignEnd  codigoColunaModelo">
-          <div>C479</div>
-          {renderModelo("USA")}
-        </div>
-        <div>19,55</div>
-      </div>
-    </div>
+    <div
+      {...props}
+      style={{
+        ...props.style,
+      }}
+      className={props.index % 2 === 0 ? "linha-par" : ""}
+    />
   );
 };
 
-const renderColunaMontagem = (cell, row) => {
-  return (
-    <div>
-      <div>R$ {cell.valor}</div>
-      <div className="colunaDividida corTextoBook">
-        <div className="mr-2">
-          {cell.bookVenda.valor} | {cell.bookVenda.qtde}
-        </div>
-        <div>
-          {cell.bookCompra.valor} | {cell.bookCompra.qtde}
-        </div>
-      </div>
-    </div>
-  );
-};
+// const filterTexto = { type: "TextFilter", delay: 250, placeholder: " " };
 
-const renderModelo = (modelo) => {
-  return (
-    <div>
-      {modelo === "EUROPEAN" ? (
-        <img src={imgModeloEU} alt="" className="imgModeloTHL" />
-      ) : (
-        <ImgModeloUSA
-          viewBox="6 -1 17 17"
-          className="imgModeloTHL"
-        ></ImgModeloUSA>
-      )}
-    </div>
-  );
-};
+// const options = (combinacoes, atributo) => {
+//   let opcoes = { "": "" };
 
-const options = (combinacoes, atributo) => {
-  let opcoes = { "": "" };
+//   combinacoes.forEach((comb) => {
+//     opcoes[comb[atributo]] = comb[atributo];
+//   });
 
-  combinacoes.forEach((comb) => {
-    opcoes[comb[atributo]] = comb[atributo];
-  });
+//   return opcoes;
+// };
 
-  return opcoes;
-};
-
-const filtrarNumeros = (filterHandler, customFilterParameters, tipo, ref) => {
-  return (
-    <FiltroNumericoSeletor
-      filterHandler={filterHandler}
-      tipo={tipo}
-      scrollbarRef={ref}
-    ></FiltroNumericoSeletor>
-  );
-};
+// const filtrarNumeros = (filterHandler, customFilterParameters, tipo, ref) => {
+//   return (
+//     <FiltroNumericoSeletor
+//       filterHandler={filterHandler}
+//       tipo={tipo}
+//       scrollbarRef={ref}
+//     ></FiltroNumericoSeletor>
+//   );
+// };
 
 /*Tabela comum
 <Table
@@ -654,3 +215,39 @@ const filtrarNumeros = (filterHandler, customFilterParameters, tipo, ref) => {
         </tbody>
       </Table>
 */
+
+/*
+  react-infinite-scroll-component
+
+
+  
+
+
+
+
+  <InfiniteScroll
+dataLength={tableData.length}
+next={() =>
+  fetchMoreData(tableData, hasMore, setTableData, setHasMore)
+}
+hasMore={hasMore}
+loader={<h4>Loading...</h4>}
+scrollableTarget="scrollbarTabelaCombinacoes"
+endMessage={
+  <p style={{ textAlign: "center" }}>
+    <b>Yay! You have seen it all</b>
+  </p>
+}
+> */
+
+const fetchMoreData = (tableData, hasMore, setTableData, setHasMore) => {
+  if (tableData.length >= comb300.length) {
+    setHasMore(false);
+    return;
+  }
+  // a fake async api call like which sends
+  // 20 more records in .5 secs
+  setTimeout(() => {
+    setTableData(tableData.concat(comb300.slice(0, 100)));
+  }, 500);
+};

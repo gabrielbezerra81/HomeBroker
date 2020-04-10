@@ -9,7 +9,7 @@ import {
 import {
   pesquisarStrikesMultilegAction,
   encontrarNumMaisProximo
-} from "components/redux/actions/api_actions/MenuAPIAction";
+} from "components/redux/actions/api_actions/MultilegAPIAction";
 import {
   listarBookOfertaAPI,
   pesquisarAtivoAPI,

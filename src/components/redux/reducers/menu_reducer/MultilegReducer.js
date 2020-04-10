@@ -22,7 +22,7 @@ const INITIAL_STATE = {
   multileg: [
     {
       nomeAba: "Ordem 1",
-      ativo: "PETRL307",
+      ativo: "PETRD450",
       ativoAtual: "",
       valor: 0,
       variacao: 0,

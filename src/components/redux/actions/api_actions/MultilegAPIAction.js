@@ -5,21 +5,21 @@ import {
   travarDestravarClique,
   verificarMonitorarAtivoAPI,
   criarAlertaOperacaoAPI,
-  criarPosicaoMultilegAPI
+  criarPosicaoMultilegAPI,
 } from "components/api/API";
 import { PESQUISAR_ATIVO_MULTILEG_API } from "constants/ApiActionTypes";
 import {
   montarOrdemMultileg,
   validarOrdemMultileg,
   atualizarCotacaoAction,
-  adicionaCotacoesMultileg
+  adicionaCotacoesMultileg,
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { MODIFICAR_VARIAVEL_MULTILEG } from "constants/MenuActionTypes";
 
 ////
 
 export const pesquisarAtivoMultilegAction = (props, indice) => {
-  return async dispatch => {
+  return async (dispatch) => {
     travarDestravarClique("travar", "multileg");
     const dados = await pesquisaAtivo(
       props.multileg,
@@ -29,7 +29,7 @@ export const pesquisarAtivoMultilegAction = (props, indice) => {
     dispatch({ type: PESQUISAR_ATIVO_MULTILEG_API, payload: dados.multileg });
     dispatch({
       type: MODIFICAR_VARIAVEL_MULTILEG,
-      payload: { nome: "cotacoesMultileg", valor: dados.cotacoesMultileg }
+      payload: { nome: "cotacoesMultileg", valor: dados.cotacoesMultileg },
     });
     atualizarCotacaoAction(dispatch, props, dados.cotacoesMultileg);
     travarDestravarClique("destravar", "multileg");
@@ -80,7 +80,7 @@ export const pesquisarStrikesMultilegAction = async (
   if (dados) {
     return dados;
   }
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({ type: "" });
   };
 };
@@ -93,7 +93,9 @@ export const encontrarNumMaisProximo = (
 ) => {
   if (listaOpcoes.length > 0) {
     if (opcaoBool) {
-      const opcao = listaOpcoes.filter(opcao => opcao.symbol === codigo_ativo);
+      const opcao = listaOpcoes.filter(
+        (opcao) => opcao.symbol === codigo_ativo
+      );
       return opcao[0].strike;
     } else {
       var maisProximo = listaOpcoes.reduce((prev, curr) =>
@@ -106,8 +108,8 @@ export const encontrarNumMaisProximo = (
   }
 };
 
-export const enviarOrdemMultilegAction = props => {
-  return async dispatch => {
+export const enviarOrdemMultilegAction = (props) => {
+  return async (dispatch) => {
     let json = montarOrdemMultileg(props);
     travarDestravarClique("travar", "multileg");
     if (validarOrdemMultileg(props)) await enviarOrdemAPI([json]);
@@ -115,8 +117,8 @@ export const enviarOrdemMultilegAction = props => {
   };
 };
 
-export const criarAlertaMultilegAction = props => {
-  return async dispatch => {
+export const criarAlertaMultilegAction = (props) => {
+  return async (dispatch) => {
     let json = montarOrdemMultileg(props);
     travarDestravarClique("travar", "multileg");
     if (validarOrdemMultileg(props)) await criarAlertaOperacaoAPI([json]);
@@ -124,8 +126,8 @@ export const criarAlertaMultilegAction = props => {
   };
 };
 
-export const criarPosicaoMultilegAction = props => {
-  return async dispatch => {
+export const criarPosicaoMultilegAction = (props) => {
+  return async (dispatch) => {
     let json = montarOrdemMultileg(props);
     travarDestravarClique("travar", "multileg");
     if (validarOrdemMultileg(props)) await criarPosicaoMultilegAPI([json]);

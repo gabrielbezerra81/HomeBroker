@@ -1,7 +1,7 @@
 import {
   MUDAR_VARIAVEL_ORDENS_EXEC,
   ADICIONAR_ABA,
-  MODIFICAR_VARIAVEL_MULTILEG
+  MODIFICAR_VARIAVEL_MULTILEG,
 } from "constants/MenuActionTypes";
 import {
   listarOrdensExecAPI,
@@ -11,50 +11,52 @@ import {
   incrementarQtdeOrdemExecAPI,
   incrementarPrecoOrdemExecAPI,
   pesquisarAtivoAPI,
-  atualizarOrdensExecAPI
+  atualizarOrdensExecAPI,
 } from "components/api/API";
 import { LISTAR_ORDENS_EXECUCAO } from "constants/ApiActionTypes";
 import {
   atualizarCotacaoAction,
-  adicionarOferta
+  adicionarOferta,
   // atualizarBookAction
 } from "components/redux/actions/menu_actions/MultilegActions";
 import {
   adicionarAba,
-  modificarAba
+  modificarAba,
 } from "components/redux/actions/menu_actions/MultilegActions";
-import { pesquisaAtivo } from "components/redux/actions/api_actions/MenuAPIAction";
+import { pesquisaAtivo } from "components/redux/actions/api_actions/MultilegAPIAction";
 import { erro_exportar_ordens_multileg } from "constants/AlertaErros";
 import {
   calculoPreco,
-  calculoMDC
+  calculoMDC,
 } from "components/forms/multileg_/CalculoPreco";
 import { formatarNumero } from "components/redux/reducers/boletas_reducer/formInputReducer";
 
 export const mudarVariavelOrdensExecAction = (nome, valor) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: MUDAR_VARIAVEL_ORDENS_EXEC,
-      payload: { nome, valor }
+      payload: { nome, valor },
     });
   };
 };
 
 export const filtrarHistoricoOpAction = () => {
-  return dispatch => {};
+  return (dispatch) => {};
 };
 
-export const listarOrdensExecAction = props => {
-  return async dispatch => {
-    const ordensExec = await listarOrdensExecAPI();
+export const listarOrdensExecAction = (props) => {
+  return async (dispatch) => {
+    if (props.token) {
+      const ordensExec = await listarOrdensExecAPI(props.token);
 
-    dispatch({ type: LISTAR_ORDENS_EXECUCAO, payload: ordensExec });
-    atualizarOrdensExec(dispatch, props, 1, ordensExec);
+      dispatch({ type: LISTAR_ORDENS_EXECUCAO, payload: ordensExec });
+      atualizarOrdensExec(dispatch, props, props.token.accessToken, ordensExec);
+    }
   };
 };
 
 export const abrirOrdemNoMultilegAction = (props, acao = "") => {
-  return async dispatch => {
+  return async (dispatch) => {
     travarDestravarClique("travar", "menusTelaPrincipal");
     const item = props.ordemAtual;
 
@@ -102,7 +104,7 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
         cotacoesMultileg = retornoPesquisa.cotacoesMultileg;
 
         const opcao = multileg[indiceAba].opcoes.filter(
-          opcao => opcao.symbol === oferta.ativo
+          (opcao) => opcao.symbol === oferta.ativo
         );
         let tipo = "";
         if (opcao.length > 0) tipo = opcao[0].type.toLowerCase();
@@ -150,13 +152,13 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
       type: ADICIONAR_ABA,
       payload: {
         multileg: objMultileg.abasMultileg,
-        abaSelecionada: objMultileg.abaAtual
-      }
+        abaSelecionada: objMultileg.abaAtual,
+      },
     });
 
     dispatch({
       type: MODIFICAR_VARIAVEL_MULTILEG,
-      payload: { nome: "cotacoesMultileg", valor: cotacoesMultileg }
+      payload: { nome: "cotacoesMultileg", valor: cotacoesMultileg },
     });
     atualizarCotacaoAction(dispatch, props, cotacoesMultileg);
     travarDestravarClique("destravar", "menusTelaPrincipal");
@@ -164,7 +166,7 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
 };
 
 export const abrirOrdensBoletaAction = (props, event, acao) => {
-  return async dispatch => {
+  return async (dispatch) => {
     const { ordemAtual } = props;
     let nome = mapearOperacaoParaBoleta(ordemAtual.operacao);
 
@@ -192,9 +194,9 @@ export const abrirOrdensBoletaAction = (props, event, acao) => {
         entradaDisparo: oferta.precoDisparo,
         entradaExec: oferta.precoEnvio,
         preco: oferta.precoEnvio ? oferta.precoEnvio.toString() : "",
-        ...retornaDadosOferta(ordemAtual, nome)
+        ...retornaDadosOferta(ordemAtual, nome),
       },
-      ultimaBoletaAbertaOrdemExec: nome
+      ultimaBoletaAbertaOrdemExec: nome,
     };
 
     if (nome) {
@@ -204,28 +206,28 @@ export const abrirOrdensBoletaAction = (props, event, acao) => {
   };
 };
 
-export const cancelarOrdemExecAction = id => {
-  return dispatch => {
+export const cancelarOrdemExecAction = (id) => {
+  return (dispatch) => {
     cancelarOrdemExecAPI(id);
   };
 };
 
-export const finalizarAMercadoAction = id => {
-  return dispatch => {
+export const finalizarAMercadoAction = (id) => {
+  return (dispatch) => {
     finalizarAMercadoAPI(id);
   };
 };
 
 export const aumentarQtdePrecoAction = (ordemAtual, valorSomar, modo) => {
-  return dispatch => {
+  return (dispatch) => {
     const { id } = ordemAtual;
     const ofertas = [...ordemAtual.offers];
-    const arrayQtde = ofertas.map(oferta => oferta.qtdeOferta);
+    const arrayQtde = ofertas.map((oferta) => oferta.qtdeOferta);
     const mdc = calculoMDC(arrayQtde);
 
     if (modo === "qtde") {
       let acrescimo = 0;
-      ofertas.forEach(oferta => {
+      ofertas.forEach((oferta) => {
         const unidade = oferta.qtdeOferta / mdc;
         acrescimo += valorSomar * unidade;
       });
@@ -233,7 +235,7 @@ export const aumentarQtdePrecoAction = (ordemAtual, valorSomar, modo) => {
     } //
     else if (modo === "preco") {
       let precoTotal = 0;
-      ofertas.forEach(oferta => {
+      ofertas.forEach((oferta) => {
         const unidade = oferta.qtdeOferta / mdc;
         precoTotal += oferta.precoEnvio * unidade;
       });
@@ -243,7 +245,7 @@ export const aumentarQtdePrecoAction = (ordemAtual, valorSomar, modo) => {
   };
 };
 
-const mapearOperacaoParaBoleta = operacao => {
+const mapearOperacaoParaBoleta = (operacao) => {
   switch (operacao) {
     case "Compra a Mercado":
       return "compra_mercado";
@@ -278,7 +280,7 @@ const retornaDadosOferta = (ordemAtual, tipo) => {
     stopDisparo: "",
     stopExec: "",
     ajustePadrao: "",
-    tabelaOrdens: []
+    tabelaOrdens: [],
   };
 
   if (["compra_startstop", "venda_startstop"].includes(tipo)) {
@@ -336,7 +338,7 @@ const retornaDadosOferta = (ordemAtual, tipo) => {
         stopAtual: stopAtual,
         ajuste: ofertaAjuste.precoEnvio,
         novoStop: novoStop,
-        tipo: "real"
+        tipo: "real",
       });
     });
   } //
@@ -357,12 +359,13 @@ const retornaDadosOferta = (ordemAtual, tipo) => {
 };
 
 export const atualizarOrdensExecAction = (props, idUsuario) => {
-  return dispatch => {
+  return (dispatch) => {
     atualizarOrdensExec(dispatch, props, idUsuario, props.tabelaOrdensExecucao);
   };
 };
 
 const atualizarOrdensExec = (dispatch, props, idUsuario, listaOrdensExec) => {
+  console.log(idUsuario);
   if (props.eventSourceOrdensExec) {
     props.eventSourceOrdensExec.close();
   }
@@ -375,6 +378,6 @@ const atualizarOrdensExec = (dispatch, props, idUsuario, listaOrdensExec) => {
 
   dispatch({
     type: MUDAR_VARIAVEL_ORDENS_EXEC,
-    payload: { nome: "eventSourceOrdensExec", valor: eventSource }
+    payload: { nome: "eventSourceOrdensExec", valor: eventSource },
   });
 };
