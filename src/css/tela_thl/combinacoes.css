@@ -1,79 +1,32 @@
 .containerCombinacoesTHL {
-  margin-right: 17px;
+  margin-right: 5px;
   margin-left: 103px;
-  border-bottom: 1px solid var(--cor-borda) !important;
-  border-radius: 5px;
-}
-
-#scrollbarTabelaCombinacoes {
-  max-height: 550px;
-  height: 550px;
-  width: 100%;
-
-  /* height: 496px;
-  width: 100%; */
-  /* overflow: hidden; */
-  /* max-height: 100vh; */
-  /* position: relative; */
-}
-
-#scrollbarTabelaCombinacoes .ps__rail-x {
-  margin: 0 1px;
-}
-
-#scrollbarTabelaCombinacoes .ps__rail-y {
-  margin-top: 120px;
+  border-bottom-left-radius: 5px;
+  /* border-bottom: 1px solid var(--cor-borda); */
 }
 
 .tabelaCombinacoes {
-  border: none !important;
+  color: var(--cor-texto);
 }
 
-.tabelaCombinacoes .react-bs-container-header.table-header-wrapper {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  min-width: 1056px;
-}
-
-.tabelaCombinacoes .react-bs-container-body {
-  /* overflow: visible !important; */
-}
-
-.tabelaCombinacoes th {
-  border-bottom-width: 2px !important;
-}
-
-.tabelaCombinacoes .react-bs-container-header {
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-}
-
-.tabelaCombinacoes .react-bs-container-body {
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-
-.tabelaCombinacoes th,
-.tabelaCombinacoes td {
-  border-color: var(--cor-borda) !important;
+.tabelaCombinacoes .th,
+.tabelaCombinacoes .td {
   text-align: center !important;
   position: relative;
 }
 
-.tabelaCombinacoes td {
+.tabelaCombinacoes .th {
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.tabelaCombinacoes .td {
   padding: 5px 3px !important;
   font-size: 0.7rem;
-  vertical-align: middle !important;
+  border-bottom: 1px solid var(--cor-borda);
 }
 
 /* Container dos inputs de filtro */
-.tabelaCombinacoes th > div:not(.colunaDividida):not(.divLabelColuna) {
-  /* position: absolute;
-  margin: 0 auto;
-  top: 0px;
-  padding-right: 5px;
-  width: 100%; */
+.containerInputFiltro {
   position: absolute;
   margin: 0 auto;
   top: 0px;
@@ -86,14 +39,13 @@
   justify-content: center;
 }
 
-.tabelaCombinacoes input,
-.tabelaCombinacoes select {
+.containerInputFiltro input,
+.containerInputFiltro select {
   height: 20px;
   background-color: #333;
   border-color: #333;
   color: var(--cor-texto) !important;
   font-size: 0.7rem;
-  /* text-align: center !important; */
   width: 100% !important;
   max-width: 100px;
   padding-left: 3px !important;
@@ -122,9 +74,6 @@
 .tabelaCombinacoes select {
   padding: 0;
   text-align-last: right;
-}
-
-.headerAcaoUlt {
 }
 
 .colunaAcaoUlt {
@@ -158,83 +107,27 @@
   margin-left: 0.4rem;
 }
 
-.inputMinRange {
-  top: -43px !important;
-}
-
-.inputMaxRange {
-  top: -86px !important;
-}
-
-/* input valor para filtrar de montagem e desmontagem*/
-
-div.filter.number-filter {
-  flex-direction: column-reverse;
-  height: 43px;
-  justify-content: space-between;
-}
-
-.number-filter-input.form-control {
-  margin-left: 0 !important;
-  /* position: absolute; */
-  /* margin: 0 calc((100% - 125px) / 2) !important; */
-}
-
-/* inputSelect  Montagem e desmontagem */
-.colunaMontagemDesmontagem .number-filter-input.form-control,
-.colunaMontagemDesmontagem .number-filter-comparator.form-control {
-  min-width: 120px;
-  max-width: 120px;
-  display: block;
-  margin: 0 auto;
-}
-
-/* Posicionamento de inputs acima do thead e configuração do th*/
+/* Posicionamento de inputs acima do thead e configuração do .th*/
 .divLabelColuna {
+  background-color: var(--light-background-color);
   border: 1px solid var(--cor-borda);
-  border-right: none;
+  border-left: none;
   height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 72px;
-  /* width: 100%; */
 }
 
 .divLabelColuna .colunaDividida {
   width: 100%;
 }
 
-.tabelaCombinacoes th:first-child .divLabelColuna {
-  border-top-left-radius: 5px;
-}
+/* Posicionamento de inputs acima do  */
 
-.tabelaCombinacoes th:nth-child(1n + 6) .divLabelColuna {
-  border-right: 1px solid var(--cor-borda);
-  border-left: none;
-}
-
-.tabelaCombinacoes th:nth-child(6) .divLabelColuna {
+.tabelaCombinacoes .td:first-child {
   border-left: 1px solid var(--cor-borda);
 }
-
-.tabelaCombinacoes th:last-child .divLabelColuna {
-  border-top-right-radius: 5px;
-}
-
-.tabelaCombinacoes th {
-  padding: 0 !important;
-  border: none !important;
-}
-
-.tabelaCombinacoes td:first-child {
-  border-left: 1px solid var(--cor-borda) !important;
-}
-
-.tabelaCombinacoes td:last-child {
-  border-right: 1px solid var(--cor-borda) !important;
-}
-/* Posicionamento de inputs acima do thead */
 
 .selectOperacaoFiltro {
   position: absolute !important;
@@ -274,19 +167,10 @@ div.filter.number-filter {
   height: 496px;
   width: 100%;
   overflow: auto;
-  max-height: 100vh;
-  position: relative;
 }
 
 .containerTabelaComb > div {
-  min-width: 1072px !important;
-}
-
-.linha-par {
-  background-color: var(--background-color);
-}
-
-.containerTabelaComb > div > div:nth-child(2) > div:nth-child(2) {
+  min-width: 1084px !important;
 }
 
 .containerTabelaComb
@@ -317,34 +201,43 @@ div.filter.number-filter {
   background: #444;
 }
 
-.tabelaCombinacoes th,
-.tabelaCombinacoes td {
-  border-right: 1px solid var(--cor-borda) !important;
+.tabelaCombinacoes .td {
+  border-right: 1px solid var(--cor-borda);
 }
 
 .table-header-row {
   width: calc(100% - 12px) !important;
 }
 
+.linha-impar .td {
+  background-color: var(--light-background-color);
+}
+
+.margemScrollbar .td:last-child {
+  margin-right: 12px;
+}
+
 .tabelaCombinacoes {
   margin-bottom: 0;
 }
 
-.tabelaCombinacoes > tbody > td,
-.tabelaCombinacoes > th {
-  background-color: unset !important;
+.tabelaCombinacoes .thead {
+  font-weight: 700;
 }
 
-.tabelaCombinacoes thead tr th {
-  border-top: 1px solid var(--cor-borda) !important;
-  border-bottom: 1px solid var(--cor-borda) !important;
-}
-
-.tabelaCombinacoes thead tr th:first-child {
+.tabelaCombinacoes .th:first-child .divLabelColuna {
   border-left: 1px solid var(--cor-borda) !important;
   border-top-left-radius: 5px !important;
 }
 
-.tabelaCombinacoes thead tr th:last-child {
+.tabelaCombinacoes .th:last-child .divLabelColuna {
   border-top-right-radius: 5px !important;
 }
+
+/* .tabelaCombinacoes .ultimaLinha .td:first-child {
+  border-bottom-left-radius: 5px;
+}
+
+.tabelaCombinacoes .ultimaLinha .td:last-child{
+  border-bottom-right-radius: 5px;
+} */

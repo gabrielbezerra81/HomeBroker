@@ -1,4 +1,5 @@
 import { MUDAR_VARIAVEL_THL } from "constants/MenuActionTypes";
+import { comb300 } from "components/forms/thl/tableData";
 
 const thlData = [
   {
@@ -10,7 +11,7 @@ const thlData = [
         strike: 27.06,
         tipo: "CALL",
         modelo: "AMERICAN",
-        vencimento: "17/08/2020"
+        vencimento: "17/08/2020",
       },
       {
         symbol: "PETRI273",
@@ -18,7 +19,7 @@ const thlData = [
         strike: 27.06,
         tipo: "CALL",
         modelo: "AMERICAN",
-        vencimento: "21/09/2020"
+        vencimento: "21/09/2020",
       },
       {
         symbol: "PETRJ273",
@@ -26,7 +27,7 @@ const thlData = [
         strike: 27.06,
         tipo: "CALL",
         modelo: "AMERICAN",
-        vencimento: "19/10/2020"
+        vencimento: "19/10/2020",
       },
       {
         symbol: "PETRF273",
@@ -34,7 +35,7 @@ const thlData = [
         strike: 27.08,
         tipo: "CALL",
         modelo: "EUROPEAN",
-        vencimento: "15/06/2020"
+        vencimento: "15/06/2020",
       },
       {
         symbol: "PETRL280",
@@ -42,7 +43,7 @@ const thlData = [
         strike: 27.14,
         tipo: "CALL",
         modelo: "AMERICAN",
-        vencimento: "21/12/2020"
+        vencimento: "21/12/2020",
       },
       {
         symbol: "PETRG77",
@@ -50,9 +51,9 @@ const thlData = [
         strike: 27.02,
         tipo: "CALL",
         modelo: "AMERICAN",
-        vencimento: "20/07/2020"
-      }
-    ]
+        vencimento: "20/07/2020",
+      },
+    ],
   },
   {
     strikeLine: 27.23,
@@ -63,7 +64,7 @@ const thlData = [
         strike: 27.23,
         tipo: "CALL",
         modelo: "AMERICAN",
-        vencimento: "20/04/2020"
+        vencimento: "20/04/2020",
       },
       {
         symbol: "PETRK275",
@@ -71,7 +72,7 @@ const thlData = [
         strike: 27.23,
         tipo: "CALL",
         modelo: "AMERICAN",
-        vencimento: "16/11/2020"
+        vencimento: "16/11/2020",
       },
       {
         symbol: "PETRG275",
@@ -79,7 +80,7 @@ const thlData = [
         strike: 27.27,
         tipo: "CALL",
         modelo: "EUROPEAN",
-        vencimento: "20/07/2020"
+        vencimento: "20/07/2020",
       },
       {
         symbol: "PETRF275",
@@ -87,9 +88,9 @@ const thlData = [
         strike: 27.33,
         tipo: "CALL",
         modelo: "AMERICAN",
-        vencimento: "15/06/2020"
-      }
-    ]
+        vencimento: "15/06/2020",
+      },
+    ],
   },
   {
     strikeLine: 27.58,
@@ -100,7 +101,7 @@ const thlData = [
         strike: 27.58,
         tipo: "CALL",
         modelo: "EUROPEAN",
-        vencimento: "15/06/2020"
+        vencimento: "15/06/2020",
       },
       {
         symbol: "PETRH277",
@@ -108,7 +109,7 @@ const thlData = [
         strike: 27.56,
         tipo: "CALL",
         modelo: "AMERICAN",
-        vencimento: "17/08/2020"
+        vencimento: "17/08/2020",
       },
       {
         symbol: "PETRD277",
@@ -116,9 +117,9 @@ const thlData = [
         strike: 27.48,
         tipo: "CALL",
         modelo: "EUROPEAN",
-        vencimento: "20/04/2020"
-      }
-    ]
+        vencimento: "20/04/2020",
+      },
+    ],
   },
   {
     strikeLine: 27.83,
@@ -129,7 +130,7 @@ const thlData = [
         strike: 27.83,
         tipo: "CALL",
         modelo: "AMERICAN",
-        vencimento: "15/06/2020"
+        vencimento: "15/06/2020",
       },
       {
         symbol: "PETRH279",
@@ -137,7 +138,7 @@ const thlData = [
         strike: 27.81,
         tipo: "CALL",
         modelo: "EUROPEAN",
-        vencimento: "17/08/2020"
+        vencimento: "17/08/2020",
       },
       {
         symbol: "PETRG279",
@@ -145,7 +146,7 @@ const thlData = [
         strike: 27.77,
         tipo: "CALL",
         modelo: "EUROPEAN",
-        vencimento: "20/07/2020"
+        vencimento: "20/07/2020",
       },
       {
         symbol: "PETRD281",
@@ -153,9 +154,9 @@ const thlData = [
         strike: 27.73,
         tipo: "CALL",
         modelo: "AMERICAN",
-        vencimento: "20/04/2020"
-      }
-    ]
+        vencimento: "20/04/2020",
+      },
+    ],
   },
   {
     strikeLine: 28.06,
@@ -166,7 +167,7 @@ const thlData = [
         strike: 28.06,
         tipo: "CALL",
         modelo: "AMERICAN",
-        vencimento: "17/08/2020"
+        vencimento: "17/08/2020",
       },
       {
         symbol: "PETRI283",
@@ -174,7 +175,7 @@ const thlData = [
         strike: 28.06,
         tipo: "CALL",
         modelo: "AMERICAN",
-        vencimento: "21/09/2020"
+        vencimento: "21/09/2020",
       },
       {
         symbol: "PETRJ283",
@@ -182,7 +183,7 @@ const thlData = [
         strike: 28.06,
         tipo: "CALL",
         modelo: "AMERICAN",
-        vencimento: "19/10/2020"
+        vencimento: "19/10/2020",
       },
       {
         symbol: "PETRF282",
@@ -190,7 +191,7 @@ const thlData = [
         strike: 28.08,
         tipo: "CALL",
         modelo: "EUROPEAN",
-        vencimento: "15/06/2020"
+        vencimento: "15/06/2020",
       },
       {
         symbol: "PETRD284",
@@ -198,9 +199,9 @@ const thlData = [
         strike: 27.98,
         tipo: "CALL",
         modelo: "EUROPEAN",
-        vencimento: "20/04/2020"
-      }
-    ]
+        vencimento: "20/04/2020",
+      },
+    ],
   },
   {
     strikeLine: 28.27,
@@ -211,7 +212,7 @@ const thlData = [
         strike: 28.27,
         tipo: "CALL",
         modelo: "EUROPEAN",
-        vencimento: "20/07/2020"
+        vencimento: "20/07/2020",
       },
       {
         symbol: "PETRK285",
@@ -219,9 +220,9 @@ const thlData = [
         strike: 28.23,
         tipo: "CALL",
         modelo: "AMERICAN",
-        vencimento: "16/11/2020"
-      }
-    ]
+        vencimento: "16/11/2020",
+      },
+    ],
   },
   {
     strikeLine: 28.52,
@@ -232,9 +233,9 @@ const thlData = [
         strike: 28.52,
         tipo: "CALL",
         modelo: "AMERICAN",
-        vencimento: "20/07/2020"
-      }
-    ]
+        vencimento: "20/07/2020",
+      },
+    ],
   },
   {
     strikeLine: 28.75,
@@ -245,7 +246,7 @@ const thlData = [
         strike: 28.75,
         tipo: "CALL",
         modelo: "AMERICAN",
-        vencimento: "18/05/2020"
+        vencimento: "18/05/2020",
       },
       {
         symbol: "PETRD289",
@@ -253,7 +254,7 @@ const thlData = [
         strike: 28.73,
         tipo: "CALL",
         modelo: "AMERICAN",
-        vencimento: "20/04/2020"
+        vencimento: "20/04/2020",
       },
       {
         symbol: "PETRL289",
@@ -261,9 +262,9 @@ const thlData = [
         strike: 28.64,
         tipo: "CALL",
         modelo: "AMERICAN",
-        vencimento: "21/12/2020"
-      }
-    ]
+        vencimento: "21/12/2020",
+      },
+    ],
   },
   {
     strikeLine: 28.89,
@@ -274,7 +275,7 @@ const thlData = [
         strike: 28.89,
         tipo: "CALL",
         modelo: "EUROPEAN",
-        vencimento: "21/12/2020"
+        vencimento: "21/12/2020",
       },
       {
         symbol: "PETRF290",
@@ -282,9 +283,9 @@ const thlData = [
         strike: 28.83,
         tipo: "CALL",
         modelo: "AMERICAN",
-        vencimento: "15/06/2020"
-      }
-    ]
+        vencimento: "15/06/2020",
+      },
+    ],
   },
   {
     strikeLine: 28.89,
@@ -295,7 +296,7 @@ const thlData = [
         strike: 28.89,
         tipo: "CALL",
         modelo: "EUROPEAN",
-        vencimento: "21/12/2020"
+        vencimento: "21/12/2020",
       },
       {
         symbol: "PETRF290",
@@ -303,9 +304,9 @@ const thlData = [
         strike: 28.83,
         tipo: "CALL",
         modelo: "AMERICAN",
-        vencimento: "15/06/2020"
-      }
-    ]
+        vencimento: "15/06/2020",
+      },
+    ],
   },
   {
     strikeLine: 28.89,
@@ -316,7 +317,7 @@ const thlData = [
         strike: 28.89,
         tipo: "CALL",
         modelo: "EUROPEAN",
-        vencimento: "21/12/2020"
+        vencimento: "21/12/2020",
       },
       {
         symbol: "PETRF290",
@@ -324,9 +325,9 @@ const thlData = [
         strike: 28.83,
         tipo: "CALL",
         modelo: "AMERICAN",
-        vencimento: "15/06/2020"
-      }
-    ]
+        vencimento: "15/06/2020",
+      },
+    ],
   },
   {
     strikeLine: 28.89,
@@ -337,7 +338,7 @@ const thlData = [
         strike: 28.89,
         tipo: "CALL",
         modelo: "EUROPEAN",
-        vencimento: "21/12/2020"
+        vencimento: "21/12/2020",
       },
       {
         symbol: "PETRF290",
@@ -345,9 +346,9 @@ const thlData = [
         strike: 28.83,
         tipo: "CALL",
         modelo: "AMERICAN",
-        vencimento: "15/06/2020"
-      }
-    ]
+        vencimento: "15/06/2020",
+      },
+    ],
   },
   {
     strikeLine: 28.89,
@@ -358,7 +359,7 @@ const thlData = [
         strike: 28.89,
         tipo: "CALL",
         modelo: "EUROPEAN",
-        vencimento: "21/12/2020"
+        vencimento: "21/12/2020",
       },
       {
         symbol: "PETRF290",
@@ -366,9 +367,9 @@ const thlData = [
         strike: 28.83,
         tipo: "CALL",
         modelo: "AMERICAN",
-        vencimento: "15/06/2020"
-      }
-    ]
+        vencimento: "15/06/2020",
+      },
+    ],
   },
   {
     strikeLine: 28.89,
@@ -379,7 +380,7 @@ const thlData = [
         strike: 28.89,
         tipo: "CALL",
         modelo: "EUROPEAN",
-        vencimento: "21/12/2020"
+        vencimento: "21/12/2020",
       },
       {
         symbol: "PETRF290",
@@ -387,10 +388,10 @@ const thlData = [
         strike: 28.83,
         tipo: "CALL",
         modelo: "AMERICAN",
-        vencimento: "15/06/2020"
-      }
-    ]
-  }
+        vencimento: "15/06/2020",
+      },
+    ],
+  },
 ];
 
 const INITIAL_STATE = {
@@ -431,9 +432,28 @@ const INITIAL_STATE = {
     39.0,
     40.0,
     41.0,
-    44.0
+    44.0,
   ],
-  strikeSelecionado: "28"
+  strikeSelecionado: "28",
+  combinacoesTabela: comb300,
+  estrategia: "",
+  grupo: "",
+  acaoUlt: "",
+  spread: { min: "", max: "", select: "=" },
+  codigos: {
+    min: "",
+    max: "",
+    select: "=",
+    codigo1: "",
+    min2: "",
+    max2: "",
+    select2: "=",
+    codigo2: "",
+  },
+  montagem: { min: "", max: "", select: "=" },
+  desmontagem: { min: "", max: "", select: "=" },
+  vencimento: "",
+  prazo: "",
 };
 
 export default (state = INITIAL_STATE, action) => {

@@ -1,21 +1,60 @@
 import React from "react";
 import imgModeloEU from "img/modeloEU.png";
 import ImgModeloUSA from "img/imgModeloUSA3.svg";
+import InputsFiltroTabela from "components/forms/thl/FiltroTabela";
+import { formatarNumDecimal } from "components/utils/Formatacoes";
 
-export const HeaderColunaAcaoUlt = ({ children, column }) => {
-  return (
-    //  className="divLabelColuna"
-    <th style={{ minWidth: "85px", flexGrow: "85" }} className="colunaAcaoUlt">
+export const ColunaHeader = ({ children, column }) => {
+  let elementoColuna;
+  let classNameColunaAcaoUlt = "";
+  let tipoFiltro = "";
+  const { key } = column;
+
+  if (key === "acaoUlt") {
+    classNameColunaAcaoUlt = " colunaAcaoUlt";
+    elementoColuna = (
       <div className="colunaDividida">
         <div>Acão</div>
         <div>Ult</div>
       </div>
-    </th>
+    );
+  } else {
+    elementoColuna = column.title;
+  }
+  if (["estrategia", "grupo", "acaoUlt"].includes(key)) {
+    tipoFiltro = "texto";
+  } else if (["spread", "montagem", "desmontagem"].includes(key)) {
+    tipoFiltro = "numero";
+  } else if ("codigos" === key) {
+    tipoFiltro = "numeroTexto";
+  } else if (["vencimento", "prazo"].includes(key)) {
+    tipoFiltro = "select";
+  }
+
+  return (
+    <div
+      style={{ width: `${column.width}px`, flexGrow: `${column.width}` }}
+      className={`th${classNameColunaAcaoUlt}`}
+    >
+      <div className="divLabelColuna">
+        {elementoColuna}
+        <div className="containerInputFiltro">
+          <InputsFiltroTabela
+            tipoFiltro={tipoFiltro}
+            coluna={column}
+          ></InputsFiltroTabela>
+        </div>
+      </div>
+    </div>
   );
 };
 
 export const ColunaTextoComum = (props) => {
   const { children } = props;
+  const key = props.column.key;
+  let texto = children;
+
+  if (key === "spread") texto = `R$ ${formatarNumDecimal(children)}`;
   return (
     <div
       style={{
@@ -25,7 +64,7 @@ export const ColunaTextoComum = (props) => {
         height: "100%",
       }}
     >
-      {children}
+      {texto}
     </div>
   );
 };
@@ -50,17 +89,17 @@ export const ColunaCodigos = ({ children, row, column }) => {
       </div>
       <div className="mr-1">
         <div className="flexAlignEnd codigoColunaModelo">
-          <div>B319</div>
+          <div>{children[0].symbol.slice(4)}</div>
           {renderModelo("EUROPEAN")}
         </div>
-        <div>19,55</div>
+        <div>{formatarNumDecimal(children[0].strike)}</div>
       </div>
       <div>
         <div className="flexAlignEnd  codigoColunaModelo">
-          <div>C479</div>
+          <div>{children[1].symbol.slice(4)}</div>
           {renderModelo("USA")}
         </div>
-        <div>19,55</div>
+        <div>{formatarNumDecimal(children[1].strike)}</div>
       </div>
     </div>
   );
@@ -69,17 +108,24 @@ export const ColunaCodigos = ({ children, row, column }) => {
 export const ColunaMontagem = ({ children, row, column }) => {
   return (
     <div>
-      <div>R$ {children.valor}</div>
+      <div>R$ {formatarNumDecimal(children.valor)}</div>
       <div className="colunaDividida corTextoBook">
         <div className="mr-2">
-          {children.bookVenda.valor} | {children.bookVenda.qtde}
+          {formatarNumDecimal(children.bookVenda.valor)} |
+          {formatarQtde(children.bookVenda.qtde)}
         </div>
         <div>
-          {children.bookCompra.valor} | {children.bookCompra.qtde}
+          {formatarNumDecimal(children.bookCompra.valor)} |
+          {formatarQtde(children.bookCompra.qtde)}
         </div>
       </div>
     </div>
   );
+};
+
+const formatarQtde = (qtde) => {
+  if (qtde < 1000) return qtde;
+  else return `${qtde / 1000}k`;
 };
 
 const renderModelo = (modelo) => {
@@ -98,11 +144,6 @@ const renderModelo = (modelo) => {
     </div>
   );
 };
-
-// <ImgModeloUSA
-// viewBox="6 -1 17 17"
-// className="imgModeloTHL"
-// ></ImgModeloUSA>
 
 // const a = (
 //   <BootstrapTable
@@ -127,12 +168,12 @@ const renderModelo = (modelo) => {
 //       className="colunaAcaoUlt"
 //       dataFormat={(cell, row) => <ColunaAcaoUlt cell={cell} row={row} />}
 //     >
-//       <div className="divLabelColuna">
-//         <div className="colunaDividida">
-//           <div>Acão</div>
-//           <div>Ult</div>
-//         </div>
-//       </div>
+// <div className="divLabelColuna">
+//   <div className="colunaDividida">
+//     <div>Acão</div>
+//     <div>Ult</div>
+//   </div>
+// </div>
 //     </TableHeaderColumn>
 //     <TableHeaderColumn
 //       dataField="spread"
