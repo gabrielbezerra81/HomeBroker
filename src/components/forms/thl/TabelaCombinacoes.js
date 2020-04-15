@@ -33,10 +33,15 @@ export default React.memo(
     //       { passive: true }
     //     );
     // });
+    let alturaContainer = 102 + 43 * dataTabela.length;
+    if (alturaContainer > 496) alturaContainer = 496;
 
     return (
       <div className="containerCombinacoesTHL">
-        <div className="containerTabelaComb">
+        <div
+          className="containerTabelaComb"
+          style={{ height: `${alturaContainer}px` }}
+        >
           <Html5Table
             className="tabelaCombinacoes"
             id="tabelaCombinacoes"

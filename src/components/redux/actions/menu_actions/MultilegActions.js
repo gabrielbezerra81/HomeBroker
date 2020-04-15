@@ -4,11 +4,11 @@ import {
   ADICIONAR_ABA,
   SELECIONAR_ABA,
   MODIFICAR_ATRIBUTO_ABA,
-  MODIFICAR_VARIAVEL_MULTILEG
+  MODIFICAR_VARIAVEL_MULTILEG,
 } from "constants/MenuActionTypes";
 import {
   pesquisarStrikesMultilegAction,
-  encontrarNumMaisProximo
+  encontrarNumMaisProximo,
 } from "components/redux/actions/api_actions/MultilegAPIAction";
 import {
   listarBookOfertaAPI,
@@ -16,22 +16,22 @@ import {
   atualizarCotacaoAPI,
   atualizarBookAPI,
   travarDestravarClique,
-  verificarMonitorarAtivoAPI
+  verificarMonitorarAtivoAPI,
 } from "components/api/API";
 import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
 import { formatarNumero } from "components/redux/reducers/boletas_reducer/formInputReducer";
 import { ATUALIZAR_SOURCE_EVENT_MULTILEG } from "constants/ApiActionTypes";
 import {
   erro_validar_qtde,
-  erro_validar_codigo_duplicado_multileg
+  erro_validar_codigo_duplicado_multileg,
 } from "constants/AlertaErros";
 import { getformatedDate } from "components/utils/Formatacoes";
 
-export const abrirFecharConfigComplAction = configComplementarAberto => {
-  return dispatch => {
+export const abrirFecharConfigComplAction = (configComplementarAberto) => {
+  return (dispatch) => {
     dispatch({
       type: ABRIR_FECHAR_CONFIG_COMPLEMENTAR,
-      payload: !configComplementarAberto
+      payload: !configComplementarAberto,
     });
   };
 };
@@ -39,26 +39,26 @@ export const abrirFecharConfigComplAction = configComplementarAberto => {
 ////
 
 export const selecionarAdicionarAbaAction = (key, props) => {
-  return dispatch => {
+  return (dispatch) => {
     if (key === "adicionar") {
       let multileg = adicionarAba(props);
       dispatch({
         type: ADICIONAR_ABA,
         payload: {
           multileg: multileg.abasMultileg,
-          abaSelecionada: multileg.abaAtual
-        }
+          abaSelecionada: multileg.abaAtual,
+        },
       });
     } else {
       dispatch({
         type: SELECIONAR_ABA,
-        payload: key
+        payload: key,
       });
     }
   };
 };
 
-export const adicionarAba = props => {
+export const adicionarAba = (props) => {
   let abasMultileg = [...props.multileg];
 
   const novaAba = cloneDeep(aba);
@@ -73,14 +73,14 @@ export const adicionarAba = props => {
 ////
 
 export const excluirAbaMultilegAction = (props, indiceAba) => {
-  return dispatch => {
+  return (dispatch) => {
     let abasMultileg = [...props.multileg];
 
     if (indiceAba > 0) {
       const key = "tab" + (indiceAba - 1);
       dispatch({
         type: SELECIONAR_ABA,
-        payload: key
+        payload: key,
       });
     }
 
@@ -99,13 +99,13 @@ export const modificarAtributoAbaAction = (
   valor,
   props = null
 ) => {
-  return async dispatch => {
+  return async (dispatch) => {
     const dados = await modificarAba(multileg, indice, atributo, valor, props);
     dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: dados.abasMultileg });
     if (dados.cotacoesMultileg)
       dispatch({
         type: MODIFICAR_VARIAVEL_MULTILEG,
-        payload: { nome: "cotacoesMultileg", valor: dados.cotacoesMultileg }
+        payload: { nome: "cotacoesMultileg", valor: dados.cotacoesMultileg },
       });
   };
 };
@@ -164,7 +164,7 @@ export const modificarAtributoTabelaAbaAction = (
   valor,
   indiceLinha
 ) => {
-  return async dispatch => {
+  return async (dispatch) => {
     travarDestravarClique("travar", "multileg");
     let abasMultileg = [...props.multileg];
     let linhaTabela = abasMultileg[indiceGeral].tabelaMultileg[indiceLinha];
@@ -188,10 +188,10 @@ export const modificarAtributoTabelaAbaAction = (
         if (dados) {
           linhaTabela.opcoes = [...dados];
           const pesquisa = linhaTabela.opcoes.find(
-            item => item.strike === linhaTabela.strikeSelecionado
+            (item) => item.strike === linhaTabela.strikeSelecionado
           );
           const cotacaoAnterior = cotacoesMultileg.find(
-            cotacao => cotacao.codigo === codigoAnterior
+            (cotacao) => cotacao.codigo === codigoAnterior
           );
 
           if (!pesquisa) {
@@ -220,7 +220,7 @@ export const modificarAtributoTabelaAbaAction = (
       adicionaCotacoesMultileg(cotacoesMultileg, linhaTabela.codigoSelecionado);
       dispatch({
         type: MODIFICAR_VARIAVEL_MULTILEG,
-        payload: { nome: "cotacoesMultileg", valor: cotacoesMultileg }
+        payload: { nome: "cotacoesMultileg", valor: cotacoesMultileg },
       });
       atualizarCotacaoAction(dispatch, props, cotacoesMultileg);
     }
@@ -237,16 +237,16 @@ export const modificarAtributoTabelaAbaAction = (
 };
 
 export const modificarVariavelAction = (nome, valor) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: MODIFICAR_VARIAVEL_MULTILEG,
-      payload: { nome: nome, valor: valor }
+      payload: { nome: nome, valor: valor },
     });
   };
 };
 
 export const excluirOfertaTabelaAction = (props, indiceAba, indiceLinha) => {
-  return dispatch => {
+  return (dispatch) => {
     let abasMultileg = [...props.multileg];
     abasMultileg[indiceAba].tabelaMultileg.splice(indiceLinha, 1);
 
@@ -257,7 +257,7 @@ export const excluirOfertaTabelaAction = (props, indiceAba, indiceLinha) => {
 ////
 
 export const adicionarOfertaTabelaAction = (props, tipoOferta) => {
-  return async dispatch => {
+  return async (dispatch) => {
     travarDestravarClique("travar", "multileg");
     const dados = await adicionarOferta(
       props.multileg,
@@ -270,7 +270,7 @@ export const adicionarOfertaTabelaAction = (props, tipoOferta) => {
     dispatch({ type: MODIFICAR_ATRIBUTO_ABA, payload: dados.abasMultileg });
     dispatch({
       type: MODIFICAR_VARIAVEL_MULTILEG,
-      payload: { nome: "cotacoesMultileg", valor: dados.cotacoesMultileg }
+      payload: { nome: "cotacoesMultileg", valor: dados.cotacoesMultileg },
     });
 
     travarDestravarClique("destravar", "multileg");
@@ -359,7 +359,7 @@ export const oferta = {
   modelo: "",
   despernamento: 1000,
   prioridade: 0,
-  ativoAtual: ""
+  ativoAtual: "",
 };
 
 export const aba = {
@@ -376,11 +376,11 @@ export const aba = {
   total: "",
   validadeSelect: "DAY",
   date: new Date(),
-  tabelaMultileg: []
+  tabelaMultileg: [],
 };
 
-const pesquisarSymbolModel_strike_tipo = objeto => {
-  objeto.opcoes.forEach(item => {
+const pesquisarSymbolModel_strike_tipo = (objeto) => {
+  objeto.opcoes.forEach((item) => {
     if (
       item.strike === objeto.strikeSelecionado &&
       item.type === objeto.tipo.toUpperCase()
@@ -392,8 +392,8 @@ const pesquisarSymbolModel_strike_tipo = objeto => {
   });
 };
 
-const pesquisarSerieStrikeModeloTipo_symbol = objeto => {
-  objeto.opcoes.forEach(item => {
+const pesquisarSerieStrikeModeloTipo_symbol = (objeto) => {
+  objeto.opcoes.forEach((item) => {
     if (item.symbol === objeto.codigoSelecionado) {
       objeto.modelo = item.model;
       objeto.tipo = item.type.toLowerCase();
@@ -405,7 +405,7 @@ const pesquisarSerieStrikeModeloTipo_symbol = objeto => {
   });
 };
 
-export const validarOrdemMultileg = props => {
+export const validarOrdemMultileg = (props) => {
   let abaMultileg = [...props.multileg][props.indice];
   let valido = true;
 
@@ -418,7 +418,7 @@ export const validarOrdemMultileg = props => {
   }
 
   const codigos = abaMultileg.tabelaMultileg.map(
-    oferta => oferta.codigoSelecionado
+    (oferta) => oferta.codigoSelecionado
   );
 
   if (new Set(codigos).size !== codigos.length) {
@@ -426,7 +426,7 @@ export const validarOrdemMultileg = props => {
     const repetidos = encontrarCodigosRepetidos(codigos);
     let codigos_erro = "";
 
-    repetidos.forEach(repetido => {
+    repetidos.forEach((repetido) => {
       if (!codigos_erro.includes(repetido)) codigos_erro += repetido + ", ";
     });
 
@@ -438,16 +438,16 @@ export const validarOrdemMultileg = props => {
   return valido;
 };
 
-export const montarOrdemMultileg = props => {
+export const montarOrdemMultileg = (props) => {
   let abaMultileg = [...props.multileg][props.indice];
 
   let json = {
     account: {},
     tradeName: {},
     offers: [],
-    next: []
+    next: [],
   };
-  json.account.id = 1;
+  json.account.id = props.contaSelecionada.id;
   json.enabled = true;
   json.multiStocks = true;
   if (abaMultileg.validadeSelect === "DAY")
@@ -462,7 +462,7 @@ export const montarOrdemMultileg = props => {
 
   abaMultileg.tabelaMultileg.forEach((oferta, index) => {
     let ofertaPrincipal = {
-      stock: {}
+      stock: {},
     };
 
     ofertaPrincipal.stock.symbol = oferta.codigoSelecionado;
@@ -482,10 +482,7 @@ export const montarOrdemMultileg = props => {
     }
 
     ofertaPrincipal.price = Number(
-      abaMultileg.preco
-        .split(".")
-        .join("")
-        .replace(",", ".")
+      abaMultileg.preco.split(".").join("").replace(",", ".")
     );
     ofertaPrincipal.expirationType = abaMultileg.validadeSelect;
 
@@ -501,7 +498,7 @@ export const atualizarCotacaoAction = (dispatch, props, cotacoesMultileg) => {
   }
   let codigos = "";
 
-  cotacoesMultileg.forEach(cotacao => {
+  cotacoesMultileg.forEach((cotacao) => {
     if (!codigos.includes(cotacao.codigo)) codigos += cotacao.codigo + ",";
   });
 
@@ -517,7 +514,7 @@ export const atualizarCotacaoAction = (dispatch, props, cotacoesMultileg) => {
   dispatch({
     type: ATUALIZAR_SOURCE_EVENT_MULTILEG,
     payload: newSource,
-    nomeVariavel: "eventSourceCotacao"
+    nomeVariavel: "eventSourceCotacao",
   });
 };
 
@@ -538,30 +535,30 @@ export const adicionaCotacoesMultileg = (
       compra: {
         price: "",
         qtty: "",
-        type: "C"
+        type: "C",
       },
       venda: {
         price: "",
         qtty: "",
-        type: "V"
-      }
+        type: "V",
+      },
     });
   }
 };
 
 const verificaCotacaoJaAdd = (cotacoesMultileg, novoCodigo) => {
-  return cotacoesMultileg.find(cotacao => cotacao.codigo === novoCodigo);
+  return cotacoesMultileg.find((cotacao) => cotacao.codigo === novoCodigo);
 };
 
 export const buscaCotacao = (cotacoesMultileg, codigo) => {
-  const cotacao = cotacoesMultileg.find(cotacao => cotacao.codigo === codigo);
+  const cotacao = cotacoesMultileg.find((cotacao) => cotacao.codigo === codigo);
 
   if (cotacao) return cotacao.valor;
   return "0,00";
 };
 
 export const buscaBook = (booksMultileg, codigoOferta) => {
-  return booksMultileg.find(book => book.codigo === codigoOferta);
+  return booksMultileg.find((book) => book.codigo === codigoOferta);
 };
 
 //Formato novo
@@ -616,8 +613,8 @@ export const buscaBook = (booksMultileg, codigoOferta) => {
 //   };
 // };
 
-const encontrarCodigosRepetidos = array => {
-  return array.reduce(function(acc, el, i, arr) {
+const encontrarCodigosRepetidos = (array) => {
+  return array.reduce(function (acc, el, i, arr) {
     if (arr.indexOf(el) !== i && acc.indexOf(el) < 0) acc.push(el);
     return acc;
   }, []);

@@ -7,7 +7,7 @@ import {
   abrirFecharConfigComplAction,
   modificarAtributoAbaAction,
   buscaBook,
-  buscaCotacao
+  buscaCotacao,
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
 import InputFormatado from "components/utils/InputFormatado";
@@ -16,7 +16,7 @@ import RowValidade from "components/forms/multileg_/RowValidade";
 import {
   enviarOrdemMultilegAction,
   criarAlertaMultilegAction,
-  criarPosicaoMultilegAction
+  criarPosicaoMultilegAction,
 } from "components/redux/actions/api_actions/MultilegAPIAction";
 import NumberFormat from "react-number-format";
 
@@ -132,7 +132,7 @@ class Book extends React.Component {
               min={min}
               max={max}
               value={Number(props.multileg[indice].preco.replace(",", "."))}
-              onChange={event => {
+              onChange={(event) => {
                 console.log(
                   Number(formatarNumDecimal(event.currentTarget.value))
                 );
@@ -213,7 +213,7 @@ class Book extends React.Component {
               tipoInput="precoNegativo"
               step={0.01}
               value={renderPlaceholder ? "" : getPreco(props)}
-              onChange={valor =>
+              onChange={(valor) =>
                 props.modificarAtributoAbaAction(
                   props.multileg,
                   indice,
@@ -315,12 +315,15 @@ class Book extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   configComplementarAberto: state.multilegReducer.configComplementarAberto,
   multileg: state.multilegReducer.multileg,
   eventSource: state.multilegReducer.eventSource,
   eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
-  cotacoesMultileg: state.multilegReducer.cotacoesMultileg
+  cotacoesMultileg: state.multilegReducer.cotacoesMultileg,
+  token: state.telaPrincipalReducer.token,
+  conta: state.telaPrincipalReducer.conta,
+  contaSelecionada: state.telaPrincipalReducer.contaSelecionada,
 });
 
 export default connect(mapStateToProps, {
@@ -328,14 +331,14 @@ export default connect(mapStateToProps, {
   modificarAtributoAbaAction,
   enviarOrdemMultilegAction,
   criarAlertaMultilegAction,
-  criarPosicaoMultilegAction
+  criarPosicaoMultilegAction,
 })(Book);
 
-const calcularTotal = props => {
+const calcularTotal = (props) => {
   let total = 0;
   let aba = props.multileg[props.indice];
 
-  aba.tabelaMultileg.forEach(oferta => {
+  aba.tabelaMultileg.forEach((oferta) => {
     const cotacao = buscaCotacao(
       props.cotacoesMultileg,
       oferta.codigoSelecionado
@@ -346,11 +349,11 @@ const calcularTotal = props => {
   return total;
 };
 
-const renderPlaceholderPreco = props => {
+const renderPlaceholderPreco = (props) => {
   let renderPlaceholder = false;
   let tabelaMultileg = props.multileg[props.indice].tabelaMultileg;
 
-  tabelaMultileg.forEach(oferta => {
+  tabelaMultileg.forEach((oferta) => {
     let qtde = oferta.qtde + "";
     qtde = qtde.split(".").join("");
     if (qtde === "" || qtde === "0") {
@@ -361,7 +364,7 @@ const renderPlaceholderPreco = props => {
   return renderPlaceholder;
 };
 
-const getPreco = props => {
+const getPreco = (props) => {
   let preco = props.multileg[props.indice].preco;
 
   if (["0.00"].includes(preco)) return "";
@@ -369,7 +372,7 @@ const getPreco = props => {
   return preco;
 };
 
-const renderQtdeBook = itemBook => {
+const renderQtdeBook = (itemBook) => {
   if (itemBook) {
     if (itemBook.qtty > 1000000000)
       return formatarNumDecimal(itemBook.qtty / 1000000000) + "G";
@@ -382,7 +385,7 @@ const renderQtdeBook = itemBook => {
   return null;
 };
 
-const atualizarPrecoDinamicante = props => {
+const atualizarPrecoDinamicante = (props) => {
   const aba = props.multileg[props.indice];
   const preco = aba.preco;
 

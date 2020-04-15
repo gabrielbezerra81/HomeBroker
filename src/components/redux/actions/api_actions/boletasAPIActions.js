@@ -2,17 +2,17 @@ import {
   pesquisarAtivoAPI,
   enviarOrdemAPI,
   atualizarCotacaoAPI,
-  verificarMonitorarAtivoAPI
+  verificarMonitorarAtivoAPI,
 } from "components/api/API";
 import { PESQUISAR_ATIVO_BOLETA_API } from "constants/ApiActionTypes";
 import {
   montaOrdemPrincipal,
-  validarOrdemBoleta
+  validarOrdemBoleta,
 } from "components/utils/MontarOrdens";
 import { ATUALIZAR_EVENT_SOURCE_BOLETAS } from "constants/ActionTypes";
 
 export const pesquisarAtivoOnEnterAction = (props, namespace) => {
-  return async dispatch => {
+  return async (dispatch) => {
     if (props.eventSourceCotacao) {
       props.eventSourceCotacao.close();
     }
@@ -26,7 +26,7 @@ export const pesquisarAtivoOnEnterAction = (props, namespace) => {
     if (dadosPesquisa) {
       dispatch({
         type: `${PESQUISAR_ATIVO_BOLETA_API}${namespace}`,
-        payload: dadosPesquisa
+        payload: dadosPesquisa,
       });
       atualizarCotacaoBoletaAction(dispatch, props, dadosPesquisa, namespace);
     }
@@ -53,14 +53,14 @@ const atualizarCotacaoBoletaAction = (
 
   dispatch({
     type: `${ATUALIZAR_EVENT_SOURCE_BOLETAS}${namespace}`,
-    payload: newSource
+    payload: newSource,
   });
 };
 
-export const enviarOrdemAction = props => {
-  return async dispatch => {
+export const enviarOrdemAction = (props) => {
+  return async (dispatch) => {
     let json = [montaOrdemPrincipal(props)];
     console.log(JSON.stringify(json));
-    if (validarOrdemBoleta(props)) await enviarOrdemAPI(json);
+    if (validarOrdemBoleta(props)) await enviarOrdemAPI(json, props.token);
   };
 };

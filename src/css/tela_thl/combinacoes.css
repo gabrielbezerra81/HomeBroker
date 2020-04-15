@@ -2,7 +2,7 @@
   margin-right: 5px;
   margin-left: 103px;
   border-bottom-left-radius: 5px;
-  /* border-bottom: 1px solid var(--cor-borda); */
+  border-bottom: 1px solid var(--cor-borda);
 }
 
 .tabelaCombinacoes {
@@ -16,13 +16,14 @@
 }
 
 .tabelaCombinacoes .th {
-  border-bottom: 1px solid var(--cor-borda);
+  /* border-bottom: 1px solid var(--cor-borda); */
 }
 
 .tabelaCombinacoes .td {
   padding: 5px 3px !important;
   font-size: 0.7rem;
-  border-bottom: 1px solid var(--cor-borda);
+  border-top: 1px solid var(--cor-borda);
+  color: var(--cor-texto-discreto);
 }
 
 /* Container dos inputs de filtro */
@@ -164,7 +165,6 @@
 }
 
 .containerTabelaComb {
-  height: 496px;
   width: 100%;
   overflow: auto;
 }

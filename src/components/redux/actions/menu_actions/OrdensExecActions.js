@@ -365,7 +365,6 @@ export const atualizarOrdensExecAction = (props, idUsuario) => {
 };
 
 const atualizarOrdensExec = (dispatch, props, idUsuario, listaOrdensExec) => {
-  console.log(idUsuario);
   if (props.eventSourceOrdensExec) {
     props.eventSourceOrdensExec.close();
   }

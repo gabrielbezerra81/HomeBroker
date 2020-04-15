@@ -1,17 +1,14 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, FormControl } from "react-bootstrap";
 import { connect } from "react-redux";
 import imgCaraFeliz from "img/iconeCaraFeliz.png";
-import { abrirFecharMenuLateralAction } from "components/redux/actions/TelaPrincipalActions";
+import {
+  abrirFecharMenuLateralAction,
+  mudarDadosLoginAction,
+} from "components/redux/actions/TelaPrincipalActions";
 import { ocultarDIV, mostrarDIV } from "components/utils/MostrarOcultarDiv";
-import { Animate } from "react-show";
 import { ReactComponent as IconeAbrirMenu } from "img/more.svg";
 import { ReactComponent as IconeHome } from "img/IconeHome.svg";
-
-const startStyle = {
-  opacity: 0,
-  pointerEvents: "none"
-};
 
 class BarraTopoTelaPrincipal extends React.Component {
   render() {
@@ -21,7 +18,7 @@ class BarraTopoTelaPrincipal extends React.Component {
           <Col md={1}>
             <div
               className="iconesMostrarMenu divClicavel"
-              onClick={event => {
+              onClick={(event) => {
                 if (this.props.menuLateralAberto === true) {
                   this.props.abrirFecharMenuLateralAction(
                     event,
@@ -53,17 +50,30 @@ class BarraTopoTelaPrincipal extends React.Component {
           </Col>
 
           <Col md={3}>
-            <Animate
-              show={this.props.logado}
-              duration={100}
-              transitionOnMount
-              stayMounted
-              preMount
-              start={startStyle}
-            >
-              {" "}
-              <h6>CONTA: {this.props.usuarioConectado.toUpperCase()}</h6>
-            </Animate>
+            <div className="containerSelectConta">
+              <h6>CONTA:</h6>
+              <FormControl
+                className="textInput"
+                as="select"
+                onChange={(e) =>
+                  this.props.mudarDadosLoginAction(
+                    "contaSelecionada",
+                    e.target.value
+                  )
+                }
+              >
+                {this.props.conta.map((conta, indice) => {
+                  const gateway = conta.gateway ? `, ${conta.gateway}` : "";
+                  return (
+                    <option value={conta} key={`conta${indice}`}>
+                      {`${conta.nome}, 
+                    ${conta.sigla}, 
+                    ${conta.numero}${gateway}`}
+                    </option>
+                  );
+                })}
+              </FormControl>
+            </div>
           </Col>
           <Col md={0}>
             <img src={imgCaraFeliz} alt="cara feliz" className="mr-1" />
@@ -89,15 +99,17 @@ class BarraTopoTelaPrincipal extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   usuarioConectado: state.telaPrincipalReducer.usuarioConectado,
   valorLiquido: state.telaPrincipalReducer.valorLiquido,
   valorComprar: state.telaPrincipalReducer.valorComprar,
   ativo: state.telaPrincipalReducer.ativo,
   menuLateralAberto: state.telaPrincipalReducer.menuLateralAberto,
-  logado: state.telaPrincipalReducer.logado
+  logado: state.telaPrincipalReducer.logado,
+  conta: state.telaPrincipalReducer.conta,
 });
 
-export default connect(mapStateToProps, { abrirFecharMenuLateralAction })(
-  BarraTopoTelaPrincipal
-);
+export default connect(mapStateToProps, {
+  abrirFecharMenuLateralAction,
+  mudarDadosLoginAction,
+})(BarraTopoTelaPrincipal);

@@ -25,6 +25,8 @@ const INITIAL_STATE = {
   usernameCadastro: "gabrielAB",
   emailCadastro: "gabrielAB@gmail.com",
   senhaCadastro: "123456789",
+  conta: [],
+  contaSelecionada: "",
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -37,6 +39,8 @@ export default (state = INITIAL_STATE, action) => {
         usuarioConectado: action.payload.usuarioConectado,
         logado: action.payload.logado,
         menuLateralAberto: false,
+        conta: action.payload.conta,
+        contaSelecionada: action.payload.contaSelecionada,
       };
     case ABRIR_FECHAR_ITEM_BARRA_LATERAL:
       return { ...state, [action.payload.name]: action.payload.valor };

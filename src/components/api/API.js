@@ -30,6 +30,7 @@ import {
   url_ordensExecReativas_idUser,
   url_posicaoReativa_idUser,
   url_pesquisarListaStrike_codigo,
+  url_listarContas_token,
 } from "components/api/url";
 import {
   MUDAR_VARIAVEL_POSICAO_CUSTODIA,
@@ -161,13 +162,16 @@ export const listarBookOfertaAPI = (codigo_ativo) => {
     });
 };
 
-export const enviarOrdemAPI = (json) => {
+export const enviarOrdemAPI = (json, token) => {
   const jsonStringBody = JSON.stringify(json);
 
   return request
     .post(url_base + url_enviarOrdem)
     .retry(2)
-    .set({ "Content-Type": "application/json" })
+    .set({
+      "Content-Type": "application/json",
+      Authorization: `${token.tokenType} ${token.accessToken}`,
+    })
     .send(jsonStringBody)
     .then((response) => {
       if (response.status === 201) alert(sucesso_enviar_ordem);
@@ -754,6 +758,7 @@ export const buscarInformacoesUsuarioAPI = (token) => {
   return request
     .get(url_base + url_informacoesUsuario_token)
     .set({ Authorization: `${token.tokenType} ${token.accessToken}` })
+    .retry(3)
     .then((response) => {
       return response.body;
     })
@@ -773,6 +778,21 @@ export const pesquisarListaStrikeTHLAPI = (ativo) => {
       console.log(erro);
       alert(erro_pesquisar_ativo);
       return [];
+    });
+};
+
+export const listarContasAPI = (token) => {
+  return request
+    .get(url_base + url_listarContas_token)
+    .set({ Authorization: `${token.tokenType} ${token.accessToken}` })
+    .retry(3)
+    .then((response) => {
+      return response.body;
+    })
+    .catch((erro) => {
+      console.log(erro);
+      alert(erro_realizar_login);
+      return null;
     });
 };
 

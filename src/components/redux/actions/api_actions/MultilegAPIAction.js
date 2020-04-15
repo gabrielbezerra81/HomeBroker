@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import {
   pesquisarAtivoMultilegAPI,
   pesquisarStrikesMultilegAPI,
@@ -112,7 +113,8 @@ export const enviarOrdemMultilegAction = (props) => {
   return async (dispatch) => {
     let json = montarOrdemMultileg(props);
     travarDestravarClique("travar", "multileg");
-    if (validarOrdemMultileg(props)) await enviarOrdemAPI([json]);
+
+    if (validarOrdemMultileg(props)) await enviarOrdemAPI([json], props.token);
     travarDestravarClique("destravar", "multileg");
   };
 };

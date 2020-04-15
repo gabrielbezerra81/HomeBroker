@@ -267,7 +267,7 @@ const renderConteudoMes = (itemColuna) => {
           </div>
           {custodia ? <div className="itemQtde">{300}</div> : null}
         </div>
-        <div className="bookAtivoTHL corTextoBook">
+        <div className="bookAtivoTHL roxoTextoTHL">
           <div className="divClicavel" tabIndex={0}>
             0,35 | 10k
           </div>

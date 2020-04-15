@@ -2,18 +2,19 @@ import {
   ABRIR_FECHAR_MENU_LATERAL,
   LOGAR_DESLOGAR_USUARIO,
   ABRIR_FECHAR_ITEM_BARRA_LATERAL,
-  MUDAR_DADOS_LOGIN
+  MUDAR_DADOS_LOGIN,
 } from "constants/ActionTypes";
 import {
   realizarLoginAPI,
   buscarInformacoesUsuarioAPI,
   travarDestravarClique,
-  realizarCadastroAPI
+  realizarCadastroAPI,
+  listarContasAPI,
 } from "components/api/API";
 import { navigate } from "@reach/router";
 
 export const abrirFecharMenuLateralAction = (event, menuLateralAberto) => {
-  return dispatch => {
+  return (dispatch) => {
     if (menuLateralAberto)
       dispatch({ type: ABRIR_FECHAR_MENU_LATERAL, payload: false });
     else dispatch({ type: ABRIR_FECHAR_MENU_LATERAL, payload: true });
@@ -21,30 +22,37 @@ export const abrirFecharMenuLateralAction = (event, menuLateralAberto) => {
 };
 
 export const logarUsuarioAction = (username, password) => {
-  return async dispatch => {
+  return async (dispatch) => {
     travarDestravarClique("travar", "botaoLogar");
     if (password === "passar")
       dispatch({
         type: LOGAR_DESLOGAR_USUARIO,
-        payload: { usuarioConectado: "Gabriel Alencar", logado: true }
+        payload: { usuarioConectado: "Gabriel Alencar", logado: true },
       });
     else {
       const token = await realizarLoginAPI(username, password);
       //const auth = await autenticacaoTokenAPI(token);
       let infoUsuario;
+      let conta;
       if (token) {
         infoUsuario = await buscarInformacoesUsuarioAPI(token);
+        conta = await listarContasAPI(token);
       }
 
-      if (token && infoUsuario) {
+      if (token && infoUsuario && conta) {
         travarDestravarClique("destravar", "botaoLogar");
         await dispatch({
           type: MUDAR_DADOS_LOGIN,
-          payload: { nomeVariavel: "token", valor: token }
+          payload: { nomeVariavel: "token", valor: token },
         });
         await dispatch({
           type: LOGAR_DESLOGAR_USUARIO,
-          payload: { usuarioConectado: infoUsuario.name, logado: true }
+          payload: {
+            usuarioConectado: infoUsuario.name,
+            logado: true,
+            conta: conta,
+            contaSelecionada: conta[0],
+          },
         });
         navigate("/home");
       } else {
@@ -54,8 +62,8 @@ export const logarUsuarioAction = (username, password) => {
   };
 };
 
-export const cadastrarUsuarioAction = props => {
-  return async dispatch => {
+export const cadastrarUsuarioAction = (props) => {
+  return async (dispatch) => {
     travarDestravarClique("travar", "botaoCadastrar");
     const role = ["ROLE_USER"];
 
@@ -75,14 +83,19 @@ export const cadastrarUsuarioAction = props => {
 };
 
 export const deslogarUsuarioAction = (event, props) => {
-  return async dispatch => {
+  return async (dispatch) => {
     await dispatch({
       type: LOGAR_DESLOGAR_USUARIO,
-      payload: { usuarioConectado: "", logado: false }
+      payload: {
+        usuarioConectado: "",
+        logado: false,
+        conta: [],
+        contaSelecionada: "",
+      },
     });
     await dispatch({
       type: MUDAR_DADOS_LOGIN,
-      payload: { nomeVariavel: "token", valor: null }
+      payload: { nomeVariavel: "token", valor: null },
     });
     navigate("/");
   };
@@ -108,40 +121,40 @@ export const abrirItemBarraLateralAction = (props, nameVariavelReducer) => {
       props.eventSourceOrdensExec_OrdensExec.close();
     }
   }
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: ABRIR_FECHAR_ITEM_BARRA_LATERAL,
       payload: {
         name: nameVariavelReducer,
-        valor: !props[nameVariavelReducer]
-      }
+        valor: !props[nameVariavelReducer],
+      },
     });
   };
 };
 
 export const mouseOverAction = (props, nameVariavelReducer) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: ABRIR_FECHAR_ITEM_BARRA_LATERAL,
-      payload: { name: nameVariavelReducer, valor: true }
+      payload: { name: nameVariavelReducer, valor: true },
     });
   };
 };
 
 export const mouseLeaveAction = (props, nameVariavelReducer) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: ABRIR_FECHAR_ITEM_BARRA_LATERAL,
-      payload: { name: nameVariavelReducer, valor: false }
+      payload: { name: nameVariavelReducer, valor: false },
     });
   };
 };
 
 export const mudarDadosLoginAction = (nomeVariavel, valor) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: MUDAR_DADOS_LOGIN,
-      payload: { nomeVariavel: nomeVariavel, valor: valor }
+      payload: { nomeVariavel: nomeVariavel, valor: valor },
     });
   };
 };

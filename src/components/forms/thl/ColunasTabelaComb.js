@@ -53,6 +53,9 @@ export const ColunaTextoComum = (props) => {
   const { children } = props;
   const key = props.column.key;
   let texto = children;
+  const classeTextoRoxo = ["vencimento", "prazo"].includes(key)
+    ? ""
+    : "roxoTextoTHL";
 
   if (key === "spread") texto = `R$ ${formatarNumDecimal(children)}`;
   return (
@@ -63,6 +66,7 @@ export const ColunaTextoComum = (props) => {
         justifyContent: "center",
         height: "100%",
       }}
+      className={classeTextoRoxo}
     >
       {texto}
     </div>
@@ -72,7 +76,7 @@ export const ColunaTextoComum = (props) => {
 export const ColunaAcaoUlt = ({ children, row, column }) => {
   return (
     <div className="colunaAcaoUlt">
-      <div className="colunaDividida">
+      <div className="colunaDividida roxoTextoTHL">
         <div>{children.acao}</div>
         <div>{children.ult}</div>
       </div>
@@ -84,19 +88,21 @@ export const ColunaCodigos = ({ children, row, column }) => {
   return (
     <div className="colunaDividida">
       <div className="mr-1">
-        <div>{row.acaoUlt.acao.slice(0, row.acaoUlt.acao.length - 1)}</div>
+        <div className="roxoTextoTHL">
+          {row.acaoUlt.acao.slice(0, row.acaoUlt.acao.length - 1)}
+        </div>
         <div>Strike</div>
       </div>
       <div className="mr-1">
         <div className="flexAlignEnd codigoColunaModelo">
-          <div>{children[0].symbol.slice(4)}</div>
+          <div className="roxoTextoTHL">{children[0].symbol.slice(4)}</div>
           {renderModelo("EUROPEAN")}
         </div>
         <div>{formatarNumDecimal(children[0].strike)}</div>
       </div>
       <div>
         <div className="flexAlignEnd  codigoColunaModelo">
-          <div>{children[1].symbol.slice(4)}</div>
+          <div className="roxoTextoTHL">{children[1].symbol.slice(4)}</div>
           {renderModelo("USA")}
         </div>
         <div>{formatarNumDecimal(children[1].strike)}</div>
@@ -109,7 +115,7 @@ export const ColunaMontagem = ({ children, row, column }) => {
   return (
     <div>
       <div>R$ {formatarNumDecimal(children.valor)}</div>
-      <div className="colunaDividida corTextoBook">
+      <div className="colunaDividida roxoTextoTHL">
         <div className="mr-2">
           {formatarNumDecimal(children.bookVenda.valor)} |
           {formatarQtde(children.bookVenda.qtde)}
