@@ -4,10 +4,11 @@ import { MDBIcon } from "mdbreact";
 import { connect } from "react-redux";
 import {
   logarUsuarioAction,
-  mudarDadosLoginAction
+  mudarDadosLoginAction,
 } from "components/redux/actions/TelaPrincipalActions";
 import FloatingLabelInput from "react-floating-label-input";
 import { navigate } from "@reach/router";
+import { StorePrincipalContext } from "components/redux/StoreCreation";
 
 class TelaLogin extends React.Component {
   render() {
@@ -32,7 +33,7 @@ class TelaLogin extends React.Component {
                   id="inputUsuarioFlutuante"
                   label="Usuário ou e-mail"
                   value={props.inputUsuario}
-                  onChange={e =>
+                  onChange={(e) =>
                     props.mudarDadosLoginAction("inputUsuario", e.target.value)
                   }
                 />
@@ -45,7 +46,7 @@ class TelaLogin extends React.Component {
                   label="Senha"
                   autoComplete="current-password"
                   value={props.inputSenha}
-                  onChange={e =>
+                  onChange={(e) =>
                     props.mudarDadosLoginAction("inputSenha", e.target.value)
                   }
                 />
@@ -92,16 +93,21 @@ class TelaLogin extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   logado: state.telaPrincipalReducer.logado,
   inputUsuario: state.telaPrincipalReducer.inputUsuario,
-  inputSenha: state.telaPrincipalReducer.inputSenha
+  inputSenha: state.telaPrincipalReducer.inputSenha,
 });
 
-export default connect(mapStateToProps, {
-  logarUsuarioAction,
-  mudarDadosLoginAction
-})(TelaLogin);
+export default connect(
+  mapStateToProps,
+  {
+    logarUsuarioAction,
+    mudarDadosLoginAction,
+  },
+  null,
+  { context: StorePrincipalContext }
+)(TelaLogin);
 
 // <Form.Group>
 // <Form.Control

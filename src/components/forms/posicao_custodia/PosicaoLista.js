@@ -2,6 +2,7 @@ import React from "react";
 import { Table } from "react-bootstrap";
 import { connect } from "react-redux";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
+import { StorePrincipalContext } from "components/redux/StoreCreation";
 
 class PosicaoEmLista extends React.Component {
   render() {
@@ -91,7 +92,9 @@ const mapStateToProps = (state) => ({
   arrayCotacoes: state.posicaoReducer.arrayCotacoes,
 });
 
-export default connect(mapStateToProps, {})(PosicaoEmLista);
+export default connect(mapStateToProps, {}, null, {
+  context: StorePrincipalContext,
+})(PosicaoEmLista);
 
 // const renderCV = cv => {
 //   return (

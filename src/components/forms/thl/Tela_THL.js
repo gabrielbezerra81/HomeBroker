@@ -1,5 +1,7 @@
 import React from "react";
 import { Form, InputGroup, Table } from "react-bootstrap";
+import { connect } from "react-redux";
+import { compose } from "redux";
 import { MDBIcon } from "mdbreact";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import ReactResizeDetector from "react-resize-detector";
@@ -9,6 +11,15 @@ import imgModeloEU from "img/modeloEU.png";
 import { ReactComponent as ImgModeloUSA } from "img/modeloUSA2.svg";
 import MapaCalor from "components/forms/thl/MapaCalor";
 import TabelaCombinacoes from "components/forms/thl/TabelaCombinacoes";
+import {
+  StorePrincipalContext,
+  GlobalContext,
+} from "components/redux/StoreCreation";
+import {
+  mudarVariavelTHLAction,
+  pesquisarAtivoTHLAction,
+} from "components/redux/actions/menu_actions/THLActions";
+import { aumentarZindexAction } from "components/redux/reducers/MainAppReducer";
 
 // import "fixed-header-table/css/defaultTheme.css";
 
@@ -67,6 +78,35 @@ class Tela_THL extends React.Component {
     );
   };
 }
+
+const mapStateToPropsTelaTHL = (state) => ({
+  ativoPesquisa: state.THLReducer.ativoPesquisa,
+  opcoesStrike: state.THLReducer.opcoesStrike,
+  faixasMapaCalor: state.THLReducer.faixasMapaCalor,
+  seletorMapaCalor: state.THLReducer.seletorMapaCalor,
+  listaStrikes: state.THLReducer.listaStrikes,
+  strikeSelecionado: state.THLReducer.strikeSelecionado,
+});
+
+const mapDateToPropsGlobal = (state) => ({
+  divkey: state.MainAppReducer.divkey,
+  zIndex: state.MainAppReducer.zIndex,
+});
+
+export default compose(
+  connect(
+    mapStateToPropsTelaTHL,
+    {
+      mudarVariavelTHLAction,
+      pesquisarAtivoTHLAction,
+    },
+    null,
+    { context: StorePrincipalContext }
+  ),
+  connect(mapDateToPropsGlobal, { aumentarZindexAction }, null, {
+    context: GlobalContext,
+  })
+)(Tela_THL);
 
 const vencimentos = (props, thiss) => {
   const strikes = filtrarStrikes(props.opcoesStrike);
@@ -387,8 +427,6 @@ const verificarMesPossuiVencimento = (props, mes) => {
 
   return stocks.some((stock) => stock.vencimento.split("/")[1] === mes);
 };
-
-export default Tela_THL;
 
 const meses = [
   "01",

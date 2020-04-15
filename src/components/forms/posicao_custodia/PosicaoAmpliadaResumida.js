@@ -5,6 +5,7 @@ import { MDBIcon } from "mdbreact";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 import EmblemaSimples from "components/utils/EmblemaSimples";
 import _ from "lodash";
+import { StorePrincipalContext } from "components/redux/StoreCreation";
 
 class PosicaoAmpliadaResumida extends React.Component {
   render() {
@@ -134,21 +135,23 @@ class PosicaoAmpliadaResumida extends React.Component {
   }
 }
 
-const mapStateToPropsPosicao = state => ({
+const mapStateToPropsPosicao = (state) => ({
   ordenacao: state.posicaoReducer.ordenacao,
   tipoVisualizacao: state.posicaoReducer.tipoVisualizacao,
   posicoesCustodia: state.posicaoReducer.posicoesCustodia,
-  arrayPrecos: state.posicaoReducer.arrayPrecos
+  arrayPrecos: state.posicaoReducer.arrayPrecos,
 });
 
-export default connect(mapStateToPropsPosicao, {})(PosicaoAmpliadaResumida);
+export default connect(mapStateToPropsPosicao, {}, null, {
+  context: StorePrincipalContext,
+})(PosicaoAmpliadaResumida);
 
-const renderAtivo = item => {
+const renderAtivo = (item) => {
   let mostrarAtivo = false;
   let conteudo = item.ativos.map((ativo, ind) => {
     //Verifica se o ativo está em uma ordem execução, caso não esteja, será mostrado.
-    item.executando.some(oferta => oferta.ativo === ativo.symbol);
-    if (!item.executando.some(oferta => oferta.ativo === ativo.symbol)) {
+    item.executando.some((oferta) => oferta.ativo === ativo.symbol);
+    if (!item.executando.some((oferta) => oferta.ativo === ativo.symbol)) {
       mostrarAtivo = true;
       return <h6 key={`custodiaCompra${ind}`}>{ativo.symbol}</h6>;
     }
@@ -158,7 +161,7 @@ const renderAtivo = item => {
   return mostrarAtivo ? <Col md={0}>{conteudo}</Col> : null;
 };
 
-const renderValorPorcentagem = porcentagem => {
+const renderValorPorcentagem = (porcentagem) => {
   if (porcentagem > 0) {
     porcentagem = formatarNumDecimal(porcentagem);
     return <span className="porcentagemPositiva">+{porcentagem}%</span>;
@@ -202,11 +205,11 @@ const renderCV = (cv, operacao, indice) => {
   );
 };
 
-const calculaAlturaRowAtivos = posicoesCustodia => {
+const calculaAlturaRowAtivos = (posicoesCustodia) => {
   let arrayQtdeCustodia = [];
 
   //Calcula o numero máximo de linhas de ativos para cada emblema. resultado => array de 42 elementos contendo a altura de cada emblema
-  posicoesCustodia.forEach(posicao => {
+  posicoesCustodia.forEach((posicao) => {
     arrayQtdeCustodia.push(
       Math.max(
         posicao.custodiaCompra.length,
@@ -218,20 +221,20 @@ const calculaAlturaRowAtivos = posicoesCustodia => {
 
   //Faz um agrupamento dividindo o array em pequenos arrays de 4 elementos para cada linha de 4 emblemas. resultado => [[1,2,0,0],[1,2,0,0]]
   var groupSize = 4;
-  arrayQtdeCustodia = _.map(arrayQtdeCustodia, function(item, index) {
+  arrayQtdeCustodia = _.map(arrayQtdeCustodia, function (item, index) {
     return index % groupSize === 0
       ? arrayQtdeCustodia.slice(index, index + groupSize)
       : null;
-  }).filter(function(item) {
+  }).filter(function (item) {
     return item;
   });
   //Calcula a altura máxima de cada linha baseando-se no emblema com maior número de linhas.
-  const alturasRowAtivo = arrayQtdeCustodia.map(array => Math.max(...array));
+  const alturasRowAtivo = arrayQtdeCustodia.map((array) => Math.max(...array));
 
   const arrayStyles = [];
 
   //Retorna um array de estilos do mesmo do tamanho do array de posições
-  alturasRowAtivo.forEach(rows => {
+  alturasRowAtivo.forEach((rows) => {
     let altura = 19;
     if (rows > 1) altura = altura * rows;
     const style = { height: altura + "px" };
@@ -243,7 +246,7 @@ const calculaAlturaRowAtivos = posicoesCustodia => {
 
 const encontrarPrecosEmblema = (props, posicao) => {
   const precosEmblema = props.arrayPrecos.filter(
-    preco => preco.idEstrutura === posicao.idEstrutura
+    (preco) => preco.idEstrutura === posicao.idEstrutura
   );
 
   return precosEmblema[0];

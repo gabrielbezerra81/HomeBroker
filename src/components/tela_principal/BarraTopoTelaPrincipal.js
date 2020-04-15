@@ -9,6 +9,7 @@ import {
 import { ocultarDIV, mostrarDIV } from "components/utils/MostrarOcultarDiv";
 import { ReactComponent as IconeAbrirMenu } from "img/more.svg";
 import { ReactComponent as IconeHome } from "img/IconeHome.svg";
+import { StorePrincipalContext } from "components/redux/StoreCreation";
 
 class BarraTopoTelaPrincipal extends React.Component {
   render() {
@@ -109,7 +110,12 @@ const mapStateToProps = (state) => ({
   conta: state.telaPrincipalReducer.conta,
 });
 
-export default connect(mapStateToProps, {
-  abrirFecharMenuLateralAction,
-  mudarDadosLoginAction,
-})(BarraTopoTelaPrincipal);
+export default connect(
+  mapStateToProps,
+  {
+    abrirFecharMenuLateralAction,
+    mudarDadosLoginAction,
+  },
+  null,
+  { context: StorePrincipalContext }
+)(BarraTopoTelaPrincipal);

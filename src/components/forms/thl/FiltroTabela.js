@@ -1,10 +1,12 @@
 import React from "react";
-import { connect, useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { FormControl } from "react-bootstrap";
 import { Select } from "antd";
 import { createFilter, useFilter } from "window-table";
 import _ from "lodash";
 import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
+import { useSelectorStorePrincipal } from "components/redux/StoreCreation";
+import { StorePrincipalContext } from "components/redux/StoreCreation";
 
 class InputsFiltroTabela extends React.Component {
   render() {
@@ -245,13 +247,15 @@ const mapStateToProps = (state) => ({
   prazo: state.THLReducer.prazo,
 });
 
-export default connect(mapStateToProps, { mudarVariavelTHLAction })(
-  InputsFiltroTabela
-);
+export default connect(mapStateToProps, { mudarVariavelTHLAction }, null, {
+  context: StorePrincipalContext,
+})(InputsFiltroTabela);
 
 // função principal que retorna a tabela filtrada
 export const FiltrarTabela = () => {
-  const reduxState = useSelector((state) => state.THLReducer);
+  const reduxState = useSelectorStorePrincipal((state) => {
+    return state.THLReducer;
+  });
   const { combinacoesTabela } = reduxState;
 
   const filteredData = useFilter(

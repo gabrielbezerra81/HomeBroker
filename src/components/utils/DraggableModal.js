@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Draggable from "react-draggable";
 import ConfigurarStop from "components/forms/compra/compra_StartStop/ConfigurarStop";
 import ConfigurarStopVenda from "components/forms/venda/venda_StartStop/ConfigurarStopVenda";
-import { connect } from "react-redux";
 import FiltrarOrdens from "components/forms/ordens_em_execucao/FiltrarOrdens"; //posicaoFormCompraVenda
 import ConfigComplementar from "components/forms/multileg_/ConfigComplementar";
 import { Resizable } from "re-resizable";
@@ -50,14 +49,14 @@ class BSModal extends Component {
         onDrag={(e, draggableData) => {
           e.preventDefault();
           this.setState({
-            draggableData: draggableData
+            draggableData: draggableData,
           });
         }}
       >
         {this.props.id === "thl" ? (
           <Resizable
             defaultSize={{
-              width: 1210
+              width: 1210,
             }}
             minWidth="607"
             minHeight="1205"
@@ -74,9 +73,7 @@ class BSModal extends Component {
   }
 }
 
-const mapStateToProps = state => ({});
-
-export default connect(mapStateToProps, {})(BSModal);
+export default BSModal;
 
 /*
 const aplicarPosicao = id => {

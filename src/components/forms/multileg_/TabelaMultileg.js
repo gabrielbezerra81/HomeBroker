@@ -6,15 +6,16 @@ import { connect } from "react-redux";
 import {
   modificarAtributoTabelaAbaAction,
   excluirOfertaTabelaAction,
-  buscaCotacao
+  buscaCotacao,
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { MDBIcon } from "mdbreact";
 import {
   formatarNumDecimal,
-  formatarVencimento
+  formatarVencimento,
 } from "components/utils/Formatacoes";
 import InputFormatado from "components/utils/InputFormatado";
 import { Select } from "antd";
+import { StorePrincipalContext } from "components/redux/StoreCreation";
 
 class TabelaMultileg extends React.Component {
   render() {
@@ -72,7 +73,7 @@ class TabelaMultileg extends React.Component {
                         step={100}
                         autoSelect
                         value={item.qtde}
-                        onChange={valor =>
+                        onChange={(valor) =>
                           props.modificarAtributoTabelaAbaAction(
                             props,
                             indiceAba,
@@ -91,7 +92,7 @@ class TabelaMultileg extends React.Component {
                         as="select"
                         className="textInput inputSerie"
                         value={item.serieSelecionada}
-                        onChange={event =>
+                        onChange={(event) =>
                           props.modificarAtributoTabelaAbaAction(
                             props,
                             indiceAba,
@@ -115,7 +116,7 @@ class TabelaMultileg extends React.Component {
                         as="select"
                         className="textInput"
                         value={item.strikeSelecionado}
-                        onChange={event =>
+                        onChange={(event) =>
                           props.modificarAtributoTabelaAbaAction(
                             props,
                             indiceAba,
@@ -147,7 +148,7 @@ class TabelaMultileg extends React.Component {
                       notFoundContent="Código não encontrado"
                       className="inputCodigo"
                       suffixIcon={<MDBIcon icon="caret-down" />}
-                      onChange={value => {
+                      onChange={(value) => {
                         props.modificarAtributoTabelaAbaAction(
                           props,
                           indiceAba,
@@ -156,7 +157,7 @@ class TabelaMultileg extends React.Component {
                           indiceLinha
                         );
                       }}
-                      onDropdownVisibleChange={open => {
+                      onDropdownVisibleChange={(open) => {
                         props.modificarAtributoTabelaAbaAction(
                           props,
                           indiceAba,
@@ -179,7 +180,7 @@ class TabelaMultileg extends React.Component {
                     <div
                       className="divClicavel"
                       tabIndex={0}
-                      onClick={event =>
+                      onClick={(event) =>
                         props.modificarAtributoTabelaAbaAction(
                           props,
                           indiceAba,
@@ -200,7 +201,7 @@ class TabelaMultileg extends React.Component {
                         tipoInput="quantidade"
                         step={100}
                         value={item.despernamento}
-                        onChange={valor =>
+                        onChange={(valor) =>
                           props.modificarAtributoTabelaAbaAction(
                             props,
                             indiceAba,
@@ -219,7 +220,7 @@ class TabelaMultileg extends React.Component {
                         as="select"
                         className="textInput formPrioridade"
                         value={item.prioridade}
-                        onChange={event =>
+                        onChange={(event) =>
                           props.modificarAtributoTabelaAbaAction(
                             props,
                             indiceAba,
@@ -256,17 +257,22 @@ class TabelaMultileg extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   multileg: state.multilegReducer.multileg,
   eventSource: state.multilegReducer.eventSource,
   eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
-  cotacoesMultileg: state.multilegReducer.cotacoesMultileg
+  cotacoesMultileg: state.multilegReducer.cotacoesMultileg,
 });
 
-export default connect(mapStateToProps, {
-  modificarAtributoTabelaAbaAction,
-  excluirOfertaTabelaAction
-})(TabelaMultileg);
+export default connect(
+  mapStateToProps,
+  {
+    modificarAtributoTabelaAbaAction,
+    excluirOfertaTabelaAction,
+  },
+  null,
+  { context: StorePrincipalContext }
+)(TabelaMultileg);
 
 const renderCV = (cv, props, indiceLinha) => {
   let cvCompra = "",
@@ -313,7 +319,7 @@ const renderCV = (cv, props, indiceLinha) => {
   );
 };
 
-const renderModelo = modelo => {
+const renderModelo = (modelo) => {
   if (modelo === "EUROPEAN")
     return (
       <div>
@@ -374,7 +380,7 @@ const renderCodigoOferta = (listaOpcoes, codigoAberto, tipoAtual, item) => {
       }
     });
   else {
-    return listaOpcoes.map(opcao => (
+    return listaOpcoes.map((opcao) => (
       <Select.Option
         key={Math.random()}
         value={opcao.symbol}

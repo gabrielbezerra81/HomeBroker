@@ -9,15 +9,16 @@ import { connect } from "react-redux";
 import {
   modificarAtributoAbaAction,
   adicionarOfertaTabelaAction,
-  buscaCotacao
+  buscaCotacao,
 } from "components/redux/actions/menu_actions/MultilegActions";
 import {
   formatarNumDecimal,
-  formatarVencimento
+  formatarVencimento,
 } from "components/utils/Formatacoes";
 import { pesquisarAtivoMultilegAction } from "components/redux/actions/api_actions/MultilegAPIAction";
 import Book from "components/forms/multileg_/Book";
 import { Select } from "antd";
+import { StorePrincipalContext } from "components/redux/StoreCreation";
 
 class AbaMultileg extends React.Component {
   render() {
@@ -39,7 +40,7 @@ class AbaMultileg extends React.Component {
                   className="inputAtivo"
                   type="text"
                   value={props.multileg[indice].ativo}
-                  onChange={event =>
+                  onChange={(event) =>
                     props.modificarAtributoAbaAction(
                       props.multileg,
                       indice,
@@ -47,7 +48,7 @@ class AbaMultileg extends React.Component {
                       event.target.value
                     )
                   }
-                  onKeyPress={event => {
+                  onKeyPress={(event) => {
                     //event.preventDefault();
                     if (event.key === "Enter")
                       props.pesquisarAtivoMultilegAction(props, indice);
@@ -87,7 +88,7 @@ class AbaMultileg extends React.Component {
                   }
                   className="inputCodigo"
                   suffixIcon={<MDBIcon icon="caret-down" />}
-                  onChange={value => {
+                  onChange={(value) => {
                     props.modificarAtributoAbaAction(
                       props.multileg,
                       indice,
@@ -106,7 +107,7 @@ class AbaMultileg extends React.Component {
                   as="select"
                   className="textInput"
                   value={props.multileg[indice].vencimentoSelecionado}
-                  onChange={event =>
+                  onChange={(event) =>
                     props.modificarAtributoAbaAction(
                       props.multileg,
                       indice,
@@ -172,28 +173,33 @@ class AbaMultileg extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   configComplementarAberto: state.multilegReducer.configComplementarAberto,
   multileg: state.multilegReducer.multileg,
   eventSource: state.multilegReducer.eventSource,
   eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
-  cotacoesMultileg: state.multilegReducer.cotacoesMultileg
+  cotacoesMultileg: state.multilegReducer.cotacoesMultileg,
 });
 
-export default connect(mapStateToProps, {
-  modificarAtributoAbaAction,
-  pesquisarAtivoMultilegAction,
-  adicionarOfertaTabelaAction
-})(AbaMultileg);
+export default connect(
+  mapStateToProps,
+  {
+    modificarAtributoAbaAction,
+    pesquisarAtivoMultilegAction,
+    adicionarOfertaTabelaAction,
+  },
+  null,
+  { context: StorePrincipalContext }
+)(AbaMultileg);
 
-const renderSeta = valor => {
+const renderSeta = (valor) => {
   valor = Number(valor);
   if (valor > 0) return <ArrowUp fill="#138342" className="mr-1" width="35" />;
   else if (valor < 0)
     return <ArrowDown fill="red" className="mr-1" width="35" />;
 };
 
-const renderValorPorcentagem = porcentagem => {
+const renderValorPorcentagem = (porcentagem) => {
   if (porcentagem > 0) {
     porcentagem = formatarNumDecimal(porcentagem);
     return <h6 className="porcentagemPositiva">+{porcentagem}%</h6>;
@@ -206,7 +212,7 @@ const renderValorPorcentagem = porcentagem => {
   }
 };
 
-const renderSerie = props => {
+const renderSerie = (props) => {
   const { indice } = props;
   let listaSerie = [];
 

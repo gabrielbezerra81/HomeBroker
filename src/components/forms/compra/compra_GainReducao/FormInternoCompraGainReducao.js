@@ -10,7 +10,7 @@ import {
   mudarAtivoAction,
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction,
-  adicionarItemTabelaGainReducaoAction
+  adicionarItemTabelaGainReducaoAction,
 } from "components/redux/actions/formInputActions";
 import RowFormValidade from "components/utils/RowFormValidade";
 import RowFormAssinatura from "components/utils/RowFormAssinatura";
@@ -19,6 +19,9 @@ import TabelaGainReducao from "./TabelaGainReducao";
 import { compraGainReducaoAction } from "components/redux/actions/SubAppActions";
 import { pesquisarAtivoOnEnterAction } from "components/redux/actions/api_actions/boletasAPIActions";
 import { RowInputsGainReducaoConectada } from "components/utils/RowInputsFormatadosFormInterno";
+import { compose } from "redux";
+import { StorePrincipalContext } from "components/redux/StoreCreation";
+import { mapStateToPropsEnvioOrdem } from "components/redux/MapStateToProps";
 
 class FormInternoCompraGainReducao extends React.Component {
   render() {
@@ -83,7 +86,7 @@ class FormInternoCompraGainReducao extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   qtde: state.compraGainReducao.qtde,
   erro: state.compraGainReducao.erro,
   gainDisparo: state.compraGainReducao.gainDisparo,
@@ -94,12 +97,14 @@ const mapStateToProps = state => ({
   resultadoAtivo: state.compraGainReducao.resultadoAtivo,
   assinatura: state.compraGainReducao.assinatura,
   checkSalvarAssinatura: state.compraGainReducao.checkSalvarAssinatura,
-  tabelaGainReducao: state.compraGainReducao.tabelaGainReducao
+  tabelaGainReducao: state.compraGainReducao.tabelaGainReducao,
 });
 
-export default connect(
-  mapStateToProps,
-  {
+export default compose(
+  connect(mapStateToPropsEnvioOrdem, {}, null, {
+    context: StorePrincipalContext,
+  }),
+  connect(mapStateToProps, {
     mudarQtdAction,
     mudarValidadeSelectAction,
     mudarDataAction,
@@ -110,6 +115,6 @@ export default connect(
     mostrarErroQtdeOnBlurAction,
     adicionarItemTabelaGainReducaoAction,
     compraGainReducaoAction,
-    pesquisarAtivoOnEnterAction
-  }
+    pesquisarAtivoOnEnterAction,
+  })
 )(FormInternoCompraGainReducao);

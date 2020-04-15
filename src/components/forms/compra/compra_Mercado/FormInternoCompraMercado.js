@@ -9,7 +9,7 @@ import {
   limparAction,
   mudarAtivoAction,
   mudarAssinaturaAction,
-  mudarCheckSalvarAssinaturaAction
+  mudarCheckSalvarAssinaturaAction,
 } from "components/redux/actions/formInputActions";
 import RowFormValidade from "components/utils/RowFormValidade";
 import RowFormAssinatura from "components/utils/RowFormAssinatura";
@@ -19,9 +19,12 @@ import { compraMercadoAction } from "components/redux/actions/SubAppActions";
 import RowAtivoQtdeBoletas from "components/utils/RowAtivoQtdeBoletas";
 import {
   pesquisarAtivoOnEnterAction,
-  enviarOrdemAction
+  enviarOrdemAction,
 } from "components/redux/actions/api_actions/boletasAPIActions";
 import { RowGainStopFormInternoConectada } from "components/utils/RowInputsFormatadosFormInterno";
+import { compose } from "redux";
+import { StorePrincipalContext } from "components/redux/StoreCreation";
+import { mapStateToPropsEnvioOrdem } from "components/redux/MapStateToProps";
 
 class FormInternoCompraMercado extends React.Component {
   render() {
@@ -84,7 +87,7 @@ class FormInternoCompraMercado extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ativo: state.compraMercadoReducer.ativo,
   qtde: state.compraMercadoReducer.qtde,
   erro: state.compraMercadoReducer.erro,
@@ -98,12 +101,14 @@ const mapStateToProps = state => ({
   assinatura: state.compraMercadoReducer.assinatura,
   checkSalvarAssinatura: state.compraMercadoReducer.checkSalvarAssinatura,
   dadosPesquisa: state.compraMercadoReducer.dadosPesquisa,
-  eventSourceCotacao: state.compraMercadoReducer.eventSourceCotacao
+  eventSourceCotacao: state.compraMercadoReducer.eventSourceCotacao,
 });
 
-export default connect(
-  mapStateToProps,
-  {
+export default compose(
+  connect(mapStateToPropsEnvioOrdem, {}, null, {
+    context: StorePrincipalContext,
+  }),
+  connect(mapStateToProps, {
     mudarQtdAction,
     mudarValidadeSelectAction,
     mudarDataAction,
@@ -114,6 +119,6 @@ export default connect(
     mostrarErroQtdeOnBlurAction,
     compraMercadoAction,
     pesquisarAtivoOnEnterAction,
-    enviarOrdemAction
-  }
+    enviarOrdemAction,
+  })
 )(FormInternoCompraMercado);

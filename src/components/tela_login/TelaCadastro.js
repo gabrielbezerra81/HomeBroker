@@ -3,10 +3,11 @@ import { Form, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import {
   cadastrarUsuarioAction,
-  mudarDadosLoginAction
+  mudarDadosLoginAction,
 } from "components/redux/actions/TelaPrincipalActions";
 import { navigate } from "@reach/router";
 import FloatingLabelInput from "react-floating-label-input";
+import { StorePrincipalContext } from "components/redux/StoreCreation";
 
 class TelaCadastro extends React.Component {
   render() {
@@ -25,7 +26,7 @@ class TelaCadastro extends React.Component {
                   id="inputNomeFlutuante"
                   label="Nome"
                   value={props.nomeCadastro}
-                  onChange={e =>
+                  onChange={(e) =>
                     props.mudarDadosLoginAction("nomeCadastro", e.target.value)
                   }
                 />
@@ -36,7 +37,7 @@ class TelaCadastro extends React.Component {
                   id="inputUserFlutuante"
                   label="Usuário"
                   value={props.usernameCadastro}
-                  onChange={e =>
+                  onChange={(e) =>
                     props.mudarDadosLoginAction(
                       "usernameCadastro",
                       e.target.value
@@ -50,7 +51,7 @@ class TelaCadastro extends React.Component {
                   id="inputEmailFlutuante"
                   label="E-mail"
                   value={props.emailCadastro}
-                  onChange={e =>
+                  onChange={(e) =>
                     props.mudarDadosLoginAction("emailCadastro", e.target.value)
                   }
                 />
@@ -64,7 +65,7 @@ class TelaCadastro extends React.Component {
                   autoComplete="current-password"
                   type="password"
                   value={props.senhaCadastro}
-                  onChange={e =>
+                  onChange={(e) =>
                     props.mudarDadosLoginAction("senhaCadastro", e.target.value)
                   }
                 />
@@ -99,15 +100,20 @@ class TelaCadastro extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   logado: state.telaPrincipalReducer.logado,
   nomeCadastro: state.telaPrincipalReducer.nomeCadastro,
   usernameCadastro: state.telaPrincipalReducer.usernameCadastro,
   emailCadastro: state.telaPrincipalReducer.emailCadastro,
-  senhaCadastro: state.telaPrincipalReducer.senhaCadastro
+  senhaCadastro: state.telaPrincipalReducer.senhaCadastro,
 });
 
-export default connect(mapStateToProps, {
-  cadastrarUsuarioAction,
-  mudarDadosLoginAction
-})(TelaCadastro);
+export default connect(
+  mapStateToProps,
+  {
+    cadastrarUsuarioAction,
+    mudarDadosLoginAction,
+  },
+  null,
+  { context: StorePrincipalContext }
+)(TelaCadastro);

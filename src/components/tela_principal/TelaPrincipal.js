@@ -1,4 +1,5 @@
 import React from "react";
+import { Animate } from "react-show";
 import MenuLateralUsuario from "components/tela_principal/MenuLateralUsuario";
 import {
   MainAppConectado,
@@ -7,14 +8,13 @@ import {
   MultilegConectado,
   PosicaoEmCustodiaConectada,
   RelatorioDetalhadoConectado,
-  TelaTHLConectada
 } from "components/redux/ElementosConectadosRedux";
 import BarraTopoTelaPrincipal from "components/tela_principal/BarraTopoTelaPrincipal";
-import { Animate } from "react-show";
+import TelaTHLConectada from "components/forms/thl/Tela_THL";
 
 const startStyle = {
   opacity: 0,
-  pointerEvents: "none"
+  pointerEvents: "none",
 };
 
 export default class TelaPrincipal extends React.Component {

@@ -1,14 +1,14 @@
 import {
   erro_validar_ativo,
   erro_validar_qtde,
-  erro_validar_disparo_start_movel
+  erro_validar_disparo_start_movel,
 } from "constants/AlertaErros";
 import { getformatedDate } from "components/utils/Formatacoes";
 
 const CVStartStop = ["Compra Start Stop", "Venda Start Stop"];
 const CVStopMovel = ["Compra Stop Móvel", "Venda Stop Móvel"];
 
-export const validarOrdemBoleta = props => {
+export const validarOrdemBoleta = (props) => {
   const { dadosPesquisa, qtde } = props;
   let valido = true;
 
@@ -28,18 +28,25 @@ export const validarOrdemBoleta = props => {
   return valido;
 };
 
-export const montaOrdemPrincipal = props => {
-  const { date, ordem, gainDisparo, stopDisparo, validadeSelect } = props;
+export const montaOrdemPrincipal = (props) => {
+  const {
+    date,
+    ordem,
+    gainDisparo,
+    stopDisparo,
+    validadeSelect,
+    contaSelecionada,
+  } = props;
 
   let json = {
     account: {},
     tradeName: {},
     offers: [],
-    next: []
+    next: [],
   };
 
   //Dados da ordem
-  json.account.id = 1;
+  json.account.id = contaSelecionada.id;
   json.enabled = true;
   json.multiStocks = false;
   json.expiration = date.toLocaleString("pt-BR");
@@ -63,7 +70,7 @@ export const montaOrdemPrincipal = props => {
       gainDisparoConfig2,
       gainExecConfig2,
       stopDisparoConfig2,
-      stopExecConfig2
+      stopExecConfig2,
     } = props;
 
     montaOfertaNext(props, gainDisparoConfig1, gainExecConfig1, "gain", json);
@@ -97,7 +104,7 @@ const montaOfertaPrincipal = (props, tipoAuxiliar, json, numAjuste = 0) => {
   const { validadeSelect, date, qtde, dadosPesquisa, ordem } = props;
 
   let ofertaPrincipal = {
-    stock: {}
+    stock: {},
   };
 
   ofertaPrincipal.status = "Nova";
@@ -194,11 +201,11 @@ export const montaOfertaNext = (props, disparo, execucao, tipo, json) => {
       account: {},
       stock: {},
       tradeName: {},
-      offers: []
-    }
+      offers: [],
+    },
   };
   let ofertaNext = {
-    stock: {}
+    stock: {},
   };
 
   //Dados Ordem

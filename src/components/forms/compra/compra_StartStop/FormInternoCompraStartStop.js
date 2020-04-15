@@ -10,7 +10,7 @@ import {
   limparAction,
   mudarAtivoAction,
   mudarAssinaturaAction,
-  mudarCheckSalvarAssinaturaAction
+  mudarCheckSalvarAssinaturaAction,
 } from "components/redux/actions/formInputActions";
 import RowFormValidade from "components/utils/RowFormValidade";
 import RowFormAssinatura from "components/utils/RowFormAssinatura";
@@ -19,10 +19,12 @@ import { compraStartStopAction } from "components/redux/actions/SubAppActions";
 import RowAtivoQtdeBoletas from "components/utils/RowAtivoQtdeBoletas";
 import {
   pesquisarAtivoOnEnterAction,
-  enviarOrdemAction
+  enviarOrdemAction,
 } from "components/redux/actions/api_actions/boletasAPIActions";
 import { mapStateToPropsConfigurarStop } from "components/forms/compra/compra_StartStop/ConfigurarStop";
 import { RowGainStopFormInternoConectada } from "components/utils/RowInputsFormatadosFormInterno";
+import { StorePrincipalContext } from "components/redux/StoreCreation";
+import { mapStateToPropsEnvioOrdem } from "components/redux/MapStateToProps";
 
 class FormInternoCompraStartStop extends React.Component {
   render() {
@@ -73,7 +75,7 @@ class FormInternoCompraStartStop extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   erro: state.compraStartStopReducer.erro,
   gainDisparo: state.compraStartStopReducer.gainDisparo,
   gainExec: state.compraStartStopReducer.gainExec,
@@ -86,28 +88,25 @@ const mapStateToProps = state => ({
   assinatura: state.compraStartStopReducer.assinatura,
   checkSalvarAssinatura: state.compraStartStopReducer.checkSalvarAssinatura,
   dadosPesquisa: state.compraStartStopReducer.dadosPesquisa,
-  eventSourceCotacao: state.compraStartStopReducer.eventSourceCotacao
+  eventSourceCotacao: state.compraStartStopReducer.eventSourceCotacao,
 });
 
 export default compose(
-  connect(
-    mapStateToProps,
-    {
-      mudarQtdAction,
-      mudarValidadeSelectAction,
-      mudarDataAction,
-      limparAction,
-      mudarAtivoAction,
-      mudarAssinaturaAction,
-      mudarCheckSalvarAssinaturaAction,
-      mostrarErroQtdeOnBlurAction,
-      compraStartStopAction,
-      pesquisarAtivoOnEnterAction,
-      enviarOrdemAction
-    }
-  ),
-  connect(
-    mapStateToPropsConfigurarStop,
-    {}
-  )
+  connect(mapStateToPropsEnvioOrdem, {}, null, {
+    context: StorePrincipalContext,
+  }),
+  connect(mapStateToProps, {
+    mudarQtdAction,
+    mudarValidadeSelectAction,
+    mudarDataAction,
+    limparAction,
+    mudarAtivoAction,
+    mudarAssinaturaAction,
+    mudarCheckSalvarAssinaturaAction,
+    mostrarErroQtdeOnBlurAction,
+    compraStartStopAction,
+    pesquisarAtivoOnEnterAction,
+    enviarOrdemAction,
+  }),
+  connect(mapStateToPropsConfigurarStop, {})
 )(FormInternoCompraStartStop);

@@ -10,7 +10,7 @@ import {
   mudarAtivoAction,
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction,
-  mudarAtributoBoletaAction
+  mudarAtributoBoletaAction,
 } from "components/redux/actions/formInputActions";
 import RowFormValidade from "components/utils/RowFormValidade";
 import RowFormAssinatura from "components/utils/RowFormAssinatura";
@@ -19,9 +19,12 @@ import { CalculoValorAproximadoMercado } from "components/utils/CalculoValorTota
 import RowAtivoQtdeBoletas from "components/utils/RowAtivoQtdeBoletas";
 import {
   pesquisarAtivoOnEnterAction,
-  enviarOrdemAction
+  enviarOrdemAction,
 } from "components/redux/actions/api_actions/boletasAPIActions";
 import { RowGainStopFormInternoConectada } from "components/utils/RowInputsFormatadosFormInterno";
+import { compose } from "redux";
+import { mapStateToPropsEnvioOrdem } from "components/redux/MapStateToProps";
+import { StorePrincipalContext } from "components/redux/StoreCreation";
 
 class FormInternoVendaMercado extends React.Component {
   render() {
@@ -84,7 +87,7 @@ class FormInternoVendaMercado extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ativo: state.vendaMercadoReducer.ativo,
   qtde: state.vendaMercadoReducer.qtde,
   erro: state.vendaMercadoReducer.erro,
@@ -98,12 +101,14 @@ const mapStateToProps = state => ({
   assinatura: state.vendaMercadoReducer.assinatura,
   checkSalvarAssinatura: state.vendaMercadoReducer.checkSalvarAssinatura,
   dadosPesquisa: state.vendaMercadoReducer.dadosPesquisa,
-  eventSourceCotacao: state.vendaMercadoReducer.eventSourceCotacao
+  eventSourceCotacao: state.vendaMercadoReducer.eventSourceCotacao,
 });
 
-export default connect(
-  mapStateToProps,
-  {
+export default compose(
+  connect(mapStateToPropsEnvioOrdem, {}, null, {
+    context: StorePrincipalContext,
+  }),
+  connect(mapStateToProps, {
     mudarQtdAction,
     mudarValidadeSelectAction,
     mudarDataAction,
@@ -114,6 +119,6 @@ export default connect(
     mostrarErroQtdeOnBlurAction,
     pesquisarAtivoOnEnterAction,
     enviarOrdemAction,
-    mudarAtributoBoletaAction
-  }
+    mudarAtributoBoletaAction,
+  })
 )(FormInternoVendaMercado);

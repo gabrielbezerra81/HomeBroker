@@ -1,10 +1,10 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { Radio } from "antd";
 import termometro from "img/termometro.svg";
+import { useSelectorStorePrincipal } from "components/redux/StoreCreation";
 
 export default ({ props }) => {
-  const state = useSelector(state => state.THLReducer);
+  const state = useSelectorStorePrincipal((state) => state.THLReducer);
 
   return (
     <div className="containerMapaCalor">
@@ -30,7 +30,7 @@ export default ({ props }) => {
         className="radioMapaCalor"
         size="small"
         value={state.seletorMapaCalor}
-        onChange={e =>
+        onChange={(e) =>
           props.mudarVariavelTHLAction("seletorMapaCalor", e.target.value)
         }
       >
@@ -51,5 +51,5 @@ export default ({ props }) => {
 const radioStyle = {
   display: "block",
   height: "25px",
-  lineHeight: "25px"
+  lineHeight: "25px",
 };

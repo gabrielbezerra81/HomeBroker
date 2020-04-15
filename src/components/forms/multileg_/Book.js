@@ -19,6 +19,7 @@ import {
   criarPosicaoMultilegAction,
 } from "components/redux/actions/api_actions/MultilegAPIAction";
 import NumberFormat from "react-number-format";
+import { StorePrincipalContext } from "components/redux/StoreCreation";
 
 class Book extends React.Component {
   componentDidUpdate(prevProps) {
@@ -326,13 +327,18 @@ const mapStateToProps = (state) => ({
   contaSelecionada: state.telaPrincipalReducer.contaSelecionada,
 });
 
-export default connect(mapStateToProps, {
-  abrirFecharConfigComplAction,
-  modificarAtributoAbaAction,
-  enviarOrdemMultilegAction,
-  criarAlertaMultilegAction,
-  criarPosicaoMultilegAction,
-})(Book);
+export default connect(
+  mapStateToProps,
+  {
+    abrirFecharConfigComplAction,
+    modificarAtributoAbaAction,
+    enviarOrdemMultilegAction,
+    criarAlertaMultilegAction,
+    criarPosicaoMultilegAction,
+  },
+  null,
+  { context: StorePrincipalContext }
+)(Book);
 
 const calcularTotal = (props) => {
   let total = 0;

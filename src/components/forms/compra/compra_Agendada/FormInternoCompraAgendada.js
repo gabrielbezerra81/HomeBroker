@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
+import { compose } from "redux";
 import { mostrarErroQtdeOnBlurAction } from "components/redux/actions/bookOfertaActions";
 import {
   mudarValidadeSelectAction,
@@ -10,7 +11,7 @@ import {
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction,
   mudarQtdAction,
-  mudarAtributoBoletaAction
+  mudarAtributoBoletaAction,
 } from "components/redux/actions/formInputActions";
 import RowFormValidade from "components/utils/RowFormValidade";
 import RowFormAssinatura from "components/utils/RowFormAssinatura";
@@ -20,10 +21,12 @@ import { compraAgendadaAction } from "components/redux/actions/SubAppActions";
 import RowAtivoQtdeBoletas from "components/utils/RowAtivoQtdeBoletas";
 import {
   pesquisarAtivoOnEnterAction,
-  enviarOrdemAction
+  enviarOrdemAction,
 } from "components/redux/actions/api_actions/boletasAPIActions";
 import InputFormatado from "components/utils/InputFormatado";
 import { RowGainStopFormInternoConectada } from "components/utils/RowInputsFormatadosFormInterno";
+import { StorePrincipalContext } from "components/redux/StoreCreation";
+import { mapStateToPropsEnvioOrdem } from "components/redux/MapStateToProps";
 
 class FormInternoCompraAgendada extends React.Component {
   render() {
@@ -43,7 +46,7 @@ class FormInternoCompraAgendada extends React.Component {
                     tipoInput="preco"
                     step={0.01}
                     value={this.props.entradaDisparo}
-                    onChange={valor =>
+                    onChange={(valor) =>
                       this.props.mudarAtributoBoletaAction(
                         valor,
                         COMPRA_AGENDADA_NAMESPACE,
@@ -60,7 +63,7 @@ class FormInternoCompraAgendada extends React.Component {
                     tipoInput="preco"
                     step={0.01}
                     value={this.props.entradaExec}
-                    onChange={valor =>
+                    onChange={(valor) =>
                       this.props.mudarAtributoBoletaAction(
                         valor,
                         COMPRA_AGENDADA_NAMESPACE,
@@ -126,7 +129,7 @@ class FormInternoCompraAgendada extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   erro: state.compraAgendadaReducer.erro,
   gainDisparo: state.compraAgendadaReducer.gainDisparo,
   gainExec: state.compraAgendadaReducer.gainExec,
@@ -142,12 +145,14 @@ const mapStateToProps = state => ({
   checkSalvarAssinatura: state.compraAgendadaReducer.checkSalvarAssinatura,
   qtde: state.compraAgendadaReducer.qtde,
   dadosPesquisa: state.compraAgendadaReducer.dadosPesquisa,
-  eventSourceCotacao: state.compraAgendadaReducer.eventSourceCotacao
+  eventSourceCotacao: state.compraAgendadaReducer.eventSourceCotacao,
 });
 
-export default connect(
-  mapStateToProps,
-  {
+export default compose(
+  connect(mapStateToPropsEnvioOrdem, {}, null, {
+    context: StorePrincipalContext,
+  }),
+  connect(mapStateToProps, {
     mudarQtdAction,
     mudarValidadeSelectAction,
     mudarDataAction,
@@ -159,6 +164,6 @@ export default connect(
     compraAgendadaAction,
     pesquisarAtivoOnEnterAction,
     enviarOrdemAction,
-    mudarAtributoBoletaAction
-  }
+    mudarAtributoBoletaAction,
+  })
 )(FormInternoCompraAgendada);

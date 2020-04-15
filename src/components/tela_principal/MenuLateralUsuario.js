@@ -8,6 +8,7 @@ import {
   deslogarUsuarioAction,
 } from "components/redux/actions/TelaPrincipalActions";
 import { Animate } from "react-show";
+import { StorePrincipalContext } from "components/redux/StoreCreation";
 
 const startStyle = {
   opacity: 0,
@@ -54,10 +55,15 @@ const mapStateToProps = (state) => ({
   menuLateralAberto: state.telaPrincipalReducer.menuLateralAberto,
 });
 
-export default connect(mapStateToProps, {
-  logarUsuarioAction,
-  deslogarUsuarioAction,
-})(MenuLateralUsuario);
+export default connect(
+  mapStateToProps,
+  {
+    logarUsuarioAction,
+    deslogarUsuarioAction,
+  },
+  null,
+  { context: StorePrincipalContext }
+)(MenuLateralUsuario);
 
 const renderDivLogin = (props) => {
   if (props.logado) {

@@ -5,6 +5,7 @@ import {
   mudarVariavelOrdensExecAction,
   filtrarHistoricoOpAction
 } from "components/redux/actions/menu_actions/OrdensExecActions";
+import { StorePrincipalContext } from "components/redux/StoreCreation";
 
 class FiltrarOrdens extends React.Component {
   render() {
@@ -152,4 +153,6 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   mudarVariavelOrdensExecAction,
   filtrarHistoricoOpAction
-})(FiltrarOrdens);
+},
+null,
+{ context: StorePrincipalContext })(FiltrarOrdens);

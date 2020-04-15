@@ -1,11 +1,9 @@
 import React from "react";
-import { Provider, connect, useSelector } from "react-redux";
-import ReduxThunk from "redux-thunk";
-import { createStore, applyMiddleware, compose, combineReducers } from "redux";
+import { Provider, connect } from "react-redux";
 import { MainApp, SubApp } from "MainApp";
+import { compose } from "redux";
 import App from "components/App";
 import { modalHeader } from "components/utils/FormHeader";
-import MainAppReducer from "components/redux/reducers/MainAppReducer";
 import TelaPrincipal from "components/tela_principal/TelaPrincipal";
 import {
   criarMostrarAppAction,
@@ -59,41 +57,18 @@ import { montarBoletaFromOrdemExecAction } from "components/redux/actions/formIn
 import { Router, Redirect } from "@reach/router";
 import TelaLogin from "components/tela_login/TelaLogin";
 import TelaCadastro from "components/tela_login/TelaCadastro";
-import Tela_THL from "components/forms/thl/Tela_THL";
-import { combinedReducersAppPrincipal } from "components/redux/reducers";
 import {
-  mudarVariavelTHLAction,
-  pesquisarAtivoTHLAction,
-} from "components/redux/actions/menu_actions/THLActions";
-
-// @ts-ignore
-export const GlobalContext = React.createContext();
-
-// @ts-ignore
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-const combinedReducers = combineReducers({
-  MainAppReducer: MainAppReducer,
-});
-
-//Usada apenas para gerenciar os estados de mostrar ou não os formulários
-const globalStore = createStore(
-  combinedReducers,
-  {},
-  composeEnhancers(applyMiddleware(ReduxThunk))
-);
-
-//Usado para todos os outros dados gerais como os da tela principal
-const storeAppPrincipal = createStore(
-  combinedReducersAppPrincipal,
-  {},
-  composeEnhancers(applyMiddleware(ReduxThunk))
-);
+  StorePrincipalContext,
+  globalStore,
+  GlobalContext,
+  storeAppPrincipal,
+  useSelectorStorePrincipal,
+} from "components/redux/StoreCreation";
 
 export const Helper = () => {
   return (
     <Provider store={globalStore} context={GlobalContext}>
-      <Provider store={storeAppPrincipal}>
+      <Provider store={storeAppPrincipal} context={StorePrincipalContext}>
         <Router>
           <TelaLogin path="/" />
           <TelaCadastro path="/cadastro" />
@@ -104,8 +79,10 @@ export const Helper = () => {
   );
 };
 
-let Home = ({ path }) => {
-  const logado = useSelector((state) => state.telaPrincipalReducer.logado);
+const Home = ({ path }) => {
+  const logado = useSelectorStorePrincipal((state) => {
+    return state.telaPrincipalReducer.logado;
+  });
   if (logado) return <TelaPrincipalConectada />;
 
   return <Redirect to="/" noThrow />;
@@ -190,15 +167,6 @@ const mapStateToPropsOpcoesOrdemExec = (state) => ({
   cotacoesMultileg: state.multilegReducer.cotacoesMultileg,
 });
 
-const mapStateToPropsTelaTHL = (state) => ({
-  ativoPesquisa: state.THLReducer.ativoPesquisa,
-  opcoesStrike: state.THLReducer.opcoesStrike,
-  faixasMapaCalor: state.THLReducer.faixasMapaCalor,
-  seletorMapaCalor: state.THLReducer.seletorMapaCalor,
-  listaStrikes: state.THLReducer.listaStrikes,
-  strikeSelecionado: state.THLReducer.strikeSelecionado,
-});
-
 export const MainAppConectado = compose(
   connect(
     mapStateToPropsGlobalStore,
@@ -213,11 +181,16 @@ export const MainAppConectado = compose(
     null,
     { context: GlobalContext }
   ),
-  connect(mapStateToPropsAppPrincipal, {
-    mouseOverAction,
-    mouseLeaveAction,
-    abrirItemBarraLateralAction,
-  })
+  connect(
+    mapStateToPropsAppPrincipal,
+    {
+      mouseOverAction,
+      mouseLeaveAction,
+      abrirItemBarraLateralAction,
+    },
+    null,
+    { context: StorePrincipalContext }
+  )
 )(MainApp);
 
 export const SubAppConectado = connect(mapStateToPropsGlobalStore, {}, null, {
@@ -260,7 +233,9 @@ const TelaPrincipalConectada = compose(
     null,
     { context: GlobalContext }
   ),
-  connect(mapStateToPropsAppPrincipal, { abrirItemBarraLateralAction })
+  connect(mapStateToPropsAppPrincipal, { abrirItemBarraLateralAction }, null, {
+    context: StorePrincipalContext,
+  })
 )(TelaPrincipal);
 
 export const OrdensExecucaoConectada = compose(
@@ -270,12 +245,17 @@ export const OrdensExecucaoConectada = compose(
     null,
     { context: GlobalContext }
   ),
-  connect(mapStateToPropsOrdensExec, {
-    listarOrdensExecAction,
-    abrirItemBarraLateralAction,
-    mudarVariavelOrdensExecAction,
-    atualizarOrdensExecAction,
-  })
+  connect(
+    mapStateToPropsOrdensExec,
+    {
+      listarOrdensExecAction,
+      abrirItemBarraLateralAction,
+      mudarVariavelOrdensExecAction,
+      atualizarOrdensExecAction,
+    },
+    null,
+    { context: StorePrincipalContext }
+  )
 )(OrdensExecucao);
 
 export const OpcoesOrdemExecConectada = compose(
@@ -290,15 +270,20 @@ export const OpcoesOrdemExecConectada = compose(
     null,
     { context: GlobalContext }
   ),
-  connect(mapStateToPropsOpcoesOrdemExec, {
-    abrirItemBarraLateralAction,
-    mudarVariavelOrdensExecAction,
-    abrirOrdemNoMultilegAction,
-    cancelarOrdemExecAction,
-    finalizarAMercadoAction,
-    aumentarQtdePrecoAction,
-    abrirOrdensBoletaAction,
-  })
+  connect(
+    mapStateToPropsOpcoesOrdemExec,
+    {
+      abrirItemBarraLateralAction,
+      mudarVariavelOrdensExecAction,
+      abrirOrdemNoMultilegAction,
+      cancelarOrdemExecAction,
+      finalizarAMercadoAction,
+      aumentarQtdePrecoAction,
+      abrirOrdensBoletaAction,
+    },
+    null,
+    { context: StorePrincipalContext }
+  )
 )(OpcoesOrdemExec);
 
 export const BarraLateralConectada = compose(
@@ -310,37 +295,52 @@ export const BarraLateralConectada = compose(
       context: GlobalContext,
     }
   ),
-  connect(mapStateToPropsAppPrincipal, {
-    abrirItemBarraLateralAction,
-    mouseOverAction,
-    mouseLeaveAction,
-  })
+  connect(
+    mapStateToPropsAppPrincipal,
+    {
+      abrirItemBarraLateralAction,
+      mouseOverAction,
+      mouseLeaveAction,
+    },
+    null,
+    { context: StorePrincipalContext }
+  )
 )(BarraLateral);
 
 export const MultilegConectado = compose(
   connect(mapStateToPropsGlobalStore, { aumentarZindexAction }, null, {
     context: GlobalContext,
   }),
-  connect(mapStateToPropsMultileg, {
-    selecionarAdicionarAbaAction,
-    modificarAtributoAbaAction,
-    excluirAbaMultilegAction,
-    // atualizarBookAction,
-    atualizarCotacaoAction,
-  })
+  connect(
+    mapStateToPropsMultileg,
+    {
+      selecionarAdicionarAbaAction,
+      modificarAtributoAbaAction,
+      excluirAbaMultilegAction,
+      // atualizarBookAction,
+      atualizarCotacaoAction,
+    },
+    null,
+    { context: StorePrincipalContext }
+  )
 )(Multileg);
 
 export const PosicaoEmCustodiaConectada = compose(
   connect(mapStateToPropsGlobalStore, { aumentarZindexAction }, null, {
     context: GlobalContext,
   }),
-  connect(mapStateToPropsPosicao, {
-    mudarVariavelPosicaoAction,
-    listarPosicoesAction,
-    atualizarEmblemasAction,
-    atualizarPosicaoAction,
-    atualizarCotacoesAction,
-  })
+  connect(
+    mapStateToPropsPosicao,
+    {
+      mudarVariavelPosicaoAction,
+      listarPosicoesAction,
+      atualizarEmblemasAction,
+      atualizarPosicaoAction,
+      atualizarCotacoesAction,
+    },
+    null,
+    { context: StorePrincipalContext }
+  )
 )(PosicaoEmCustodia);
 
 export const PosicaoDetalhadaConectada = connect(
@@ -356,13 +356,3 @@ export const RelatorioDetalhadoConectado = connect(
   null,
   { context: GlobalContext }
 )(RelatorioDetalhado);
-
-export const TelaTHLConectada = compose(
-  connect(mapStateToPropsTelaTHL, {
-    mudarVariavelTHLAction,
-    pesquisarAtivoTHLAction,
-  }),
-  connect(mapStateToPropsGlobalStore, { aumentarZindexAction }, null, {
-    context: GlobalContext,
-  })
-)(Tela_THL);

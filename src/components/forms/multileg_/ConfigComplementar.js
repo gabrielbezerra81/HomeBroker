@@ -6,6 +6,7 @@ import {
   abrirFecharConfigComplAction,
   modificarVariavelAction
 } from "components/redux/actions/menu_actions/MultilegActions";
+import { StorePrincipalContext } from "components/redux/StoreCreation";
 
 class ConfigComplementar extends React.Component {
   render() {
@@ -122,5 +123,7 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { abrirFecharConfigComplAction, modificarVariavelAction }
+  { abrirFecharConfigComplAction, modificarVariavelAction },
+  null,
+  { context: StorePrincipalContext }
 )(ConfigComplementar);

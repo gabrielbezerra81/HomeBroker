@@ -10,7 +10,7 @@ import {
   mudarAtivoAction,
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction,
-  mudarAtributoBoletaAction
+  mudarAtributoBoletaAction,
 } from "components/redux/actions/formInputActions";
 import RowFormValidade from "components/utils/RowFormValidade";
 import RowFormAssinatura from "components/utils/RowFormAssinatura";
@@ -19,10 +19,13 @@ import { CalculoValorTotalLimitada } from "components/utils/CalculoValorTotal";
 import RowAtivoQtdeBoletas from "components/utils/RowAtivoQtdeBoletas";
 import {
   pesquisarAtivoOnEnterAction,
-  enviarOrdemAction
+  enviarOrdemAction,
 } from "components/redux/actions/api_actions/boletasAPIActions";
 import InputFormatado from "components/utils/InputFormatado";
 import { RowGainStopFormInternoConectada } from "components/utils/RowInputsFormatadosFormInterno";
+import { compose } from "redux";
+import { mapStateToPropsEnvioOrdem } from "components/redux/MapStateToProps";
+import { StorePrincipalContext } from "components/redux/StoreCreation";
 
 class FormInternoVendaLimitada extends React.Component {
   render() {
@@ -43,7 +46,7 @@ class FormInternoVendaLimitada extends React.Component {
                     tipoInput="preco"
                     step={0.01}
                     value={this.props.preco}
-                    onChange={valor =>
+                    onChange={(valor) =>
                       this.props.mudarAtributoBoletaAction(
                         valor,
                         VENDA_LIMITADA_NAMESPACE,
@@ -102,7 +105,7 @@ class FormInternoVendaLimitada extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   qtde: state.vendaLimitadaReducer.qtde,
   erro: state.vendaLimitadaReducer.erro,
   gainDisparo: state.vendaLimitadaReducer.gainDisparo,
@@ -117,12 +120,14 @@ const mapStateToProps = state => ({
   preco: state.vendaLimitadaReducer.preco,
   checkSalvarAssinatura: state.vendaLimitadaReducer.checkSalvarAssinatura,
   dadosPesquisa: state.vendaLimitadaReducer.dadosPesquisa,
-  eventSourceCotacao: state.vendaLimitadaReducer.eventSourceCotacao
+  eventSourceCotacao: state.vendaLimitadaReducer.eventSourceCotacao,
 });
 
-export default connect(
-  mapStateToProps,
-  {
+export default compose(
+  connect(mapStateToPropsEnvioOrdem, {}, null, {
+    context: StorePrincipalContext,
+  }),
+  connect(mapStateToProps, {
     mudarQtdAction,
     mudarValidadeSelectAction,
     mudarDataAction,
@@ -133,6 +138,6 @@ export default connect(
     mostrarErroQtdeOnBlurAction,
     pesquisarAtivoOnEnterAction,
     enviarOrdemAction,
-    mudarAtributoBoletaAction
-  }
+    mudarAtributoBoletaAction,
+  })
 )(FormInternoVendaLimitada);
