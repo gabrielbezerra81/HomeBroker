@@ -28,15 +28,8 @@ export const validarOrdemBoleta = (props) => {
   return valido;
 };
 
-export const montaOrdemPrincipal = (props) => {
-  const {
-    date,
-    ordem,
-    gainDisparo,
-    stopDisparo,
-    validadeSelect,
-    contaSelecionada,
-  } = props;
+export const montaOrdemPrincipal = (props, contaSelecionada) => {
+  const { date, ordem, gainDisparo, stopDisparo, validadeSelect } = props;
 
   let json = {
     account: {},

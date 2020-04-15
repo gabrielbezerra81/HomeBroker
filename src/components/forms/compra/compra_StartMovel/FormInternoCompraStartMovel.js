@@ -26,9 +26,7 @@ import {
 } from "components/redux/actions/api_actions/boletasAPIActions";
 import InputFormatado from "components/utils/InputFormatado";
 import { RowInputsStopMovelConectada } from "components/utils/RowInputsFormatadosFormInterno";
-import { compose } from "redux";
-import { StorePrincipalContext } from "components/redux/StoreCreation";
-import { mapStateToPropsEnvioOrdem } from "components/redux/MapStateToProps";
+import { BotaoEnviarOrdem } from "components/utils/BotaoEnviarOrdem";
 
 class FormInternoCompraStartMovel extends React.Component {
   render() {
@@ -107,13 +105,10 @@ class FormInternoCompraStartMovel extends React.Component {
                 </Button>
               </Col>
               <Col md={4}>
-                <Button
-                  variant="primary"
-                  size="sm"
-                  onClick={() => props.enviarOrdemAction(props)}
-                >
-                  <h6>Comprar</h6>
-                </Button>
+                <BotaoEnviarOrdem
+                  props={this.props}
+                  tipoCompraVenda="Comprar"
+                />
               </Col>
               <Col md={4}>
                 <Button
@@ -158,23 +153,18 @@ const mapStateToProps = (state) => ({
   tabelaOrdensSimulacao: state.compraStartMovelReducer.tabelaOrdensSimulacao,
 });
 
-export default compose(
-  connect(mapStateToPropsEnvioOrdem, {}, null, {
-    context: StorePrincipalContext,
-  }),
-  connect(mapStateToProps, {
-    mudarQtdAction,
-    mudarAtivoAction,
-    mudarValidadeSelectAction,
-    mudarDataAction,
-    mostrarErroQtdeOnBlurAction,
-    adicionarItemTabelaStartMovel,
-    mudarAssinaturaAction,
-    mudarCheckSalvarAssinaturaAction,
-    limparAction,
-    compraStartMovelAction,
-    pesquisarAtivoOnEnterAction,
-    enviarOrdemAction,
-    mudarAtributoBoletaAction,
-  })
-)(FormInternoCompraStartMovel);
+export default connect(mapStateToProps, {
+  mudarQtdAction,
+  mudarAtivoAction,
+  mudarValidadeSelectAction,
+  mudarDataAction,
+  mostrarErroQtdeOnBlurAction,
+  adicionarItemTabelaStartMovel,
+  mudarAssinaturaAction,
+  mudarCheckSalvarAssinaturaAction,
+  limparAction,
+  compraStartMovelAction,
+  pesquisarAtivoOnEnterAction,
+  enviarOrdemAction,
+  mudarAtributoBoletaAction,
+})(FormInternoCompraStartMovel);

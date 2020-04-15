@@ -23,8 +23,7 @@ import {
 } from "components/redux/actions/api_actions/boletasAPIActions";
 import { mapStateToPropsConfigStopVenda } from "components/forms/venda/venda_StartStop/ConfigurarStopVenda";
 import { RowGainStopFormInternoConectada } from "components/utils/RowInputsFormatadosFormInterno";
-import { mapStateToPropsEnvioOrdem } from "components/redux/MapStateToProps";
-import { StorePrincipalContext } from "components/redux/StoreCreation";
+import { BotaoEnviarOrdem } from "components/utils/BotaoEnviarOrdem";
 
 class FormInternoVendaStartStop extends React.Component {
   render() {
@@ -59,13 +58,7 @@ class FormInternoVendaStartStop extends React.Component {
                 </Button>
               </Col>
               <Col md={6}>
-                <Button
-                  variant="danger"
-                  size="sm"
-                  onClick={() => this.props.enviarOrdemAction(this.props)}
-                >
-                  <h6>Vender</h6>
-                </Button>
+                <BotaoEnviarOrdem props={this.props} tipoCompraVenda="Vender" />
               </Col>
             </Row>
           </div>
@@ -92,9 +85,6 @@ const mapStateToProps = (state) => ({
 });
 
 export default compose(
-  connect(mapStateToPropsEnvioOrdem, {}, null, {
-    context: StorePrincipalContext,
-  }),
   connect(mapStateToProps, {
     mudarQtdAction,
     mudarValidadeSelectAction,

@@ -19,9 +19,7 @@ import TabelaGainReducao from "./TabelaGainReducao";
 import { compraGainReducaoAction } from "components/redux/actions/SubAppActions";
 import { pesquisarAtivoOnEnterAction } from "components/redux/actions/api_actions/boletasAPIActions";
 import { RowInputsGainReducaoConectada } from "components/utils/RowInputsFormatadosFormInterno";
-import { compose } from "redux";
-import { StorePrincipalContext } from "components/redux/StoreCreation";
-import { mapStateToPropsEnvioOrdem } from "components/redux/MapStateToProps";
+import { BotaoEnviarOrdem } from "components/utils/BotaoEnviarOrdem";
 
 class FormInternoCompraGainReducao extends React.Component {
   render() {
@@ -65,18 +63,10 @@ class FormInternoCompraGainReducao extends React.Component {
                 </Button>
               </Col>
               <Col md={6}>
-                <Button
-                  variant="primary"
-                  size="sm"
-                  onClick={() =>
-                    this.props.compraGainReducaoAction(
-                      this.props,
-                      COMPRA_GAINREDUCAO_NAMESPACE
-                    )
-                  }
-                >
-                  <h6>Comprar</h6>
-                </Button>
+                <BotaoEnviarOrdem
+                  props={this.props}
+                  tipoCompraVenda="Comprar"
+                />
               </Col>
             </Row>
           </div>
@@ -100,21 +90,16 @@ const mapStateToProps = (state) => ({
   tabelaGainReducao: state.compraGainReducao.tabelaGainReducao,
 });
 
-export default compose(
-  connect(mapStateToPropsEnvioOrdem, {}, null, {
-    context: StorePrincipalContext,
-  }),
-  connect(mapStateToProps, {
-    mudarQtdAction,
-    mudarValidadeSelectAction,
-    mudarDataAction,
-    limparAction,
-    mudarAtivoAction,
-    mudarAssinaturaAction,
-    mudarCheckSalvarAssinaturaAction,
-    mostrarErroQtdeOnBlurAction,
-    adicionarItemTabelaGainReducaoAction,
-    compraGainReducaoAction,
-    pesquisarAtivoOnEnterAction,
-  })
-)(FormInternoCompraGainReducao);
+export default connect(mapStateToProps, {
+  mudarQtdAction,
+  mudarValidadeSelectAction,
+  mudarDataAction,
+  limparAction,
+  mudarAtivoAction,
+  mudarAssinaturaAction,
+  mudarCheckSalvarAssinaturaAction,
+  mostrarErroQtdeOnBlurAction,
+  adicionarItemTabelaGainReducaoAction,
+  compraGainReducaoAction,
+  pesquisarAtivoOnEnterAction,
+})(FormInternoCompraGainReducao);

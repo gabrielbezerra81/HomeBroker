@@ -18,9 +18,7 @@ import { VENDA_GAINREDUCAO_NAMESPACE } from "constants/ActionTypes";
 import TabelaGainReducao from "./TabelaGainReducao";
 import { pesquisarAtivoOnEnterAction } from "components/redux/actions/api_actions/boletasAPIActions";
 import { RowInputsGainReducaoConectada } from "components/utils/RowInputsFormatadosFormInterno";
-import { compose } from "redux";
-import { mapStateToPropsEnvioOrdem } from "components/redux/MapStateToProps";
-import { StorePrincipalContext } from "components/redux/StoreCreation";
+import { BotaoEnviarOrdem } from "components/utils/BotaoEnviarOrdem";
 
 class FormInternoVendaGainReducao extends React.Component {
   render() {
@@ -64,9 +62,7 @@ class FormInternoVendaGainReducao extends React.Component {
                 </Button>
               </Col>
               <Col md={6}>
-                <Button variant="danger" size="sm" onClick={() => false}>
-                  <h6>Vender</h6>
-                </Button>
+                <BotaoEnviarOrdem props={this.props} tipoCompraVenda="Vender" />
               </Col>
             </Row>
           </div>
@@ -90,20 +86,15 @@ const mapStateToProps = (state) => ({
   tabelaGainReducao: state.vendaGainReducao.tabelaGainReducao,
 });
 
-export default compose(
-  connect(mapStateToPropsEnvioOrdem, {}, null, {
-    context: StorePrincipalContext,
-  }),
-  connect(mapStateToProps, {
-    mudarQtdAction,
-    mudarValidadeSelectAction,
-    mudarDataAction,
-    limparAction,
-    mudarAtivoAction,
-    mudarAssinaturaAction,
-    mudarCheckSalvarAssinaturaAction,
-    mostrarErroQtdeOnBlurAction,
-    adicionarItemTabelaGainReducaoAction,
-    pesquisarAtivoOnEnterAction,
-  })
-)(FormInternoVendaGainReducao);
+export default connect(mapStateToProps, {
+  mudarQtdAction,
+  mudarValidadeSelectAction,
+  mudarDataAction,
+  limparAction,
+  mudarAtivoAction,
+  mudarAssinaturaAction,
+  mudarCheckSalvarAssinaturaAction,
+  mostrarErroQtdeOnBlurAction,
+  adicionarItemTabelaGainReducaoAction,
+  pesquisarAtivoOnEnterAction,
+})(FormInternoVendaGainReducao);

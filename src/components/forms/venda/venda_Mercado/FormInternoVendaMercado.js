@@ -22,9 +22,7 @@ import {
   enviarOrdemAction,
 } from "components/redux/actions/api_actions/boletasAPIActions";
 import { RowGainStopFormInternoConectada } from "components/utils/RowInputsFormatadosFormInterno";
-import { compose } from "redux";
-import { mapStateToPropsEnvioOrdem } from "components/redux/MapStateToProps";
-import { StorePrincipalContext } from "components/redux/StoreCreation";
+import { BotaoEnviarOrdem } from "components/utils/BotaoEnviarOrdem";
 
 class FormInternoVendaMercado extends React.Component {
   render() {
@@ -71,13 +69,7 @@ class FormInternoVendaMercado extends React.Component {
                 </Button>
               </Col>
               <Col md={6}>
-                <Button
-                  variant="danger"
-                  size="sm"
-                  onClick={() => this.props.enviarOrdemAction(this.props)}
-                >
-                  <h6>Vender</h6>
-                </Button>
+                <BotaoEnviarOrdem props={this.props} tipoCompraVenda="Vender" />
               </Col>
             </Row>
           </div>
@@ -104,21 +96,16 @@ const mapStateToProps = (state) => ({
   eventSourceCotacao: state.vendaMercadoReducer.eventSourceCotacao,
 });
 
-export default compose(
-  connect(mapStateToPropsEnvioOrdem, {}, null, {
-    context: StorePrincipalContext,
-  }),
-  connect(mapStateToProps, {
-    mudarQtdAction,
-    mudarValidadeSelectAction,
-    mudarDataAction,
-    limparAction,
-    mudarAtivoAction,
-    mudarAssinaturaAction,
-    mudarCheckSalvarAssinaturaAction,
-    mostrarErroQtdeOnBlurAction,
-    pesquisarAtivoOnEnterAction,
-    enviarOrdemAction,
-    mudarAtributoBoletaAction,
-  })
-)(FormInternoVendaMercado);
+export default connect(mapStateToProps, {
+  mudarQtdAction,
+  mudarValidadeSelectAction,
+  mudarDataAction,
+  limparAction,
+  mudarAtivoAction,
+  mudarAssinaturaAction,
+  mudarCheckSalvarAssinaturaAction,
+  mostrarErroQtdeOnBlurAction,
+  pesquisarAtivoOnEnterAction,
+  enviarOrdemAction,
+  mudarAtributoBoletaAction,
+})(FormInternoVendaMercado);

@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
-import { compose } from "redux";
 import { mostrarErroQtdeOnBlurAction } from "components/redux/actions/bookOfertaActions";
 import {
   mudarValidadeSelectAction,
@@ -25,8 +24,7 @@ import {
 } from "components/redux/actions/api_actions/boletasAPIActions";
 import InputFormatado from "components/utils/InputFormatado";
 import { RowGainStopFormInternoConectada } from "components/utils/RowInputsFormatadosFormInterno";
-import { StorePrincipalContext } from "components/redux/StoreCreation";
-import { mapStateToPropsEnvioOrdem } from "components/redux/MapStateToProps";
+import { BotaoEnviarOrdem } from "components/utils/BotaoEnviarOrdem";
 
 class FormInternoCompraAgendada extends React.Component {
   render() {
@@ -113,13 +111,10 @@ class FormInternoCompraAgendada extends React.Component {
                 </Button>
               </Col>
               <Col md={6}>
-                <Button
-                  variant="primary"
-                  size="sm"
-                  onClick={() => this.props.enviarOrdemAction(this.props)}
-                >
-                  <h6>Comprar</h6>
-                </Button>
+                <BotaoEnviarOrdem
+                  props={this.props}
+                  tipoCompraVenda="Comprar"
+                />
               </Col>
             </Row>
           </div>
@@ -148,22 +143,17 @@ const mapStateToProps = (state) => ({
   eventSourceCotacao: state.compraAgendadaReducer.eventSourceCotacao,
 });
 
-export default compose(
-  connect(mapStateToPropsEnvioOrdem, {}, null, {
-    context: StorePrincipalContext,
-  }),
-  connect(mapStateToProps, {
-    mudarQtdAction,
-    mudarValidadeSelectAction,
-    mudarDataAction,
-    limparAction,
-    mudarAtivoAction,
-    mudarAssinaturaAction,
-    mudarCheckSalvarAssinaturaAction,
-    mostrarErroQtdeOnBlurAction,
-    compraAgendadaAction,
-    pesquisarAtivoOnEnterAction,
-    enviarOrdemAction,
-    mudarAtributoBoletaAction,
-  })
-)(FormInternoCompraAgendada);
+export default connect(mapStateToProps, {
+  mudarQtdAction,
+  mudarValidadeSelectAction,
+  mudarDataAction,
+  limparAction,
+  mudarAtivoAction,
+  mudarAssinaturaAction,
+  mudarCheckSalvarAssinaturaAction,
+  mostrarErroQtdeOnBlurAction,
+  compraAgendadaAction,
+  pesquisarAtivoOnEnterAction,
+  enviarOrdemAction,
+  mudarAtributoBoletaAction,
+})(FormInternoCompraAgendada);

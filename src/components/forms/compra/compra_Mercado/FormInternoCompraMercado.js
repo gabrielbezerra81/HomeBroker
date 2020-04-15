@@ -22,9 +22,7 @@ import {
   enviarOrdemAction,
 } from "components/redux/actions/api_actions/boletasAPIActions";
 import { RowGainStopFormInternoConectada } from "components/utils/RowInputsFormatadosFormInterno";
-import { compose } from "redux";
-import { StorePrincipalContext } from "components/redux/StoreCreation";
-import { mapStateToPropsEnvioOrdem } from "components/redux/MapStateToProps";
+import { BotaoEnviarOrdem } from "components/utils/BotaoEnviarOrdem";
 
 class FormInternoCompraMercado extends React.Component {
   render() {
@@ -71,13 +69,10 @@ class FormInternoCompraMercado extends React.Component {
                 </Button>
               </Col>
               <Col md={6}>
-                <Button
-                  variant="primary"
-                  size="sm"
-                  onClick={() => this.props.enviarOrdemAction(this.props)}
-                >
-                  <h6>Comprar</h6>
-                </Button>
+                <BotaoEnviarOrdem
+                  props={this.props}
+                  tipoCompraVenda="Comprar"
+                />
               </Col>
             </Row>
           </div>
@@ -104,21 +99,16 @@ const mapStateToProps = (state) => ({
   eventSourceCotacao: state.compraMercadoReducer.eventSourceCotacao,
 });
 
-export default compose(
-  connect(mapStateToPropsEnvioOrdem, {}, null, {
-    context: StorePrincipalContext,
-  }),
-  connect(mapStateToProps, {
-    mudarQtdAction,
-    mudarValidadeSelectAction,
-    mudarDataAction,
-    limparAction,
-    mudarAtivoAction,
-    mudarAssinaturaAction,
-    mudarCheckSalvarAssinaturaAction,
-    mostrarErroQtdeOnBlurAction,
-    compraMercadoAction,
-    pesquisarAtivoOnEnterAction,
-    enviarOrdemAction,
-  })
-)(FormInternoCompraMercado);
+export default connect(mapStateToProps, {
+  mudarQtdAction,
+  mudarValidadeSelectAction,
+  mudarDataAction,
+  limparAction,
+  mudarAtivoAction,
+  mudarAssinaturaAction,
+  mudarCheckSalvarAssinaturaAction,
+  mostrarErroQtdeOnBlurAction,
+  compraMercadoAction,
+  pesquisarAtivoOnEnterAction,
+  enviarOrdemAction,
+})(FormInternoCompraMercado);

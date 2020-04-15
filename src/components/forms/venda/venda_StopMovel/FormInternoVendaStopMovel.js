@@ -25,9 +25,7 @@ import {
 } from "components/redux/actions/api_actions/boletasAPIActions";
 import InputFormatado from "components/utils/InputFormatado";
 import { RowInputsStopMovelConectada } from "components/utils/RowInputsFormatadosFormInterno";
-import { compose } from "redux";
-import { mapStateToPropsEnvioOrdem } from "components/redux/MapStateToProps";
-import { StorePrincipalContext } from "components/redux/StoreCreation";
+import { BotaoEnviarOrdem } from "components/utils/BotaoEnviarOrdem";
 
 class FormInternoVendaStopMovel extends React.Component {
   render() {
@@ -104,13 +102,7 @@ class FormInternoVendaStopMovel extends React.Component {
                 </Button>
               </Col>
               <Col md={4}>
-                <Button
-                  variant="danger"
-                  size="sm"
-                  onClick={() => props.enviarOrdemAction(props)}
-                >
-                  <h6>Vender</h6>
-                </Button>
+                <BotaoEnviarOrdem props={this.props} tipoCompraVenda="Vender" />
               </Col>
               <Col md={4}>
                 <Button
@@ -155,22 +147,17 @@ const mapStateToProps = (state) => ({
   tabelaOrdensSimulacao: state.vendaStopMovel.tabelaOrdensSimulacao,
 });
 
-export default compose(
-  connect(mapStateToPropsEnvioOrdem, {}, null, {
-    context: StorePrincipalContext,
-  }),
-  connect(mapStateToProps, {
-    mudarQtdAction,
-    mudarAtivoAction,
-    mudarValidadeSelectAction,
-    mudarDataAction,
-    mostrarErroQtdeOnBlurAction,
-    adicionarItemTabelaStopMovel,
-    mudarAssinaturaAction,
-    mudarCheckSalvarAssinaturaAction,
-    limparAction,
-    pesquisarAtivoOnEnterAction,
-    enviarOrdemAction,
-    mudarAtributoBoletaAction,
-  })
-)(FormInternoVendaStopMovel);
+export default connect(mapStateToProps, {
+  mudarQtdAction,
+  mudarAtivoAction,
+  mudarValidadeSelectAction,
+  mudarDataAction,
+  mostrarErroQtdeOnBlurAction,
+  adicionarItemTabelaStopMovel,
+  mudarAssinaturaAction,
+  mudarCheckSalvarAssinaturaAction,
+  limparAction,
+  pesquisarAtivoOnEnterAction,
+  enviarOrdemAction,
+  mudarAtributoBoletaAction,
+})(FormInternoVendaStopMovel);

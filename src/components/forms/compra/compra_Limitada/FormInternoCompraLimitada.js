@@ -24,9 +24,7 @@ import {
 } from "components/redux/actions/api_actions/boletasAPIActions";
 import InputFormatado from "components/utils/InputFormatado";
 import { RowGainStopFormInternoConectada } from "components/utils/RowInputsFormatadosFormInterno";
-import { compose } from "redux";
-import { StorePrincipalContext } from "components/redux/StoreCreation";
-import { mapStateToPropsEnvioOrdem } from "components/redux/MapStateToProps";
+import { BotaoEnviarOrdem } from "components/utils/BotaoEnviarOrdem";
 
 class FormInternoCompraLimitada extends React.Component {
   render() {
@@ -90,13 +88,10 @@ class FormInternoCompraLimitada extends React.Component {
                 </Button>
               </Col>
               <Col md={6}>
-                <Button
-                  variant="primary"
-                  size="sm"
-                  onClick={() => this.props.enviarOrdemAction(this.props)}
-                >
-                  <h6>Comprar</h6>
-                </Button>
+                <BotaoEnviarOrdem
+                  props={this.props}
+                  tipoCompraVenda="Comprar"
+                />
               </Col>
             </Row>
           </div>
@@ -124,22 +119,17 @@ const mapStateToProps = (state) => ({
   eventSourceCotacao: state.compraLimitadaReducer.eventSourceCotacao,
 });
 
-export default compose(
-  connect(mapStateToPropsEnvioOrdem, {}, null, {
-    context: StorePrincipalContext,
-  }),
-  connect(mapStateToProps, {
-    mudarQtdAction,
-    mudarValidadeSelectAction,
-    mudarDataAction,
-    limparAction,
-    mudarAtivoAction,
-    mudarAssinaturaAction,
-    mudarCheckSalvarAssinaturaAction,
-    mostrarErroQtdeOnBlurAction,
-    compraLimitadaAction,
-    pesquisarAtivoOnEnterAction,
-    enviarOrdemAction,
-    mudarAtributoBoletaAction,
-  })
-)(FormInternoCompraLimitada);
+export default connect(mapStateToProps, {
+  mudarQtdAction,
+  mudarValidadeSelectAction,
+  mudarDataAction,
+  limparAction,
+  mudarAtivoAction,
+  mudarAssinaturaAction,
+  mudarCheckSalvarAssinaturaAction,
+  mostrarErroQtdeOnBlurAction,
+  compraLimitadaAction,
+  pesquisarAtivoOnEnterAction,
+  enviarOrdemAction,
+  mudarAtributoBoletaAction,
+})(FormInternoCompraLimitada);
