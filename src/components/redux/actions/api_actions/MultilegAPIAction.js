@@ -115,6 +115,7 @@ export const enviarOrdemMultilegAction = (props) => {
     travarDestravarClique("travar", "multileg");
 
     if (validarOrdemMultileg(props)) await enviarOrdemAPI([json], props.token);
+    
     travarDestravarClique("destravar", "multileg");
   };
 };
