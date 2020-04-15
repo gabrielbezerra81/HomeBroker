@@ -86,9 +86,9 @@ class PosicaoEmLista extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   posicoesCustodia: state.posicaoReducer.posicoesCustodia,
-  arrayCotacoes: state.posicaoReducer.arrayCotacoes
+  arrayCotacoes: state.posicaoReducer.arrayCotacoes,
 });
 
 export default connect(mapStateToProps, {})(PosicaoEmLista);
@@ -131,14 +131,15 @@ let renderConteudoAtributoComposto = (props, posicao, oferta, atributo) => {
         <div key={Math.random()}>
           {formatarNumDecimal(oferta.qtdeInicial || "")}
         </div>,
-        <div key={Math.random()}>{formatarNumDecimal(oferta.qtty || 0)}</div>
+        <div key={Math.random()}>{formatarNumDecimal(oferta.qtty || 0)}</div>,
       ];
       break;
     case "precoUlt":
       const ativo = props.arrayCotacoes.find(
-        ativo => ativo.codigo === oferta.symbol
+        (ativo) => ativo.codigo === oferta.symbol
       );
-      const cotacao = ativo ? formatarNumDecimal(ativo.cotacao) : "";
+      const cotacao =
+        ativo && ativo.cotacao ? formatarNumDecimal(ativo.cotacao) : "";
       conteudo = <div>{cotacao}</div>;
       break;
     case "totalAtual":
