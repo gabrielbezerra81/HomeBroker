@@ -58,11 +58,16 @@ import {
   erro_modificar_ordemExec,
   erro_realizar_login,
   erro_realizar_cadastro,
+  erro_timeout,
+  erro_listarBook,
 } from "constants/AlertaErros";
+
+const timeout = 5000;
 
 export const pesquisarAtivoAPI = (codigo) => {
   return request
     .get(url_base + url_pesquisarAtivoBoletas_codigo + codigo)
+    .timeout(timeout)
     .retry(3)
     .then((response) => {
       const { body } = response;
@@ -118,8 +123,7 @@ export const pesquisarAtivoAPI = (codigo) => {
       return dadosPesquisa;
     })
     .catch((erro) => {
-      alert(erro_pesquisar_ativo);
-      console.log(erro);
+      mostrarErroConsulta(erro, erro_pesquisar_ativo);
       return {
         resultadoAtivo: "",
         codigoEspecificacao: "",
@@ -140,6 +144,7 @@ export const listarBookOfertaAPI = (codigo_ativo) => {
   };
   return request
     .get(url_base + url_listarBookOfertas_codigo + codigo_ativo)
+    .timeout(timeout)
     .retry(3)
     .then((response) => {
       const { body } = response;
@@ -157,7 +162,7 @@ export const listarBookOfertaAPI = (codigo_ativo) => {
       return tabelas;
     })
     .catch((erro) => {
-      console.log(erro);
+      mostrarErroConsulta(erro, erro_listarBook);
       return tabelas;
     });
 };
@@ -167,6 +172,7 @@ export const enviarOrdemAPI = (json, token) => {
 
   return request
     .post(url_base + url_enviarOrdem)
+    .timeout(timeout)
     .retry(2)
     .set({
       "Content-Type": "application/json",
@@ -178,8 +184,7 @@ export const enviarOrdemAPI = (json, token) => {
       else alert(erro_enviar_ordem);
     })
     .catch((erro) => {
-      console.log(erro.response);
-      alert(erro_enviar_ordem);
+      mostrarErroConsulta(erro, erro_enviar_ordem);
     });
 };
 
@@ -188,6 +193,7 @@ export const pesquisarAtivoMultilegAPI = (codigo_ativo) => {
 
   return request
     .get(url_base + url_pesquisarOpcoesVencimentos_codigo + codigo_ativo)
+    .timeout(timeout)
     .retry(3)
     .then(async (response) => {
       dados = {
@@ -212,8 +218,7 @@ export const pesquisarAtivoMultilegAPI = (codigo_ativo) => {
       }
     })
     .catch((erro) => {
-      alert(erro_pesquisar_ativo);
-      console.log(erro);
+      mostrarErroConsulta(erro, erro_pesquisar_ativo);
       return null;
     });
 };
@@ -227,12 +232,14 @@ export const pesquisarStrikesMultilegAPI = (codigo_ativo, vencimento) => {
         "/" +
         vencimento
     )
+    .timeout(timeout)
     .retry(3)
     .then((response) => {
       return response.body;
     })
     .catch((erro) => {
-      console.log(erro);
+      mostrarErroConsulta(erro);
+      console.log(erro, "");
       return [];
     });
 };
@@ -240,6 +247,7 @@ export const pesquisarStrikesMultilegAPI = (codigo_ativo, vencimento) => {
 export const listarOrdensExecAPI = (idToken) => {
   return request
     .get(url_base + url_listarOrdensExecucao_)
+    .timeout(timeout)
     .retry(3)
     .set({ Authorization: `${idToken.tokenType} ${idToken.accessToken}` })
     .then((response) => {
@@ -253,7 +261,7 @@ export const listarOrdensExecAPI = (idToken) => {
       return ofertas;
     })
     .catch((erro) => {
-      console.log(erro);
+      mostrarErroConsulta(erro, "");
       return [];
     });
 };
@@ -261,6 +269,7 @@ export const listarOrdensExecAPI = (idToken) => {
 export const listarPosicoesAPI = (idToken) => {
   return request
     .get(url_base + url_listarPosicoes)
+    .timeout(timeout)
     .set({ Authorization: `${idToken.tokenType} ${idToken.accessToken}` })
     .retry(3)
     .then((response) => {
@@ -268,7 +277,7 @@ export const listarPosicoesAPI = (idToken) => {
       return body;
     })
     .catch((erro) => {
-      console.log(erro);
+      mostrarErroConsulta(erro, "");
       return [];
     });
 };
@@ -596,20 +605,22 @@ export const atualizarPosicaoAPI = (
 export const verificarMonitorarAtivoAPI = (codigo) => {
   request
     .get(url_base + url_listarAtivosMonitorados_)
+    .timeout(timeout)
     .then((response) => {
       const { body } = response;
 
       if (!body.some((item) => item.symbol === codigo)) {
         request
           .get(url_base + url_monitorarAtivo_codigo + codigo)
+          .timeout(timeout)
           .then(() => console.log("adicionou"))
           .catch((erro) => {
-            console.log(erro);
+            mostrarErroConsulta(erro, "");
           });
       }
     })
     .catch((erro) => {
-      console.log(erro);
+      mostrarErroConsulta(erro, "");
     });
 };
 
@@ -618,6 +629,7 @@ export const criarPosicaoMultilegAPI = (json) => {
 
   return request
     .post(url_base + url_criarPosicaoMultileg_)
+    .timeout(timeout)
     .retry(2)
     .set({ "Content-Type": "application/json" })
     .send(jsonStringBody)
@@ -627,8 +639,7 @@ export const criarPosicaoMultilegAPI = (json) => {
       else alert(erro_criar_posicao);
     })
     .catch((erro) => {
-      console.log(erro.response);
-      alert(erro_criar_posicao);
+      mostrarErroConsulta(erro, erro_criar_posicao);
     });
 };
 
@@ -637,65 +648,64 @@ export const criarAlertaOperacaoAPI = (json) => {
 
   return request
     .post(url_base + url_criarAlertaOperacao_)
+    .timeout(timeout)
     .retry(2)
     .set({ "Content-Type": "application/json" })
     .send(jsonStringBody)
     .then((response) => {
-      console.log("response", response);
       if (response.status === 201) alert(sucesso_criar_alerta);
       else alert(erro_criar_alerta);
     })
     .catch((erro) => {
-      console.log(erro.response);
-      alert(erro_criar_alerta);
+      mostrarErroConsulta(erro, erro_criar_alerta);
     });
 };
 
 export const cancelarOrdemExecAPI = (id) => {
   return request
     .get(url_base + url_cancelarOrdemExec_id + id)
+    .timeout(timeout)
     .then(() => {
       alert(sucesso_cancelar_ordem);
     })
     .catch((erro) => {
-      console.log(erro);
-      alert(erro_cancelar_ordem);
+      mostrarErroConsulta(erro, erro_cancelar_ordem);
     });
 };
 
 export const finalizarAMercadoAPI = (id) => {
   return request
     .get(url_base + url_finalizarAMercado_id + id)
+    .timeout(timeout)
     .then(() => {
       alert(sucesso_finalizar_a_mercado);
     })
     .catch((erro) => {
-      console.log(erro);
-      alert(erro_finalizar_a_mercado);
+      mostrarErroConsulta(erro, erro_finalizar_a_mercado);
     });
 };
 
 export const incrementarQtdeOrdemExecAPI = (id, qtde) => {
   return request
     .get(url_base + url_aumentarQtde_id_qtde + id + "/" + qtde)
+    .timeout(timeout)
     .then(() => {
       alert(sucesso_modificar_ordemExec);
     })
     .catch((erro) => {
-      console.log(erro);
-      alert(erro_modificar_ordemExec);
+      mostrarErroConsulta(erro, erro_modificar_ordemExec);
     });
 };
 
 export const incrementarPrecoOrdemExecAPI = (id, preco) => {
   return request
     .get(url_base + url_aumentarPreco_id_valor + id + "/" + preco)
+    .timeout(timeout)
     .then(() => {
       alert(sucesso_modificar_ordemExec);
     })
     .catch((erro) => {
-      console.log(erro);
-      alert(erro_modificar_ordemExec);
+      mostrarErroConsulta(erro, erro_modificar_ordemExec);
     });
 };
 
@@ -704,6 +714,7 @@ export const realizarLoginAPI = (username, password) => {
 
   return request
     .post(url_base + url_realizarLogin_usuario_senha)
+    .timeout(timeout)
     .set({ "Content-Type": "application/json" })
     .send(JSON.stringify(payload))
     .then((response) => {
@@ -711,8 +722,7 @@ export const realizarLoginAPI = (username, password) => {
       return body;
     })
     .catch((erro) => {
-      console.log(erro);
-      alert(erro_realizar_login);
+      mostrarErroConsulta(erro, erro_realizar_login);
       return null;
     });
 };
@@ -729,13 +739,13 @@ export const realizarCadastroAPI = (nome, username, email, role, password) => {
   return request
     .post(url_base + url_realizarCadastro_dados)
     .set({ "Content-Type": "application/json" })
+    .timeout(timeout)
     .send(JSON.stringify(payload))
     .then(() => {
       return true;
     })
     .catch((erro) => {
-      console.log(erro);
-      alert(erro_realizar_cadastro);
+      mostrarErroConsulta(erro, erro_realizar_cadastro);
       return false;
     });
 };
@@ -743,13 +753,13 @@ export const realizarCadastroAPI = (nome, username, email, role, password) => {
 export const autenticacaoTokenAPI = (token) => {
   return request
     .get(url_base + url_autenticacao_token)
+    .timeout(timeout)
     .set({ Authorization: `${token.tokenType} ${token.accessToken}` })
     .then((response) => {
       return response.body;
     })
     .catch((erro) => {
-      console.log(erro);
-      alert(erro_realizar_login);
+      mostrarErroConsulta(erro, erro_realizar_login);
       return null;
     });
 };
@@ -758,13 +768,13 @@ export const buscarInformacoesUsuarioAPI = (token) => {
   return request
     .get(url_base + url_informacoesUsuario_token)
     .set({ Authorization: `${token.tokenType} ${token.accessToken}` })
+    .timeout(timeout)
     .retry(3)
     .then((response) => {
       return response.body;
     })
     .catch((erro) => {
-      console.log(erro);
-      alert(erro_realizar_login);
+      mostrarErroConsulta(erro, erro_realizar_login);
       return null;
     });
 };
@@ -772,11 +782,11 @@ export const buscarInformacoesUsuarioAPI = (token) => {
 export const pesquisarListaStrikeTHLAPI = (ativo) => {
   return request
     .get(url_base + url_pesquisarListaStrike_codigo + ativo)
+    .timeout(timeout)
     .retry(3)
     .then((response) => response.body)
     .catch((erro) => {
-      console.log(erro);
-      alert(erro_pesquisar_ativo);
+      mostrarErroConsulta(erro, erro_pesquisar_ativo);
       return [];
     });
 };
@@ -785,13 +795,13 @@ export const listarContasAPI = (token) => {
   return request
     .get(url_base + url_listarContas_token)
     .set({ Authorization: `${token.tokenType} ${token.accessToken}` })
+    .timeout(timeout)
     .retry(3)
     .then((response) => {
       return response.body;
     })
     .catch((erro) => {
-      console.log(erro);
-      alert(erro_realizar_login);
+      mostrarErroConsulta(erro, erro_realizar_login);
       return null;
     });
 };
@@ -805,4 +815,11 @@ export const travarDestravarClique = (modo, id) => {
     document.body.style.cursor = "auto";
     document.getElementById(id).style.pointerEvents = "all";
   }
+};
+
+const mostrarErroConsulta = (erro, mensagem) => {
+  console.log(erro);
+  if (erro.timeout) {
+    alert(erro_timeout);
+  } else alert(mensagem);
 };
