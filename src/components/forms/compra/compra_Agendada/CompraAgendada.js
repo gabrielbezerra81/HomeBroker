@@ -5,7 +5,7 @@ import DraggableModal from "components/utils/DraggableModal";
 import FormInternoCompraAgendada from "./FormInternoCompraAgendada";
 import GraficoCompraAgendada from "./GraficoCompraAgendada";
 import BodyHeaderCompraAgendada from "./BodyHeaderCompraAgendada";
-import { modalHeader } from "components/utils/FormHeader";
+import { ModalHeader } from "components/utils/FormHeader";
 
 class CompraAgendada extends React.Component {
   render() {
@@ -13,20 +13,24 @@ class CompraAgendada extends React.Component {
       <DraggableModal
         id="compra_agendada"
         renderModalBody={() => modalBody(this.props)}
-        renderHeader={resetPosition =>
-          modalHeader(
-            this.props,
-            this.props.headerTitle,
-            "border-green",
-            resetPosition
-          )
-        }
+        renderHeader={(resetPosition) => (
+          <ModalHeader
+            headerTitle={this.props.headerTitle}
+            headerClass="border-green"
+            resetPosition={resetPosition}
+            name={this.props.name}
+            handleShow={this.props.handleShow}
+            ativo={this.props.ativo}
+            close={this.props.close}
+            eventSourceCotacao={this.props.eventSourceCotacao}
+          />
+        )}
       />
     );
   }
 }
 
-const modalBody = props => (
+const modalBody = (props) => (
   <div className="mbody">
     <BodyHeaderCompraAgendada />
     <Row>
@@ -36,18 +40,15 @@ const modalBody = props => (
   </div>
 );
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ativo: state.compraAgendadaReducer.ativo,
-  eventSourceCotacao: state.compraAgendadaReducer.eventSourceCotacao
+  eventSourceCotacao: state.compraAgendadaReducer.eventSourceCotacao,
 });
 
-export default connect(
-  mapStateToProps,
-  {}
-)(CompraAgendada);
+export default connect(mapStateToProps, {})(CompraAgendada);
 
 const ordem = {
   nome: "Compra Agendada",
   tipoOrdem: "buyWait",
-  tipoOferta: "C"
+  tipoOferta: "C",
 };

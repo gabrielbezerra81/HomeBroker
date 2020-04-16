@@ -6,11 +6,11 @@ import {
   mudarStopLossAction,
   mudarGainAction,
   mudarInputHeaderAction,
-  mostrarErroQtdeOnBlurAction
+  mostrarErroQtdeOnBlurAction,
 } from "components/redux/actions/bookOfertaActions";
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import TabelaOfertas from "./TabelaOfertas";
-import { bookHeader } from "components/utils/FormHeader";
+import { BookHeader } from "components/utils/FormHeader";
 import { listarBookOfertaOnEnterAction } from "components/redux/actions/api_actions/bookOfertaAPIActions";
 
 class BookOfertas extends React.Component {
@@ -20,16 +20,20 @@ class BookOfertas extends React.Component {
         id="bookofertas"
         renderModalBody={() => modalBody(this.props)}
         headerClass="no-border"
-        renderHeader={resetPosition =>
-          bookHeader(this.props, "no-border", resetPosition)
-        }
+        renderHeader={(resetPosition) => (
+          <BookHeader
+            close={this.props.close}
+            resetPosition={resetPosition}
+            headerClass="no-border"
+          />
+        )}
         closeButton={false}
       />
     );
   }
 }
 
-const modalBody = props => (
+const modalBody = (props) => (
   <Modal.Body>
     <TabelaOfertas
       tableDataVenda={props.tabelaOfertasVenda}
@@ -46,7 +50,7 @@ const modalBody = props => (
               placeholder=""
               value={props.stopLoss}
               step={0.01}
-              onChange={event => props.mudarStopLossAction(event)}
+              onChange={(event) => props.mudarStopLossAction(event)}
             />
           </Form.Group>
         </Col>
@@ -58,7 +62,7 @@ const modalBody = props => (
               type="number"
               step={100}
               value={props.qtde}
-              onChange={event => props.mudarQtdAction(event)}
+              onChange={(event) => props.mudarQtdAction(event)}
               onBlur={() => props.mostrarErroQtdeOnBlurAction(props.erro)}
               min={0}
             />
@@ -73,7 +77,7 @@ const modalBody = props => (
               placeholder=""
               step={0.01}
               value={props.gain}
-              onChange={event => props.mudarGainAction(event)}
+              onChange={(event) => props.mudarGainAction(event)}
             />
           </Form.Group>
         </Col>
@@ -83,7 +87,7 @@ const modalBody = props => (
   </Modal.Body>
 );
 
-const modalFooter = props => (
+const modalFooter = (props) => (
   <div className="no-border modal-footer">
     <Button variant="danger" size="sm" onClick={() => false}>
       <h6>Vender</h6>
@@ -97,7 +101,7 @@ const modalFooter = props => (
   </div>
 );
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   qtde: state.bookOfertaReducer.qtde,
   erro: state.bookOfertaReducer.erro,
   stopLoss: state.bookOfertaReducer.stopLoss,
@@ -105,17 +109,14 @@ const mapStateToProps = state => ({
   inputHeader: state.bookOfertaReducer.inputHeader,
   tabelaOfertasCompra: state.bookOfertaReducer.tabelaOfertasCompra,
   tabelaOfertasVenda: state.bookOfertaReducer.tabelaOfertasVenda,
-  eventSource: state.bookOfertaReducer.eventSource
+  eventSource: state.bookOfertaReducer.eventSource,
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    mudarQtdAction,
-    mudarStopLossAction,
-    mudarGainAction,
-    mudarInputHeaderAction,
-    mostrarErroQtdeOnBlurAction,
-    listarBookOfertaOnEnterAction
-  }
-)(BookOfertas);
+export default connect(mapStateToProps, {
+  mudarQtdAction,
+  mudarStopLossAction,
+  mudarGainAction,
+  mudarInputHeaderAction,
+  mostrarErroQtdeOnBlurAction,
+  listarBookOfertaOnEnterAction,
+})(BookOfertas);

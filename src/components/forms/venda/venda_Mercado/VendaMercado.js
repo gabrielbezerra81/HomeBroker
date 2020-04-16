@@ -6,7 +6,7 @@ import DraggableModal from "components/utils/DraggableModal";
 import FormInternoVendaMercado from "./FormInternoVendaMercado";
 import GraficoVendaMercado from "./GraficoVendaMercado";
 import BodyHeaderVendaMercado from "./BodyHeaderVendaMercado";
-import { modalHeader } from "components/utils/FormHeader";
+import { ModalHeader } from "components/utils/FormHeader";
 
 class VendaMercado extends React.Component {
   componentDidMount() {
@@ -19,20 +19,24 @@ class VendaMercado extends React.Component {
         headerTitle={this.props.headerTitle}
         renderModalBody={() => modalBody(this.props)}
         headerClass="border-green"
-        renderHeader={resetPosition =>
-          modalHeader(
-            this.props,
-            this.props.headerTitle,
-            "border-green",
-            resetPosition
-          )
-        }
+        renderHeader={(resetPosition) => (
+          <ModalHeader
+            headerTitle={this.props.headerTitle}
+            headerClass="border-green"
+            resetPosition={resetPosition}
+            name={this.props.name}
+            handleShow={this.props.handleShow}
+            ativo={this.props.ativo}
+            close={this.props.close}
+            eventSourceCotacao={this.props.eventSourceCotacao}
+          />
+        )}
       />
     );
   }
 }
 
-const modalBody = props => (
+const modalBody = (props) => (
   <div className="mbody">
     <BodyHeaderVendaMercado />
     <Row>
@@ -42,9 +46,9 @@ const modalBody = props => (
   </div>
 );
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ativo: state.vendaMercadoReducer.ativo,
-  eventSourceCotacao: state.vendaMercadoReducer.eventSourceCotacao
+  eventSourceCotacao: state.vendaMercadoReducer.eventSourceCotacao,
 });
 
 export default connect(mapStateToProps, {})(VendaMercado);
@@ -52,5 +56,5 @@ export default connect(mapStateToProps, {})(VendaMercado);
 const ordem = {
   nome: "Venda a Mercado",
   tipoOrdem: "sell",
-  tipoOferta: "V"
+  tipoOferta: "V",
 };

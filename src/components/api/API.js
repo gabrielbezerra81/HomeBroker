@@ -63,7 +63,7 @@ import {
 
 retryDelay(request);
 
-const timeout = 5000;
+const timeout = 6000;
 
 export const pesquisarAtivoAPI = (codigo) => {
   return request

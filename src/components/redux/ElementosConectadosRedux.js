@@ -3,7 +3,7 @@ import { Provider, connect } from "react-redux";
 import { MainApp, SubApp } from "MainApp";
 import { compose } from "redux";
 import App from "components/App";
-import { modalHeader } from "components/utils/FormHeader";
+import { ModalHeader } from "components/utils/FormHeader";
 import TelaPrincipal from "components/tela_principal/TelaPrincipal";
 import {
   criarMostrarAppAction,
@@ -222,7 +222,7 @@ export const ModalHeaderConectado = connect(
   { fecharFormAction, abrirFormAction },
   null,
   { context: GlobalContext }
-)(modalHeader);
+)(ModalHeader);
 
 const TelaPrincipalConectada = compose(
   connect(

@@ -6,7 +6,7 @@ import DraggableModal from "components/utils/DraggableModal";
 import FormInternoCompraLimitada from "./FormInternoCompraLimitada";
 import GraficoCompraLimitada from "./GraficoCompraLimitada";
 import BodyHeaderCompraLimitada from "./BodyHeaderCompraLimitada";
-import { modalHeader } from "components/utils/FormHeader";
+import { ModalHeader } from "components/utils/FormHeader";
 
 class CompraLimitada extends React.Component {
   render() {
@@ -16,20 +16,24 @@ class CompraLimitada extends React.Component {
         headerTitle={this.props.headerTitle}
         renderModalBody={() => modalBody(this.props)}
         headerClass="border-green"
-        renderHeader={resetPosition =>
-          modalHeader(
-            this.props,
-            this.props.headerTitle,
-            "border-green",
-            resetPosition
-          )
-        }
+        renderHeader={(resetPosition) => (
+          <ModalHeader
+            headerTitle={this.props.headerTitle}
+            headerClass="border-green"
+            resetPosition={resetPosition}
+            name={this.props.name}
+            handleShow={this.props.handleShow}
+            ativo={this.props.ativo}
+            close={this.props.close}
+            eventSourceCotacao={this.props.eventSourceCotacao}
+          />
+        )}
       />
     );
   }
 }
 
-const modalBody = props => (
+const modalBody = (props) => (
   <div className="mbody">
     <BodyHeaderCompraLimitada />
     <Row>
@@ -39,9 +43,9 @@ const modalBody = props => (
   </div>
 );
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ativo: state.compraLimitadaReducer.ativo,
-  eventSourceCotacao: state.compraLimitadaReducer.eventSourceCotacao
+  eventSourceCotacao: state.compraLimitadaReducer.eventSourceCotacao,
 });
 
 export default connect(mapStateToProps, {})(CompraLimitada);
@@ -49,5 +53,5 @@ export default connect(mapStateToProps, {})(CompraLimitada);
 const ordem = {
   nome: "Compra Limitada",
   tipoOrdem: "buyLimit",
-  tipoOferta: "C"
+  tipoOferta: "C",
 };

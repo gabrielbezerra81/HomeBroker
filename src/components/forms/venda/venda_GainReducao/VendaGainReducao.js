@@ -6,7 +6,7 @@ import DraggableModal from "components/utils/DraggableModal";
 import FormInternoVendaGainReducao from "./FormInternoVendaGainReducao";
 import GraficoVendaGainReducao from "./GraficoVendaGainReducao";
 import BodyHeaderVendaGainReducao from "./BodyHeaderVendaGainReducao";
-import { modalHeader } from "components/utils/FormHeader";
+import { ModalHeader } from "components/utils/FormHeader";
 
 class VendaGainReducao extends React.Component {
   render() {
@@ -14,14 +14,18 @@ class VendaGainReducao extends React.Component {
       <DraggableModal
         id="vendagainreducao"
         renderModalBody={() => modalBody()}
-        renderHeader={resetPosition =>
-          modalHeader(
-            this.props,
-            this.props.headerTitle,
-            "border-green",
-            resetPosition
-          )
-        }
+        renderHeader={(resetPosition) => (
+          <ModalHeader
+            headerTitle={this.props.headerTitle}
+            headerClass="border-green"
+            resetPosition={resetPosition}
+            name={this.props.name}
+            handleShow={this.props.handleShow}
+            ativo={this.props.ativo}
+            close={this.props.close}
+            eventSourceCotacao={this.props.eventSourceCotacao}
+          />
+        )}
       />
     );
   }
@@ -37,9 +41,9 @@ const modalBody = () => (
   </div>
 );
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ativo: state.vendaGainReducao.ativo,
-  eventSourceCotacao: state.vendaGainReducao.eventSourceCotacao
+  eventSourceCotacao: state.vendaGainReducao.eventSourceCotacao,
 });
 
 export default connect(mapStateToProps, {})(VendaGainReducao);

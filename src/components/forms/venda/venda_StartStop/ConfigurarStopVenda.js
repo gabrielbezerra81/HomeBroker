@@ -7,30 +7,31 @@ import { VENDA_STARTSTOP_NAMESPACE } from "constants/ActionTypes";
 import {
   LabelInputGrafico,
   TextoGainStopGrafico,
-  TextoValorTotalGrafico
+  TextoValorTotalGrafico,
 } from "components/utils/TextoGrafico";
 import { mudarInputConfigAction } from "components/redux/actions/formInputActions";
 import { CalculoValorTotalAgendada } from "components/utils/CalculoValorTotal";
 import { fecharFormConfigurarAction } from "components/redux/reducers/MainAppReducer";
-import { modalHeaderLimpo } from "components/utils/FormHeader";
+import { ModalHeaderLimpo } from "components/utils/FormHeader";
 import GraficoInputsConfigStartStop from "components/utils/GraficoInputsConfigStartStop";
 
 class ConfigurarStopVenda extends React.Component {
   render() {
     return (
       <div className="configDiv mcontent">
-        {modalHeaderLimpo(
-          event => this.props.fecharFormConfigurarAction(event),
-          "CONFIGURAR STOP",
-          "config_venda"
-        )}
+        <ModalHeaderLimpo
+          funcaoFechar={(event) => this.props.fecharFormConfigurarAction(event)}
+          titulo="CONFIGURAR STOP"
+          name="config_venda"
+        />
+
         {modalBody(this.props)}
       </div>
     );
   }
 }
 
-const modalBody = props => (
+const modalBody = (props) => (
   <div className="imgContainer imgConfigurar">
     <img src={configurarStop} className="imgChart" alt="" />
     {LabelInputGrafico("Disparo", "TextoGainDisparo_CONFIGURAR_VENDA")}
@@ -93,7 +94,7 @@ const modalBody = props => (
   </div>
 );
 
-export const mapStateToPropsConfigStopVenda = state => ({
+export const mapStateToPropsConfigStopVenda = (state) => ({
   qtde: state.vendaStartStopReducer.qtde,
   gainDisparoConfig1: state.vendaStartStopReducer.gainDisparoConfig1,
   gainExecConfig1: state.vendaStartStopReducer.gainExecConfig1,
@@ -102,14 +103,11 @@ export const mapStateToPropsConfigStopVenda = state => ({
   gainDisparoConfig2: state.vendaStartStopReducer.gainDisparoConfig2,
   gainExecConfig2: state.vendaStartStopReducer.gainExecConfig2,
   stopDisparoConfig2: state.vendaStartStopReducer.stopDisparoConfig2,
-  stopExecConfig2: state.vendaStartStopReducer.stopExecConfig2
+  stopExecConfig2: state.vendaStartStopReducer.stopExecConfig2,
 });
 
-export default connect(
-  mapStateToPropsConfigStopVenda,
-  {
-    mostrarConfigurarStopAction,
-    fecharFormConfigurarAction,
-    mudarInputConfigAction
-  }
-)(ConfigurarStopVenda);
+export default connect(mapStateToPropsConfigStopVenda, {
+  mostrarConfigurarStopAction,
+  fecharFormConfigurarAction,
+  mudarInputConfigAction,
+})(ConfigurarStopVenda);

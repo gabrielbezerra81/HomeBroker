@@ -6,7 +6,7 @@ import DraggableModal from "components/utils/DraggableModal";
 import FormInternoVendaLimitada from "./FormInternoVendaLimitada";
 import GraficoVendaLimitada from "./GraficoVendaLimitada";
 import BodyHeaderVendaLimitada from "./BodyHeaderVendaLimitada";
-import { modalHeader } from "components/utils/FormHeader";
+import { ModalHeader } from "components/utils/FormHeader";
 
 class VendaLimitada extends React.Component {
   componentDidMount() {
@@ -19,20 +19,24 @@ class VendaLimitada extends React.Component {
         headerTitle={this.props.headerTitle}
         renderModalBody={() => modalBody(this.props)}
         headerClass="border-green"
-        renderHeader={resetPosition =>
-          modalHeader(
-            this.props,
-            this.props.headerTitle,
-            "border-green",
-            resetPosition
-          )
-        }
+        renderHeader={(resetPosition) => (
+          <ModalHeader
+            headerTitle={this.props.headerTitle}
+            headerClass="border-green"
+            resetPosition={resetPosition}
+            name={this.props.name}
+            handleShow={this.props.handleShow}
+            ativo={this.props.ativo}
+            close={this.props.close}
+            eventSourceCotacao={this.props.eventSourceCotacao}
+          />
+        )}
       />
     );
   }
 }
 
-const modalBody = props => (
+const modalBody = (props) => (
   <div className="mbody">
     <BodyHeaderVendaLimitada />
     <Row>
@@ -42,9 +46,9 @@ const modalBody = props => (
   </div>
 );
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ativo: state.vendaLimitadaReducer.ativo,
-  eventSourceCotacao: state.vendaLimitadaReducer.eventSourceCotacao
+  eventSourceCotacao: state.vendaLimitadaReducer.eventSourceCotacao,
 });
 
 export default connect(mapStateToProps, {})(VendaLimitada);
@@ -52,5 +56,5 @@ export default connect(mapStateToProps, {})(VendaLimitada);
 const ordem = {
   nome: "Venda Limitada",
   tipoOrdem: "sellLimit",
-  tipoOferta: "V"
+  tipoOferta: "V",
 };

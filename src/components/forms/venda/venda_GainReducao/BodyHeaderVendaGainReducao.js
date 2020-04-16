@@ -4,15 +4,12 @@ import { BodyHeaderCompleto } from "components/utils/BodyHeader";
 
 class BodyHeaderVendaGainReducao extends React.Component {
   render() {
-    return <BodyHeaderCompleto props={this.props} />;
+    return <BodyHeaderCompleto dadosPesquisa={this.props.dadosPesquisa} />;
   }
 }
 
-const mapStateToProps = state => ({
-  dadosPesquisa: state.vendaGainReducao.dadosPesquisa
+const mapStateToProps = (state) => ({
+  dadosPesquisa: state.vendaGainReducao.dadosPesquisa,
 });
 
-export default connect(
-  mapStateToProps,
-  {}
-)(BodyHeaderVendaGainReducao);
+export default connect(mapStateToProps, {})(BodyHeaderVendaGainReducao);

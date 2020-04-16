@@ -1,10 +1,10 @@
 import React from "react";
 import { Row, Col, Button, Form } from "react-bootstrap";
-import { modalHeaderLimpo } from "components/utils/FormHeader";
+import { ModalHeaderLimpo } from "components/utils/FormHeader";
 import { connect } from "react-redux";
 import {
   abrirFecharConfigComplAction,
-  modificarVariavelAction
+  modificarVariavelAction,
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { StorePrincipalContext } from "components/redux/StoreCreation";
 
@@ -12,14 +12,16 @@ class ConfigComplementar extends React.Component {
   render() {
     return (
       <div className="mcontent config_complementar">
-        {modalHeaderLimpo(
-          () =>
+        <ModalHeaderLimpo
+          funcaoFechar={() =>
             this.props.abrirFecharConfigComplAction(
               this.props.configComplementarAberto
-            ),
-          "CONFIGURAÇÃO COMPLEMENTAR",
-          ""
-        )}
+            )
+          }
+          titulo="CONFIGURAÇÃO COMPLEMENTAR"
+          name=""
+        />
+
         <div className="p-1 pl-3 pr-3 bodyConfigComplementar">
           <Row className="mt-2 mb-2">
             <Col md={5}>
@@ -30,7 +32,7 @@ class ConfigComplementar extends React.Component {
                 type="time"
                 className="textInput"
                 value={this.props.horaInicial}
-                onChange={event =>
+                onChange={(event) =>
                   this.props.modificarVariavelAction(
                     "horaInicial",
                     event.currentTarget.value
@@ -48,7 +50,7 @@ class ConfigComplementar extends React.Component {
                 type="time"
                 className="textInput"
                 value={this.props.horaFinal}
-                onChange={event =>
+                onChange={(event) =>
                   this.props.modificarVariavelAction(
                     "horaFinal",
                     event.currentTarget.value
@@ -66,7 +68,7 @@ class ConfigComplementar extends React.Component {
                 as="select"
                 className="textInput"
                 value={this.props.modoExec}
-                onChange={event =>
+                onChange={(event) =>
                   this.props.modificarVariavelAction(
                     "modoExec",
                     event.currentTarget.value
@@ -85,7 +87,7 @@ class ConfigComplementar extends React.Component {
               <Form.Check
                 type="checkbox"
                 checked={this.props.apregoarOferta}
-                onChange={event =>
+                onChange={(event) =>
                   this.props.modificarVariavelAction(
                     "apregoarOferta",
                     event.currentTarget.checked
@@ -112,13 +114,13 @@ class ConfigComplementar extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   configComplementarAberto: state.multilegReducer.configComplementarAberto,
   multileg: state.multilegReducer.multileg,
   horaInicial: state.multilegReducer.horaInicial,
   horaFinal: state.multilegReducer.horaFinal,
   modoExec: state.multilegReducer.modoExec,
-  apregoarOferta: state.multilegReducer.apregoarOferta
+  apregoarOferta: state.multilegReducer.apregoarOferta,
 });
 
 export default connect(

@@ -6,7 +6,7 @@ import { MDBIcon } from "mdbreact";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import ReactResizeDetector from "react-resize-detector";
 import DraggableModal from "components/utils/DraggableModal";
-import { modalHeaderSemBook } from "components/utils/FormHeader";
+import { ModalHeaderSemBook } from "components/utils/FormHeader";
 import imgModeloEU from "img/modeloEU.png";
 import { ReactComponent as ImgModeloUSA } from "img/modeloUSA2.svg";
 import MapaCalor from "components/forms/thl/MapaCalor";
@@ -56,9 +56,14 @@ class Tela_THL extends React.Component {
         id="thl"
         renderModalBody={() => this.modalBody(this.props, this)}
         renderConfigComplementar={this.props.configComplementarAberto}
-        renderHeader={() =>
-          modalHeaderSemBook(this.props, this.props.headerTitle, "border-green")
-        }
+        renderHeader={() => (
+          <ModalHeaderSemBook
+            close={this.props.close}
+            name={this.props.name}
+            headerTitle={this.props.headerTitle}
+            headerClass="border-green"
+          />
+        )}
       ></DraggableModal>
     );
   }

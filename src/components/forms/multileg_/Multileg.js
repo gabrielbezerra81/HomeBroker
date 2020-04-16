@@ -2,7 +2,7 @@ import React from "react";
 
 import { Tab, Row, Col, Nav, Form } from "react-bootstrap";
 import DraggableModal from "components/utils/DraggableModal";
-import { modalHeaderSemBook } from "components/utils/FormHeader";
+import { ModalHeaderSemBook } from "components/utils/FormHeader";
 import AbaMultileg from "components/forms/multileg_/AbaMultileg";
 import { MDBIcon } from "mdbreact";
 
@@ -32,9 +32,14 @@ export default class Multileg extends React.Component {
         id="multileg"
         renderModalBody={() => this.modalBody(this.props)}
         renderConfigComplementar={this.props.configComplementarAberto}
-        renderHeader={() =>
-          modalHeaderSemBook(this.props, this.props.headerTitle, "border-green")
-        }
+        renderHeader={() => (
+          <ModalHeaderSemBook
+            close={this.props.close}
+            name={this.props.name}
+            headerTitle={this.props.headerTitle}
+            headerClass="border-green"
+          />
+        )}
       />
     );
   }
@@ -42,7 +47,7 @@ export default class Multileg extends React.Component {
  
   */
 
-  modalBody = props => {
+  modalBody = (props) => {
     return (
       <div>
         <Tab.Container
@@ -85,7 +90,7 @@ export default class Multileg extends React.Component {
                           <MDBIcon
                             icon="times"
                             className="saldoOpNegativo"
-                            onClick={e => {
+                            onClick={(e) => {
                               this.props.excluirAbaMultilegAction(
                                 this.props,
                                 index
@@ -97,7 +102,7 @@ export default class Multileg extends React.Component {
                             type="text"
                             value={aba.nomeAba}
                             className="inputTituloAba"
-                            onChange={e => {
+                            onChange={(e) => {
                               this.props.modificarAtributoAbaAction(
                                 this.props.multileg,
                                 index,
@@ -147,22 +152,22 @@ export default class Multileg extends React.Component {
     );
   };
 
-  handleSelect = key => {
+  handleSelect = (key) => {
     if (key === "adicionar") {
       const { tabs } = this.state;
 
       const newTabObject = {
         name: `Sim ${tabs.length + 1}`,
-        content: `This is Tab ${tabs.length + 1}`
+        content: `This is Tab ${tabs.length + 1}`,
       };
 
       this.setState({
         tabs: [...tabs, newTabObject],
-        abaAtual: `tab${tabs.length}`
+        abaAtual: `tab${tabs.length}`,
       });
     } else {
       this.setState({
-        abaAtual: key
+        abaAtual: key,
       });
     }
   };

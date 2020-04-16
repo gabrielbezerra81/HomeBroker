@@ -6,7 +6,7 @@ import DraggableModal from "components/utils/DraggableModal";
 import FormInternoCompraStartMovel from "./FormInternoCompraStartMovel";
 import GraficoCompraStartMovel from "./GraficoCompraStartMovel";
 import BodyHeaderCompraStartMovel from "./BodyHeaderCompraStartMovel";
-import { modalHeader } from "components/utils/FormHeader";
+import { ModalHeader } from "components/utils/FormHeader";
 
 class CompraStarMovel extends React.Component {
   render() {
@@ -16,14 +16,18 @@ class CompraStarMovel extends React.Component {
         headerTitle={this.props.headerTitle}
         renderModalBody={() => modalBody()}
         headerClass="border-green"
-        renderHeader={resetPosition =>
-          modalHeader(
-            this.props,
-            this.props.headerTitle,
-            "border-green",
-            resetPosition
-          )
-        }
+        renderHeader={(resetPosition) => (
+          <ModalHeader
+            headerTitle={this.props.headerTitle}
+            headerClass="border-green"
+            resetPosition={resetPosition}
+            name={this.props.name}
+            handleShow={this.props.handleShow}
+            ativo={this.props.ativo}
+            close={this.props.close}
+            eventSourceCotacao={this.props.eventSourceCotacao}
+          />
+        )}
       />
     );
   }
@@ -39,9 +43,9 @@ const modalBody = () => (
   </div>
 );
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ativo: state.compraStartMovelReducer.ativo,
-  eventSourceCotacao: state.compraStartMovelReducer.eventSourceCotacao
+  eventSourceCotacao: state.compraStartMovelReducer.eventSourceCotacao,
 });
 
 export default connect(mapStateToProps, {})(CompraStarMovel);
@@ -49,5 +53,5 @@ export default connect(mapStateToProps, {})(CompraStarMovel);
 const ordem = {
   nome: "Compra Stop Móvel",
   tipoOrdem: "buyMovel",
-  tipoOferta: "C"
+  tipoOferta: "C",
 };

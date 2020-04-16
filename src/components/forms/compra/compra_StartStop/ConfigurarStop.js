@@ -7,30 +7,30 @@ import { COMPRA_STARTSTOP_NAMESPACE } from "constants/ActionTypes";
 import {
   LabelInputGrafico,
   TextoGainStopGrafico,
-  TextoValorTotalGrafico
+  TextoValorTotalGrafico,
 } from "components/utils/TextoGrafico";
 import { mudarInputConfigAction } from "components/redux/actions/formInputActions";
 import { CalculoValorTotalAgendada } from "components/utils/CalculoValorTotal";
 import { fecharFormConfigurarAction } from "components/redux/reducers/MainAppReducer";
-import { modalHeaderLimpo } from "components/utils/FormHeader";
+import { ModalHeaderLimpo } from "components/utils/FormHeader";
 import GraficoInputsConfigStartStop from "components/utils/GraficoInputsConfigStartStop";
 
 class ConfigurarStop extends React.Component {
   render() {
     return (
       <div className="configDiv mcontent">
-        {modalHeaderLimpo(
-          event => this.props.fecharFormConfigurarAction(event),
-          "CONFIGURAR STOP",
-          "config_compra"
-        )}
+        <ModalHeaderLimpo
+          funcaoFechar={(event) => this.props.fecharFormConfigurarAction(event)}
+          titulo="CONFIGURAR STOP"
+          name="config_compra"
+        />
         {modalBody(this.props)}
       </div>
     );
   }
 }
 
-const modalBody = props => (
+const modalBody = (props) => (
   <div className="imgContainer imgConfigurar">
     <img src={configurarStop} className="imgChart" alt="" />
     {LabelInputGrafico("Disparo", "TextoGainDisparo_CONFIGURAR")}
@@ -105,7 +105,7 @@ const modalBody = props => (
   </div>
 );
 
-export const mapStateToPropsConfigurarStop = state => ({
+export const mapStateToPropsConfigurarStop = (state) => ({
   qtde: state.compraStartStopReducer.qtde,
   gainDisparoConfig1: state.compraStartStopReducer.gainDisparoConfig1,
   gainExecConfig1: state.compraStartStopReducer.gainExecConfig1,
@@ -114,13 +114,10 @@ export const mapStateToPropsConfigurarStop = state => ({
   gainDisparoConfig2: state.compraStartStopReducer.gainDisparoConfig2,
   gainExecConfig2: state.compraStartStopReducer.gainExecConfig2,
   stopDisparoConfig2: state.compraStartStopReducer.stopDisparoConfig2,
-  stopExecConfig2: state.compraStartStopReducer.stopExecConfig2
+  stopExecConfig2: state.compraStartStopReducer.stopExecConfig2,
 });
 
-export default connect(
-  mapStateToPropsConfigurarStop,
-  {
-    fecharFormConfigurarAction,
-    mudarInputConfigAction
-  }
-)(ConfigurarStop);
+export default connect(mapStateToPropsConfigurarStop, {
+  fecharFormConfigurarAction,
+  mudarInputConfigAction,
+})(ConfigurarStop);

@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Table, ProgressBar } from "react-bootstrap";
 import DraggableModal from "components/utils/DraggableModal";
-import { modalHeaderSemBook } from "components/utils/FormHeader";
+import { ModalHeaderSemBook } from "components/utils/FormHeader";
 import { formatarDataDaAPI } from "components/utils/Formatacoes";
 import { OpcoesOrdemExecConectada } from "components/redux/ElementosConectadosRedux";
 
@@ -40,9 +40,14 @@ export default class OrdensExecucao extends React.Component {
         id="ordens_execucao"
         renderModalBody={() => modalBody(this.props)}
         renderDivFiltrarOrdens={true}
-        renderHeader={() =>
-          modalHeaderSemBook(this.props, this.props.headerTitle, "border-green")
-        }
+        renderHeader={() => (
+          <ModalHeaderSemBook
+            close={this.props.close}
+            name={this.props.name}
+            headerTitle={this.props.headerTitle}
+            headerClass="border-green"
+          />
+        )}
       />
     );
   }

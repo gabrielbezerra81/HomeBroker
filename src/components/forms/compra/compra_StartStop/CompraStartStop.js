@@ -6,7 +6,7 @@ import DraggableModal from "components/utils/DraggableModal";
 import FormInternoCompraStartStop from "./FormInternoCompraStartStop";
 import GraficoCompraStartStop from "./GraficoCompraStartStop";
 import BodyHeaderCompraStartStop from "./BodyHeaderCompraStartStop";
-import { modalHeader } from "components/utils/FormHeader";
+import { ModalHeader } from "components/utils/FormHeader";
 
 class CompraStartStop extends React.Component {
   render() {
@@ -16,14 +16,18 @@ class CompraStartStop extends React.Component {
         headerTitle={this.props.headerTitle}
         renderModalBody={() => modalBody(this.props)}
         headerClass="border-green"
-        renderHeader={resetPosition =>
-          modalHeader(
-            this.props,
-            this.props.headerTitle,
-            "border-green",
-            resetPosition
-          )
-        }
+        renderHeader={(resetPosition) => (
+          <ModalHeader
+            headerTitle={this.props.headerTitle}
+            headerClass="border-green"
+            resetPosition={resetPosition}
+            name={this.props.name}
+            handleShow={this.props.handleShow}
+            ativo={this.props.ativo}
+            close={this.props.close}
+            eventSourceCotacao={this.props.eventSourceCotacao}
+          />
+        )}
         renderConfigForm={this.props.config_compra}
         classConfigAberto={this.props.config_compra ? "configStopAberto" : null}
       />
@@ -31,22 +35,24 @@ class CompraStartStop extends React.Component {
   }
 }
 
-const modalBody = props => (
+const modalBody = (props) => (
   <div className="mbody">
     <BodyHeaderCompraStartStop />
     <Row>
-      <
-// @ts-ignore
-      FormInternoCompraStartStop handleShow={props.handleShow} ordem={ordem} />
+      <// @ts-ignore
+      FormInternoCompraStartStop
+        handleShow={props.handleShow}
+        ordem={ordem}
+      />
       <GraficoCompraStartStop />
     </Row>
   </div>
 );
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   config_compra: state.SubAppReducer.config_compra,
   ativo: state.compraStartStopReducer.ativo,
-  eventSourceCotacao: state.compraStartStopReducer.eventSourceCotacao
+  eventSourceCotacao: state.compraStartStopReducer.eventSourceCotacao,
 });
 
 export default connect(mapStateToProps, {})(CompraStartStop);
@@ -54,5 +60,5 @@ export default connect(mapStateToProps, {})(CompraStartStop);
 const ordem = {
   nome: "Compra Start Stop",
   tipoOrdem: "buyDoubleStart",
-  tipoOferta: "C"
+  tipoOferta: "C",
 };

@@ -2,7 +2,7 @@ import React from "react";
 
 import { Row, Col, Form, InputGroup } from "react-bootstrap";
 import DraggableModal from "components/utils/DraggableModal";
-import { modalHeaderSemBook } from "components/utils/FormHeader";
+import { ModalHeaderSemBook } from "components/utils/FormHeader";
 import { iconeConfigAbrirFormulario } from "components/utils/IconesConfigFormInterno";
 import { MDBIcon } from "mdbreact";
 import { ReactComponent as IconeResumido } from "img/rounded-rectangle.svg";
@@ -48,14 +48,19 @@ export default class PosicaoEmCustodia extends React.Component {
         id="posicao_custodia"
         renderModalBody={() => this.modalBody(this.props)}
         renderDivPosicaoEmCustodia={true}
-        renderHeader={() =>
-          modalHeaderSemBook(this.props, this.props.headerTitle, "border-green")
-        }
+        renderHeader={() => (
+          <ModalHeaderSemBook
+            close={this.props.close}
+            name={this.props.name}
+            headerTitle={this.props.headerTitle}
+            headerClass="border-green"
+          />
+        )}
       />
     );
   }
 
-  modalBody = props => {
+  modalBody = (props) => {
     return (
       <div className="bodyListaCompleta">
         <Row>
@@ -79,7 +84,7 @@ export default class PosicaoEmCustodia extends React.Component {
                 className="inputAtivo"
                 type="text"
                 value={this.props.ativoPesquisa}
-                onChange={event =>
+                onChange={(event) =>
                   this.props.mudarVariavelPosicaoAction(
                     "ativoPesquisa",
                     event.currentTarget.value
@@ -99,7 +104,7 @@ export default class PosicaoEmCustodia extends React.Component {
                 as="select"
                 className="textInput formPosicao"
                 value={this.props.inputSelect}
-                onChange={event =>
+                onChange={(event) =>
                   this.props.mudarVariavelPosicaoAction(
                     "inputSelect",
                     event.currentTarget.value
@@ -247,7 +252,7 @@ export default class PosicaoEmCustodia extends React.Component {
   };
 }
 
-const visualizacaoPosicao = tipoVisualizacao => {
+const visualizacaoPosicao = (tipoVisualizacao) => {
   if (tipoVisualizacao === "lista") {
     return <PosicaoEmLista />;
   } else if (

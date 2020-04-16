@@ -2,7 +2,7 @@ import React from "react";
 
 import { Row, Col } from "react-bootstrap";
 import DraggableModal from "components/utils/DraggableModal";
-import { modalHeaderSemBook } from "components/utils/FormHeader";
+import { ModalHeaderSemBook } from "components/utils/FormHeader";
 import {} from "recharts";
 import Tabela1Custos from "components/forms/relatorio_detalhado/Tabela1Custos";
 import Tabela2ProximaOrdem from "components/forms/relatorio_detalhado/Tabela2ProximaOrdem";
@@ -18,7 +18,7 @@ import {
   BarChart,
   Bar,
   Legend,
-  ReferenceLine
+  ReferenceLine,
 } from "recharts";
 import { data } from "components/forms/posicao_custodia/posicao_detalhada/GraficoPatrimonio";
 
@@ -44,9 +44,14 @@ export default class RelatorioDetalhado extends React.Component {
         id="relatorio_detalhado"
         renderModalBody={() => this.modalBody(this.props)}
         renderDivFiltrarOrdens={false}
-        renderHeader={() =>
-          modalHeaderSemBook(this.props, this.props.headerTitle, "border-green")
-        }
+        renderHeader={() => (
+          <ModalHeaderSemBook
+            close={this.props.close}
+            name={this.props.name}
+            headerTitle={this.props.headerTitle}
+            headerClass="border-green"
+          />
+        )}
       />
     );
   }
@@ -54,7 +59,7 @@ export default class RelatorioDetalhado extends React.Component {
  
   */
 
-  modalBody = props => {
+  modalBody = (props) => {
     return (
       <div className="bodyRelatorioDetalhado">
         <Row className="row1">
@@ -201,12 +206,12 @@ export default class RelatorioDetalhado extends React.Component {
   };
 }
 
-const positivoNegativo = valor => {
+const positivoNegativo = (valor) => {
   if (valor >= 0) return "porcentagemPositiva";
   else return "porcentagemNegativa";
 };
 
-export const ativoCompraVenda = tipo => {
+export const ativoCompraVenda = (tipo) => {
   if (tipo === "compra") return "ativoCompra";
   else return "ativoVenda";
 };
@@ -215,11 +220,11 @@ const item = {
   ativo: "PETR4",
   custodiaCompra: [
     { ativo: "X280", qtde: 1000 },
-    { ativo: "X290", qtde: 1000 }
+    { ativo: "X290", qtde: 1000 },
   ],
   custodiaVenda: [
     { ativo: "S272", qtde: 1000 },
-    { ativo: "S290", qtde: 1000 }
+    { ativo: "S290", qtde: 1000 },
   ],
   precoCompra: 2.5,
   precoVenda: 2.6,
@@ -228,6 +233,6 @@ const item = {
   porcentagemResultado: 38.46,
   executando: [
     { ativo: "S272", qtde: 1000, valor: "0,30", tipo: "compra" },
-    { ativo: "T272", qtde: 1000, valor: "0,40", tipo: "venda" }
-  ]
+    { ativo: "T272", qtde: 1000, valor: "0,40", tipo: "venda" },
+  ],
 };
