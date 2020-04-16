@@ -4,6 +4,14 @@ import { MDBIcon } from "mdbreact";
 import InputFormatado from "components/utils/InputFormatado";
 
 export default (props, namespace) => {
+  let step = 0.01;
+  let tipoInputQtde = "preco";
+
+  if (props.dadosPesquisa.qtdeMultiplo100) {
+    step = 100;
+    tipoInputQtde = "quantidade";
+  }
+
   return (
     <Row>
       <Col md={2} className="colLabelInput">
@@ -17,8 +25,8 @@ export default (props, namespace) => {
             placeholder=""
             name="ativo"
             value={props.ativo}
-            onChange={event => props.mudarAtivoAction(event, namespace)}
-            onKeyPress={event => {
+            onChange={(event) => props.mudarAtivoAction(event, namespace)}
+            onKeyPress={(event) => {
               //event.preventDefault();
               if (event.key === "Enter") {
                 props.pesquisarAtivoOnEnterAction(props, namespace);
@@ -42,10 +50,10 @@ export default (props, namespace) => {
         <Form.Group>
           <Form.Label>Qtde</Form.Label>
           <InputFormatado
-            tipoInput="quantidade"
-            step={100}
+            tipoInput={tipoInputQtde}
+            step={step}
             value={props.qtde}
-            onChange={valor => props.mudarQtdAction(valor, namespace)}
+            onChange={(valor) => props.mudarQtdAction(valor, namespace)}
             name="qtde"
             onBlur={() => qtdeMultiplo100(props)}
           />
@@ -55,7 +63,7 @@ export default (props, namespace) => {
   );
 };
 
-const qtdeMultiplo100 = props => {
+const qtdeMultiplo100 = (props) => {
   let erro = "";
   if (Number(props.qtde) % 100 !== 0)
     erro = "Quantidade deve ser múltiplo de 100";

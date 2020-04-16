@@ -73,27 +73,26 @@ export const pesquisarAtivoAPI = (codigo) => {
     .then((response) => {
       const { body } = response;
       var dadosPesquisa;
-      let oscilacao;
+      let oscilacao = "0,00";
       let cotacaoAtual = 0;
       let qtdeMultiplo100;
 
-      let ultimoHorario = formatarDataDaAPI(
-        body.ultimoHorario
-      ).toLocaleTimeString();
+      let ultimoHorario = "";
 
       if (["OddLot", "Forex"].includes(body.stock.market))
         qtdeMultiplo100 = false;
       else qtdeMultiplo100 = true;
 
-      oscilacao = body.oscilacao;
-      if (!oscilacao) oscilacao = "0,00";
-      cotacaoAtual = body.ultimo;
-      if (!cotacaoAtual) cotacaoAtual = 0;
+      if (body.oscilacao) oscilacao = body.oscilacao;
 
-      if (
-        body.stock.market === "EquityCall" ||
-        body.stock.market === "EquityPut"
-      ) {
+      if (body.ultimo) cotacaoAtual = body.ultimo;
+
+      if (body.ultimoHorario)
+        ultimoHorario = formatarDataDaAPI(
+          body.ultimoHorario
+        ).toLocaleTimeString();
+
+      if (["EquityPut", "EquityCall"].includes(body.stock.market)) {
         dadosPesquisa = {
           resultadoAtivo: body.stock.symbol,
           strike: body.stock.strike,
@@ -430,11 +429,13 @@ export const atualizarCotacaoAPI = (
       const ativoRetornado = dados.symbol;
 
       if (tipo === "boletas" && dadosPesquisa) {
-        if (dadosPesquisa.cotacaoAtual !== cotacaoAtual) {
+        if (cotacaoAtual && dadosPesquisa.cotacaoAtual !== cotacaoAtual) {
           dadosPesquisa.cotacaoAtual = cotacaoAtual;
-          dadosPesquisa.ultimoHorario = formatarDataDaAPI(
-            dados.ultimoHorario
-          ).toLocaleTimeString();
+
+          if (dados.ultimoHorario)
+            dadosPesquisa.ultimoHorario = formatarDataDaAPI(
+              dados.ultimoHorario
+            ).toLocaleTimeString();
 
           dispatch({
             type: `${PESQUISAR_ATIVO_BOLETA_API}${namespace}`,
