@@ -16,7 +16,6 @@ import {
   atualizarCotacaoAPI,
   atualizarBookAPI,
   travarDestravarClique,
-  verificarMonitorarAtivoAPI,
 } from "components/api/API";
 import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
 import { formatarNumero } from "components/redux/reducers/boletas_reducer/formInputReducer";
@@ -213,7 +212,6 @@ export const modificarAtributoTabelaAbaAction = (
     }
 
     if (codigoAnterior !== linhaTabela.codigoSelecionado) {
-      verificarMonitorarAtivoAPI(linhaTabela.codigoSelecionado);
       //Se o código mudar, deve ser verificado se o novo código já está presente nos books
       cotacoesMultileg = [...props.cotacoesMultileg];
 
@@ -340,8 +338,6 @@ export const adicionarOferta = async (
   let calculo = calculoPreco(aba, "ultimo", [], cotacoesMultileg).toFixed(2);
   calculo = formatarNumero(calculo, 2, ".", ",");
   aba.preco = calculo;
-
-  verificarMonitorarAtivoAPI(novaOferta.codigoSelecionado);
 
   return { abasMultileg, cotacoesMultileg };
 };

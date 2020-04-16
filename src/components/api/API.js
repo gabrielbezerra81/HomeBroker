@@ -1,4 +1,5 @@
 import request from "superagent";
+import retryDelay from "superagent-retry-delay";
 import { formatarDataDaAPI } from "components/utils/Formatacoes";
 import { atualizarTabelaAntiga } from "components/redux/actions/api_actions/bookOfertaAPIActions";
 import { adicionaPosicao } from "components/redux/actions/menu_actions/PosicaoActions";
@@ -15,8 +16,6 @@ import {
   url_base_reativa,
   url_bookReativo_codigos,
   url_cotacaoReativa_codigos,
-  url_listarAtivosMonitorados_,
-  url_monitorarAtivo_codigo,
   url_criarPosicaoMultileg_,
   url_criarAlertaOperacao_,
   url_cancelarOrdemExec_id,
@@ -62,13 +61,15 @@ import {
   erro_listarBook,
 } from "constants/AlertaErros";
 
+retryDelay(request);
+
 const timeout = 5000;
 
 export const pesquisarAtivoAPI = (codigo) => {
   return request
     .get(url_base + url_pesquisarAtivoBoletas_codigo + codigo)
     .timeout(timeout)
-    .retry(3)
+    .retry(3, 2000)
     .then((response) => {
       const { body } = response;
       var dadosPesquisa;
@@ -80,7 +81,8 @@ export const pesquisarAtivoAPI = (codigo) => {
         body.ultimoHorario
       ).toLocaleTimeString();
 
-      if (body.stock.market === "OddLot") qtdeMultiplo100 = false;
+      if (["OddLot", "Forex"].includes(body.stock.market))
+        qtdeMultiplo100 = false;
       else qtdeMultiplo100 = true;
 
       oscilacao = body.oscilacao;
@@ -130,7 +132,7 @@ export const pesquisarAtivoAPI = (codigo) => {
         cotacaoAtual: "",
         porcentagem: "",
         ultimoHorario: "",
-        qtdeMultiplo100: "",
+        qtdeMultiplo100: true,
         market: "",
         ativo: "",
       };
@@ -145,7 +147,7 @@ export const listarBookOfertaAPI = (codigo_ativo) => {
   return request
     .get(url_base + url_listarBookOfertas_codigo + codigo_ativo)
     .timeout(timeout)
-    .retry(3)
+    .retry(3, 2000)
     .then((response) => {
       const { body } = response;
 
@@ -173,7 +175,7 @@ export const enviarOrdemAPI = (json, token) => {
   return request
     .post(url_base + url_enviarOrdem)
     .timeout(timeout)
-    .retry(2)
+    .retry(2, 2000)
     .set({
       "Content-Type": "application/json",
       Authorization: `${token.tokenType} ${token.accessToken}`,
@@ -194,7 +196,7 @@ export const pesquisarAtivoMultilegAPI = (codigo_ativo) => {
   return request
     .get(url_base + url_pesquisarOpcoesVencimentos_codigo + codigo_ativo)
     .timeout(timeout)
-    .retry(3)
+    .retry(3, 2000)
     .then(async (response) => {
       dados = {
         opcoes: [],
@@ -233,7 +235,7 @@ export const pesquisarStrikesMultilegAPI = (codigo_ativo, vencimento) => {
         vencimento
     )
     .timeout(timeout)
-    .retry(3)
+    .retry(3, 2000)
     .then((response) => {
       return response.body;
     })
@@ -248,7 +250,7 @@ export const listarOrdensExecAPI = (idToken) => {
   return request
     .get(url_base + url_listarOrdensExecucao_)
     .timeout(timeout)
-    .retry(3)
+    .retry(3, 2000)
     .set({ Authorization: `${idToken.tokenType} ${idToken.accessToken}` })
     .then((response) => {
       const { body } = response;
@@ -271,7 +273,7 @@ export const listarPosicoesAPI = (idToken) => {
     .get(url_base + url_listarPosicoes)
     .timeout(timeout)
     .set({ Authorization: `${idToken.tokenType} ${idToken.accessToken}` })
-    .retry(3)
+    .retry(3, 2000)
     .then((response) => {
       const { body } = response;
       return body;
@@ -602,35 +604,13 @@ export const atualizarPosicaoAPI = (
   return source;
 };
 
-export const verificarMonitorarAtivoAPI = (codigo) => {
-  request
-    .get(url_base + url_listarAtivosMonitorados_)
-    .timeout(timeout)
-    .then((response) => {
-      const { body } = response;
-
-      if (!body.some((item) => item.symbol === codigo)) {
-        request
-          .get(url_base + url_monitorarAtivo_codigo + codigo)
-          .timeout(timeout)
-          .then(() => console.log("adicionou"))
-          .catch((erro) => {
-            mostrarErroConsulta(erro, "");
-          });
-      }
-    })
-    .catch((erro) => {
-      mostrarErroConsulta(erro, "");
-    });
-};
-
 export const criarPosicaoMultilegAPI = (json) => {
   const jsonStringBody = JSON.stringify(json);
 
   return request
     .post(url_base + url_criarPosicaoMultileg_)
     .timeout(timeout)
-    .retry(2)
+    .retry(2, 2000)
     .set({ "Content-Type": "application/json" })
     .send(jsonStringBody)
     .then((response) => {
@@ -649,7 +629,7 @@ export const criarAlertaOperacaoAPI = (json) => {
   return request
     .post(url_base + url_criarAlertaOperacao_)
     .timeout(timeout)
-    .retry(2)
+    .retry(2, 2000)
     .set({ "Content-Type": "application/json" })
     .send(jsonStringBody)
     .then((response) => {
@@ -712,19 +692,22 @@ export const incrementarPrecoOrdemExecAPI = (id, preco) => {
 export const realizarLoginAPI = (username, password) => {
   let payload = { username: username, password: password };
 
-  return request
-    .post(url_base + url_realizarLogin_usuario_senha)
-    .timeout(timeout)
-    .set({ "Content-Type": "application/json" })
-    .send(JSON.stringify(payload))
-    .then((response) => {
-      const { body } = response;
-      return body;
-    })
-    .catch((erro) => {
-      mostrarErroConsulta(erro, erro_realizar_login);
-      return null;
-    });
+  return (
+    request
+      .post(url_base + url_realizarLogin_usuario_senha)
+      // .retry(3, 2000)
+      .timeout(timeout)
+      .set({ "Content-Type": "application/json" })
+      .send(JSON.stringify(payload))
+      .then((response) => {
+        const { body } = response;
+        return body;
+      })
+      .catch((erro) => {
+        mostrarErroConsulta(erro, erro_realizar_login);
+        return null;
+      })
+  );
 };
 
 export const realizarCadastroAPI = (nome, username, email, role, password) => {
@@ -769,7 +752,7 @@ export const buscarInformacoesUsuarioAPI = (token) => {
     .get(url_base + url_informacoesUsuario_token)
     .set({ Authorization: `${token.tokenType} ${token.accessToken}` })
     .timeout(timeout)
-    .retry(3)
+    .retry(3, 2000)
     .then((response) => {
       return response.body;
     })
@@ -783,7 +766,7 @@ export const pesquisarListaStrikeTHLAPI = (ativo) => {
   return request
     .get(url_base + url_pesquisarListaStrike_codigo + ativo)
     .timeout(timeout)
-    .retry(3)
+    .retry(3, 2000)
     .then((response) => response.body)
     .catch((erro) => {
       mostrarErroConsulta(erro, erro_pesquisar_ativo);
@@ -796,7 +779,7 @@ export const listarContasAPI = (token) => {
     .get(url_base + url_listarContas_token)
     .set({ Authorization: `${token.tokenType} ${token.accessToken}` })
     .timeout(timeout)
-    .retry(3)
+    .retry(3, 2000)
     .then((response) => {
       return response.body;
     })

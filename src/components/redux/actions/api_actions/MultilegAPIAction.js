@@ -3,7 +3,6 @@ import {
   pesquisarStrikesMultilegAPI,
   enviarOrdemAPI,
   travarDestravarClique,
-  verificarMonitorarAtivoAPI,
   criarAlertaOperacaoAPI,
   criarPosicaoMultilegAPI,
 } from "components/api/API";
@@ -40,8 +39,6 @@ export const pesquisaAtivo = async (abasMultileg, indice, cotacoesMultileg) => {
   let multileg = [...abasMultileg];
   let aba = multileg[indice];
   const codigo_ativo = aba.ativo;
-
-  verificarMonitorarAtivoAPI(codigo_ativo);
 
   const dados = await pesquisarAtivoMultilegAPI(codigo_ativo);
 
@@ -114,7 +111,7 @@ export const enviarOrdemMultilegAction = (props) => {
     travarDestravarClique("travar", "multileg");
 
     if (validarOrdemMultileg(props)) await enviarOrdemAPI([json], props.token);
-    
+
     travarDestravarClique("destravar", "multileg");
   };
 };
