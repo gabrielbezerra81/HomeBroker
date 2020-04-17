@@ -14,7 +14,7 @@ import {
   MUDAR_INPUT_CONFIGURAR,
   MUDAR_QTDE,
   MUDAR_ATRIBUTO_BOLETA,
-  ATUALIZAR_EVENT_SOURCE_BOLETAS
+  ATUALIZAR_EVENT_SOURCE_BOLETAS,
 } from "constants/ActionTypes";
 import { PESQUISAR_ATIVO_BOLETA_API } from "constants/ApiActionTypes";
 
@@ -28,8 +28,8 @@ const INITIAL_STATE = {
     cotacaoAtual: "",
     porcentagem: "",
     ultimoHorario: "",
-    qtdeMultiplo100: true,
-    market: ""
+    stepQtde: 100,
+    market: "",
   },
   ativo: "PETR4",
   entradaDisparo: "",
@@ -68,10 +68,10 @@ const INITIAL_STATE = {
   stopExecConfig2: "",
   qtde: "",
   erro: "",
-  eventSourceCotacao: null
+  eventSourceCotacao: null,
 };
 
-export default namespace => (state = INITIAL_STATE, action) => {
+export default (namespace) => (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case `${MUDAR_ATIVO}${namespace}`:
       return { ...state, ativo: action.payload };
@@ -97,7 +97,7 @@ export default namespace => (state = INITIAL_STATE, action) => {
       return {
         ...state,
         [action.payload.nome]: action.payload.valor,
-        ajusteAssimetrico: ""
+        ajusteAssimetrico: "",
       };
     case `${REMOVE_ITEM_TABELA_GAIN_REDUCAO}${namespace}`:
       return { ...state, tabelaGainReducao: action.payload };

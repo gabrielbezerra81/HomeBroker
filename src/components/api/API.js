@@ -75,13 +75,12 @@ export const pesquisarAtivoAPI = (codigo) => {
       var dadosPesquisa;
       let oscilacao = "0,00";
       let cotacaoAtual = 0;
-      let qtdeMultiplo100;
+      let stepQtde = 100;
 
       let ultimoHorario = "";
 
-      if (["OddLot", "Forex"].includes(body.stock.market))
-        qtdeMultiplo100 = false;
-      else qtdeMultiplo100 = true;
+      if (body.stock.market === "OddLot") stepQtde = 1;
+      else if (body.stock.market === "Forex") stepQtde = 0.01;
 
       if (body.oscilacao) oscilacao = body.oscilacao;
 
@@ -105,7 +104,7 @@ export const pesquisarAtivoAPI = (codigo) => {
           cotacaoAtual: cotacaoAtual,
           porcentagem: oscilacao,
           ultimoHorario: ultimoHorario,
-          qtdeMultiplo100: qtdeMultiplo100,
+          stepQtde: stepQtde,
           market: "tipo2",
           ativo: body.stock.symbol,
         };
@@ -116,7 +115,7 @@ export const pesquisarAtivoAPI = (codigo) => {
           cotacaoAtual: cotacaoAtual,
           porcentagem: oscilacao,
           ultimoHorario: ultimoHorario,
-          qtdeMultiplo100: qtdeMultiplo100,
+          stepQtde: stepQtde,
           market: "tipo1",
           ativo: body.stock.symbol,
         };
@@ -131,7 +130,7 @@ export const pesquisarAtivoAPI = (codigo) => {
         cotacaoAtual: "",
         porcentagem: "",
         ultimoHorario: "",
-        qtdeMultiplo100: true,
+        stepQtde: 100,
         market: "",
         ativo: "",
       };

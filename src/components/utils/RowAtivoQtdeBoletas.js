@@ -4,12 +4,10 @@ import { MDBIcon } from "mdbreact";
 import InputFormatado from "components/utils/InputFormatado";
 
 export default (props, namespace) => {
-  let step = 0.01;
-  let tipoInputQtde = "preco";
+  let tipoInputQtde = "quantidade";
 
-  if (props.dadosPesquisa.qtdeMultiplo100) {
-    step = 100;
-    tipoInputQtde = "quantidade";
+  if (props.dadosPesquisa.stepQtde === 0.01) {
+    tipoInputQtde = "preco";
   }
 
   return (
@@ -51,11 +49,11 @@ export default (props, namespace) => {
           <Form.Label>Qtde</Form.Label>
           <InputFormatado
             tipoInput={tipoInputQtde}
-            step={step}
+            step={props.dadosPesquisa.stepQtde}
             value={props.qtde}
             onChange={(valor) => props.mudarQtdAction(valor, namespace)}
             name="qtde"
-            onBlur={() => qtdeMultiplo100(props)}
+            onBlur={() => validacaoQtde(props)}
           />
         </Form.Group>
       </Col>
@@ -63,11 +61,11 @@ export default (props, namespace) => {
   );
 };
 
-const qtdeMultiplo100 = (props) => {
+const validacaoQtde = (props) => {
   let erro = "";
   if (Number(props.qtde) % 100 !== 0)
     erro = "Quantidade deve ser múltiplo de 100";
-  if (props.dadosPesquisa && props.dadosPesquisa.qtdeMultiplo100) {
+  if (props.dadosPesquisa && props.dadosPesquisa.stepQtde === 100) {
     return props.mostrarErroQtdeOnBlurAction(erro);
   } else return false;
 };
