@@ -47,7 +47,6 @@ class FormInternoCompraMercado extends React.Component {
           <RowGainStopFormInternoConectada
             namespace={COMPRA_MERCADO_NAMESPACE}
             cv="compra"
-            handleShow={this.props.handleShow}
             iconeConfigGain="compra_gainreducao"
             iconeConfigStop="venda_stopmovel"
           />

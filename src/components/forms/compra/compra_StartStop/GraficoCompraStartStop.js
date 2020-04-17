@@ -7,7 +7,7 @@ import {
   LabelInputGrafico,
   TextoValorTotalGrafico,
   TextoGainStopGrafico,
-  TextoCotacaoAtualGrafico
+  TextoCotacaoAtualGrafico,
 } from "components/utils/TextoGrafico";
 import { COMPRA_STARTSTOP_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalAgendada } from "components/utils/CalculoValorTotal";
@@ -33,20 +33,8 @@ class GraficoCompraStartStop extends React.Component {
               onChange={() => false}
             />
           </Form>
-          <IconeConfigGrafico
-            id="ConfigGainGrafico_CA"
-            name="config_compra"
-            handleShow={event => {
-              this.props.abrirFormConfigurarAction(event, this.props);
-            }}
-          />
-          <IconeConfigGrafico
-            id="ConfigStopGrafico_CA"
-            name="config_compra"
-            handleShow={event => {
-              this.props.abrirFormConfigurarAction(event, this.props);
-            }}
-          />
+          <IconeConfigGrafico id="ConfigGainGrafico_CA" name="config_compra" />
+          <IconeConfigGrafico id="ConfigStopGrafico_CA" name="config_compra" />
           {LabelInputGrafico("Disparo", "TextoGainDisparo_CA")}
           {LabelInputGrafico("Execução", "TextoGainExecucao_CA")}
           {LabelInputGrafico("Disparo", "TextoStopDisparo_CA")}
@@ -80,18 +68,15 @@ class GraficoCompraStartStop extends React.Component {
 
 //
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   gainDisparo: state.compraStartStopReducer.gainDisparo,
   gainExec: state.compraStartStopReducer.gainExec,
   stopDisparo: state.compraStartStopReducer.stopDisparo,
   stopExec: state.compraStartStopReducer.stopExec,
   dadosPesquisa: state.compraStartStopReducer.dadosPesquisa,
-  qtde: state.compraStartStopReducer.qtde
+  qtde: state.compraStartStopReducer.qtde,
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    abrirFormConfigurarAction
-  }
-)(GraficoCompraStartStop);
+export default connect(mapStateToProps, {
+  abrirFormConfigurarAction,
+})(GraficoCompraStartStop);

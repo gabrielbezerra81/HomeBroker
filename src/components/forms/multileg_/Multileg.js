@@ -34,7 +34,6 @@ export default class Multileg extends React.Component {
         renderConfigComplementar={this.props.configComplementarAberto}
         renderHeader={() => (
           <ModalHeaderSemBook
-            close={this.props.close}
             name={this.props.name}
             headerTitle={this.props.headerTitle}
             headerClass="border-green"

@@ -2,20 +2,20 @@ import React from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import InputFormatado, {
-  boxShadowInput
+  boxShadowInput,
 } from "components/utils/InputFormatado";
 import {
   mudarAtributoBoletaAction,
   adicionarItemTabelaGainReducaoAction,
-  mudarQtdAction
+  mudarQtdAction,
 } from "components/redux/actions/formInputActions";
 import { mostrarErroQtdeOnBlurAction } from "components/redux/actions/bookOfertaActions";
-import { iconeConfigAbrirFormulario } from "components/utils/IconesConfigFormInterno";
+import { IconeConfigAbrirFormulario } from "components/utils/IconesConfigFormInterno";
 import { mapStateToPropsInputsPreco } from "components/utils/GraficoInputs";
 import { MDBIcon } from "mdbreact";
 import {
   COMPRA_STARTSTOP_NAMESPACE,
-  VENDA_STARTSTOP_NAMESPACE
+  VENDA_STARTSTOP_NAMESPACE,
 } from "constants/ActionTypes";
 
 class RowGainStopFormInterno extends React.Component {
@@ -40,7 +40,7 @@ class RowGainStopFormInterno extends React.Component {
               )}`}
               step={0.01}
               value={this.props[this.props.namespace].gainDisparo}
-              onChange={valor =>
+              onChange={(valor) =>
                 this.props.mudarAtributoBoletaAction(
                   valor,
                   this.props.namespace,
@@ -60,7 +60,7 @@ class RowGainStopFormInterno extends React.Component {
                 "gainExec_Agendada"
               )}`}
               value={this.props[this.props.namespace].gainExec}
-              onChange={valor =>
+              onChange={(valor) =>
                 this.props.mudarAtributoBoletaAction(
                   valor,
                   this.props.namespace,
@@ -71,10 +71,9 @@ class RowGainStopFormInterno extends React.Component {
           </Form.Group>
         </Col>
         <Col md={1} className="colIconeConfig">
-          {iconeConfigAbrirFormulario(
-            this.props.handleShow,
-            this.props.iconeConfigGain
-          )}
+          <IconeConfigAbrirFormulario
+            nomeFormulario={this.props.iconeConfigGain}
+          />
         </Col>
       </Row>
     );
@@ -94,7 +93,7 @@ class RowGainStopFormInterno extends React.Component {
               )}`}
               step={0.01}
               value={this.props[this.props.namespace].stopDisparo}
-              onChange={valor =>
+              onChange={(valor) =>
                 this.props.mudarAtributoBoletaAction(
                   valor,
                   this.props.namespace,
@@ -114,7 +113,7 @@ class RowGainStopFormInterno extends React.Component {
               )}`}
               step={0.01}
               value={this.props[this.props.namespace].stopExec}
-              onChange={valor =>
+              onChange={(valor) =>
                 this.props.mudarAtributoBoletaAction(
                   valor,
                   this.props.namespace,
@@ -125,10 +124,9 @@ class RowGainStopFormInterno extends React.Component {
           </Form.Group>
         </Col>
         <Col md={1} className="colIconeConfig">
-          {iconeConfigAbrirFormulario(
-            this.props.handleShow,
-            this.props.iconeConfigStop
-          )}
+          <IconeConfigAbrirFormulario
+            nomeFormulario={this.props.iconeConfigStop}
+          />
         </Col>
       </Row>
     );
@@ -174,7 +172,7 @@ class RowInputsStopMovel extends React.Component {
                   "inicioDisparo_Movel"
                 )}`}
                 value={this.props[this.props.namespace].inicioDisparo}
-                onChange={valor =>
+                onChange={(valor) =>
                   this.props.mudarAtributoBoletaAction(
                     valor,
                     this.props.namespace,
@@ -191,7 +189,7 @@ class RowInputsStopMovel extends React.Component {
                 tipoInput="preco"
                 step={0.01}
                 value={this.props[this.props.namespace].ajustePadrao}
-                onChange={valor =>
+                onChange={(valor) =>
                   this.props.mudarAtributoBoletaAction(
                     valor,
                     this.props.namespace,
@@ -217,7 +215,7 @@ class RowInputsStopMovel extends React.Component {
                   "stopDisparo_Movel"
                 )}`}
                 value={this.props[this.props.namespace].stopDisparo}
-                onChange={valor =>
+                onChange={(valor) =>
                   this.props.mudarAtributoBoletaAction(
                     valor,
                     this.props.namespace,
@@ -235,7 +233,7 @@ class RowInputsStopMovel extends React.Component {
                 className={`stopExec_Movel ${boxShadowInput("stopExec_Movel")}`}
                 step={0.01}
                 value={this.props[this.props.namespace].stopExec}
-                onChange={valor =>
+                onChange={(valor) =>
                   this.props.mudarAtributoBoletaAction(
                     valor,
                     this.props.namespace,
@@ -252,7 +250,7 @@ class RowInputsStopMovel extends React.Component {
 }
 
 export const RowInputsStopMovelConectada = connect(mapStateToPropsInputsPreco, {
-  mudarAtributoBoletaAction
+  mudarAtributoBoletaAction,
 })(RowInputsStopMovel);
 
 class RowInputsGainReducao extends React.Component {
@@ -267,7 +265,7 @@ class RowInputsGainReducao extends React.Component {
                 tipoInput="preco"
                 step={0.01}
                 value={this.props[this.props.namespace].gainDisparo}
-                onChange={valor =>
+                onChange={(valor) =>
                   this.props.mudarAtributoBoletaAction(
                     valor,
                     this.props.namespace,
@@ -284,7 +282,7 @@ class RowInputsGainReducao extends React.Component {
                 tipoInput="preco"
                 step={0.01}
                 value={this.props[this.props.namespace].gainExec}
-                onChange={valor =>
+                onChange={(valor) =>
                   this.props.mudarAtributoBoletaAction(
                     valor,
                     this.props.namespace,
@@ -301,7 +299,7 @@ class RowInputsGainReducao extends React.Component {
                 tipoInput="quantidade"
                 step={100}
                 value={this.props[this.props.namespace].qtde}
-                onChange={valor =>
+                onChange={(valor) =>
                   this.props.mudarQtdAction(valor, this.props.namespace)
                 }
                 name="qtde"
@@ -341,6 +339,6 @@ export const RowInputsGainReducaoConectada = connect(
     mudarAtributoBoletaAction,
     adicionarItemTabelaGainReducaoAction,
     mostrarErroQtdeOnBlurAction,
-    mudarQtdAction
+    mudarQtdAction,
   }
 )(RowInputsGainReducao);

@@ -26,9 +26,7 @@ class VendaStartStop extends React.Component {
             headerClass="border-green"
             resetPosition={resetPosition}
             name={this.props.name}
-            handleShow={this.props.handleShow}
             ativo={this.props.ativo}
-            close={this.props.close}
             eventSourceCotacao={this.props.eventSourceCotacao}
           />
         )}
@@ -43,11 +41,7 @@ const modalBody = (props) => (
   <div className="mbody">
     <BodyHeaderVendaStartStop />
     <Row>
-      <// @ts-ignore
-      FormInternoVendaStartStop
-        handleShow={props.handleShow}
-        ordem={ordem}
-      />
+      <FormInternoVendaStartStop ordem={ordem} />
       <GraficoVendaStartStop />
     </Row>
   </div>

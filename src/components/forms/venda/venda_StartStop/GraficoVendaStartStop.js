@@ -7,7 +7,7 @@ import {
   LabelInputGrafico,
   TextoValorTotalGrafico,
   TextoGainStopGrafico,
-  TextoCotacaoAtualGrafico
+  TextoCotacaoAtualGrafico,
 } from "components/utils/TextoGrafico";
 import { VENDA_STARTSTOP_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalAgendada } from "components/utils/CalculoValorTotal";
@@ -33,20 +33,8 @@ class GraficoVendaStartStop extends React.Component {
               onChange={() => false}
             />
           </Form>
-          <IconeConfigGrafico
-            id="ConfigGainGrafico_VA"
-            name="config_venda"
-            handleShow={event => {
-              this.props.abrirFormConfigurarAction(event, this.props);
-            }}
-          />
-          <IconeConfigGrafico
-            id="ConfigStopGrafico_VA"
-            name="config_venda"
-            handleShow={event => {
-              this.props.abrirFormConfigurarAction(event, this.props);
-            }}
-          />
+          <IconeConfigGrafico id="ConfigGainGrafico_VA" name="config_venda" />
+          <IconeConfigGrafico id="ConfigStopGrafico_VA" name="config_venda" />
           {LabelInputGrafico("Disparo", "TextoGainDisparo_VA")}
           {LabelInputGrafico("Execução", "TextoGainExecucao_VA")}
           {LabelInputGrafico("Disparo", "TextoStopDisparo_VA")}
@@ -80,18 +68,15 @@ class GraficoVendaStartStop extends React.Component {
 
 //
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   gainDisparo: state.vendaStartStopReducer.gainDisparo,
   gainExec: state.vendaStartStopReducer.gainExec,
   stopDisparo: state.vendaStartStopReducer.stopDisparo,
   stopExec: state.vendaStartStopReducer.stopExec,
   dadosPesquisa: state.vendaStartStopReducer.dadosPesquisa,
-  qtde: state.vendaStartStopReducer.qtde
+  qtde: state.vendaStartStopReducer.qtde,
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    abrirFormConfigurarAction
-  }
-)(GraficoVendaStartStop);
+export default connect(mapStateToProps, {
+  abrirFormConfigurarAction,
+})(GraficoVendaStartStop);

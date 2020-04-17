@@ -7,7 +7,7 @@ import {
   FECHAR_FORM,
   ABRIR_FORMULARIO, //Apenas para form de configurar, pois usa o reducer dos sub-apps
   FECHAR_FORMULARIO, //Apenas para form de configurar, pois usa o reducer dos sub-apps
-  RECEBER_APPKEYLOCAL
+  RECEBER_APPKEYLOCAL,
 } from "constants/ActionTypes";
 import React from "react";
 import { SubAppConectado } from "components/redux/ElementosConectadosRedux";
@@ -19,7 +19,7 @@ const INITIAL_STATE = {
   divkey: "",
   zIndex: 100,
   dadosOrdemExec: null,
-  ultimaBoletaAbertaOrdemExec: ""
+  ultimaBoletaAbertaOrdemExec: "",
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -29,14 +29,14 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         apps: action.apps,
         show: action.show,
-        zIndex: action.zIndex
+        zIndex: action.zIndex,
       };
     case MOSTRAR_APP:
       return {
         ...state,
         apps: action.apps,
         show: action.show,
-        zIndex: action.zIndex
+        zIndex: action.zIndex,
       };
     case ATUALIZAR_SHOW:
       return { ...state, show: action.payload };
@@ -51,7 +51,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         dadosOrdemExec: action.payload.dadosOrdemExec,
-        ultimaBoletaAbertaOrdemExec: action.payload.ultimaBoletaAbertaOrdemExec
+        ultimaBoletaAbertaOrdemExec: action.payload.ultimaBoletaAbertaOrdemExec,
       };
     default:
       return state;
@@ -66,7 +66,7 @@ export const mostrarAppAction = (apps, show, zindex, dispatch) => {
     type: MOSTRAR_APP,
     apps: apps,
     show: show,
-    zIndex: zindex + 1
+    zIndex: zindex + 1,
   });
 };
 
@@ -74,8 +74,8 @@ export const atualizarShowAction = (show, dispatch) => {
   dispatch({ type: ATUALIZAR_SHOW, payload: show });
 };
 
-export const atualizarDivKeyAction = divkey => {
-  return dispatch => {
+export const atualizarDivKeyAction = (divkey) => {
+  return (dispatch) => {
     dispatch({ type: ATUALIZAR_DIVKEY, payload: divkey });
   };
 };
@@ -84,18 +84,18 @@ export const atualizarDivKeyAction2 = (divkey, dispatch) => {
   dispatch({ type: ATUALIZAR_DIVKEY, payload: divkey });
 };
 
-export const fecharFormAction = (props, divkey) => {
-  let show = [...props.show];
-  show[props.appkey][divkey] = false;
+export const fecharFormAction = (show, divkey, appkey) => {
+  const showModificado = [...show];
+  showModificado[appkey][divkey] = false;
 
-  return dispatch => {
-    dispatch({ type: FECHAR_FORM, payload: show });
+  return (dispatch) => {
+    dispatch({ type: FECHAR_FORM, payload: showModificado });
   };
 };
 
 //Usado para aumentar o Zindex e dar foco ao clicar em uma div.
 export const aumentarZindexAction = (div_id, zIndex, show) => {
-  return dispatch => {
+  return (dispatch) => {
     if (show) {
       zIndex = zIndex + 1;
       document.getElementById(div_id).style.zIndex = zIndex;
@@ -111,7 +111,7 @@ export const abrirFormAction = (
   codigo_ativo = "",
   nameOrdemExec = "" //identificação da boleta que irá ser aberta vindo das ordens em execução
 ) => {
-  return dispatch => {
+  return (dispatch) => {
     let apps = [...props.apps];
     let name;
 
@@ -163,7 +163,7 @@ const criarMostrarApp = (name, props, dispatch, codigo_ativo) => {
     venda_stopmovel: false,
     venda_gainreducao: false,
     config_compra: false,
-    config_venda: false
+    config_venda: false,
   });
   //Faz o dispatch dos dados de visibilidade
   atualizarShowAction(show, dispatch);
@@ -205,11 +205,11 @@ const mostrarApp = (name, index, props, dispatch, codigo_ativo) => {
 export const abrirFormConfigurarAction = (event, props) => {
   const name = event.target.getAttribute("data-name");
 
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: ABRIR_FORMULARIO,
       name: name,
-      payload: true
+      payload: true,
     });
 
     aumentarZindex(props.zIndex, dispatch);
@@ -217,13 +217,13 @@ export const abrirFormConfigurarAction = (event, props) => {
 };
 
 //Usado apenas na store local de cada sub-app para abrir os forms de configuração de start/stop movel
-export const fecharFormConfigurarAction = event => {
+export const fecharFormConfigurarAction = (event) => {
   const name = event.target.getAttribute("name");
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: FECHAR_FORMULARIO,
       name: name,
-      payload: false
+      payload: false,
     });
   };
 };
@@ -234,20 +234,20 @@ export const aumentarZindex = (zIndex, dispatch) => {
   dispatch({ type: AUMENTAR_ZINDEX, payload: zIndex });
 };
 
-export const receberAppPropsAction = appProps => {
-  return dispatch => {
+export const receberAppPropsAction = (appProps) => {
+  return (dispatch) => {
     dispatch({ type: RECEBER_APPKEYLOCAL, payload: appProps });
   };
 };
 
-export const receberDadosOrdemExecMainReducerAction = dados => {
-  return dispatch => {
+export const receberDadosOrdemExecMainReducerAction = (dados) => {
+  return (dispatch) => {
     dispatch({
       type: MUDAR_ORDEM_EXEC_MAIN_REDUCER,
       payload: {
         dadosOrdemExec: dados.dadosOrdemExec,
-        ultimaBoletaAbertaOrdemExec: dados.ultimaBoletaAbertaOrdemExec
-      }
+        ultimaBoletaAbertaOrdemExec: dados.ultimaBoletaAbertaOrdemExec,
+      },
     });
   };
 };

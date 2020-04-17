@@ -3,7 +3,7 @@ import React from "react";
 import { Row, Col, Form, InputGroup } from "react-bootstrap";
 import DraggableModal from "components/utils/DraggableModal";
 import { ModalHeaderSemBook } from "components/utils/FormHeader";
-import { iconeConfigAbrirFormulario } from "components/utils/IconesConfigFormInterno";
+import { IconeConfigAbrirFormulario } from "components/utils/IconesConfigFormInterno";
 import { MDBIcon } from "mdbreact";
 import { ReactComponent as IconeResumido } from "img/rounded-rectangle.svg";
 import { ReactComponent as IconeAmpliado } from "img/check-box-empty.svg";
@@ -50,7 +50,6 @@ export default class PosicaoEmCustodia extends React.Component {
         renderDivPosicaoEmCustodia={true}
         renderHeader={() => (
           <ModalHeaderSemBook
-            close={this.props.close}
             name={this.props.name}
             headerTitle={this.props.headerTitle}
             headerClass="border-green"
@@ -68,12 +67,12 @@ export default class PosicaoEmCustodia extends React.Component {
           <Col md={2}>
             <div className="divIconeConfigOrdernar">
               <h6 className="mr-2">Ordernar</h6>
-              {iconeConfigAbrirFormulario(() => false, "")}
+              <IconeConfigAbrirFormulario nomeFormulario="" />
             </div>
           </Col>
           <Col md={8}>
             <div className="divIconeConfigAmpliado">
-              {iconeConfigAbrirFormulario(() => false, "")}
+              <IconeConfigAbrirFormulario nomeFormulario="" />
             </div>
           </Col>
         </Row>

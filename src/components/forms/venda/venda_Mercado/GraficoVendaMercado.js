@@ -8,7 +8,7 @@ import {
   LabelInputGrafico,
   TextoGainStopGrafico,
   TextoCotacaoAtualGrafico,
-  TextoValorTotalGrafico
+  TextoValorTotalGrafico,
 } from "components/utils/TextoGrafico";
 import { VENDA_MERCADO_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalAgendada } from "components/utils/CalculoValorTotal";
@@ -61,12 +61,10 @@ class GraficoVendaMercado extends React.Component {
           <IconeConfigGrafico
             id="ConfigGainGrafico_VA"
             name="venda_gainreducao"
-            handleShow={this.props.handleShow}
           />
           <IconeConfigGrafico
             id="ConfigStopGrafico_VA"
             name="venda_stopmovel"
-            handleShow={this.props.handleShow}
           />
         </div>
       </Col>
@@ -74,16 +72,13 @@ class GraficoVendaMercado extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   gainDisparo: state.vendaMercadoReducer.gainDisparo,
   gainExec: state.vendaMercadoReducer.gainExec,
   stopDisparo: state.vendaMercadoReducer.stopDisparo,
   stopExec: state.vendaMercadoReducer.stopExec,
   dadosPesquisa: state.vendaMercadoReducer.dadosPesquisa,
-  qtde: state.vendaMercadoReducer.qtde
+  qtde: state.vendaMercadoReducer.qtde,
 });
 
-export default connect(
-  mapStateToProps,
-  {}
-)(GraficoVendaMercado);
+export default connect(mapStateToProps, {})(GraficoVendaMercado);

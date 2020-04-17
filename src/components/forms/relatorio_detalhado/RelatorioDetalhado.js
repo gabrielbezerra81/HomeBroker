@@ -46,7 +46,6 @@ export default class RelatorioDetalhado extends React.Component {
         renderDivFiltrarOrdens={false}
         renderHeader={() => (
           <ModalHeaderSemBook
-            close={this.props.close}
             name={this.props.name}
             headerTitle={this.props.headerTitle}
             headerClass="border-green"

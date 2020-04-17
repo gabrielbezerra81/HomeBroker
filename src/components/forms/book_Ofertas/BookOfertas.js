@@ -21,11 +21,7 @@ class BookOfertas extends React.Component {
         renderModalBody={() => modalBody(this.props)}
         headerClass="no-border"
         renderHeader={(resetPosition) => (
-          <BookHeader
-            close={this.props.close}
-            resetPosition={resetPosition}
-            headerClass="no-border"
-          />
+          <BookHeader resetPosition={resetPosition} headerClass="no-border" />
         )}
         closeButton={false}
       />

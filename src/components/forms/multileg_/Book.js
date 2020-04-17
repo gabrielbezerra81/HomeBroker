@@ -4,7 +4,6 @@ import { Table, Row, Col, Button } from "react-bootstrap";
 import IconeConfigGrafico from "components/utils/IconeConfigGrafico";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 import {
-  abrirFecharConfigComplAction,
   modificarAtributoAbaAction,
   buscaBook,
   buscaCotacao,
@@ -50,9 +49,6 @@ class Book extends React.Component {
             <h6>Book</h6>
           </Col>
           <IconeConfigGrafico
-            handleShow={() =>
-              props.abrirFecharConfigComplAction(props.configComplementarAberto)
-            }
             name="config_complementar"
             id="icone_config_complementar"
           />
@@ -330,7 +326,6 @@ const mapStateToProps = (state) => ({
 export default connect(
   mapStateToProps,
   {
-    abrirFecharConfigComplAction,
     modificarAtributoAbaAction,
     enviarOrdemMultilegAction,
     criarAlertaMultilegAction,

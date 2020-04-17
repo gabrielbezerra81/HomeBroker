@@ -7,7 +7,7 @@ import {
   LabelInputGrafico,
   TextoGainStopGrafico,
   TextoCotacaoAtualGrafico,
-  TextoValorTotalGrafico
+  TextoValorTotalGrafico,
 } from "components/utils/TextoGrafico";
 import { COMPRA_LIMITADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalAgendada } from "components/utils/CalculoValorTotal";
@@ -60,12 +60,10 @@ class GraficoCompraLimitada extends React.Component {
           <IconeConfigGrafico
             id="ConfigGainGrafico_CA"
             name="compra_gainreducao"
-            handleShow={this.props.handleShow}
           />
           <IconeConfigGrafico
             id="ConfigStopGrafico_CA"
             name="venda_stopmovel"
-            handleShow={this.props.handleShow}
           />
         </div>
       </Col>
@@ -73,16 +71,13 @@ class GraficoCompraLimitada extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   gainDisparo: state.compraLimitadaReducer.gainDisparo,
   gainExec: state.compraLimitadaReducer.gainExec,
   stopDisparo: state.compraLimitadaReducer.stopDisparo,
   stopExec: state.compraLimitadaReducer.stopExec,
   dadosPesquisa: state.compraLimitadaReducer.dadosPesquisa,
-  qtde: state.compraLimitadaReducer.qtde
+  qtde: state.compraLimitadaReducer.qtde,
 });
 
-export default connect(
-  mapStateToProps,
-  {}
-)(GraficoCompraLimitada);
+export default connect(mapStateToProps, {})(GraficoCompraLimitada);

@@ -44,15 +44,7 @@ export default class TelaPrincipal extends React.Component {
                     )
                   }
                 >
-                  <OrdensExecucaoConectada
-                    close={() => {
-                      props.abrirItemBarraLateralAction(
-                        props,
-                        "ordensExecucaoAberto"
-                      );
-                    }}
-                    headerTitle="HISTÓRICO DE OPERAÇÕES"
-                  />
+                  <OrdensExecucaoConectada headerTitle="HISTÓRICO DE OPERAÇÕES" />
                 </Animate>
                 <Animate
                   show={props.relatorioDetalhadoAberto}
@@ -68,15 +60,7 @@ export default class TelaPrincipal extends React.Component {
                     )
                   }
                 >
-                  <RelatorioDetalhadoConectado
-                    close={() => {
-                      props.abrirItemBarraLateralAction(
-                        props,
-                        "relatorioDetalhadoAberto"
-                      );
-                    }}
-                    headerTitle="RELATÓRIO DETALHADO"
-                  />
+                  <RelatorioDetalhadoConectado headerTitle="RELATÓRIO DETALHADO" />
                 </Animate>
                 <Animate
                   show={props.listaCompletaAberta}
@@ -92,15 +76,7 @@ export default class TelaPrincipal extends React.Component {
                     )
                   }
                 >
-                  <PosicaoEmCustodiaConectada
-                    close={() => {
-                      props.abrirItemBarraLateralAction(
-                        props,
-                        "listaCompletaAberta"
-                      );
-                    }}
-                    headerTitle="POSIÇÃO EM CUSTÓDIA"
-                  />
+                  <PosicaoEmCustodiaConectada headerTitle="POSIÇÃO EM CUSTÓDIA" />
                 </Animate>
                 <Animate
                   show={props.multilegAberto}
@@ -116,15 +92,7 @@ export default class TelaPrincipal extends React.Component {
                     )
                   }
                 >
-                  <MultilegConectado
-                    close={() => {
-                      props.abrirItemBarraLateralAction(
-                        props,
-                        "multilegAberto"
-                      );
-                    }}
-                    headerTitle="MULTI ATIVOS"
-                  />
+                  <MultilegConectado headerTitle="MULTI ATIVOS" />
                 </Animate>
                 {/* THL */}
                 <Animate
@@ -141,12 +109,7 @@ export default class TelaPrincipal extends React.Component {
                     )
                   }
                 >
-                  <TelaTHLConectada
-                    close={() => {
-                      props.abrirItemBarraLateralAction(props, "thlAberta");
-                    }}
-                    headerTitle=""
-                  />
+                  <TelaTHLConectada headerTitle="THL" />
                 </Animate>
               </div>
             </div>
@@ -174,12 +137,7 @@ export default class TelaPrincipal extends React.Component {
                 }
               >
                 <OrdensExecucaoConectada
-                  close={() => {
-                    props.abrirItemBarraLateralAction(
-                      props,
-                      "ordensExecucaoAberto"
-                    );
-                  }}
+         
                   headerTitle="ORDENS EM EXECUÇÃO"
                 />
               </Animate>
@@ -199,12 +157,7 @@ export default class TelaPrincipal extends React.Component {
                 }
               >
                 <MultilegConectado
-                  close={() => {
-                    props.abrirItemBarraLateralAction(
-                      props,
-                      "multilegAberto"
-                    );
-                  }}
+      
                   headerTitle="MULTILEG"
                 />
               </Animate>

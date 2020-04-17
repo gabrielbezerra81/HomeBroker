@@ -42,7 +42,6 @@ export default class OrdensExecucao extends React.Component {
         renderDivFiltrarOrdens={true}
         renderHeader={() => (
           <ModalHeaderSemBook
-            close={this.props.close}
             name={this.props.name}
             headerTitle={this.props.headerTitle}
             headerClass="border-green"

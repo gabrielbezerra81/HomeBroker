@@ -23,9 +23,7 @@ class VendaAgendada extends React.Component {
             headerClass="border-green"
             resetPosition={resetPosition}
             name={this.props.name}
-            handleShow={this.props.handleShow}
             ativo={this.props.ativo}
-            close={this.props.close}
             eventSourceCotacao={this.props.eventSourceCotacao}
           />
         )}
@@ -38,8 +36,8 @@ const modalBody = (props) => (
   <div className="mbody">
     <BodyHeaderVendaAgendada />
     <Row>
-      <FormInternoVendaAgendada handleShow={props.handleShow} ordem={ordem} />
-      <GraficoVendaAgendada handleShow={props.handleShow} />
+      <FormInternoVendaAgendada ordem={ordem} />
+      <GraficoVendaAgendada />
     </Row>
   </div>
 );

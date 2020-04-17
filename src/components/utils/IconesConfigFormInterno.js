@@ -1,22 +1,35 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
+import {
+  useSelectorGlobalStore,
+  useDispatchGlobalStore,
+} from "components/redux/StoreCreation";
+import { abrirFormAction } from "components/redux/reducers/MainAppReducer";
 
-export const iconeConfigAbrirFormulario = (handleShow, nomeFormulario) => (
-  <Button
-    variant="link"
-    className="operation-icons"
-    onClick={event => {
-      event.stopPropagation();
-      handleShow(event);
-    }}
-    data-name={nomeFormulario}
-  >
-    <MDBIcon
-      icon="cog"
-      size="2x"
-      className="labelInput-verticalAlign"
+export const IconeConfigAbrirFormulario = ({ nomeFormulario }) => {
+  const stateGlobalStore = useSelectorGlobalStore(
+    (state) => state.MainAppReducer
+  );
+  const dispatchGlobal = useDispatchGlobalStore();
+
+  return (
+    <Button
+      variant="link"
+      className="operation-icons"
+      onClick={(event) => {
+        event.stopPropagation();
+        if (nomeFormulario)
+          dispatchGlobal(abrirFormAction(event, { ...stateGlobalStore }, ""));
+      }}
       data-name={nomeFormulario}
-    />
-  </Button>
-);
+    >
+      <MDBIcon
+        icon="cog"
+        size="2x"
+        className="labelInput-verticalAlign"
+        data-name={nomeFormulario}
+      />
+    </Button>
+  );
+};

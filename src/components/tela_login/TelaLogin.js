@@ -44,6 +44,7 @@ class TelaLogin extends React.Component {
                   }`}
                   id="inputSenhaFlutuante"
                   label="Senha"
+                  type="password"
                   autoComplete="current-password"
                   value={props.inputSenha}
                   onChange={(e) =>

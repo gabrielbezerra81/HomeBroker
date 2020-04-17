@@ -88,7 +88,6 @@ class FormInternoVendaAgendada extends React.Component {
           <RowGainStopFormInternoConectada
             namespace={VENDA_AGENDADA_NAMESPACE}
             cv="venda"
-            handleShow={this.props.handleShow}
             iconeConfigGain="venda_gainreducao"
             iconeConfigStop="venda_stopmovel"
           />
@@ -110,10 +109,7 @@ class FormInternoVendaAgendada extends React.Component {
                 </Button>
               </Col>
               <Col md={6}>
-                <BotaoEnviarOrdem
-                  props={this.props}
-                  tipoCompraVenda="Vender"
-                />
+                <BotaoEnviarOrdem props={this.props} tipoCompraVenda="Vender" />
               </Col>
             </Row>
           </div>

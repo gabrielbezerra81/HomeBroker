@@ -36,7 +36,6 @@ class FormInternoCompraStartStop extends React.Component {
           <RowGainStopFormInternoConectada
             namespace={COMPRA_STARTSTOP_NAMESPACE}
             cv="compra"
-            handleShow={this.props.handleShow}
             iconeConfigGain="compra_gainreducao"
             iconeConfigStop="venda_stopmovel"
           />

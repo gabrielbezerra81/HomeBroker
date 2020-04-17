@@ -22,9 +22,7 @@ class CompraLimitada extends React.Component {
             headerClass="border-green"
             resetPosition={resetPosition}
             name={this.props.name}
-            handleShow={this.props.handleShow}
             ativo={this.props.ativo}
-            close={this.props.close}
             eventSourceCotacao={this.props.eventSourceCotacao}
           />
         )}
@@ -37,8 +35,8 @@ const modalBody = (props) => (
   <div className="mbody">
     <BodyHeaderCompraLimitada />
     <Row>
-      <FormInternoCompraLimitada handleShow={props.handleShow} ordem={ordem} />
-      <GraficoCompraLimitada handleShow={props.handleShow} />
+      <FormInternoCompraLimitada ordem={ordem} />
+      <GraficoCompraLimitada />
     </Row>
   </div>
 );

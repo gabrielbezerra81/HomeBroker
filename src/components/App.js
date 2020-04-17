@@ -18,7 +18,7 @@ import { Animate } from "react-show";
 
 const startStyle = {
   opacity: 0,
-  pointerEvents: "none"
+  pointerEvents: "none",
 };
 
 const animate = (props, Componente) => {
@@ -97,160 +97,91 @@ export default class App extends React.Component {
     props.receberAppPropsAction(props);
   }
 
-  handleShow = (event, ativo) => {
-    this.props.abrirFormAction(event, this.props, ativo);
-  };
-
   render() {
     const { props } = this;
 
     return (
       <div className="App">
         <Row className="appbody">
-          {animate(
-            props,
-            <BookOfertas
-              close={() => {
-                props.fecharFormAction(props, "book");
-              }}
-              name="book"
-            />
-          )}
+          {animate(props, <BookOfertas name="book" />)}
           {animate(
             props,
             <CompraAgendada
-              close={() => {
-                props.fecharFormAction(props, "compra_agendada");
-              }}
               headerTitle="COMPRA AGENDADA"
               name="compra_agendada"
-              handleShow={this.handleShow}
             />
           )}
           {animate(
             props,
             <CompraLimitada
-              close={() => {
-                props.fecharFormAction(props, "compra_limitada");
-              }}
               headerTitle="COMPRA LIMITADA"
               name="compra_limitada"
-              handleShow={this.handleShow}
             />
           )}
 
           {animate(
             props,
             <CompraMercado
-              close={() => {
-                props.fecharFormAction(props, "compra_mercado");
-              }}
               headerTitle="COMPRA A MERCADO"
               name="compra_mercado"
-              handleShow={this.handleShow}
             />
           )}
 
           {animate(
             props,
             <CompraStartStop
-              close={() => {
-                props.fecharFormAction(props, "compra_startstop");
-              }}
               headerTitle="COMPRA START STOP"
               name="compra_startstop"
-              handleShow={this.handleShow}
             />
           )}
 
           {animate(
             props,
             <CompraStartMovel
-              close={() => {
-                props.fecharFormAction(props, "compra_startmovel");
-              }}
               headerTitle="COMPRA START MÓVEL"
               name="compra_startmovel"
-              handleShow={this.handleShow}
             />
           )}
 
           {animate(
             props,
             <CompraGainReducao
-              close={() => {
-                props.fecharFormAction(props, "compra_gainreducao");
-              }}
               headerTitle="GAIN / REDUÇÃO DE COMPRA"
               name="compra_gainreducao"
-              handleShow={this.handleShow}
             />
           )}
 
           {animate(
             props,
-            <VendaAgendada
-              close={() => {
-                props.fecharFormAction(props, "venda_agendada");
-              }}
-              headerTitle="VENDA AGENDADA"
-              name="venda_agendada"
-              handleShow={this.handleShow}
-            />
+            <VendaAgendada headerTitle="VENDA AGENDADA" name="venda_agendada" />
           )}
           {animate(
             props,
-            <VendaLimitada
-              close={() => {
-                props.fecharFormAction(props, "venda_limitada");
-              }}
-              headerTitle="VENDA LIMITADA"
-              name="venda_limitada"
-              handleShow={this.handleShow}
-            />
+            <VendaLimitada headerTitle="VENDA LIMITADA" name="venda_limitada" />
           )}
           {animate(
             props,
-            <VendaMercado
-              close={() => {
-                props.fecharFormAction(props, "venda_mercado");
-              }}
-              headerTitle="VENDA MERCADO"
-              name="venda_mercado"
-              handleShow={this.handleShow}
-            />
+            <VendaMercado headerTitle="VENDA MERCADO" name="venda_mercado" />
           )}
           {animate(
             props,
             <VendaStartStop
-              close={() => {
-                props.fecharFormAction(props, "venda_startstop");
-              }}
               headerTitle="VENDA START STOP"
               name="venda_startstop"
-              handleShow={this.handleShow}
             />
           )}
           {animate(
             props,
             <VendaStopMovel
-              close={() => {
-                props.fecharFormAction(props, "venda_stopmovel");
-              }}
               headerTitle="VENDA STOP MÓVEL"
               name="venda_stopmovel"
-              handleShow={this.handleShow}
             />
           )}
           {animate(
             props,
             <VendaGainReducao
-              close={() => {
-                props.fecharFormAction(props, "venda_gainreducao");
-              }}
               headerTitle="GAIN / REDUÇÃO DE VENDA"
               name="venda_gainreducao"
-              handleShow={this.handleShow}
             />
           )}
         </Row>
