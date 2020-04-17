@@ -13,7 +13,7 @@ const INITIAL_STATE = {
   valorComprar: "3.500,00",
   ativo: "Bender",
   ordensAberto: false,
-  ordensExecucaoAberto: true,
+  ordensExecucaoAberto: false,
   relatorioDetalhadoAberto: false,
   listaCompletaAberta: false,
   multilegAberto: false,

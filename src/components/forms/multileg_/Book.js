@@ -90,12 +90,12 @@ class Book extends React.Component {
                         <tr key={indiceLinha}>
                           <td>{renderQtdeBook(book.compra)}</td>
                           <td>
-                            {book.compra
+                            {book.compra && book.compra.price
                               ? formatarNumDecimal(book.compra.price)
                               : null}
                           </td>
                           <td>
-                            {book.venda
+                            {book.venda && book.venda.price
                               ? formatarNumDecimal(book.venda.price)
                               : null}
                           </td>

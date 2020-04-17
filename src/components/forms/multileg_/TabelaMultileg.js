@@ -7,6 +7,7 @@ import {
   modificarAtributoTabelaAbaAction,
   excluirOfertaTabelaAction,
   buscaCotacao,
+  buscaBook,
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { MDBIcon } from "mdbreact";
 import {
@@ -50,6 +51,7 @@ class TabelaMultileg extends React.Component {
         <tbody>
           {props.multileg[props.indice].tabelaMultileg.map(
             (item, indiceLinha) => {
+              const cotacao = renderCotacao(props, item);
               return (
                 <tr key={indiceLinha}>
                   <td
@@ -241,12 +243,8 @@ class TabelaMultileg extends React.Component {
                       </Form.Control>
                     </Form.Group>
                   </td>
-                  <td>{renderCotacao(props, item)}</td>
-                  <td>
-                    {item.cotacao
-                      ? formatarNumDecimal(item.qtde * item.cotacao)
-                      : ""}
-                  </td>
+                  <td>{cotacao}</td>
+                  <td>{calculaColunaValor(props, item)}</td>
                 </tr>
               );
             }
@@ -256,6 +254,23 @@ class TabelaMultileg extends React.Component {
     );
   }
 }
+
+const calculaColunaValor = (props, oferta) => {
+  let valor;
+  const book = buscaBook(props.cotacoesMultileg, oferta.codigoSelecionado);
+  if (oferta.cv === "compra" && book && book.venda.price) {
+    valor = book.venda.price;
+  } //
+  else if (oferta.cv === "venda" && book && book.compra.price) {
+    valor = book.compra.price;
+  } //
+  else {
+    const cotacao = renderCotacao(props, oferta);
+    valor = Number(cotacao.replace(",", "."));
+  }
+
+  return formatarNumDecimal(oferta.qtde * valor);
+};
 
 const mapStateToProps = (state) => ({
   multileg: state.multilegReducer.multileg,
