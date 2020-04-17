@@ -23,7 +23,7 @@ const INITIAL_STATE = {
   token: {
     tokenType: "Bearer",
     accessToken:
-      "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJnYWJyaWVsQUIiLCJpYXQiOjE1ODcwNzQwNzcsImV4cCI6MTU4NzE2MDQ3N30.4oRmV8FPlFXG1OZWNcWZmNZDeSdVq7MtaH83LJ5yPb0A7uLAQHQBUBG0dDSGJC4T95OLqvyzVv2wTQtH2OmNZw",
+      "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJnYWJyaWVsQUIiLCJpYXQiOjE1ODcxMzcyMzgsImV4cCI6MTU4NzIyMzYzOH0.C6IbFUed6JucYm0DQ6ixN6jdCdFAfB_lEo_uasgr_1SQzAKzY7uUdCwhPEU_zH2Q081rodDoCMSa5VWZ-EHh9A",
   },
   nomeCadastro: "Gabriel",
   usernameCadastro: "gabrielAB",
