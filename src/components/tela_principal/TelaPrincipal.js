@@ -2,7 +2,7 @@ import React from "react";
 import { Animate } from "react-show";
 import MenuLateralUsuario from "components/tela_principal/MenuLateralUsuario";
 import {
-  MainAppConectado,
+  MenuOrdensConectado,
   OrdensExecucaoConectada,
   BarraLateralConectada,
   MultilegConectado,
@@ -29,7 +29,7 @@ export default class TelaPrincipal extends React.Component {
             <div style={{ display: "flex", height: "100%" }}>
               <BarraLateralConectada />
               <div id="menusTelaPrincipal">
-                <MainAppConectado />
+                <MenuOrdensConectado />
                 <Animate
                   show={props.ordensExecucaoAberto}
                   duration={100}

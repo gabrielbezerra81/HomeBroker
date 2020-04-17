@@ -44,7 +44,7 @@ const modalBody = (props) => (
 );
 
 const mapStateToProps = (state) => ({
-  config_compra: state.SubAppReducer.config_compra,
+  config_compra: state.appBoletasReducer.config_compra,
   ativo: state.compraStartStopReducer.ativo,
   eventSourceCotacao: state.compraStartStopReducer.eventSourceCotacao,
 });

@@ -19,7 +19,7 @@ import {
   mudarVariavelTHLAction,
   pesquisarAtivoTHLAction,
 } from "components/redux/actions/menu_actions/THLActions";
-import { aumentarZindexAction } from "components/redux/reducers/MainAppReducer";
+import { aumentarZindexAction } from "components/redux/actions/MainAppActions";
 
 // import "fixed-header-table/css/defaultTheme.css";
 

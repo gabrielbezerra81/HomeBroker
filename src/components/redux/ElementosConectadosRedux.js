@@ -1,8 +1,8 @@
 import React from "react";
 import { Provider, connect } from "react-redux";
-import { MainApp, SubApp } from "MainApp";
+import { MenuOrdens, WrapperAppBoletas } from "components/tela_principal/MenuOrdens";
 import { compose } from "redux";
-import App from "components/App";
+import AppBoletas from "components/AppBoletas";
 import { ModalHeader } from "components/utils/FormHeader";
 import TelaPrincipal from "components/tela_principal/TelaPrincipal";
 import {
@@ -15,7 +15,7 @@ import {
   aumentarZindexAction,
   receberAppPropsAction,
   receberDadosOrdemExecMainReducerAction,
-} from "components/redux/reducers/MainAppReducer";
+} from "components/redux/actions/MainAppActions";
 import {
   mouseOverAction,
   mouseLeaveAction,
@@ -167,7 +167,7 @@ const mapStateToPropsOpcoesOrdemExec = (state) => ({
   cotacoesMultileg: state.multilegReducer.cotacoesMultileg,
 });
 
-export const MainAppConectado = compose(
+export const MenuOrdensConectado = compose(
   connect(
     mapStateToPropsGlobalStore,
     {
@@ -191,13 +191,18 @@ export const MainAppConectado = compose(
     null,
     { context: StorePrincipalContext }
   )
-)(MainApp);
+)(MenuOrdens);
 
-export const SubAppConectado = connect(mapStateToPropsGlobalStore, {}, null, {
-  context: GlobalContext,
-})(SubApp);
+export const WrapperAppBoletasConectado = connect(
+  mapStateToPropsGlobalStore,
+  {},
+  null,
+  {
+    context: GlobalContext,
+  }
+)(WrapperAppBoletas);
 
-export const AppConectado = compose(
+export const AppBoletasConectado = compose(
   connect(
     mapStateToPropsGlobalStore_App,
     {
@@ -215,7 +220,7 @@ export const AppConectado = compose(
     mudarInputHeaderAction,
     montarBoletaFromOrdemExecAction,
   })
-)(App);
+)(AppBoletas);
 
 export const ModalHeaderConectado = connect(
   mapStateToPropsGlobalStore,

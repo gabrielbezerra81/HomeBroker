@@ -43,7 +43,7 @@ const animate = (props, Componente) => {
   );
 };
 
-export default class App extends React.Component {
+export default class AppBoletas extends React.Component {
   componentWillMount() {
     const { props } = this;
 
@@ -68,7 +68,7 @@ export default class App extends React.Component {
       document.getElementById(props.divkey).style.zIndex = props.zIndex + 1;
 
     //Disparar montagem de ordem ao mostrar App Local
-    //1 - Filtra o subapp que deve ser alterado com a nova ordem em execução, pois ele terá seu estado "show" alterado.
+    //1 - Filtra o appBoleta que deve ser alterado com a nova ordem em execução, pois ele terá seu estado "show" alterado.
     //2 - Verifica se foi enviada uma ordem de execução para ser aberta nas boletas
     if (
       prevProps.show[props.appkey] !== props.show[props.appkey] &&

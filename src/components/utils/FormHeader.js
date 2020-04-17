@@ -8,7 +8,7 @@ import {
   fecharFormAction,
   abrirFormAction,
   fecharFormConfigurarAction,
-} from "components/redux/reducers/MainAppReducer";
+} from "components/redux/actions/MainAppActions";
 import {
   useSelectorGlobalStore,
   useDispatchGlobalStore,
@@ -30,7 +30,7 @@ export const ModalHeader = ({
   ativo,
   eventSourceCotacao,
 }) => {
-  const state = useSelector((state) => state.SubAppReducer);
+  const state = useSelector((state) => state.appBoletasReducer);
   const stateGlobalStore = useSelectorGlobalStore(
     (state) => state.MainAppReducer
   ); // Filtrar state pelo nome do reducer
@@ -88,7 +88,7 @@ export const ModalHeader = ({
 
 export const BookHeader = ({ headerClass, resetPosition }) => {
   const stateBook = useSelector((state) => state.bookOfertaReducer);
-  const stateSubApp = useSelector((state) => state.SubAppReducer);
+  const stateSubApp = useSelector((state) => state.appBoletasReducer);
   const stateGlobalStore = useSelectorGlobalStore(
     (state) => state.MainAppReducer
   );

@@ -2,14 +2,14 @@ import {
   ABRIR_FORMULARIO,
   FECHAR_FORMULARIO,
   AUMENTAR_ZINDEX,
-  RECEBER_APPKEYLOCAL
+  RECEBER_APPKEYLOCAL,
 } from "constants/ActionTypes";
 
 const INITIAL_STATE = {
   config_compra: false,
   config_venda: false,
   zIndex: 100,
-  appProps: {}
+  appProps: {},
 };
 
 export default (state = INITIAL_STATE, action) => {

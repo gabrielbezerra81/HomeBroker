@@ -7,7 +7,7 @@ import FormInternoVendaStartStop from "./FormInternoVendaStartStop";
 import GraficoVendaStartStop from "./GraficoVendaStartStop";
 import BodyHeaderVendaStartStop from "./BodyHeaderVendaStartStop";
 import { ModalHeader } from "components/utils/FormHeader";
-import {} from "components/redux/actions/SubAppActions";
+import {} from "components/redux/actions/AppBoletasActions";
 
 class VendaStartStop extends React.Component {
   componentDidMount() {
@@ -48,7 +48,7 @@ const modalBody = (props) => (
 );
 
 const mapStateToProps = (state) => ({
-  config_venda: state.SubAppReducer.config_venda,
+  config_venda: state.appBoletasReducer.config_venda,
   ativo: state.vendaStartStopReducer.ativo,
   eventSourceCotacao: state.vendaStartStopReducer.eventSourceCotacao,
 });

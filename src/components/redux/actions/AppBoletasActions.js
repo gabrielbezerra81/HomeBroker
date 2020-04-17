@@ -8,14 +8,6 @@ import {
 } from "components/utils/Validacoes";
 import { getformatedDate } from "components/utils/Formatacoes";
 
-/*
-
-  "cadastro": "2019-08-06",
-  "password": "asdsadasidbsia",
-  "username": "usuarioteste"
-
-*/
-
 export const compraAgendadaAction = (props, namespace) => {
   return dispatch => {
     if (validacaoCompraAgenda(props)) {

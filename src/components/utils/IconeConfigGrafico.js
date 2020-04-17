@@ -10,7 +10,7 @@ import {
 import {
   abrirFormAction,
   abrirFormConfigurarAction,
-} from "components/redux/reducers/MainAppReducer";
+} from "components/redux/actions/MainAppActions";
 import { useDispatch } from "react-redux";
 import { abrirFecharConfigComplAction } from "components/redux/actions/menu_actions/MultilegActions";
 
@@ -43,7 +43,7 @@ export default ({ id, name = "" }) => {
     handleShow = (e) =>
       dispatchGlobal(abrirFormAction(e, { ...stateGlobalStore }, ""));
   }
-  
+
   return (
     <div id={id} className="wrapperIconeConfiguracaoGrafico">
       <Button

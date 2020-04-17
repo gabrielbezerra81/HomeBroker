@@ -15,7 +15,7 @@ import RowFormValidade from "components/utils/RowFormValidade";
 import RowFormAssinatura from "components/utils/RowFormAssinatura";
 import { COMPRA_MERCADO_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorAproximadoMercado } from "components/utils/CalculoValorTotal";
-import { compraMercadoAction } from "components/redux/actions/SubAppActions";
+import { compraMercadoAction } from "components/redux/actions/AppBoletasActions";
 import RowAtivoQtdeBoletas from "components/utils/RowAtivoQtdeBoletas";
 import {
   pesquisarAtivoOnEnterAction,

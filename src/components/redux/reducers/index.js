@@ -13,9 +13,9 @@ import {
   VENDA_MERCADO_NAMESPACE,
   VENDA_STARTSTOP_NAMESPACE,
   VENDA_STOPMOVEL_NAMESPACE,
-  VENDA_GAINREDUCAO_NAMESPACE
+  VENDA_GAINREDUCAO_NAMESPACE,
 } from "constants/ActionTypes";
-import SubAppReducer from "./SubAppReducer";
+import appBoletasReducer from "./appBoletasReducer";
 import THLReducer from "./menu_reducer/THLReducer";
 import TelaPrincipalReducer from "components/redux/reducers/TelaPrincipalReducer";
 import MultilegReducer from "components/redux/reducers/menu_reducer/MultilegReducer";
@@ -37,7 +37,7 @@ export default combineReducers({
   vendaStartStopReducer: formInputReducer(VENDA_STARTSTOP_NAMESPACE),
   vendaStopMovel: formInputReducer(VENDA_STOPMOVEL_NAMESPACE),
   vendaGainReducao: formInputReducer(VENDA_GAINREDUCAO_NAMESPACE),
-  SubAppReducer: SubAppReducer
+  appBoletasReducer: appBoletasReducer,
 });
 
 export const combinedReducersAppPrincipal = combineReducers({
@@ -45,5 +45,5 @@ export const combinedReducersAppPrincipal = combineReducers({
   multilegReducer: MultilegReducer,
   posicaoReducer: PosicaoReducer,
   ordensExecReducer: OrdensExecucaoReducer,
-  THLReducer: THLReducer
+  THLReducer: THLReducer,
 });

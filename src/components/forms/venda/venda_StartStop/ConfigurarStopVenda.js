@@ -11,7 +11,7 @@ import {
 } from "components/utils/TextoGrafico";
 import { mudarInputConfigAction } from "components/redux/actions/formInputActions";
 import { CalculoValorTotalAgendada } from "components/utils/CalculoValorTotal";
-import { fecharFormConfigurarAction } from "components/redux/reducers/MainAppReducer";
+import { fecharFormConfigurarAction } from "components/redux/actions/MainAppActions";
 import { ModalHeaderLimpo } from "components/utils/FormHeader";
 import GraficoInputsConfigStartStop from "components/utils/GraficoInputsConfigStartStop";
 

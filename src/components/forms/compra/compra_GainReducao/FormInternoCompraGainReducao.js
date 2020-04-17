@@ -16,7 +16,7 @@ import RowFormValidade from "components/utils/RowFormValidade";
 import RowFormAssinatura from "components/utils/RowFormAssinatura";
 import { COMPRA_GAINREDUCAO_NAMESPACE } from "constants/ActionTypes";
 import TabelaGainReducao from "./TabelaGainReducao";
-import { compraGainReducaoAction } from "components/redux/actions/SubAppActions";
+import { compraGainReducaoAction } from "components/redux/actions/AppBoletasActions";
 import { pesquisarAtivoOnEnterAction } from "components/redux/actions/api_actions/boletasAPIActions";
 import { RowInputsGainReducaoConectada } from "components/utils/RowInputsFormatadosFormInterno";
 import { BotaoEnviarOrdem } from "components/utils/BotaoEnviarOrdem";
