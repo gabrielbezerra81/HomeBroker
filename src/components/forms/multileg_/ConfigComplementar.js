@@ -12,15 +12,7 @@ class ConfigComplementar extends React.Component {
   render() {
     return (
       <div className="mcontent config_complementar">
-        <ModalHeaderLimpo
-          funcaoFechar={() =>
-            this.props.abrirFecharConfigComplAction(
-              this.props.configComplementarAberto
-            )
-          }
-          titulo="CONFIGURAÇÃO COMPLEMENTAR"
-          name=""
-        />
+        <ModalHeaderLimpo titulo="CONFIGURAÇÃO COMPLEMENTAR" name="config_complementar" />
 
         <div className="p-1 pl-3 pr-3 bodyConfigComplementar">
           <Row className="mt-2 mb-2">

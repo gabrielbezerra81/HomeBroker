@@ -7,14 +7,19 @@ import { listarBookOfertaOnEnterAction } from "components/redux/actions/api_acti
 import {
   fecharFormAction,
   abrirFormAction,
+  fecharFormConfigurarAction,
 } from "components/redux/reducers/MainAppReducer";
 import {
   useSelectorGlobalStore,
   useDispatchGlobalStore,
   useDispatchStorePrincipal,
   useSelectorStorePrincipal,
+  DispatchStorePrincipal,
+  DispatchBoletas,
+  DispatchGlobalStore,
 } from "components/redux/StoreCreation";
 import { abrirItemBarraLateralAction } from "components/redux/actions/TelaPrincipalActions";
+import { abrirFecharConfigComplAction } from "components/redux/actions/menu_actions/MultilegActions";
 
 // Apenas para boletas de compra e venda
 export const ModalHeader = ({
@@ -29,7 +34,7 @@ export const ModalHeader = ({
   const stateGlobalStore = useSelectorGlobalStore(
     (state) => state.MainAppReducer
   ); // Filtrar state pelo nome do reducer
-  const dispatch = useDispatchGlobalStore();
+  const dispatch = DispatchGlobalStore();
   const formShow = stateGlobalStore.show;
   const { appkey } = state.appProps;
   const abrirBookProps = {
@@ -183,9 +188,28 @@ export const ModalHeaderSemBook = ({ headerTitle, headerClass, name }) => {
 };
 
 // form configurar ordem start stop
-export const ModalHeaderLimpo = ({ funcaoFechar, titulo, name }) => {
+export const ModalHeaderLimpo = ({ titulo, name = "" }) => {
   // form Configurar Stop  => fecharFormConfigurarAction(event)
   // multileg config compl => abrirFecharConfigComplAction( this.props.configComplementarAberto)
+  let funcaoFechar;
+
+  const stateStorePrincipal = useSelectorStorePrincipal(
+    (state) => state.multilegReducer
+  );
+
+  const { configComplementarAberto } = stateStorePrincipal;
+
+  if (["config_compra", "config_venda"].includes(name)) {
+    const dispatch = DispatchBoletas();
+    funcaoFechar = (e) => dispatch(fecharFormConfigurarAction(e));
+  } //
+  else if (name === "config_complementar") {
+    const dispatchStorePrincipal = DispatchStorePrincipal();
+    funcaoFechar = (e) =>
+      dispatchStorePrincipal(
+        abrirFecharConfigComplAction(configComplementarAberto)
+      );
+  }
 
   return (
     <div className="border-green mheader">
