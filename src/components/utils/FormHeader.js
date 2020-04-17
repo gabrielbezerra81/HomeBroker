@@ -17,9 +17,11 @@ import {
   DispatchStorePrincipal,
   DispatchBoletas,
   DispatchGlobalStore,
+  StateStorePrincipal,
 } from "components/redux/StoreCreation";
 import { abrirItemBarraLateralAction } from "components/redux/actions/TelaPrincipalActions";
 import { abrirFecharConfigComplAction } from "components/redux/actions/menu_actions/MultilegActions";
+import { mudarVariavelOrdensExecAction } from "components/redux/actions/menu_actions/OrdensExecActions";
 
 // Apenas para boletas de compra e venda
 export const ModalHeader = ({
@@ -155,11 +157,7 @@ export const ModalHeaderSemBook = ({ headerTitle, headerClass, name }) => {
     <div className={`${headerClass} handle mheader`}>
       <h6 className="mtitle">{headerTitle === "THL" ? "" : headerTitle}</h6>
       <div className="wrapperIconesHeader">
-        {headerTitle === "HISTÓRICO DE OPERAÇÕES" ? (
-          <Button variant="link" className="iconesHeader">
-            <MDBIcon icon="cog" size="2x"></MDBIcon>
-          </Button>
-        ) : null}
+        <BotaoAbrirFiltrarOrdens headerTitle={headerTitle} />
         <Button variant="link" className="iconesHeader">
           <MDBIcon icon="cog" size="2x" />
         </Button>
@@ -173,7 +171,7 @@ export const ModalHeaderSemBook = ({ headerTitle, headerClass, name }) => {
             )
           }
         >
-          <span className="fa-stack hoverIconeFechar iconesHeader">
+          <span className="fa-stack hoverIconeFechar">
             <MDBIcon icon="circle" className="fa-stack-2x" />
             <MDBIcon
               icon="times"
@@ -189,8 +187,6 @@ export const ModalHeaderSemBook = ({ headerTitle, headerClass, name }) => {
 
 // form configurar ordem start stop
 export const ModalHeaderLimpo = ({ titulo, name = "" }) => {
-  // form Configurar Stop  => fecharFormConfigurarAction(event)
-  // multileg config compl => abrirFecharConfigComplAction( this.props.configComplementarAberto)
   let funcaoFechar;
 
   const stateStorePrincipal = useSelectorStorePrincipal(
@@ -285,4 +281,34 @@ const GetAbrirMenuProps = () => {
 
     return props;
   });
+};
+
+const BotaoAbrirFiltrarOrdens = ({ headerTitle }) => {
+  let botaoAbrirFiltrarOrdens = <div></div>;
+  if (headerTitle === "HISTÓRICO DE OPERAÇÕES") {
+    const state = StateStorePrincipal((state) => state);
+    const dispatch = DispatchStorePrincipal();
+
+    const { filtrarOrdensAberto } = state.ordensExecReducer;
+
+    botaoAbrirFiltrarOrdens = (
+      <Button
+        variant="link"
+        className="iconesHeader"
+        style={{ marginRight: "6px" }}
+        onClick={() =>
+          dispatch(
+            mudarVariavelOrdensExecAction(
+              "filtrarOrdensAberto",
+              !filtrarOrdensAberto
+            )
+          )
+        }
+      >
+        <MDBIcon icon="search" size="2x"></MDBIcon>
+      </Button>
+    );
+  }
+
+  return botaoAbrirFiltrarOrdens;
 };

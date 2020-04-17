@@ -5,6 +5,7 @@ import ConfigurarStopVenda from "components/forms/venda/venda_StartStop/Configur
 import FiltrarOrdens from "components/forms/ordens_em_execucao/FiltrarOrdens"; //posicaoFormCompraVenda
 import ConfigComplementar from "components/forms/multileg_/ConfigComplementar";
 import { Resizable } from "re-resizable";
+import { StateStorePrincipal } from "components/redux/StoreCreation";
 class BSModal extends Component {
   constructor(props) {
     super(props);
@@ -20,10 +21,7 @@ class BSModal extends Component {
   render() {
     const formulario = (
       <div id={this.props.id} className={` ${this.props.classConfigAberto}`}>
-        {this.props.renderDivFiltrarOrdens &&
-        this.props.id === "ordens_execucao" ? (
-          <FiltrarOrdens />
-        ) : null}
+        {this.props.id === "ordens_execucao" ? <RenderFiltrarOrdens /> : null}
         <div className="mcontent">
           {this.props.renderHeader(this.resetPosition)}
           {this.props.renderModalBody()}
@@ -74,6 +72,14 @@ class BSModal extends Component {
 }
 
 export default BSModal;
+
+const RenderFiltrarOrdens = () => {
+  const state = StateStorePrincipal();
+  const { filtrarOrdensAberto } = state.ordensExecReducer;
+
+  if (filtrarOrdensAberto) return <FiltrarOrdens />;
+  return <div></div>;
+};
 
 /*
 const aplicarPosicao = id => {

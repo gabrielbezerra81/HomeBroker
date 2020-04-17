@@ -1,6 +1,9 @@
 import React from "react";
 import { Provider, connect } from "react-redux";
-import { MenuOrdens, WrapperAppBoletas } from "components/tela_principal/MenuOrdens";
+import {
+  MenuOrdens,
+  WrapperAppBoletas,
+} from "components/tela_principal/MenuOrdens";
 import { compose } from "redux";
 import AppBoletas from "components/AppBoletas";
 import { ModalHeader } from "components/utils/FormHeader";

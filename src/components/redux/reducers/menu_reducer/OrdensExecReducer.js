@@ -14,7 +14,8 @@ const INITIAL_STATE = {
   selectQtdeAberto: false,
   selectPrecoAberto: false,
   sinalInputSelect: "+",
-  eventSourceOrdensExec: null
+  eventSourceOrdensExec: null,
+  filtrarOrdensAberto: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
