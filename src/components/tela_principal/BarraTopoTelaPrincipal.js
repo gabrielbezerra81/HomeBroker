@@ -56,17 +56,22 @@ class BarraTopoTelaPrincipal extends React.Component {
               <FormControl
                 className="textInput"
                 as="select"
-                onChange={(e) =>
+                onChange={(e) => {
+                  const novoID = Number(e.currentTarget.value);
+                  const novaConta = this.props.conta.filter(
+                    (conta) => conta.id === novoID
+                  )[0];
+
                   this.props.mudarDadosLoginAction(
                     "contaSelecionada",
-                    e.target.value
-                  )
-                }
+                    novaConta
+                  );
+                }}
               >
                 {this.props.conta.map((conta, indice) => {
                   const gateway = conta.gateway ? `, ${conta.gateway}` : "";
                   return (
-                    <option value={conta} key={`conta${indice}`}>
+                    <option value={conta.id} key={`conta${indice}`}>
                       {`${conta.nome}, 
                     ${conta.sigla}, 
                     ${conta.numero}${gateway}`}
