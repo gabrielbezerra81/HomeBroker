@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { WindowTable } from "window-table";
-// import InfiniteScroll from "react-infinite-scroller";
-// import InfiniteScroll2 from "react-infinite-scroll-component";
 import {
   ColunaAcaoUlt,
   ColunaCodigos,
@@ -10,52 +8,51 @@ import {
   ColunaHeader,
 } from "components/forms/thl/ColunasTabelaComb";
 import { FiltrarTabela } from "components/forms/thl/FiltroTabela";
+import { useSelectorStorePrincipal } from "components/redux/StoreCreation";
 
-export default React.memo(
-  ({ props }) => {
-    const dataTabela = FiltrarTabela();
+export default React.memo(() => {
+  const reduxState = useSelectorStorePrincipal((state) => {
+    return state.THLReducer;
+  });
+  const dataTabela = useMemo(() => FiltrarTabela(reduxState), [reduxState]);
 
-    //Bloqueia o scroll do container quando for rolar a tabela
-    // useEffect(() => {
-    //   var parent = document.getElementById("tabelaCombinacoes").childNodes[1];
-    //   var scrollDiv = parent.lastChild;
+  //Bloqueia o scroll do container quando for rolar a tabela
+  // useEffect(() => {
+  //   var parent = document.getElementById("tabelaCombinacoes").childNodes[1];
+  //   var scrollDiv = parent.lastChild;
 
-    //   if (scrollDiv)
-    //     scrollDiv.addEventListener(
-    //       "wheel",
-    //       function (e) {
-    //         var event = e,
-    //           d = -event.deltaY || -event.detail;
+  //   if (scrollDiv)
+  //     scrollDiv.addEventListener(
+  //       "wheel",
+  //       function (e) {
+  //         var event = e,
+  //           d = -event.deltaY || -event.detail;
 
-    //         this.scrollTop += (d < 0 ? 1 : -1) * 30;
-    //         // e.preventDefault();
-    //       },
-    //       { passive: true }
-    //     );
-    // });
-    let alturaContainer = 102 + 43 * dataTabela.length;
-    if (alturaContainer > 496) alturaContainer = 496;
+  //         this.scrollTop += (d < 0 ? 1 : -1) * 30;
+  //         // e.preventDefault();
+  //       },
+  //       { passive: true }
+  //     );
+  // });
+  let alturaContainer = 102 + 43 * dataTabela.length;
+  if (alturaContainer > 496) alturaContainer = 496;
 
-    return (
-      <div className="containerCombinacoesTHL">
-        <div
-          className="containerTabelaComb"
-          style={{ height: `${alturaContainer}px` }}
-        >
-          <Html5Table
-            className="tabelaCombinacoes"
-            id="tabelaCombinacoes"
-            data={dataTabela}
-            columns={columns}
-          />
-        </div>
+  return (
+    <div className="containerCombinacoesTHL">
+      <div
+        className="containerTabelaComb"
+        style={{ height: `${alturaContainer}px` }}
+      >
+        <Html5Table
+          className="tabelaCombinacoes"
+          id="tabelaCombinacoes"
+          data={dataTabela}
+          columns={columns}
+        />
       </div>
-    );
-  },
-  (prevProps, nextProps) => {
-    return prevProps.combinacoesTabela === nextProps.combinacoesTabela;
-  }
-);
+    </div>
+  );
+});
 
 const Html5Table = (props) => {
   const tamanhoTabela = props.data.length;
@@ -197,19 +194,6 @@ endMessage={
   </p>
 }
 > */
-
-// const [hasMore, setHasMore] = useState(true);
-// const fetchMoreData = (tableData, hasMore, setTableData, setHasMore) => {
-//   if (tableData.length >= comb300.length) {
-//     setHasMore(false);
-//     return;
-//   }
-//   // a fake async api call like which sends
-//   // 20 more records in .5 secs
-//   setTimeout(() => {
-//     setTableData(tableData.concat(comb300.slice(0, 100)));
-//   }, 500);
-// };
 
 /* <InfiniteScroll
           pageStart={0}

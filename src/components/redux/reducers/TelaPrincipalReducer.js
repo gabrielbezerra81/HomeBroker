@@ -17,7 +17,7 @@ const INITIAL_STATE = {
   relatorioDetalhadoAberto: false,
   listaCompletaAberta: false,
   multilegAberto: false,
-  thlAberta: false,
+  thlAberta: true,
   inputUsuario: "gabrielAB",
   inputSenha: "123456789",
   token: {

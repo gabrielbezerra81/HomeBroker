@@ -2,10 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { FormControl } from "react-bootstrap";
 import { Select } from "antd";
-import { createFilter, useFilter } from "window-table";
 import _ from "lodash";
 import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
-import { useSelectorStorePrincipal } from "components/redux/StoreCreation";
 import { StorePrincipalContext } from "components/redux/StoreCreation";
 
 class InputsFiltroTabela extends React.Component {
@@ -252,27 +250,16 @@ export default connect(mapStateToProps, { mudarVariavelTHLAction }, null, {
 })(InputsFiltroTabela);
 
 // função principal que retorna a tabela filtrada
-export const FiltrarTabela = () => {
-  const reduxState = useSelectorStorePrincipal((state) => {
-    return state.THLReducer;
-  });
+export const FiltrarTabela = (reduxState) => {
   const { combinacoesTabela } = reduxState;
 
-  const filteredData = useFilter(
-    filtroEstrategia,
+  const filteredData = filtroEstrategia(
     combinacoesTabela,
     reduxState.estrategia
   );
-  const filteredData2 = useFilter(
-    filtroGrupo,
-    combinacoesTabela,
-    reduxState.grupo
-  );
-  const filteredData3 = useFilter(
-    filtroAcaoUlt,
-    combinacoesTabela,
-    reduxState.acaoUlt
-  );
+
+  const filteredData2 = filtroGrupo(combinacoesTabela, reduxState.grupo);
+  const filteredData3 = filtroAcaoUlt(combinacoesTabela, reduxState.acaoUlt);
   const filteredData4 = filtroSpread(combinacoesTabela, reduxState.spread);
   const filteredData5 = filtroCodigos(combinacoesTabela, reduxState.codigos);
   const filteredData6 = filtroMontagem(
@@ -286,16 +273,8 @@ export const FiltrarTabela = () => {
     "desmontagem"
   );
 
-  const filteredData8 = useFilter(
-    filtroVcto,
-    combinacoesTabela,
-    reduxState.vencimento
-  );
-  const filteredData9 = useFilter(
-    filtroPrazo,
-    combinacoesTabela,
-    reduxState.prazo
-  );
+  const filteredData8 = filtroVcto(combinacoesTabela, reduxState.vencimento);
+  const filteredData9 = filtroPrazo(combinacoesTabela, reduxState.prazo);
 
   return _.intersectionBy(
     filteredData,
@@ -311,8 +290,18 @@ export const FiltrarTabela = () => {
   );
 };
 
-const filtroEstrategia = createFilter(["estrategia"]);
-const filtroGrupo = createFilter(["grupo"]);
+const filtroEstrategia = (data, filterText) => {
+  return data.filter((linha) =>
+    linha.estrategia
+      .toLocaleLowerCase()
+      .includes(filterText.toLocaleLowerCase())
+  );
+};
+const filtroGrupo = (data, filterText) => {
+  return data.filter((linha) =>
+    linha.grupo.toLocaleLowerCase().includes(filterText.toLocaleLowerCase())
+  );
+};
 const filtroAcaoUlt = (data, filterText) => {
   return data.filter((linha) =>
     `${linha.acaoUlt.acao} ${linha.acaoUlt.ult}`
@@ -329,8 +318,18 @@ const filtroCodigos = (data, filterObj) => {
 const filtroMontagem = (data, filterObj, atributo) => {
   return filtrarDadosColuna(data, filterObj, atributo, "numero");
 };
-const filtroVcto = createFilter(["vencimento"]);
-const filtroPrazo = createFilter(["prazo"]);
+const filtroVcto = (data, filterText) => {
+  return data.filter((linha) =>
+    linha.vencimento
+      .toLocaleLowerCase()
+      .includes(filterText.toLocaleLowerCase())
+  );
+};
+const filtroPrazo = (data, filterText) => {
+  return data.filter((linha) =>
+    linha.prazo.toLocaleLowerCase().includes(filterText.toLocaleLowerCase())
+  );
+};
 
 //
 const filtrarDadosColuna = (data, filterObj, atributo, tipoFiltro) => {
