@@ -6,9 +6,9 @@ import {
 } from "constants/ActionTypes";
 
 const INITIAL_STATE = {
-  usuarioConectado: "Gabriel Alencar",
+  usuarioConectado: "",
   menuLateralAberto: false,
-  logado: true,
+  logado: false,
   valorLiquido: "15.000,00",
   valorComprar: "3.500,00",
   ativo: "Bender",
@@ -17,40 +17,16 @@ const INITIAL_STATE = {
   relatorioDetalhadoAberto: false,
   listaCompletaAberta: false,
   multilegAberto: false,
-  thlAberta: true,
+  thlAberta: false,
   inputUsuario: "gabrielAB",
   inputSenha: "123456789",
-  token: {
-    tokenType: "Bearer",
-    accessToken:
-      "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJnYWJyaWVsQUIiLCJpYXQiOjE1ODcxMzcyMzgsImV4cCI6MTU4NzIyMzYzOH0.C6IbFUed6JucYm0DQ6ixN6jdCdFAfB_lEo_uasgr_1SQzAKzY7uUdCwhPEU_zH2Q081rodDoCMSa5VWZ-EHh9A",
-  },
+  token: {},
   nomeCadastro: "Gabriel",
   usernameCadastro: "gabrielAB",
   emailCadastro: "gabrielAB@gmail.com",
   senhaCadastro: "123456789",
-  conta: [
-    {
-      id: 1,
-      numero: "12345-6",
-      nome: null,
-      preferencia: null,
-      gateway: "MT5",
-      saldo: null,
-      sigla: "XPI",
-      corretora: "XP INVESTIMENTOS",
-    },
-  ],
-  contaSelecionada: {
-    id: 1,
-    numero: "12345-6",
-    nome: null,
-    preferencia: null,
-    gateway: "MT5",
-    saldo: null,
-    sigla: "XPI",
-    corretora: "XP INVESTIMENTOS",
-  },
+  conta: [],
+  contaSelecionada: {},
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -62,9 +38,10 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         usuarioConectado: action.payload.usuarioConectado,
         logado: action.payload.logado,
-        menuLateralAberto: false,
         conta: action.payload.conta,
         contaSelecionada: action.payload.contaSelecionada,
+        inputSenha: "",
+        ...resetarEstado(action.payload.logado),
       };
     case ABRIR_FECHAR_ITEM_BARRA_LATERAL:
       return { ...state, [action.payload.name]: action.payload.valor };
@@ -73,4 +50,9 @@ export default (state = INITIAL_STATE, action) => {
     default:
       return state;
   }
+};
+
+const resetarEstado = (logado) => {
+  if (!logado) return INITIAL_STATE;
+  return {};
 };

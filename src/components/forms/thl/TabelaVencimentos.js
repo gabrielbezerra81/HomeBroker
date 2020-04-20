@@ -5,7 +5,7 @@ import imgModeloEU from "img/modeloEU.png";
 import { ReactComponent as ImgModeloUSA } from "img/modeloUSA2.svg";
 import { StateStorePrincipal } from "components/redux/StoreCreation";
 
-export default ({ setScrollbarRef }) => {
+export default React.memo(({ setScrollbarRef }) => {
   const reduxState = StateStorePrincipal().THLReducer;
   const { opcoesStrike } = reduxState;
   const strikes = filtrarStrikes(opcoesStrike);
@@ -72,7 +72,7 @@ export default ({ setScrollbarRef }) => {
       </div>
     </PerfectScrollbar>
   );
-};
+});
 
 const filtrarStrikes = (arrayVencimentos) => {
   return [

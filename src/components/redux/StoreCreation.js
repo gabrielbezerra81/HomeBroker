@@ -7,6 +7,9 @@ import {
 } from "react-redux";
 import ReduxThunk from "redux-thunk";
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
+import { persistStore, persistReducer } from "redux-persist";
+import autoMergeLevel1 from "redux-persist/lib/stateReconciler/autoMergeLevel1";
+import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 import MainAppReducer from "components/redux/reducers/MainAppReducer";
 import { combinedReducersAppPrincipal } from "components/redux/reducers";
 
@@ -43,6 +46,18 @@ export const DispatchGlobalStore = () => {
   return useDispatchGlobalStore();
 };
 
+const persistConfig = {
+  key: "root",
+  storage,
+  stateReconciler: autoMergeLevel1,
+  whitelist: ["telaPrincipalReducer"],
+};
+
+const persistedReducerAppPrincipal = persistReducer(
+  persistConfig,
+  combinedReducersAppPrincipal
+);
+
 // @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -52,10 +67,12 @@ const combinedReducers = combineReducers({
 
 //Usado para todos os outros dados gerais como os da tela principal
 export const storeAppPrincipal = createStore(
-  combinedReducersAppPrincipal,
+  persistedReducerAppPrincipal,
   {},
   composeEnhancers(applyMiddleware(ReduxThunk))
 );
+
+export const persistor = persistStore(storeAppPrincipal);
 
 //Usada apenas para gerenciar os estados de mostrar ou não os formulários
 export const globalStore = createStore(

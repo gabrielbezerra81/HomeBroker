@@ -1,5 +1,4 @@
 import React from "react";
-import {} from "react-bootstrap";
 import iconeListaCompleta from "img/iconeListaCompleta.png";
 import { ReactComponent as Icones } from "img/IconesBarraLateral.svg";
 
@@ -9,17 +8,26 @@ import { ReactComponent as Icones } from "img/IconesBarraLateral.svg";
 Icone Ordens
 
 */
+const margemParaMenuLateral = (menuLateralAberto) => {
+  if (menuLateralAberto) return " divBarraLateralAfastada";
+  return "";
+};
 
 export default class BarraLateral extends React.Component {
   render() {
     const { props } = this;
     return (
-      <div className="divBarraLateral" id="divBarraLateral">
+      <div
+        className={`divBarraLateral${margemParaMenuLateral(
+          props.menuLateralAberto
+        )}`}
+        id="divBarraLateral"
+      >
         <div
           tabIndex={0}
           className="itemDivBarraLateral divClicavel"
           onClick={(event) => {
-            this.props.abrirFormAction(event, this.props);
+            props.abrirFormAction(event, props);
           }}
           data-name="book"
         >
@@ -30,8 +38,8 @@ export default class BarraLateral extends React.Component {
           tabIndex={0}
           className="itemDivBarraLateral divClicavel"
           onClick={() => {
-            this.props.atualizarDivKeyAction("thl");
-            this.props.abrirItemBarraLateralAction(this.props, "thlAberta");
+            props.atualizarDivKeyAction("thl");
+            props.abrirItemBarraLateralAction(props, "thlAberta");
           }}
         >
           <Icones viewBox="7 70 42 49" className="iconesBarraLateral"></Icones>
@@ -42,14 +50,14 @@ export default class BarraLateral extends React.Component {
           tabIndex={0}
           className="itemDivBarraLateral divClicavel"
           onMouseOver={() => {
-            this.props.atualizarDivKeyAction("divOrdens");
+            props.atualizarDivKeyAction("divOrdens");
 
             if (!props.ordensAberto)
-              this.props.mouseOverAction(this.props, "ordensAberto");
+              props.mouseOverAction(props, "ordensAberto");
           }}
           onMouseLeave={() => {
             if (props.ordensAberto)
-              this.props.mouseLeaveAction(this.props, "ordensAberto");
+              props.mouseLeaveAction(props, "ordensAberto");
           }}
         >
           <Icones
@@ -62,11 +70,8 @@ export default class BarraLateral extends React.Component {
           tabIndex={0}
           className="itemDivBarraLateral divClicavel"
           onClick={() => {
-            this.props.atualizarDivKeyAction("ordens_execucao");
-            this.props.abrirItemBarraLateralAction(
-              this.props,
-              "ordensExecucaoAberto"
-            );
+            props.atualizarDivKeyAction("ordens_execucao");
+            props.abrirItemBarraLateralAction(props, "ordensExecucaoAberto");
           }}
         >
           <Icones
@@ -79,11 +84,8 @@ export default class BarraLateral extends React.Component {
           tabIndex={0}
           className="itemDivBarraLateral divClicavel"
           onClick={() => {
-            this.props.atualizarDivKeyAction("posicao_custodia");
-            this.props.abrirItemBarraLateralAction(
-              this.props,
-              "listaCompletaAberta"
-            );
+            props.atualizarDivKeyAction("posicao_custodia");
+            props.abrirItemBarraLateralAction(props, "listaCompletaAberta");
           }}
         >
           <Icones viewBox="5 326 41 52" className="iconesBarraLateral"></Icones>
@@ -93,9 +95,9 @@ export default class BarraLateral extends React.Component {
           tabIndex={0}
           className="itemDivBarraLateral divClicavel"
           onClick={() => {
-            this.props.atualizarDivKeyAction("relatorio_detalhado");
-            this.props.abrirItemBarraLateralAction(
-              this.props,
+            props.atualizarDivKeyAction("relatorio_detalhado");
+            props.abrirItemBarraLateralAction(
+              props,
               "relatorioDetalhadoAberto"
             );
           }}
@@ -107,11 +109,8 @@ export default class BarraLateral extends React.Component {
           tabIndex={0}
           className="itemDivBarraLateral divClicavel"
           onClick={() => {
-            this.props.atualizarDivKeyAction("posicao_custodia");
-            this.props.abrirItemBarraLateralAction(
-              this.props,
-              "listaCompletaAberta"
-            );
+            props.atualizarDivKeyAction("posicao_custodia");
+            props.abrirItemBarraLateralAction(props, "listaCompletaAberta");
           }}
           style={{ display: "none" }}
         >

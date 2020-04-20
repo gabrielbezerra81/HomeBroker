@@ -30,6 +30,7 @@ import {
   url_posicaoReativa_idUser,
   url_pesquisarListaStrike_codigo,
   url_listarContas_token,
+  url_verificarToken_token,
 } from "components/api/url";
 import {
   MUDAR_VARIAVEL_POSICAO_CUSTODIA,
@@ -59,6 +60,7 @@ import {
   erro_realizar_cadastro,
   erro_timeout,
   erro_listarBook,
+  erro_sessaoExpirada,
 } from "constants/AlertaErros";
 
 retryDelay(request);
@@ -785,6 +787,21 @@ export const listarContasAPI = (token) => {
     })
     .catch((erro) => {
       mostrarErroConsulta(erro, erro_realizar_login);
+      return null;
+    });
+};
+
+export const verificarTokenAPI = (token) => {
+  return request
+    .get(url_base + url_verificarToken_token + token.accessToken)
+    .timeout(timeout)
+    .retry(3, 2000)
+    .then((response) => {
+      const { body } = response;
+      return body;
+    })
+    .catch((erro) => {
+      mostrarErroConsulta(erro, erro_sessaoExpirada);
       return null;
     });
 };

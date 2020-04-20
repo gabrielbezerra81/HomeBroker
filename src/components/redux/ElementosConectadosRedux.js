@@ -1,10 +1,11 @@
 import React from "react";
 import { Provider, connect } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { compose } from "redux";
 import {
   MenuOrdens,
   WrapperAppBoletas,
 } from "components/tela_principal/MenuOrdens";
-import { compose } from "redux";
 import AppBoletas from "components/AppBoletas";
 import { ModalHeader } from "components/utils/FormHeader";
 import TelaPrincipal from "components/tela_principal/TelaPrincipal";
@@ -66,17 +67,20 @@ import {
   GlobalContext,
   storeAppPrincipal,
   useSelectorStorePrincipal,
+  persistor,
 } from "components/redux/StoreCreation";
 
 export const Helper = () => {
   return (
     <Provider store={globalStore} context={GlobalContext}>
       <Provider store={storeAppPrincipal} context={StorePrincipalContext}>
-        <Router>
-          <TelaLogin path="/" />
-          <TelaCadastro path="/cadastro" />
-          <Home path="/home" />
-        </Router>
+        <PersistGate loading={null} persistor={persistor}>
+          <Router>
+            <TelaLogin path="/" />
+            <TelaCadastro path="/cadastro" />
+            <Home path="/home" />
+          </Router>
+        </PersistGate>
       </Provider>
     </Provider>
   );
@@ -86,6 +90,7 @@ const Home = ({ path }) => {
   const logado = useSelectorStorePrincipal((state) => {
     return state.telaPrincipalReducer.logado;
   });
+
   if (logado) return <TelaPrincipalConectada />;
 
   return <Redirect to="/" noThrow />;
@@ -115,6 +120,7 @@ const mapStateToPropsAppPrincipal = (state) => ({
   ordensExecucaoAberto: state.telaPrincipalReducer.ordensExecucaoAberto,
   relatorioDetalhadoAberto: state.telaPrincipalReducer.relatorioDetalhadoAberto,
   listaCompletaAberta: state.telaPrincipalReducer.listaCompletaAberta,
+  menuLateralAberto: state.telaPrincipalReducer.menuLateralAberto,
   multilegAberto: state.telaPrincipalReducer.multilegAberto,
   thlAberta: state.telaPrincipalReducer.thlAberta,
   logado: state.telaPrincipalReducer.logado,

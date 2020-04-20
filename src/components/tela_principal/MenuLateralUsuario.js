@@ -7,34 +7,23 @@ import {
   logarUsuarioAction,
   deslogarUsuarioAction,
 } from "components/redux/actions/TelaPrincipalActions";
-import { Animate } from "react-show";
 import { StorePrincipalContext } from "components/redux/StoreCreation";
-
-const startStyle = {
-  opacity: 0,
-  pointerEvents: "none",
-};
 
 class MenuLateralUsuario extends React.Component {
   render() {
+    const { menuLateralAberto } = this.props;
     return (
-      <div className="divMenuLateral hide" id="divMenuLateral">
+      <div
+        className={`divMenuLateral${visibilidade(menuLateralAberto)}`}
+        id="divMenuLateral"
+      >
         <div className="itemMenuLateral corAlternada">
           <h6>Menu</h6>
         </div>
         <div className="itemMenuLateral">
           <Row>
             <Col>
-              <Animate
-                show={this.props.logado}
-                duration={100}
-                transitionOnMount
-                stayMounted
-                preMount
-                start={startStyle}
-              >
-                <h6>{this.props.usuarioConectado}</h6>
-              </Animate>
+              <h6>{this.props.usuarioConectado}</h6>
             </Col>
           </Row>
         </div>
@@ -123,4 +112,9 @@ const renderDivLogin = (props) => {
       </div>
     );
   }
+};
+
+const visibilidade = (menuAberto) => {
+  if (menuAberto) return " visible";
+  return " hide";
 };

@@ -12,6 +12,7 @@ import {
   listarContasAPI,
 } from "components/api/API";
 import { navigate } from "@reach/router";
+import { persistor } from "components/redux/StoreCreation";
 
 export const abrirFecharMenuLateralAction = (event, menuLateralAberto) => {
   return (dispatch) => {
@@ -83,21 +84,29 @@ export const cadastrarUsuarioAction = (props) => {
 };
 
 export const deslogarUsuarioAction = (event, props) => {
-  return async (dispatch) => {
-    await dispatch({
-      type: LOGAR_DESLOGAR_USUARIO,
-      payload: {
-        usuarioConectado: "",
-        logado: false,
-        conta: [],
-        contaSelecionada: "",
-      },
-    });
-    await dispatch({
-      type: MUDAR_DADOS_LOGIN,
-      payload: { nomeVariavel: "token", valor: null },
-    });
-    navigate("/");
+  return (dispatch) => {
+    persistor
+      .purge()
+      .then(async () => {
+        await dispatch({
+          type: LOGAR_DESLOGAR_USUARIO,
+          payload: {
+            usuarioConectado: "",
+            logado: false,
+            conta: [],
+            contaSelecionada: "",
+          },
+        });
+        await dispatch({
+          type: MUDAR_DADOS_LOGIN,
+          payload: { nomeVariavel: "token", valor: null },
+        });
+
+        navigate("/");
+      })
+      .catch((erro) => {
+        console.log("purge error: ", erro);
+      });
   };
 };
 

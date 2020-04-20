@@ -20,7 +20,7 @@ export const sucesso_modificar_ordemExec = "Ordem modificada com sucesso";
 export const erro_modificar_ordemExec = "Falha ao modificar ordem";
 export const erro_realizar_login = "Falha ao fazer login";
 export const erro_realizar_cadastro = "Falha ao fazer cadastro de usuário";
-export const erro_listarBook = "Falha ao listar book de ofertas"
+export const erro_listarBook = "Falha ao listar book de ofertas";
 
 //Alertas Validação
 
@@ -35,5 +35,5 @@ export const erro_validar_codigo_duplicado_multileg =
 //Alertas
 export const erro_exportar_ordens_multileg = "Falha ao adicionar abas";
 export const erro_opcoes_ordens_exec = "Selecione uma ordem";
-
 export const erro_timeout = "Não foi possível se conectar ao servidor remoto";
+export const erro_sessaoExpirada = "Sessão expirada, faça login novamente.";

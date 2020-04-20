@@ -6,13 +6,14 @@ import {
   abrirFecharMenuLateralAction,
   mudarDadosLoginAction,
 } from "components/redux/actions/TelaPrincipalActions";
-import { ocultarDIV, mostrarDIV } from "components/utils/MostrarOcultarDiv";
 import { ReactComponent as IconeAbrirMenu } from "img/more.svg";
 import { ReactComponent as IconeHome } from "img/IconeHome.svg";
 import { StorePrincipalContext } from "components/redux/StoreCreation";
 
 class BarraTopoTelaPrincipal extends React.Component {
   render() {
+    const { props } = this;
+
     return (
       <div className="divBarraTopo">
         <Row>
@@ -20,18 +21,16 @@ class BarraTopoTelaPrincipal extends React.Component {
             <div
               className="iconesMostrarMenu divClicavel"
               onClick={(event) => {
-                if (this.props.menuLateralAberto === true) {
-                  this.props.abrirFecharMenuLateralAction(
+                if (props.menuLateralAberto === true) {
+                  props.abrirFecharMenuLateralAction(
                     event,
-                    this.props.menuLateralAberto
+                    props.menuLateralAberto
                   );
-                  return ocultarDIV("divMenuLateral");
                 } else {
-                  this.props.abrirFecharMenuLateralAction(
+                  props.abrirFecharMenuLateralAction(
                     event,
-                    this.props.menuLateralAberto
+                    props.menuLateralAberto
                   );
-                  return mostrarDIV("divMenuLateral");
                 }
               }}
             >
@@ -56,19 +55,17 @@ class BarraTopoTelaPrincipal extends React.Component {
               <FormControl
                 className="textInput"
                 as="select"
+                value={props.contaSelecionada.id}
                 onChange={(e) => {
                   const novoID = Number(e.currentTarget.value);
-                  const novaConta = this.props.conta.filter(
+                  const novaConta = props.conta.filter(
                     (conta) => conta.id === novoID
                   )[0];
 
-                  this.props.mudarDadosLoginAction(
-                    "contaSelecionada",
-                    novaConta
-                  );
+                  props.mudarDadosLoginAction("contaSelecionada", novaConta);
                 }}
               >
-                {this.props.conta.map((conta, indice) => {
+                {props.conta.map((conta, indice) => {
                   const gateway = conta.gateway ? `, ${conta.gateway}` : "";
                   return (
                     <option value={conta.id} key={`conta${indice}`}>
@@ -88,16 +85,16 @@ class BarraTopoTelaPrincipal extends React.Component {
             <h6 className="">VALOR LIQUIDO:</h6>
           </Col>
           <Col md={2}>
-            <h6 className="valorLiquido">{this.props.valorLiquido} R$</h6>
+            <h6 className="valorLiquido">{props.valorLiquido} R$</h6>
           </Col>
           <Col md={0}>
             <h6>COMPRAR:</h6>
           </Col>
           <Col>
-            <h6 className="valorComprar">{this.props.valorComprar} R$</h6>
+            <h6 className="valorComprar">{props.valorComprar} R$</h6>
           </Col>
           <Col md={0}>
-            <h4>{this.props.ativo}</h4>
+            <h4>{props.ativo}</h4>
           </Col>
         </Row>
       </div>
@@ -113,6 +110,7 @@ const mapStateToProps = (state) => ({
   menuLateralAberto: state.telaPrincipalReducer.menuLateralAberto,
   logado: state.telaPrincipalReducer.logado,
   conta: state.telaPrincipalReducer.conta,
+  contaSelecionada: state.telaPrincipalReducer.contaSelecionada,
 });
 
 export default connect(

@@ -17,6 +17,11 @@ const startStyle = {
   pointerEvents: "none",
 };
 
+const margemParaMenuLateral = (menuLateralAberto) => {
+  if (menuLateralAberto) return "menuLateralAfastado";
+  return "";
+};
+
 export default class TelaPrincipal extends React.Component {
   render() {
     const { props } = this;
@@ -28,7 +33,10 @@ export default class TelaPrincipal extends React.Component {
             <BarraTopoTelaPrincipal />
             <div style={{ display: "flex", height: "100%" }}>
               <BarraLateralConectada />
-              <div id="menusTelaPrincipal">
+              <div
+                id="menusTelaPrincipal"
+                className={margemParaMenuLateral(props.menuLateralAberto)}
+              >
                 <MenuOrdensConectado />
                 <Animate
                   show={props.ordensExecucaoAberto}
