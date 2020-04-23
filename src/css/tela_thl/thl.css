@@ -72,12 +72,6 @@
   margin-left: 103px;
 }
 
-/* .containerVencimentos {
-}
-
-.containerTabela {
-} */
-
 .tabelaVencimentos {
   margin-bottom: 0;
   white-space: nowrap;
@@ -208,12 +202,8 @@ thead th:nth-child(3) {
 
 .tabelaVencimentos td {
   font-size: 0.7rem;
-  padding: 0 !important;
-  height: 0 !important;
-}
-
-.tabelaVencimentos tbody tr:first-child td {
   padding: 0px 5px !important;
+  height: 0 !important;
 }
 
 .tabelaVencimentos td,
@@ -288,11 +278,7 @@ thead th:nth-child(3) {
 }
 
 .containerColunaMes > div {
-  padding: 6px 5px !important;
-}
-
-.itemAtivoQtdeVazio {
-  min-width: 164px;
+  padding: 5px 0 5px 4px !important;
 }
 
 .itemAtivosQtde {
@@ -300,7 +286,7 @@ thead th:nth-child(3) {
   padding: 2px 2px 2px 2px;
   display: flex;
   align-items: center;
-  min-width: 150px;
+  min-width: 122px;
   justify-content: center;
 }
 
@@ -342,8 +328,7 @@ thead th:nth-child(3) {
   justify-content: center;
   margin-left: 10px;
   border-left: 1px dashed var(--cor-borda-discreta);
-  padding-left: 5px;
-  min-width: 52px;
+  min-width: 46px;
 }
 
 .containerMapaCalor {
@@ -391,9 +376,8 @@ thead th:nth-child(3) {
 }
 
 .divNomeMes {
-  min-width: 161px;
   width: 100%;
-  max-width: 166px;
+  max-width: 126px;
   min-height: 16px;
 }
 
