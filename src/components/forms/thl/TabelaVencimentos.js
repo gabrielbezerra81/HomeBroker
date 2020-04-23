@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useMemo } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { Table } from "react-bootstrap";
 import imgModeloEU from "img/modeloEU.png";
 import { ReactComponent as ImgModeloUSA } from "img/modeloUSA2.svg";
 import { StateStorePrincipal } from "components/redux/StoreCreation";
+import { formatarNumDecimal } from "components/utils/Formatacoes";
 
 export default React.memo(({ setScrollbarRef }) => {
   const reduxState = StateStorePrincipal().THLReducer;
   const { opcoesStrike } = reduxState;
-  const strikes = filtrarStrikes(opcoesStrike);
+  const strikesInteiros = filtrarStrikesInteiros(opcoesStrike);
+  const anos = useMemo(() => {}, [opcoesStrike]);
 
   return (
     <PerfectScrollbar
@@ -52,21 +54,20 @@ export default React.memo(({ setScrollbarRef }) => {
                   <div>Mensal</div>
                 </div>
               </td>
-              {/* <td></td> */}
-              <td>{renderColunaNomeMes("01", opcoesStrike)}</td>
-              <td>{renderColunaNomeMes("02", opcoesStrike)}</td>
-              <td>{renderColunaNomeMes("03", opcoesStrike)}</td>
-              <td>{renderColunaNomeMes("04", opcoesStrike)}</td>
-              <td>{renderColunaNomeMes("05", opcoesStrike)}</td>
-              <td>{renderColunaNomeMes("06", opcoesStrike)}</td>
-              <td>{renderColunaNomeMes("07", opcoesStrike)}</td>
-              <td>{renderColunaNomeMes("08", opcoesStrike)}</td>
-              <td>{renderColunaNomeMes("09", opcoesStrike)}</td>
-              <td>{renderColunaNomeMes("10", opcoesStrike)}</td>
-              <td>{renderColunaNomeMes("11", opcoesStrike)}</td>
-              <td>{renderColunaNomeMes("12", opcoesStrike)}</td>
+              <td>{renderColunaNomeMes(1, opcoesStrike)}</td>
+              <td>{renderColunaNomeMes(2, opcoesStrike)}</td>
+              <td>{renderColunaNomeMes(3, opcoesStrike)}</td>
+              <td>{renderColunaNomeMes(4, opcoesStrike)}</td>
+              <td>{renderColunaNomeMes(5, opcoesStrike)}</td>
+              <td>{renderColunaNomeMes(6, opcoesStrike)}</td>
+              <td>{renderColunaNomeMes(7, opcoesStrike)}</td>
+              <td>{renderColunaNomeMes(8, opcoesStrike)}</td>
+              <td>{renderColunaNomeMes(9, opcoesStrike)}</td>
+              <td>{renderColunaNomeMes(10, opcoesStrike)}</td>
+              <td>{renderColunaNomeMes(11, opcoesStrike)}</td>
+              <td>{renderColunaNomeMes(12, opcoesStrike)}</td>
             </tr>
-            {renderConteudoTabelaVencimentos(reduxState, strikes)}
+            {renderConteudoTabelaVencimentos(reduxState, strikesInteiros)}
           </tbody>
         </Table>
       </div>
@@ -74,7 +75,7 @@ export default React.memo(({ setScrollbarRef }) => {
   );
 });
 
-const filtrarStrikes = (arrayVencimentos) => {
+const filtrarStrikesInteiros = (arrayVencimentos) => {
   return [
     ...new Set(
       arrayVencimentos.map((linhaVencimento) =>
@@ -84,89 +85,93 @@ const filtrarStrikes = (arrayVencimentos) => {
   ];
 };
 
-const renderConteudoTabelaVencimentos = (reduxState, strikes) => {
+const renderConteudoTabelaVencimentos = (reduxState, strikesInteiros) => {
   const { opcoesStrike } = reduxState;
-  const conteudoTabelaVencimentos = strikes.map((strike, indiceStrike) => {
-    const linhaStrike = (
-      <tr key={`strikeLine${indiceStrike}`} className="linhasStrike">
-        <td className="divClicavel" tabIndex={0}>
-          {strike}
-        </td>
-        <td>
-          <div className="colunaDividida colunaPrecoLinha">
-            <div></div>
-            <div></div>
-          </div>
-        </td>
-        {/* <td></td> */}
-        <td>{renderColunaNomeMes("01", opcoesStrike, true)}</td>
-        <td>{renderColunaNomeMes("02", opcoesStrike, true)}</td>
-        <td>{renderColunaNomeMes("03", opcoesStrike, true)}</td>
-        <td>{renderColunaNomeMes("04", opcoesStrike, true)}</td>
-        <td>{renderColunaNomeMes("05", opcoesStrike, true)}</td>
-        <td>{renderColunaNomeMes("06", opcoesStrike, true)}</td>
-        <td>{renderColunaNomeMes("07", opcoesStrike, true)}</td>
-        <td>{renderColunaNomeMes("08", opcoesStrike, true)}</td>
-        <td>{renderColunaNomeMes("09", opcoesStrike, true)}</td>
-        <td>{renderColunaNomeMes("10", opcoesStrike, true)}</td>
-        <td>{renderColunaNomeMes("11", opcoesStrike, true)}</td>
-        <td>{renderColunaNomeMes("12", opcoesStrike, true)}</td>
-      </tr>
-    );
-
-    const vencimentosStrike = opcoesStrike.filter(
-      (linhaVencimentos) => parseInt(linhaVencimentos.strikeLine) === strike
-    );
-
-    const linhaVencimentos = vencimentosStrike.map((linha, indiceLinha) => {
-      return (
-        <tr key={`linhaVenc${indiceLinha}`}>
-          <td>{linha.strikeLine}</td>
+  const conteudoTabelaVencimentos = strikesInteiros.map(
+    (strike, indiceStrike) => {
+      const linhaStrike = (
+        <tr key={`strikeLine${indiceStrike}`} className="linhasStrike">
+          <td className="divClicavel" tabIndex={0}>
+            {strike}
+          </td>
           <td>
             <div className="colunaDividida colunaPrecoLinha">
-              <div>
-                <div className="precoLinhaMontar">0,68 | 3k</div>
-                <div className="precoLinhaDesmontar">0,66 | 3k</div>
-              </div>
-              <div>
-                <div className="precoLinhaMontar">0,34 | 2 meses</div>
-              </div>
+              <div></div>
+              <div></div>
             </div>
           </td>
           {/* <td></td> */}
-          {meses.map((mes, indiceMes) => {
-            const itemColuna = linha.stocks.find(
-              (itemColuna) => itemColuna.vencimento.split("/")[1] === mes
-            );
-            if (itemColuna) {
-              return (
-                <td key={`${indiceLinha}|colunaVenc${indiceMes}`}>
-                  {renderConteudoMes(itemColuna)}
-                </td>
-              );
-            }
-            const possuiVencimento = verificarMesPossuiVencimento(
-              opcoesStrike,
-              mes
-            );
-
-            return (
-              <td key={`${indiceLinha}|colunaVenc${indiceMes}`}>
-                {possuiVencimento ? colunaVazia : null}
-              </td>
-            );
-          })}
+          <td>{renderColunaNomeMes(1, opcoesStrike, true)}</td>
+          <td>{renderColunaNomeMes(2, opcoesStrike, true)}</td>
+          <td>{renderColunaNomeMes(3, opcoesStrike, true)}</td>
+          <td>{renderColunaNomeMes(4, opcoesStrike, true)}</td>
+          <td>{renderColunaNomeMes(5, opcoesStrike, true)}</td>
+          <td>{renderColunaNomeMes(6, opcoesStrike, true)}</td>
+          <td>{renderColunaNomeMes(7, opcoesStrike, true)}</td>
+          <td>{renderColunaNomeMes(8, opcoesStrike, true)}</td>
+          <td>{renderColunaNomeMes(9, opcoesStrike, true)}</td>
+          <td>{renderColunaNomeMes(10, opcoesStrike, true)}</td>
+          <td>{renderColunaNomeMes(11, opcoesStrike, true)}</td>
+          <td>{renderColunaNomeMes(12, opcoesStrike, true)}</td>
         </tr>
       );
-    });
 
-    return [linhaStrike, ...linhaVencimentos];
-  });
+      const vencimentosStrike = opcoesStrike.filter(
+        (linhaVencimentos) => parseInt(linhaVencimentos.strikeLine) === strike
+      );
+
+      const linhaVencimentos = vencimentosStrike.map((linha, indiceLinha) => {
+        return (
+          <tr key={`linhaVenc${indiceLinha}`}>
+            <td>{formatarNumDecimal(linha.strikeLine)}</td>
+            <td>
+              <div className="colunaDividida colunaPrecoLinha">
+                <div>
+                  <div className="precoLinhaMontar">0,68 | 3k</div>
+                  <div className="precoLinhaDesmontar">0,66 | 3k</div>
+                </div>
+                <div>
+                  <div className="precoLinhaMontar">0,34 | 2 meses</div>
+                </div>
+              </div>
+            </td>
+            {/* <td></td> */}
+            {meses.map((mes, indiceMes) => {
+              const indMes = indiceMes + 1;
+              const itemColuna = linha.stocks.find(
+                (itemColuna) => itemColuna.vencimento.month() + 1 === indMes
+              );
+              if (itemColuna) {
+                return (
+                  <td key={`${indiceLinha}|colunaVenc${indMes}`}>
+                    {renderConteudoMes(itemColuna)}
+                  </td>
+                );
+              }
+              const possuiVencimento = verificarMesPossuiVencimento(
+                opcoesStrike,
+                indMes
+              );
+
+              return (
+                <td key={`${indiceLinha}|colunaVenc${indMes}`}>
+                  {possuiVencimento ? colunaVazia : null}
+                </td>
+              );
+            })}
+          </tr>
+        );
+      });
+
+      return [linhaStrike, ...linhaVencimentos];
+    }
+  );
   return conteudoTabelaVencimentos;
 };
 
 const renderConteudoMes = (itemColuna) => {
-  const ativoStrike = `${itemColuna.symbol.slice(4)}(${itemColuna.strike})`;
+  const strike = formatarNumDecimal(itemColuna.strike);
+  const ativoStrike = `${itemColuna.symbol.slice(4)} (${strike})`;
   const custodia = verificaAtivoCustodia(itemColuna);
 
   return (
@@ -178,7 +183,7 @@ const renderConteudoMes = (itemColuna) => {
           }`}
         >
           <div className="itemAtivos divClicavel" tabIndex={0}>
-            {renderModelo(itemColuna.modelo)}
+            {renderModelo(itemColuna.model)}
             {ativoStrike}
           </div>
           {custodia ? <div className="itemQtde">{300}</div> : null}
@@ -243,7 +248,7 @@ const renderColunaNomeMes = (mes, opcoesStrike, textoVazio = false) => {
 
   // Texto com o nome do mês nas colunas de mês ou vazio nas linhas de Strike
   if (!textoVazio) {
-    nomeMes = mesesExtenso[Number(mes) - 1];
+    nomeMes = meses[mes - 1];
   }
   if (!verificarMesPossuiVencimento(opcoesStrike, mes)) return nomeMes;
   return (
@@ -265,26 +270,10 @@ const verificarMesPossuiVencimento = (opcoesStrike, mes) => {
       stocks.push(stock);
     });
   });
-
-  return stocks.some((stock) => stock.vencimento.split("/")[1] === mes);
+  return stocks.some((stock) => stock.vencimento.month() + 1 === mes);
 };
 
 const meses = [
-  "01",
-  "02",
-  "03",
-  "04",
-  "05",
-  "06",
-  "07",
-  "08",
-  "09",
-  "10",
-  "11",
-  "12",
-];
-
-const mesesExtenso = [
   "Janeiro",
   "Fevereiro",
   "Março",

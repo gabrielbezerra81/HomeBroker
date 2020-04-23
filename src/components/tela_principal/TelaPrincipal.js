@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Animate } from "react-show";
 import MenuLateralUsuario from "components/tela_principal/MenuLateralUsuario";
 import {
@@ -10,7 +10,10 @@ import {
   RelatorioDetalhadoConectado,
 } from "components/redux/ElementosConectadosRedux";
 import BarraTopoTelaPrincipal from "components/tela_principal/BarraTopoTelaPrincipal";
-import TelaTHLConectada from "components/forms/thl/Tela_THL";
+// import TelaTHLConectada from "components/forms/thl/Tela_THL";
+const TelaTHLConectada = React.lazy(() =>
+  import("components/forms/thl/Tela_THL")
+);
 
 const startStyle = {
   opacity: 0,
@@ -103,22 +106,13 @@ export default class TelaPrincipal extends React.Component {
                   <MultilegConectado headerTitle="MULTI ATIVOS" />
                 </Animate>
                 {/* THL */}
-                <Animate
-                  show={props.thlAberta}
-                  duration={100}
-                  transitionOnMount
-                  stayMounted={false}
-                  start={startStyle}
-                  onClick={() =>
-                    props.aumentarZindexAction(
-                      "thl",
-                      props.zIndex,
-                      props.thlAberta
-                    )
-                  }
-                >
-                  <TelaTHLConectada headerTitle="THL" />
-                </Animate>
+                <RenderMenus
+                  menuAberto={props.thlAberta}
+                  zIndex={props.zIndex}
+                  divkey={"thl"}
+                  aumentarZindex={props.aumentarZindexAction}
+                  headerTitle="THL"
+                />
               </div>
             </div>
           </div>
@@ -127,6 +121,30 @@ export default class TelaPrincipal extends React.Component {
     );
   }
 }
+
+const RenderMenus = ({
+  menuAberto,
+  zIndex,
+  divkey,
+  aumentarZindex,
+  headerTitle,
+}) => {
+  return (
+    <Suspense fallback={null}>
+      <Animate
+        show={menuAberto}
+        duration={100}
+        transitionOnMount
+        stayMounted={false}
+        start={startStyle}
+        onClick={() => aumentarZindex(divkey, zIndex, menuAberto)}
+      >
+        <TelaTHLConectada headerTitle={headerTitle} />
+      </Animate>
+    </Suspense>
+  );
+};
+
 /*
 
 <Animate

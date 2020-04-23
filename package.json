@@ -17,6 +17,7 @@
     "jquery": "^3.5.0",
     "lodash": "^4.17.15",
     "mdbreact": "^4.25.6",
+    "moment": "^2.24.0",
     "pretty-checkbox": "^3.0.3",
     "re-resizable": "^6.3.2",
     "react": "^16.13.1",

@@ -295,7 +295,7 @@ export const atualizarOrdensExecAPI = (
   );
 
   source.onopen = function (event) {
-    console.log("open");
+    // console.log("open");
   };
 
   source.onmessage = function (event) {
@@ -424,7 +424,7 @@ export const atualizarCotacaoAPI = (
 
   source.onmessage = function (event) {
     if (typeof event.data !== "undefined") {
-      // console.log("chegou");
+      console.log("chegou");
       var dados = JSON.parse(event.data);
       const cotacaoAtual = dados.ultimo;
       const ativoRetornado = dados.symbol;

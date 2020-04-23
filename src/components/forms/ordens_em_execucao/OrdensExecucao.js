@@ -23,16 +23,16 @@ export default class OrdensExecucao extends React.Component {
     }
     this.props.listarOrdensExecAction(this.props);
   }
-  componentDidUpdate(prevProps) {
-    if (this.props.eventSourceOrdensExec) {
-      if (prevProps.tabelaOrdensExecucao !== this.props.tabelaOrdensExecucao) {
-        this.props.atualizarOrdensExecAction(
-          this.props,
-          this.props.token.accessToken
-        );
-      }
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.eventSourceOrdensExec) {
+  //     if (prevProps.tabelaOrdensExecucao !== this.props.tabelaOrdensExecucao) {
+  //       this.props.atualizarOrdensExecAction(
+  //         this.props,
+  //         this.props.token.accessToken
+  //       );
+  //     }
+  //   }
+  // }
 
   render() {
     return (

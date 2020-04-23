@@ -50,7 +50,17 @@ export const listarOrdensExecAction = (props) => {
       const ordensExec = await listarOrdensExecAPI(props.token);
 
       dispatch({ type: LISTAR_ORDENS_EXECUCAO, payload: ordensExec });
-      atualizarOrdensExec(dispatch, props, props.token.accessToken, ordensExec);
+
+      setTimeout(
+        () =>
+          atualizarOrdensExec(
+            dispatch,
+            props,
+            props.token.accessToken,
+            ordensExec
+          ),
+        3000
+      );
     }
   };
 };
