@@ -9,8 +9,13 @@ import { formatarNumDecimal } from "components/utils/Formatacoes";
 export default React.memo(({ setScrollbarRef }) => {
   const reduxState = StateStorePrincipal().THLReducer;
   const { opcoesStrike } = reduxState;
-  const strikesInteiros = filtrarStrikesInteiros(opcoesStrike);
-  const anos = useMemo(() => {}, [opcoesStrike]);
+  const strikesInteiros = useMemo(() => getStrikesInteiros(opcoesStrike), [
+    opcoesStrike,
+  ]);
+  const { anos, ultimoMes } = useMemo(
+    () => getAnosUltimoMesTabela(opcoesStrike),
+    [opcoesStrike]
+  );
 
   return (
     <PerfectScrollbar
@@ -54,20 +59,21 @@ export default React.memo(({ setScrollbarRef }) => {
                   <div>Mensal</div>
                 </div>
               </td>
-              <td>{renderColunaNomeMes(1, opcoesStrike)}</td>
-              <td>{renderColunaNomeMes(2, opcoesStrike)}</td>
-              <td>{renderColunaNomeMes(3, opcoesStrike)}</td>
-              <td>{renderColunaNomeMes(4, opcoesStrike)}</td>
-              <td>{renderColunaNomeMes(5, opcoesStrike)}</td>
-              <td>{renderColunaNomeMes(6, opcoesStrike)}</td>
-              <td>{renderColunaNomeMes(7, opcoesStrike)}</td>
-              <td>{renderColunaNomeMes(8, opcoesStrike)}</td>
-              <td>{renderColunaNomeMes(9, opcoesStrike)}</td>
-              <td>{renderColunaNomeMes(10, opcoesStrike)}</td>
-              <td>{renderColunaNomeMes(11, opcoesStrike)}</td>
-              <td>{renderColunaNomeMes(12, opcoesStrike)}</td>
+              {/* renderiza as colunas com os nomes do meses */}
+              {renderElementoDinamico(
+                anos,
+                ultimoMes,
+                (indice, ano) =>
+                  renderColunaNomeMes(indice + 1, opcoesStrike, ano),
+                "colunaNomesMeses"
+              )}
             </tr>
-            {renderConteudoTabelaVencimentos(reduxState, strikesInteiros)}
+            {renderConteudoTabelaVencimentos(
+              reduxState,
+              strikesInteiros,
+              anos,
+              ultimoMes
+            )}
           </tbody>
         </Table>
       </div>
@@ -75,7 +81,20 @@ export default React.memo(({ setScrollbarRef }) => {
   );
 });
 
-const filtrarStrikesInteiros = (arrayVencimentos) => {
+const renderElementoDinamico = (anos, ultimoMes, renderElemento, key) => {
+  return anos.map((ano, indice) =>
+    meses.map((mes, indiceMes) => {
+      if (!(ano === anos[anos.length - 1] && indiceMes >= ultimoMes)) {
+        return (
+          <td key={`${key}${ano}${mes}`}>{renderElemento(indiceMes, ano)}</td>
+        );
+      }
+      return null;
+    })
+  );
+};
+
+const getStrikesInteiros = (arrayVencimentos) => {
   return [
     ...new Set(
       arrayVencimentos.map((linhaVencimento) =>
@@ -85,7 +104,29 @@ const filtrarStrikesInteiros = (arrayVencimentos) => {
   ];
 };
 
-const renderConteudoTabelaVencimentos = (reduxState, strikesInteiros) => {
+const getAnosUltimoMesTabela = (arrayVencimentos) => {
+  const vencimentos = [];
+  arrayVencimentos.forEach((linhaStrike) => {
+    linhaStrike.stocks.forEach((stock) => {
+      const vencimento = stock.vencimento;
+      vencimentos.push(vencimento);
+    });
+  });
+  const anos = [...new Set(vencimentos.map((vencimento) => vencimento.year()))];
+  const meses = vencimentos.filter(
+    (vencimento) => vencimento.year() === anos[anos.length - 1]
+  );
+  meses.sort((a, b) => a.diff(b));
+
+  return { anos: anos, ultimoMes: meses[meses.length - 1].month() + 1 };
+};
+
+const renderConteudoTabelaVencimentos = (
+  reduxState,
+  strikesInteiros,
+  anos,
+  ultimoMes
+) => {
   const { opcoesStrike } = reduxState;
   const conteudoTabelaVencimentos = strikesInteiros.map(
     (strike, indiceStrike) => {
@@ -100,19 +141,14 @@ const renderConteudoTabelaVencimentos = (reduxState, strikesInteiros) => {
               <div></div>
             </div>
           </td>
-          {/* <td></td> */}
-          <td>{renderColunaNomeMes(1, opcoesStrike, true)}</td>
-          <td>{renderColunaNomeMes(2, opcoesStrike, true)}</td>
-          <td>{renderColunaNomeMes(3, opcoesStrike, true)}</td>
-          <td>{renderColunaNomeMes(4, opcoesStrike, true)}</td>
-          <td>{renderColunaNomeMes(5, opcoesStrike, true)}</td>
-          <td>{renderColunaNomeMes(6, opcoesStrike, true)}</td>
-          <td>{renderColunaNomeMes(7, opcoesStrike, true)}</td>
-          <td>{renderColunaNomeMes(8, opcoesStrike, true)}</td>
-          <td>{renderColunaNomeMes(9, opcoesStrike, true)}</td>
-          <td>{renderColunaNomeMes(10, opcoesStrike, true)}</td>
-          <td>{renderColunaNomeMes(11, opcoesStrike, true)}</td>
-          <td>{renderColunaNomeMes(12, opcoesStrike, true)}</td>
+          {/* renderiza as colunas vazias na linha que contem o strike inteiro */}
+          {renderElementoDinamico(
+            anos,
+            ultimoMes,
+            (indice, ano) =>
+              renderColunaNomeMes(indice + 1, opcoesStrike, ano, true),
+            "colunaMesLinhaStrike"
+          )}
         </tr>
       );
 
@@ -135,30 +171,31 @@ const renderConteudoTabelaVencimentos = (reduxState, strikesInteiros) => {
                 </div>
               </div>
             </td>
-            {/* <td></td> */}
-            {meses.map((mes, indiceMes) => {
-              const indMes = indiceMes + 1;
-              const itemColuna = linha.stocks.find(
-                (itemColuna) => itemColuna.vencimento.month() + 1 === indMes
-              );
-              if (itemColuna) {
-                return (
-                  <td key={`${indiceLinha}|colunaVenc${indMes}`}>
-                    {renderConteudoMes(itemColuna)}
-                  </td>
+            {renderElementoDinamico(
+              anos,
+              ultimoMes,
+              (indiceMes, ano) => {
+                const indMes = indiceMes + 1;
+                const itemColuna = linha.stocks.find(
+                  (itemColuna) =>
+                    itemColuna.vencimento.month() + 1 === indMes &&
+                    itemColuna.vencimento.year() === ano
                 );
-              }
-              const possuiVencimento = verificarMesPossuiVencimento(
-                opcoesStrike,
-                indMes
-              );
+                if (itemColuna) {
+                  return renderConteudoMes(itemColuna);
+                } //
+                else {
+                  const possuiVencimento = verificarMesPossuiVencimento(
+                    opcoesStrike,
+                    indMes,
+                    ano
+                  );
 
-              return (
-                <td key={`${indiceLinha}|colunaVenc${indMes}`}>
-                  {possuiVencimento ? colunaVazia : null}
-                </td>
-              );
-            })}
+                  return possuiVencimento ? colunaVazia : null;
+                }
+              },
+              "colunaVencimento"
+            )}
           </tr>
         );
       });
@@ -210,21 +247,6 @@ const renderConteudoMes = (itemColuna) => {
   );
 };
 
-const renderModelo = (modelo) => {
-  return (
-    <div className="mr-1">
-      {modelo === "EUROPEAN" ? (
-        <img src={imgModeloEU} alt="" className="imgModeloTHL" />
-      ) : (
-        <ImgModeloUSA
-          viewBox="6 -1 17 17"
-          className="imgModeloTHL"
-        ></ImgModeloUSA>
-      )}
-    </div>
-  );
-};
-
 const colunaVazia = (
   <div className="containerColunaMes">
     <div>
@@ -243,14 +265,14 @@ const verificaAtivoCustodia = (itemColuna) => {
   return custodia;
 };
 
-const renderColunaNomeMes = (mes, opcoesStrike, textoVazio = false) => {
+const renderColunaNomeMes = (mes, opcoesStrike, ano, textoVazio = false) => {
   let nomeMes = "";
 
   // Texto com o nome do mês nas colunas de mês ou vazio nas linhas de Strike
   if (!textoVazio) {
     nomeMes = meses[mes - 1];
   }
-  if (!verificarMesPossuiVencimento(opcoesStrike, mes)) return nomeMes;
+  if (!verificarMesPossuiVencimento(opcoesStrike, mes, ano)) return nomeMes;
   return (
     <div style={{ display: "flex" }}>
       <div className="divNomeMes">{nomeMes}</div>
@@ -262,7 +284,7 @@ const renderColunaNomeMes = (mes, opcoesStrike, textoVazio = false) => {
   );
 };
 
-const verificarMesPossuiVencimento = (opcoesStrike, mes) => {
+const verificarMesPossuiVencimento = (opcoesStrike, mes, ano = "") => {
   const stocks = [];
 
   opcoesStrike.forEach((linha) => {
@@ -270,7 +292,25 @@ const verificarMesPossuiVencimento = (opcoesStrike, mes) => {
       stocks.push(stock);
     });
   });
-  return stocks.some((stock) => stock.vencimento.month() + 1 === mes);
+  return stocks.some(
+    (stock) =>
+      stock.vencimento.month() + 1 === mes && stock.vencimento.year() === ano
+  );
+};
+
+const renderModelo = (modelo) => {
+  return (
+    <div className="mr-1">
+      {modelo === "EUROPEAN" ? (
+        <img src={imgModeloEU} alt="" className="imgModeloTHL" />
+      ) : (
+        <ImgModeloUSA
+          viewBox="6 -1 17 17"
+          className="imgModeloTHL"
+        ></ImgModeloUSA>
+      )}
+    </div>
+  );
 };
 
 const meses = [

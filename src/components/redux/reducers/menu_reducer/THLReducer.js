@@ -231,7 +231,7 @@ const thlData = [
         model: "AMERICAN",
         referenceStock: 200000355262,
         startBusiness: "18/02/2020 23:59:00",
-        endBusiness: "17/12/2021 23:59:00",
+        endBusiness: "17/10/2021 23:59:00",
         option: true,
       },
     ],
