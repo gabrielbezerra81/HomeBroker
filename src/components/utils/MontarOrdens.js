@@ -2,29 +2,38 @@ import {
   erro_validar_ativo,
   erro_validar_qtde,
   erro_validar_disparo_start_movel,
+  erro_validar_contaSelecionada,
 } from "constants/AlertaErros";
 import { getformatedDate } from "components/utils/Formatacoes";
 
 const CVStartStop = ["Compra Start Stop", "Venda Start Stop"];
 const CVStopMovel = ["Compra Stop Móvel", "Venda Stop Móvel"];
 
-export const validarOrdemBoleta = (props) => {
+export const validarOrdemBoleta = (props, contaSelecionada) => {
   const { dadosPesquisa, qtde } = props;
   let valido = true;
 
   if (!dadosPesquisa.ativo) {
-    alert(erro_validar_ativo);
     valido = false;
+    alert(erro_validar_ativo);
   }
   if (Number(qtde) === 0) {
-    alert(erro_validar_qtde);
     valido = false;
+    alert(erro_validar_qtde);
   }
 
   if (CVStopMovel.includes(props.ordem.nome)) {
-    if (props.inicioDisparo > props.stopDisparo)
+    if (props.inicioDisparo > props.stopDisparo) {
+      valido = false;
       alert(erro_validar_disparo_start_movel);
+    }
   }
+
+  if (!contaSelecionada) {
+    valido = false;
+    alert(erro_validar_contaSelecionada);
+  }
+
   return valido;
 };
 

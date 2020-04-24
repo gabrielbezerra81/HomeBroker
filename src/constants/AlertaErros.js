@@ -31,6 +31,8 @@ export const erro_validar_disparo_start_movel =
   "O disparo móvel deve ser menor que o disparo stop";
 export const erro_validar_codigo_duplicado_multileg =
   "Ativos duplicados na ordem";
+export const erro_validar_contaSelecionada =
+  "É preciso selecionar uma conta para enviar ordens";
 
 //Alertas
 export const erro_exportar_ordens_multileg = "Falha ao adicionar abas";

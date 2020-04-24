@@ -45,19 +45,19 @@ export const ADICIONAR_ITEM_TABELA_REDUCAO = "adicionar_item_tabela_reducao";
 export const REMOVE_ITEM_TABELA_GAIN_REDUCAO =
   "remove_item_tabela_gain_reducao";
 
-export const COMPRA_AGENDADA_NAMESPACE = "_COMPRA_AGENDADA";
-export const COMPRA_LIMITADA_NAMESPACE = "_COMPRA_LIMITADA";
-export const COMPRA_MERCADO_NAMESPACE = "_COMPRA_MERCADO";
-export const COMPRA_STARTSTOP_NAMESPACE = "_COMPRA_STARTSTOP";
-export const COMPRA_STARTMOVEL_NAMESPACE = "_COMPRA_STARTMOVEL";
-export const COMPRA_GAINREDUCAO_NAMESPACE = "_COMPRA_GAINREDUCAO";
+export const COMPRA_AGENDADA_NAMESPACE = "compraAgendadaReducer";
+export const COMPRA_LIMITADA_NAMESPACE = "compraLimitadaReducer";
+export const COMPRA_MERCADO_NAMESPACE = "compraMercadoReducer";
+export const COMPRA_STARTSTOP_NAMESPACE = "compraStartStopReducer";
+export const COMPRA_STARTMOVEL_NAMESPACE = "compraStartMovelReducer";
+export const COMPRA_GAINREDUCAO_NAMESPACE = "compraGainReducao";
 
-export const VENDA_AGENDADA_NAMESPACE = "_VENDA_AGENDADA";
-export const VENDA_LIMITADA_NAMESPACE = "_VENDA_LIMITADA";
-export const VENDA_MERCADO_NAMESPACE = "_VENDA_MERCADO";
-export const VENDA_STARTSTOP_NAMESPACE = "_VENDA_STARTSTOP";
-export const VENDA_STOPMOVEL_NAMESPACE = "_VENDA_STOPMOVEL";
-export const VENDA_GAINREDUCAO_NAMESPACE = "_VENDA_GAINREDUCAO";
+export const VENDA_AGENDADA_NAMESPACE = "vendaAgendadaReducer";
+export const VENDA_LIMITADA_NAMESPACE = "vendaLimitadaReducer";
+export const VENDA_MERCADO_NAMESPACE = "vendaMercadoReducer";
+export const VENDA_STARTSTOP_NAMESPACE = "vendaStartStopReducer";
+export const VENDA_STOPMOVEL_NAMESPACE = "vendaStopMovel";
+export const VENDA_GAINREDUCAO_NAMESPACE = "vendaGainReducao";
 
 export const ABRIR_FORMULARIO = "abrir_formulario";
 export const FECHAR_FORMULARIO = "fechar_formulario";
