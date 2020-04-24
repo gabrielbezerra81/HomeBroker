@@ -31,6 +31,7 @@ class TelaLogin extends React.Component {
                     props.inputUsuario ? "flutuantePreenchido" : ""
                   }`}
                   id="inputUsuarioFlutuante"
+                  autoComplete="username"
                   label="Usuário ou e-mail"
                   value={props.inputUsuario}
                   onChange={(e) =>

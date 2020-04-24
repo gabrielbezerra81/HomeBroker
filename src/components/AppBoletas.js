@@ -44,8 +44,19 @@ const animate = (props, Componente) => {
 };
 
 export default class AppBoletas extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     const { props } = this;
+
+    if (
+      props.divkey !== "" &&
+      props.divkey !== "divOrdens" &&
+      props.divkey !== "ordens_execucao" &&
+      props.divkey !== "posicao_custodia" &&
+      props.divkey !== "multileg" &&
+      props.divkey !== "relatorio_detalhado"
+    )
+      document.getElementById(props.divkey).style.zIndex = props.zIndex + 1;
+    props.receberAppPropsAction(props);
 
     if (props.appkey !== 0 && props.codigoBook) {
       props.mudarInputHeaderAction(props.codigoBook);
@@ -54,6 +65,7 @@ export default class AppBoletas extends React.Component {
     //Disparar montagem de ordem vinda das ordens em execução ao criar App Local
     if (props.dadosOrdemExec) props.montarBoletaFromOrdemExecAction(props);
   }
+
   componentDidUpdate(prevProps) {
     const { props } = this;
     if (
@@ -80,21 +92,6 @@ export default class AppBoletas extends React.Component {
     if (prevProps !== props) {
       props.receberAppPropsAction(props);
     }
-  }
-
-  componentDidMount() {
-    const { props } = this;
-
-    if (
-      props.divkey !== "" &&
-      props.divkey !== "divOrdens" &&
-      props.divkey !== "ordens_execucao" &&
-      props.divkey !== "posicao_custodia" &&
-      props.divkey !== "multileg" &&
-      props.divkey !== "relatorio_detalhado"
-    )
-      document.getElementById(props.divkey).style.zIndex = props.zIndex + 1;
-    props.receberAppPropsAction(props);
   }
 
   render() {
