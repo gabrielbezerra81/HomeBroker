@@ -13,6 +13,14 @@ import { StorePrincipalContext } from "components/redux/StoreCreation";
 class BarraTopoTelaPrincipal extends React.Component {
   render() {
     const { props } = this;
+    const {
+      contaSelecionada,
+      menuLateralAberto,
+      conta,
+      valorLiquido,
+      valorComprar,
+      ativo,
+    } = props;
 
     return (
       <div className="divBarraTopo">
@@ -21,16 +29,10 @@ class BarraTopoTelaPrincipal extends React.Component {
             <div
               className="iconesMostrarMenu divClicavel"
               onClick={(event) => {
-                if (props.menuLateralAberto === true) {
-                  props.abrirFecharMenuLateralAction(
-                    event,
-                    props.menuLateralAberto
-                  );
+                if (menuLateralAberto === true) {
+                  props.abrirFecharMenuLateralAction(event, menuLateralAberto);
                 } else {
-                  props.abrirFecharMenuLateralAction(
-                    event,
-                    props.menuLateralAberto
-                  );
+                  props.abrirFecharMenuLateralAction(event, menuLateralAberto);
                 }
               }}
             >
@@ -55,23 +57,23 @@ class BarraTopoTelaPrincipal extends React.Component {
               <FormControl
                 className="textInput"
                 as="select"
-                value={props.contaSelecionada.id}
+                value={contaSelecionada ? contaSelecionada.id : ""}
                 onChange={(e) => {
                   const novoID = Number(e.currentTarget.value);
-                  const novaConta = props.conta.filter(
-                    (conta) => conta.id === novoID
+                  const novaConta = conta.filter(
+                    (item) => item.id === novoID
                   )[0];
 
                   props.mudarDadosLoginAction("contaSelecionada", novaConta);
                 }}
               >
-                {props.conta.map((conta, indice) => {
-                  const gateway = conta.gateway ? `, ${conta.gateway}` : "";
+                {conta.map((item, indice) => {
+                  const gateway = item.gateway ? `, ${item.gateway}` : "";
                   return (
-                    <option value={conta.id} key={`conta${indice}`}>
-                      {`${conta.nome}, 
-                    ${conta.sigla}, 
-                    ${conta.numero}${gateway}`}
+                    <option value={item.id} key={`conta${indice}`}>
+                      {`${item.nome}, 
+                    ${item.sigla}, 
+                    ${item.numero}${gateway}`}
                     </option>
                   );
                 })}
@@ -85,16 +87,16 @@ class BarraTopoTelaPrincipal extends React.Component {
             <h6 className="">VALOR LIQUIDO:</h6>
           </Col>
           <Col md={2}>
-            <h6 className="valorLiquido">{props.valorLiquido} R$</h6>
+            <h6 className="valorLiquido">{valorLiquido} R$</h6>
           </Col>
           <Col md={0}>
             <h6>COMPRAR:</h6>
           </Col>
           <Col>
-            <h6 className="valorComprar">{props.valorComprar} R$</h6>
+            <h6 className="valorComprar">{valorComprar} R$</h6>
           </Col>
           <Col md={0}>
-            <h4>{props.ativo}</h4>
+            <h4>{ativo}</h4>
           </Col>
         </Row>
       </div>

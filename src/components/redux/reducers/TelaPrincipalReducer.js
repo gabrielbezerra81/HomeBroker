@@ -21,10 +21,10 @@ const INITIAL_STATE = {
   inputUsuario: "gabrielAB",
   inputSenha: "123456789",
   token: {},
-  nomeCadastro: "Gabriel",
-  usernameCadastro: "gabrielAB",
-  emailCadastro: "gabrielAB@gmail.com",
-  senhaCadastro: "123456789",
+  nomeCadastro: "",
+  usernameCadastro: "",
+  emailCadastro: "",
+  senhaCadastro: "",
   conta: [],
   contaSelecionada: {},
 };
@@ -38,8 +38,6 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         usuarioConectado: action.payload.usuarioConectado,
         logado: action.payload.logado,
-        conta: action.payload.conta,
-        contaSelecionada: action.payload.contaSelecionada,
         inputSenha: "",
         ...resetarEstado(action.payload.logado),
       };

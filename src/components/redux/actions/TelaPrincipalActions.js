@@ -40,8 +40,7 @@ export const logarUsuarioAction = (username, password) => {
         conta = await listarContasAPI(token);
       }
 
-      if (token && infoUsuario && conta) {
-        travarDestravarClique("destravar", "botaoLogar");
+      if (token && infoUsuario) {
         await dispatch({
           type: MUDAR_DADOS_LOGIN,
           payload: { nomeVariavel: "token", valor: token },
@@ -51,14 +50,27 @@ export const logarUsuarioAction = (username, password) => {
           payload: {
             usuarioConectado: infoUsuario.name,
             logado: true,
-            conta: conta,
-            contaSelecionada: conta[0],
           },
         });
         navigate("/home");
-      } else {
-        travarDestravarClique("destravar", "botaoLogar");
       }
+      if (conta) {
+        await dispatch({
+          type: MUDAR_DADOS_LOGIN,
+          payload: {
+            nomeVariavel: "conta",
+            valor: conta,
+          },
+        });
+        await dispatch({
+          type: MUDAR_DADOS_LOGIN,
+          payload: {
+            nomeVariavel: "contaSelecionada",
+            valor: conta[0],
+          },
+        });
+      }
+      travarDestravarClique("destravar", "botaoLogar");
     }
   };
 };

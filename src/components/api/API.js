@@ -175,7 +175,6 @@ export const enviarOrdemAPI = (json, token) => {
   return request
     .post(url_base + url_enviarOrdem)
     .timeout(timeout)
-    .retry(2, 2000)
     .set({
       "Content-Type": "application/json",
       Authorization: `${token.tokenType} ${token.accessToken}`,

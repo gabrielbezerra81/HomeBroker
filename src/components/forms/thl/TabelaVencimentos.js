@@ -44,9 +44,11 @@ export default React.memo(({ setScrollbarRef }) => {
             <tr>
               <th>Strike</th>
               <th>Preço da linha</th>
-              <th colSpan="12">
-                <div style={{ paddingLeft: "5px" }}>2020</div>
-              </th>
+              {anos.map((ano) => (
+                <th key={`coluna${ano}`} colSpan="12" className="colunaAno">
+                  <div style={{ paddingLeft: "5px" }}>{ano}</div>
+                </th>
+              ))}
             </tr>
           </thead>
 

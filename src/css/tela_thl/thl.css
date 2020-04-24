@@ -136,8 +136,7 @@ thead th:nth-child(3) {
   z-index: 2;
 }
 
-/* coluna 'ano' */
-.tabelaVencimentos tr:nth-child(2) th:nth-child(3) {
+.colunaAno {
   text-align: start;
 }
 
