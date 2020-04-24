@@ -23,6 +23,7 @@ import { ATUALIZAR_SOURCE_EVENT_MULTILEG } from "constants/ApiActionTypes";
 import {
   erro_validar_qtde,
   erro_validar_codigo_duplicado_multileg,
+  erro_validar_contaSelecionada,
 } from "constants/AlertaErros";
 import { getformatedDate } from "components/utils/Formatacoes";
 
@@ -429,6 +430,10 @@ export const validarOrdemMultileg = (props) => {
     codigos_erro = codigos_erro.substring(0, codigos_erro.length - 2);
 
     alert(`${erro_validar_codigo_duplicado_multileg}: ${codigos_erro}`);
+  }
+  if (!props.contaSelecionada) {
+    valido = false;
+    alert(erro_validar_contaSelecionada);
   }
 
   return valido;
