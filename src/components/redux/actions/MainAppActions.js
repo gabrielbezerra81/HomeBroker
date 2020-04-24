@@ -12,6 +12,8 @@ import {
 import React from "react";
 import { WrapperAppBoletasConectado } from "components/redux/ElementosConectadosRedux";
 import { MUDAR_ORDEM_EXEC_MAIN_REDUCER } from "constants/MenuActionTypes";
+import { mudarInputHeaderAction } from "components/redux/actions/bookOfertaActions";
+import { listarBookOfertaOnEnterAction } from "components/redux/actions/api_actions/bookOfertaAPIActions";
 
 export const criarMostrarAppAction = (apps, show, zindex, dispatch) => {
   dispatch({ type: CRIAR_APP, apps: apps, show: show, zIndex: zindex + 1 });
@@ -144,8 +146,9 @@ const criarMostrarApp = (name, props, dispatch, codigo_ativo) => {
 //Muda o estado de visibilidade de uma determinada boleta no ultimo appBoletas criado
 const mostrarApp = (name, index, props, dispatch, codigo_ativo) => {
   if (name === "book" && codigo_ativo) {
-    props.mudarInputHeaderAction(codigo_ativo);
-    props.listarBookOfertaOnEnterAction(codigo_ativo);
+    const dispatchBoleta = props.dispatch;
+    dispatchBoleta(mudarInputHeaderAction(codigo_ativo));
+    dispatchBoleta(listarBookOfertaOnEnterAction(codigo_ativo));
   }
 
   let apps = [...props.apps];

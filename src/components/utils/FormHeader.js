@@ -36,15 +36,14 @@ export const ModalHeader = ({
   const stateGlobalStore = useSelectorGlobalStore(
     (state) => state.MainAppReducer
   ); // Filtrar state pelo nome do reducer
-  const dispatch = DispatchGlobalStore();
+  const dispatchGlobal = DispatchGlobalStore();
+  const dispatch = useDispatch();
   const formShow = stateGlobalStore.show;
   const { appkey } = state.appProps;
   const abrirBookProps = {
     ...stateGlobalStore,
-    mudarInputHeaderAction,
-    listarBookOfertaOnEnterAction,
+    dispatch,
   };
-
   return (
     <div className={`${headerClass} handle mheader`}>
       <h6 className="mtitle">{headerTitle}</h6>
@@ -54,7 +53,7 @@ export const ModalHeader = ({
           className="iconesHeader"
           onClick={(event) => {
             event.stopPropagation();
-            dispatch(abrirFormAction(event, abrirBookProps, ativo));
+            dispatchGlobal(abrirFormAction(event, abrirBookProps, ativo));
           }}
           data-name="book"
         >
@@ -70,7 +69,7 @@ export const ModalHeader = ({
           className="iconesHeader"
           onClick={() => {
             resetPosition();
-            dispatch(fecharFormAction(formShow, name, appkey));
+            dispatchGlobal(fecharFormAction(formShow, name, appkey));
             if (eventSourceCotacao) eventSourceCotacao.close();
           }}
         >
