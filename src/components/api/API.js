@@ -31,6 +31,7 @@ import {
   url_pesquisarListaStrike_codigo,
   url_listarContas_token,
   url_verificarToken_token,
+  url_listarTabelaInicialTHL_ativo_strike_tipo,
 } from "components/api/url";
 import {
   MUDAR_VARIAVEL_POSICAO_CUSTODIA,
@@ -61,6 +62,7 @@ import {
   erro_timeout,
   erro_listarBook,
   erro_sessaoExpirada,
+  erro_listarTHL_thl,
 } from "constants/AlertaErros";
 
 retryDelay(request);
@@ -802,6 +804,22 @@ export const verificarTokenAPI = (token) => {
     .catch((erro) => {
       mostrarErroConsulta(erro, erro_sessaoExpirada);
       return null;
+    });
+};
+
+export const listarTabelaInicialTHLAPI = (ativo, strike, tipo) => {
+  return request
+    .get(
+      `${url_base}${url_listarTabelaInicialTHL_ativo_strike_tipo}${ativo}/${strike}/${tipo}`
+    )
+    .timeout(timeout)
+    .retry(3, 2000)
+    .then((response) => {
+      return response.body;
+    })
+    .catch((erro) => {
+      mostrarErroConsulta(erro, erro_listarTHL_thl);
+      return [];
     });
 };
 

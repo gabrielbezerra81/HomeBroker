@@ -1,6 +1,7 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { Table, FormControl } from "react-bootstrap";
+import moment from "moment";
 import imgModeloEU from "img/modeloEU.png";
 import { ReactComponent as ImgModeloUSA } from "img/modeloUSA2.svg";
 import {
@@ -9,11 +10,20 @@ import {
 } from "components/redux/StoreCreation";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
-import moment from "moment";
+import { listarTabelaInicialTHLAPIAction } from "components/redux/actions/api_actions/ThlAPIAction";
 
 export default React.memo(({ setScrollbarRef }) => {
   const reduxState = StateStorePrincipal().THLReducer;
-  const { opcoesStrike } = reduxState;
+  const dispatch = DispatchStorePrincipal();
+  const { opcoesStrike, strikeSelecionado, ativoPesquisado, tipo } = reduxState;
+
+  useEffect(() => {
+    dispatch(
+      listarTabelaInicialTHLAPIAction(ativoPesquisado, strikeSelecionado, tipo)
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ativoPesquisado, strikeSelecionado, tipo]);
+
   const strikesInteiros = useMemo(() => getStrikesInteiros(opcoesStrike), [
     opcoesStrike,
   ]);
@@ -349,7 +359,9 @@ const InputStrikeSelecionado = ({ strikeLinha, indiceStrike }) => {
         >
           <option value=""></option>
           {listaStrikes.map((strike, indice) => (
-            <option value={strike}>{strike}</option>
+            <option key={`strikeInteiro:${strike}`} value={strike}>
+              {strike}
+            </option>
           ))}
         </FormControl>
       </div>

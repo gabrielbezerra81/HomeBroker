@@ -1,6 +1,6 @@
-import moment from "moment";
 import { MUDAR_VARIAVEL_THL } from "constants/MenuActionTypes";
 import { comb300 } from "components/forms/thl/tableData";
+import { mapTabelaVencimentos } from "components/redux/actions/api_actions/ThlAPIAction";
 
 const thlData = [
   {
@@ -648,8 +648,11 @@ const thlData = [
 ];
 
 const INITIAL_STATE = {
-  ativoPesquisa: "petr4",
-  opcoesStrike: mapTabelaVencimentos(thlData),
+  ativoPesquisa: "PETR4",
+  ativoPesquisado: "",
+  tipo: "CALL",
+  opcoesStrike: mapTabelaVencimentos([]),
+  carregandoTabelaVencimentos: false,
   faixasMapaCalor: null,
   seletorMapaCalor: "semcor",
   listaStrikes: [
@@ -717,20 +720,3 @@ export default (state = INITIAL_STATE, action) => {
       return state;
   }
 };
-
-function mapTabelaVencimentos(dataTabela) {
-  return thlData.map((linhaStrike) => {
-    const novaLinhaStrike = {
-      strikeLine: linhaStrike.strikeLine,
-      structuresIds: [...linhaStrike.structuresIds],
-    };
-    novaLinhaStrike.stocks = linhaStrike.stocks.map((stock) => {
-      const data = moment(stock.endBusiness, "DD-MM-YYYY HH:mm:ss");
-      const novoStock = { ...stock, vencimento: data };
-
-      return novoStock;
-    });
-
-    return novaLinhaStrike;
-  });
-}

@@ -43,4 +43,5 @@ import "antd/es/select/style/index.css";
 import "antd/es/radio/style/index.css";
 import "antd/es/popover/style/index.css";
 import "antd/es/button/style/index.css";
+import "antd/es/spin/style/index.css"
 import "react-perfect-scrollbar/dist/css/styles.css";

@@ -68,15 +68,23 @@
   color: var(--cor-texto);
 }
 
-.containerTHL {
-  padding-top: 625px;
-}
-
 .containerPesquisaAtivo {
-  width: 180px;
+  width: 265px;
   position: fixed; /*  */
   top: 41px;
   margin-left: 103px;
+  display: flex;
+}
+
+.radioGroupTipo {
+  display: flex !important;
+  max-width: 110px;
+  align-items: center;
+  margin-left: 20px !important;
+}
+
+.radioGroupTipo label {
+  color: var(--cor-texto);
 }
 
 .tabelaVencimentos {
@@ -293,7 +301,7 @@ thead th:nth-child(3) {
   display: flex;
   align-items: center;
   min-width: 124px;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .itemAtivosQtdeCustodia {
@@ -393,4 +401,14 @@ thead th:nth-child(3) {
 
 .roxoTextoTHL {
   color: var(--roxo-texto-thl);
+}
+
+.spinnerTabelaVencimentos{
+  top: 337px !important;
+}
+
+.spinnerTabelaVencimentos .ant-spin-dot {
+  font-size: 14px;
+  width: 35px;
+  height: 35px;
 }
