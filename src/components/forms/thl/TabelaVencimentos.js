@@ -280,7 +280,7 @@ const renderColunaNomeMes = (mes, opcoesStrike, ano, textoVazio = false) => {
   }
   if (!verificarMesPossuiVencimento(opcoesStrike, mes, ano)) return nomeMes;
   return (
-    <div style={{ display: "flex" }}>
+    <div style={{ display: "flex", height: "100%" }}>
       <div className="divNomeMes">{nomeMes}</div>
       <div className="containerPrecoMontDesmont">
         <div></div>

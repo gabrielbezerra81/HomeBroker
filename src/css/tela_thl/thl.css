@@ -292,8 +292,8 @@ thead th:nth-child(3) {
   padding: 2px 2px 2px 2px;
   display: flex;
   align-items: center;
-  min-width: 122px;
-  justify-content: center;
+  min-width: 124px;
+  justify-content: start;
 }
 
 .itemAtivosQtdeCustodia {
@@ -308,7 +308,7 @@ thead th:nth-child(3) {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   padding: 1px 5px;
-  min-width: 118px;
+  min-width: 89px;
   display: flex;
   align-items: center;
 }
@@ -383,7 +383,7 @@ thead th:nth-child(3) {
 
 .divNomeMes {
   width: 100%;
-  max-width: 126px;
+  max-width: 128px;
   min-height: 16px;
 }
 
