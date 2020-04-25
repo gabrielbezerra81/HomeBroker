@@ -1,10 +1,14 @@
 import React, { useMemo } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
-import { Table } from "react-bootstrap";
+import { Table, FormControl } from "react-bootstrap";
 import imgModeloEU from "img/modeloEU.png";
 import { ReactComponent as ImgModeloUSA } from "img/modeloUSA2.svg";
-import { StateStorePrincipal } from "components/redux/StoreCreation";
+import {
+  StateStorePrincipal,
+  DispatchStorePrincipal,
+} from "components/redux/StoreCreation";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
+import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
 
 export default React.memo(({ setScrollbarRef }) => {
   const reduxState = StateStorePrincipal().THLReducer;
@@ -135,7 +139,7 @@ const renderConteudoTabelaVencimentos = (
       const linhaStrike = (
         <tr key={`strikeLine${indiceStrike}`} className="linhasStrike">
           <td className="divClicavel" tabIndex={0}>
-            {strike}
+            <InputStrikeSelecionado strikeLinha={strike} />
           </td>
           <td>
             <div className="colunaDividida colunaPrecoLinha">
@@ -313,6 +317,34 @@ const renderModelo = (modelo) => {
       )}
     </div>
   );
+};
+
+const InputStrikeSelecionado = ({ strikeLinha }) => {
+  const reduxState = StateStorePrincipal().THLReducer;
+  const dispatch = DispatchStorePrincipal();
+  const { strikeSelecionado, listaStrikes } = reduxState;
+  if (Number(strikeLinha) === Number(strikeSelecionado)) {
+    return (
+      <div style={{ padding: "5px 0", width: "45px", textAlignLast: "end" }}>
+        <FormControl
+          as="select"
+          value={strikeSelecionado}
+          className="textInput"
+          onChange={(e) =>
+            dispatch(
+              mudarVariavelTHLAction("strikeSelecionado", e.target.value)
+            )
+          }
+        >
+          {listaStrikes.map((strike, indice) => (
+            <option value={strike}>{strike}</option>
+          ))}
+        </FormControl>
+      </div>
+    );
+  }
+
+  return strikeLinha;
 };
 
 const meses = [

@@ -15,10 +15,6 @@
   position: relative;
 }
 
-.tabelaCombinacoes .th {
-  /* border-bottom: 1px solid var(--cor-borda); */
-}
-
 .tabelaCombinacoes .td {
   padding: 5px 3px !important;
   font-size: 0.7rem;
@@ -233,11 +229,3 @@
 .tabelaCombinacoes .th:last-child .divLabelColuna {
   border-top-right-radius: 5px !important;
 }
-
-/* .tabelaCombinacoes .ultimaLinha .td:first-child {
-  border-bottom-left-radius: 5px;
-}
-
-.tabelaCombinacoes .ultimaLinha .td:last-child{
-  border-bottom-right-radius: 5px;
-} */

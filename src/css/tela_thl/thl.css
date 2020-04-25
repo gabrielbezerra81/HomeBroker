@@ -61,6 +61,13 @@
   margin-right: -4px;
 }
 
+#thl input,
+#thl select {
+  background-color: #333;
+  border-color: #333;
+  color: var(--cor-texto);
+}
+
 .containerTHL {
   padding-top: 625px;
 }

@@ -687,7 +687,7 @@ const INITIAL_STATE = {
     41.0,
     44.0,
   ],
-  strikeSelecionado: "28",
+  strikeSelecionado: 28,
   combinacoesTabela: comb300,
   estrategia: "",
   grupo: "",
@@ -710,7 +710,7 @@ const INITIAL_STATE = {
 };
 
 export default (state = INITIAL_STATE, action) => {
-  switch (action.tipo) {
+  switch (action.type) {
     case MUDAR_VARIAVEL_THL:
       return { ...state, [action.payload.nome]: action.payload.valor };
     default:
