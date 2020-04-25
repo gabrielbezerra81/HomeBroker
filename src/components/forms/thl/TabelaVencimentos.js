@@ -9,6 +9,7 @@ import {
 } from "components/redux/StoreCreation";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
+import moment from "moment";
 
 export default React.memo(({ setScrollbarRef }) => {
   const reduxState = StateStorePrincipal().THLReducer;
@@ -74,6 +75,7 @@ export default React.memo(({ setScrollbarRef }) => {
                 "colunaNomesMeses"
               )}
             </tr>
+            {opcoesStrike.length === 0 ? <OpcoesStrikeVazio /> : null}
             {renderConteudoTabelaVencimentos(
               reduxState,
               strikesInteiros,
@@ -112,19 +114,24 @@ const getStrikesInteiros = (arrayVencimentos) => {
 
 const getAnosUltimoMesTabela = (arrayVencimentos) => {
   const vencimentos = [];
-  arrayVencimentos.forEach((linhaStrike) => {
-    linhaStrike.stocks.forEach((stock) => {
-      const vencimento = stock.vencimento;
-      vencimentos.push(vencimento);
+  let ultimoMes = 12;
+  let anos = [moment().year()];
+  if (arrayVencimentos.length > 0) {
+    arrayVencimentos.forEach((linhaStrike) => {
+      linhaStrike.stocks.forEach((stock) => {
+        const vencimento = stock.vencimento;
+        vencimentos.push(vencimento);
+      });
     });
-  });
-  const anos = [...new Set(vencimentos.map((vencimento) => vencimento.year()))];
-  const meses = vencimentos.filter(
-    (vencimento) => vencimento.year() === anos[anos.length - 1]
-  );
-  meses.sort((a, b) => a.diff(b));
+    anos = [...new Set(vencimentos.map((vencimento) => vencimento.year()))];
+    const meses = vencimentos.filter(
+      (vencimento) => vencimento.year() === anos[anos.length - 1]
+    );
+    meses.sort((a, b) => a.diff(b));
+    ultimoMes = meses[meses.length - 1].month() + 1;
+  }
 
-  return { anos: anos, ultimoMes: meses[meses.length - 1].month() + 1 };
+  return { anos: anos, ultimoMes: ultimoMes };
 };
 
 const renderConteudoTabelaVencimentos = (
@@ -139,7 +146,10 @@ const renderConteudoTabelaVencimentos = (
       const linhaStrike = (
         <tr key={`strikeLine${indiceStrike}`} className="linhasStrike">
           <td className="divClicavel" tabIndex={0}>
-            <InputStrikeSelecionado strikeLinha={strike} />
+            <InputStrikeSelecionado
+              strikeLinha={strike}
+              indiceStrike={indiceStrike}
+            />
           </td>
           <td>
             <div className="colunaDividida colunaPrecoLinha">
@@ -319,11 +329,12 @@ const renderModelo = (modelo) => {
   );
 };
 
-const InputStrikeSelecionado = ({ strikeLinha }) => {
+const InputStrikeSelecionado = ({ strikeLinha, indiceStrike }) => {
   const reduxState = StateStorePrincipal().THLReducer;
   const dispatch = DispatchStorePrincipal();
   const { strikeSelecionado, listaStrikes } = reduxState;
-  if (Number(strikeLinha) === Number(strikeSelecionado)) {
+  // Strike inteiro do meio => 27, 28, 29
+  if (indiceStrike === 1) {
     return (
       <div style={{ padding: "5px 0", width: "45px", textAlignLast: "end" }}>
         <FormControl
@@ -336,6 +347,7 @@ const InputStrikeSelecionado = ({ strikeLinha }) => {
             )
           }
         >
+          <option value=""></option>
           {listaStrikes.map((strike, indice) => (
             <option value={strike}>{strike}</option>
           ))}
@@ -345,6 +357,29 @@ const InputStrikeSelecionado = ({ strikeLinha }) => {
   }
 
   return strikeLinha;
+};
+
+const OpcoesStrikeVazio = () => {
+  return (
+    <tr>
+      <td>
+        <InputStrikeSelecionado indiceStrike={1} />
+      </td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  );
 };
 
 const meses = [
