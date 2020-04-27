@@ -19,20 +19,24 @@ class BSModal extends Component {
   }
 
   render() {
+    const { classConfigAberto, id } = this.props;
     const formulario = (
-      <div id={this.props.id} className={` ${this.props.classConfigAberto}`}>
-        {this.props.id === "ordens_execucao" ? <RenderFiltrarOrdens /> : null}
+      <div
+        id={id !== "thl" ? id : ""}
+        className={`${classConfigAberto ? classConfigAberto : ""}`}
+      >
+        {id === "ordens_execucao" ? <RenderFiltrarOrdens /> : null}
         <div className="mcontent">
           {this.props.renderHeader(this.resetPosition)}
           {this.props.renderModalBody()}
         </div>
-        {this.props.renderConfigForm && this.props.id === "comprastartstop" ? (
+        {this.props.renderConfigForm && id === "comprastartstop" ? (
           <ConfigurarStop />
         ) : null}
-        {this.props.renderConfigForm && this.props.id === "vendastartstop" ? (
+        {this.props.renderConfigForm && id === "vendastartstop" ? (
           <ConfigurarStopVenda />
         ) : null}
-        {this.props.renderConfigComplementar && this.props.id === "multileg" ? (
+        {this.props.renderConfigComplementar && id === "multileg" ? (
           <ConfigComplementar />
         ) : null}
       </div>
@@ -59,6 +63,7 @@ class BSModal extends Component {
             minWidth="607"
             minHeight="1205"
             maxHeight="1205"
+            id={id}
             style={{ position: "absolute" }}
           >
             {formulario}
@@ -88,5 +93,4 @@ const aplicarPosicao = id => {
     return "posicaoFormCompraVenda";
   } else return "";
 };
-
 */
