@@ -243,14 +243,6 @@ thead th:nth-child(3) {
   border-bottom: 0;
 }
 
-.tabelaVencimentos tr:first-child .colunaPrecoLinha div {
-  padding: 4px 0.8px;
-}
-
-.tabelaVencimentos tr:first-child .colunaPrecoLinha div:first-child {
-  border-right: 1px solid var(--cor-borda);
-}
-
 /* primeira coluna Strike, ultimas colunas cabeçalho e ultimas colunas do ultimo mês */
 .tabelaVencimentos tr th:first-child,
 .tabelaVencimentos tr th:last-child,
@@ -262,14 +254,17 @@ thead th:nth-child(3) {
   height: 100%;
 }
 
+.colunaPrecoLinhaPreenchida {
+  min-height: 49px;
+}
+
+/* container total  e mensal */
 .tabelaVencimentos .colunaPrecoLinha > div {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding: 0px 10px 0 10px !important;
-  width: 50%;
-  min-width: 70px;
+  min-width: 84px;
 }
 
 .precoLinhaMontar {
@@ -280,9 +275,19 @@ thead th:nth-child(3) {
   color: #a67269;
 }
 
+/* subcoluna total */
 .tabelaVencimentos .colunaPrecoLinha > div:first-child {
-  border-right: 1px dashed var(--cor-borda-discreta);
-  padding: 4px 0.8px;
+  border-right: 1px dashed var(--cor-borda-discreta) !important;
+  padding: 0px 10px 0 5px;
+}
+
+/* subcoluna mensal */
+.tabelaVencimentos .colunaPrecoLinha > div:last-child {
+  padding: 0px 5px 0 10px;
+}
+
+.tabelaVencimentos tr:first-child .colunaPrecoLinha div:first-child {
+  border-right: 1px solid var(--cor-borda);
 }
 
 .containerColunaMes {
@@ -342,7 +347,7 @@ thead th:nth-child(3) {
   justify-content: center;
   margin-left: 10px;
   border-left: 1px dashed var(--cor-borda-discreta);
-  min-width: 46px;
+  min-width: 55px;
 }
 
 .containerMapaCalor {
@@ -403,7 +408,7 @@ thead th:nth-child(3) {
   color: var(--roxo-texto-thl);
 }
 
-.spinnerTabelaVencimentos{
+.spinnerTabelaVencimentos {
   top: 337px !important;
 }
 

@@ -2,8 +2,6 @@ import React, { useMemo, useEffect } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { Table, FormControl } from "react-bootstrap";
 import moment from "moment";
-import imgModeloEU from "img/modeloEU.png";
-import { ReactComponent as ImgModeloUSA } from "img/modeloUSA2.svg";
 import {
   StateStorePrincipal,
   DispatchStorePrincipal,
@@ -11,15 +9,28 @@ import {
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
 import { listarTabelaInicialTHLAPIAction } from "components/redux/actions/api_actions/ThlAPIAction";
+import { CelulaMes } from "components/forms/thl/tabelaDeVencimentos/CelulaMes";
 
 export default React.memo(({ setScrollbarRef }) => {
   const reduxState = StateStorePrincipal().THLReducer;
   const dispatch = DispatchStorePrincipal();
-  const { opcoesStrike, strikeSelecionado, ativoPesquisado, tipo } = reduxState;
+  const {
+    opcoesStrike,
+    strikeSelecionado,
+    ativoPesquisado,
+    tipo,
+    eventSourcePrecos,
+    precosTabelaVencimentos,
+  } = reduxState;
 
   useEffect(() => {
     dispatch(
-      listarTabelaInicialTHLAPIAction(ativoPesquisado, strikeSelecionado, tipo)
+      listarTabelaInicialTHLAPIAction(
+        ativoPesquisado,
+        strikeSelecionado,
+        tipo,
+        eventSourcePrecos
+      )
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ativoPesquisado, strikeSelecionado, tipo]);
@@ -81,7 +92,7 @@ export default React.memo(({ setScrollbarRef }) => {
                 anos,
                 ultimoMes,
                 (indice, ano) =>
-                  renderColunaNomeMes(indice + 1, opcoesStrike, ano),
+                renderCelulaNomeMes(indice + 1, opcoesStrike, ano),
                 "colunaNomesMeses"
               )}
             </tr>
@@ -98,19 +109,6 @@ export default React.memo(({ setScrollbarRef }) => {
     </PerfectScrollbar>
   );
 });
-
-const renderElementoDinamico = (anos, ultimoMes, renderElemento, key) => {
-  return anos.map((ano, indice) =>
-    meses.map((mes, indiceMes) => {
-      if (!(ano === anos[anos.length - 1] && indiceMes >= ultimoMes)) {
-        return (
-          <td key={`${key}${ano}${mes}`}>{renderElemento(indiceMes, ano)}</td>
-        );
-      }
-      return null;
-    })
-  );
-};
 
 const getStrikesInteiros = (arrayVencimentos) => {
   return [
@@ -144,13 +142,26 @@ const getAnosUltimoMesTabela = (arrayVencimentos) => {
   return { anos: anos, ultimoMes: ultimoMes };
 };
 
+const renderElementoDinamico = (anos, ultimoMes, renderElemento, key) => {
+  return anos.map((ano, indice) =>
+    meses.map((mes, indiceMes) => {
+      if (!(ano === anos[anos.length - 1] && indiceMes >= ultimoMes)) {
+        return (
+          <td key={`${key}${ano}${mes}`}>{renderElemento(indiceMes, ano)}</td>
+        );
+      }
+      return null;
+    })
+  );
+};
+
 const renderConteudoTabelaVencimentos = (
   reduxState,
   strikesInteiros,
   anos,
   ultimoMes
 ) => {
-  const { opcoesStrike } = reduxState;
+  const { opcoesStrike, precosTabelaVencimentos } = reduxState;
   const conteudoTabelaVencimentos = strikesInteiros.map(
     (strike, indiceStrike) => {
       const linhaStrike = (
@@ -172,7 +183,7 @@ const renderConteudoTabelaVencimentos = (
             anos,
             ultimoMes,
             (indice, ano) =>
-              renderColunaNomeMes(indice + 1, opcoesStrike, ano, true),
+            renderCelulaNomeMes(indice + 1, opcoesStrike, ano, true),
             "colunaMesLinhaStrike"
           )}
         </tr>
@@ -183,20 +194,37 @@ const renderConteudoTabelaVencimentos = (
       );
 
       const linhaVencimentos = vencimentosStrike.map((linha, indiceLinha) => {
+        const IDs = linha.structuresIds;
+        const idColunaTotal = IDs[IDs.length - 1];
+        const precosColunaTotal = precosTabelaVencimentos.find(
+          (estrutura) => estrutura.id === idColunaTotal
+        );
+        let precoTotalMontar = "0,68 | 3k";
+        let precoTotalDesmontar = "0,66 | 3k";
+        let precoMensalMontar = "0,34 | 2 meses";
+        let precoMensalDesmontar = "";
+
         return (
           <tr key={`linhaVenc${indiceLinha}`}>
             <td>{formatarNumDecimal(linha.strikeLine)}</td>
             <td>
-              <div className="colunaDividida colunaPrecoLinha">
+              <div className="colunaDividida colunaPrecoLinha colunaPrecoLinhaPreenchida">
                 <div>
-                  <div className="precoLinhaMontar">0,68 | 3k</div>
-                  <div className="precoLinhaDesmontar">0,66 | 3k</div>
+                  <div className="precoLinhaMontar">{precoTotalMontar}</div>
+                  <div className="precoLinhaDesmontar">
+                    {precoTotalDesmontar}
+                  </div>
                 </div>
                 <div>
-                  <div className="precoLinhaMontar">0,34 | 2 meses</div>
+                  <div className="precoLinhaMontar">{precoMensalMontar}</div>
+                  <div className="precoLinhaDesmontar">
+                    {precoMensalDesmontar}
+                  </div>
                 </div>
               </div>
             </td>
+
+            {/* Colunas dos meses */}
             {renderElementoDinamico(
               anos,
               ultimoMes,
@@ -208,7 +236,7 @@ const renderConteudoTabelaVencimentos = (
                     itemColuna.vencimento.year() === ano
                 );
                 if (itemColuna) {
-                  return renderConteudoMes(itemColuna);
+                  return <CelulaMes itemColuna={itemColuna} />;
                 } //
                 else {
                   const possuiVencimento = verificarMesPossuiVencimento(
@@ -232,47 +260,6 @@ const renderConteudoTabelaVencimentos = (
   return conteudoTabelaVencimentos;
 };
 
-const renderConteudoMes = (itemColuna) => {
-  const strike = formatarNumDecimal(itemColuna.strike);
-  const ativoStrike = `${itemColuna.symbol.slice(4)} (${strike})`;
-  const custodia = verificaAtivoCustodia(itemColuna);
-
-  return (
-    <div className="containerColunaMes">
-      <div>
-        <div
-          className={`itemAtivosQtde ${
-            custodia ? "itemAtivosQtdeCustodia" : ""
-          }`}
-        >
-          <div className="itemAtivos divClicavel" tabIndex={0}>
-            {renderModelo(itemColuna.model)}
-            {ativoStrike}
-          </div>
-          {custodia ? <div className="itemQtde">{300}</div> : null}
-        </div>
-        <div className="bookAtivoTHL roxoTextoTHL">
-          <div className="divClicavel" tabIndex={0}>
-            0,35 | 10k
-          </div>
-          <div className="divClicavel" tabIndex={0}>
-            0,36 | 3k
-          </div>
-        </div>
-      </div>
-
-      <div className="containerPrecoMontDesmont">
-        <div className="divClicavel" tabIndex={0}>
-          0,37 | 5k
-        </div>
-        <div className="divClicavel" tabIndex={0}>
-          0,34 | 3k
-        </div>
-      </div>
-    </div>
-  );
-};
-
 const colunaVazia = (
   <div className="containerColunaMes">
     <div>
@@ -285,13 +272,7 @@ const colunaVazia = (
   </div>
 );
 
-const verificaAtivoCustodia = (itemColuna) => {
-  let custodia = false;
-
-  return custodia;
-};
-
-const renderColunaNomeMes = (mes, opcoesStrike, ano, textoVazio = false) => {
+const renderCelulaNomeMes = (mes, opcoesStrike, ano, textoVazio = false) => {
   let nomeMes = "";
 
   // Texto com o nome do mês nas colunas de mês ou vazio nas linhas de Strike
@@ -321,21 +302,6 @@ const verificarMesPossuiVencimento = (opcoesStrike, mes, ano = "") => {
   return stocks.some(
     (stock) =>
       stock.vencimento.month() + 1 === mes && stock.vencimento.year() === ano
-  );
-};
-
-const renderModelo = (modelo) => {
-  return (
-    <div className="mr-1">
-      {modelo === "EUROPEAN" ? (
-        <img src={imgModeloEU} alt="" className="imgModeloTHL" />
-      ) : (
-        <ImgModeloUSA
-          viewBox="6 -1 17 17"
-          className="imgModeloTHL"
-        ></ImgModeloUSA>
-      )}
-    </div>
   );
 };
 

@@ -7,7 +7,7 @@ import { MDBIcon } from "mdbreact";
 import { Radio, Spin } from "antd";
 import { ModalHeaderSemBook } from "components/utils/FormHeader";
 import MapaCalor from "components/forms/thl/MapaCalor";
-import TabelaVencimentos from "components/forms/thl/TabelaVencimentos";
+import TabelaVencimentos from "components/forms/thl/tabelaDeVencimentos/TabelaVencimentos";
 import TabelaCombinacoes from "components/forms/thl/TabelaCombinacoes";
 import {
   GlobalContext,

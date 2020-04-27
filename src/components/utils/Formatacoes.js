@@ -1,4 +1,4 @@
-export const getformatedDate = date => {
+export const getformatedDate = (date) => {
   let DD = date.getDate();
   let MM = date.getMonth() + 1;
   const YYYY = date.getFullYear();
@@ -85,22 +85,32 @@ export const getDiaEMes = () => {
   return date.getDate() + " de " + mes;
 };
 
-export const formatarNumDecimal = function(num) {
+export const formatarNumDecimal = function (num) {
   return num.toLocaleString("pt-BR", {
-    minimumFractionDigits: 2
+    minimumFractionDigits: 2,
   });
 };
 
-export const formatarDataDaAPI = dataAPI => {
+export const formatarDataDaAPI = (dataAPI) => {
   const arrayDate = dataAPI.split(" ");
   const data = arrayDate[0].split("/");
   const hora = arrayDate[1];
   return new Date(`${data[1]}/${data[0]}/${data[2]} ${hora}`);
 };
 
-export const formatarVencimento = string => {
+export const formatarVencimento = (string) => {
   string = string.split("-");
   string[2] = Number(Number(string[2]) + 1) + "";
   let dateString = string.join("-");
   return new Date(dateString).toLocaleDateString("pt-BR");
+};
+
+export const formatarQuantidadeKMG = (qtde) => {
+  if (qtde < 1000) return qtde;
+  else if (qtde > 1000000000)
+    return formatarNumDecimal(qtde / 1000000000) + "G";
+  else if (qtde > 1000000) return formatarNumDecimal(qtde / 1000000) + "M";
+  else if (qtde < 1000000) {
+    return formatarNumDecimal(qtde / 1000) + "K";
+  }
 };

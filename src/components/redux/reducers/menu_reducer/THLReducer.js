@@ -710,6 +710,51 @@ const INITIAL_STATE = {
   desmontagem: { min: "", max: "", select: "=" },
   vencimento: "",
   prazo: "",
+  eventSourcePrecos: null,
+  precosTabelaVencimentos: [
+    {
+      id: 4320,
+      max: 0,
+      min: 0,
+      components: [
+        {
+          id: 200000374093,
+          compraQtde: 3500,
+          compra: 0.11,
+          vendaQtde: 100,
+          venda: 0.2,
+        },
+        {
+          id: 200000326053,
+          compraQtde: 3600,
+          compra: 0.12,
+          vendaQtde: 200,
+          venda: 0.3,
+        },
+      ],
+    },
+    {
+      id: 3609,
+      max: 0,
+      min: 0,
+      components: [
+        {
+          id: 200000296136,
+          compraQtde: 3500,
+          compra: 0.11,
+          vendaQtde: 100,
+          venda: 0.2,
+        },
+        {
+          id: 200000304047,
+          compraQtde: 3600,
+          compra: 0.12,
+          vendaQtde: 200,
+          venda: 0.3,
+        },
+      ],
+    },
+  ],
 };
 
 export default (state = INITIAL_STATE, action) => {

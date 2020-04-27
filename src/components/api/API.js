@@ -32,6 +32,7 @@ import {
   url_listarContas_token,
   url_verificarToken_token,
   url_listarTabelaInicialTHL_ativo_strike_tipo,
+  url_atualizarPrecosTHL_ids,
 } from "components/api/url";
 import {
   MUDAR_VARIAVEL_POSICAO_CUSTODIA,
@@ -287,12 +288,12 @@ export const listarPosicoesAPI = (idToken) => {
 
 export const atualizarOrdensExecAPI = (
   dispatch,
-  idUsuario,
+  token,
   listaOrdensExec,
   props
 ) => {
   var source = new EventSource(
-    url_base_reativa + url_ordensExecReativas_idUser + idUsuario
+    url_base_reativa + url_ordensExecReativas_idUser + token
   );
 
   source.onopen = function (event) {
@@ -302,20 +303,21 @@ export const atualizarOrdensExecAPI = (
   source.onmessage = function (event) {
     if (typeof event.data !== "undefined") {
       var dados = JSON.parse(event.data);
+      console.log(dados.orders);
 
-      const indice = listaOrdensExec.findIndex(
-        (ordem) => ordem.id === dados.id
-      );
+      // const indice = listaOrdensExec.findIndex(
+      //   (ordem) => ordem.id === dados.id
+      // );
 
-      const novaTabela = [...listaOrdensExec];
-      if (indice !== -1) {
-        novaTabela[indice] = dados;
-        dispatch({ type: LISTAR_ORDENS_EXECUCAO, payload: novaTabela });
-      } else {
-        novaTabela.unshift(dados);
+      // const novaTabela = [...listaOrdensExec];
+      // if (indice !== -1) {
+      //   novaTabela[indice] = dados;
+      //   dispatch({ type: LISTAR_ORDENS_EXECUCAO, payload: novaTabela });
+      // } else {
+      //   novaTabela.unshift(dados);
 
-        dispatch({ type: LISTAR_ORDENS_EXECUCAO, payload: novaTabela });
-      }
+      //   dispatch({ type: LISTAR_ORDENS_EXECUCAO, payload: novaTabela });
+      // }
     }
   };
 
@@ -821,6 +823,24 @@ export const listarTabelaInicialTHLAPI = (ativo, strike, tipo) => {
       mostrarErroConsulta(erro, erro_listarTHL_thl);
       return [];
     });
+};
+
+export const atualizarPrecosTHLAPI = (ids) => {
+  var source = new EventSource(
+    url_base_reativa + url_atualizarPrecosTHL_ids + ids
+  );
+
+  source.onopen = function (event) {
+    // console.log("open");
+  };
+
+  source.onmessage = function (event) {
+    if (typeof event.data !== "undefined") {
+      var dados = JSON.parse(event.data);
+    }
+  };
+
+  return source;
 };
 
 export const travarDestravarClique = (modo, id) => {

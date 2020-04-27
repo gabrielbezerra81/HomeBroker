@@ -33,7 +33,7 @@ export const url_listarPosicoes = "position";
 export const url_cotacaoReativa_codigos = "quotes/symbols?symbols=";
 export const url_bookReativo_codigos = "books/symbols?symbols=";
 export const url_emblemaReativo_ids = "structures/ids?ids="; //Id estrutura
-export const url_ordensExecReativas_idUser = "orders/user/";
+export const url_ordensExecReativas_idUser = "orders/user2/";
 export const url_posicaoReativa_idUser = "position/user/";
 
 //Monitorar e adicionar
@@ -54,4 +54,4 @@ export const url_realizarCadastro_dados = "auth/signup";
 export const url_pesquisarListaStrike_codigo = "stocks/strikes/integer/";
 export const url_listarTabelaInicialTHL_ativo_strike_tipo =
   "structure/thl/list/";
-export const url_atualizarPrecosTHL_ids = "structures/ids"
+export const url_atualizarPrecosTHL_ids = "structures/ids?ids="

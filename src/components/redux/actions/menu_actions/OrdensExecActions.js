@@ -368,19 +368,24 @@ const retornaDadosOferta = (ordemAtual, tipo) => {
   return dadosOferta;
 };
 
-export const atualizarOrdensExecAction = (props, idUsuario) => {
+export const atualizarOrdensExecAction = (props) => {
   return (dispatch) => {
-    atualizarOrdensExec(dispatch, props, idUsuario, props.tabelaOrdensExecucao);
+    atualizarOrdensExec(
+      dispatch,
+      props,
+      props.token.accessToken,
+      props.tabelaOrdensExecucao
+    );
   };
 };
 
-const atualizarOrdensExec = (dispatch, props, idUsuario, listaOrdensExec) => {
+const atualizarOrdensExec = (dispatch, props, accessToken, listaOrdensExec) => {
   if (props.eventSourceOrdensExec) {
     props.eventSourceOrdensExec.close();
   }
   const eventSource = atualizarOrdensExecAPI(
     dispatch,
-    idUsuario,
+    accessToken,
     listaOrdensExec,
     props
   );
