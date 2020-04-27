@@ -296,28 +296,21 @@ export const atualizarOrdensExecAPI = (
     url_base_reativa + url_ordensExecReativas_idUser + token
   );
 
-  source.onopen = function (event) {
-    // console.log("open");
-  };
-
   source.onmessage = function (event) {
     if (typeof event.data !== "undefined") {
       var dados = JSON.parse(event.data);
-      console.log(dados.orders);
 
-      // const indice = listaOrdensExec.findIndex(
-      //   (ordem) => ordem.id === dados.id
-      // );
-
-      // const novaTabela = [...listaOrdensExec];
-      // if (indice !== -1) {
-      //   novaTabela[indice] = dados;
-      //   dispatch({ type: LISTAR_ORDENS_EXECUCAO, payload: novaTabela });
-      // } else {
-      //   novaTabela.unshift(dados);
-
-      //   dispatch({ type: LISTAR_ORDENS_EXECUCAO, payload: novaTabela });
-      // }
+      if (dados.orders && dados.orders.length > 0) {
+        const novaTabela = [...listaOrdensExec];
+        dados.orders.forEach((novaOrdem) => {
+          const indice = novaTabela.findIndex(
+            (ordem) => ordem.id === novaOrdem.id
+          );
+          if (indice !== -1) novaTabela[indice] = novaOrdem;
+          else novaTabela.unshift(novaOrdem);
+        });
+        dispatch({ type: LISTAR_ORDENS_EXECUCAO, payload: novaTabela });
+      }
     }
   };
 
