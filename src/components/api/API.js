@@ -37,6 +37,7 @@ import {
 import {
   MUDAR_VARIAVEL_POSICAO_CUSTODIA,
   MODIFICAR_VARIAVEL_MULTILEG,
+  MUDAR_VARIAVEL_THL,
 } from "constants/MenuActionTypes";
 import {
   LISTAR_BOOK_OFERTAS,
@@ -72,7 +73,7 @@ const timeout = 6000;
 
 export const pesquisarAtivoAPI = (codigo) => {
   return request
-    .get(url_base + url_pesquisarAtivoBoletas_codigo + codigo)
+    .get(`${url_base}${url_pesquisarAtivoBoletas_codigo}${codigo}`)
     .timeout(timeout)
     .retry(3, 2000)
     .then((response) => {
@@ -148,7 +149,7 @@ export const listarBookOfertaAPI = (codigo_ativo) => {
     tabelaOfertasVenda: [],
   };
   return request
-    .get(url_base + url_listarBookOfertas_codigo + codigo_ativo)
+    .get(`${url_base}${url_listarBookOfertas_codigo}${codigo_ativo}`)
     .timeout(timeout)
     .retry(3, 2000)
     .then((response) => {
@@ -176,7 +177,7 @@ export const enviarOrdemAPI = (json, token) => {
   const jsonStringBody = JSON.stringify(json);
 
   return request
-    .post(url_base + url_enviarOrdem)
+    .post(`${url_base}${url_enviarOrdem}`)
     .timeout(timeout)
     .set({
       "Content-Type": "application/json",
@@ -196,7 +197,7 @@ export const pesquisarAtivoMultilegAPI = (codigo_ativo) => {
   var dados;
 
   return request
-    .get(url_base + url_pesquisarOpcoesVencimentos_codigo + codigo_ativo)
+    .get(`${url_base}${url_pesquisarOpcoesVencimentos_codigo}${codigo_ativo}`)
     .timeout(timeout)
     .retry(3, 2000)
     .then(async (response) => {
@@ -230,11 +231,7 @@ export const pesquisarAtivoMultilegAPI = (codigo_ativo) => {
 export const pesquisarStrikesMultilegAPI = (codigo_ativo, vencimento) => {
   return request
     .get(
-      url_base +
-        url_pesquisarStrikes_codigo_vencimento +
-        codigo_ativo +
-        "/" +
-        vencimento
+      `${url_base}${url_pesquisarStrikes_codigo_vencimento}${codigo_ativo}/${vencimento}`
     )
     .timeout(timeout)
     .retry(3, 2000)
@@ -250,7 +247,7 @@ export const pesquisarStrikesMultilegAPI = (codigo_ativo, vencimento) => {
 
 export const listarOrdensExecAPI = (idToken) => {
   return request
-    .get(url_base + url_listarOrdensExecucao_)
+    .get(`${url_base}${url_listarOrdensExecucao_}`)
     .timeout(timeout)
     .retry(3, 2000)
     .set({ Authorization: `${idToken.tokenType} ${idToken.accessToken}` })
@@ -272,7 +269,7 @@ export const listarOrdensExecAPI = (idToken) => {
 
 export const listarPosicoesAPI = (idToken) => {
   return request
-    .get(url_base + url_listarPosicoes)
+    .get(`${url_base}${url_listarPosicoes}`)
     .timeout(timeout)
     .set({ Authorization: `${idToken.tokenType} ${idToken.accessToken}` })
     .retry(3, 2000)
@@ -293,7 +290,7 @@ export const atualizarOrdensExecAPI = (
   props
 ) => {
   var source = new EventSource(
-    url_base_reativa + url_ordensExecReativas_idUser + token
+    `${url_base_reativa}${url_ordensExecReativas_idUser}${token}`
   );
 
   source.onmessage = function (event) {
@@ -325,7 +322,7 @@ export const atualizarBookAPI = (
   rembook //booksMultileg
 ) => {
   var source = new EventSource(
-    url_base_reativa + url_bookReativo_codigos + codigos
+    `${url_base_reativa}${url_bookReativo_codigos}${codigos}`
   );
   source.onopen = function (event) {
     // console.log("open");
@@ -411,7 +408,7 @@ export const atualizarCotacaoAPI = (
   dadosPesquisa = null
 ) => {
   var source = new EventSource(
-    url_base_reativa + url_cotacaoReativa_codigos + codigos
+    `${url_base_reativa}${url_cotacaoReativa_codigos}${codigos}`
   );
 
   source.onopen = function (event) {
@@ -511,7 +508,9 @@ export const atualizarCotacaoAPI = (
 };
 
 export const atualizarEmblemasAPI = (dispatch, listaPrecos, ids) => {
-  var source = new EventSource(url_base_reativa + url_emblemaReativo_ids + ids);
+  var source = new EventSource(
+    `${url_base_reativa}${url_emblemaReativo_ids}${ids}`
+  );
 
   source.onopen = function (event) {
     console.log("open");
@@ -563,7 +562,7 @@ export const atualizarPosicaoAPI = (
   props
 ) => {
   var source = new EventSource(
-    url_base_reativa + url_posicaoReativa_idUser + idUsuario
+    `${url_base_reativa}${url_posicaoReativa_idUser}${idUsuario}`
   );
 
   source.onopen = function (event) {
@@ -606,7 +605,7 @@ export const criarPosicaoMultilegAPI = (json) => {
   const jsonStringBody = JSON.stringify(json);
 
   return request
-    .post(url_base + url_criarPosicaoMultileg_)
+    .post(`${url_base}${url_criarPosicaoMultileg_}`)
     .timeout(timeout)
     .retry(2, 2000)
     .set({ "Content-Type": "application/json" })
@@ -625,7 +624,7 @@ export const criarAlertaOperacaoAPI = (json) => {
   const jsonStringBody = JSON.stringify(json);
 
   return request
-    .post(url_base + url_criarAlertaOperacao_)
+    .post(`${url_base}${url_criarAlertaOperacao_}`)
     .timeout(timeout)
     .retry(2, 2000)
     .set({ "Content-Type": "application/json" })
@@ -641,7 +640,7 @@ export const criarAlertaOperacaoAPI = (json) => {
 
 export const cancelarOrdemExecAPI = (id) => {
   return request
-    .get(url_base + url_cancelarOrdemExec_id + id)
+    .get(`${url_base}${url_cancelarOrdemExec_id}${id}`)
     .timeout(timeout)
     .then(() => {
       alert(sucesso_cancelar_ordem);
@@ -653,7 +652,7 @@ export const cancelarOrdemExecAPI = (id) => {
 
 export const finalizarAMercadoAPI = (id) => {
   return request
-    .get(url_base + url_finalizarAMercado_id + id)
+    .get(`${url_base}${url_finalizarAMercado_id}${id}`)
     .timeout(timeout)
     .then(() => {
       alert(sucesso_finalizar_a_mercado);
@@ -665,7 +664,7 @@ export const finalizarAMercadoAPI = (id) => {
 
 export const incrementarQtdeOrdemExecAPI = (id, qtde) => {
   return request
-    .get(url_base + url_aumentarQtde_id_qtde + id + "/" + qtde)
+    .get(`${url_base}${url_aumentarQtde_id_qtde}${id}/${qtde}`)
     .timeout(timeout)
     .then(() => {
       alert(sucesso_modificar_ordemExec);
@@ -677,7 +676,7 @@ export const incrementarQtdeOrdemExecAPI = (id, qtde) => {
 
 export const incrementarPrecoOrdemExecAPI = (id, preco) => {
   return request
-    .get(url_base + url_aumentarPreco_id_valor + id + "/" + preco)
+    .get(`${url_base}${url_aumentarPreco_id_valor}${id}/${preco}`)
     .timeout(timeout)
     .then(() => {
       alert(sucesso_modificar_ordemExec);
@@ -692,7 +691,7 @@ export const realizarLoginAPI = (username, password) => {
 
   return (
     request
-      .post(url_base + url_realizarLogin_usuario_senha)
+      .post(`${url_base}${url_realizarLogin_usuario_senha}`)
       // .retry(3, 2000)
       .timeout(timeout)
       .set({ "Content-Type": "application/json" })
@@ -718,7 +717,7 @@ export const realizarCadastroAPI = (nome, username, email, role, password) => {
   };
 
   return request
-    .post(url_base + url_realizarCadastro_dados)
+    .post(`${url_base}${url_realizarCadastro_dados}`)
     .set({ "Content-Type": "application/json" })
     .timeout(timeout)
     .send(JSON.stringify(payload))
@@ -733,7 +732,7 @@ export const realizarCadastroAPI = (nome, username, email, role, password) => {
 
 export const autenticacaoTokenAPI = (token) => {
   return request
-    .get(url_base + url_autenticacao_token)
+    .get(`${url_base}${url_autenticacao_token}`)
     .timeout(timeout)
     .set({ Authorization: `${token.tokenType} ${token.accessToken}` })
     .then((response) => {
@@ -747,7 +746,7 @@ export const autenticacaoTokenAPI = (token) => {
 
 export const buscarInformacoesUsuarioAPI = (token) => {
   return request
-    .get(url_base + url_informacoesUsuario_token)
+    .get(`${url_base}${url_informacoesUsuario_token}`)
     .set({ Authorization: `${token.tokenType} ${token.accessToken}` })
     .timeout(timeout)
     .retry(3, 2000)
@@ -762,7 +761,7 @@ export const buscarInformacoesUsuarioAPI = (token) => {
 
 export const pesquisarListaStrikeTHLAPI = (ativo) => {
   return request
-    .get(url_base + url_pesquisarListaStrike_codigo + ativo)
+    .get(`${url_base}${url_pesquisarListaStrike_codigo}${ativo}`)
     .timeout(timeout)
     .retry(3, 2000)
     .then((response) => response.body)
@@ -774,7 +773,7 @@ export const pesquisarListaStrikeTHLAPI = (ativo) => {
 
 export const listarContasAPI = (token) => {
   return request
-    .get(url_base + url_listarContas_token)
+    .get(`${url_base}${url_listarContas_token}`)
     .set({ Authorization: `${token.tokenType} ${token.accessToken}` })
     .timeout(timeout)
     .retry(3, 2000)
@@ -789,7 +788,7 @@ export const listarContasAPI = (token) => {
 
 export const verificarTokenAPI = (token) => {
   return request
-    .get(url_base + url_verificarToken_token + token.accessToken)
+    .get(`${url_base}${url_verificarToken_token}${token.accessToken}`)
     .timeout(timeout)
     .retry(3, 2000)
     .then((response) => {
@@ -818,18 +817,38 @@ export const listarTabelaInicialTHLAPI = (ativo, strike, tipo) => {
     });
 };
 
-export const atualizarPrecosTHLAPI = (ids) => {
+// TODO:
+export const atualizarPrecosTHLAPI = (
+  ids,
+  dispatch,
+  precosTabelaVencimentos
+) => {
   var source = new EventSource(
-    url_base_reativa + url_atualizarPrecosTHL_ids + ids
+    `${url_base_reativa}${url_atualizarPrecosTHL_ids}${ids}`
   );
-
-  source.onopen = function (event) {
-    // console.log("open");
-  };
 
   source.onmessage = function (event) {
     if (typeof event.data !== "undefined") {
       var dados = JSON.parse(event.data);
+      const { orders } = dados;
+
+      if (orders && orders.length > 0) {
+        const novaTabela = [...precosTabelaVencimentos];
+        orders.forEach((novaEstrutura) => {
+          const indice = novaTabela.findIndex(
+            (estrutura) => estrutura.id === novaEstrutura.id
+          );
+          if (indice !== -1) novaTabela[indice] = novaEstrutura;
+          else novaTabela.unshift(novaEstrutura);
+        });
+        dispatch({
+          type: MUDAR_VARIAVEL_THL,
+          payload: {
+            nome: "opcoesStrike",
+            valor: novaTabela,
+          },
+        });
+      }
     }
   };
 
@@ -851,5 +870,5 @@ const mostrarErroConsulta = (erro, mensagem) => {
   console.log(erro);
   if (erro.timeout) {
     alert(erro_timeout);
-  } else alert(mensagem);
+  } else if (mensagem) alert(mensagem);
 };

@@ -1,6 +1,6 @@
+import moment from "moment";
 import { MUDAR_VARIAVEL_THL } from "constants/MenuActionTypes";
 import { comb300 } from "components/forms/thl/tableData";
-import { mapTabelaVencimentos } from "components/redux/actions/api_actions/ThlAPIAction";
 
 const thlData = [
   {
@@ -760,8 +760,28 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case MUDAR_VARIAVEL_THL:
-      return { ...state, [action.payload.nome]: action.payload.valor };
+      const { nome, valor } = action.payload;
+      const valorFormatado =
+        nome === "opcoesStrike" ? mapTabelaVencimentos(valor) : valor;
+      return { ...state, [nome]: valorFormatado };
     default:
       return state;
   }
 };
+
+function mapTabelaVencimentos(dataTabela) {
+  return dataTabela.map((linhaStrike) => {
+    const novaLinhaStrike = {
+      strikeLine: linhaStrike.strikeLine,
+      structuresIds: [...linhaStrike.structuresIds],
+    };
+    novaLinhaStrike.stocks = linhaStrike.stocks.map((stock) => {
+      const data = moment(stock.endBusiness, "DD-MM-YYYY HH:mm:ss");
+      const novoStock = { ...stock, vencimento: data };
+
+      return novoStock;
+    });
+
+    return novaLinhaStrike;
+  });
+}

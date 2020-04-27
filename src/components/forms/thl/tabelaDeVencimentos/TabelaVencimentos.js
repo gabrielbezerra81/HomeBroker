@@ -29,7 +29,8 @@ export default React.memo(({ setScrollbarRef }) => {
         ativoPesquisado,
         strikeSelecionado,
         tipo,
-        eventSourcePrecos
+        eventSourcePrecos,
+        precosTabelaVencimentos
       )
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -92,7 +93,7 @@ export default React.memo(({ setScrollbarRef }) => {
                 anos,
                 ultimoMes,
                 (indice, ano) =>
-                renderCelulaNomeMes(indice + 1, opcoesStrike, ano),
+                  renderCelulaNomeMes(indice + 1, opcoesStrike, ano),
                 "colunaNomesMeses"
               )}
             </tr>
@@ -183,7 +184,7 @@ const renderConteudoTabelaVencimentos = (
             anos,
             ultimoMes,
             (indice, ano) =>
-            renderCelulaNomeMes(indice + 1, opcoesStrike, ano, true),
+              renderCelulaNomeMes(indice + 1, opcoesStrike, ano, true),
             "colunaMesLinhaStrike"
           )}
         </tr>

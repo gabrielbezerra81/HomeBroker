@@ -1,15 +1,15 @@
-import {} from "constants/ActionTypes";
+import { ABRIR_FECHAR_ITEM_BARRA_LATERAL } from "constants/ActionTypes";
 import {
   MUDAR_TIPO,
   ABRIR_FECHAR_CONFIG_COMPLEMENTAR,
   ADICIONAR_ABA,
   SELECIONAR_ABA,
   MODIFICAR_ATRIBUTO_ABA,
-  MODIFICAR_VARIAVEL_MULTILEG
+  MODIFICAR_VARIAVEL_MULTILEG,
 } from "constants/MenuActionTypes";
 import {
   PESQUISAR_ATIVO_MULTILEG_API,
-  ATUALIZAR_SOURCE_EVENT_MULTILEG
+  ATUALIZAR_SOURCE_EVENT_MULTILEG,
 } from "constants/ApiActionTypes";
 
 const INITIAL_STATE = {
@@ -34,12 +34,12 @@ const INITIAL_STATE = {
       total: "",
       validadeSelect: "DAY",
       date: new Date(),
-      tabelaMultileg: []
-    }
+      tabelaMultileg: [],
+    },
   ],
   eventSource: null, //Book
   eventSourceCotacao: null,
-  cotacoesMultileg: []
+  cotacoesMultileg: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -52,7 +52,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         multileg: action.payload.multileg,
-        abaSelecionada: action.payload.abaSelecionada
+        abaSelecionada: action.payload.abaSelecionada,
       };
     case SELECIONAR_ABA: {
       return { ...state, abaSelecionada: action.payload };
@@ -65,6 +65,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, multileg: action.payload };
     case ATUALIZAR_SOURCE_EVENT_MULTILEG:
       return { ...state, [action.nomeVariavel]: action.payload };
+    case ABRIR_FECHAR_ITEM_BARRA_LATERAL:
+      return action.payload.name === "multilegAberto"
+        ? { ...INITIAL_STATE }
+        : state;
     default:
       return state;
   }

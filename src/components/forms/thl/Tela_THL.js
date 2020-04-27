@@ -46,7 +46,7 @@ class Tela_THL extends React.Component {
             headerClass="border-green"
           />
         )}
-      ></DraggableModal>
+      />
     );
   }
 

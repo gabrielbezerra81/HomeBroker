@@ -1,4 +1,3 @@
-import moment from "moment";
 import {
   listarTabelaInicialTHLAPI,
   atualizarPrecosTHLAPI,
@@ -32,7 +31,8 @@ export const listarTabelaInicialTHLAPIAction = (
   ativo,
   strikeSelecionado,
   tipo,
-  sourcePrecos
+  sourcePrecos,
+  precosTabela
 ) => {
   return async (dispatch) => {
     if (ativo && strikeSelecionado && tipo) {
@@ -40,29 +40,29 @@ export const listarTabelaInicialTHLAPIAction = (
         type: MUDAR_VARIAVEL_THL,
         payload: { nome: "carregandoTabelaVencimentos", valor: true },
       });
+
       const tabelaVencimentos = await listarTabelaInicialTHLAPI(
         ativo,
         strikeSelecionado,
         tipo
       );
-      if (tabelaVencimentos)
-        atualizarPrecosTHL(tabelaVencimentos, sourcePrecos, dispatch);
+      if (tabelaVencimentos.length > 0)
+        atualizarPrecosTHL(
+          tabelaVencimentos,
+          sourcePrecos,
+          dispatch,
+          precosTabela
+        );
       dispatch({
         type: MUDAR_VARIAVEL_THL,
         payload: {
           nome: "opcoesStrike",
-          valor: mapTabelaVencimentos(tabelaVencimentos),
+          valor: tabelaVencimentos,
         },
       });
       dispatch({
         type: MUDAR_VARIAVEL_THL,
         payload: { nome: "carregandoTabelaVencimentos", valor: false },
-      });
-    } // caso os parametros não estejam preenchidos
-    else {
-      dispatch({
-        type: MUDAR_VARIAVEL_THL,
-        payload: { nome: "opcoesStrike", valor: [] },
       });
     }
   };
@@ -71,7 +71,8 @@ export const listarTabelaInicialTHLAPIAction = (
 const atualizarPrecosTHL = async (
   tabelaVencimentos,
   sourcePrecos,
-  dispatch
+  dispatch,
+  precosTabela
 ) => {
   if (sourcePrecos) {
     sourcePrecos.close();
@@ -87,27 +88,10 @@ const atualizarPrecosTHL = async (
 
   ids = ids.substring(0, ids.length - 1);
 
-  const source = await atualizarPrecosTHLAPI(ids);
+  const source = await atualizarPrecosTHLAPI(ids, dispatch, precosTabela);
 
   dispatch({
     type: MUDAR_VARIAVEL_THL,
     payload: { nome: "eventSourcePrecos", valor: source },
-  });
-};
-
-export const mapTabelaVencimentos = (dataTabela) => {
-  return dataTabela.map((linhaStrike) => {
-    const novaLinhaStrike = {
-      strikeLine: linhaStrike.strikeLine,
-      structuresIds: [...linhaStrike.structuresIds],
-    };
-    novaLinhaStrike.stocks = linhaStrike.stocks.map((stock) => {
-      const data = moment(stock.endBusiness, "DD-MM-YYYY HH:mm:ss");
-      const novoStock = { ...stock, vencimento: data };
-
-      return novoStock;
-    });
-
-    return novaLinhaStrike;
   });
 };
