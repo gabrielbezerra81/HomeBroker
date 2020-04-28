@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { forwardRef, useMemo } from "react";
 import { WindowTable } from "window-table";
 import {
   ColunaAcaoUlt,
@@ -36,6 +36,7 @@ export default React.memo(() => {
   // });
   let alturaContainer = 102 + 43 * dataTabela.length;
   if (alturaContainer > 496) alturaContainer = 496;
+  const classeMargemScroll = dataTabela.length < 10 ? "margemScrollbar " : "";
 
   return (
     <div className="containerCombinacoesTHL">
@@ -43,27 +44,51 @@ export default React.memo(() => {
         className="containerTabelaComb"
         style={{ height: `${alturaContainer}px` }}
       >
-        <Html5Table
+        <WindowTable
           className="tabelaCombinacoes"
           id="tabelaCombinacoes"
           data={dataTabela}
           columns={columns}
+          Cell={(props) => Td(props, classeMargemScroll)}
+          Header={Thead}
+          Row={StripedRow}
+          overscanCount={2}
         />
       </div>
     </div>
   );
 });
 
-const Html5Table = (props) => {
-  const tamanhoTabela = props.data.length;
+const Thead = (props) => {
   return (
-    <WindowTable
-      Cell={Td}
-      Header={Thead}
-      Row={(props) => StripedRow(props, tamanhoTabela)}
-      overscanCount={2}
+    <div
       {...props}
+      style={{
+        ...props.style,
+      }}
+      className="thead"
+    ></div>
+  );
+};
+
+const StripedRow = forwardRef((props, ref) => {
+  return (
+    <div
+      {...props}
+      className={props.index % 2 === 0 ? "linha-par" : "linha-impar"}
     />
+  );
+});
+
+const Td = (props, classeMargemScroll) => {
+  return (
+    <div
+      {...props}
+      style={{
+        ...props.style,
+      }}
+      className={classeMargemScroll + "td"}
+    ></div>
   );
 };
 
@@ -132,51 +157,6 @@ const columns = [
     HeaderCell: ColunaHeader,
   },
 ];
-
-const Thead = (props) => {
-  return (
-    <div
-      {...props}
-      style={{
-        ...props.style,
-      }}
-      className="thead"
-    ></div>
-  );
-};
-
-const StripedRow = (props, tamanhoTabela) => {
-  const classeMargemScroll = tamanhoTabela < 10 ? "margemScrollbar " : "";
-  const classeUltimaLinha =
-    props.index === tamanhoTabela - 1 ? "ultimaLinha " : "";
-
-  return (
-    <div
-      {...props}
-      style={{
-        ...props.style,
-      }}
-      className={
-        classeMargemScroll +
-        classeUltimaLinha +
-        (props.index % 2 === 0 ? "linha-par" : "linha-impar")
-      }
-    />
-  );
-};
-
-const Td = (props) => {
-  return (
-    <div
-      {...props}
-      style={{
-        ...props.style,
-      }}
-      className="td"
-    ></div>
-  );
-};
-
 /*
   react-infinite-scroll-component
 

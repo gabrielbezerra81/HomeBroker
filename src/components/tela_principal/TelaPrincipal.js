@@ -10,10 +10,10 @@ import {
   RelatorioDetalhadoConectado,
 } from "components/redux/ElementosConectadosRedux";
 import BarraTopoTelaPrincipal from "components/tela_principal/BarraTopoTelaPrincipal";
-// import TelaTHLConectada from "components/forms/thl/Tela_THL";
-const TelaTHLConectada = React.lazy(() =>
-  import("components/forms/thl/Tela_THL")
-);
+import TelaTHLConectada from "components/forms/thl/Tela_THL";
+// const TelaTHLConectada = React.lazy(() =>
+//   import("components/forms/thl/Tela_THL")
+// );
 
 const startStyle = {
   opacity: 0,
@@ -130,7 +130,7 @@ const RenderMenus = ({
   headerTitle,
 }) => {
   return (
-    <Suspense fallback={null}>
+    // <Suspense fallback={null}>
       <Animate
         show={menuAberto}
         duration={100}
@@ -141,7 +141,7 @@ const RenderMenus = ({
       >
         <TelaTHLConectada headerTitle={headerTitle} />
       </Animate>
-    </Suspense>
+    // </Suspense>
   );
 };
 

@@ -829,26 +829,26 @@ export const atualizarPrecosTHLAPI = (
 
   source.onmessage = function (event) {
     if (typeof event.data !== "undefined") {
-      var dados = JSON.parse(event.data);
-      const { orders } = dados;
+      // var dados = JSON.parse(event.data);
+      // const { orders } = dados;
 
-      if (orders && orders.length > 0) {
-        const novaTabela = [...precosTabelaVencimentos];
-        orders.forEach((novaEstrutura) => {
-          const indice = novaTabela.findIndex(
-            (estrutura) => estrutura.id === novaEstrutura.id
-          );
-          if (indice !== -1) novaTabela[indice] = novaEstrutura;
-          else novaTabela.unshift(novaEstrutura);
-        });
-        dispatch({
-          type: MUDAR_VARIAVEL_THL,
-          payload: {
-            nome: "opcoesStrike",
-            valor: novaTabela,
-          },
-        });
-      }
+      // if (orders && orders.length > 0) {
+      //   const novaTabela = [...precosTabelaVencimentos];
+      //   orders.forEach((novaEstrutura) => {
+      //     const indice = novaTabela.findIndex(
+      //       (estrutura) => estrutura.id === novaEstrutura.id
+      //     );
+      //     if (indice !== -1) novaTabela[indice] = novaEstrutura;
+      //     else novaTabela.unshift(novaEstrutura);
+      //   });
+      //   dispatch({
+      //     type: MUDAR_VARIAVEL_THL,
+      //     payload: {
+      //       nome: "opcoesStrike",
+      //       valor: novaTabela,
+      //     },
+      //   });
+      // }
     }
   };
 

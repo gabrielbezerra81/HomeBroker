@@ -210,7 +210,7 @@
   background-color: var(--light-background-color);
 }
 
-.margemScrollbar .td:last-child {
+.margemScrollbar.td:last-child {
   margin-right: 12px;
 }
 
