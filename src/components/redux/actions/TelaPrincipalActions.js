@@ -100,6 +100,16 @@ export const deslogarUsuarioAction = (event, props) => {
     persistor
       .purge()
       .then(async () => {
+        if (props.eventSourceOrdensExec_OrdensExec) {
+          props.eventSourceOrdensExec_OrdensExec.close();
+        }
+        if (props.eventSourceEmblema_Posicao)
+          props.eventSourceEmblema_Posicao.close();
+        if (props.eventSourcePosicao_Posicao)
+          props.eventSourcePosicao_Posicao.close();
+        if (props.eventSourceCotacoes_Posicao)
+          props.eventSourceCotacoes_Posicao.close();
+
         await dispatch({
           type: LOGAR_DESLOGAR_USUARIO,
           payload: {
@@ -128,20 +138,6 @@ export const abrirItemBarraLateralAction = (props, nameVariavelReducer) => {
     if (props.eventSourceCotacao_Multileg)
       props.eventSourceCotacao_Multileg.close();
   } //
-  // Posição
-  else if (nameVariavelReducer === "listaCompletaAberta") {
-    if (props.eventSourceEmblema_Posicao)
-      props.eventSourceEmblema_Posicao.close();
-    if (props.eventSourcePosicao_Posicao)
-      props.eventSourcePosicao_Posicao.close();
-    if (props.eventSourceCotacoes_Posicao)
-      props.eventSourceCotacoes_Posicao.close();
-  } //
-  else if (nameVariavelReducer === "ordensExecucaoAberto") {
-    if (props.eventSourceOrdensExec_OrdensExec) {
-      props.eventSourceOrdensExec_OrdensExec.close();
-    }
-  }
   return (dispatch) => {
     dispatch({
       type: ABRIR_FECHAR_ITEM_BARRA_LATERAL,

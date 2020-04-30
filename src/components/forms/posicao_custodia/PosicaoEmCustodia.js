@@ -1,17 +1,24 @@
 import React from "react";
-
 import { Row, Col, Form, InputGroup } from "react-bootstrap";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import { MDBIcon } from "mdbreact";
 import DraggableModal from "components/utils/DraggableModal";
 import { ModalHeaderSemBook } from "components/utils/FormHeader";
 import { IconeConfigAbrirFormulario } from "components/utils/IconesConfigFormInterno";
-import { MDBIcon } from "mdbreact";
 import { ReactComponent as IconeResumido } from "img/rounded-rectangle.svg";
 import { ReactComponent as IconeAmpliado } from "img/check-box-empty.svg";
 import PosicaoEmLista from "components/forms/posicao_custodia/PosicaoLista";
 import PosicaoAmpliadaResumida from "components/forms/posicao_custodia/PosicaoAmpliadaResumida";
-import { PosicaoDetalhadaConectada } from "components/redux/ElementosConectadosRedux";
+import {
+  StorePrincipalContext,
+  GlobalContext,
+} from "components/redux/StoreCreation";
+import { mudarVariavelPosicaoAction } from "components/redux/actions/menu_actions/PosicaoActions";
+import { aumentarZindexAction } from "components/redux/actions/MainAppActions";
+import PosicaoDetalhada from "components/forms/posicao_custodia/posicao_detalhada/PosicaoDetalhada";
 
-export default class PosicaoEmCustodia extends React.Component {
+class PosicaoEmCustodia extends React.Component {
   componentDidMount() {
     if (this.props.divkey !== "" && this.props.divkey === "posicao_custodia") {
       document.getElementById("posicao_custodia").style.zIndex =
@@ -22,25 +29,24 @@ export default class PosicaoEmCustodia extends React.Component {
         true
       );
     }
-    this.props.listarPosicoesAction(this.props);
   }
-  componentDidUpdate(prevProps) {
-    const { props } = this;
-    if (props.eventSourcePosicao && props.eventSourceEmblema) {
-      if (props.posicoesCustodia.length !== props.arrayPrecos.length) {
-        if (prevProps.posicoesCustodia !== props.posicoesCustodia) {
-          if (
-            props.posicoesCustodia.length > 0 &&
-            props.arrayPrecos.length > 0 &&
-            props.arrayCotacoes.length > 0
-          ) {
-            props.atualizarEmblemasAction(props);
-            props.atualizarCotacoesAction(props);
-          }
-        }
-      }
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   const { props } = this;
+  //   if (props.eventSourcePosicao && props.eventSourceEmblema) {
+  //     if (props.posicoesCustodia.length !== props.arrayPrecos.length) {
+  //       if (prevProps.posicoesCustodia !== props.posicoesCustodia) {
+  //         if (
+  //           props.posicoesCustodia.length > 0 &&
+  //           props.arrayPrecos.length > 0 &&
+  //           props.arrayCotacoes.length > 0
+  //         ) {
+  //           props.atualizarEmblemasAction(props);
+  //           props.atualizarCotacoesAction(props);
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 
   render() {
     return (
@@ -260,6 +266,35 @@ const visualizacaoPosicao = (tipoVisualizacao) => {
   ) {
     return <PosicaoAmpliadaResumida emblemaMaior={true} />;
   } else if (tipoVisualizacao === "detalhada") {
-    return <PosicaoDetalhadaConectada />;
+    return <PosicaoDetalhada />;
   }
 };
+
+const mapStateToPropsGlobalStore = (state) => {
+  return {
+    divkey: state.MainAppReducer.divkey,
+    zIndex: state.MainAppReducer.zIndex,
+  };
+};
+
+const mapStateToPropsPosicao = (state) => ({
+  ordenacao: state.posicaoReducer.ordenacao,
+  tipoVisualizacao: state.posicaoReducer.tipoVisualizacao,
+  ativoPesquisa: state.posicaoReducer.ativoPesquisa,
+  inputSelect: state.posicaoReducer.inputSelect,
+  token: state.telaPrincipalReducer.token,
+});
+
+export default compose(
+  connect(mapStateToPropsGlobalStore, { aumentarZindexAction }, null, {
+    context: GlobalContext,
+  }),
+  connect(
+    mapStateToPropsPosicao,
+    {
+      mudarVariavelPosicaoAction,
+    },
+    null,
+    { context: StorePrincipalContext }
+  )
+)(PosicaoEmCustodia);

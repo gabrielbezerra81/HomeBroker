@@ -3,9 +3,21 @@ import { Row, Table, ProgressBar } from "react-bootstrap";
 import DraggableModal from "components/utils/DraggableModal";
 import { ModalHeaderSemBook } from "components/utils/FormHeader";
 import { formatarDataDaAPI } from "components/utils/Formatacoes";
-import { OpcoesOrdemExecConectada } from "components/redux/ElementosConectadosRedux";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import {
+  GlobalContext,
+  StorePrincipalContext,
+} from "components/redux/StoreCreation";
+import { mudarVariavelOrdensExecAction } from "components/redux/actions/menu_actions/OrdensExecActions";
+import {
+  atualizarDivKeyAction,
+  aumentarZindexAction,
+} from "components/redux/actions/MainAppActions";
+import { abrirItemBarraLateralAction } from "components/redux/actions/TelaPrincipalActions";
+import OpcoesOrdemExec from "components/forms/ordens_em_execucao/OpcoesOrdemExec";
 
-export default class OrdensExecucao extends React.Component {
+class OrdensExecucao extends React.Component {
   componentWillUnmount() {
     if (this.props.eventSourceOrdensExec) {
       this.props.eventSourceOrdensExec.close();
@@ -21,7 +33,6 @@ export default class OrdensExecucao extends React.Component {
         true
       );
     }
-    this.props.listarOrdensExecAction(this.props);
   }
   // componentDidUpdate(prevProps) {
   //   if (this.props.eventSourceOrdensExec) {
@@ -96,16 +107,26 @@ const modalBody = (props) => (
             const ordensNext = item.nextOrders.map((ordemNext, ind) =>
               renderOferta(ordemNext, "ON" + ind, props, "ordemNext")
             );
-            const opcoesOrdem =
-              props.opcoesOrdemAberto && item.id === props.ordemAtual.id ? (
-                // @ts-ignore
-                <OpcoesOrdemExecConectada id="opcoes_ordens" />
-              ) : null;
 
-            return [ofertaPrincipal, ...ordensNext, opcoesOrdem];
+            return [ofertaPrincipal, ...ordensNext];
           })}
         </tbody>
       </Table>
+      {props.tabelaOrdensExecucao.map((item, index) => {
+        if (props.opcoesOrdemAberto && item.id === props.ordemAtual.id) {
+          const top = document.getElementById(item.id).offsetTop;
+
+          return (
+            // @ts-ignore
+            <OpcoesOrdemExec
+              style={{ top: `${top + 80}px` }}
+              id="opcoes_ordens"
+              key={`opcoes${item.id}`}
+            />
+          );
+        }
+        return null;
+      })}
     </Row>
   </div>
 );
@@ -125,7 +146,8 @@ const renderOferta = (item, index, props, tipo) => {
 
   return (
     <tr
-      key={index + "ordens"}
+      id={item.id}
+      key={item.id}
       className={classeOrdem(tipo, props, item)}
       onClick={
         tipo === "ofertaPrincipal"
@@ -187,7 +209,7 @@ const listarAtributoComposto = (listaOfertas, atributo, classeCor) => {
 
     return (
       <span
-        key={index2}
+        key={index2 + atributo}
         className={classeCor === "sim" ? classeOfertaVenda(oferta) : ""}
       >
         {oferta[atributo]}
@@ -223,3 +245,36 @@ const abrirOpcoesOrdem = (props, item) => {
     else props.mudarVariavelOrdensExecAction("opcoesOrdemAberto", true);
   } else props.mudarVariavelOrdensExecAction("opcoesOrdemAberto", true);
 };
+
+const mapStateToPropsGlobalStore = (state) => {
+  return {
+    divkey: state.MainAppReducer.divkey,
+    zIndex: state.MainAppReducer.zIndex,
+  };
+};
+
+const mapStateToPropsOrdensExec = (state) => ({
+  tabelaOrdensExecucao: state.ordensExecReducer.tabelaOrdensExecucao,
+  ativo: state.ordensExecReducer.ativo,
+  opcoesOrdemAberto: state.ordensExecReducer.opcoesOrdemAberto,
+  ordemAtual: state.ordensExecReducer.ordemAtual,
+  token: state.telaPrincipalReducer.token,
+});
+
+export default compose(
+  connect(
+    mapStateToPropsGlobalStore,
+    { aumentarZindexAction, atualizarDivKeyAction },
+    null,
+    { context: GlobalContext }
+  ),
+  connect(
+    mapStateToPropsOrdensExec,
+    {
+      abrirItemBarraLateralAction,
+      mudarVariavelOrdensExecAction,
+    },
+    null,
+    { context: StorePrincipalContext }
+  )
+)(OrdensExecucao);

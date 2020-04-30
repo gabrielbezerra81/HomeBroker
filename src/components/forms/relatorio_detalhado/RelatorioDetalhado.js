@@ -1,14 +1,6 @@
 import React from "react";
-
+import { connect } from "react-redux";
 import { Row, Col } from "react-bootstrap";
-import DraggableModal from "components/utils/DraggableModal";
-import { ModalHeaderSemBook } from "components/utils/FormHeader";
-import {} from "recharts";
-import Tabela1Custos from "components/forms/relatorio_detalhado/Tabela1Custos";
-import Tabela2ProximaOrdem from "components/forms/relatorio_detalhado/Tabela2ProximaOrdem";
-import EmblemaRelatorio from "components/forms/relatorio_detalhado/EmblemaRelatorio";
-import Tabela3Resultado from "components/forms/relatorio_detalhado/Tabela3Resultado";
-import Tabela4HistoricoOrdens from "components/forms/relatorio_detalhado/Tabela4HistoricoOrdens";
 import {
   XAxis,
   YAxis,
@@ -20,9 +12,18 @@ import {
   Legend,
   ReferenceLine,
 } from "recharts";
+import DraggableModal from "components/utils/DraggableModal";
+import { ModalHeaderSemBook } from "components/utils/FormHeader";
+import Tabela1Custos from "components/forms/relatorio_detalhado/Tabela1Custos";
+import Tabela2ProximaOrdem from "components/forms/relatorio_detalhado/Tabela2ProximaOrdem";
+import EmblemaRelatorio from "components/forms/relatorio_detalhado/EmblemaRelatorio";
+import Tabela3Resultado from "components/forms/relatorio_detalhado/Tabela3Resultado";
+import Tabela4HistoricoOrdens from "components/forms/relatorio_detalhado/Tabela4HistoricoOrdens";
 import { data } from "components/forms/posicao_custodia/posicao_detalhada/GraficoPatrimonio";
+import { GlobalContext } from "components/redux/StoreCreation";
+import { aumentarZindexAction } from "components/redux/actions/MainAppActions";
 
-export default class RelatorioDetalhado extends React.Component {
+class RelatorioDetalhado extends React.Component {
   componentDidMount() {
     if (
       this.props.divkey !== "" &&
@@ -235,3 +236,17 @@ const item = {
     { ativo: "T272", qtde: 1000, valor: "0,40", tipo: "venda" },
   ],
 };
+
+const mapStateToPropsGlobalStore = (state) => {
+  return {
+    divkey: state.MainAppReducer.divkey,
+    zIndex: state.MainAppReducer.zIndex,
+  };
+};
+
+export default connect(
+  mapStateToPropsGlobalStore,
+  { aumentarZindexAction },
+  null,
+  { context: GlobalContext }
+)(RelatorioDetalhado);

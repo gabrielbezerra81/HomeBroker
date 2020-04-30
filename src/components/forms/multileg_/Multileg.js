@@ -1,12 +1,24 @@
 import React from "react";
-
+import { MDBIcon } from "mdbreact";
+import { compose } from "redux";
+import { connect } from "react-redux";
 import { Tab, Row, Col, Nav, Form } from "react-bootstrap";
 import DraggableModal from "components/utils/DraggableModal";
 import { ModalHeaderSemBook } from "components/utils/FormHeader";
 import AbaMultileg from "components/forms/multileg_/AbaMultileg";
-import { MDBIcon } from "mdbreact";
+import {
+  StorePrincipalContext,
+  GlobalContext,
+} from "components/redux/StoreCreation";
+import {
+  selecionarAdicionarAbaAction,
+  modificarAtributoAbaAction,
+  excluirAbaMultilegAction,
+  atualizarCotacaoAction,
+} from "components/redux/actions/menu_actions/MultilegActions";
+import { aumentarZindexAction } from "components/redux/actions/MainAppActions";
 
-export default class Multileg extends React.Component {
+class Multileg extends React.Component {
   // shouldComponentUpdate(nextProps, nextState) {
   //   const multileg = this.props.multileg !== nextProps.multileg;
   //   if (multileg) {
@@ -173,3 +185,36 @@ export default class Multileg extends React.Component {
 }
 
 const arrayKeys = ["ArrowUp", "ArrowRight", "ArrowDown", "ArrowLeft"];
+
+const mapStateToPropsMultileg = (state) => ({
+  configComplementarAberto: state.multilegReducer.configComplementarAberto,
+  multileg: state.multilegReducer.multileg,
+  abaSelecionada: state.multilegReducer.abaSelecionada,
+  eventSource: state.multilegReducer.eventSource,
+  eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
+});
+
+const mapStateToPropsGlobalStore = (state) => {
+  return {
+    divkey: state.MainAppReducer.divkey,
+    zIndex: state.MainAppReducer.zIndex,
+  };
+};
+
+export default compose(
+  connect(mapStateToPropsGlobalStore, { aumentarZindexAction }, null, {
+    context: GlobalContext,
+  }),
+  connect(
+    mapStateToPropsMultileg,
+    {
+      selecionarAdicionarAbaAction,
+      modificarAtributoAbaAction,
+      excluirAbaMultilegAction,
+      // atualizarBookAction,
+      atualizarCotacaoAction,
+    },
+    null,
+    { context: StorePrincipalContext }
+  )
+)(Multileg);

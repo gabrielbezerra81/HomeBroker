@@ -1,3 +1,6 @@
+import React from "react";
+import { mudarInputHeaderAction } from "components/redux/actions/bookOfertaActions";
+import { listarBookOfertaOnEnterAction } from "components/redux/actions/api_actions/bookOfertaAPIActions";
 import {
   AUMENTAR_ZINDEX,
   CRIAR_APP,
@@ -9,11 +12,8 @@ import {
   FECHAR_FORMULARIO, //Apenas para form de configurar, pois usa o reducer dos sub-apps
   RECEBER_APPKEYLOCAL,
 } from "constants/ActionTypes";
-import React from "react";
-import { WrapperAppBoletasConectado } from "components/redux/ElementosConectadosRedux";
 import { MUDAR_ORDEM_EXEC_MAIN_REDUCER } from "constants/MenuActionTypes";
-import { mudarInputHeaderAction } from "components/redux/actions/bookOfertaActions";
-import { listarBookOfertaOnEnterAction } from "components/redux/actions/api_actions/bookOfertaAPIActions";
+import { WrapperAppBoletasConectado } from "components/redux/ElementosConectadosRedux";
 
 export const criarMostrarAppAction = (apps, show, zindex, dispatch) => {
   dispatch({ type: CRIAR_APP, apps: apps, show: show, zIndex: zindex + 1 });

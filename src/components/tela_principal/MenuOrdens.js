@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import { Provider } from "react-redux";
-import ReduxThunk from "redux-thunk";
-import { createStore, applyMiddleware, compose } from "redux";
-import rootReducer from "../redux/reducers";
+import { connect } from "react-redux";
+import { compose } from "redux";
 import { Row } from "react-bootstrap";
 import "../../css";
 import iconeCompra from "img/compra/IconeCompra.png";
@@ -18,19 +16,32 @@ import iconeVendaAgendada from "img/venda/iconeVendaAgendada.png";
 import iconeVendaStartStop from "img/venda/iconeVendaStartStop.png";
 import iconeVendaStopMovel from "img/venda/iconeVendaStopMovel.png";
 import { Animate } from "react-show";
-import { AppBoletasConectado } from "components/redux/ElementosConectadosRedux";
 import iconeMultileg from "img/iconeMultileg.png";
+import {
+  GlobalContext,
+  StorePrincipalContext,
+} from "components/redux/StoreCreation";
+import {
+  criarMostrarAppAction,
+  mostrarAppAction,
+  atualizarShowAction,
+  atualizarDivKeyAction,
+  abrirFormAction,
+  aumentarZindexAction,
+} from "components/redux/actions/MainAppActions";
+import {
+  mouseOverAction,
+  mouseLeaveAction,
+} from "components/redux/actions/TelaPrincipalActions";
+import { abrirItemBarraLateralAction } from "components/redux/actions/TelaPrincipalActions";
 
 const startStyle = {
   opacity: 0,
   pointerEvents: "none",
 };
 
-// @ts-ignore
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
 //Possui o menu de ordens e encapsula todos os sub-apps.
-export class MenuOrdens extends Component {
+class MenuOrdens extends Component {
   componentDidUpdate() {
     if (
       this.props.divkey !== "" &&
@@ -191,28 +202,55 @@ export class MenuOrdens extends Component {
   }
 }
 
-// Responsável por criar uma store individual para cada app que contem as boletas e encapsulá-los.
-// Cada appBoleta contem os 12 formularios de compra e venda
-export class WrapperAppBoletas extends Component {
-  constructor(props) {
-    super(props);
+const mapStateToPropsGlobalStore = (state) => {
+  return {
+    apps: state.MainAppReducer.apps,
+    show: state.MainAppReducer.show,
+    divkey: state.MainAppReducer.divkey,
+    zIndex: state.MainAppReducer.zIndex,
+  };
+};
 
-    this.store = createStore(
-      rootReducer,
-      {},
-      composeEnhancers(applyMiddleware(ReduxThunk))
-    );
-  }
-  render() {
-    const { props } = this;
-    return (
-      <Provider store={this.store}>
-        <AppBoletasConectado
-          appkey={props.index}
-          indiceShow={props.indiceShow}
-          codigoBook={props.codigoBook}
-        />
-      </Provider>
-    );
-  }
-}
+const mapStateToPropsAppPrincipal = (state) => ({
+  ordensAberto: state.telaPrincipalReducer.ordensAberto,
+  ordensExecucaoAberto: state.telaPrincipalReducer.ordensExecucaoAberto,
+  relatorioDetalhadoAberto: state.telaPrincipalReducer.relatorioDetalhadoAberto,
+  listaCompletaAberta: state.telaPrincipalReducer.listaCompletaAberta,
+  menuLateralAberto: state.telaPrincipalReducer.menuLateralAberto,
+  multilegAberto: state.telaPrincipalReducer.multilegAberto,
+  thlAberta: state.telaPrincipalReducer.thlAberta,
+  logado: state.telaPrincipalReducer.logado,
+  eventSourceBook_Multileg: state.multilegReducer.eventSource,
+  eventSourceCotacao_Multileg: state.multilegReducer.eventSourceCotacao,
+  eventSourcePosicao_Posicao: state.posicaoReducer.eventSourcePosicao,
+  eventSourceEmblema_Posicao: state.posicaoReducer.eventSourceEmblema,
+  eventSourceCotacoes_Posicao: state.posicaoReducer.eventSourceCotacoes,
+  eventSourceOrdensExec_OrdensExec:
+    state.ordensExecReducer.eventSourceOrdensExec,
+});
+
+export default compose(
+  connect(
+    mapStateToPropsGlobalStore,
+    {
+      criarMostrarAppAction,
+      mostrarAppAction,
+      atualizarShowAction,
+      atualizarDivKeyAction,
+      abrirFormAction,
+      aumentarZindexAction,
+    },
+    null,
+    { context: GlobalContext }
+  ),
+  connect(
+    mapStateToPropsAppPrincipal,
+    {
+      mouseOverAction,
+      mouseLeaveAction,
+      abrirItemBarraLateralAction,
+    },
+    null,
+    { context: StorePrincipalContext }
+  )
+)(MenuOrdens);

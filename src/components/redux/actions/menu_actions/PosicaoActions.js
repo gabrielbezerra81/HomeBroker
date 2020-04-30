@@ -107,8 +107,6 @@ export const adicionaPosicao = (grupoPosicao) => {
 // Atualiza min, max e ult
 export const atualizarEmblemasAction = (props) => {
   return (dispatch) => {
-    console.log(props.posicoesCustodia.length);
-    console.log(props.arrayPrecos.length);
     atualizarEmblemas(
       dispatch,
       props.posicoesCustodia,
@@ -126,9 +124,9 @@ export const atualizarEmblemas = (
 ) => {
   let ids = "";
 
-  if (props.eventSourceEmblema) {
-    props.eventSourceEmblema.close();
-  }
+  // if (props.eventSourceEmblema) {
+  //   props.eventSourceEmblema.close();
+  // }
 
   listaPosicoes.forEach((posicao) => {
     ids += posicao.idEstrutura + ",";
@@ -156,9 +154,9 @@ export const atualizarPosicaoAction = (props) => {
 };
 
 const atualizarPosicao = (dispatch, listaPosicoes, props, idUsuario) => {
-  if (props.eventSourcePosicao) {
-    props.eventSourcePosicao.close();
-  }
+  // if (props.eventSourcePosicao) {
+  //   props.eventSourcePosicao.close();
+  // }
 
   const newSource = atualizarPosicaoAPI(
     dispatch,
@@ -215,9 +213,9 @@ const atualizarCotacoes = async (
   let codigos = "";
   const arrayCodigos = await montaArrayCotacoes(listaPosicoes, "codigos");
 
-  if (props.eventSourceCotacoes) {
-    props.eventSourceCotacoes.close();
-  }
+  // if (props.eventSourceCotacoes) {
+  //   props.eventSourceCotacoes.close();
+  // }
 
   arrayCodigos.forEach((ativo) => {
     codigos += ativo.codigo + ",";
@@ -235,6 +233,6 @@ const atualizarCotacoes = async (
 
   dispatch({
     type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-    payload: { nome: "arrayCotacoes", valor: newSource },
+    payload: { nome: "eventSourceCotacoes", valor: newSource },
   });
 };

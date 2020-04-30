@@ -1,6 +1,21 @@
 import React from "react";
+import { compose } from "redux";
+import { connect } from "react-redux";
 import iconeListaCompleta from "img/iconeListaCompleta.png";
 import { ReactComponent as Icones } from "img/IconesBarraLateral.svg";
+import {
+  StorePrincipalContext,
+  GlobalContext,
+} from "components/redux/StoreCreation";
+import {
+  mouseOverAction,
+  mouseLeaveAction,
+} from "components/redux/actions/TelaPrincipalActions";
+import { abrirItemBarraLateralAction } from "components/redux/actions/TelaPrincipalActions";
+import {
+  atualizarDivKeyAction,
+  abrirFormAction,
+} from "components/redux/actions/MainAppActions";
 
 /*
 <img src={iconeAbrirOrdens} alt="Ordens" />
@@ -13,7 +28,7 @@ const margemParaMenuLateral = (menuLateralAberto) => {
   return "";
 };
 
-export default class BarraLateral extends React.Component {
+class BarraLateral extends React.Component {
   render() {
     const { props } = this;
     return (
@@ -121,3 +136,43 @@ export default class BarraLateral extends React.Component {
     );
   }
 }
+
+const mapStateToPropsGlobalStore = (state) => {
+  return {
+    apps: state.MainAppReducer.apps,
+    show: state.MainAppReducer.show,
+    divkey: state.MainAppReducer.divkey,
+    zIndex: state.MainAppReducer.zIndex,
+  };
+};
+
+const mapStateToPropsAppPrincipal = (state) => ({
+  ordensAberto: state.telaPrincipalReducer.ordensAberto,
+  ordensExecucaoAberto: state.telaPrincipalReducer.ordensExecucaoAberto,
+  relatorioDetalhadoAberto: state.telaPrincipalReducer.relatorioDetalhadoAberto,
+  listaCompletaAberta: state.telaPrincipalReducer.listaCompletaAberta,
+  menuLateralAberto: state.telaPrincipalReducer.menuLateralAberto,
+  multilegAberto: state.telaPrincipalReducer.multilegAberto,
+  thlAberta: state.telaPrincipalReducer.thlAberta,
+});
+
+export default compose(
+  connect(
+    mapStateToPropsGlobalStore,
+    { atualizarDivKeyAction, abrirFormAction },
+    null,
+    {
+      context: GlobalContext,
+    }
+  ),
+  connect(
+    mapStateToPropsAppPrincipal,
+    {
+      abrirItemBarraLateralAction,
+      mouseOverAction,
+      mouseLeaveAction,
+    },
+    null,
+    { context: StorePrincipalContext }
+  )
+)(BarraLateral);

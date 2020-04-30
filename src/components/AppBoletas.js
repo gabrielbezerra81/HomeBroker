@@ -1,5 +1,8 @@
 import React from "react";
 import { Row } from "react-bootstrap";
+import { Animate } from "react-show";
+import { compose } from "redux";
+import { connect } from "react-redux";
 import "../css";
 import BookOfertas from "./forms/book_Ofertas/BookOfertas";
 import CompraAgendada from "components/forms/compra/compra_Agendada/CompraAgendada";
@@ -14,7 +17,17 @@ import VendaMercado from "./forms/venda/venda_Mercado/VendaMercado";
 import VendaStartStop from "./forms/venda/venda_StartStop/VendaStartStop";
 import VendaStopMovel from "./forms/venda/venda_StopMovel/VendaStopMovel";
 import VendaGainReducao from "./forms/venda/venda_GainReducao/VendaGainReducao";
-import { Animate } from "react-show";
+import { GlobalContext } from "components/redux/StoreCreation";
+import {
+  fecharFormAction,
+  abrirFormAction,
+  aumentarZindexAction,
+  receberAppPropsAction,
+  receberDadosOrdemExecMainReducerAction,
+} from "components/redux/actions/MainAppActions";
+import { listarBookOfertaOnEnterAction } from "components/redux/actions/api_actions/bookOfertaAPIActions";
+import { mudarInputHeaderAction } from "components/redux/actions/bookOfertaActions";
+import { montarBoletaFromOrdemExecAction } from "components/redux/actions/formInputActions";
 
 const startStyle = {
   opacity: 0,
@@ -43,7 +56,7 @@ const animate = (props, Componente) => {
   );
 };
 
-export default class AppBoletas extends React.Component {
+class AppBoletas extends React.Component {
   componentDidMount() {
     const { props } = this;
 
@@ -186,3 +199,39 @@ export default class AppBoletas extends React.Component {
     );
   }
 }
+
+const mapStateToPropsGlobalStore = (state) => {
+  return {
+    apps: state.MainAppReducer.apps,
+    show: state.MainAppReducer.show,
+    divkey: state.MainAppReducer.divkey,
+    zIndex: state.MainAppReducer.zIndex,
+    dadosOrdemExec: state.MainAppReducer.dadosOrdemExec,
+    ultimaBoletaAbertaOrdemExec:
+      state.MainAppReducer.ultimaBoletaAbertaOrdemExec,
+  };
+};
+
+const mapStateToPropsLocal = (state) => ({
+  eventSourceBook_Book: state.bookOfertaReducer.eventSource,
+});
+
+export default compose(
+  connect(
+    mapStateToPropsGlobalStore,
+    {
+      aumentarZindexAction,
+      fecharFormAction,
+      abrirFormAction,
+      receberDadosOrdemExecMainReducerAction,
+    },
+    null,
+    { context: GlobalContext }
+  ),
+  connect(mapStateToPropsLocal, {
+    receberAppPropsAction,
+    listarBookOfertaOnEnterAction,
+    mudarInputHeaderAction,
+    montarBoletaFromOrdemExecAction,
+  })
+)(AppBoletas);

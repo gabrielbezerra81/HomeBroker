@@ -1,19 +1,33 @@
 import React, { Suspense } from "react";
 import { Animate } from "react-show";
+import { compose } from "redux";
+import { connect } from "react-redux";
 import MenuLateralUsuario from "components/tela_principal/MenuLateralUsuario";
-import {
-  MenuOrdensConectado,
-  OrdensExecucaoConectada,
-  BarraLateralConectada,
-  MultilegConectado,
-  PosicaoEmCustodiaConectada,
-  RelatorioDetalhadoConectado,
-} from "components/redux/ElementosConectadosRedux";
 import BarraTopoTelaPrincipal from "components/tela_principal/BarraTopoTelaPrincipal";
-import TelaTHLConectada from "components/forms/thl/Tela_THL";
-// const TelaTHLConectada = React.lazy(() =>
-//   import("components/forms/thl/Tela_THL")
-// );
+import {
+  StorePrincipalContext,
+  GlobalContext,
+} from "components/redux/StoreCreation";
+import { aumentarZindexAction } from "components/redux/actions/MainAppActions";
+import { listarOrdensExecAction } from "components/redux/actions/menu_actions/OrdensExecActions";
+import { abrirItemBarraLateralAction } from "components/redux/actions/TelaPrincipalActions";
+import { listarPosicoesAction } from "components/redux/actions/menu_actions/PosicaoActions";
+import BarraLateral from "components/tela_principal/BarraLateral";
+import MenuOrdens from "components/tela_principal/MenuOrdens";
+
+const OrdensExecucao = React.lazy(() =>
+  import("components/forms/ordens_em_execucao/OrdensExecucao")
+);
+const Multileg = React.lazy(() =>
+  import("components/forms/multileg_/Multileg")
+);
+const PosicaoEmCustodia = React.lazy(() =>
+  import("components/forms/posicao_custodia/PosicaoEmCustodia")
+);
+const RelatorioDetalhado = React.lazy(() =>
+  import("components/forms/relatorio_detalhado/RelatorioDetalhado")
+);
+const TelaTHL = React.lazy(() => import("components/forms/thl/Tela_THL"));
 
 const startStyle = {
   opacity: 0,
@@ -25,9 +39,23 @@ const margemParaMenuLateral = (menuLateralAberto) => {
   return "";
 };
 
-export default class TelaPrincipal extends React.Component {
+class TelaPrincipal extends React.Component {
+  componentDidMount() {
+    this.props.listarOrdensExecAction(this.props);
+    this.props.listarPosicoesAction(this.props);
+  }
+
   render() {
     const { props } = this;
+    const {
+      zIndex,
+      menuLateralAberto,
+      ordensExecucaoAberto,
+      relatorioDetalhadoAberto,
+      listaCompletaAberta,
+      multilegAberto,
+      thlAberta,
+    } = props;
     return (
       <div>
         <div className="divTelaPrincipal">
@@ -35,83 +63,58 @@ export default class TelaPrincipal extends React.Component {
           <div className="conteudoMenuPrincipal">
             <BarraTopoTelaPrincipal />
             <div style={{ display: "flex", height: "100%" }}>
-              <BarraLateralConectada />
+              <BarraLateral />
               <div
                 id="menusTelaPrincipal"
-                className={margemParaMenuLateral(props.menuLateralAberto)}
+                className={margemParaMenuLateral(menuLateralAberto)}
               >
-                <MenuOrdensConectado />
-                <Animate
-                  show={props.ordensExecucaoAberto}
-                  duration={100}
-                  transitionOnMount
-                  stayMounted={false}
-                  start={startStyle}
-                  onClick={() =>
-                    props.aumentarZindexAction(
-                      "ordens_execucao",
-                      props.zIndex,
-                      props.ordensExecucaoAberto
-                    )
+                <MenuOrdens />
+
+                <RenderMenus
+                  menuAberto={ordensExecucaoAberto}
+                  zIndex={zIndex}
+                  divkey={"ordens_execucao"}
+                  aumentarZindex={props.aumentarZindexAction}
+                  component={
+                    <OrdensExecucao headerTitle="HISTÓRICO DE OPERAÇÕES" />
                   }
-                >
-                  <OrdensExecucaoConectada headerTitle="HISTÓRICO DE OPERAÇÕES" />
-                </Animate>
-                <Animate
-                  show={props.relatorioDetalhadoAberto}
-                  duration={100}
-                  transitionOnMount
-                  stayMounted={false}
-                  start={startStyle}
-                  onClick={() =>
-                    props.aumentarZindexAction(
-                      "relatorio_detalhado",
-                      props.zIndex,
-                      props.relatorioDetalhadoAberto
-                    )
+                />
+
+                <RenderMenus
+                  menuAberto={relatorioDetalhadoAberto}
+                  zIndex={zIndex}
+                  divkey={"relatorio_detalhado"}
+                  aumentarZindex={props.aumentarZindexAction}
+                  component={
+                    <RelatorioDetalhado headerTitle="RELATÓRIO DETALHADO" />
                   }
-                >
-                  <RelatorioDetalhadoConectado headerTitle="RELATÓRIO DETALHADO" />
-                </Animate>
-                <Animate
-                  show={props.listaCompletaAberta}
-                  duration={100}
-                  transitionOnMount
-                  stayMounted={false}
-                  start={startStyle}
-                  onClick={() =>
-                    props.aumentarZindexAction(
-                      "posicao_custodia",
-                      props.zIndex,
-                      props.listaCompletaAberta
-                    )
+                />
+
+                <RenderMenus
+                  menuAberto={listaCompletaAberta}
+                  zIndex={zIndex}
+                  divkey={"posicao_custodia"}
+                  aumentarZindex={props.aumentarZindexAction}
+                  component={
+                    <PosicaoEmCustodia headerTitle="POSIÇÃO EM CUSTÓDIA" />
                   }
-                >
-                  <PosicaoEmCustodiaConectada headerTitle="POSIÇÃO EM CUSTÓDIA" />
-                </Animate>
-                <Animate
-                  show={props.multilegAberto}
-                  duration={100}
-                  transitionOnMount
-                  stayMounted={false}
-                  start={startStyle}
-                  onClick={() =>
-                    props.aumentarZindexAction(
-                      "multileg",
-                      props.zIndex,
-                      props.multilegAberto
-                    )
-                  }
-                >
-                  <MultilegConectado headerTitle="MULTI ATIVOS" />
-                </Animate>
+                />
+
+                <RenderMenus
+                  menuAberto={multilegAberto}
+                  zIndex={zIndex}
+                  divkey={"multileg"}
+                  aumentarZindex={props.aumentarZindexAction}
+                  component={<Multileg headerTitle="MULTI ATIVOS" />}
+                />
+
                 {/* THL */}
                 <RenderMenus
-                  menuAberto={props.thlAberta}
-                  zIndex={props.zIndex}
+                  menuAberto={thlAberta}
+                  zIndex={zIndex}
                   divkey={"thl"}
                   aumentarZindex={props.aumentarZindexAction}
-                  headerTitle="THL"
+                  component={<TelaTHL headerTitle="THL" />}
                 />
               </div>
             </div>
@@ -127,10 +130,10 @@ const RenderMenus = ({
   zIndex,
   divkey,
   aumentarZindex,
-  headerTitle,
+  component,
 }) => {
   return (
-    // <Suspense fallback={null}>
+    <Suspense fallback={null}>
       <Animate
         show={menuAberto}
         duration={100}
@@ -139,11 +142,53 @@ const RenderMenus = ({
         start={startStyle}
         onClick={() => aumentarZindex(divkey, zIndex, menuAberto)}
       >
-        <TelaTHLConectada headerTitle={headerTitle} />
+        {component}
       </Animate>
-    // </Suspense>
+    </Suspense>
   );
 };
+
+const mapStateToPropsGlobalStore = (state) => ({
+  zIndex: state.MainAppReducer.zIndex,
+});
+
+const mapStateToPropsAppPrincipal = (state) => ({
+  ordensAberto: state.telaPrincipalReducer.ordensAberto,
+  ordensExecucaoAberto: state.telaPrincipalReducer.ordensExecucaoAberto,
+  relatorioDetalhadoAberto: state.telaPrincipalReducer.relatorioDetalhadoAberto,
+  listaCompletaAberta: state.telaPrincipalReducer.listaCompletaAberta,
+  menuLateralAberto: state.telaPrincipalReducer.menuLateralAberto,
+  multilegAberto: state.telaPrincipalReducer.multilegAberto,
+  thlAberta: state.telaPrincipalReducer.thlAberta,
+  token: state.telaPrincipalReducer.token,
+  // Posição
+  posicoesCustodia: state.posicaoReducer.posicoesCustodia,
+  arrayPrecos: state.posicaoReducer.arrayPrecos,
+  arrayCotacoes: state.posicaoReducer.arrayCotacoes,
+});
+
+export default compose(
+  connect(
+    mapStateToPropsGlobalStore,
+    {
+      aumentarZindexAction,
+    },
+    null,
+    { context: GlobalContext }
+  ),
+  connect(
+    mapStateToPropsAppPrincipal,
+    {
+      abrirItemBarraLateralAction,
+      listarOrdensExecAction,
+      listarPosicoesAction,
+    },
+    null,
+    {
+      context: StorePrincipalContext,
+    }
+  )
+)(TelaPrincipal);
 
 /*
 

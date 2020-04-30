@@ -42,6 +42,13 @@ const mapStateToProps = (state) => ({
   usuarioConectado: state.telaPrincipalReducer.usuarioConectado,
   logado: state.telaPrincipalReducer.logado,
   menuLateralAberto: state.telaPrincipalReducer.menuLateralAberto,
+  // Ordens Exec reativa
+  eventSourceOrdensExec_OrdensExec:
+    state.ordensExecReducer.eventSourceOrdensExec,
+  // Posicao Reativa
+  eventSourcePosicao_Posicao: state.posicaoReducer.eventSourcePosicao,
+  eventSourceEmblema_Posicao: state.posicaoReducer.eventSourceEmblema,
+  eventSourceCotacoes_Posicao: state.posicaoReducer.eventSourceCotacoes,
 });
 
 export default connect(

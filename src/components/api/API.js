@@ -410,6 +410,7 @@ export const atualizarCotacaoAPI = (
   var source = new EventSource(
     `${url_base_reativa}${url_cotacaoReativa_codigos}${codigos}`
   );
+  var array = [];
 
   source.onopen = function (event) {
     // console.log("open");
@@ -417,8 +418,20 @@ export const atualizarCotacaoAPI = (
 
   source.onmessage = function (event) {
     if (typeof event.data !== "undefined") {
-      console.log("chegou");
       var dados = JSON.parse(event.data);
+      //
+      // const indice = array.findIndex((it) => it.symbol === dados.symbol);
+      // if (indice !== -1)
+      //   array = array.map((item, ind) => {
+      //     if (indice === ind) {
+      //       return dados;
+      //     }
+      //     return item;
+      //   });
+      // else array.push(dados);
+      // console.log(dados.symbol);
+
+      //
       const cotacaoAtual = dados.ultimo;
       const ativoRetornado = dados.symbol;
 
@@ -829,9 +842,9 @@ export const atualizarPrecosTHLAPI = (
 
   source.onmessage = function (event) {
     if (typeof event.data !== "undefined") {
-      // var dados = JSON.parse(event.data);
-      // const { orders } = dados;
+      var dados = JSON.parse(event.data);
 
+      // const { orders } = dados;
       // if (orders && orders.length > 0) {
       //   const novaTabela = [...precosTabelaVencimentos];
       //   orders.forEach((novaEstrutura) => {

@@ -1,18 +1,19 @@
 import React from "react";
-
+import { connect } from "react-redux";
 import { Row, Col } from "react-bootstrap";
 import TabelaCompleta from "components/forms/posicao_custodia/posicao_detalhada/TabelaCompleta";
 import TabelaSimples from "components/forms/posicao_custodia/posicao_detalhada/TabelaSimples";
 import GraficoPatrimonio from "components/forms/posicao_custodia/posicao_detalhada/GraficoPatrimonio";
 import IconeRostoCoberto from "img/rostoCoberto2.svg";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
+import { StorePrincipalContext } from "components/redux/StoreCreation";
 
-export default class PosicaoDetalhada extends React.Component {
+class PosicaoDetalhada extends React.Component {
   render() {
     return this.modalBody(this.props);
   }
 
-  modalBody = props => {
+  modalBody = (props) => {
     return (
       <div className="bodyPosicao mt-2">
         <Row>
@@ -89,6 +90,12 @@ export default class PosicaoDetalhada extends React.Component {
   };
 }
 
+const mapStateToProps = (state) => ({});
+
+export default connect(mapStateToProps, {}, null, {
+  context: StorePrincipalContext,
+})(PosicaoDetalhada);
+
 const dados = {
   dinheiro: 227708,
   posicaoLiquida: 227708,
@@ -105,7 +112,7 @@ const dados = {
       stopGain: 3.6,
       resultado: {
         total: 1800,
-        variacaoGanho: 30.46
+        variacaoGanho: 30.46,
       },
       operacoes: [
         {
@@ -113,21 +120,21 @@ const dados = {
           qtde: 10000,
           precoExec: {
             qtde: "+1",
-            unit: 26
+            unit: 26,
           },
           atual: 280000,
           osc: 7.69,
           saldoOp: 20000,
           compra: {
             qtde: 3700,
-            preco: 28.26
+            preco: 28.26,
           },
           venda: {
             qtde: 2700,
-            preco: 28.27
-          }
-        }
-      ]
+            preco: 28.27,
+          },
+        },
+      ],
     },
     {
       estrategia: "BORBOLETA",
@@ -141,7 +148,7 @@ const dados = {
       stopGain: 0.4,
       resultado: {
         total: 180,
-        variacaoGanho: 38.46
+        variacaoGanho: 38.46,
       },
       operacoes: [
         {
@@ -154,19 +161,19 @@ const dados = {
           ext: 2.7,
           precoExec: {
             qtde: "+1",
-            unit: 2.61
+            unit: 2.61,
           },
           atual: 2560,
           osc: 1.91,
           saldoOp: 50,
           compra: {
             qtde: 3700,
-            preco: 2.56
+            preco: 2.56,
           },
           venda: {
             qtde: 700,
-            preco: 2.57
-          }
+            preco: 2.57,
+          },
         },
         {
           codigo: "G27",
@@ -178,19 +185,19 @@ const dados = {
           ext: 2.21,
           precoExec: {
             qtde: "-2",
-            unit: 1.74
+            unit: 1.74,
           },
           atual: 3360,
           osc: 3.45,
           saldoOp: 120,
           compra: {
             qtde: 3700,
-            preco: 1.68
+            preco: 1.68,
           },
           venda: {
             qtde: 1700,
-            preco: 1.69
-          }
+            preco: 1.69,
+          },
         },
         {
           codigo: "G280",
@@ -202,21 +209,21 @@ const dados = {
           ext: 0.6,
           precoExec: {
             qtde: "+1",
-            unit: 1
+            unit: 1,
           },
           atual: 980,
           osc: -2,
           saldoOp: 20,
           compra: {
             qtde: 3700,
-            preco: 0.98
+            preco: 0.98,
           },
           venda: {
             qtde: 2700,
-            preco: 0.99
-          }
-        }
-      ]
+            preco: 0.99,
+          },
+        },
+      ],
     },
     {
       estrategia: "BORBOLETA",
@@ -230,7 +237,7 @@ const dados = {
       stopGain: 0.4,
       resultado: {
         total: 180,
-        variacaoGanho: 38.46
+        variacaoGanho: 38.46,
       },
       operacoes: [
         {
@@ -243,19 +250,19 @@ const dados = {
           ext: 2.7,
           precoExec: {
             qtde: "+1",
-            unit: 2.61
+            unit: 2.61,
           },
           atual: 2560,
           osc: 1.91,
           saldoOp: 50,
           compra: {
             qtde: 3700,
-            preco: 2.56
+            preco: 2.56,
           },
           venda: {
             qtde: 700,
-            preco: 2.57
-          }
+            preco: 2.57,
+          },
         },
         {
           codigo: "G27",
@@ -267,19 +274,19 @@ const dados = {
           ext: 2.21,
           precoExec: {
             qtde: "-2",
-            unit: 1.74
+            unit: 1.74,
           },
           atual: 3360,
           osc: 3.45,
           saldoOp: 120,
           compra: {
             qtde: 3700,
-            preco: 1.68
+            preco: 1.68,
           },
           venda: {
             qtde: 1700,
-            preco: 1.69
-          }
+            preco: 1.69,
+          },
         },
         {
           codigo: "G280",
@@ -291,21 +298,21 @@ const dados = {
           ext: 0.6,
           precoExec: {
             qtde: "+1",
-            unit: 1
+            unit: 1,
           },
           atual: 980,
           osc: -2,
           saldoOp: 20,
           compra: {
             qtde: 3700,
-            preco: 0.98
+            preco: 0.98,
           },
           venda: {
             qtde: 2700,
-            preco: 0.99
-          }
-        }
-      ]
-    }
-  ]
+            preco: 0.99,
+          },
+        },
+      ],
+    },
+  ],
 };
