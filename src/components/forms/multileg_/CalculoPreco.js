@@ -1,62 +1,80 @@
 import {
   buscaBook,
-  buscaCotacao
+  buscaCotacao,
 } from "components/redux/actions/menu_actions/MultilegActions";
 
-export const calculoPreco = (
-  aba,
-  tipo,
-  booksMultileg = [],
-  cotacoesMultileg = []
-) => {
+export const calculoPreco = (aba, tipo, cotacoesMultileg) => {
   let preco = 0;
   let arrayQtde = [];
 
   aba.tabelaMultileg.forEach((oferta, index) => {
-    let book = buscaBook(booksMultileg, oferta.codigoSelecionado);
-    book = book ? book : [];
-    if (book.compra || book.venda || tipo === "ultimo")
-      arrayQtde.push(oferta.qtde);
+    let book = buscaBook(cotacoesMultileg, oferta.codigoSelecionado);
+    const cotacao = buscaCotacao(cotacoesMultileg, oferta.codigoSelecionado);
+    if (!book && cotacao) {
+      book = { compra: { price: cotacao }, venda: { price: cotacao } };
+    }
+    if (book || tipo === "ultimo") arrayQtde.push(oferta.qtde);
   });
   const mdc = calculoMDC(arrayQtde);
 
   if (mdc > 0)
     aba.tabelaMultileg.forEach((oferta, index) => {
       const codigo = oferta.codigoSelecionado;
-      let book = buscaBook(booksMultileg, codigo);
-      book = book ? book : [];
+      const cotacao = buscaCotacao(cotacoesMultileg, codigo);
+      let book = buscaBook(cotacoesMultileg, codigo);
 
-      if (book.compra || book.venda || tipo === "ultimo") {
+      if (
+        !book ||
+        (book.compra.price === 0 && book.venda.price === 0 && cotacao)
+      ) {
+        book = { compra: { price: cotacao }, venda: { price: cotacao } };
+      }
+
+      if (book)
         switch (tipo) {
           case "max":
-            if (oferta.cv === "compra" && book.venda)
+            if (oferta.cv === "compra")
               preco += book.venda.price * (oferta.qtde / mdc);
-            else if (oferta.cv === "venda" && book.compra)
+            else if (oferta.cv === "venda")
               preco -= book.compra.price * (oferta.qtde / mdc);
             break;
           case "min":
-            if (oferta.cv === "compra" && book.compra)
+            if (oferta.cv === "compra")
               preco += book.compra.price * (oferta.qtde / mdc);
-            else if (oferta.cv === "venda" && book.venda)
+            else if (oferta.cv === "venda")
               preco -= book.venda.price * (oferta.qtde / mdc);
             break;
           case "ultimo":
-            const cotacao = buscaCotacao(cotacoesMultileg, codigo);
-
-            if (oferta.cv === "compra" && cotacao)
-              preco += cotacao * (oferta.qtde / mdc);
-            else if (oferta.cv === "venda" && cotacao)
+            if (oferta.cv === "compra") preco += cotacao * (oferta.qtde / mdc);
+            else if (oferta.cv === "venda")
               preco -= cotacao * (oferta.qtde / mdc);
             break;
           default:
             break;
         }
-      }
     });
+
   return preco;
 };
 
-export const calculoMDC = nums => {
+export const calcularTotal = (props) => {
+  let total = 0;
+  let aba = props.multileg[props.indice];
+
+  aba.tabelaMultileg.forEach((oferta) => {
+    const cotacao = buscaCotacao(
+      props.cotacoesMultileg,
+      oferta.codigoSelecionado
+    );
+    if (cotacao) {
+      if (oferta.cv === "compra") total += oferta.qtde * cotacao;
+      else total -= oferta.qtde * cotacao;
+    }
+  });
+  return total;
+};
+
+export const calculoMDC = (nums) => {
   var factor = nums[0];
   for (var i = 1; i < nums.length; i++) {
     factor = gcd2(factor, nums[i]);

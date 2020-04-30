@@ -224,7 +224,7 @@ export const modificarAtributoTabelaAbaAction = (
       atualizarCotacaoAction(dispatch, props, cotacoesMultileg);
     }
     const aba = abasMultileg[indiceGeral];
-    let calculo = calculoPreco(aba, "ultimo", [], cotacoesMultileg).toFixed(2);
+    let calculo = calculoPreco(aba, "ultimo", cotacoesMultileg).toFixed(2);
 
     calculo = formatarNumero(calculo, 2, ".", ",");
     aba.preco = calculo;
@@ -336,7 +336,7 @@ export const adicionarOferta = async (
   abasMultileg[indiceAba].tabelaMultileg.push(novaOferta);
 
   const aba = abasMultileg[indiceAba];
-  let calculo = calculoPreco(aba, "ultimo", [], cotacoesMultileg).toFixed(2);
+  let calculo = calculoPreco(aba, "ultimo", cotacoesMultileg).toFixed(2);
   calculo = formatarNumero(calculo, 2, ".", ",");
   aba.preco = calculo;
 
@@ -555,11 +555,13 @@ export const buscaCotacao = (cotacoesMultileg, codigo) => {
   const cotacao = cotacoesMultileg.find((cotacao) => cotacao.codigo === codigo);
 
   if (cotacao) return cotacao.valor;
-  return "0,00";
+  return "";
 };
 
 export const buscaBook = (booksMultileg, codigoOferta) => {
-  return booksMultileg.find((book) => book.codigo === codigoOferta);
+  const book = booksMultileg.find((book) => book.codigo === codigoOferta);
+  if (book) return book;
+  return null;
 };
 
 //Formato novo

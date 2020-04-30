@@ -145,7 +145,6 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
       let calculo = calculoPreco(
         multileg[indiceAba],
         "ultimo",
-        [],
         cotacoesMultileg
       ).toFixed(2);
       calculo = formatarNumero(calculo, 2, ".", ",");

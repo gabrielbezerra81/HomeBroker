@@ -8,7 +8,10 @@ import {
   buscaBook,
   buscaCotacao,
 } from "components/redux/actions/menu_actions/MultilegActions";
-import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
+import {
+  calculoPreco,
+  calcularTotal,
+} from "components/forms/multileg_/CalculoPreco";
 import InputFormatado from "components/utils/InputFormatado";
 import { formatarNumero } from "components/redux/reducers/boletas_reducer/formInputReducer";
 import RowValidade from "components/forms/multileg_/RowValidade";
@@ -31,6 +34,7 @@ class Book extends React.Component {
 
   render() {
     const { props } = this;
+
     const indice = props.indice,
       total = calcularTotal(props),
       min = calculoPreco(props.multileg[indice], "min", props.cotacoesMultileg),
@@ -85,17 +89,21 @@ class Book extends React.Component {
                       props.cotacoesMultileg,
                       item.codigoSelecionado
                     );
+                    const cotacao = buscaCotacao(
+                      props.cotacoesMultileg,
+                      item.codigoSelecionado
+                    );
                     if (book)
                       return (
                         <tr key={indiceLinha}>
                           <td>{renderQtdeBook(book.compra)}</td>
                           <td>
-                            {book.compra && book.compra.price
+                            {(book.compra && book.compra.price) || cotacao
                               ? formatarNumDecimal(book.compra.price)
                               : null}
                           </td>
                           <td>
-                            {book.venda && book.venda.price
+                            {(book.venda && book.venda.price) || cotacao
                               ? formatarNumDecimal(book.venda.price)
                               : null}
                           </td>
@@ -335,21 +343,6 @@ export default connect(
   { context: StorePrincipalContext }
 )(Book);
 
-const calcularTotal = (props) => {
-  let total = 0;
-  let aba = props.multileg[props.indice];
-
-  aba.tabelaMultileg.forEach((oferta) => {
-    const cotacao = buscaCotacao(
-      props.cotacoesMultileg,
-      oferta.codigoSelecionado
-    );
-    if (oferta.cv === "compra") total += oferta.qtde * cotacao;
-    else total -= oferta.qtde * cotacao;
-  });
-  return total;
-};
-
 const renderPlaceholderPreco = (props) => {
   let renderPlaceholder = false;
   let tabelaMultileg = props.multileg[props.indice].tabelaMultileg;
@@ -390,12 +383,9 @@ const atualizarPrecoDinamicante = (props) => {
   const aba = props.multileg[props.indice];
   const preco = aba.preco;
 
-  let novoPreco = calculoPreco(
-    aba,
-    "ultimo",
-    [],
-    props.cotacoesMultileg
-  ).toFixed(2);
+  let novoPreco = calculoPreco(aba, "ultimo", props.cotacoesMultileg).toFixed(
+    2
+  );
   novoPreco = formatarNumero(novoPreco, 2, ".", ",");
 
   if (preco !== novoPreco)
