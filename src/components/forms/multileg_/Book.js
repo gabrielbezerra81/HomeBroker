@@ -11,6 +11,7 @@ import {
 import {
   calculoPreco,
   calcularTotal,
+  verificaCalculoSemBook,
 } from "components/forms/multileg_/CalculoPreco";
 import InputFormatado from "components/utils/InputFormatado";
 import { formatarNumero } from "components/redux/reducers/boletas_reducer/formInputReducer";
@@ -22,6 +23,7 @@ import {
 } from "components/redux/actions/api_actions/MultilegAPIAction";
 import NumberFormat from "react-number-format";
 import { StorePrincipalContext } from "components/redux/StoreCreation";
+import { aviso_calculo_preco_multileg } from "constants/AlertaErros";
 
 class Book extends React.Component {
   componentDidUpdate(prevProps) {
@@ -34,16 +36,21 @@ class Book extends React.Component {
 
   render() {
     const { props } = this;
+    const { indice, cotacoesMultileg } = props;
+    const aba = props.multileg[indice];
 
-    const indice = props.indice,
-      total = calcularTotal(props),
-      min = calculoPreco(props.multileg[indice], "min", props.cotacoesMultileg),
-      max = calculoPreco(props.multileg[indice], "max", props.cotacoesMultileg);
+    const total = calcularTotal(props),
+      min = calculoPreco(aba, "min", cotacoesMultileg),
+      max = calculoPreco(aba, "max", cotacoesMultileg);
     const condicaoMed =
       (min && max) ||
       (min === 0 && max) ||
       (min && max === 0) ||
       (min === 0 && max === 0);
+    const calculoSemBook = verificaCalculoSemBook(
+      aba.tabelaMultileg,
+      cotacoesMultileg
+    );
 
     const renderPlaceholder = renderPlaceholderPreco(props);
     return (
@@ -206,6 +213,13 @@ class Book extends React.Component {
             </span>
           </Col>
         </Row>
+        {calculoSemBook ? (
+          <Row className="mb-2">
+            <Col className="text-align-center textoAvisoCalculoSemBook">
+              {aviso_calculo_preco_multileg}
+            </Col>
+          </Row>
+        ) : null}
         <Row className="mr-2 mb-2">
           <Col md={4} className="ml-2">
             <h6>Preço</h6>

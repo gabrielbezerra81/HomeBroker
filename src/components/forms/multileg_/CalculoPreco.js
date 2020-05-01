@@ -85,3 +85,13 @@ export const calculoMDC = (nums) => {
 const gcd2 = (a, b) => {
   return !b ? a : gcd2(b, a % b);
 };
+
+export const verificaCalculoSemBook = (tabelaMultileg, cotacoesMultileg) => {
+  return tabelaMultileg.some((oferta, index) => {
+    const book = buscaBook(cotacoesMultileg, oferta.codigoSelecionado);
+    const cotacao = buscaCotacao(cotacoesMultileg, oferta.codigoSelecionado);
+    return (
+      !book || (book.compra.price === 0 && book.venda.price === 0 && cotacao)
+    );
+  });
+};

@@ -436,3 +436,8 @@ a.botaoAddAba.active {
   display: flex;
   flex-direction: column;
 }
+
+.textoAvisoCalculoSemBook {
+  font-size: 9px;
+  color: var(--cor-texto);
+}

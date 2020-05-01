@@ -4,7 +4,7 @@ export const ALERTA_COMPRA =
 export const ALERTA_VENDA =
   "É recomendado que o preço de Execução seja menor que o preço de disparo para melhorar a chance da oferta ser executada";
 
-//Alertas API
+// Alertas API
 export const erro_pesquisar_ativo = "Falha ao pesquisar ativo";
 export const sucesso_enviar_ordem = "Ordem enviada com sucesso";
 export const erro_enviar_ordem = "Falha ao enviar ordem";
@@ -23,7 +23,7 @@ export const erro_realizar_cadastro = "Falha ao fazer cadastro de usuário";
 export const erro_listarBook = "Falha ao listar book de ofertas";
 export const erro_listarTHL_thl = "Falha ao listar dados";
 
-//Alertas Validação
+// Alertas Validação
 
 export const erro_validar_ativo = "Ordem inválida, pesquise um ativo";
 export const erro_validar_qtde =
@@ -35,8 +35,12 @@ export const erro_validar_codigo_duplicado_multileg =
 export const erro_validar_contaSelecionada =
   "É preciso selecionar uma conta para enviar ordens";
 
-//Alertas
+// Alertas
 export const erro_exportar_ordens_multileg = "Falha ao adicionar abas";
 export const erro_opcoes_ordens_exec = "Selecione uma ordem";
 export const erro_timeout = "Não foi possível se conectar ao servidor remoto";
 export const erro_sessaoExpirada = "Sessão expirada, faça login novamente.";
+
+// Avisos
+export const aviso_calculo_preco_multileg =
+  "Book vazio! Cálculo feito com o preço do últ. negócio";
