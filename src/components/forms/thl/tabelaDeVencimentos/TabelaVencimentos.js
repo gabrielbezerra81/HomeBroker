@@ -21,6 +21,7 @@ export default React.memo(({ setScrollbarRef }) => {
     tipo,
     eventSourcePrecos,
     precosTabelaVencimentos,
+    setPrecosIntervalo,
   } = reduxState;
 
   useEffect(() => {
@@ -30,7 +31,8 @@ export default React.memo(({ setScrollbarRef }) => {
         strikeSelecionado,
         tipo,
         eventSourcePrecos,
-        precosTabelaVencimentos
+        precosTabelaVencimentos,
+        setPrecosIntervalo
       )
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -167,7 +169,7 @@ const renderConteudoTabelaVencimentos = (
     (strike, indiceStrike) => {
       const linhaStrike = (
         <tr key={`strikeLine${indiceStrike}`} className="linhasStrike">
-          <td className="divClicavel" tabIndex={0}>
+          <td>
             <InputStrikeSelecionado
               strikeLinha={strike}
               indiceStrike={indiceStrike}

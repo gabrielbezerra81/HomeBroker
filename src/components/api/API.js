@@ -70,6 +70,7 @@ import {
 retryDelay(request);
 
 const timeout = 6000;
+const intervaloAttReativa = 3000;
 
 export const pesquisarAtivoAPI = (codigo) => {
   return request
@@ -840,28 +841,24 @@ export const atualizarPrecosTHLAPI = (
     `${url_base_reativa}${url_atualizarPrecosTHL_ids}${ids}`
   );
 
+  const novosPrecos = [...precosTabelaVencimentos];
+
+  atualizaListaReativa(
+    dispatch,
+    novosPrecos,
+    MUDAR_VARIAVEL_THL,
+    "precosTabelaVencimentos",
+    "setPrecosIntervalo"
+  );
+
   source.onmessage = function (event) {
     if (typeof event.data !== "undefined") {
       var dados = JSON.parse(event.data);
-
-      // const { orders } = dados;
-      // if (orders && orders.length > 0) {
-      //   const novaTabela = [...precosTabelaVencimentos];
-      //   orders.forEach((novaEstrutura) => {
-      //     const indice = novaTabela.findIndex(
-      //       (estrutura) => estrutura.id === novaEstrutura.id
-      //     );
-      //     if (indice !== -1) novaTabela[indice] = novaEstrutura;
-      //     else novaTabela.unshift(novaEstrutura);
-      //   });
-      //   dispatch({
-      //     type: MUDAR_VARIAVEL_THL,
-      //     payload: {
-      //       nome: "opcoesStrike",
-      //       valor: novaTabela,
-      //     },
-      //   });
-      // }
+      const indice = novosPrecos.findIndex(
+        (estrutura) => estrutura.id === dados.id
+      );
+      if (indice !== -1) novosPrecos[indice] = dados;
+      else novosPrecos.push(dados);
     }
   };
 
@@ -884,4 +881,30 @@ const mostrarErroConsulta = (erro, mensagem) => {
   if (erro.timeout) {
     alert(erro_timeout);
   } else if (mensagem) alert(mensagem);
+};
+
+const atualizaListaReativa = (
+  dispatch,
+  lista,
+  actionType,
+  nomeLista,
+  nomeSetInterval
+) => {
+  const setPrecos = setInterval(() => {
+    dispatch({
+      type: actionType,
+      payload: {
+        nome: nomeLista,
+        valor: lista,
+      },
+    });
+  }, intervaloAttReativa);
+
+  dispatch({
+    type: actionType,
+    payload: {
+      nome: nomeSetInterval,
+      valor: setPrecos,
+    },
+  });
 };

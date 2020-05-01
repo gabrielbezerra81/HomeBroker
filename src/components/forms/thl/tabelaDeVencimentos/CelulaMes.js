@@ -10,25 +10,42 @@ import { StateStorePrincipal } from "components/redux/StoreCreation";
 export const CelulaMes = ({ itemColuna }) => {
   const reduxState = StateStorePrincipal().THLReducer;
   const { precosTabelaVencimentos } = reduxState;
+  let compra, compraQtde, venda, vendaQtde, min, max, qtdeMontar, qtdeDesmont;
 
   const strike = formatarNumDecimal(itemColuna.strike);
   const ativoStrike = `${itemColuna.symbol.slice(4)} (${strike})`;
   const custodia = verificaAtivoCustodia(itemColuna);
   const estrutura = precosTabelaVencimentos.find((item) =>
-    item.components.some((comp) => comp.id === itemColuna.id)
+    item.components.some((comp) => comp.stock.symbol === itemColuna.symbol)
   );
 
   let precosColuna;
   let precosPar;
 
   if (estrutura) {
-    if (estrutura.components[0].id === itemColuna.id) {
+    max = formatarNumDecimal(estrutura.max);
+    min = formatarNumDecimal(estrutura.min);
+
+    if (estrutura.components[0].stock.symbol === itemColuna.symbol) {
       precosColuna = estrutura.components[0];
       precosPar = estrutura.components[1];
     } else {
       precosColuna = estrutura.components[1];
       precosPar = estrutura.components[0];
     }
+  }
+
+  if (precosColuna && precosColuna) {
+    compra = formatarNumDecimal(precosColuna.compra);
+    compraQtde = formatarQuantidadeKMG(precosColuna.compraQtde);
+    venda = formatarNumDecimal(precosColuna.venda);
+    vendaQtde = formatarQuantidadeKMG(precosColuna.vendaQtde);
+    qtdeMontar = formatarQuantidadeKMG(
+      Math.min(precosColuna.compraQtde, precosPar.vendaQtde)
+    );
+    qtdeDesmont = formatarQuantidadeKMG(
+      Math.min(precosColuna.vendaQtde, precosPar.compraQtde)
+    );
   }
 
   return (
@@ -49,12 +66,10 @@ export const CelulaMes = ({ itemColuna }) => {
         {precosColuna ? (
           <div className="bookAtivoTHL roxoTextoTHL">
             <div className="divClicavel" tabIndex={0}>
-              {formatarNumDecimal(precosColuna.compra)} |{" "}
-              {formatarQuantidadeKMG(precosColuna.compraQtde)}
+              {compra} | {compraQtde}
             </div>
             <div className="divClicavel" tabIndex={0}>
-              {formatarNumDecimal(precosColuna.venda)} |{" "}
-              {formatarQuantidadeKMG(precosColuna.vendaQtde)}
+              {venda} | {vendaQtde}
             </div>
           </div>
         ) : null}
@@ -64,16 +79,10 @@ export const CelulaMes = ({ itemColuna }) => {
         {estrutura ? (
           <div>
             <div className="divClicavel" tabIndex={0}>
-              {formatarNumDecimal(estrutura.max)} |{" "}
-              {formatarQuantidadeKMG(
-                Math.min(precosColuna.compraQtde, precosPar.vendaQtde)
-              )}
+              {max} | {qtdeMontar}
             </div>
             <div className="divClicavel" tabIndex={0}>
-              {formatarNumDecimal(estrutura.min)} |{" "}
-              {formatarQuantidadeKMG(
-                Math.min(precosColuna.vendaQtde, precosPar.compraQtde)
-              )}
+              {min} | {qtdeDesmont}
             </div>
           </div>
         ) : null}

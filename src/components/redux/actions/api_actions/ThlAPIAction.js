@@ -32,7 +32,8 @@ export const listarTabelaInicialTHLAPIAction = (
   strikeSelecionado,
   tipo,
   sourcePrecos,
-  precosTabela
+  precosTabela,
+  setPrecosIntervalo
 ) => {
   return async (dispatch) => {
     if (ativo && strikeSelecionado && tipo) {
@@ -51,7 +52,8 @@ export const listarTabelaInicialTHLAPIAction = (
           tabelaVencimentos,
           sourcePrecos,
           dispatch,
-          precosTabela
+          precosTabela,
+          setPrecosIntervalo
         );
       dispatch({
         type: MUDAR_VARIAVEL_THL,
@@ -72,10 +74,14 @@ const atualizarPrecosTHL = async (
   tabelaVencimentos,
   sourcePrecos,
   dispatch,
-  precosTabela
+  precosTabela,
+  setPrecosIntervalo
 ) => {
   if (sourcePrecos) {
     sourcePrecos.close();
+  }
+  if (setPrecosIntervalo) {
+    clearInterval(setPrecosIntervalo);
   }
 
   let ids = "";

@@ -86,6 +86,7 @@ export const getDiaEMes = () => {
 };
 
 export const formatarNumDecimal = function (num) {
+  if (!num && num !== 0) return "0";
   return num.toLocaleString("pt-BR", {
     minimumFractionDigits: 2,
   });
@@ -106,6 +107,7 @@ export const formatarVencimento = (string) => {
 };
 
 export const formatarQuantidadeKMG = (qtde) => {
+  if (!qtde) return "0K";
   if (qtde < 1000) return qtde;
   else if (qtde > 1000000000)
     return formatarNumDecimal(qtde / 1000000000) + "G";

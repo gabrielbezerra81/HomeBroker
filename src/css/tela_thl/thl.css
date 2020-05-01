@@ -302,11 +302,11 @@ thead th:nth-child(3) {
 
 .itemAtivosQtde {
   border-radius: 5px;
-  padding: 2px 2px 2px 2px;
+  padding: 2px 0px 2px 0px;
   display: flex;
   align-items: center;
-  min-width: 124px;
-  justify-content: flex-start;
+  min-width: 135px;
+  justify-content: center;
 }
 
 .itemAtivosQtdeCustodia {
@@ -320,20 +320,22 @@ thead th:nth-child(3) {
 .itemAtivos {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-  padding: 1px 5px;
-  min-width: 89px;
+  padding: 1px 11px;
+  min-width: 90px;
   display: flex;
   align-items: center;
+  margin-left: -3px;
 }
 
 .itemQtde {
-  padding: 1px 5px;
+  padding: 1px 3px 1px 6px;
   color: #314452;
 }
 
 .bookAtivoTHL {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
+  margin-top: 1px;
 }
 
 .imgModeloTHL {
@@ -347,7 +349,7 @@ thead th:nth-child(3) {
   justify-content: center;
   margin-left: 10px;
   border-left: 1px dashed var(--cor-borda-discreta);
-  min-width: 55px;
+  min-width: 66px;
 }
 
 .containerMapaCalor {
@@ -396,7 +398,7 @@ thead th:nth-child(3) {
 
 .divNomeMes {
   width: 100%;
-  max-width: 128px;
+  max-width: 139px;
   min-height: 16px;
 }
 
