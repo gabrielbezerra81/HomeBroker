@@ -14,7 +14,7 @@ export const CelulaMes = ({ itemColuna }) => {
 
   const strike = formatarNumDecimal(itemColuna.strike);
   const ativoStrike = `${itemColuna.symbol.slice(4)} (${strike})`;
-  const custodia = verificaAtivoCustodia(itemColuna);
+  const { custodia, executando } = VerificaAtivoCustodia(itemColuna);
   const estrutura = precosTabelaVencimentos.find((item) =>
     item.components.some((comp) => comp.stock.symbol === itemColuna.symbol)
   );
@@ -47,6 +47,7 @@ export const CelulaMes = ({ itemColuna }) => {
       Math.min(precosColuna.vendaQtde, precosPar.compraQtde)
     );
   }
+  const corQtdeExecutando = executando ? " ativoExecutando" : "";
 
   return (
     <div className="containerColunaMes">
@@ -60,7 +61,9 @@ export const CelulaMes = ({ itemColuna }) => {
             {renderModelo(itemColuna.model)}
             {ativoStrike}
           </div>
-          {custodia ? <div className="itemQtde">{300}</div> : null}
+          {custodia ? (
+            <div className={`itemQtde${corQtdeExecutando}`}>{300}</div>
+          ) : null}
         </div>
 
         {precosColuna ? (
@@ -106,8 +109,27 @@ const renderModelo = (modelo) => {
   );
 };
 
-const verificaAtivoCustodia = (itemColuna) => {
+const VerificaAtivoCustodia = (itemColuna) => {
+  let executando = false;
   let custodia = false;
+  const ativoCelula = itemColuna.symbol;
+  const reduxState = StateStorePrincipal().posicaoReducer;
+  const { posicoesCustodia } = reduxState;
+  executando = posicoesCustodia.some((posicao) => {
+    const condicaoExec =
+      posicao.custodiaCompra.some(
+        (custCompra) => custCompra.ativo === ativoCelula
+      ) ||
+      posicao.custodiaVenda.some(
+        (custVenda) => custVenda.ativo === ativoCelula
+      );
+    const condicaoCust = posicao.ativos.some(
+      (ativo) => ativo.symbol === ativoCelula
+    );
+    if (condicaoCust) custodia = true;
 
-  return custodia;
+    return condicaoExec;
+  });
+
+  return { executando, custodia };
 };

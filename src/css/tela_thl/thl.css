@@ -419,3 +419,7 @@ thead th:nth-child(3) {
   width: 35px;
   height: 35px;
 }
+
+.ativoExecutando {
+  color: yellow;
+}
