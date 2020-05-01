@@ -890,7 +890,7 @@ const atualizaListaReativa = (
   nomeLista,
   nomeSetInterval
 ) => {
-  const setPrecos = setInterval(() => {
+  const atualizarLista = () => {
     dispatch({
       type: actionType,
       payload: {
@@ -898,7 +898,11 @@ const atualizaListaReativa = (
         valor: lista,
       },
     });
-  }, intervaloAttReativa);
+  };
+
+  setTimeout(atualizarLista, 1500);
+
+  const setPrecos = setInterval(atualizarLista, intervaloAttReativa);
 
   dispatch({
     type: actionType,
