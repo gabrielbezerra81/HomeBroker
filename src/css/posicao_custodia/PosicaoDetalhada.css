@@ -90,7 +90,7 @@
 }
 
 .graficoVermelho {
-  background-color: #a67269 !important;
+  background-color: var(--cor-vermelha-venda) !important;
 }
 
 .graficoAmarelo {

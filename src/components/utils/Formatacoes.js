@@ -108,7 +108,7 @@ export const formatarVencimento = (string) => {
 
 export const formatarQuantidadeKMG = (qtde) => {
   if (!qtde) return "0K";
-  if (qtde < 1000) return qtde;
+  if (qtde < 1000) return formatarNumDecimal(qtde);
   else if (qtde > 1000000000)
     return formatarNumDecimal(qtde / 1000000000) + "G";
   else if (qtde > 1000000) return formatarNumDecimal(qtde / 1000000) + "M";

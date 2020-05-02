@@ -81,7 +81,7 @@
   display: flex;
   justify-content: space-evenly;
   flex-direction: column;
-  border: 2px solid #008fca;
+  border: 2px solid var(--cor-azul-compra);
   border-radius: 1px;
 }
 
@@ -117,7 +117,7 @@ input.inputFlutuante:focus {
 
 div.inputFlutuante:focus-within label.inputFlutuante,
 label.flutuantePreenchido {
-  color: #008fca !important;
+  color: var(--cor-azul-compra) !important;
   font-size: 1.1rem !important;
   top: 3px;
   left: 0;

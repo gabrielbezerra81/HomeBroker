@@ -164,8 +164,8 @@ a.botaoAddAba.active {
 .divFlexRowDetalhesAba button {
   flex: 1;
   max-width: 65px;
-  background-color: #008fca;
-  border-color: #008fca;
+  background-color: var(--cor-azul-compra);
+  border-color: var(--cor-azul-compra);
 }
 
 .tableMultileg {

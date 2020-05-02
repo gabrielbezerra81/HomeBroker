@@ -272,7 +272,7 @@ thead th:nth-child(3) {
 }
 
 .precoLinhaDesmontar {
-  color: #a67269;
+  color: var(--cor-vermelha-venda);
 }
 
 /* subcoluna total */
@@ -423,3 +423,21 @@ thead th:nth-child(3) {
 .ativoExecutando {
   color: yellow;
 }
+
+/* mapaCalor */
+.faixa1Mapa {
+  background-color: #fff100;
+}
+.faixa2Mapa {
+  background-color: #fcb80f;
+}
+.faixa3Mapa {
+  background-color: #f7921c;
+}
+.faixa4Mapa {
+  background-color: #f36e21;
+}
+.faixa5Mapa {
+  background-color: #ed1b24;
+}
+/* mapaCalor */

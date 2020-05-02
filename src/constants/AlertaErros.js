@@ -36,7 +36,7 @@ export const erro_validar_contaSelecionada =
   "É preciso selecionar uma conta para enviar ordens";
 
 // Alertas
-export const erro_exportar_ordens_multileg = "Falha ao adicionar abas";
+export const erro_exportar_ordens_multileg = "Falha ao abrir ordem na Multileg";
 export const erro_opcoes_ordens_exec = "Selecione uma ordem";
 export const erro_timeout = "Não foi possível se conectar ao servidor remoto";
 export const erro_sessaoExpirada = "Sessão expirada, faça login novamente.";

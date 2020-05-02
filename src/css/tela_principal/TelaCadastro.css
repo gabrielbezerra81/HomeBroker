@@ -25,7 +25,7 @@
   justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
-  border: 2px solid #008fca;
+  border: 2px solid var(--cor-azul-compra);
   border-radius: 1px;
   color: #fff;
 }

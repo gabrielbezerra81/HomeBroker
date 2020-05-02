@@ -15,13 +15,10 @@ import {
 } from "components/api/API";
 import { LISTAR_ORDENS_EXECUCAO } from "constants/ApiActionTypes";
 import {
-  atualizarCotacaoAction,
-  adicionarOferta,
-  // atualizarBookAction
-} from "components/redux/actions/menu_actions/MultilegActions";
-import {
   adicionarAba,
   modificarAba,
+  atualizarCotacaoAction,
+  adicionarOferta,
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { pesquisaAtivo } from "components/redux/actions/api_actions/MultilegAPIAction";
 import { erro_exportar_ordens_multileg } from "constants/AlertaErros";

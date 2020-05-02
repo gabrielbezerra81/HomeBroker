@@ -155,12 +155,12 @@ th .colunaDividida div {
 }
 
 .itemCustodiaCompra {
-  color: #008fca;
+  color: var(--cor-azul-compra);
   font-size: 0.8rem;
 }
 
 .itemCustodiaVenda {
-  color: #a67269;
+  color: var(--cor-vermelha-venda);
   font-size: 0.8rem;
 }
 
@@ -182,7 +182,7 @@ th .colunaDividida div {
 
 .meioSliderTopo {
   height: 5px;
-  background-color: #008fca;
+  background-color: var(--cor-azul-compra);
   flex: 1;
 }
 

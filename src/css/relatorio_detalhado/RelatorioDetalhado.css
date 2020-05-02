@@ -23,11 +23,11 @@
 }
 
 .ativoCompra {
-  color: #008fca;
+  color: var(--cor-azul-compra);
 }
 
 .ativoVenda {
-  color: #a67269;
+  color: var(--cor-vermelha-venda);
 }
 
 .tabela1Custo {
@@ -132,7 +132,7 @@
 }
 
 table.tabela4HistoricoOrdens > tbody > tr.linhaVermelha td {
-  background-color: #a67269 !important;
+  background-color: var(--cor-vermelha-venda) !important;
 }
 
 table.tabela4HistoricoOrdens > tbody > tr.linhaAmarela td {
