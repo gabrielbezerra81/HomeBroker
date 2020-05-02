@@ -2,7 +2,10 @@ import React from "react";
 import { Row, Col, Table } from "react-bootstrap";
 import { connect } from "react-redux";
 import { MDBIcon } from "mdbreact";
-import { formatarNumDecimal } from "components/utils/Formatacoes";
+import {
+  formatarNumDecimal,
+  formatarQuantidadeKMG,
+} from "components/utils/Formatacoes";
 import EmblemaSimples from "components/utils/EmblemaSimples";
 import _ from "lodash";
 import { StorePrincipalContext } from "components/redux/StoreCreation";
@@ -88,12 +91,18 @@ class PosicaoAmpliadaResumida extends React.Component {
                                     {ordem.offers.map((oferta, indice) =>
                                       oferta.oferta === "C" ? (
                                         <span key={indice}>
-                                          +{oferta.qtdeOferta / 1000}K
+                                          +
+                                          {formatarQuantidadeKMG(
+                                            oferta.qtdeOferta
+                                          )}
                                           <br />
                                         </span>
                                       ) : (
                                         <span key={indice}>
-                                          -{oferta.qtdeOferta / 1000}K
+                                          -
+                                          {formatarQuantidadeKMG(
+                                            oferta.qtdeOferta
+                                          )}
                                           <br />
                                         </span>
                                       )
