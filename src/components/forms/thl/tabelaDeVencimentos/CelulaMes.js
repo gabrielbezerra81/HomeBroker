@@ -5,7 +5,13 @@ import {
 } from "components/utils/Formatacoes";
 import imgModeloEU from "img/modeloEU.png";
 import { ReactComponent as ImgModeloUSA } from "img/modeloUSA2.svg";
-import { StateStorePrincipal } from "components/redux/StoreCreation";
+import {
+  StateStorePrincipal,
+  StateGlobalStore,
+  DispatchGlobalStore,
+  DispatchStorePrincipal,
+} from "components/redux/StoreCreation";
+import { abrirMultilegTHLAction } from "components/redux/actions/menu_actions/THLActions";
 
 export const CelulaMes = ({ itemColuna }) => {
   const reduxState = StateStorePrincipal().THLReducer;
@@ -14,7 +20,12 @@ export const CelulaMes = ({ itemColuna }) => {
 
   const strike = formatarNumDecimal(itemColuna.strike);
   const ativoStrike = `${itemColuna.symbol.slice(4)} (${strike})`;
-  const { custodia, executando } = VerificaAtivoCustodia(itemColuna);
+  const {
+    custodia,
+    executando,
+    qtdeExecutada,
+    qtdeOferta,
+  } = VerificaAtivoCustodia(itemColuna);
   const estrutura = precosTabelaVencimentos.find((item) =>
     item.components.some((comp) => comp.stock.symbol === itemColuna.symbol)
   );
@@ -62,18 +73,24 @@ export const CelulaMes = ({ itemColuna }) => {
             {ativoStrike}
           </div>
           {custodia ? (
-            <div className={`itemQtde${corQtdeExecutando}`}>{300}</div>
+            <div className={`itemQtde${corQtdeExecutando}`}>{qtdeOferta}</div>
           ) : null}
         </div>
 
         {precosColuna ? (
           <div className="bookAtivoTHL roxoTextoTHL">
-            <div className="divClicavel" tabIndex={0}>
-              {compra} | {compraQtde}
-            </div>
-            <div className="divClicavel" tabIndex={0}>
-              {venda} | {vendaQtde}
-            </div>
+            <RenderBook
+              preco={compra}
+              qtde={compraQtde}
+              tipo="venda"
+              ativo={itemColuna.symbol}
+            />
+            <RenderBook
+              preco={venda}
+              qtde={vendaQtde}
+              tipo="compra"
+              ativo={itemColuna.symbol}
+            />
           </div>
         ) : null}
       </div>
@@ -90,6 +107,46 @@ export const CelulaMes = ({ itemColuna }) => {
           </div>
         ) : null}
       </div>
+    </div>
+  );
+};
+
+const RenderBook = ({ preco, qtde, tipo, ativo }) => {
+  const { divkey, zIndex } = StateGlobalStore().MainAppReducer;
+  const { multilegAberto } = StateStorePrincipal().telaPrincipalReducer;
+  const {
+    multileg,
+    eventSource,
+    eventSourceCotacao,
+    cotacoesMultileg,
+  } = StateStorePrincipal().multilegReducer;
+
+  const dispatchGlobal = DispatchGlobalStore();
+  const dispatchStorePrincipal = DispatchStorePrincipal();
+
+  const props = {
+    multileg,
+    multilegAberto,
+    eventSource,
+    eventSourceCotacao,
+    cotacoesMultileg,
+    divkey,
+    zIndex,
+    dispatchGlobal,
+    ativo,
+    tipo,
+  };
+
+  return (
+    <div
+      className="divClicavel"
+      tabIndex={0}
+      onClick={(e) => {
+        e.stopPropagation();
+        dispatchStorePrincipal(abrirMultilegTHLAction(props));
+      }}
+    >
+      {preco} | {qtde}
     </div>
   );
 };
@@ -112,24 +169,33 @@ const renderModelo = (modelo) => {
 const VerificaAtivoCustodia = (itemColuna) => {
   let executando = false;
   let custodia = false;
+  let qtdeExecutada = 0;
+  let qtdeOferta = 0;
   const ativoCelula = itemColuna.symbol;
   const reduxState = StateStorePrincipal().posicaoReducer;
   const { posicoesCustodia } = reduxState;
   executando = posicoesCustodia.some((posicao) => {
-    const condicaoExec =
-      posicao.custodiaCompra.some(
-        (custCompra) => custCompra.ativo === ativoCelula
-      ) ||
-      posicao.custodiaVenda.some(
-        (custVenda) => custVenda.ativo === ativoCelula
-      );
+    const execCompra = posicao.custodiaCompra.find(
+      (custCompra) => custCompra.ativo === ativoCelula
+    );
+    const execVenda = posicao.custodiaVenda.find(
+      (custVenda) => custVenda.ativo === ativoCelula
+    );
     const condicaoCust = posicao.ativos.some(
       (ativo) => ativo.symbol === ativoCelula
     );
+    const condicaoExec = execCompra || execVenda;
     if (condicaoCust) custodia = true;
+    if (execCompra) {
+      qtdeExecutada = execCompra.qtdeExecutada;
+      qtdeOferta = execCompra.qtdeOferta;
+    } else if (execVenda) {
+      qtdeExecutada = execVenda.qtdeExecutada;
+      qtdeOferta = execVenda.qtdeOferta;
+    }
 
     return condicaoExec;
   });
 
-  return { executando, custodia };
+  return { executando, custodia, qtdeExecutada, qtdeOferta };
 };
