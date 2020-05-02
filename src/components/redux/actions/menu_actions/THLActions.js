@@ -40,7 +40,6 @@ export const abrirMultilegTHLAction = (props) => {
       dispatchGlobal,
       ativo,
     } = props;
-
     dispatchGlobal(atualizarDivKeyAction("multileg"));
 
     if (!multilegAberto) {
