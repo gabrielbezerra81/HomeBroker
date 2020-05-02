@@ -4,7 +4,7 @@ import ReactResizeDetector from "react-resize-detector";
 import DraggableModal from "components/utils/DraggableModal";
 import { Form, InputGroup, Spinner } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
-import { Radio, Spin } from "antd";
+import { Radio, Spin, Input } from "antd";
 import { ModalHeaderSemBook } from "components/utils/FormHeader";
 import MapaCalor from "components/forms/thl/MapaCalor";
 import TabelaVencimentos from "components/forms/thl/tabelaDeVencimentos/TabelaVencimentos";
@@ -92,7 +92,7 @@ export default connect(mapDateToPropsGlobal, { aumentarZindexAction }, null, {
 const InputPesquisa = () => {
   const reduxState = StateStorePrincipal().THLReducer;
   const dispatch = DispatchStorePrincipal();
-  const { ativoPesquisa, tipo } = reduxState;
+  const { ativoPesquisa, tipo, pesquisandoAtivo } = reduxState;
 
   return (
     <div className="containerPesquisaAtivo">
@@ -115,7 +115,11 @@ const InputPesquisa = () => {
             className="input-group-text iconeProcurar divClicavel"
             onClick={() => dispatch(pesquisarAtivoTHLAPIAction(ativoPesquisa))}
           >
-            <MDBIcon icon="search" />
+            {pesquisandoAtivo ? (
+              <Spinner animation="border" variant="light" size="sm" />
+            ) : (
+              <MDBIcon icon="search" />
+            )}
           </span>
         </InputGroup.Append>
       </InputGroup>

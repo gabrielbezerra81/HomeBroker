@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Button, InputGroup } from "react-bootstrap";
+import { Form, Button, InputGroup, Spinner } from "react-bootstrap";
 import { ReactComponent as ArrowDown } from "img/down-arrow.svg";
 // @ts-ignore
 import { ReactComponent as ArrowUp } from "img/up-arrow.svg";
@@ -23,7 +23,7 @@ import { StorePrincipalContext } from "components/redux/StoreCreation";
 class AbaMultileg extends React.Component {
   render() {
     const { props } = this;
-    const { indice } = props;
+    const { indice, pesquisandoAtivo } = props;
     const arrayStrike = renderSerie(props);
 
     const cotacao = buscaCotacao(
@@ -35,7 +35,7 @@ class AbaMultileg extends React.Component {
         <div>
           <div className="divDetalhesAbaMultileg">
             <div className="divColunaDetalhes">
-              <InputGroup>
+              <InputGroup className="inputGroupPesquisaMultileg">
                 <Form.Control
                   className="inputAtivo"
                   type="text"
@@ -61,13 +61,17 @@ class AbaMultileg extends React.Component {
                       props.pesquisarAtivoMultilegAction(props, indice);
                     }}
                   >
-                    <MDBIcon icon="search" />
+                    {pesquisandoAtivo ? (
+                      <Spinner animation="border" variant="light" size="sm" />
+                    ) : (
+                      <MDBIcon icon="search" />
+                    )}
                   </span>
                 </InputGroup.Append>
               </InputGroup>
 
               <h5 className="textoValor">
-                {cotacao ? formatarNumDecimal(cotacao) : ""}
+                {cotacao ? formatarNumDecimal(cotacao) : "0,00"}
               </h5>
               {renderSeta(props.multileg[indice].variacao)}
               {renderValorPorcentagem(props.multileg[indice].variacao)}
@@ -179,6 +183,7 @@ const mapStateToProps = (state) => ({
   eventSource: state.multilegReducer.eventSource,
   eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
   cotacoesMultileg: state.multilegReducer.cotacoesMultileg,
+  pesquisandoAtivo: state.multilegReducer.pesquisandoAtivo,
 });
 
 export default connect(

@@ -113,7 +113,7 @@
   width: calc(100% - 140px);
   z-index: 2;
   background-color: var(--light-background-color);
-  left: 115px;
+  left: 110px;
 }
 
 thead th:first-child {

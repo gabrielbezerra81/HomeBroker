@@ -14,6 +14,7 @@ import {
 
 const INITIAL_STATE = {
   configComplementarAberto: false,
+  pesquisandoAtivo: false,
   abaSelecionada: "tab0",
   horaInicial: "",
   horaFinal: "",

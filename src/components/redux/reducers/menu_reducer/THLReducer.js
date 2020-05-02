@@ -3250,9 +3250,11 @@ const precos = [
 const INITIAL_STATE = {
   ativoPesquisa: "PETR4",
   ativoPesquisado: "",
+  pesquisandoAtivo: false,
   tipo: "CALL",
   opcoesStrike: mapTabelaVencimentos([]),
   carregandoTabelaVencimentos: false,
+  booksSelecionados: [],
   faixasMapaCalor: null,
   seletorMapaCalor: "semcor",
   listaStrikes: [

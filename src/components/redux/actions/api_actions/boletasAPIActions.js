@@ -12,16 +12,16 @@ import {
   ATUALIZAR_EVENT_SOURCE_BOLETAS,
   MUDAR_QTDE,
 } from "constants/ActionTypes";
+import { mudarAtributoBoletaAction } from "components/redux/actions/formInputActions";
 
 export const pesquisarAtivoOnEnterAction = (props, namespace) => {
   return async (dispatch) => {
     if (props.eventSourceCotacao) {
       props.eventSourceCotacao.close();
     }
+    dispatch(mudarAtributoBoletaAction(true, namespace, "pesquisandoAtivo"));
 
-    document.body.style.cursor = "wait";
     const dadosPesquisa = await pesquisarAtivoAPI(props.ativo);
-    document.body.style.cursor = "auto";
 
     if (dadosPesquisa) {
       dispatch({
@@ -37,6 +37,7 @@ export const pesquisarAtivoOnEnterAction = (props, namespace) => {
         },
       });
 
+      dispatch(mudarAtributoBoletaAction(false, namespace, "pesquisandoAtivo"));
       atualizarCotacaoBoletaAction(dispatch, props, dadosPesquisa, namespace);
     }
   };

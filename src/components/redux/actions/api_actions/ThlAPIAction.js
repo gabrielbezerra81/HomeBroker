@@ -3,27 +3,26 @@ import {
   atualizarPrecosTHLAPI,
 } from "components/api/API";
 import { MUDAR_VARIAVEL_THL } from "constants/MenuActionTypes";
-import {
-  pesquisarListaStrikeTHLAPI,
-  travarDestravarClique,
-} from "components/api/API";
+import { pesquisarListaStrikeTHLAPI } from "components/api/API";
+import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
+
+const dispatchTHL = (dispatch, nome, valor) => {
+  dispatch({
+    type: MUDAR_VARIAVEL_THL,
+    payload: { nome: nome, valor: valor },
+  });
+};
 
 export const pesquisarAtivoTHLAPIAction = (codigo) => {
   return async (dispatch) => {
-    travarDestravarClique("travar", "thl");
+    dispatch(mudarVariavelTHLAction("pesquisandoAtivo", true));
     const listaStrikes = await pesquisarListaStrikeTHLAPI(codigo);
 
     if (listaStrikes.length > 0) {
-      dispatch({
-        type: MUDAR_VARIAVEL_THL,
-        payload: { nome: "listaStrikes", valor: listaStrikes },
-      });
-      dispatch({
-        type: MUDAR_VARIAVEL_THL,
-        payload: { nome: "ativoPesquisado", valor: codigo.toUpperCase() },
-      });
+      dispatch(mudarVariavelTHLAction("listaStrikes", listaStrikes));
+      dispatch(mudarVariavelTHLAction("ativoPesquisado", codigo.toUpperCase()));
     }
-    travarDestravarClique("destravar", "thl");
+    dispatch(mudarVariavelTHLAction("pesquisandoAtivo", false));
   };
 };
 
@@ -37,10 +36,7 @@ export const listarTabelaInicialTHLAPIAction = (
 ) => {
   return async (dispatch) => {
     if (ativo && strikeSelecionado && tipo) {
-      dispatch({
-        type: MUDAR_VARIAVEL_THL,
-        payload: { nome: "carregandoTabelaVencimentos", valor: true },
-      });
+      dispatch(mudarVariavelTHLAction("carregandoTabelaVencimentos", true));
 
       const tabelaVencimentos = await listarTabelaInicialTHLAPI(
         ativo,
@@ -55,17 +51,8 @@ export const listarTabelaInicialTHLAPIAction = (
           precosTabela,
           setPrecosIntervalo
         );
-      dispatch({
-        type: MUDAR_VARIAVEL_THL,
-        payload: {
-          nome: "opcoesStrike",
-          valor: tabelaVencimentos,
-        },
-      });
-      dispatch({
-        type: MUDAR_VARIAVEL_THL,
-        payload: { nome: "carregandoTabelaVencimentos", valor: false },
-      });
+      dispatch(mudarVariavelTHLAction("opcoesStrike", tabelaVencimentos));
+      dispatch(mudarVariavelTHLAction("carregandoTabelaVencimentos", false));
     }
   };
 };
@@ -95,9 +82,5 @@ const atualizarPrecosTHL = async (
   ids = ids.substring(0, ids.length - 1);
 
   const source = await atualizarPrecosTHLAPI(ids, dispatch, precosTabela);
-
-  dispatch({
-    type: MUDAR_VARIAVEL_THL,
-    payload: { nome: "eventSourcePrecos", valor: source },
-  });
+  dispatch(mudarVariavelTHLAction("eventSourcePrecos", source));
 };

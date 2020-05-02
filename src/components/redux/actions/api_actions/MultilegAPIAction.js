@@ -19,7 +19,10 @@ import { MODIFICAR_VARIAVEL_MULTILEG } from "constants/MenuActionTypes";
 
 export const pesquisarAtivoMultilegAction = (props, indice) => {
   return async (dispatch) => {
-    travarDestravarClique("travar", "multileg");
+    dispatch({
+      type: MODIFICAR_VARIAVEL_MULTILEG,
+      payload: { nome: "pesquisandoAtivo", valor: true },
+    });
     const dados = await pesquisaAtivo(
       props.multileg,
       indice,
@@ -31,7 +34,10 @@ export const pesquisarAtivoMultilegAction = (props, indice) => {
       payload: { nome: "cotacoesMultileg", valor: dados.cotacoesMultileg },
     });
     atualizarCotacaoAction(dispatch, props, dados.cotacoesMultileg);
-    travarDestravarClique("destravar", "multileg");
+    dispatch({
+      type: MODIFICAR_VARIAVEL_MULTILEG,
+      payload: { nome: "pesquisandoAtivo", valor: false },
+    });
   };
 };
 

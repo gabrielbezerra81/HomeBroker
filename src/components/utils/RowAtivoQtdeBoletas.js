@@ -1,9 +1,12 @@
 import React from "react";
-import { Row, Col, Form, InputGroup } from "react-bootstrap";
+import { Row, Col, Form, InputGroup, Spinner } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import InputFormatado from "components/utils/InputFormatado";
+import { useSelector } from "react-redux";
 
-export default (props, namespace) => {
+export default RowAtivoQtdeBoletas;
+
+function RowAtivoQtdeBoletas(props, namespace) {
   let tipoInputQtde = "quantidade";
 
   if (props.dadosPesquisa.stepQtde === 0.01) {
@@ -16,32 +19,7 @@ export default (props, namespace) => {
         <h6 className="labelInput-verticalAlign">Ativo</h6>
       </Col>
       <Col className="formAtivo colTextInput">
-        <InputGroup>
-          <Form.Control
-            className="textInput"
-            type="text"
-            placeholder=""
-            name="ativo"
-            value={props.ativo}
-            onChange={(event) => props.mudarAtivoAction(event, namespace)}
-            onKeyPress={(event) => {
-              //event.preventDefault();
-              if (event.key === "Enter") {
-                props.pesquisarAtivoOnEnterAction(props, namespace);
-              }
-            }}
-          />
-          <InputGroup.Append className="inputAtivoAppend">
-            <span
-              className="input-group-text iconeProcurar divClicavel iconePesquisarBoletas"
-              onClick={() =>
-                props.pesquisarAtivoOnEnterAction(props, namespace)
-              }
-            >
-              <MDBIcon icon="search" />
-            </span>
-          </InputGroup.Append>
-        </InputGroup>
+        <InputPesquisa props={props} namespace={namespace} />
       </Col>
 
       <Col className="colTextInput">
@@ -59,7 +37,7 @@ export default (props, namespace) => {
       </Col>
     </Row>
   );
-};
+}
 
 const validacaoQtde = (props) => {
   let erro = "";
@@ -68,4 +46,45 @@ const validacaoQtde = (props) => {
   if (props.dadosPesquisa && props.dadosPesquisa.stepQtde === 100) {
     return props.mostrarErroQtdeOnBlurAction(erro);
   } else return false;
+};
+
+const InputPesquisa = ({ props, namespace }) => {
+  const reduxState = useSelector((state) => state[namespace]);
+  const { pesquisandoAtivo } = reduxState;
+
+  return (
+    <InputGroup>
+      <Form.Control
+        className="textInput"
+        type="text"
+        placeholder=""
+        name="ativo"
+        value={props.ativo}
+        onChange={(event) => props.mudarAtivoAction(event, namespace)}
+        onKeyPress={(event) => {
+          //event.preventDefault();
+          if (event.key === "Enter") {
+            props.pesquisarAtivoOnEnterAction(props, namespace);
+          }
+        }}
+      />
+      <InputGroup.Append className="inputAtivoAppend">
+        <span
+          className="iconeProcurar divClicavel iconePesquisarBoletas"
+          onClick={() => props.pesquisarAtivoOnEnterAction(props, namespace)}
+        >
+          {pesquisandoAtivo ? (
+            <Spinner
+              className="spinnerBoleta"
+              animation="border"
+              variant="light"
+              size="sm"
+            />
+          ) : (
+            <MDBIcon icon="search" />
+          )}
+        </span>
+      </InputGroup.Append>
+    </InputGroup>
+  );
 };

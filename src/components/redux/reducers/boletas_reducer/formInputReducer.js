@@ -31,6 +31,7 @@ const INITIAL_STATE = {
     stepQtde: 100,
     market: "",
   },
+  pesquisandoAtivo: false,
   ativo: "PETR4",
   entradaDisparo: "",
   entradaExec: "",

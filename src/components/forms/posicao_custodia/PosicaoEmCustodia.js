@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Form, InputGroup } from "react-bootstrap";
+import { Row, Col, Form, InputGroup, Spinner } from "react-bootstrap";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { MDBIcon } from "mdbreact";
@@ -98,7 +98,11 @@ class PosicaoEmCustodia extends React.Component {
               />
               <InputGroup.Append className="inputAtivoAppend">
                 <span className="input-group-text iconeProcurar divClicavel">
-                  <MDBIcon icon="search" />
+                  {false ? (
+                    <Spinner animation="border" variant="light" size="sm" />
+                  ) : (
+                    <MDBIcon icon="search" />
+                  )}
                 </span>
               </InputGroup.Append>
             </InputGroup>
