@@ -7,15 +7,14 @@ import imgModeloEU from "img/modeloEU.png";
 import { ReactComponent as ImgModeloUSA } from "img/modeloUSA2.svg";
 import {
   StateStorePrincipal,
-  StateGlobalStore,
-  DispatchGlobalStore,
   DispatchStorePrincipal,
 } from "components/redux/StoreCreation";
-import { abrirMultilegTHLAction } from "components/redux/actions/menu_actions/THLActions";
+import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
 
-export const CelulaMes = ({ itemColuna }) => {
+export const CelulaMes = ({ itemColuna, id }) => {
   const reduxState = StateStorePrincipal().THLReducer;
-  const { precosTabelaVencimentos } = reduxState;
+  const dispatch = DispatchStorePrincipal();
+  const { precosTabelaVencimentos, booksSelecionados } = reduxState;
   let compra, compraQtde, venda, vendaQtde, min, max, qtdeMontar, qtdeDesmont;
 
   const strike = formatarNumDecimal(itemColuna.strike);
@@ -26,12 +25,15 @@ export const CelulaMes = ({ itemColuna }) => {
     qtdeExecutada,
     qtdeOferta,
   } = VerificaAtivoCustodia(itemColuna);
-  const estrutura = precosTabelaVencimentos.find((item) =>
-    item.components.some((comp) => comp.stock.symbol === itemColuna.symbol)
+  const estrutura = precosTabelaVencimentos.find(
+    (item) =>
+      item.id === id &&
+      item.components.some((comp) => comp.stock.symbol === itemColuna.symbol)
   );
 
-  let precosColuna;
-  let precosPar;
+  let precosColuna, precosPar;
+  let booksMontar = [],
+    booksDesmontar = [];
 
   if (estrutura) {
     max = formatarNumDecimal(estrutura.max);
@@ -46,7 +48,7 @@ export const CelulaMes = ({ itemColuna }) => {
     }
   }
 
-  if (precosColuna && precosColuna) {
+  if (precosColuna && precosPar) {
     compra = formatarNumDecimal(precosColuna.compra);
     compraQtde = formatarQuantidadeKMG(precosColuna.compraQtde);
     venda = formatarNumDecimal(precosColuna.venda);
@@ -57,7 +59,17 @@ export const CelulaMes = ({ itemColuna }) => {
     qtdeDesmont = formatarQuantidadeKMG(
       Math.min(precosColuna.vendaQtde, precosPar.compraQtde)
     );
+
+    booksMontar = [
+      { ativo: precosColuna.stock.symbol, tipo: "venda" },
+      { ativo: precosPar.stock.symbol, tipo: "compra" },
+    ];
+    booksDesmontar = [
+      { ativo: precosColuna.stock.symbol, tipo: "compra" },
+      { ativo: precosPar.stock.symbol, tipo: "venda" },
+    ];
   }
+
   const corQtdeExecutando = executando ? " ativoExecutando" : "";
 
   return (
@@ -98,10 +110,23 @@ export const CelulaMes = ({ itemColuna }) => {
       <div className="containerPrecoMontDesmont">
         {estrutura ? (
           <div>
-            <div className="divClicavel" tabIndex={0}>
+            <div
+              className="divClicavel"
+              tabIndex={0}
+              onClick={() => {
+                SelecionarBooks(booksSelecionados, booksMontar, dispatch);
+                console.log("book clicado: ", booksMontar);
+              }}
+            >
               {max} | {qtdeMontar}
             </div>
-            <div className="divClicavel" tabIndex={0}>
+            <div
+              className="divClicavel"
+              tabIndex={0}
+              onClick={() =>
+                SelecionarBooks(booksSelecionados, booksDesmontar, dispatch)
+              }
+            >
               {min} | {qtdeDesmont}
             </div>
           </div>
@@ -112,39 +137,25 @@ export const CelulaMes = ({ itemColuna }) => {
 };
 
 const RenderBook = ({ preco, qtde, tipo, ativo }) => {
-  const { divkey, zIndex } = StateGlobalStore().MainAppReducer;
-  const { multilegAberto } = StateStorePrincipal().telaPrincipalReducer;
-  const {
-    multileg,
-    eventSource,
-    eventSourceCotacao,
-    cotacoesMultileg,
-  } = StateStorePrincipal().multilegReducer;
+  const reduxState = StateStorePrincipal().THLReducer;
+  const dispatch = DispatchStorePrincipal();
+  const { booksSelecionados } = reduxState;
+  const indice = booksSelecionados.findIndex(
+    (book) => book.ativo === ativo && book.tipo === tipo
+  );
 
-  const dispatchGlobal = DispatchGlobalStore();
-  const dispatchStorePrincipal = DispatchStorePrincipal();
+  const tipoBook = tipo === "compra" ? "venda" : "compra";
 
-  const props = {
-    multileg,
-    multilegAberto,
-    eventSource,
-    eventSourceCotacao,
-    cotacoesMultileg,
-    divkey,
-    zIndex,
-    dispatchGlobal,
-    ativo,
-    tipo,
-  };
+  const bookSelecionado =
+    indice !== -1 ? ` bookSelecionado_${tipoBook}` : " bookNaoSelecionado";
 
   return (
     <div
-      className="divClicavel"
+      className={`divClicavel${bookSelecionado}`}
       tabIndex={0}
-      onClick={(e) => {
-        e.stopPropagation();
-        dispatchStorePrincipal(abrirMultilegTHLAction(props));
-      }}
+      onClick={() =>
+        SelecionarBooks(booksSelecionados, [{ ativo, tipo }], dispatch)
+      }
     >
       {preco} | {qtde}
     </div>
@@ -198,4 +209,21 @@ const VerificaAtivoCustodia = (itemColuna) => {
   });
 
   return { executando, custodia, qtdeExecutada, qtdeOferta };
+};
+
+const SelecionarBooks = (booksSelecionados, novosBooks, dispatch) => {
+  const books = [...booksSelecionados];
+
+  novosBooks.forEach((novoBook) => {
+    const indice = books.findIndex(
+      (book) => book.ativo === novoBook.ativo && book.tipo === novoBook.tipo
+    );
+    if (indice === -1) {
+      books.push({ ativo: novoBook.ativo, tipo: novoBook.tipo });
+    } else {
+      books.splice(indice, 1);
+    }
+  });
+
+  dispatch(mudarVariavelTHLAction("booksSelecionados", books));
 };

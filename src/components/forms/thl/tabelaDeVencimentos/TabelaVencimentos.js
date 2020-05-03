@@ -233,13 +233,19 @@ const renderConteudoTabelaVencimentos = (
               ultimoMes,
               (indiceMes, ano) => {
                 const indMes = indiceMes + 1;
-                const itemColuna = linha.stocks.find(
+                const indiceStock = linha.stocks.findIndex(
                   (itemColuna) =>
                     itemColuna.vencimento.month() + 1 === indMes &&
                     itemColuna.vencimento.year() === ano
                 );
-                if (itemColuna) {
-                  return <CelulaMes itemColuna={itemColuna} />;
+
+                if (indiceStock !== -1) {
+                  return (
+                    <CelulaMes
+                      id={IDs[indiceStock]}
+                      itemColuna={linha.stocks[indiceStock]}
+                    />
+                  );
                 } //
                 else {
                   const possuiVencimento = verificarMesPossuiVencimento(

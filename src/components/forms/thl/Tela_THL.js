@@ -4,7 +4,7 @@ import ReactResizeDetector from "react-resize-detector";
 import DraggableModal from "components/utils/DraggableModal";
 import { Form, InputGroup, Spinner } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
-import { Radio, Spin, Input } from "antd";
+import { Radio, Spin, Button } from "antd";
 import { ModalHeaderSemBook } from "components/utils/FormHeader";
 import MapaCalor from "components/forms/thl/MapaCalor";
 import TabelaVencimentos from "components/forms/thl/tabelaDeVencimentos/TabelaVencimentos";
@@ -13,8 +13,13 @@ import {
   GlobalContext,
   StateStorePrincipal,
   DispatchStorePrincipal,
+  DispatchGlobalStore,
+  StateGlobalStore,
 } from "components/redux/StoreCreation";
-import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
+import {
+  mudarVariavelTHLAction,
+  abrirMultilegTHLAction,
+} from "components/redux/actions/menu_actions/THLActions";
 import { aumentarZindexAction } from "components/redux/actions/MainAppActions";
 import { pesquisarAtivoTHLAPIAction } from "components/redux/actions/api_actions/ThlAPIAction";
 
@@ -60,6 +65,7 @@ class Tela_THL extends React.Component {
         <MapaCalor />
         <div className="containerVencimentos">
           <InputPesquisa />
+          <EnviarOrdem />
           <Spin
             className="spinnerTabelaVencimentos"
             indicator={<Spinner animation="border" variant="light" />}
@@ -138,6 +144,50 @@ const InputPesquisa = () => {
         </Radio>
       </Radio.Group>
     </div>
+  );
+};
+
+const EnviarOrdem = () => {
+  const { divkey, zIndex } = StateGlobalStore().MainAppReducer;
+  const { multilegAberto } = StateStorePrincipal().telaPrincipalReducer;
+  const {
+    multileg,
+    eventSource,
+    eventSourceCotacao,
+    cotacoesMultileg,
+  } = StateStorePrincipal().multilegReducer;
+  const { booksSelecionados } = StateStorePrincipal().THLReducer;
+
+  const dispatchGlobal = DispatchGlobalStore();
+  const dispatchStorePrincipal = DispatchStorePrincipal();
+
+  const props = {
+    multileg,
+    multilegAberto,
+    eventSource,
+    eventSourceCotacao,
+    cotacoesMultileg,
+    divkey,
+    zIndex,
+    dispatchGlobal,
+    booksSelecionados,
+  };
+
+  return (
+    <Button
+      onClick={(e) => {
+        if (booksSelecionados.length > 0) {
+          e.stopPropagation();
+          dispatchStorePrincipal(abrirMultilegTHLAction(props));
+        } //
+        else {
+        }
+      }}
+      type="primary"
+      className="botaoEnviarTHL"
+    >
+      Enviar Ordem
+    </Button>
   );
 };
 

@@ -441,3 +441,42 @@ thead th:nth-child(3) {
   background-color: #ed1b24;
 }
 /* mapaCalor */
+.bookNaoSelecionado:focus {
+  outline: none !important;
+}
+
+.bookSelecionado_compra {
+  padding: 0 3px;
+  border: 1px solid var(--cor-azul-compra);
+  border-radius: 4px;
+  margin-right: 1px;
+}
+
+.bookSelecionado_compra:focus {
+  outline: none !important;
+}
+
+.bookSelecionado_venda {
+  padding: 0px 3px;
+  border: 1px solid var(--cor-vermelha-venda);
+  border-radius: 4px;
+  margin-left: 1px;
+}
+
+.bookSelecionado_venda:focus {
+  outline: none !important;
+}
+
+.botaoEnviarTHL {
+  background-color: #da6d2e !important;
+  border-color: #a0440f !important;
+  color: white !important;
+  display: inline-block;
+  position: absolute !important;
+  right: 30px;
+  top: 41px;
+}
+
+.botaoEnviarTHL:hover {
+  opacity: 0.6;
+}

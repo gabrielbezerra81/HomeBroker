@@ -114,24 +114,6 @@
   transition-timing-function: linear;
 }
 
-.divClicavell:hover {
-  cursor: pointer;
-  transition-duration: 0.15s;
-  opacity: 0.5;
-}
-
-.divClicavell:active {
-  transition-timing-function: linear;
-  outline: none !important;
-  opacity: 0.1;
-}
-
-.divClicavell:focus {
-  outline: solid medium rgba(0, 83, 186, 0.3) !important;
-  transition-duration: 0.3s;
-  transition-timing-function: linear;
-}
-
 .itemDivBarraLateral svg {
   max-width: 48px;
 }

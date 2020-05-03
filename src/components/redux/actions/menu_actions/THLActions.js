@@ -38,7 +38,7 @@ export const abrirMultilegTHLAction = (props) => {
       cotacoesMultileg,
       zIndex,
       dispatchGlobal,
-      ativo,
+      booksSelecionados,
     } = props;
     dispatchGlobal(atualizarDivKeyAction("multileg"));
 
@@ -57,46 +57,48 @@ export const abrirMultilegTHLAction = (props) => {
     const indiceAba = multileg.length - 1;
 
     try {
-      const dadosModificados = await modificarAba(
-        multileg,
-        indiceAba,
-        "ativo",
-        ativo
-      );
+      for (const [indiceOferta, book] of booksSelecionados.entries()) {
+        const dadosModificados = await modificarAba(
+          multileg,
+          indiceAba,
+          "ativo",
+          book.ativo
+        );
 
-      multileg = dadosModificados.abasMultileg;
+        multileg = dadosModificados.abasMultileg;
 
-      const retornoPesquisa = await pesquisaAtivo(
-        multileg,
-        indiceAba,
-        cotacoesMultileg
-      );
+        const retornoPesquisa = await pesquisaAtivo(
+          multileg,
+          indiceAba,
+          cotacoesMultileg
+        );
 
-      multileg = retornoPesquisa.multileg;
-      cotacoesMultileg = retornoPesquisa.cotacoesMultileg;
+        multileg = retornoPesquisa.multileg;
+        cotacoesMultileg = retornoPesquisa.cotacoesMultileg;
 
-      const opcao = multileg[indiceAba].opcoes.filter(
-        (opcao) => opcao.symbol === ativo
-      );
+        const opcao = multileg[indiceAba].opcoes.filter(
+          (opcao) => opcao.symbol === book.ativo
+        );
 
-      let tipo = "";
-      if (opcao.length > 0) tipo = opcao[0].type.toLowerCase();
-      else tipo = "acao";
+        let tipo = "";
+        if (opcao.length > 0) tipo = opcao[0].type.toLowerCase();
+        else tipo = "acao";
 
-      //Adicionar oferta
-      const dadosMultileg = await adicionarOferta(
-        multileg,
-        tipo,
-        indiceAba,
-        cotacoesMultileg
-      );
-      multileg = dadosMultileg.abasMultileg;
-      cotacoesMultileg = dadosMultileg.cotacoesMultileg;
+        //Adicionar oferta
+        const dadosMultileg = await adicionarOferta(
+          multileg,
+          tipo,
+          indiceAba,
+          cotacoesMultileg
+        );
+        multileg = dadosMultileg.abasMultileg;
+        cotacoesMultileg = dadosMultileg.cotacoesMultileg;
 
-      const ofertaNova = multileg[indiceAba].tabelaMultileg[0];
+        const ofertaNova = multileg[indiceAba].tabelaMultileg[indiceOferta];
 
-      ofertaNova.qtde = 100;
-      ofertaNova.cv = props.tipo;
+        ofertaNova.qtde = 100;
+        ofertaNova.cv = book.tipo;
+      }
 
       let calculo = calculoPreco(
         multileg[indiceAba],
