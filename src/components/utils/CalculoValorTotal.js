@@ -21,9 +21,9 @@ export const CalculoValorTotalAgendada = (disparo, execucao, qtde) => {
 
 export const CalculoValorTotalLimitada = (preco, qtde) => {
   if (preco !== "" && qtde !== "") {
-    while (preco.search(",") !== -1) {
-      preco = preco.replace(",", "");
-    }
+    // while (preco.search(",") !== -1) {
+    //   preco = preco.replace(",", "");
+    // }
     let total = qtde * Number(preco);
 
     return "VALOR TOTAL: R$ " + formatarNumDecimal(total);
