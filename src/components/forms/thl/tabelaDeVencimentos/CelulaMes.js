@@ -11,7 +11,7 @@ import {
 } from "components/redux/StoreCreation";
 import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
 
-export const CelulaMes = ({ itemColuna, id }) => {
+export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
   const reduxState = StateStorePrincipal().THLReducer;
   const dispatch = DispatchStorePrincipal();
   const { precosTabelaVencimentos, booksSelecionados } = reduxState;
@@ -108,7 +108,7 @@ export const CelulaMes = ({ itemColuna, id }) => {
       </div>
 
       <div className="containerPrecoMontDesmont">
-        {estrutura ? (
+        {!ultimaColuna && estrutura ? (
           <div>
             <div
               className="divClicavel"

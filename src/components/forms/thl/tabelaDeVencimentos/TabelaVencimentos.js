@@ -240,10 +240,12 @@ const renderConteudoTabelaVencimentos = (
                 );
 
                 if (indiceStock !== -1) {
+                  const id = IDs[indiceStock];
                   return (
                     <CelulaMes
-                      id={IDs[indiceStock]}
+                      id={id}
                       itemColuna={linha.stocks[indiceStock]}
+                      ultimaColuna={idColunaTotal === id}
                     />
                   );
                 } //
