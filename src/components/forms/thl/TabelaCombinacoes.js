@@ -14,7 +14,31 @@ export default React.memo(() => {
   const reduxState = useSelectorStorePrincipal((state) => {
     return state.THLReducer;
   });
-  const dataTabela = useMemo(() => FiltrarTabela(reduxState), [reduxState]);
+  const {
+    combinacoesTabela,
+    estrategia,
+    grupo,
+    acaoUlt,
+    spread,
+    codigos,
+    montagem,
+    desmontagem,
+    vencimento,
+    prazo,
+  } = reduxState;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const dataTabela = useMemo(() => FiltrarTabela(reduxState), [
+    combinacoesTabela,
+    estrategia,
+    grupo,
+    acaoUlt,
+    spread,
+    codigos,
+    montagem,
+    desmontagem,
+    vencimento,
+    prazo,
+  ]);
 
   //Bloqueia o scroll do container quando for rolar a tabela
   // useEffect(() => {

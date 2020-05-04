@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import { Radio } from "antd";
 import termometro from "img/termometro.svg";
@@ -6,20 +7,20 @@ import {
   DispatchStorePrincipal,
 } from "components/redux/StoreCreation";
 import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
+import { formatarNumDecimal } from "components/utils/Formatacoes";
 
 export default React.memo(() => {
   const reduxState = StateStorePrincipal().THLReducer;
   const dispatch = DispatchStorePrincipal();
-  const { seletorMapaCalor, faixasMapaCalor } = reduxState;
+  const { seletorMapaCalor, faixasMapaCalor, precoMin, precoMax } = reduxState;
 
   useEffect(() => {
     let faixasMapa = null;
-    if (seletorMapaCalor === "montar")
-      faixasMapa = calculaMapaCalor(valoresMapaMontar);
-    else if (seletorMapaCalor === "desmontar")
-      faixasMapa = calculaMapaCalor(valoresMapaDesmontar);
-    dispatch(mudarVariavelTHLAction("faixasMapaCalor", faixasMapa));
-  }, [seletorMapaCalor, dispatch]);
+    if (["montar", "desmontar"].includes(seletorMapaCalor) && precoMax) {
+      faixasMapa = calculaMapaCalor([precoMin, precoMax]);
+      dispatch(mudarVariavelTHLAction("faixasMapaCalor", faixasMapa));
+    }
+  }, [seletorMapaCalor, precoMin, precoMax]);
 
   return (
     <div className="containerMapaCalor">
@@ -75,8 +76,8 @@ const calculaMapaCalor = (arrayValores) => {
   const faixas = [0, 0, 0, 0, 0];
 
   let valores = arrayValores.sort();
-  faixas[0] = valores[0] + ""; // faixa 1 32
-  faixas[4] = valores[valores.length - 1] + ""; // faixa 5 40
+  faixas[0] = formatarNumDecimal(valores[0]) + ""; // faixa 1 32
+  faixas[4] = formatarNumDecimal(valores[valores.length - 1]) + ""; // faixa 5 40
   valores = valores.map((valor) => {
     if (valor < 1) return valor * 100;
     return valor;
@@ -84,26 +85,26 @@ const calculaMapaCalor = (arrayValores) => {
 
   let intervalo = valores[valores.length - 1] - 1 - (valores[0] + 1) + 1; // intervalo de 7
   intervalo = intervalo / 3; // 2.33 -> inteiro 2
-  faixas[1] = `${(valores[0] + 1) / 100}-${
+  faixas[1] = `${formatarNumDecimal(
+    (valores[0] + 1) / 100
+  )}-${formatarNumDecimal(
     (valores[0] + // faixa 2 de 33 a 34
       Math.floor(intervalo)) /
-    100
-  }`;
-  faixas[3] = `${
-    (valores[valores.length - 1] - Math.floor(intervalo)) / // faixa 4 38 a 39
-    100
-  }-${(valores[valores.length - 1] - 1) / 100}`;
+      100
+  )}`;
+  faixas[3] = `${formatarNumDecimal(
+    // faixa 4 38 a 39
+    (valores[valores.length - 1] - Math.floor(intervalo)) / 100
+  )}-${formatarNumDecimal((valores[valores.length - 1] - 1) / 100)}`;
 
   if ((intervalo * 3) % 3 === 0) intervalo += 1;
-  faixas[2] = `${(valores[0] + Math.ceil(intervalo)) / 100}-${
+  faixas[2] = `${formatarNumDecimal(
+    (valores[0] + Math.ceil(intervalo)) / 100
+  )}-${formatarNumDecimal(
     (valores[valores.length - 1] - // faixa 3 de 35 a 37
       Math.ceil(intervalo)) /
-    100
-  }`;
+      100
+  )}`;
 
   return faixas;
 };
-
-const valoresMapaMontar = [0.4, 0.32];
-
-const valoresMapaDesmontar = [0.36, 0.32];

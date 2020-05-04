@@ -3256,6 +3256,8 @@ const INITIAL_STATE = {
   carregandoTabelaVencimentos: false,
   booksSelecionados: [],
   faixasMapaCalor: null,
+  precoMin: "", // faixa 1 mapa
+  precoMax: "", // faixa 5 mapa
   seletorMapaCalor: "semcor",
   listaStrikes: [
     9.0,

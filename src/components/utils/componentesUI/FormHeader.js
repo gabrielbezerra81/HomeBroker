@@ -147,42 +147,44 @@ export const BookHeader = ({ headerClass, resetPosition }) => {
 };
 
 // Menus multileg, posição, thl, ordens exec, relatorio
-export const ModalHeaderSemBook = ({ headerTitle, headerClass, name }) => {
-  const dispatchStorePrincipal = useDispatchStorePrincipal();
-  const nomeVariavelReducer = getNomeVariavelReducer(headerTitle);
-  const abrirMenuProps = GetAbrirMenuProps();
+export const ModalHeaderSemBook = React.memo(
+  ({ headerTitle, headerClass, name }) => {
+    const dispatchStorePrincipal = useDispatchStorePrincipal();
+    const nomeVariavelReducer = getNomeVariavelReducer(headerTitle);
+    const abrirMenuProps = GetAbrirMenuProps();
 
-  return (
-    <div className={`${headerClass} handle mheader`}>
-      <h6 className="mtitle">{headerTitle === "THL" ? "" : headerTitle}</h6>
-      <div className="wrapperIconesHeader">
-        <BotaoAbrirFiltrarOrdens headerTitle={headerTitle} />
-        <Button variant="link" className="iconesHeader">
-          <MDBIcon icon="cog" size="2x" />
-        </Button>
+    return (
+      <div className={`${headerClass} handle mheader`}>
+        <h6 className="mtitle">{headerTitle === "THL" ? "" : headerTitle}</h6>
+        <div className="wrapperIconesHeader">
+          <BotaoAbrirFiltrarOrdens headerTitle={headerTitle} />
+          <Button variant="link" className="iconesHeader">
+            <MDBIcon icon="cog" size="2x" />
+          </Button>
 
-        <Button
-          variant="link"
-          className="iconesHeader"
-          onClick={() =>
-            dispatchStorePrincipal(
-              abrirItemBarraLateralAction(abrirMenuProps, nomeVariavelReducer)
-            )
-          }
-        >
-          <span className="fa-stack hoverIconeFechar">
-            <MDBIcon icon="circle" className="fa-stack-2x" />
-            <MDBIcon
-              icon="times"
-              className="fa-stack-1x iconeFechar"
-              name={name}
-            />
-          </span>
-        </Button>
+          <Button
+            variant="link"
+            className="iconesHeader"
+            onClick={() =>
+              dispatchStorePrincipal(
+                abrirItemBarraLateralAction(abrirMenuProps, nomeVariavelReducer)
+              )
+            }
+          >
+            <span className="fa-stack hoverIconeFechar">
+              <MDBIcon icon="circle" className="fa-stack-2x" />
+              <MDBIcon
+                icon="times"
+                className="fa-stack-1x iconeFechar"
+                name={name}
+              />
+            </span>
+          </Button>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+);
 
 // form configurar ordem start stop
 export const ModalHeaderLimpo = ({ titulo, name = "" }) => {

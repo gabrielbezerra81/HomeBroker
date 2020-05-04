@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useMemo, useEffect } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
-import { Table, FormControl } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import moment from "moment";
 import {
   StateStorePrincipal,
@@ -10,6 +11,7 @@ import { formatarNumDecimal } from "components/utils/Formatacoes";
 import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
 import { listarTabelaInicialTHLAPIAction } from "components/redux/actions/api_actions/ThlAPIAction";
 import { CelulaMes } from "components/forms/thl/tabelaDeVencimentos/CelulaMes";
+import InputStrikeSelecionado from "components/forms/thl/tabelaDeVencimentos/InputStrikeSelecionado";
 
 export default React.memo(({ setScrollbarRef }) => {
   const reduxState = StateStorePrincipal().THLReducer;
@@ -22,7 +24,21 @@ export default React.memo(({ setScrollbarRef }) => {
     eventSourcePrecos,
     precosTabelaVencimentos,
     setPrecosIntervalo,
+    seletorMapaCalor,
   } = reduxState;
+
+  const strikesInteiros = useMemo(() => getStrikesInteiros(opcoesStrike), [
+    opcoesStrike,
+  ]);
+  const { anos, ultimoMes } = useMemo(
+    () => getAnosUltimoMesTabela(opcoesStrike),
+    [opcoesStrike]
+  );
+
+  const { precoMin, precoMax } = useMemo(
+    () => calcularPrecosMinMaxMapa(precosTabelaVencimentos, seletorMapaCalor),
+    [precosTabelaVencimentos, seletorMapaCalor]
+  );
 
   useEffect(() => {
     dispatch(
@@ -35,16 +51,14 @@ export default React.memo(({ setScrollbarRef }) => {
         setPrecosIntervalo
       )
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ativoPesquisado, strikeSelecionado, tipo]);
 
-  const strikesInteiros = useMemo(() => getStrikesInteiros(opcoesStrike), [
-    opcoesStrike,
-  ]);
-  const { anos, ultimoMes } = useMemo(
-    () => getAnosUltimoMesTabela(opcoesStrike),
-    [opcoesStrike]
-  );
+  useEffect(() => {
+    if (seletorMapaCalor !== "semcor") {
+      dispatch(mudarVariavelTHLAction("precoMin", precoMin));
+      dispatch(mudarVariavelTHLAction("precoMax", precoMax));
+    }
+  }, [precoMin, precoMax, seletorMapaCalor]);
 
   return (
     <PerfectScrollbar
@@ -59,56 +73,54 @@ export default React.memo(({ setScrollbarRef }) => {
       id="scrollTabelaVencimento"
       className="wrapper containerTabela"
     >
-      <div className="">
-        <Table
-          variant="dark"
-          className="text-center tabelaVencimentos"
-          bordered
-          id="tabela"
-        >
-          <thead>
-            <tr>
-              <th colSpan="14">Vencimentos</th>
-            </tr>
-            <tr>
-              <th>Strike</th>
-              <th>Preço da linha</th>
-              {anos.map((ano) => (
-                <th key={`coluna${ano}`} colSpan="12" className="colunaAno">
-                  <div style={{ paddingLeft: "5px" }}>{ano}</div>
-                </th>
-              ))}
-            </tr>
-          </thead>
+      <Table
+        variant="dark"
+        className="text-center tabelaVencimentos"
+        bordered
+        id="tabela"
+      >
+        <thead>
+          <tr>
+            <th colSpan="14">Vencimentos</th>
+          </tr>
+          <tr>
+            <th>Strike</th>
+            <th>Preço da linha</th>
+            {anos.map((ano) => (
+              <th key={`coluna${ano}`} colSpan="12" className="colunaAno">
+                <div style={{ paddingLeft: "5px" }}>{ano}</div>
+              </th>
+            ))}
+          </tr>
+        </thead>
 
-          <tbody className="verticalAlignColunaTabela">
-            <tr>
-              <td></td>
-              <td>
-                <div className="colunaDividida colunaPrecoLinha">
-                  <div>Total</div>
-                  <div>Mensal</div>
-                </div>
-              </td>
-              {/* renderiza as colunas com os nomes do meses */}
-              {renderElementoDinamico(
-                anos,
-                ultimoMes,
-                (indice, ano) =>
-                  renderCelulaNomeMes(indice + 1, opcoesStrike, ano),
-                "colunaNomesMeses"
-              )}
-            </tr>
-            {opcoesStrike.length === 0 ? <OpcoesStrikeVazio /> : null}
-            {renderConteudoTabelaVencimentos(
-              reduxState,
-              strikesInteiros,
+        <tbody className="verticalAlignColunaTabela">
+          <tr>
+            <td></td>
+            <td>
+              <div className="colunaDividida colunaPrecoLinha">
+                <div>Total</div>
+                <div>Mensal</div>
+              </div>
+            </td>
+            {/* renderiza as colunas com os nomes do meses */}
+            {renderElementoDinamico(
               anos,
-              ultimoMes
+              ultimoMes,
+              (indice, ano) =>
+                renderCelulaNomeMes(indice + 1, opcoesStrike, ano),
+              "colunaNomesMeses"
             )}
-          </tbody>
-        </Table>
-      </div>
+          </tr>
+          {opcoesStrike.length === 0 ? <OpcoesStrikeVazio /> : null}
+          {renderConteudoTabelaVencimentos(
+            reduxState,
+            strikesInteiros,
+            anos,
+            ultimoMes
+          )}
+        </tbody>
+      </Table>
     </PerfectScrollbar>
   );
 });
@@ -202,12 +214,13 @@ const renderConteudoTabelaVencimentos = (
         const precosColunaTotal = precosTabelaVencimentos.find(
           (estrutura) => estrutura.id === idColunaTotal
         );
-        if (precosColunaTotal) {
-        }
+
         let precoTotalMontar = "0,68 | 3k";
         let precoTotalDesmontar = "0,66 | 3k";
         let precoMensalMontar = "0,34 | 2 meses";
         let precoMensalDesmontar = "";
+        if (precosColunaTotal) {
+        }
 
         return (
           <tr key={`linhaVenc${indiceLinha}`}>
@@ -273,18 +286,6 @@ const renderConteudoTabelaVencimentos = (
   return conteudoTabelaVencimentos;
 };
 
-const colunaVazia = (
-  <div className="containerColunaMes">
-    <div>
-      <div className="itemAtivosQtde"></div>
-    </div>
-    <div className="containerPrecoMontDesmont">
-      <div></div>
-      <div></div>
-    </div>
-  </div>
-);
-
 const renderCelulaNomeMes = (mes, opcoesStrike, ano, textoVazio = false) => {
   let nomeMes = "";
 
@@ -318,38 +319,6 @@ const verificarMesPossuiVencimento = (opcoesStrike, mes, ano = "") => {
   );
 };
 
-const InputStrikeSelecionado = ({ strikeLinha, indiceStrike }) => {
-  const reduxState = StateStorePrincipal().THLReducer;
-  const dispatch = DispatchStorePrincipal();
-  const { strikeSelecionado, listaStrikes } = reduxState;
-  // Strike inteiro do meio => 27, 28, 29
-  if (indiceStrike === 1) {
-    return (
-      <div style={{ padding: "5px 0", width: "45px", textAlignLast: "end" }}>
-        <FormControl
-          as="select"
-          value={strikeSelecionado}
-          className="textInput"
-          onChange={(e) =>
-            dispatch(
-              mudarVariavelTHLAction("strikeSelecionado", e.target.value)
-            )
-          }
-        >
-          <option value=""></option>
-          {listaStrikes.map((strike, indice) => (
-            <option key={`strikeInteiro:${strike}`} value={strike}>
-              {strike}
-            </option>
-          ))}
-        </FormControl>
-      </div>
-    );
-  }
-
-  return strikeLinha;
-};
-
 const OpcoesStrikeVazio = () => {
   return (
     <tr>
@@ -372,6 +341,33 @@ const OpcoesStrikeVazio = () => {
     </tr>
   );
 };
+
+const calcularPrecosMinMaxMapa = (listaPrecos, seletorMapaCalor) => {
+  let precoMin = 0,
+    precoMax = 0;
+  if (listaPrecos.length) {
+    const valorCalculo = seletorMapaCalor === "montar" ? "max" : "min";
+    precoMin = Math.min(
+      ...listaPrecos.map((estrutura) => estrutura[valorCalculo].toFixed(2))
+    );
+    precoMax = Math.max(
+      ...listaPrecos.map((estrutura) => estrutura[valorCalculo].toFixed(2))
+    );
+  }
+  return { precoMin, precoMax };
+};
+
+const colunaVazia = (
+  <div className="containerColunaMes">
+    <div>
+      <div className="itemAtivosQtde"></div>
+    </div>
+    <div className="containerPrecoMontDesmont">
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+);
 
 const meses = [
   "Janeiro",

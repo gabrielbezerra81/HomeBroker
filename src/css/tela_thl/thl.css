@@ -366,10 +366,14 @@ thead th:nth-child(3) {
 
 .containerMapaCalor img {
   margin-right: 10px;
+  position: relative;
+  left: -10px;
 }
 
 .labelMinMax {
   margin-right: 10px;
+  position: relative;
+  left: -10px;
 }
 
 .containerMapaCalor label {
@@ -387,7 +391,7 @@ thead th:nth-child(3) {
 
 .faixasTemperatura {
   justify-content: space-between;
-  left: 49px;
+  left: 39px;
   flex-direction: column;
   display: flex;
   position: absolute;
