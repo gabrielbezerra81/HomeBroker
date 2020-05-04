@@ -12,17 +12,17 @@ import {
   mudarCheckSalvarAssinaturaAction,
   mudarAtributoBoletaAction,
 } from "components/redux/actions/formInputActions";
-import RowFormValidade from "components/utils/RowFormValidade";
-import RowFormAssinatura from "components/utils/RowFormAssinatura";
+import RowFormValidade from "components/utils/componentesUI/RowFormValidade";
+import RowFormAssinatura from "components/utils/componentesUI/RowFormAssinatura";
 import { VENDA_MERCADO_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorAproximadoMercado } from "components/utils/CalculoValorTotal";
-import RowAtivoQtdeBoletas from "components/utils/RowAtivoQtdeBoletas";
+import RowAtivoQtdeBoletas from "components/utils/componentesUI/RowAtivoQtdeBoletas";
 import {
   pesquisarAtivoOnEnterAction,
   enviarOrdemAction,
 } from "components/redux/actions/api_actions/boletasAPIActions";
-import { RowGainStopFormInternoConectada } from "components/utils/RowInputsFormatadosFormInterno";
-import { BotaoEnviarOrdem } from "components/utils/BotaoEnviarOrdem";
+import { RowGainStopFormInternoConectada } from "components/utils/componentesUI/RowInputsFormatadosFormInterno";
+import { BotaoEnviarOrdem } from "components/utils/componentesUI/BotaoEnviarOrdem";
 
 class FormInternoVendaMercado extends React.Component {
   render() {

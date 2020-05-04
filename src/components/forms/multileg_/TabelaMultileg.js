@@ -14,7 +14,7 @@ import {
   formatarNumDecimal,
   formatarVencimento,
 } from "components/utils/Formatacoes";
-import InputFormatado from "components/utils/InputFormatado";
+import InputFormatado from "components/utils/componentesUI/InputFormatado";
 import { Select } from "antd";
 import { StorePrincipalContext } from "components/redux/StoreCreation";
 

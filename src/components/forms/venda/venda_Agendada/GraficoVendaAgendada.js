@@ -2,16 +2,16 @@ import React from "react";
 import { Col, Form } from "react-bootstrap";
 import { connect } from "react-redux";
 import img from "img/venda/VendaAgendada.png";
-import IconeConfigGrafico from "components/utils/IconeConfigGrafico";
+import IconeConfigGrafico from "components/utils/componentesUI/IconeConfigGrafico";
 import {
   LabelInputGrafico,
   TextoGainStopGrafico,
   TextoCotacaoAtualGrafico,
   TextoValorTotalGrafico,
-} from "components/utils/TextoGrafico";
+} from "components/utils/componentesUI/TextoGraficoBoletas";
 import { VENDA_AGENDADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalAgendada } from "components/utils/CalculoValorTotal";
-import GraficoInputs from "components/utils/GraficoInputs";
+import GraficoInputs from "components/utils/componentesUI/GraficoInputs";
 
 class GraficoVendaAgendada extends React.Component {
   render() {

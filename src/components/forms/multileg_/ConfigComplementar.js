@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col, Button, Form } from "react-bootstrap";
-import { ModalHeaderLimpo } from "components/utils/FormHeader";
+import { ModalHeaderLimpo } from "components/utils/componentesUI/FormHeader";
 import { connect } from "react-redux";
 import {
   abrirFecharConfigComplAction,

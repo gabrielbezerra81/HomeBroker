@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Table, ProgressBar } from "react-bootstrap";
-import DraggableModal from "components/utils/DraggableModal";
-import { ModalHeaderSemBook } from "components/utils/FormHeader";
+import DraggableModal from "components/utils/componentesUI/DraggableModal";
+import { ModalHeaderSemBook } from "components/utils/componentesUI/FormHeader";
 import { formatarDataDaAPI } from "components/utils/Formatacoes";
 import { compose } from "redux";
 import { connect } from "react-redux";

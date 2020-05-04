@@ -16,16 +16,16 @@ import {
 } from "components/redux/actions/formInputActions";
 import { VENDA_STOPMOVEL_NAMESPACE } from "constants/ActionTypes";
 import TabelaOrdens from "./TabelaOrdens";
-import RowFormValidade from "components/utils/RowFormValidade";
-import RowFormAssinatura from "components/utils/RowFormAssinatura";
-import RowAtivoQtdeBoletas from "components/utils/RowAtivoQtdeBoletas";
+import RowFormValidade from "components/utils/componentesUI/RowFormValidade";
+import RowFormAssinatura from "components/utils/componentesUI/RowFormAssinatura";
+import RowAtivoQtdeBoletas from "components/utils/componentesUI/RowAtivoQtdeBoletas";
 import {
   pesquisarAtivoOnEnterAction,
   enviarOrdemAction,
 } from "components/redux/actions/api_actions/boletasAPIActions";
-import InputFormatado from "components/utils/InputFormatado";
-import { RowInputsStopMovelConectada } from "components/utils/RowInputsFormatadosFormInterno";
-import { BotaoEnviarOrdem } from "components/utils/BotaoEnviarOrdem";
+import InputFormatado from "components/utils/componentesUI/InputFormatado";
+import { RowInputsStopMovelConectada } from "components/utils/componentesUI/RowInputsFormatadosFormInterno";
+import { BotaoEnviarOrdem } from "components/utils/componentesUI/BotaoEnviarOrdem";
 
 class FormInternoVendaStopMovel extends React.Component {
   render() {

@@ -5,9 +5,9 @@ import img from "img/compra/GainReducaoCompra.png";
 import {
   TextoGainStopGrafico,
   TextoCotacaoAtualGrafico
-} from "components/utils/TextoGrafico";
+} from "components/utils/componentesUI/TextoGraficoBoletas";
 import { COMPRA_GAINREDUCAO_NAMESPACE } from "constants/ActionTypes";
-import GraficoInputs from "components/utils/GraficoInputs";
+import GraficoInputs from "components/utils/componentesUI/GraficoInputs";
 
 class GraficoCompraGainReducao extends React.Component {
   render() {

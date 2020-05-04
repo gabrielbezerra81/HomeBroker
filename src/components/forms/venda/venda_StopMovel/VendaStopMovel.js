@@ -2,11 +2,11 @@ import React from "react";
 
 import { connect } from "react-redux";
 import { Row } from "react-bootstrap";
-import DraggableModal from "components/utils/DraggableModal";
+import DraggableModal from "components/utils/componentesUI/DraggableModal";
 import FormInternoVendaStopMovel from "./FormInternoVendaStopMovel";
 import GraficoVendaStopMovel from "./GraficoVendaStopMovel";
 import BodyHeaderVendaStopMovel from "./BodyHeaderVendaStopMovel";
-import { ModalHeader } from "components/utils/FormHeader";
+import { ModalHeader } from "components/utils/componentesUI/FormHeader";
 
 class VendaStopMovel extends React.Component {
   componentDidMount() {

@@ -3,7 +3,7 @@ import { Form } from "react-bootstrap";
 import { connect } from "react-redux";
 import InputFormatado, {
   boxShadowInput
-} from "components/utils/InputFormatado";
+} from "components/utils/componentesUI/InputFormatado";
 import { mudarAtributoBoletaAction } from "components/redux/actions/formInputActions";
 import {
   COMPRA_AGENDADA_NAMESPACE,

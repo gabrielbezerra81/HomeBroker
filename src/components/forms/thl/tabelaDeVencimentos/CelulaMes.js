@@ -109,7 +109,7 @@ export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
 
       <div className="containerPrecoMontDesmont">
         {!ultimaColuna && estrutura ? (
-          <div>
+          <>
             <div
               className="divClicavel"
               tabIndex={0}
@@ -128,7 +128,7 @@ export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
             >
               {min} | {qtdeDesmont}
             </div>
-          </div>
+          </>
         ) : null}
       </div>
     </div>

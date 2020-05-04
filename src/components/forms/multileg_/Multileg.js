@@ -3,8 +3,8 @@ import { MDBIcon } from "mdbreact";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { Tab, Row, Col, Nav, Form } from "react-bootstrap";
-import DraggableModal from "components/utils/DraggableModal";
-import { ModalHeaderSemBook } from "components/utils/FormHeader";
+import DraggableModal from "components/utils/componentesUI/DraggableModal";
+import { ModalHeaderSemBook } from "components/utils/componentesUI/FormHeader";
 import AbaMultileg from "components/forms/multileg_/AbaMultileg";
 import {
   StorePrincipalContext,

@@ -3,15 +3,15 @@ import { Row, Col, Form, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import InputFormatado, {
   boxShadowInput,
-} from "components/utils/InputFormatado";
+} from "components/utils/componentesUI/InputFormatado";
 import {
   mudarAtributoBoletaAction,
   adicionarItemTabelaGainReducaoAction,
   mudarQtdAction,
 } from "components/redux/actions/formInputActions";
 import { mostrarErroQtdeOnBlurAction } from "components/redux/actions/bookOfertaActions";
-import { IconeConfigAbrirFormulario } from "components/utils/IconesConfigFormInterno";
-import { mapStateToPropsInputsPreco } from "components/utils/GraficoInputs";
+import { IconeConfigAbrirFormulario } from "components/utils/componentesUI/IconesConfigFormInterno";
+import { mapStateToPropsInputsPreco } from "components/utils/componentesUI/GraficoInputs";
 import { MDBIcon } from "mdbreact";
 import {
   COMPRA_STARTSTOP_NAMESPACE,

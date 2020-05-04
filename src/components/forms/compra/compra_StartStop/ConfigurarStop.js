@@ -2,18 +2,18 @@ import React from "react";
 // @ts-ignore
 import { connect } from "react-redux";
 import configurarStop from "img/compra/configurarStop.PNG";
-import IconeConfigGrafico from "components/utils/IconeConfigGrafico";
+import IconeConfigGrafico from "components/utils/componentesUI/IconeConfigGrafico";
 import { COMPRA_STARTSTOP_NAMESPACE } from "constants/ActionTypes";
 import {
   LabelInputGrafico,
   TextoGainStopGrafico,
   TextoValorTotalGrafico,
-} from "components/utils/TextoGrafico";
+} from "components/utils/componentesUI/TextoGraficoBoletas";
 import { mudarInputConfigAction } from "components/redux/actions/formInputActions";
 import { CalculoValorTotalAgendada } from "components/utils/CalculoValorTotal";
 import { fecharFormConfigurarAction } from "components/redux/actions/MainAppActions";
-import { ModalHeaderLimpo } from "components/utils/FormHeader";
-import GraficoInputsConfigStartStop from "components/utils/GraficoInputsConfigStartStop";
+import { ModalHeaderLimpo } from "components/utils/componentesUI/FormHeader";
+import GraficoInputsConfigStartStop from "components/utils/componentesUI/GraficoInputsConfigStartStop";
 
 class ConfigurarStop extends React.Component {
   render() {

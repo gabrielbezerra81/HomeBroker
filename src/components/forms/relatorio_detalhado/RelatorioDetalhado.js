@@ -12,8 +12,8 @@ import {
   Legend,
   ReferenceLine,
 } from "recharts";
-import DraggableModal from "components/utils/DraggableModal";
-import { ModalHeaderSemBook } from "components/utils/FormHeader";
+import DraggableModal from "components/utils/componentesUI/DraggableModal";
+import { ModalHeaderSemBook } from "components/utils/componentesUI/FormHeader";
 import Tabela1Custos from "components/forms/relatorio_detalhado/Tabela1Custos";
 import Tabela2ProximaOrdem from "components/forms/relatorio_detalhado/Tabela2ProximaOrdem";
 import EmblemaRelatorio from "components/forms/relatorio_detalhado/EmblemaRelatorio";

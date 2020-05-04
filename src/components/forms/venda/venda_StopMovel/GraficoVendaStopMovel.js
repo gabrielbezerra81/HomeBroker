@@ -8,9 +8,9 @@ import {
   TextoGainStopGrafico,
   TextoCotacaoAtualGrafico,
   TextoMenorGrafico
-} from "components/utils/TextoGrafico";
+} from "components/utils/componentesUI/TextoGraficoBoletas";
 import { VENDA_STOPMOVEL_NAMESPACE } from "constants/ActionTypes";
-import GraficoInputs from "components/utils/GraficoInputs";
+import GraficoInputs from "components/utils/componentesUI/GraficoInputs";
 
 class GraficoVendaStopMovel extends React.Component {
   render() {

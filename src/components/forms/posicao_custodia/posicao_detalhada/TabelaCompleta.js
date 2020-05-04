@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col, Table } from "react-bootstrap";
-import EmblemaSimples from "components/utils/EmblemaSimples";
+import EmblemaSimples from "components/utils/componentesUI/EmblemaSimples";
 import { corSaldoOp } from "components/forms/posicao_custodia/posicao_detalhada/TabelaSimples";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 

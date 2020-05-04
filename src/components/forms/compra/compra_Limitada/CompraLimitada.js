@@ -2,11 +2,11 @@ import React from "react";
 
 import { connect } from "react-redux";
 import { Row } from "react-bootstrap";
-import DraggableModal from "components/utils/DraggableModal";
+import DraggableModal from "components/utils/componentesUI/DraggableModal";
 import FormInternoCompraLimitada from "./FormInternoCompraLimitada";
 import GraficoCompraLimitada from "./GraficoCompraLimitada";
 import BodyHeaderCompraLimitada from "./BodyHeaderCompraLimitada";
-import { ModalHeader } from "components/utils/FormHeader";
+import { ModalHeader } from "components/utils/componentesUI/FormHeader";
 
 class CompraLimitada extends React.Component {
   render() {

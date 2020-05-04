@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Form, InputGroup, Spinner } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
-import InputFormatado from "components/utils/InputFormatado";
+import InputFormatado from "components/utils/componentesUI/InputFormatado";
 import { useSelector } from "react-redux";
 
 export default RowAtivoQtdeBoletas;

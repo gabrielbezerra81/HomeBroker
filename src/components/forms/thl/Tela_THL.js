@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import ReactResizeDetector from "react-resize-detector";
-import DraggableModal from "components/utils/DraggableModal";
+import DraggableModal from "components/utils/componentesUI/DraggableModal";
 import { Form, InputGroup, Spinner } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import { Radio, Spin, Button } from "antd";
-import { ModalHeaderSemBook } from "components/utils/FormHeader";
+import { ModalHeaderSemBook } from "components/utils/componentesUI/FormHeader";
 import MapaCalor from "components/forms/thl/MapaCalor";
 import TabelaVencimentos from "components/forms/thl/tabelaDeVencimentos/TabelaVencimentos";
 import TabelaCombinacoes from "components/forms/thl/TabelaCombinacoes";

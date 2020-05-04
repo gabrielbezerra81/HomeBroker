@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { BodyHeaderCompleto } from "components/utils/BodyHeader";
+import { BodyHeaderCompleto } from "components/utils/componentesUI/BodyHeader";
 
 class BodyHeaderCompraStartStop extends React.Component {
   render() {

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { BodyHeaderAtivo } from "components/utils/BodyHeader";
+import { BodyHeaderAtivo } from "components/utils/componentesUI/BodyHeader";
 
 class BodyHeaderVendaStopMovel extends React.Component {
   render() {

@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Table, Row, Col, Button } from "react-bootstrap";
-import IconeConfigGrafico from "components/utils/IconeConfigGrafico";
+import IconeConfigGrafico from "components/utils/componentesUI/IconeConfigGrafico";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 import {
   modificarAtributoAbaAction,
@@ -13,7 +13,7 @@ import {
   calcularTotal,
   verificaCalculoSemBook,
 } from "components/forms/multileg_/CalculoPreco";
-import InputFormatado from "components/utils/InputFormatado";
+import InputFormatado from "components/utils/componentesUI/InputFormatado";
 import { formatarNumero } from "components/redux/reducers/boletas_reducer/formInputReducer";
 import RowValidade from "components/forms/multileg_/RowValidade";
 import {

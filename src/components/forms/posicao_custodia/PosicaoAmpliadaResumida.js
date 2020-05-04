@@ -6,7 +6,7 @@ import {
   formatarNumDecimal,
   formatarQuantidadeKMG,
 } from "components/utils/Formatacoes";
-import EmblemaSimples from "components/utils/EmblemaSimples";
+import EmblemaSimples from "components/utils/componentesUI/EmblemaSimples";
 import _ from "lodash";
 import { StorePrincipalContext } from "components/redux/StoreCreation";
 
