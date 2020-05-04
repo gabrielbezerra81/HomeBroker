@@ -27,7 +27,28 @@ import { RowGainStopFormInternoConectada } from "components/utils/RowInputsForma
 import { BotaoEnviarOrdem } from "components/utils/BotaoEnviarOrdem";
 
 class FormInternoCompraLimitada extends React.Component {
+  componentDidUpdate(prevProps) {
+    const prevStepQtde = prevProps.dadosPesquisa.stepQtde;
+    const stepQtde = this.props.dadosPesquisa.stepQtde;
+
+    if (prevStepQtde !== stepQtde && stepQtde === 100) {
+      this.props.mudarAtributoBoletaAction(
+        Number(this.props.preco).toFixed(2),
+        COMPRA_LIMITADA_NAMESPACE,
+        "preco"
+      );
+    }
+  }
+  
   render() {
+    const { dadosPesquisa } = this.props;
+    const { stepQtde } = dadosPesquisa;
+    let stepPreco = 0.01,
+      precisao = 2;
+    if (stepQtde === 0.01) {
+      stepPreco = 0.00001;
+      precisao = 5;
+    }
     return (
       <Col className="colFormInterno">
         <div className="divAsModalContainer">
@@ -43,7 +64,9 @@ class FormInternoCompraLimitada extends React.Component {
                   <Form.Label />
                   <InputFormatado
                     tipoInput="preco"
-                    step={0.01}
+                    step={stepPreco}
+                    id="compralim"
+                    precision={precisao}
                     value={this.props.preco}
                     onChange={(valor) =>
                       this.props.mudarAtributoBoletaAction(

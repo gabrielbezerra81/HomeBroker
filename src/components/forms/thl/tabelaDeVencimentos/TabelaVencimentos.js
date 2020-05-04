@@ -202,6 +202,8 @@ const renderConteudoTabelaVencimentos = (
         const precosColunaTotal = precosTabelaVencimentos.find(
           (estrutura) => estrutura.id === idColunaTotal
         );
+        if (precosColunaTotal) {
+        }
         let precoTotalMontar = "0,68 | 3k";
         let precoTotalDesmontar = "0,66 | 3k";
         let precoMensalMontar = "0,34 | 2 meses";

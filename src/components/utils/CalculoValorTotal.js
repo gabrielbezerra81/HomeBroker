@@ -19,7 +19,7 @@ export const CalculoValorTotalAgendada = (disparo, execucao, qtde) => {
   return "";
 };
 
-export const CalculoValorTotalLimitada = (preco, qtde) => {
+export function CalculoValorTotalLimitada(preco, qtde) {
   if (preco !== "" && qtde !== "") {
     // while (preco.search(",") !== -1) {
     //   preco = preco.replace(",", "");
@@ -30,7 +30,7 @@ export const CalculoValorTotalLimitada = (preco, qtde) => {
   }
 
   return "";
-};
+}
 
 export const CalculoValorAproximadoMercado = (qtde, dadosPesquisa) => {
   if (dadosPesquisa && qtde !== "") {

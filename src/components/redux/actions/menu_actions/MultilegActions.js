@@ -11,10 +11,8 @@ import {
   encontrarNumMaisProximo,
 } from "components/redux/actions/api_actions/MultilegAPIAction";
 import {
-  listarBookOfertaAPI,
   pesquisarAtivoAPI,
   atualizarCotacaoAPI,
-  atualizarBookAPI,
   travarDestravarClique,
 } from "components/api/API";
 import { calculoPreco } from "components/forms/multileg_/CalculoPreco";
@@ -190,9 +188,9 @@ export const modificarAtributoTabelaAbaAction = (
           const pesquisa = linhaTabela.opcoes.find(
             (item) => item.strike === linhaTabela.strikeSelecionado
           );
-          const cotacaoAnterior = cotacoesMultileg.find(
-            (cotacao) => cotacao.codigo === codigoAnterior
-          );
+          // const cotacaoAnterior = cotacoesMultileg.find(
+          //   (cotacao) => cotacao.codigo === codigoAnterior
+          // );
 
           if (!pesquisa) {
             linhaTabela.strikeSelecionado = encontrarNumMaisProximo(

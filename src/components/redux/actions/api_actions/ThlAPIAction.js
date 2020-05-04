@@ -2,16 +2,8 @@ import {
   listarTabelaInicialTHLAPI,
   atualizarPrecosTHLAPI,
 } from "components/api/API";
-import { MUDAR_VARIAVEL_THL } from "constants/MenuActionTypes";
 import { pesquisarListaStrikeTHLAPI } from "components/api/API";
 import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
-
-const dispatchTHL = (dispatch, nome, valor) => {
-  dispatch({
-    type: MUDAR_VARIAVEL_THL,
-    payload: { nome: nome, valor: valor },
-  });
-};
 
 export const pesquisarAtivoTHLAPIAction = (codigo) => {
   return async (dispatch) => {

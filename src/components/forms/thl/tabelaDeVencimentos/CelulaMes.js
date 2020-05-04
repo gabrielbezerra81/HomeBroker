@@ -115,7 +115,6 @@ export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
               tabIndex={0}
               onClick={() => {
                 SelecionarBooks(booksSelecionados, booksMontar, dispatch);
-                console.log("book clicado: ", booksMontar);
               }}
             >
               {max} | {qtdeMontar}

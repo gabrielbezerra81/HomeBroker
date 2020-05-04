@@ -411,7 +411,7 @@ export const atualizarCotacaoAPI = (
   var source = new EventSource(
     `${url_base_reativa}${url_cotacaoReativa_codigos}${codigos}`
   );
-  var array = [];
+  // var array = [];
 
   source.onopen = function (event) {
     // console.log("open");

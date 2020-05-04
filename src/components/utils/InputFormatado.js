@@ -8,6 +8,7 @@ import { formatarNumero } from "components/redux/reducers/boletas_reducer/formIn
 class InputFormatado extends React.Component {
   render() {
     var input;
+    const precision = this.props.precision ? this.props.precision : 2;
     if (this.props.tipoInput === "preco")
       input = (
         <CurrencyInput
@@ -15,7 +16,7 @@ class InputFormatado extends React.Component {
           placeholder={this.props.placeholder}
           locale="pt-BR"
           className={`form-control textInput inputFormatado ${this.props.className}`}
-          precision={2}
+          precision={precision}
           step={this.props.step}
           value={this.props.value}
           onChange={
@@ -26,10 +27,10 @@ class InputFormatado extends React.Component {
           onBlur={this.props.onBlur}
           onKeyPress={this.props.onKeyPress}
           prefix={this.props.value < 0 ? "- " : ""}
-          onFocus={event => {
+          onFocus={(event) => {
             if (this.props.autoSelect) event.target.select();
           }}
-          onKeyUp={event => {
+          onKeyUp={(event) => {
             if (event.key === "ArrowUp") onUp(this.props);
             else if (event.key === "ArrowDown") onDown(this.props);
           }}
@@ -47,16 +48,16 @@ class InputFormatado extends React.Component {
           onChange={
             this.props.readOnly
               ? null
-              : event => {
+              : (event) => {
                   this.props.onChange(event.target.value.split(".").join(""));
                 }
           }
-          onFocus={event => {
+          onFocus={(event) => {
             if (this.props.autoSelect) event.target.select();
           }}
           onBlur={this.props.onBlur}
           onKeyPress={this.props.onKeyPress}
-          onKeyUp={event => {
+          onKeyUp={(event) => {
             if (event.key === "ArrowUp") onUp(this.props);
             else if (event.key === "ArrowDown") onDown(this.props);
           }}
@@ -73,9 +74,9 @@ class InputFormatado extends React.Component {
           onChange={
             this.props.readOnly
               ? null
-              : event => this.props.onChange(event.target.value)
+              : (event) => this.props.onChange(event.target.value)
           }
-          onKeyPress={event => {
+          onKeyPress={(event) => {
             if (event.key !== "-" && !document.getSelection().toString())
               event.currentTarget.value = formatarNumero(
                 event.currentTarget.value,
@@ -84,10 +85,10 @@ class InputFormatado extends React.Component {
                 ","
               );
           }}
-          onFocus={event => {
+          onFocus={(event) => {
             if (this.props.autoSelect) event.target.select();
           }}
-          onKeyUp={event => {
+          onKeyUp={(event) => {
             if (event.key === "ArrowUp") onUp(this.props);
             else if (event.key === "ArrowDown") onDown(this.props);
           }}
@@ -105,7 +106,7 @@ class InputFormatado extends React.Component {
             <Repeatable
               repeatDelay={600}
               repeatInterval={40}
-              onPress={event => {
+              onPress={(event) => {
                 event.preventDefault();
                 onUp(this.props);
               }}
@@ -117,7 +118,7 @@ class InputFormatado extends React.Component {
             <Repeatable
               repeatDelay={600}
               repeatInterval={40}
-              onPress={event => {
+              onPress={(event) => {
                 event.preventDefault();
                 onDown(this.props);
               }}
@@ -135,8 +136,9 @@ class InputFormatado extends React.Component {
 
 export default InputFormatado;
 
-const onUp = props => {
+const onUp = (props) => {
   let valorAnterior = props.value;
+  const precision = props.precision ? props.precision : 2;
   let resultado;
 
   //Tira todos os pontos e vírgulas do número e o transforma em um número decimal com ponto com separador
@@ -150,14 +152,15 @@ const onUp = props => {
   resultado = Number(Number(valorAnterior) + Number(props.step));
 
   if (props.tipoInput === "preco" || props.tipoInput === "precoNegativo")
-    resultado = Number(resultado).toFixed(2);
+    resultado = Number(resultado).toFixed(precision);
   if (props.tipoInput === "precoNegativo")
     resultado = resultado.toString().replace(".", ",");
   props.onChange(resultado);
 };
 
-const onDown = props => {
+const onDown = (props) => {
   let valorAnterior = props.value;
+  const precision = props.precision ? props.precision : 2;
   if (valorAnterior > 0 || props.allowNegative) {
     let resultado;
 
@@ -170,7 +173,7 @@ const onDown = props => {
 
     resultado = Number(Number(valorAnterior) - props.step);
     if (props.tipoInput === "preco" || props.tipoInput === "precoNegativo")
-      resultado = resultado.toFixed(2);
+      resultado = resultado.toFixed(precision);
     if (props.tipoInput === "precoNegativo")
       resultado = resultado.toString().replace(".", ",");
     props.onChange(resultado);
@@ -178,6 +181,6 @@ const onDown = props => {
 };
 
 //Fazer replace de todos os pontos em QTDE
-export const boxShadowInput = classe => {
+export const boxShadowInput = (classe) => {
   return document.activeElement.className.includes(classe) ? "inputFocado" : "";
 };
