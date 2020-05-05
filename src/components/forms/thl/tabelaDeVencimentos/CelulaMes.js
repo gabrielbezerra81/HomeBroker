@@ -71,6 +71,7 @@ export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
   }
 
   const corQtdeExecutando = executando ? " ativoExecutando" : "";
+  const classeCorPrecos = ultimaColuna ? "" : CalculaCorPreco(estrutura);
 
   return (
     <div className="containerColunaMes">
@@ -107,7 +108,7 @@ export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
         ) : null}
       </div>
 
-      <div className="containerPrecoMontDesmont">
+      <div className={`containerPrecoMontDesmont${classeCorPrecos}`}>
         {!ultimaColuna && estrutura ? (
           <>
             <div
@@ -225,4 +226,26 @@ const SelecionarBooks = (booksSelecionados, novosBooks, dispatch) => {
   });
 
   dispatch(mudarVariavelTHLAction("booksSelecionados", books));
+};
+
+const CalculaCorPreco = (estrutura) => {
+  const reduxState = StateStorePrincipal().THLReducer;
+  let classe = "";
+  const { seletorMapaCalor, faixasMapaCalor } = reduxState;
+
+  if (
+    ["montar", "desmontar"].includes(seletorMapaCalor) &&
+    faixasMapaCalor &&
+    estrutura
+  ) {
+    const valor = seletorMapaCalor === "montar" ? estrutura.max : estrutura.min;
+    const indice = faixasMapaCalor.findIndex((faixa) => {
+      const min = Number(faixa.min.replace(",", "."));
+      const max = Number(faixa.max.replace(",", "."));
+      return valor >= min && valor <= max;
+    });
+    if (indice !== -1) classe = ` faixa${indice + 1}Mapa`;
+  }
+
+  return classe;
 };

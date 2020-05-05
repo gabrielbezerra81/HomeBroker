@@ -297,7 +297,7 @@ thead th:nth-child(3) {
 }
 
 .containerColunaMes > div {
-  padding: 5px 0 5px 4px !important;
+  padding: 5px 0 5px 0px !important;
 }
 
 .itemAtivosQtde {
@@ -320,16 +320,18 @@ thead th:nth-child(3) {
 .itemAtivos {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-  padding: 1px 11px;
-  min-width: 90px;
+  padding: 1px 0px;
+  min-width: 102px;
   display: flex;
   align-items: center;
   margin-left: -3px;
+  justify-content: center;
 }
 
 .itemQtde {
   padding: 1px 3px 1px 6px;
   color: #314452;
+  min-width: 27px;
 }
 
 .bookAtivoTHL {
@@ -349,7 +351,8 @@ thead th:nth-child(3) {
   justify-content: center;
   margin-left: 10px;
   border-left: 1px dashed var(--cor-borda-discreta);
-  min-width: 66px;
+  min-width: 75px;
+  margin-right: -6px;
 }
 
 .containerMapaCalor {
@@ -366,14 +369,10 @@ thead th:nth-child(3) {
 
 .containerMapaCalor img {
   margin-right: 10px;
-  position: relative;
-  left: -10px;
 }
 
 .labelMinMax {
   margin-right: 10px;
-  position: relative;
-  left: -10px;
 }
 
 .containerMapaCalor label {
@@ -391,12 +390,12 @@ thead th:nth-child(3) {
 
 .faixasTemperatura {
   justify-content: space-between;
-  left: 39px;
+  left: 49px;
   flex-direction: column;
   display: flex;
   position: absolute;
-  top: 54px;
-  height: 73px;
+  top: 42px;
+  height: 98px;
   white-space: nowrap;
 }
 
@@ -431,18 +430,28 @@ thead th:nth-child(3) {
 /* mapaCalor */
 .faixa1Mapa {
   background-color: #fff100;
+  color: black;
+  border-left: none;
 }
 .faixa2Mapa {
   background-color: #fcb80f;
+  color: black;
+  border-left: none;
 }
 .faixa3Mapa {
   background-color: #f7921c;
+  color: black;
+  border-left: none;
 }
 .faixa4Mapa {
   background-color: #f36e21;
+  color: black;
+  border-left: none;
 }
 .faixa5Mapa {
   background-color: #ed1b24;
+  color: black;
+  border-left: none;
 }
 /* mapaCalor */
 .bookNaoSelecionado:focus {

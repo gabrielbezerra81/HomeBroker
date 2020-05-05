@@ -8,7 +8,6 @@ import {
   DispatchStorePrincipal,
 } from "components/redux/StoreCreation";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
-import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
 import { listarTabelaInicialTHLAPIAction } from "components/redux/actions/api_actions/ThlAPIAction";
 import { CelulaMes } from "components/forms/thl/tabelaDeVencimentos/CelulaMes";
 import InputStrikeSelecionado from "components/forms/thl/tabelaDeVencimentos/InputStrikeSelecionado";
@@ -24,7 +23,6 @@ export default React.memo(({ setScrollbarRef }) => {
     eventSourcePrecos,
     precosTabelaVencimentos,
     setPrecosIntervalo,
-    seletorMapaCalor,
   } = reduxState;
 
   const strikesInteiros = useMemo(() => getStrikesInteiros(opcoesStrike), [
@@ -33,11 +31,6 @@ export default React.memo(({ setScrollbarRef }) => {
   const { anos, ultimoMes } = useMemo(
     () => getAnosUltimoMesTabela(opcoesStrike),
     [opcoesStrike]
-  );
-
-  const { precoMin, precoMax } = useMemo(
-    () => calcularPrecosMinMaxMapa(precosTabelaVencimentos, seletorMapaCalor),
-    [precosTabelaVencimentos, seletorMapaCalor]
   );
 
   useEffect(() => {
@@ -52,13 +45,6 @@ export default React.memo(({ setScrollbarRef }) => {
       )
     );
   }, [ativoPesquisado, strikeSelecionado, tipo]);
-
-  useEffect(() => {
-    if (seletorMapaCalor !== "semcor") {
-      dispatch(mudarVariavelTHLAction("precoMin", precoMin));
-      dispatch(mudarVariavelTHLAction("precoMax", precoMax));
-    }
-  }, [precoMin, precoMax, seletorMapaCalor]);
 
   return (
     <PerfectScrollbar
@@ -340,21 +326,6 @@ const OpcoesStrikeVazio = () => {
       <td></td>
     </tr>
   );
-};
-
-const calcularPrecosMinMaxMapa = (listaPrecos, seletorMapaCalor) => {
-  let precoMin = 0,
-    precoMax = 0;
-  if (listaPrecos.length) {
-    const valorCalculo = seletorMapaCalor === "montar" ? "max" : "min";
-    precoMin = Math.min(
-      ...listaPrecos.map((estrutura) => estrutura[valorCalculo].toFixed(2))
-    );
-    precoMax = Math.max(
-      ...listaPrecos.map((estrutura) => estrutura[valorCalculo].toFixed(2))
-    );
-  }
-  return { precoMin, precoMax };
 };
 
 const colunaVazia = (
