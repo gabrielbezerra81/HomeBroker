@@ -121,7 +121,7 @@ thead th:first-child {
   z-index: 2;
 }
 
-thead th:nth-child(3) {
+thead th:nth-child(n + 3) {
   z-index: 1;
 }
 
@@ -162,7 +162,7 @@ thead th:nth-child(3) {
 }
 
 .tabelaVencimentos tr:nth-child(2) th:nth-child(2) {
-  left: 47px;
+  left: 55px;
 }
 
 .tabelaVencimentos tr:nth-child(2) th {
@@ -206,7 +206,7 @@ thead th:nth-child(3) {
 }
 
 .tabelaVencimentos tbody tr td:nth-child(2) {
-  left: 47px;
+  left: 55px;
 }
 /* posicionamento sticky */
 
