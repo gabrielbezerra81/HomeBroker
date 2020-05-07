@@ -263,6 +263,10 @@ thead th:nth-child(n + 3) {
   opacity: 1;
 }
 
+.containerCelula:focus{
+  outline: none !important;
+}
+
 .celulaSelecionada {
   border: 2px solid #fc990a;
   border-radius: 2px;
