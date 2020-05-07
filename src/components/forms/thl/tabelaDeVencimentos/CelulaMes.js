@@ -19,10 +19,12 @@ export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
     booksSelecionados,
     codigoCelulaSelecionada,
   } = reduxState;
+  const ativo = itemColuna.symbol;
+
   let compra, compraQtde, venda, vendaQtde, min, max, qtdeMontar, qtdeDesmont;
 
   const strike = formatarNumDecimal(itemColuna.strike);
-  const ativoStrike = `${itemColuna.symbol.slice(4)} (${strike})`;
+  const ativoStrike = `${ativo.slice(4)} (${strike})`;
   const {
     custodia,
     executando,
@@ -33,9 +35,7 @@ export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
     ? precosTabelaVencimentos.find(
         (item) =>
           item.id === id &&
-          item.components.some(
-            (comp) => comp.stock.symbol === itemColuna.symbol
-          )
+          item.components.some((comp) => comp.stock.symbol === ativo)
       )
     : null;
 
@@ -47,7 +47,7 @@ export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
     max = formatarNumDecimal(estrutura.max);
     min = formatarNumDecimal(estrutura.min);
 
-    if (estrutura.components[0].stock.symbol === itemColuna.symbol) {
+    if (estrutura.components[0].stock.symbol === ativo) {
       precosColuna = estrutura.components[0];
       precosPar = estrutura.components[1];
     } else {
@@ -78,31 +78,32 @@ export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
     ];
   }
 
-  const corQtdeExecutando = executando ? " ativoExecutando" : "";
-  const classeCorPrecos = ultimaColuna
-    ? ""
-    : calculaCorPreco(reduxState, estrutura);
+  const {
+    corQtdeExecutando,
+    classeCorPrecos,
+    celulaSelecionada,
+    precosCelulaSelecionada,
+  } = classesDinamicas(reduxState, executando, ultimaColuna, estrutura, ativo);
 
   return (
     <div className="containerColunaMes">
-      <div>
+      <div
+        tabIndex={0}
+        className={`divClicavel containerCelula${celulaSelecionada}`}
+        onClick={() => {
+          let novoCodigo = "";
+          if (ativo !== codigoCelulaSelecionada) novoCodigo = ativo;
+          dispatch(
+            mudarVariavelTHLAction("codigoCelulaSelecionada", novoCodigo)
+          );
+        }}
+      >
         <div
           className={`itemAtivosQtde ${
             custodia ? "itemAtivosQtdeCustodia" : ""
           }`}
         >
-          <div
-            className="itemAtivos divClicavel"
-            tabIndex={0}
-            onClick={() => {
-              let novoCodigo = "";
-              if (itemColuna.symbol !== codigoCelulaSelecionada)
-                novoCodigo = itemColuna.symbol;
-              dispatch(
-                mudarVariavelTHLAction("codigoCelulaSelecionada", novoCodigo)
-              );
-            }}
-          >
+          <div className="itemAtivos">
             {renderModelo(itemColuna.model)}
             {ativoStrike}
           </div>
@@ -117,27 +118,29 @@ export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
               preco={compra}
               qtde={compraQtde}
               tipo="venda"
-              ativo={itemColuna.symbol}
+              ativo={ativo}
             />
             <RenderBook
               preco={venda}
               qtde={vendaQtde}
               tipo="compra"
-              ativo={itemColuna.symbol}
+              ativo={ativo}
             />
           </div>
         ) : null}
       </div>
 
-      <div className={`containerPrecoMontDesmont${classeCorPrecos}`}>
+      <div
+        className={`containerPrecoMontDesmont${classeCorPrecos}${precosCelulaSelecionada}`}
+      >
         {!ultimaColuna && estrutura ? (
           <>
             <div
               className="divClicavel"
               tabIndex={0}
-              onClick={() => {
-                SelecionarBooks(booksSelecionados, booksMontar, dispatch);
-              }}
+              onClick={() =>
+                SelecionarBooks(booksSelecionados, booksMontar, dispatch)
+              }
             >
               {max} | {qtdeMontar}
             </div>
@@ -174,9 +177,10 @@ const RenderBook = ({ preco, qtde, tipo, ativo }) => {
     <div
       className={`divClicavel${bookSelecionado}`}
       tabIndex={0}
-      onClick={() =>
-        SelecionarBooks(booksSelecionados, [{ ativo, tipo }], dispatch)
-      }
+      onClick={(e) => {
+        SelecionarBooks(booksSelecionados, [{ ativo, tipo }], dispatch);
+        e.stopPropagation();
+      }}
     >
       {preco} | {qtde}
     </div>
@@ -268,4 +272,31 @@ const calculaCorPreco = (reduxState, estrutura) => {
   }
 
   return classe;
+};
+
+const classesDinamicas = (
+  reduxState,
+  executando,
+  ultimaColuna,
+  estrutura,
+  ativo
+) => {
+  const { codigoCelulaSelecionada } = reduxState;
+  const corQtdeExecutando = executando ? " ativoExecutando" : "";
+  const classeCorPrecos = ultimaColuna
+    ? ""
+    : calculaCorPreco(reduxState, estrutura);
+  let celulaSelecionada = "";
+  let precosCelulaSelecionada = "";
+  if (codigoCelulaSelecionada === ativo) {
+    celulaSelecionada = " celulaSelecionada";
+    precosCelulaSelecionada = " precosCelulaSelecionada";
+  }
+
+  return {
+    corQtdeExecutando,
+    classeCorPrecos,
+    celulaSelecionada,
+    precosCelulaSelecionada,
+  };
 };

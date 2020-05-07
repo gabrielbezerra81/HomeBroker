@@ -210,7 +210,7 @@ const renderConteudoTabelaVencimentos = (
           <tr key={`linhaVenc${indiceLinha}`}>
             <td>{formatarNumDecimal(linha.strikeLine)}</td>
             <td>
-              <div className="colunaDividida colunaPrecoLinha colunaPrecoLinhaPreenchida">
+              <div className="colunaDividida colunaPrecoLinha">
                 <div>
                   <div className="precoLinhaMontar">{precoTotalMontar}</div>
                   <div className="precoLinhaDesmontar">
@@ -328,8 +328,10 @@ const OpcoesStrikeVazio = () => {
 
 const colunaVazia = (
   <div className="containerColunaMes">
-    <div>
-      <div className="itemAtivosQtde"></div>
+    <div className="containerCelula">
+      <div>
+        <div className="itemAtivosQtde"></div>
+      </div>
     </div>
     <div className="containerPrecoMontDesmont">
       <div></div>

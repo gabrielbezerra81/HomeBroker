@@ -33,6 +33,7 @@ import "./tela_principal/TelaLogin.css";
 import "./tela_principal/TelaCadastro.css";
 import "./tela_thl/thl.css";
 import "./tela_thl/combinacoes.css";
+import "./tela_thl/vencimentos.css";
 
 import "./componentes_customizados/CustomCheckbox.css";
 import "./componentes_customizados/InputFormatado.css";
