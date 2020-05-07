@@ -210,8 +210,10 @@ const RecalcularPrecos = () => {
       <Tooltip
         overlayClassName="toolTipRecalcularPreco"
         title="Para recalcular os preços das estruturas é preciso selecionar uma Opção"
-        visible={visible && !!classeBotaoDesabilitado}
-        onVisibleChange={(visible) => setVisible(visible)}
+        visible={visible}
+        onVisibleChange={(visible) =>
+          setVisible(visible && !!classeBotaoDesabilitado)
+        }
       >
         <Button
           className={`${classeBotaoDesabilitado}`}
