@@ -14,7 +14,11 @@ import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/TH
 export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
   const reduxState = StateStorePrincipal().THLReducer;
   const dispatch = DispatchStorePrincipal();
-  const { precosTabelaVencimentos, booksSelecionados } = reduxState;
+  const {
+    precosTabelaVencimentos,
+    booksSelecionados,
+    codigoCelulaSelecionada,
+  } = reduxState;
   let compra, compraQtde, venda, vendaQtde, min, max, qtdeMontar, qtdeDesmont;
 
   const strike = formatarNumDecimal(itemColuna.strike);
@@ -25,11 +29,15 @@ export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
     qtdeExecutada,
     qtdeOferta,
   } = VerificaAtivoCustodia(itemColuna);
-  const estrutura = precosTabelaVencimentos.find(
-    (item) =>
-      item.id === id &&
-      item.components.some((comp) => comp.stock.symbol === itemColuna.symbol)
-  );
+  const estrutura = id
+    ? precosTabelaVencimentos.find(
+        (item) =>
+          item.id === id &&
+          item.components.some(
+            (comp) => comp.stock.symbol === itemColuna.symbol
+          )
+      )
+    : null;
 
   let precosColuna, precosPar;
   let booksMontar = [],
@@ -71,7 +79,9 @@ export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
   }
 
   const corQtdeExecutando = executando ? " ativoExecutando" : "";
-  const classeCorPrecos = ultimaColuna ? "" : CalculaCorPreco(estrutura);
+  const classeCorPrecos = ultimaColuna
+    ? ""
+    : calculaCorPreco(reduxState, estrutura);
 
   return (
     <div className="containerColunaMes">
@@ -81,7 +91,18 @@ export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
             custodia ? "itemAtivosQtdeCustodia" : ""
           }`}
         >
-          <div className="itemAtivos divClicavel" tabIndex={0}>
+          <div
+            className="itemAtivos divClicavel"
+            tabIndex={0}
+            onClick={() => {
+              let novoCodigo = "";
+              if (itemColuna.symbol !== codigoCelulaSelecionada)
+                novoCodigo = itemColuna.symbol;
+              dispatch(
+                mudarVariavelTHLAction("codigoCelulaSelecionada", novoCodigo)
+              );
+            }}
+          >
             {renderModelo(itemColuna.model)}
             {ativoStrike}
           </div>
@@ -228,8 +249,7 @@ const SelecionarBooks = (booksSelecionados, novosBooks, dispatch) => {
   dispatch(mudarVariavelTHLAction("booksSelecionados", books));
 };
 
-const CalculaCorPreco = (estrutura) => {
-  const reduxState = StateStorePrincipal().THLReducer;
+const calculaCorPreco = (reduxState, estrutura) => {
   let classe = "";
   const { seletorMapaCalor, faixasMapaCalor } = reduxState;
 

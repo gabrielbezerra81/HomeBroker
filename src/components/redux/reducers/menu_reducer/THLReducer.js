@@ -3253,6 +3253,7 @@ const INITIAL_STATE = {
   pesquisandoAtivo: false,
   tipo: "CALL",
   opcoesStrike: mapTabelaVencimentos([]),
+  codigoCelulaSelecionada: "",
   carregandoTabelaVencimentos: false,
   booksSelecionados: [],
   faixasMapaCalor: null,

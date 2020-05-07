@@ -4,7 +4,7 @@ import ReactResizeDetector from "react-resize-detector";
 import DraggableModal from "components/utils/componentesUI/DraggableModal";
 import { Form, InputGroup, Spinner } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
-import { Radio, Spin, Button } from "antd";
+import { Radio, Spin, Button, Tooltip } from "antd";
 import { ModalHeaderSemBook } from "components/utils/componentesUI/FormHeader";
 import MapaCalor from "components/forms/thl/MapaCalor";
 import TabelaVencimentos from "components/forms/thl/tabelaDeVencimentos/TabelaVencimentos";
@@ -21,7 +21,11 @@ import {
   abrirMultilegTHLAction,
 } from "components/redux/actions/menu_actions/THLActions";
 import { aumentarZindexAction } from "components/redux/actions/MainAppActions";
-import { pesquisarAtivoTHLAPIAction } from "components/redux/actions/api_actions/ThlAPIAction";
+import {
+  pesquisarAtivoTHLAPIAction,
+  recalcularPrecosTHLAPIAction,
+} from "components/redux/actions/api_actions/ThlAPIAction";
+import iconeRecalcularPrecos from "img/recalcularTHL.png";
 
 // import "fixed-header-table/css/defaultTheme.css";
 
@@ -66,6 +70,7 @@ class Tela_THL extends React.Component {
         <div className="containerVencimentos">
           <InputPesquisa />
           <EnviarOrdem />
+          <RecalcularPrecos />
           <Spin
             className="spinnerTabelaVencimentos"
             indicator={<Spinner animation="border" variant="light" />}
@@ -188,6 +193,37 @@ const EnviarOrdem = () => {
     >
       Enviar Ordem
     </Button>
+  );
+};
+
+const RecalcularPrecos = () => {
+  const reduxState = StateStorePrincipal().THLReducer;
+  const [visible, setVisible] = useState(false);
+  const dispatch = DispatchStorePrincipal();
+  const { codigoCelulaSelecionada } = reduxState;
+  const classeBotaoDesabilitado = !codigoCelulaSelecionada
+    ? " recalcularDesabilitado"
+    : "";
+
+  return (
+    <div className="iconeRecalcularPrecos">
+      <Tooltip
+        overlayClassName="toolTipRecalcularPreco"
+        title="Para recalcular os preços das estruturas é preciso selecionar uma Opção"
+        visible={visible && !!classeBotaoDesabilitado}
+        onVisibleChange={(visible) => setVisible(visible)}
+      >
+        <Button
+          className={`${classeBotaoDesabilitado}`}
+          disabled={!!classeBotaoDesabilitado}
+          onClick={() => dispatch(recalcularPrecosTHLAPIAction(reduxState))}
+          ghost
+          type="link"
+        >
+          <img src={iconeRecalcularPrecos} height="31" alt="recalcular preco" />
+        </Button>
+      </Tooltip>
+    </div>
   );
 };
 

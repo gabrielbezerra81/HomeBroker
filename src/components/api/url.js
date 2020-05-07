@@ -54,4 +54,5 @@ export const url_realizarCadastro_dados = "auth/signup";
 export const url_pesquisarListaStrike_codigo = "stocks/strikes/integer/";
 export const url_listarTabelaInicialTHL_ativo_strike_tipo =
   "structure/thl/list/";
-export const url_atualizarPrecosTHL_ids = "structures/ids?ids="
+export const url_atualizarPrecosTHL_ids = "structures/ids?ids=";
+export const url_recalcularPrecos_acao_ativo_strike_tipo = "structure/thl/ids/";

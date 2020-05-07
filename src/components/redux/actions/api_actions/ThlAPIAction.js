@@ -1,6 +1,7 @@
 import {
   listarTabelaInicialTHLAPI,
   atualizarPrecosTHLAPI,
+  recalcularPrecosTHLAPI,
 } from "components/api/API";
 import { pesquisarListaStrikeTHLAPI } from "components/api/API";
 import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
@@ -23,7 +24,6 @@ export const listarTabelaInicialTHLAPIAction = (
   strikeSelecionado,
   tipo,
   sourcePrecos,
-  precosTabela,
   setPrecosIntervalo
 ) => {
   return async (dispatch) => {
@@ -40,7 +40,6 @@ export const listarTabelaInicialTHLAPIAction = (
           tabelaVencimentos,
           sourcePrecos,
           dispatch,
-          precosTabela,
           setPrecosIntervalo
         );
       dispatch(mudarVariavelTHLAction("opcoesStrike", tabelaVencimentos));
@@ -49,11 +48,40 @@ export const listarTabelaInicialTHLAPIAction = (
   };
 };
 
+export const recalcularPrecosTHLAPIAction = (thlState) => {
+  return async (dispatch) => {
+    const {
+      ativoPesquisado,
+      strikeSelecionado,
+      tipo,
+      eventSourcePrecos,
+      setPrecosIntervalo,
+      codigoCelulaSelecionada,
+    } = thlState;
+
+    const opcoesRecalculadas = await recalcularPrecosTHLAPI(
+      codigoCelulaSelecionada,
+      ativoPesquisado,
+      strikeSelecionado,
+      tipo
+    );
+
+    if (opcoesRecalculadas.length) {
+      dispatch(mudarVariavelTHLAction("opcoesStrike", opcoesRecalculadas));
+      atualizarPrecosTHL(
+        opcoesRecalculadas,
+        eventSourcePrecos,
+        dispatch,
+        setPrecosIntervalo
+      );
+    }
+  };
+};
+
 const atualizarPrecosTHL = async (
   tabelaVencimentos,
   sourcePrecos,
   dispatch,
-  precosTabela,
   setPrecosIntervalo
 ) => {
   if (sourcePrecos) {
@@ -67,12 +95,13 @@ const atualizarPrecosTHL = async (
 
   tabelaVencimentos.forEach((linhaTabela) => {
     linhaTabela.structuresIds.forEach((id) => {
-      if (!ids.includes(id)) ids += id + ",";
+      if (id && !ids.includes(id)) ids += id + ",";
     });
   });
 
   ids = ids.substring(0, ids.length - 1);
 
-  const source = await atualizarPrecosTHLAPI(ids, dispatch, precosTabela);
+  const source = await atualizarPrecosTHLAPI(ids, dispatch);
   dispatch(mudarVariavelTHLAction("eventSourcePrecos", source));
+  dispatch(mudarVariavelTHLAction("precosTabelaVencimentos", []));
 };

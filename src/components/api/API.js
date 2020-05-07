@@ -22,17 +22,12 @@ import {
   url_finalizarAMercado_id,
   url_aumentarQtde_id_qtde,
   url_aumentarPreco_id_valor,
-  url_realizarLogin_usuario_senha,
-  url_autenticacao_token,
-  url_informacoesUsuario_token,
-  url_realizarCadastro_dados,
   url_ordensExecReativas_idUser,
   url_posicaoReativa_idUser,
   url_pesquisarListaStrike_codigo,
-  url_listarContas_token,
-  url_verificarToken_token,
   url_listarTabelaInicialTHL_ativo_strike_tipo,
   url_atualizarPrecosTHL_ids,
+  url_recalcularPrecos_acao_ativo_strike_tipo,
 } from "components/api/url";
 import {
   MUDAR_VARIAVEL_POSICAO_CUSTODIA,
@@ -59,11 +54,8 @@ import {
   erro_finalizar_a_mercado,
   sucesso_modificar_ordemExec,
   erro_modificar_ordemExec,
-  erro_realizar_login,
-  erro_realizar_cadastro,
   erro_timeout,
   erro_listarBook,
-  erro_sessaoExpirada,
   erro_listarTHL_thl,
 } from "constants/AlertaErros";
 
@@ -700,79 +692,6 @@ export const incrementarPrecoOrdemExecAPI = (id, preco) => {
     });
 };
 
-export const realizarLoginAPI = (username, password) => {
-  let payload = { username: username, password: password };
-
-  return (
-    request
-      .post(`${url_base}${url_realizarLogin_usuario_senha}`)
-      // .retry(3, 2000)
-      .timeout(timeout)
-      .set({ "Content-Type": "application/json" })
-      .send(JSON.stringify(payload))
-      .then((response) => {
-        const { body } = response;
-        return body;
-      })
-      .catch((erro) => {
-        mostrarErroConsulta(erro, erro_realizar_login);
-        return null;
-      })
-  );
-};
-
-export const realizarCadastroAPI = (nome, username, email, role, password) => {
-  let payload = {
-    name: nome,
-    username: username,
-    email: email,
-    role: role,
-    password: password,
-  };
-
-  return request
-    .post(`${url_base}${url_realizarCadastro_dados}`)
-    .set({ "Content-Type": "application/json" })
-    .timeout(timeout)
-    .send(JSON.stringify(payload))
-    .then(() => {
-      return true;
-    })
-    .catch((erro) => {
-      mostrarErroConsulta(erro, erro_realizar_cadastro);
-      return false;
-    });
-};
-
-export const autenticacaoTokenAPI = (token) => {
-  return request
-    .get(`${url_base}${url_autenticacao_token}`)
-    .timeout(timeout)
-    .set({ Authorization: `${token.tokenType} ${token.accessToken}` })
-    .then((response) => {
-      return response.body;
-    })
-    .catch((erro) => {
-      mostrarErroConsulta(erro, erro_realizar_login);
-      return null;
-    });
-};
-
-export const buscarInformacoesUsuarioAPI = (token) => {
-  return request
-    .get(`${url_base}${url_informacoesUsuario_token}`)
-    .set({ Authorization: `${token.tokenType} ${token.accessToken}` })
-    .timeout(timeout)
-    .retry(3, 2000)
-    .then((response) => {
-      return response.body;
-    })
-    .catch((erro) => {
-      mostrarErroConsulta(erro, erro_realizar_login);
-      return null;
-    });
-};
-
 export const pesquisarListaStrikeTHLAPI = (ativo) => {
   return request
     .get(`${url_base}${url_pesquisarListaStrike_codigo}${ativo}`)
@@ -782,36 +701,6 @@ export const pesquisarListaStrikeTHLAPI = (ativo) => {
     .catch((erro) => {
       mostrarErroConsulta(erro, erro_pesquisar_ativo);
       return [];
-    });
-};
-
-export const listarContasAPI = (token) => {
-  return request
-    .get(`${url_base}${url_listarContas_token}`)
-    .set({ Authorization: `${token.tokenType} ${token.accessToken}` })
-    .timeout(timeout)
-    .retry(3, 2000)
-    .then((response) => {
-      return response.body;
-    })
-    .catch((erro) => {
-      mostrarErroConsulta(erro, erro_realizar_login);
-      return null;
-    });
-};
-
-export const verificarTokenAPI = (token) => {
-  return request
-    .get(`${url_base}${url_verificarToken_token}${token.accessToken}`)
-    .timeout(timeout)
-    .retry(3, 2000)
-    .then((response) => {
-      const { body } = response;
-      return body;
-    })
-    .catch((erro) => {
-      mostrarErroConsulta(erro, erro_sessaoExpirada);
-      return null;
     });
 };
 
@@ -832,16 +721,12 @@ export const listarTabelaInicialTHLAPI = (ativo, strike, tipo) => {
 };
 
 // TODO:
-export const atualizarPrecosTHLAPI = (
-  ids,
-  dispatch,
-  precosTabelaVencimentos
-) => {
+export const atualizarPrecosTHLAPI = (ids, dispatch) => {
   var source = new EventSource(
     `${url_base_reativa}${url_atualizarPrecosTHL_ids}${ids}`
   );
 
-  const novosPrecos = [...precosTabelaVencimentos];
+  const novosPrecos = [];
 
   atualizaListaReativa(
     dispatch,
@@ -865,6 +750,25 @@ export const atualizarPrecosTHLAPI = (
   return source;
 };
 
+export const recalcularPrecosTHLAPI = (
+  ativo,
+  ativoPesquisado,
+  strike,
+  tipo
+) => {
+  return request
+    .get(
+      `${url_base}${url_recalcularPrecos_acao_ativo_strike_tipo}${ativo}/${ativoPesquisado}/${strike}/${tipo}`
+    )
+    .retry(2, 2000)
+    .timeout(timeout)
+    .then((response) => response.body)
+    .catch((erro) => {
+      mostrarErroConsulta(erro, "");
+      return [];
+    });
+};
+
 export const travarDestravarClique = (modo, id) => {
   if (modo === "travar") {
     document.body.style.cursor = "wait";
@@ -876,7 +780,7 @@ export const travarDestravarClique = (modo, id) => {
   }
 };
 
-const mostrarErroConsulta = (erro, mensagem) => {
+export const mostrarErroConsulta = (erro, mensagem) => {
   console.log(erro);
   if (erro.timeout) {
     alert(erro_timeout);

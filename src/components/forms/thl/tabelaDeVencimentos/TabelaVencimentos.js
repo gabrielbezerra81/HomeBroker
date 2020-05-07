@@ -21,7 +21,6 @@ export default React.memo(({ setScrollbarRef }) => {
     ativoPesquisado,
     tipo,
     eventSourcePrecos,
-    precosTabelaVencimentos,
     setPrecosIntervalo,
   } = reduxState;
 
@@ -40,7 +39,6 @@ export default React.memo(({ setScrollbarRef }) => {
         strikeSelecionado,
         tipo,
         eventSourcePrecos,
-        precosTabelaVencimentos,
         setPrecosIntervalo
       )
     );

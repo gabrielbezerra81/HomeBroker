@@ -493,3 +493,30 @@ thead th:nth-child(n + 3) {
 .botaoEnviarTHL:hover {
   opacity: 0.6;
 }
+
+.iconeRecalcularPrecos {
+  right: 150px;
+  top: 41px;
+  position: absolute !important;
+}
+
+.iconeRecalcularPrecos button {
+  border: none !important;
+}
+
+.recalcularDesabilitado {
+  opacity: 0.5;
+}
+
+.toolTipRecalcularPreco {
+  z-index: 99999999 !important;
+}
+
+.toolTipRecalcularPreco .ant-tooltip-arrow::before {
+  background-color: #fff;
+}
+
+.toolTipRecalcularPreco .ant-tooltip-inner {
+  background-color: #fff;
+  color: black;
+}

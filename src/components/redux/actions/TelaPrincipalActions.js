@@ -4,13 +4,13 @@ import {
   ABRIR_FECHAR_ITEM_BARRA_LATERAL,
   MUDAR_DADOS_LOGIN,
 } from "constants/ActionTypes";
+import { travarDestravarClique } from "components/api/API";
 import {
   realizarLoginAPI,
   buscarInformacoesUsuarioAPI,
-  travarDestravarClique,
   realizarCadastroAPI,
   listarContasAPI,
-} from "components/api/API";
+} from "components/api/LoginAPI";
 import { navigate } from "@reach/router";
 import { persistor } from "components/redux/StoreCreation";
 
