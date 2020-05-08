@@ -98,7 +98,7 @@ thead th:nth-child(n + 3) {
 
 /* tamanho minimo da coluna strike */
 .tabelaVencimentos tr td:first-child {
-  min-width: 47px;
+  width: 55px;
 }
 
 /* cabeçalho coluna 2 preço da linha */

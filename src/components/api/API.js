@@ -802,6 +802,13 @@ const atualizaListaReativa = (
         valor: lista,
       },
     });
+    dispatch({
+      type: actionType,
+      payload: {
+        nome: `${nomeLista}ID`,
+        valor: Math.random(),
+      },
+    });
   };
 
   setTimeout(atualizarLista, 1500);

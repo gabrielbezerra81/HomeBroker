@@ -9,39 +9,32 @@ import {
 import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 
-export default () => {
+export default React.memo(() => {
   const reduxState = StateStorePrincipal().THLReducer;
   const dispatch = DispatchStorePrincipal();
   const {
     seletorMapaCalor,
     faixasMapaCalor,
-    precoMin,
-    precoMax,
     precosTabelaVencimentos,
+    precosTabelaVencimentosID,
   } = reduxState;
-
   const { min, max } = useMemo(
     () => calcularPrecosMinMaxMapa(precosTabelaVencimentos, seletorMapaCalor),
-    [precosTabelaVencimentos, seletorMapaCalor]
+    [precosTabelaVencimentosID, seletorMapaCalor]
   );
 
   useEffect(() => {
     if (seletorMapaCalor !== "semcor") {
       dispatch(mudarVariavelTHLAction("precoMin", min));
       dispatch(mudarVariavelTHLAction("precoMax", max));
+
+      let faixasMapa = null;
+      if (max || min) {
+        faixasMapa = calculaMapaCalor([min, max]);
+        dispatch(mudarVariavelTHLAction("faixasMapaCalor", faixasMapa));
+      }
     }
   }, [min, max, seletorMapaCalor]);
-
-  useEffect(() => {
-    let faixasMapa = null;
-    if (
-      ["montar", "desmontar"].includes(seletorMapaCalor) &&
-      (precoMax || precoMin)
-    ) {
-      faixasMapa = calculaMapaCalor([precoMin, precoMax]);
-      dispatch(mudarVariavelTHLAction("faixasMapaCalor", faixasMapa));
-    }
-  }, [seletorMapaCalor, precoMin, precoMax]);
 
   return (
     <div className="containerMapaCalor">
@@ -84,7 +77,7 @@ export default () => {
       </Radio.Group>
     </div>
   );
-};
+});
 
 const radioStyle = {
   display: "block",

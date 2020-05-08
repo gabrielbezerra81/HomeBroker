@@ -3317,6 +3317,7 @@ const INITIAL_STATE = {
   prazo: "",
   eventSourcePrecos: null,
   setPrecosIntervalo: null,
+  precosTabelaVencimentosID: 0, // Como são enviados arrays mutados no setInterval, será enviado um id que muda a cada dispatch
   precosTabelaVencimentos: [], //[
   // {
   //   id: 4320,
