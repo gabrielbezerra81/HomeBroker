@@ -44,6 +44,7 @@ export const listarTabelaInicialTHLAPIAction = (
         );
       dispatch(mudarVariavelTHLAction("opcoesStrike", tabelaVencimentos));
       dispatch(mudarVariavelTHLAction("carregandoTabelaVencimentos", false));
+      dispatch(mudarVariavelTHLAction("codigoCelulaSelecionada", ""));
     }
   };
 };
@@ -58,6 +59,7 @@ export const recalcularPrecosTHLAPIAction = (thlState) => {
       setPrecosIntervalo,
       codigoCelulaSelecionada,
     } = thlState;
+    dispatch(mudarVariavelTHLAction("carregandoTabelaVencimentos", true));
 
     const opcoesRecalculadas = await recalcularPrecosTHLAPI(
       codigoCelulaSelecionada,
@@ -75,6 +77,11 @@ export const recalcularPrecosTHLAPIAction = (thlState) => {
         setPrecosIntervalo
       );
     }
+    setTimeout(
+      () =>
+        dispatch(mudarVariavelTHLAction("carregandoTabelaVencimentos", false)),
+      3000
+    );
   };
 };
 

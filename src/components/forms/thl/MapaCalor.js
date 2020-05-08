@@ -34,7 +34,10 @@ export default () => {
 
   useEffect(() => {
     let faixasMapa = null;
-    if (["montar", "desmontar"].includes(seletorMapaCalor) && precoMax) {
+    if (
+      ["montar", "desmontar"].includes(seletorMapaCalor) &&
+      (precoMax || precoMin)
+    ) {
       faixasMapa = calculaMapaCalor([precoMin, precoMax]);
       dispatch(mudarVariavelTHLAction("faixasMapaCalor", faixasMapa));
     }

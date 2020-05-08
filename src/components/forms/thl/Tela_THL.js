@@ -153,6 +153,7 @@ const InputPesquisa = () => {
 };
 
 const EnviarOrdem = () => {
+  const [visible, setVisible] = useState(false);
   const { divkey, zIndex } = StateGlobalStore().MainAppReducer;
   const { multilegAberto } = StateStorePrincipal().telaPrincipalReducer;
   const {
@@ -179,20 +180,28 @@ const EnviarOrdem = () => {
   };
 
   return (
-    <Button
-      onClick={(e) => {
-        if (booksSelecionados.length > 0) {
-          e.stopPropagation();
-          dispatchStorePrincipal(abrirMultilegTHLAction(props));
-        } //
-        else {
+    <div className="containerBotaoEnviarTHL">
+      <Tooltip
+        overlayClassName="toolTipRecalcularPreco"
+        title="Para enviar a ordem para a Multileg é preciso selecionar um book de uma Opção."
+        visible={visible}
+        onVisibleChange={(visible) =>
+          setVisible(visible && !booksSelecionados.length)
         }
-      }}
-      type="primary"
-      className="botaoEnviarTHL"
-    >
-      Enviar Ordem
-    </Button>
+      >
+        <Button
+          disabled={!booksSelecionados.length}
+          className={!booksSelecionados.length ? "botaoDesabilitado" : ""}
+          onClick={(e) => {
+            e.stopPropagation();
+            dispatchStorePrincipal(abrirMultilegTHLAction(props));
+          }}
+          type="primary"
+        >
+          Enviar Ordem
+        </Button>
+      </Tooltip>
+    </div>
   );
 };
 
@@ -202,14 +211,14 @@ const RecalcularPrecos = () => {
   const dispatch = DispatchStorePrincipal();
   const { codigoCelulaSelecionada } = reduxState;
   const classeBotaoDesabilitado = !codigoCelulaSelecionada
-    ? " recalcularDesabilitado"
+    ? " botaoDesabilitado"
     : "";
 
   return (
     <div className="iconeRecalcularPrecos">
       <Tooltip
         overlayClassName="toolTipRecalcularPreco"
-        title="Para recalcular os preços das estruturas é preciso selecionar uma Opção"
+        title="Para recalcular os preços das estruturas é preciso selecionar uma Opção."
         visible={visible}
         onVisibleChange={(visible) =>
           setVisible(visible && !!classeBotaoDesabilitado)
@@ -222,7 +231,14 @@ const RecalcularPrecos = () => {
           ghost
           type="link"
         >
-          <img src={iconeRecalcularPrecos} height="31" alt="recalcular preco" />
+          <div className="flexJustifyCenter">
+            <img
+              src={iconeRecalcularPrecos}
+              height="32"
+              alt="recalcular preco"
+            />
+            <h6 className="textoRecalcular">Recalcular</h6>
+          </div>
         </Button>
       </Tooltip>
     </div>

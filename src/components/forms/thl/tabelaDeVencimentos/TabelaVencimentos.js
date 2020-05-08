@@ -22,6 +22,7 @@ export default React.memo(({ setScrollbarRef }) => {
     tipo,
     eventSourcePrecos,
     setPrecosIntervalo,
+    precosTabelaVencimentos,
   } = reduxState;
 
   const strikesInteiros = useMemo(() => getStrikesInteiros(opcoesStrike), [
