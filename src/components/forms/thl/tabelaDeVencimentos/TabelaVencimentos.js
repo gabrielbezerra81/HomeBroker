@@ -22,7 +22,6 @@ export default React.memo(({ setScrollbarRef }) => {
     tipo,
     eventSourcePrecos,
     setPrecosIntervalo,
-    precosTabelaVencimentos,
   } = reduxState;
 
   const strikesInteiros = useMemo(() => getStrikesInteiros(opcoesStrike), [
@@ -71,11 +70,19 @@ export default React.memo(({ setScrollbarRef }) => {
           <tr>
             <th>Strike</th>
             <th>Preço da linha</th>
-            {anos.map((ano) => (
-              <th key={`coluna${ano}`} colSpan="12" className="colunaAno">
-                <div style={{ paddingLeft: "5px" }}>{ano}</div>
-              </th>
-            ))}
+            {anos.map((ano, indice) => {
+              let colSpan = 12;
+              if (indice === 0) colSpan = 12 - moment().month();
+              return (
+                <th
+                  key={`coluna${ano}`}
+                  colSpan={colSpan}
+                  className="colunaAno"
+                >
+                  <div style={{ paddingLeft: "5px" }}>{ano}</div>
+                </th>
+              );
+            })}
           </tr>
         </thead>
 
@@ -145,7 +152,13 @@ const getAnosUltimoMesTabela = (arrayVencimentos) => {
 const renderElementoDinamico = (anos, ultimoMes, renderElemento, key) => {
   return anos.map((ano, indice) =>
     meses.map((mes, indiceMes) => {
-      if (!(ano === anos[anos.length - 1] && indiceMes >= ultimoMes)) {
+      // Meses anteriores
+      const condicaoPrimeiroAno =
+        ano === anos[0] && indiceMes < moment().month();
+      // Se estiver renderizando no ultimo ano, o mês não pode ser maior que o ultimo mês. Ex: opções do ano 2021 termina em junho
+      const condicaoUltimoAno =
+        ano === anos[anos.length - 1] && indiceMes >= ultimoMes;
+      if (!condicaoPrimeiroAno && !condicaoUltimoAno) {
         return (
           <td key={`${key}${ano}${mes}`}>{renderElemento(indiceMes, ano)}</td>
         );
@@ -310,18 +323,6 @@ const OpcoesStrikeVazio = () => {
       <td>
         <InputStrikeSelecionado indiceStrike={1} />
       </td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
       <td></td>
     </tr>
   );
