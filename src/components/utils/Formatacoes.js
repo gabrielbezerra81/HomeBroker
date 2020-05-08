@@ -85,10 +85,11 @@ export const getDiaEMes = () => {
   return date.getDate() + " de " + mes;
 };
 
-export const formatarNumDecimal = function (num) {
+export const formatarNumDecimal = function (num, maximumFractionDigits = 3) {
   if (!num && num !== 0) return "0";
   return num.toLocaleString("pt-BR", {
     minimumFractionDigits: 2,
+    maximumFractionDigits: maximumFractionDigits,
   });
 };
 

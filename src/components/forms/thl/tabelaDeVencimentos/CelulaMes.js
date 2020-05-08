@@ -262,10 +262,14 @@ const calculaCorPreco = (reduxState, estrutura) => {
     faixasMapaCalor &&
     estrutura
   ) {
-    const valor = seletorMapaCalor === "montar" ? estrutura.max : estrutura.min;
+    const valor =
+      seletorMapaCalor === "montar"
+        ? +estrutura.max.toFixed(2)
+        : +estrutura.min.toFixed(2);
     const indice = faixasMapaCalor.findIndex((faixa) => {
-      const min = Number(faixa.min.replace(",", "."));
-      const max = Number(faixa.max.replace(",", "."));
+      const min = faixa.min;
+      const max = faixa.max;
+
       return valor >= min && valor <= max;
     });
     if (indice !== -1) classe = ` faixa${indice + 1}Mapa`;

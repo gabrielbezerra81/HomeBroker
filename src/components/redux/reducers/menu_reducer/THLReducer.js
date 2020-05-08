@@ -3249,7 +3249,7 @@ const precos = [
 
 const INITIAL_STATE = {
   ativoPesquisa: "PETR4",
-  ativoPesquisado: "",
+  ativoPesquisado: "PETR4",
   pesquisandoAtivo: false,
   tipo: "CALL",
   opcoesStrike: mapTabelaVencimentos([]),
