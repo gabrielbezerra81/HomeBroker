@@ -4,13 +4,12 @@ import { ReactComponent as ArrowDown } from "img/down-arrow.svg";
 import { ReactComponent as ArrowUp } from "img/up-arrow.svg";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 
-class EmblemaSimples extends React.Component {
-  render() {
-    const { props } = this;
-    const precos = props.precosEmblema ? props.precosEmblema : props.item;
+export default React.memo(
+  ({ item, precosEmblema, emblemaMaior, arrayPrecosID }) => {
+    const precos = precosEmblema ? precosEmblema : item;
 
     return (
-      <div className={props.emblemaMaior ? "" : "itemListaCompleta"}>
+      <div className={emblemaMaior ? "" : "itemListaCompleta"}>
         <Row>
           <Col>Min</Col>
           <Col md={0}>Médio</Col>
@@ -36,26 +35,26 @@ class EmblemaSimples extends React.Component {
         <Row>
           <Col md={12} className="text-align-center">
             <div className="divSetaPorcentagem">
-              {renderSeta(props.item.oscilacao)}
-              {renderValorPorcentagem(props.item.oscilacao)}
+              {renderSeta(item.oscilacao)}
+              {renderValorPorcentagem(item.oscilacao)}
             </div>
           </Col>
         </Row>
         <div className="divSetaPorcentagem">
           <Col md={0}>
             STOP<br></br>
-            {formatarNumDecimal(props.item.stopLoss)}
+            {formatarNumDecimal(item.stopLoss)}
           </Col>
           <Col md={8}>
             <div>
               <input
                 type="range"
                 className={`custom-range ${corInputRange(
-                  props.item.oscilacao
+                  item.oscilacao
                 )} inputRange`}
-                min={props.item.stopLoss}
-                max={props.item.stopGain}
-                value={(props.item.stopLoss + props.item.stopGain) / 2}
+                min={item.stopLoss}
+                max={item.stopGain}
+                value={(item.stopLoss + item.stopGain) / 2}
                 step={0.01}
                 onChange={() => false}
                 //value={item.valorAcao}
@@ -64,29 +63,27 @@ class EmblemaSimples extends React.Component {
           </Col>
           <Col md={0}>
             GAIN<br></br>
-            {formatarNumDecimal(props.item.stopGain)}
+            {formatarNumDecimal(item.stopGain)}
           </Col>
         </div>
       </div>
     );
   }
-}
+);
 
-export default EmblemaSimples;
-
-const renderSeta = valor => {
+const renderSeta = (valor) => {
   valor = Number(valor);
   if (valor >= 0)
     return <ArrowUp fill="#138342" className="iconeSeta setaEmblema mr-1" />;
   else return <ArrowDown fill="red" className="iconeSeta setaEmblema mr-1" />;
 };
 
-const corInputRange = porcentagem => {
+const corInputRange = (porcentagem) => {
   if (porcentagem >= 0) return "rangePositivo";
   else return "rangeNegativo";
 };
 
-const renderValorPorcentagem = porcentagem => {
+const renderValorPorcentagem = (porcentagem) => {
   if (porcentagem > 0) {
     porcentagem = formatarNumDecimal(porcentagem);
     return <span className="porcentagemPositiva">+{porcentagem}%</span>;

@@ -7,10 +7,14 @@ const INITIAL_STATE = {
   inputSelect: "",
   posicoesCustodia: [],
   eventSourceEmblema: null,
+  setIntervalEmblema: null,
   eventSourcePosicao: null,
   eventSourceCotacoes: null,
+  setIntervalCotacoesPosicao: null,
   arrayPrecos: [],
-  arrayCotacoes: []
+  arrayPrecosID: 0,
+  arrayCotacoes: [],
+  arrayCotacoesID: 0,
 };
 
 export default (state = INITIAL_STATE, action) => {

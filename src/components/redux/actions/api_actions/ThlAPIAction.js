@@ -1,9 +1,9 @@
 import {
   listarTabelaInicialTHLAPI,
-  atualizarPrecosTHLAPI,
   recalcularPrecosTHLAPI,
 } from "components/api/API";
 import { pesquisarListaStrikeTHLAPI } from "components/api/API";
+import { atualizarPrecosTHLAPI } from "components/api/ReativosAPI";
 import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
 
 export const pesquisarAtivoTHLAPIAction = (codigo) => {

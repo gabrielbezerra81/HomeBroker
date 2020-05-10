@@ -24,7 +24,7 @@ export default class TabelaCompleta extends React.Component {
         </Row>
         <Row className="rowCompra mb-3">
           <Col md={0} className="pb-3">
-            <EmblemaSimples item={this.props.dados}></EmblemaSimples>
+            <EmblemaSimples item={this.props.dados} />
           </Col>
           <Col className="colTabela">
             <Table
@@ -133,10 +133,10 @@ export default class TabelaCompleta extends React.Component {
   }
 }
 
-const renderAtivos = dados => {
+const renderAtivos = (dados) => {
   let ativos = `${dados.estrategia}: ${dados.ativo}`;
   var codigos = "   ";
-  dados.operacoes.map(item => {
+  dados.operacoes.map((item) => {
     return (codigos += item.codigo + " | ");
   });
   ativos += codigos;
@@ -144,7 +144,7 @@ const renderAtivos = dados => {
   return ativos.substring(0, ativos.length - 2);
 };
 
-export const calculaTotal = item => {
+export const calculaTotal = (item) => {
   let total = Number(item.qtde) * 1000 * Number(item.unit);
   let tipo = "";
   if (total >= 0) tipo = " (D)";
@@ -152,7 +152,7 @@ export const calculaTotal = item => {
   return formatarNumDecimal(total) + tipo;
 };
 
-export const calculaResultado = resultado => {
+export const calculaResultado = (resultado) => {
   let result = "Resultado: R$ ";
   if (resultado.total >= 0) result += "+";
   else result += "-";
@@ -161,7 +161,7 @@ export const calculaResultado = resultado => {
   return <h6 className="textosTitulos">{result}</h6>;
 };
 
-export const calculaVariacao = variacao => {
+export const calculaVariacao = (variacao) => {
   let result = "";
   let classe = "";
   if (variacao >= 0) {

@@ -1,8 +1,5 @@
-import {
-  pesquisarAtivoAPI,
-  enviarOrdemAPI,
-  atualizarCotacaoAPI,
-} from "components/api/API";
+import { pesquisarAtivoAPI, enviarOrdemAPI } from "components/api/API";
+import { atualizarCotacaoAPI } from "components/api/ReativosAPI";
 import { PESQUISAR_ATIVO_BOLETA_API } from "constants/ApiActionTypes";
 import {
   montaOrdemPrincipal,
@@ -53,7 +50,6 @@ const atualizarCotacaoBoletaAction = (
 
   const newSource = atualizarCotacaoAPI(
     dispatch,
-    props,
     codigo,
     "boletas",
     [],

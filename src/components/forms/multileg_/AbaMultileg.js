@@ -184,6 +184,9 @@ const mapStateToProps = (state) => ({
   eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
   cotacoesMultileg: state.multilegReducer.cotacoesMultileg,
   pesquisandoAtivo: state.multilegReducer.pesquisandoAtivo,
+  setIntervalCotacoesMultileg:
+    state.multilegReducer.setIntervalCotacoesMultileg,
+  cotacoesMultilegID: state.multilegReducer.cotacoesMultilegID,
 });
 
 export default connect(

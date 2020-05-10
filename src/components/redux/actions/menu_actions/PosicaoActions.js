@@ -1,11 +1,10 @@
 import { MUDAR_VARIAVEL_POSICAO_CUSTODIA } from "constants/MenuActionTypes";
+import { listarPosicoesAPI, pesquisarAtivoAPI } from "components/api/API";
 import {
-  listarPosicoesAPI,
   atualizarEmblemasAPI,
   atualizarPosicaoAPI,
-  pesquisarAtivoAPI,
   atualizarCotacaoAPI,
-} from "components/api/API";
+} from "components/api/ReativosAPI";
 
 export const mudarVariavelPosicaoAction = (nome, valor) => {
   return (dispatch) => {
@@ -39,22 +38,13 @@ export const listarPosicoesAction = (props) => {
       // arrayPrecos.splice(0, 19);
       arrayCotacoes = await montaArrayCotacoes(listaPosicoes);
 
-      atualizarPosicao(dispatch, listaPosicoes, props, props.token.accessToken);
-      atualizarEmblemas(dispatch, listaPosicoes, props, arrayPrecos);
+      // atualizarPosicao(dispatch, listaPosicoes, props, props.token.accessToken);
+      // atualizarEmblemas(dispatch, listaPosicoes, props, arrayPrecos);
       atualizarCotacoes(dispatch, listaPosicoes, props, arrayCotacoes);
 
-      dispatch({
-        type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-        payload: { nome: "posicoesCustodia", valor: listaPosicoes },
-      });
-      dispatch({
-        type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-        payload: { nome: "arrayPrecos", valor: arrayPrecos },
-      });
-      dispatch({
-        type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-        payload: { nome: "arrayCotacoes", valor: arrayCotacoes },
-      });
+      dispatch(mudarVariavelPosicaoAction("posicoesCustodia", listaPosicoes));
+      dispatch(mudarVariavelPosicaoAction("arrayPrecos", arrayPrecos));
+      dispatch(mudarVariavelPosicaoAction("arrayCotacoes", arrayCotacoes));
     }
   };
 };
@@ -105,16 +95,16 @@ export const adicionaPosicao = (grupoPosicao) => {
 };
 
 // Atualiza min, max e ult
-export const atualizarEmblemasAction = (props) => {
-  return (dispatch) => {
-    atualizarEmblemas(
-      dispatch,
-      props.posicoesCustodia,
-      props,
-      props.arrayPrecos
-    );
-  };
-};
+// export const atualizarEmblemasAction = (props) => {
+//   return (dispatch) => {
+//     atualizarEmblemas(
+//       dispatch,
+//       props.posicoesCustodia,
+//       props,
+//       props.arrayPrecos
+//     );
+//   };
+// };
 
 export const atualizarEmblemas = (
   dispatch,
@@ -124,9 +114,12 @@ export const atualizarEmblemas = (
 ) => {
   let ids = "";
 
-  // if (props.eventSourceEmblema) {
-  //   props.eventSourceEmblema.close();
-  // }
+  if (props.eventSourceEmblema) {
+    props.eventSourceEmblema.close();
+  }
+  if (props.setIntervalEmblema) {
+    clearInterval(props.setIntervalEmblema);
+  }
 
   listaPosicoes.forEach((posicao) => {
     ids += posicao.idEstrutura + ",";
@@ -135,23 +128,20 @@ export const atualizarEmblemas = (
 
   const newSource = atualizarEmblemasAPI(dispatch, arrayPrecos, ids);
 
-  dispatch({
-    type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-    payload: { nome: "eventSourceEmblema", valor: newSource },
-  });
+  dispatch(mudarVariavelPosicaoAction("eventSourceEmblema", newSource));
 };
 
 // Atualiza demais campos de posição
-export const atualizarPosicaoAction = (props) => {
-  return (dispatch) => {
-    atualizarPosicao(
-      dispatch,
-      props.posicoesCustodia,
-      props,
-      props.token.accessToken
-    );
-  };
-};
+// export const atualizarPosicaoAction = (props) => {
+//   return (dispatch) => {
+//     atualizarPosicao(
+//       dispatch,
+//       props.posicoesCustodia,
+//       props,
+//       props.token.accessToken
+//     );
+//   };
+// };
 
 const atualizarPosicao = (dispatch, listaPosicoes, props, idUsuario) => {
   // if (props.eventSourcePosicao) {
@@ -165,10 +155,7 @@ const atualizarPosicao = (dispatch, listaPosicoes, props, idUsuario) => {
     props
   );
 
-  dispatch({
-    type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-    payload: { nome: "eventSourcePosicao", valor: newSource },
-  });
+  dispatch(mudarVariavelPosicaoAction("eventSourcePosicao", newSource));
 };
 
 const montaArrayCotacoes = async (listaPosicoes, tipoRetorno = "completo") => {
@@ -213,9 +200,12 @@ const atualizarCotacoes = async (
   let codigos = "";
   const arrayCodigos = await montaArrayCotacoes(listaPosicoes, "codigos");
 
-  // if (props.eventSourceCotacoes) {
-  //   props.eventSourceCotacoes.close();
-  // }
+  if (props.eventSourceCotacoes) {
+    props.eventSourceCotacoes.close();
+  }
+  if (props.setIntervalCotacoesPosicao) { // quem disparar pela segunda vez deve ter essa var no connect
+    clearInterval(props.setIntervalCotacoesPosicao);
+  }
 
   arrayCodigos.forEach((ativo) => {
     codigos += ativo.codigo + ",";
@@ -225,14 +215,10 @@ const atualizarCotacoes = async (
 
   const newSource = atualizarCotacaoAPI(
     dispatch,
-    props,
     codigos,
     "posicao",
     arrayCotacoes
   );
 
-  dispatch({
-    type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-    payload: { nome: "eventSourceCotacoes", valor: newSource },
-  });
+  dispatch(mudarVariavelPosicaoAction("eventSourceCotacoes", newSource));
 };

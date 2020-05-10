@@ -59,7 +59,8 @@ class PosicaoAmpliadaResumida extends React.Component {
                   item={item}
                   precosEmblema={encontrarPrecosEmblema(props, item)}
                   emblemaMaior={props.emblemaMaior}
-                ></EmblemaSimples>
+                  arrayPrecosID={props.arrayPrecosID}
+                />
                 {props.tipoVisualizacao === "ampliado" ? (
                   <div>
                     <div className="divSetaPorcentagem">
@@ -149,6 +150,7 @@ const mapStateToPropsPosicao = (state) => ({
   tipoVisualizacao: state.posicaoReducer.tipoVisualizacao,
   posicoesCustodia: state.posicaoReducer.posicoesCustodia,
   arrayPrecos: state.posicaoReducer.arrayPrecos,
+  arrayPrecosID: state.posicaoReducer.arrayPrecosID,
 });
 
 export default connect(mapStateToPropsPosicao, {}, null, {
@@ -257,6 +259,6 @@ const encontrarPrecosEmblema = (props, posicao) => {
   const precosEmblema = props.arrayPrecos.filter(
     (preco) => preco.idEstrutura === posicao.idEstrutura
   );
-
-  return precosEmblema[0];
+  if (precosEmblema.length) return precosEmblema[0];
+  return null;
 };

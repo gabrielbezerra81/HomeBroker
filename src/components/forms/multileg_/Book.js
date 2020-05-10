@@ -27,7 +27,8 @@ import { aviso_calculo_preco_multileg } from "constants/AlertaErros";
 
 class Book extends React.Component {
   componentDidUpdate(prevProps) {
-    if (prevProps.cotacoesMultileg !== this.props.cotacoesMultileg) {
+    if (prevProps.cotacoesMultilegID !== this.props.cotacoesMultilegID) {
+      console.log("calculou");
       atualizarPrecoDinamicante(this.props);
     }
   }
@@ -341,6 +342,7 @@ const mapStateToProps = (state) => ({
   token: state.telaPrincipalReducer.token,
   conta: state.telaPrincipalReducer.conta,
   contaSelecionada: state.telaPrincipalReducer.contaSelecionada,
+  cotacoesMultilegID: state.multilegReducer.cotacoesMultilegID,
 });
 
 export default connect(

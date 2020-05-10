@@ -4,7 +4,7 @@ import { ModalHeaderLimpo } from "components/utils/componentesUI/FormHeader";
 import { connect } from "react-redux";
 import {
   abrirFecharConfigComplAction,
-  modificarVariavelAction,
+  modificarVariavelMultilegAction,
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { StorePrincipalContext } from "components/redux/StoreCreation";
 
@@ -25,7 +25,7 @@ class ConfigComplementar extends React.Component {
                 className="textInput"
                 value={this.props.horaInicial}
                 onChange={(event) =>
-                  this.props.modificarVariavelAction(
+                  this.props.modificarVariavelMultilegAction(
                     "horaInicial",
                     event.currentTarget.value
                   )
@@ -43,7 +43,7 @@ class ConfigComplementar extends React.Component {
                 className="textInput"
                 value={this.props.horaFinal}
                 onChange={(event) =>
-                  this.props.modificarVariavelAction(
+                  this.props.modificarVariavelMultilegAction(
                     "horaFinal",
                     event.currentTarget.value
                   )
@@ -61,7 +61,7 @@ class ConfigComplementar extends React.Component {
                 className="textInput"
                 value={this.props.modoExec}
                 onChange={(event) =>
-                  this.props.modificarVariavelAction(
+                  this.props.modificarVariavelMultilegAction(
                     "modoExec",
                     event.currentTarget.value
                   )
@@ -80,7 +80,7 @@ class ConfigComplementar extends React.Component {
                 type="checkbox"
                 checked={this.props.apregoarOferta}
                 onChange={(event) =>
-                  this.props.modificarVariavelAction(
+                  this.props.modificarVariavelMultilegAction(
                     "apregoarOferta",
                     event.currentTarget.checked
                   )
@@ -117,7 +117,7 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  { abrirFecharConfigComplAction, modificarVariavelAction },
+  { abrirFecharConfigComplAction, modificarVariavelMultilegAction },
   null,
   { context: StorePrincipalContext }
 )(ConfigComplementar);

@@ -1,6 +1,5 @@
 import {
   MUDAR_VARIAVEL_THL,
-  ADICIONAR_ABA,
   MODIFICAR_VARIAVEL_MULTILEG,
 } from "constants/MenuActionTypes";
 import { travarDestravarClique } from "components/api/API";
@@ -14,6 +13,7 @@ import {
   modificarAba,
   atualizarCotacaoAction,
   adicionarOferta,
+  modificarVariavelMultilegAction,
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { erro_exportar_ordens_multileg } from "constants/AlertaErros";
 import { pesquisaAtivo } from "components/redux/actions/api_actions/MultilegAPIAction";
@@ -113,17 +113,16 @@ export const abrirMultilegTHLAction = (props) => {
     }
     objMultileg.abasMultileg = multileg;
 
-    dispatch({
-      type: ADICIONAR_ABA,
-      payload: {
-        multileg: objMultileg.abasMultileg,
-        abaSelecionada: objMultileg.abaAtual,
-      },
-    });
-    dispatch({
-      type: MODIFICAR_VARIAVEL_MULTILEG,
-      payload: { nome: "cotacoesMultileg", valor: cotacoesMultileg },
-    });
+    dispatch(
+      modificarVariavelMultilegAction("multileg", objMultileg.abasMultileg)
+    );
+    dispatch(
+      modificarVariavelMultilegAction("abaSelecionada", objMultileg.abaAtual)
+    );
+    dispatch(
+      modificarVariavelMultilegAction("cotacoesMultileg", cotacoesMultileg)
+    );
+
     atualizarCotacaoAction(dispatch, props, cotacoesMultileg);
 
     travarDestravarClique("destravar", "thl");

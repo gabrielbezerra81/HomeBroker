@@ -1,8 +1,6 @@
 import request from "superagent";
 import retryDelay from "superagent-retry-delay";
 import { formatarDataDaAPI } from "components/utils/Formatacoes";
-import { atualizarTabelaAntiga } from "components/redux/actions/api_actions/bookOfertaAPIActions";
-import { adicionaPosicao } from "components/redux/actions/menu_actions/PosicaoActions";
 import {
   url_base,
   url_pesquisarAtivoBoletas_codigo,
@@ -12,34 +10,17 @@ import {
   url_pesquisarStrikes_codigo_vencimento,
   url_listarOrdensExecucao_,
   url_listarPosicoes,
-  url_emblemaReativo_ids,
-  url_base_reativa,
-  url_bookReativo_codigos,
-  url_cotacaoReativa_codigos,
   url_criarPosicaoMultileg_,
   url_criarAlertaOperacao_,
   url_cancelarOrdemExec_id,
   url_finalizarAMercado_id,
   url_aumentarQtde_id_qtde,
   url_aumentarPreco_id_valor,
-  url_ordensExecReativas_idUser,
-  url_posicaoReativa_idUser,
   url_pesquisarListaStrike_codigo,
   url_listarTabelaInicialTHL_ativo_strike_tipo,
-  url_atualizarPrecosTHL_ids,
   url_recalcularPrecos_acao_ativo_strike_tipo,
 } from "components/api/url";
-import {
-  MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-  MODIFICAR_VARIAVEL_MULTILEG,
-  MUDAR_VARIAVEL_THL,
-} from "constants/MenuActionTypes";
-import {
-  LISTAR_BOOK_OFERTAS,
-  PESQUISAR_ATIVO_BOLETA_API,
-  ATUALIZAR_SOURCE_EVENT_MULTILEG,
-  LISTAR_ORDENS_EXECUCAO,
-} from "constants/ApiActionTypes";
+
 import {
   erro_pesquisar_ativo,
   sucesso_enviar_ordem,
@@ -62,7 +43,6 @@ import {
 retryDelay(request);
 
 const timeout = 6000;
-const intervaloAttReativa = 3000;
 
 export const pesquisarAtivoAPI = (codigo) => {
   return request
@@ -276,337 +256,6 @@ export const listarPosicoesAPI = (idToken) => {
     });
 };
 
-export const atualizarOrdensExecAPI = (
-  dispatch,
-  token,
-  listaOrdensExec,
-  props
-) => {
-  var source = new EventSource(
-    `${url_base_reativa}${url_ordensExecReativas_idUser}${token}`
-  );
-
-  source.onmessage = function (event) {
-    if (typeof event.data !== "undefined") {
-      var dados = JSON.parse(event.data);
-
-      if (dados.orders && dados.orders.length > 0) {
-        const novaTabela = [...listaOrdensExec];
-        dados.orders.forEach((novaOrdem) => {
-          const indice = novaTabela.findIndex(
-            (ordem) => ordem.id === novaOrdem.id
-          );
-          if (indice !== -1) novaTabela[indice] = novaOrdem;
-          else novaTabela.unshift(novaOrdem);
-        });
-        dispatch({ type: LISTAR_ORDENS_EXECUCAO, payload: novaTabela });
-      }
-    }
-  };
-
-  return source;
-};
-
-export const atualizarBookAPI = (
-  dispatch,
-  props,
-  codigos,
-  tipo,
-  rembook //booksMultileg
-) => {
-  var source = new EventSource(
-    `${url_base_reativa}${url_bookReativo_codigos}${codigos}`
-  );
-  source.onopen = function (event) {
-    // console.log("open");
-  };
-
-  source.onmessage = function (event) {
-    if (typeof event.data !== "undefined") {
-      // console.log("chegou");
-      let tabelas = {
-        tabelaOfertasCompra: [],
-        tabelaOfertasVenda: [],
-      };
-
-      var dados = JSON.parse(event.data);
-
-      let ativoRetornado = dados.symbol;
-      if (dados.bookOffers) {
-        let bookNovo = [...dados.bookOffers];
-
-        bookNovo.forEach((item) => {
-          if (item.type === "V") {
-            tabelas.tabelaOfertasVenda.push(item);
-          } else if (item.type === "C") {
-            tabelas.tabelaOfertasCompra.push(item);
-          }
-        });
-        tabelas.tabelaOfertasCompra.sort((a, b) => b.price - a.price);
-        tabelas.tabelaOfertasVenda.sort((a, b) => b.price - a.price);
-      }
-
-      if (tipo === "book") {
-        dispatch({
-          type: LISTAR_BOOK_OFERTAS,
-          payload: atualizarTabelaAntiga(tabelas),
-        });
-      }
-
-      if (tipo === "multileg" && dados.bookOffers) {
-        let permitirDispatch = false;
-        let novosBooks = [...rembook];
-
-        novosBooks.forEach((book) => {
-          if (book.codigo === ativoRetornado) {
-            const valorCompra = tabelas.tabelaOfertasCompra[0];
-            const valorVenda =
-              tabelas.tabelaOfertasVenda[tabelas.tabelaOfertasVenda.length - 1];
-
-            if (!book.compra || book.compra.price !== valorCompra.price) {
-              book.compra = valorCompra;
-              permitirDispatch = true;
-            }
-            if (!book.venda || book.venda.price !== valorVenda.price) {
-              book.venda = valorVenda;
-              permitirDispatch = true;
-            }
-          }
-        });
-
-        if (permitirDispatch) {
-          dispatch({
-            type: MODIFICAR_VARIAVEL_MULTILEG,
-            payload: { nome: "rembook", valor: novosBooks },
-          });
-        }
-        dispatch({
-          type: ATUALIZAR_SOURCE_EVENT_MULTILEG,
-          payload: source,
-          nomeVariavel: "eventSource",
-        });
-      }
-    }
-  };
-  return source;
-};
-
-export const atualizarCotacaoAPI = (
-  dispatch,
-  props,
-  codigos,
-  tipo, // Quem disparou a função, ex: multileg, posição, boleta de compra e venda
-  arrayCotacoes = [], // Usado para o multileg ou para posição
-  namespace = "", // Usado para disparar atualização para a boleta de compra e venda correta
-  dadosPesquisa = null
-) => {
-  var source = new EventSource(
-    `${url_base_reativa}${url_cotacaoReativa_codigos}${codigos}`
-  );
-  // var array = [];
-
-  source.onopen = function (event) {
-    // console.log("open");
-  };
-
-  source.onmessage = function (event) {
-    if (typeof event.data !== "undefined") {
-      var dados = JSON.parse(event.data);
-      //
-      // const indice = array.findIndex((it) => it.symbol === dados.symbol);
-      // if (indice !== -1)
-      //   array = array.map((item, ind) => {
-      //     if (indice === ind) {
-      //       return dados;
-      //     }
-      //     return item;
-      //   });
-      // else array.push(dados);
-      // console.log(dados.symbol);
-
-      //
-      const cotacaoAtual = dados.ultimo;
-      const ativoRetornado = dados.symbol;
-
-      if (tipo === "boletas" && dadosPesquisa) {
-        if (cotacaoAtual && dadosPesquisa.cotacaoAtual !== cotacaoAtual) {
-          dadosPesquisa.cotacaoAtual = cotacaoAtual;
-
-          if (dados.ultimoHorario)
-            dadosPesquisa.ultimoHorario = formatarDataDaAPI(
-              dados.ultimoHorario
-            ).toLocaleTimeString();
-
-          dispatch({
-            type: `${PESQUISAR_ATIVO_BOLETA_API}${namespace}`,
-            payload: { ...dadosPesquisa },
-          });
-        }
-      } //
-      else if (tipo === "multileg") {
-        let permitirDispatch = false;
-        arrayCotacoes = [...arrayCotacoes];
-        const indice = arrayCotacoes.findIndex(
-          (cotacao) => cotacao.codigo === ativoRetornado
-        );
-
-        if (indice !== -1) {
-          //&& arrayCotacoes[indice].valor !== cotacaoAtual => condição da cotação antiga ser diferente da nova
-          arrayCotacoes[indice].valor = cotacaoAtual;
-          arrayCotacoes[indice].compra = {
-            price: dados.compra,
-            qtty: dados.compraQtde,
-            type: "C",
-          };
-          arrayCotacoes[indice].venda = {
-            price: dados.venda,
-            qtty: dados.vendaQtde,
-            type: "V",
-          };
-          permitirDispatch = true;
-        }
-
-        if (permitirDispatch) {
-          // let calculo = calculoPreco(aba, "ultimo", []).toFixed(2);
-          // calculo = formatarNumero(calculo, 2, ".", ",");
-          // aba.preco = calculo;
-          dispatch({
-            type: MODIFICAR_VARIAVEL_MULTILEG,
-            payload: { nome: "cotacoesMultileg", valor: arrayCotacoes },
-          });
-        }
-        dispatch({
-          type: ATUALIZAR_SOURCE_EVENT_MULTILEG,
-          payload: source,
-          nomeVariavel: "eventSourceCotacao",
-        });
-      } //
-      else if (tipo === "posicao") {
-        arrayCotacoes = [...arrayCotacoes];
-
-        const indice = arrayCotacoes.findIndex(
-          (ativo) => ativo.codigo === ativoRetornado
-        );
-        let permitirDispatch = false;
-
-        if (indice !== -1 && arrayCotacoes[indice].cotacao !== cotacaoAtual) {
-          arrayCotacoes[indice].cotacao = cotacaoAtual;
-          permitirDispatch = true;
-        } //
-        else {
-          const ativo = {
-            codigo: ativoRetornado,
-            cotacao: cotacaoAtual,
-          };
-          arrayCotacoes.push(ativo);
-          permitirDispatch = true;
-        }
-
-        if (permitirDispatch)
-          dispatch({
-            type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-            payload: { nome: "arrayCotacoes", valor: arrayCotacoes },
-          });
-      }
-    }
-  };
-  return source;
-};
-
-export const atualizarEmblemasAPI = (dispatch, listaPrecos, ids) => {
-  var source = new EventSource(
-    `${url_base_reativa}${url_emblemaReativo_ids}${ids}`
-  );
-
-  source.onopen = function (event) {
-    console.log("open");
-  };
-
-  source.onmessage = function (event) {
-    if (typeof event.data !== "undefined") {
-      var dados = JSON.parse(event.data);
-      listaPrecos = [...listaPrecos];
-
-      const indice = listaPrecos.findIndex(
-        (posicao) => posicao.idEstrutura === dados.id
-      );
-      let permitirDispatch = false;
-
-      if (indice !== -1) {
-        listaPrecos[indice].precoCompra = dados.min;
-        listaPrecos[indice].precoVenda = dados.max;
-        listaPrecos[indice].cotacaoAtual = dados.last;
-
-        permitirDispatch = true;
-      } //
-      else {
-        const preco = {
-          precoCompra: dados.min,
-          precoVenda: dados.max,
-          cotacaoAtual: dados.last,
-          idEstrutura: dados.id,
-        };
-        listaPrecos.push(preco);
-        permitirDispatch = true;
-      }
-
-      if (permitirDispatch)
-        dispatch({
-          type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-          payload: { nome: "arrayPrecos", valor: listaPrecos },
-        });
-    }
-  };
-
-  return source;
-};
-
-export const atualizarPosicaoAPI = (
-  dispatch,
-  listaPosicoes,
-  idUsuario,
-  props
-) => {
-  var source = new EventSource(
-    `${url_base_reativa}${url_posicaoReativa_idUser}${idUsuario}`
-  );
-
-  source.onopen = function (event) {
-    console.log("open");
-  };
-
-  source.onmessage = function (event) {
-    if (typeof event.data !== "undefined") {
-      var grupoPosicao = JSON.parse(event.data);
-      listaPosicoes = [...listaPosicoes];
-
-      const indice = listaPosicoes.findIndex(
-        (posicao) =>
-          posicao.agrupadorPrincipal === grupoPosicao.agrupadorPrincipal
-      );
-      let permitirDispatch = false;
-
-      if (indice !== -1) {
-        const posicaoAtualizada = adicionaPosicao(grupoPosicao)[0];
-        listaPosicoes[indice] = posicaoAtualizada;
-        permitirDispatch = true;
-      } //
-      else {
-        const novaPosicao = adicionaPosicao(grupoPosicao);
-        listaPosicoes.push(...novaPosicao);
-        permitirDispatch = true;
-      }
-      if (permitirDispatch)
-        dispatch({
-          type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-          payload: { nome: "posicoesCustodia", valor: listaPosicoes },
-        });
-    }
-  };
-
-  return source;
-};
-
 export const criarPosicaoMultilegAPI = (json) => {
   const jsonStringBody = JSON.stringify(json);
 
@@ -720,36 +369,6 @@ export const listarTabelaInicialTHLAPI = (ativo, strike, tipo) => {
     });
 };
 
-// TODO:
-export const atualizarPrecosTHLAPI = (ids, dispatch) => {
-  var source = new EventSource(
-    `${url_base_reativa}${url_atualizarPrecosTHL_ids}${ids}`
-  );
-
-  const novosPrecos = [];
-
-  atualizaListaReativa(
-    dispatch,
-    novosPrecos,
-    MUDAR_VARIAVEL_THL,
-    "precosTabelaVencimentos",
-    "setPrecosIntervalo"
-  );
-
-  source.onmessage = function (event) {
-    if (typeof event.data !== "undefined") {
-      var dados = JSON.parse(event.data);
-      const indice = novosPrecos.findIndex(
-        (estrutura) => estrutura.id === dados.id
-      );
-      if (indice !== -1) novosPrecos[indice] = dados;
-      else novosPrecos.push(dados);
-    }
-  };
-
-  return source;
-};
-
 export const recalcularPrecosTHLAPI = (
   ativo,
   ativoPesquisado,
@@ -785,41 +404,4 @@ export const mostrarErroConsulta = (erro, mensagem) => {
   if (erro.timeout) {
     alert(erro_timeout);
   } else if (mensagem) alert(mensagem);
-};
-
-const atualizaListaReativa = (
-  dispatch,
-  lista,
-  actionType,
-  nomeLista,
-  nomeSetInterval
-) => {
-  const atualizarLista = () => {
-    dispatch({
-      type: actionType,
-      payload: {
-        nome: nomeLista,
-        valor: lista,
-      },
-    });
-    dispatch({
-      type: actionType,
-      payload: {
-        nome: `${nomeLista}ID`,
-        valor: Math.random(),
-      },
-    });
-  };
-
-  setTimeout(atualizarLista, 1500);
-
-  const setPrecos = setInterval(atualizarLista, intervaloAttReativa);
-
-  dispatch({
-    type: actionType,
-    payload: {
-      nome: nomeSetInterval,
-      valor: setPrecos,
-    },
-  });
 };

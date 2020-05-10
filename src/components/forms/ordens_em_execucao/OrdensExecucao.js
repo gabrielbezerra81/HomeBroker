@@ -34,16 +34,6 @@ class OrdensExecucao extends React.Component {
       );
     }
   }
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.eventSourceOrdensExec) {
-  //     if (prevProps.tabelaOrdensExecucao !== this.props.tabelaOrdensExecucao) {
-  //       this.props.atualizarOrdensExecAction(
-  //         this.props,
-  //         this.props.token.accessToken
-  //       );
-  //     }
-  //   }
-  // }
 
   render() {
     return (

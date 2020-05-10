@@ -14,7 +14,6 @@ import {
   selecionarAdicionarAbaAction,
   modificarAtributoAbaAction,
   excluirAbaMultilegAction,
-  atualizarCotacaoAction,
 } from "components/redux/actions/menu_actions/MultilegActions";
 import { aumentarZindexAction } from "components/redux/actions/MainAppActions";
 
@@ -212,7 +211,6 @@ export default compose(
       modificarAtributoAbaAction,
       excluirAbaMultilegAction,
       // atualizarBookAction,
-      atualizarCotacaoAction,
     },
     null,
     { context: StorePrincipalContext }

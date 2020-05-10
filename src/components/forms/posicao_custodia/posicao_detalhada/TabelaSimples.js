@@ -4,7 +4,7 @@ import EmblemaSimples from "components/utils/componentesUI/EmblemaSimples";
 import {
   calculaTotal,
   calculaResultado,
-  calculaVariacao
+  calculaVariacao,
 } from "components/forms/posicao_custodia/posicao_detalhada/TabelaCompleta";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 
@@ -32,7 +32,7 @@ export default class TabelaSimples extends React.Component {
         </Row>
         <Row className="rowCompra mb-3">
           <Col md={0} className="pb-3">
-            <EmblemaSimples item={this.props.dados}></EmblemaSimples>
+            <EmblemaSimples item={this.props.dados} />
           </Col>
           <Col className="colTabela">
             <Table
@@ -124,7 +124,7 @@ export default class TabelaSimples extends React.Component {
   }
 }
 
-export const corSaldoOp = osc => {
+export const corSaldoOp = (osc) => {
   if (osc >= 0) return "saldoOpPositivo";
   else return "saldoOpNegativo";
 };

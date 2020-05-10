@@ -1,11 +1,12 @@
-import { listarBookOfertaAPI, atualizarBookAPI } from "components/api/API";
+import { listarBookOfertaAPI } from "components/api/API";
+import { atualizarBookAPI } from "components/api/ReativosAPI";
 import {
   LISTAR_BOOK_OFERTAS,
-  ATUALIZAR_SOURCE_EVENT_BOOK_OFERTAS
+  ATUALIZAR_SOURCE_EVENT_BOOK_OFERTAS,
 } from "constants/ApiActionTypes";
 
 export const listarBookOfertaOnEnterAction = (codigo_ativo, props) => {
-  return async dispatch => {
+  return async (dispatch) => {
     document.body.style.cursor = "wait";
     const tabelasAPI = await listarBookOfertaAPI(codigo_ativo);
     document.body.style.cursor = "default";
@@ -20,15 +21,15 @@ export const listarBookOfertaOnEnterAction = (codigo_ativo, props) => {
     }, 3000);
     dispatch({
       type: LISTAR_BOOK_OFERTAS,
-      payload: tabelas
+      payload: tabelas,
     });
   };
 };
 
-export const atualizarTabelaAntiga = tabelaAPI => {
+export const atualizarTabelaAntiga = (tabelaAPI) => {
   let tabelaAntiga = {
     tabelaOfertasCompra: new Array(5).fill({ price: "", qtty: "" }, 0, 5),
-    tabelaOfertasVenda: new Array(5).fill({ price: "", qtty: "" }, 0, 5)
+    tabelaOfertasVenda: new Array(5).fill({ price: "", qtty: "" }, 0, 5),
   };
 
   let indiceTabAntiga = 4;

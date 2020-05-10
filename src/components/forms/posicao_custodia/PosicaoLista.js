@@ -90,6 +90,7 @@ class PosicaoEmLista extends React.Component {
 const mapStateToProps = (state) => ({
   posicoesCustodia: state.posicaoReducer.posicoesCustodia,
   arrayCotacoes: state.posicaoReducer.arrayCotacoes,
+  arrayCotacoesID: state.posicaoReducer.arrayCotacoesID,
 });
 
 export default connect(mapStateToProps, {}, null, {
