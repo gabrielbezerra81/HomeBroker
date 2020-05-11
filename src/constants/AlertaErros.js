@@ -34,6 +34,8 @@ export const erro_validar_codigo_duplicado_multileg =
   "Ativos duplicados na ordem";
 export const erro_validar_contaSelecionada =
   "É preciso selecionar uma conta para enviar ordens";
+export const erro_selecaoBook_THL =
+  "Limite de seleção de ofertas excedido. Para selecionar este item é necessário remover a seleção de outro item";
 
 // Alertas
 export const erro_exportar_ordens_multileg = "Falha ao abrir ordem na Multileg";
