@@ -258,13 +258,19 @@ const GetAbrirMenuProps = () => {
       multilegAberto,
       thlAberta,
     } = state.telaPrincipalReducer;
-    const { eventSourceCotacao } = state.multilegReducer;
     const {
-      eventSourceEmblema,
-      eventSourcePosicao,
-      eventSourceCotacoes,
-    } = state.posicaoReducer;
-    const { eventSourceOrdensExec } = state.ordensExecReducer;
+      eventSourceCotacao,
+      setIntervalCotacoesMultileg,
+    } = state.multilegReducer;
+    // const {
+    //   eventSourceEmblema,
+    //   eventSourcePosicao,
+    //   eventSourceCotacoes,
+    //   setIntervalCotacoesPosicao,
+    //   setIntervalEmblema,
+    // } = state.posicaoReducer;
+    // const { eventSourceOrdensExec } = state.ordensExecReducer;
+    const { eventSourcePrecos, setIntervalPrecosTHL } = state.THLReducer;
 
     const props = {
       ordensExecucaoAberto,
@@ -273,10 +279,15 @@ const GetAbrirMenuProps = () => {
       multilegAberto,
       thlAberta,
       eventSourceCotacao_Multileg: eventSourceCotacao,
-      eventSourceEmblema_Posicao: eventSourceEmblema,
-      eventSourcePosicao_Posicao: eventSourcePosicao,
-      eventSourceCotacoes_Posicao: eventSourceCotacoes,
-      eventSourceOrdensExec_OrdensExec: eventSourceOrdensExec,
+      setIntervalCotacoes_Multileg: setIntervalCotacoesMultileg,
+      // eventSourceEmblema_Posicao: eventSourceEmblema,
+      // setIntervalEmblema_Posicao: setIntervalEmblema,
+      // eventSourcePosicao_Posicao: eventSourcePosicao,
+      // eventSourceCotacoes_Posicao: eventSourceCotacoes,
+      // setIntervalCotacoes_Posicao: setIntervalCotacoesPosicao,
+      // eventSourceOrdensExec_OrdensExec: eventSourceOrdensExec,
+      eventSourcePrecos_THL: eventSourcePrecos,
+      setIntervalPrecos_THL: setIntervalPrecosTHL,
     };
 
     return props;

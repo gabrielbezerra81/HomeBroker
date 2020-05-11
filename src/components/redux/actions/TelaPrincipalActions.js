@@ -94,21 +94,18 @@ export const cadastrarUsuarioAction = (props) => {
     }
   };
 };
-
+// TODO: limpar set Interval
 export const deslogarUsuarioAction = (event, props) => {
   return (dispatch) => {
     persistor
       .purge()
       .then(async () => {
-        if (props.eventSourceOrdensExec_OrdensExec) {
-          props.eventSourceOrdensExec_OrdensExec.close();
-        }
-        if (props.eventSourceEmblema_Posicao)
-          props.eventSourceEmblema_Posicao.close();
-        if (props.eventSourcePosicao_Posicao)
-          props.eventSourcePosicao_Posicao.close();
-        if (props.eventSourceCotacoes_Posicao)
-          props.eventSourceCotacoes_Posicao.close();
+        Object.keys(props).forEach((key) => {
+          if (props[key]) {
+            if (key.includes("eventSource")) props[key].close();
+            else if (key.includes("setInterval")) clearInterval(props[key]);
+          }
+        });
 
         await dispatch({
           type: LOGAR_DESLOGAR_USUARIO,
@@ -133,10 +130,12 @@ export const deslogarUsuarioAction = (event, props) => {
 };
 
 export const abrirItemBarraLateralAction = (props, nameVariavelReducer) => {
-  if (nameVariavelReducer === "multilegAberto") {
-    if (props.eventSourceCotacao_Multileg)
-      props.eventSourceCotacao_Multileg.close();
-  } //
+  Object.keys(props).forEach((key) => {
+    if (props[key]) {
+      if (key.includes("eventSource")) props[key].close();
+      else if (key.includes("setInterval")) clearInterval(props[key]);
+    }
+  });
   return (dispatch) => {
     dispatch({
       type: ABRIR_FECHAR_ITEM_BARRA_LATERAL,

@@ -1,4 +1,3 @@
-import { atualizarTabelaAntiga } from "components/redux/actions/api_actions/bookOfertaAPIActions";
 import {
   adicionaPosicao,
   mudarVariavelPosicaoAction,
@@ -68,7 +67,7 @@ export const atualizarBookAPI = (
       if (tipo === "book") {
         dispatch({
           type: LISTAR_BOOK_OFERTAS,
-          payload: atualizarTabelaAntiga(tabelas),
+          payload: tabelas,
         });
       }
     }
@@ -286,7 +285,7 @@ export const atualizarPrecosTHLAPI = (ids, dispatch) => {
     novosPrecos,
     MUDAR_VARIAVEL_THL,
     "precosTabelaVencimentos",
-    "setPrecosIntervalo"
+    "setIntervalPrecosTHL"
   );
 
   source.onmessage = function (event) {

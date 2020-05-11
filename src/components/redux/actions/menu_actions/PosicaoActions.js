@@ -124,7 +124,7 @@ const atualizarPosicao = async (dispatch, listaPosicoes, props, token) => {
     props.eventSourcePosicao.close();
   }
 
-  const newSource = await atualizarPosicaoAPI(dispatch, listaPosicoes, token);
+  const newSource = atualizarPosicaoAPI(dispatch, listaPosicoes, token);
 
   dispatch(mudarVariavelPosicaoAction("eventSourcePosicao", newSource));
 };

@@ -8,10 +8,17 @@ import {
 export const listarBookOfertaOnEnterAction = (codigo_ativo, props) => {
   return async (dispatch) => {
     document.body.style.cursor = "wait";
-    const tabelasAPI = await listarBookOfertaAPI(codigo_ativo);
+    let tabelasAPI = await listarBookOfertaAPI(codigo_ativo);
     document.body.style.cursor = "default";
 
-    const tabelas = atualizarTabelaAntiga(tabelasAPI);
+    if (
+      !tabelasAPI.tabelaOfertasCompra.length &&
+      !tabelasAPI.tabelaOfertasVenda.length
+    )
+      tabelasAPI = {
+        tabelaOfertasCompra: new Array(5).fill({ price: "", qtty: "" }, 0, 5),
+        tabelaOfertasVenda: new Array(5).fill({ price: "", qtty: "" }, 0, 5),
+      };
     if (props) {
       if (props.eventSource) props.eventSource.close();
     }
@@ -21,34 +28,7 @@ export const listarBookOfertaOnEnterAction = (codigo_ativo, props) => {
     }, 3000);
     dispatch({
       type: LISTAR_BOOK_OFERTAS,
-      payload: tabelas,
+      payload: tabelasAPI,
     });
   };
-};
-
-export const atualizarTabelaAntiga = (tabelaAPI) => {
-  let tabelaAntiga = {
-    tabelaOfertasCompra: new Array(5).fill({ price: "", qtty: "" }, 0, 5),
-    tabelaOfertasVenda: new Array(5).fill({ price: "", qtty: "" }, 0, 5),
-  };
-
-  let indiceTabAntiga = 4;
-  for (
-    let index = tabelaAPI.tabelaOfertasVenda.length - 1;
-    index !== -1;
-    index--
-  ) {
-    tabelaAntiga.tabelaOfertasVenda[indiceTabAntiga] =
-      tabelaAPI.tabelaOfertasVenda[index];
-    indiceTabAntiga -= 1;
-  }
-
-  indiceTabAntiga = 0;
-  for (let index = 0; index < tabelaAPI.tabelaOfertasCompra.length; index++) {
-    tabelaAntiga.tabelaOfertasCompra[indiceTabAntiga] =
-      tabelaAPI.tabelaOfertasCompra[index];
-    indiceTabAntiga += 1;
-  }
-
-  return tabelaAntiga;
 };

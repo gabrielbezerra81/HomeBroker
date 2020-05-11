@@ -24,7 +24,7 @@ export default React.memo(({ setScrollbarRef }) => {
     ativoPesquisado,
     tipo,
     eventSourcePrecos,
-    setPrecosIntervalo,
+    setIntervalPrecosTHL,
   } = reduxState;
 
   const strikesInteiros = useMemo(() => getStrikesInteiros(opcoesStrike), [
@@ -42,7 +42,7 @@ export default React.memo(({ setScrollbarRef }) => {
         strikeSelecionado,
         tipo,
         eventSourcePrecos,
-        setPrecosIntervalo
+        setIntervalPrecosTHL
       )
     );
   }, [ativoPesquisado, strikeSelecionado, tipo]);
@@ -353,7 +353,7 @@ const OpcoesStrikeVazio = () => {
       <td>
         <InputStrikeSelecionado indiceStrike={1} />
       </td>
-      <td></td>
+      <td />
     </tr>
   );
 };

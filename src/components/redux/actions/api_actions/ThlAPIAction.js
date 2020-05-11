@@ -24,7 +24,7 @@ export const listarTabelaInicialTHLAPIAction = (
   strikeSelecionado,
   tipo,
   sourcePrecos,
-  setPrecosIntervalo
+  setIntervalPrecosTHL
 ) => {
   return async (dispatch) => {
     if (ativo && strikeSelecionado && tipo) {
@@ -40,7 +40,7 @@ export const listarTabelaInicialTHLAPIAction = (
           tabelaVencimentos,
           sourcePrecos,
           dispatch,
-          setPrecosIntervalo
+          setIntervalPrecosTHL
         );
       dispatch(mudarVariavelTHLAction("opcoesStrike", tabelaVencimentos));
       dispatch(mudarVariavelTHLAction("carregandoTabelaVencimentos", false));
@@ -56,7 +56,7 @@ export const recalcularPrecosTHLAPIAction = (thlState) => {
       strikeSelecionado,
       tipo,
       eventSourcePrecos,
-      setPrecosIntervalo,
+      setIntervalPrecosTHL,
       codigoCelulaSelecionada,
     } = thlState;
     dispatch(mudarVariavelTHLAction("carregandoTabelaVencimentos", true));
@@ -74,7 +74,7 @@ export const recalcularPrecosTHLAPIAction = (thlState) => {
         opcoesRecalculadas,
         eventSourcePrecos,
         dispatch,
-        setPrecosIntervalo
+        setIntervalPrecosTHL
       );
     }
     setTimeout(
@@ -89,13 +89,13 @@ const atualizarPrecosTHL = async (
   tabelaVencimentos,
   sourcePrecos,
   dispatch,
-  setPrecosIntervalo
+  setIntervalPrecosTHL
 ) => {
   if (sourcePrecos) {
     sourcePrecos.close();
   }
-  if (setPrecosIntervalo) {
-    clearInterval(setPrecosIntervalo);
+  if (setIntervalPrecosTHL) {
+    clearInterval(setIntervalPrecosTHL);
   }
 
   let ids = "";
@@ -108,7 +108,7 @@ const atualizarPrecosTHL = async (
 
   ids = ids.substring(0, ids.length - 1);
 
-  const source = await atualizarPrecosTHLAPI(ids, dispatch);
+  const source = atualizarPrecosTHLAPI(ids, dispatch);
   dispatch(mudarVariavelTHLAction("eventSourcePrecos", source));
   dispatch(mudarVariavelTHLAction("precosTabelaVencimentos", []));
 };

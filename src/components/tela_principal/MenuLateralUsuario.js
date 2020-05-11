@@ -49,6 +49,14 @@ const mapStateToProps = (state) => ({
   eventSourcePosicao_Posicao: state.posicaoReducer.eventSourcePosicao,
   eventSourceEmblema_Posicao: state.posicaoReducer.eventSourceEmblema,
   eventSourceCotacoes_Posicao: state.posicaoReducer.eventSourceCotacoes,
+  setIntervalEmblema_Posicao: state.posicaoReducer.setIntervalEmblema,
+  setIntervalCotacoes_Posicao: state.posicaoReducer.setIntervalCotacoesPosicao,
+  // Multileg Reativo:
+  eventSourceCotacao_Multileg: state.multilegReducer.eventSourceCotacao,
+  setIntervalCotacoes_Multileg:
+    state.multilegReducer.setIntervalCotacoesMultileg,
+  eventSourcePrecos_THL: state.THLReducer.eventSourcePrecos,
+  setIntervalPrecos_THL: state.THLReducer.setIntervalPrecosTHL,
 });
 
 export default connect(
