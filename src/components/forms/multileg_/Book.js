@@ -28,7 +28,6 @@ import { aviso_calculo_preco_multileg } from "constants/AlertaErros";
 class Book extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.cotacoesMultilegID !== this.props.cotacoesMultilegID) {
-      console.log("calculou");
       atualizarPrecoDinamicante(this.props);
     }
   }

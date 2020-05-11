@@ -222,7 +222,8 @@ const renderConteudoTabelaVencimentos = (
         let precoMensalDesmontar = "";
 
         if (precosColunaTotal) {
-          const { max, min, components } = precosColunaTotal;
+          let { max, min, components } = precosColunaTotal;
+
           const qtdeMontar = formatarQuantidadeKMG(
             Math.min(components[0].compraQtde, components[1].vendaQtde)
           );
@@ -233,21 +234,27 @@ const renderConteudoTabelaVencimentos = (
           const primeiroMes = moment(
             components[0].stock.endBusiness,
             "DD-MM-YYYY HH:mm:ss"
-          );
+          ).startOf("month");
           const ultimoMes = moment(
             components[1].stock.endBusiness,
             "DD-MM-YYYY HH:mm:ss"
-          );
+          ).startOf("month");
+
           const diferencaMeses = ultimoMes.diff(primeiroMes, "months");
+          const textoMeses = diferencaMeses === 1 ? "mês" : "meses";
+
+          precoMensalMontar = `${formatarNumDecimal(
+            max / (diferencaMeses || 1)
+          )} | ${diferencaMeses} ${textoMeses}`;
+          precoMensalDesmontar = `${formatarNumDecimal(
+            min / (diferencaMeses || 1)
+          )} | ${diferencaMeses} ${textoMeses}`;
+
+          max = formatarNumDecimal(max);
+          min = formatarNumDecimal(min);
 
           precoTotalMontar = `${max} | ${qtdeMontar}`;
           precoTotalDesmontar = `${min} | ${qtdeDesmont}`;
-          precoMensalMontar = `${
-            max / diferencaMeses
-          } | ${diferencaMeses} meses`;
-          precoMensalDesmontar = `${
-            min / diferencaMeses
-          } | ${diferencaMeses} meses`;
         }
 
         return (
@@ -284,11 +291,12 @@ const renderConteudoTabelaVencimentos = (
 
                 if (indiceStock !== -1) {
                   const id = IDs[indiceStock];
+
                   return (
                     <CelulaMes
                       id={id}
                       itemColuna={linha.stocks[indiceStock]}
-                      ultimaColuna={idColunaTotal === id}
+                      ultimaColuna={idColunaTotal === id && indiceStock !== 0}
                     />
                   );
                 } //

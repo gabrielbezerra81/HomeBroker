@@ -3295,7 +3295,7 @@ const INITIAL_STATE = {
     41.0,
     44.0,
   ],
-  strikeSelecionado: 28,
+  strikeSelecionado: 17,
   combinacoesTabela: comb300,
   estrategia: "",
   grupo: "",

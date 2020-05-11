@@ -36,9 +36,9 @@ class PosicaoEmCustodia extends React.Component {
   //     if (props.posicoesCustodia.length !== props.arrayPrecos.length) {
   //       if (prevProps.posicoesCustodia !== props.posicoesCustodia) {
   //         if (
-  //           props.posicoesCustodia.length > 0 &&
-  //           props.arrayPrecos.length > 0 &&
-  //           props.arrayCotacoes.length > 0
+  //           props.posicoesCustodia.length &&
+  //           props.arrayPrecos.length &&
+  //           props.arrayCotacoes.length
   //         ) {
   //           props.atualizarEmblemasAction(props);
   //           props.atualizarCotacoesAction(props);
