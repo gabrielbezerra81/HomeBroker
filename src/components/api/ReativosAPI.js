@@ -1,5 +1,8 @@
 import { atualizarTabelaAntiga } from "components/redux/actions/api_actions/bookOfertaAPIActions";
-import { adicionaPosicao } from "components/redux/actions/menu_actions/PosicaoActions";
+import {
+  adicionaPosicao,
+  mudarVariavelPosicaoAction,
+} from "components/redux/actions/menu_actions/PosicaoActions";
 import {
   url_emblemaReativo_ids,
   url_base_reativa,
@@ -17,7 +20,6 @@ import {
 import {
   LISTAR_BOOK_OFERTAS,
   PESQUISAR_ATIVO_BOLETA_API,
-  ATUALIZAR_SOURCE_EVENT_MULTILEG,
   LISTAR_ORDENS_EXECUCAO,
 } from "constants/ApiActionTypes";
 import { formatarDataDaAPI } from "components/utils/Formatacoes";
@@ -48,7 +50,7 @@ export const atualizarBookAPI = (
 
       var dados = JSON.parse(event.data);
 
-      let ativoRetornado = dados.symbol;
+      //   let ativoRetornado = dados.symbol;
       if (dados.bookOffers) {
         let bookNovo = [...dados.bookOffers];
 
@@ -69,46 +71,11 @@ export const atualizarBookAPI = (
           payload: atualizarTabelaAntiga(tabelas),
         });
       }
-
-      if (tipo === "multileg" && dados.bookOffers) {
-        let permitirDispatch = false;
-        let novosBooks = [...rembook];
-
-        novosBooks.forEach((book) => {
-          if (book.codigo === ativoRetornado) {
-            const valorCompra = tabelas.tabelaOfertasCompra[0];
-            const valorVenda =
-              tabelas.tabelaOfertasVenda[tabelas.tabelaOfertasVenda.length - 1];
-
-            if (!book.compra || book.compra.price !== valorCompra.price) {
-              book.compra = valorCompra;
-              permitirDispatch = true;
-            }
-            if (!book.venda || book.venda.price !== valorVenda.price) {
-              book.venda = valorVenda;
-              permitirDispatch = true;
-            }
-          }
-        });
-
-        if (permitirDispatch) {
-          dispatch({
-            type: MODIFICAR_VARIAVEL_MULTILEG,
-            payload: { nome: "rembook", valor: novosBooks },
-          });
-        }
-        dispatch({
-          type: ATUALIZAR_SOURCE_EVENT_MULTILEG,
-          payload: source,
-          nomeVariavel: "eventSource",
-        });
-      }
     }
   };
   return source;
 };
 
-// TODO: a cada pesquisa no multileg deve ser feito o clear Interval
 export const atualizarCotacaoAPI = (
   dispatch,
   codigos,
@@ -248,46 +215,33 @@ export const atualizarEmblemasAPI = (dispatch, listaPrecos, ids) => {
   return source;
 };
 
-export const atualizarPosicaoAPI = (
-  dispatch,
-  listaPosicoes,
-  idUsuario,
-  props
-) => {
+export const atualizarPosicaoAPI = (dispatch, listaPosicoes, token) => {
   var source = new EventSource(
-    `${url_base_reativa}${url_posicaoReativa_idUser}${idUsuario}`
+    `${url_base_reativa}${url_posicaoReativa_idUser}${token}`
   );
-
-  source.onopen = function (event) {
-    console.log("open");
-  };
 
   source.onmessage = function (event) {
     if (typeof event.data !== "undefined") {
-      var grupoPosicao = JSON.parse(event.data);
-      listaPosicoes = [...listaPosicoes];
+      var posicoes = JSON.parse(event.data).positions;
 
-      const indice = listaPosicoes.findIndex(
-        (posicao) =>
-          posicao.agrupadorPrincipal === grupoPosicao.agrupadorPrincipal
-      );
-      let permitirDispatch = false;
+      const novaLista = [...listaPosicoes];
 
-      if (indice !== -1) {
-        const posicaoAtualizada = adicionaPosicao(grupoPosicao)[0];
-        listaPosicoes[indice] = posicaoAtualizada;
-        permitirDispatch = true;
-      } //
-      else {
-        const novaPosicao = adicionaPosicao(grupoPosicao);
-        listaPosicoes.push(...novaPosicao);
-        permitirDispatch = true;
-      }
-      if (permitirDispatch)
-        dispatch({
-          type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-          payload: { nome: "posicoesCustodia", valor: listaPosicoes },
-        });
+      posicoes.forEach((novaPosicao) => {
+        const indice = novaLista.findIndex(
+          (posicao) =>
+            posicao.agrupadorPrincipal === novaPosicao.agrupadorPrincipal
+        );
+
+        if (indice !== -1) {
+          const posicaoAtualizada = adicionaPosicao(novaPosicao)[0];
+          novaLista[indice] = posicaoAtualizada;
+        } else {
+          const posicaoAdicionada = adicionaPosicao(novaPosicao);
+          novaLista.push(...posicaoAdicionada);
+        }
+      });
+
+      dispatch(mudarVariavelPosicaoAction("posicoesCustodia", novaLista));
     }
   };
 
@@ -303,7 +257,7 @@ export const atualizarOrdensExecAPI = (dispatch, token, listaOrdensExec) => {
     if (typeof event.data !== "undefined") {
       var dados = JSON.parse(event.data);
 
-      if (dados.orders && dados.orders.length > 0) {
+      if (dados.orders && dados.orders.length) {
         const novaTabela = [...listaOrdensExec];
         dados.orders.forEach((novaOrdem) => {
           const indice = novaTabela.findIndex(

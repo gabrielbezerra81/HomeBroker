@@ -61,6 +61,7 @@ export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
     compraQtde = formatarQuantidadeKMG(precosColuna.compraQtde);
     venda = formatarNumDecimal(precosColuna.venda);
     vendaQtde = formatarQuantidadeKMG(precosColuna.vendaQtde);
+
     qtdeMontar = formatarQuantidadeKMG(
       Math.min(precosColuna.compraQtde, precosPar.vendaQtde)
     );
@@ -105,7 +106,7 @@ export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
         >
           <div className="itemAtivos">
             {renderModelo(itemColuna.model)}
-            {ativoStrike}
+            {ativoStrike} | id:{id}
           </div>
           {custodia ? (
             <div className={`itemQtde${corQtdeExecutando}`}>{qtdeOferta}</div>

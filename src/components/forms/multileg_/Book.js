@@ -336,7 +336,6 @@ class Book extends React.Component {
 const mapStateToProps = (state) => ({
   configComplementarAberto: state.multilegReducer.configComplementarAberto,
   multileg: state.multilegReducer.multileg,
-  eventSource: state.multilegReducer.eventSource,
   eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
   cotacoesMultileg: state.multilegReducer.cotacoesMultileg,
   token: state.telaPrincipalReducer.token,

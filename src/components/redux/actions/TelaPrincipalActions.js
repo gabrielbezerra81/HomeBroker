@@ -134,7 +134,6 @@ export const deslogarUsuarioAction = (event, props) => {
 
 export const abrirItemBarraLateralAction = (props, nameVariavelReducer) => {
   if (nameVariavelReducer === "multilegAberto") {
-    if (props.eventSourceBook_Multileg) props.eventSourceBook_Multileg.close();
     if (props.eventSourceCotacao_Multileg)
       props.eventSourceCotacao_Multileg.close();
   } //

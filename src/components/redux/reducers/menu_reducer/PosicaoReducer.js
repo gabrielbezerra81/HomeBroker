@@ -2,7 +2,7 @@ import { MUDAR_VARIAVEL_POSICAO_CUSTODIA } from "constants/MenuActionTypes";
 
 const INITIAL_STATE = {
   ordenacao: "",
-  tipoVisualizacao: "lista",
+  tipoVisualizacao: "ampliado",
   ativoPesquisa: "PESQUISAR",
   inputSelect: "",
   posicoesCustodia: [],

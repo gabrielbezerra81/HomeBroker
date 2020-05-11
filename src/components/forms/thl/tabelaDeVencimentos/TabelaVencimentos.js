@@ -7,7 +7,10 @@ import {
   StateStorePrincipal,
   DispatchStorePrincipal,
 } from "components/redux/StoreCreation";
-import { formatarNumDecimal } from "components/utils/Formatacoes";
+import {
+  formatarNumDecimal,
+  formatarQuantidadeKMG,
+} from "components/utils/Formatacoes";
 import { listarTabelaInicialTHLAPIAction } from "components/redux/actions/api_actions/ThlAPIAction";
 import { CelulaMes } from "components/forms/thl/tabelaDeVencimentos/CelulaMes";
 import InputStrikeSelecionado from "components/forms/thl/tabelaDeVencimentos/InputStrikeSelecionado";
@@ -213,11 +216,38 @@ const renderConteudoTabelaVencimentos = (
           (estrutura) => estrutura.id === idColunaTotal
         );
 
-        let precoTotalMontar = "0,68 | 3k";
-        let precoTotalDesmontar = "0,66 | 3k";
-        let precoMensalMontar = "0,34 | 2 meses";
+        let precoTotalMontar = "";
+        let precoTotalDesmontar = "";
+        let precoMensalMontar = "";
         let precoMensalDesmontar = "";
+
         if (precosColunaTotal) {
+          const { max, min, components } = precosColunaTotal;
+          const qtdeMontar = formatarQuantidadeKMG(
+            Math.min(components[0].compraQtde, components[1].vendaQtde)
+          );
+          const qtdeDesmont = formatarQuantidadeKMG(
+            Math.min(components[0].vendaQtde, components[1].compraQtde)
+          );
+
+          const primeiroMes = moment(
+            components[0].stock.endBusiness,
+            "DD-MM-YYYY HH:mm:ss"
+          );
+          const ultimoMes = moment(
+            components[1].stock.endBusiness,
+            "DD-MM-YYYY HH:mm:ss"
+          );
+          const diferencaMeses = ultimoMes.diff(primeiroMes, "months");
+
+          precoTotalMontar = `${max} | ${qtdeMontar}`;
+          precoTotalDesmontar = `${min} | ${qtdeDesmont}`;
+          precoMensalMontar = `${
+            max / diferencaMeses
+          } | ${diferencaMeses} meses`;
+          precoMensalDesmontar = `${
+            min / diferencaMeses
+          } | ${diferencaMeses} meses`;
         }
 
         return (

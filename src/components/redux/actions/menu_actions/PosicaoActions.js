@@ -19,9 +19,9 @@ export const listarPosicoesAction = (props) => {
   return async (dispatch) => {
     if (props.token) {
       const dados = await listarPosicoesAPI(props.token);
-      var listaPosicoes = [];
-      var arrayPrecos = [];
-      var arrayCotacoes = [];
+      const listaPosicoes = [];
+      const arrayPrecos = [];
+      let arrayCotacoes = [];
 
       dados.forEach((grupoPosicao) => {
         const posicao = adicionaPosicao(grupoPosicao);
@@ -38,8 +38,8 @@ export const listarPosicoesAction = (props) => {
       // arrayPrecos.splice(0, 19);
       arrayCotacoes = await montaArrayCotacoes(listaPosicoes);
 
-      // atualizarPosicao(dispatch, listaPosicoes, props, props.token.accessToken);
-      // atualizarEmblemas(dispatch, listaPosicoes, props, arrayPrecos);
+      atualizarPosicao(dispatch, listaPosicoes, props, props.token.accessToken);
+      atualizarEmblemas(dispatch, listaPosicoes, props, arrayPrecos);
       atualizarCotacoes(dispatch, listaPosicoes, props, arrayCotacoes);
 
       dispatch(mudarVariavelPosicaoAction("posicoesCustodia", listaPosicoes));
@@ -94,18 +94,6 @@ export const adicionaPosicao = (grupoPosicao) => {
   });
 };
 
-// Atualiza min, max e ult
-// export const atualizarEmblemasAction = (props) => {
-//   return (dispatch) => {
-//     atualizarEmblemas(
-//       dispatch,
-//       props.posicoesCustodia,
-//       props,
-//       props.arrayPrecos
-//     );
-//   };
-// };
-
 export const atualizarEmblemas = (
   dispatch,
   listaPosicoes,
@@ -131,29 +119,12 @@ export const atualizarEmblemas = (
   dispatch(mudarVariavelPosicaoAction("eventSourceEmblema", newSource));
 };
 
-// Atualiza demais campos de posição
-// export const atualizarPosicaoAction = (props) => {
-//   return (dispatch) => {
-//     atualizarPosicao(
-//       dispatch,
-//       props.posicoesCustodia,
-//       props,
-//       props.token.accessToken
-//     );
-//   };
-// };
+const atualizarPosicao = async (dispatch, listaPosicoes, props, token) => {
+  if (props.eventSourcePosicao) {
+    props.eventSourcePosicao.close();
+  }
 
-const atualizarPosicao = (dispatch, listaPosicoes, props, idUsuario) => {
-  // if (props.eventSourcePosicao) {
-  //   props.eventSourcePosicao.close();
-  // }
-
-  const newSource = atualizarPosicaoAPI(
-    dispatch,
-    listaPosicoes,
-    idUsuario,
-    props
-  );
+  const newSource = await atualizarPosicaoAPI(dispatch, listaPosicoes, token);
 
   dispatch(mudarVariavelPosicaoAction("eventSourcePosicao", newSource));
 };
@@ -203,7 +174,8 @@ const atualizarCotacoes = async (
   if (props.eventSourceCotacoes) {
     props.eventSourceCotacoes.close();
   }
-  if (props.setIntervalCotacoesPosicao) { // quem disparar pela segunda vez deve ter essa var no connect
+  if (props.setIntervalCotacoesPosicao) {
+    // quem disparar pela segunda vez deve ter essa var no connect
     clearInterval(props.setIntervalCotacoesPosicao);
   }
 

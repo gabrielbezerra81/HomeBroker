@@ -274,7 +274,6 @@ const calculaColunaValor = (props, oferta) => {
 
 const mapStateToProps = (state) => ({
   multileg: state.multilegReducer.multileg,
-  eventSource: state.multilegReducer.eventSource,
   eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
   cotacoesMultileg: state.multilegReducer.cotacoesMultileg,
   setIntervalCotacoesMultileg:

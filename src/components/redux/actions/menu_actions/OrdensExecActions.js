@@ -1,6 +1,5 @@
 import {
   MUDAR_VARIAVEL_ORDENS_EXEC,
-  MODIFICAR_VARIAVEL_MULTILEG,
 } from "constants/MenuActionTypes";
 import {
   listarOrdensExecAPI,

@@ -182,7 +182,6 @@ const mapStateToPropsOpcoesOrdemExec = (state) => ({
   selectPrecoAberto: state.ordensExecReducer.selectPrecoAberto,
   sinalInputSelect: state.ordensExecReducer.sinalInputSelect,
   multileg: state.multilegReducer.multileg,
-  eventSource: state.multilegReducer.eventSource,
   eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
   multilegAberto: state.telaPrincipalReducer.multilegAberto,
   cotacoesMultileg: state.multilegReducer.cotacoesMultileg,

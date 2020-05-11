@@ -258,7 +258,7 @@ const GetAbrirMenuProps = () => {
       multilegAberto,
       thlAberta,
     } = state.telaPrincipalReducer;
-    const { eventSource, eventSourceCotacao } = state.multilegReducer;
+    const { eventSourceCotacao } = state.multilegReducer;
     const {
       eventSourceEmblema,
       eventSourcePosicao,
@@ -272,7 +272,6 @@ const GetAbrirMenuProps = () => {
       listaCompletaAberta,
       multilegAberto,
       thlAberta,
-      eventSourceBook_Multileg: eventSource,
       eventSourceCotacao_Multileg: eventSourceCotacao,
       eventSourceEmblema_Posicao: eventSourceEmblema,
       eventSourcePosicao_Posicao: eventSourcePosicao,

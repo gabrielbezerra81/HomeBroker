@@ -1,6 +1,5 @@
 import {
   MUDAR_VARIAVEL_THL,
-  MODIFICAR_VARIAVEL_MULTILEG,
 } from "constants/MenuActionTypes";
 import { travarDestravarClique } from "components/api/API";
 import {
