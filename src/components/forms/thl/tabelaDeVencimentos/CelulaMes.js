@@ -255,7 +255,7 @@ const SelecionarBooks = (booksSelecionados, novosBooks, dispatch) => {
       if (!mostrarAlerta)
         books.push({ ativo: novoBook.ativo, tipo: novoBook.tipo });
     } else {
-      books.splice(indice, 1);
+      if (novosBooks.length !== 2) books.splice(indice, 1);
     }
   });
   if (mostrarAlerta) alert(erro_selecaoBook_THL);
