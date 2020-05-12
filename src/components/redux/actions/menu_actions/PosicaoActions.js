@@ -94,31 +94,6 @@ export const adicionaPosicao = (grupoPosicao) => {
   });
 };
 
-export const atualizarEmblemas = (
-  dispatch,
-  listaPosicoes,
-  props,
-  arrayPrecos
-) => {
-  let ids = "";
-
-  if (props.eventSourceEmblema) {
-    props.eventSourceEmblema.close();
-  }
-  if (props.setIntervalEmblema) {
-    clearInterval(props.setIntervalEmblema);
-  }
-
-  listaPosicoes.forEach((posicao) => {
-    ids += posicao.idEstrutura + ",";
-  });
-  ids = ids.substring(0, ids.length - 1);
-
-  const newSource = atualizarEmblemasAPI(dispatch, arrayPrecos, ids);
-
-  dispatch(mudarVariavelPosicaoAction("eventSourceEmblema", newSource));
-};
-
 const atualizarPosicao = async (dispatch, listaPosicoes, props, token) => {
   if (props.eventSourcePosicao) {
     props.eventSourcePosicao.close();
@@ -151,14 +126,38 @@ const montaArrayCotacoes = async (listaPosicoes, tipoRetorno = "completo") => {
   return arrayCodigos;
 };
 
+export const atualizarEmblemasAction = (props) => {
+  return (dispatch) => {
+    const { posicoesCustodia, arrayPrecos } = props;
+    atualizarEmblemas(dispatch, posicoesCustodia, props, arrayPrecos);
+  };
+};
+
+const atualizarEmblemas = (dispatch, listaPosicoes, props, arrayPrecos) => {
+  let ids = "";
+
+  if (props.eventSourceEmblema) {
+    props.eventSourceEmblema.close();
+  }
+  if (props.setIntervalEmblema) {
+    clearInterval(props.setIntervalEmblema);
+  }
+  
+
+  listaPosicoes.forEach((posicao) => {
+    ids += posicao.idEstrutura + ",";
+  });
+  ids = ids.substring(0, ids.length - 1);
+
+  const newSource = atualizarEmblemasAPI(dispatch, arrayPrecos, ids);
+
+  dispatch(mudarVariavelPosicaoAction("eventSourceEmblema", newSource));
+};
+
 export const atualizarCotacoesAction = (props) => {
   return (dispatch) => {
-    atualizarCotacoes(
-      dispatch,
-      props.posicoesCustodia,
-      props,
-      props.arrayCotacoes
-    );
+    const { posicoesCustodia, arrayCotacoes } = props;
+    atualizarCotacoes(dispatch, posicoesCustodia, props, arrayCotacoes);
   };
 };
 

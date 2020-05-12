@@ -14,7 +14,11 @@ import {
   StorePrincipalContext,
   GlobalContext,
 } from "components/redux/StoreCreation";
-import { mudarVariavelPosicaoAction } from "components/redux/actions/menu_actions/PosicaoActions";
+import {
+  mudarVariavelPosicaoAction,
+  atualizarCotacoesAction,
+  atualizarEmblemasAction,
+} from "components/redux/actions/menu_actions/PosicaoActions";
 import { aumentarZindexAction } from "components/redux/actions/MainAppActions";
 import PosicaoDetalhada from "components/forms/posicao_custodia/posicao_detalhada/PosicaoDetalhada";
 
@@ -30,23 +34,28 @@ class PosicaoEmCustodia extends React.Component {
       );
     }
   }
-  // componentDidUpdate(prevProps) {
-  //   const { props } = this;
-  //   if (props.eventSourcePosicao && props.eventSourceEmblema) {
-  //     if (props.posicoesCustodia.length !== props.arrayPrecos.length) {
-  //       if (prevProps.posicoesCustodia !== props.posicoesCustodia) {
-  //         if (
-  //           props.posicoesCustodia.length &&
-  //           props.arrayPrecos.length &&
-  //           props.arrayCotacoes.length
-  //         ) {
-  //           props.atualizarEmblemasAction(props);
-  //           props.atualizarCotacoesAction(props);
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
+  componentDidUpdate(prevProps) {
+    const { props } = this;
+
+    if (
+      props.eventSourcePosicao &&
+      props.eventSourceEmblema &&
+      props.eventSourceCotacoes
+    ) {
+      if (props.posicoesCustodia.length !== props.arrayPrecos.length) {
+        if (prevProps.posicoesCustodia !== props.posicoesCustodia) {
+          if (
+            props.posicoesCustodia.length &&
+            props.arrayPrecos.length &&
+            props.arrayCotacoes.length
+          ) {
+            props.atualizarEmblemasAction(props);
+            props.atualizarCotacoesAction(props);
+          }
+        }
+      }
+    }
+  }
 
   render() {
     return (
@@ -286,6 +295,15 @@ const mapStateToPropsPosicao = (state) => ({
   tipoVisualizacao: state.posicaoReducer.tipoVisualizacao,
   ativoPesquisa: state.posicaoReducer.ativoPesquisa,
   inputSelect: state.posicaoReducer.inputSelect,
+  eventSourceEmblema: state.posicaoReducer.eventSourceEmblema,
+  eventSourcePosicao: state.posicaoReducer.eventSourcePosicao,
+  eventSourceCotacoes: state.posicaoReducer.eventSourceCotacoes,
+  setIntervalEmblema: state.posicaoReducer.setIntervalEmblema,
+  setIntervalCotacoesPosicao: state.posicaoReducer.setIntervalCotacoesPosicao,
+  posicoesCustodia: state.posicaoReducer.posicoesCustodia,
+  arrayCotacoes: state.posicaoReducer.arrayCotacoes,
+  arrayPrecos: state.posicaoReducer.arrayPrecos,
+  arrayPrecosID: state.posicaoReducer.arrayPrecosID,
   token: state.telaPrincipalReducer.token,
 });
 
@@ -297,6 +315,8 @@ export default compose(
     mapStateToPropsPosicao,
     {
       mudarVariavelPosicaoAction,
+      atualizarCotacoesAction,
+      atualizarEmblemasAction,
     },
     null,
     { context: StorePrincipalContext }

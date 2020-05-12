@@ -18,11 +18,6 @@ import { abrirItemBarraLateralAction } from "components/redux/actions/TelaPrinci
 import OpcoesOrdemExec from "components/forms/ordens_em_execucao/OpcoesOrdemExec";
 
 class OrdensExecucao extends React.Component {
-  componentWillUnmount() {
-    if (this.props.eventSourceOrdensExec) {
-      this.props.eventSourceOrdensExec.close();
-    }
-  }
   componentDidMount() {
     if (this.props.divkey !== "" && this.props.divkey === "ordens_execucao") {
       document.getElementById("ordens_execucao").style.zIndex =
