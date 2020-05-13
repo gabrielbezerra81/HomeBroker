@@ -1,27 +1,26 @@
 /* Abrange a tela thl, tabela de vencimento e mapa de calor */
-
 #thl {
   /* width: calc(100% - 95px); */
   margin-left: 5px;
   overflow: hidden;
-}
 
-#thl .mcontent {
-  margin-right: 0;
-  padding-bottom: 15px;
-}
+  .mheader {
+    position: fixed;
+    width: calc(100% - 17px);
+    padding-right: 1px;
+  }
 
-#thl .mheader {
-  position: fixed;
-  width: calc(100% - 17px);
-  padding-right: 1px;
-}
+  .mcontent {
+    margin-right: 0;
+    padding-bottom: 15px;
+  }
 
-#thl input,
-#thl select {
-  background-color: #333;
-  border-color: #333;
-  color: var(--cor-texto);
+  input,
+  select {
+    background-color: #333;
+    border-color: #333;
+    color: var(--cor-texto);
+  }
 }
 
 .containerPesquisaAtivo {
@@ -37,10 +36,10 @@
   max-width: 110px;
   align-items: center;
   margin-left: 20px !important;
-}
 
-.radioGroupTipo label {
-  color: var(--cor-texto);
+  label {
+    color: var(--cor-texto);
+  }
 }
 
 .containerMapaCalor {
@@ -53,18 +52,18 @@
   font-size: 0.7rem;
   position: fixed;
   top: calc(0% + 67px + 270px - 128px);
-}
 
-.containerMapaCalor img {
-  margin-right: 10px;
+  img {
+    margin-right: 10px;
+  }
+
+  label {
+    vertical-align: sub;
+  }
 }
 
 .labelMinMax {
   margin-right: 10px;
-}
-
-.containerMapaCalor label {
-  vertical-align: sub;
 }
 
 .radioMapaCalor label {
@@ -91,36 +90,36 @@
   position: absolute !important;
   right: 30px;
   top: 41px;
-}
 
-.containerBotaoEnviarTHL button {
-  background-color: #fc990a !important;
-  border-color: #fc990a !important;
-  color: white !important;
-}
+  &:hover {
+    opacity: 0.8;
+  }
 
-.containerBotaoEnviarTHL:hover {
-  opacity: 0.8;
+  button {
+    background-color: #fc990a !important;
+    border-color: #fc990a !important;
+    color: white !important;
+  }
 }
 
 .iconeRecalcularPrecos {
   right: 160px;
   top: 41px;
   position: absolute !important;
-}
 
-.iconeRecalcularPrecos:hover {
-  opacity: 0.8;
-}
+  &:hover {
+    opacity: 0.8;
+  }
 
-.iconeRecalcularPrecos button {
-  border: none !important;
-  color: #fc990a;
-  padding: 0;
-}
+  button {
+    border: none !important;
+    color: #fc990a;
+    padding: 0;
+  }
 
-.iconeRecalcularPrecos img {
-  z-index: 1;
+  img {
+    z-index: 1;
+  }
 }
 
 .botaoDesabilitado {
@@ -129,16 +128,16 @@
 
 .toolTipRecalcularPreco {
   z-index: 99999999 !important;
-}
 
-.toolTipRecalcularPreco .ant-tooltip-arrow::before {
-  background-color: #fff;
-}
+  .ant-tooltip-arrow::before {
+    background-color: #fff;
+  }
 
-.toolTipRecalcularPreco .ant-tooltip-inner {
-  background-color: #fff;
-  color: black;
-  text-align: justify;
+  .ant-tooltip-inner {
+    background-color: #fff;
+    color: black;
+    text-align: justify;
+  }
 }
 
 .textoRecalcular {

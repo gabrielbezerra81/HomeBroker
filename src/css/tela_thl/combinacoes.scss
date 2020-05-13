@@ -1,0 +1,298 @@
+.containerCombinacoesTHL {
+  margin-right: 5px;
+  margin-left: 103px;
+  border-bottom-left-radius: 5px;
+  border-bottom: 1px solid var(--cor-borda);
+  margin-top: 625px;
+}
+
+.tabelaCombinacoes {
+  color: var(--cor-texto);
+  margin-bottom: 0;
+
+  .colunaTextoCentralizado {
+    text-align: center !important;
+    position: relative;
+  }
+
+  .thead {
+    font-weight: 700;
+  }
+
+  .table-header-row {
+    width: calc(100% - 12px) !important;
+  }
+
+  .th {
+    @extend .colunaTextoCentralizado;
+  }
+
+  .th:first-child {
+    .divLabelColuna {
+      border-left: 1px solid var(--cor-borda) !important;
+      border-top-left-radius: 5px !important;
+    }
+  }
+
+  .th:last-child {
+    .divLabelColuna {
+      border-top-right-radius: 5px !important;
+    }
+  }
+
+  .td {
+    @extend .colunaTextoCentralizado;
+    padding: 5px 3px !important;
+    font-size: 0.7rem;
+    border-top: 1px solid var(--cor-borda);
+    color: var(--cor-texto-discreto);
+    border-right: 1px solid var(--cor-borda);
+  }
+
+  .td:first-child {
+    border-left: 1px solid var(--cor-borda);
+  }
+
+  .linha-impar {
+    .td {
+      background-color: var(--light-background-color);
+    }
+  }
+
+  .margemScrollbar.td:last-child {
+    margin-right: 12px;
+  }
+}
+
+/* Container dos inputs de filtro */
+.containerInputFiltro {
+  position: absolute;
+  margin: 0 auto;
+  top: 0px;
+  width: 100%;
+  height: calc(100% - 28px);
+  background-color: var(--background-color);
+  display: flex;
+  align-items: flex-end;
+  padding: 0px 3px 3px 3px;
+  justify-content: center;
+
+  .input {
+    height: 20px;
+    background-color: #333;
+    border-color: #333;
+    color: var(--cor-texto) !important;
+    font-size: 0.7rem;
+    width: 100% !important;
+    max-width: 100px;
+    padding-left: 3px !important;
+  }
+
+  input {
+    @extend .input;
+  }
+
+  select {
+    @extend .input;
+    padding: 0;
+    text-align-last: right;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+
+  input:focus,
+  select:focus {
+    background-color: #333;
+    border-color: #333;
+  }
+}
+
+.colunaAcaoUlt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  > div {
+    width: 100%;
+  }
+
+  .colunaDividida {
+    div {
+      padding: 0 !important;
+      width: 50%;
+    }
+    div:first-child {
+      border-right: 1px solid var(--cor-borda);
+    }
+  }
+}
+
+.codigoColunaModelo {
+  div:first-child {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 0px 0 10px;
+  }
+  div:last-child {
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 0.4rem;
+  }
+}
+
+/* Posicionamento de inputs acima do thead e configuração do .th*/
+.divLabelColuna {
+  background-color: var(--light-background-color);
+  border: 1px solid var(--cor-borda);
+  border-left: none;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 72px;
+
+  .colunaDividida {
+    width: 100%;
+  }
+  /* Posicionamento de inputs acima do  */
+}
+
+.selectOperacaoFiltro {
+  position: absolute !important;
+  bottom: 0px;
+  right: 0px;
+
+  > div {
+    height: 20px !important;
+    background-color: #333 !important;
+    color: var(--cor-texto) !important;
+    width: 25px !important;
+    border: none;
+    text-align: center !important;
+    font-size: 0.73rem !important;
+  }
+
+  .ant-select-selection__rendered {
+    height: 20px !important;
+    line-height: 20px !important;
+  }
+
+  .ant-select-arrow {
+    width: 100%;
+    right: 0 !important;
+  }
+}
+
+.selectOperacaoFiltroDropdown {
+  width: 50px !important;
+}
+
+.containerTabelaComb {
+  width: 100%;
+  overflow: auto;
+
+  .scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+  .scrollbar-track {
+    border-radius: 10px;
+    background-color: #222;
+  }
+  .scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #444;
+  }
+
+  &::-webkit-scrollbar {
+    @extend .scrollbar;
+  }
+  &::-webkit-scrollbar-track {
+    @extend .scrollbar-track;
+  }
+  &::-webkit-scrollbar-thumb {
+    @extend .scrollbar-thumb;
+  }
+
+  > div {
+    min-width: 1084px !important;
+
+    > div:nth-child(2) {
+      > div:nth-child(2) {
+        &::-webkit-scrollbar {
+          @extend .scrollbar;
+        }
+        &::-webkit-scrollbar-track {
+          @extend .scrollbar-track;
+        }
+        &::-webkit-scrollbar-thumb {
+          @extend .scrollbar-thumb;
+        }
+      }
+    }
+  }
+}
+
+.multiSelectVencimento {
+  .ant-select-selection.ant-select-selection--multiple {
+    height: 20px !important;
+    overflow: hidden !important;
+    width: 112px !important;
+    padding-bottom: 0 !important;
+  }
+
+  .ant-select-search__field {
+    width: 0px !important;
+    max-width: 0px !important;
+  }
+
+  > div {
+    background-color: #333 !important;
+    color: var(--cor-texto) !important;
+    border: none;
+    font-size: 0.73rem !important;
+    min-height: 20px !important;
+  }
+  .ant-select-arrow {
+    width: 100% !important;
+    right: 0px !important;
+  }
+
+  .ant-select-selection__rendered {
+    margin-right: 0px;
+  }
+
+  .ant-select-selection__choice {
+    height: 20px !important;
+    margin-top: 0 !important;
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: var(--cor-texto) !important;
+  }
+
+  .ant-select-selection__choice > div {
+    vertical-align: middle;
+    font-weight: 400 !important;
+  }
+  .ant-select-remove-icon {
+    color: var(--cor-texto) !important;
+  }
+
+  .ant-select-selection__choice__remove {
+    top: 1px;
+  }
+}
+
+.multiSelectVencimentoOption {
+  font-size: 0.73rem !important;
+}

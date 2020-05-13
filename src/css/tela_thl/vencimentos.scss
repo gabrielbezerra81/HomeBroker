@@ -1,0 +1,431 @@
+#scrollTabelaVencimento {
+  border: 1px solid var(--cor-borda);
+  margin-top: 0.5rem;
+  border-radius: 6px;
+  position: fixed; /*  */
+  height: 540px; /*  */
+  width: calc(
+    100% - 138px
+  ); /* 120px de diferença pro mcontent + 15px scrollbar y + 5*/
+  top: 67px;
+  margin-left: 103px;
+
+  .ps__rail-x {
+    opacity: 1;
+    background: #5c5c5c;
+    height: 3px;
+    margin: 0 calc((100% - 310px) / 2);
+    position: fixed;
+    top: 622px !important;
+    left: 110px !important;
+    z-index: 999;
+  }
+
+  .ps__thumb-x {
+    height: 8px;
+    margin-bottom: -4px;
+  }
+
+  .ps__rail-y {
+    margin: 180px 0;
+    top: 83px !important;
+    position: fixed;
+    width: 3px;
+    background: #5c5c5c;
+    opacity: 1;
+    right: 15px !important;
+  }
+
+  .ps__thumb-y {
+    width: 8px;
+    margin-right: -4px;
+  }
+}
+
+.tabelaVencimentos {
+  margin-bottom: 0;
+  white-space: nowrap;
+  border-collapse: separate !important;
+  border-spacing: 0;
+
+  %comumTdTh {
+    border-color: var(--cor-borda) !important;
+    border-right: 1px dashed var(--cor-borda-discreta) !important;
+    border-left: none;
+  }
+
+  %comumTdThChild2 {
+    border-style: solid !important;
+    border-left-width: 1px;
+    border-color: var(--cor-borda) !important;
+  }
+
+  %borderRightNone {
+    border-right: none !important;
+  }
+
+  thead {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    z-index: 2;
+
+    /* cabeçalho vencimentos */
+    tr {
+      &:first-child {
+        th:first-child {
+          position: fixed;
+          width: calc(100% - 140px);
+          z-index: 2;
+          background-color: var(--light-background-color);
+          left: 110px;
+          border-top-right-radius: 4px;
+          border-top-left-radius: 4px;
+        }
+      }
+
+      /* cabeçalho coluna 2 preço da linha */
+      &:nth-child(2) {
+        th {
+          top: 30px;
+
+          &:nth-child(2) {
+            z-index: 2;
+            left: 55px;
+          }
+        }
+      }
+
+      th {
+        position: -webkit-sticky;
+        position: sticky;
+        z-index: 2;
+        background-color: var(--light-background-color);
+        @extend %comumTdTh;
+
+        &:first-child {
+          left: 0;
+          z-index: 2;
+          @extend %borderRightNone;
+        }
+
+        &:nth-child(2) {
+          @extend %comumTdThChild2;
+        }
+
+        &:nth-child(n + 3) {
+          z-index: 1;
+        }
+
+        &:last-child {
+          @extend %borderRightNone;
+        }
+      }
+    }
+  }
+
+  tbody {
+    overflow-y: hidden !important;
+    max-height: 500px !important;
+
+    /* espaço antes do cabeçalho fixo */
+    &::before {
+      content: "";
+      display: table-row;
+      height: 30px;
+    }
+
+    tr {
+      /* colunas strike e preço das linhas fixas */
+      &:nth-child(1n + 2) {
+        color: var(--cor-texto-discreto);
+
+        %primeirasColunasTd {
+          position: -webkit-sticky; /* for Safari */
+          position: sticky;
+          top: 0px; /* Para elementos móveis verticalmente nao é necessario Top, pois vão subir e se esconder atras do cabeçalho */
+        }
+
+        td {
+          &:nth-child(1) {
+            @extend %primeirasColunasTd;
+          }
+
+          &:nth-child(2) {
+            @extend %primeirasColunasTd;
+          }
+        }
+      }
+
+      &:nth-child(even) {
+        td {
+          &:nth-child(1),
+          &:nth-child(2) {
+            background-color: var(--light-background-color) !important;
+          }
+        }
+      }
+
+      &:nth-child(odd) {
+        td {
+          &:nth-child(1),
+          &:nth-child(2) {
+            background-color: var(--background-color) !important;
+          }
+        }
+      }
+
+      &:first-child {
+        .colunaPrecoLinha div:first-child {
+          border-right: 1px solid var(--cor-borda) !important;
+        }
+
+        td {
+          position: -webkit-sticky; /* for Safari */
+          position: sticky;
+          background-color: var(--light-background-color);
+          top: 60px;
+          z-index: 2;
+          border-bottom: 1px solid var(--cor-borda) !important;
+          font-size: 0.9rem;
+
+          &:nth-child(1n + 3) {
+            left: 0px;
+            z-index: 1;
+          }
+        }
+      }
+    }
+
+    td {
+      font-size: 0.7rem;
+      padding: 0px 5px !important;
+      height: 0 !important;
+      @extend %comumTdTh;
+      border-bottom: 0;
+
+      &:first-child {
+        width: 55px;
+        left: 0px;
+        @extend %borderRightNone;
+      }
+
+      &:nth-child(2) {
+        left: 55px;
+        @extend %comumTdThChild2;
+      }
+
+      &:last-child {
+        @extend %borderRightNone;
+      }
+    }
+  }
+
+  .colunaAno {
+    text-align: start;
+  }
+
+  /* container total  e mensal */
+  .colunaPrecoLinha {
+    height: 100%;
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 84px;
+
+      /* subcoluna total */
+      &:first-child {
+        border-right: 1px dashed var(--cor-borda-discreta) !important;
+        padding: 0px 10px 0 5px;
+      }
+
+      /* subcoluna mensal TODO:*/
+      &:last-child {
+        padding: 0px 5px 0 10px;
+      }
+    }
+  }
+}
+
+%precoLinha {
+  display: flex;
+  align-items: center;
+}
+
+.precoLinhaMontar {
+  @extend %precoLinha;
+}
+
+.precoLinhaDesmontar {
+  color: var(--cor-vermelha-venda);
+  @extend %precoLinha;
+}
+
+.containerColunaMes {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+}
+
+.containerCelula {
+  width: 139px;
+  height: 53px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:focus {
+    outline: none !important;
+  }
+}
+
+.celulaSelecionada {
+  border: 2px solid #fc990a;
+  border-radius: 2px;
+}
+
+.itemAtivosQtde {
+  border-radius: 5px;
+  padding: 2px 0px 2px 0px;
+  display: flex;
+}
+
+.itemAtivosQtdeCustodia {
+  background-color: #b7b7b7;
+
+  .itemAtivos {
+    background-color: #222 !important;
+  }
+}
+
+.itemAtivos {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  padding: 1px 0px;
+  min-width: 96px;
+  margin-left: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imgModeloTHL {
+  height: 15px;
+  vertical-align: text-top;
+}
+
+.itemQtde {
+  padding: 1px 0;
+  color: #314452;
+  min-width: 27px;
+}
+
+.bookAtivoTHL {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 3px;
+  min-width: 128px;
+
+  > div {
+    box-sizing: border-box;
+    height: 18px;
+    border-radius: 4px;
+    padding: 0px 3px;
+    border: 1px solid transparent;
+
+    &:focus {
+      outline: none !important;
+    }
+
+    &:first-child {
+      margin-right: 1px;
+    }
+
+    &:last-child {
+      margin-left: 1px;
+    }
+  }
+}
+
+.bookSelecionado_compra {
+  border-color: var(--cor-azul-compra) !important;
+}
+
+.bookSelecionado_venda {
+  border-color: var(--cor-vermelha-venda) !important;
+}
+
+.containerPrecoMontDesmont {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 5px;
+  border-left: 1px dashed var(--cor-borda-discreta);
+  min-width: 75px;
+  margin-right: -6px;
+  height: 100%;
+}
+
+.divNomeMes {
+  width: 100%;
+  max-width: 139px;
+  min-height: 16px;
+}
+
+.linhasStrike {
+  .divClicavel {
+    outline: none !important;
+  }
+}
+
+.roxoTextoTHL {
+  color: var(--roxo-texto-thl);
+}
+
+.spinnerTabelaVencimentos {
+  top: 337px !important;
+
+  .ant-spin-dot {
+    font-size: 14px;
+    width: 35px;
+    height: 35px;
+  }
+}
+
+.ativoExecutando {
+  color: yellow;
+}
+
+@mixin faixaMapa() {
+  color: black;
+  border-left: none;
+}
+
+.faixa1Mapa {
+  background-color: #fff100;
+  @include faixaMapa();
+}
+.faixa2Mapa {
+  background-color: #fcb80f;
+  @include faixaMapa();
+}
+.faixa3Mapa {
+  background-color: #f7921c;
+  @include faixaMapa();
+}
+.faixa4Mapa {
+  background-color: #f36e21;
+  @include faixaMapa();
+}
+.faixa5Mapa {
+  background-color: #ed1b24;
+  @include faixaMapa();
+}
