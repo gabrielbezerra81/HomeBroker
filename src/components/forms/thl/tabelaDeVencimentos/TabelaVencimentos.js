@@ -25,6 +25,7 @@ export default React.memo(({ setScrollbarRef }) => {
     tipo,
     eventSourcePrecos,
     setIntervalPrecosTHL,
+    codigoCelulaSelecionada,
   } = reduxState;
 
   const strikesInteiros = useMemo(() => getStrikesInteiros(opcoesStrike), [
@@ -42,10 +43,11 @@ export default React.memo(({ setScrollbarRef }) => {
         strikeSelecionado,
         tipo,
         eventSourcePrecos,
-        setIntervalPrecosTHL
+        setIntervalPrecosTHL,
+        codigoCelulaSelecionada
       )
     );
-  }, [ativoPesquisado, strikeSelecionado, tipo]);
+  }, [ativoPesquisado, strikeSelecionado, tipo, codigoCelulaSelecionada]);
 
   return (
     <PerfectScrollbar

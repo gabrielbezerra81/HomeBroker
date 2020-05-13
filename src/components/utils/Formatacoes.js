@@ -85,10 +85,14 @@ export const getDiaEMes = () => {
   return date.getDate() + " de " + mes;
 };
 
-export const formatarNumDecimal = function (num, maximumFractionDigits = 3) {
+export const formatarNumDecimal = function (
+  num,
+  maximumFractionDigits = 3,
+  minimumFractionDigits = 2
+) {
   if (!num && num !== 0) return "0";
   return num.toLocaleString("pt-BR", {
-    minimumFractionDigits: 2,
+    minimumFractionDigits: minimumFractionDigits,
     maximumFractionDigits: maximumFractionDigits,
   });
 };
@@ -109,11 +113,12 @@ export const formatarVencimento = (string) => {
 
 export const formatarQuantidadeKMG = (qtde) => {
   if (!qtde) return "0K";
-  if (qtde < 1000) return formatarNumDecimal(qtde);
+  if (qtde < 1000) return formatarNumDecimal(qtde, 2, 0);
   else if (qtde > 1000000000)
-    return formatarNumDecimal(qtde / 1000000000) + "G";
-  else if (qtde > 1000000) return formatarNumDecimal(qtde / 1000000) + "M";
+    return formatarNumDecimal(qtde / 1000000000, 2, 0) + "G";
+  else if (qtde > 1000000)
+    return formatarNumDecimal(qtde / 1000000, 2, 0) + "M";
   else if (qtde < 1000000) {
-    return formatarNumDecimal(qtde / 1000) + "K";
+    return formatarNumDecimal(qtde / 1000, 2, 0) + "K";
   }
 };
