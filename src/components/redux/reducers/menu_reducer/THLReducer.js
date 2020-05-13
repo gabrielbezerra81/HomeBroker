@@ -3254,6 +3254,7 @@ const INITIAL_STATE = {
   tipo: "CALL",
   opcoesStrike: mapTabelaVencimentos([]),
   codigoCelulaSelecionada: "",
+  celulaCalculada: "",
   carregandoTabelaVencimentos: false,
   booksSelecionados: [],
   faixasMapaCalor: null,

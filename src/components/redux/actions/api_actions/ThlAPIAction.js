@@ -23,12 +23,11 @@ export const listarTabelaInicialTHLAPIAction = (
   ativo,
   strikeSelecionado,
   tipo,
-  sourcePrecos,
-  setIntervalPrecosTHL,
-  codigoCelulaSelecionada
+  props
 ) => {
   return async (dispatch) => {
-    if (ativo && strikeSelecionado && tipo && !codigoCelulaSelecionada) {
+    const { sourcePrecos, setIntervalPrecosTHL } = props;
+    if (ativo && strikeSelecionado && tipo) {
       dispatch(mudarVariavelTHLAction("carregandoTabelaVencimentos", true));
 
       const tabelaVencimentos = await listarTabelaInicialTHLAPI(
@@ -46,6 +45,7 @@ export const listarTabelaInicialTHLAPIAction = (
       dispatch(mudarVariavelTHLAction("opcoesStrike", tabelaVencimentos));
       dispatch(mudarVariavelTHLAction("carregandoTabelaVencimentos", false));
       dispatch(mudarVariavelTHLAction("codigoCelulaSelecionada", ""));
+      dispatch(mudarVariavelTHLAction("celulaCalculada", ""));
       dispatch(mudarVariavelTHLAction("booksSelecionados", []));
     }
   };
@@ -72,6 +72,9 @@ export const recalcularPrecosTHLAPIAction = (thlState) => {
 
     if (opcoesRecalculadas.length) {
       dispatch(mudarVariavelTHLAction("opcoesStrike", opcoesRecalculadas));
+      dispatch(
+        mudarVariavelTHLAction("celulaCalculada", codigoCelulaSelecionada)
+      );
       dispatch(mudarVariavelTHLAction("booksSelecionados", []));
       atualizarPrecosTHL(
         opcoesRecalculadas,

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo, useEffect, useRef } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { Table } from "react-bootstrap";
 import moment from "moment";
@@ -14,6 +14,7 @@ import {
 import { listarTabelaInicialTHLAPIAction } from "components/redux/actions/api_actions/ThlAPIAction";
 import { CelulaMes } from "components/forms/thl/tabelaDeVencimentos/CelulaMes";
 import InputStrikeSelecionado from "components/forms/thl/tabelaDeVencimentos/InputStrikeSelecionado";
+import { usePrevious } from "components/utils/cicloVida/cicloVida";
 
 export default React.memo(({ setScrollbarRef }) => {
   const reduxState = StateStorePrincipal().THLReducer;
@@ -23,9 +24,10 @@ export default React.memo(({ setScrollbarRef }) => {
     strikeSelecionado,
     ativoPesquisado,
     tipo,
-    eventSourcePrecos,
-    setIntervalPrecosTHL,
+    // eventSourcePrecos,
+    // setIntervalPrecosTHL,
     codigoCelulaSelecionada,
+    celulaCalculada,
   } = reduxState;
 
   const strikesInteiros = useMemo(() => getStrikesInteiros(opcoesStrike), [
@@ -36,18 +38,53 @@ export default React.memo(({ setScrollbarRef }) => {
     [opcoesStrike]
   );
 
+  const prevCodigoSelecionado = usePrevious(codigoCelulaSelecionada);
+  const prevCalculada = usePrevious(celulaCalculada);
+
   useEffect(() => {
     dispatch(
       listarTabelaInicialTHLAPIAction(
         ativoPesquisado,
         strikeSelecionado,
         tipo,
-        eventSourcePrecos,
-        setIntervalPrecosTHL,
-        codigoCelulaSelecionada
+        reduxState
       )
     );
-  }, [ativoPesquisado, strikeSelecionado, tipo, codigoCelulaSelecionada]);
+  }, []);
+
+  useEffect(() => {
+    if (
+      prevCodigoSelecionado !== codigoCelulaSelecionada ||
+      prevCalculada !== celulaCalculada
+    ) {
+      if (!codigoCelulaSelecionada && celulaCalculada) {
+        dispatch(
+          listarTabelaInicialTHLAPIAction(
+            ativoPesquisado,
+            strikeSelecionado,
+            tipo,
+            reduxState
+          )
+        );
+      }
+    } //
+    else {
+      dispatch(
+        listarTabelaInicialTHLAPIAction(
+          ativoPesquisado,
+          strikeSelecionado,
+          tipo,
+          reduxState
+        )
+      );
+    }
+  }, [
+    ativoPesquisado,
+    strikeSelecionado,
+    tipo,
+    codigoCelulaSelecionada,
+    celulaCalculada,
+  ]);
 
   return (
     <PerfectScrollbar
