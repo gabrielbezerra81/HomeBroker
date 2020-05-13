@@ -3313,7 +3313,7 @@ const INITIAL_STATE = {
   },
   montagem: { min: "", max: "", select: "=" },
   desmontagem: { min: "", max: "", select: "=" },
-  vencimento: "",
+  vencimento: [],
   prazo: "",
   eventSourcePrecos: null,
   setIntervalPrecosTHL: null,

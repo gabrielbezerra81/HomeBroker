@@ -94,7 +94,6 @@ export const cadastrarUsuarioAction = (props) => {
     }
   };
 };
-// TODO: limpar set Interval
 export const deslogarUsuarioAction = (event, props) => {
   return (dispatch) => {
     persistor

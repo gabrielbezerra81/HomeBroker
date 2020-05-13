@@ -8,7 +8,7 @@ import { Radio, Spin, Button, Tooltip } from "antd";
 import { ModalHeaderSemBook } from "components/utils/componentesUI/FormHeader";
 import MapaCalor from "components/forms/thl/MapaCalor";
 import TabelaVencimentos from "components/forms/thl/tabelaDeVencimentos/TabelaVencimentos";
-import TabelaCombinacoes from "components/forms/thl/TabelaCombinacoes";
+import TabelaCombinacoes from "components/forms/thl/tabelaCombinacoes/TabelaCombinacoes";
 import {
   GlobalContext,
   StateStorePrincipal,

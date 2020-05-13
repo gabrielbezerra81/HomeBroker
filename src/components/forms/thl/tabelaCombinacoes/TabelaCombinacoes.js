@@ -6,8 +6,8 @@ import {
   ColunaMontagem,
   ColunaTextoComum,
   ColunaHeader,
-} from "components/forms/thl/ColunasTabelaComb";
-import { FiltrarTabela } from "components/forms/thl/FiltroTabela";
+} from "components/forms/thl/tabelaCombinacoes/ColunasTabelaComb";
+import { FiltrarTabela } from "components/forms/thl/tabelaCombinacoes/FiltroTabela";
 import { useSelectorStorePrincipal } from "components/redux/StoreCreation";
 
 export default React.memo(() => {
@@ -168,14 +168,14 @@ const columns = [
   },
   {
     key: "vencimento",
-    width: 95,
+    width: 110,
     title: "Vencimento",
     Component: ColunaTextoComum,
     HeaderCell: ColunaHeader,
   },
   {
     key: "prazo",
-    width: 80,
+    width: 65,
     title: "Prazo",
     Component: ColunaTextoComum,
     HeaderCell: ColunaHeader,

@@ -20765,7 +20765,7 @@ export const data = [
       bookVenda: { valor: 0.7, qtde: 10000 },
       bookCompra: { valor: 0.7, qtde: 10000 },
     },
-    vencimento: "21/11/2019",
+    vencimento: "21/09/2019",
     prazo: "22 Dias",
   },
   {
@@ -20788,7 +20788,7 @@ export const data = [
       bookVenda: { valor: 0.7, qtde: 10000 },
       bookCompra: { valor: 0.7, qtde: 10000 },
     },
-    vencimento: "21/11/2019",
+    vencimento: "21/12/2019",
     prazo: "22 Dias",
   },
 ];

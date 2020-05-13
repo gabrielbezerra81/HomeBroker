@@ -1,7 +1,7 @@
 import React from "react";
 import imgModeloEU from "img/modeloEU.png";
 import ImgModeloUSA from "img/imgModeloUSA3.svg";
-import InputsFiltroTabela from "components/forms/thl/FiltroTabela";
+import InputsFiltroTabela from "components/forms/thl/tabelaCombinacoes/FiltroTabela";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 
 export const ColunaHeader = ({ children, column }) => {
@@ -27,7 +27,9 @@ export const ColunaHeader = ({ children, column }) => {
     tipoFiltro = "numero";
   } else if ("codigos" === key) {
     tipoFiltro = "numeroTexto";
-  } else if (["vencimento", "prazo"].includes(key)) {
+  } else if ("vencimento" === key) {
+    tipoFiltro = "multiSelect";
+  } else if ("prazo" === key) {
     tipoFiltro = "select";
   }
 

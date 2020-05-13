@@ -27,3 +27,15 @@
 .ant-select-dropdown-menu-item-active:not(.ant-select-dropdown-menu-item-disabled) {
   background-color: var(--cor-item-selected) !important;
 }
+
+.ant-select-dropdown.ant-select-dropdown--multiple
+  .ant-select-dropdown-menu-item:not(.ant-select-dropdown-menu-item-selected):hover
+  .ant-select-selected-icon {
+  color: transparent !important;
+}
+
+.ant-select-dropdown.ant-select-dropdown--multiple
+  .ant-select-dropdown-menu-item-selected
+  .ant-select-selected-icon {
+  color:var(--light-background-color) !important;
+}

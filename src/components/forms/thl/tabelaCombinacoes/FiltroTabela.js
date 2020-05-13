@@ -14,6 +14,8 @@ class InputsFiltroTabela extends React.Component {
     else if (this.props.tipoFiltro === "numeroTexto")
       filtro = this.filtroNumeroTexto();
     else if (this.props.tipoFiltro === "texto") filtro = this.filtroTexto();
+    else if (this.props.tipoFiltro === "multiSelect")
+      filtro = this.filtroMultiSelect();
     else if (this.props.tipoFiltro === "select") filtro = this.filtroSelect();
 
     return filtro;
@@ -69,9 +71,9 @@ class InputsFiltroTabela extends React.Component {
           <Select
             size="small"
             dropdownClassName="inputCodigoDropdown selectOperacaoFiltroDropdown"
-            value={this.props[key].select}
             className="selectOperacaoFiltro"
             style={{ height: "20px !important" }}
+            value={this.props[key].select}
             suffixIcon={<div style={{ color: "#ddd" }}>{select}</div>}
             onChange={(value) =>
               this.props.mudarVariavelTHLAction(key, {
@@ -217,19 +219,46 @@ class InputsFiltroTabela extends React.Component {
       </FormControl>
     );
   }
+
+  filtroMultiSelect() {
+    return (
+      <Select
+        mode="multiple"
+        size="small"
+        // value={this.props.vencimento}
+        className="multiSelectVencimento"
+        dropdownClassName="inputCodigoDropdown"
+        onChange={(value) => {
+          this.props.mudarVariavelTHLAction("vencimento", value);
+        }}
+      >
+        {opcoesInputSelect(this.props, "antd")}
+      </Select>
+    );
+  }
 }
 
-const opcoesInputSelect = (props) => {
+const opcoesInputSelect = (props, lib = "") => {
   const key = props.coluna.key;
   const arrayOpcoes = [
     ...new Set(props.combinacoesTabela.map((linha) => linha[key])),
   ];
 
-  return arrayOpcoes.map((opcao, indice) => (
-    <option key={`${key}${indice}`} value={opcao}>
-      {opcao}
-    </option>
-  ));
+  return arrayOpcoes.map((opcao, indice) =>
+    lib === "antd" ? (
+      <Select.Option
+        className="multiSelectVencimentoOption"
+        key={`${key}${indice}`}
+        value={opcao}
+      >
+        {opcao}
+      </Select.Option>
+    ) : (
+      <option key={`${key}${indice}`} value={opcao}>
+        {opcao}
+      </option>
+    )
+  );
 };
 
 const mapStateToProps = (state) => ({
@@ -318,12 +347,12 @@ const filtroCodigos = (data, filterObj) => {
 const filtroMontagem = (data, filterObj, atributo) => {
   return filtrarDadosColuna(data, filterObj, atributo, "numero");
 };
-const filtroVcto = (data, filterText) => {
-  return data.filter((linha) =>
-    linha.vencimento
-      .toLocaleLowerCase()
-      .includes(filterText.toLocaleLowerCase())
-  );
+const filtroVcto = (data, arrayVencimentos) => {
+  if (arrayVencimentos.length)
+    return data.filter((linha) =>
+      arrayVencimentos.includes(linha.vencimento.toLocaleLowerCase())
+    );
+  return data;
 };
 const filtroPrazo = (data, filterText) => {
   return data.filter((linha) =>
