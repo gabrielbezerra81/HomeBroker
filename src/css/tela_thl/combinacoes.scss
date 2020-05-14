@@ -10,7 +10,7 @@
   color: var(--cor-texto);
   margin-bottom: 0;
 
-  .colunaTextoCentralizado {
+  %colunaTextoCentralizado {
     text-align: center !important;
     position: relative;
   }
@@ -24,7 +24,7 @@
   }
 
   .th {
-    @extend .colunaTextoCentralizado;
+    @extend %colunaTextoCentralizado;
   }
 
   .th:first-child {
@@ -41,7 +41,7 @@
   }
 
   .td {
-    @extend .colunaTextoCentralizado;
+    @extend %colunaTextoCentralizado;
     padding: 5px 3px !important;
     font-size: 0.7rem;
     border-top: 1px solid var(--cor-borda);
@@ -77,7 +77,7 @@
   padding: 0px 3px 3px 3px;
   justify-content: center;
 
-  .input {
+  %input {
     height: 20px;
     background-color: #333;
     border-color: #333;
@@ -89,11 +89,11 @@
   }
 
   input {
-    @extend .input;
+    @extend %input;
   }
 
   select {
-    @extend .input;
+    @extend %input;
     padding: 0;
     text-align-last: right;
   }
@@ -200,28 +200,30 @@
   width: 100%;
   overflow: auto;
 
-  .scrollbar {
-    width: 12px;
-    height: 12px;
+  @mixin scrollbar() {
+    width: 12px !important;
+    height: 12px !important;
   }
-  .scrollbar-track {
+
+  @mixin scrollbar-track() {
     border-radius: 10px;
     background-color: #222;
   }
-  .scrollbar-thumb {
+
+  @mixin scrollbar-thumb() {
     -webkit-border-radius: 10px;
     border-radius: 10px;
     background: #444;
   }
 
   &::-webkit-scrollbar {
-    @extend .scrollbar;
+    @include scrollbar();
   }
   &::-webkit-scrollbar-track {
-    @extend .scrollbar-track;
+    @include scrollbar-track();
   }
   &::-webkit-scrollbar-thumb {
-    @extend .scrollbar-thumb;
+    @include scrollbar-thumb();
   }
 
   > div {
@@ -230,13 +232,13 @@
     > div:nth-child(2) {
       > div:nth-child(2) {
         &::-webkit-scrollbar {
-          @extend .scrollbar;
+          @include scrollbar();
         }
         &::-webkit-scrollbar-track {
-          @extend .scrollbar-track;
+          @include scrollbar-track();
         }
         &::-webkit-scrollbar-thumb {
-          @extend .scrollbar-thumb;
+          @include scrollbar-thumb();
         }
       }
     }
