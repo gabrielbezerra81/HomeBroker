@@ -1,11 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import LogRocket from "logrocket";
+import setupLogRocketReact from "logrocket-react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import "@fortawesome/fontawesome-free/css/all.css";
 import { Helper } from "components/redux/ElementosConectadosRedux";
 import PerfectScrollbar from "react-perfect-scrollbar";
+
+LogRocket.init("g32h7d/react-homebroker");
+setupLogRocketReact(LogRocket);
 
 ReactDOM.render(
   <PerfectScrollbar id="scrollbarPrincipal">{Helper()}</PerfectScrollbar>,

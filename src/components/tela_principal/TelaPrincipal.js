@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { Animate } from "react-show";
 import { compose } from "redux";
 import { connect } from "react-redux";
+import LogRocket from "logrocket";
 import MenuLateralUsuario from "components/tela_principal/MenuLateralUsuario";
 import BarraTopoTelaPrincipal from "components/tela_principal/BarraTopoTelaPrincipal";
 import {
@@ -43,6 +44,10 @@ class TelaPrincipal extends React.Component {
   componentDidMount() {
     this.props.listarOrdensExecAction(this.props);
     this.props.listarPosicoesAction(this.props);
+
+    LogRocket.identify(this.props.usuarioConectado, {
+      name: this.props.usuarioConectado,
+    });
   }
 
   render() {
@@ -161,6 +166,7 @@ const mapStateToPropsAppPrincipal = (state) => ({
   multilegAberto: state.telaPrincipalReducer.multilegAberto,
   thlAberta: state.telaPrincipalReducer.thlAberta,
   token: state.telaPrincipalReducer.token,
+  usuarioConectado: state.telaPrincipalReducer.usuarioConectado,
   // Posição
   posicoesCustodia: state.posicaoReducer.posicoesCustodia,
   arrayPrecos: state.posicaoReducer.arrayPrecos,

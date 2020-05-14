@@ -8,6 +8,7 @@ import {
 import ReduxThunk from "redux-thunk";
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
+import LogRocket from "logrocket";
 import autoMergeLevel1 from "redux-persist/lib/stateReconciler/autoMergeLevel1";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 import MainAppReducer from "components/redux/reducers/MainAppReducer";
@@ -69,7 +70,7 @@ const combinedReducers = combineReducers({
 export const storeAppPrincipal = createStore(
   persistedReducerAppPrincipal,
   {},
-  composeEnhancers(applyMiddleware(ReduxThunk))
+  composeEnhancers(applyMiddleware(ReduxThunk, LogRocket.reduxMiddleware()))
 );
 
 export const persistor = persistStore(storeAppPrincipal);
@@ -78,5 +79,5 @@ export const persistor = persistStore(storeAppPrincipal);
 export const globalStore = createStore(
   combinedReducers,
   {},
-  composeEnhancers(applyMiddleware(ReduxThunk))
+  composeEnhancers(applyMiddleware(ReduxThunk, LogRocket.reduxMiddleware()))
 );
