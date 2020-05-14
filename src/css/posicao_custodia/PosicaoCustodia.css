@@ -111,6 +111,7 @@ th .colunaDividida div {
   border-color: #444;
   color: var(--cor-texto);
   height: 30px;
+  width: 90px;
 }
 
 .formPosicao:focus {
@@ -134,7 +135,7 @@ th .colunaDividida div {
   display: flex;
   flex-wrap: wrap;
   width: 1040px;
-  padding-left: 0.5px;
+  padding-left: 7px;
 }
 
 .rowListagenItens > div {

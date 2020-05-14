@@ -19,14 +19,16 @@ export const pesquisarAtivoTHLAPIAction = (codigo) => {
   };
 };
 
-export const listarTabelaInicialTHLAPIAction = (
-  ativo,
-  strikeSelecionado,
-  tipo,
-  props
-) => {
+export const listarTabelaInicialTHLAPIAction = (props) => {
   return async (dispatch) => {
-    const { sourcePrecos, setIntervalPrecosTHL } = props;
+    const {
+      sourcePrecos,
+      setIntervalPrecosTHL,
+      ativoPesquisado,
+      strikeSelecionado,
+      tipo,
+    } = props;
+    const ativo = ativoPesquisado;
     if (ativo && strikeSelecionado && tipo) {
       dispatch(mudarVariavelTHLAction("carregandoTabelaVencimentos", true));
 

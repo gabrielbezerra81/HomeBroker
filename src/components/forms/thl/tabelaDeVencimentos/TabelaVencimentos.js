@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useMemo, useEffect, useRef } from "react";
+import React, { useMemo, useEffect } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { Table } from "react-bootstrap";
 import moment from "moment";
@@ -24,8 +24,6 @@ export default React.memo(({ setScrollbarRef }) => {
     strikeSelecionado,
     ativoPesquisado,
     tipo,
-    // eventSourcePrecos,
-    // setIntervalPrecosTHL,
     codigoCelulaSelecionada,
     celulaCalculada,
   } = reduxState;
@@ -42,14 +40,7 @@ export default React.memo(({ setScrollbarRef }) => {
   const prevCalculada = usePrevious(celulaCalculada);
 
   useEffect(() => {
-    dispatch(
-      listarTabelaInicialTHLAPIAction(
-        ativoPesquisado,
-        strikeSelecionado,
-        tipo,
-        reduxState
-      )
-    );
+    dispatch(listarTabelaInicialTHLAPIAction(reduxState));
   }, []);
 
   useEffect(() => {
@@ -58,25 +49,11 @@ export default React.memo(({ setScrollbarRef }) => {
       prevCalculada !== celulaCalculada
     ) {
       if (!codigoCelulaSelecionada && celulaCalculada) {
-        dispatch(
-          listarTabelaInicialTHLAPIAction(
-            ativoPesquisado,
-            strikeSelecionado,
-            tipo,
-            reduxState
-          )
-        );
+        dispatch(listarTabelaInicialTHLAPIAction(reduxState));
       }
     } //
     else {
-      dispatch(
-        listarTabelaInicialTHLAPIAction(
-          ativoPesquisado,
-          strikeSelecionado,
-          tipo,
-          reduxState
-        )
-      );
+      dispatch(listarTabelaInicialTHLAPIAction(reduxState));
     }
   }, [
     ativoPesquisado,
