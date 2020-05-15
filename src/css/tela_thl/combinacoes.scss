@@ -1,5 +1,4 @@
 .containerCombinacoesTHL {
-  margin-right: 5px;
   margin-left: 103px;
   border-bottom-left-radius: 5px;
   border-bottom: 1px solid var(--cor-borda);
@@ -20,7 +19,7 @@
   }
 
   .table-header-row {
-    width: calc(100% - 12px) !important;
+    width: calc(100% - 20px) !important;
   }
 
   .th {
@@ -200,30 +199,34 @@
   width: 100%;
   overflow: auto;
 
-  @mixin scrollbar() {
-    width: 12px !important;
-    height: 12px !important;
+  @mixin scrollbar($prop, $value) {
+    #{$prop}: $value;
   }
 
-  @mixin scrollbar-track() {
+  @mixin scrollbar-track($borderWidth, $margin) {
     border-radius: 10px;
-    background-color: #222;
+    background: #5c5c5c;
+    background-clip: content-box;
+    margin: $margin;
+    border: $borderWidth solid transparent;
   }
 
-  @mixin scrollbar-thumb() {
-    -webkit-border-radius: 10px;
+  @mixin scrollbar-thumb($borderWidth) {
     border-radius: 10px;
-    background: #444;
+    background: #aaa;
+    height: 52px;
+    border: $borderWidth solid transparent;
+    background-clip: content-box;
   }
 
   &::-webkit-scrollbar {
-    @include scrollbar();
+    @include scrollbar(height, 14px);
   }
   &::-webkit-scrollbar-track {
-    @include scrollbar-track();
+    @include scrollbar-track(5px, 0 calc((100% - 173px) / 2));
   }
   &::-webkit-scrollbar-thumb {
-    @include scrollbar-thumb();
+    @include scrollbar-thumb(3px);
   }
 
   > div {
@@ -232,13 +235,13 @@
     > div:nth-child(2) {
       > div:nth-child(2) {
         &::-webkit-scrollbar {
-          @include scrollbar();
+          @include scrollbar(width, 20px);
         }
         &::-webkit-scrollbar-track {
-          @include scrollbar-track();
+          @include scrollbar-track(8px, 80px 0);
         }
         &::-webkit-scrollbar-thumb {
-          @include scrollbar-thumb();
+          @include scrollbar-thumb(6px);
         }
       }
     }
