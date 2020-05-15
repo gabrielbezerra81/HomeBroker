@@ -39,9 +39,9 @@ export default React.memo(({ setScrollbarRef }) => {
   const prevCodigoSelecionado = usePrevious(codigoCelulaSelecionada);
   const prevCalculada = usePrevious(celulaCalculada);
 
-  // useEffect(() => {
-  //   dispatch(listarTabelaInicialTHLAPIAction(reduxState));
-  // }, []);
+  useEffect(() => {
+    dispatch(listarTabelaInicialTHLAPIAction(reduxState));
+  }, []);
 
   useEffect(() => {
     if (
@@ -63,16 +63,20 @@ export default React.memo(({ setScrollbarRef }) => {
     celulaCalculada,
   ]);
 
-  let [mouseDown, setMouseDown] = useState(false);
-  let [startX, setStartX] = useState(false);
-  let [scrollLeft, setScrollLeft] = useState(false);
+  const [mouseDown, setMouseDown] = useState(false);
+  const [startX, setStartX] = useState(false);
+  const [startY, setStartY] = useState(false);
+  const [scrollLeft, setScrollLeft] = useState(false);
+  const [scrollTop, setScrollTop] = useState(false);
   const [selectBloqueado, setSelectBloqueado] = useState(false);
 
   const onMouseDown = (e) => {
     const container = document.getElementById("scrollTabelaVencimento");
     setMouseDown(true);
     setStartX(e.pageX);
+    setStartY(e.pageY);
     setScrollLeft(container.scrollLeft);
+    setScrollTop(container.scrollTop);
   };
   const onMouseUp = (e) => {
     const thl = document.getElementById("thl");
@@ -91,17 +95,31 @@ export default React.memo(({ setScrollbarRef }) => {
     }
 
     let diferencaXInicial = startX - e.pageX;
-    let threshold = 30;
+    let thresholdX = 0;
     if (diferencaXInicial < 1) {
       diferencaXInicial *= -1;
-      threshold *= -1;
+      thresholdX *= -1;
     }
 
-    if (diferencaXInicial > 30) {
-      const container = document.getElementById("scrollTabelaVencimento");
+    let diferencaYInicial = startY - e.pageY;
+    let thresholdY = 0;
+    if (diferencaYInicial < 1) {
+      diferencaYInicial *= -1;
+      thresholdY *= -1;
+    }
+
+    const container = document.getElementById("scrollTabelaVencimento");
+
+    if (diferencaXInicial > Math.abs(thresholdX)) {
       const x = e.pageX;
-      const walk = (x - startX + threshold) * 2;
-      container.scrollLeft = scrollLeft - walk;
+      const movimentoX = (x - startX + thresholdX) * 2;
+      container.scrollLeft = scrollLeft - movimentoX;
+    }
+
+    if (diferencaYInicial > Math.abs(thresholdY)) {
+      const y = e.pageY;
+      const movimentoY = (y - startY + thresholdY) * 1;
+      container.scrollTop = scrollTop - movimentoY;
     }
   };
 
