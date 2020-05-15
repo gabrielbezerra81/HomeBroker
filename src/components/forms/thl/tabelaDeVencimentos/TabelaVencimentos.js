@@ -101,12 +101,12 @@ export default React.memo(({ setScrollbarRef }) => {
       thresholdX *= -1;
     }
 
-    let diferencaYInicial = startY - e.pageY;
-    let thresholdY = 0;
-    if (diferencaYInicial < 1) {
-      diferencaYInicial *= -1;
-      thresholdY *= -1;
-    }
+    // let diferencaYInicial = startY - e.pageY;
+    // let thresholdY = 0;
+    // if (diferencaYInicial < 1) {
+    //   diferencaYInicial *= -1;
+    //   thresholdY *= -1;
+    // }
 
     const container = document.getElementById("scrollTabelaVencimento");
 
@@ -116,11 +116,11 @@ export default React.memo(({ setScrollbarRef }) => {
       container.scrollLeft = scrollLeft - movimentoX;
     }
 
-    if (diferencaYInicial > Math.abs(thresholdY)) {
-      const y = e.pageY;
-      const movimentoY = (y - startY + thresholdY) * 1;
-      container.scrollTop = scrollTop - movimentoY;
-    }
+    // if (diferencaYInicial > Math.abs(thresholdY)) {
+    //   const y = e.pageY;
+    //   const movimentoY = (y - startY + thresholdY) * 1;
+    //   container.scrollTop = scrollTop - movimentoY;
+    // }
   };
 
   return (
