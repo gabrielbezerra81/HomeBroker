@@ -63,20 +63,19 @@ export default React.memo(({ setScrollbarRef }) => {
     celulaCalculada,
   ]);
 
-  const thl = document.querySelector("#thl");
-  const container = document.querySelector("#scrollTabelaVencimento");
-
   let [mouseDown, setMouseDown] = useState(false);
   let [startX, setStartX] = useState(false);
   let [scrollLeft, setScrollLeft] = useState(false);
   const [selectBloqueado, setSelectBloqueado] = useState(false);
 
   const onMouseDown = (e) => {
+    const container = document.getElementById("scrollTabelaVencimento");
     setMouseDown(true);
     setStartX(e.pageX);
     setScrollLeft(container.scrollLeft);
   };
   const onMouseUp = (e) => {
+    const thl = document.getElementById("thl");
     setMouseDown(false);
     setSelectBloqueado(false);
     thl.classList.remove("blockSelection");
@@ -86,6 +85,7 @@ export default React.memo(({ setScrollbarRef }) => {
     e.preventDefault();
 
     if (!selectBloqueado) {
+      const thl = document.getElementById("thl");
       thl.classList.add("blockSelection");
       setSelectBloqueado(true);
     }
@@ -98,6 +98,7 @@ export default React.memo(({ setScrollbarRef }) => {
     }
 
     if (diferencaXInicial > 30) {
+      const container = document.getElementById("scrollTabelaVencimento");
       const x = e.pageX;
       const walk = (x - startX + threshold) * 2;
       container.scrollLeft = scrollLeft - walk;
