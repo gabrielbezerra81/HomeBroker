@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { Table } from "react-bootstrap";
 import moment from "moment";
@@ -39,9 +39,9 @@ export default React.memo(({ setScrollbarRef }) => {
   const prevCodigoSelecionado = usePrevious(codigoCelulaSelecionada);
   const prevCalculada = usePrevious(celulaCalculada);
 
-  useEffect(() => {
-    dispatch(listarTabelaInicialTHLAPIAction(reduxState));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(listarTabelaInicialTHLAPIAction(reduxState));
+  // }, []);
 
   useEffect(() => {
     if (
@@ -63,6 +63,47 @@ export default React.memo(({ setScrollbarRef }) => {
     celulaCalculada,
   ]);
 
+  const thl = document.querySelector("#thl");
+  const container = document.querySelector("#scrollTabelaVencimento");
+
+  let [mouseDown, setMouseDown] = useState(false);
+  let [startX, setStartX] = useState(false);
+  let [scrollLeft, setScrollLeft] = useState(false);
+  const [selectBloqueado, setSelectBloqueado] = useState(false);
+
+  const onMouseDown = (e) => {
+    setMouseDown(true);
+    setStartX(e.pageX);
+    setScrollLeft(container.scrollLeft);
+  };
+  const onMouseUp = (e) => {
+    setMouseDown(false);
+    setSelectBloqueado(false);
+    thl.classList.remove("blockSelection");
+  };
+  const onMouseMove = (e) => {
+    if (!mouseDown) return;
+    e.preventDefault();
+
+    if (!selectBloqueado) {
+      thl.classList.add("blockSelection");
+      setSelectBloqueado(true);
+    }
+
+    let diferencaXInicial = startX - e.pageX;
+    let threshold = 30;
+    if (diferencaXInicial < 1) {
+      diferencaXInicial *= -1;
+      threshold *= -1;
+    }
+
+    if (diferencaXInicial > 30) {
+      const x = e.pageX;
+      const walk = (x - startX + threshold) * 2;
+      container.scrollLeft = scrollLeft - walk;
+    }
+  };
+
   return (
     <PerfectScrollbar
       ref={(ref) => {
@@ -75,6 +116,10 @@ export default React.memo(({ setScrollbarRef }) => {
       }}
       id="scrollTabelaVencimento"
       className="wrapper containerTabela"
+      onMouseDown={onMouseDown}
+      onMouseUp={onMouseUp}
+      onMouseLeave={onMouseUp}
+      onMouseMove={onMouseMove}
     >
       <Table
         variant="dark"
