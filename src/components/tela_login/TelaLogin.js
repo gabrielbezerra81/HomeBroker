@@ -11,6 +11,13 @@ import { navigate } from "@reach/router";
 import { StorePrincipalContext } from "components/redux/StoreCreation";
 
 class TelaLogin extends React.Component {
+  onKeyUp(event) {
+    const { props } = this;
+    //event.preventDefault();
+    if (event.key === "Enter")
+      props.logarUsuarioAction(props.inputUsuario, props.inputSenha);
+  }
+
   render() {
     const { props } = this;
     return (
@@ -37,6 +44,7 @@ class TelaLogin extends React.Component {
                   onChange={(e) =>
                     props.mudarDadosLoginAction("inputUsuario", e.target.value)
                   }
+                  onKeyUp={(e) => this.onKeyUp(e)}
                 />
 
                 <FloatingLabelInput
@@ -51,6 +59,7 @@ class TelaLogin extends React.Component {
                   onChange={(e) =>
                     props.mudarDadosLoginAction("inputSenha", e.target.value)
                   }
+                  onKeyUp={(e) => this.onKeyUp(e)}
                 />
 
                 <Button

@@ -112,7 +112,7 @@ export const BookHeader = ({ headerClass, resetPosition }) => {
             onChange={(event) =>
               dispatch(mudarInputHeaderAction(event.target.value))
             }
-            onKeyPress={(event) => {
+            onKeyUp={(event) => {
               //event.preventDefault();
               if (event.key === "Enter")
                 dispatch(
