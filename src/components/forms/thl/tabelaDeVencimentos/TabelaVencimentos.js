@@ -16,7 +16,7 @@ import { CelulaMes } from "components/forms/thl/tabelaDeVencimentos/CelulaMes";
 import InputStrikeSelecionado from "components/forms/thl/tabelaDeVencimentos/InputStrikeSelecionado";
 import { usePrevious } from "components/utils/cicloVida/cicloVida";
 
-export default React.memo(({ setScrollbarRef }) => {
+export default React.memo(() => {
   const reduxState = StateStorePrincipal().THLReducer;
   const dispatch = DispatchStorePrincipal();
   const {
@@ -77,64 +77,66 @@ export default React.memo(({ setScrollbarRef }) => {
     setStartY(e.pageY);
     setScrollLeft(container.scrollLeft);
     setScrollTop(container.scrollTop);
+    container.classList.add("ponteiroDragScroll");
   };
   const onMouseUp = (e) => {
     const thl = document.getElementById("thl");
+    const container = document.getElementById("scrollTabelaVencimento");
     setMouseDown(false);
     setSelectBloqueado(false);
     thl.classList.remove("blockSelection");
+    container.classList.remove("ponteiroDragScroll");
+    container.releasePointerCapture(1);
   };
   const onMouseMove = (e) => {
     if (!mouseDown) return;
     e.preventDefault();
 
     if (!selectBloqueado) {
+      const container = document.getElementById("scrollTabelaVencimento");
       const thl = document.getElementById("thl");
+      container.setPointerCapture(1);
       thl.classList.add("blockSelection");
       setSelectBloqueado(true);
     }
 
     let diferencaXInicial = startX - e.pageX;
-    let thresholdX = 0;
+    let thresholdX = 3;
     if (diferencaXInicial < 1) {
       diferencaXInicial *= -1;
       thresholdX *= -1;
     }
 
-    // let diferencaYInicial = startY - e.pageY;
-    // let thresholdY = 0;
-    // if (diferencaYInicial < 1) {
-    //   diferencaYInicial *= -1;
-    //   thresholdY *= -1;
-    // }
+    let diferencaYInicial = startY - e.pageY;
+    let thresholdY = 3;
+    if (diferencaYInicial < 1) {
+      diferencaYInicial *= -1;
+      thresholdY *= -1;
+    }
 
     const container = document.getElementById("scrollTabelaVencimento");
 
     if (diferencaXInicial > Math.abs(thresholdX)) {
       const x = e.pageX;
-      const movimentoX = (x - startX + thresholdX) * 2;
+      const movimentoX = (x - startX + thresholdX) * 3;
       container.scrollLeft = scrollLeft - movimentoX;
     }
 
-    // if (diferencaYInicial > Math.abs(thresholdY)) {
-    //   const y = e.pageY;
-    //   const movimentoY = (y - startY + thresholdY) * 1;
-    //   container.scrollTop = scrollTop - movimentoY;
-    // }
+    if (diferencaYInicial > Math.abs(thresholdY)) {
+      const y = e.pageY;
+      const movimentoY = (y - startY + thresholdY) * 1;
+      container.scrollTop = scrollTop - movimentoY;
+    }
   };
 
   return (
     <PerfectScrollbar
-      ref={(ref) => {
-        setScrollbarRef(ref);
-      }}
       options={{
         maxScrollbarLength: 40,
         minScrollbarLength: 40,
-        suppressScrollY: false,
+        wheelPropagation: false,
       }}
       id="scrollTabelaVencimento"
-      className="wrapper containerTabela"
       onMouseDown={onMouseDown}
       onMouseUp={onMouseUp}
       onMouseLeave={onMouseUp}
@@ -147,9 +149,6 @@ export default React.memo(({ setScrollbarRef }) => {
         id="tabela"
       >
         <thead>
-          <tr>
-            <th colSpan="14">Vencimentos</th>
-          </tr>
           <tr>
             <th>Strike</th>
             <th>Preço da linha</th>

@@ -2,7 +2,6 @@
 #thl {
   /* width: calc(100% - 95px); */
   margin-left: 5px;
-  overflow: hidden;
 
   .mheader {
     position: fixed;
@@ -13,6 +12,7 @@
   .mcontent {
     margin-right: 0;
     padding-bottom: 15px;
+    // overflow: auto;
   }
 
   input,
@@ -23,12 +23,40 @@
   }
 }
 
+#scrollbarTHL {
+  margin-top: 24px;
+  height: 85vh;
+  padding-right: 5px;
+}
+
 .containerPesquisaAtivo {
-  width: 265px;
+  width: calc(100% - 153px);
   position: fixed; /*  */
-  top: 41px;
+  top: 37px;
   margin-left: 103px;
   display: flex;
+  z-index: 1;
+  height: 40px;
+  padding: 5px 0;
+  background-color: var(--background-color);
+  z-index: 3;
+
+  &::after {
+    content: "";
+    position: absolute;
+
+    background-color: transparent;
+    bottom: -30px;
+    height: 30px;
+    width: 100%;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    box-shadow: 0 -1px 0 0 var(--cor-borda);
+  }
+
+  .input-group {
+    width: 135px;
+  }
 }
 
 .radioGroupTipo {
@@ -52,6 +80,7 @@
   font-size: 0.7rem;
   position: fixed;
   top: calc(0% + 67px + 270px - 128px);
+  z-index: 1;
 
   img {
     margin-right: 10px;
@@ -87,9 +116,10 @@
 }
 
 .containerBotaoEnviarTHL {
-  position: absolute !important;
-  right: 30px;
+  position: fixed !important;
+  right: 45px;
   top: 41px;
+  z-index: 3;
 
   &:hover {
     opacity: 0.8;
@@ -103,9 +133,10 @@
 }
 
 .iconeRecalcularPrecos {
-  right: 160px;
+  right: 177px;
   top: 41px;
-  position: absolute !important;
+  position: fixed !important;
+  z-index: 3;
 
   &:hover {
     opacity: 0.8;

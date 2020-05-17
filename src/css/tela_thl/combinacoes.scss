@@ -2,7 +2,8 @@
   margin-left: 103px;
   border-bottom-left-radius: 5px;
   border-bottom: 1px solid var(--cor-borda);
-  margin-top: 625px;
+  margin-top: 5px;
+  width: calc(100% - 113px);
 }
 
 .tabelaCombinacoes {
@@ -29,13 +30,13 @@
   .th:first-child {
     .divLabelColuna {
       border-left: 1px solid var(--cor-borda) !important;
-      border-top-left-radius: 5px !important;
+      border-top-left-radius: 3px !important;
     }
   }
 
   .th:last-child {
     .divLabelColuna {
-      border-top-right-radius: 5px !important;
+      border-top-right-radius: 3px !important;
     }
   }
 
@@ -59,7 +60,7 @@
   }
 
   .margemScrollbar.td:last-child {
-    margin-right: 12px;
+    margin-right: 20px;
   }
 }
 
@@ -230,7 +231,7 @@
   }
 
   > div {
-    min-width: 1084px !important;
+    min-width: 1079px !important;
 
     > div:nth-child(2) {
       > div:nth-child(2) {

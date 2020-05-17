@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import PerfectScrollbar from "react-perfect-scrollbar";
 import ReactResizeDetector from "react-resize-detector";
 import DraggableModal from "components/utils/componentesUI/DraggableModal";
 import { Form, InputGroup, Spinner } from "react-bootstrap";
@@ -26,7 +27,6 @@ import {
   recalcularPrecosTHLAPIAction,
 } from "components/redux/actions/api_actions/ThlAPIAction";
 import iconeRecalcularPrecos from "img/recalcularTHL.png";
-
 // import "fixed-header-table/css/defaultTheme.css";
 
 // window.jQuery = require("jquery");
@@ -60,33 +60,47 @@ class Tela_THL extends React.Component {
   }
 
   ModalBody = () => {
-    const [scrollbarRef, setScrollbarRef] = useState("");
     const reduxState = StateStorePrincipal().THLReducer;
     const { carregandoTabelaVencimentos } = reduxState;
 
     return (
-      <div className="containerTHL">
-        <MapaCalor />
-        <div className="containerVencimentos">
-          <InputPesquisa />
-          <EnviarOrdem />
-          <RecalcularPrecos />
-          <Spin
-            className="spinnerTabelaVencimentos"
-            indicator={<Spinner animation="border" variant="light" />}
-            spinning={carregandoTabelaVencimentos}
-          >
-            <TabelaVencimentos setScrollbarRef={setScrollbarRef} />
-          </Spin>
-          <TabelaCombinacoes />
+      <PerfectScrollbar
+        id="scrollbarTHL"
+        options={{
+          wheelPropagation: false,
+        }}
+      >
+        <div className="containerTHL">
+          <MapaCalor />
+          <div>
+            <InputPesquisa />
+            <EnviarOrdem />
+            <RecalcularPrecos />
+            <div className="containerSpinnerVencimentos">
+              <Spin
+                className="spinnerTabelaVencimentos"
+                indicator={
+                  <Spinner
+                    className="asdas"
+                    animation="border"
+                    variant="light"
+                  />
+                }
+                spinning={carregandoTabelaVencimentos}
+              >
+                <TabelaVencimentos />
+              </Spin>
+            </div>
+            <TabelaCombinacoes />
+          </div>
+          {/* <ReactResizeDetector
+            handleWidth
+            onResize={(w, h) => {
+              scrollbarRef.updateScroll();
+            }}
+          /> */}
         </div>
-        <ReactResizeDetector
-          handleWidth
-          onResize={(w, h) => {
-            scrollbarRef.updateScroll();
-          }}
-        />
-      </div>
+      </PerfectScrollbar>
     );
   };
 }
@@ -106,7 +120,7 @@ const InputPesquisa = () => {
   const { ativoPesquisa, tipo, pesquisandoAtivo } = reduxState;
 
   return (
-    <div className="containerPesquisaAtivo">
+    <div className="containerPesquisaAtivo inverted-border-radius">
       <InputGroup>
         <Form.Control
           className="inputAtivo"

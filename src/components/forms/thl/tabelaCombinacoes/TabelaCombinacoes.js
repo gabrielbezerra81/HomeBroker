@@ -1,4 +1,4 @@
-import React, { forwardRef, useMemo } from "react";
+import React, { forwardRef, useMemo, useEffect } from "react";
 import { WindowTable } from "window-table";
 import {
   ColunaAcaoUlt,
@@ -41,23 +41,20 @@ export default React.memo(() => {
   ]);
 
   //Bloqueia o scroll do container quando for rolar a tabela
-  // useEffect(() => {
-  //   var parent = document.getElementById("tabelaCombinacoes").childNodes[1];
-  //   var scrollDiv = parent.lastChild;
+  useEffect(() => {
+    var parent = document.getElementById("tabelaCombinacoes").childNodes[1];
+    var scrollDiv = parent.lastChild;
 
-  //   if (scrollDiv)
-  //     scrollDiv.addEventListener(
-  //       "wheel",
-  //       function (e) {
-  //         var event = e,
-  //           d = -event.deltaY || -event.detail;
+    if (scrollDiv)
+      scrollDiv.addEventListener(
+        "wheel",
+        function (e) {
+          e.stopPropagation();
+        },
+        { passive: true }
+      );
+  });
 
-  //         this.scrollTop += (d < 0 ? 1 : -1) * 30;
-  //         // e.preventDefault();
-  //       },
-  //       { passive: true }
-  //     );
-  // });
   let alturaContainer = 102 + 43 * dataTabela.length;
   if (alturaContainer > 496) alturaContainer = 496;
   const classeMargemScroll = dataTabela.length < 10 ? "margemScrollbar " : "";
