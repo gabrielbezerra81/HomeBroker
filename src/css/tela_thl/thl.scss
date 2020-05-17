@@ -5,7 +5,7 @@
 
   .mheader {
     position: fixed;
-    width: calc(100% - 17px);
+    width: calc(100% - 12px);
     padding-right: 1px;
   }
 
@@ -29,6 +29,10 @@
   height: calc(
     100vh - 106px
   ); // - 45px - 6px - 6px - 2px - 24px - 15px - 6px - 2px
+
+  .ps__rail-y{
+    background-color: transparent;
+  }
 }
 
 .containerPesquisaAtivo {
