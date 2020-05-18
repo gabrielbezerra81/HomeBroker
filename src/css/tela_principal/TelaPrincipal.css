@@ -11,17 +11,18 @@
 }
 
 #menusTelaPrincipal {
-  margin-left: 85px;
+  margin-left: 84px;
   margin-top: 30px;
 }
 
 .menuLateralAfastado {
-  margin-left: 217px !important;
+  margin-left: 216px !important;
 }
 
 /*Menus de posição, multileg e histórico*/
 #menusTelaPrincipal > div > div {
-  margin-bottom: 1rem;
+  margin-bottom: 4px;
+  margin-top: 7px;
 }
 
 .divBarraTopo {
@@ -88,13 +89,13 @@
   text-align: center;
 }
 
-.divClicavel {
-  /* backface-visibility: hidden !important;
+/* .divClicavel {
+ backface-visibility: hidden !important;
   transform: translateZ(0) scale(1, 1) !important;
   -webkit-transform-style: preserve-3d;
   -webkit-backface-visibility: hidden;*/
-  /*  z-index: 1; */
-}
+/*  z-index: 1; 
+} */
 
 .divClicavel:hover {
   cursor: pointer;

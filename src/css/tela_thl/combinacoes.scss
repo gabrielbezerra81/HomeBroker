@@ -1,9 +1,8 @@
 .containerCombinacoesTHL {
   margin-left: 103px;
-  border-bottom-left-radius: 5px;
-  border-bottom: 1px solid var(--cor-borda);
   margin-top: 5px;
   width: calc(100% - 113px);
+  position: relative;
 }
 
 .tabelaCombinacoes {
@@ -29,7 +28,7 @@
 
   .th:first-child {
     .divLabelColuna {
-      border-left: 1px solid var(--cor-borda) !important;
+      // border-left: 1px solid var(--cor-borda) !important;
       border-top-left-radius: 3px !important;
     }
   }
@@ -47,10 +46,14 @@
     border-top: 1px solid var(--cor-borda);
     color: var(--cor-texto-discreto);
     border-right: 1px solid var(--cor-borda);
-  }
 
-  .td:first-child {
-    border-left: 1px solid var(--cor-borda);
+    &:first-child {
+      // border-left: 1px solid var(--cor-borda);
+    }
+
+    &:last-child {
+      border-right: none;
+    }
   }
 
   .linha-impar {
@@ -199,6 +202,28 @@
 .containerTabelaComb {
   width: 100%;
   overflow: auto;
+
+  @mixin border($bottom, $height) {
+    content: "";
+    position: absolute;
+    background-color: transparent;
+    border-radius: 3px;
+    border: 1px solid var(--cor-borda);
+    left: -1px;
+    z-index: 3;
+    bottom: $bottom;
+    height: $height;
+    width: var(--some-width);
+    pointer-events: none;
+  }
+
+  &::before {
+    @include border(0px, calc(100% - 72px));
+  }
+
+  &.bordaRedimensionar::before {
+    @include border(14px, calc(100% - 86px));
+  }
 
   @mixin scrollbar($prop, $value) {
     #{$prop}: $value;

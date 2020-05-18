@@ -2,6 +2,8 @@
 #thl {
   /* width: calc(100% - 95px); */
   margin-left: 5px;
+  margin-bottom: 0 !important;
+  min-width: 669px;
 
   .mheader {
     position: fixed;
@@ -25,12 +27,13 @@
 
 #scrollbarTHL {
   margin-top: 24px;
+  overflow: hidden;
   padding-right: 5px;
   height: calc(
     100vh - 106px
   ); // - 45px - 6px - 6px - 2px - 24px - 15px - 6px - 2px
 
-  .ps__rail-y{
+  .ps__rail-y {
     background-color: transparent;
   }
 }

@@ -9,7 +9,10 @@ import { Radio, Spin, Button, Tooltip } from "antd";
 import { ModalHeaderSemBook } from "components/utils/componentesUI/FormHeader";
 import MapaCalor from "components/forms/thl/MapaCalor";
 import TabelaVencimentos from "components/forms/thl/tabelaDeVencimentos/TabelaVencimentos";
-import TabelaCombinacoes from "components/forms/thl/tabelaCombinacoes/TabelaCombinacoes";
+import TabelaCombinacoes, {
+  calcularMargemBorda,
+  verificarOverflow,
+} from "components/forms/thl/tabelaCombinacoes/TabelaCombinacoes";
 import {
   GlobalContext,
   StateStorePrincipal,
@@ -72,33 +75,40 @@ class Tela_THL extends React.Component {
       >
         <div className="containerTHL">
           <MapaCalor />
-          <div>
-            <InputPesquisa />
-            <EnviarOrdem />
-            <RecalcularPrecos />
-            <div className="containerSpinnerVencimentos">
-              <Spin
-                className="spinnerTabelaVencimentos"
-                indicator={
-                  <Spinner
-                    className="asdas"
-                    animation="border"
-                    variant="light"
-                  />
-                }
-                spinning={carregandoTabelaVencimentos}
-              >
-                <TabelaVencimentos />
-              </Spin>
-            </div>
-            <TabelaCombinacoes />
+          <InputPesquisa />
+          <EnviarOrdem />
+          <RecalcularPrecos />
+          <div className="containerSpinnerVencimentos">
+            <Spin
+              className="spinnerTabelaVencimentos"
+              indicator={
+                <Spinner className="asdas" animation="border" variant="light" />
+              }
+              spinning={carregandoTabelaVencimentos}
+            >
+              <TabelaVencimentos />
+            </Spin>
           </div>
-          {/* <ReactResizeDetector
-            handleWidth
-            onResize={(w, h) => {
-              scrollbarRef.updateScroll();
-            }}
-          /> */}
+          <TabelaCombinacoes />
+
+          {
+            <ReactResizeDetector
+              handleWidth
+              onResize={(w, h) => {
+                const container = document.getElementsByClassName(
+                  "containerTabelaComb"
+                )[0];
+                if (container.scrollWidth > container.clientWidth) {
+                  container.classList.add("bordaRedimensionar");
+                  container.style.height += verificarOverflow();
+                } else {
+                  container.classList.remove("bordaRedimensionar");
+                  container.style.height -= verificarOverflow();
+                }
+                calcularMargemBorda();
+              }}
+            />
+          }
         </div>
       </PerfectScrollbar>
     );
