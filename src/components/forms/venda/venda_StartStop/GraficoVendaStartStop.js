@@ -27,14 +27,13 @@ class GraficoVendaStartStop extends React.Component {
               cv="VA"
             />
             <Form.Control
-              id="CotacaoAtualGrafico_VA"
-              className="inputGrafico"
+              className="inputGrafico CotacaoAtualGrafico_VA"
               value={this.props.dadosPesquisa.cotacaoAtual}
               onChange={() => false}
             />
           </Form>
-          <IconeConfigGrafico id="ConfigGainGrafico_VA" name="config_venda" />
-          <IconeConfigGrafico id="ConfigStopGrafico_VA" name="config_venda" />
+          <IconeConfigGrafico className="ConfigGainGrafico_VA" name="config_venda" />
+          <IconeConfigGrafico className="ConfigStopGrafico_VA" name="config_venda" />
           {LabelInputGrafico("Disparo", "TextoGainDisparo_VA")}
           {LabelInputGrafico("Execução", "TextoGainExecucao_VA")}
           {LabelInputGrafico("Disparo", "TextoStopDisparo_VA")}

@@ -59,7 +59,7 @@ class Book extends React.Component {
           </Col>
           <IconeConfigGrafico
             name="config_complementar"
-            id="icone_config_complementar"
+            className="icone_config_complementar"
           />
         </Row>
         <Row>

@@ -58,19 +58,19 @@ const modalBody = (props) => (
       "ValorTotalStop1_CONFIGURAR"
     )}
     <IconeConfigGrafico
-      id="ConfigGain1Grafico_CONFIGURAR"
+      className="ConfigGain1Grafico_CONFIGURAR"
       name="compra_gainreducao"
     />
     <IconeConfigGrafico
-      id="ConfigStop1Grafico_CONFIGURAR"
+      className="ConfigStop1Grafico_CONFIGURAR"
       name="venda_stopmovel"
     />
     <IconeConfigGrafico
-      id="ConfigGain2Grafico_CONFIGURAR"
+      className="ConfigGain2Grafico_CONFIGURAR"
       name="compra_gainreducao"
     />
     <IconeConfigGrafico
-      id="ConfigStop2Grafico_CONFIGURAR"
+      className="ConfigStop2Grafico_CONFIGURAR"
       name="venda_stopmovel"
     />
     <GraficoInputsConfigStartStop

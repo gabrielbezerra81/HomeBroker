@@ -329,7 +329,7 @@ a.botaoAddAba.active {
   text-align: center;
 }
 
-#icone_config_complementar {
+.icone_config_complementar {
   right: 20px;
   top: 5px;
 }

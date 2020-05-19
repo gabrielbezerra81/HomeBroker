@@ -2,7 +2,7 @@ import React from "react";
 import { Form } from "react-bootstrap";
 import { connect } from "react-redux";
 import InputFormatado, {
-  boxShadowInput
+  boxShadowInput,
 } from "components/utils/componentesUI/InputFormatado";
 import { mudarAtributoBoletaAction } from "components/redux/actions/formInputActions";
 import {
@@ -17,7 +17,7 @@ import {
   VENDA_MERCADO_NAMESPACE,
   VENDA_STARTSTOP_NAMESPACE,
   VENDA_STOPMOVEL_NAMESPACE,
-  VENDA_GAINREDUCAO_NAMESPACE
+  VENDA_GAINREDUCAO_NAMESPACE,
 } from "constants/ActionTypes";
 
 class GraficoInputs extends React.Component {
@@ -29,13 +29,12 @@ class GraficoInputs extends React.Component {
             <InputFormatado
               tipoInput="preco"
               step={0.01}
-              id={`GainDisparoGrafico_${this.props.cv}`}
               className={`gainDisparo_Agendada ${boxShadowInput(
                 "gainDisparo_Agendada"
               )}`}
-              inputGrafico="containerInputGrafico"
+              inputGrafico={`GainDisparoGrafico_${this.props.cv} containerInputGrafico`}
               value={this.props[this.props.namespace].gainDisparo}
-              onChange={valor =>
+              onChange={(valor) =>
                 this.props.mudarAtributoBoletaAction(
                   valor,
                   this.props.namespace,
@@ -49,10 +48,9 @@ class GraficoInputs extends React.Component {
               className={`gainExec_Agendada ${boxShadowInput(
                 "gainExec_Agendada"
               )}`}
-              id={`GainExecGrafico_${this.props.cv}`}
-              inputGrafico="containerInputGrafico"
+              inputGrafico={`GainExecGrafico_${this.props.cv} containerInputGrafico`}
               value={this.props[this.props.namespace].gainExec}
-              onChange={valor =>
+              onChange={(valor) =>
                 this.props.mudarAtributoBoletaAction(
                   valor,
                   this.props.namespace,
@@ -66,10 +64,9 @@ class GraficoInputs extends React.Component {
               className={`stopDisparo_Agendada ${boxShadowInput(
                 "stopDisparo_Agendada"
               )}`}
-              id={`StopDisparoGrafico_${this.props.cv}`}
-              inputGrafico="containerInputGrafico"
+              inputGrafico={`StopDisparoGrafico_${this.props.cv} containerInputGrafico`}
               value={this.props[this.props.namespace].stopDisparo}
-              onChange={valor =>
+              onChange={(valor) =>
                 this.props.mudarAtributoBoletaAction(
                   valor,
                   this.props.namespace,
@@ -83,10 +80,9 @@ class GraficoInputs extends React.Component {
               className={`stopExec_Agendada ${boxShadowInput(
                 "stopExec_Agendada"
               )}`}
-              id={`StopExecGrafico_${this.props.cv}`}
-              inputGrafico="containerInputGrafico"
+              inputGrafico={`StopExecGrafico_${this.props.cv} containerInputGrafico`}
               value={this.props[this.props.namespace].stopExec}
-              onChange={valor =>
+              onChange={(valor) =>
                 this.props.mudarAtributoBoletaAction(
                   valor,
                   this.props.namespace,
@@ -102,13 +98,12 @@ class GraficoInputs extends React.Component {
             <InputFormatado
               tipoInput="preco"
               step={0.01}
-              id={`StopDisparoGrafico_${this.props.cv}`}
               className={`stopDisparo_Movel ${boxShadowInput(
                 "stopDisparo_Movel"
               )}`}
-              inputGrafico={`containerInputGrafico TamanhoInputGrafico_StartMovel`}
+              inputGrafico={`StopDisparoGrafico_${this.props.cv} containerInputGrafico TamanhoInputGrafico_StartMovel`}
               value={this.props[this.props.namespace].stopDisparo}
-              onChange={valor =>
+              onChange={(valor) =>
                 this.props.mudarAtributoBoletaAction(
                   valor,
                   this.props.namespace,
@@ -120,10 +115,9 @@ class GraficoInputs extends React.Component {
               tipoInput="preco"
               step={0.01}
               className={`stopExec_Movel ${boxShadowInput("stopExec_Movel")}`}
-              id={`StopExecGrafico_${this.props.cv}`}
-              inputGrafico="containerInputGrafico TamanhoInputGrafico_StartMovel"
+              inputGrafico={`StopExecGrafico_${this.props.cv} containerInputGrafico TamanhoInputGrafico_StartMovel`}
               value={this.props[this.props.namespace].stopExec}
-              onChange={valor =>
+              onChange={(valor) =>
                 this.props.mudarAtributoBoletaAction(
                   valor,
                   this.props.namespace,
@@ -132,8 +126,7 @@ class GraficoInputs extends React.Component {
               }
             />
             <Form.Control
-              id={`CotacaoAtualGrafico_${this.props.cv}`}
-              className="inputGrafico"
+              className={`inputGrafico CotacaoAtualGrafico_${this.props.cv}`}
               value={
                 this.props[this.props.namespace].dadosPesquisa.cotacaoAtual
               }
@@ -145,10 +138,9 @@ class GraficoInputs extends React.Component {
               className={`inicioDisparo_Movel ${boxShadowInput(
                 "inicioDisparo_Movel"
               )}`}
-              id={`Disparo1AjusteGrafico_${this.props.cv}`}
-              inputGrafico="containerInputGrafico TamanhoInputGrafico_StartMovel"
+              inputGrafico={`Disparo1AjusteGrafico_${this.props.cv} containerInputGrafico TamanhoInputGrafico_StartMovel`}
               value={this.props[this.props.namespace].inicioDisparo}
-              onChange={valor =>
+              onChange={(valor) =>
                 this.props.mudarAtributoBoletaAction(
                   valor,
                   this.props.namespace,
@@ -207,10 +199,9 @@ class GraficoInputs extends React.Component {
             <InputFormatado
               tipoInput="preco"
               step={0.01}
-              id={`Reducao1Grafico_${this.props.cv}`}
-              inputGrafico="containerInputGrafico TamanhoInputGrafico_GainReducao"
+              inputGrafico={`Reducao1Grafico_${this.props.cv} containerInputGrafico TamanhoInputGrafico_GainReducao`}
               value={this.props[this.props.namespace].reducao1}
-              onChange={valor =>
+              onChange={(valor) =>
                 this.props.mudarAtributoBoletaAction(
                   valor,
                   this.props.namespace,
@@ -222,10 +213,9 @@ class GraficoInputs extends React.Component {
             <InputFormatado
               tipoInput="preco"
               step={0.01}
-              id={`Reducao2Grafico_${this.props.cv}`}
-              inputGrafico="containerInputGrafico TamanhoInputGrafico_GainReducao"
+              inputGrafico={`Reducao2Grafico_${this.props.cv} containerInputGrafico TamanhoInputGrafico_GainReducao`}
               value={this.props[this.props.namespace].reducao2}
-              onChange={valor =>
+              onChange={(valor) =>
                 this.props.mudarAtributoBoletaAction(
                   valor,
                   this.props.namespace,
@@ -237,10 +227,10 @@ class GraficoInputs extends React.Component {
             <InputFormatado
               tipoInput="preco"
               step={0.01}
-              id={`GainGrafico_${this.props.cv}`}
-              inputGrafico="containerInputGrafico TamanhoInputGrafico_GainReducao"
+              className={`GainGrafico_${this.props.cv}`}
+              inputGrafico={`GainGrafico_${this.props.cv} containerInputGrafico TamanhoInputGrafico_GainReducao`}
               value={this.props[this.props.namespace].gain}
-              onChange={valor =>
+              onChange={(valor) =>
                 this.props.mudarAtributoBoletaAction(
                   valor,
                   this.props.namespace,
@@ -250,8 +240,7 @@ class GraficoInputs extends React.Component {
             />
 
             <Form.Control
-              id={`CotacaoAtualGrafico_${this.props.cv}`}
-              className="inputGrafico"
+              className={`CotacaoAtualGrafico_${this.props.cv} inputGrafico`}
               value={
                 this.props[this.props.namespace].dadosPesquisa.cotacaoAtual
               }
@@ -265,7 +254,7 @@ class GraficoInputs extends React.Component {
   }
 }
 
-export const mapStateToPropsInputsPreco = state => {
+export const mapStateToPropsInputsPreco = (state) => {
   return {
     [COMPRA_AGENDADA_NAMESPACE]: {
       gainDisparo: state.compraAgendadaReducer.gainDisparo,
@@ -274,7 +263,7 @@ export const mapStateToPropsInputsPreco = state => {
       stopExec: state.compraAgendadaReducer.stopExec,
       dadosPesquisa: state.compraAgendadaReducer.dadosPesquisa,
       valorTotal: state.compraAgendadaReducer.valorTotal,
-      qtde: state.compraAgendadaReducer.qtde
+      qtde: state.compraAgendadaReducer.qtde,
     },
     [COMPRA_LIMITADA_NAMESPACE]: {
       gainDisparo: state.compraLimitadaReducer.gainDisparo,
@@ -282,7 +271,7 @@ export const mapStateToPropsInputsPreco = state => {
       stopDisparo: state.compraLimitadaReducer.stopDisparo,
       stopExec: state.compraLimitadaReducer.stopExec,
       dadosPesquisa: state.compraLimitadaReducer.dadosPesquisa,
-      qtde: state.compraLimitadaReducer.qtde
+      qtde: state.compraLimitadaReducer.qtde,
     },
     [COMPRA_MERCADO_NAMESPACE]: {
       gainDisparo: state.compraMercadoReducer.gainDisparo,
@@ -290,7 +279,7 @@ export const mapStateToPropsInputsPreco = state => {
       stopDisparo: state.compraMercadoReducer.stopDisparo,
       stopExec: state.compraMercadoReducer.stopExec,
       dadosPesquisa: state.compraMercadoReducer.dadosPesquisa,
-      qtde: state.compraMercadoReducer.qtde
+      qtde: state.compraMercadoReducer.qtde,
     },
     [COMPRA_STARTSTOP_NAMESPACE]: {
       gainDisparo: state.compraStartStopReducer.gainDisparo,
@@ -306,7 +295,7 @@ export const mapStateToPropsInputsPreco = state => {
       gainDisparoConfig2: state.compraStartStopReducer.gainDisparoConfig2,
       gainExecConfig2: state.compraStartStopReducer.gainExecConfig2,
       stopDisparoConfig2: state.compraStartStopReducer.stopDisparoConfig2,
-      stopExecConfig2: state.compraStartStopReducer.stopExecConfig2
+      stopExecConfig2: state.compraStartStopReducer.stopExecConfig2,
     },
     [COMPRA_STARTMOVEL_NAMESPACE]: {
       gainDisparo: state.compraStartMovelReducer.gainDisparo,
@@ -318,7 +307,7 @@ export const mapStateToPropsInputsPreco = state => {
       disparoMaisAjuste: state.compraStartMovelReducer.disparoMaisAjuste,
       stopMais1Ajuste: state.compraStartMovelReducer.stopMais1Ajuste,
       stopAnteriorAjuste: state.compraStartMovelReducer.stopAnteriorAjuste,
-      ajustePadrao: state.compraStartMovelReducer.ajustePadrao
+      ajustePadrao: state.compraStartMovelReducer.ajustePadrao,
     },
     [COMPRA_GAINREDUCAO_NAMESPACE]: {
       dadosPesquisa: state.compraGainReducao.dadosPesquisa,
@@ -328,7 +317,7 @@ export const mapStateToPropsInputsPreco = state => {
       gainDisparo: state.compraGainReducao.gainDisparo,
       gainExec: state.compraGainReducao.gainExec,
       qtde: state.compraGainReducao.qtde,
-      tabelaGainReducao: state.compraGainReducao.tabelaGainReducao
+      tabelaGainReducao: state.compraGainReducao.tabelaGainReducao,
     },
     [VENDA_AGENDADA_NAMESPACE]: {
       gainDisparo: state.vendaAgendadaReducer.gainDisparo,
@@ -337,7 +326,7 @@ export const mapStateToPropsInputsPreco = state => {
       stopExec: state.vendaAgendadaReducer.stopExec,
       dadosPesquisa: state.vendaAgendadaReducer.dadosPesquisa,
       valorTotal: state.vendaAgendadaReducer.valorTotal,
-      qtde: state.vendaAgendadaReducer.qtde
+      qtde: state.vendaAgendadaReducer.qtde,
     },
     [VENDA_LIMITADA_NAMESPACE]: {
       gainDisparo: state.vendaLimitadaReducer.gainDisparo,
@@ -345,7 +334,7 @@ export const mapStateToPropsInputsPreco = state => {
       stopDisparo: state.vendaLimitadaReducer.stopDisparo,
       stopExec: state.vendaLimitadaReducer.stopExec,
       dadosPesquisa: state.vendaLimitadaReducer.dadosPesquisa,
-      qtde: state.vendaLimitadaReducer.qtde
+      qtde: state.vendaLimitadaReducer.qtde,
     },
     [VENDA_MERCADO_NAMESPACE]: {
       gainDisparo: state.vendaMercadoReducer.gainDisparo,
@@ -353,7 +342,7 @@ export const mapStateToPropsInputsPreco = state => {
       stopDisparo: state.vendaMercadoReducer.stopDisparo,
       stopExec: state.vendaMercadoReducer.stopExec,
       dadosPesquisa: state.vendaMercadoReducer.dadosPesquisa,
-      qtde: state.vendaMercadoReducer.qtde
+      qtde: state.vendaMercadoReducer.qtde,
     },
     [VENDA_STARTSTOP_NAMESPACE]: {
       gainDisparo: state.vendaStartStopReducer.gainDisparo,
@@ -369,7 +358,7 @@ export const mapStateToPropsInputsPreco = state => {
       gainDisparoConfig2: state.vendaStartStopReducer.gainDisparoConfig2,
       gainExecConfig2: state.vendaStartStopReducer.gainExecConfig2,
       stopDisparoConfig2: state.vendaStartStopReducer.stopDisparoConfig2,
-      stopExecConfig2: state.vendaStartStopReducer.stopExecConfig2
+      stopExecConfig2: state.vendaStartStopReducer.stopExecConfig2,
     },
     [VENDA_STOPMOVEL_NAMESPACE]: {
       gainDisparo: state.vendaStopMovel.gainDisparo,
@@ -381,7 +370,7 @@ export const mapStateToPropsInputsPreco = state => {
       disparoMaisAjuste: state.vendaStopMovel.disparoMaisAjuste,
       stopMais1Ajuste: state.vendaStopMovel.stopMais1Ajuste,
       stopAnteriorAjuste: state.vendaStopMovel.stopAnteriorAjuste,
-      ajustePadrao: state.vendaStopMovel.ajustePadrao
+      ajustePadrao: state.vendaStopMovel.ajustePadrao,
     },
     [VENDA_GAINREDUCAO_NAMESPACE]: {
       dadosPesquisa: state.vendaGainReducao.dadosPesquisa,
@@ -391,11 +380,11 @@ export const mapStateToPropsInputsPreco = state => {
       gainDisparo: state.vendaGainReducao.gainDisparo,
       gainExec: state.vendaGainReducao.gainExec,
       qtde: state.vendaGainReducao.qtde,
-      tabelaGainReducao: state.vendaGainReducao.tabelaGainReducao
-    }
+      tabelaGainReducao: state.vendaGainReducao.tabelaGainReducao,
+    },
   };
 };
 
 export default connect(mapStateToPropsInputsPreco, {
-  mudarAtributoBoletaAction
+  mudarAtributoBoletaAction,
 })(GraficoInputs);

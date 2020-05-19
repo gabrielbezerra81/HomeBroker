@@ -14,7 +14,7 @@ import {
 import { useDispatch } from "react-redux";
 import { abrirFecharConfigComplAction } from "components/redux/actions/menu_actions/MultilegActions";
 
-export default ({ id, name = "" }) => {
+export default ({ className, name = "" }) => {
   let handleShow;
 
   const stateGlobalStore = useSelectorGlobalStore(
@@ -45,7 +45,7 @@ export default ({ id, name = "" }) => {
   }
 
   return (
-    <div id={id} className="wrapperIconeConfiguracaoGrafico">
+    <div className={`wrapperIconeConfiguracaoGrafico ${className}`}>
       <Button
         variant="link"
         className="iconeConfiguracaoGrafico"

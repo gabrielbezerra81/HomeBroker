@@ -4,73 +4,73 @@
   height: 415px;
 }
 
-#GainDisparoGrafico_CST {
+.GainDisparoGrafico_CST {
   top: 16%;
   left: 45%;
 }
 
-#GainExecGrafico_CST {
+.GainExecGrafico_CST {
   top: 21.2%;
   left: 45%;
 }
 
-#StopDisparoGrafico_CST {
+.StopDisparoGrafico_CST {
   top: 74%;
   left: 45%;
 }
 
-#StopExecGrafico_CST {
+.StopExecGrafico_CST {
   top: 79%;
   left: 45%;
 }
-#CotacaoAtualGrafico_CST {
+.CotacaoAtualGrafico_CST {
   top: 46.7%;
   left: 3.3%;
   width: 16.2%;
   height: 8%;
 }
 
-#ConfigGainGrafico_CST {
+.ConfigGainGrafico_CST {
   top: 0%;
   left: 80%;
 }
 
-#ConfigStopGrafico_CST {
+.ConfigStopGrafico_CST {
   top: 59%;
   left: 80%;
 }
 
-#TextoGainDisparo_CST {
+.TextoGainDisparo_CST {
   top: 9.5%;
   left: 43%;
 }
 
-#TextoGainExecucao_CST {
+.TextoGainExecucao_CST {
   top: 28%;
   left: 44.5%;
 }
 
-#TextoStopDisparo_CST {
+.TextoStopDisparo_CST {
   top: 67%;
   left: 43%;
 }
 
-#TextoStopExecucao_CST {
+.TextoStopExecucao_CST {
   top: 86.5%;
   left: 44.5%;
 }
 
-#TextoGain_CST {
+.TextoGain_CST {
   top: 1%;
   left: 55%;
 }
 
-#TextoStop_CST {
+.TextoStop_CST {
   top: 59%;
   left: 55%;
 }
 
-#TextoCotacaoAtualGrafico_CST {
+.TextoCotacaoAtualGrafico_CST {
   top: 48.5%;
   left: 22%;
 }

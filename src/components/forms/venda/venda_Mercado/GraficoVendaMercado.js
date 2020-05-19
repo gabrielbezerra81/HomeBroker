@@ -27,8 +27,7 @@ class GraficoVendaMercado extends React.Component {
               cv="VA"
             />
             <Form.Control
-              id="CotacaoAtualGrafico_VA"
-              className="inputGrafico"
+              className="inputGrafico CotacaoAtualGrafico_VA"
               value={this.props.dadosPesquisa.cotacaoAtual}
               onChange={() => false}
             />
@@ -59,11 +58,11 @@ class GraficoVendaMercado extends React.Component {
             "ValorTotalStop_Venda"
           )}
           <IconeConfigGrafico
-            id="ConfigGainGrafico_VA"
+            className="ConfigGainGrafico_VA"
             name="venda_gainreducao"
           />
           <IconeConfigGrafico
-            id="ConfigStopGrafico_VA"
+            className="ConfigStopGrafico_VA"
             name="venda_stopmovel"
           />
         </div>

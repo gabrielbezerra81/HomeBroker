@@ -41,32 +41,32 @@
 /*
 Textos da primeira parte do grafico
 */
-#TextoGainDisparo_CONFIGURAR {
+.TextoGainDisparo_CONFIGURAR {
   top: 8.8%;
   left: 31%;
 }
 
-#TextoGainExecucao_CONFIGURAR {
+.TextoGainExecucao_CONFIGURAR {
   top: 21.5%;
   left: 33.5%;
 }
 
-#TextoStopDisparo_CONFIGURAR {
+.TextoStopDisparo_CONFIGURAR {
   top: 34%;
   left: 31%;
 }
 
-#TextoStopExecucao_CONFIGURAR {
+.TextoStopExecucao_CONFIGURAR {
   top: 46.5%;
   left: 33.5%;
 }
 
-#TextoGain_CONFIGURAR {
+.TextoGain_CONFIGURAR {
   top: 3%;
   left: 26%;
 }
 
-#TextoStop_CONFIGURAR {
+.TextoStop_CONFIGURAR {
   top: 28.5%;
   left: 26%;
 }
@@ -75,22 +75,22 @@ Textos da primeira parte do grafico
 Icones de configuração do gráfico
 */
 
-#ConfigGain1Grafico_CONFIGURAR {
+.ConfigGain1Grafico_CONFIGURAR {
   top: 2%;
   left: 48.5%;
 }
 
-#ConfigStop1Grafico_CONFIGURAR {
+.ConfigStop1Grafico_CONFIGURAR {
   top: 27.7%;
   left: 49%;
 }
 
-#ConfigGain2Grafico_CONFIGURAR {
+.ConfigGain2Grafico_CONFIGURAR {
   top: 51%;
   left: 49%;
 }
 
-#ConfigStop2Grafico_CONFIGURAR {
+.ConfigStop2Grafico_CONFIGURAR {
   top: 75.4%;
   left: 49%;
 }
@@ -99,32 +99,32 @@ Icones de configuração do gráfico
 Textos da segunda parte do gráfico
 */
 
-#TextoGainDisparo2_CONFIGURAR {
+.TextoGainDisparo2_CONFIGURAR {
   top: 56.3%;
   left: 31%;
 }
 
-#TextoGainExecucao2_CONFIGURAR {
+.TextoGainExecucao2_CONFIGURAR {
   top: 69%;
   left: 33.5%;
 }
 
-#TextoStopDisparo2_CONFIGURAR {
+.TextoStopDisparo2_CONFIGURAR {
   top: 81.6%;
   left: 31%;
 }
 
-#TextoStopExecucao2_CONFIGURAR {
+.TextoStopExecucao2_CONFIGURAR {
   top: 93.5%;
   left: 33.5%;
 }
 
-#TextoGain2_CONFIGURAR {
+.TextoGain2_CONFIGURAR {
   top: 51.5%;
   left: 26%;
 }
 
-#TextoStop2_CONFIGURAR {
+.TextoStop2_CONFIGURAR {
   top: 76%;
   left: 26%;
 }
@@ -133,22 +133,22 @@ Textos da segunda parte do gráfico
 Textos de valor total do gráfico
 */
 
-#ValorTotalGain1_CONFIGURAR {
+.ValorTotalGain1_CONFIGURAR {
   top: 1%;
   left: 64.5%;
 }
 
-#ValorTotalStop1_CONFIGURAR {
+.ValorTotalStop1_CONFIGURAR {
   top: 25%;
   left: 64.5%;
 }
 
-#ValorTotalGain2_CONFIGURAR {
+.ValorTotalGain2_CONFIGURAR {
   top: 48%;
   left: 64.5%;
 }
 
-#ValorTotalStop2_CONFIGURAR {
+.ValorTotalStop2_CONFIGURAR {
   top: 73%;
   left: 64.5%;
 }
@@ -157,22 +157,22 @@ Textos de valor total do gráfico
 Inputs da primeira parte do gráfico
 */
 
-#GainDisparoGrafico_CONFIGURAR {
+.GainDisparoGrafico_CONFIGURAR {
   top: 14%;
   left: 31%;
 }
 
-#GainExecGrafico_CONFIGURAR {
+.GainExecGrafico_CONFIGURAR {
   top: 17.7%;
   left: 31%;
 }
 
-#StopDisparoGrafico_CONFIGURAR {
+.StopDisparoGrafico_CONFIGURAR {
   top: 38.7%;
   left: 31%;
 }
 
-#StopExecGrafico_CONFIGURAR {
+.StopExecGrafico_CONFIGURAR {
   top: 42.4%;
   left: 31%;
 }
@@ -181,22 +181,22 @@ Inputs da primeira parte do gráfico
 Inputs da segunda parte do gráfico
 */
 
-#GainDisparoGrafico2_CONFIGURAR {
+.GainDisparoGrafico2_CONFIGURAR {
   top: 61.2%;
   left: 31%;
 }
 
-#GainExecGrafico2_CONFIGURAR {
+.GainExecGrafico2_CONFIGURAR {
   top: 65%;
   left: 31%;
 }
 
-#StopDisparoGrafico2_CONFIGURAR {
+.StopDisparoGrafico2_CONFIGURAR {
   top: 86.3%;
   left: 31%;
 }
 
-#StopExecGrafico2_CONFIGURAR {
+.StopExecGrafico2_CONFIGURAR {
   top: 90%;
   left: 31%;
 }

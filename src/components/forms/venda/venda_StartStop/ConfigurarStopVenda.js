@@ -54,10 +54,10 @@ const modalBody = (props) => (
       ),
       "ValorTotalGain1_CONFIGURAR_VENDA"
     )}
-    <IconeConfigGrafico id="ConfigGain1Grafico_CONFIGURAR_VENDA" />
-    <IconeConfigGrafico id="ConfigStop1Grafico_CONFIGURAR_VENDA" />
-    <IconeConfigGrafico id="ConfigGain2Grafico_CONFIGURAR_VENDA" />
-    <IconeConfigGrafico id="ConfigStop2Grafico_CONFIGURAR_VENDA" />
+    <IconeConfigGrafico className="ConfigGain1Grafico_CONFIGURAR_VENDA" />
+    <IconeConfigGrafico className="ConfigStop1Grafico_CONFIGURAR_VENDA" />
+    <IconeConfigGrafico className="ConfigGain2Grafico_CONFIGURAR_VENDA" />
+    <IconeConfigGrafico className="ConfigStop2Grafico_CONFIGURAR_VENDA" />
     {LabelInputGrafico("Disparo", "TextoGainDisparo2_CONFIGURAR_VENDA")}
     {LabelInputGrafico("Execução", "TextoGainExecucao2_CONFIGURAR_VENDA")}
     {LabelInputGrafico("Disparo", "TextoStopDisparo2_CONFIGURAR_VENDA")}

@@ -4,26 +4,26 @@
 }
 /*Inputs do grafico*/
 
-#GainDisparoGrafico_VA {
+.GainDisparoGrafico_VA {
   top: 63.4%;
   left: 51%;
 }
 
-#GainExecGrafico_VA {
+.GainExecGrafico_VA {
   top: 67.8%;
   left: 51%;
 }
 
-#StopDisparoGrafico_VA {
+.StopDisparoGrafico_VA {
   top: 12.6%;
   left: 51%;
 }
 
-#StopExecGrafico_VA {
+.StopExecGrafico_VA {
   top: 17%;
   left: 51%;
 }
-#CotacaoAtualGrafico_VA {
+.CotacaoAtualGrafico_VA {
   top: 40.5%;
   left: 7%;
   width: 37%;
@@ -32,49 +32,49 @@
 
 /*Icones de configuração*/
 
-#ConfigGainGrafico_VA {
+.ConfigGainGrafico_VA {
   top: 65%;
   left: 93%;
 }
 
-#ConfigStopGrafico_VA {
+.ConfigStopGrafico_VA {
   top: 13.5%;
   left: 93%;
 }
 
 /*Textos do grafico*/
 
-#TextoGainDisparo_VA {
+.TextoGainDisparo_VA {
   top: 57.8%;
   left: 49%;
 }
 
-#TextoGainExecucao_VA {
+.TextoGainExecucao_VA {
   top: 73.2%;
   left: 50.5%;
 }
 
-#TextoStopDisparo_VA {
+.TextoStopDisparo_VA {
   top: 7%;
   left: 49%;
 }
 
-#TextoStopExecucao_VA {
+.TextoStopExecucao_VA {
   top: 23.3%;
   left: 50.5%;
 }
 
-#TextoGain_VA {
+.TextoGain_VA {
   top: 52%;
   left: 61%;
 }
 
-#TextoStop_VA {
+.TextoStop_VA {
   top: 0%;
   left: 61%;
 }
 
-#TextoCotacaoAtualGrafico_VA {
+.TextoCotacaoAtualGrafico_VA {
   top: 40%;
   left: 45%;
 }

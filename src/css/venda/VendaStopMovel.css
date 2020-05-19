@@ -14,41 +14,41 @@
   Inputs do grafico
   */
 
-#StopDisparoGrafico_VSM {
+.StopDisparoGrafico_VSM {
   top: 83.8%;
   left: 29.5%;
 }
 
-#StopExecGrafico_VSM {
+.StopExecGrafico_VSM {
   top: 87.3%;
   left: 29.5%;
 }
 
-#CotacaoAtualGrafico_VSM {
+.CotacaoAtualGrafico_VSM {
   top: 63%;
   left: 3.7%;
   width: 16.3%;
   height: 12px;
 }
 
-#Disparo1AjusteGrafico_VSM {
+.Disparo1AjusteGrafico_VSM {
   top: 27.3%;
   left: 28.7%;
 }
 
-#DisparoMaisAjusteGrafico_VSM {
+.DisparoMaisAjusteGrafico_VSM {
   top: 14.8%;
   left: 54.5%;
   color: black;
 }
 
-#StopMais1AjusteGrafico_VSM {
+.StopMais1AjusteGrafico_VSM {
   top: 59%;
   left: 35.8%;
   color: black;
 }
 
-#StopAnteriorAjusteGrafico_VSM {
+.StopAnteriorAjusteGrafico_VSM {
   top: 48.2%;
   left: 55%;
   color: black;
@@ -56,85 +56,85 @@
 
 /*Textos do grafico*/
 
-#TextoPrimeiroAjuste_VSM {
+.TextoPrimeiroAjuste_VSM {
   top: 2%;
   left: 19.8%;
 }
 
-#TextoSegundoAjuste_VSM {
+.TextoSegundoAjuste_VSM {
   top: 2%;
   left: 55.5%;
 }
 
-#TextoGainDisparo_VSM {
+.TextoGainDisparo_VSM {
   top: 22%;
   left: 26.5%;
 }
 
-#TextoStopDisparo_VSM {
+.TextoStopDisparo_VSM {
   top: 78.5%;
   left: 25%;
 }
 
-#TextoStopExecucao_VSM {
+.TextoStopExecucao_VSM {
   top: 90.5%;
   left: 23.5%;
 }
 
-#TextoDisparoMaisAjuste_VSM {
+.TextoDisparoMaisAjuste_VSM {
   top: 22%;
   left: 54.5%;
 }
 
-#TextoCotacaoAtualGrafico_VSM {
+.TextoCotacaoAtualGrafico_VSM {
   top: 62.5%;
   left: 20.5%;
 }
 
-#TextoStop_VSM {
+.TextoStop_VSM {
   top: 73%;
   left: 26.5%;
 }
 
-#TextoMenorGrafico_Stop1ajuste_VSM {
+.TextoMenorGrafico_Stop1ajuste_VSM {
   top: 54%;
   left: 33%;
 }
 
-#TextoMenorGrafico_StopAnterior_VSM {
+.TextoMenorGrafico_StopAnterior_VSM {
   top: 43%;
   left: 55%;
 }
 
-#TextoMenorGrafico_Ajuste1_VSM {
+.TextoMenorGrafico_Ajuste1_VSM {
   top: 23.5%;
   left: 66.5%;
 }
 
-#TextoMenorGrafico_Ajuste2_VSM {
+.TextoMenorGrafico_Ajuste2_VSM {
   top: 55.5%;
   left: 66.5%;
 }
 
-#TextoMenorGrafico_Ajuste3_VSM {
+.TextoMenorGrafico_Ajuste3_VSM {
   top: 75.5%;
   left: 66.5%;
 }
 
 /*Valores dos textos dos 3 ajustes */
-#ValorAjuste1Grafico_VSM {
+.ValorAjuste1Grafico_VSM {
   top: 22.7%;
   left: 80.5%;
   color: black;
 }
 
-#ValorAjuste2Grafico_VSM {
+.ValorAjuste2Grafico_VSM {
   top: 54.7%;
   left: 80.5%;
   color: black;
 }
 
-#ValorAjuste3Grafico_VSM {
+.ValorAjuste3Grafico_VSM {
   top: 74%;
   left: 80.5%;
   color: black;

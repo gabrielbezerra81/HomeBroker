@@ -1,9 +1,9 @@
-#vendagainreducao {
+.vendagainreducao {
   max-width: 900px;
   min-width: 900px;
 }
 
-#vendagainreducao .mbody {
+.vendagainreducao .mbody {
   min-height: 434.09px;
 }
 
@@ -14,21 +14,21 @@
     Inputs do grafico
     */
 
-#Reducao1Grafico_VGR {
+.Reducao1Grafico_VGR {
   top: 51%;
   left: 28.6%;
 }
 
-#Reducao2Grafico_VGR {
+.Reducao2Grafico_VGR {
   top: 64.4%;
   left: 54.9%;
 }
-#GainGrafico_VGR {
+.GainGrafico_VGR {
   top: 76.5%;
   left: 80.7%;
 }
 
-#CotacaoAtualGrafico_VGR {
+.CotacaoAtualGrafico_VGR {
   top: 14.5%;
   left: 2.3%;
   width: 18%;
@@ -37,22 +37,22 @@
 
 /*Textos do grafico*/
 
-#TextoReducao1_VGR {
+.TextoReducao1_VGR {
   top: 45%;
   left: 27%;
 }
 
-#TextoReducao2_VGR {
+.TextoReducao2_VGR {
   top: 58%;
   left: 53%;
 }
 
-#TextoCotacaoAtualGrafico_VGR {
+.TextoCotacaoAtualGrafico_VGR {
   top: 13.5%;
   left: 21%;
 }
 
-#TextoGain_VGR {
+.TextoGain_VGR {
   top: 70.5%;
   left: 78.5%;
 }

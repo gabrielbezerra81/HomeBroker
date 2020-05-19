@@ -14,41 +14,41 @@
 Inputs do grafico
 */
 
-#StopDisparoGrafico_CSM {
+.StopDisparoGrafico_CSM {
   top: 15.4%;
   left: 30%;
 }
 
-#StopExecGrafico_CSM {
+.StopExecGrafico_CSM {
   top: 19%;
   left: 30%;
 }
 
-#CotacaoAtualGrafico_CSM {
+.CotacaoAtualGrafico_CSM {
   top: 40%;
   left: 4.6%;
   width: 16.3%;
   height: 12px;
 }
 
-#Disparo1AjusteGrafico_CSM {
+.Disparo1AjusteGrafico_CSM {
   top: 76.2%;
   left: 29%;
 }
 
-#DisparoMaisAjusteGrafico_CSM {
+.DisparoMaisAjusteGrafico_CSM {
   top: 87%;
   left: 54.5%;
   color: black;
 }
 
-#StopMais1AjusteGrafico_CSM {
+.StopMais1AjusteGrafico_CSM {
   top: 42.3%;
   left: 36%;
   color: black;
 }
 
-#StopAnteriorAjusteGrafico_CSM {
+.StopAnteriorAjusteGrafico_CSM {
   top: 53.2%;
   left: 55.6%;
   color: black;
@@ -56,92 +56,92 @@ Inputs do grafico
 
 /*Textos do grafico*/
 
-#TextoPrimeiroAjuste_CSM {
+.TextoPrimeiroAjuste_CSM {
   top: 1%;
   left: 19.8%;
 }
 
-#TextoSegundoAjuste_CSM {
+.TextoSegundoAjuste_CSM {
   top: 1%;
   left: 55.5%;
 }
 
-#TextoGainDisparo_CSM {
+.TextoGainDisparo_CSM {
   top: 70.5%;
   left: 27%;
 }
 
-#TextoStopExecucao_CSM {
+.TextoStopExecucao_CSM {
   top: 22.5%;
   left: 24.2%;
 }
 
-#TextoStopDisparo_CSM {
+.TextoStopDisparo_CSM {
   top: 10%;
   left: 26%;
 }
 
-#TextoDisparoMaisAjuste_CSM {
+.TextoDisparoMaisAjuste_CSM {
   top: 94%;
   left: 55.5%;
 }
 
-#TextoCotacaoAtualGrafico_CSM {
+.TextoCotacaoAtualGrafico_CSM {
   top: 37%;
   left: 21.5%;
   width: 88px;
 }
 
-#TextoCotacaoAtualGrafico_CSM h6 {
+.TextoCotacaoAtualGrafico_CSM h6 {
   top: 37%;
   left: 20.8%;
   font-size: 0.85rem !important;
 }
 
-#TextoStop_CSM {
+.TextoStop_CSM {
   top: 8%;
   left: 37%;
 }
 
-#TextoMenorGrafico_Stop1ajuste_CSM {
+.TextoMenorGrafico_Stop1ajuste_CSM {
   top: 47.5%;
   left: 33.5%;
 }
 
-#TextoMenorGrafico_StopAnterior_CSM {
+.TextoMenorGrafico_StopAnterior_CSM {
   top: 47%;
   left: 54.5%;
 }
 
-#TextoMenorGrafico_Ajuste1_CSM {
+.TextoMenorGrafico_Ajuste1_CSM {
   top: 27.5%;
   left: 67%;
 }
 
-#TextoMenorGrafico_Ajuste2_CSM {
+.TextoMenorGrafico_Ajuste2_CSM {
   top: 47.5%;
   left: 67%;
 }
 
-#TextoMenorGrafico_Ajuste3_CSM {
+.TextoMenorGrafico_Ajuste3_CSM {
   top: 80%;
   left: 67%;
 }
 
 /*Valores dos textos dos 3 ajustes */
-#ValorAjuste1Grafico_CSM {
+.ValorAjuste1Grafico_CSM {
   top: 27%;
   left: 81%;
   color: black;
 }
 
-#ValorAjuste2Grafico_CSM {
+.ValorAjuste2Grafico_CSM {
   top: 46.7%;
   left: 81%;
   color: black;
 }
 
-#ValorAjuste3Grafico_CSM {
+.ValorAjuste3Grafico_CSM {
   top: 79.5%;
   left: 81%;
   color: black;
