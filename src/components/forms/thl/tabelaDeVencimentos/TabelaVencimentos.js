@@ -147,20 +147,29 @@ const getAnosUltimoMesTabela = (arrayVencimentos) => {
 };
 
 const renderElementoDinamico = (anos, ultimoMes, renderElemento, key) => {
-  return anos.map((ano, indice) =>
+  const mesAtual = moment().month();
+
+  return anos.map((ano, indiceAno) =>
     meses.map((mes, indiceMes) => {
+      const celula = (
+        <td key={`${key}${ano}${mes}`}>{renderElemento(indiceMes, ano)}</td>
+      );
+
       // Meses anteriores
-      const condicaoPrimeiroAno =
-        ano === anos[0] && indiceMes < moment().month();
+      const condicaoPrimeiroAno = indiceMes >= mesAtual;
       // Se estiver renderizando no ultimo ano, o mês não pode ser maior que o ultimo mês. Ex: opções do ano 2021 termina em junho
-      const condicaoUltimoAno =
-        ano === anos[anos.length - 1] && indiceMes >= ultimoMes;
-      if (!condicaoPrimeiroAno && !condicaoUltimoAno) {
-        return (
-          <td key={`${key}${ano}${mes}`}>{renderElemento(indiceMes, ano)}</td>
-        );
+      const condicaoUltimoAno = indiceMes <= ultimoMes - 1;
+
+      switch (indiceAno) {
+        case 0:
+          if (condicaoPrimeiroAno) return celula;
+          return null;
+        case anos.length - 1:
+          if (condicaoUltimoAno) return celula;
+          return null;
+        default:
+          return celula;
       }
-      return null;
     })
   );
 };
