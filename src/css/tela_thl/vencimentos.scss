@@ -360,17 +360,6 @@ $tabelaVencimentosWidth: 100%;
   color: var(--roxo-texto-thl);
 }
 
-.spinnerTabelaVencimentos {
-  max-height: 100% !important;
-  margin-left: 103px;
-
-  .ant-spin-dot {
-    font-size: 14px;
-    width: 35px;
-    height: 35px;
-  }
-}
-
 .ativoExecutando {
   color: yellow;
 }

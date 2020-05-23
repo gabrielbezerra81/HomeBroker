@@ -56,3 +56,6 @@ export const url_listarTabelaInicialTHL_ativo_strike_tipo =
   "structure/thl/list/";
 export const url_atualizarPrecosTHL_ids = "structures/ids?ids=";
 export const url_recalcularPrecos_acao_ativo_strike_tipo = "structure/thl/ids/";
+export const url_criarAlertaTHL_boolMontagem_ = "advice/structure/";
+export const url_favoritarTHL_ = "favorite";
+export const url_pesquisarCombinacoes_ativo = "structure/list/ /CalendarLine";

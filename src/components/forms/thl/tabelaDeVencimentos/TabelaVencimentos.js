@@ -325,7 +325,7 @@ const renderCelulaNomeMes = (mes, opcoesStrike, ano, textoVazio = false) => {
   }
   if (!verificarMesPossuiVencimento(opcoesStrike, mes, ano)) return nomeMes;
   return (
-    <div style={{ display: "flex", height: "100%" }}>
+    <div style={{ display: "flex", height: "100%", justifyContent: "center" }}>
       <div className="divNomeMes">{nomeMes}</div>
       <div className="containerPrecoMontDesmont">
         <div></div>

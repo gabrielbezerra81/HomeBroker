@@ -19,6 +19,8 @@ import {
   url_pesquisarListaStrike_codigo,
   url_listarTabelaInicialTHL_ativo_strike_tipo,
   url_recalcularPrecos_acao_ativo_strike_tipo,
+  url_pesquisarCombinacoes_ativo,
+  url_favoritarTHL_,
 } from "components/api/url";
 
 import {
@@ -38,6 +40,7 @@ import {
   erro_timeout,
   erro_listarBook,
   erro_listarTHL_thl,
+  erro_pesquisarCombinacoes_thl,
 } from "constants/AlertaErros";
 
 retryDelay(request);
@@ -385,6 +388,34 @@ export const recalcularPrecosTHLAPI = (
     .catch((erro) => {
       mostrarErroConsulta(erro, "");
       return [];
+    });
+};
+
+export const pesquisarCombinacoesTHLAPI = (ativo) => {
+  const url = url_pesquisarCombinacoes_ativo.split(" ");
+
+  return request
+    .get(`${url_base}${url[0]}${ativo}${url[1]}`)
+    .retry(2, 2000)
+    .timeout(timeout * 2)
+    .then((response) => response.body)
+    .catch((erro) => {
+      mostrarErroConsulta(erro, erro_pesquisarCombinacoes_thl);
+      return [];
+    });
+};
+
+export const criarAlertaTHLAPI = (json) => {
+  return request
+    .post(`${url_base}${url_favoritarTHL_}`)
+    .timeout(timeout)
+    .set({
+      "Content-Type": "application/json",
+    })
+    .send(json)
+    .then(() => console.log(sucesso_criar_alerta))
+    .catch((erro) => {
+      mostrarErroConsulta(erro, erro_criar_alerta);
     });
 };
 

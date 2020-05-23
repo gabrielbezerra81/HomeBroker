@@ -88,7 +88,7 @@ export const atualizarCotacaoAPI = (
   );
 
   let listaCotacoes = arrayCotacoes;
-  if (["multileg", "posicao"].includes(tipo)) {
+  if (["multileg", "posicao", "thl"].includes(tipo)) {
     let actionType = MODIFICAR_VARIAVEL_MULTILEG;
     let nomeLista = "cotacoesMultileg";
     let nomeSetInterval = "setIntervalCotacoesMultileg";
@@ -97,6 +97,12 @@ export const atualizarCotacaoAPI = (
       actionType = MUDAR_VARIAVEL_POSICAO_CUSTODIA;
       nomeLista = "arrayCotacoes";
       nomeSetInterval = "setIntervalCotacoesPosicao";
+    }
+
+    if (tipo === "thl") {
+      actionType = MUDAR_VARIAVEL_THL;
+      nomeLista = "arrayCotacoes";
+      nomeSetInterval = "setIntervalCotacoesTHL";
     }
 
     atualizaListaReativa(
@@ -149,7 +155,7 @@ export const atualizarCotacaoAPI = (
           };
         }
       } //
-      else if (tipo === "posicao") {
+      else if (["posicao", "thl"].includes(tipo)) {
         const indice = listaCotacoes.findIndex(
           (ativo) => ativo.codigo === ativoRetornado
         );

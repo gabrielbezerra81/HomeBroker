@@ -243,3 +243,13 @@ table > tbody > tr:nth-child(odd) > th {
 .anticon {
   line-height: 0;
 }
+
+.spinnerHomebroker {
+  max-height: 100% !important;
+}
+
+.spinnerHomebroker .ant-spin-dot {
+  font-size: 14px;
+  width: 35px;
+  height: 35px;
+}

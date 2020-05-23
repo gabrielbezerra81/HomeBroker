@@ -10,8 +10,8 @@ export default ({ strikeLinha, indiceStrike }) => {
   const reduxState = StateStorePrincipal().THLReducer;
   const dispatch = DispatchStorePrincipal();
   const { strikeSelecionado, listaStrikes } = reduxState;
-  // Strike inteiro do meio => 27, 28, 29
-  if (indiceStrike === 1) {
+
+  if (Number(strikeSelecionado) === Number(strikeLinha)) {
     return (
       <div style={{ padding: "5px 0", width: "45px", textAlignLast: "end" }}>
         <FormControl
@@ -35,5 +35,5 @@ export default ({ strikeLinha, indiceStrike }) => {
     );
   }
 
-  return strikeLinha;
+  return <div>{strikeLinha}</div>;
 };

@@ -94,10 +94,15 @@ export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
         className={`divClicavel containerCelula${celulaSelecionada}`}
         onClick={() => {
           let novoCodigo = "";
-          if (ativo !== codigoCelulaSelecionada) novoCodigo = ativo;
+          let novoID = null;
+          if (ativo !== codigoCelulaSelecionada) {
+            novoCodigo = ativo;
+            novoID = id;
+          }
           dispatch(
             mudarVariavelTHLAction("codigoCelulaSelecionada", novoCodigo)
           );
+          dispatch(mudarVariavelTHLAction("idCelulaSelecionada", novoID));
         }}
       >
         <div

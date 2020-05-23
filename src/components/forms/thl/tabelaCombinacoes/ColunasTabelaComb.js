@@ -2,7 +2,11 @@ import React from "react";
 import imgModeloEU from "img/modeloEU.png";
 import ImgModeloUSA from "img/imgModeloUSA3.svg";
 import InputsFiltroTabela from "components/forms/thl/tabelaCombinacoes/FiltroTabela";
-import { formatarNumDecimal } from "components/utils/Formatacoes";
+import {
+  formatarNumDecimal,
+  formatarQuantidadeKMG,
+} from "components/utils/Formatacoes";
+import { StateStorePrincipal } from "components/redux/StoreCreation";
 
 export const ColunaHeader = ({ children, column }) => {
   let elementoColuna;
@@ -60,6 +64,7 @@ export const ColunaTextoComum = (props) => {
     : "roxoTextoTHL";
 
   if (key === "spread") texto = `R$ ${formatarNumDecimal(children)}`;
+  if (key === "vencimento") texto = texto.split(" ")[0];
   return (
     <div
       style={{
@@ -76,17 +81,28 @@ export const ColunaTextoComum = (props) => {
 };
 
 export const ColunaAcaoUlt = ({ children, row, column }) => {
+  const reduxState = StateStorePrincipal().THLReducer;
+  const { arrayCotacoes } = reduxState;
+  const acao = children.acao;
+
+  const item = arrayCotacoes.find((item) => item.codigo === acao);
+
   return (
     <div className="colunaAcaoUlt">
       <div className="colunaDividida roxoTextoTHL">
-        <div>{children.acao}</div>
-        <div>{children.ult}</div>
+        <div>{acao}</div>
+        <div>{item ? item.cotacao : ""}</div>
       </div>
     </div>
   );
 };
 
 export const ColunaCodigos = ({ children, row, column }) => {
+  const { estrutura } = row;
+  const { components } = estrutura;
+  const opcao1 = components[0].stock;
+  const opcao2 = components[1].stock;
+
   return (
     <div className="colunaDividida">
       <div className="mr-1">
@@ -97,35 +113,55 @@ export const ColunaCodigos = ({ children, row, column }) => {
       </div>
       <div className="mr-1">
         <div className="flexAlignEnd codigoColunaModelo">
-          <div className="roxoTextoTHL">{children[0].symbol.slice(4)}</div>
-          {renderModelo("EUROPEAN")}
+          <div className="roxoTextoTHL">{opcao1.symbol.slice(4)}</div>
+          {renderModelo(opcao1.model)}
         </div>
-        <div>{formatarNumDecimal(children[0].strike)}</div>
+        <div>{formatarNumDecimal(opcao1.strike)}</div>
       </div>
       <div>
         <div className="flexAlignEnd  codigoColunaModelo">
-          <div className="roxoTextoTHL">{children[1].symbol.slice(4)}</div>
-          {renderModelo("USA")}
+          <div className="roxoTextoTHL">{opcao2.symbol.slice(4)}</div>
+          {renderModelo(opcao2.model)}
         </div>
-        <div>{formatarNumDecimal(children[1].strike)}</div>
+        <div>{formatarNumDecimal(opcao2.strike)}</div>
       </div>
     </div>
   );
 };
 
 export const ColunaMontagem = ({ children, row, column }) => {
+  const { estrutura } = row;
+  const { components } = estrutura;
+  const opcao1 = components[0].stock;
+  const opcao2 = components[1].stock;
+
+  let preco = "";
+  let book1, book2;
+
+  if (column.key === "montagem") {
+    preco = estrutura.max;
+    book1 = `${formatarNumDecimal(opcao1.compra)} | ${formatarQuantidadeKMG(
+      opcao1.compraQtde
+    )}`;
+    book2 = `${formatarNumDecimal(opcao2.venda)} | ${formatarQuantidadeKMG(
+      opcao2.vendaQtde
+    )}`;
+  } else {
+    book1 = `${formatarNumDecimal(opcao1.venda)} | ${formatarQuantidadeKMG(
+      opcao1.vendaQtde
+    )}`;
+    book2 = `${formatarNumDecimal(opcao2.compra)} | ${formatarQuantidadeKMG(
+      opcao2.compraQtde
+    )}`;
+    preco = estrutura.min;
+  }
+
   return (
     <div>
-      <div>R$ {formatarNumDecimal(children.valor)}</div>
+      <div>R$ {formatarNumDecimal(preco)}</div>
       <div className="colunaDividida roxoTextoTHL">
-        <div className="mr-2">
-          {formatarNumDecimal(children.bookVenda.valor)} |
-          {formatarQtde(children.bookVenda.qtde)}
-        </div>
-        <div>
-          {formatarNumDecimal(children.bookCompra.valor)} |
-          {formatarQtde(children.bookCompra.qtde)}
-        </div>
+        <div className="mr-2">{book1}</div>
+        <div>{book2}</div>
       </div>
     </div>
   );

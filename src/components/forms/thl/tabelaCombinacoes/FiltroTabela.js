@@ -5,6 +5,7 @@ import { Select } from "antd";
 import _ from "lodash";
 import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
 import { StorePrincipalContext } from "components/redux/StoreCreation";
+import { formatarNumDecimal } from "components/utils/Formatacoes";
 
 class InputsFiltroTabela extends React.Component {
   render() {
@@ -251,7 +252,7 @@ const opcoesInputSelect = (props, lib = "") => {
         key={`${key}${indice}`}
         value={opcao}
       >
-        {opcao}
+        {opcao.split(" ")[0]}
       </Select.Option>
     ) : (
       <option key={`${key}${indice}`} value={opcao}>
@@ -280,7 +281,7 @@ export default connect(mapStateToProps, { mudarVariavelTHLAction }, null, {
 
 // função principal que retorna a tabela filtrada
 export const FiltrarTabela = (reduxState) => {
-  const { combinacoesTabela } = reduxState;
+  const { combinacoesTabela, arrayCotacoes } = reduxState;
 
   const filteredData = filtroEstrategia(
     combinacoesTabela,
@@ -288,7 +289,11 @@ export const FiltrarTabela = (reduxState) => {
   );
 
   const filteredData2 = filtroGrupo(combinacoesTabela, reduxState.grupo);
-  const filteredData3 = filtroAcaoUlt(combinacoesTabela, reduxState.acaoUlt);
+  const filteredData3 = filtroAcaoUlt(
+    combinacoesTabela,
+    reduxState.acaoUlt,
+    arrayCotacoes
+  );
   const filteredData4 = filtroSpread(combinacoesTabela, reduxState.spread);
   const filteredData5 = filtroCodigos(combinacoesTabela, reduxState.codigos);
   const filteredData6 = filtroMontagem(
@@ -331,12 +336,19 @@ const filtroGrupo = (data, filterText) => {
     linha.grupo.toLocaleLowerCase().includes(filterText.toLocaleLowerCase())
   );
 };
-const filtroAcaoUlt = (data, filterText) => {
-  return data.filter((linha) =>
-    `${linha.acaoUlt.acao} ${linha.acaoUlt.ult}`
-      .toLocaleLowerCase()
-      .includes(filterText.toLocaleLowerCase())
-  );
+const filtroAcaoUlt = (data, filterText, arrayCotacoes) => {
+  if (filterText) {
+    return data.filter((linha) => {
+      const acao = linha.acaoUlt.acao;
+      const ativo = arrayCotacoes.find((item) => item.codigo === acao);
+      const cotacao = ativo ? ativo.cotacao : "";
+      return `${acao} ${linha.acaoUlt.ult} ${formatarNumDecimal(cotacao)}`
+        .toLocaleLowerCase()
+        .includes(filterText.toLocaleLowerCase());
+    });
+  }
+
+  return data;
 };
 const filtroSpread = (data, filterObj) => {
   return filtrarDadosColuna(data, filterObj, "spread", "numero");
@@ -355,9 +367,9 @@ const filtroVcto = (data, arrayVencimentos) => {
   return data;
 };
 const filtroPrazo = (data, filterText) => {
-  return data.filter((linha) =>
-    linha.prazo.toLocaleLowerCase().includes(filterText.toLocaleLowerCase())
-  );
+  if (filterText)
+    return data.filter((linha) => linha.prazo === Number(filterText));
+  return data;
 };
 
 //
@@ -365,10 +377,17 @@ const filtrarDadosColuna = (data, filterObj, atributo, tipoFiltro) => {
   if (!filterObj.select) return data;
 
   return data.filter((linha) => {
+    const { estrutura } = linha;
     let targetValue = linha[atributo];
     if (!filterObj.min && !filterObj.max && atributo !== "codigos") return true;
-    if (["montagem", "desmontagem"].includes(atributo)) {
-      targetValue = linha[atributo].valor;
+
+    if ("montagem" === atributo) targetValue = estrutura.max;
+    else if ("desmontagem" === atributo) targetValue = estrutura.min;
+    else if (atributo === "codigos") {
+      const { components } = estrutura;
+      const opcao1 = components[0].stock;
+      const opcao2 = components[1].stock;
+      targetValue = { opcao1, opcao2 };
     }
 
     return filtrarLinha(targetValue, filterObj, tipoFiltro);
@@ -407,7 +426,9 @@ const comparadorNumero = (targetValue, min, max, select) => {
       if (minNumber) return targetValue > Number(minNumber);
       break;
     case "=":
-      if (minNumber) return targetValue === Number(minNumber);
+      if (minNumber) {
+        return targetValue === Number(minNumber);
+      }
       break;
     default:
       return true;
@@ -432,10 +453,10 @@ const filtragemNumeroTexto = (targetValue, filterObj) => {
   const select2 = filterObj.select2;
 
   // Targets
-  const targetSymbol1 = targetValue[0].symbol;
-  const targetStrike1 = targetValue[0].strike;
-  const targetSymbol2 = targetValue[1].symbol;
-  const targetStrike2 = targetValue[1].strike;
+  const targetSymbol1 = targetValue.opcao1.symbol;
+  const targetStrike1 = targetValue.opcao1.strike;
+  const targetSymbol2 = targetValue.opcao2.symbol;
+  const targetStrike2 = targetValue.opcao2.strike;
 
   const condicaoStrike1 = comparadorNumero(
     targetStrike1,

@@ -22,6 +22,7 @@ export const erro_realizar_login = "Falha ao fazer login";
 export const erro_realizar_cadastro = "Falha ao fazer cadastro de usuário";
 export const erro_listarBook = "Falha ao listar book de ofertas";
 export const erro_listarTHL_thl = "Falha ao listar dados";
+export const erro_pesquisarCombinacoes_thl = "Falha ao exibir combinações das travas de linha"
 
 // Alertas Validação
 

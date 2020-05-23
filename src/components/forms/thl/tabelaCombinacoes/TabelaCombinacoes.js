@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { forwardRef, useMemo, useEffect, useState } from "react";
 import { WindowTable } from "window-table";
+import { Spinner } from "react-bootstrap";
+import { Spin } from "antd";
 import {
   ColunaAcaoUlt,
   ColunaCodigos,
@@ -26,6 +28,7 @@ export default React.memo(() => {
     desmontagem,
     vencimento,
     prazo,
+    carregandoCombinacoes,
   } = reduxState;
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const [alturaContainer, setAlturaContainer] = useState(496);
@@ -87,21 +90,29 @@ export default React.memo(() => {
 
   return (
     <div className="containerCombinacoesTHL">
-      <div
-        className="containerTabelaComb"
-        style={{ height: `${alturaScrollbarHorizontal + alturaContainer}px` }}
+      <Spin
+        className="spinnerHomebroker"
+        indicator={
+          <Spinner className="asdas" animation="border" variant="light" />
+        }
+        spinning={carregandoCombinacoes}
       >
-        <WindowTable
-          className="tabelaCombinacoes"
-          id="tabelaCombinacoes"
-          data={dataTabela}
-          columns={columns}
-          Cell={(props) => Td(props, classeMargemScroll)}
-          Header={Thead}
-          Row={StripedRow}
-          overscanCount={2}
-        />
-      </div>
+        <div
+          className="containerTabelaComb"
+          style={{ height: `${alturaScrollbarHorizontal + alturaContainer}px` }}
+        >
+          <WindowTable
+            className="tabelaCombinacoes"
+            id="tabelaCombinacoes"
+            data={dataTabela}
+            columns={columns}
+            Cell={(props) => Td(props, classeMargemScroll)}
+            Header={Thead}
+            Row={StripedRow}
+            overscanCount={2}
+          />
+        </div>
+      </Spin>
     </div>
   );
 });
@@ -216,49 +227,16 @@ const columns = [
   },
   {
     key: "vencimento",
-    width: 110,
+    width: 115,
     title: "Vencimento",
     Component: ColunaTextoComum,
     HeaderCell: ColunaHeader,
   },
   {
     key: "prazo",
-    width: 65,
+    width: 60,
     title: "Prazo",
     Component: ColunaTextoComum,
     HeaderCell: ColunaHeader,
   },
 ];
-
-/*
-  react-infinite-scroll-component
-
-  <InfiniteScroll
-dataLength={tableData.length}
-next={() =>
-  fetchMoreData(tableData, hasMore, setTableData, setHasMore)
-}
-hasMore={hasMore}
-loader={<h4>Loading...</h4>}
-scrollableTarget="scrollbarTabelaCombinacoes"
-endMessage={
-  <p style={{ textAlign: "center" }}>
-    <b>Yay! You have seen it all</b>
-  </p>
-}
-> */
-
-/* <InfiniteScroll
-          pageStart={0}
-          loadMore={() =>
-            fetchMoreData(tableData, hasMore, setTableData, setHasMore)
-          }
-          hasMore={hasMore}
-          loader={
-            <div className="loader" key={0}>
-              Loading ...
-            </div>
-          }
-          useWindow={false}
-          // getScrollParent={() => scrollbarRef}
-        > */

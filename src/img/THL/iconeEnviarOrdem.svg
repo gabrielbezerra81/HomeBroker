@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 53.5 20.5" style="enable-background:new 0 0 53.5 20.5;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#F1881D;}
+	.st1{font-family:'MyriadPro-Regular';}
+	.st2{font-size:8.4319px;}
+	.st3{fill:#444444;stroke:#D1D1D1;stroke-width:18;stroke-miterlimit:10;}
+	.st4{fill:none;stroke:#FF9933;stroke-width:2;stroke-miterlimit:10;}
+	.st5{fill:none;stroke:#FF9933;stroke-miterlimit:10;}
+</style>
+<g>
+	<g>
+		<text transform="matrix(1 0 0 1 25.5403 8.8451)"><tspan x="0" y="0" class="st0 st1 st2">Enviar </tspan><tspan x="0" y="9" class="st0 st1 st2">ordem</tspan></text>
+	</g>
+	<path class="st3" d="M7.6,1.4"/>
+	<g>
+		<path class="st4" d="M0,1h3.3c0,0,0.5,0.1,0.9,1.6s3.2,10.5,3.2,10.5s0,0.8,1.4,0.8s8.1,0,8.1,0"/>
+		<circle class="st5" cx="8.7" cy="18.2" r="1.8"/>
+		<circle class="st5" cx="17.1" cy="18.2" r="1.8"/>
+		<path class="st4" d="M8.4,13.8c0,0,9.8,0.1,10.2,0c0.4-0.1,0.5-0.5,0.5-0.5s1.8-5.8,2.1-6.7c0.3-0.9-0.6-1-0.6-1H7.1"/>
+	</g>
+	<path class="st0" d="M50.2,0.5H26.1c-0.6,0-1.1,0.3-1.5,0.7l-2.5,3l0.5,0.4L25,1.7c0.3-0.4,0.7-0.6,1.2-0.6h24
+		c1.4,0,2.5,1.1,2.5,2.5v13.1c0,1.4-1.1,2.5-2.5,2.5H20.2L19.7,20h30.5c1.8,0,3.3-1.5,3.3-3.3v-13C53.5,1.9,52.1,0.5,50.2,0.5z"/>
+</g>
+</svg>

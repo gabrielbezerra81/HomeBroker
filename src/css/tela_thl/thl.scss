@@ -3,7 +3,7 @@
   /* width: calc(100% - 95px); */
   margin-left: 5px;
   margin-bottom: 0 !important;
-  min-width: 669px;
+  min-width: 871px;
 
   .mheader {
     position: fixed;
@@ -124,37 +124,17 @@
   white-space: nowrap;
 }
 
-.containerBotaoEnviarTHL {
-  position: fixed !important;
-  right: 45px;
-  top: 41px;
-  z-index: 3;
-
-  &:hover {
-    opacity: 0.8;
-  }
-
-  button {
-    background-color: #fc990a !important;
-    border-color: #fc990a !important;
-    color: white !important;
-  }
-}
-
-.iconeRecalcularPrecos {
-  right: 177px;
-  top: 41px;
+.containerBotaoMenuTopo {
   position: fixed !important;
   z-index: 3;
-
-  &:hover {
-    opacity: 0.8;
-  }
 
   button {
     border: none !important;
-    color: #fc990a;
     padding: 0;
+  }
+
+  &:hover {
+    opacity: 0.8;
   }
 
   img {
@@ -162,11 +142,31 @@
   }
 }
 
+.containerBotaoEnviarTHL {
+  right: 45px;
+  top: 41px;
+}
+
+.containerBotaoCriarAlerta {
+  right: 161px;
+  top: 41px;
+}
+
+.containerBotaoFavoritar {
+  right: 262px;
+  top: 41px;
+}
+
+.iconeRecalcularPrecos {
+  right: 380px;
+  top: 41px;
+}
+
 .botaoDesabilitado {
   opacity: 0.5;
 }
 
-.toolTipRecalcularPreco {
+.toolTipMenuTopoTHL {
   z-index: 99999999 !important;
 
   .ant-tooltip-arrow::before {

@@ -80,7 +80,7 @@ export default () => {
   return (
     <div className="containerSpinnerVencimentos">
       <Spin
-        className="spinnerTabelaVencimentos"
+        className="spinnerHomebroker"
         indicator={
           <Spinner className="asdas" animation="border" variant="light" />
         }
