@@ -2,8 +2,8 @@ import {
   listarTabelaInicialTHLAPI,
   recalcularPrecosTHLAPI,
   pesquisarCombinacoesTHLAPI,
-  criarAlertaTHLAPI,
   travarDestravarClique,
+  favoritarTHLAPI,
 } from "components/api/API";
 import { pesquisarListaStrikeTHLAPI } from "components/api/API";
 import {
@@ -129,7 +129,7 @@ export const favoritarTHLAPIAction = (idCelulaSelecionada) => {
   return async (dispatch) => {
     travarDestravarClique("travar", "thl");
     const json = { structure: { id: idCelulaSelecionada } };
-    await criarAlertaTHLAPI(JSON.stringify(json));
+    await favoritarTHLAPI(JSON.stringify(json));
     travarDestravarClique("destravar", "thl");
   };
 };

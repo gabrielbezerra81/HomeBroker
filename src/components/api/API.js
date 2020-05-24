@@ -41,6 +41,8 @@ import {
   erro_listarBook,
   erro_listarTHL_thl,
   erro_pesquisarCombinacoes_thl,
+  sucesso_favoritar_thl,
+  erro_favoritar_thl,
 } from "constants/AlertaErros";
 
 retryDelay(request);
@@ -405,7 +407,7 @@ export const pesquisarCombinacoesTHLAPI = (ativo) => {
     });
 };
 
-export const criarAlertaTHLAPI = (json) => {
+export const favoritarTHLAPI = (json) => {
   return request
     .post(`${url_base}${url_favoritarTHL_}`)
     .timeout(timeout)
@@ -413,9 +415,9 @@ export const criarAlertaTHLAPI = (json) => {
       "Content-Type": "application/json",
     })
     .send(json)
-    .then(() => console.log(sucesso_criar_alerta))
+    .then(() => console.log(sucesso_favoritar_thl))
     .catch((erro) => {
-      mostrarErroConsulta(erro, erro_criar_alerta);
+      mostrarErroConsulta(erro, erro_favoritar_thl);
     });
 };
 
