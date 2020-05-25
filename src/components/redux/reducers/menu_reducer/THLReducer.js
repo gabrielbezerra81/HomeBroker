@@ -62,7 +62,7 @@ const INITIAL_STATE = {
   precosTabelaVencimentosID: 0, // Como são enviados arrays mutados no setInterval, será enviado um id que muda a cada dispatch
 
   /* Tabela de combinações */
-  combinacoesTabela: montarTabelaCombinacoes(tempData).tabelaCombinacoes, //[],
+  combinacoesTabela: montarTabelaCombinacoes(tempData).tabelaCombinacoes, //,
   carregandoCombinacoes: false,
   estrategia: "",
   grupo: "",

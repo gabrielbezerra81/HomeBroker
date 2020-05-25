@@ -9,7 +9,10 @@ import TabelaCombinacoes, {
   calcularMargemBorda,
   verificarOverflow,
 } from "components/forms/thl/tabelaCombinacoes/TabelaCombinacoes";
-import { GlobalContext } from "components/redux/StoreCreation";
+import {
+  GlobalContext,
+  StateStorePrincipal,
+} from "components/redux/StoreCreation";
 import { aumentarZindexAction } from "components/redux/actions/MainAppActions";
 import MenuTopo from "components/forms/thl/MenuTopo";
 import ContainerTabelaVencimentos from "components/forms/thl/tabelaDeVencimentos/ContainerTabelaVencimentos";

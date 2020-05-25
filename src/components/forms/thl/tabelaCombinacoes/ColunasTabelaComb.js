@@ -176,13 +176,14 @@ export const ColunaMontagem = ({ children, row, column }) => {
       <div
         tabIndex={0}
         className="divClicavel precoMontagem"
-        onClick={() =>
+        onClick={(e) => {
+          e.stopPropagation();
           selecionarBooks({
             booksSelecionados,
             novosBooks: [book1, book2],
             dispatch,
-          })
-        }
+          });
+        }}
       >
         R$ {formatarNumDecimal(preco)}
       </div>

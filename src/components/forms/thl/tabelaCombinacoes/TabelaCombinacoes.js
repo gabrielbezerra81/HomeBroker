@@ -11,7 +11,11 @@ import {
   ColunaHeader,
 } from "components/forms/thl/tabelaCombinacoes/ColunasTabelaComb";
 import { FiltrarTabela } from "components/forms/thl/tabelaCombinacoes/FiltroTabela";
-import { useSelectorStorePrincipal } from "components/redux/StoreCreation";
+import {
+  useSelectorStorePrincipal,
+  DispatchStorePrincipal,
+} from "components/redux/StoreCreation";
+import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
 
 export default React.memo(() => {
   const reduxState = useSelectorStorePrincipal((state) => {
@@ -29,6 +33,7 @@ export default React.memo(() => {
     vencimento,
     prazo,
     carregandoCombinacoes,
+    idCelulaSelecionada,
   } = reduxState;
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const [alturaContainer, setAlturaContainer] = useState(496);
@@ -58,6 +63,7 @@ export default React.memo(() => {
     desmontagem,
     vencimento,
     prazo,
+    idCelulaSelecionada,
   ]);
 
   //Bloqueia o scroll do container THL quando for rolar a tabela
@@ -88,6 +94,12 @@ export default React.memo(() => {
   }, []);
 
   const alturaScrollbarHorizontal = verificarOverflow();
+  // const ultimaLinha = dataTabela[dataTabela.length - 1];
+  // const ultimaLinhaSelecionada =
+  //   ultimaLinha && ultimaLinha.id === idCelulaSelecionada
+  //     ? " ultimaLinhaSelecionada"
+  //     : "";
+  const ultimaLinhaSelecionada = "";
 
   return (
     <div className="containerCombinacoesTHL">
@@ -99,7 +111,7 @@ export default React.memo(() => {
         spinning={carregandoCombinacoes}
       >
         <div
-          className="containerTabelaComb"
+          className={`containerTabelaComb${ultimaLinhaSelecionada}`}
           style={{ height: `${alturaScrollbarHorizontal + alturaContainer}px` }}
         >
           <WindowTable
@@ -107,7 +119,15 @@ export default React.memo(() => {
             id="tabelaCombinacoes"
             data={dataTabela}
             columns={columns}
-            Cell={(props) => Td(props, classeMargemScroll)}
+            Cell={(props) => {
+              const idAnterior =
+                props.index > 0 ? dataTabela[props.index - 1].id : -1;
+              return Td(props, {
+                classeMargemScroll,
+                idCelulaSelecionada,
+                idAnterior,
+              });
+            }}
             Header={Thead}
             Row={StripedRow}
             overscanCount={2}
@@ -131,22 +151,37 @@ const Thead = (props) => {
 };
 
 const StripedRow = forwardRef((props, ref) => {
+  const dispatch = DispatchStorePrincipal();
   return (
     <div
       {...props}
-      className={props.index % 2 === 0 ? "linha-par" : "linha-impar"}
+      tabIndex={0}
+      onClick={() =>
+        dispatch(mudarVariavelTHLAction("idCelulaSelecionada", props.row.id))
+      }
+      className={
+        props.index % 2 === 0
+          ? "linha-par divClicavel tr"
+          : "linha-impar divClicavel tr"
+      }
     />
   );
 });
 
-const Td = (props, classeMargemScroll) => {
+const Td = (props, layoutProps) => {
+  const { row } = props;
+  const { classeMargemScroll, idCelulaSelecionada, idAnterior } = layoutProps;
+  const linhaSelecionada = [row.id, idAnterior].includes(idCelulaSelecionada)
+    ? " linhaSelecionada"
+    : "";
+
   return (
     <div
       {...props}
       style={{
         ...props.style,
       }}
-      className={classeMargemScroll + "td"}
+      className={`${classeMargemScroll}td${linhaSelecionada}`}
     ></div>
   );
 };

@@ -175,7 +175,7 @@ export const montarTabelaCombinacoes = (tabelaAPI) => {
 
   const tabelaCombinacoes = tabelaAPI.map((item, indice) => {
     const linha = {};
-    linha.id = indice;
+    linha.id = item.id;
     linha.estrategia = item.name;
     linha.grupo = item.group || "";
     linha.acaoUlt = { acao: item.symbol };
