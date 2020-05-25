@@ -5,17 +5,14 @@ import ReactResizeDetector from "react-resize-detector";
 import DraggableModal from "components/utils/componentesUI/DraggableModal";
 import { ModalHeaderSemBook } from "components/utils/componentesUI/FormHeader";
 import MapaCalor from "components/forms/thl/MapaCalor";
-import TabelaCombinacoes, {
-  calcularMargemBorda,
-  verificarOverflow,
-} from "components/forms/thl/tabelaCombinacoes/TabelaCombinacoes";
-import {
-  GlobalContext,
-  StateStorePrincipal,
-} from "components/redux/StoreCreation";
+import { GlobalContext } from "components/redux/StoreCreation";
 import { aumentarZindexAction } from "components/redux/actions/MainAppActions";
 import MenuTopo from "components/forms/thl/MenuTopo";
 import ContainerTabelaVencimentos from "components/forms/thl/tabelaDeVencimentos/ContainerTabelaVencimentos";
+import ContainerTabelaCombinacoes, {
+  calcularMargemBorda,
+  verificarOverflow,
+} from "components/forms/thl/tabelaCombinacoes/ContainerTabelaCombinacoes";
 
 // window.jQuery = require("jquery");
 // window.$ = window.jQuery;
@@ -59,7 +56,7 @@ class Tela_THL extends React.Component {
           <MapaCalor />
           <MenuTopo />
           <ContainerTabelaVencimentos />
-          <TabelaCombinacoes />
+          <ContainerTabelaCombinacoes />
           <ReactResizeDetector
             handleWidth
             onResize={(w, h) => {

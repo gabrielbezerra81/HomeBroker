@@ -49,14 +49,14 @@ export default () => {
     }
 
     let diferencaXInicial = startX - e.pageX;
-    let thresholdX = 3;
+    let thresholdX = 4;
     if (diferencaXInicial < 1) {
       diferencaXInicial *= -1;
       thresholdX *= -1;
     }
 
     let diferencaYInicial = startY - e.pageY;
-    let thresholdY = 3;
+    let thresholdY = 4;
     if (diferencaYInicial < 1) {
       diferencaYInicial *= -1;
       thresholdY *= -1;
