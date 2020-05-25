@@ -10,7 +10,7 @@ import {
   DispatchStorePrincipal,
 } from "components/redux/StoreCreation";
 import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
-import { erro_selecaoBook_THL } from "constants/AlertaErros";
+import BookTHL, { selecionarBooks } from "components/forms/thl/BookTHL";
 
 export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
   const reduxState = StateStorePrincipal().THLReducer;
@@ -92,18 +92,9 @@ export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
       <div
         tabIndex={0}
         className={`divClicavel containerCelula${celulaSelecionada}`}
-        onClick={() => {
-          let novoCodigo = "";
-          let novoID = null;
-          if (ativo !== codigoCelulaSelecionada) {
-            novoCodigo = ativo;
-            novoID = id;
-          }
-          dispatch(
-            mudarVariavelTHLAction("codigoCelulaSelecionada", novoCodigo)
-          );
-          dispatch(mudarVariavelTHLAction("idCelulaSelecionada", novoID));
-        }}
+        onClick={() =>
+          selecionarCelula({ dispatch, ativo, id, codigoCelulaSelecionada })
+        }
       >
         <div
           className={`itemAtivosQtde ${
@@ -121,13 +112,13 @@ export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
 
         {precosColuna ? (
           <div className="bookAtivoTHL roxoTextoTHL">
-            <RenderBook
+            <BookTHL
               preco={compra}
               qtde={compraQtde}
               tipo="venda"
               ativo={ativo}
             />
-            <RenderBook
+            <BookTHL
               preco={venda}
               qtde={vendaQtde}
               tipo="compra"
@@ -146,7 +137,11 @@ export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
               className="divClicavel"
               tabIndex={0}
               onClick={() =>
-                SelecionarBooks(booksSelecionados, booksMontar, dispatch)
+                selecionarBooks({
+                  booksSelecionados,
+                  novosBooks: booksMontar,
+                  dispatch,
+                })
               }
             >
               {max} | {qtdeMontar}
@@ -155,7 +150,11 @@ export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
               className="divClicavel"
               tabIndex={0}
               onClick={() =>
-                SelecionarBooks(booksSelecionados, booksDesmontar, dispatch)
+                selecionarBooks({
+                  booksSelecionados,
+                  novosBooks: booksDesmontar,
+                  dispatch,
+                })
               }
             >
               {min} | {qtdeDesmont}
@@ -163,33 +162,6 @@ export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
           </>
         ) : null}
       </div>
-    </div>
-  );
-};
-
-const RenderBook = ({ preco, qtde, tipo, ativo }) => {
-  const reduxState = StateStorePrincipal().THLReducer;
-  const dispatch = DispatchStorePrincipal();
-  const { booksSelecionados } = reduxState;
-  const indice = booksSelecionados.findIndex(
-    (book) => book.ativo === ativo && book.tipo === tipo
-  );
-
-  const tipoBook = tipo === "compra" ? "venda" : "compra";
-
-  const bookSelecionado =
-    indice !== -1 ? ` bookSelecionado_${tipoBook}` : " bookNaoSelecionado";
-
-  return (
-    <div
-      className={`divClicavel${bookSelecionado}`}
-      tabIndex={0}
-      onClick={(e) => {
-        SelecionarBooks(booksSelecionados, [{ ativo, tipo }], dispatch);
-        e.stopPropagation();
-      }}
-    >
-      {preco} | {qtde}
     </div>
   );
 };
@@ -243,31 +215,6 @@ const VerificaAtivoCustodia = (itemColuna) => {
   return { executando, custodia, qtdeExecutada, qtdeOferta };
 };
 
-const SelecionarBooks = (booksSelecionados, novosBooks, dispatch) => {
-  const books = [...booksSelecionados];
-  let mostrarAlerta = false;
-
-  novosBooks.forEach((novoBook) => {
-    const indice = books.findIndex(
-      (book) => book.ativo === novoBook.ativo && book.tipo === novoBook.tipo
-    );
-    if (indice === -1) {
-      if (novosBooks.length === 1 && booksSelecionados.length === 6)
-        mostrarAlerta = true;
-      else if (novosBooks.length === 2 && booksSelecionados.length >= 5)
-        mostrarAlerta = true;
-
-      if (!mostrarAlerta)
-        books.push({ ativo: novoBook.ativo, tipo: novoBook.tipo });
-    } else {
-      if (novosBooks.length !== 2) books.splice(indice, 1);
-    }
-  });
-  if (mostrarAlerta) alert(erro_selecaoBook_THL);
-
-  dispatch(mudarVariavelTHLAction("booksSelecionados", books));
-};
-
 const calculaCorPreco = (reduxState, estrutura) => {
   let classe = "";
   const { seletorMapaCalor, faixasMapaCalor } = reduxState;
@@ -318,4 +265,21 @@ const classesDinamicas = (
     celulaSelecionada,
     precosCelulaSelecionada,
   };
+};
+
+export const selecionarCelula = (props: {
+  ativo: string,
+  codigoCelulaSelecionada: string,
+  id: number,
+  dispatch: any,
+}) => {
+  const { ativo, codigoCelulaSelecionada, id, dispatch } = props;
+  let novoCodigo = "";
+  let novoID = null;
+  if (ativo !== codigoCelulaSelecionada) {
+    novoCodigo = ativo;
+    novoID = id;
+  }
+  dispatch(mudarVariavelTHLAction("codigoCelulaSelecionada", novoCodigo));
+  dispatch(mudarVariavelTHLAction("idCelulaSelecionada", novoID));
 };

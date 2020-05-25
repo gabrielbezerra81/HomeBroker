@@ -38,7 +38,8 @@ export default React.memo(() => {
     const data = FiltrarTabela(reduxState);
     const tamanhoTabela = data.length;
 
-    let alturaCalculada = 102 + 43 * tamanhoTabela;
+    const alturaLinha = 45;
+    let alturaCalculada = 102 + alturaLinha * tamanhoTabela;
     if (alturaCalculada > 496) alturaCalculada = 496;
     setAlturaContainer(alturaCalculada);
 

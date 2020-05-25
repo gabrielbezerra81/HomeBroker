@@ -143,6 +143,7 @@ export const criarAlertaTHLAPIAction = (actionProps) => {
 export const pesquisarCombinacoesTHLAPIAction = (actionProps) => {
   return async (dispatch) => {
     const { ativoPesquisa } = actionProps;
+    dispatch(mudarVariavelTHLAction("booksSelecionados", []));
     dispatch(mudarVariavelTHLAction("pesquisandoAtivo", true));
     dispatch(mudarVariavelTHLAction("carregandoCombinacoes", true));
     const combinacoes = await pesquisarCombinacoesTHLAPI(ativoPesquisa);

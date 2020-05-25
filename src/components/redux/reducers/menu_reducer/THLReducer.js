@@ -1,7 +1,7 @@
 import moment from "moment";
 import { MUDAR_VARIAVEL_THL } from "constants/MenuActionTypes";
-// import { tempData } from "components/forms/thl/tabelaCombinacoes/tempData";
-// import { montarTabelaCombinacoes } from "components/redux/actions/api_actions/ThlAPIAction";
+import { tempData } from "components/forms/thl/tabelaCombinacoes/tempData";
+import { montarTabelaCombinacoes } from "components/redux/actions/api_actions/ThlAPIAction";
 
 const INITIAL_STATE = {
   ativoPesquisa: "PETR4",
@@ -62,8 +62,8 @@ const INITIAL_STATE = {
   precosTabelaVencimentosID: 0, // Como são enviados arrays mutados no setInterval, será enviado um id que muda a cada dispatch
 
   /* Tabela de combinações */
-  combinacoesTabela: [],
-  carregandoCombinacoes:false,
+  combinacoesTabela: montarTabelaCombinacoes(tempData).tabelaCombinacoes, //[],
+  carregandoCombinacoes: false,
   estrategia: "",
   grupo: "",
   acaoUlt: "",

@@ -399,7 +399,7 @@ export const pesquisarCombinacoesTHLAPI = (ativo) => {
   return request
     .get(`${url_base}${url[0]}${ativo}${url[1]}`)
     .retry(2, 2000)
-    .timeout(timeout * 2)
+    .timeout(timeout * 3)
     .then((response) => response.body)
     .catch((erro) => {
       mostrarErroConsulta(erro, erro_pesquisarCombinacoes_thl);
