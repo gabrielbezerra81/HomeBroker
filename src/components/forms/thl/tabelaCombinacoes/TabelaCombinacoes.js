@@ -57,6 +57,15 @@ const StripedRow = forwardRef((props, ref) => {
   const dispatch = DispatchStorePrincipal();
   const reduxState = StateStorePrincipal().THLReducer;
   const { idCelulaSelecionada, codigoCelulaSelecionada } = reduxState;
+
+  const id = props.row ? props.row.id : -1;
+  const linhaSelecionada =
+    [id].includes(idCelulaSelecionada) && !codigoCelulaSelecionada
+      ? " linhaSelecionada"
+      : "";
+
+  const paridade = props.index % 2 === 0 ? "linha-par" : "linha-impar";
+
   return (
     <div
       {...props}
@@ -64,34 +73,18 @@ const StripedRow = forwardRef((props, ref) => {
       onClick={() =>
         selecionarLinha({
           dispatch,
-          id: props.row.id,
+          id: id,
           idCelulaSelecionada,
           codigoCelulaSelecionada,
         })
       }
-      className={
-        props.index % 2 === 0
-          ? "linha-par divClicavel tr"
-          : "linha-impar divClicavel tr"
-      }
+      className={`divClicavel tr ${paridade}${linhaSelecionada}`}
     />
   );
 });
 
 const Td = (props, layoutProps) => {
-  const { row } = props;
-  const {
-    classeMargemScroll,
-    idCelulaSelecionada,
-    idAnterior,
-    codigoCelulaSelecionada,
-  } = layoutProps;
-
-  const linhaSelecionada =
-    [row.id, idAnterior].includes(idCelulaSelecionada) &&
-    !codigoCelulaSelecionada
-      ? " linhaSelecionada"
-      : "";
+  const { classeMargemScroll } = layoutProps;
 
   return (
     <div
@@ -99,7 +92,7 @@ const Td = (props, layoutProps) => {
       style={{
         ...props.style,
       }}
-      className={`${classeMargemScroll}td${linhaSelecionada}`}
+      className={`${classeMargemScroll}td`}
     ></div>
   );
 };

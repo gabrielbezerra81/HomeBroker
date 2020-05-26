@@ -83,6 +83,7 @@ export default React.memo(() => {
   }, []);
 
   const alturaScrollbarHorizontal = verificarOverflow();
+  // TODO:
   // const ultimaLinha = dataTabela[dataTabela.length - 1];
   // const ultimaLinhaSelecionada =
   //   ultimaLinha && ultimaLinha.id === idCelulaSelecionada

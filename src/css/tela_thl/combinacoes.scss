@@ -40,6 +40,17 @@
   }
 
   .tr {
+    border: 1px solid transparent;
+    border-top-color: var(--cor-borda);
+
+    &.linhaSelecionada {
+      border-color: #fc990a;
+
+      .td:last-child {
+        border-right: 1px solid #fc990a;
+      }
+    }
+
     &:hover {
       opacity: 1;
     }
@@ -49,20 +60,11 @@
     @extend %colunaTextoCentralizado;
     padding: 5px 3px !important;
     font-size: 0.7rem;
-    border-top: 1px solid var(--cor-borda);
     color: var(--cor-texto-discreto);
     border-right: 1px solid var(--cor-borda);
 
-    &.linhaSelecionada {
-      border-top-color: #fc990a;
-    }
-
-    &:first-child {
-      // border-left: 1px solid var(--cor-borda);
-    }
-
     &:last-child {
-      border-right: none;
+      border-right: 1px solid transparent;
     }
   }
 
