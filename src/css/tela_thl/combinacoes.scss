@@ -40,14 +40,18 @@
   }
 
   .tr {
-    border: 1px solid transparent;
-    border-top-color: var(--cor-borda);
-
     &.linhaSelecionada {
-      border-color: #fc990a;
+      .td {
+        border-top-color: #fc990a;
+        border-bottom-color: #fc990a;
 
-      .td:last-child {
-        border-right: 1px solid #fc990a;
+        &:first-child {
+          border-left: 1px solid #fc990a;
+        }
+
+        &:last-child {
+          border-right: 1px solid #fc990a;
+        }
       }
     }
 
@@ -61,7 +65,13 @@
     padding: 5px 3px !important;
     font-size: 0.7rem;
     color: var(--cor-texto-discreto);
+    border-top: 1px solid var(--cor-borda);
     border-right: 1px solid var(--cor-borda);
+    border-bottom: 1px solid transparent;
+
+    &:first-child {
+      border-left: 1px solid transparent;
+    }
 
     &:last-child {
       border-right: 1px solid transparent;

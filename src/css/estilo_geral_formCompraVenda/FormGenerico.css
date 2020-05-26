@@ -16,7 +16,7 @@
   --cor-texto-discreto: #b7b7b7;
   --cor-azul-compra: #008fca;
   --cor-vermelha-venda: #a67269;
-  --some-width: calc(100% - 20px);
+  --some-width: calc(100% - 19px);
 }
 
 .mcontent {

@@ -128,7 +128,7 @@ export const calcularMargemBorda = () => {
   if (container) {
     const { clientWidth, scrollWidth } = container;
     const maxScroll = scrollWidth - clientWidth;
-    let right = 20;
+    let right = 19;
 
     if (clientWidth < 1079) {
       right -= maxScroll - container.scrollLeft;
