@@ -7,7 +7,7 @@ import {
 import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
 
 export default ({ strikeLinha, indiceStrike }) => {
-  const reduxState = StateStorePrincipal().THLReducer;
+  const reduxState = StateStorePrincipal("thl");
   const dispatch = DispatchStorePrincipal();
   const { strikeSelecionado, listaStrikes } = reduxState;
 

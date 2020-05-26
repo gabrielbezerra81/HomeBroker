@@ -13,7 +13,7 @@ import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/TH
 import BookTHL, { selecionarBooks } from "components/forms/thl/BookTHL";
 
 export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
-  const reduxState = StateStorePrincipal().THLReducer;
+  const reduxState = StateStorePrincipal("thl");
   const dispatch = DispatchStorePrincipal();
   const {
     precosTabelaVencimentos,
@@ -187,7 +187,7 @@ const VerificaAtivoCustodia = (itemColuna) => {
   let qtdeExecutada = 0;
   let qtdeOferta = 0;
   const ativoCelula = itemColuna.symbol;
-  const reduxState = StateStorePrincipal().posicaoReducer;
+  const reduxState = StateStorePrincipal('posicao');
   const { posicoesCustodia } = reduxState;
   executando = posicoesCustodia.some((posicao) => {
     const execCompra = posicao.custodiaCompra.find(

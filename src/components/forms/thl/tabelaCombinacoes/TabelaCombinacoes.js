@@ -15,7 +15,7 @@ import {
 import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
 
 export default React.memo(({ dataTabela, classeMargemScroll }) => {
-  const reduxState = StateStorePrincipal().THLReducer;
+  const reduxState = StateStorePrincipal("thl");
   const { idCelulaSelecionada, codigoCelulaSelecionada } = reduxState;
 
   return (
@@ -55,7 +55,7 @@ const Thead = (props) => {
 
 const StripedRow = forwardRef((props, ref) => {
   const dispatch = DispatchStorePrincipal();
-  const reduxState = StateStorePrincipal().THLReducer;
+  const reduxState = StateStorePrincipal("thl");
   const { idCelulaSelecionada, codigoCelulaSelecionada } = reduxState;
 
   const id = props.row ? props.row.id : -1;

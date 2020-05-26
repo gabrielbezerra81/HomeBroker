@@ -10,7 +10,7 @@ import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/TH
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 
 export default React.memo(() => {
-  const reduxState = StateStorePrincipal().THLReducer;
+  const reduxState = StateStorePrincipal("thl");
   const dispatch = DispatchStorePrincipal();
   const {
     seletorMapaCalor,

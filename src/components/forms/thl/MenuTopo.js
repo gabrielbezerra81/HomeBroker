@@ -45,7 +45,7 @@ export default () => {
 };
 
 const InputPesquisa = () => {
-  const reduxState = StateStorePrincipal().THLReducer;
+  const reduxState = StateStorePrincipal("thl");
   const dispatch = DispatchStorePrincipal();
   const {
     ativoPesquisa,
@@ -115,15 +115,15 @@ const InputPesquisa = () => {
 };
 
 const EnviarOrdem = () => {
-  const { divkey, zIndex } = StateGlobalStore().MainAppReducer;
-  const { multilegAberto } = StateStorePrincipal().telaPrincipalReducer;
+  const { divkey, zIndex } = StateGlobalStore();
+  const { multilegAberto } = StateStorePrincipal("principal");
   const {
     multileg,
     eventSource,
     eventSourceCotacao,
     cotacoesMultileg,
-  } = StateStorePrincipal().multilegReducer;
-  const { booksSelecionados } = StateStorePrincipal().THLReducer;
+  } = StateStorePrincipal("multileg");
+  const { booksSelecionados } = StateStorePrincipal("thl");
 
   const dispatchGlobal = DispatchGlobalStore();
   const dispatchStorePrincipal = DispatchStorePrincipal();
@@ -156,7 +156,7 @@ const EnviarOrdem = () => {
 };
 
 const RecalcularPrecos = () => {
-  const reduxState = StateStorePrincipal().THLReducer;
+  const reduxState = StateStorePrincipal("thl");
   const dispatch = DispatchStorePrincipal();
   const { codigoCelulaSelecionada } = reduxState;
   const classeBotaoDesabilitado = !codigoCelulaSelecionada
@@ -176,9 +176,9 @@ const RecalcularPrecos = () => {
 };
 
 const Favoritar = () => {
-  const reduxState = StateStorePrincipal().THLReducer;
+  const { idCelulaSelecionada } = StateStorePrincipal("thl");
+  const { token } = StateStorePrincipal("principal");
   const dispatch = DispatchStorePrincipal();
-  const { idCelulaSelecionada } = reduxState;
   const classeBotaoDesabilitado = !idCelulaSelecionada
     ? " botaoDesabilitado"
     : "";
@@ -189,13 +189,15 @@ const Favoritar = () => {
         texto={textoFavoritar}
         condicaoVisibilidade={classeBotaoDesabilitado}
         icone={iconeFavorito}
-        onClick={() => dispatch(favoritarTHLAPIAction(idCelulaSelecionada))}
+        onClick={() =>
+          dispatch(favoritarTHLAPIAction({ idCelulaSelecionada, token }))
+        }
       />
     </div>
   );
 };
 const CriarAlerta = () => {
-  const reduxState = StateStorePrincipal().THLReducer;
+  const reduxState = StateStorePrincipal("thl");
   const dispatch = DispatchStorePrincipal();
   const { idCelulaSelecionada } = reduxState;
   const classeBotaoDesabilitado = !idCelulaSelecionada

@@ -6,7 +6,7 @@ import { StateStorePrincipal } from "components/redux/StoreCreation";
 import TabelaVencimentos from "components/forms/thl/tabelaDeVencimentos/TabelaVencimentos";
 
 export default () => {
-  const reduxState = StateStorePrincipal().THLReducer;
+  const reduxState = StateStorePrincipal("thl");
   const { carregandoTabelaVencimentos } = reduxState;
 
   const [mouseDown, setMouseDown] = useState(false);

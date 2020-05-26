@@ -407,15 +407,16 @@ export const pesquisarCombinacoesTHLAPI = (ativo) => {
     });
 };
 
-export const favoritarTHLAPI = (json) => {
+export const favoritarTHLAPI = (json, token) => {
   return request
     .post(`${url_base}${url_favoritarTHL_}`)
     .timeout(timeout)
     .set({
       "Content-Type": "application/json",
+      Authorization: `${token.tokenType} ${token.accessToken}`,
     })
     .send(json)
-    .then(() => console.log(sucesso_favoritar_thl))
+    .then(() => alert(sucesso_favoritar_thl))
     .catch((erro) => {
       mostrarErroConsulta(erro, erro_favoritar_thl);
     });

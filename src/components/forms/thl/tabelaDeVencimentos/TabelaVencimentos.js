@@ -16,7 +16,7 @@ import InputStrikeSelecionado from "components/forms/thl/tabelaDeVencimentos/Inp
 import { usePrevious } from "components/utils/cicloVida/cicloVida";
 
 export default React.memo(() => {
-  const reduxState = StateStorePrincipal().THLReducer;
+  const reduxState = StateStorePrincipal("thl");
   const dispatch = DispatchStorePrincipal();
   const {
     opcoesStrike,

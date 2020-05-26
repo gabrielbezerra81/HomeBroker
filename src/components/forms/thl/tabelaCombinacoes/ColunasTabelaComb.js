@@ -85,7 +85,7 @@ export const ColunaTextoComum = (props) => {
 };
 
 export const ColunaAcaoUlt = ({ children, row, column }) => {
-  const reduxState = StateStorePrincipal().THLReducer;
+  const reduxState = StateStorePrincipal("thl");
   const { arrayCotacoes } = reduxState;
   const acao = children.acao;
 
@@ -139,7 +139,7 @@ export const ColunaMontagem = ({ children, row, column }) => {
   const opcao1 = components[0].stock;
   const opcao2 = components[1].stock;
   const dispatch = DispatchStorePrincipal();
-  const reduxState = StateStorePrincipal().THLReducer;
+  const reduxState = StateStorePrincipal("thl");
   const { booksSelecionados } = reduxState;
 
   let preco = "";

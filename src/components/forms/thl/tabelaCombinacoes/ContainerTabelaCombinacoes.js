@@ -7,7 +7,7 @@ import { StateStorePrincipal } from "components/redux/StoreCreation";
 import TabelaCombinacoes from "components/forms/thl/tabelaCombinacoes/TabelaCombinacoes";
 
 export default React.memo(() => {
-  const reduxState = StateStorePrincipal().THLReducer;
+  const reduxState = StateStorePrincipal("thl");
   const {
     combinacoesTabela,
     estrategia,
@@ -83,13 +83,6 @@ export default React.memo(() => {
   }, []);
 
   const alturaScrollbarHorizontal = verificarOverflow();
-  // TODO:
-  // const ultimaLinha = dataTabela[dataTabela.length - 1];
-  // const ultimaLinhaSelecionada =
-  //   ultimaLinha && ultimaLinha.id === idCelulaSelecionada
-  //     ? " ultimaLinhaSelecionada"
-  //     : "";
-  const ultimaLinhaSelecionada = "";
 
   return (
     <div className="containerCombinacoesTHL">
@@ -101,7 +94,7 @@ export default React.memo(() => {
         spinning={carregandoCombinacoes}
       >
         <div
-          className={`containerTabelaComb${ultimaLinhaSelecionada}`}
+          className={`containerTabelaComb`}
           style={{ height: `${alturaScrollbarHorizontal + alturaContainer}px` }}
         >
           <TabelaCombinacoes

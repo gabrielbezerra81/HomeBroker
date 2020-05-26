@@ -125,11 +125,13 @@ const atualizarPrecosTHL = async (
   dispatch(mudarVariavelTHLAction("precosTabelaVencimentos", []));
 };
 
-export const favoritarTHLAPIAction = (idCelulaSelecionada) => {
+export const favoritarTHLAPIAction = (actionProps) => {
   return async (dispatch) => {
+    const { idCelulaSelecionada, token } = actionProps;
+
     travarDestravarClique("travar", "thl");
     const json = { structure: { id: idCelulaSelecionada } };
-    await favoritarTHLAPI(JSON.stringify(json));
+    await favoritarTHLAPI(JSON.stringify(json), token);
     travarDestravarClique("destravar", "thl");
   };
 };

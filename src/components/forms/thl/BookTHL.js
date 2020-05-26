@@ -7,7 +7,7 @@ import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/TH
 import { erro_selecaoBook_THL } from "constants/AlertaErros";
 
 export default ({ preco, qtde, tipo, ativo }) => {
-  const reduxState = StateStorePrincipal().THLReducer;
+  const reduxState = StateStorePrincipal("thl");
   const dispatch = DispatchStorePrincipal();
   const { booksSelecionados } = reduxState;
   const indice = booksSelecionados.findIndex(
