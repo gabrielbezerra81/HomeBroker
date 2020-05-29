@@ -12,3 +12,4 @@ export const MUDAR_ORDEM_EXEC_MAIN_REDUCER = "mudar_ordem_exec_main_reducer";
 
 //THL
 export const MUDAR_VARIAVEL_THL = "mudar_variavel_thl";
+export const MUDAR_VARIAVEIS_THL = "mudar_variaveis_thl";

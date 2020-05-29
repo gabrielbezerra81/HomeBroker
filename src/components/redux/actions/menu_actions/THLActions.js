@@ -1,5 +1,6 @@
 import {
   MUDAR_VARIAVEL_THL,
+  MUDAR_VARIAVEIS_THL,
 } from "constants/MenuActionTypes";
 import { travarDestravarClique } from "components/api/API";
 import {
@@ -24,6 +25,15 @@ export const mudarVariavelTHLAction = (nome, valor) => {
     dispatch({
       type: MUDAR_VARIAVEL_THL,
       payload: { nome, valor },
+    });
+  };
+};
+
+export const mudarVariaveisTHLAction = (payload) => {
+  return (dispatch) => {
+    dispatch({
+      type: MUDAR_VARIAVEIS_THL,
+      payload,
     });
   };
 };

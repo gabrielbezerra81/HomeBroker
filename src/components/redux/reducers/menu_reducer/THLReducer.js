@@ -1,5 +1,8 @@
 import moment from "moment";
-import { MUDAR_VARIAVEL_THL } from "constants/MenuActionTypes";
+import {
+  MUDAR_VARIAVEL_THL,
+  MUDAR_VARIAVEIS_THL,
+} from "constants/MenuActionTypes";
 import { tempData } from "components/forms/thl/tabelaCombinacoes/tempData";
 import { montarTabelaCombinacoes } from "components/redux/actions/api_actions/ThlAPIAction";
 
@@ -2739,12 +2742,15 @@ export default (state = INITIAL_STATE, action) => {
       const valorFormatado =
         nome === "opcoesStrike" ? mapTabelaVencimentos(valor) : valor;
       return { ...state, [nome]: valorFormatado };
+    case MUDAR_VARIAVEIS_THL:
+      
+      return { ...state, ...action.payload };
     default:
       return state;
   }
 };
 
-function mapTabelaVencimentos(dataTabela) {
+export function mapTabelaVencimentos(dataTabela) {
   return dataTabela.map((linhaStrike) => {
     const novaLinhaStrike = {
       strikeLine: linhaStrike.strikeLine,

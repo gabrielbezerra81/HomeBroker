@@ -10,15 +10,23 @@ import {
   atualizarPrecosTHLAPI,
   atualizarCotacaoAPI,
 } from "components/api/ReativosAPI";
-import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
+import {
+  mudarVariavelTHLAction,
+  mudarVariaveisTHLAction,
+} from "components/redux/actions/menu_actions/THLActions";
+import { mapTabelaVencimentos } from "components/redux/reducers/menu_reducer/THLReducer";
 
 export const pesquisarAtivoTHLAPIAction = (codigo) => {
   return async (dispatch) => {
     const listaStrikes = await pesquisarListaStrikeTHLAPI(codigo);
 
     if (listaStrikes.length > 0) {
-      dispatch(mudarVariavelTHLAction("listaStrikes", listaStrikes));
-      dispatch(mudarVariavelTHLAction("ativoPesquisado", codigo.toUpperCase()));
+      dispatch(
+        mudarVariaveisTHLAction({
+          listaStrikes,
+          ativoPesquisado: codigo.toUpperCase(),
+        })
+      );
     }
   };
 };
@@ -48,11 +56,16 @@ export const listarTabelaInicialTHLAPIAction = (props) => {
           dispatch,
           setIntervalPrecosTHL
         );
-      dispatch(mudarVariavelTHLAction("opcoesStrike", tabelaVencimentos));
-      dispatch(mudarVariavelTHLAction("carregandoTabelaVencimentos", false));
-      dispatch(mudarVariavelTHLAction("codigoCelulaSelecionada", ""));
-      dispatch(mudarVariavelTHLAction("celulaCalculada", ""));
-      dispatch(mudarVariavelTHLAction("booksSelecionados", []));
+
+      dispatch(
+        mudarVariaveisTHLAction({
+          opcoesStrike: mapTabelaVencimentos(tabelaVencimentos),
+          carregandoTabelaVencimentos: false,
+          codigoCelulaSelecionada: "",
+          celulaCalculada: "",
+          booksSelecionados: [],
+        })
+      );
     }
   };
 };
@@ -77,11 +90,6 @@ export const recalcularPrecosTHLAPIAction = (thlState) => {
     );
 
     if (opcoesRecalculadas.length) {
-      dispatch(mudarVariavelTHLAction("opcoesStrike", opcoesRecalculadas));
-      dispatch(
-        mudarVariavelTHLAction("celulaCalculada", codigoCelulaSelecionada)
-      );
-      dispatch(mudarVariavelTHLAction("booksSelecionados", []));
       atualizarPrecosTHL(
         opcoesRecalculadas,
         eventSourcePrecos,
@@ -89,11 +97,16 @@ export const recalcularPrecosTHLAPIAction = (thlState) => {
         setIntervalPrecosTHL
       );
     }
-    setTimeout(
-      () =>
-        dispatch(mudarVariavelTHLAction("carregandoTabelaVencimentos", false)),
-      3000
-    );
+    setTimeout(() => {
+      dispatch(
+        mudarVariaveisTHLAction({
+          opcoesStrike: mapTabelaVencimentos(opcoesRecalculadas),
+          celulaCalculada: codigoCelulaSelecionada,
+          booksSelecionados: [],
+          carregandoTabelaVencimentos: false,
+        })
+      );
+    }, 3000);
   };
 };
 
@@ -121,8 +134,12 @@ const atualizarPrecosTHL = async (
   ids = ids.substring(0, ids.length - 1);
 
   const source = atualizarPrecosTHLAPI(ids, dispatch);
-  dispatch(mudarVariavelTHLAction("eventSourcePrecos", source));
-  dispatch(mudarVariavelTHLAction("precosTabelaVencimentos", []));
+  dispatch(
+    mudarVariaveisTHLAction({
+      eventSourcePrecos: source,
+      precosTabelaVencimentos: [],
+    })
+  );
 };
 
 export const favoritarTHLAPIAction = (actionProps) => {
@@ -145,25 +162,35 @@ export const criarAlertaTHLAPIAction = (actionProps) => {
 export const pesquisarCombinacoesTHLAPIAction = (actionProps) => {
   return async (dispatch) => {
     const { ativoPesquisa } = actionProps;
-    dispatch(mudarVariavelTHLAction("booksSelecionados", []));
-    dispatch(mudarVariavelTHLAction("pesquisandoAtivo", true));
-    dispatch(mudarVariavelTHLAction("carregandoCombinacoes", true));
+    dispatch(
+      mudarVariaveisTHLAction({
+        booksSelecionados: [],
+        pesquisandoAtivo: true,
+        carregandoCombinacoes: true,
+      })
+    );
     const combinacoes = await pesquisarCombinacoesTHLAPI(ativoPesquisa);
 
     //limpar setInterval e eventSource
+    let tabelaCombinacoes = [],
+      arrayCotacoes = [];
 
     if (combinacoes.length) {
-      const { tabelaCombinacoes, arrayCotacoes } = montarTabelaCombinacoes(
-        combinacoes
-      );
+      const result = montarTabelaCombinacoes(combinacoes);
+      tabelaCombinacoes = result.tabelaCombinacoes;
+      arrayCotacoes = result.arrayCotacoes;
 
       atualizarCotacaoTHL({ ...actionProps, dispatch, arrayCotacoes });
-
-      dispatch(mudarVariavelTHLAction("arrayCotacoes", arrayCotacoes));
-      dispatch(mudarVariavelTHLAction("combinacoesTabela", tabelaCombinacoes));
     }
-    dispatch(mudarVariavelTHLAction("pesquisandoAtivo", false));
-    dispatch(mudarVariavelTHLAction("carregandoCombinacoes", false));
+
+    dispatch(
+      mudarVariaveisTHLAction({
+        pesquisandoAtivo: false,
+        carregandoCombinacoes: false,
+        combinacoesTabela: tabelaCombinacoes,
+        arrayCotacoes,
+      })
+    );
   };
 };
 
