@@ -138,7 +138,7 @@ export const favoritarTHLAPIAction = (actionProps) => {
 
 export const criarAlertaTHLAPIAction = (actionProps) => {
   return (dispatch) => {
-    const { idCelulaSelecionada } = actionProps;
+    // const { idCelulaSelecionada } = actionProps;
   };
 };
 

@@ -1,10 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useRef } from "react";
 import { Spinner } from "react-bootstrap";
 import { Spin } from "antd";
 import { FiltrarTabela } from "components/forms/thl/tabelaCombinacoes/FiltroTabela";
 import { StateStorePrincipal } from "components/redux/StoreCreation";
 import TabelaCombinacoes from "components/forms/thl/tabelaCombinacoes/TabelaCombinacoes";
+import _ from "lodash";
+
+const alturaLinha = 46;
 
 export default React.memo(() => {
   const reduxState = StateStorePrincipal("thl");
@@ -26,20 +29,26 @@ export default React.memo(() => {
 
   const [alturaContainer, setAlturaContainer] = useState(496);
   const [classeMargemScroll, setClasseMargemScroll] = useState("");
+  const [dataTabela, setData] = useState([]);
 
-  const dataTabela = useMemo(() => {
-    const data = FiltrarTabela(reduxState);
-    const tamanhoTabela = data.length;
+  const throttle = useRef(
+    _.debounce((state) => {
+      const data = FiltrarTabela(state);
+      const tamanhoTabela = data.length;
 
-    const alturaLinha = 45;
-    let alturaCalculada = 102 + alturaLinha * tamanhoTabela;
-    if (alturaCalculada > 496) alturaCalculada = 496;
-    setAlturaContainer(alturaCalculada);
+      let alturaCalculada = 102 + alturaLinha * tamanhoTabela;
+      if (alturaCalculada > 496) alturaCalculada = 496;
+      setAlturaContainer(alturaCalculada);
 
-    if (tamanhoTabela < 10) setClasseMargemScroll("margemScrollbar ");
-    else setClasseMargemScroll("");
+      if (tamanhoTabela < 10) setClasseMargemScroll("margemScrollbar ");
+      else setClasseMargemScroll("");
 
-    return data;
+      setData(data);
+    }, 500)
+  );
+
+  useEffect(() => {
+    throttle.current(reduxState);
   }, [
     combinacoesTabela,
     estrategia,

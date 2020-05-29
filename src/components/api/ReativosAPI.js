@@ -23,7 +23,7 @@ import {
 } from "constants/ApiActionTypes";
 import { formatarDataDaAPI } from "components/utils/Formatacoes";
 
-const intervaloAttReativa = 3000;
+const intervaloAttReativa = 3500;
 
 export const atualizarBookAPI = (
   dispatch,

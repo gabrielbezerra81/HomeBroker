@@ -1,6 +1,4 @@
-import {
-  MUDAR_VARIAVEL_ORDENS_EXEC,
-} from "constants/MenuActionTypes";
+import { MUDAR_VARIAVEL_ORDENS_EXEC } from "constants/MenuActionTypes";
 import {
   listarOrdensExecAPI,
   travarDestravarClique,
@@ -47,14 +45,10 @@ export const listarOrdensExecAction = (props) => {
 
       dispatch({ type: LISTAR_ORDENS_EXECUCAO, payload: ordensExec });
 
+      const token = props.token.accessToken;
+
       setTimeout(
-        () =>
-          atualizarOrdensExec(
-            dispatch,
-            props,
-            props.token.accessToken,
-            ordensExec
-          ),
+        () => atualizarOrdensExec(dispatch, props, token, ordensExec),
         3000
       );
     }
@@ -162,7 +156,7 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
     dispatch(
       modificarVariavelMultilegAction("cotacoesMultileg", cotacoesMultileg)
     );
-    
+
     atualizarCotacaoAction(dispatch, props, cotacoesMultileg);
     travarDestravarClique("destravar", "menusTelaPrincipal");
   };
@@ -383,8 +377,7 @@ const atualizarOrdensExec = (dispatch, props, accessToken, listaOrdensExec) => {
     listaOrdensExec
   );
 
-  dispatch({
-    type: MUDAR_VARIAVEL_ORDENS_EXEC,
-    payload: { nome: "eventSourceOrdensExec", valor: eventSource },
-  });
+  dispatch(mudarVariavelOrdensExecAction("eventSourceOrdensExec", eventSource));
+
+  return eventSource;
 };

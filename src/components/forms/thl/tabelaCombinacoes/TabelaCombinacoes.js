@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { forwardRef } from "react";
+import React, { forwardRef, useMemo, useState } from "react";
 import { WindowTable } from "window-table";
 import {
   ColunaAcaoUlt,
@@ -16,7 +16,53 @@ import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/TH
 
 export default React.memo(({ dataTabela, classeMargemScroll }) => {
   const reduxState = StateStorePrincipal("thl");
+  const dispatch = DispatchStorePrincipal();
   const { idCelulaSelecionada, codigoCelulaSelecionada } = reduxState;
+
+  const StripedRow = useMemo(
+    () =>
+      forwardRef((props, ref) => {
+        const id = props.row ? props.row.id : -1;
+        const linhaSelecionada =
+          id === idCelulaSelecionada && !codigoCelulaSelecionada
+            ? " linhaSelecionada"
+            : "";
+
+        const paridade = props.index % 2 === 0 ? "linha-par" : "linha-impar";
+
+        return (
+          <div
+            {...props}
+            tabIndex={0}
+            onClick={() => {
+              selecionarLinha({
+                dispatch,
+                id: id,
+                idCelulaSelecionada,
+                codigoCelulaSelecionada,
+              });
+            }}
+            className={`divClicavel tr ${paridade}${linhaSelecionada}`}
+          />
+        );
+      }),
+    [idCelulaSelecionada, codigoCelulaSelecionada]
+  );
+
+  const Td = useMemo(
+    () => (props) => {
+      return (
+        <div
+          {...props}
+          style={{
+            ...props.style,
+          }}
+          className={`${classeMargemScroll}td`}
+        ></div>
+      );
+    },
+    [classeMargemScroll]
+  );
 
   return (
     <WindowTable
@@ -24,16 +70,7 @@ export default React.memo(({ dataTabela, classeMargemScroll }) => {
       id="tabelaCombinacoes"
       data={dataTabela}
       columns={columns}
-      Cell={(props) => {
-        const idAnterior =
-          props.index > 0 ? dataTabela[props.index - 1].id : -1;
-        return Td(props, {
-          classeMargemScroll,
-          idCelulaSelecionada,
-          idAnterior,
-          codigoCelulaSelecionada,
-        });
-      }}
+      Cell={Td}
       Header={Thead}
       Row={StripedRow}
       overscanCount={2}
@@ -41,61 +78,7 @@ export default React.memo(({ dataTabela, classeMargemScroll }) => {
   );
 });
 
-const Thead = (props) => {
-  return (
-    <div
-      {...props}
-      style={{
-        ...props.style,
-      }}
-      className="thead"
-    ></div>
-  );
-};
-
-const StripedRow = forwardRef((props, ref) => {
-  const dispatch = DispatchStorePrincipal();
-  const reduxState = StateStorePrincipal("thl");
-  const { idCelulaSelecionada, codigoCelulaSelecionada } = reduxState;
-
-  const id = props.row ? props.row.id : -1;
-  const linhaSelecionada =
-    [id].includes(idCelulaSelecionada) && !codigoCelulaSelecionada
-      ? " linhaSelecionada"
-      : "";
-
-  const paridade = props.index % 2 === 0 ? "linha-par" : "linha-impar";
-
-  return (
-    <div
-      {...props}
-      tabIndex={0}
-      onClick={() =>
-        selecionarLinha({
-          dispatch,
-          id: id,
-          idCelulaSelecionada,
-          codigoCelulaSelecionada,
-        })
-      }
-      className={`divClicavel tr ${paridade}${linhaSelecionada}`}
-    />
-  );
-});
-
-const Td = (props, layoutProps) => {
-  const { classeMargemScroll } = layoutProps;
-
-  return (
-    <div
-      {...props}
-      style={{
-        ...props.style,
-      }}
-      className={`${classeMargemScroll}td`}
-    ></div>
-  );
-};
+const Thead = (props) => <div {...props} className="thead"></div>;
 
 const columns = [
   {
