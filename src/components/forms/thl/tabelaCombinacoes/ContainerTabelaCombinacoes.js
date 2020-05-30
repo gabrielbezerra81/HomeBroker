@@ -34,6 +34,7 @@ export default React.memo(() => {
   const [classeMargemScroll, setClasseMargemScroll] = useState("");
   const [dataTabela, setData] = useState(combinacoesTabela);
 
+  // Aplica filtros na tabela e calcula altura do container. Caso não haja overflow, aplica margem no ultimo TD de cada linha
   const throttle = useRef(
     _.debounce((state) => {
       let data = FiltrarTabela(state);
@@ -43,7 +44,7 @@ export default React.memo(() => {
       if (alturaCalculada > 496) alturaCalculada = 496;
       setAlturaContainer(alturaCalculada);
 
-      if (tamanhoTabela < 10) setClasseMargemScroll("margemScrollbar ");
+      if (tamanhoTabela < 9) setClasseMargemScroll("margemScrollbar ");
       else setClasseMargemScroll("");
       if (state.ordenacao.key && state.ordenacao.valor)
         data = ordenarTabela(state, data);

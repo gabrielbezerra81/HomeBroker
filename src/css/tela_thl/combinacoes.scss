@@ -319,11 +319,18 @@
   }
 }
 
-.multiSelectVencimento {
+.multiSelectVencimento .ant-select-selection.ant-select-selection--multiple {
+  width: 110px !important;
+}
+
+.multiSelectPrazo .ant-select-selection.ant-select-selection--multiple {
+  width: 65px !important;
+}
+
+.multiSelectFiltroTHL {
   .ant-select-selection.ant-select-selection--multiple {
     height: 20px !important;
     overflow: hidden !important;
-    width: 110px !important;
     padding-bottom: 0 !important;
   }
 
@@ -369,13 +376,13 @@
   }
 }
 
-.multiSelectVencimentoOption {
+.multiSelectFiltroTHLOption {
   font-size: 0.73rem !important;
   padding-right: 0 !important;
 }
 
 .ant-select-dropdown.ant-select-dropdown--multiple {
-  .ant-select-dropdown-menu-item-selected.multiSelectVencimentoOption {
+  .ant-select-dropdown-menu-item-selected.multiSelectFiltroTHLOption {
     .ant-select-selected-icon {
       color: transparent !important;
     }

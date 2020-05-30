@@ -84,7 +84,7 @@ const INITIAL_STATE = {
   montagem: { min: "", max: "", select: "=" },
   desmontagem: { min: "", max: "", select: "=" },
   vencimento: [],
-  prazo: "",
+  prazo: [],
   arrayCotacoes: [],
   arrayCotacoesID: 0,
   eventSourceCotacoesTHL: null,

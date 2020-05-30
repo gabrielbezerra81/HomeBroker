@@ -222,15 +222,17 @@ class InputsFiltroTabela extends React.Component {
   }
 
   filtroMultiSelect() {
+    const { key } = this.props.coluna;
+    const classeSelect = key === "vencimento" ? "multiSelectVencimento" : "multiSelectPrazo";
     return (
       <Select
         mode="multiple"
         size="small"
         // value={this.props.vencimento}
-        className="multiSelectVencimento"
+        className={`multiSelectFiltroTHL ${classeSelect}`}
         dropdownClassName="inputCodigoDropdown"
         onChange={(value) => {
-          this.props.mudarVariavelTHLAction("vencimento", value);
+          this.props.mudarVariavelTHLAction(key, value);
         }}
       >
         {opcoesInputSelect(this.props, "antd")}
@@ -248,11 +250,11 @@ const opcoesInputSelect = (props, lib = "") => {
   return arrayOpcoes.map((opcao, indice) =>
     lib === "antd" ? (
       <Select.Option
-        className="multiSelectVencimentoOption"
+        className="multiSelectFiltroTHLOption"
         key={`${key}${indice}`}
         value={opcao}
       >
-        {opcao.split(" ")[0]}
+        {key === "vencimento" ? opcao.split(" ")[0] : opcao}
       </Select.Option>
     ) : (
       <option key={`${key}${indice}`} value={opcao}>
@@ -367,8 +369,8 @@ const filtroVcto = (data, arrayVencimentos) => {
   return data;
 };
 const filtroPrazo = (data, filterText) => {
-  if (filterText)
-    return data.filter((linha) => linha.prazo === Number(filterText));
+  if (filterText.length)
+    return data.filter((linha) => filterText.includes(linha.prazo));
   return data;
 };
 

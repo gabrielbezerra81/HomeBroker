@@ -42,7 +42,7 @@ export const ColunaHeader = ({ children, column }) => {
   } else if ("vencimento" === key) {
     tipoFiltro = "multiSelect";
   } else if ("prazo" === key) {
-    tipoFiltro = "select";
+    tipoFiltro = "multiSelect";
   }
 
   if (key === "acaoUlt") {
