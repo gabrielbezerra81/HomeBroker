@@ -99,16 +99,19 @@ const modalBody = (props) => (
       </Table>
       {props.tabelaOrdensExecucao.map((item, index) => {
         if (props.opcoesOrdemAberto && item.id === props.ordemAtual.id) {
-          const top = document.getElementById(item.id).offsetTop;
+          const linha = document.getElementById(item.id);
 
-          return (
-            // @ts-ignore
-            <OpcoesOrdemExec
-              style={{ top: `${top + 80}px` }}
-              id="opcoes_ordens"
-              key={`opcoes${item.id}`}
-            />
-          );
+          if (linha) {
+            const top = linha.offsetTop;
+            return (
+              // @ts-ignore
+              <OpcoesOrdemExec
+                style={{ top: `${top + 80}px` }}
+                id="opcoes_ordens"
+                key={`opcoes${item.id}`}
+              />
+            );
+          }
         }
         return null;
       })}

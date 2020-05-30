@@ -13,6 +13,7 @@ import {
 } from "components/api/LoginAPI";
 import { navigate } from "@reach/router";
 import { persistor } from "components/redux/StoreCreation";
+import { mudarVariavelOrdensExecAction } from "components/redux/actions/menu_actions/OrdensExecActions";
 
 export const abrirFecharMenuLateralAction = (event, menuLateralAberto) => {
   return (dispatch) => {
@@ -119,6 +120,11 @@ export const deslogarUsuarioAction = (event, props) => {
           type: MUDAR_DADOS_LOGIN,
           payload: { nomeVariavel: "token", valor: null },
         });
+        // TODO: talvez precise resetar os estados
+        await dispatch(mudarVariavelOrdensExecAction("ordemAtual", null));
+        await dispatch(
+          mudarVariavelOrdensExecAction("opcoesOrdemAberto", false)
+        );
 
         navigate("/");
       })
@@ -135,6 +141,7 @@ export const abrirItemBarraLateralAction = (props, nameVariavelReducer) => {
       else if (key.includes("setInterval")) clearInterval(props[key]);
     }
   });
+
   return (dispatch) => {
     dispatch({
       type: ABRIR_FECHAR_ITEM_BARRA_LATERAL,

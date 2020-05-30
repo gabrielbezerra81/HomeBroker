@@ -139,7 +139,7 @@ const columns = [
   },
   {
     key: "prazo",
-    width: 70,
+    width: 73,
     title: "Prazo",
     Component: ColunaTextoComum,
     HeaderCell: ColunaHeader,
