@@ -23,7 +23,7 @@ import {
 } from "constants/ApiActionTypes";
 import { formatarDataDaAPI } from "components/utils/Formatacoes";
 
-const intervaloAttReativa = 3500;
+const intervaloAttReativa = 6000;
 
 export const atualizarBookAPI = (
   dispatch,
@@ -257,6 +257,14 @@ export const atualizarOrdensExecAPI = (dispatch, token, listaOrdensExec) => {
   var source = new EventSource(
     `${url_base_reativa}${url_ordensExecReativas_idUser}${token}`
   );
+
+  // source.onopen = function (event) {
+  //   console.log("open");
+  // };
+
+  // source.onerror = function (event) {
+  //   console.log(event);
+  // };
 
   source.onmessage = function (event) {
     if (typeof event.data !== "undefined") {

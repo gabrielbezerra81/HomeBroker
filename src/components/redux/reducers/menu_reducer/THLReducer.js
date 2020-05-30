@@ -91,7 +91,7 @@ const INITIAL_STATE = {
   setIntervalCotacoesTHL: null,
   ordenacao: {
     key: "",
-    valor: "",
+    valor: 0,
   },
 
   // const precos = [

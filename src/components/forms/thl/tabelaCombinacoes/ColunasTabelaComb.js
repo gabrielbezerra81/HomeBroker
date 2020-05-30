@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useRef } from "react";
+import { Row, Col } from "antd";
 import { MDBIcon } from "mdbreact";
 import BookTHL, { selecionarBooks } from "components/forms/thl/BookTHL";
 import imgModeloEU from "img/modeloEU.png";
@@ -13,6 +14,7 @@ import {
   DispatchStorePrincipal,
 } from "components/redux/StoreCreation";
 import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
+import { buscarNumeroArray } from "components/utils/FuncoesBusca";
 
 export const ColunaHeader = ({ children, column }) => {
   const dispatch = DispatchStorePrincipal();
@@ -21,18 +23,16 @@ export const ColunaHeader = ({ children, column }) => {
   let classNameColunaAcaoUlt = "";
   let tipoFiltro = "";
   const { key } = column;
+  const iconeOrdenacao = renderIconeOrdenacao(key, ordenacao);
 
-  if (key === "acaoUlt") {
-    classNameColunaAcaoUlt = " colunaAcaoUlt";
-    elementoColuna = (
-      <div className="colunaDividida">
-        <div>Acão</div>
-        <div>Ult</div>
-      </div>
-    );
-  } else {
-    elementoColuna = column.title;
-  }
+  const onClick = useRef((key, ordenacao, strike = "") => {
+    const novaKey = key + strike;
+    const novaOrdenacao = { key: novaKey, valor: ordenacao.valor + 1 };
+    if (novaOrdenacao.valor > 2) novaOrdenacao.valor = 0;
+    if (novaKey !== ordenacao.key) novaOrdenacao.valor = 1;
+    dispatch(mudarVariavelTHLAction("ordenacao", novaOrdenacao));
+  });
+
   if (["estrategia", "grupo", "acaoUlt"].includes(key)) {
     tipoFiltro = "texto";
   } else if (["spread", "montagem", "desmontagem"].includes(key)) {
@@ -45,22 +45,57 @@ export const ColunaHeader = ({ children, column }) => {
     tipoFiltro = "select";
   }
 
+  if (key === "acaoUlt") {
+    classNameColunaAcaoUlt = " colunaAcaoUlt";
+    elementoColuna = (
+      <div className="colunaDividida">
+        <div>Acão</div>
+        <div>Ult {iconeOrdenacao}</div>
+      </div>
+    );
+  } else if (key === "codigos") {
+    const subkey = ordenacao.key.split(" ")[1];
+    elementoColuna = (
+      <Row>
+        <Col span={8}></Col>
+        <Col
+          span={8}
+          className="divClicavel"
+          onClick={() => onClick.current(key, ordenacao, " opcao1")}
+          tabIndex={0}
+        >
+          Strike 1{subkey === "opcao1" ? iconeOrdenacao : null}
+        </Col>
+        <Col
+          span={8}
+          className="divClicavel"
+          onClick={() => onClick.current(key, ordenacao, " opcao2")}
+          tabIndex={0}
+        >
+          Strike 2{subkey === "opcao2" ? iconeOrdenacao : null}
+        </Col>
+      </Row>
+    );
+  } else {
+    elementoColuna = column.title;
+  }
+
+  const propsDivTituloColuna = {};
+  if (key !== "codigos") {
+    propsDivTituloColuna.tabIndex = 0;
+    propsDivTituloColuna.onClick = () => onClick.current(key, ordenacao);
+    propsDivTituloColuna.className = "divClicavel tituloColuna";
+  }
+
   return (
     <div
       style={{ width: `${column.width}px`, flexGrow: `${column.width}` }}
       className={`th${classNameColunaAcaoUlt}`}
     >
       <div className="divLabelColuna">
-        <div
-          tabIndex={0}
-          className="divClicavel"
-          onClick={() => {
-            const novaOrdenacao = { key, valor: ordenacao.valor + 1 };
-            if (novaOrdenacao.valor > 2) novaOrdenacao.valor = 0;  
-            dispatch(mudarVariavelTHLAction("ordenacao", novaOrdenacao));
-          }}
-        >
+        <div className="tituloColuna" {...propsDivTituloColuna}>
           {elementoColuna}
+          {!["acaoUlt", "codigos"].includes(key) ? iconeOrdenacao : null}
         </div>
 
         <div className="containerInputFiltro">
@@ -104,60 +139,56 @@ export const ColunaAcaoUlt = ({ children, row, column }) => {
   const { arrayCotacoes } = reduxState;
   const acao = children.acao;
 
-  const item = arrayCotacoes.find((item) => item.codigo === acao);
+  const cotacao = buscarNumeroArray(arrayCotacoes, acao, "codigo", "cotacao");
 
   return (
     <div className="colunaAcaoUlt">
       <div className="colunaDividida roxoTextoTHL">
         <div>{acao}</div>
-        <div>{item ? item.cotacao : ""}</div>
+        <div>{cotacao ? cotacao : ""}</div>
       </div>
     </div>
   );
 };
 
 export const ColunaCodigos = ({ children, row, column }) => {
-  const { estrutura } = row;
-  const { components } = estrutura;
-  const opcao1 = components[0].stock;
-  const opcao2 = components[1].stock;
+  const { opcao1, opcao2 } = children;
+  const style = { justifyContent: "center" };
 
   return (
-    <div className="colunaDividida colunaCodigo">
-      <div className="mr-1">
+    <Row type="flex" align="middle" style={{ height: "100%" }}>
+      <Col span={8}>
         <div className="roxoTextoTHL">
           {row.acaoUlt.acao.slice(0, row.acaoUlt.acao.length - 1)}
         </div>
         <div>Strike</div>
-      </div>
-      <div className="mr-1">
-        <div className="flexAlignEnd codigoColunaModelo">
+      </Col>
+      <Col span={8} offset={0}>
+        <div className="flexAlignEnd codigoColunaModelo" style={style}>
           <div className="roxoTextoTHL">{opcao1.symbol.slice(4)}</div>
           {renderModelo(opcao1.model)}
         </div>
         <div>{formatarNumDecimal(opcao1.strike)}</div>
-      </div>
-      <div>
-        <div className="flexAlignEnd  codigoColunaModelo">
+      </Col>
+      <Col span={8} offset={0}>
+        <div className="flexAlignEnd  codigoColunaModelo" style={style}>
           <div className="roxoTextoTHL">{opcao2.symbol.slice(4)}</div>
           {renderModelo(opcao2.model)}
         </div>
         <div>{formatarNumDecimal(opcao2.strike)}</div>
-      </div>
-    </div>
+      </Col>
+    </Row>
   );
 };
 
 export const ColunaMontagem = ({ children, row, column }) => {
-  const { estrutura } = row;
-  const { components } = estrutura;
-  const opcao1 = components[0].stock;
-  const opcao2 = components[1].stock;
+  const { opcao1, opcao2 } = row.codigos;
+
   const dispatch = DispatchStorePrincipal();
   const reduxState = StateStorePrincipal("thl");
   const { booksSelecionados } = reduxState;
 
-  let preco = "";
+  const preco = children;
   const book1 = {},
     book2 = {};
 
@@ -165,7 +196,6 @@ export const ColunaMontagem = ({ children, row, column }) => {
   book2.ativo = opcao2.symbol;
 
   if (column.key === "montagem") {
-    preco = estrutura.max;
     book1.tipo = "venda";
     book2.tipo = "compra";
 
@@ -175,7 +205,6 @@ export const ColunaMontagem = ({ children, row, column }) => {
     book2.preco = formatarNumDecimal(opcao2.venda);
     book2.qtde = formatarQuantidadeKMG(opcao2.vendaQtde);
   } else {
-    preco = estrutura.min;
     book1.tipo = "compra";
     book2.tipo = "venda";
 
@@ -235,4 +264,15 @@ const renderModelo = (modelo) => {
       )}
     </div>
   );
+};
+
+const renderIconeOrdenacao = (key, ordenacao) => {
+  if (key === ordenacao.key.split(" ")[0]) {
+    if (ordenacao.valor === 1) {
+      return <MDBIcon className="iconeOrdenacao" icon="long-arrow-alt-up" />;
+    } else if (ordenacao.valor === 2) {
+      return <MDBIcon className="iconeOrdenacao" icon="long-arrow-alt-down" />;
+    }
+  }
+  return null;
 };

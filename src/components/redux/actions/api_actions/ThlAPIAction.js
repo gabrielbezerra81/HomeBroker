@@ -214,9 +214,12 @@ export const montarTabelaCombinacoes = (tabelaAPI) => {
       item.components[0].stock.strike - item.components[1].stock.strike
     ).toFixed(2);
     linha.estrutura = { ...item };
-    linha.codigos = "";
-    linha.montagem = "";
-    linha.desmontagem = "";
+    linha.codigos = {
+      opcao1: item.components[0].stock,
+      opcao2: item.components[1].stock,
+    };
+    linha.montagem = item.max;
+    linha.desmontagem = item.min;
     linha.vencimento = item.expiration;
     linha.prazo = item.prazo;
 

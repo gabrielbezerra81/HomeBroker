@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Spinner } from "react-bootstrap";
 import { Spin } from "antd";
 import { FiltrarTabela } from "components/forms/thl/tabelaCombinacoes/FiltroTabela";
 import { StateStorePrincipal } from "components/redux/StoreCreation";
 import TabelaCombinacoes from "components/forms/thl/tabelaCombinacoes/TabelaCombinacoes";
 import _ from "lodash";
+import { buscarNumeroArray } from "components/utils/FuncoesBusca";
 
 const alturaLinha = 46;
 const escolhasOrdem = ["", "asc", "desc"];
@@ -46,7 +47,7 @@ export default React.memo(() => {
       else setClasseMargemScroll("");
       if (state.ordenacao.key && state.ordenacao.valor)
         data = ordenarTabela(state, data);
-        
+
       setData(data);
     }, 500)
   );
@@ -153,18 +154,58 @@ export const calcularMargemBorda = () => {
 };
 
 const ordenarTabela = (state, tabela) => {
-  const { ordenacao } = state;
+  const { ordenacao, arrayCotacoes } = state;
   if (ordenacao.key) {
     const ordem = escolhasOrdem[ordenacao.valor];
     if (!ordem) {
       return FiltrarTabela(state);
     }
-    return ordenar(tabela, ordenacao.key, ordem);
-    // return _.orderBy(tabela, [ordenacao.key], ordem);
+    return [...ordenar(tabela, ordenacao.key, ordem, arrayCotacoes)];
   }
   return [];
 };
 
-const ordenar = (array, key, ordem) => {
-  return array;
+const ordenar = (array, key, ordem, arrayCotacoes) => {
+  return array.sort((a, b) => {
+    let item1, item2;
+    let valor1, valor2;
+    let attbr = key.split(" ");
+
+    if (ordem === "asc") {
+      item1 = a;
+      item2 = b;
+    } else {
+      item1 = b;
+      item2 = a;
+    }
+
+    if (attbr[1]) {
+      valor1 = item1[attbr[0]][attbr[1]].strike;
+      valor2 = item2[attbr[0]][attbr[1]].strike;
+    } else if (key === "acaoUlt") {
+      valor1 = buscarNumeroArray(
+        arrayCotacoes,
+        item1[key].acao,
+        "codigo",
+        "cotacao"
+      );
+      valor2 = buscarNumeroArray(
+        arrayCotacoes,
+        item2[key].acao,
+        "codigo",
+        "cotacao"
+      );
+    } else {
+      valor1 = item1[key];
+      valor2 = item2[key];
+    }
+
+    if (valor1 > valor2) {
+      return 1;
+    }
+    if (valor1 < valor2) {
+      return -1;
+    }
+    return 0;
+  });
 };

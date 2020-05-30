@@ -92,6 +92,10 @@
   .precoMontagem {
     display: inline-block;
   }
+
+  .iconeOrdenacao {
+    margin-left: 5px;
+  }
 }
 
 /* Container dos inputs de filtro */
@@ -170,12 +174,14 @@
   div:first-child {
     display: flex;
     justify-content: flex-end;
-    padding: 0 0px 0 10px;
+    flex: 1;
+    // padding: 0 0px 0 10px;
   }
   div:last-child {
     display: flex;
-    justify-content: flex-start;
-    margin-left: 0.4rem;
+    justify-content: center;
+    flex: 1;
+    margin-right: 1px;
   }
 }
 
@@ -190,12 +196,12 @@
   justify-content: center;
   margin-top: 72px;
 
-  > .divClicavel {
+  > .tituloColuna {
     width: 100%;
+  }
 
-    &:focus {
-      box-shadow: none;
-    }
+  .divClicavel:focus {
+    box-shadow: none;
   }
 
   .colunaDividida {

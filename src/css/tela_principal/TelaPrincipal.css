@@ -110,9 +110,12 @@
 }
 
 .divClicavel:focus {
-  outline: solid medium rgba(0, 83, 186, 0.3) !important;
+  outline: none;
+  /* outline: solid medium rgba(0, 83, 186, 0.3) !important; */
   transition-duration: 0.3s;
   transition-timing-function: linear;
+  box-shadow: 0 0 0px 2px rgba(0, 83, 186, 0.3);
+  border-radius: 2px;
 }
 
 .itemDivBarraLateral svg {

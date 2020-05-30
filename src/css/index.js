@@ -46,4 +46,6 @@ import "antd/es/popover/style/index.css";
 import "antd/es/button/style/index.css";
 import "antd/es/tooltip/style/index.css";
 import "antd/es/spin/style/index.css";
+import "antd/es/grid/style/index.css";
+
 import "react-perfect-scrollbar/dist/css/styles.css";
