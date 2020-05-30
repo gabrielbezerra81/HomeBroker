@@ -1,4 +1,5 @@
 import React from "react";
+import { MDBIcon } from "mdbreact";
 import BookTHL, { selecionarBooks } from "components/forms/thl/BookTHL";
 import imgModeloEU from "img/modeloEU.png";
 import ImgModeloUSA from "img/imgModeloUSA3.svg";
@@ -11,8 +12,11 @@ import {
   StateStorePrincipal,
   DispatchStorePrincipal,
 } from "components/redux/StoreCreation";
+import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
 
 export const ColunaHeader = ({ children, column }) => {
+  const dispatch = DispatchStorePrincipal();
+  const { ordenacao } = StateStorePrincipal("thl");
   let elementoColuna;
   let classNameColunaAcaoUlt = "";
   let tipoFiltro = "";
@@ -47,7 +51,18 @@ export const ColunaHeader = ({ children, column }) => {
       className={`th${classNameColunaAcaoUlt}`}
     >
       <div className="divLabelColuna">
-        {elementoColuna}
+        <div
+          tabIndex={0}
+          className="divClicavel"
+          onClick={() => {
+            const novaOrdenacao = { key, valor: ordenacao.valor + 1 };
+            if (novaOrdenacao.valor > 2) novaOrdenacao.valor = 0;  
+            dispatch(mudarVariavelTHLAction("ordenacao", novaOrdenacao));
+          }}
+        >
+          {elementoColuna}
+        </div>
+
         <div className="containerInputFiltro">
           <InputsFiltroTabela
             tipoFiltro={tipoFiltro}
@@ -221,117 +236,3 @@ const renderModelo = (modelo) => {
     </div>
   );
 };
-
-// const a = (
-//   <BootstrapTable
-//     data={tableData}
-//     keyField="id"
-//     tableContainerClass="tabelaCombinacoes"
-//     striped
-//     options={{ noDataText: "Nenhum resultado foi encontrado" }}
-//   >
-//     <TableHeaderColumn dataField="estrategia" width="90" filter={filterTexto}>
-//       <div className="divLabelColuna">Estratégia</div>
-//     </TableHeaderColumn>
-
-//     <TableHeaderColumn dataField="grupo" filter={filterTexto} width="75">
-//       <div className="divLabelColuna">Grupo</div>
-//     </TableHeaderColumn>
-//     <TableHeaderColumn
-//       width="85"
-//       dataField="acaoUlt"
-//       filterValue={(cell) => `${cell.acao}${cell.ult}`}
-//       filter={filterTexto}
-//       className="colunaAcaoUlt"
-//       dataFormat={(cell, row) => <ColunaAcaoUlt cell={cell} row={row} />}
-//     >
-// <div className="divLabelColuna">
-//   <div className="colunaDividida">
-//     <div>Acão</div>
-//     <div>Ult</div>
-//   </div>
-// </div>
-//     </TableHeaderColumn>
-//     <TableHeaderColumn
-//       dataField="spread"
-//       width="70"
-//       filterValue={(cell) => Number(cell.replace(",", "."))}
-//       filter={{
-//         type: "CustomFilter",
-//         getElement: (filterHandler, customParam) =>
-//           filtrarNumeros(filterHandler, customParam, "simples", scrollbarRef),
-//       }}
-//     >
-//       <div className="divLabelColuna">Spread</div>
-//     </TableHeaderColumn>
-//     <TableHeaderColumn
-//       dataField="codigos"
-//       width="220"
-//       dataFormat={(cell, row) => <ColunaCodigos cell={cell} row={row} />}
-//       filter={{
-//         type: "CustomFilter",
-//         getElement: (filterHandler, customParam) =>
-//           filtrarNumeros(
-//             filterHandler,
-//             customParam,
-//             "compostoArray",
-//             scrollbarRef
-//           ),
-//       }}
-//     >
-//       <div className="divLabelColuna">Códigos</div>
-//     </TableHeaderColumn>
-//     <TableHeaderColumn
-//       dataField="montagem"
-//       dataFormat={(cell, row) => <ColunaMontagem cell={cell} row={row} />}
-//       width="170"
-//       filterValue={(cell) => Number(cell.valor.replace(",", "."))}
-//       filter={{
-//         type: "CustomFilter",
-//         getElement: (filterHandler, customParam) =>
-//           filtrarNumeros(filterHandler, customParam, "simples", scrollbarRef),
-//       }}
-//       className="colunaMontagemDesmontagem"
-//     >
-//       <div className="divLabelColuna">Montagem</div>
-//     </TableHeaderColumn>
-//     <TableHeaderColumn
-//       dataField="desmontagem"
-//       dataFormat={(cell, row) => <ColunaMontagem cell={cell} row={row} />}
-//       width="170"
-//       filterValue={(cell) => Number(cell.valor.replace(",", "."))}
-//       filter={{
-//         type: "CustomFilter",
-//         getElement: (filterHandler, customParam) =>
-//           filtrarNumeros(filterHandler, customParam, "simples", scrollbarRef),
-//       }}
-//       className="colunaMontagemDesmontagem"
-//     >
-//       <div className="divLabelColuna">Desmontagem</div>
-//     </TableHeaderColumn>
-//     <TableHeaderColumn
-//       dataField="vencimento"
-//       width="95"
-//       filter={{
-//         type: "SelectFilter",
-//         options: options(combinacoes, "vencimento"),
-//         selectText: "",
-//         withoutEmptyOption: true,
-//       }}
-//     >
-//       <div className="divLabelColuna">Vencimento</div>
-//     </TableHeaderColumn>
-//     <TableHeaderColumn
-//       dataField="prazo"
-//       width="80"
-//       filter={{
-//         type: "SelectFilter",
-//         options: options(combinacoes, "prazo"),
-//         selectText: "",
-//         withoutEmptyOption: true,
-//       }}
-//     >
-//       <div className="divLabelColuna">Prazo</div>
-//     </TableHeaderColumn>
-//   </BootstrapTable>
-// );

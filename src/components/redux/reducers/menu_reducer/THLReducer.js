@@ -89,6 +89,10 @@ const INITIAL_STATE = {
   arrayCotacoesID: 0,
   eventSourceCotacoesTHL: null,
   setIntervalCotacoesTHL: null,
+  ordenacao: {
+    key: "",
+    valor: "",
+  },
 
   // const precos = [
   //   {
@@ -2743,7 +2747,6 @@ export default (state = INITIAL_STATE, action) => {
         nome === "opcoesStrike" ? mapTabelaVencimentos(valor) : valor;
       return { ...state, [nome]: valorFormatado };
     case MUDAR_VARIAVEIS_THL:
-      
       return { ...state, ...action.payload };
     default:
       return state;

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { forwardRef, useMemo, useState } from "react";
+import React, { forwardRef, useMemo } from "react";
 import { WindowTable } from "window-table";
 import {
   ColunaAcaoUlt,
@@ -83,7 +83,7 @@ const Thead = (props) => <div {...props} className="thead"></div>;
 const columns = [
   {
     key: "estrategia",
-    width: 90,
+    width: 95,
     title: "Estratégia",
     Component: ColunaTextoComum,
     HeaderCell: ColunaHeader,
@@ -97,14 +97,14 @@ const columns = [
   },
   {
     key: "acaoUlt",
-    width: 85,
+    width: 96,
     title: "Acão | Ult",
     Component: ColunaAcaoUlt,
     HeaderCell: ColunaHeader,
   },
   {
     key: "spread",
-    width: 70,
+    width: 75,
     title: "Spread",
     Component: ColunaTextoComum,
     HeaderCell: ColunaHeader,
@@ -118,14 +118,14 @@ const columns = [
   },
   {
     key: "montagem",
-    width: 170,
+    width: 160,
     title: "Montagem",
     Component: ColunaMontagem,
     HeaderCell: ColunaHeader,
   },
   {
     key: "desmontagem",
-    width: 170,
+    width: 160,
     title: "Desmontagem",
     Component: ColunaMontagem,
     HeaderCell: ColunaHeader,
@@ -139,7 +139,7 @@ const columns = [
   },
   {
     key: "prazo",
-    width: 60,
+    width: 70,
     title: "Prazo",
     Component: ColunaTextoComum,
     HeaderCell: ColunaHeader,

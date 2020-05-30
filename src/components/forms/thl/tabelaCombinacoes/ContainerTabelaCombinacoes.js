@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState, useMemo, useRef } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import { Spinner } from "react-bootstrap";
 import { Spin } from "antd";
 import { FiltrarTabela } from "components/forms/thl/tabelaCombinacoes/FiltroTabela";
@@ -8,6 +8,7 @@ import TabelaCombinacoes from "components/forms/thl/tabelaCombinacoes/TabelaComb
 import _ from "lodash";
 
 const alturaLinha = 46;
+const escolhasOrdem = ["", "asc", "desc"];
 
 export default React.memo(() => {
   const reduxState = StateStorePrincipal("thl");
@@ -25,15 +26,16 @@ export default React.memo(() => {
     idCelulaSelecionada,
     codigoCelulaSelecionada,
     carregandoCombinacoes,
+    ordenacao,
   } = reduxState;
 
   const [alturaContainer, setAlturaContainer] = useState(496);
   const [classeMargemScroll, setClasseMargemScroll] = useState("");
-  const [dataTabela, setData] = useState([]);
+  const [dataTabela, setData] = useState(combinacoesTabela);
 
   const throttle = useRef(
     _.debounce((state) => {
-      const data = FiltrarTabela(state);
+      let data = FiltrarTabela(state);
       const tamanhoTabela = data.length;
 
       let alturaCalculada = 102 + alturaLinha * tamanhoTabela;
@@ -42,7 +44,9 @@ export default React.memo(() => {
 
       if (tamanhoTabela < 10) setClasseMargemScroll("margemScrollbar ");
       else setClasseMargemScroll("");
-
+      if (state.ordenacao.key && state.ordenacao.valor)
+        data = ordenarTabela(state, data);
+        
       setData(data);
     }, 500)
   );
@@ -60,9 +64,16 @@ export default React.memo(() => {
     desmontagem,
     vencimento,
     prazo,
-    idCelulaSelecionada,
-    codigoCelulaSelecionada,
   ]);
+
+  useEffect(() => {
+    setData([...dataTabela]);
+  }, [idCelulaSelecionada, codigoCelulaSelecionada]);
+
+  useEffect(() => {
+    const data = ordenarTabela(reduxState, dataTabela);
+    if (data.length) setData(data);
+  }, [ordenacao]);
 
   //Bloqueia o scroll do container THL quando for rolar a tabela
   const bloquearScroll = alturaContainer === 102;
@@ -139,4 +150,21 @@ export const calcularMargemBorda = () => {
 
     container.style.setProperty("--some-width", `calc(100% - ${right}px)`);
   }
+};
+
+const ordenarTabela = (state, tabela) => {
+  const { ordenacao } = state;
+  if (ordenacao.key) {
+    const ordem = escolhasOrdem[ordenacao.valor];
+    if (!ordem) {
+      return FiltrarTabela(state);
+    }
+    return ordenar(tabela, ordenacao.key, ordem);
+    // return _.orderBy(tabela, [ordenacao.key], ordem);
+  }
+  return [];
+};
+
+const ordenar = (array, key, ordem) => {
+  return array;
 };

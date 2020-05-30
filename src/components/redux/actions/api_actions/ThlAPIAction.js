@@ -167,6 +167,8 @@ export const pesquisarCombinacoesTHLAPIAction = (actionProps) => {
         booksSelecionados: [],
         pesquisandoAtivo: true,
         carregandoCombinacoes: true,
+        codigoCelulaSelecionada: "",
+        idCelulaSelecionada: null,
       })
     );
     const combinacoes = await pesquisarCombinacoesTHLAPI(ativoPesquisa);
