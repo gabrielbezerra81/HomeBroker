@@ -232,7 +232,9 @@ const BotaoMenuTopo = (props) => {
       overlayClassName="toolTipMenuTopoTHL"
       title={texto}
       visible={visible}
-      onVisibleChange={(visible) => setVisible(visible && condicaoVisibilidade)}
+      onVisibleChange={(visible) => {
+        setVisible(visible && !!condicaoVisibilidade);
+      }}
     >
       <Button
         className={condicaoVisibilidade ? "botaoDesabilitado" : ""}
