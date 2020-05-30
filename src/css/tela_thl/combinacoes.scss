@@ -190,6 +190,14 @@
   justify-content: center;
   margin-top: 72px;
 
+  > .divClicavel {
+    width: 100%;
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
   .colunaDividida {
     width: 100%;
   }
@@ -358,6 +366,14 @@
 .multiSelectVencimentoOption {
   font-size: 0.73rem !important;
   padding-right: 0 !important;
+}
+
+.ant-select-dropdown.ant-select-dropdown--multiple {
+  .ant-select-dropdown-menu-item-selected.multiSelectVencimentoOption {
+    .ant-select-selected-icon {
+      color: transparent !important;
+    }
+  }
 }
 
 .bookCombinacoes {
