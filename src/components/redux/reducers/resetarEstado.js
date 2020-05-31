@@ -1,33 +1,42 @@
 import _ from "lodash";
+import {
+  clonarMultileg,
+  clonarArrayCotacoes,
+} from "components/redux/actions/menu_actions/MultilegActions";
 
 export const resetarEstadoRedux = (
   state,
   estadoInicial,
   omissoes = [],
-  condicao = true,
   reducer,
-  limparTudo = true
+  limparTudo
 ) => {
-  if (!condicao) return state;
-
   let mutableProps = {};
+  let pick = {};
 
   if (limparTudo)
     switch (reducer) {
       case "multileg":
-        mutableProps = { ...multileg, cotacoesMultileg: [] }; // cotacoes está sendo mutado
+        mutableProps = {
+          multileg: clonarMultileg(multileg.multileg),
+          cotacoesMultileg: clonarArrayCotacoes(multileg.cotacoesMultileg), // cotacoes está sendo mutado
+        };
         break;
       case "ordensExec":
-        mutableProps = { tabelaOrdensExecucao: [] };
+        mutableProps = {
+          tabelaOrdensExecucao: [],
+          eventSourceOrdensExec: null,
+        };
         break;
       default:
         break;
     }
-  if (condicao && !omissoes.length)
-    return { ...estadoInicial, ...mutableProps };
-  if (condicao && omissoes.length) {
+  else pick = { ..._.pick(state, [...omissoes]) };
+
+  if (!omissoes.length) return { ...estadoInicial, ...mutableProps };
+  if (omissoes.length) {
     return {
-      ..._.pick(state, [...omissoes]),
+      ...pick,
       ..._.omit(estadoInicial, [...omissoes]),
       ...mutableProps,
     };
@@ -53,33 +62,5 @@ const multileg = {
       tabelaMultileg: [],
     },
   ],
+  cotacoesMultileg: [],
 };
-
-/*
-  const initial_state = {};
-  Object.keys(state).forEach((key) => {
-    let valorVazio = null;
-    const valorAtual = state[key];
-
-    if (Array.isArray(valorAtual)) valorVazio = [];
-    else {
-      switch (typeof valorAtual) {
-        case "number":
-          valorVazio = 0;
-          break;
-        case "string":
-          valorVazio = "";
-          break;
-        case "boolean":
-          valorVazio = false;
-          break;
-        case "object":
-          valorVazio = null;
-          break;
-        default:
-          break;
-      }
-    }
-    initial_state[key] = valorVazio;
-  });
-*/

@@ -557,7 +557,7 @@ const encontrarCodigosRepetidos = (array) => {
   }, []);
 };
 
-const clonarMultileg = (multileg) => {
+export const clonarMultileg = (multileg) => {
   return multileg.map((aba) => {
     return {
       ...aba,
@@ -568,6 +568,6 @@ const clonarMultileg = (multileg) => {
   });
 };
 
-const clonarArrayCotacoes = (array) => {
+export const clonarArrayCotacoes = (array) => {
   return array.map((cotacao) => ({ ...cotacao }));
 };

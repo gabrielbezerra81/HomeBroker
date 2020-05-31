@@ -86,3 +86,5 @@ export const ATUALIZAR_EVENT_SOURCE_BOLETAS = "atualizar_event_source_boletas";
 
 //TelaLogin
 export const MUDAR_DADOS_LOGIN = "mudar_dados_login";
+
+export const actionType = { RESET_REDUX_STATE: "RESET_REDUX_STATE" };

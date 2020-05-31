@@ -3,6 +3,7 @@ import { LISTAR_ORDENS_EXECUCAO } from "constants/ApiActionTypes";
 import {
   ABRIR_FECHAR_ITEM_BARRA_LATERAL,
   LOGAR_DESLOGAR_USUARIO,
+  actionType,
 } from "constants/ActionTypes";
 import { resetarEstadoRedux } from "components/redux/reducers/resetarEstado";
 
@@ -23,31 +24,43 @@ const INITIAL_STATE = {
   filtrarOrdensAberto: false,
 };
 
-export default (state = INITIAL_STATE, action) => {
-  switch (action.type) {
+export default (state = INITIAL_STATE, { type, payload }) => {
+  switch (type) {
     case MUDAR_VARIAVEL_ORDENS_EXEC:
-      return { ...state, [action.payload.nome]: action.payload.valor };
+      return { ...state, [payload.nome]: payload.valor };
     case LISTAR_ORDENS_EXECUCAO:
-      return { ...state, tabelaOrdensExecucao: action.payload };
-    case ABRIR_FECHAR_ITEM_BARRA_LATERAL:
-      return action.payload.name === "ordensExecucaoAberto"
-        ? resetarEstadoRedux(
+      return { ...state, tabelaOrdensExecucao: payload };
+    case actionType.RESET_REDUX_STATE:
+      if (["ordensExecucaoAberto", "deslogar"].includes(payload.name))
+        return {
+          ...resetarEstadoRedux(
             state,
             INITIAL_STATE,
             ["tabelaOrdensExecucao", "eventSourceOrdensExec"],
-            !action.payload.valor,
             "ordensExec",
-            false
-          )
-        : state;
-    case LOGAR_DESLOGAR_USUARIO:
-      return resetarEstadoRedux(
-        state,
-        INITIAL_STATE,
-        [],
-        !action.payload.logado,
-        "ordensExec"
-      );
+            payload.limparReducer
+          ),
+        };
+      else return state;
+    // case ABRIR_FECHAR_ITEM_BARRA_LATERAL:
+    //   return action.payload.name === "ordensExecucaoAberto"
+    //     ? resetarEstadoRedux(
+    //         state,
+    //         INITIAL_STATE,
+    //         ["tabelaOrdensExecucao", "eventSourceOrdensExec"],
+    //         !action.payload.valor,
+    //         "ordensExec",
+    //         false
+    //       )
+    //     : state;
+    // case LOGAR_DESLOGAR_USUARIO:
+    //   return resetarEstadoRedux(
+    //     state,
+    //     INITIAL_STATE,
+    //     [],
+    //     !action.payload.logado,
+    //     "ordensExec"
+    //   );
     default:
       return state;
   }

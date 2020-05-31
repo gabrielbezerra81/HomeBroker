@@ -3,6 +3,7 @@ import {
   LOGAR_DESLOGAR_USUARIO,
   ABRIR_FECHAR_ITEM_BARRA_LATERAL,
   MUDAR_DADOS_LOGIN,
+  actionType,
 } from "constants/ActionTypes";
 import { resetarEstadoRedux } from "components/redux/reducers/resetarEstado";
 
@@ -30,21 +31,38 @@ const INITIAL_STATE = {
   contaSelecionada: {},
 };
 
-export default (state = INITIAL_STATE, action) => {
-  switch (action.type) {
+export default (state = INITIAL_STATE, { type, payload }) => {
+  switch (type) {
     case ABRIR_FECHAR_MENU_LATERAL:
-      return { ...state, menuLateralAberto: action.payload };
+      return { ...state, menuLateralAberto: payload };
     case LOGAR_DESLOGAR_USUARIO:
       return {
-        ...resetarEstadoRedux(state, INITIAL_STATE, [], !action.payload.logado),
-        ...action.payload,
-        inputSenha: "",
-        // ...resetarEstado(!action.payload.logado),// inverter quando usar nova função
+        // ...resetarEstadoRedux(state, INITIAL_STATE, [], !payload.logado),
+        ...state,
+        ...payload,
       };
     case ABRIR_FECHAR_ITEM_BARRA_LATERAL:
-      return { ...state, [action.payload.name]: action.payload.valor };
+      return { ...state, [payload.name]: payload.valor };
     case MUDAR_DADOS_LOGIN:
-      return { ...state, [action.payload.nomeVariavel]: action.payload.valor };
+      return { ...state, [payload.nomeVariavel]: payload.valor };
+    case actionType.RESET_REDUX_STATE:
+      if (["deslogar"].includes(payload.name))
+        return {
+          ...resetarEstadoRedux(
+            state,
+            INITIAL_STATE,
+            [
+              "ordensExecucaoAberto",
+              "relatorioDetalhadoAberto",
+              "listaCompletaAberta",
+              "multilegAberto",
+              "thlAberta",
+            ],
+            "telaprincipal",
+            false
+          ),
+        };
+      else return state;
     default:
       return state;
   }

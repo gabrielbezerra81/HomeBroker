@@ -1,6 +1,7 @@
 import {
   ABRIR_FECHAR_ITEM_BARRA_LATERAL,
   LOGAR_DESLOGAR_USUARIO,
+  actionType,
 } from "constants/ActionTypes";
 import {
   MUDAR_TIPO,
@@ -50,26 +51,18 @@ export default (state = INITIAL_STATE, { type, payload }) => {
       return { ...state, [payload.nome]: payload.valor };
     case PESQUISAR_ATIVO_MULTILEG_API:
       return { ...state, multileg: payload };
-
-    case ABRIR_FECHAR_ITEM_BARRA_LATERAL:
-      if (payload.name === "multilegAberto")
-        return resetarEstadoRedux(
-          state,
-          INITIAL_STATE,
-          ["multileg", "cotacoesMultileg"],
-          !payload.valor,
-          "multileg"
-        );
+    case actionType.RESET_REDUX_STATE:
+      if (["multilegAberto", "deslogar"].includes(payload.name))
+        return {
+          ...resetarEstadoRedux(
+            state,
+            INITIAL_STATE,
+            ["multileg", "cotacoesMultileg"],
+            "multileg",
+            payload.limparReducer
+          ),
+        };
       else return state;
-
-    case LOGAR_DESLOGAR_USUARIO:
-      return resetarEstadoRedux(
-        state,
-        INITIAL_STATE,
-        ["multileg", "cotacoesMultileg"],
-        !payload.logado,
-        "multileg"
-      );
     default:
       return state;
   }

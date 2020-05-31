@@ -3,6 +3,7 @@ import {
   LOGAR_DESLOGAR_USUARIO,
   ABRIR_FECHAR_ITEM_BARRA_LATERAL,
   MUDAR_DADOS_LOGIN,
+  actionType,
 } from "constants/ActionTypes";
 import { travarDestravarClique } from "components/api/API";
 import {
@@ -13,7 +14,8 @@ import {
 } from "components/api/LoginAPI";
 import { navigate } from "@reach/router";
 import { persistor } from "components/redux/StoreCreation";
-import { mudarVariavelOrdensExecAction } from "components/redux/actions/menu_actions/OrdensExecActions";
+
+const waitDispatch = 1000;
 
 export const abrirFecharMenuLateralAction = (event, menuLateralAberto) => {
   return (dispatch) => {
@@ -93,26 +95,22 @@ export const deslogarUsuarioAction = (event, props) => {
   return (dispatch) => {
     persistor
       .purge()
-      .then(async () => {
+      .then(() => {
         Object.keys(props).forEach((key) => {
           if (props[key]) {
             if (key.includes("eventSource")) props[key].close();
             else if (key.includes("setInterval")) clearInterval(props[key]);
           }
         });
-
-        await dispatch({
+        dispatch({
           type: LOGAR_DESLOGAR_USUARIO,
           payload: {
             usuarioConectado: "",
             logado: false,
           },
         });
-        await dispatch({
-          type: MUDAR_DADOS_LOGIN,
-          payload: { nomeVariavel: "token", valor: null },
-        });
-        //TODO: resetando apenas Multileg e Ordens Exec
+
+        resetarDadosReducerAction("deslogar", dispatch, false);
 
         navigate("/");
       })
@@ -130,14 +128,17 @@ export const abrirItemBarraLateralAction = (props, nameVariavelReducer) => {
     }
   });
 
+  const visibilidade = !props[nameVariavelReducer];
+
   return (dispatch) => {
     dispatch({
       type: ABRIR_FECHAR_ITEM_BARRA_LATERAL,
       payload: {
         name: nameVariavelReducer,
-        valor: !props[nameVariavelReducer],
+        valor: visibilidade,
       },
     });
+    resetarDadosReducerAction(nameVariavelReducer, dispatch, visibilidade);
   };
 };
 
@@ -166,4 +167,18 @@ export const mudarDadosLoginAction = (nomeVariavel, valor) => {
       payload: { nomeVariavel: nomeVariavel, valor: valor },
     });
   };
+};
+
+const resetarDadosReducerAction = (nome, dispatch, visibilidadeMenu) => {
+  let limparReducer = true;
+  if (["ordensExecucaoAberto", "listaCompletaAberta"].includes(nome))
+    limparReducer = false;
+
+  if (!visibilidadeMenu)
+    setTimeout(() => {
+      dispatch({
+        type: actionType.RESET_REDUX_STATE,
+        payload: { name: nome, limparReducer },
+      });
+    }, waitDispatch);
 };
