@@ -26,53 +26,47 @@ export const abrirFecharMenuLateralAction = (event, menuLateralAberto) => {
 export const logarUsuarioAction = (username, password) => {
   return async (dispatch) => {
     travarDestravarClique("travar", "botaoLogar");
-    if (password === "passar")
-      dispatch({
-        type: LOGAR_DESLOGAR_USUARIO,
-        payload: { usuarioConectado: "Gabriel Alencar", logado: true },
-      });
-    else {
-      const token = await realizarLoginAPI(username, password);
-      //const auth = await autenticacaoTokenAPI(token);
-      let infoUsuario;
-      let conta;
-      if (token) {
-        infoUsuario = await buscarInformacoesUsuarioAPI(token);
-        conta = await listarContasAPI(token);
-      }
 
-      if (token && infoUsuario) {
-        await dispatch({
-          type: MUDAR_DADOS_LOGIN,
-          payload: { nomeVariavel: "token", valor: token },
-        });
-        await dispatch({
-          type: LOGAR_DESLOGAR_USUARIO,
-          payload: {
-            usuarioConectado: infoUsuario.name,
-            logado: true,
-          },
-        });
-        navigate("/home");
-      }
-      if (conta) {
-        await dispatch({
-          type: MUDAR_DADOS_LOGIN,
-          payload: {
-            nomeVariavel: "conta",
-            valor: conta,
-          },
-        });
-        await dispatch({
-          type: MUDAR_DADOS_LOGIN,
-          payload: {
-            nomeVariavel: "contaSelecionada",
-            valor: conta[0],
-          },
-        });
-      }
-      travarDestravarClique("destravar", "botaoLogar");
+    const token = await realizarLoginAPI(username, password);
+    //const auth = await autenticacaoTokenAPI(token);
+    let infoUsuario;
+    let conta;
+    if (token) {
+      infoUsuario = await buscarInformacoesUsuarioAPI(token);
+      conta = await listarContasAPI(token);
     }
+
+    if (token && infoUsuario) {
+      await dispatch({
+        type: MUDAR_DADOS_LOGIN,
+        payload: { nomeVariavel: "token", valor: token },
+      });
+      await dispatch({
+        type: LOGAR_DESLOGAR_USUARIO,
+        payload: {
+          usuarioConectado: infoUsuario.name,
+          logado: true,
+        },
+      });
+      navigate("/home");
+    }
+    if (conta) {
+      await dispatch({
+        type: MUDAR_DADOS_LOGIN,
+        payload: {
+          nomeVariavel: "conta",
+          valor: conta,
+        },
+      });
+      await dispatch({
+        type: MUDAR_DADOS_LOGIN,
+        payload: {
+          nomeVariavel: "contaSelecionada",
+          valor: conta[0],
+        },
+      });
+    }
+    travarDestravarClique("destravar", "botaoLogar");
   };
 };
 
@@ -112,19 +106,13 @@ export const deslogarUsuarioAction = (event, props) => {
           payload: {
             usuarioConectado: "",
             logado: false,
-            conta: [],
-            contaSelecionada: "",
           },
         });
         await dispatch({
           type: MUDAR_DADOS_LOGIN,
           payload: { nomeVariavel: "token", valor: null },
         });
-        // TODO: talvez precise resetar os estados
-        await dispatch(mudarVariavelOrdensExecAction("ordemAtual", null));
-        await dispatch(
-          mudarVariavelOrdensExecAction("opcoesOrdemAberto", false)
-        );
+        //TODO: resetando apenas Multileg e Ordens Exec
 
         navigate("/");
       })

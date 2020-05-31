@@ -4,6 +4,7 @@ import {
   ABRIR_FECHAR_ITEM_BARRA_LATERAL,
   MUDAR_DADOS_LOGIN,
 } from "constants/ActionTypes";
+import { resetarEstadoRedux } from "components/redux/reducers/resetarEstado";
 
 const INITIAL_STATE = {
   usuarioConectado: "",
@@ -35,11 +36,10 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, menuLateralAberto: action.payload };
     case LOGAR_DESLOGAR_USUARIO:
       return {
-        ...state,
-        usuarioConectado: action.payload.usuarioConectado,
-        logado: action.payload.logado,
+        ...resetarEstadoRedux(state, INITIAL_STATE, [], !action.payload.logado),
+        ...action.payload,
         inputSenha: "",
-        ...resetarEstado(action.payload.logado),
+        // ...resetarEstado(!action.payload.logado),// inverter quando usar nova função
       };
     case ABRIR_FECHAR_ITEM_BARRA_LATERAL:
       return { ...state, [action.payload.name]: action.payload.valor };
@@ -48,9 +48,4 @@ export default (state = INITIAL_STATE, action) => {
     default:
       return state;
   }
-};
-
-const resetarEstado = (logado) => {
-  if (!logado) return INITIAL_STATE;
-  return {};
 };

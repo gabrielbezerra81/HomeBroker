@@ -41,8 +41,12 @@ export const selecionarAdicionarAbaAction = (key, props) => {
   return (dispatch) => {
     if (key === "adicionar") {
       let multileg = adicionarAba(props);
-      dispatch(modificarVariavelMultilegAction("multileg", multileg.abasMultileg));
-      dispatch(modificarVariavelMultilegAction("abaSelecionada", multileg.abaAtual));
+      dispatch(
+        modificarVariavelMultilegAction("multileg", multileg.abasMultileg)
+      );
+      dispatch(
+        modificarVariavelMultilegAction("abaSelecionada", multileg.abaAtual)
+      );
     } else {
       dispatch(modificarVariavelMultilegAction("abaSelecionada", key));
     }
@@ -50,7 +54,7 @@ export const selecionarAdicionarAbaAction = (key, props) => {
 };
 
 export const adicionarAba = (props) => {
-  let abasMultileg = [...props.multileg];
+  let abasMultileg = clonarMultileg(props.multileg);
 
   const novaAba = cloneDeep(aba);
   novaAba.nomeAba = "Ordem " + (abasMultileg.length + 1);
@@ -65,7 +69,7 @@ export const adicionarAba = (props) => {
 
 export const excluirAbaMultilegAction = (props, indiceAba) => {
   return (dispatch) => {
-    let abasMultileg = [...props.multileg];
+    let abasMultileg = clonarMultileg(props.multileg);
 
     if (indiceAba > 0) {
       const key = "tab" + (indiceAba - 1);
@@ -92,7 +96,10 @@ export const modificarAtributoAbaAction = (
     dispatch(modificarVariavelMultilegAction("multileg", dados.abasMultileg));
     if (dados.cotacoesMultileg)
       dispatch(
-        modificarVariavelMultilegAction("cotacoesMultileg", dados.cotacoesMultileg)
+        modificarVariavelMultilegAction(
+          "cotacoesMultileg",
+          dados.cotacoesMultileg
+        )
       );
   };
 };
@@ -104,7 +111,7 @@ export const modificarAba = async (
   valor,
   props = null
 ) => {
-  let abasMultileg = [...multileg];
+  let abasMultileg = clonarMultileg(multileg);
   let cotacoesMultileg;
 
   if (atributo === "limpar") {
@@ -116,7 +123,8 @@ export const modificarAba = async (
     abasMultileg[indice][atributo] = valor;
 
     if (atributo === "vencimentoSelecionado") {
-      cotacoesMultileg = [...props.cotacoesMultileg];
+      // TODO: possível side effect
+      cotacoesMultileg = clonarArrayCotacoes(props.cotacoesMultileg);
       const codigo = multileg[indice].ativoAtual;
       multileg[indice].ativo = codigo;
 
@@ -153,9 +161,9 @@ export const modificarAtributoTabelaAbaAction = (
 ) => {
   return async (dispatch) => {
     travarDestravarClique("travar", "multileg");
-    let abasMultileg = [...props.multileg];
+    let abasMultileg = clonarMultileg(props.multileg);
     let linhaTabela = abasMultileg[indiceGeral].tabelaMultileg[indiceLinha];
-    let cotacoesMultileg = props.cotacoesMultileg;
+    let cotacoesMultileg = clonarArrayCotacoes(props.cotacoesMultileg)
 
     const codigoAnterior = linhaTabela.codigoSelecionado;
 
@@ -201,10 +209,12 @@ export const modificarAtributoTabelaAbaAction = (
 
     if (codigoAnterior !== linhaTabela.codigoSelecionado) {
       //Se o código mudar, deve ser verificado se o novo código já está presente nos books
-      cotacoesMultileg = [...props.cotacoesMultileg];
+      cotacoesMultileg = clonarArrayCotacoes(props.cotacoesMultileg);
 
       adicionaCotacoesMultileg(cotacoesMultileg, linhaTabela.codigoSelecionado);
-      dispatch(modificarVariavelMultilegAction("cotacoesMultileg", cotacoesMultileg));
+      dispatch(
+        modificarVariavelMultilegAction("cotacoesMultileg", cotacoesMultileg)
+      );
       atualizarCotacaoAction(dispatch, props, cotacoesMultileg);
     }
     const aba = abasMultileg[indiceGeral];
@@ -221,7 +231,7 @@ export const modificarAtributoTabelaAbaAction = (
 
 export const excluirOfertaTabelaAction = (props, indiceAba, indiceLinha) => {
   return (dispatch) => {
-    let abasMultileg = [...props.multileg];
+    let abasMultileg = clonarMultileg(props.multileg);
     abasMultileg[indiceAba].tabelaMultileg.splice(indiceLinha, 1);
 
     dispatch(modificarVariavelMultilegAction("multileg", abasMultileg));
@@ -243,7 +253,10 @@ export const adicionarOfertaTabelaAction = (props, tipoOferta) => {
     atualizarCotacaoAction(dispatch, props, dados.cotacoesMultileg);
     dispatch(modificarVariavelMultilegAction("multileg", dados.abasMultileg));
     dispatch(
-      modificarVariavelMultilegAction("cotacoesMultileg", dados.cotacoesMultileg)
+      modificarVariavelMultilegAction(
+        "cotacoesMultileg",
+        dados.cotacoesMultileg
+      )
     );
 
     travarDestravarClique("destravar", "multileg");
@@ -256,8 +269,8 @@ export const adicionarOferta = async (
   indice,
   cotacoesMultileg
 ) => {
-  let abasMultileg = [...multileg];
-  cotacoesMultileg = [...cotacoesMultileg];
+  let abasMultileg = clonarMultileg(multileg);
+  cotacoesMultileg = clonarArrayCotacoes(cotacoesMultileg);
 
   const indiceAba = indice;
   let novaOferta = cloneDeep(oferta);
@@ -542,4 +555,19 @@ const encontrarCodigosRepetidos = (array) => {
     if (arr.indexOf(el) !== i && acc.indexOf(el) < 0) acc.push(el);
     return acc;
   }, []);
+};
+
+const clonarMultileg = (multileg) => {
+  return multileg.map((aba) => {
+    return {
+      ...aba,
+      opcoes: aba.opcoes.map((opcao) => ({ ...opcao })),
+      vencimento: [...aba.vencimento],
+      tabelaMultileg: aba.tabelaMultileg.map((oferta) => ({ ...oferta })),
+    };
+  });
+};
+
+const clonarArrayCotacoes = (array) => {
+  return array.map((cotacao) => ({ ...cotacao }));
 };

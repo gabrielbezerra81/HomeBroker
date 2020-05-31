@@ -7,7 +7,6 @@ export const ATUALIZAR_SOURCE_EVENT_BOOK_OFERTAS = "atualizar_source_event_book_
 
 //MULTILEG
 export const PESQUISAR_ATIVO_MULTILEG_API = "pesquisar_ativo_multileg_api";
-export const ATUALIZAR_SOURCE_EVENT_MULTILEG = "atualizar_source_event_multileg"
 
 //ORDENS EM EXECUÇÃO
 export const LISTAR_ORDENS_EXECUCAO = "listar_ordens_execucao";

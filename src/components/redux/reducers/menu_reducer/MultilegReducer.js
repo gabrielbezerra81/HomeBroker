@@ -1,12 +1,13 @@
-import { ABRIR_FECHAR_ITEM_BARRA_LATERAL } from "constants/ActionTypes";
+import {
+  ABRIR_FECHAR_ITEM_BARRA_LATERAL,
+  LOGAR_DESLOGAR_USUARIO,
+} from "constants/ActionTypes";
 import {
   MUDAR_TIPO,
   MODIFICAR_VARIAVEL_MULTILEG,
 } from "constants/MenuActionTypes";
-import {
-  PESQUISAR_ATIVO_MULTILEG_API,
-  ATUALIZAR_SOURCE_EVENT_MULTILEG,
-} from "constants/ApiActionTypes";
+import { PESQUISAR_ATIVO_MULTILEG_API } from "constants/ApiActionTypes";
+import { resetarEstadoRedux } from "components/redux/reducers/resetarEstado";
 
 const INITIAL_STATE = {
   configComplementarAberto: false,
@@ -41,20 +42,34 @@ const INITIAL_STATE = {
   cotacoesMultilegID: 0,
 };
 
-export default (state = INITIAL_STATE, action) => {
-  switch (action.type) {
+export default (state = INITIAL_STATE, { type, payload }) => {
+  switch (type) {
     case MUDAR_TIPO:
-      return { ...state, tipo: action.payload };
+      return { ...state, tipo: payload };
     case MODIFICAR_VARIAVEL_MULTILEG:
-      return { ...state, [action.payload.nome]: action.payload.valor };
+      return { ...state, [payload.nome]: payload.valor };
     case PESQUISAR_ATIVO_MULTILEG_API:
-      return { ...state, multileg: action.payload };
-    case ATUALIZAR_SOURCE_EVENT_MULTILEG:
-      return { ...state, [action.nomeVariavel]: action.payload };
+      return { ...state, multileg: payload };
+
     case ABRIR_FECHAR_ITEM_BARRA_LATERAL:
-      return action.payload.name === "multilegAberto"
-        ? { ...INITIAL_STATE }
-        : state;
+      if (payload.name === "multilegAberto")
+        return resetarEstadoRedux(
+          state,
+          INITIAL_STATE,
+          ["multileg", "cotacoesMultileg"],
+          !payload.valor,
+          "multileg"
+        );
+      else return state;
+
+    case LOGAR_DESLOGAR_USUARIO:
+      return resetarEstadoRedux(
+        state,
+        INITIAL_STATE,
+        ["multileg", "cotacoesMultileg"],
+        !payload.logado,
+        "multileg"
+      );
     default:
       return state;
   }
