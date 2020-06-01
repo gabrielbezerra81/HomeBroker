@@ -203,20 +203,21 @@ export const abrirOrdensBoletaAction = (props, event, acao) => {
   };
 };
 
-export const cancelarOrdemExecAction = (id) => {
+export const cancelarOrdemExecAction = ({ id, token }) => {
   return (dispatch) => {
-    cancelarOrdemExecAPI(id);
+    cancelarOrdemExecAPI(id, token);
   };
 };
 
-export const finalizarAMercadoAction = (id) => {
+export const finalizarAMercadoAction = ({ id, token }) => {
   return (dispatch) => {
-    finalizarAMercadoAPI(id);
+    finalizarAMercadoAPI(id, token);
   };
 };
 
-export const aumentarQtdePrecoAction = (ordemAtual, valorSomar, modo) => {
+export const aumentarQtdePrecoAction = (actionProps) => {
   return (dispatch) => {
+    const { ordemAtual, valorSomar, modo, token } = actionProps;
     const { id } = ordemAtual;
     const ofertas = [...ordemAtual.offers];
     const arrayQtde = ofertas.map((oferta) => oferta.qtdeOferta);
@@ -228,7 +229,7 @@ export const aumentarQtdePrecoAction = (ordemAtual, valorSomar, modo) => {
         const unidade = oferta.qtdeOferta / mdc;
         acrescimo += valorSomar * unidade;
       });
-      incrementarQtdeOrdemExecAPI(id, acrescimo);
+      incrementarQtdeOrdemExecAPI(id, acrescimo, token);
     } //
     else if (modo === "preco") {
       let precoTotal = 0;
@@ -237,7 +238,7 @@ export const aumentarQtdePrecoAction = (ordemAtual, valorSomar, modo) => {
         precoTotal += oferta.precoEnvio * unidade;
       });
       precoTotal += valorSomar;
-      incrementarPrecoOrdemExecAPI(id, precoTotal);
+      incrementarPrecoOrdemExecAPI(id, precoTotal, token);
     }
   };
 };

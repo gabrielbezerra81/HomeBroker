@@ -298,9 +298,12 @@ export const criarAlertaOperacaoAPI = (json) => {
     });
 };
 
-export const cancelarOrdemExecAPI = (id) => {
+export const cancelarOrdemExecAPI = (id, token) => {
   return request
-    .get(`${url_base}${url_cancelarOrdemExec_id}${id}`)
+    .put(`${url_base}${url_cancelarOrdemExec_id}${id}`)
+    .set({
+      Authorization: `${token.tokenType} ${token.accessToken}`,
+    })
     .timeout(timeout)
     .then(() => {
       alert(sucesso_cancelar_ordem);
@@ -310,9 +313,12 @@ export const cancelarOrdemExecAPI = (id) => {
     });
 };
 
-export const finalizarAMercadoAPI = (id) => {
+export const finalizarAMercadoAPI = (id, token) => {
   return request
-    .get(`${url_base}${url_finalizarAMercado_id}${id}`)
+    .put(`${url_base}${url_finalizarAMercado_id}${id}`)
+    .set({
+      Authorization: `${token.tokenType} ${token.accessToken}`,
+    })
     .timeout(timeout)
     .then(() => {
       alert(sucesso_finalizar_a_mercado);
@@ -322,9 +328,9 @@ export const finalizarAMercadoAPI = (id) => {
     });
 };
 
-export const incrementarQtdeOrdemExecAPI = (id, qtde) => {
+export const incrementarQtdeOrdemExecAPI = (id, qtde, token) => {
   return request
-    .get(`${url_base}${url_aumentarQtde_id_qtde}${id}/${qtde}`)
+    .put(`${url_base}${url_aumentarQtde_id_qtde}${id}/${qtde}`)
     .timeout(timeout)
     .then(() => {
       alert(sucesso_modificar_ordemExec);
@@ -334,9 +340,12 @@ export const incrementarQtdeOrdemExecAPI = (id, qtde) => {
     });
 };
 
-export const incrementarPrecoOrdemExecAPI = (id, preco) => {
+export const incrementarPrecoOrdemExecAPI = (id, preco, token) => {
   return request
-    .get(`${url_base}${url_aumentarPreco_id_valor}${id}/${preco}`)
+    .put(`${url_base}${url_aumentarPreco_id_valor}${id}/${preco}`)
+    .set({
+      Authorization: `${token.tokenType} ${token.accessToken}`,
+    })
     .timeout(timeout)
     .then(() => {
       alert(sucesso_modificar_ordemExec);

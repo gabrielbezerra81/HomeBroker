@@ -5,7 +5,7 @@ import {
   LOGAR_DESLOGAR_USUARIO,
   actionType,
 } from "constants/ActionTypes";
-import { resetarEstadoRedux } from "components/redux/reducers/resetarEstado";
+import { resetarEstadoRedux } from "components/redux/reducers/resetarEstadoReducer";
 
 const INITIAL_STATE = {
   ativoFiltrarOrdens: "",

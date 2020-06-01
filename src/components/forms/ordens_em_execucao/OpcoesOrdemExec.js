@@ -47,6 +47,9 @@ class OpcoesOrdemExec extends React.Component {
 
   render() {
     const { props } = this;
+
+    const actionProps = { idOrdem: props.ordemAtual.id, token: props.token };
+
     return (
       <div
         className="containerOpcoesOrdem mcontent"
@@ -57,8 +60,7 @@ class OpcoesOrdemExec extends React.Component {
           className="divClicavel"
           tabIndex={0}
           onClick={() => {
-            if (props.ordemAtual)
-              props.cancelarOrdemExecAction(props.ordemAtual.id);
+            if (props.ordemAtual) props.cancelarOrdemExecAction(actionProps);
             else alert(erro_opcoes_ordens_exec);
           }}
         >
@@ -74,31 +76,14 @@ class OpcoesOrdemExec extends React.Component {
           <img src={iconeEditarOrdem} width="27" alt=""></img>
           <h6>Editar Ordem</h6>
         </div>
-        <InputSelectBotoes
-          open={props.selectQtdeAberto}
-          nomeOpen="selectQtdeAberto"
-          changeVar={props.mudarVariavelOrdensExecAction}
-          sinal={props.sinalInputSelect}
-          modo="qtde"
-          ordemAtual={props.ordemAtual}
-          dispararAtualizacao={props.aumentarQtdePrecoAction}
-        />
-        <InputSelectBotoes
-          open={props.selectPrecoAberto}
-          nomeOpen="selectPrecoAberto"
-          changeVar={props.mudarVariavelOrdensExecAction}
-          sinal={props.sinalInputSelect}
-          modo="preco"
-          ordemAtual={props.ordemAtual}
-          dispararAtualizacao={props.aumentarQtdePrecoAction}
-        />
+        <InputSelectBotoes nomeOpen="selectQtdeAberto" modo="qtde" />
+        <InputSelectBotoes nomeOpen="selectPrecoAberto" modo="preco" />
 
         <div
           className="divClicavel"
           tabIndex={0}
           onClick={() => {
-            if (props.ordemAtual)
-              props.finalizarAMercadoAction(props.ordemAtual.id);
+            if (props.ordemAtual) props.finalizarAMercadoAction(actionProps);
             else alert(erro_opcoes_ordens_exec);
           }}
         >
@@ -178,9 +163,6 @@ const mapStateToPropsOrdensExec = (state) => ({
 
 const mapStateToPropsOpcoesOrdemExec = (state) => ({
   ...mapStateToPropsOrdensExec(state),
-  selectQtdeAberto: state.ordensExecReducer.selectQtdeAberto,
-  selectPrecoAberto: state.ordensExecReducer.selectPrecoAberto,
-  sinalInputSelect: state.ordensExecReducer.sinalInputSelect,
   multileg: state.multilegReducer.multileg,
   eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
   multilegAberto: state.telaPrincipalReducer.multilegAberto,

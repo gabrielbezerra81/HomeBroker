@@ -5,7 +5,7 @@ import {
   MUDAR_DADOS_LOGIN,
   actionType,
 } from "constants/ActionTypes";
-import { resetarEstadoRedux } from "components/redux/reducers/resetarEstado";
+import { resetarEstadoRedux } from "components/redux/reducers/resetarEstadoReducer";
 
 const INITIAL_STATE = {
   usuarioConectado: "",

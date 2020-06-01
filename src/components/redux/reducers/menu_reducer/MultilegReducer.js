@@ -8,7 +8,7 @@ import {
   MODIFICAR_VARIAVEL_MULTILEG,
 } from "constants/MenuActionTypes";
 import { PESQUISAR_ATIVO_MULTILEG_API } from "constants/ApiActionTypes";
-import { resetarEstadoRedux } from "components/redux/reducers/resetarEstado";
+import { resetarEstadoRedux } from "components/redux/reducers/resetarEstadoReducer";
 
 const INITIAL_STATE = {
   configComplementarAberto: false,
@@ -21,7 +21,7 @@ const INITIAL_STATE = {
   multileg: [
     {
       nomeAba: "Ordem 1",
-      ativo: "PETR4",
+      ativo: "",
       ativoAtual: "",
       valor: 0,
       variacao: 0,
