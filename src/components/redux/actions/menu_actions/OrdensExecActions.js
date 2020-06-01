@@ -203,15 +203,19 @@ export const abrirOrdensBoletaAction = (props, event, acao) => {
   };
 };
 
-export const cancelarOrdemExecAction = ({ id, token }) => {
-  return (dispatch) => {
-    cancelarOrdemExecAPI(id, token);
+export const cancelarOrdemExecAction = ({ idOrdem, token }) => {
+  return async (dispatch) => {
+    travarDestravarClique("travar", "ordens_execucao");
+    await cancelarOrdemExecAPI(idOrdem, token);
+    travarDestravarClique("destravar", "ordens_execucao");
   };
 };
 
-export const finalizarAMercadoAction = ({ id, token }) => {
-  return (dispatch) => {
-    finalizarAMercadoAPI(id, token);
+export const finalizarAMercadoAction = ({ idOrdem, token }) => {
+  return async (dispatch) => {
+    travarDestravarClique("travar", "ordens_execucao");
+    await finalizarAMercadoAPI(idOrdem, token);
+    travarDestravarClique("destravar", "ordens_execucao");
   };
 };
 
