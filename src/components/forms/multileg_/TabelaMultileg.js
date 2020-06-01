@@ -19,6 +19,20 @@ import { Select } from "antd";
 import { StorePrincipalContext } from "components/redux/StoreCreation";
 
 class TabelaMultileg extends React.Component {
+  componentDidUpdate(prevProps) {
+    const { props } = this;
+    const indiceAba = props.indice;
+    if (
+      prevProps.multileg[indiceAba].tabelaMultileg.length !==
+      props.multileg[indiceAba].tabelaMultileg.length
+    ) {
+      const indiceLinha = props.multileg[indiceAba].tabelaMultileg.length - 1;
+      const linha = document.getElementById("ofertaMultileg" + indiceLinha);
+      const input = linha.children[2].getElementsByTagName("input");
+      input[0].select();
+    }
+  }
+
   render() {
     const { props } = this;
     const indiceAba = props.indice;
@@ -53,7 +67,7 @@ class TabelaMultileg extends React.Component {
             (item, indiceLinha) => {
               const cotacao = renderCotacao(props, item);
               return (
-                <tr key={indiceLinha}>
+                <tr key={indiceLinha} id={`ofertaMultileg${indiceLinha}`}>
                   <td
                     className="divClicavel"
                     onClick={() =>
