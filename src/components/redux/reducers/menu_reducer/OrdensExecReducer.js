@@ -1,10 +1,6 @@
 import { MUDAR_VARIAVEL_ORDENS_EXEC } from "constants/MenuActionTypes";
 import { LISTAR_ORDENS_EXECUCAO } from "constants/ApiActionTypes";
-import {
-  ABRIR_FECHAR_ITEM_BARRA_LATERAL,
-  LOGAR_DESLOGAR_USUARIO,
-  actionType,
-} from "constants/ActionTypes";
+import { actionType } from "constants/ActionTypes";
 import { resetarEstadoRedux } from "components/redux/reducers/resetarEstadoReducer";
 
 const INITIAL_STATE = {

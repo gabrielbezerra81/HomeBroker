@@ -1,8 +1,4 @@
-import {
-  ABRIR_FECHAR_ITEM_BARRA_LATERAL,
-  LOGAR_DESLOGAR_USUARIO,
-  actionType,
-} from "constants/ActionTypes";
+import { actionType } from "constants/ActionTypes";
 import {
   MUDAR_TIPO,
   MODIFICAR_VARIAVEL_MULTILEG,

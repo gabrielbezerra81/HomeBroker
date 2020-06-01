@@ -43,8 +43,14 @@ export const selecionarBooks = (props: {
   dispatch: any,
 }) => {
   const { booksSelecionados, novosBooks, dispatch } = props;
-  const books = [...booksSelecionados];
+  const books = booksSelecionados.map((book) => ({ ...book }));
   let mostrarAlerta = false;
+  let qtdeAdicionar = novosBooks.length;
+  qtdeAdicionar -= booksSelecionados.filter(
+    (book) =>
+      novosBooks.length === 2 &&
+      (book.ativo === novosBooks[0].ativo || book.ativo === novosBooks[1].ativo)
+  ).length;
 
   novosBooks.forEach((novoBook) => {
     const indice = books.findIndex(
@@ -53,13 +59,15 @@ export const selecionarBooks = (props: {
     if (indice === -1) {
       if (novosBooks.length === 1 && booksSelecionados.length === 6)
         mostrarAlerta = true;
-      else if (novosBooks.length === 2 && booksSelecionados.length >= 5)
+      else if (booksSelecionados.length + qtdeAdicionar >= 7)
         mostrarAlerta = true;
 
       if (!mostrarAlerta)
         books.push({ ativo: novoBook.ativo, tipo: novoBook.tipo });
-    } else {
-      if (novosBooks.length !== 2) books.splice(indice, 1);
+    } //
+    else {
+      if (qtdeAdicionar === 0 || novosBooks.length === 1)
+        books.splice(indice, 1);
     }
   });
   if (mostrarAlerta) alert(erro_selecaoBook_THL);
