@@ -187,7 +187,7 @@ const VerificaAtivoCustodia = (itemColuna) => {
   let qtdeExecutada = 0;
   let qtdeOferta = 0;
   const ativoCelula = itemColuna.symbol;
-  const reduxState = StateStorePrincipal('posicao');
+  const reduxState = StateStorePrincipal("posicao");
   const { posicoesCustodia } = reduxState;
   executando = posicoesCustodia.some((posicao) => {
     const execCompra = posicao.custodiaCompra.find(
@@ -267,12 +267,7 @@ const classesDinamicas = (
   };
 };
 
-export const selecionarCelula = (props: {
-  ativo: string,
-  codigoCelulaSelecionada: string,
-  id: number,
-  dispatch: any,
-}) => {
+export const selecionarCelula = (props) => {
   const { ativo, codigoCelulaSelecionada, id, dispatch } = props;
   let novoCodigo = "";
   let novoID = null;

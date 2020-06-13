@@ -146,12 +146,7 @@ const columns = [
   },
 ];
 
-const selecionarLinha = (props: {
-  idCelulaSelecionada: number,
-  id: number,
-  dispatch: any,
-  codigoCelulaSelecionada: string,
-}) => {
+const selecionarLinha = (props) => {
   const { id, dispatch, idCelulaSelecionada, codigoCelulaSelecionada } = props;
   let novoID = null;
   if (id !== idCelulaSelecionada || codigoCelulaSelecionada) {

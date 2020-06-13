@@ -19,6 +19,7 @@ export const listarPosicoesAction = (props) => {
   return async (dispatch) => {
     if (props.token) {
       const dados = await listarPosicoesAPI(props.token);
+
       const listaPosicoes = [];
       const arrayPrecos = [];
       let arrayCotacoes = [];
@@ -58,7 +59,7 @@ export const adicionaPosicao = (grupoPosicao) => {
           Number(operacao.dealPrice)) *
         100;
     var posicao = {
-      ativos: operacao.ativos,
+      ativos: operacao.ativos || [], // TODO: atualização reativa vem elemento sem atributo ativos
       precoCompra: operacao.priceMin,
       precoVenda: operacao.priceMax,
       cotacaoAtual: operacao.lastPrice,
@@ -142,7 +143,6 @@ const atualizarEmblemas = (dispatch, listaPosicoes, props, arrayPrecos) => {
   if (props.setIntervalEmblema) {
     clearInterval(props.setIntervalEmblema);
   }
-  
 
   listaPosicoes.forEach((posicao) => {
     ids += posicao.idEstrutura + ",";

@@ -6,7 +6,8 @@ import {
 import { mudarVariavelTHLAction } from "components/redux/actions/menu_actions/THLActions";
 import { erro_selecaoBook_THL } from "constants/AlertaErros";
 
-export default ({ preco, qtde, tipo, ativo }) => {
+export default (props) => {
+  const { preco, qtde, tipo, ativo } = props;
   const reduxState = StateStorePrincipal("thl");
   const dispatch = DispatchStorePrincipal();
   const { booksSelecionados } = reduxState;
@@ -37,11 +38,7 @@ export default ({ preco, qtde, tipo, ativo }) => {
   );
 };
 
-export const selecionarBooks = (props: {
-  booksSelecionados: [],
-  novosBooks: [],
-  dispatch: any,
-}) => {
+export const selecionarBooks = (props) => {
   const { booksSelecionados, novosBooks, dispatch } = props;
   const books = booksSelecionados.map((book) => ({ ...book }));
   let mostrarAlerta = false;
