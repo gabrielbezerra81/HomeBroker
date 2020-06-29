@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Form } from "react-bootstrap";
 import { mapStateToPropsInputsPreco } from "components/utils/componentesUI/GraficoInputs";
-import { mudarAtributoBoletaAction } from "components/redux/actions/formInputActions";
+import { mudarAtributoBoletaAction } from "redux/actions/formInputActions";
 import InputFormatado from "components/utils/componentesUI/InputFormatado";
 
 class GraficoInputsConfigStartStop extends React.Component {

@@ -2,13 +2,13 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Col, Row, Form } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
-import { mudarInputHeaderAction } from "components/redux/actions/bookOfertaActions";
-import { listarBookOfertaOnEnterAction } from "components/redux/actions/api_actions/bookOfertaAPIActions";
+import { mudarInputHeaderAction } from "redux/actions/bookOfertaActions";
+import { listarBookOfertaOnEnterAction } from "redux/actions/api_actions/bookOfertaAPIActions";
 import {
   fecharFormAction,
   abrirFormAction,
   fecharFormConfigurarAction,
-} from "components/redux/actions/MainAppActions";
+} from "redux/actions/MainAppActions";
 import {
   useSelectorGlobalStore,
   useDispatchGlobalStore,
@@ -18,10 +18,10 @@ import {
   DispatchBoletas,
   DispatchGlobalStore,
   StateStorePrincipal,
-} from "components/redux/StoreCreation";
-import { abrirItemBarraLateralAction } from "components/redux/actions/TelaPrincipalActions";
-import { abrirFecharConfigComplAction } from "components/redux/actions/menu_actions/MultilegActions";
-import { mudarVariavelOrdensExecAction } from "components/redux/actions/menu_actions/OrdensExecActions";
+} from "redux/StoreCreation";
+import { abrirItemBarraLateralAction } from "redux/actions/TelaPrincipalActions";
+import { abrirFecharConfigComplAction } from "redux/actions/menu_actions/MultilegActions";
+import { mudarVariavelOrdensExecAction } from "redux/actions/menu_actions/OrdensExecActions";
 
 // Apenas para boletas de compra e venda
 export const ModalHeader = ({

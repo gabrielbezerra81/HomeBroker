@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import "@fortawesome/fontawesome-free/css/all.css";
-import { Helper } from "components/redux/ElementosConectadosRedux";
+import { Helper } from "redux/ElementosConectadosRedux";
 import PerfectScrollbar from "react-perfect-scrollbar";
 
 // LogRocket.init("g32h7d/react-homebroker");

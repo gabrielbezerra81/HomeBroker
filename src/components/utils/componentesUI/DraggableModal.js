@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import Draggable from "react-draggable";
-import ConfigurarStop from "components/forms/compra/compra_StartStop/ConfigurarStop";
-import ConfigurarStopVenda from "components/forms/venda/venda_StartStop/ConfigurarStopVenda";
-import FiltrarOrdens from "components/forms/ordens_em_execucao/FiltrarOrdens"; //posicaoFormCompraVenda
-import ConfigComplementar from "components/forms/multileg_/ConfigComplementar";
+import ConfigurarStop from "components/popups/compra/compra_StartStop/ConfigurarStop";
+import ConfigurarStopVenda from "components/popups/venda/venda_StartStop/ConfigurarStopVenda";
+import FiltrarOrdens from "components/popups/ordens_em_execucao/FiltrarOrdens"; //posicaoFormCompraVenda
+import ConfigComplementar from "components/popups/multileg_/ConfigComplementar";
 import { Resizable } from "re-resizable";
-import { StateStorePrincipal } from "components/redux/StoreCreation";
+import { StateStorePrincipal } from "redux/StoreCreation";
 class BSModal extends Component {
   constructor(props) {
     super(props);

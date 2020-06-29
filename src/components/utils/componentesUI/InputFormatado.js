@@ -3,7 +3,7 @@ import NumberFormat from "react-number-format";
 import CurrencyInput from "react-intl-number-input";
 import { MDBIcon } from "mdbreact";
 import Repeatable from "react-repeatable";
-import { formatarNumero } from "components/redux/reducers/boletas_reducer/formInputReducer";
+import { formatarNumero } from "redux/reducers/boletas_reducer/formInputReducer";
 
 class InputFormatado extends React.Component {
   render() {

@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import { Popconfirm } from "antd";
-import { useSelectorStorePrincipal } from "components/redux/StoreCreation";
+import { useSelectorStorePrincipal } from "redux/StoreCreation";
 
 export const BotaoEnviarOrdem = ({ props, tipoCompraVenda }) => {
   const state = useSelectorStorePrincipal(

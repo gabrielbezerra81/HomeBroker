@@ -4,8 +4,8 @@ import { MDBIcon } from "mdbreact";
 import {
   useSelectorGlobalStore,
   useDispatchGlobalStore,
-} from "components/redux/StoreCreation";
-import { abrirFormAction } from "components/redux/actions/MainAppActions";
+} from "redux/StoreCreation";
+import { abrirFormAction } from "redux/actions/MainAppActions";
 
 export const IconeConfigAbrirFormulario = ({ nomeFormulario }) => {
   const stateGlobalStore = useSelectorGlobalStore(

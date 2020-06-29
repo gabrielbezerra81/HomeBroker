@@ -6,13 +6,13 @@ import {
   useSelectorGlobalStore,
   useDispatchStorePrincipal,
   useSelectorStorePrincipal,
-} from "components/redux/StoreCreation";
+} from "redux/StoreCreation";
 import {
   abrirFormAction,
   abrirFormConfigurarAction,
-} from "components/redux/actions/MainAppActions";
+} from "redux/actions/MainAppActions";
 import { useDispatch } from "react-redux";
-import { abrirFecharConfigComplAction } from "components/redux/actions/menu_actions/MultilegActions";
+import { abrirFecharConfigComplAction } from "redux/actions/menu_actions/MultilegActions";
 
 export default ({ className, name = "" }) => {
   let handleShow;

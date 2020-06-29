@@ -4,30 +4,30 @@ import { Animate } from "react-show";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import "../css";
-import BookOfertas from "./forms/book_Ofertas/BookOfertas";
-import CompraAgendada from "components/forms/compra/compra_Agendada/CompraAgendada";
-import CompraLimitada from "components/forms/compra/compra_Limitada/CompraLimitada";
-import CompraMercado from "components/forms/compra/compra_Mercado/CompraMercado";
-import CompraStartStop from "components/forms/compra/compra_StartStop/CompraStartStop";
-import CompraStartMovel from "components/forms/compra/compra_StartMovel/CompraStartMovel";
-import CompraGainReducao from "components/forms/compra/compra_GainReducao/CompraGainReducao";
-import VendaAgendada from "./forms/venda/venda_Agendada/VendaAgendada";
-import VendaLimitada from "./forms/venda/venda_Limitada/VendaLimitada";
-import VendaMercado from "./forms/venda/venda_Mercado/VendaMercado";
-import VendaStartStop from "./forms/venda/venda_StartStop/VendaStartStop";
-import VendaStopMovel from "./forms/venda/venda_StopMovel/VendaStopMovel";
-import VendaGainReducao from "./forms/venda/venda_GainReducao/VendaGainReducao";
-import { GlobalContext } from "components/redux/StoreCreation";
+import BookOfertas from "./popups/book_Ofertas/BookOfertas";
+import CompraAgendada from "components/popups/compra/compra_Agendada/CompraAgendada";
+import CompraLimitada from "components/popups/compra/compra_Limitada/CompraLimitada";
+import CompraMercado from "components/popups/compra/compra_Mercado/CompraMercado";
+import CompraStartStop from "components/popups/compra/compra_StartStop/CompraStartStop";
+import CompraStartMovel from "components/popups/compra/compra_StartMovel/CompraStartMovel";
+import CompraGainReducao from "components/popups/compra/compra_GainReducao/CompraGainReducao";
+import VendaAgendada from "./popups/venda/venda_Agendada/VendaAgendada";
+import VendaLimitada from "./popups/venda/venda_Limitada/VendaLimitada";
+import VendaMercado from "./popups/venda/venda_Mercado/VendaMercado";
+import VendaStartStop from "./popups/venda/venda_StartStop/VendaStartStop";
+import VendaStopMovel from "./popups/venda/venda_StopMovel/VendaStopMovel";
+import VendaGainReducao from "./popups/venda/venda_GainReducao/VendaGainReducao";
+import { GlobalContext } from "redux/StoreCreation";
 import {
   fecharFormAction,
   abrirFormAction,
   aumentarZindexAction,
   receberAppPropsAction,
   receberDadosOrdemExecMainReducerAction,
-} from "components/redux/actions/MainAppActions";
-import { listarBookOfertaOnEnterAction } from "components/redux/actions/api_actions/bookOfertaAPIActions";
-import { mudarInputHeaderAction } from "components/redux/actions/bookOfertaActions";
-import { montarBoletaFromOrdemExecAction } from "components/redux/actions/formInputActions";
+} from "redux/actions/MainAppActions";
+import { listarBookOfertaOnEnterAction } from "redux/actions/api_actions/bookOfertaAPIActions";
+import { mudarInputHeaderAction } from "redux/actions/bookOfertaActions";
+import { montarBoletaFromOrdemExecAction } from "redux/actions/formInputActions";
 
 const startStyle = {
   opacity: 0,
