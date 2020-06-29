@@ -1,5 +1,5 @@
 export const cors_anywhere = "https://cors-anywhere.herokuapp.com/";
-export const url_base = "http://173.249.37.183:8080/api/";
+export const url_base = "https://api.rendacontinua.com/api/"; //"http://173.249.37.183:8080/api/";
 export const url_base_reativa = "http://173.249.37.183:8090/";
 
 //Boletas de compra e venda
@@ -43,8 +43,8 @@ export const url_listarAtivosMonitorados_ = "mt5/symbols";
 //Login
 export const url_realizarLogin_usuario_senha = "auth/signin";
 export const url_autenticacao_token = "test/user";
-export const url_informacoesUsuario_token = "auth/info";
-export const url_listarContas_token = "account/login";
+// export const url_informacoesUsuario_token = "auth/info";
+// export const url_listarContas_token = "account/login";
 export const url_verificarToken_token = "auth/";
 
 //Cadastro

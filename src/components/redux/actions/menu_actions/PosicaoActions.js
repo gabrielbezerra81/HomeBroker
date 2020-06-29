@@ -5,6 +5,7 @@ import {
   atualizarPosicaoAPI,
   atualizarCotacaoAPI,
 } from "components/api/ReativosAPI";
+import ItemPosicao from "entities/posicao/posicao";
 
 export const mudarVariavelPosicaoAction = (nome, valor) => {
   return (dispatch) => {
@@ -59,13 +60,13 @@ export const adicionaPosicao = (grupoPosicao) => {
           Number(operacao.dealPrice)) *
         100;
     var posicao = {
-      ativos: operacao.ativos || [], // TODO: atualização reativa vem elemento sem atributo ativos
+      ativos: operacao.ativos, // TODO: atualização reativa vem elemento sem atributo ativos
       precoCompra: operacao.priceMin,
       precoVenda: operacao.priceMax,
       cotacaoAtual: operacao.lastPrice,
-      oscilacao: operacao.dealPrice || 0,
-      stopLoss: operacao.stopLoss || 0,
-      stopGain: operacao.stopGain || 0,
+      oscilacao: operacao.dealPrice,
+      stopLoss: operacao.stopLoss,
+      stopGain: operacao.stopGain,
       total: Number(operacao.lastPrice) - Number(operacao.dealPrice), //itemLista.total,
       variacaoGanho: variacaoGanho,
       qtde: 0, // itemLista.qtty,
@@ -91,7 +92,9 @@ export const adicionaPosicao = (grupoPosicao) => {
       });
     });
 
-    return posicao;
+    const itemPosicao = new ItemPosicao(posicao);
+
+    return itemPosicao;
   });
 };
 

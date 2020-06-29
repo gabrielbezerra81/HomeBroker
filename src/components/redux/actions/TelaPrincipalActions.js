@@ -8,9 +8,7 @@ import {
 import { travarDestravarClique } from "components/api/API";
 import {
   realizarLoginAPI,
-  buscarInformacoesUsuarioAPI,
   realizarCadastroAPI,
-  listarContasAPI,
 } from "components/api/LoginAPI";
 import { navigate } from "@reach/router";
 import { persistor } from "components/redux/StoreCreation";
@@ -29,45 +27,41 @@ export const logarUsuarioAction = (username, password) => {
   return async (dispatch) => {
     travarDestravarClique("travar", "botaoLogar");
 
-    const token = await realizarLoginAPI(username, password);
+    const data = await realizarLoginAPI(username, password);
     //const auth = await autenticacaoTokenAPI(token);
-    let infoUsuario;
-    let conta;
-    if (token) {
-      infoUsuario = await buscarInformacoesUsuarioAPI(token);
-      conta = await listarContasAPI(token);
-    }
 
-    if (token && infoUsuario) {
+    if (data) {
+      const { name, accessToken, tokenType, accounts } = data;
+
       await dispatch({
         type: MUDAR_DADOS_LOGIN,
-        payload: { nomeVariavel: "token", valor: token },
+        payload: { nomeVariavel: "token", valor: { accessToken, tokenType } },
       });
       await dispatch({
         type: LOGAR_DESLOGAR_USUARIO,
         payload: {
-          usuarioConectado: infoUsuario.name,
+          usuarioConectado: name,
           logado: true,
         },
       });
-      navigate("/home");
-    }
-    if (conta) {
       await dispatch({
         type: MUDAR_DADOS_LOGIN,
         payload: {
           nomeVariavel: "conta",
-          valor: conta,
+          valor: accounts,
         },
       });
       await dispatch({
         type: MUDAR_DADOS_LOGIN,
         payload: {
           nomeVariavel: "contaSelecionada",
-          valor: conta[0],
+          valor: accounts[0],
         },
       });
+
+      navigate("/home");
     }
+
     travarDestravarClique("destravar", "botaoLogar");
   };
 };

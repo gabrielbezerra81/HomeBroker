@@ -4,9 +4,7 @@ import {
   url_base,
   url_realizarLogin_usuario_senha,
   url_autenticacao_token,
-  url_informacoesUsuario_token,
   url_realizarCadastro_dados,
-  url_listarContas_token,
   url_verificarToken_token,
 } from "components/api/url";
 import {
@@ -18,7 +16,7 @@ import { mostrarErroConsulta } from "components/api/API";
 
 retryDelay(request);
 
-const timeout = 6000;
+const timeout = 10000;
 
 export const autenticacaoTokenAPI = (token) => {
   return request
@@ -34,35 +32,35 @@ export const autenticacaoTokenAPI = (token) => {
     });
 };
 
-export const buscarInformacoesUsuarioAPI = (token) => {
-  return request
-    .get(`${url_base}${url_informacoesUsuario_token}`)
-    .set({ Authorization: `${token.tokenType} ${token.accessToken}` })
-    .timeout(timeout)
-    .retry(3, 2000)
-    .then((response) => {
-      return response.body;
-    })
-    .catch((erro) => {
-      mostrarErroConsulta(erro, erro_realizar_login);
-      return null;
-    });
-};
+// export const buscarInformacoesUsuarioAPI = (token) => {
+//   return request
+//     .get(`${url_base}${url_informacoesUsuario_token}`)
+//     .set({ Authorization: `${token.tokenType} ${token.accessToken}` })
+//     .timeout(timeout)
+//     .retry(3, 2000)
+//     .then((response) => {
+//       return response.body;
+//     })
+//     .catch((erro) => {
+//       mostrarErroConsulta(erro, erro_realizar_login);
+//       return null;
+//     });
+// };
 
-export const listarContasAPI = (token) => {
-  return request
-    .get(`${url_base}${url_listarContas_token}`)
-    .set({ Authorization: `${token.tokenType} ${token.accessToken}` })
-    .timeout(timeout)
-    .retry(3, 2000)
-    .then((response) => {
-      return response.body;
-    })
-    .catch((erro) => {
-      mostrarErroConsulta(erro, erro_realizar_login);
-      return null;
-    });
-};
+// export const listarContasAPI = (token) => {
+//   return request
+//     .get(`${url_base}${url_listarContas_token}`)
+//     .set({ Authorization: `${token.tokenType} ${token.accessToken}` })
+//     .timeout(timeout)
+//     .retry(3, 2000)
+//     .then((response) => {
+//       return response.body;
+//     })
+//     .catch((erro) => {
+//       mostrarErroConsulta(erro, erro_realizar_login);
+//       return null;
+//     });
+// };
 
 export const realizarLoginAPI = (username, password) => {
   let payload = { username: username, password: password };
