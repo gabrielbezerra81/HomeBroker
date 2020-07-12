@@ -42,7 +42,6 @@ class InputsFiltroTabela extends React.Component {
       >
         {select === "<>" || select === "><" ? (
           <FormControl
-            ref="toInput"
             type="number"
             placeholder="max"
             className="form-control inputMaxRange"
@@ -57,7 +56,6 @@ class InputsFiltroTabela extends React.Component {
         ) : null}
         <div style={{ position: "relative" }}>
           <FormControl
-            ref="fromInput"
             type="number"
             placeholder={select === "<>" || select === "><" ? "min" : "valor"}
             className="form-control inputMinRange"
@@ -132,7 +130,6 @@ class InputsFiltroTabela extends React.Component {
       >
         {select === "<>" || select === "><" ? (
           <FormControl
-            ref="toInput"
             type="number"
             placeholder="max"
             className="form-control inputMaxRange"
@@ -147,7 +144,6 @@ class InputsFiltroTabela extends React.Component {
         ) : null}
         <div style={{ position: "relative" }}>
           <FormControl
-            ref="fromInput"
             type="number"
             placeholder={select === "<>" || select === "><" ? "min" : "valor"}
             className="form-control inputMinRange"
