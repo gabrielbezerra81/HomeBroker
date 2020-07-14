@@ -1,21 +1,17 @@
 #divMenuLateral.hide {
   opacity: 0;
   pointer-events: none;
-  flex: 0;
   width: 0px;
 }
 
 .divMenuLateral {
   background-color: #1d1d1d;
-  min-height: 100vh;
-  flex: 1;
-  max-width: 211.699px;
-  transition-duration: 0.4s;
-  /*  */
+  height: 100vh;
+  transition-property: width opacity;
+  transition: 0.4s;
   border-right: 1px solid #888;
   width: 132px;
   position: fixed;
-  height: 100%;
 }
 
 .corAlternada {
