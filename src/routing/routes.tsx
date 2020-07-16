@@ -1,7 +1,7 @@
 import React from "react";
-import { Router, Redirect, RouteComponentProps } from "@reach/router";
+import { Router, Redirect, RouteComponentProps, } from "@reach/router";
 import TelaLogin from "components/telas/login/TelaLogin";
-import TelaCadastro from "components/telas/login/TelaCadastro";
+import TelaCadastro from "components/telas/cadastro/TelaCadastro";
 import { useSelectorStorePrincipal } from "redux/StoreCreation";
 import TelaPrincipal from "components/telas/principal/TelaPrincipal";
 
