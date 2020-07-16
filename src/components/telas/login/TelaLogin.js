@@ -33,9 +33,8 @@ const TelaLogin = ({ path }) => {
         </div>
 
         <div className="divLogin">
-          <div className="divTextoLogin mb-4">
-            <h4>Realize seu login para continuar.</h4>
-          </div>
+          <h4 className="mb-4">Realize seu login para continuar.</h4>
+
           <Form onSubmit={handleSubmit}>
             <div className="conteudoLogin">
               <FloatingLabelInput
