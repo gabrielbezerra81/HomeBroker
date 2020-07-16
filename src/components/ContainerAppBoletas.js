@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { Provider, connect } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import ReduxThunk from "redux-thunk";
