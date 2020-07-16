@@ -1,17 +1,19 @@
-import moment from "moment";
 import {
   MUDAR_VARIAVEL_THL,
   MUDAR_VARIAVEIS_THL,
 } from "constants/MenuActionTypes";
 import { tempData } from "components/popups/thl/tabelaCombinacoes/tempData";
-import { montarTabelaCombinacoes } from "redux/actions/api_actions/ThlAPIAction";
+import {
+  montarTabelaCombinacoes,
+  mapearTabelaVencimentos,
+} from "redux/actions/api_actions/ThlAPIAction";
 
 const INITIAL_STATE = {
   ativoPesquisa: "PETR4",
   ativoPesquisado: "PETR4",
   pesquisandoAtivo: false,
   tipo: "CALL",
-  opcoesStrike: mapTabelaVencimentos([]),
+  opcoesStrike: mapearTabelaVencimentos([]),
   codigoCelulaSelecionada: "",
   idCelulaSelecionada: null,
   celulaCalculada: "",
@@ -2744,7 +2746,7 @@ export default (state = INITIAL_STATE, action) => {
     case MUDAR_VARIAVEL_THL:
       const { nome, valor } = action.payload;
       const valorFormatado =
-        nome === "opcoesStrike" ? mapTabelaVencimentos(valor) : valor;
+        nome === "opcoesStrike" ? mapearTabelaVencimentos(valor) : valor;
       return { ...state, [nome]: valorFormatado };
     case MUDAR_VARIAVEIS_THL:
       return { ...state, ...action.payload };
@@ -2752,20 +2754,3 @@ export default (state = INITIAL_STATE, action) => {
       return state;
   }
 };
-
-export function mapTabelaVencimentos(dataTabela) {
-  return dataTabela.map((linhaStrike) => {
-    const novaLinhaStrike = {
-      strikeLine: linhaStrike.strikeLine,
-      structuresIds: [...linhaStrike.structuresIds],
-    };
-    novaLinhaStrike.stocks = linhaStrike.stocks.map((stock) => {
-      const data = moment(stock.endBusiness, "DD-MM-YYYY HH:mm:ss");
-      const novoStock = { ...stock, vencimento: data };
-
-      return novoStock;
-    });
-
-    return novaLinhaStrike;
-  });
-}

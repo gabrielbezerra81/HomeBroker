@@ -1,3 +1,4 @@
+import moment from "moment";
 import {
   listarTabelaInicialTHLAPI,
   recalcularPrecosTHLAPI,
@@ -11,7 +12,6 @@ import {
   mudarVariavelTHLAction,
   mudarVariaveisTHLAction,
 } from "redux/actions/menu_actions/THLActions";
-import { mapTabelaVencimentos } from "redux/reducers/menu_reducer/THLReducer";
 
 export const pesquisarAtivoTHLAPIAction = (codigo) => {
   return async (dispatch) => {
@@ -56,7 +56,7 @@ export const listarTabelaInicialTHLAPIAction = (props) => {
 
       dispatch(
         mudarVariaveisTHLAction({
-          opcoesStrike: mapTabelaVencimentos(tabelaVencimentos),
+          opcoesStrike: mapearTabelaVencimentos(tabelaVencimentos),
           carregandoTabelaVencimentos: false,
           codigoCelulaSelecionada: "",
           celulaCalculada: "",
@@ -97,7 +97,7 @@ export const recalcularPrecosTHLAPIAction = (thlState) => {
     setTimeout(() => {
       dispatch(
         mudarVariaveisTHLAction({
-          opcoesStrike: mapTabelaVencimentos(opcoesRecalculadas),
+          opcoesStrike: mapearTabelaVencimentos(opcoesRecalculadas),
           celulaCalculada: codigoCelulaSelecionada,
           booksSelecionados: [],
           carregandoTabelaVencimentos: false,
@@ -225,6 +225,23 @@ export const montarTabelaCombinacoes = (tabelaAPI) => {
 
   return { tabelaCombinacoes, arrayCotacoes };
 };
+
+export function mapearTabelaVencimentos(dataTabela) {
+  return dataTabela.map((linhaStrike) => {
+    const novaLinhaStrike = {
+      strikeLine: linhaStrike.strikeLine,
+      structuresIds: [...linhaStrike.structuresIds],
+    };
+    novaLinhaStrike.stocks = linhaStrike.stocks.map((stock) => {
+      const data = moment(stock.endBusiness, "DD-MM-YYYY HH:mm:ss");
+      const novoStock = { ...stock, vencimento: data };
+
+      return novoStock;
+    });
+
+    return novaLinhaStrike;
+  });
+}
 
 const atualizarCotacaoTHL = (actionProps) => {
   const {
