@@ -1,25 +1,26 @@
-.backgroundLoginCadastro {
-  height: 100vh;
-  width: 100vw;
-  position: relative;
+@keyframes login {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 .backgroundLoginCadastro::after {
   background-image: url("../../img/backgrounds/background_login.jpg");
   content: "";
   position: fixed;
-  top: 0px;
-  left: 0px;
   height: 100vh;
   width: 100vw;
-  z-index: 99;
   background-size: 100% 100%;
   opacity: 0.2;
 }
 
 .containerTelaLogin {
   position: fixed;
-  z-index: 999;
+  z-index: 1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -48,6 +49,7 @@
   flex: 4;
   display: flex;
   flex-direction: column;
+  animation: login 1s;
 }
 
 .divLogin label {
