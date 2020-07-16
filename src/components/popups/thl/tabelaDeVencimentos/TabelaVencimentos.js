@@ -13,7 +13,7 @@ import {
 import { listarTabelaInicialTHLAPIAction } from "redux/actions/thl/ThlAPIAction";
 import { CelulaMes } from "components/popups/thl/tabelaDeVencimentos/CelulaMes";
 import InputStrikeSelecionado from "components/popups/thl/tabelaDeVencimentos/InputStrikeSelecionado";
-import { usePrevious } from "components/utils/cicloVida/cicloVida";
+import usePrevious from "hooks/usePrevious";
 
 export default React.memo(() => {
   const reduxState = StateStorePrincipal("thl");
