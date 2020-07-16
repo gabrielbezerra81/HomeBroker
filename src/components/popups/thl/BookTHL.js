@@ -3,7 +3,7 @@ import {
   StateStorePrincipal,
   DispatchStorePrincipal,
 } from "redux/StoreCreation";
-import { mudarVariavelTHLAction } from "redux/actions/menu_actions/THLActions";
+import { mudarVariavelTHLAction } from "redux/actions/thl/THLActions";
 import { erro_selecaoBook_THL } from "constants/AlertaErros";
 
 export default (props) => {

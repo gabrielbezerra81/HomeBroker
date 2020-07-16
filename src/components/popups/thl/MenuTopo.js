@@ -11,14 +11,14 @@ import {
 import {
   mudarVariavelTHLAction,
   abrirMultilegTHLAction,
-} from "redux/actions/menu_actions/THLActions";
+} from "redux/actions/thl/THLActions";
 import {
   pesquisarAtivoTHLAPIAction,
   recalcularPrecosTHLAPIAction,
   favoritarTHLAPIAction,
   criarAlertaTHLAPIAction,
   pesquisarCombinacoesTHLAPIAction,
-} from "redux/actions/api_actions/ThlAPIAction";
+} from "redux/actions/thl/ThlAPIAction";
 import iconeRecalcularPrecos from "img/THL/iconeRecalcular.svg";
 import iconeEnviarOrdem from "img/THL/iconeEnviarOrdem.svg";
 import iconeFavorito from "img/THL/iconeFavorito.svg";

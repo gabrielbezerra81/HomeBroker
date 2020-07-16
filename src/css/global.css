@@ -16,11 +16,3 @@ body {
   -ms-user-select: none !important;
   user-select: none !important;
 }
-
-#root {
-  height: 100%;
-}
-
-#root > div {
-  flex: 1;
-}

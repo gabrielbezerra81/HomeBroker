@@ -12,7 +12,7 @@ import { abrirItemBarraLateralAction } from "redux/actions/TelaPrincipalActions"
 import {
   atualizarDivKeyAction,
   abrirFormAction,
-} from "redux/actions/MainAppActions";
+} from "redux/actions/GlobalAppActions";
 
 /*
 <img src={iconeAbrirOrdens} alt="Ordens" />

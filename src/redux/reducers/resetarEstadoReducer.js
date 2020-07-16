@@ -2,7 +2,7 @@ import _ from "lodash";
 import {
   clonarMultileg,
   clonarArrayCotacoes,
-} from "redux/actions/menu_actions/MultilegActions";
+} from "redux/actions/multileg/MultilegActions";
 
 export const resetarEstadoRedux = (
   state,

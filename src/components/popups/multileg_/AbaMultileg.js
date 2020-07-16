@@ -9,13 +9,13 @@ import { connect } from "react-redux";
 import {
   modificarAtributoAbaAction,
   adicionarOfertaTabelaAction,
-  buscaCotacao,
-} from "redux/actions/menu_actions/MultilegActions";
+} from "redux/actions/multileg/MultilegActions";
+import { buscaCotacao } from "redux/actions/multileg/utils";
 import {
   formatarNumDecimal,
   formatarVencimento,
 } from "components/utils/Formatacoes";
-import { pesquisarAtivoMultilegAction } from "redux/actions/api_actions/MultilegAPIAction";
+import { pesquisarAtivoMultilegAPIAction } from "redux/actions/multileg/MultilegAPIAction";
 import Book from "components/popups/multileg_/Book";
 import { Select } from "antd";
 import { StorePrincipalContext } from "redux/StoreCreation";
@@ -51,14 +51,14 @@ class AbaMultileg extends React.Component {
                   onKeyPress={(event) => {
                     //event.preventDefault();
                     if (event.key === "Enter")
-                      props.pesquisarAtivoMultilegAction(props, indice);
+                      props.pesquisarAtivoMultilegAPIAction(props, indice);
                   }}
                 />
                 <InputGroup.Append className="inputAtivoAppend">
                   <span
                     className="input-group-text iconeProcurar divClicavel"
                     onClick={() => {
-                      props.pesquisarAtivoMultilegAction(props, indice);
+                      props.pesquisarAtivoMultilegAPIAction(props, indice);
                     }}
                   >
                     {pesquisandoAtivo ? (
@@ -192,7 +192,7 @@ export default connect(
   mapStateToProps,
   {
     modificarAtributoAbaAction,
-    pesquisarAtivoMultilegAction,
+    pesquisarAtivoMultilegAPIAction,
     adicionarOfertaTabelaAction,
   },
   null,

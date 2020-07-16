@@ -6,7 +6,7 @@ import {
   REMOVE_ITEM_TABELA_GAIN_REDUCAO,
 } from "constants/ActionTypes";
 import { connect } from "react-redux";
-import { removerItemTabelaAction } from "redux/actions/formInputActions";
+import { removerItemTabelaAction } from "redux/actions/boletas/formInputActions";
 
 class TabelaGainReducao extends React.Component {
   somaQtde = 0;

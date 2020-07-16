@@ -3,11 +3,8 @@ import { connect } from "react-redux";
 import { Table, Row, Col, Button } from "react-bootstrap";
 import IconeConfigGrafico from "components/utils/componentesUI/IconeConfigGrafico";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
-import {
-  modificarAtributoAbaAction,
-  buscaBook,
-  buscaCotacao,
-} from "redux/actions/menu_actions/MultilegActions";
+import { modificarAtributoAbaAction } from "redux/actions/multileg/MultilegActions";
+import { buscaCotacao, buscaBook } from "redux/actions/multileg/utils";
 import {
   calculoPreco,
   calcularTotal,
@@ -20,7 +17,7 @@ import {
   enviarOrdemMultilegAction,
   criarAlertaMultilegAction,
   criarPosicaoMultilegAction,
-} from "redux/actions/api_actions/MultilegAPIAction";
+} from "redux/actions/multileg/MultilegAPIAction";
 import NumberFormat from "react-number-format";
 import { StorePrincipalContext } from "redux/StoreCreation";
 import { aviso_calculo_preco_multileg } from "constants/AlertaErros";

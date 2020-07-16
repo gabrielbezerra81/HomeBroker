@@ -6,7 +6,7 @@ import DraggableModal from "components/utils/componentesUI/DraggableModal";
 import { ModalHeaderSemBook } from "components/utils/componentesUI/FormHeader";
 import MapaCalor from "components/popups/thl/MapaCalor";
 import { GlobalContext } from "redux/StoreCreation";
-import { aumentarZindexAction } from "redux/actions/MainAppActions";
+import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
 import MenuTopo from "components/popups/thl/MenuTopo";
 import ContainerTabelaVencimentos from "components/popups/thl/tabelaDeVencimentos/ContainerTabelaVencimentos";
 import ContainerTabelaCombinacoes, {

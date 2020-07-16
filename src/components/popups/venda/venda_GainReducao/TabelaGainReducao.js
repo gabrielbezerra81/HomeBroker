@@ -2,7 +2,7 @@ import React from "react";
 import { Table, Button } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import { connect } from "react-redux";
-import { removerItemTabelaAction } from "redux/actions/formInputActions";
+import { removerItemTabelaAction } from "redux/actions/boletas/formInputActions";
 import {
   VENDA_GAINREDUCAO_NAMESPACE,
   REMOVE_ITEM_TABELA_GAIN_REDUCAO,

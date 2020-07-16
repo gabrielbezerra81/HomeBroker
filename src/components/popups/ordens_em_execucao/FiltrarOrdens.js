@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import {
   mudarVariavelOrdensExecAction,
   filtrarHistoricoOpAction,
-} from "redux/actions/menu_actions/OrdensExecActions";
+} from "redux/actions/ordensExecucao/OrdensExecActions";
 import { StorePrincipalContext } from "redux/StoreCreation";
 
 class FiltrarOrdens extends React.Component {

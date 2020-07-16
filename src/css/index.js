@@ -1,3 +1,4 @@
+import "./global.css"
 import "./App.css";
 import "./estilo_geral_formCompraVenda/FormGenerico.css";
 import "./BookOfertas.css";

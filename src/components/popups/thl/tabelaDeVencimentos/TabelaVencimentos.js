@@ -10,7 +10,7 @@ import {
   formatarNumDecimal,
   formatarQuantidadeKMG,
 } from "components/utils/Formatacoes";
-import { listarTabelaInicialTHLAPIAction } from "redux/actions/api_actions/ThlAPIAction";
+import { listarTabelaInicialTHLAPIAction } from "redux/actions/thl/ThlAPIAction";
 import { CelulaMes } from "components/popups/thl/tabelaDeVencimentos/CelulaMes";
 import InputStrikeSelecionado from "components/popups/thl/tabelaDeVencimentos/InputStrikeSelecionado";
 import { usePrevious } from "components/utils/cicloVida/cicloVida";

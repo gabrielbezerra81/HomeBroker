@@ -1,7 +1,7 @@
 import {
   buscaBook,
   buscaCotacao,
-} from "redux/actions/menu_actions/MultilegActions";
+} from "redux/actions/multileg/utils";
 
 export const calculoPreco = (aba, tipo, cotacoesMultileg) => {
   let preco = 0;

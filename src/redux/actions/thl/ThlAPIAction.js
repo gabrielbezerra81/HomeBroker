@@ -8,10 +8,7 @@ import {
 } from "api/API";
 import { pesquisarListaStrikeTHLAPI } from "api/API";
 import { atualizarPrecosTHLAPI, atualizarCotacaoAPI } from "api/ReativosAPI";
-import {
-  mudarVariavelTHLAction,
-  mudarVariaveisTHLAction,
-} from "redux/actions/menu_actions/THLActions";
+import { mudarVariavelTHL, mudarVariaveisTHL } from "./utils";
 
 export const pesquisarAtivoTHLAPIAction = (codigo) => {
   return async (dispatch) => {
@@ -19,7 +16,7 @@ export const pesquisarAtivoTHLAPIAction = (codigo) => {
 
     if (listaStrikes.length > 0) {
       dispatch(
-        mudarVariaveisTHLAction({
+        mudarVariaveisTHL({
           listaStrikes,
           ativoPesquisado: codigo.toUpperCase(),
         })
@@ -39,7 +36,7 @@ export const listarTabelaInicialTHLAPIAction = (props) => {
     } = props;
     const ativo = ativoPesquisado;
     if (ativo && strikeSelecionado && tipo) {
-      dispatch(mudarVariavelTHLAction("carregandoTabelaVencimentos", true));
+      dispatch(mudarVariavelTHL("carregandoTabelaVencimentos", true));
 
       const tabelaVencimentos = await listarTabelaInicialTHLAPI(
         ativo,
@@ -55,7 +52,7 @@ export const listarTabelaInicialTHLAPIAction = (props) => {
         );
 
       dispatch(
-        mudarVariaveisTHLAction({
+        mudarVariaveisTHL({
           opcoesStrike: mapearTabelaVencimentos(tabelaVencimentos),
           carregandoTabelaVencimentos: false,
           codigoCelulaSelecionada: "",
@@ -77,7 +74,7 @@ export const recalcularPrecosTHLAPIAction = (thlState) => {
       setIntervalPrecosTHL,
       codigoCelulaSelecionada,
     } = thlState;
-    dispatch(mudarVariavelTHLAction("carregandoTabelaVencimentos", true));
+    dispatch(mudarVariavelTHL("carregandoTabelaVencimentos", true));
 
     const opcoesRecalculadas = await recalcularPrecosTHLAPI(
       codigoCelulaSelecionada,
@@ -96,7 +93,7 @@ export const recalcularPrecosTHLAPIAction = (thlState) => {
     }
     setTimeout(() => {
       dispatch(
-        mudarVariaveisTHLAction({
+        mudarVariaveisTHL({
           opcoesStrike: mapearTabelaVencimentos(opcoesRecalculadas),
           celulaCalculada: codigoCelulaSelecionada,
           booksSelecionados: [],
@@ -132,7 +129,7 @@ const atualizarPrecosTHL = async (
 
   const source = atualizarPrecosTHLAPI(ids, dispatch);
   dispatch(
-    mudarVariaveisTHLAction({
+    mudarVariaveisTHL({
       eventSourcePrecos: source,
       precosTabelaVencimentos: [],
     })
@@ -160,7 +157,7 @@ export const pesquisarCombinacoesTHLAPIAction = (actionProps) => {
   return async (dispatch) => {
     const { ativoPesquisa } = actionProps;
     dispatch(
-      mudarVariaveisTHLAction({
+      mudarVariaveisTHL({
         booksSelecionados: [],
         pesquisandoAtivo: true,
         carregandoCombinacoes: true,
@@ -183,7 +180,7 @@ export const pesquisarCombinacoesTHLAPIAction = (actionProps) => {
     }
 
     dispatch(
-      mudarVariaveisTHLAction({
+      mudarVariaveisTHL({
         pesquisandoAtivo: false,
         carregandoCombinacoes: false,
         combinacoesTabela: tabelaCombinacoes,
@@ -260,5 +257,5 @@ const atualizarCotacaoTHL = (actionProps) => {
   codigos = codigos.substring(0, codigos.length - 1);
 
   const source = atualizarCotacaoAPI(dispatch, codigos, "thl", arrayCotacoes);
-  dispatch(mudarVariavelTHLAction("eventSourceCotacoesTHL", source));
+  dispatch(mudarVariavelTHL("eventSourceCotacoesTHL", source));
 };

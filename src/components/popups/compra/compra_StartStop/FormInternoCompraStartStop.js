@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { mostrarErroQtdeOnBlurAction } from "redux/actions/bookOfertaActions";
+import { mostrarErroQtdeOnBlurAction } from "redux/actions/boletas/bookOfertaActions";
 import {
   mudarQtdAction,
   mudarValidadeSelectAction,
@@ -11,7 +11,7 @@ import {
   mudarAtivoAction,
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction,
-} from "redux/actions/formInputActions";
+} from "redux/actions/boletas/formInputActions";
 import RowFormValidade from "components/utils/componentesUI/RowFormValidade";
 import RowFormAssinatura from "components/utils/componentesUI/RowFormAssinatura";
 import { COMPRA_STARTSTOP_NAMESPACE } from "constants/ActionTypes";
@@ -20,7 +20,7 @@ import RowAtivoQtdeBoletas from "components/utils/componentesUI/RowAtivoQtdeBole
 import {
   pesquisarAtivoOnEnterAction,
   enviarOrdemAction,
-} from "redux/actions/api_actions/boletasAPIActions";
+} from "redux/actions/boletas/boletasAPIActions";
 import { mapStateToPropsConfigurarStop } from "components/popups/compra/compra_StartStop/ConfigurarStop";
 import { RowGainStopFormInternoConectada } from "components/utils/componentesUI/RowInputsFormatadosFormInterno";
 import { BotaoEnviarOrdem } from "components/utils/componentesUI/BotaoEnviarOrdem";

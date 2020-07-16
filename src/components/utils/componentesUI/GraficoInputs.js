@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import InputFormatado, {
   boxShadowInput,
 } from "components/utils/componentesUI/InputFormatado";
-import { mudarAtributoBoletaAction } from "redux/actions/formInputActions";
+import { mudarAtributoBoletaAction } from "redux/actions/boletas/formInputActions";
 import {
   COMPRA_AGENDADA_NAMESPACE,
   COMPRA_LIMITADA_NAMESPACE,

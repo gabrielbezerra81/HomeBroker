@@ -12,7 +12,7 @@ import {
   DispatchStorePrincipal,
   StateStorePrincipal,
 } from "redux/StoreCreation";
-import { mudarVariavelTHLAction } from "redux/actions/menu_actions/THLActions";
+import { mudarVariavelTHLAction } from "redux/actions/thl/THLActions";
 
 export default React.memo(({ dataTabela, classeMargemScroll }) => {
   const reduxState = StateStorePrincipal("thl");

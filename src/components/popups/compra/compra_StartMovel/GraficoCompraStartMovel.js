@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Form } from "react-bootstrap";
 import { connect } from "react-redux";
-import {} from "redux/actions/formInputActions";
+import {} from "redux/actions/boletas/formInputActions";
 import img from "img/compra/CompraStartMovel.png";
 import {
   LabelInputGrafico,

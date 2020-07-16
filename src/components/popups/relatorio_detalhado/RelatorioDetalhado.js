@@ -21,7 +21,7 @@ import Tabela3Resultado from "components/popups/relatorio_detalhado/Tabela3Resul
 import Tabela4HistoricoOrdens from "components/popups/relatorio_detalhado/Tabela4HistoricoOrdens";
 import { data } from "components/popups/posicao_custodia/posicao_detalhada/GraficoPatrimonio";
 import { GlobalContext } from "redux/StoreCreation";
-import { aumentarZindexAction } from "redux/actions/MainAppActions";
+import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
 
 class RelatorioDetalhado extends React.Component {
   componentDidMount() {
@@ -211,10 +211,7 @@ const positivoNegativo = (valor) => {
   else return "porcentagemNegativa";
 };
 
-export const ativoCompraVenda = (tipo) => {
-  if (tipo === "compra") return "ativoCompra";
-  else return "ativoVenda";
-};
+
 
 const item = {
   ativo: "PETR4",

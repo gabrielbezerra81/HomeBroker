@@ -15,8 +15,8 @@ import {
   mudarVariavelPosicaoAction,
   atualizarCotacoesAction,
   atualizarEmblemasAction,
-} from "redux/actions/menu_actions/PosicaoActions";
-import { aumentarZindexAction } from "redux/actions/MainAppActions";
+} from "redux/actions/posicao/PosicaoActions";
+import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
 import PosicaoDetalhada from "components/popups/posicao_custodia/posicao_detalhada/PosicaoDetalhada";
 
 class PosicaoEmCustodia extends React.Component {

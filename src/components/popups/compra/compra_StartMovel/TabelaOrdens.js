@@ -6,7 +6,7 @@ import {
   COMPRA_STARTMOVEL_NAMESPACE,
   REMOVE_ITEM_TABELA_ORDENS_MOVEL,
 } from "constants/ActionTypes";
-import { removerItemTabelaAction } from "redux/actions/formInputActions";
+import { removerItemTabelaAction } from "redux/actions/boletas/formInputActions";
 
 class TabelaOrdens extends React.Component {
   renderItems(tableData) {

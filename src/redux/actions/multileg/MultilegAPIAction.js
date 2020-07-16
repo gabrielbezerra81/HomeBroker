@@ -1,43 +1,43 @@
 import {
   pesquisarAtivoMultilegAPI,
-  pesquisarStrikesMultilegAPI,
   enviarOrdemAPI,
   travarDestravarClique,
   criarAlertaOperacaoAPI,
   criarPosicaoMultilegAPI,
 } from "api/API";
 import { PESQUISAR_ATIVO_MULTILEG_API } from "constants/ApiActionTypes";
+import { atualizarCotacaoAction } from "redux/actions/multileg/MultilegActions";
 import {
   montarOrdemMultileg,
   validarOrdemMultileg,
-  atualizarCotacaoAction,
   adicionaCotacoesMultileg,
-} from "redux/actions/menu_actions/MultilegActions";
-import { MODIFICAR_VARIAVEL_MULTILEG } from "constants/MenuActionTypes";
+  encontrarNumMaisProximo,
+  modificarVariavelMultileg,
+} from "./utils";
 
 ////
 
-export const pesquisarAtivoMultilegAction = (props, indice) => {
+export const pesquisarAtivoMultilegAPIAction = (props, indice) => {
   return async (dispatch) => {
-    dispatch({
-      type: MODIFICAR_VARIAVEL_MULTILEG,
-      payload: { nome: "pesquisandoAtivo", valor: true },
-    });
+    dispatch(
+      modificarVariavelMultileg({ nome: "pesquisandoAtivo", valor: true })
+    );
     const dados = await pesquisaAtivo(
       props.multileg,
       indice,
       props.cotacoesMultileg
     );
     dispatch({ type: PESQUISAR_ATIVO_MULTILEG_API, payload: dados.multileg });
-    dispatch({
-      type: MODIFICAR_VARIAVEL_MULTILEG,
-      payload: { nome: "cotacoesMultileg", valor: dados.cotacoesMultileg },
-    });
+    dispatch(
+      modificarVariavelMultileg({
+        nome: "cotacoesMultileg",
+        valor: dados.cotacoesMultileg,
+      })
+    );
     atualizarCotacaoAction(dispatch, props, dados.cotacoesMultileg);
-    dispatch({
-      type: MODIFICAR_VARIAVEL_MULTILEG,
-      payload: { nome: "pesquisandoAtivo", valor: false },
-    });
+    dispatch(
+      modificarVariavelMultileg({ nome: "pesquisandoAtivo", valor: false })
+    );
   };
 };
 
@@ -72,44 +72,6 @@ export const pesquisaAtivo = async (abasMultileg, indice, cotacoesMultileg) => {
 };
 
 ////
-
-export const pesquisarStrikesMultilegAction = async (
-  codigo_ativo,
-  vencimento
-) => {
-  travarDestravarClique("travar", "multileg");
-  const dados = await pesquisarStrikesMultilegAPI(codigo_ativo, vencimento);
-  travarDestravarClique("destravar", "multileg");
-  if (dados) {
-    return dados;
-  }
-  return async (dispatch) => {
-    dispatch({ type: "" });
-  };
-};
-
-export const encontrarNumMaisProximo = (
-  listaOpcoes,
-  cotacao,
-  codigo_ativo,
-  opcaoBool
-) => {
-  if (listaOpcoes.length > 0) {
-    if (opcaoBool) {
-      const opcao = listaOpcoes.filter(
-        (opcao) => opcao.symbol === codigo_ativo
-      );
-      return opcao[0].strike;
-    } else {
-      var maisProximo = listaOpcoes.reduce((prev, curr) =>
-        Math.abs(curr.strike - cotacao) < Math.abs(prev.strike - cotacao)
-          ? curr
-          : prev
-      );
-      return maisProximo.strike;
-    }
-  }
-};
 
 export const enviarOrdemMultilegAction = (props) => {
   return async (dispatch) => {

@@ -11,8 +11,8 @@ import {
   selecionarAdicionarAbaAction,
   modificarAtributoAbaAction,
   excluirAbaMultilegAction,
-} from "redux/actions/menu_actions/MultilegActions";
-import { aumentarZindexAction } from "redux/actions/MainAppActions";
+} from "redux/actions/multileg/MultilegActions";
+import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
 
 class Multileg extends React.Component {
   // shouldComponentUpdate(nextProps, nextState) {

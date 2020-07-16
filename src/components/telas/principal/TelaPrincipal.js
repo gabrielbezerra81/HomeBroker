@@ -6,10 +6,10 @@ import { connect } from "react-redux";
 import MenuLateralUsuario from "components/telas/principal/MenuLateralUsuario";
 import BarraTopoTelaPrincipal from "components/telas/principal/BarraTopoTelaPrincipal";
 import { StorePrincipalContext, GlobalContext } from "redux/StoreCreation";
-import { aumentarZindexAction } from "redux/actions/MainAppActions";
-import { listarOrdensExecAction } from "redux/actions/menu_actions/OrdensExecActions";
+import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
+import { listarOrdensExecAction } from "redux/actions/ordensExecucao/OrdensExecActions";
 import { abrirItemBarraLateralAction } from "redux/actions/TelaPrincipalActions";
-import { listarPosicoesAction } from "redux/actions/menu_actions/PosicaoActions";
+import { listarPosicoesAction } from "redux/actions/posicao/PosicaoActions";
 import BarraLateral from "components/telas/principal/BarraLateral";
 import MenuOrdens from "components/telas/principal/MenuOrdens";
 

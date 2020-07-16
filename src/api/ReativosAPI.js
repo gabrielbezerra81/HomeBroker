@@ -1,7 +1,7 @@
 import {
   adicionaPosicao,
-  mudarVariavelPosicaoAction,
-} from "redux/actions/menu_actions/PosicaoActions";
+  mudarVariavelPosicao,
+} from "redux/actions/posicao/utils";
 import {
   url_emblemaReativo_ids,
   url_base_reativa,
@@ -246,7 +246,7 @@ export const atualizarPosicaoAPI = (dispatch, listaPosicoes, token) => {
         }
       });
 
-      dispatch(mudarVariavelPosicaoAction("posicoesCustodia", novaLista));
+      dispatch(mudarVariavelPosicao("posicoesCustodia", novaLista));
     }
   };
 

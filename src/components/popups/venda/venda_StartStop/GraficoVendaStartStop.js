@@ -11,7 +11,7 @@ import {
 } from "components/utils/componentesUI/TextoGraficoBoletas";
 import { VENDA_STARTSTOP_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalAgendada } from "components/utils/CalculoValorTotal";
-import { abrirFormConfigurarAction } from "redux/actions/MainAppActions";
+import { abrirFormConfigurarAction } from "redux/actions/GlobalAppActions";
 import GraficoInputs from "components/utils/componentesUI/GraficoInputs";
 
 class GraficoVendaStartStop extends React.Component {

@@ -2,13 +2,13 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Col, Row, Form } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
-import { mudarInputHeaderAction } from "redux/actions/bookOfertaActions";
-import { listarBookOfertaOnEnterAction } from "redux/actions/api_actions/bookOfertaAPIActions";
+import { mudarInputHeaderAction } from "redux/actions/boletas/bookOfertaActions";
+import { listarBookOfertaOnEnterAction } from "redux/actions/boletas/bookOfertaAPIActions";
 import {
   fecharFormAction,
   abrirFormAction,
   fecharFormConfigurarAction,
-} from "redux/actions/MainAppActions";
+} from "redux/actions/GlobalAppActions";
 import {
   useSelectorGlobalStore,
   useDispatchGlobalStore,
@@ -20,8 +20,8 @@ import {
   StateStorePrincipal,
 } from "redux/StoreCreation";
 import { abrirItemBarraLateralAction } from "redux/actions/TelaPrincipalActions";
-import { abrirFecharConfigComplAction } from "redux/actions/menu_actions/MultilegActions";
-import { mudarVariavelOrdensExecAction } from "redux/actions/menu_actions/OrdensExecActions";
+import { abrirFecharConfigComplAction } from "redux/actions/multileg/MultilegActions";
+import { mudarVariavelOrdensExecAction } from "redux/actions/ordensExecucao/OrdensExecActions";
 
 // Apenas para boletas de compra e venda
 export const ModalHeader = ({

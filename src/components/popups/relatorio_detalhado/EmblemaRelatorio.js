@@ -4,7 +4,6 @@ import { ReactComponent as ArrowDown } from "img/down-arrow.svg";
 import { ReactComponent as ArrowUp } from "img/up-arrow.svg";
 import imgModeloEU from "img/modeloEU.png";
 import imgModeloUSA from "img/modeloUSA.png";
-import { ativoCompraVenda } from "components/popups/relatorio_detalhado/RelatorioDetalhado";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 
 class EmblemaRelatorio extends React.Component {
@@ -98,14 +97,14 @@ class EmblemaRelatorio extends React.Component {
 
 export default EmblemaRelatorio;
 
-const renderSeta = valor => {
+const renderSeta = (valor) => {
   valor = Number(valor);
   if (valor >= 0)
     return <ArrowUp fill="#138342" className="iconeSeta setaEmblema mr-1" />;
   else return <ArrowDown fill="red" className="iconeSeta setaEmblema mr-1" />;
 };
 
-const renderValorPorcentagem = porcentagem => {
+const renderValorPorcentagem = (porcentagem) => {
   if (porcentagem > 0) {
     porcentagem = formatarNumDecimal(porcentagem);
     return <span className="porcentagemPositiva">+{porcentagem}%</span>;
@@ -118,7 +117,7 @@ const renderValorPorcentagem = porcentagem => {
   }
 };
 
-const renderModelo = modelo => {
+const renderModelo = (modelo) => {
   return (
     <div>
       {modelo === "EU" ? (
@@ -128,4 +127,9 @@ const renderModelo = modelo => {
       )}
     </div>
   );
+};
+
+const ativoCompraVenda = (tipo) => {
+  if (tipo === "compra") return "ativoCompra";
+  else return "ativoVenda";
 };

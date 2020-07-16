@@ -24,7 +24,7 @@ import {
   atualizarDivKeyAction,
   abrirFormAction,
   aumentarZindexAction,
-} from "redux/actions/MainAppActions";
+} from "redux/actions/GlobalAppActions";
 import {
   mouseOverAction,
   mouseLeaveAction,

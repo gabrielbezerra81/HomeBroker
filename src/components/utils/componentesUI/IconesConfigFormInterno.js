@@ -5,7 +5,7 @@ import {
   useSelectorGlobalStore,
   useDispatchGlobalStore,
 } from "redux/StoreCreation";
-import { abrirFormAction } from "redux/actions/MainAppActions";
+import { abrirFormAction } from "redux/actions/GlobalAppActions";
 
 export const IconeConfigAbrirFormulario = ({ nomeFormulario }) => {
   const stateGlobalStore = useSelectorGlobalStore(

@@ -1,6 +1,6 @@
-import React from "react";
-import { mudarInputHeaderAction } from "redux/actions/bookOfertaActions";
-import { listarBookOfertaOnEnterAction } from "redux/actions/api_actions/bookOfertaAPIActions";
+import React, { Suspense } from "react";
+import { mudarInputHeaderAction } from "redux/actions/boletas/bookOfertaActions";
+import { listarBookOfertaOnEnterAction } from "redux/actions/boletas/bookOfertaAPIActions";
 import {
   AUMENTAR_ZINDEX,
   CRIAR_APP,
@@ -13,7 +13,10 @@ import {
   RECEBER_APPKEYLOCAL,
 } from "constants/ActionTypes";
 import { MUDAR_ORDEM_EXEC_MAIN_REDUCER } from "constants/MenuActionTypes";
-import { WrapperAppBoletasConectado } from "redux/ElementosConectadosRedux";
+
+const ContainerAppBoletas = React.lazy(() =>
+  import("components/ContainerAppBoletas")
+);
 
 export const criarMostrarAppAction = (apps, show, zindex, dispatch) => {
   dispatch({ type: CRIAR_APP, apps: apps, show: show, zIndex: zindex + 1 });
@@ -122,23 +125,19 @@ const criarMostrarApp = (name, props, dispatch, codigo_ativo) => {
     config_compra: false,
     config_venda: false,
   });
-  //Faz o dispatch dos dados de visibilidade
+  //Faz o dispatch dos dados de visibilidade das boletas
   atualizarShowAction(show, dispatch);
   const length = show.length;
 
   //escolher o que vai ser mostrado
   show[length - 1][name] = true;
 
-  let numeroApps = show.length;
-  let sub = (
-    <WrapperAppBoletasConectado
-      key={apps.length}
-      index={apps.length}
-      indiceShow={numeroApps - 1}
-      context={props.context}
-      codigoBook={codigo_ativo}
-    />
-  );
+  let sub = adicionarContainerAppBoletas({
+    numeroAppsAbertos: apps.length,
+    context: props.context,
+    codigoBook: codigo_ativo,
+  });
+
   apps.push(sub);
   criarMostrarAppAction(apps, show, props.zIndex, dispatch);
 };
@@ -208,4 +207,25 @@ export const receberDadosOrdemExecMainReducerAction = (dados) => {
       },
     });
   };
+};
+
+const adicionarContainerAppBoletas = ({
+  numeroAppsAbertos,
+  context,
+  codigoBook,
+}) => {
+  const containerApp = (
+    <ContainerAppBoletas
+      key={numeroAppsAbertos}
+      index={numeroAppsAbertos}
+      indiceShow={numeroAppsAbertos}
+      context={context}
+      codigoBook={codigoBook}
+    />
+  );
+
+  if (numeroAppsAbertos === 0)
+    return <Suspense fallback={null}>{containerApp}</Suspense>;
+
+  return containerApp;
 };

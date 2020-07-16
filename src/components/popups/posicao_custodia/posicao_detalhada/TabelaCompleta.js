@@ -1,7 +1,6 @@
 import React from "react";
 import { Row, Col, Table } from "react-bootstrap";
 import EmblemaSimples from "components/utils/componentesUI/EmblemaSimples";
-import { corSaldoOp } from "components/popups/posicao_custodia/posicao_detalhada/TabelaSimples";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 
 export default class TabelaCompleta extends React.Component {
@@ -173,4 +172,9 @@ export const calculaVariacao = (variacao) => {
   }
   result += formatarNumDecimal(variacao) + "%";
   return <h6 className={classe}>{result}</h6>;
+};
+
+export const corSaldoOp = (osc) => {
+  if (osc >= 0) return "saldoOpPositivo";
+  else return "saldoOpNegativo";
 };

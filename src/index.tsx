@@ -1,14 +1,30 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./index.css";
-// import * as serviceWorker from "./serviceWorker";
+import "./css/index";
 import "@fortawesome/fontawesome-free/css/all.css";
-import { Helper } from "redux/ElementosConectadosRedux";
+import { Routes } from "routing/routes";
 import PerfectScrollbar from "react-perfect-scrollbar";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import {
+  StorePrincipalContext,
+  globalStore,
+  GlobalContext,
+  storeAppPrincipal,
+  persistor,
+} from "redux/StoreCreation";
 
 ReactDOM.render(
-  <PerfectScrollbar id="scrollbarPrincipal">{Helper()}</PerfectScrollbar>,
+  <Provider store={globalStore} context={GlobalContext}>
+    <Provider store={storeAppPrincipal} context={StorePrincipalContext}>
+      <PersistGate loading={null} persistor={persistor}>
+        <PerfectScrollbar id="scrollbarPrincipal">
+          <Routes />
+        </PerfectScrollbar>
+      </PersistGate>
+    </Provider>
+  </Provider>,
   document.getElementById("root")
 );
 

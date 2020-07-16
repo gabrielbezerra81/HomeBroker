@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
-import { mostrarErroQtdeOnBlurAction } from "redux/actions/bookOfertaActions";
+import { mostrarErroQtdeOnBlurAction } from "redux/actions/boletas/bookOfertaActions";
 import {
   mudarQtdAction,
   mudarValidadeSelectAction,
@@ -11,12 +11,12 @@ import {
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction,
   adicionarItemTabelaGainReducaoAction,
-} from "redux/actions/formInputActions";
+} from "redux/actions/boletas/formInputActions";
 import RowFormValidade from "components/utils/componentesUI/RowFormValidade";
 import RowFormAssinatura from "components/utils/componentesUI/RowFormAssinatura";
 import { VENDA_GAINREDUCAO_NAMESPACE } from "constants/ActionTypes";
 import TabelaGainReducao from "./TabelaGainReducao";
-import { pesquisarAtivoOnEnterAction } from "redux/actions/api_actions/boletasAPIActions";
+import { pesquisarAtivoOnEnterAction } from "redux/actions/boletas/boletasAPIActions";
 import { RowInputsGainReducaoConectada } from "components/utils/componentesUI/RowInputsFormatadosFormInterno";
 import { BotaoEnviarOrdem } from "components/utils/componentesUI/BotaoEnviarOrdem";
 

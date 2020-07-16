@@ -3,7 +3,6 @@ import { Row } from "react-bootstrap";
 import { Animate } from "react-show";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import "../css";
 import BookOfertas from "./popups/book_Ofertas/BookOfertas";
 import CompraAgendada from "components/popups/compra/compra_Agendada/CompraAgendada";
 import CompraLimitada from "components/popups/compra/compra_Limitada/CompraLimitada";
@@ -24,10 +23,10 @@ import {
   aumentarZindexAction,
   receberAppPropsAction,
   receberDadosOrdemExecMainReducerAction,
-} from "redux/actions/MainAppActions";
-import { listarBookOfertaOnEnterAction } from "redux/actions/api_actions/bookOfertaAPIActions";
-import { mudarInputHeaderAction } from "redux/actions/bookOfertaActions";
-import { montarBoletaFromOrdemExecAction } from "redux/actions/formInputActions";
+} from "redux/actions/GlobalAppActions";
+import { listarBookOfertaOnEnterAction } from "redux/actions/boletas/bookOfertaAPIActions";
+import { mudarInputHeaderAction } from "redux/actions/boletas/bookOfertaActions";
+import { montarBoletaFromOrdemExecAction } from "redux/actions/boletas/formInputActions";
 
 const startStyle = {
   opacity: 0,

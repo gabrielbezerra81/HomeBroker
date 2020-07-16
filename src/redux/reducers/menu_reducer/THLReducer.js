@@ -6,7 +6,7 @@ import { tempData } from "components/popups/thl/tabelaCombinacoes/tempData";
 import {
   montarTabelaCombinacoes,
   mapearTabelaVencimentos,
-} from "redux/actions/api_actions/ThlAPIAction";
+} from "redux/actions/thl/ThlAPIAction";
 
 const INITIAL_STATE = {
   ativoPesquisa: "PETR4",

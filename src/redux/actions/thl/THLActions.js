@@ -1,12 +1,8 @@
-import {
-  MUDAR_VARIAVEL_THL,
-  MUDAR_VARIAVEIS_THL,
-} from "constants/MenuActionTypes";
 import { travarDestravarClique } from "api/API";
 import {
   atualizarDivKeyAction,
   aumentarZindexAction,
-} from "redux/actions/MainAppActions";
+} from "redux/actions/GlobalAppActions";
 import { abrirItemBarraLateralAction } from "redux/actions/TelaPrincipalActions";
 import {
   adicionarAba,
@@ -14,27 +10,22 @@ import {
   atualizarCotacaoAction,
   adicionarOferta,
   modificarVariavelMultilegAction,
-} from "redux/actions/menu_actions/MultilegActions";
+} from "redux/actions/multileg/MultilegActions";
 import { erro_exportar_ordens_multileg } from "constants/AlertaErros";
-import { pesquisaAtivo } from "redux/actions/api_actions/MultilegAPIAction";
+import { pesquisaAtivo } from "redux/actions/multileg/MultilegAPIAction";
 import { calculoPreco } from "components/popups/multileg_/CalculoPreco";
 import { formatarNumero } from "redux/reducers/boletas_reducer/formInputReducer";
+import { mudarVariaveisTHL, mudarVariavelTHL } from "./utils";
 
 export const mudarVariavelTHLAction = (nome, valor) => {
   return (dispatch) => {
-    dispatch({
-      type: MUDAR_VARIAVEL_THL,
-      payload: { nome, valor },
-    });
+    dispatch(mudarVariavelTHL({ nome, valor }));
   };
 };
 
 export const mudarVariaveisTHLAction = (payload) => {
   return (dispatch) => {
-    dispatch({
-      type: MUDAR_VARIAVEIS_THL,
-      payload,
-    });
+    dispatch(mudarVariaveisTHL(payload));
   };
 };
 

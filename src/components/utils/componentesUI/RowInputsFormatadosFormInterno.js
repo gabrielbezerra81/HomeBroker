@@ -8,8 +8,8 @@ import {
   mudarAtributoBoletaAction,
   adicionarItemTabelaGainReducaoAction,
   mudarQtdAction,
-} from "redux/actions/formInputActions";
-import { mostrarErroQtdeOnBlurAction } from "redux/actions/bookOfertaActions";
+} from "redux/actions/boletas/formInputActions";
+import { mostrarErroQtdeOnBlurAction } from "redux/actions/boletas/bookOfertaActions";
 import { IconeConfigAbrirFormulario } from "components/utils/componentesUI/IconesConfigFormInterno";
 import { mapStateToPropsInputsPreco } from "components/utils/componentesUI/GraficoInputs";
 import { MDBIcon } from "mdbreact";

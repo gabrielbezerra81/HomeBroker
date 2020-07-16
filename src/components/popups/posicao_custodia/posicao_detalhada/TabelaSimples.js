@@ -5,6 +5,7 @@ import {
   calculaTotal,
   calculaResultado,
   calculaVariacao,
+  corSaldoOp,
 } from "components/popups/posicao_custodia/posicao_detalhada/TabelaCompleta";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 
@@ -123,8 +124,3 @@ export default class TabelaSimples extends React.Component {
     );
   }
 }
-
-export const corSaldoOp = (osc) => {
-  if (osc >= 0) return "saldoOpPositivo";
-  else return "saldoOpNegativo";
-};

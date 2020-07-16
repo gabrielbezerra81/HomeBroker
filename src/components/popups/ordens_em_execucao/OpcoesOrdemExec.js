@@ -18,14 +18,14 @@ import {
   finalizarAMercadoAction,
   aumentarQtdePrecoAction,
   abrirOrdensBoletaAction,
-} from "redux/actions/menu_actions/OrdensExecActions";
+} from "redux/actions/ordensExecucao/OrdensExecActions";
 import { abrirItemBarraLateralAction } from "redux/actions/TelaPrincipalActions";
 import {
   atualizarDivKeyAction,
   abrirFormAction,
   aumentarZindexAction,
   receberDadosOrdemExecMainReducerAction,
-} from "redux/actions/MainAppActions";
+} from "redux/actions/GlobalAppActions";
 
 class OpcoesOrdemExec extends React.Component {
   shouldComponentUpdate(nextProps) {

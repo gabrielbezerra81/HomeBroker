@@ -9,9 +9,9 @@ import {
   TextoGainStopGrafico,
   TextoValorTotalGrafico,
 } from "components/utils/componentesUI/TextoGraficoBoletas";
-import { mudarInputConfigAction } from "redux/actions/formInputActions";
+import { mudarInputConfigAction } from "redux/actions/boletas/formInputActions";
 import { CalculoValorTotalAgendada } from "components/utils/CalculoValorTotal";
-import { fecharFormConfigurarAction } from "redux/actions/MainAppActions";
+import { fecharFormConfigurarAction } from "redux/actions/GlobalAppActions";
 import { ModalHeaderLimpo } from "components/utils/componentesUI/FormHeader";
 import GraficoInputsConfigStartStop from "components/utils/componentesUI/GraficoInputsConfigStartStop";
 

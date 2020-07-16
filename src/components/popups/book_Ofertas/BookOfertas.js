@@ -7,11 +7,11 @@ import {
   mudarGainAction,
   mudarInputHeaderAction,
   mostrarErroQtdeOnBlurAction,
-} from "redux/actions/bookOfertaActions";
+} from "redux/actions/boletas/bookOfertaActions";
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import TabelaOfertas from "./TabelaOfertas";
 import { BookHeader } from "components/utils/componentesUI/FormHeader";
-import { listarBookOfertaOnEnterAction } from "redux/actions/api_actions/bookOfertaAPIActions";
+import { listarBookOfertaOnEnterAction } from "redux/actions/boletas/bookOfertaAPIActions";
 
 class BookOfertas extends React.Component {
   render() {

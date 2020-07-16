@@ -6,9 +6,8 @@ import { connect } from "react-redux";
 import {
   modificarAtributoTabelaAbaAction,
   excluirOfertaTabelaAction,
-  buscaCotacao,
-  buscaBook,
-} from "redux/actions/menu_actions/MultilegActions";
+} from "redux/actions/multileg/MultilegActions";
+import { buscaCotacao, buscaBook } from "redux/actions/multileg/utils";
 import { MDBIcon } from "mdbreact";
 import {
   formatarNumDecimal,

@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import {
   abrirFecharConfigComplAction,
   modificarVariavelMultilegAction,
-} from "redux/actions/menu_actions/MultilegActions";
+} from "redux/actions/multileg/MultilegActions";
 import { StorePrincipalContext } from "redux/StoreCreation";
 
 class ConfigComplementar extends React.Component {

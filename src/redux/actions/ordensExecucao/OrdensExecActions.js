@@ -16,8 +16,8 @@ import {
   atualizarCotacaoAction,
   adicionarOferta,
   modificarVariavelMultilegAction,
-} from "redux/actions/menu_actions/MultilegActions";
-import { pesquisaAtivo } from "redux/actions/api_actions/MultilegAPIAction";
+} from "redux/actions/multileg/MultilegActions";
+import { pesquisaAtivo } from "redux/actions/multileg/MultilegAPIAction";
 import { erro_exportar_ordens_multileg } from "constants/AlertaErros";
 import {
   calculoPreco,

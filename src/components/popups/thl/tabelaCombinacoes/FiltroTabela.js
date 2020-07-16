@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { FormControl } from "react-bootstrap";
 import { Select } from "antd";
 import _ from "lodash";
-import { mudarVariavelTHLAction } from "redux/actions/menu_actions/THLActions";
+import { mudarVariavelTHLAction } from "redux/actions/thl/THLActions";
 import { StorePrincipalContext } from "redux/StoreCreation";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 

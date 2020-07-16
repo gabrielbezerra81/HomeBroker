@@ -6,11 +6,11 @@ import { formatarDataDaAPI } from "components/utils/Formatacoes";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { GlobalContext, StorePrincipalContext } from "redux/StoreCreation";
-import { mudarVariavelOrdensExecAction } from "redux/actions/menu_actions/OrdensExecActions";
+import { mudarVariavelOrdensExecAction } from "redux/actions/ordensExecucao/OrdensExecActions";
 import {
   atualizarDivKeyAction,
   aumentarZindexAction,
-} from "redux/actions/MainAppActions";
+} from "redux/actions/GlobalAppActions";
 import { abrirItemBarraLateralAction } from "redux/actions/TelaPrincipalActions";
 import OpcoesOrdemExec from "components/popups/ordens_em_execucao/OpcoesOrdemExec";
 

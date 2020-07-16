@@ -10,9 +10,9 @@ import {
 import {
   abrirFormAction,
   abrirFormConfigurarAction,
-} from "redux/actions/MainAppActions";
+} from "redux/actions/GlobalAppActions";
 import { useDispatch } from "react-redux";
-import { abrirFecharConfigComplAction } from "redux/actions/menu_actions/MultilegActions";
+import { abrirFecharConfigComplAction } from "redux/actions/multileg/MultilegActions";
 
 export default ({ className, name = "" }) => {
   let handleShow;

@@ -1,26 +1,22 @@
 import { cloneDeep } from "lodash";
-import { MODIFICAR_VARIAVEL_MULTILEG } from "constants/MenuActionTypes";
 import {
-  pesquisarStrikesMultilegAction,
-  encontrarNumMaisProximo,
-} from "redux/actions/api_actions/MultilegAPIAction";
-import { pesquisarAtivoAPI, travarDestravarClique } from "api/API";
+  pesquisarAtivoAPI,
+  travarDestravarClique,
+  pesquisarStrikesMultilegAPI,
+} from "api/API";
 import { atualizarCotacaoAPI } from "api/ReativosAPI";
 import { calculoPreco } from "components/popups/multileg_/CalculoPreco";
 import { formatarNumero } from "redux/reducers/boletas_reducer/formInputReducer";
 import {
-  erro_validar_qtde,
-  erro_validar_codigo_duplicado_multileg,
-  erro_validar_contaSelecionada,
-} from "constants/AlertaErros";
-import { getformatedDate } from "components/utils/Formatacoes";
+  encontrarNumMaisProximo,
+  adicionaCotacoesMultileg,
+  verificaCotacaoJaAdd,
+  modificarVariavelMultileg,
+} from "./utils";
 
 export const modificarVariavelMultilegAction = (nome, valor) => {
   return (dispatch) => {
-    dispatch({
-      type: MODIFICAR_VARIAVEL_MULTILEG,
-      payload: { nome: nome, valor: valor },
-    });
+    dispatch(modificarVariavelMultileg({ nome: nome, valor: valor }));
   };
 };
 
@@ -111,6 +107,7 @@ export const modificarAba = async (
   valor,
   props = null
 ) => {
+  travarDestravarClique("travar", "multileg");
   let abasMultileg = clonarMultileg(multileg);
   let cotacoesMultileg;
 
@@ -130,11 +127,12 @@ export const modificarAba = async (
 
       if (!verificaCotacaoJaAdd(cotacoesMultileg, codigo)) {
         const dadosAtivo = await pesquisarAtivoAPI(codigo);
+        console.log(dadosAtivo);
         var cotacao = dadosAtivo.cotacaoAtual;
         adicionaCotacoesMultileg(cotacoesMultileg, codigo, cotacao);
       }
 
-      const dados = await pesquisarStrikesMultilegAction(
+      const dados = await pesquisarStrikesMultilegAPI(
         codigo,
         multileg[indice].vencimentoSelecionado
       );
@@ -147,6 +145,7 @@ export const modificarAba = async (
       }
     }
   }
+  travarDestravarClique("destravar", "multileg");
   return { abasMultileg, cotacoesMultileg };
 };
 
@@ -176,7 +175,7 @@ export const modificarAtributoTabelaAbaAction = (
       linhaTabela[atributo] = valor;
       //Se a série for alterada, pesquisa novamente os strikes e códigos
       if (atributo === "serieSelecionada") {
-        const dados = await pesquisarStrikesMultilegAction(
+        const dados = await pesquisarStrikesMultilegAPI(
           linhaTabela.ativoAtual,
           valor
         );
@@ -389,96 +388,6 @@ const pesquisarSerieStrikeModeloTipo_symbol = (objeto) => {
   });
 };
 
-export const validarOrdemMultileg = (props) => {
-  let abaMultileg = [...props.multileg][props.indice];
-  let valido = true;
-
-  const qtde0 = abaMultileg.tabelaMultileg.some(
-    (oferta, index) => oferta.qtde === 0
-  );
-  if (qtde0) {
-    valido = false;
-    alert(erro_validar_qtde);
-  }
-
-  const codigos = abaMultileg.tabelaMultileg.map(
-    (oferta) => oferta.codigoSelecionado
-  );
-
-  if (new Set(codigos).size !== codigos.length) {
-    valido = false;
-    const repetidos = encontrarCodigosRepetidos(codigos);
-    let codigos_erro = "";
-
-    repetidos.forEach((repetido) => {
-      if (!codigos_erro.includes(repetido)) codigos_erro += repetido + ", ";
-    });
-
-    codigos_erro = codigos_erro.substring(0, codigos_erro.length - 2);
-
-    alert(`${erro_validar_codigo_duplicado_multileg}: ${codigos_erro}`);
-  }
-  if (!props.contaSelecionada) {
-    valido = false;
-    alert(erro_validar_contaSelecionada);
-  }
-
-  return valido;
-};
-
-export const montarOrdemMultileg = (props) => {
-  let abaMultileg = [...props.multileg][props.indice];
-
-  let json = {
-    account: {},
-    tradeName: {},
-    offers: [],
-    next: [],
-  };
-  json.account.id = props.contaSelecionada.id;
-  json.enabled = true;
-  json.multiStocks = true;
-  if (abaMultileg.validadeSelect === "DAY")
-    json.expiration = getformatedDate(new Date()) + " 22:00:00";
-  else {
-    json.expiration = abaMultileg.date.toLocaleString("pt-BR");
-  }
-  json.status = "Nova";
-  json.priority = 0;
-  json.tradeName.name = "Multileg";
-  json.formName = "Multileg";
-
-  abaMultileg.tabelaMultileg.forEach((oferta, index) => {
-    let ofertaPrincipal = {
-      stock: {},
-    };
-
-    ofertaPrincipal.stock.symbol = oferta.codigoSelecionado;
-    ofertaPrincipal.limit = oferta.despernamento;
-    ofertaPrincipal.qtty = oferta.qtde;
-    ofertaPrincipal.priority = Number(oferta.prioridade);
-    ofertaPrincipal.offerType = oferta.cv.charAt(0).toUpperCase();
-    //ofertaPrincipal.orderType = "multileg";
-    if (ofertaPrincipal.offerType === "C") ofertaPrincipal.orderType = "buy";
-    else if (ofertaPrincipal.offerType === "V")
-      ofertaPrincipal.orderType = "sell";
-
-    if (abaMultileg.validadeSelect === "DAY")
-      ofertaPrincipal.expiration = getformatedDate(new Date()) + " 22:00:00";
-    else {
-      ofertaPrincipal.expiration = abaMultileg.date.toLocaleString("pt-BR");
-    }
-
-    ofertaPrincipal.price = Number(
-      abaMultileg.preco.split(".").join("").replace(",", ".")
-    );
-    ofertaPrincipal.expirationType = abaMultileg.validadeSelect;
-
-    json.offers.push(ofertaPrincipal);
-  });
-  return json;
-};
-
 //Formato antigo
 export const atualizarCotacaoAction = (dispatch, props, cotacoesMultileg) => {
   if (props.eventSourceCotacao) {
@@ -503,58 +412,6 @@ export const atualizarCotacaoAction = (dispatch, props, cotacoesMultileg) => {
   );
 
   dispatch(modificarVariavelMultilegAction("eventSourceCotacao", newSource));
-};
-
-export const adicionaCotacoesMultileg = (
-  cotacoesMultileg,
-  novoCodigo,
-  valorCotacao = ""
-) => {
-  const cotacaoJaAdicionada = verificaCotacaoJaAdd(
-    cotacoesMultileg,
-    novoCodigo
-  );
-
-  if (!cotacaoJaAdicionada) {
-    cotacoesMultileg.push({
-      codigo: novoCodigo,
-      valor: valorCotacao,
-      compra: {
-        price: "",
-        qtty: "",
-        type: "C",
-      },
-      venda: {
-        price: "",
-        qtty: "",
-        type: "V",
-      },
-    });
-  }
-};
-
-const verificaCotacaoJaAdd = (cotacoesMultileg, novoCodigo) => {
-  return cotacoesMultileg.find((cotacao) => cotacao.codigo === novoCodigo);
-};
-
-export const buscaCotacao = (cotacoesMultileg, codigo) => {
-  const cotacao = cotacoesMultileg.find((cotacao) => cotacao.codigo === codigo);
-
-  if (cotacao) return cotacao.valor;
-  return "";
-};
-
-export const buscaBook = (booksMultileg, codigoOferta) => {
-  const book = booksMultileg.find((book) => book.codigo === codigoOferta);
-  if (book) return book;
-  return null;
-};
-
-const encontrarCodigosRepetidos = (array) => {
-  return array.reduce(function (acc, el, i, arr) {
-    if (arr.indexOf(el) !== i && acc.indexOf(el) < 0) acc.push(el);
-    return acc;
-  }, []);
 };
 
 export const clonarMultileg = (multileg) => {

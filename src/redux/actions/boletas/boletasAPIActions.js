@@ -9,7 +9,7 @@ import {
   ATUALIZAR_EVENT_SOURCE_BOLETAS,
   MUDAR_QTDE,
 } from "constants/ActionTypes";
-import { mudarAtributoBoletaAction } from "redux/actions/formInputActions";
+import { mudarAtributoBoletaAction } from "redux/actions/boletas/formInputActions";
 
 export const pesquisarAtivoOnEnterAction = (props, namespace) => {
   return async (dispatch) => {

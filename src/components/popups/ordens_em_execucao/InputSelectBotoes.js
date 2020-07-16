@@ -9,7 +9,7 @@ import {
 import {
   mudarVariavelOrdensExecAction,
   aumentarQtdePrecoAction,
-} from "redux/actions/menu_actions/OrdensExecActions";
+} from "redux/actions/ordensExecucao/OrdensExecActions";
 
 export default (props) => {
   const dispatch = DispatchStorePrincipal();
