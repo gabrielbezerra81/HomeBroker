@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Form, Button } from "react-bootstrap";
-import { connect } from "react-redux";
 import {
   cadastrarUsuarioAction,
   mudarDadosLoginAction,
@@ -13,21 +12,29 @@ import {
 } from "redux/StoreCreation";
 
 const TelaCadastro = ({ path }) => {
+  const state = StateStorePrincipal("principal");
+  const dispatch = DispatchStorePrincipal();
+
   const {
-    inputUsuario,
-    inputSenha,
     nomeCadastro,
     usernameCadastro,
     emailCadastro,
     senhaCadastro,
-  } = StateStorePrincipal("principal");
-  const dispatch = DispatchStorePrincipal();
+  } = state;
+
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(cadastrarUsuarioAction(state));
+    },
+    [dispatch, state]
+  );
 
   return (
     <div className="backgroundLoginCadastro">
       <div className="containerTelaCadastro">
         <div className="divCadastro">
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <div className="conteudoCadastro">
               <h4>Faça seu cadastro</h4>
               <FloatingLabelInput
@@ -89,7 +96,7 @@ const TelaCadastro = ({ path }) => {
                 id="botaoCadastrar"
                 variant="primary"
                 className="mt-2"
-                onClick={() => dispatch(cadastrarUsuarioAction({}))}
+                type="submit"
               >
                 Cadastrar-se
               </Button>
