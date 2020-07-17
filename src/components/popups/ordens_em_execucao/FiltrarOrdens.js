@@ -13,7 +13,7 @@ class FiltrarOrdens extends React.Component {
       <div className="mcontent divFiltrarOrdens">
         <Form>
           <Row>
-            <Col md={0}>
+            <Col md={"0"}>
               <Form.Group>
                 <h6>Ativo</h6>
                 <Form.Control
@@ -29,7 +29,7 @@ class FiltrarOrdens extends React.Component {
                 />
               </Form.Group>
             </Col>
-            <Col md={0}>
+            <Col md={"0"}>
               <Form.Group>
                 <h6>Mercado</h6>
                 <Form.Control
@@ -48,7 +48,7 @@ class FiltrarOrdens extends React.Component {
                 </Form.Control>
               </Form.Group>
             </Col>
-            <Col md={0}>
+            <Col md={"0"}>
               <Form.Group>
                 <h6>Conta</h6>
                 <Form.Control
@@ -67,7 +67,7 @@ class FiltrarOrdens extends React.Component {
                 </Form.Control>
               </Form.Group>
             </Col>
-            <Col md={0}>
+            <Col md={"0"}>
               <Form.Group>
                 <h6>Status</h6>
                 <Form.Control
@@ -86,7 +86,7 @@ class FiltrarOrdens extends React.Component {
                 </Form.Control>
               </Form.Group>
             </Col>
-            <Col md={0}>
+            <Col md={"0"}>
               <Form.Group>
                 <h6>Data</h6>
                 <Form.Control
@@ -105,7 +105,7 @@ class FiltrarOrdens extends React.Component {
                 </Form.Control>
               </Form.Group>
             </Col>
-            <Col md={0}>
+            <Col md={"0"}>
               <Form.Group>
                 <h6>Oferta</h6>
                 <Form.Control
@@ -124,7 +124,7 @@ class FiltrarOrdens extends React.Component {
                 </Form.Control>
               </Form.Group>
             </Col>
-            <Col md={0}>
+            <Col md={"0"}>
               <Button
                 variant="primary"
                 size="sm"

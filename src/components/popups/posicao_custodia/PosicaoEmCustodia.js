@@ -180,7 +180,7 @@ const Linha2 = ({ props }) => {
           </InputGroup.Append>
         </InputGroup>
       </Col>
-      <Col md={0}>
+      <Col md={"0"}>
         <Form.Group>
           <Form.Control
             as="select"

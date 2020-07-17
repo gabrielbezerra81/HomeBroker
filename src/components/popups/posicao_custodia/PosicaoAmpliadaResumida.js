@@ -27,7 +27,7 @@ class PosicaoAmpliadaResumida extends React.Component {
                 {renderAtivo(item)}
 
                 {item.custodiaCompra.length > 0 ? (
-                  <Col md={0}>
+                  <Col md={"0"}>
                     {item.custodiaCompra.map((itemCustodiaCompra, index2) => (
                       <h6
                         key={`custodiaCompra${index2}`}
@@ -40,7 +40,7 @@ class PosicaoAmpliadaResumida extends React.Component {
                   </Col>
                 ) : null}
                 {item.custodiaVenda.length > 0 ? (
-                  <Col md={0}>
+                  <Col md={"0"}>
                     {item.custodiaVenda.map((itemCustodiaVenda, index2) => (
                       <h6
                         key={`custodiaVenda${index2}`}
@@ -64,10 +64,10 @@ class PosicaoAmpliadaResumida extends React.Component {
                 {props.tipoVisualizacao === "ampliado" ? (
                   <div>
                     <div className="divSetaPorcentagem">
-                      <Col md={0} className="m-2">
+                      <Col md={"0"} className="m-2">
                         Resultado: {formatarNumDecimal(item.total)}
                       </Col>
-                      <Col md={0} className="m-2">
+                      <Col md={"0"} className="m-2">
                         {renderValorPorcentagem(item.variacaoGanho)}
                       </Col>
                     </div>
@@ -169,7 +169,7 @@ const renderAtivo = (item) => {
     return <span key={`custodiaCompra${ind}`}></span>;
   });
 
-  return mostrarAtivo ? <Col md={0}>{conteudo}</Col> : null;
+  return mostrarAtivo ? <Col md={"0"}>{conteudo}</Col> : null;
 };
 
 const renderValorPorcentagem = (porcentagem) => {

@@ -63,11 +63,11 @@ class RelatorioDetalhado extends React.Component {
     return (
       <div className="bodyRelatorioDetalhado">
         <Row className="row1">
-          <Col md={0}>
+          <Col md={"0"}>
             <h6>TRAVA HORIZONTAL DE LINHA - THL</h6>
             <h6>PUT 28 PETR</h6>
           </Col>
-          <Col md={0}>
+          <Col md={"0"}>
             <div className="flexRow ativoCompra">
               <h6 className="mr-1">PETRT275</h6>
               <h6 className="qtdeAtivo">+1k</h6>
@@ -77,13 +77,13 @@ class RelatorioDetalhado extends React.Component {
               <h6 className="qtdeAtivo">+1k</h6>
             </div>
           </Col>
-          <Col md={0}>
+          <Col md={"0"}>
             <div className={`flexRow ${positivoNegativo(180)}`}>
               <h6 className="mr-3">Resultado: R$ +180,00</h6>
               <h6>+38,46%</h6>
             </div>
           </Col>
-          <Col md={0}>
+          <Col md={"0"}>
             <div className={`${positivoNegativo(180)}`}>
               <h6>Inicio</h6>
               <h6>25/06/2019</h6>
@@ -210,8 +210,6 @@ const positivoNegativo = (valor) => {
   if (valor >= 0) return "porcentagemPositiva";
   else return "porcentagemNegativa";
 };
-
-
 
 const item = {
   ativo: "PETR4",

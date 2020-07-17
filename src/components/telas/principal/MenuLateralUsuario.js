@@ -78,7 +78,7 @@ const renderDivLogin = (props) => {
         tabIndex={0}
       >
         <Row className="botaoDeslogar">
-          <Col md={0} className="colLogout">
+          <Col md={"0"} className="colLogout">
             <MDBIcon icon="power-off" className="iconeDeslogar" />
           </Col>
           <Col md={4} className="colLogout">
@@ -86,7 +86,7 @@ const renderDivLogin = (props) => {
           </Col>
         </Row>
         <Row>
-          <Col md={0} className="colLogout">
+          <Col md={"0"} className="colLogout">
             <MDBIcon
               icon="circle"
               className="iconeStatusCirculo iconeStatusConectado"
@@ -106,7 +106,7 @@ const renderDivLogin = (props) => {
         onClick={(event) => props.deslogarUsuarioAction(event, props)}
       >
         <Row className="botaoDeslogar">
-          <Col md={0} className="colLogout">
+          <Col md={"0"} className="colLogout">
             <MDBIcon icon="power-off" className="iconeDeslogar" />
           </Col>
           <Col md={3} className="colLogout">
@@ -114,7 +114,7 @@ const renderDivLogin = (props) => {
           </Col>
         </Row>
         <Row>
-          <Col md={0} className="colLogout">
+          <Col md={"0"} className="colLogout">
             <MDBIcon
               icon="circle"
               className="iconeStatusCirculo iconeStatusDesconectado"

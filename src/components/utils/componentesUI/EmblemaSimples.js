@@ -12,7 +12,7 @@ export default React.memo(
       <div className={emblemaMaior ? "" : "itemListaCompleta"}>
         <Row>
           <Col>Min</Col>
-          <Col md={0}>Médio</Col>
+          <Col md={"0"}>Médio</Col>
           <Col className="text-align-right">Max</Col>
         </Row>
         <div className="containerSliderTopo">
@@ -41,7 +41,7 @@ export default React.memo(
           </Col>
         </Row>
         <div className="divSetaPorcentagem">
-          <Col md={0}>
+          <Col md={"0"}>
             STOP<br></br>
             {formatarNumDecimal(item.stopLoss)}
           </Col>
@@ -61,7 +61,7 @@ export default React.memo(
               />
             </div>
           </Col>
-          <Col md={0}>
+          <Col md={"0"}>
             GAIN<br></br>
             {formatarNumDecimal(item.stopGain)}
           </Col>

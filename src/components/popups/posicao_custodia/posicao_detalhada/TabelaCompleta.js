@@ -22,7 +22,7 @@ export default class TabelaCompleta extends React.Component {
           </Col>
         </Row>
         <Row className="rowCompra mb-3">
-          <Col md={0} className="pb-3">
+          <Col md={"0"} className="pb-3">
             <EmblemaSimples item={this.props.dados} />
           </Col>
           <Col className="colTabela">

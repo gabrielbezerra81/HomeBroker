@@ -36,7 +36,7 @@ class PosicaoDetalhada extends React.Component {
         </Row>
         <Row className="rowCheckbox">
           <Col md={7} className="divCheckbox">
-            <Col md={0}>
+            <Col md={"0"}>
               <div className="divCheckbox">
                 <div className="round mr-3">
                   <input type="checkbox" id="checkbox" />
@@ -45,7 +45,7 @@ class PosicaoDetalhada extends React.Component {
                 <h6>Ações</h6>
               </div>
             </Col>
-            <Col md={0}>
+            <Col md={"0"}>
               <div className="divCheckbox">
                 <div className="round mr-3">
                   <input type="checkbox" id="checkbox2" />
@@ -54,7 +54,7 @@ class PosicaoDetalhada extends React.Component {
                 <h6>Opções</h6>
               </div>
             </Col>
-            <Col md={0}>
+            <Col md={"0"}>
               <div className="divCheckbox">
                 <div className="round mr-3">
                   <input type="checkbox" id="checkbox3" />
@@ -63,7 +63,7 @@ class PosicaoDetalhada extends React.Component {
                 <h6>Agrupados por Operações</h6>
               </div>
             </Col>
-            <Col md={0}>
+            <Col md={"0"}>
               <div className="divCheckbox">
                 <div className="round mr-3">
                   <input type="checkbox" id="checkbox4" />

@@ -34,19 +34,19 @@ export const BodyHeaderCompleto = ({ dadosPesquisa }) => {
     } else if (dadosPesquisa.market === "tipo2") {
       return (
         <Row className="rowBodyHeader">
-          <Col md={0} className=" ml-3 mr-2">
+          <Col md={"0"} className=" ml-3 mr-2">
             <h5>{dadosPesquisa.resultadoAtivo}</h5>
           </Col>
-          <Col md={0} className="colStrikeVencimento mr-5">
+          <Col md={"0"} className="colStrikeVencimento mr-5">
             <h5>({dadosPesquisa.strike})</h5>
           </Col>
-          <Col md={0}>
+          <Col md={"0"}>
             <h5>{dadosPesquisa.tipo}</h5>
           </Col>
-          <Col md={0} className="colModeloBodyHeader">
+          <Col md={"0"} className="colModeloBodyHeader">
             {renderModelo(dadosPesquisa.model)}
           </Col>
-          <Col md={0} className="colStrikeVencimento">
+          <Col md={"0"} className="colStrikeVencimento">
             <h5>({dadosPesquisa.vencimento})</h5>
           </Col>
           <Col className="colValorBodyHeader">

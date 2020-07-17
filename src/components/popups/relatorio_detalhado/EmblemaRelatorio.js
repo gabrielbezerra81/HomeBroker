@@ -61,13 +61,13 @@ class EmblemaRelatorio extends React.Component {
             </Col>
           </Row>
           <Row className="flexJustifyCenter pl-1 pr-1 ml-3">
-            <Col md={0} className="flexAlignEnd mr-1">
+            <Col md={"0"} className="flexAlignEnd mr-1">
               <span>Últ.</span>
             </Col>
-            <Col md={0} className="text-align-center">
+            <Col md={"0"} className="text-align-center">
               <h3>{formatarNumDecimal(this.props.item.valorAcao)}</h3>
             </Col>
-            <Col md={0} className="text-align-center flexAlignEnd pb-1 ml-1">
+            <Col md={"0"} className="text-align-center flexAlignEnd pb-1 ml-1">
               <div className="divSetaPorcentagem">
                 {renderSeta(this.props.item.porcentagem)}
                 {renderValorPorcentagem(this.props.item.porcentagem)}
@@ -76,7 +76,7 @@ class EmblemaRelatorio extends React.Component {
           </Row>
           <Row className="mt-1">
             <Col>COMPRA</Col>
-            <Col md={0}>Médio</Col>
+            <Col md={"0"}>Médio</Col>
             <Col className="text-align-right">VENDA</Col>
           </Row>
           <div className="containerSliderTopo">

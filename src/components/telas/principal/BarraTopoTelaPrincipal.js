@@ -44,7 +44,7 @@ class BarraTopoTelaPrincipal extends React.Component {
               ></IconeAbrirMenu>
             </div>
           </Col>
-          <Col md={0}>
+          <Col md={"0"}>
             <IconeHome height="25" fill="#eee"></IconeHome>
           </Col>
           <Col md={1}>
@@ -80,22 +80,22 @@ class BarraTopoTelaPrincipal extends React.Component {
               </FormControl>
             </div>
           </Col>
-          <Col md={0}>
+          <Col md={"0"}>
             <img src={imgCaraFeliz} alt="cara feliz" className="mr-1" />
           </Col>
-          <Col md={0}>
+          <Col md={"0"}>
             <h6 className="">VALOR LIQUIDO:</h6>
           </Col>
           <Col md={2}>
             <h6 className="valorLiquido">{valorLiquido} R$</h6>
           </Col>
-          <Col md={0}>
+          <Col md={"0"}>
             <h6>COMPRAR:</h6>
           </Col>
           <Col>
             <h6 className="valorComprar">{valorComprar} R$</h6>
           </Col>
-          <Col md={0}>
+          <Col md={"0"}>
             <h4>{ativo}</h4>
           </Col>
         </Row>
