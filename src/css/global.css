@@ -3,18 +3,16 @@
   src: local("Segoe UI"), url(../fonts/SEGOEUI.TTF) format("truetype");
 }
 
-/* SEMI-BOLD */
 @font-face {
   font-family: "Segoe UI";
-  font-weight: 400;
-  src: local("Segoe UI"), url(../fonts/SEGUISB.TTF) format("truetype");
+  src: local("Segoe UI Semibold"), url(../fonts/SEGUISB.TTF) format("truetype");
+  font-weight: 500;
 }
 
-/* BOLD */
 @font-face {
   font-family: "Segoe UI";
-  font-weight: 500;
-  src: local("Segoe UI"), url(../fonts/SEGOEUIB.TTF) format("truetype");
+  src: local("SegoeUI Bold"), url(../fonts/SEGOEUIB.TTF) format("truetype");
+  font-weight: 600;
 }
 
 body {
