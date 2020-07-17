@@ -111,89 +111,84 @@ class AppBoletas extends React.Component {
 
     return (
       <div className="App">
-        <Row className="appbody">
-          {animate(props, <BookOfertas name="book" />)}
-          {animate(
-            props,
-            <CompraAgendada
-              headerTitle="COMPRA AGENDADA"
-              name="compra_agendada"
-            />
-          )}
-          {animate(
-            props,
-            <CompraLimitada
-              headerTitle="COMPRA LIMITADA"
-              name="compra_limitada"
-            />
-          )}
+        {animate(props, <BookOfertas name="book" />)}
+        {animate(
+          props,
+          <CompraAgendada
+            headerTitle="COMPRA AGENDADA"
+            name="compra_agendada"
+          />
+        )}
+        {animate(
+          props,
+          <CompraLimitada
+            headerTitle="COMPRA LIMITADA"
+            name="compra_limitada"
+          />
+        )}
 
-          {animate(
-            props,
-            <CompraMercado
-              headerTitle="COMPRA A MERCADO"
-              name="compra_mercado"
-            />
-          )}
+        {animate(
+          props,
+          <CompraMercado headerTitle="COMPRA A MERCADO" name="compra_mercado" />
+        )}
 
-          {animate(
-            props,
-            <CompraStartStop
-              headerTitle="COMPRA START STOP"
-              name="compra_startstop"
-            />
-          )}
+        {animate(
+          props,
+          <CompraStartStop
+            headerTitle="COMPRA START STOP"
+            name="compra_startstop"
+          />
+        )}
 
-          {animate(
-            props,
-            <CompraStartMovel
-              headerTitle="COMPRA START MÓVEL"
-              name="compra_startmovel"
-            />
-          )}
+        {animate(
+          props,
+          <CompraStartMovel
+            headerTitle="COMPRA START MÓVEL"
+            name="compra_startmovel"
+          />
+        )}
 
-          {animate(
-            props,
-            <CompraGainReducao
-              headerTitle="GAIN / REDUÇÃO DE COMPRA"
-              name="compra_gainreducao"
-            />
-          )}
+        {animate(
+          props,
+          <CompraGainReducao
+            headerTitle="GAIN / REDUÇÃO DE COMPRA"
+            name="compra_gainreducao"
+          />
+        )}
 
-          {animate(
-            props,
-            <VendaAgendada headerTitle="VENDA AGENDADA" name="venda_agendada" />
-          )}
-          {animate(
-            props,
-            <VendaLimitada headerTitle="VENDA LIMITADA" name="venda_limitada" />
-          )}
-          {animate(
-            props,
-            <VendaMercado headerTitle="VENDA MERCADO" name="venda_mercado" />
-          )}
-          {animate(
-            props,
-            <VendaStartStop
-              headerTitle="VENDA START STOP"
-              name="venda_startstop"
-            />
-          )}
-          {animate(
-            props,
-            <VendaStopMovel
-              headerTitle="VENDA STOP MÓVEL"
-              name="venda_stopmovel"
-            />
-          )}
-          {animate(
-            props,
-            <VendaGainReducao
-              headerTitle="GAIN / REDUÇÃO DE VENDA"
-              name="venda_gainreducao"
-            />
-          )}
-        </Row>
+        {animate(
+          props,
+          <VendaAgendada headerTitle="VENDA AGENDADA" name="venda_agendada" />
+        )}
+        {animate(
+          props,
+          <VendaLimitada headerTitle="VENDA LIMITADA" name="venda_limitada" />
+        )}
+        {animate(
+          props,
+          <VendaMercado headerTitle="VENDA MERCADO" name="venda_mercado" />
+        )}
+        {animate(
+          props,
+          <VendaStartStop
+            headerTitle="VENDA START STOP"
+            name="venda_startstop"
+          />
+        )}
+        {animate(
+          props,
+          <VendaStopMovel
+            headerTitle="VENDA STOP MÓVEL"
+            name="venda_stopmovel"
+          />
+        )}
+        {animate(
+          props,
+          <VendaGainReducao
+            headerTitle="GAIN / REDUÇÃO DE VENDA"
+            name="venda_gainreducao"
+          />
+        )}
       </div>
     );
   }

@@ -1,14 +1,9 @@
 .App {
   text-align: center;
-  max-width: 99%;
+  margin-left: 5px;
 }
 
-.App-header {
-  color: white;
-  padding-top: 5px;
-}
-
-.appbody {
-  margin-left: 10px;
-  margin-right: 10px;
+/* Boletas */
+.App > div > div {
+  margin-top: 7px;
 }
