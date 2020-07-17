@@ -1,9 +1,6 @@
 .App {
   text-align: center;
   margin-left: 5px;
-}
-
-/* Boletas */
-.App > div > div {
-  margin-top: 7px;
+  display: flex;
+  position: absolute;
 }
