@@ -12,19 +12,17 @@ import { persistor } from "redux/StoreCreation";
 
 const waitDispatch = 1000;
 
-export const abrirFecharMenuLateralAction = (event, menuLateralAberto) => {
+export const abrirFecharMenuLateralAction = (menuLateralAberto) => {
   return (dispatch) => {
-    if (menuLateralAberto)
-      dispatch({ type: ABRIR_FECHAR_MENU_LATERAL, payload: false });
-    else dispatch({ type: ABRIR_FECHAR_MENU_LATERAL, payload: true });
+    dispatch({ type: ABRIR_FECHAR_MENU_LATERAL, payload: menuLateralAberto });
   };
 };
 
-export const logarUsuarioAction = (username, password) => {
-  return async (dispatch) => {
+export const logarUsuarioAction = (email, senha) => {
+  return async (dispatch, getState) => {
     travarDestravarClique("travar", "botaoLogar");
 
-    const data = await realizarLoginAPI(username, password);
+    const data = await realizarLoginAPI(email, senha);
     //const auth = await autenticacaoTokenAPI(token);
 
     if (data) {
@@ -82,7 +80,7 @@ export const cadastrarUsuarioAction = (props) => {
     }
   };
 };
-export const deslogarUsuarioAction = (event, props) => {
+export const deslogarUsuarioAction = (props) => {
   return (dispatch) => {
     persistor
       .purge()
@@ -101,7 +99,11 @@ export const deslogarUsuarioAction = (event, props) => {
           },
         });
 
-        resetarDadosReducerAction("deslogar", dispatch, false);
+        resetarDadosReducerAction({
+          nameVariavelReducer: "deslogar",
+          dispatch,
+          visibilidadeMenu: false,
+        });
 
         navigate("/");
       })
@@ -119,21 +121,25 @@ export const abrirItemBarraLateralAction = (props, nameVariavelReducer) => {
     }
   });
 
-  const visibilidade = !props[nameVariavelReducer];
+  const visibilidadeMenu = !props[nameVariavelReducer];
 
   return (dispatch) => {
     dispatch({
       type: ABRIR_FECHAR_ITEM_BARRA_LATERAL,
       payload: {
         name: nameVariavelReducer,
-        valor: visibilidade,
+        valor: visibilidadeMenu,
       },
     });
-    resetarDadosReducerAction(nameVariavelReducer, dispatch, visibilidade);
+    resetarDadosReducerAction({
+      dispatch,
+      nameVariavelReducer,
+      visibilidadeMenu,
+    });
   };
 };
 
-export const mouseOverAction = (props, nameVariavelReducer) => {
+export const mouseOverAction = (nameVariavelReducer) => {
   return (dispatch) => {
     dispatch({
       type: ABRIR_FECHAR_ITEM_BARRA_LATERAL,
@@ -142,7 +148,7 @@ export const mouseOverAction = (props, nameVariavelReducer) => {
   };
 };
 
-export const mouseLeaveAction = (props, nameVariavelReducer) => {
+export const mouseLeaveAction = (nameVariavelReducer) => {
   return (dispatch) => {
     dispatch({
       type: ABRIR_FECHAR_ITEM_BARRA_LATERAL,
@@ -160,16 +166,24 @@ export const mudarDadosLoginAction = (nomeVariavel, valor) => {
   };
 };
 
-const resetarDadosReducerAction = (nome, dispatch, visibilidadeMenu) => {
+const resetarDadosReducerAction = ({
+  nameVariavelReducer,
+  dispatch,
+  visibilidadeMenu,
+}) => {
   let limparReducer = true;
-  if (["ordensExecucaoAberto", "listaCompletaAberta"].includes(nome))
+  if (
+    ["ordensExecucaoAberto", "listaCompletaAberta"].includes(
+      nameVariavelReducer
+    )
+  )
     limparReducer = false;
 
   if (!visibilidadeMenu)
     setTimeout(() => {
       dispatch({
         type: actionType.RESET_REDUX_STATE,
-        payload: { name: nome, limparReducer },
+        payload: { name: nameVariavelReducer, limparReducer },
       });
     }, waitDispatch);
 };

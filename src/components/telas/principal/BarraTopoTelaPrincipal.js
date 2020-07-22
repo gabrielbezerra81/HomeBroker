@@ -28,12 +28,8 @@ class BarraTopoTelaPrincipal extends React.Component {
           <Col md={1}>
             <div
               className="iconesMostrarMenu divClicavel"
-              onClick={(event) => {
-                if (menuLateralAberto === true) {
-                  props.abrirFecharMenuLateralAction(event, menuLateralAberto);
-                } else {
-                  props.abrirFecharMenuLateralAction(event, menuLateralAberto);
-                }
+              onClick={() => {
+                props.abrirFecharMenuLateralAction(!menuLateralAberto);
               }}
             >
               <IconeAbrirMenu

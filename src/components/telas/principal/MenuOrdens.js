@@ -64,8 +64,8 @@ class MenuOrdens extends Component {
           <div
             className="divOrdens"
             id="divOrdens"
-            onMouseOver={() => props.mouseOverAction(props, "ordensAberto")}
-            onMouseLeave={() => props.mouseLeaveAction(props, "ordensAberto")}
+            onMouseOver={() => props.mouseOverAction("ordensAberto")}
+            onMouseLeave={() => props.mouseLeaveAction("ordensAberto")}
           >
             <Row className="rowOrdensTracejada">
               <img src={iconeCompra} alt="" />

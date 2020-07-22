@@ -3,10 +3,7 @@ import { Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
 import { getDiaSemana, getDiaEMes } from "components/utils/Formatacoes";
 import { MDBIcon } from "mdbreact";
-import {
-  logarUsuarioAction,
-  deslogarUsuarioAction,
-} from "redux/actions/TelaPrincipalActions";
+import { deslogarUsuarioAction } from "redux/actions/TelaPrincipalActions";
 import { StorePrincipalContext } from "redux/StoreCreation";
 
 class MenuLateralUsuario extends React.Component {
@@ -62,7 +59,6 @@ const mapStateToProps = (state) => ({
 export default connect(
   mapStateToProps,
   {
-    logarUsuarioAction,
     deslogarUsuarioAction,
   },
   null,
@@ -74,7 +70,7 @@ const renderDivLogin = (props) => {
     return (
       <div
         className="divClicavel itemMenuLateral corAlternada"
-        onClick={(event) => props.deslogarUsuarioAction(event, props)}
+        onClick={() => props.deslogarUsuarioAction(props)}
         tabIndex={0}
       >
         <Row className="botaoDeslogar">
@@ -103,7 +99,7 @@ const renderDivLogin = (props) => {
       <div
         tabIndex={0}
         className="divClicavel itemMenuLateral corAlternada"
-        onClick={(event) => props.deslogarUsuarioAction(event, props)}
+        onClick={() => props.deslogarUsuarioAction(props)}
       >
         <Row className="botaoDeslogar">
           <Col md={"0"} className="colLogout">

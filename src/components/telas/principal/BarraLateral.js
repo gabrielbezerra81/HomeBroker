@@ -64,12 +64,10 @@ class BarraLateral extends React.Component {
           onMouseOver={() => {
             props.atualizarDivKeyAction("divOrdens");
 
-            if (!props.ordensAberto)
-              props.mouseOverAction(props, "ordensAberto");
+            if (!props.ordensAberto) props.mouseOverAction("ordensAberto");
           }}
           onMouseLeave={() => {
-            if (props.ordensAberto)
-              props.mouseLeaveAction(props, "ordensAberto");
+            if (props.ordensAberto) props.mouseLeaveAction("ordensAberto");
           }}
         >
           <Icones
