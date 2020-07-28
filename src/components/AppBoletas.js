@@ -1,5 +1,4 @@
 import React from "react";
-import { Row } from "react-bootstrap";
 import { Animate } from "react-show";
 import { compose } from "redux";
 import { connect } from "react-redux";

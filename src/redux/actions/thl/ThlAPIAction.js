@@ -9,6 +9,7 @@ import {
 import { pesquisarListaStrikeTHLAPI } from "api/API";
 import { atualizarPrecosTHLAPI, atualizarCotacaoAPI } from "api/ReativosAPI";
 import { mudarVariavelTHL, mudarVariaveisTHL } from "./utils";
+import { getReducerStateStorePrincipal } from "hooks/utils";
 
 export const pesquisarAtivoTHLAPIAction = (codigo) => {
   return async (dispatch) => {
@@ -26,7 +27,7 @@ export const pesquisarAtivoTHLAPIAction = (codigo) => {
 };
 
 export const listarTabelaInicialTHLAPIAction = (props) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     const {
       sourcePrecos,
       setIntervalPrecosTHL,
@@ -37,6 +38,8 @@ export const listarTabelaInicialTHLAPIAction = (props) => {
     const ativo = ativoPesquisado;
     if (ativo && strikeSelecionado && tipo) {
       dispatch(mudarVariavelTHL("carregandoTabelaVencimentos", true));
+
+      console.log(getReducerStateStorePrincipal(getState(), "thl"));
 
       const tabelaVencimentos = await listarTabelaInicialTHLAPI(
         ativo,

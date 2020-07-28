@@ -3,10 +3,8 @@ import { Form, InputGroup, Spinner } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import { Radio, Button, Tooltip } from "antd";
 import {
-  StateStorePrincipal,
   DispatchStorePrincipal,
   DispatchGlobalStore,
-  StateGlobalStore,
 } from "redux/StoreCreation";
 import {
   mudarVariavelTHLAction,
@@ -23,6 +21,8 @@ import iconeRecalcularPrecos from "img/THL/iconeRecalcular.svg";
 import iconeEnviarOrdem from "img/THL/iconeEnviarOrdem.svg";
 import iconeFavorito from "img/THL/iconeFavorito.svg";
 import iconeCriarAlerta from "img/THL/iconeCriarAlerta.svg";
+import useStateStorePrincipal from "hooks/useStateStorePrincipal";
+import useStateGlobalStore from "hooks/useStateGlobalStore";
 
 const textoRecalcular =
   "Para recalcular os preços das estruturas é preciso selecionar uma Opção.";
@@ -45,7 +45,7 @@ export default () => {
 };
 
 const InputPesquisa = () => {
-  const reduxState = StateStorePrincipal("thl");
+  const reduxState = useStateStorePrincipal("thl");
   const dispatch = DispatchStorePrincipal();
   const {
     ativoPesquisa,
@@ -115,15 +115,15 @@ const InputPesquisa = () => {
 };
 
 const EnviarOrdem = () => {
-  const { divkey, zIndex } = StateGlobalStore();
-  const { multilegAberto } = StateStorePrincipal("principal");
+  const { divkey, zIndex } = useStateGlobalStore();
+  const { multilegAberto } = useStateStorePrincipal("principal");
   const {
     multileg,
     eventSource,
     eventSourceCotacao,
     cotacoesMultileg,
-  } = StateStorePrincipal("multileg");
-  const { booksSelecionados } = StateStorePrincipal("thl");
+  } = useStateStorePrincipal("multileg");
+  const { booksSelecionados } = useStateStorePrincipal("thl");
 
   const dispatchGlobal = DispatchGlobalStore();
   const dispatchStorePrincipal = DispatchStorePrincipal();
@@ -156,7 +156,7 @@ const EnviarOrdem = () => {
 };
 
 const RecalcularPrecos = () => {
-  const reduxState = StateStorePrincipal("thl");
+  const reduxState = useStateStorePrincipal("thl");
   const dispatch = DispatchStorePrincipal();
   const { codigoCelulaSelecionada } = reduxState;
   const classeBotaoDesabilitado = !codigoCelulaSelecionada
@@ -176,8 +176,8 @@ const RecalcularPrecos = () => {
 };
 
 const Favoritar = () => {
-  const { idCelulaSelecionada } = StateStorePrincipal("thl");
-  const { token } = StateStorePrincipal("principal");
+  const { idCelulaSelecionada } = useStateStorePrincipal("thl");
+  const { token } = useStateStorePrincipal("principal");
   const dispatch = DispatchStorePrincipal();
   const classeBotaoDesabilitado = !idCelulaSelecionada
     ? " botaoDesabilitado"
@@ -197,7 +197,7 @@ const Favoritar = () => {
   );
 };
 const CriarAlerta = () => {
-  const reduxState = StateStorePrincipal("thl");
+  const reduxState = useStateStorePrincipal("thl");
   const dispatch = DispatchStorePrincipal();
   const { idCelulaSelecionada } = reduxState;
   const classeBotaoDesabilitado = !idCelulaSelecionada

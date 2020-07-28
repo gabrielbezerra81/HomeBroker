@@ -2,10 +2,7 @@
 import React, { useMemo, useEffect } from "react";
 import { Table } from "react-bootstrap";
 import moment from "moment";
-import {
-  StateStorePrincipal,
-  DispatchStorePrincipal,
-} from "redux/StoreCreation";
+import { DispatchStorePrincipal } from "redux/StoreCreation";
 import {
   formatarNumDecimal,
   formatarQuantidadeKMG,
@@ -14,9 +11,10 @@ import { listarTabelaInicialTHLAPIAction } from "redux/actions/thl/ThlAPIAction"
 import { CelulaMes } from "components/popups/thl/tabelaDeVencimentos/CelulaMes";
 import InputStrikeSelecionado from "components/popups/thl/tabelaDeVencimentos/InputStrikeSelecionado";
 import usePrevious from "hooks/usePrevious";
+import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export default React.memo(() => {
-  const reduxState = StateStorePrincipal("thl");
+  const reduxState = useStateStorePrincipal("thl");
   const dispatch = DispatchStorePrincipal();
   const {
     opcoesStrike,

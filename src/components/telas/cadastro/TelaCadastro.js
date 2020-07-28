@@ -6,13 +6,11 @@ import {
 } from "redux/actions/telaPrincipal/TelaPrincipalActions";
 import { navigate } from "@reach/router";
 import FloatingLabelInput from "react-floating-label-input";
-import {
-  StateStorePrincipal,
-  DispatchStorePrincipal,
-} from "redux/StoreCreation";
+import { DispatchStorePrincipal } from "redux/StoreCreation";
+import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 const TelaCadastro = ({ path }) => {
-  const state = StateStorePrincipal("principal");
+  const state = useStateStorePrincipal("principal");
   const dispatch = DispatchStorePrincipal();
 
   const {

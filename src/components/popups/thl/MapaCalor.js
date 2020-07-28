@@ -2,15 +2,13 @@
 import React, { useEffect, useMemo } from "react";
 import { Radio } from "antd";
 import termometro from "img/termometro.svg";
-import {
-  StateStorePrincipal,
-  DispatchStorePrincipal,
-} from "redux/StoreCreation";
+import { DispatchStorePrincipal } from "redux/StoreCreation";
 import { mudarVariavelTHLAction } from "redux/actions/thl/THLActions";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
+import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export default React.memo(() => {
-  const reduxState = StateStorePrincipal("thl");
+  const reduxState = useStateStorePrincipal("thl");
   const dispatch = DispatchStorePrincipal();
   const {
     seletorMapaCalor,

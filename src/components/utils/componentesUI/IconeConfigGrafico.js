@@ -3,7 +3,6 @@ import { MDBIcon } from "mdbreact";
 import { Button } from "react-bootstrap";
 import {
   useDispatchGlobalStore,
-  useSelectorGlobalStore,
   useDispatchStorePrincipal,
   useSelectorStorePrincipal,
 } from "redux/StoreCreation";
@@ -13,13 +12,12 @@ import {
 } from "redux/actions/GlobalAppActions";
 import { useDispatch } from "react-redux";
 import { abrirFecharConfigComplAction } from "redux/actions/multileg/MultilegActions";
+import useStateGlobalStore from "hooks/useStateGlobalStore";
 
 export default ({ className, name = "" }) => {
   let handleShow;
 
-  const stateGlobalStore = useSelectorGlobalStore(
-    (state) => state.MainAppReducer
-  );
+  const stateGlobalStore = useStateGlobalStore();
 
   if (["config_venda", "config_compra"].includes(name)) {
     const dispatch = useDispatch();

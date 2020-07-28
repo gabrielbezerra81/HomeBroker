@@ -1,14 +1,12 @@
 import React from "react";
-import {
-  StateStorePrincipal,
-  DispatchStorePrincipal,
-} from "redux/StoreCreation";
+import { DispatchStorePrincipal } from "redux/StoreCreation";
 import { mudarVariavelTHLAction } from "redux/actions/thl/THLActions";
 import { erro_selecaoBook_THL } from "constants/AlertaErros";
+import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export default (props) => {
   const { preco, qtde, tipo, ativo } = props;
-  const reduxState = StateStorePrincipal("thl");
+  const reduxState = useStateStorePrincipal("thl");
   const dispatch = DispatchStorePrincipal();
   const { booksSelecionados } = reduxState;
   const indice = booksSelecionados.findIndex(

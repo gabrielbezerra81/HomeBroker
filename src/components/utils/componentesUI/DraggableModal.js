@@ -5,7 +5,8 @@ import ConfigurarStopVenda from "components/popups/venda/venda_StartStop/Configu
 import FiltrarOrdens from "components/popups/ordens_em_execucao/FiltrarOrdens"; //posicaoFormCompraVenda
 import ConfigComplementar from "components/popups/multileg_/ConfigComplementar";
 import { Resizable } from "re-resizable";
-import { StateStorePrincipal } from "redux/StoreCreation";
+import useStateStorePrincipal from "hooks/useStateStorePrincipal";
+
 class BSModal extends Component {
   constructor(props) {
     super(props);
@@ -79,7 +80,7 @@ class BSModal extends Component {
 export default BSModal;
 
 const RenderFiltrarOrdens = () => {
-  const state = StateStorePrincipal();
+  const state = useStateStorePrincipal();
   const { filtrarOrdensAberto } = state.ordensExecReducer;
 
   if (filtrarOrdensAberto) return <FiltrarOrdens />;

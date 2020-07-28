@@ -2,19 +2,17 @@ import React from "react";
 import { InputGroup } from "react-bootstrap";
 import { Select } from "antd";
 import { erro_opcoes_ordens_exec } from "constants/AlertaErros";
-import {
-  StateStorePrincipal,
-  DispatchStorePrincipal,
-} from "redux/StoreCreation";
+import { DispatchStorePrincipal } from "redux/StoreCreation";
 import {
   mudarVariavelOrdensExecAction,
   aumentarQtdePrecoAction,
 } from "redux/actions/ordensExecucao/OrdensExecActions";
+import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export default (props) => {
   const dispatch = DispatchStorePrincipal();
-  const state = StateStorePrincipal("ordensExec");
-  const { token } = StateStorePrincipal("principal");
+  const state = useStateStorePrincipal("ordensExec");
+  const { token } = useStateStorePrincipal("principal");
 
   const placeholder = props.modo.charAt(0).toUpperCase() + props.modo.slice(1);
   const { ordemAtual, sinalInputSelect } = state;

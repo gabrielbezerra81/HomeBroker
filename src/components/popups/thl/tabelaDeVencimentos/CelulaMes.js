@@ -5,15 +5,13 @@ import {
 } from "components/utils/Formatacoes";
 import imgModeloEU from "img/modeloEU.png";
 import { ReactComponent as ImgModeloUSA } from "img/modeloUSA2.svg";
-import {
-  StateStorePrincipal,
-  DispatchStorePrincipal,
-} from "redux/StoreCreation";
+import { DispatchStorePrincipal } from "redux/StoreCreation";
 import { mudarVariavelTHLAction } from "redux/actions/thl/THLActions";
 import BookTHL, { selecionarBooks } from "components/popups/thl/BookTHL";
+import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
-  const reduxState = StateStorePrincipal("thl");
+  const reduxState = useStateStorePrincipal("thl");
   const dispatch = DispatchStorePrincipal();
   const {
     precosTabelaVencimentos,
@@ -187,7 +185,7 @@ const VerificaAtivoCustodia = (itemColuna) => {
   let qtdeExecutada = 0;
   let qtdeOferta = 0;
   const ativoCelula = itemColuna.symbol;
-  const reduxState = StateStorePrincipal("posicao");
+  const reduxState = useStateStorePrincipal("posicao");
   const { posicoesCustodia } = reduxState;
   executando = posicoesCustodia.some((posicao) => {
     const execCompra = posicao.custodiaCompra.find(

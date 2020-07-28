@@ -3,7 +3,6 @@ import {
   createSelectorHook,
   createDispatchHook,
   useDispatch,
-  useSelector,
 } from "react-redux";
 import ReduxThunk from "redux-thunk";
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
@@ -26,32 +25,6 @@ export const useDispatchStorePrincipal = createDispatchHook(
   StorePrincipalContext
 );
 export const useDispatchGlobalStore = createDispatchHook(GlobalContext);
-
-export const StateBoletas = (namespace = "") => {
-  const state = useSelector((state) => state);
-  if (namespace) return state[namespace];
-  return state;
-};
-export const StateStorePrincipal = (reducer = "") => {
-  const state = useSelectorStorePrincipal((state) => state);
-  switch (reducer) {
-    case "thl":
-      return state.THLReducer;
-    case "principal":
-      return state.telaPrincipalReducer;
-    case "multileg":
-      return state.multilegReducer;
-    case "posicao":
-      return state.posicaoReducer;
-    case "ordensExec":
-      return state.ordensExecReducer;
-    default:
-      return state;
-  }
-};
-export const StateGlobalStore = () => {
-  return useSelectorGlobalStore((state) => state.MainAppReducer);
-};
 
 export const DispatchBoletas = () => {
   return useDispatch();

@@ -9,16 +9,14 @@ import {
   formatarNumDecimal,
   formatarQuantidadeKMG,
 } from "components/utils/Formatacoes";
-import {
-  StateStorePrincipal,
-  DispatchStorePrincipal,
-} from "redux/StoreCreation";
+import { DispatchStorePrincipal } from "redux/StoreCreation";
 import { mudarVariavelTHLAction } from "redux/actions/thl/THLActions";
 import { buscarNumeroArray } from "components/utils/FuncoesBusca";
+import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export const ColunaHeader = ({ children, column }) => {
   const dispatch = DispatchStorePrincipal();
-  const { ordenacao } = StateStorePrincipal("thl");
+  const { ordenacao } = useStateStorePrincipal("thl");
   let elementoColuna;
   let classNameColunaAcaoUlt = "";
   let tipoFiltro = "";
@@ -135,7 +133,7 @@ export const ColunaTextoComum = (props) => {
 };
 
 export const ColunaAcaoUlt = ({ children, row, column }) => {
-  const reduxState = StateStorePrincipal("thl");
+  const reduxState = useStateStorePrincipal("thl");
   const { arrayCotacoes } = reduxState;
   const acao = children.acao;
 
@@ -185,7 +183,7 @@ export const ColunaMontagem = ({ children, row, column }) => {
   const { opcao1, opcao2 } = row.codigos;
 
   const dispatch = DispatchStorePrincipal();
-  const reduxState = StateStorePrincipal("thl");
+  const reduxState = useStateStorePrincipal("thl");
   const { booksSelecionados } = reduxState;
 
   const preco = children;

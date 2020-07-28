@@ -1,16 +1,12 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
-import {
-  useSelectorGlobalStore,
-  useDispatchGlobalStore,
-} from "redux/StoreCreation";
+import { useDispatchGlobalStore } from "redux/StoreCreation";
 import { abrirFormAction } from "redux/actions/GlobalAppActions";
+import useStateGlobalStore from "hooks/useStateGlobalStore";
 
 export const IconeConfigAbrirFormulario = ({ nomeFormulario }) => {
-  const stateGlobalStore = useSelectorGlobalStore(
-    (state) => state.MainAppReducer
-  );
+  const stateGlobalStore = useStateGlobalStore();
   const dispatchGlobal = useDispatchGlobalStore();
 
   return (

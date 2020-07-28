@@ -3,11 +3,11 @@ import React, { useState, useCallback } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { Spinner } from "react-bootstrap";
 import { Spin } from "antd";
-import { StateStorePrincipal } from "redux/StoreCreation";
 import TabelaVencimentos from "components/popups/thl/tabelaDeVencimentos/TabelaVencimentos";
+import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export default () => {
-  const reduxState = StateStorePrincipal("thl");
+  const reduxState = useStateStorePrincipal("thl");
   const { carregandoTabelaVencimentos } = reduxState;
 
   const [mouseDown, setMouseDown] = useState(false);

@@ -3,16 +3,16 @@ import React, { useEffect, useState, useRef } from "react";
 import { Spinner } from "react-bootstrap";
 import { Spin } from "antd";
 import { FiltrarTabela } from "components/popups/thl/tabelaCombinacoes/FiltroTabela";
-import { StateStorePrincipal } from "redux/StoreCreation";
 import TabelaCombinacoes from "components/popups/thl/tabelaCombinacoes/TabelaCombinacoes";
 import _ from "lodash";
 import { buscarNumeroArray } from "components/utils/FuncoesBusca";
+import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 const alturaLinha = 46;
 const escolhasOrdem = ["", "asc", "desc"];
 
 export default React.memo(() => {
-  const reduxState = StateStorePrincipal("thl");
+  const reduxState = useStateStorePrincipal("thl");
   const {
     combinacoesTabela,
     estrategia,

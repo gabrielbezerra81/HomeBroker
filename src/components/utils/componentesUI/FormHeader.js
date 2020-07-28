@@ -17,11 +17,12 @@ import {
   DispatchStorePrincipal,
   DispatchBoletas,
   DispatchGlobalStore,
-  StateStorePrincipal,
 } from "redux/StoreCreation";
 import { abrirItemBarraLateralAction } from "redux/actions/telaPrincipal/TelaPrincipalActions";
 import { abrirFecharConfigComplAction } from "redux/actions/multileg/MultilegActions";
 import { mudarVariavelOrdensExecAction } from "redux/actions/ordensExecucao/OrdensExecActions";
+import useStateStorePrincipal from "hooks/useStateStorePrincipal";
+import useStateGlobalStore from "hooks/useStateGlobalStore";
 
 // Apenas para boletas de compra e venda
 export const ModalHeader = ({
@@ -33,9 +34,7 @@ export const ModalHeader = ({
   eventSourceCotacao,
 }) => {
   const state = useSelector((state) => state.appBoletasReducer);
-  const stateGlobalStore = useSelectorGlobalStore(
-    (state) => state.MainAppReducer
-  ); // Filtrar state pelo nome do reducer
+  const stateGlobalStore = useStateGlobalStore();
   const dispatchGlobal = DispatchGlobalStore();
   const dispatch = useDispatch();
   const formShow = stateGlobalStore.show;
@@ -296,8 +295,8 @@ const GetAbrirMenuProps = () => {
 
 const BotaoAbrirFiltrarOrdens = ({ headerTitle }) => {
   let botaoAbrirFiltrarOrdens = <div></div>;
+  const state = useStateStorePrincipal((state) => state);
   if (headerTitle === "HISTÓRICO DE OPERAÇÕES") {
-    const state = StateStorePrincipal((state) => state);
     const dispatch = DispatchStorePrincipal();
 
     const { filtrarOrdensAberto } = state.ordensExecReducer;
