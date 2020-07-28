@@ -23,7 +23,7 @@ import {
   calculoPreco,
   calculoMDC,
 } from "components/popups/multileg_/CalculoPreco";
-import { formatarNumero } from "redux/reducers/boletas_reducer/formInputReducer";
+import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
 
 export const mudarVariavelOrdensExecAction = (nome, valor) => {
   return (dispatch) => {

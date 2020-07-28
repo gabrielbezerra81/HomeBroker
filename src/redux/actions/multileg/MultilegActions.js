@@ -6,7 +6,7 @@ import {
 } from "api/API";
 import { atualizarCotacaoAPI } from "api/ReativosAPI";
 import { calculoPreco } from "components/popups/multileg_/CalculoPreco";
-import { formatarNumero } from "redux/reducers/boletas_reducer/formInputReducer";
+import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
 import {
   encontrarNumMaisProximo,
   adicionaCotacoesMultileg,

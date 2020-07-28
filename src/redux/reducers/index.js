@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import bookOfertaReducer from "./boletas_reducer/bookOfertaReducer";
-import formInputReducer from "./boletas_reducer/formInputReducer";
+import bookOfertaReducer from "./boletas/bookOfertaReducer";
+import formInputReducer from "./boletas/formInputReducer";
 import {
   COMPRA_AGENDADA_NAMESPACE,
   COMPRA_MERCADO_NAMESPACE,
@@ -15,12 +15,12 @@ import {
   VENDA_STOPMOVEL_NAMESPACE,
   VENDA_GAINREDUCAO_NAMESPACE,
 } from "constants/ActionTypes";
-import appBoletasReducer from "./appBoletasReducer";
-import THLReducer from "./menu_reducer/THLReducer";
-import TelaPrincipalReducer from "redux/reducers/TelaPrincipalReducer";
-import MultilegReducer from "redux/reducers/menu_reducer/MultilegReducer";
-import PosicaoReducer from "redux/reducers/menu_reducer/PosicaoReducer";
-import OrdensExecucaoReducer from "redux/reducers/menu_reducer/OrdensExecReducer";
+import appBoletasReducer from "./boletas/appBoletasReducer";
+import THLReducer from "./thl/THLReducer";
+import TelaPrincipalReducer from "redux/reducers/telaPrincipal/TelaPrincipalReducer";
+import MultilegReducer from "redux/reducers/multileg/MultilegReducer";
+import PosicaoReducer from "redux/reducers/posicao/PosicaoReducer";
+import OrdensExecucaoReducer from "redux/reducers/ordensExecucao/OrdensExecReducer";
 
 export default combineReducers({
   bookOfertaReducer: bookOfertaReducer,

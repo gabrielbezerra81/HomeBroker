@@ -3,7 +3,7 @@ import {
   atualizarDivKeyAction,
   aumentarZindexAction,
 } from "redux/actions/GlobalAppActions";
-import { abrirItemBarraLateralAction } from "redux/actions/TelaPrincipalActions";
+import { abrirItemBarraLateralAction } from "redux/actions/telaPrincipal/TelaPrincipalActions";
 import {
   adicionarAba,
   modificarAba,
@@ -14,7 +14,7 @@ import {
 import { erro_exportar_ordens_multileg } from "constants/AlertaErros";
 import { pesquisaAtivo } from "redux/actions/multileg/MultilegAPIAction";
 import { calculoPreco } from "components/popups/multileg_/CalculoPreco";
-import { formatarNumero } from "redux/reducers/boletas_reducer/formInputReducer";
+import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
 import { mudarVariaveisTHL, mudarVariavelTHL } from "./utils";
 
 export const mudarVariavelTHLAction = (nome, valor) => {
