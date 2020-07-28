@@ -23,6 +23,10 @@ import {
 } from "constants/ApiActionTypes";
 import { formatarDataDaAPI } from "components/utils/Formatacoes";
 
+import { EventSourcePolyfill } from "event-source-polyfill";
+
+var EventSource = EventSourcePolyfill;
+
 const intervaloAttReativa = 6000;
 
 export const atualizarBookAPI = (
@@ -33,7 +37,12 @@ export const atualizarBookAPI = (
   rembook //booksMultileg
 ) => {
   var source = new EventSource(
-    `${url_base_reativa}${url_bookReativo_codigos}${codigos}`
+    `${url_base_reativa}${url_bookReativo_codigos}${codigos}`,
+    {
+      headers: {
+        Authorization: "my secret jwt token",
+      },
+    }
   );
   source.onopen = function (event) {
     // console.log("open");
@@ -84,7 +93,12 @@ export const atualizarCotacaoAPI = (
   dadosPesquisa = null
 ) => {
   var source = new EventSource(
-    `${url_base_reativa}${url_cotacaoReativa_codigos}${codigos}`
+    `${url_base_reativa}${url_cotacaoReativa_codigos}${codigos}`,
+    {
+      headers: {
+        Authorization: "my secret jwt token",
+      },
+    }
   );
 
   let listaCotacoes = arrayCotacoes;
@@ -179,7 +193,12 @@ export const atualizarCotacaoAPI = (
 
 export const atualizarEmblemasAPI = (dispatch, listaPrecos, ids) => {
   var source = new EventSource(
-    `${url_base_reativa}${url_emblemaReativo_ids}${ids}`
+    `${url_base_reativa}${url_emblemaReativo_ids}${ids}`,
+    {
+      headers: {
+        Authorization: "my secret jwt token",
+      },
+    }
   );
 
   const novaLista = [...listaPrecos];
@@ -222,7 +241,12 @@ export const atualizarEmblemasAPI = (dispatch, listaPrecos, ids) => {
 
 export const atualizarPosicaoAPI = (dispatch, listaPosicoes, token) => {
   var source = new EventSource(
-    `${url_base_reativa}${url_posicaoReativa_idUser}${token}`
+    `${url_base_reativa}${url_posicaoReativa_idUser}${token}`,
+    {
+      headers: {
+        Authorization: "my secret jwt token",
+      },
+    }
   );
 
   source.onmessage = function (event) {
@@ -255,7 +279,12 @@ export const atualizarPosicaoAPI = (dispatch, listaPosicoes, token) => {
 
 export const atualizarOrdensExecAPI = (dispatch, token, listaOrdensExec) => {
   var source = new EventSource(
-    `${url_base_reativa}${url_ordensExecReativas_idUser}${token}`
+    `${url_base_reativa}${url_ordensExecReativas_idUser}${token}`,
+    {
+      headers: {
+        Authorization: "my secret jwt token",
+      },
+    }
   );
 
   // source.onopen = function (event) {
@@ -289,7 +318,12 @@ export const atualizarOrdensExecAPI = (dispatch, token, listaOrdensExec) => {
 
 export const atualizarPrecosTHLAPI = (ids, dispatch) => {
   var source = new EventSource(
-    `${url_base_reativa}${url_atualizarPrecosTHL_ids}${ids}`
+    `${url_base_reativa}${url_atualizarPrecosTHL_ids}${ids}`,
+    {
+      headers: {
+        Authorization: "my secret jwt token",
+      },
+    }
   );
 
   const novosPrecos = [];

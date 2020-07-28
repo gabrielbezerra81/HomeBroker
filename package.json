@@ -13,6 +13,7 @@
     "@types/react-dom": "^16.9.8",
     "antd": "3.26.16",
     "bootstrap": "^4.5.0",
+    "event-source-polyfill": "^1.0.15",
     "jquery": "^3.5.1",
     "lodash": "^4.17.19",
     "mdbreact": "^4.27.0",
