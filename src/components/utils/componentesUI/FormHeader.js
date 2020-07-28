@@ -10,10 +10,8 @@ import {
   fecharFormConfigurarAction,
 } from "redux/actions/GlobalAppActions";
 import {
-  useSelectorGlobalStore,
   useDispatchGlobalStore,
   useDispatchStorePrincipal,
-  useSelectorStorePrincipal,
   DispatchStorePrincipal,
   DispatchBoletas,
   DispatchGlobalStore,
@@ -89,9 +87,8 @@ export const ModalHeader = ({
 export const BookHeader = ({ headerClass, resetPosition }) => {
   const stateBook = useSelector((state) => state.bookOfertaReducer);
   const stateSubApp = useSelector((state) => state.appBoletasReducer);
-  const stateGlobalStore = useSelectorGlobalStore(
-    (state) => state.MainAppReducer
-  );
+  const stateGlobalStore = useStateGlobalStore();
+
   const { inputHeader, eventSource } = stateBook;
   const formShow = stateGlobalStore.show;
   const { appkey } = stateSubApp.appProps;
@@ -189,9 +186,7 @@ export const ModalHeaderSemBook = React.memo(
 export const ModalHeaderLimpo = ({ titulo, name = "" }) => {
   let funcaoFechar;
 
-  const stateStorePrincipal = useSelectorStorePrincipal(
-    (state) => state.multilegReducer
-  );
+  const stateStorePrincipal = useStateStorePrincipal("multileg");
 
   const { configComplementarAberto } = stateStorePrincipal;
 
@@ -249,48 +244,51 @@ const getNomeVariavelReducer = (headerTitle) => {
 };
 
 const GetAbrirMenuProps = () => {
-  return useSelectorStorePrincipal((state) => {
-    const {
-      ordensExecucaoAberto,
-      relatorioDetalhadoAberto,
-      listaCompletaAberta,
-      multilegAberto,
-      thlAberta,
-    } = state.telaPrincipalReducer;
-    const {
-      eventSourceCotacao,
-      setIntervalCotacoesMultileg,
-    } = state.multilegReducer;
-    // const {
-    //   eventSourceEmblema,
-    //   eventSourcePosicao,
-    //   eventSourceCotacoes,
-    //   setIntervalCotacoesPosicao,
-    //   setIntervalEmblema,
-    // } = state.posicaoReducer;
-    // const { eventSourceOrdensExec } = state.ordensExecReducer;
-    const { eventSourcePrecos, setIntervalPrecosTHL } = state.THLReducer;
+  const {
+    ordensExecucaoAberto,
+    relatorioDetalhadoAberto,
+    listaCompletaAberta,
+    multilegAberto,
+    thlAberta,
+  } = useStateStorePrincipal("principal");
 
-    const props = {
-      ordensExecucaoAberto,
-      relatorioDetalhadoAberto,
-      listaCompletaAberta,
-      multilegAberto,
-      thlAberta,
-      eventSourceCotacao_Multileg: eventSourceCotacao,
-      setIntervalCotacoes_Multileg: setIntervalCotacoesMultileg,
-      // eventSourceEmblema_Posicao: eventSourceEmblema,
-      // setIntervalEmblema_Posicao: setIntervalEmblema,
-      // eventSourcePosicao_Posicao: eventSourcePosicao,
-      // eventSourceCotacoes_Posicao: eventSourceCotacoes,
-      // setIntervalCotacoes_Posicao: setIntervalCotacoesPosicao,
-      // eventSourceOrdensExec_OrdensExec: eventSourceOrdensExec,
-      eventSourcePrecos_THL: eventSourcePrecos,
-      setIntervalPrecos_THL: setIntervalPrecosTHL,
-    };
+  const {
+    eventSourceCotacao,
+    setIntervalCotacoesMultileg,
+  } = useStateStorePrincipal("multileg");
 
-    return props;
-  });
+  const { eventSourcePrecos, setIntervalPrecosTHL } = useStateStorePrincipal(
+    "thl"
+  );
+
+  const props = {
+    ordensExecucaoAberto,
+    relatorioDetalhadoAberto,
+    listaCompletaAberta,
+    multilegAberto,
+    thlAberta,
+    eventSourceCotacao_Multileg: eventSourceCotacao,
+    setIntervalCotacoes_Multileg: setIntervalCotacoesMultileg,
+    // eventSourceEmblema_Posicao: eventSourceEmblema,
+    // setIntervalEmblema_Posicao: setIntervalEmblema,
+    // eventSourcePosicao_Posicao: eventSourcePosicao,
+    // eventSourceCotacoes_Posicao: eventSourceCotacoes,
+    // setIntervalCotacoes_Posicao: setIntervalCotacoesPosicao,
+    // eventSourceOrdensExec_OrdensExec: eventSourceOrdensExec,
+    eventSourcePrecos_THL: eventSourcePrecos,
+    setIntervalPrecos_THL: setIntervalPrecosTHL,
+  };
+
+  return props;
+
+  // const {
+  //   eventSourceEmblema,
+  //   eventSourcePosicao,
+  //   eventSourceCotacoes,
+  //   setIntervalCotacoesPosicao,
+  //   setIntervalEmblema,
+  // } = state.posicaoReducer;
+  // const { eventSourceOrdensExec } = state.ordensExecReducer;
 };
 
 const BotaoAbrirFiltrarOrdens = ({ headerTitle }) => {

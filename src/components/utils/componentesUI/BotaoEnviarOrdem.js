@@ -1,12 +1,11 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import { Popconfirm } from "antd";
-import { useSelectorStorePrincipal } from "redux/StoreCreation";
+import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export const BotaoEnviarOrdem = ({ props, tipoCompraVenda }) => {
-  const state = useSelectorStorePrincipal(
-    (state) => state.telaPrincipalReducer
-  );
+  const state = useStateStorePrincipal("principal");
+
   const { conta, contaSelecionada, token } = state;
   const variacaoBotao = tipoCompraVenda === "Comprar" ? "primary" : "danger";
 

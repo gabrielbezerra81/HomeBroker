@@ -4,7 +4,6 @@ import { Button } from "react-bootstrap";
 import {
   useDispatchGlobalStore,
   useDispatchStorePrincipal,
-  useSelectorStorePrincipal,
 } from "redux/StoreCreation";
 import {
   abrirFormAction,
@@ -13,6 +12,7 @@ import {
 import { useDispatch } from "react-redux";
 import { abrirFecharConfigComplAction } from "redux/actions/multileg/MultilegActions";
 import useStateGlobalStore from "hooks/useStateGlobalStore";
+import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export default ({ className, name = "" }) => {
   let handleShow;
@@ -28,9 +28,8 @@ export default ({ className, name = "" }) => {
   } //
   else if (name === "config_complementar") {
     const dispatchStorePrincipal = useDispatchStorePrincipal();
-    const stateMultileg = useSelectorStorePrincipal(
-      (state) => state.multilegReducer
-    );
+    const stateMultileg = useStateStorePrincipal("multileg");
+
     handleShow = () =>
       dispatchStorePrincipal(
         abrirFecharConfigComplAction(stateMultileg.configComplementarAberto)
