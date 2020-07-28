@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useMemo } from "react";
 import { Radio } from "antd";
-import termometro from "img/termometro.svg";
+import termometro from "assets/termometro.svg";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { mudarVariavelTHLAction } from "redux/actions/thl/THLActions";
 import { formatarNumDecimal } from "components/utils/Formatacoes";

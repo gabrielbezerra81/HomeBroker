@@ -1,5 +1,5 @@
 import React from "react";
-import configurarStop from "img/venda/VendaConfigurar.png";
+import configurarStop from "assets/venda/VendaConfigurar.png";
 import { connect } from "react-redux";
 import IconeConfigGrafico from "components/utils/componentesUI/IconeConfigGrafico";
 import { mostrarConfigurarStopAction } from "redux/actions/boletas/compraStartStopActions";

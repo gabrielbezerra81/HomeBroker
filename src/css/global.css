@@ -1,17 +1,19 @@
 @font-face {
   font-family: "Segoe UI";
-  src: local("Segoe UI"), url(../fonts/SEGOEUI.TTF) format("truetype");
+  src: local("Segoe UI"), url(../assets/fonts/SEGOEUI.TTF) format("truetype");
 }
 
 @font-face {
   font-family: "Segoe UI";
-  src: local("Segoe UI Semibold"), url(../fonts/SEGUISB.TTF) format("truetype");
+  src: local("Segoe UI Semibold"),
+    url(../assets/fonts/SEGUISB.TTF) format("truetype");
   font-weight: 500;
 }
 
 @font-face {
   font-family: "Segoe UI";
-  src: local("SegoeUI Bold"), url(../fonts/SEGOEUIB.TTF) format("truetype");
+  src: local("SegoeUI Bold"),
+    url(../assets/fonts/SEGOEUIB.TTF) format("truetype");
   font-weight: 600;
 }
 

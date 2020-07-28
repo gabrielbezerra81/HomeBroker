@@ -9,7 +9,7 @@
 }
 
 .backgroundLoginCadastro::after {
-  background-image: url("../../img/backgrounds/background_login.jpg");
+  background-image: url("../../assets/backgrounds/background_login.jpg");
   content: "";
   position: fixed;
   height: 100vh;

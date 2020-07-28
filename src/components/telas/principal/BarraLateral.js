@@ -1,8 +1,8 @@
 import React from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import iconeListaCompleta from "img/iconeListaCompleta.png";
-import { ReactComponent as Icones } from "img/IconesBarraLateral.svg";
+import iconeListaCompleta from "assets/iconeListaCompleta.png";
+import { ReactComponent as Icones } from "assets/IconesBarraLateral.svg";
 import { StorePrincipalContext, GlobalContext } from "redux/StoreCreation";
 import {
   mouseOverAction,

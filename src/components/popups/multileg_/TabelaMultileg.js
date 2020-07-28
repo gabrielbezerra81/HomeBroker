@@ -1,7 +1,7 @@
 import React from "react";
 import { Table, Form } from "react-bootstrap";
-import imgModeloEU from "img/modeloEU.png";
-import imgModeloUSA from "img/modeloUSA2.svg";
+import imgModeloEU from "assets/modeloEU.png";
+import imgModeloUSA from "assets/modeloUSA2.svg";
 import { connect } from "react-redux";
 import {
   modificarAtributoTabelaAbaAction,

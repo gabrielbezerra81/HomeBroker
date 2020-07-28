@@ -1,7 +1,7 @@
 import React from "react";
 // @ts-ignore
 import { connect } from "react-redux";
-import configurarStop from "img/compra/configurarStop.PNG";
+import configurarStop from "assets/compra/configurarStop.PNG";
 import IconeConfigGrafico from "components/utils/componentesUI/IconeConfigGrafico";
 import { COMPRA_STARTSTOP_NAMESPACE } from "constants/ActionTypes";
 import {

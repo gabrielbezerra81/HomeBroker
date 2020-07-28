@@ -1,9 +1,9 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
-import { ReactComponent as ArrowDown } from "img/down-arrow.svg";
-import { ReactComponent as ArrowUp } from "img/up-arrow.svg";
-import imgModeloEU from "img/modeloEU.png";
-import imgModeloUSA from "img/modeloUSA.png";
+import { ReactComponent as ArrowDown } from "assets/down-arrow.svg";
+import { ReactComponent as ArrowUp } from "assets/up-arrow.svg";
+import imgModeloEU from "assets/modeloEU.png";
+import imgModeloUSA from "assets/modeloUSA.png";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 
 class EmblemaRelatorio extends React.Component {

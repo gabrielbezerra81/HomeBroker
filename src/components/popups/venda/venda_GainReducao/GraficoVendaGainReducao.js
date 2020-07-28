@@ -1,10 +1,10 @@
 import React from "react";
 import { Col, Form } from "react-bootstrap";
 import { connect } from "react-redux";
-import img from "img/venda/VendaGainReducao.png";
+import img from "assets/venda/VendaGainReducao.png";
 import {
   TextoGainStopGrafico,
-  TextoCotacaoAtualGrafico
+  TextoCotacaoAtualGrafico,
 } from "components/utils/componentesUI/TextoGraficoBoletas";
 import { VENDA_GAINREDUCAO_NAMESPACE } from "constants/ActionTypes";
 import GraficoInputs from "components/utils/componentesUI/GraficoInputs";
@@ -33,14 +33,11 @@ class GraficoVendaGainReducao extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   dadosPesquisa: state.vendaGainReducao.dadosPesquisa,
   reducao1: state.vendaGainReducao.reducao1,
   reducao2: state.vendaGainReducao.reducao2,
-  gain: state.vendaGainReducao.gain
+  gain: state.vendaGainReducao.gain,
 });
 
-export default connect(
-  mapStateToProps,
-  {}
-)(GraficoVendaGainReducao);
+export default connect(mapStateToProps, {})(GraficoVendaGainReducao);

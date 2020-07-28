@@ -1,13 +1,13 @@
 import React from "react";
 import { Row, Col, FormControl } from "react-bootstrap";
 import { connect } from "react-redux";
-import imgCaraFeliz from "img/iconeCaraFeliz.png";
+import imgCaraFeliz from "assets/iconeCaraFeliz.png";
 import {
   abrirFecharMenuLateralAction,
   mudarDadosLoginAction,
 } from "redux/actions/telaPrincipal/TelaPrincipalActions";
-import { ReactComponent as IconeAbrirMenu } from "img/more.svg";
-import { ReactComponent as IconeHome } from "img/IconeHome.svg";
+import { ReactComponent as IconeAbrirMenu } from "assets/more.svg";
+import { ReactComponent as IconeHome } from "assets/IconeHome.svg";
 import { StorePrincipalContext } from "redux/StoreCreation";
 
 class BarraTopoTelaPrincipal extends React.Component {

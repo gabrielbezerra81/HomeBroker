@@ -2,12 +2,12 @@ import React from "react";
 import { Col, Form } from "react-bootstrap";
 import { connect } from "react-redux";
 
-import img from "img/venda/VendaStopMovel.png";
+import img from "assets/venda/VendaStopMovel.png";
 import {
   LabelInputGrafico,
   TextoGainStopGrafico,
   TextoCotacaoAtualGrafico,
-  TextoMenorGrafico
+  TextoMenorGrafico,
 } from "components/utils/componentesUI/TextoGraficoBoletas";
 import { VENDA_STOPMOVEL_NAMESPACE } from "constants/ActionTypes";
 import GraficoInputs from "components/utils/componentesUI/GraficoInputs";
@@ -57,7 +57,7 @@ class GraficoVendaStopMovel extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   gainDisparo: state.vendaStopMovel.gainDisparo,
   gainExec: state.vendaStopMovel.gainExec,
   stopDisparo: state.vendaStopMovel.stopDisparo,
@@ -67,12 +67,12 @@ const mapStateToProps = state => ({
   disparoMaisAjuste: state.vendaStopMovel.disparoMaisAjuste,
   stopMais1Ajuste: state.vendaStopMovel.stopMais1Ajuste,
   stopAnteriorAjuste: state.vendaStopMovel.stopAnteriorAjuste,
-  tabelaOrdens: state.vendaStopMovel.tabelaOrdens
+  tabelaOrdens: state.vendaStopMovel.tabelaOrdens,
 });
 
 export default connect(mapStateToProps, {})(GraficoVendaStopMovel);
 
-const renderTextos = props => {
+const renderTextos = (props) => {
   const { tabelaOrdens } = props;
 
   let ajuste1,

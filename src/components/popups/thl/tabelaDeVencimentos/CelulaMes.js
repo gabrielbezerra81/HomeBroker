@@ -3,8 +3,8 @@ import {
   formatarNumDecimal,
   formatarQuantidadeKMG,
 } from "components/utils/Formatacoes";
-import imgModeloEU from "img/modeloEU.png";
-import { ReactComponent as ImgModeloUSA } from "img/modeloUSA2.svg";
+import imgModeloEU from "assets/modeloEU.png";
+import { ReactComponent as ImgModeloUSA } from "assets/modeloUSA2.svg";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { mudarVariavelTHLAction } from "redux/actions/thl/THLActions";
 import BookTHL, { selecionarBooks } from "components/popups/thl/BookTHL";

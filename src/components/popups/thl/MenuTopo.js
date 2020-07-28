@@ -14,10 +14,10 @@ import {
   criarAlertaTHLAPIAction,
   pesquisarCombinacoesTHLAPIAction,
 } from "redux/actions/thl/ThlAPIAction";
-import iconeRecalcularPrecos from "img/THL/iconeRecalcular.svg";
-import iconeEnviarOrdem from "img/THL/iconeEnviarOrdem.svg";
-import iconeFavorito from "img/THL/iconeFavorito.svg";
-import iconeCriarAlerta from "img/THL/iconeCriarAlerta.svg";
+import iconeRecalcularPrecos from "assets/THL/iconeRecalcular.svg";
+import iconeEnviarOrdem from "assets/THL/iconeEnviarOrdem.svg";
+import iconeFavorito from "assets/THL/iconeFavorito.svg";
+import iconeCriarAlerta from "assets/THL/iconeCriarAlerta.svg";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useStateGlobalStore from "hooks/useStateGlobalStore";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";

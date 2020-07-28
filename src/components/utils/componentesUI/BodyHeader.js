@@ -1,10 +1,10 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
-import { ReactComponent as ArrowDown } from "img/down-arrow.svg";
-import { ReactComponent as ArrowUp } from "img/up-arrow.svg";
+import { ReactComponent as ArrowDown } from "assets/down-arrow.svg";
+import { ReactComponent as ArrowUp } from "assets/up-arrow.svg";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
-import imgModeloEU from "img/modeloEU.png";
-import imgModeloUSA from "img/modeloUSA2.svg";
+import imgModeloEU from "assets/modeloEU.png";
+import imgModeloUSA from "assets/modeloUSA2.svg";
 
 export const BodyHeaderCompleto = ({ dadosPesquisa }) => {
   if (dadosPesquisa) {

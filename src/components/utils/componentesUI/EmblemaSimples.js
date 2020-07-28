@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
-import { ReactComponent as ArrowDown } from "img/down-arrow.svg";
-import { ReactComponent as ArrowUp } from "img/up-arrow.svg";
+import { ReactComponent as ArrowDown } from "assets/down-arrow.svg";
+import { ReactComponent as ArrowUp } from "assets/up-arrow.svg";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 
 export default React.memo(

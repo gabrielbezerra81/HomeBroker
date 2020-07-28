@@ -4,7 +4,7 @@ import { Row, Col } from "react-bootstrap";
 import TabelaCompleta from "components/popups/posicao_custodia/posicao_detalhada/TabelaCompleta";
 import TabelaSimples from "components/popups/posicao_custodia/posicao_detalhada/TabelaSimples";
 import GraficoPatrimonio from "components/popups/posicao_custodia/posicao_detalhada/GraficoPatrimonio";
-import IconeRostoCoberto from "img/rostoCoberto2.svg";
+import IconeRostoCoberto from "assets/rostoCoberto2.svg";
 import { formatarNumDecimal } from "components/utils/Formatacoes";
 import { StorePrincipalContext } from "redux/StoreCreation";
 

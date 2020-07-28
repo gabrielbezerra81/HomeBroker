@@ -2,8 +2,8 @@ import React, { useRef } from "react";
 import { Row, Col } from "antd";
 import { MDBIcon } from "mdbreact";
 import BookTHL, { selecionarBooks } from "components/popups/thl/BookTHL";
-import imgModeloEU from "img/modeloEU.png";
-import ImgModeloUSA from "img/imgModeloUSA3.svg";
+import imgModeloEU from "assets/modeloEU.png";
+import ImgModeloUSA from "assets/imgModeloUSA3.svg";
 import InputsFiltroTabela from "components/popups/thl/tabelaCombinacoes/FiltroTabela";
 import {
   formatarNumDecimal,

@@ -1,8 +1,8 @@
 import React from "react";
 import { Form, Button, InputGroup, Spinner } from "react-bootstrap";
-import { ReactComponent as ArrowDown } from "img/down-arrow.svg";
+import { ReactComponent as ArrowDown } from "assets/down-arrow.svg";
 // @ts-ignore
-import { ReactComponent as ArrowUp } from "img/up-arrow.svg";
+import { ReactComponent as ArrowUp } from "assets/up-arrow.svg";
 import { MDBIcon } from "mdbreact";
 import TabelaMultileg from "components/popups/multileg_/TabelaMultileg";
 import { connect } from "react-redux";

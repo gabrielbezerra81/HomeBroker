@@ -1,10 +1,10 @@
 import React from "react";
 import { Col, Form } from "react-bootstrap";
 import { connect } from "react-redux";
-import img from "img/compra/GainReducaoCompra.png";
+import img from "assets/compra/GainReducaoCompra.png";
 import {
   TextoGainStopGrafico,
-  TextoCotacaoAtualGrafico
+  TextoCotacaoAtualGrafico,
 } from "components/utils/componentesUI/TextoGraficoBoletas";
 import { COMPRA_GAINREDUCAO_NAMESPACE } from "constants/ActionTypes";
 import GraficoInputs from "components/utils/componentesUI/GraficoInputs";
@@ -33,14 +33,11 @@ class GraficoCompraGainReducao extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   dadosPesquisa: state.compraGainReducao.dadosPesquisa,
   reducao1: state.compraGainReducao.reducao1,
   reducao2: state.compraGainReducao.reducao2,
-  gain: state.compraGainReducao.gain
+  gain: state.compraGainReducao.gain,
 });
 
-export default connect(
-  mapStateToProps,
-  {}
-)(GraficoCompraGainReducao);
+export default connect(mapStateToProps, {})(GraficoCompraGainReducao);
