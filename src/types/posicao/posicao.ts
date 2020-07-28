@@ -1,3 +1,17 @@
+import { typedAssign } from "types/utils";
+
+export interface ItemArrayPrecos {
+  precoCompra: number;
+  precoVenda: number;
+  cotacaoAtual: number;
+  idEstrutura: number;
+}
+
+export interface ItemArrayCotacoes {
+  codigo: string;
+  cotacao: number;
+}
+
 export interface IItemPosicao {
   ativos: any[];
   precoCompra: number;
@@ -36,19 +50,6 @@ export default class ItemPosicao implements IItemPosicao {
   agrupadorPrincipal: number = 0;
 
   constructor(posicao: any) {
-    assign(this, posicao);
+    typedAssign(this, posicao);
   }
-}
-
-export function assign(target: any, source: any, typecheck = true) {
-  const temp: { [k: string]: any } = {};
-  for (const key of Object.keys(source)) {
-    if (typecheck) {
-      const sameType = typeof source[key] === typeof target[key];
-      if (sameType && source[key]) temp[key] = source[key];
-    } //
-    else if (source[key]) temp[key] = source[key];
-  }
-
-  Object.assign(target, temp);
 }
