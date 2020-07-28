@@ -1,5 +1,6 @@
 import { getReducerStateStorePrincipal } from "./utils";
-import { useSelectorStorePrincipal } from "redux/StoreCreation";
+import { StorePrincipalContext } from "redux/StoreCreation";
+import { createSelectorHook } from "react-redux";
 
 type reducerName =
   | ""
@@ -8,6 +9,8 @@ type reducerName =
   | "multileg"
   | "posicao"
   | "ordensExec";
+
+const useSelectorStorePrincipal = createSelectorHook(StorePrincipalContext);
 
 const useStateStorePrincipal = (reducer: reducerName) => {
   const state = useSelectorStorePrincipal((state) => state);

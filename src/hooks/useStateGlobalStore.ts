@@ -1,5 +1,8 @@
 import { getMainReducerState } from "./utils";
-import { useSelectorGlobalStore } from "redux/StoreCreation";
+import { GlobalContext } from "redux/StoreCreation";
+import { createSelectorHook } from "react-redux";
+
+const useSelectorGlobalStore = createSelectorHook(GlobalContext);
 
 const useStateGlobalStore = () => {
   const state = useSelectorGlobalStore((state) => state);

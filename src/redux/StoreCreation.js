@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  createSelectorHook,
-  createDispatchHook,
-  useDispatch,
-} from "react-redux";
+import { createDispatchHook, useDispatch } from "react-redux";
 import ReduxThunk from "redux-thunk";
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
@@ -15,11 +11,6 @@ import { combinedReducersAppPrincipal } from "redux/reducers";
 
 export const StorePrincipalContext = React.createContext();
 export const GlobalContext = React.createContext();
-
-export const useSelectorStorePrincipal = createSelectorHook(
-  StorePrincipalContext
-);
-export const useSelectorGlobalStore = createSelectorHook(GlobalContext);
 
 export const useDispatchStorePrincipal = createDispatchHook(
   StorePrincipalContext
