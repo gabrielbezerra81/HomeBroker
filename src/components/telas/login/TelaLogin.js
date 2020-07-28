@@ -4,7 +4,7 @@ import { MDBIcon } from "mdbreact";
 import {
   logarUsuarioAction,
   mudarDadosLoginAction,
-} from "redux/actions/TelaPrincipalActions";
+} from "redux/actions/telaPrincipal/TelaPrincipalActions";
 import FloatingLabelInput from "react-floating-label-input";
 import { navigate } from "@reach/router";
 import {

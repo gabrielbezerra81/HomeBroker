@@ -7,7 +7,7 @@ import FormInternoVendaStartStop from "./FormInternoVendaStartStop";
 import GraficoVendaStartStop from "./GraficoVendaStartStop";
 import BodyHeaderVendaStartStop from "./BodyHeaderVendaStartStop";
 import { ModalHeader } from "components/utils/componentesUI/FormHeader";
-import {} from "redux/actions/AppBoletasActions";
+import {} from "redux/actions/boletas/AppBoletasActions";
 
 class VendaStartStop extends React.Component {
   componentDidMount() {

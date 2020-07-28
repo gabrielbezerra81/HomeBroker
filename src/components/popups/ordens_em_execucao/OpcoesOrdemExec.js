@@ -19,7 +19,7 @@ import {
   aumentarQtdePrecoAction,
   abrirOrdensBoletaAction,
 } from "redux/actions/ordensExecucao/OrdensExecActions";
-import { abrirItemBarraLateralAction } from "redux/actions/TelaPrincipalActions";
+import { abrirItemBarraLateralAction } from "redux/actions/telaPrincipal/TelaPrincipalActions";
 import {
   atualizarDivKeyAction,
   abrirFormAction,

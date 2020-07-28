@@ -18,7 +18,7 @@ import { COMPRA_STARTMOVEL_NAMESPACE } from "constants/ActionTypes";
 import TabelaOrdens from "./TabelaOrdens";
 import RowFormValidade from "components/utils/componentesUI/RowFormValidade";
 import RowFormAssinatura from "components/utils/componentesUI/RowFormAssinatura";
-import { compraStartMovelAction } from "redux/actions/AppBoletasActions";
+import { compraStartMovelAction } from "redux/actions/boletas/AppBoletasActions";
 import RowAtivoQtdeBoletas from "components/utils/componentesUI/RowAtivoQtdeBoletas";
 import {
   pesquisarAtivoOnEnterAction,

@@ -11,7 +11,7 @@ import {
   verificaCalculoSemBook,
 } from "components/popups/multileg_/CalculoPreco";
 import InputFormatado from "components/utils/componentesUI/InputFormatado";
-import { formatarNumero } from "redux/reducers/boletas_reducer/formInputReducer";
+import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
 import RowValidade from "components/popups/multileg_/RowValidade";
 import {
   enviarOrdemMultilegAction,

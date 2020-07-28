@@ -5,7 +5,7 @@ import imgCaraFeliz from "img/iconeCaraFeliz.png";
 import {
   abrirFecharMenuLateralAction,
   mudarDadosLoginAction,
-} from "redux/actions/TelaPrincipalActions";
+} from "redux/actions/telaPrincipal/TelaPrincipalActions";
 import { ReactComponent as IconeAbrirMenu } from "img/more.svg";
 import { ReactComponent as IconeHome } from "img/IconeHome.svg";
 import { StorePrincipalContext } from "redux/StoreCreation";

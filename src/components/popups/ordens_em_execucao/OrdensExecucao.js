@@ -11,7 +11,7 @@ import {
   atualizarDivKeyAction,
   aumentarZindexAction,
 } from "redux/actions/GlobalAppActions";
-import { abrirItemBarraLateralAction } from "redux/actions/TelaPrincipalActions";
+import { abrirItemBarraLateralAction } from "redux/actions/telaPrincipal/TelaPrincipalActions";
 import OpcoesOrdemExec from "components/popups/ordens_em_execucao/OpcoesOrdemExec";
 
 class OrdensExecucao extends React.Component {

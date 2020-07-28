@@ -15,7 +15,7 @@ import {
 import RowFormValidade from "components/utils/componentesUI/RowFormValidade";
 import RowFormAssinatura from "components/utils/componentesUI/RowFormAssinatura";
 import { COMPRA_STARTSTOP_NAMESPACE } from "constants/ActionTypes";
-import { compraStartStopAction } from "redux/actions/AppBoletasActions";
+import { compraStartStopAction } from "redux/actions/boletas/AppBoletasActions";
 import RowAtivoQtdeBoletas from "components/utils/componentesUI/RowAtivoQtdeBoletas";
 import {
   pesquisarAtivoOnEnterAction,

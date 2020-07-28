@@ -3,7 +3,7 @@ import { Form, Button } from "react-bootstrap";
 import {
   cadastrarUsuarioAction,
   mudarDadosLoginAction,
-} from "redux/actions/TelaPrincipalActions";
+} from "redux/actions/telaPrincipal/TelaPrincipalActions";
 import { navigate } from "@reach/router";
 import FloatingLabelInput from "react-floating-label-input";
 import {

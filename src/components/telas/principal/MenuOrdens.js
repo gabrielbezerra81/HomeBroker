@@ -28,8 +28,8 @@ import {
 import {
   mouseOverAction,
   mouseLeaveAction,
-} from "redux/actions/TelaPrincipalActions";
-import { abrirItemBarraLateralAction } from "redux/actions/TelaPrincipalActions";
+} from "redux/actions/telaPrincipal/TelaPrincipalActions";
+import { abrirItemBarraLateralAction } from "redux/actions/telaPrincipal/TelaPrincipalActions";
 
 const startStyle = {
   opacity: 0,

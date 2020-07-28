@@ -8,7 +8,7 @@ import BarraTopoTelaPrincipal from "components/telas/principal/BarraTopoTelaPrin
 import { StorePrincipalContext, GlobalContext } from "redux/StoreCreation";
 import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
 import { listarOrdensExecAction } from "redux/actions/ordensExecucao/OrdensExecActions";
-import { abrirItemBarraLateralAction } from "redux/actions/TelaPrincipalActions";
+import { abrirItemBarraLateralAction } from "redux/actions/telaPrincipal/TelaPrincipalActions";
 import { listarPosicoesAction } from "redux/actions/posicao/PosicaoActions";
 import BarraLateral from "components/telas/principal/BarraLateral";
 import MenuOrdens from "components/telas/principal/MenuOrdens";

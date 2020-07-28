@@ -19,7 +19,7 @@ import {
   DispatchGlobalStore,
   StateStorePrincipal,
 } from "redux/StoreCreation";
-import { abrirItemBarraLateralAction } from "redux/actions/TelaPrincipalActions";
+import { abrirItemBarraLateralAction } from "redux/actions/telaPrincipal/TelaPrincipalActions";
 import { abrirFecharConfigComplAction } from "redux/actions/multileg/MultilegActions";
 import { mudarVariavelOrdensExecAction } from "redux/actions/ordensExecucao/OrdensExecActions";
 

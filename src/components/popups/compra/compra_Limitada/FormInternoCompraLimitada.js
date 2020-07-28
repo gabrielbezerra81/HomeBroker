@@ -16,7 +16,7 @@ import RowFormValidade from "components/utils/componentesUI/RowFormValidade";
 import RowFormAssinatura from "components/utils/componentesUI/RowFormAssinatura";
 import { COMPRA_LIMITADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalLimitada } from "components/utils/CalculoValorTotal";
-import { compraLimitadaAction } from "redux/actions/AppBoletasActions";
+import { compraLimitadaAction } from "redux/actions/boletas/AppBoletasActions";
 import RowAtivoQtdeBoletas from "components/utils/componentesUI/RowAtivoQtdeBoletas";
 import {
   pesquisarAtivoOnEnterAction,
