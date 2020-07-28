@@ -2,7 +2,7 @@ import React from "react";
 import { InputGroup } from "react-bootstrap";
 import { Select } from "antd";
 import { erro_opcoes_ordens_exec } from "constants/AlertaErros";
-import { DispatchStorePrincipal } from "redux/StoreCreation";
+import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import {
   mudarVariavelOrdensExecAction,
   aumentarQtdePrecoAction,
@@ -10,7 +10,7 @@ import {
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export default (props) => {
-  const dispatch = DispatchStorePrincipal();
+  const dispatch = useDispatchStorePrincipal();
   const state = useStateStorePrincipal("ordensExec");
   const { token } = useStateStorePrincipal("principal");
 

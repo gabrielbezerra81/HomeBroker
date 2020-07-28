@@ -1,9 +1,9 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
-import { useDispatchGlobalStore } from "redux/StoreCreation";
 import { abrirFormAction } from "redux/actions/GlobalAppActions";
 import useStateGlobalStore from "hooks/useStateGlobalStore";
+import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 
 export const IconeConfigAbrirFormulario = ({ nomeFormulario }) => {
   const stateGlobalStore = useStateGlobalStore();

@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import { Form, InputGroup, Spinner } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import { Radio, Button, Tooltip } from "antd";
-import {
-  DispatchStorePrincipal,
-  DispatchGlobalStore,
-} from "redux/StoreCreation";
+import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import {
   mudarVariavelTHLAction,
   abrirMultilegTHLAction,
@@ -23,6 +20,7 @@ import iconeFavorito from "img/THL/iconeFavorito.svg";
 import iconeCriarAlerta from "img/THL/iconeCriarAlerta.svg";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useStateGlobalStore from "hooks/useStateGlobalStore";
+import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 
 const textoRecalcular =
   "Para recalcular os preços das estruturas é preciso selecionar uma Opção.";
@@ -46,7 +44,7 @@ export default () => {
 
 const InputPesquisa = () => {
   const reduxState = useStateStorePrincipal("thl");
-  const dispatch = DispatchStorePrincipal();
+  const dispatch = useDispatchStorePrincipal();
   const {
     ativoPesquisa,
     tipo,
@@ -125,8 +123,8 @@ const EnviarOrdem = () => {
   } = useStateStorePrincipal("multileg");
   const { booksSelecionados } = useStateStorePrincipal("thl");
 
-  const dispatchGlobal = DispatchGlobalStore();
-  const dispatchStorePrincipal = DispatchStorePrincipal();
+  const dispatchGlobal = useDispatchGlobalStore();
+  const dispatchStorePrincipal = useDispatchStorePrincipal();
 
   const props = {
     multileg,
@@ -157,7 +155,7 @@ const EnviarOrdem = () => {
 
 const RecalcularPrecos = () => {
   const reduxState = useStateStorePrincipal("thl");
-  const dispatch = DispatchStorePrincipal();
+  const dispatch = useDispatchStorePrincipal();
   const { codigoCelulaSelecionada } = reduxState;
   const classeBotaoDesabilitado = !codigoCelulaSelecionada
     ? " botaoDesabilitado"
@@ -178,7 +176,7 @@ const RecalcularPrecos = () => {
 const Favoritar = () => {
   const { idCelulaSelecionada } = useStateStorePrincipal("thl");
   const { token } = useStateStorePrincipal("principal");
-  const dispatch = DispatchStorePrincipal();
+  const dispatch = useDispatchStorePrincipal();
   const classeBotaoDesabilitado = !idCelulaSelecionada
     ? " botaoDesabilitado"
     : "";
@@ -198,7 +196,7 @@ const Favoritar = () => {
 };
 const CriarAlerta = () => {
   const reduxState = useStateStorePrincipal("thl");
-  const dispatch = DispatchStorePrincipal();
+  const dispatch = useDispatchStorePrincipal();
   const { idCelulaSelecionada } = reduxState;
   const classeBotaoDesabilitado = !idCelulaSelecionada
     ? " botaoDesabilitado"

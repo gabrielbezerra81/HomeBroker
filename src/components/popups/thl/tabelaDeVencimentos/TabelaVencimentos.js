@@ -2,7 +2,7 @@
 import React, { useMemo, useEffect } from "react";
 import { Table } from "react-bootstrap";
 import moment from "moment";
-import { DispatchStorePrincipal } from "redux/StoreCreation";
+import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import {
   formatarNumDecimal,
   formatarQuantidadeKMG,
@@ -15,7 +15,7 @@ import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export default React.memo(() => {
   const reduxState = useStateStorePrincipal("thl");
-  const dispatch = DispatchStorePrincipal();
+  const dispatch = useDispatchStorePrincipal();
   const {
     opcoesStrike,
     strikeSelecionado,

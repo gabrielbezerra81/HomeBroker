@@ -8,13 +8,13 @@ import {
   ColunaTextoComum,
   ColunaHeader,
 } from "components/popups/thl/tabelaCombinacoes/ColunasTabelaComb";
-import { DispatchStorePrincipal } from "redux/StoreCreation";
+import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { mudarVariavelTHLAction } from "redux/actions/thl/THLActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export default React.memo(({ dataTabela, classeMargemScroll }) => {
   const reduxState = useStateStorePrincipal("thl");
-  const dispatch = DispatchStorePrincipal();
+  const dispatch = useDispatchStorePrincipal();
   const { idCelulaSelecionada, codigoCelulaSelecionada } = reduxState;
 
   const StripedRow = useMemo(

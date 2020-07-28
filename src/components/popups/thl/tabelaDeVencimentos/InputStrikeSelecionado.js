@@ -1,12 +1,12 @@
 import React from "react";
 import { FormControl } from "react-bootstrap";
-import { DispatchStorePrincipal } from "redux/StoreCreation";
+import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { mudarVariavelTHLAction } from "redux/actions/thl/THLActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export default ({ strikeLinha, indiceStrike }) => {
   const reduxState = useStateStorePrincipal("thl");
-  const dispatch = DispatchStorePrincipal();
+  const dispatch = useDispatchStorePrincipal();
   const { strikeSelecionado, listaStrikes } = reduxState;
 
   if (Number(strikeSelecionado) === Number(strikeLinha)) {

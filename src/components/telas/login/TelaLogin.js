@@ -7,13 +7,13 @@ import {
 } from "redux/actions/telaPrincipal/TelaPrincipalActions";
 import FloatingLabelInput from "react-floating-label-input";
 import { navigate } from "@reach/router";
-import { DispatchStorePrincipal } from "redux/StoreCreation";
+import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 const TelaLogin = ({ path }) => {
   const { inputUsuario, inputSenha } = useStateStorePrincipal("principal");
 
-  const dispatch = DispatchStorePrincipal();
+  const dispatch = useDispatchStorePrincipal();
 
   const handleSubmit = useCallback(
     (e) => {

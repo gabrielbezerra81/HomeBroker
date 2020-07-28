@@ -1,5 +1,4 @@
 import React from "react";
-import { createDispatchHook, useDispatch } from "react-redux";
 import ReduxThunk from "redux-thunk";
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
@@ -11,21 +10,6 @@ import { combinedReducersAppPrincipal } from "redux/reducers";
 
 export const StorePrincipalContext = React.createContext();
 export const GlobalContext = React.createContext();
-
-export const useDispatchStorePrincipal = createDispatchHook(
-  StorePrincipalContext
-);
-export const useDispatchGlobalStore = createDispatchHook(GlobalContext);
-
-export const DispatchBoletas = () => {
-  return useDispatch();
-};
-export const DispatchStorePrincipal = () => {
-  return useDispatchStorePrincipal();
-};
-export const DispatchGlobalStore = () => {
-  return useDispatchGlobalStore();
-};
 
 const persistConfig = {
   key: "root",

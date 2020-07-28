@@ -1,5 +1,5 @@
 import React from "react";
-import { DispatchStorePrincipal } from "redux/StoreCreation";
+import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { mudarVariavelTHLAction } from "redux/actions/thl/THLActions";
 import { erro_selecaoBook_THL } from "constants/AlertaErros";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
@@ -7,7 +7,7 @@ import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 export default (props) => {
   const { preco, qtde, tipo, ativo } = props;
   const reduxState = useStateStorePrincipal("thl");
-  const dispatch = DispatchStorePrincipal();
+  const dispatch = useDispatchStorePrincipal();
   const { booksSelecionados } = reduxState;
   const indice = booksSelecionados.findIndex(
     (book) => book.ativo === ativo && book.tipo === tipo

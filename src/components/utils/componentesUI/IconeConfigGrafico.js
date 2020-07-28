@@ -1,18 +1,16 @@
 import React from "react";
 import { MDBIcon } from "mdbreact";
 import { Button } from "react-bootstrap";
-import {
-  useDispatchGlobalStore,
-  useDispatchStorePrincipal,
-} from "redux/StoreCreation";
+import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import {
   abrirFormAction,
   abrirFormConfigurarAction,
 } from "redux/actions/GlobalAppActions";
-import { useDispatch } from "react-redux";
 import { abrirFecharConfigComplAction } from "redux/actions/multileg/MultilegActions";
 import useStateGlobalStore from "hooks/useStateGlobalStore";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
+import useDispatchBoletas from "hooks/useDispatchBoletas";
+import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 
 export default ({ className, name = "" }) => {
   let handleShow;
@@ -20,7 +18,7 @@ export default ({ className, name = "" }) => {
   const stateGlobalStore = useStateGlobalStore();
 
   if (["config_venda", "config_compra"].includes(name)) {
-    const dispatch = useDispatch();
+    const dispatch = useDispatchBoletas();
     handleShow = (e) =>
       dispatch(
         abrirFormConfigurarAction(e, { zIndex: stateGlobalStore.zIndex })

@@ -5,14 +5,14 @@ import {
 } from "components/utils/Formatacoes";
 import imgModeloEU from "img/modeloEU.png";
 import { ReactComponent as ImgModeloUSA } from "img/modeloUSA2.svg";
-import { DispatchStorePrincipal } from "redux/StoreCreation";
+import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { mudarVariavelTHLAction } from "redux/actions/thl/THLActions";
 import BookTHL, { selecionarBooks } from "components/popups/thl/BookTHL";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
   const reduxState = useStateStorePrincipal("thl");
-  const dispatch = DispatchStorePrincipal();
+  const dispatch = useDispatchStorePrincipal();
   const {
     precosTabelaVencimentos,
     booksSelecionados,

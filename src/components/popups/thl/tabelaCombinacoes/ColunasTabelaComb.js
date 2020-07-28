@@ -9,13 +9,13 @@ import {
   formatarNumDecimal,
   formatarQuantidadeKMG,
 } from "components/utils/Formatacoes";
-import { DispatchStorePrincipal } from "redux/StoreCreation";
+import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { mudarVariavelTHLAction } from "redux/actions/thl/THLActions";
 import { buscarNumeroArray } from "components/utils/FuncoesBusca";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export const ColunaHeader = ({ children, column }) => {
-  const dispatch = DispatchStorePrincipal();
+  const dispatch = useDispatchStorePrincipal();
   const { ordenacao } = useStateStorePrincipal("thl");
   let elementoColuna;
   let classNameColunaAcaoUlt = "";
@@ -182,7 +182,7 @@ export const ColunaCodigos = ({ children, row, column }) => {
 export const ColunaMontagem = ({ children, row, column }) => {
   const { opcao1, opcao2 } = row.codigos;
 
-  const dispatch = DispatchStorePrincipal();
+  const dispatch = useDispatchStorePrincipal();
   const reduxState = useStateStorePrincipal("thl");
   const { booksSelecionados } = reduxState;
 

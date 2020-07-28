@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Button, Col, Row, Form } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import { mudarInputHeaderAction } from "redux/actions/boletas/bookOfertaActions";
@@ -9,18 +9,14 @@ import {
   abrirFormAction,
   fecharFormConfigurarAction,
 } from "redux/actions/GlobalAppActions";
-import {
-  useDispatchGlobalStore,
-  useDispatchStorePrincipal,
-  DispatchStorePrincipal,
-  DispatchBoletas,
-  DispatchGlobalStore,
-} from "redux/StoreCreation";
+import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { abrirItemBarraLateralAction } from "redux/actions/telaPrincipal/TelaPrincipalActions";
 import { abrirFecharConfigComplAction } from "redux/actions/multileg/MultilegActions";
 import { mudarVariavelOrdensExecAction } from "redux/actions/ordensExecucao/OrdensExecActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useStateGlobalStore from "hooks/useStateGlobalStore";
+import useDispatchBoletas from "hooks/useDispatchBoletas";
+import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 
 // Apenas para boletas de compra e venda
 export const ModalHeader = ({
@@ -33,8 +29,8 @@ export const ModalHeader = ({
 }) => {
   const state = useSelector((state) => state.appBoletasReducer);
   const stateGlobalStore = useStateGlobalStore();
-  const dispatchGlobal = DispatchGlobalStore();
-  const dispatch = useDispatch();
+  const dispatchGlobal = useDispatchGlobalStore();
+  const dispatch = useDispatchBoletas();
   const formShow = stateGlobalStore.show;
   const { appkey } = state.appProps;
   const abrirBookProps = {
@@ -93,7 +89,7 @@ export const BookHeader = ({ headerClass, resetPosition }) => {
   const formShow = stateGlobalStore.show;
   const { appkey } = stateSubApp.appProps;
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatchBoletas();
   const dispatchGlobal = useDispatchGlobalStore();
 
   return (
@@ -186,16 +182,16 @@ export const ModalHeaderSemBook = React.memo(
 export const ModalHeaderLimpo = ({ titulo, name = "" }) => {
   let funcaoFechar;
 
+  const dispatchStorePrincipal = useDispatchStorePrincipal();
+  const dispatch = useDispatchBoletas();
   const stateStorePrincipal = useStateStorePrincipal("multileg");
 
   const { configComplementarAberto } = stateStorePrincipal;
 
   if (["config_compra", "config_venda"].includes(name)) {
-    const dispatch = DispatchBoletas();
     funcaoFechar = (e) => dispatch(fecharFormConfigurarAction(e));
   } //
   else if (name === "config_complementar") {
-    const dispatchStorePrincipal = DispatchStorePrincipal();
     funcaoFechar = (e) =>
       dispatchStorePrincipal(
         abrirFecharConfigComplAction(configComplementarAberto)
@@ -293,10 +289,11 @@ const GetAbrirMenuProps = () => {
 
 const BotaoAbrirFiltrarOrdens = ({ headerTitle }) => {
   let botaoAbrirFiltrarOrdens = <div></div>;
-  const state = useStateStorePrincipal((state) => state);
-  if (headerTitle === "HISTÓRICO DE OPERAÇÕES") {
-    const dispatch = DispatchStorePrincipal();
 
+  const dispatch = useDispatchStorePrincipal();
+  const state = useStateStorePrincipal((state) => state);
+
+  if (headerTitle === "HISTÓRICO DE OPERAÇÕES") {
     const { filtrarOrdensAberto } = state.ordensExecReducer;
 
     botaoAbrirFiltrarOrdens = (
