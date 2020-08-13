@@ -6,7 +6,7 @@
 }
 
 .tabelaCombinacoes {
-  color: var(--cor-texto);
+  color: var(--color-text-primary);
   margin-bottom: 0;
 
   %colunaTextoCentralizado {
@@ -28,7 +28,7 @@
 
   .th:first-child {
     .divLabelColuna {
-      // border-left: 1px solid var(--cor-borda) !important;
+      // border-left: 1px solid var(--color-border-light) !important;
       border-top-left-radius: 3px !important;
     }
   }
@@ -65,9 +65,9 @@
     @extend %colunaTextoCentralizado;
     padding: 5px 3px !important;
     font-size: 0.7rem;
-    color: var(--cor-texto-discreto);
-    border-top: 1px solid var(--cor-borda);
-    border-right: 1px solid var(--cor-borda);
+    color: var(--color-text-dark);
+    border-top: 1px solid var(--color-border-light);
+    border-right: 1px solid var(--color-border-light);
     border-bottom: 1px solid transparent;
 
     &:first-child {
@@ -81,7 +81,7 @@
 
   .linha-impar {
     .td {
-      background-color: var(--light-background-color);
+      background-color: var(--color-background-light);
     }
   }
 
@@ -105,7 +105,7 @@
   top: 0px;
   width: 100%;
   height: calc(100% - 28px);
-  background-color: var(--background-color);
+  background-color: var(--color-background);
   display: flex;
   align-items: flex-end;
   padding: 0px 3px 3px 3px;
@@ -115,7 +115,7 @@
     height: 20px;
     background-color: #333;
     border-color: #333;
-    color: var(--cor-texto) !important;
+    color: var(--color-text-primary) !important;
     font-size: 0.7rem;
     width: 100% !important;
     max-width: 100px;
@@ -165,7 +165,7 @@
       width: 50%;
     }
     div:first-child {
-      border-right: 1px solid var(--cor-borda);
+      border-right: 1px solid var(--color-border-light);
     }
   }
 }
@@ -187,8 +187,8 @@
 
 /* Posicionamento de inputs acima do thead e configuração do .th*/
 .divLabelColuna {
-  background-color: var(--light-background-color);
-  border: 1px solid var(--cor-borda);
+  background-color: var(--color-background-light);
+  border: 1px solid var(--color-border-light);
   border-left: none;
   height: 28px;
   display: flex;
@@ -218,7 +218,7 @@
   > div {
     height: 20px !important;
     background-color: #333 !important;
-    color: var(--cor-texto) !important;
+    color: var(--color-text-primary) !important;
     width: 25px !important;
     border: none;
     text-align: center !important;
@@ -249,12 +249,12 @@
     position: absolute;
     background-color: transparent;
     border-radius: 3px;
-    border: 1px solid var(--cor-borda);
+    border: 1px solid var(--color-border-light);
     left: -1px;
     z-index: 3;
     bottom: $bottom;
     height: $height;
-    width: var(--some-width);
+    width: var(--width-tabela-combinacoes);
     pointer-events: none;
   }
 
@@ -341,7 +341,7 @@
 
   > div {
     background-color: #333 !important;
-    color: var(--cor-texto) !important;
+    color: var(--color-text-primary) !important;
     border: none;
     font-size: 0.73rem !important;
     min-height: 20px !important;
@@ -360,7 +360,7 @@
     margin-top: 0 !important;
     background-color: transparent !important;
     border-color: transparent !important;
-    color: var(--cor-texto) !important;
+    color: var(--color-text-primary) !important;
   }
 
   .ant-select-selection__choice > div {
@@ -368,7 +368,7 @@
     font-weight: 400 !important;
   }
   .ant-select-remove-icon {
-    color: var(--cor-texto) !important;
+    color: var(--color-text-primary) !important;
   }
 
   .ant-select-selection__choice__remove {

@@ -1,9 +1,9 @@
 .divAsModalContainer {
-  background-color: var(--background-color);
+  background-color: var(--color-background);
   border-radius: 1rem;
   padding: 0rem 1rem;
-  border: 0.2rem solid var(--cor-borda);
-  color: var(--cor-texto);
+  border: 0.2rem solid var(--color-border-light);
+  color: var(--color-text-primary);
   font-size: 0.9rem;
   padding-bottom: 0.5rem;
   width: 100%;
@@ -41,24 +41,6 @@
   max-width: 106.73px;
 }
 
-.textInput {
-  height: 15px;
-  font-size: 0.66rem;
-  background-color: var(--cor-text-input);
-  border-color: var(--cor-text-input);
-  color: black;
-  text-align: center;
-}
-
-.form-control.textInput {
-  padding: 0 0.04rem 0 0.04rem;
-}
-
-.textInput:focus {
-  background-color: var(--cor-text-input);
-  box-shadow: 0 0 0px 3.5px var(--box-shadow-color);
-}
-
 .colIconeConfig {
   display: flex;
   justify-content: flex-start;
@@ -73,16 +55,16 @@
 
 .valorTotalText {
   text-align: center;
-  background-color: var(--light-background-color);
+  background-color: var(--color-background-light);
   margin-top: 0.5rem;
   margin-bottom: 0rem;
   padding: 0.2rem 0;
-  color: var(--laranja-valorTotal);
+  color: var(--color-orange-primary);
 }
 
 .valorTotalText_CL {
   text-align: center;
-  color: var(--laranja-valorTotal);
+  color: var(--color-orange-primary);
   margin: 0;
 }
 
@@ -117,7 +99,7 @@
 
 .colDateIcon {
   padding-left: 0.7rem;
-  color: var(--cor-cinza-botoes);
+  color: var(--color-buttons-grey);
 }
 
 .rowAssinaturaEletronica {
@@ -186,7 +168,7 @@
 }
 
 .tabelaGainReducao {
-  background: var(--background-color);
+  background: var(--color-background);
   margin: 0;
   color: #ddd;
   border-bottom: 1px dashed #ddd;

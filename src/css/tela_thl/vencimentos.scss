@@ -8,7 +8,7 @@ $tabelaVencimentosWidth: 100%;
 }
 
 #scrollTabelaVencimento {
-  border: 1px solid var(--cor-borda);
+  border: 1px solid var(--color-border-light);
   border-radius: 3px;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
@@ -31,15 +31,15 @@ $tabelaVencimentosWidth: 100%;
   border-spacing: 0;
 
   %comumTdTh {
-    border-color: var(--cor-borda) !important;
-    border-right: 1px dashed var(--cor-borda-discreta) !important;
+    border-color: var(--color-border-light) !important;
+    border-right: 1px dashed var(--color-border-dark) !important;
     border-left: none;
   }
 
   %comumTdThChild2 {
     border-style: solid !important;
     border-left-width: 1px;
-    border-color: var(--cor-borda) !important;
+    border-color: var(--color-border-light) !important;
   }
 
   %borderRightNone {
@@ -69,7 +69,7 @@ $tabelaVencimentosWidth: 100%;
         position: -webkit-sticky;
         position: sticky;
         z-index: 2;
-        background-color: var(--light-background-color);
+        background-color: var(--color-background-light);
         @extend %comumTdTh;
 
         &:first-child {
@@ -107,7 +107,7 @@ $tabelaVencimentosWidth: 100%;
     tr {
       /* colunas strike e preço das linhas fixas */
       &:nth-child(1n + 2) {
-        color: var(--cor-texto-discreto);
+        color: var(--color-text-dark);
 
         %primeirasColunasTd {
           position: -webkit-sticky; /* for Safari */
@@ -130,7 +130,7 @@ $tabelaVencimentosWidth: 100%;
         td {
           &:nth-child(1),
           &:nth-child(2) {
-            background-color: var(--light-background-color) !important;
+            background-color: var(--color-background-light) !important;
           }
         }
       }
@@ -139,23 +139,23 @@ $tabelaVencimentosWidth: 100%;
         td {
           &:nth-child(1),
           &:nth-child(2) {
-            background-color: var(--background-color) !important;
+            background-color: var(--color-background) !important;
           }
         }
       }
 
       &:first-child {
         .colunaPrecoLinha div:first-child {
-          border-right: 1px solid var(--cor-borda) !important;
+          border-right: 1px solid var(--color-border-light) !important;
         }
 
         td {
           position: -webkit-sticky; /* for Safari */
           position: sticky;
-          background-color: var(--light-background-color);
+          background-color: var(--color-background-light);
           top: 30px;
           z-index: 2;
-          border-bottom: 1px solid var(--cor-borda) !important;
+          border-bottom: 1px solid var(--color-border-light) !important;
           font-size: 0.9rem;
 
           &:nth-child(1n + 3) {
@@ -206,7 +206,7 @@ $tabelaVencimentosWidth: 100%;
 
       /* subcoluna total */
       &:first-child {
-        border-right: 1px dashed var(--cor-borda-discreta) !important;
+        border-right: 1px dashed var(--color-border-dark) !important;
         padding: 0px 10px 0 5px;
       }
 
@@ -228,7 +228,7 @@ $tabelaVencimentosWidth: 100%;
 }
 
 .precoLinhaDesmontar {
-  color: var(--cor-vermelha-venda);
+  color: var(--color-sell-primary-red);
   @extend %precoLinha;
 }
 
@@ -326,11 +326,11 @@ $tabelaVencimentosWidth: 100%;
 }
 
 .bookSelecionado_compra {
-  border-color: var(--cor-azul-compra) !important;
+  border-color: var(--color-buy-primary-blue) !important;
 }
 
 .bookSelecionado_venda {
-  border-color: var(--cor-vermelha-venda) !important;
+  border-color: var(--color-sell-primary-red) !important;
 }
 
 .containerPrecoMontDesmont {
@@ -338,7 +338,7 @@ $tabelaVencimentosWidth: 100%;
   flex-direction: column;
   justify-content: center;
   margin-left: 5px;
-  border-left: 1px dashed var(--cor-borda-discreta);
+  border-left: 1px dashed var(--color-border-dark);
   min-width: 75px;
   margin-right: -6px;
   height: 100%;
@@ -357,7 +357,7 @@ $tabelaVencimentosWidth: 100%;
 }
 
 .roxoTextoTHL {
-  color: var(--roxo-texto-thl);
+  color: var(--color-text-purple);
 }
 
 .ativoExecutando {

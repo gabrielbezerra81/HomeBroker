@@ -1,4 +1,4 @@
-import "./global.css"
+import "./global.scss";
 import "./App.css";
 import "./estilo_geral_formCompraVenda/FormGenerico.css";
 import "./BookOfertas.css";
@@ -38,6 +38,9 @@ import "./tela_thl/vencimentos.scss";
 
 import "./componentes_customizados/CustomCheckbox.css";
 import "./componentes_customizados/InputFormatado.css";
+import "./componentes_customizados/IconeConfigGrafico.css";
+import "./componentes_customizados/EmblemaSimples.css";
+import "./componentes_customizados/IconeSeta.css";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./componentes_customizados/SelectANTD.css";

@@ -83,7 +83,7 @@
   display: flex;
   justify-content: space-evenly;
   flex-direction: column;
-  border: 2px solid var(--cor-azul-compra);
+  border: 2px solid var(--color-buy-primary-blue);
   border-radius: 1px;
 }
 
@@ -113,13 +113,13 @@ input.inputFlutuante {
 }
 
 input.inputFlutuante:focus {
-  box-shadow: 0 0 0px 3.5px var(--box-shadow-color);
+  box-shadow: 0 0 0px 3.5px var(--color-input-box-shadow);
   border-radius: 0.25rem;
 }
 
 div.inputFlutuante:focus-within label.inputFlutuante,
 label.flutuantePreenchido {
-  color: var(--cor-azul-compra) !important;
+  color: var(--color-buy-primary-blue) !important;
   font-size: 1.1rem !important;
   top: 3px;
   left: 0;

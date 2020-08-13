@@ -1,0 +1,21 @@
+.itemListaCompleta {
+  width: 180px;
+}
+
+.containerSliderTopo {
+  display: flex;
+  flex-direction: row;
+  padding: 0 0.5rem;
+}
+
+.sliderTopo {
+  height: 5px;
+  background-color: #4e4f4e;
+  flex: 17;
+}
+
+.meioSliderTopo {
+  height: 5px;
+  background-color: var(--color-buy-primary-blue);
+  flex: 1;
+}

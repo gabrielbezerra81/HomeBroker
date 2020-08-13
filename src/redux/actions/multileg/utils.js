@@ -4,7 +4,7 @@ import {
   erro_validar_contaSelecionada,
 } from "constants/AlertaErros";
 
-import { getformatedDate } from "components/utils/Formatacoes";
+import { getformatedDate } from "shared/utils/Formatacoes";
 import { MODIFICAR_VARIAVEL_MULTILEG } from "constants/MenuActionTypes";
 
 export const modificarVariavelMultileg = ({ nome, valor }) => {

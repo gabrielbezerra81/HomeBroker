@@ -7,7 +7,7 @@
 }
 
 .rowCheckbox {
-  border-bottom: 1px dashed var(--cor-borda);
+  border-bottom: 1px dashed var(--color-border-light);
   padding-top: 1rem;
   padding-bottom: 1rem;
   margin-bottom: 0.1rem;
@@ -19,16 +19,12 @@
   justify-content: space-between;
 }
 
-.text-align-right {
-  text-align: right;
-}
-
 .rowCompra {
-  border-bottom: 1px solid var(--cor-borda);
+  border-bottom: 1px solid var(--color-border-light);
 }
 
 .rowCompra > div:first-child {
-  border-right: 1px solid var(--cor-borda);
+  border-right: 1px solid var(--color-border-light);
   padding-bottom: 1rem;
   padding-left: 15px !important;
   padding-right: 15px !important;
@@ -55,7 +51,7 @@
 }
 
 .tabelaCompraPosicao > thead > tr > th {
-  border-right: 1px solid var(--cor-borda);
+  border-right: 1px solid var(--color-border-light);
   color: #8fb9a1;
 }
 
@@ -72,7 +68,7 @@
 }
 
 .tabelaCompraPosicao td {
-  border-right: 1px solid var(--cor-borda);
+  border-right: 1px solid var(--color-border-light);
   vertical-align: middle;
 }
 
@@ -85,12 +81,12 @@
 }
 
 .containerGrafico {
-  background-color: var(--light-background-color);
+  background-color: var(--color-background-light);
   border-radius: 5px;
 }
 
 .graficoVermelho {
-  background-color: var(--cor-vermelha-venda) !important;
+  background-color: var(--color-sell-primary-red) !important;
 }
 
 .graficoAmarelo {

@@ -8,7 +8,7 @@
 }
 
 .tableBook {
-  background: var(--background-color);
+  background: var(--color-background);
   margin: 0;
   color: #ddd;
 }
@@ -19,7 +19,7 @@ th {
 
 .table-striped > tbody > tr:nth-child(odd) > td,
 .table-striped > tbody > tr:nth-child(odd) > th {
-  background-color: var(--light-background-color);
+  background-color: var(--color-background-light);
 }
 
 .operacoes .col {
@@ -53,7 +53,7 @@ th {
 .operation-icons {
   padding: 0;
   border: none;
-  color: var(--cor-cinza-botoes);
+  color: var(--color-buttons-grey);
   font-size: 0.8rem;
 }
 
@@ -98,8 +98,4 @@ td {
 
 .ColFormGain {
   padding-left: 0.18rem;
-}
-
-.text-align-center {
-  text-align: center !important;
 }

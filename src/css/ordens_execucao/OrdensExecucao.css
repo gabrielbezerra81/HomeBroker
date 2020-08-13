@@ -17,7 +17,7 @@
 #ordens_execucao select {
   /* background-color: #333;
   border-color: #333;
-  color: var(--cor-texto) !important; */
+  color: var(--color-text-primary) !important; */
 }
 
 .tableOrdensExecucao {
@@ -44,7 +44,7 @@ span.colunasOfertaVenda {
 }
 
 .bodyOrdensExecucao thead {
-  background-color: var(--background-color);
+  background-color: var(--color-background);
 }
 
 .divFiltrarOrdens {

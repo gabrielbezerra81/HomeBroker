@@ -1,0 +1,15 @@
+.wrapperIconeConfiguracaoGrafico {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconeConfiguracaoGrafico {
+  padding: 0;
+  border: none;
+  color: var(--color-buttons-grey);
+  font-size: 0.6rem;
+}

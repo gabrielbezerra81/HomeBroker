@@ -1,5 +1,5 @@
 .divTelaPrincipal {
-  background-color: var(--background-colors);
+  background-color: var(--color-backgrounds);
   display: flex;
   height: 100vh;
 }
@@ -167,7 +167,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  color: var(--cor-texto);
+  color: var(--color-text-primary);
 }
 
 .rowSpeciais {
@@ -178,7 +178,7 @@
 .divBotaoFormulario {
   display: flex;
   flex-direction: column;
-  color: var(--cor-texto);
+  color: var(--color-text-primary);
   align-items: center;
   text-align: end !important;
 }

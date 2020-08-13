@@ -5,8 +5,8 @@ import {
   validacaoCompraStartMovel,
   validacaoCompraGainReducao,
   validacaoCompraStartStop
-} from "components/utils/Validacoes";
-import { getformatedDate } from "components/utils/Formatacoes";
+} from "shared/utils/Validacoes";
+import { getformatedDate } from "shared/utils/Formatacoes";
 
 export const compraAgendadaAction = (props, namespace) => {
   return dispatch => {

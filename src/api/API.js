@@ -1,6 +1,6 @@
 import request from "superagent";
 import retryDelay from "superagent-retry-delay";
-import { formatarDataDaAPI } from "components/utils/Formatacoes";
+import { formatarDataDaAPI } from "shared/utils/Formatacoes";
 import {
   url_base,
   url_pesquisarAtivoBoletas_codigo,

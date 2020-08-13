@@ -4,7 +4,7 @@ import { PESQUISAR_ATIVO_BOLETA_API } from "constants/ApiActionTypes";
 import {
   montaOrdemPrincipal,
   validarOrdemBoleta,
-} from "components/utils/MontarOrdens";
+} from "shared/utils/MontarOrdens";
 import {
   ATUALIZAR_EVENT_SOURCE_BOLETAS,
   MUDAR_QTDE,

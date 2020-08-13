@@ -22,7 +22,7 @@ import { erro_exportar_ordens_multileg } from "constants/AlertaErros";
 import {
   calculoPreco,
   calculoMDC,
-} from "components/popups/multileg_/CalculoPreco";
+} from "telas/popups/multileg_/CalculoPreco";
 import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
 
 export const mudarVariavelOrdensExecAction = (nome, valor) => {

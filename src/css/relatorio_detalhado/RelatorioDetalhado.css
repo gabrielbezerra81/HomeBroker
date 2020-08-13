@@ -23,21 +23,21 @@
 }
 
 .ativoCompra {
-  color: var(--cor-azul-compra);
+  color: var(--color-buy-primary-blue);
 }
 
 .ativoVenda {
-  color: var(--cor-vermelha-venda);
+  color: var(--color-sell-primary-red);
 }
 
 .tabela1Custo {
-  border-bottom: 1px solid var(--cor-borda);
+  border-bottom: 1px solid var(--color-border-light);
 }
 
 .tabela1Custo td:nth-child(1),
 .tabela1Custo td:nth-child(2),
 .tabela1Custo td:nth-child(3) {
-  border-right: 1px solid var(--cor-borda);
+  border-right: 1px solid var(--color-border-light);
 }
 
 .tabela1Custo tr:last-child td {
@@ -54,7 +54,7 @@
 }
 
 .colTextoPosicao {
-  background-color: var(--light-background-color);
+  background-color: var(--color-background-light);
 }
 
 .containerEmblemaRelatorio {
@@ -77,11 +77,11 @@
 }
 
 .bordaGrossaLinhaOrganizadaEmblema {
-  border-bottom: 3px solid var(--cor-borda);
+  border-bottom: 3px solid var(--color-border-light);
 }
 
 .bordaFinaLinhaOrganizadaEmblema {
-  border-bottom: 2px solid var(--cor-borda);
+  border-bottom: 2px solid var(--color-border-light);
 }
 
 .rowHorarioEmblema {
@@ -97,17 +97,17 @@
 }
 
 .tabela3Resultado {
-  background-color: var(--background-color) !important;
+  background-color: var(--color-background) !important;
 }
 
 .tabela3Resultado > tbody > tr:nth-child(odd) > td,
 .tabela3Resultado > tbody > tr:nth-child(odd) > th {
-  background-color: var(--light-background-color) !important;
+  background-color: var(--color-background-light) !important;
 }
 
 .tabela3Resultado td,
 .tabela3Resultado th {
-  border-right: 1px solid var(--cor-borda) !important;
+  border-right: 1px solid var(--color-border-light) !important;
   padding: 0.2rem !important;
 }
 
@@ -132,7 +132,7 @@
 }
 
 table.tabela4HistoricoOrdens > tbody > tr.linhaVermelha td {
-  background-color: var(--cor-vermelha-venda) !important;
+  background-color: var(--color-sell-primary-red) !important;
 }
 
 table.tabela4HistoricoOrdens > tbody > tr.linhaAmarela td {

@@ -11,12 +11,12 @@ div.dropdown {
 }
 
 .ui.selection.active.dropdown {
-  border-color: var(--box-shadow-color) !important;
+  border-color: var(--color-input-box-shadow) !important;
 }
 
 div.dropdown:focus {
-  box-shadow: 0 0 0px 3.5px var(--box-shadow-color);
-  border-color: var(--box-shadow-color);
+  box-shadow: 0 0 0px 3.5px var(--color-input-box-shadow);
+  border-color: var(--color-input-box-shadow);
 }
 
 .ui.search.dropdown > .text {
@@ -37,7 +37,7 @@ div.dropdown:focus {
 
 .ui.selection.active.dropdown .menu {
   background-color: #333;
-  border-color: var(--box-shadow-color) !important;
+  border-color: var(--color-input-box-shadow) !important;
   color: #ddd;
 }
 
@@ -50,19 +50,19 @@ div.dropdown:focus {
 }
 
 .ui.selection.active.dropdown:hover {
-  border-color: var(--box-shadow-color) !important;
+  border-color: var(--color-input-box-shadow) !important;
 }
 
 .ui.selection.active.dropdown:hover .menu {
-  border-color: var(--box-shadow-color) !important;
+  border-color: var(--color-input-box-shadow) !important;
 }
 
 .ui.selection.dropdown .menu > .item:hover {
-  background-color: var(--cor-azul-compra);
+  background-color: var(--color-buy-primary-blue);
   color: #fff;
 }
 
 .ui.dropdown.selected,
 .ui.dropdown .menu .selected.item {
-  background-color: var(--cor-azul-compra);
+  background-color: var(--color-buy-primary-blue);
 }

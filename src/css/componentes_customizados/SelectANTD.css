@@ -1,9 +1,9 @@
 .ant-select-focused .ant-select-selection {
-  box-shadow: 0 0 0px 3.5px var(--box-shadow-color) !important;
+  box-shadow: 0 0 0px 3.5px var(--color-input-box-shadow) !important;
 }
 
 .ant-select-search__field__wrap input {
-  color: var(--cor-texto) !important;
+  color: var(--color-text-primary) !important;
   line-height: 3 !important;
 }
 
@@ -12,20 +12,20 @@
 }
 
 .ant-select-dropdown-menu-item {
-  color: var(--cor-texto) !important;
+  color: var(--color-text-primary) !important;
   background-color: #333 !important;
 }
 
 .ant-select-dropdown-menu-item-selected {
-  color: var(--cor-texto) !important;
-  background-color: var(--cor-item-selected) !important;
+  color: var(--color-text-primary) !important;
+  background-color: var(--color-select-selected-item) !important;
 }
 
 .ant-select-dropdown-menu-item:hover {
-  background-color: var(--cor-item-selected) !important;
+  background-color: var(--color-select-selected-item) !important;
 }
 .ant-select-dropdown-menu-item-active:not(.ant-select-dropdown-menu-item-disabled) {
-  background-color: var(--cor-item-selected) !important;
+  background-color: var(--color-select-selected-item) !important;
 }
 
 .ant-select-dropdown.ant-select-dropdown--multiple
@@ -37,5 +37,5 @@
 .ant-select-dropdown.ant-select-dropdown--multiple
   .ant-select-dropdown-menu-item-selected
   .ant-select-selected-icon {
-  color:var(--light-background-color) !important;
+  color: var(--color-background-light) !important;
 }

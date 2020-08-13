@@ -21,7 +21,7 @@ import {
   PESQUISAR_ATIVO_BOLETA_API,
   LISTAR_ORDENS_EXECUCAO,
 } from "constants/ApiActionTypes";
-import { formatarDataDaAPI } from "components/utils/Formatacoes";
+import { formatarDataDaAPI } from "shared/utils/Formatacoes";
 
 import { EventSourcePolyfill } from "event-source-polyfill";
 

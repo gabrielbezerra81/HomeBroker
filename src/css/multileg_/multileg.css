@@ -13,7 +13,7 @@
 #multileg select {
   background-color: #333;
   border-color: #333;
-  color: var(--cor-texto) !important;
+  color: var(--color-text-primary) !important;
   font-size: 0.73rem;
   box-sizing: content-box;
 }
@@ -36,10 +36,10 @@
   height: 24px;
   text-align: center;
   padding: 0 0.5rem;
-  border-color: var(--cor-borda);
+  border-color: var(--color-border-light);
   margin: 0 !important;
   margin-top: 0.5rem !important;
-  border-bottom: 1px solid var(--cor-borda) !important;
+  border-bottom: 1px solid var(--color-border-light) !important;
 }
 
 .navTabMultileg a {
@@ -49,21 +49,21 @@
   padding: 0;
   background-color: rgb(40, 40, 40);
   margin-right: 3px;
-  color: var(--cor-texto);
+  color: var(--color-text-primary);
   border: none;
-  border-bottom: 1px solid var(--cor-borda);
+  border-bottom: 1px solid var(--color-border-light);
   text-align: center;
 }
 
 .abaAtiva {
-  color: var(--cor-texto) !important;
+  color: var(--color-text-primary) !important;
   background-color: rgb(40, 40, 40) !important;
-  border: 1px solid var(--cor-borda) !important;
+  border: 1px solid var(--color-border-light) !important;
   border-bottom: none !important;
 }
 
 a.botaoAddAba.active {
-  color: var(--cor-texto) !important;
+  color: var(--color-text-primary) !important;
   background-color: rgb(40, 40, 40) !important;
 }
 
@@ -106,7 +106,7 @@ a.botaoAddAba.active {
 
 .containerAbaMultileg > div:first-child {
   flex: 8;
-  border-right: 1px solid var(--cor-borda);
+  border-right: 1px solid var(--color-border-light);
 }
 
 .containerAbaMultileg > div:last-child {
@@ -147,7 +147,7 @@ a.botaoAddAba.active {
 }
 
 .textoLaranja {
-  color: var(--laranja-valorTotal) !important;
+  color: var(--color-orange-primary) !important;
 }
 
 .divFlexRowDetalhesAba {
@@ -164,8 +164,8 @@ a.botaoAddAba.active {
 .divFlexRowDetalhesAba button {
   flex: 1;
   max-width: 65px;
-  background-color: var(--cor-azul-compra);
-  border-color: var(--cor-azul-compra);
+  background-color: var(--color-buy-primary-blue);
+  border-color: var(--color-buy-primary-blue);
 }
 
 .tableMultileg {
@@ -242,16 +242,16 @@ a.botaoAddAba.active {
 .inputAtivo {
   height: 30px;
   font-size: 0.8rem;
-  background-color: var(--background-color) !important;
+  background-color: var(--color-background) !important;
   border-color: #4d4c4c !important;
-  color: var(--cor-texto) !important;
+  color: var(--color-text-primary) !important;
   text-align: center;
   box-sizing: border-box !important;
 }
 
 .inputAtivo:focus {
-  background-color: var(--background-color);
-  box-shadow: 0 0 0px 3.5px var(--box-shadow-color);
+  background-color: var(--color-background);
+  box-shadow: 0 0 0px 3.5px var(--color-input-box-shadow);
 }
 
 /* .inputAtivoAppend {
@@ -265,7 +265,7 @@ a.botaoAddAba.active {
 }
 
 .iconeProcurar i {
-  color: var(--background-color);
+  color: var(--color-background);
 }
 
 .wrapperVencimento {
@@ -325,7 +325,7 @@ a.botaoAddAba.active {
 
 .rowTextoInputRange > div {
   height: 14px;
-  color: var(--cor-texto);
+  color: var(--color-text-primary);
   text-align: center;
 }
 
@@ -409,7 +409,7 @@ a.botaoAddAba.active {
 
 .inputCodigo > div {
   background-color: #333 !important;
-  color: var(--cor-texto) !important;
+  color: var(--color-text-primary) !important;
   width: 175px !important;
   border: none;
   height: 17px !important;
@@ -443,5 +443,5 @@ a.botaoAddAba.active {
 
 .textoAvisoCalculoSemBook {
   font-size: 9px;
-  color: var(--cor-texto);
+  color: var(--color-text-primary);
 }

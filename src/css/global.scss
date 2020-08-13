@@ -1,0 +1,95 @@
+@font-face {
+  font-family: "Segoe UI";
+  src: local("Segoe UI"), url(../assets/fonts/SEGOEUI.TTF) format("truetype");
+}
+
+@font-face {
+  font-family: "Segoe UI";
+  src: local("Segoe UI Semibold"),
+    url(../assets/fonts/SEGUISB.TTF) format("truetype");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Segoe UI";
+  src: local("SegoeUI Bold"),
+    url(../assets/fonts/SEGOEUIB.TTF) format("truetype");
+  font-weight: 600;
+}
+// --color-input-box-shadow
+:root {
+  --color-background: #1d1d1d;
+  --color-background-light: rgb(38, 38, 38);
+  --color-orange-primary: rgb(243, 148, 44);
+  --color-text-primary: #ddd;
+  --color-text-dark: #b7b7b7;
+  --color-buttons-grey: #444;
+  --color-border-dark: #333;
+  --color-border-light: #4a494c;
+  --color-input-background-light: #bbb;
+  /*--box-shadow-color:  #0a51bd*/
+  --color-input-box-shadow: #1f3b69c9;
+  --color-green-primary: #0cc45b;
+  --color-select-selected-item: #008fca;
+  --color-text-purple: #aa88bc;
+  --color-buy-primary-blue: #008fca;
+  --color-sell-primary-red: #a67269;
+  --width-tabela-combinacoes: calc(100% - 19px);
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #0f0f0f;
+}
+
+.blockSelection {
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  -khtml-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+
+.textInput {
+  height: 15px;
+  font-size: 0.66rem;
+  background-color: var(--color-input-background-light);
+  border-color: var(--color-input-background-light);
+  color: black;
+  text-align: center;
+
+  &.form-control {
+    padding: 0 0.04rem 0 0.04rem;
+  }
+
+  &:focus {
+    background-color: var(--color-input-background-light);
+    box-shadow: 0 0 0px 3.5px var(--box-shadow-color);
+  }
+}
+
+.porcentagemPositiva {
+  color: #138342;
+}
+
+.porcentagemNegativa {
+  color: red;
+}
+
+.flexCenterCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-align-right {
+  text-align: right;
+}
+
+.text-align-center {
+  text-align: center !important;
+}

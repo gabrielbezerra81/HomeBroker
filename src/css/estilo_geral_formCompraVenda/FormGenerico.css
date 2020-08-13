@@ -1,30 +1,9 @@
-:root {
-  --background-color: #1d1d1d;
-  --light-background-color: rgb(38, 38, 38);
-  --laranja-valorTotal: rgb(243, 148, 44);
-  --cor-texto: #ddd;
-  --cor-cinza-botoes: #444;
-  --cor-borda: #4a494c;
-  --cor-text-input: #bbb;
-  /*--box-shadow-color:  #0a51bd*/
-  --box-shadow-color: #1f3b69c9;
-  --green: #0cc45b;
-  --cor-item-selected: #008fca;
-  --cor-borda-discreta: #333;
-  --box-shadow-color-default: #1f3b69c9;
-  --roxo-texto-thl: #aa88bc;
-  --cor-texto-discreto: #b7b7b7;
-  --cor-azul-compra: #008fca;
-  --cor-vermelha-venda: #a67269;
-  --some-width: calc(100% - 19px);
-}
-
 .mcontent {
-  background-color: var(--background-color);
+  background-color: var(--color-background);
   border-radius: 1rem;
   padding: 0.1rem 0rem;
-  border: 0.4rem solid var(--cor-borda);
-  color: var(--cor-texto);
+  border: 0.4rem solid var(--color-border-light);
+  color: var(--color-text-primary);
   font-size: 0.9rem;
   margin-top: 5px;
   margin-right: 10px;
@@ -64,7 +43,7 @@ input {
 .iconesHeader {
   padding: 0;
   border: none;
-  color: var(--cor-cinza-botoes);
+  color: var(--color-buttons-grey);
   font-size: 0.65rem;
   margin: 0 3px;
 }
@@ -104,7 +83,7 @@ input {
 }
 
 .border-green {
-  border-bottom: 1px solid var(--cor-borda);
+  border-bottom: 1px solid var(--color-border-light);
 }
 
 .customFooter {
@@ -147,7 +126,7 @@ input[type="number"] {
 }
 
 .resultadoTextoAtivo {
-  color: var(--laranja-valorTotal);
+  color: var(--color-orange-primary);
 }
 
 .react-draggable {
@@ -169,13 +148,13 @@ input[type="number"] {
 }
 
 table {
-  background-color: var(--light-background-color) !important;
+  background-color: var(--color-background-light) !important;
   color: #ddd !important;
 }
 
 table > tbody > tr:nth-child(odd) > td,
 table > tbody > tr:nth-child(odd) > th {
-  background-color: var(--background-color) !important;
+  background-color: var(--color-background) !important;
 }
 
 .flexJustifyCenter {
@@ -215,7 +194,7 @@ table > tbody > tr:nth-child(odd) > th {
 }
 
 .fa-circle {
-  color: var(--cor-cinza-botoes);
+  color: var(--color-buttons-grey);
 }
 
 .fa-stack:hover .fa-circle {
@@ -223,14 +202,14 @@ table > tbody > tr:nth-child(odd) > th {
 }
 
 .inputFocado {
-  box-shadow: 0 0 0px 3.5px var(--box-shadow-color);
+  box-shadow: 0 0 0px 3.5px var(--color-input-box-shadow);
   z-index: 1 !important;
   border-radius: 0.25rem;
   transition: box-shadow 0.15s ease-in-out;
 }
 
 .containerTabelaRedonda {
-  border: 1px solid var(--cor-borda) !important;
+  border: 1px solid var(--color-border-light) !important;
   border-radius: 6px;
 }
 

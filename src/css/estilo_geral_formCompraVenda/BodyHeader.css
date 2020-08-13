@@ -55,19 +55,6 @@
   font-size: 80%;
 }
 
-.iconeSeta {
-  max-width: 1.7vmin;
-  vertical-align: initial;
-}
-
-.porcentagemPositiva {
-  color: #138342;
-}
-
-.porcentagemNegativa {
-  color: red;
-}
-
 .rowToggleSwitch {
   display: flex;
   justify-content: flex-end;

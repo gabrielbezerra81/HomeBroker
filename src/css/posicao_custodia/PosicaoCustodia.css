@@ -14,7 +14,7 @@
 }
 
 .tableListaCompleta {
-  background-color: var(--light-background-color);
+  background-color: var(--color-background-light);
   color: #ddd;
   padding: 20px;
 }
@@ -27,7 +27,7 @@
 
 .tableListaCompleta td,
 .tableListaCompleta th {
-  border-right: 1px solid var(--cor-borda);
+  border-right: 1px solid var(--color-border-light);
   padding-left: 0.7rem !important;
   padding-right: 0.7rem !important;
 }
@@ -67,13 +67,13 @@ th .colunaDividida div {
 
 .divSeletor {
   display: flex;
-  border: 2px solid var(--cor-borda);
+  border: 2px solid var(--color-border-light);
   border-radius: 22px;
   height: 38px;
 }
 
 .divSeletor > div {
-  border-right: 2px solid var(--cor-borda);
+  border-right: 2px solid var(--color-border-light);
   flex: 1;
   padding: 0.65rem;
   display: flex;
@@ -109,7 +109,7 @@ th .colunaDividida div {
   font-size: 1rem;
   background-color: #444;
   border-color: #444;
-  color: var(--cor-texto);
+  color: var(--color-text-primary);
   height: 30px;
   width: 90px;
 }
@@ -117,7 +117,7 @@ th .colunaDividida div {
 .formPosicao:focus {
   background-color: #444;
   border-color: #444;
-  color: var(--cor-texto);
+  color: var(--color-text-primary);
 }
 
 .divIconeConfigOrdernar {
@@ -144,10 +144,6 @@ th .colunaDividida div {
   justify-content: flex-start;
 }
 
-.itemListaCompleta {
-  width: 180px;
-}
-
 .rowAtivosEmblema {
   justify-content: space-evenly;
   align-items: flex-end;
@@ -156,12 +152,12 @@ th .colunaDividida div {
 }
 
 .itemCustodiaCompra {
-  color: var(--cor-azul-compra);
+  color: var(--color-buy-primary-blue);
   font-size: 0.8rem;
 }
 
 .itemCustodiaVenda {
-  color: var(--cor-vermelha-venda);
+  color: var(--color-sell-primary-red);
   font-size: 0.8rem;
 }
 
@@ -169,36 +165,8 @@ th .colunaDividida div {
   padding: 0.4rem;
 }
 
-.containerSliderTopo {
-  display: flex;
-  flex-direction: row;
-  padding: 0 0.5rem;
-}
-
-.sliderTopo {
-  height: 5px;
-  background-color: #4e4f4e;
-  flex: 17;
-}
-
-.meioSliderTopo {
-  height: 5px;
-  background-color: var(--cor-azul-compra);
-  flex: 1;
-}
-
-.divSetaPorcentagem {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .containerEmblema h3 {
   margin-bottom: 0 !important;
-}
-
-.setaEmblema {
-  height: 11px !important;
 }
 
 .rowTabela {
@@ -207,7 +175,7 @@ th .colunaDividida div {
 }
 
 .tabelaExecutando {
-  background-color: var(--light-background-color);
+  background-color: var(--color-background-light);
   color: #ddd;
   margin-bottom: 0;
 }
@@ -218,7 +186,7 @@ th .colunaDividida div {
 }
 
 .iconeResumido path {
-  fill: var(--cor-texto) !important;
+  fill: var(--color-text-primary) !important;
 }
 
 .emblemaExecutandoDivCV {
