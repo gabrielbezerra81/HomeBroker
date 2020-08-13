@@ -43,7 +43,7 @@ class PosicaoEmCustodia extends React.Component {
             props.arrayPrecos.length &&
             props.arrayCotacoes.length
           ) {
-            props.atualizarEmblemasAction(props);
+            props.atualizarEmblemasAction();
             props.atualizarCotacoesAction(props);
           }
         }

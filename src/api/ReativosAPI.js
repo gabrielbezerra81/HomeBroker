@@ -191,12 +191,13 @@ export const atualizarCotacaoAPI = (
   return source;
 };
 
-export const atualizarEmblemasAPI = (dispatch, listaPrecos, ids) => {
+export const atualizarEmblemasAPI = ({ dispatch, listaPrecos, ids, token }) => {
+  console.log(token);
   var source = new EventSource(
     `${url_base_reativa}${url_emblemaReativo_ids}${ids}`,
     {
       headers: {
-        Authorization: "my secret jwt token",
+        Authorization: `${token.type} ${token.accessToken}`,
       },
     }
   );

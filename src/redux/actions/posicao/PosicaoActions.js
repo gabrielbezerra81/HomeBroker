@@ -16,10 +16,11 @@ export const mudarVariavelPosicaoAction = (nome, valor) => {
 export const listarPosicoesAction = (props) => {
   return async (dispatch, getState) => {
     const { token } = getReducerStateStorePrincipal(getState(), "principal");
-    const { eventSourcePosicao } = getReducerStateStorePrincipal(
-      getState(),
-      "posicao"
-    );
+    const {
+      eventSourcePosicao,
+      eventSourceEmblema,
+      setIntervalEmblema,
+    } = getReducerStateStorePrincipal(getState(), "posicao");
 
     if (token) {
       const dados = await listarPosicoesAPI(token);
@@ -49,7 +50,14 @@ export const listarPosicoesAction = (props) => {
         token,
         eventSourcePosicao,
       });
-      atualizarEmblemas(dispatch, listaPosicoes, props, arrayPrecos);
+      atualizarEmblemas({
+        dispatch,
+        token,
+        listaPosicoes,
+        listaPrecos: arrayPrecos,
+        eventSourceEmblema,
+        setIntervalEmblema,
+      });
       atualizarCotacoes(dispatch, listaPosicoes, props, arrayCotacoes);
 
       dispatch(mudarVariavelPosicaoAction("posicoesCustodia", listaPosicoes));
@@ -96,21 +104,42 @@ const montaArrayCotacoes = async (listaPosicoes, tipoRetorno = "completo") => {
   return arrayCodigos;
 };
 
-export const atualizarEmblemasAction = (props) => {
-  return (dispatch) => {
-    const { posicoesCustodia, arrayPrecos } = props;
-    atualizarEmblemas(dispatch, posicoesCustodia, props, arrayPrecos);
+export const atualizarEmblemasAction = () => {
+  return (dispatch, getState) => {
+    const { token } = getReducerStateStorePrincipal(getState(), "principal");
+    const {
+      eventSourceEmblema,
+      setIntervalEmblema,
+      arrayPrecos,
+      posicoesCustodia,
+    } = getReducerStateStorePrincipal(getState(), "posicao");
+
+    atualizarEmblemas({
+      dispatch,
+      listaPrecos: arrayPrecos,
+      listaPosicoes: posicoesCustodia,
+      token,
+      eventSourceEmblema,
+      setIntervalEmblema,
+    });
   };
 };
 
-const atualizarEmblemas = (dispatch, listaPosicoes, props, arrayPrecos) => {
+const atualizarEmblemas = ({
+  dispatch,
+  listaPosicoes,
+  eventSourceEmblema,
+  listaPrecos,
+  setIntervalEmblema,
+  token,
+}) => {
   let ids = "";
 
-  if (props.eventSourceEmblema) {
-    props.eventSourceEmblema.close();
+  if (eventSourceEmblema) {
+    eventSourceEmblema.close();
   }
-  if (props.setIntervalEmblema) {
-    clearInterval(props.setIntervalEmblema);
+  if (setIntervalEmblema) {
+    clearInterval(setIntervalEmblema);
   }
 
   listaPosicoes.forEach((posicao) => {
@@ -118,7 +147,12 @@ const atualizarEmblemas = (dispatch, listaPosicoes, props, arrayPrecos) => {
   });
   ids = ids.substring(0, ids.length - 1);
 
-  const newSource = atualizarEmblemasAPI(dispatch, arrayPrecos, ids);
+  const newSource = atualizarEmblemasAPI({
+    dispatch,
+    ids,
+    listaPrecos,
+    token,
+  });
 
   dispatch(mudarVariavelPosicaoAction("eventSourceEmblema", newSource));
 };
