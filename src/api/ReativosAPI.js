@@ -239,12 +239,12 @@ export const atualizarEmblemasAPI = (dispatch, listaPrecos, ids) => {
   return source;
 };
 
-export const atualizarPosicaoAPI = (dispatch, listaPosicoes, token) => {
+export const atualizarPosicaoAPI = ({ dispatch, listaPosicoes, token }) => {
   var source = new EventSource(
-    `${url_base_reativa}${url_posicaoReativa_idUser}${token}`,
+    `${url_base_reativa}${url_posicaoReativa_idUser}`,
     {
       headers: {
-        Authorization: "my secret jwt token",
+        Authorization: `${token.type} ${token.accessToken}`,
       },
     }
   );

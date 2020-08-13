@@ -5,6 +5,7 @@ import {
   atualizarCotacaoAPI,
 } from "api/ReativosAPI";
 import { mudarVariavelPosicao, adicionaPosicao } from "./utils";
+import { getReducerStateStorePrincipal } from "hooks/utils";
 
 export const mudarVariavelPosicaoAction = (nome, valor) => {
   return (dispatch) => {
@@ -13,9 +14,15 @@ export const mudarVariavelPosicaoAction = (nome, valor) => {
 };
 
 export const listarPosicoesAction = (props) => {
-  return async (dispatch) => {
-    if (props.token) {
-      const dados = await listarPosicoesAPI(props.token);
+  return async (dispatch, getState) => {
+    const { token } = getReducerStateStorePrincipal(getState(), "principal");
+    const { eventSourcePosicao } = getReducerStateStorePrincipal(
+      getState(),
+      "posicao"
+    );
+
+    if (token) {
+      const dados = await listarPosicoesAPI(token);
 
       const listaPosicoes = [];
       const arrayPrecos = [];
@@ -36,7 +43,12 @@ export const listarPosicoesAction = (props) => {
       // arrayPrecos.splice(0, 19);
       arrayCotacoes = await montaArrayCotacoes(listaPosicoes);
 
-      atualizarPosicao(dispatch, listaPosicoes, props, props.token.accessToken);
+      atualizarPosicao({
+        dispatch,
+        listaPosicoes,
+        token,
+        eventSourcePosicao,
+      });
       atualizarEmblemas(dispatch, listaPosicoes, props, arrayPrecos);
       atualizarCotacoes(dispatch, listaPosicoes, props, arrayCotacoes);
 
@@ -47,12 +59,17 @@ export const listarPosicoesAction = (props) => {
   };
 };
 
-const atualizarPosicao = async (dispatch, listaPosicoes, props, token) => {
-  if (props.eventSourcePosicao) {
-    props.eventSourcePosicao.close();
+const atualizarPosicao = async ({
+  dispatch,
+  listaPosicoes,
+  eventSourcePosicao,
+  token,
+}) => {
+  if (eventSourcePosicao) {
+    eventSourcePosicao.close();
   }
 
-  const newSource = atualizarPosicaoAPI(dispatch, listaPosicoes, token);
+  const newSource = atualizarPosicaoAPI({ dispatch, listaPosicoes, token });
 
   dispatch(mudarVariavelPosicaoAction("eventSourcePosicao", newSource));
 };
