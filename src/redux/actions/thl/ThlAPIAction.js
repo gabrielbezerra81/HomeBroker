@@ -68,7 +68,7 @@ export const listarTabelaInicialTHLAPIAction = () => {
   };
 };
 
-export const recalcularPrecosTHLAPIAction = (thlState) => {
+export const recalcularPrecosTHLAPIAction = () => {
   return async (dispatch, getState) => {
     dispatch(mudarVariavelTHL("carregandoTabelaVencimentos", true));
 

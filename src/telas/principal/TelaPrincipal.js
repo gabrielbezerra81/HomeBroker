@@ -39,7 +39,7 @@ const margemParaMenuLateral = (menuLateralAberto) => {
 
 class TelaPrincipal extends React.Component {
   componentDidMount() {
-    this.props.listarOrdensExecAction(this.props);
+    this.props.listarOrdensExecAction();
     this.props.listarPosicoesAction(this.props);
 
     // LogRocket.identify(this.props.usuarioConectado, {

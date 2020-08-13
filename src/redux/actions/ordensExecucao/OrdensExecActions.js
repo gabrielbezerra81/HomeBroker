@@ -19,11 +19,9 @@ import {
 } from "redux/actions/multileg/MultilegActions";
 import { pesquisaAtivo } from "redux/actions/multileg/MultilegAPIAction";
 import { erro_exportar_ordens_multileg } from "constants/AlertaErros";
-import {
-  calculoPreco,
-  calculoMDC,
-} from "telas/popups/multileg_/CalculoPreco";
+import { calculoPreco, calculoMDC } from "telas/popups/multileg_/CalculoPreco";
 import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
+import { getReducerStateStorePrincipal } from "hooks/utils";
 
 export const mudarVariavelOrdensExecAction = (nome, valor) => {
   return (dispatch) => {
@@ -39,16 +37,26 @@ export const filtrarHistoricoOpAction = () => {
 };
 
 export const listarOrdensExecAction = (props) => {
-  return async (dispatch) => {
-    if (props.token) {
-      const ordensExec = await listarOrdensExecAPI(props.token);
+  return async (dispatch, getState) => {
+    const { eventSourceOrdensExec } = getReducerStateStorePrincipal(
+      getState(),
+      "ordensExec"
+    );
+    const { token } = getReducerStateStorePrincipal(getState(), "principal");
+
+    if (token) {
+      const ordensExec = await listarOrdensExecAPI(token);
 
       dispatch({ type: LISTAR_ORDENS_EXECUCAO, payload: ordensExec });
 
-      const token = props.token.accessToken;
-
       setTimeout(
-        () => atualizarOrdensExec(dispatch, props, token, ordensExec),
+        () =>
+          atualizarOrdensExec({
+            dispatch,
+            token,
+            eventSourceOrdensExec,
+            listaOrdensExec: ordensExec,
+          }),
         3000
       );
     }
@@ -360,27 +368,38 @@ const retornaDadosOferta = (ordemAtual, tipo) => {
   return dadosOferta;
 };
 
-export const atualizarOrdensExecAction = (props) => {
-  return (dispatch) => {
-    atualizarOrdensExec(
-      dispatch,
-      props,
-      props.token.accessToken,
-      props.tabelaOrdensExecucao
-    );
-  };
-};
+// const atualizarOrdensExecAction = (props) => {
+//   return (dispatch, getState) => {
+//     const {
+//       eventSourceOrdensExec,
+//       tabelaOrdensExecucao,
+//     } = getReducerStateStorePrincipal(getState(), "ordensExec");
+//     const { token } = getReducerStateStorePrincipal(getState(), "principal");
 
-const atualizarOrdensExec = (dispatch, props, accessToken, listaOrdensExec) => {
-  if (props.eventSourceOrdensExec) {
-    props.eventSourceOrdensExec.close();
+//     atualizarOrdensExec({
+//       dispatch,
+//       listaOrdensExec: tabelaOrdensExecucao,
+//       eventSourceOrdensExec,
+//       token,
+//     });
+//   };
+// };
+
+const atualizarOrdensExec = ({
+  dispatch,
+  eventSourceOrdensExec,
+  token,
+  listaOrdensExec,
+}) => {
+  if (eventSourceOrdensExec) {
+    eventSourceOrdensExec.close();
   }
 
-  const eventSource = atualizarOrdensExecAPI(
+  const eventSource = atualizarOrdensExecAPI({
     dispatch,
-    accessToken,
-    listaOrdensExec
-  );
+    listaOrdensExec,
+    token,
+  });
 
   dispatch(mudarVariavelOrdensExecAction("eventSourceOrdensExec", eventSource));
 

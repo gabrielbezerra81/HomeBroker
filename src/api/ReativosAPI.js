@@ -277,12 +277,16 @@ export const atualizarPosicaoAPI = (dispatch, listaPosicoes, token) => {
   return source;
 };
 
-export const atualizarOrdensExecAPI = (dispatch, token, listaOrdensExec) => {
+export const atualizarOrdensExecAPI = ({
+  dispatch,
+  token,
+  listaOrdensExec,
+}) => {
   var source = new EventSource(
-    `${url_base_reativa}${url_ordensExecReativas_idUser}${token}`,
+    `${url_base_reativa}${url_ordensExecReativas_idUser}`,
     {
       headers: {
-        Authorization: "my secret jwt token",
+        Authorization: `${token.type} ${token.accessToken}`,
       },
     }
   );
