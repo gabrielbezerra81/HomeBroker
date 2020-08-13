@@ -15,7 +15,7 @@ import VendaMercado from "./telas/popups/venda/venda_Mercado/VendaMercado";
 import VendaStartStop from "./telas/popups/venda/venda_StartStop/VendaStartStop";
 import VendaStopMovel from "./telas/popups/venda/venda_StopMovel/VendaStopMovel";
 import VendaGainReducao from "./telas/popups/venda/venda_GainReducao/VendaGainReducao";
-import { GlobalContext } from "redux/StoreCreation";
+import { GlobalContext, StorePrincipalContext } from "redux/StoreCreation";
 import {
   fecharFormAction,
   abrirFormAction,
@@ -70,8 +70,13 @@ class AppBoletas extends React.Component {
     props.receberAppPropsAction(props);
 
     if (props.appkey !== 0 && props.codigoBook) {
+      // quando a abertura do book for solicitada a partir de um AppBoletas que já possui book, será criado um novo
+      // AppBoletas que precisará receber os dados do código do book
       props.mudarInputHeaderAction(props.codigoBook);
-      props.listarBookOfertaOnEnterAction(props.codigoBook);
+      props.listarBookOfertaOnEnterAction({
+        codigoAtivo: props.codigoBook,
+        token: props.token,
+      });
     }
     //Disparar montagem de ordem vinda das ordens em execução ao criar App Local
     if (props.dadosOrdemExec) props.montarBoletaFromOrdemExecAction(props);
@@ -205,6 +210,10 @@ const mapStateToPropsGlobalStore = (state) => {
   };
 };
 
+const mapStateToPropsStorePrincipal = (state) => ({
+  token: state.telaPrincipalReducer.token,
+});
+
 const mapStateToPropsLocal = (state) => ({
   eventSourceBook_Book: state.bookOfertaReducer.eventSource,
 });
@@ -221,6 +230,9 @@ export default compose(
     null,
     { context: GlobalContext }
   ),
+  connect(mapStateToPropsStorePrincipal, {}, null, {
+    context: StorePrincipalContext,
+  }),
   connect(mapStateToPropsLocal, {
     receberAppPropsAction,
     listarBookOfertaOnEnterAction,

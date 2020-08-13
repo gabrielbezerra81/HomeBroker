@@ -102,6 +102,8 @@ const namespaces = [
   VENDA_STARTSTOP_NAMESPACE,
   VENDA_STOPMOVEL_NAMESPACE,
   VENDA_GAINREDUCAO_NAMESPACE,
+  "bookOfertaReducer",
+  "appBoletasReducer",
 ] as const;
 
 export type NamespacesType = typeof namespaces[number];

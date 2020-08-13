@@ -29,18 +29,12 @@ var EventSource = EventSourcePolyfill;
 
 const intervaloAttReativa = 6000;
 
-export const atualizarBookAPI = (
-  dispatch,
-  props,
-  codigos,
-  tipo,
-  rembook //booksMultileg
-) => {
+export const atualizarBookAPI = ({ dispatch, codigos, tipo, token }) => {
   var source = new EventSource(
     `${url_base_reativa}${url_bookReativo_codigos}${codigos}`,
     {
       headers: {
-        Authorization: "my secret jwt token",
+        Authorization: `${token.type} ${token.accessToken}`,
       },
     }
   );
@@ -192,7 +186,6 @@ export const atualizarCotacaoAPI = (
 };
 
 export const atualizarEmblemasAPI = ({ dispatch, listaPrecos, ids, token }) => {
-  console.log(token);
   var source = new EventSource(
     `${url_base_reativa}${url_emblemaReativo_ids}${ids}`,
     {

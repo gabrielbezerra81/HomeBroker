@@ -1,5 +1,4 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { Button, Col, Row, Form } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import { mudarInputHeaderAction } from "redux/actions/boletas/bookOfertaActions";
@@ -18,6 +17,8 @@ import useStateGlobalStore from "hooks/useStateGlobalStore";
 import useDispatchBoletas from "hooks/useDispatchBoletas";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 
+import useStateBoletas from "hooks/useStateBoletas";
+
 // Apenas para boletas de compra e venda
 export const ModalHeader = ({
   headerTitle,
@@ -27,7 +28,8 @@ export const ModalHeader = ({
   ativo,
   eventSourceCotacao,
 }) => {
-  const state = useSelector((state) => state.appBoletasReducer);
+  const state = useStateBoletas("appBoletasReducer");
+  const { token } = useStateStorePrincipal("principal");
   const stateGlobalStore = useStateGlobalStore();
   const dispatchGlobal = useDispatchGlobalStore();
   const dispatch = useDispatchBoletas();
@@ -36,6 +38,7 @@ export const ModalHeader = ({
   const abrirBookProps = {
     ...stateGlobalStore,
     dispatch,
+    token,
   };
   return (
     <div className={`${headerClass} handle mheader`}>
@@ -81,9 +84,11 @@ export const ModalHeader = ({
 };
 
 export const BookHeader = ({ headerClass, resetPosition }) => {
-  const stateBook = useSelector((state) => state.bookOfertaReducer);
-  const stateSubApp = useSelector((state) => state.appBoletasReducer);
+  const stateBook = useStateBoletas("bookOfertaReducer");
+  const stateSubApp = useStateBoletas("appBoletasReducer");
   const stateGlobalStore = useStateGlobalStore();
+
+  const { token } = useStateStorePrincipal("principal");
 
   const { inputHeader, eventSource } = stateBook;
   const formShow = stateGlobalStore.show;
@@ -108,7 +113,10 @@ export const BookHeader = ({ headerClass, resetPosition }) => {
               //event.preventDefault();
               if (event.key === "Enter")
                 dispatch(
-                  listarBookOfertaOnEnterAction(event.target.value, eventSource)
+                  listarBookOfertaOnEnterAction({
+                    codigoAtivo: event.target.value,
+                    token,
+                  })
                 );
             }}
           />

@@ -14,9 +14,7 @@ import {
 } from "constants/ActionTypes";
 import { MUDAR_ORDEM_EXEC_MAIN_REDUCER } from "constants/MenuActionTypes";
 
-const ContainerAppBoletas = React.lazy(() =>
-  import("ContainerAppBoletas")
-);
+const ContainerAppBoletas = React.lazy(() => import("ContainerAppBoletas"));
 
 export const criarMostrarAppAction = (apps, show, zindex, dispatch) => {
   dispatch({ type: CRIAR_APP, apps: apps, show: show, zIndex: zindex + 1 });
@@ -145,9 +143,15 @@ const criarMostrarApp = (name, props, dispatch, codigo_ativo) => {
 //Muda o estado de visibilidade de uma determinada boleta no ultimo appBoletas criado
 const mostrarApp = (name, index, props, dispatch, codigo_ativo) => {
   if (name === "book" && codigo_ativo) {
+    // Quando abrir o book a partir de uma boleta de compra ou venda
     const dispatchBoleta = props.dispatch;
     dispatchBoleta(mudarInputHeaderAction(codigo_ativo));
-    dispatchBoleta(listarBookOfertaOnEnterAction(codigo_ativo));
+    dispatchBoleta(
+      listarBookOfertaOnEnterAction({
+        codigoAtivo: codigo_ativo,
+        token: props.token,
+      })
+    );
   }
 
   let apps = [...props.apps];

@@ -4,11 +4,17 @@ import {
   LISTAR_BOOK_OFERTAS,
   ATUALIZAR_SOURCE_EVENT_BOOK_OFERTAS,
 } from "constants/ApiActionTypes";
+import { getReducerStateBoletas } from "hooks/utils";
 
-export const listarBookOfertaOnEnterAction = (codigo_ativo, props) => {
-  return async (dispatch) => {
+export const listarBookOfertaOnEnterAction = ({ codigoAtivo, token }) => {
+  return async (dispatch, getState) => {
+    const { eventSource } = getReducerStateBoletas(
+      getState(),
+      "bookOfertaReducer"
+    );
+
     document.body.style.cursor = "wait";
-    let tabelasAPI = await listarBookOfertaAPI(codigo_ativo);
+    let tabelasAPI = await listarBookOfertaAPI(codigoAtivo);
     document.body.style.cursor = "default";
 
     if (
@@ -19,11 +25,18 @@ export const listarBookOfertaOnEnterAction = (codigo_ativo, props) => {
         tabelaOfertasCompra: new Array(5).fill({ price: "", qtty: "" }, 0, 5),
         tabelaOfertasVenda: new Array(5).fill({ price: "", qtty: "" }, 0, 5),
       };
-    if (props) {
-      if (props.eventSource) props.eventSource.close();
+
+    if (eventSource) {
+      eventSource.close();
     }
+
     setTimeout(() => {
-      const source = atualizarBookAPI(dispatch, {}, codigo_ativo, "book");
+      const source = atualizarBookAPI({
+        dispatch,
+        codigos: codigoAtivo,
+        tipo: "book",
+        token,
+      });
       dispatch({ type: ATUALIZAR_SOURCE_EVENT_BOOK_OFERTAS, payload: source });
     }, 3000);
     dispatch({

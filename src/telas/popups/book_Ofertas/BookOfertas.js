@@ -11,7 +11,6 @@ import {
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 import TabelaOfertas from "./TabelaOfertas";
 import { BookHeader } from "shared/componentes/PopupHeader";
-import { listarBookOfertaOnEnterAction } from "redux/actions/boletas/bookOfertaAPIActions";
 
 class BookOfertas extends React.Component {
   render() {
@@ -114,5 +113,4 @@ export default connect(mapStateToProps, {
   mudarGainAction,
   mudarInputHeaderAction,
   mostrarErroQtdeOnBlurAction,
-  listarBookOfertaOnEnterAction,
 })(BookOfertas);
