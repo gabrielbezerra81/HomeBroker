@@ -21,7 +21,7 @@ class Multileg extends React.Component {
   //     // Executar atualizar book e atualizar cotação
   //     //this.props.atualizarBookAction(nextProps, nextProps.multileg);
 
-  //     this.props.atualizarCotacaoAction(nextProps, nextProps.multileg);
+  //     this.props.atualizarCotacaoMultilegAction(nextProps, nextProps.multileg);
   //   }
 
   //   return !_.isEqual(nextProps, this.props);

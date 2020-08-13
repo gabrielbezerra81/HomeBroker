@@ -13,7 +13,7 @@ import { LISTAR_ORDENS_EXECUCAO } from "constants/ApiActionTypes";
 import {
   adicionarAba,
   modificarAba,
-  atualizarCotacaoAction,
+  atualizarCotacaoMultilegAction,
   adicionarOferta,
   modificarVariavelMultilegAction,
 } from "redux/actions/multileg/MultilegActions";
@@ -64,8 +64,15 @@ export const listarOrdensExecAction = (props) => {
 };
 
 export const abrirOrdemNoMultilegAction = (props, acao = "") => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     travarDestravarClique("travar", "menusTelaPrincipal");
+
+    const { token } = getReducerStateStorePrincipal(getState(), "principal");
+    const {
+      eventSourceCotacao,
+      setIntervalCotacoesMultileg,
+    } = getReducerStateStorePrincipal(getState(), "multileg");
+
     const item = props.ordemAtual;
 
     let multilegAberto = props.multilegAberto;
@@ -165,7 +172,13 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
       modificarVariavelMultilegAction("cotacoesMultileg", cotacoesMultileg)
     );
 
-    atualizarCotacaoAction(dispatch, props, cotacoesMultileg);
+    atualizarCotacaoMultilegAction({
+      dispatch,
+      cotacoesMultileg,
+      eventSourceCotacao,
+      setIntervalCotacoesMultileg,
+      token,
+    });
     travarDestravarClique("destravar", "menusTelaPrincipal");
   };
 };

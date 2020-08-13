@@ -5,21 +5,23 @@ import {
   pesquisarCombinacoesTHLAPI,
   travarDestravarClique,
   favoritarTHLAPI,
+  pesquisarListaStrikeTHLAPI,
 } from "api/API";
-import { pesquisarListaStrikeTHLAPI } from "api/API";
-import { atualizarPrecosTHLAPI, atualizarCotacaoAPI } from "api/ReativosAPI";
+import { atualizarPrecosTHLAPI, atualizarCotacaoTHLAPI } from "api/ReativosAPI";
 import { mudarVariavelTHL, mudarVariaveisTHL } from "./utils";
 import { getReducerStateStorePrincipal } from "hooks/utils";
 
-export const pesquisarAtivoTHLAPIAction = (codigo) => {
-  return async (dispatch) => {
-    const listaStrikes = await pesquisarListaStrikeTHLAPI(codigo);
+export const pesquisarAtivoTHLAPIAction = () => {
+  return async (dispatch, getState) => {
+    const { ativoPesquisa } = getReducerStateStorePrincipal(getState(), "thl");
+
+    const listaStrikes = await pesquisarListaStrikeTHLAPI(ativoPesquisa);
 
     if (listaStrikes.length > 0) {
       dispatch(
         mudarVariaveisTHL({
           listaStrikes,
-          ativoPesquisado: codigo.toUpperCase(),
+          ativoPesquisado: ativoPesquisa.toUpperCase(),
         })
       );
     }
@@ -162,9 +164,15 @@ export const criarAlertaTHLAPIAction = (actionProps) => {
   };
 };
 
-export const pesquisarCombinacoesTHLAPIAction = (actionProps) => {
-  return async (dispatch) => {
-    const { ativoPesquisa } = actionProps;
+export const pesquisarCombinacoesTHLAPIAction = () => {
+  return async (dispatch, getState) => {
+    const {
+      ativoPesquisa,
+      eventSourceCotacoesTHL,
+      setIntervalCotacoesTHL,
+    } = getReducerStateStorePrincipal(getState(), "thl");
+    const { token } = getReducerStateStorePrincipal(getState(), "principal");
+
     dispatch(
       mudarVariaveisTHL({
         booksSelecionados: [],
@@ -185,7 +193,13 @@ export const pesquisarCombinacoesTHLAPIAction = (actionProps) => {
       tabelaCombinacoes = result.tabelaCombinacoes;
       arrayCotacoes = result.arrayCotacoes;
 
-      atualizarCotacaoTHL({ ...actionProps, dispatch, arrayCotacoes });
+      atualizarCotacaoTHL({
+        dispatch,
+        arrayCotacoes,
+        token,
+        eventSourceCotacoesTHL,
+        setIntervalCotacoesTHL,
+      });
     }
 
     dispatch(
@@ -249,13 +263,13 @@ export function mapearTabelaVencimentos(dataTabela) {
   });
 }
 
-const atualizarCotacaoTHL = (actionProps) => {
-  const {
-    dispatch,
-    arrayCotacoes,
-    setIntervalCotacoesTHL,
-    eventSourceCotacoesTHL,
-  } = actionProps;
+const atualizarCotacaoTHL = ({
+  dispatch,
+  arrayCotacoes,
+  setIntervalCotacoesTHL,
+  eventSourceCotacoesTHL,
+  token,
+}) => {
   if (setIntervalCotacoesTHL) clearInterval(setIntervalCotacoesTHL);
   if (eventSourceCotacoesTHL) eventSourceCotacoesTHL.close();
 
@@ -265,6 +279,11 @@ const atualizarCotacaoTHL = (actionProps) => {
   });
   codigos = codigos.substring(0, codigos.length - 1);
 
-  const source = atualizarCotacaoAPI(dispatch, codigos, "thl", arrayCotacoes);
+  const source = atualizarCotacaoTHLAPI({
+    dispatch,
+    arrayCotacoes,
+    codigos,
+    token,
+  });
   dispatch(mudarVariavelTHL("eventSourceCotacoesTHL", source));
 };

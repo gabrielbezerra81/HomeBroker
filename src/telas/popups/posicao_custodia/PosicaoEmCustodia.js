@@ -13,7 +13,7 @@ import PosicaoAmpliadaResumida from "telas/popups/posicao_custodia/PosicaoAmplia
 import { StorePrincipalContext, GlobalContext } from "redux/StoreCreation";
 import {
   mudarVariavelPosicaoAction,
-  atualizarCotacoesAction,
+  atualizarCotacoesPosicaoAction,
   atualizarEmblemasAction,
 } from "redux/actions/posicao/PosicaoActions";
 import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
@@ -44,7 +44,7 @@ class PosicaoEmCustodia extends React.Component {
             props.arrayCotacoes.length
           ) {
             props.atualizarEmblemasAction();
-            props.atualizarCotacoesAction(props);
+            props.atualizarCotacoesPosicaoAction();
           }
         }
       }
@@ -126,7 +126,7 @@ export default compose(
     mapStateToPropsPosicao,
     {
       mudarVariavelPosicaoAction,
-      atualizarCotacoesAction,
+      atualizarCotacoesPosicaoAction,
       atualizarEmblemasAction,
     },
     null,

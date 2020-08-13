@@ -45,18 +45,7 @@ export default () => {
 const InputPesquisa = () => {
   const reduxState = useStateStorePrincipal("thl");
   const dispatch = useDispatchStorePrincipal();
-  const {
-    ativoPesquisa,
-    tipo,
-    pesquisandoAtivo,
-    eventSourceCotacoesTHL,
-    setIntervalCotacoesTHL,
-  } = reduxState;
-  const propsPesquisarCombinacoes = {
-    ativoPesquisa,
-    eventSourceCotacoesTHL,
-    setIntervalCotacoesTHL,
-  };
+  const { ativoPesquisa, tipo, pesquisandoAtivo } = reduxState;
 
   return (
     <div className="containerPesquisaAtivo inverted-border-radius">
@@ -79,10 +68,8 @@ const InputPesquisa = () => {
             className="input-group-text iconeProcurar divClicavel"
             onClick={() => {
               if (!pesquisandoAtivo) {
-                dispatch(pesquisarAtivoTHLAPIAction(ativoPesquisa));
-                dispatch(
-                  pesquisarCombinacoesTHLAPIAction(propsPesquisarCombinacoes)
-                );
+                dispatch(pesquisarAtivoTHLAPIAction());
+                dispatch(pesquisarCombinacoesTHLAPIAction());
               }
             }}
           >

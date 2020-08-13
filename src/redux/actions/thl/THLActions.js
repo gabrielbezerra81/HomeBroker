@@ -7,7 +7,7 @@ import { abrirItemBarraLateralAction } from "redux/actions/telaPrincipal/TelaPri
 import {
   adicionarAba,
   modificarAba,
-  atualizarCotacaoAction,
+  atualizarCotacaoMultilegAction,
   adicionarOferta,
   modificarVariavelMultilegAction,
 } from "redux/actions/multileg/MultilegActions";
@@ -16,6 +16,7 @@ import { pesquisaAtivo } from "redux/actions/multileg/MultilegAPIAction";
 import { calculoPreco } from "telas/popups/multileg_/CalculoPreco";
 import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
 import { mudarVariaveisTHL, mudarVariavelTHL } from "./utils";
+import { getReducerStateStorePrincipal } from "hooks/utils";
 
 export const mudarVariavelTHLAction = (nome, valor) => {
   return (dispatch) => {
@@ -31,8 +32,15 @@ export const mudarVariaveisTHLAction = (payload) => {
 
 export const abrirMultilegTHLAction = (props) => {
   // Actions
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     travarDestravarClique("travar", "thl");
+
+    const { token } = getReducerStateStorePrincipal(getState(), "principal");
+    const {
+      eventSourceCotacao,
+      setIntervalCotacoesMultileg,
+    } = getReducerStateStorePrincipal(getState(), "multileg");
+
     let {
       multilegAberto,
       cotacoesMultileg,
@@ -123,7 +131,13 @@ export const abrirMultilegTHLAction = (props) => {
       modificarVariavelMultilegAction("cotacoesMultileg", cotacoesMultileg)
     );
 
-    atualizarCotacaoAction(dispatch, props, cotacoesMultileg);
+    atualizarCotacaoMultilegAction({
+      dispatch,
+      cotacoesMultileg,
+      eventSourceCotacao,
+      setIntervalCotacoesMultileg,
+      token,
+    });
 
     travarDestravarClique("destravar", "thl");
   };

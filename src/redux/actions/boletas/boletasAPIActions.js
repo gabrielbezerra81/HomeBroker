@@ -1,5 +1,5 @@
 import { pesquisarAtivoAPI, enviarOrdemAPI } from "api/API";
-import { atualizarCotacaoAPI } from "api/ReativosAPI";
+import { atualizarCotacaoBoletasAPI } from "api/ReativosAPI";
 import { PESQUISAR_ATIVO_BOLETA_API } from "constants/ApiActionTypes";
 import {
   montaOrdemPrincipal,
@@ -12,7 +12,7 @@ import {
 import { mudarAtributoBoletaAction } from "redux/actions/boletas/formInputActions";
 
 export const pesquisarAtivoOnEnterAction = (props, namespace) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     if (props.eventSourceCotacao) {
       props.eventSourceCotacao.close();
     }
@@ -35,27 +35,24 @@ export const pesquisarAtivoOnEnterAction = (props, namespace) => {
       });
 
       dispatch(mudarAtributoBoletaAction(false, namespace, "pesquisandoAtivo"));
-      atualizarCotacaoBoletaAction(dispatch, props, dadosPesquisa, namespace);
+      atualizarCotacaoBoletaAction({ dispatch, dadosPesquisa, namespace });
     }
   };
 };
 
-const atualizarCotacaoBoletaAction = (
+const atualizarCotacaoBoletaAction = ({
   dispatch,
-  props,
   dadosPesquisa,
-  namespace
-) => {
+  namespace,
+}) => {
   const codigo = dadosPesquisa.ativo;
 
-  const newSource = atualizarCotacaoAPI(
+  const newSource = atualizarCotacaoBoletasAPI({
     dispatch,
-    codigo,
-    "boletas",
-    [],
+    codigos: codigo,
+    dadosPesquisa,
     namespace,
-    dadosPesquisa
-  );
+  });
 
   dispatch({
     type: `${ATUALIZAR_EVENT_SOURCE_BOLETAS}${namespace}`,

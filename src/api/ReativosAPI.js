@@ -78,14 +78,170 @@ export const atualizarBookAPI = ({ dispatch, codigos, tipo, token }) => {
   return source;
 };
 
-export const atualizarCotacaoAPI = (
+export const atualizarCotacaoMultilegAPI = ({
   dispatch,
   codigos,
-  tipo, // Quem disparou a função, ex: multileg, posição, boleta de compra e venda
-  arrayCotacoes = [], // Usado para o multileg ou para posição
-  namespace = "", // Usado para disparar atualização para a boleta de compra e venda correta
-  dadosPesquisa = null
-) => {
+  arrayCotacoes,
+  token,
+}) => {
+  var source = new EventSource(
+    `${url_base_reativa}${url_cotacaoReativa_codigos}${codigos}`,
+    {
+      headers: {
+        Authorization: `${token.type} ${token.accessToken}`,
+      },
+    }
+  );
+
+  let listaCotacoes = arrayCotacoes;
+
+  atualizaListaReativa(
+    dispatch,
+    listaCotacoes,
+    MODIFICAR_VARIAVEL_MULTILEG,
+    "cotacoesMultileg",
+    "setIntervalCotacoesMultileg"
+  );
+
+  source.onmessage = function (event) {
+    if (typeof event.data !== "undefined") {
+      var dados = JSON.parse(event.data);
+
+      const cotacaoAtual = dados.ultimo;
+      const ativoRetornado = dados.symbol;
+
+      const indice = listaCotacoes.findIndex(
+        (cotacao) => cotacao.codigo === ativoRetornado
+      );
+
+      if (indice !== -1) {
+        listaCotacoes[indice].valor = cotacaoAtual;
+        listaCotacoes[indice].compra = {
+          price: dados.compra,
+          qtty: dados.compraQtde,
+          type: "C",
+        };
+        listaCotacoes[indice].venda = {
+          price: dados.venda,
+          qtty: dados.vendaQtde,
+          type: "V",
+        };
+      }
+    }
+  };
+  return source;
+};
+
+export const atualizarCotacaoPosicaoAPI = ({
+  dispatch,
+  codigos,
+  arrayCotacoes,
+  token,
+}) => {
+  var source = new EventSource(
+    `${url_base_reativa}${url_cotacaoReativa_codigos}${codigos}`,
+    {
+      headers: {
+        Authorization: `${token.type} ${token.accessToken}`,
+      },
+    }
+  );
+
+  let listaCotacoes = arrayCotacoes;
+
+  atualizaListaReativa(
+    dispatch,
+    listaCotacoes,
+    MUDAR_VARIAVEL_POSICAO_CUSTODIA,
+    "arrayCotacoes",
+    "setIntervalCotacoesPosicao"
+  );
+
+  source.onmessage = function (event) {
+    if (typeof event.data !== "undefined") {
+      var dados = JSON.parse(event.data);
+
+      const cotacaoAtual = dados.ultimo;
+      const ativoRetornado = dados.symbol;
+
+      const indice = listaCotacoes.findIndex(
+        (ativo) => ativo.codigo === ativoRetornado
+      );
+
+      if (indice !== -1) {
+        //&& listaCotacoes[indice].cotacao !== cotacaoAtual tirar verificação para teste
+        listaCotacoes[indice].cotacao = cotacaoAtual;
+      } //
+      else {
+        const ativo = {
+          codigo: ativoRetornado,
+          cotacao: cotacaoAtual,
+        };
+        listaCotacoes.push(ativo);
+      }
+    }
+  };
+  return source;
+};
+
+export const atualizarCotacaoTHLAPI = ({
+  dispatch,
+  codigos,
+  arrayCotacoes,
+  token,
+}) => {
+  var source = new EventSource(
+    `${url_base_reativa}${url_cotacaoReativa_codigos}${codigos}`,
+    {
+      headers: {
+        Authorization: `${token.type} ${token.accessToken}`,
+      },
+    }
+  );
+
+  let listaCotacoes = arrayCotacoes;
+
+  atualizaListaReativa(
+    dispatch,
+    listaCotacoes,
+    MUDAR_VARIAVEL_THL,
+    "arrayCotacoes",
+    "setIntervalCotacoesTHL"
+  );
+
+  source.onmessage = function (event) {
+    if (typeof event.data !== "undefined") {
+      var dados = JSON.parse(event.data);
+
+      const cotacaoAtual = dados.ultimo;
+      const ativoRetornado = dados.symbol;
+
+      const indice = listaCotacoes.findIndex(
+        (ativo) => ativo.codigo === ativoRetornado
+      );
+
+      if (indice !== -1) {
+        //&& listaCotacoes[indice].cotacao !== cotacaoAtual tirar verificação para teste
+        listaCotacoes[indice].cotacao = cotacaoAtual;
+      } //
+      else {
+        const ativo = {
+          codigo: ativoRetornado,
+          cotacao: cotacaoAtual,
+        };
+        listaCotacoes.push(ativo);
+      }
+    }
+  };
+  return source;
+};
+
+export const atualizarCotacaoBoletasAPI = ({
+  dispatch,
+  codigos,
+  namespace,
+  dadosPesquisa,
+}) => {
   var source = new EventSource(
     `${url_base_reativa}${url_cotacaoReativa_codigos}${codigos}`,
     {
@@ -95,90 +251,24 @@ export const atualizarCotacaoAPI = (
     }
   );
 
-  let listaCotacoes = arrayCotacoes;
-  if (["multileg", "posicao", "thl"].includes(tipo)) {
-    let actionType = MODIFICAR_VARIAVEL_MULTILEG;
-    let nomeLista = "cotacoesMultileg";
-    let nomeSetInterval = "setIntervalCotacoesMultileg";
-
-    if (tipo === "posicao") {
-      actionType = MUDAR_VARIAVEL_POSICAO_CUSTODIA;
-      nomeLista = "arrayCotacoes";
-      nomeSetInterval = "setIntervalCotacoesPosicao";
-    }
-
-    if (tipo === "thl") {
-      actionType = MUDAR_VARIAVEL_THL;
-      nomeLista = "arrayCotacoes";
-      nomeSetInterval = "setIntervalCotacoesTHL";
-    }
-
-    atualizaListaReativa(
-      dispatch,
-      listaCotacoes,
-      actionType,
-      nomeLista,
-      nomeSetInterval
-    );
-  }
-
   source.onmessage = function (event) {
     if (typeof event.data !== "undefined") {
       var dados = JSON.parse(event.data);
 
       const cotacaoAtual = dados.ultimo;
-      const ativoRetornado = dados.symbol;
 
-      if (tipo === "boletas" && dadosPesquisa) {
-        if (cotacaoAtual && dadosPesquisa.cotacaoAtual !== cotacaoAtual) {
-          dadosPesquisa.cotacaoAtual = cotacaoAtual;
+      if (cotacaoAtual && dadosPesquisa.cotacaoAtual !== cotacaoAtual) {
+        dadosPesquisa.cotacaoAtual = cotacaoAtual;
 
-          if (dados.ultimoHorario)
-            dadosPesquisa.ultimoHorario = formatarDataDaAPI(
-              dados.ultimoHorario
-            ).toLocaleTimeString();
+        if (dados.ultimoHorario)
+          dadosPesquisa.ultimoHorario = formatarDataDaAPI(
+            dados.ultimoHorario
+          ).toLocaleTimeString();
 
-          dispatch({
-            type: `${PESQUISAR_ATIVO_BOLETA_API}${namespace}`,
-            payload: { ...dadosPesquisa },
-          });
-        }
-      } //
-      else if (tipo === "multileg") {
-        const indice = listaCotacoes.findIndex(
-          (cotacao) => cotacao.codigo === ativoRetornado
-        );
-
-        if (indice !== -1) {
-          listaCotacoes[indice].valor = cotacaoAtual;
-          listaCotacoes[indice].compra = {
-            price: dados.compra,
-            qtty: dados.compraQtde,
-            type: "C",
-          };
-          listaCotacoes[indice].venda = {
-            price: dados.venda,
-            qtty: dados.vendaQtde,
-            type: "V",
-          };
-        }
-      } //
-      else if (["posicao", "thl"].includes(tipo)) {
-        const indice = listaCotacoes.findIndex(
-          (ativo) => ativo.codigo === ativoRetornado
-        );
-
-        if (indice !== -1) {
-          //&& listaCotacoes[indice].cotacao !== cotacaoAtual tirar verificação para teste
-          listaCotacoes[indice].cotacao = cotacaoAtual;
-        } //
-        else {
-          const ativo = {
-            codigo: ativoRetornado,
-            cotacao: cotacaoAtual,
-          };
-          listaCotacoes.push(ativo);
-        }
+        dispatch({
+          type: `${PESQUISAR_ATIVO_BOLETA_API}${namespace}`,
+          payload: { ...dadosPesquisa },
+        });
       }
     }
   };

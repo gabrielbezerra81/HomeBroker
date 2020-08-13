@@ -2,7 +2,7 @@ import { listarPosicoesAPI, pesquisarAtivoAPI } from "api/API";
 import {
   atualizarEmblemasAPI,
   atualizarPosicaoAPI,
-  atualizarCotacaoAPI,
+  atualizarCotacaoPosicaoAPI,
 } from "api/ReativosAPI";
 import { mudarVariavelPosicao, adicionaPosicao } from "./utils";
 import { getReducerStateStorePrincipal } from "hooks/utils";
@@ -20,6 +20,8 @@ export const listarPosicoesAction = (props) => {
       eventSourcePosicao,
       eventSourceEmblema,
       setIntervalEmblema,
+      eventSourceCotacoes,
+      setIntervalCotacoesPosicao,
     } = getReducerStateStorePrincipal(getState(), "posicao");
 
     if (token) {
@@ -58,7 +60,14 @@ export const listarPosicoesAction = (props) => {
         eventSourceEmblema,
         setIntervalEmblema,
       });
-      atualizarCotacoes(dispatch, listaPosicoes, props, arrayCotacoes);
+      atualizarCotacoes({
+        dispatch,
+        listaPosicoes,
+        arrayCotacoes,
+        eventSourceCotacoes,
+        setIntervalCotacoesPosicao,
+        token,
+      });
 
       dispatch(mudarVariavelPosicaoAction("posicoesCustodia", listaPosicoes));
       dispatch(mudarVariavelPosicaoAction("arrayPrecos", arrayPrecos));
@@ -157,28 +166,44 @@ const atualizarEmblemas = ({
   dispatch(mudarVariavelPosicaoAction("eventSourceEmblema", newSource));
 };
 
-export const atualizarCotacoesAction = (props) => {
-  return (dispatch) => {
-    const { posicoesCustodia, arrayCotacoes } = props;
-    atualizarCotacoes(dispatch, posicoesCustodia, props, arrayCotacoes);
+export const atualizarCotacoesPosicaoAction = () => {
+  return (dispatch, getState) => {
+    const { token } = getReducerStateStorePrincipal(getState(), "principal");
+    const {
+      eventSourceCotacoes,
+      setIntervalCotacoesPosicao,
+      posicoesCustodia,
+      arrayCotacoes,
+    } = getReducerStateStorePrincipal(getState(), "posicao");
+
+    atualizarCotacoes({
+      dispatch,
+      arrayCotacoes,
+      listaPosicoes: posicoesCustodia,
+      eventSourceCotacoes,
+      setIntervalCotacoesPosicao,
+      token,
+    });
   };
 };
 
-const atualizarCotacoes = async (
+const atualizarCotacoes = async ({
   dispatch,
   listaPosicoes,
-  props,
-  arrayCotacoes
-) => {
+  arrayCotacoes,
+  token,
+  eventSourceCotacoes,
+  setIntervalCotacoesPosicao,
+}) => {
   let codigos = "";
   const arrayCodigos = await montaArrayCotacoes(listaPosicoes, "codigos");
 
-  if (props.eventSourceCotacoes) {
-    props.eventSourceCotacoes.close();
+  if (eventSourceCotacoes) {
+    eventSourceCotacoes.close();
   }
-  if (props.setIntervalCotacoesPosicao) {
+  if (setIntervalCotacoesPosicao) {
     // quem disparar pela segunda vez deve ter essa var no connect
-    clearInterval(props.setIntervalCotacoesPosicao);
+    clearInterval(setIntervalCotacoesPosicao);
   }
 
   arrayCodigos.forEach((ativo) => {
@@ -187,12 +212,12 @@ const atualizarCotacoes = async (
 
   codigos = codigos.substring(0, codigos.length - 1);
 
-  const newSource = atualizarCotacaoAPI(
+  const newSource = atualizarCotacaoPosicaoAPI({
     dispatch,
+    arrayCotacoes,
     codigos,
-    "posicao",
-    arrayCotacoes
-  );
+    token,
+  });
 
   dispatch(mudarVariavelPosicaoAction("eventSourceCotacoes", newSource));
 };

@@ -6,7 +6,7 @@ import {
   criarPosicaoMultilegAPI,
 } from "api/API";
 import { PESQUISAR_ATIVO_MULTILEG_API } from "constants/ApiActionTypes";
-import { atualizarCotacaoAction } from "redux/actions/multileg/MultilegActions";
+import { atualizarCotacaoMultilegAction } from "redux/actions/multileg/MultilegActions";
 import {
   montarOrdemMultileg,
   validarOrdemMultileg,
@@ -14,11 +14,18 @@ import {
   encontrarNumMaisProximo,
   modificarVariavelMultileg,
 } from "./utils";
+import { getReducerStateStorePrincipal } from "hooks/utils";
 
 ////
 
 export const pesquisarAtivoMultilegAPIAction = (props, indice) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const { token } = getReducerStateStorePrincipal(getState(), "principal");
+    const {
+      eventSourceCotacao,
+      setIntervalCotacoesMultileg,
+    } = getReducerStateStorePrincipal(getState(), "multileg");
+
     dispatch(
       modificarVariavelMultileg({ nome: "pesquisandoAtivo", valor: true })
     );
@@ -34,7 +41,13 @@ export const pesquisarAtivoMultilegAPIAction = (props, indice) => {
         valor: dados.cotacoesMultileg,
       })
     );
-    atualizarCotacaoAction(dispatch, props, dados.cotacoesMultileg);
+    atualizarCotacaoMultilegAction({
+      dispatch,
+      cotacoesMultileg: dados.cotacoesMultileg,
+      eventSourceCotacao,
+      token,
+      setIntervalCotacoesMultileg,
+    });
     dispatch(
       modificarVariavelMultileg({ nome: "pesquisandoAtivo", valor: false })
     );

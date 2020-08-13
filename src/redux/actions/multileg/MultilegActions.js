@@ -4,7 +4,7 @@ import {
   travarDestravarClique,
   pesquisarStrikesMultilegAPI,
 } from "api/API";
-import { atualizarCotacaoAPI } from "api/ReativosAPI";
+import { atualizarCotacaoMultilegAPI } from "api/ReativosAPI";
 import { calculoPreco } from "telas/popups/multileg_/CalculoPreco";
 import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
 import {
@@ -13,6 +13,7 @@ import {
   verificaCotacaoJaAdd,
   modificarVariavelMultileg,
 } from "./utils";
+import { getReducerStateStorePrincipal } from "hooks/utils";
 
 export const modificarVariavelMultilegAction = (nome, valor) => {
   return (dispatch) => {
@@ -158,8 +159,15 @@ export const modificarAtributoTabelaAbaAction = (
   valor,
   indiceLinha
 ) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     travarDestravarClique("travar", "multileg");
+
+    const { token } = getReducerStateStorePrincipal(getState(), "principal");
+    const {
+      eventSourceCotacao,
+      setIntervalCotacoesMultileg,
+    } = getReducerStateStorePrincipal(getState(), "multileg");
+
     let abasMultileg = clonarMultileg(props.multileg);
     let linhaTabela = abasMultileg[indiceGeral].tabelaMultileg[indiceLinha];
     let cotacoesMultileg = clonarArrayCotacoes(props.cotacoesMultileg);
@@ -214,7 +222,13 @@ export const modificarAtributoTabelaAbaAction = (
       dispatch(
         modificarVariavelMultilegAction("cotacoesMultileg", cotacoesMultileg)
       );
-      atualizarCotacaoAction(dispatch, props, cotacoesMultileg);
+      atualizarCotacaoMultilegAction({
+        dispatch,
+        cotacoesMultileg,
+        token,
+        eventSourceCotacao,
+        setIntervalCotacoesMultileg,
+      });
     }
     const aba = abasMultileg[indiceGeral];
     let calculo = calculoPreco(aba, "ultimo", cotacoesMultileg).toFixed(2);
@@ -240,16 +254,31 @@ export const excluirOfertaTabelaAction = (props, indiceAba, indiceLinha) => {
 ////
 
 export const adicionarOfertaTabelaAction = (props, tipoOferta) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     travarDestravarClique("travar", "multileg");
+
+    const { token } = getReducerStateStorePrincipal(getState(), "principal");
+    const {
+      eventSourceCotacao,
+      setIntervalCotacoesMultileg,
+      multileg,
+      cotacoesMultileg,
+    } = getReducerStateStorePrincipal(getState(), "multileg");
+
     const dados = await adicionarOferta(
-      props.multileg,
+      multileg,
       tipoOferta,
       props.indice,
-      props.cotacoesMultileg
+      cotacoesMultileg
     );
 
-    atualizarCotacaoAction(dispatch, props, dados.cotacoesMultileg);
+    atualizarCotacaoMultilegAction({
+      dispatch,
+      token,
+      eventSourceCotacao,
+      setIntervalCotacoesMultileg,
+      cotacoesMultileg: dados.cotacoesMultileg,
+    });
     dispatch(modificarVariavelMultilegAction("multileg", dados.abasMultileg));
     dispatch(
       modificarVariavelMultilegAction(
@@ -389,12 +418,18 @@ const pesquisarSerieStrikeModeloTipo_symbol = (objeto) => {
 };
 
 //Formato antigo
-export const atualizarCotacaoAction = (dispatch, props, cotacoesMultileg) => {
-  if (props.eventSourceCotacao) {
-    props.eventSourceCotacao.close();
+export const atualizarCotacaoMultilegAction = ({
+  dispatch,
+  cotacoesMultileg,
+  eventSourceCotacao,
+  setIntervalCotacoesMultileg,
+  token,
+}) => {
+  if (eventSourceCotacao) {
+    eventSourceCotacao.close();
   }
-  if (props.setIntervalCotacoesMultileg) {
-    clearInterval(props.setIntervalCotacoesMultileg);
+  if (setIntervalCotacoesMultileg) {
+    clearInterval(setIntervalCotacoesMultileg);
   }
   let codigos = "";
 
@@ -404,12 +439,12 @@ export const atualizarCotacaoAction = (dispatch, props, cotacoesMultileg) => {
 
   codigos = codigos.substring(0, codigos.length - 1);
 
-  const newSource = atualizarCotacaoAPI(
+  const newSource = atualizarCotacaoMultilegAPI({
     dispatch,
     codigos,
-    "multileg",
-    cotacoesMultileg
-  );
+    arrayCotacoes: cotacoesMultileg,
+    token,
+  });
 
   dispatch(modificarVariavelMultilegAction("eventSourceCotacao", newSource));
 };
