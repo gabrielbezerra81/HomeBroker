@@ -316,12 +316,12 @@ export const atualizarOrdensExecAPI = (dispatch, token, listaOrdensExec) => {
   return source;
 };
 
-export const atualizarPrecosTHLAPI = (ids, dispatch) => {
+export const atualizarPrecosTHLAPI = ({ ids, dispatch, token }) => {
   var source = new EventSource(
     `${url_base_reativa}${url_atualizarPrecosTHL_ids}${ids}`,
     {
       headers: {
-        Authorization: "my secret jwt token",
+        Authorization: `${token.type} ${token.accessToken}`,
       },
     }
   );

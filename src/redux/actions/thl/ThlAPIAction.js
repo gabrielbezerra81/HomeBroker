@@ -26,20 +26,20 @@ export const pesquisarAtivoTHLAPIAction = (codigo) => {
   };
 };
 
-export const listarTabelaInicialTHLAPIAction = (props) => {
+export const listarTabelaInicialTHLAPIAction = () => {
   return async (dispatch, getState) => {
     const {
-      sourcePrecos,
-      setIntervalPrecosTHL,
-      ativoPesquisado,
-      strikeSelecionado,
       tipo,
-    } = props;
-    const ativo = ativoPesquisado;
+      strikeSelecionado,
+      setIntervalPrecosTHL,
+      ativoPesquisado: ativo,
+      eventSourcePrecos,
+    } = getReducerStateStorePrincipal(getState(), "thl");
+
     if (ativo && strikeSelecionado && tipo) {
       dispatch(mudarVariavelTHL("carregandoTabelaVencimentos", true));
 
-      console.log(getReducerStateStorePrincipal(getState(), "thl"));
+      const { token } = getReducerStateStorePrincipal(getState(), "principal");
 
       const tabelaVencimentos = await listarTabelaInicialTHLAPI(
         ativo,
@@ -47,12 +47,13 @@ export const listarTabelaInicialTHLAPIAction = (props) => {
         tipo
       );
       if (tabelaVencimentos.length > 0)
-        atualizarPrecosTHL(
+        atualizarPrecosTHL({
           tabelaVencimentos,
-          sourcePrecos,
           dispatch,
-          setIntervalPrecosTHL
-        );
+          setIntervalPrecosTHL,
+          sourcePrecos: eventSourcePrecos,
+          token,
+        });
 
       dispatch(
         mudarVariaveisTHL({
@@ -68,7 +69,9 @@ export const listarTabelaInicialTHLAPIAction = (props) => {
 };
 
 export const recalcularPrecosTHLAPIAction = (thlState) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    dispatch(mudarVariavelTHL("carregandoTabelaVencimentos", true));
+
     const {
       ativoPesquisado,
       strikeSelecionado,
@@ -76,28 +79,30 @@ export const recalcularPrecosTHLAPIAction = (thlState) => {
       eventSourcePrecos,
       setIntervalPrecosTHL,
       codigoCelulaSelecionada,
-    } = thlState;
-    dispatch(mudarVariavelTHL("carregandoTabelaVencimentos", true));
+    } = getReducerStateStorePrincipal(getState(), "thl");
 
-    const opcoesRecalculadas = await recalcularPrecosTHLAPI(
+    const tabelaVencimentos = await recalcularPrecosTHLAPI(
       codigoCelulaSelecionada,
       ativoPesquisado,
       strikeSelecionado,
       tipo
     );
 
-    if (opcoesRecalculadas.length) {
-      atualizarPrecosTHL(
-        opcoesRecalculadas,
-        eventSourcePrecos,
+    const { token } = getReducerStateStorePrincipal(getState(), "principal");
+
+    if (tabelaVencimentos.length) {
+      atualizarPrecosTHL({
+        tabelaVencimentos,
+        sourcePrecos: eventSourcePrecos,
         dispatch,
-        setIntervalPrecosTHL
-      );
+        setIntervalPrecosTHL,
+        token,
+      });
     }
     setTimeout(() => {
       dispatch(
         mudarVariaveisTHL({
-          opcoesStrike: mapearTabelaVencimentos(opcoesRecalculadas),
+          opcoesStrike: mapearTabelaVencimentos(tabelaVencimentos),
           celulaCalculada: codigoCelulaSelecionada,
           booksSelecionados: [],
           carregandoTabelaVencimentos: false,
@@ -107,12 +112,13 @@ export const recalcularPrecosTHLAPIAction = (thlState) => {
   };
 };
 
-const atualizarPrecosTHL = async (
+const atualizarPrecosTHL = async ({
   tabelaVencimentos,
   sourcePrecos,
   dispatch,
-  setIntervalPrecosTHL
-) => {
+  setIntervalPrecosTHL,
+  token,
+}) => {
   if (sourcePrecos) {
     sourcePrecos.close();
   }
@@ -130,7 +136,7 @@ const atualizarPrecosTHL = async (
 
   ids = ids.substring(0, ids.length - 1);
 
-  const source = atualizarPrecosTHLAPI(ids, dispatch);
+  const source = atualizarPrecosTHLAPI({ ids, dispatch, token });
   dispatch(
     mudarVariaveisTHL({
       eventSourcePrecos: source,

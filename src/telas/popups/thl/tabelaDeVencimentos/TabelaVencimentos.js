@@ -37,7 +37,7 @@ export default React.memo(() => {
   const prevCalculada = usePrevious(celulaCalculada);
 
   useEffect(() => {
-    dispatch(listarTabelaInicialTHLAPIAction(reduxState));
+    dispatch(listarTabelaInicialTHLAPIAction());
   }, []);
 
   useEffect(() => {
@@ -46,11 +46,11 @@ export default React.memo(() => {
       prevCalculada !== celulaCalculada
     ) {
       if (!codigoCelulaSelecionada && celulaCalculada) {
-        dispatch(listarTabelaInicialTHLAPIAction(reduxState));
+        dispatch(listarTabelaInicialTHLAPIAction());
       }
     } //
     else {
-      dispatch(listarTabelaInicialTHLAPIAction(reduxState));
+      dispatch(listarTabelaInicialTHLAPIAction());
     }
   }, [
     ativoPesquisado,

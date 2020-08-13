@@ -167,7 +167,7 @@ const RecalcularPrecos = () => {
         texto={textoRecalcular}
         condicaoVisibilidade={classeBotaoDesabilitado}
         icone={iconeRecalcularPrecos}
-        onClick={() => dispatch(recalcularPrecosTHLAPIAction(reduxState))}
+        onClick={() => dispatch(recalcularPrecosTHLAPIAction())}
       />
     </div>
   );
