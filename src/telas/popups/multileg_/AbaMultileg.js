@@ -30,6 +30,7 @@ class AbaMultileg extends React.Component {
       props.cotacoesMultileg,
       props.multileg[indice].ativo
     );
+    
     return (
       <div className="containerAbaMultileg">
         <div>
@@ -51,14 +52,14 @@ class AbaMultileg extends React.Component {
                   onKeyPress={(event) => {
                     //event.preventDefault();
                     if (event.key === "Enter")
-                      props.pesquisarAtivoMultilegAPIAction(props, indice);
+                      props.pesquisarAtivoMultilegAPIAction( indice);
                   }}
                 />
                 <InputGroup.Append className="inputAtivoAppend">
                   <span
                     className="input-group-text iconeProcurar divClicavel"
                     onClick={() => {
-                      props.pesquisarAtivoMultilegAPIAction(props, indice);
+                      props.pesquisarAtivoMultilegAPIAction( indice);
                     }}
                   >
                     {pesquisandoAtivo ? (

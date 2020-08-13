@@ -18,21 +18,23 @@ import { getReducerStateStorePrincipal } from "hooks/utils";
 
 ////
 
-export const pesquisarAtivoMultilegAPIAction = (props, indice) => {
+export const pesquisarAtivoMultilegAPIAction = (indiceAbaMultileg) => {
   return async (dispatch, getState) => {
     const { token } = getReducerStateStorePrincipal(getState(), "principal");
     const {
       eventSourceCotacao,
       setIntervalCotacoesMultileg,
+      multileg,
+      cotacoesMultileg,
     } = getReducerStateStorePrincipal(getState(), "multileg");
 
     dispatch(
       modificarVariavelMultileg({ nome: "pesquisandoAtivo", valor: true })
     );
     const dados = await pesquisaAtivo(
-      props.multileg,
-      indice,
-      props.cotacoesMultileg
+      multileg,
+      indiceAbaMultileg,
+      cotacoesMultileg
     );
     dispatch({ type: PESQUISAR_ATIVO_MULTILEG_API, payload: dados.multileg });
     dispatch(
