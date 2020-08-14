@@ -33,7 +33,7 @@ export const url_listarPosicoes = "position";
 export const url_cotacaoReativa_codigos = "quotes/symbols?symbols=";
 export const url_bookReativo_codigos = "books/symbols?symbols=";
 export const url_emblemaReativo_ids = "structures/ids?ids="; //Id estrutura
-export const url_ordensExecReativas_idUser = "orders/user2/";
+export const url_ordensExecReativas_idUser = "orders/user/";
 export const url_posicaoReativa_idUser = "position/user/";
 
 //Monitorar e adicionar

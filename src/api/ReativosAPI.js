@@ -34,7 +34,7 @@ export const atualizarBookAPI = ({ dispatch, codigos, tipo, token }) => {
     `${url_base_reativa}${url_bookReativo_codigos}${codigos}`,
     {
       headers: {
-        Authorization: `${token.type} ${token.accessToken}`,
+        Authorization: `${token.tokenType} ${token.accessToken}`,
       },
     }
   );
@@ -88,7 +88,7 @@ export const atualizarCotacaoMultilegAPI = ({
     `${url_base_reativa}${url_cotacaoReativa_codigos}${codigos}`,
     {
       headers: {
-        Authorization: `${token.type} ${token.accessToken}`,
+        Authorization: `${token.tokenType} ${token.accessToken}`,
       },
     }
   );
@@ -142,7 +142,7 @@ export const atualizarCotacaoPosicaoAPI = ({
     `${url_base_reativa}${url_cotacaoReativa_codigos}${codigos}`,
     {
       headers: {
-        Authorization: `${token.type} ${token.accessToken}`,
+        Authorization: `${token.tokenType} ${token.accessToken}`,
       },
     }
   );
@@ -194,7 +194,7 @@ export const atualizarCotacaoTHLAPI = ({
     `${url_base_reativa}${url_cotacaoReativa_codigos}${codigos}`,
     {
       headers: {
-        Authorization: `${token.type} ${token.accessToken}`,
+        Authorization: `${token.tokenType} ${token.accessToken}`,
       },
     }
   );
@@ -280,7 +280,7 @@ export const atualizarEmblemasAPI = ({ dispatch, listaPrecos, ids, token }) => {
     `${url_base_reativa}${url_emblemaReativo_ids}${ids}`,
     {
       headers: {
-        Authorization: `${token.type} ${token.accessToken}`,
+        Authorization: `${token.tokenType} ${token.accessToken}`,
       },
     }
   );
@@ -328,7 +328,7 @@ export const atualizarPosicaoAPI = ({ dispatch, listaPosicoes, token }) => {
     `${url_base_reativa}${url_posicaoReativa_idUser}`,
     {
       headers: {
-        Authorization: `${token.type} ${token.accessToken}`,
+        Authorization: `${token.tokenType} ${token.accessToken}`,
       },
     }
   );
@@ -370,7 +370,7 @@ export const atualizarOrdensExecAPI = ({
     `${url_base_reativa}${url_ordensExecReativas_idUser}`,
     {
       headers: {
-        Authorization: `${token.type} ${token.accessToken}`,
+        Authorization: `${token.tokenType} ${token.accessToken}`,
       },
     }
   );
@@ -409,7 +409,7 @@ export const atualizarPrecosTHLAPI = ({ ids, dispatch, token }) => {
     `${url_base_reativa}${url_atualizarPrecosTHL_ids}${ids}`,
     {
       headers: {
-        Authorization: `${token.type} ${token.accessToken}`,
+        Authorization: `${token.tokenType} ${token.accessToken}`,
       },
     }
   );

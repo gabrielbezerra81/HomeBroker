@@ -1,4 +1,5 @@
 import React from "react";
+import { ReactReduxContextValue } from "react-redux";
 import ReduxThunk from "redux-thunk";
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
@@ -8,9 +9,6 @@ import storage from "redux-persist/lib/storage"; // defaults to localStorage for
 import MainAppReducer from "redux/reducers/MainAppReducer";
 import { combinedReducersAppPrincipal } from "redux/reducers";
 
-export const StorePrincipalContext = React.createContext();
-export const GlobalContext = React.createContext();
-
 const persistConfig = {
   key: "root",
   storage,
@@ -18,7 +16,7 @@ const persistConfig = {
   whitelist: ["telaPrincipalReducer"],
 };
 
-const persistedReducerAppPrincipal = persistReducer(
+const persistedReducerAppPrincipal = persistReducer<any, any>(
   persistConfig,
   combinedReducersAppPrincipal
 );
@@ -45,3 +43,12 @@ export const globalStore = createStore(
   {},
   composeEnhancers(applyMiddleware(ReduxThunk)) //, LogRocket.reduxMiddleware()
 );
+
+export const StorePrincipalContext = React.createContext<
+  ReactReduxContextValue
+>({ store: storeAppPrincipal, storeState: {} });
+
+export const GlobalContext = React.createContext<ReactReduxContextValue>({
+  store: globalStore,
+  storeState: {},
+});
