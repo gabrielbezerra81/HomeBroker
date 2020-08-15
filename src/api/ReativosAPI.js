@@ -166,21 +166,21 @@ export const atualizarCotacaoPosicaoAPI = ({
       const cotacaoAtual = dados.ultimo;
       const ativoRetornado = dados.symbol;
 
-      // const indice = listaCotacoes.findIndex(
-      //   (ativo) => ativo.codigo === ativoRetornado
-      // );
+      const indice = listaCotacoes.findIndex(
+        (ativo) => ativo.codigo === ativoRetornado
+      );
 
-      // if (indice !== -1) {
-      //   //&& listaCotacoes[indice].cotacao !== cotacaoAtual tirar verificação para teste
-      //   listaCotacoes[indice].cotacao = cotacaoAtual;
-      // } //
-      // else {
-      //   const ativo = {
-      //     codigo: ativoRetornado,
-      //     cotacao: cotacaoAtual,
-      //   };
-      //   listaCotacoes.push(ativo);
-      // }
+      if (indice !== -1) {
+        //&& listaCotacoes[indice].cotacao !== cotacaoAtual tirar verificação para teste
+        listaCotacoes[indice].cotacao = cotacaoAtual;
+      } //
+      else {
+        const ativo = {
+          codigo: ativoRetornado,
+          cotacao: cotacaoAtual,
+        };
+        listaCotacoes.push(ativo);
+      }
     }
   };
   return source;
@@ -307,20 +307,20 @@ export const atualizarEmblemasAPI = ({ dispatch, listaPrecos, ids, token }) => {
         (posicao) => posicao.idEstrutura === dados.id
       );
 
-      // if (indice !== -1) {
-      //   novaLista[indice].precoCompra = dados.min;
-      //   novaLista[indice].precoVenda = dados.max;
-      //   novaLista[indice].cotacaoAtual = dados.last;
-      // } //
-      // else {
-      //   const preco = {
-      //     precoCompra: dados.min,
-      //     precoVenda: dados.max,
-      //     cotacaoAtual: dados.last,
-      //     idEstrutura: dados.id,
-      //   };
-      //   novaLista.push(preco);
-      // }
+      if (indice !== -1) {
+        novaLista[indice].precoCompra = dados.min;
+        novaLista[indice].precoVenda = dados.max;
+        novaLista[indice].cotacaoAtual = dados.last;
+      } //
+      else {
+        const preco = {
+          precoCompra: dados.min,
+          precoVenda: dados.max,
+          cotacaoAtual: dados.last,
+          idEstrutura: dados.id,
+        };
+        novaLista.push(preco);
+      }
     }
   };
 
@@ -345,22 +345,22 @@ export const atualizarPosicaoAPI = ({ dispatch, listaPosicoes, token }) => {
 
       console.log(posicoes);
 
-      // posicoes.forEach((novaPosicao) => {
-      //   const indice = novaLista.findIndex(
-      //     (posicao) =>
-      //       posicao.agrupadorPrincipal === novaPosicao.agrupadorPrincipal
-      //   );
+      posicoes.forEach((novaPosicao) => {
+        const indice = novaLista.findIndex(
+          (posicao) =>
+            posicao.agrupadorPrincipal === novaPosicao.agrupadorPrincipal
+        );
 
-      //   if (indice !== -1) {
-      //     const posicaoAtualizada = adicionaPosicao(novaPosicao)[0];
-      //     novaLista[indice] = posicaoAtualizada;
-      //   } else {
-      //     const posicaoAdicionada = adicionaPosicao(novaPosicao);
-      //     novaLista.push(...posicaoAdicionada);
-      //   }
-      // });
+        if (indice !== -1) {
+          const posicaoAtualizada = adicionaPosicao(novaPosicao)[0];
+          novaLista[indice] = posicaoAtualizada;
+        } else {
+          const posicaoAdicionada = adicionaPosicao(novaPosicao);
+          novaLista.push(...posicaoAdicionada);
+        }
+      });
 
-      // dispatch(mudarVariavelPosicao("posicoesCustodia", novaLista));
+      dispatch(mudarVariavelPosicao("posicoesCustodia", novaLista));
     }
   };
 
@@ -429,8 +429,6 @@ export const atualizarPrecosTHLAPI = ({ ids, dispatch, token }) => {
     "precosTabelaVencimentos",
     "setIntervalPrecosTHL"
   );
-
-
 
   source.onmessage = function (event) {
     if (typeof event.data !== "undefined") {
