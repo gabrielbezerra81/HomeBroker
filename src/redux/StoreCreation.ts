@@ -7,7 +7,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import autoMergeLevel1 from "redux-persist/lib/stateReconciler/autoMergeLevel1";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 import MainAppReducer from "redux/reducers/MainAppReducer";
-import { combinedReducersAppPrincipal } from "redux/reducers";
+import { reducersAppPrincipal, MainStoreState } from "redux/reducers";
 
 const persistConfig = {
   key: "root",
@@ -16,9 +16,9 @@ const persistConfig = {
   whitelist: ["telaPrincipalReducer"],
 };
 
-const persistedReducerAppPrincipal = persistReducer<any, any>(
+const persistedReducerAppPrincipal = persistReducer<MainStoreState, any>(
   persistConfig,
-  combinedReducersAppPrincipal
+  reducersAppPrincipal
 );
 
 // @ts-ignore
@@ -45,8 +45,8 @@ export const globalStore = createStore(
 );
 
 export const StorePrincipalContext = React.createContext<
-  ReactReduxContextValue
->({ store: storeAppPrincipal, storeState: {} });
+  ReactReduxContextValue<MainStoreState, any>
+>({ store: storeAppPrincipal, storeState: {} as MainStoreState });
 
 export const GlobalContext = React.createContext<ReactReduxContextValue>({
   store: globalStore,

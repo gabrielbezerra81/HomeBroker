@@ -1,12 +1,10 @@
 import { actionType } from "constants/ActionTypes";
-import {
-  MUDAR_TIPO,
-  MODIFICAR_VARIAVEL_MULTILEG,
-} from "constants/MenuActionTypes";
+import { MODIFICAR_VARIAVEL_MULTILEG } from "constants/MenuActionTypes";
 import { PESQUISAR_ATIVO_MULTILEG_API } from "constants/ApiActionTypes";
 import { resetarEstadoRedux } from "redux/reducers/resetarEstadoReducer";
+import MultilegState from "types/multileg/MultilegState";
 
-const INITIAL_STATE = {
+const INITIAL_STATE: MultilegState = {
   configComplementarAberto: false,
   pesquisandoAtivo: false,
   abaSelecionada: "tab0",
@@ -38,10 +36,16 @@ const INITIAL_STATE = {
   cotacoesMultilegID: 0,
 };
 
-export default (state = INITIAL_STATE, { type, payload }) => {
+interface Action {
+  type: string;
+  payload: any;
+}
+
+export default (
+  state = INITIAL_STATE,
+  { type, payload }: Action
+): MultilegState => {
   switch (type) {
-    case MUDAR_TIPO:
-      return { ...state, tipo: payload };
     case MODIFICAR_VARIAVEL_MULTILEG:
       return { ...state, [payload.nome]: payload.valor };
     case PESQUISAR_ATIVO_MULTILEG_API:

@@ -2,7 +2,7 @@ import React from "react";
 import { Provider, connect } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import ReduxThunk from "redux-thunk";
-import rootReducer from "redux/reducers/index";
+import { BoletasReducer } from "redux/reducers/index";
 import AppBoletas from "AppBoletas";
 import { GlobalContext } from "redux/StoreCreation";
 
@@ -15,7 +15,7 @@ class ContainerAppBoletas extends React.Component {
     super(props);
 
     this.store = createStore(
-      rootReducer,
+      BoletasReducer,
       {},
       composeEnhancers(applyMiddleware(ReduxThunk))
     );

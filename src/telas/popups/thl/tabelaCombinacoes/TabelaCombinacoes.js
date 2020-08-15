@@ -13,9 +13,10 @@ import { mudarVariavelTHLAction } from "redux/actions/thl/THLActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export default React.memo(({ dataTabela, classeMargemScroll }) => {
-  const reduxState = useStateStorePrincipal("thl");
+  const {
+    THLReducer: { idCelulaSelecionada, codigoCelulaSelecionada },
+  } = useStateStorePrincipal();
   const dispatch = useDispatchStorePrincipal();
-  const { idCelulaSelecionada, codigoCelulaSelecionada } = reduxState;
 
   const StripedRow = useMemo(
     () =>

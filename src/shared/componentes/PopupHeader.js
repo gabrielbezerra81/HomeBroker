@@ -29,7 +29,9 @@ export const ModalHeader = ({
   eventSourceCotacao,
 }) => {
   const state = useStateBoletas("appBoletasReducer");
-  const { token } = useStateStorePrincipal("principal");
+  const {
+    telaPrincipalReducer: { token },
+  } = useStateStorePrincipal();
   const stateGlobalStore = useStateGlobalStore();
   const dispatchGlobal = useDispatchGlobalStore();
   const dispatch = useDispatchBoletas();
@@ -88,7 +90,9 @@ export const BookHeader = ({ headerClass, resetPosition }) => {
   const stateSubApp = useStateBoletas("appBoletasReducer");
   const stateGlobalStore = useStateGlobalStore();
 
-  const { token } = useStateStorePrincipal("principal");
+  const {
+    telaPrincipalReducer: { token },
+  } = useStateStorePrincipal();
 
   const { inputHeader, eventSource } = stateBook;
   const formShow = stateGlobalStore.show;
@@ -192,9 +196,9 @@ export const ModalHeaderLimpo = ({ titulo, name = "" }) => {
 
   const dispatchStorePrincipal = useDispatchStorePrincipal();
   const dispatch = useDispatchBoletas();
-  const stateStorePrincipal = useStateStorePrincipal("multileg");
-
-  const { configComplementarAberto } = stateStorePrincipal;
+  const {
+    multilegReducer: { configComplementarAberto },
+  } = useStateStorePrincipal();
 
   if (["config_compra", "config_venda"].includes(name)) {
     funcaoFechar = (e) => dispatch(fecharFormConfigurarAction(e));
@@ -249,21 +253,16 @@ const getNomeVariavelReducer = (headerTitle) => {
 
 const GetAbrirMenuProps = () => {
   const {
-    ordensExecucaoAberto,
-    relatorioDetalhadoAberto,
-    listaCompletaAberta,
-    multilegAberto,
-    thlAberta,
-  } = useStateStorePrincipal("principal");
-
-  const {
-    eventSourceCotacao,
-    setIntervalCotacoesMultileg,
-  } = useStateStorePrincipal("multileg");
-
-  const { eventSourcePrecos, setIntervalPrecosTHL } = useStateStorePrincipal(
-    "thl"
-  );
+    telaPrincipalReducer: {
+      ordensExecucaoAberto,
+      relatorioDetalhadoAberto,
+      listaCompletaAberta,
+      multilegAberto,
+      thlAberta,
+    },
+    multilegReducer: { eventSourceCotacao, setIntervalCotacoesMultileg },
+    THLReducer: { eventSourcePrecos, setIntervalPrecosTHL },
+  } = useStateStorePrincipal();
 
   const props = {
     ordensExecucaoAberto,
@@ -299,11 +298,11 @@ const BotaoAbrirFiltrarOrdens = ({ headerTitle }) => {
   let botaoAbrirFiltrarOrdens = <div></div>;
 
   const dispatch = useDispatchStorePrincipal();
-  const state = useStateStorePrincipal((state) => state);
+  const {
+    ordensExecReducer: { filtrarOrdensAberto },
+  } = useStateStorePrincipal();
 
   if (headerTitle === "HISTÓRICO DE OPERAÇÕES") {
-    const { filtrarOrdensAberto } = state.ordensExecReducer;
-
     botaoAbrirFiltrarOrdens = (
       <Button
         variant="link"

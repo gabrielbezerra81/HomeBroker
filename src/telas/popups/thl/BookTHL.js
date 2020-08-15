@@ -6,9 +6,11 @@ import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export default (props) => {
   const { preco, qtde, tipo, ativo } = props;
-  const reduxState = useStateStorePrincipal("thl");
+  const {
+    THLReducer: { booksSelecionados },
+  } = useStateStorePrincipal();
   const dispatch = useDispatchStorePrincipal();
-  const { booksSelecionados } = reduxState;
+
   const indice = booksSelecionados.findIndex(
     (book) => book.ativo === ativo && book.tipo === tipo
   );

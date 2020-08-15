@@ -11,13 +11,14 @@ import BookTHL, { selecionarBooks } from "telas/popups/thl/BookTHL";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
-  const reduxState = useStateStorePrincipal("thl");
+  const { THLReducer: reduxState } = useStateStorePrincipal();
   const dispatch = useDispatchStorePrincipal();
   const {
     precosTabelaVencimentos,
     booksSelecionados,
     codigoCelulaSelecionada,
   } = reduxState;
+
   const ativo = itemColuna.symbol;
 
   let compra, compraQtde, venda, vendaQtde, min, max, qtdeMontar, qtdeDesmont;
@@ -185,8 +186,11 @@ const VerificaAtivoCustodia = (itemColuna) => {
   let qtdeExecutada = 0;
   let qtdeOferta = 0;
   const ativoCelula = itemColuna.symbol;
-  const reduxState = useStateStorePrincipal("posicao");
-  const { posicoesCustodia } = reduxState;
+
+  const {
+    posicaoReducer: { posicoesCustodia },
+  } = useStateStorePrincipal();
+
   executando = posicoesCustodia.some((posicao) => {
     const execCompra = posicao.custodiaCompra.find(
       (custCompra) => custCompra.ativo === ativoCelula

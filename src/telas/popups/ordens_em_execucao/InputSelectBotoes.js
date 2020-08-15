@@ -11,8 +11,10 @@ import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export default (props) => {
   const dispatch = useDispatchStorePrincipal();
-  const state = useStateStorePrincipal("ordensExec");
-  const { token } = useStateStorePrincipal("principal");
+  const {
+    ordensExecReducer: state,
+    telaPrincipalReducer: { token },
+  } = useStateStorePrincipal();
 
   const placeholder = props.modo.charAt(0).toUpperCase() + props.modo.slice(1);
   const { ordemAtual, sinalInputSelect } = state;

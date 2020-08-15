@@ -16,7 +16,9 @@ import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export const ColunaHeader = ({ children, column }) => {
   const dispatch = useDispatchStorePrincipal();
-  const { ordenacao } = useStateStorePrincipal("thl");
+  const {
+    THLReducer: { ordenacao },
+  } = useStateStorePrincipal();
   let elementoColuna;
   let classNameColunaAcaoUlt = "";
   let tipoFiltro = "";
@@ -133,8 +135,9 @@ export const ColunaTextoComum = (props) => {
 };
 
 export const ColunaAcaoUlt = ({ children, row, column }) => {
-  const reduxState = useStateStorePrincipal("thl");
-  const { arrayCotacoes } = reduxState;
+  const {
+    THLReducer: { arrayCotacoes },
+  } = useStateStorePrincipal();
   const acao = children.acao;
 
   const cotacao = buscarNumeroArray(arrayCotacoes, acao, "codigo", "cotacao");
@@ -183,8 +186,9 @@ export const ColunaMontagem = ({ children, row, column }) => {
   const { opcao1, opcao2 } = row.codigos;
 
   const dispatch = useDispatchStorePrincipal();
-  const reduxState = useStateStorePrincipal("thl");
-  const { booksSelecionados } = reduxState;
+  const {
+    THLReducer: { booksSelecionados },
+  } = useStateStorePrincipal();
 
   const preco = children;
   const book1 = {},

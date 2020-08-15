@@ -1,5 +1,4 @@
 //MULTI ATIVOS
-export const MUDAR_TIPO = "mudar_tipo";
 export const MODIFICAR_VARIAVEL_MULTILEG = "modificar_variavel_multileg";
 
 //POSICAO EM CUSTODIA

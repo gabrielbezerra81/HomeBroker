@@ -22,7 +22,7 @@ import MultilegReducer from "redux/reducers/multileg/MultilegReducer";
 import PosicaoReducer from "redux/reducers/posicao/PosicaoReducer";
 import OrdensExecucaoReducer from "redux/reducers/ordensExecucao/OrdensExecReducer";
 
-export default combineReducers({
+export const BoletasReducer = combineReducers({
   bookOfertaReducer: bookOfertaReducer,
   formInputReducer: formInputReducer("_DEMAIS"),
   compraAgendadaReducer: formInputReducer(COMPRA_AGENDADA_NAMESPACE),
@@ -40,10 +40,12 @@ export default combineReducers({
   appBoletasReducer: appBoletasReducer,
 });
 
-export const combinedReducersAppPrincipal = combineReducers({
+export const reducersAppPrincipal = combineReducers({
   telaPrincipalReducer: TelaPrincipalReducer,
   multilegReducer: MultilegReducer,
   posicaoReducer: PosicaoReducer,
   ordensExecReducer: OrdensExecucaoReducer,
   THLReducer: THLReducer,
 });
+
+export type MainStoreState = ReturnType<typeof reducersAppPrincipal>;

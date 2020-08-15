@@ -11,7 +11,9 @@ import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 const TelaLogin = ({ path }) => {
-  const { inputUsuario, inputSenha } = useStateStorePrincipal("principal");
+  const {
+    telaPrincipalReducer: { inputUsuario, inputSenha },
+  } = useStateStorePrincipal();
 
   const dispatch = useDispatchStorePrincipal();
 

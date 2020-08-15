@@ -4,9 +4,9 @@ import { Popconfirm } from "antd";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export const BotaoEnviarOrdem = ({ props, tipoCompraVenda }) => {
-  const state = useStateStorePrincipal("principal");
+  const { telaPrincipalReducer } = useStateStorePrincipal();
 
-  const { conta, contaSelecionada, token } = state;
+  const { conta, contaSelecionada, token } = telaPrincipalReducer;
   const variacaoBotao = tipoCompraVenda === "Comprar" ? "primary" : "danger";
 
   if (conta.length > 1) {

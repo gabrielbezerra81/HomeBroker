@@ -80,8 +80,8 @@ class BSModal extends Component {
 export default BSModal;
 
 const RenderFiltrarOrdens = () => {
-  const state = useStateStorePrincipal();
-  const { filtrarOrdensAberto } = state.ordensExecReducer;
+  const { ordensExecReducer } = useStateStorePrincipal();
+  const { filtrarOrdensAberto } = ordensExecReducer;
 
   if (filtrarOrdensAberto) return <FiltrarOrdens />;
   return <div></div>;

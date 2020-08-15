@@ -1,4 +1,5 @@
 import { NamespacesType } from "constants/ActionTypes";
+import { MainStoreState } from "redux/reducers";
 
 type reducerName =
   | ""
@@ -9,7 +10,7 @@ type reducerName =
   | "ordensExec";
 
 export const getReducerStateStorePrincipal = (
-  state: any,
+  state: MainStoreState,
   reducer: reducerName
 ) => {
   switch (reducer) {

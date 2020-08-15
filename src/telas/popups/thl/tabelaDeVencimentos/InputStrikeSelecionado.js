@@ -5,9 +5,10 @@ import { mudarVariavelTHLAction } from "redux/actions/thl/THLActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export default ({ strikeLinha, indiceStrike }) => {
-  const reduxState = useStateStorePrincipal("thl");
+  const {
+    THLReducer: { strikeSelecionado, listaStrikes },
+  } = useStateStorePrincipal();
   const dispatch = useDispatchStorePrincipal();
-  const { strikeSelecionado, listaStrikes } = reduxState;
 
   if (Number(strikeSelecionado) === Number(strikeLinha)) {
     return (

@@ -8,14 +8,16 @@ import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export default React.memo(() => {
-  const reduxState = useStateStorePrincipal("thl");
-  const dispatch = useDispatchStorePrincipal();
   const {
-    seletorMapaCalor,
-    faixasMapaCalor,
-    precosTabelaVencimentos,
-    precosTabelaVencimentosID,
-  } = reduxState;
+    THLReducer: {
+      seletorMapaCalor,
+      faixasMapaCalor,
+      precosTabelaVencimentos,
+      precosTabelaVencimentosID,
+    },
+  } = useStateStorePrincipal();
+  const dispatch = useDispatchStorePrincipal();
+
   const { min, max } = useMemo(
     () => calcularPrecosMinMaxMapa(precosTabelaVencimentos, seletorMapaCalor),
     [precosTabelaVencimentosID, seletorMapaCalor]

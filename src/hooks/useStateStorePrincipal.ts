@@ -1,21 +1,16 @@
-import { getReducerStateStorePrincipal } from "./utils";
 import { StorePrincipalContext } from "redux/StoreCreation";
-import { createSelectorHook } from "react-redux";
+import { createSelectorHook, TypedUseSelectorHook } from "react-redux";
+import { MainStoreState } from "redux/reducers";
 
-type reducerName =
-  | ""
-  | "thl"
-  | "principal"
-  | "multileg"
-  | "posicao"
-  | "ordensExec";
+const useSelectorStorePrincipal: TypedUseSelectorHook<MainStoreState> = createSelectorHook(
+  StorePrincipalContext
+);
 
-const useSelectorStorePrincipal = createSelectorHook(StorePrincipalContext);
-
-const useStateStorePrincipal = (reducer: reducerName) => {
-  const state = useSelectorStorePrincipal((state) => state);
-
-  return getReducerStateStorePrincipal(state, reducer);
+const useStateStorePrincipal = (): MainStoreState => {
+  const reducerState = useSelectorStorePrincipal((state) => {
+    return state;
+  });
+  return reducerState;
 };
 
 export default useStateStorePrincipal;

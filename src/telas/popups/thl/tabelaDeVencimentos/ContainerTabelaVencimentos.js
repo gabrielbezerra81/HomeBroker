@@ -7,8 +7,9 @@ import TabelaVencimentos from "telas/popups/thl/tabelaDeVencimentos/TabelaVencim
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export default () => {
-  const reduxState = useStateStorePrincipal("thl");
-  const { carregandoTabelaVencimentos } = reduxState;
+  const {
+    THLReducer: { carregandoTabelaVencimentos },
+  } = useStateStorePrincipal();
 
   const [mouseDown, setMouseDown] = useState(false);
   const [startX, setStartX] = useState(false);

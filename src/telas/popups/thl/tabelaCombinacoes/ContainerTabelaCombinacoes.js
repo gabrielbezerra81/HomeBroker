@@ -12,7 +12,7 @@ const alturaLinha = 46;
 const escolhasOrdem = ["", "asc", "desc"];
 
 export default React.memo(() => {
-  const reduxState = useStateStorePrincipal("thl");
+  const { THLReducer: reduxState } = useStateStorePrincipal();
   const {
     combinacoesTabela,
     estrategia,

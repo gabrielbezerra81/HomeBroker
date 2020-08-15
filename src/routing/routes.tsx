@@ -16,7 +16,9 @@ export const Routes = () => {
 };
 
 const Home: React.FC<RouteComponentProps> = ({ path }) => {
-  const { logado } = useStateStorePrincipal("principal");
+  const {
+    telaPrincipalReducer: { logado },
+  } = useStateStorePrincipal();
 
   if (logado) return <TelaPrincipal />;
 

@@ -26,11 +26,13 @@ export default ({ className, name = "" }) => {
   } //
   else if (name === "config_complementar") {
     const dispatchStorePrincipal = useDispatchStorePrincipal();
-    const stateMultileg = useStateStorePrincipal("multileg");
+    const {
+      multilegReducer: { configComplementarAberto },
+    } = useStateStorePrincipal();
 
     handleShow = () =>
       dispatchStorePrincipal(
-        abrirFecharConfigComplAction(stateMultileg.configComplementarAberto)
+        abrirFecharConfigComplAction(configComplementarAberto)
       );
   } //
   else {

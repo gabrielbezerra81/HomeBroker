@@ -10,7 +10,7 @@ import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 const TelaCadastro = ({ path }) => {
-  const state = useStateStorePrincipal("principal");
+  const { telaPrincipalReducer: state } = useStateStorePrincipal();
   const dispatch = useDispatchStorePrincipal();
 
   const {

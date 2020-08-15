@@ -14,7 +14,7 @@ import usePrevious from "hooks/usePrevious";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export default React.memo(() => {
-  const reduxState = useStateStorePrincipal("thl");
+  const { THLReducer: reduxState } = useStateStorePrincipal();
   const dispatch = useDispatchStorePrincipal();
   const {
     opcoesStrike,
