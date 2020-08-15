@@ -27,51 +27,53 @@ export const listarPosicoesAction = (props) => {
     if (token) {
       const dados = await listarPosicoesAPI(token);
 
+      console.log(dados);
+
       const listaPosicoes = [];
       const arrayPrecos = [];
       let arrayCotacoes = [];
 
-      dados.forEach((grupoPosicao) => {
-        const posicao = adicionaPosicao(grupoPosicao);
-        const preco = {
-          precoCompra: posicao[0].precoCompra,
-          precoVenda: posicao[0].precoVenda,
-          cotacaoAtual: posicao[0].cotacaoAtual,
-          idEstrutura: posicao[0].idEstrutura,
-        };
-        arrayPrecos.push(preco);
-        listaPosicoes.push(...posicao);
-      });
-      // listaPosicoes.splice(0, 19);
-      // arrayPrecos.splice(0, 19);
-      arrayCotacoes = await montaArrayCotacoes(listaPosicoes);
+      // dados.forEach((grupoPosicao) => {
+      //   const posicao = adicionaPosicao(grupoPosicao);
+      //   const preco = {
+      //     precoCompra: posicao[0].precoCompra,
+      //     precoVenda: posicao[0].precoVenda,
+      //     cotacaoAtual: posicao[0].cotacaoAtual,
+      //     idEstrutura: posicao[0].idEstrutura,
+      //   };
+      //   arrayPrecos.push(preco);
+      //   listaPosicoes.push(...posicao);
+      // });
+      // // listaPosicoes.splice(0, 19);
+      // // arrayPrecos.splice(0, 19);
+      // arrayCotacoes = await montaArrayCotacoes(listaPosicoes);
 
-      atualizarPosicao({
-        dispatch,
-        listaPosicoes,
-        token,
-        eventSourcePosicao,
-      });
-      atualizarEmblemas({
-        dispatch,
-        token,
-        listaPosicoes,
-        listaPrecos: arrayPrecos,
-        eventSourceEmblema,
-        setIntervalEmblema,
-      });
-      atualizarCotacoes({
-        dispatch,
-        listaPosicoes,
-        arrayCotacoes,
-        eventSourceCotacoes,
-        setIntervalCotacoesPosicao,
-        token,
-      });
+      // atualizarPosicao({
+      //   dispatch,
+      //   listaPosicoes,
+      //   token,
+      //   eventSourcePosicao,
+      // });
+      // atualizarEmblemas({
+      //   dispatch,
+      //   token,
+      //   listaPosicoes,
+      //   listaPrecos: arrayPrecos,
+      //   eventSourceEmblema,
+      //   setIntervalEmblema,
+      // });
+      // atualizarCotacoes({
+      //   dispatch,
+      //   listaPosicoes,
+      //   arrayCotacoes,
+      //   eventSourceCotacoes,
+      //   setIntervalCotacoesPosicao,
+      //   token,
+      // });
 
-      dispatch(mudarVariavelPosicaoAction("posicoesCustodia", listaPosicoes));
-      dispatch(mudarVariavelPosicaoAction("arrayPrecos", arrayPrecos));
-      dispatch(mudarVariavelPosicaoAction("arrayCotacoes", arrayCotacoes));
+      // dispatch(mudarVariavelPosicaoAction("posicoesCustodia", listaPosicoes));
+      // dispatch(mudarVariavelPosicaoAction("arrayPrecos", arrayPrecos));
+      // dispatch(mudarVariavelPosicaoAction("arrayCotacoes", arrayCotacoes));
     }
   };
 };

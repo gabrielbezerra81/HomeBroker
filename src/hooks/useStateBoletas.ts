@@ -1,11 +1,12 @@
-import { useSelector } from "react-redux";
-import { getReducerStateBoletas } from "./utils";
-import { NamespacesType } from "constants/ActionTypes";
+import { useSelector, TypedUseSelectorHook } from "react-redux";
+import { BoletasState } from "redux/reducers";
 
-const useStateBoletas = (namespace: "" | NamespacesType) => {
-  const state = useSelector((state) => state);
+const useTypedSelector: TypedUseSelectorHook<BoletasState> = useSelector;
 
-  return getReducerStateBoletas(state, namespace);
+const useStateBoletas = (): BoletasState => {
+  const state = useTypedSelector((state) => state);
+
+  return state;
 };
 
 export default useStateBoletas;

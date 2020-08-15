@@ -48,4 +48,6 @@ export const reducersAppPrincipal = combineReducers({
   THLReducer: THLReducer,
 });
 
+export type BoletasState = ReturnType<typeof BoletasReducer>;
+
 export type MainStoreState = ReturnType<typeof reducersAppPrincipal>;

@@ -28,7 +28,9 @@ export const ModalHeader = ({
   ativo,
   eventSourceCotacao,
 }) => {
-  const state = useStateBoletas("appBoletasReducer");
+  const {
+    appBoletasReducer: { appProps },
+  } = useStateBoletas();
   const {
     telaPrincipalReducer: { token },
   } = useStateStorePrincipal();
@@ -36,7 +38,7 @@ export const ModalHeader = ({
   const dispatchGlobal = useDispatchGlobalStore();
   const dispatch = useDispatchBoletas();
   const formShow = stateGlobalStore.show;
-  const { appkey } = state.appProps;
+  const { appkey } = appProps;
   const abrirBookProps = {
     ...stateGlobalStore,
     dispatch,
@@ -86,17 +88,19 @@ export const ModalHeader = ({
 };
 
 export const BookHeader = ({ headerClass, resetPosition }) => {
-  const stateBook = useStateBoletas("bookOfertaReducer");
-  const stateSubApp = useStateBoletas("appBoletasReducer");
+  const {
+    bookOfertaReducer: { inputHeader, eventSource },
+    appBoletasReducer: { appProps },
+  } = useStateBoletas();
+
   const stateGlobalStore = useStateGlobalStore();
 
   const {
     telaPrincipalReducer: { token },
   } = useStateStorePrincipal();
 
-  const { inputHeader, eventSource } = stateBook;
   const formShow = stateGlobalStore.show;
-  const { appkey } = stateSubApp.appProps;
+  const { appkey } = appProps;
 
   const dispatch = useDispatchBoletas();
   const dispatchGlobal = useDispatchGlobalStore();
