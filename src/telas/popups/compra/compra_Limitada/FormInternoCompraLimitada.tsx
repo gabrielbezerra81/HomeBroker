@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
-import { connect } from "react-redux";
+import { connect, ConnectedProps } from "react-redux";
 import { mostrarErroQtdeOnBlurAction } from "redux/actions/boletas/bookOfertaActions";
 import {
   mudarQtdAction,
@@ -25,20 +25,22 @@ import {
 import InputFormatado from "shared/componentes/InputFormatado";
 import { RowGainStopFormInternoConectada } from "shared/componentes/RowInputsFormatadosFormInterno";
 import { BotaoEnviarOrdem } from "shared/componentes/BotaoEnviarOrdem";
+import { BoletasState } from "redux/reducers";
+import BoletasOrderType from "types/boletasOrderType";
 
-class FormInternoCompraLimitada extends React.Component {
-  componentDidUpdate(prevProps) {
-    const prevStepQtde = prevProps.dadosPesquisa.stepQtde;
-    const stepQtde = this.props.dadosPesquisa.stepQtde;
+class FormInternoCompraLimitada extends React.Component<Props> {
+  // componentDidUpdate(prevProps) {
+  //   const prevStepQtde = prevProps.dadosPesquisa.stepQtde;
+  //   const stepQtde = this.props.dadosPesquisa.stepQtde;
 
-    if (prevStepQtde !== stepQtde && stepQtde === 100) {
-      this.props.mudarAtributoBoletaAction(
-        Number(this.props.preco).toFixed(2),
-        COMPRA_LIMITADA_NAMESPACE,
-        "preco"
-      );
-    }
-  }
+  //   if (prevStepQtde !== stepQtde && stepQtde === 100) {
+  //     this.props.mudarAtributoBoletaAction(
+  //       Number(this.props.preco).toFixed(2),
+  //       COMPRA_LIMITADA_NAMESPACE,
+  //       "preco"
+  //     );
+  //   }
+  // }
 
   render() {
     const { dadosPesquisa } = this.props;
@@ -68,7 +70,7 @@ class FormInternoCompraLimitada extends React.Component {
                     id="compralim"
                     precision={precisao}
                     value={this.props.preco}
-                    onChange={(valor) =>
+                    onChange={(valor: number | string) =>
                       this.props.mudarAtributoBoletaAction(
                         valor,
                         COMPRA_LIMITADA_NAMESPACE,
@@ -123,7 +125,7 @@ class FormInternoCompraLimitada extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: BoletasState) => ({
   qtde: state.compraLimitadaReducer.qtde,
   erro: state.compraLimitadaReducer.erro,
   gainDisparo: state.compraLimitadaReducer.gainDisparo,
@@ -141,7 +143,7 @@ const mapStateToProps = (state) => ({
   eventSourceCotacao: state.compraLimitadaReducer.eventSourceCotacao,
 });
 
-export default connect(mapStateToProps, {
+const mapDispatch = {
   mudarQtdAction,
   mudarValidadeSelectAction,
   mudarDataAction,
@@ -154,4 +156,12 @@ export default connect(mapStateToProps, {
   pesquisarAtivoOnEnterAction,
   enviarOrdemAction,
   mudarAtributoBoletaAction,
-})(FormInternoCompraLimitada);
+};
+
+const connector = connect(mapStateToProps, mapDispatch);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type Props = PropsFromRedux & { ordem: BoletasOrderType };
+
+export default connector(FormInternoCompraLimitada);

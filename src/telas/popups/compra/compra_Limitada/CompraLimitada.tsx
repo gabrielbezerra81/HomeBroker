@@ -1,22 +1,24 @@
 import React from "react";
 
-import { connect } from "react-redux";
+import { connect, ConnectedProps } from "react-redux";
 import { Row } from "react-bootstrap";
 import DraggableModal from "shared/componentes/DraggableModal";
 import FormInternoCompraLimitada from "./FormInternoCompraLimitada";
 import GraficoCompraLimitada from "./GraficoCompraLimitada";
 import BodyHeaderCompraLimitada from "./BodyHeaderCompraLimitada";
 import { ModalHeader } from "shared/componentes/PopupHeader";
+import { BoletasState } from "redux/reducers";
+import BoletasOrderType from "types/boletasOrderType";
 
-class CompraLimitada extends React.Component {
+class CompraLimitada extends React.Component<Props> {
   render() {
     return (
       <DraggableModal
         id={"compra_limitada"}
         headerTitle={this.props.headerTitle}
-        renderModalBody={() => modalBody(this.props)}
+        renderModalBody={modalBody}
         headerClass="border-green"
-        renderHeader={(resetPosition) => (
+        renderHeader={(resetPosition: any) => (
           <ModalHeader
             headerTitle={this.props.headerTitle}
             headerClass="border-green"
@@ -31,7 +33,7 @@ class CompraLimitada extends React.Component {
   }
 }
 
-const modalBody = (props) => (
+const modalBody = () => (
   <div className="mbody">
     <BodyHeaderCompraLimitada />
     <Row>
@@ -41,14 +43,20 @@ const modalBody = (props) => (
   </div>
 );
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: BoletasState) => ({
   ativo: state.compraLimitadaReducer.ativo,
   eventSourceCotacao: state.compraLimitadaReducer.eventSourceCotacao,
 });
 
-export default connect(mapStateToProps, {})(CompraLimitada);
+const connector = connect(mapStateToProps, {});
 
-const ordem = {
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type Props = PropsFromRedux & { headerTitle: string; name: string };
+
+export default connector(CompraLimitada);
+
+const ordem: BoletasOrderType = {
   nome: "Compra Limitada",
   tipoOrdem: "buyLimit",
   tipoOferta: "C",

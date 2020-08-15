@@ -1,6 +1,6 @@
 import React from "react";
 import { Col, Form } from "react-bootstrap";
-import { connect } from "react-redux";
+import { connect, ConnectedProps } from "react-redux";
 import img from "assets/compra/CompraModeloNovo.png";
 import IconeConfigGrafico from "shared/componentes/IconeConfigGrafico";
 import {
@@ -12,8 +12,9 @@ import {
 import { COMPRA_LIMITADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalAgendada } from "shared/utils/CalculoValorTotal";
 import GraficoInputs from "shared/componentes/GraficoInputs";
+import { BoletasState } from "redux/reducers";
 
-class GraficoCompraLimitada extends React.Component {
+class GraficoCompraLimitada extends React.Component<PropsFromRedux> {
   render() {
     return (
       <Col className="colGrafico">
@@ -70,7 +71,7 @@ class GraficoCompraLimitada extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: BoletasState) => ({
   gainDisparo: state.compraLimitadaReducer.gainDisparo,
   gainExec: state.compraLimitadaReducer.gainExec,
   stopDisparo: state.compraLimitadaReducer.stopDisparo,
@@ -79,4 +80,8 @@ const mapStateToProps = (state) => ({
   qtde: state.compraLimitadaReducer.qtde,
 });
 
-export default connect(mapStateToProps, {})(GraficoCompraLimitada);
+const connector = connect(mapStateToProps, {});
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(GraficoCompraLimitada);
