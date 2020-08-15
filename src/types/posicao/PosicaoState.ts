@@ -4,7 +4,7 @@ import {
   ItemArrayCotacoes,
 } from "types/posicao/posicao";
 
-export default interface IPosicaoRedux {
+export default interface PosicaoState {
   ordenacao: string;
   tipoVisualizacao: "ampliado" | "lista" | "resumido" | "detalhada";
   ativoPesquisa: string;
