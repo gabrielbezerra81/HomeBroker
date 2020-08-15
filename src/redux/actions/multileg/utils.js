@@ -142,13 +142,13 @@ export const adicionaCotacoesMultileg = (
       codigo: novoCodigo,
       valor: valorCotacao,
       compra: {
-        price: "",
-        qtty: "",
+        price: null,
+        qtty: null,
         type: "C",
       },
       venda: {
-        price: "",
-        qtty: "",
+        price: null,
+        qtty: null,
         type: "V",
       },
     });

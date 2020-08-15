@@ -9,6 +9,11 @@ class InputFormatado extends React.Component {
   render() {
     var input;
     const precision = this.props.precision ? this.props.precision : 2;
+
+    const onChange = this.props.readOnly
+      ? (something) => {}
+      : this.props.onChange;
+
     if (this.props.tipoInput === "preco")
       input = (
         <CurrencyInput
@@ -19,11 +24,7 @@ class InputFormatado extends React.Component {
           precision={precision}
           step={this.props.step}
           value={this.props.value}
-          onChange={
-            this.props.readOnly
-              ? null
-              : (event, double, string) => this.props.onChange(double)
-          }
+          onChange={(event, double, string) => onChange(double)}
           onBlur={this.props.onBlur}
           onKeyPress={this.props.onKeyPress}
           prefix={this.props.value < 0 ? "- " : ""}
@@ -45,13 +46,11 @@ class InputFormatado extends React.Component {
           decimalScale={0}
           className={`form-control textInput inputFormatado ${this.props.className}`}
           value={this.props.value}
-          onChange={
-            this.props.readOnly
-              ? null
-              : (event) => {
-                  this.props.onChange(event.target.value.split(".").join(""));
-                }
-          }
+          onChange={(event) => {
+            const parsedValue = event.target.value.split(".").join("");
+
+            onChange(Number(parsedValue));
+          }}
           onFocus={(event) => {
             if (this.props.autoSelect) event.target.select();
           }}
@@ -71,11 +70,7 @@ class InputFormatado extends React.Component {
           thousandSeparator="."
           decimalSeparator=","
           value={this.props.value}
-          onChange={
-            this.props.readOnly
-              ? null
-              : (event) => this.props.onChange(event.target.value)
-          }
+          onChange={(event) => onChange(event.target.value)}
           onKeyPress={(event) => {
             if (event.key !== "-" && !document.getSelection().toString())
               event.currentTarget.value = formatarNumero(

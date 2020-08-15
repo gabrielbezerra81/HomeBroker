@@ -34,14 +34,16 @@ class Book extends React.Component {
     const { indice, cotacoesMultileg } = props;
     const aba = props.multileg[indice];
 
-    const total = calcularTotal(props),
-      min = calculoPreco(aba, "min", cotacoesMultileg),
-      max = calculoPreco(aba, "max", cotacoesMultileg);
+    const total = calcularTotal(props);
+    const min = calculoPreco(aba, "min", cotacoesMultileg);
+    const max = calculoPreco(aba, "max", cotacoesMultileg);
+
     const condicaoMed =
       (min && max) ||
       (min === 0 && max) ||
       (min && max === 0) ||
       (min === 0 && max === 0);
+
     const calculoSemBook = verificaCalculoSemBook(
       aba.tabelaMultileg,
       cotacoesMultileg
@@ -140,9 +142,6 @@ class Book extends React.Component {
               max={max}
               value={Number(props.multileg[indice].preco.replace(",", "."))}
               onChange={(event) => {
-                console.log(
-                  Number(formatarNumDecimal(event.currentTarget.value))
-                );
                 props.modificarAtributoAbaAction(
                   props.multileg,
                   indice,

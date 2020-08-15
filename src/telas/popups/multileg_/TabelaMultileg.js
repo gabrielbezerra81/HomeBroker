@@ -235,15 +235,15 @@ class TabelaMultileg extends React.Component {
                         as="select"
                         className="textInput formPrioridade"
                         value={item.prioridade}
-                        onChange={(event) =>
+                        onChange={(event) => {
                           props.modificarAtributoTabelaAbaAction(
                             props,
                             indiceAba,
                             "prioridade",
-                            event.currentTarget.value,
+                            Number(event.currentTarget.value),
                             indiceLinha
-                          )
-                        }
+                          );
+                        }}
 
                         //value={item.prioridade}
                       >

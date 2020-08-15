@@ -71,7 +71,6 @@ export const pesquisaAtivo = async (abasMultileg, indice, cotacoesMultileg) => {
 
     aba.opcoes = [...dados.opcoes].sort((a, b) => a.strike - b.strike);
     aba.vencimento = [...dados.vencimentos];
-    aba.valor = cotacaoAtual;
     aba.variacao = dados.variacao;
     aba.vencimentoSelecionado = aba.opcoes[0].expiration;
     aba.strikeSelecionado = encontrarNumMaisProximo(

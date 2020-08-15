@@ -360,7 +360,7 @@ export const adicionarOferta = async (
 
 export const oferta = {
   opcoes: [],
-  strikeSelecionado: "",
+  strikeSelecionado: 0,
   cv: "compra",
   qtde: 0,
   serie: [],
@@ -380,12 +380,11 @@ export const aba = {
   ativoAtual: "",
   variacao: 0,
   opcoes: [],
-  strikeSelecionado: "",
+  strikeSelecionado: 0,
   codigoAberto: false,
   vencimento: [],
   vencimentoSelecionado: "",
   preco: "",
-  total: "",
   validadeSelect: "DAY",
   date: new Date(),
   tabelaMultileg: [],
