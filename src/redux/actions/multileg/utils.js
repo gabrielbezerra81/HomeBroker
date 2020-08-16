@@ -37,8 +37,12 @@ export const encontrarNumMaisProximo = (
   }
 };
 
-export const montarOrdemMultileg = (props) => {
-  let abaMultileg = [...props.multileg][props.indice];
+export const montarOrdemMultileg = ({
+  multilegTabs,
+  selectedAccount,
+  tabIndex,
+}) => {
+  let abaMultileg = [...multilegTabs][tabIndex];
 
   let json = {
     account: {},
@@ -46,7 +50,7 @@ export const montarOrdemMultileg = (props) => {
     offers: [],
     next: [],
   };
-  json.account.id = props.contaSelecionada.id;
+  json.account.id = selectedAccount.id;
   json.enabled = true;
   json.multiStocks = true;
   if (abaMultileg.validadeSelect === "DAY")
@@ -87,11 +91,15 @@ export const montarOrdemMultileg = (props) => {
 
     json.offers.push(ofertaPrincipal);
   });
-  return json;
+  return [json];
 };
 
-export const validarOrdemMultileg = (props) => {
-  let abaMultileg = [...props.multileg][props.indice];
+export const validarOrdemMultileg = ({
+  multilegTabs,
+  selectedAccount,
+  tabIndex,
+}) => {
+  let abaMultileg = [...multilegTabs][tabIndex];
   let valido = true;
 
   const qtde0 = abaMultileg.tabelaMultileg.some(
@@ -119,7 +127,7 @@ export const validarOrdemMultileg = (props) => {
 
     alert(`${erro_validar_codigo_duplicado_multileg}: ${codigos_erro}`);
   }
-  if (!props.contaSelecionada) {
+  if (!selectedAccount) {
     valido = false;
     alert(erro_validar_contaSelecionada);
   }

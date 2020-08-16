@@ -298,7 +298,7 @@ class Book extends React.Component {
             <Button
               variant="primary"
               size="sm"
-              onClick={() => props.enviarOrdemMultilegAction(props)}
+              onClick={() => props.enviarOrdemMultilegAction(props.indice)}
             >
               EXECUTAR
             </Button>
@@ -309,7 +309,7 @@ class Book extends React.Component {
             <Button
               variant="primary"
               size="sm"
-              onClick={() => props.criarAlertaMultilegAction(props)}
+              onClick={() => props.criarAlertaMultilegAction(props.indice)}
               block
             >
               ALERTA DE OPERAÇÃO
@@ -321,7 +321,7 @@ class Book extends React.Component {
             <Button
               variant="primary"
               size="sm"
-              onClick={() => props.criarPosicaoMultilegAction(props)}
+              onClick={() => props.criarPosicaoMultilegAction(props.indice)}
               block
             >
               CRIAR POSIÇÃO

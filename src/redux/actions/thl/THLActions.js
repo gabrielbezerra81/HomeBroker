@@ -75,14 +75,14 @@ export const abrirMultilegTHLAction = (props) => {
 
         multileg = dadosModificados.abasMultileg;
 
-        const retornoPesquisa = await pesquisaAtivo(
-          multileg,
-          indiceAba,
-          cotacoesMultileg
-        );
+        const data = await pesquisaAtivo({
+          multilegTabs: multileg,
+          tabIndex: indiceAba,
+          multilegQuotes: cotacoesMultileg,
+        });
 
-        multileg = retornoPesquisa.multileg;
-        cotacoesMultileg = retornoPesquisa.cotacoesMultileg;
+        multileg = data.multilegTabs;
+        cotacoesMultileg = data.multilegQuotes;
 
         const opcao = multileg[indiceAba].opcoes.filter(
           (opcao) => opcao.symbol === book.ativo

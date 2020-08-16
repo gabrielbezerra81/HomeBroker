@@ -233,6 +233,9 @@ export const listarOrdensExecAPI = (idToken) => {
       const { body } = response;
       let ofertas = [];
 
+      console.log(body);
+      // TODO: fazer map
+
       body.forEach((oferta) => {
         ofertas.push(oferta);
       });
@@ -253,6 +256,7 @@ export const listarPosicoesAPI = (idToken) => {
     .retry(3, 2000)
     .then((response) => {
       const { body } = response;
+      console.log(body);
       return body;
     })
     .catch((erro) => {

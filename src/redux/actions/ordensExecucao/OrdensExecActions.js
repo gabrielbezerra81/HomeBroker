@@ -112,13 +112,13 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
         multileg = dadosModificados.abasMultileg;
 
         //Pesquisar ativo
-        const retornoPesquisa = await pesquisaAtivo(
-          multileg,
-          indiceAba,
-          cotacoesMultileg
-        );
-        multileg = retornoPesquisa.multileg;
-        cotacoesMultileg = retornoPesquisa.cotacoesMultileg;
+        const data = await pesquisaAtivo({
+          multilegTabs: multileg,
+          tabIndex: indiceAba,
+          multilegQuotes: cotacoesMultileg,
+        });
+        multileg = data.multilegTabs;
+        cotacoesMultileg = data.multilegQuotes;
 
         const opcao = multileg[indiceAba].opcoes.filter(
           (opcao) => opcao.symbol === oferta.ativo
