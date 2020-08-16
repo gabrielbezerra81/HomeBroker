@@ -2,10 +2,7 @@ import React from "react";
 import { Row, Col, Button, Form } from "react-bootstrap";
 import { ModalHeaderLimpo } from "shared/componentes/PopupHeader";
 import { connect } from "react-redux";
-import {
-  abrirFecharConfigComplAction,
-  modificarVariavelMultilegAction,
-} from "redux/actions/multileg/MultilegActions";
+import { modificarVariavelMultilegAction } from "redux/actions/multileg/MultilegActions";
 import { StorePrincipalContext } from "redux/StoreCreation";
 
 class ConfigComplementar extends React.Component {
@@ -120,7 +117,7 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  { abrirFecharConfigComplAction, modificarVariavelMultilegAction },
+  { modificarVariavelMultilegAction },
   null,
   { context: StorePrincipalContext }
 )(ConfigComplementar);

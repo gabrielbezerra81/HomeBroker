@@ -130,7 +130,7 @@ export const validarOrdemMultileg = (props) => {
 export const adicionaCotacoesMultileg = (
   cotacoesMultileg,
   novoCodigo,
-  valorCotacao = ""
+  valorCotacao = 0
 ) => {
   const cotacaoJaAdicionada = verificaCotacaoJaAdd(
     cotacoesMultileg,

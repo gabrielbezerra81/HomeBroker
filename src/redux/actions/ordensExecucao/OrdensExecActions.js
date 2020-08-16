@@ -91,7 +91,7 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
     }
 
     //Adicionar aba
-    let objMultileg = adicionarAba(props);
+    let objMultileg = adicionarAba(props.multileg);
 
     let multileg = objMultileg.abasMultileg;
     let cotacoesMultileg = props.cotacoesMultileg;
@@ -101,12 +101,14 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
     try {
       for (const [indiceOferta, oferta] of item.offers.entries()) {
         //Alterar ativo
-        const dadosModificados = await modificarAba(
-          multileg,
-          indiceAba,
-          "ativo",
-          oferta.ativo
-        );
+
+        const dadosModificados = await modificarAba({
+          multilegTabs: multileg,
+          tabIndex: indiceAba,
+          attributeName: "ativo",
+          attributeValue: oferta.ativo,
+        });
+
         multileg = dadosModificados.abasMultileg;
 
         //Pesquisar ativo
@@ -125,12 +127,12 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
         if (opcao.length > 0) tipo = opcao[0].type.toLowerCase();
         else tipo = "acao";
         //Adicionar oferta
-        const dadosMultileg = await adicionarOferta(
-          multileg,
-          tipo,
-          indiceAba,
-          cotacoesMultileg
-        );
+        const dadosMultileg = await adicionarOferta({
+          multilegTabs: multileg,
+          offerType: tipo,
+          tabIndex: indiceAba,
+          multilegQuotes: cotacoesMultileg,
+        });
         multileg = dadosMultileg.abasMultileg;
         cotacoesMultileg = dadosMultileg.cotacoesMultileg;
 

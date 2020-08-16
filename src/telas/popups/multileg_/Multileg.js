@@ -63,7 +63,7 @@ class Multileg extends React.Component {
             // @ts-ignore
             const keysPressionadas = arrayKeys.includes(event.key);
             if (!keysPressionadas) {
-              this.props.selecionarAdicionarAbaAction(key, this.props);
+              this.props.selecionarAdicionarAbaAction(key);
             }
           }}
           activeKey={this.props.abaSelecionada}
@@ -98,10 +98,7 @@ class Multileg extends React.Component {
                             icon="times"
                             className="saldoOpNegativo"
                             onClick={(e) => {
-                              this.props.excluirAbaMultilegAction(
-                                this.props,
-                                index
-                              );
+                              this.props.excluirAbaMultilegAction(index);
                               e.stopPropagation();
                             }}
                           />
@@ -110,12 +107,11 @@ class Multileg extends React.Component {
                             value={aba.nomeAba}
                             className="inputTituloAba"
                             onChange={(e) => {
-                              this.props.modificarAtributoAbaAction(
-                                this.props.multileg,
-                                index,
-                                "nomeAba",
-                                e.target.value
-                              );
+                              this.props.modificarAtributoAbaAction({
+                                tabIndex: index,
+                                attributeName: "nomeAba",
+                                attributeValue: e.target.value,
+                              });
                             }}
                           />
                         </div>

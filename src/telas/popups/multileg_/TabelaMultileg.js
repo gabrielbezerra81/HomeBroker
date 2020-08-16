@@ -70,11 +70,10 @@ class TabelaMultileg extends React.Component {
                   <td
                     className="divClicavel"
                     onClick={() =>
-                      props.excluirOfertaTabelaAction(
-                        props,
-                        indiceAba,
-                        indiceLinha
-                      )
+                      props.excluirOfertaTabelaAction({
+                        tabIndex: indiceAba,
+                        lineIndex: indiceLinha,
+                      })
                     }
                   >
                     <MDBIcon icon="times" className="saldoOpNegativo" />
@@ -88,14 +87,13 @@ class TabelaMultileg extends React.Component {
                         step={100}
                         autoSelect
                         value={item.qtde}
-                        onChange={(valor) =>
-                          props.modificarAtributoTabelaAbaAction(
-                            props,
-                            indiceAba,
-                            "qtde",
-                            valor,
-                            indiceLinha
-                          )
+                        onChange={(value) =>
+                          props.modificarAtributoTabelaAbaAction({
+                            tabIndex: indiceAba,
+                            attributeName: "qtde",
+                            attributeValue: value,
+                            lineIndex: indiceLinha,
+                          })
                         }
                         className="formDespernamento"
                       />
@@ -108,13 +106,12 @@ class TabelaMultileg extends React.Component {
                         className="textInput inputSerie"
                         value={item.serieSelecionada}
                         onChange={(event) =>
-                          props.modificarAtributoTabelaAbaAction(
-                            props,
-                            indiceAba,
-                            "serieSelecionada",
-                            event.currentTarget.value,
-                            indiceLinha
-                          )
+                          props.modificarAtributoTabelaAbaAction({
+                            tabIndex: indiceAba,
+                            attributeName: "serieSelecionada",
+                            attributeValue: event.currentTarget.value,
+                            lineIndex: indiceLinha,
+                          })
                         }
                       >
                         {item.serie.map((serie, indice) => (
@@ -132,13 +129,12 @@ class TabelaMultileg extends React.Component {
                         className="textInput"
                         value={item.strikeSelecionado}
                         onChange={(event) =>
-                          props.modificarAtributoTabelaAbaAction(
-                            props,
-                            indiceAba,
-                            "strikeSelecionado",
-                            Number(event.currentTarget.value),
-                            indiceLinha
-                          )
+                          props.modificarAtributoTabelaAbaAction({
+                            tabIndex: indiceAba,
+                            attributeName: "strikeSelecionado",
+                            attributeValue: Number(event.currentTarget.value),
+                            lineIndex: indiceLinha,
+                          })
                         }
                       >
                         {item.opcoes.map((itemStrike, indice) => {
@@ -164,22 +160,20 @@ class TabelaMultileg extends React.Component {
                       className="inputCodigo"
                       suffixIcon={<MDBIcon icon="caret-down" />}
                       onChange={(value) => {
-                        props.modificarAtributoTabelaAbaAction(
-                          props,
-                          indiceAba,
-                          "codigoSelecionado",
-                          value,
-                          indiceLinha
-                        );
+                        props.modificarAtributoTabelaAbaAction({
+                          tabIndex: indiceAba,
+                          attributeName: "codigoSelecionado",
+                          attributeValue: value,
+                          lineIndex: indiceLinha,
+                        });
                       }}
                       onDropdownVisibleChange={(open) => {
-                        props.modificarAtributoTabelaAbaAction(
-                          props,
-                          indiceAba,
-                          "codigoAberto",
-                          open,
-                          indiceLinha
-                        );
+                        props.modificarAtributoTabelaAbaAction({
+                          tabIndex: indiceAba,
+                          attributeName: "codigoAberto",
+                          attributeValue: open,
+                          lineIndex: indiceLinha,
+                        });
                       }}
                     >
                       {renderCodigoOferta(
@@ -196,13 +190,12 @@ class TabelaMultileg extends React.Component {
                       className="divClicavel"
                       tabIndex={0}
                       onClick={(event) =>
-                        props.modificarAtributoTabelaAbaAction(
-                          props,
-                          indiceAba,
-                          "tipo",
-                          item.tipo,
-                          indiceLinha
-                        )
+                        props.modificarAtributoTabelaAbaAction({
+                          tabIndex: indiceAba,
+                          attributeName: "tipo",
+                          attributeValue: item.tipo,
+                          lineIndex: indiceLinha,
+                        })
                       }
                     >
                       {item.tipo.toUpperCase()}
@@ -216,14 +209,13 @@ class TabelaMultileg extends React.Component {
                         tipoInput="quantidade"
                         step={100}
                         value={item.despernamento}
-                        onChange={(valor) =>
-                          props.modificarAtributoTabelaAbaAction(
-                            props,
-                            indiceAba,
-                            "despernamento",
-                            valor,
-                            indiceLinha
-                          )
+                        onChange={(value) =>
+                          props.modificarAtributoTabelaAbaAction({
+                            tabIndex: indiceAba,
+                            attributeName: "despernamento",
+                            attributeValue: value,
+                            lineIndex: indiceLinha,
+                          })
                         }
                         className="formDespernamento"
                       />
@@ -236,13 +228,12 @@ class TabelaMultileg extends React.Component {
                         className="textInput formPrioridade"
                         value={item.prioridade}
                         onChange={(event) => {
-                          props.modificarAtributoTabelaAbaAction(
-                            props,
-                            indiceAba,
-                            "prioridade",
-                            Number(event.currentTarget.value),
-                            indiceLinha
-                          );
+                          props.modificarAtributoTabelaAbaAction({
+                            tabIndex: indiceAba,
+                            attributeName: "prioridade",
+                            attributeValue: Number(event.currentTarget.value),
+                            lineIndex: indiceLinha,
+                          });
                         }}
 
                         //value={item.prioridade}
@@ -269,20 +260,20 @@ class TabelaMultileg extends React.Component {
 }
 
 const calculaColunaValor = (props, oferta) => {
-  let valor;
+  let value;
   const book = buscaBook(props.cotacoesMultileg, oferta.codigoSelecionado);
   if (oferta.cv === "compra" && book && book.venda.price) {
-    valor = book.venda.price;
+    value = book.venda.price;
   } //
   else if (oferta.cv === "venda" && book && book.compra.price) {
-    valor = book.compra.price;
+    value = book.compra.price;
   } //
   else {
     const cotacao = renderCotacao(props, oferta);
-    valor = Number(cotacao.replace(",", "."));
+    value = Number(cotacao.replace(",", "."));
   }
 
-  return formatarNumDecimal(oferta.qtde * valor);
+  return formatarNumDecimal(oferta.qtde * value);
 };
 
 const mapStateToProps = (state) => ({
@@ -319,13 +310,12 @@ const renderCV = (cv, props, indiceLinha) => {
         <h6
           className={`${cvCompra} divClicavel`}
           onClick={() =>
-            props.modificarAtributoTabelaAbaAction(
-              props,
-              props.indice,
-              "cv",
-              "compra",
-              indiceLinha
-            )
+            props.modificarAtributoTabelaAbaAction({
+              tabIndex: props.indice,
+              attributeName: "cv",
+              attributeValue: "compra",
+              lineIndex: indiceLinha,
+            })
           }
         >
           C
@@ -333,13 +323,12 @@ const renderCV = (cv, props, indiceLinha) => {
         <h6
           className={`${cvVenda} divClicavel`}
           onClick={() =>
-            props.modificarAtributoTabelaAbaAction(
-              props,
-              props.indice,
-              "cv",
-              "venda",
-              indiceLinha
-            )
+            props.modificarAtributoTabelaAbaAction({
+              tabIndex: props.indice,
+              attributeName: "cv",
+              attributeValue: "venda",
+              lineIndex: indiceLinha,
+            })
           }
         >
           V

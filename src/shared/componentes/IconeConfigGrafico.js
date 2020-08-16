@@ -8,7 +8,6 @@ import {
 } from "redux/actions/GlobalAppActions";
 import { abrirFecharConfigComplAction } from "redux/actions/multileg/MultilegActions";
 import useStateGlobalStore from "hooks/useStateGlobalStore";
-import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useDispatchBoletas from "hooks/useDispatchBoletas";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 
@@ -26,13 +25,10 @@ export default ({ className, name = "" }) => {
   } //
   else if (name === "config_complementar") {
     const dispatchStorePrincipal = useDispatchStorePrincipal();
-    const {
-      multilegReducer: { configComplementarAberto },
-    } = useStateStorePrincipal();
 
     handleShow = () =>
       dispatchStorePrincipal(
-        abrirFecharConfigComplAction(configComplementarAberto)
+        abrirFecharConfigComplAction()
       );
   } //
   else {

@@ -14,7 +14,7 @@ export interface MultilegTab {
   tabelaMultileg: Array<MultilegOffer>;
 }
 
-interface MultilegOption {
+export interface MultilegOption {
   id: number;
   symbol: string;
   expiration: string;
@@ -38,8 +38,8 @@ export interface MultilegQuote {
   };
 }
 
-interface MultilegOffer {
-  opcoes: Array<MultilegOption | { symbol: string }>;
+export interface MultilegOffer {
+  opcoes: Array<MultilegOption> | Array<{ symbol: string }>;
   strikeSelecionado: number;
   cv: "compra" | "venda";
   qtde: number;

@@ -142,12 +142,13 @@ class Book extends React.Component {
               max={max}
               value={Number(props.multileg[indice].preco.replace(",", "."))}
               onChange={(event) => {
-                props.modificarAtributoAbaAction(
-                  props.multileg,
-                  indice,
-                  "preco",
-                  formatarNumDecimal(Number(event.currentTarget.value))
-                );
+                props.modificarAtributoAbaAction({
+                  tabIndex: indice,
+                  attributeName: "preco",
+                  attributeValue: formatarNumDecimal(
+                    Number(event.currentTarget.value)
+                  ),
+                });
               }}
             />
           </Col>
@@ -156,12 +157,16 @@ class Book extends React.Component {
           <Col md={4}>
             <span
               onClick={() =>
-                props.modificarAtributoAbaAction(
-                  props.multileg,
-                  indice,
-                  "preco",
-                  formatarNumero(Number(min).toFixed(2), 2, ".", ",")
-                )
+                props.modificarAtributoAbaAction({
+                  tabIndex: indice,
+                  attributeName: "preco",
+                  attributeValue: formatarNumero(
+                    Number(min).toFixed(2),
+                    2,
+                    ".",
+                    ","
+                  ),
+                })
               }
               className="divClicavel"
             >
@@ -173,17 +178,16 @@ class Book extends React.Component {
               onClick={
                 condicaoMed
                   ? () =>
-                      props.modificarAtributoAbaAction(
-                        props.multileg,
-                        indice,
-                        "preco",
-                        formatarNumero(
+                      props.modificarAtributoAbaAction({
+                        tabIndex: indice,
+                        attributeName: "preco",
+                        attributeValue: formatarNumero(
                           Number((max + min) / 2).toFixed(2),
                           2,
                           ".",
                           ","
-                        )
-                      )
+                        ),
+                      })
                   : () => false
               }
               className="divClicavel"
@@ -194,12 +198,16 @@ class Book extends React.Component {
           <Col md={4}>
             <span
               onClick={() =>
-                props.modificarAtributoAbaAction(
-                  props.multileg,
-                  indice,
-                  "preco",
-                  formatarNumero(Number(max).toFixed(2), 2, ".", ",")
-                )
+                props.modificarAtributoAbaAction({
+                  tabIndex: indice,
+                  attributeName: "preco",
+                  attributeValue: formatarNumero(
+                    Number(max).toFixed(2),
+                    2,
+                    ".",
+                    ","
+                  ),
+                })
               }
               className="divClicavel"
             >
@@ -227,12 +235,11 @@ class Book extends React.Component {
               step={0.01}
               value={renderPlaceholder ? "" : getPreco(props)}
               onChange={(valor) =>
-                props.modificarAtributoAbaAction(
-                  props.multileg,
-                  indice,
-                  "preco",
-                  valor
-                )
+                props.modificarAtributoAbaAction({
+                  tabIndex: indice,
+                  attributeName: "preco",
+                  attributeValue: valor,
+                })
               }
             />
           </Col>
@@ -277,13 +284,11 @@ class Book extends React.Component {
               variant="secondary"
               size="sm"
               onClick={() =>
-                props.modificarAtributoAbaAction(
-                  props.multileg,
-                  indice,
-                  "limpar",
-                  "",
-                  props
-                )
+                props.modificarAtributoAbaAction({
+                  tabIndex: indice,
+                  attributeName: "limpar",
+                  attributeValue: "",
+                })
               }
             >
               LIMPAR
@@ -397,10 +402,9 @@ const atualizarPrecoDinamicante = (props) => {
   novoPreco = formatarNumero(novoPreco, 2, ".", ",");
 
   if (preco !== novoPreco)
-    props.modificarAtributoAbaAction(
-      props.multileg,
-      props.indice,
-      "preco",
-      novoPreco
-    );
+    props.modificarAtributoAbaAction({
+      tabIndex: props.indice,
+      attributeName: "preco",
+      attributeValue: novoPreco,
+    });
 };

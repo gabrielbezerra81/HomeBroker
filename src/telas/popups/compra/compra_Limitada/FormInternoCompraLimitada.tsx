@@ -44,6 +44,7 @@ class FormInternoCompraLimitada extends React.Component<Props> {
 
   render() {
     const { dadosPesquisa } = this.props;
+
     const { stepQtde } = dadosPesquisa;
     let stepPreco = 0.01,
       precisao = 2;

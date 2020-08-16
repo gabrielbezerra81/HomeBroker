@@ -200,18 +200,13 @@ export const ModalHeaderLimpo = ({ titulo, name = "" }) => {
 
   const dispatchStorePrincipal = useDispatchStorePrincipal();
   const dispatch = useDispatchBoletas();
-  const {
-    multilegReducer: { configComplementarAberto },
-  } = useStateStorePrincipal();
 
   if (["config_compra", "config_venda"].includes(name)) {
     funcaoFechar = (e) => dispatch(fecharFormConfigurarAction(e));
   } //
   else if (name === "config_complementar") {
     funcaoFechar = (e) =>
-      dispatchStorePrincipal(
-        abrirFecharConfigComplAction(configComplementarAberto)
-      );
+      dispatchStorePrincipal(abrirFecharConfigComplAction());
   }
 
   return (

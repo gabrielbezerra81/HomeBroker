@@ -183,7 +183,7 @@ export const pesquisarAtivoMultilegAPI = (codigo_ativo) => {
         opcoes: [],
         vencimentos: [],
         //cotacaoAtual: 0,
-        variacao: "",
+        variacao: 0,
         cotacaoAtual: 0,
         ativoPrincipal: "",
       };
@@ -195,7 +195,7 @@ export const pesquisarAtivoMultilegAPI = (codigo_ativo) => {
       const dadosAtivo = await pesquisarAtivoAPI(codigo_ativo);
       if (dadosAtivo) {
         dados.cotacaoAtual = Number(dadosAtivo.cotacaoAtual);
-        dados.variacao = dadosAtivo.porcentagem;
+        dados.variacao = Number(dadosAtivo.porcentagem);
 
         return dados;
       }

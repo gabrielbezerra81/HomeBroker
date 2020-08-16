@@ -59,19 +59,19 @@ export const abrirMultilegTHLAction = (props) => {
       dispatchGlobal(aumentarZindexAction("multileg", zIndex, true));
     }
 
-    let objMultileg = adicionarAba(props);
+    let objMultileg = adicionarAba(props.multileg);
 
     let multileg = objMultileg.abasMultileg;
     const indiceAba = multileg.length - 1;
 
     try {
       for (const [indiceOferta, book] of booksSelecionados.entries()) {
-        const dadosModificados = await modificarAba(
-          multileg,
-          indiceAba,
-          "ativo",
-          book.ativo
-        );
+        const dadosModificados = await modificarAba({
+          multilegTabs: multileg,
+          tabIndex: indiceAba,
+          attributeName: "ativo",
+          attributeValue: book.ativo,
+        });
 
         multileg = dadosModificados.abasMultileg;
 
@@ -93,12 +93,12 @@ export const abrirMultilegTHLAction = (props) => {
         else tipo = "acao";
 
         //Adicionar oferta
-        const dadosMultileg = await adicionarOferta(
-          multileg,
-          tipo,
-          indiceAba,
-          cotacoesMultileg
-        );
+        const dadosMultileg = await adicionarOferta({
+          multilegTabs: multileg,
+          offerType: tipo,
+          tabIndex: indiceAba,
+          multilegQuotes: cotacoesMultileg,
+        });
         multileg = dadosMultileg.abasMultileg;
         cotacoesMultileg = dadosMultileg.cotacoesMultileg;
 

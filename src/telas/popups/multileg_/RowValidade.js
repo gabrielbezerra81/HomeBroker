@@ -23,13 +23,12 @@ const renderFormData = (props, abaMultileg) => (
       abaMultileg.validadeSelect === "SPECIFIED_DAY" ? "formDatepicker" : ""
     }`}
     selected={abaMultileg.date}
-    onChange={data =>
-      props.modificarAtributoAbaAction(
-        props.multileg,
-        props.indice,
-        "date",
-        data
-      )
+    onChange={(data) =>
+      props.modificarAtributoAbaAction({
+        tabIndex: props.indice,
+        attributeName: "date",
+        attributeValue: data,
+      })
     }
     dateFormat="dd/MM/yyyy"
     popperPlacement="top-start"
@@ -52,13 +51,12 @@ const formSelect = (props, opcao2, abaMultileg) => (
           : "inputValidade"
       }`}
       value={abaMultileg.validadeSelect}
-      onChange={event =>
-        props.modificarAtributoAbaAction(
-          props.multileg,
-          props.indice,
-          "validadeSelect",
-          event.currentTarget.value
-        )
+      onChange={(event) =>
+        props.modificarAtributoAbaAction({
+          tabIndex: props.indice,
+          attributeName: "validadeSelect",
+          attributeValue: event.currentTarget.value,
+        })
       }
       autoFocus
     >
