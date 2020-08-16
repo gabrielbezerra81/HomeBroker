@@ -24,7 +24,7 @@ const renderFormData = (props, abaMultileg) => (
     }`}
     selected={abaMultileg.date}
     onChange={(data) =>
-      props.modificarAtributoAbaAction({
+      props.updateMultilegTabAction({
         tabIndex: props.indice,
         attributeName: "date",
         attributeValue: data,
@@ -52,7 +52,7 @@ const formSelect = (props, opcao2, abaMultileg) => (
       }`}
       value={abaMultileg.validadeSelect}
       onChange={(event) =>
-        props.modificarAtributoAbaAction({
+        props.updateMultilegTabAction({
           tabIndex: props.indice,
           attributeName: "validadeSelect",
           attributeValue: event.currentTarget.value,

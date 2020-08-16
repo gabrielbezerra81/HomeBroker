@@ -1,7 +1,7 @@
 import _ from "lodash";
 import {
-  clonarMultileg,
-  clonarArrayCotacoes,
+  cloneMultilegTabs,
+  cloneMultilegQuotes,
 } from "redux/actions/multileg/MultilegActions";
 
 export const resetarEstadoRedux = (
@@ -18,8 +18,8 @@ export const resetarEstadoRedux = (
     switch (reducer) {
       case "multileg":
         mutableProps = {
-          multileg: clonarMultileg(multileg.multileg),
-          cotacoesMultileg: clonarArrayCotacoes(multileg.cotacoesMultileg), // cotacoes está sendo mutado
+          multileg: cloneMultilegTabs(multileg.multileg),
+          cotacoesMultileg: cloneMultilegQuotes(multileg.cotacoesMultileg), // cotacoes está sendo mutado
         };
         break;
       case "ordensExec":

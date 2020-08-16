@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col, Button, Form } from "react-bootstrap";
 import { ModalHeaderLimpo } from "shared/componentes/PopupHeader";
 import { connect } from "react-redux";
-import { modificarVariavelMultilegAction } from "redux/actions/multileg/MultilegActions";
+import { updateMultilegStateAction } from "redux/actions/multileg/MultilegActions";
 import { StorePrincipalContext } from "redux/StoreCreation";
 
 class ConfigComplementar extends React.Component {
@@ -25,7 +25,7 @@ class ConfigComplementar extends React.Component {
                 className="textInput"
                 value={this.props.horaInicial}
                 onChange={(event) =>
-                  this.props.modificarVariavelMultilegAction(
+                  this.props.updateMultilegStateAction(
                     "horaInicial",
                     event.currentTarget.value
                   )
@@ -43,7 +43,7 @@ class ConfigComplementar extends React.Component {
                 className="textInput"
                 value={this.props.horaFinal}
                 onChange={(event) =>
-                  this.props.modificarVariavelMultilegAction(
+                  this.props.updateMultilegStateAction(
                     "horaFinal",
                     event.currentTarget.value
                   )
@@ -61,7 +61,7 @@ class ConfigComplementar extends React.Component {
                 className="textInput"
                 value={this.props.modoExec}
                 onChange={(event) =>
-                  this.props.modificarVariavelMultilegAction(
+                  this.props.updateMultilegStateAction(
                     "modoExec",
                     event.currentTarget.value
                   )
@@ -80,7 +80,7 @@ class ConfigComplementar extends React.Component {
                 type="checkbox"
                 checked={this.props.apregoarOferta}
                 onChange={(event) =>
-                  this.props.modificarVariavelMultilegAction(
+                  this.props.updateMultilegStateAction(
                     "apregoarOferta",
                     event.currentTarget.checked
                   )
@@ -115,9 +115,6 @@ const mapStateToProps = (state) => ({
   apregoarOferta: state.multilegReducer.apregoarOferta,
 });
 
-export default connect(
-  mapStateToProps,
-  { modificarVariavelMultilegAction },
-  null,
-  { context: StorePrincipalContext }
-)(ConfigComplementar);
+export default connect(mapStateToProps, { updateMultilegStateAction }, null, {
+  context: StorePrincipalContext,
+})(ConfigComplementar);

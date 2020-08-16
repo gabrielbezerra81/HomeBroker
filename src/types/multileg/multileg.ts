@@ -5,7 +5,7 @@ export interface MultilegTab {
   variacao: number;
   opcoes: Array<MultilegOption>;
   codigoAberto: boolean;
-  strikeSelecionado: number;
+  strikeSelecionado: number | undefined;
   vencimento: Array<string>;
   vencimentoSelecionado: string;
   preco: string;

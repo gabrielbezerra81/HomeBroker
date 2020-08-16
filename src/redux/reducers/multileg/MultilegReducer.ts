@@ -19,7 +19,7 @@ const INITIAL_STATE: MultilegState = {
       ativoAtual: "",
       variacao: 0,
       opcoes: [],
-      strikeSelecionado: 0,
+      strikeSelecionado: undefined,
       codigoAberto: false,
       vencimento: [],
       vencimentoSelecionado: "",
@@ -47,7 +47,7 @@ export default (
 ): MultilegState => {
   switch (type) {
     case MODIFICAR_VARIAVEL_MULTILEG:
-      return { ...state, [payload.nome]: payload.valor };
+      return { ...state, [payload.attributeName]: payload.attributeValue };
     case PESQUISAR_ATIVO_MULTILEG_API:
       return { ...state, multileg: payload };
     case actionType.RESET_REDUX_STATE:

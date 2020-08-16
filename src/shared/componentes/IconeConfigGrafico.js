@@ -6,7 +6,7 @@ import {
   abrirFormAction,
   abrirFormConfigurarAction,
 } from "redux/actions/GlobalAppActions";
-import { abrirFecharConfigComplAction } from "redux/actions/multileg/MultilegActions";
+import { openCloseMultilegExtraConfigsAction } from "redux/actions/multileg/MultilegActions";
 import useStateGlobalStore from "hooks/useStateGlobalStore";
 import useDispatchBoletas from "hooks/useDispatchBoletas";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
@@ -27,9 +27,7 @@ export default ({ className, name = "" }) => {
     const dispatchStorePrincipal = useDispatchStorePrincipal();
 
     handleShow = () =>
-      dispatchStorePrincipal(
-        abrirFecharConfigComplAction()
-      );
+      dispatchStorePrincipal(openCloseMultilegExtraConfigsAction());
   } //
   else {
     const dispatchGlobal = useDispatchGlobalStore();

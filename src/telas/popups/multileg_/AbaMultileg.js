@@ -7,15 +7,15 @@ import { MDBIcon } from "mdbreact";
 import TabelaMultileg from "telas/popups/multileg_/TabelaMultileg";
 import { connect } from "react-redux";
 import {
-  modificarAtributoAbaAction,
-  adicionarOfertaTabelaAction,
+  updateMultilegTabAction,
+  addMultilegOfferAction,
 } from "redux/actions/multileg/MultilegActions";
-import { buscaCotacao } from "redux/actions/multileg/utils";
+import { findMultilegQuote } from "redux/actions/multileg/utils";
 import {
   formatarNumDecimal,
   formatarVencimento,
 } from "shared/utils/Formatacoes";
-import { pesquisarAtivoMultilegAPIAction } from "redux/actions/multileg/MultilegAPIAction";
+import { searchMultilegSymbolAPIAction } from "redux/actions/multileg/MultilegAPIAction";
 import Book from "telas/popups/multileg_/Book";
 import { Select } from "antd";
 import { StorePrincipalContext } from "redux/StoreCreation";
@@ -26,10 +26,10 @@ class AbaMultileg extends React.Component {
     const { indice, pesquisandoAtivo } = props;
     const arrayStrike = renderSerie(props);
 
-    const cotacao = buscaCotacao(
-      props.cotacoesMultileg,
-      props.multileg[indice].ativo
-    );
+    const cotacao = findMultilegQuote({
+      multilegQuotes: props.cotacoesMultileg,
+      symbol: props.multileg[indice].ativo,
+    });
 
     return (
       <div className="containerAbaMultileg">
@@ -42,7 +42,7 @@ class AbaMultileg extends React.Component {
                   type="text"
                   value={props.multileg[indice].ativo}
                   onChange={(event) =>
-                    props.modificarAtributoAbaAction({
+                    props.updateMultilegTabAction({
                       tabIndex: indice,
                       attributeName: "ativo",
                       attributeValue: event.target.value,
@@ -51,14 +51,14 @@ class AbaMultileg extends React.Component {
                   onKeyPress={(event) => {
                     //event.preventDefault();
                     if (event.key === "Enter")
-                      props.pesquisarAtivoMultilegAPIAction(indice);
+                      props.searchMultilegSymbolAPIAction(indice);
                   }}
                 />
                 <InputGroup.Append className="inputAtivoAppend">
                   <span
                     className="input-group-text iconeProcurar divClicavel"
                     onClick={() => {
-                      props.pesquisarAtivoMultilegAPIAction(indice);
+                      props.searchMultilegSymbolAPIAction(indice);
                     }}
                   >
                     {pesquisandoAtivo ? (
@@ -93,7 +93,7 @@ class AbaMultileg extends React.Component {
                   className="inputCodigo"
                   suffixIcon={<MDBIcon icon="caret-down" />}
                   onChange={(value) => {
-                    props.modificarAtributoAbaAction({
+                    props.updateMultilegTabAction({
                       tabIndex: indice,
                       attributeName: "strikeSelecionado",
                       attributeValue: value,
@@ -111,7 +111,7 @@ class AbaMultileg extends React.Component {
                   className="textInput"
                   value={props.multileg[indice].vencimentoSelecionado}
                   onChange={(event) =>
-                    props.modificarAtributoAbaAction({
+                    props.updateMultilegTabAction({
                       tabIndex: indice,
                       attributeName: "vencimentoSelecionado",
                       attributeValue: event.currentTarget.value,
@@ -139,7 +139,7 @@ class AbaMultileg extends React.Component {
                     variant="primary"
                     size="sm"
                     onClick={() => {
-                      props.adicionarOfertaTabelaAction({
+                      props.addMultilegOfferAction({
                         tabIndex: props.indice,
                         offerType: "acao",
                       });
@@ -151,7 +151,7 @@ class AbaMultileg extends React.Component {
                     variant="primary"
                     size="sm"
                     onClick={() => {
-                      props.adicionarOfertaTabelaAction({
+                      props.addMultilegOfferAction({
                         tabIndex: props.indice,
                         offerType: "call",
                       });
@@ -163,7 +163,7 @@ class AbaMultileg extends React.Component {
                     variant="primary"
                     size="sm"
                     onClick={() => {
-                      props.adicionarOfertaTabelaAction({
+                      props.addMultilegOfferAction({
                         tabIndex: props.indice,
                         offerType: "put",
                       });
@@ -197,9 +197,9 @@ const mapStateToProps = (state) => ({
 export default connect(
   mapStateToProps,
   {
-    modificarAtributoAbaAction,
-    pesquisarAtivoMultilegAPIAction,
-    adicionarOfertaTabelaAction,
+    updateMultilegTabAction,
+    searchMultilegSymbolAPIAction,
+    addMultilegOfferAction,
   },
   null,
   { context: StorePrincipalContext }

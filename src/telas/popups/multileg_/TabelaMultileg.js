@@ -4,10 +4,13 @@ import imgModeloEU from "assets/modeloEU.png";
 import imgModeloUSA from "assets/modeloUSA2.svg";
 import { connect } from "react-redux";
 import {
-  modificarAtributoTabelaAbaAction,
-  excluirOfertaTabelaAction,
+  updateMultilegOfferAction,
+  removeMultilegOfferAction,
 } from "redux/actions/multileg/MultilegActions";
-import { buscaCotacao, buscaBook } from "redux/actions/multileg/utils";
+import {
+  findMultilegQuote,
+  findMultilegBook,
+} from "redux/actions/multileg/utils";
 import { MDBIcon } from "mdbreact";
 import {
   formatarNumDecimal,
@@ -70,7 +73,7 @@ class TabelaMultileg extends React.Component {
                   <td
                     className="divClicavel"
                     onClick={() =>
-                      props.excluirOfertaTabelaAction({
+                      props.removeMultilegOfferAction({
                         tabIndex: indiceAba,
                         lineIndex: indiceLinha,
                       })
@@ -88,7 +91,7 @@ class TabelaMultileg extends React.Component {
                         autoSelect
                         value={item.qtde}
                         onChange={(value) =>
-                          props.modificarAtributoTabelaAbaAction({
+                          props.updateMultilegOfferAction({
                             tabIndex: indiceAba,
                             attributeName: "qtde",
                             attributeValue: value,
@@ -106,7 +109,7 @@ class TabelaMultileg extends React.Component {
                         className="textInput inputSerie"
                         value={item.serieSelecionada}
                         onChange={(event) =>
-                          props.modificarAtributoTabelaAbaAction({
+                          props.updateMultilegOfferAction({
                             tabIndex: indiceAba,
                             attributeName: "serieSelecionada",
                             attributeValue: event.currentTarget.value,
@@ -129,7 +132,7 @@ class TabelaMultileg extends React.Component {
                         className="textInput"
                         value={item.strikeSelecionado}
                         onChange={(event) =>
-                          props.modificarAtributoTabelaAbaAction({
+                          props.updateMultilegOfferAction({
                             tabIndex: indiceAba,
                             attributeName: "strikeSelecionado",
                             attributeValue: Number(event.currentTarget.value),
@@ -160,7 +163,7 @@ class TabelaMultileg extends React.Component {
                       className="inputCodigo"
                       suffixIcon={<MDBIcon icon="caret-down" />}
                       onChange={(value) => {
-                        props.modificarAtributoTabelaAbaAction({
+                        props.updateMultilegOfferAction({
                           tabIndex: indiceAba,
                           attributeName: "codigoSelecionado",
                           attributeValue: value,
@@ -168,7 +171,7 @@ class TabelaMultileg extends React.Component {
                         });
                       }}
                       onDropdownVisibleChange={(open) => {
-                        props.modificarAtributoTabelaAbaAction({
+                        props.updateMultilegOfferAction({
                           tabIndex: indiceAba,
                           attributeName: "codigoAberto",
                           attributeValue: open,
@@ -190,7 +193,7 @@ class TabelaMultileg extends React.Component {
                       className="divClicavel"
                       tabIndex={0}
                       onClick={(event) =>
-                        props.modificarAtributoTabelaAbaAction({
+                        props.updateMultilegOfferAction({
                           tabIndex: indiceAba,
                           attributeName: "tipo",
                           attributeValue: item.tipo,
@@ -210,7 +213,7 @@ class TabelaMultileg extends React.Component {
                         step={100}
                         value={item.despernamento}
                         onChange={(value) =>
-                          props.modificarAtributoTabelaAbaAction({
+                          props.updateMultilegOfferAction({
                             tabIndex: indiceAba,
                             attributeName: "despernamento",
                             attributeValue: value,
@@ -228,7 +231,7 @@ class TabelaMultileg extends React.Component {
                         className="textInput formPrioridade"
                         value={item.prioridade}
                         onChange={(event) => {
-                          props.modificarAtributoTabelaAbaAction({
+                          props.updateMultilegOfferAction({
                             tabIndex: indiceAba,
                             attributeName: "prioridade",
                             attributeValue: Number(event.currentTarget.value),
@@ -261,7 +264,10 @@ class TabelaMultileg extends React.Component {
 
 const calculaColunaValor = (props, oferta) => {
   let value;
-  const book = buscaBook(props.cotacoesMultileg, oferta.codigoSelecionado);
+  const book = findMultilegBook({
+    multilegQuotes: props.cotacoesMultileg,
+    symbol: oferta.codigoSelecionado,
+  });
   if (oferta.cv === "compra" && book && book.venda.price) {
     value = book.venda.price;
   } //
@@ -288,8 +294,8 @@ const mapStateToProps = (state) => ({
 export default connect(
   mapStateToProps,
   {
-    modificarAtributoTabelaAbaAction,
-    excluirOfertaTabelaAction,
+    updateMultilegOfferAction,
+    removeMultilegOfferAction,
   },
   null,
   { context: StorePrincipalContext }
@@ -310,7 +316,7 @@ const renderCV = (cv, props, indiceLinha) => {
         <h6
           className={`${cvCompra} divClicavel`}
           onClick={() =>
-            props.modificarAtributoTabelaAbaAction({
+            props.updateMultilegOfferAction({
               tabIndex: props.indice,
               attributeName: "cv",
               attributeValue: "compra",
@@ -323,7 +329,7 @@ const renderCV = (cv, props, indiceLinha) => {
         <h6
           className={`${cvVenda} divClicavel`}
           onClick={() =>
-            props.modificarAtributoTabelaAbaAction({
+            props.updateMultilegOfferAction({
               tabIndex: props.indice,
               attributeName: "cv",
               attributeValue: "venda",
@@ -414,10 +420,10 @@ const renderCodigoOferta = (listaOpcoes, codigoAberto, tipoAtual, item) => {
 };
 
 const renderCotacao = (props, oferta) => {
-  const cotacao = buscaCotacao(
-    props.cotacoesMultileg,
-    oferta.codigoSelecionado
-  );
+  const cotacao = findMultilegQuote({
+    multilegQuotes: props.cotacoesMultileg,
+    symbol: oferta.codigoSelecionado,
+  });
 
   if (cotacao) return formatarNumDecimal(cotacao);
   return "";

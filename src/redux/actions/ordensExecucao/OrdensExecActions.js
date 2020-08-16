@@ -11,13 +11,13 @@ import {
 import { atualizarOrdensExecAPI } from "api/ReativosAPI";
 import { LISTAR_ORDENS_EXECUCAO } from "constants/ApiActionTypes";
 import {
-  adicionarAba,
-  modificarAba,
-  atualizarCotacaoMultilegAction,
-  adicionarOferta,
-  modificarVariavelMultilegAction,
+  addMultilegTab,
+  updateMultilegTab,
+  updateMultilegQuotesAction,
+  addMultilegOffer,
+  updateMultilegStateAction,
 } from "redux/actions/multileg/MultilegActions";
-import { pesquisaAtivo } from "redux/actions/multileg/MultilegAPIAction";
+import { searchMultilegSymbolData } from "redux/actions/multileg/MultilegAPIAction";
 import { erro_exportar_ordens_multileg } from "constants/AlertaErros";
 import { calculoPreco, calculoMDC } from "telas/popups/multileg_/CalculoPreco";
 import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
@@ -91,9 +91,9 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
     }
 
     //Adicionar aba
-    let objMultileg = adicionarAba(props.multileg);
+    let objMultileg = addMultilegTab(props.multileg);
 
-    let multileg = objMultileg.abasMultileg;
+    let multileg = objMultileg.multilegTabs;
     let cotacoesMultileg = props.cotacoesMultileg;
     const indiceAba = multileg.length - 1;
     //const arrayCodigos = [...new Set(item.offers.map(oferta => oferta.ativo))];
@@ -102,17 +102,17 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
       for (const [indiceOferta, oferta] of item.offers.entries()) {
         //Alterar ativo
 
-        const dadosModificados = await modificarAba({
+        const dadosModificados = await updateMultilegTab({
           multilegTabs: multileg,
           tabIndex: indiceAba,
           attributeName: "ativo",
           attributeValue: oferta.ativo,
         });
 
-        multileg = dadosModificados.abasMultileg;
+        multileg = dadosModificados.multilegTabs;
 
         //Pesquisar ativo
-        const data = await pesquisaAtivo({
+        const data = await searchMultilegSymbolData({
           multilegTabs: multileg,
           tabIndex: indiceAba,
           multilegQuotes: cotacoesMultileg,
@@ -127,14 +127,14 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
         if (opcao.length > 0) tipo = opcao[0].type.toLowerCase();
         else tipo = "acao";
         //Adicionar oferta
-        const dadosMultileg = await adicionarOferta({
+        const dadosMultileg = await addMultilegOffer({
           multilegTabs: multileg,
           offerType: tipo,
           tabIndex: indiceAba,
           multilegQuotes: cotacoesMultileg,
         });
-        multileg = dadosMultileg.abasMultileg;
-        cotacoesMultileg = dadosMultileg.cotacoesMultileg;
+        multileg = dadosMultileg.multilegTabs;
+        cotacoesMultileg = dadosMultileg.multilegQuotes;
 
         const ofertaNova = multileg[indiceAba].tabelaMultileg[indiceOferta];
 
@@ -164,21 +164,15 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
     //Disparar atualizações feitas com objeto multileg
     objMultileg.abasMultileg = multileg;
 
-    dispatch(
-      modificarVariavelMultilegAction("multileg", objMultileg.abasMultileg)
-    );
-    dispatch(
-      modificarVariavelMultilegAction("abaSelecionada", objMultileg.abaAtual)
-    );
-    dispatch(
-      modificarVariavelMultilegAction("cotacoesMultileg", cotacoesMultileg)
-    );
+    dispatch(updateMultilegStateAction("multileg", objMultileg.abasMultileg));
+    dispatch(updateMultilegStateAction("abaSelecionada", objMultileg.abaAtual));
+    dispatch(updateMultilegStateAction("cotacoesMultileg", cotacoesMultileg));
 
-    atualizarCotacaoMultilegAction({
+    updateMultilegQuotesAction({
       dispatch,
-      cotacoesMultileg,
-      eventSourceCotacao,
-      setIntervalCotacoesMultileg,
+      multilegQuotes: cotacoesMultileg,
+      eventSourceMultilegQuotes: eventSourceCotacao,
+      setIntervalMultilegQuotes: setIntervalCotacoesMultileg,
       token,
     });
     travarDestravarClique("destravar", "menusTelaPrincipal");

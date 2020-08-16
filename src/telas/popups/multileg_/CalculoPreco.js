@@ -1,6 +1,6 @@
 import {
-  buscaBook,
-  buscaCotacao,
+  findMultilegBook,
+  findMultilegQuote,
 } from "redux/actions/multileg/utils";
 
 export const calculoPreco = (aba, tipo, cotacoesMultileg) => {
@@ -8,8 +8,14 @@ export const calculoPreco = (aba, tipo, cotacoesMultileg) => {
   let arrayQtde = [];
 
   aba.tabelaMultileg.forEach((oferta, index) => {
-    let book = buscaBook(cotacoesMultileg, oferta.codigoSelecionado);
-    const cotacao = buscaCotacao(cotacoesMultileg, oferta.codigoSelecionado);
+    let book = findMultilegBook({
+      multilegQuotes: cotacoesMultileg,
+      symbol: oferta.codigoSelecionado,
+    });
+    const cotacao = findMultilegQuote({
+      multilegQuotes: cotacoesMultileg,
+      symbol: oferta.codigoSelecionado,
+    });
     if (!book && cotacao) {
       book = { compra: { price: cotacao }, venda: { price: cotacao } };
     }
@@ -20,8 +26,14 @@ export const calculoPreco = (aba, tipo, cotacoesMultileg) => {
   if (mdc > 0)
     aba.tabelaMultileg.forEach((oferta, index) => {
       const codigo = oferta.codigoSelecionado;
-      const cotacao = buscaCotacao(cotacoesMultileg, codigo);
-      let book = buscaBook(cotacoesMultileg, codigo);
+      const cotacao = findMultilegQuote({
+        multilegQuotes: cotacoesMultileg,
+        symbol: codigo,
+      });
+      let book = findMultilegBook({
+        multilegQuotes: cotacoesMultileg,
+        symbol: codigo,
+      });
 
       if (
         !book ||
@@ -62,10 +74,10 @@ export const calcularTotal = (props) => {
   let aba = props.multileg[props.indice];
 
   aba.tabelaMultileg.forEach((oferta) => {
-    const cotacao = buscaCotacao(
-      props.cotacoesMultileg,
-      oferta.codigoSelecionado
-    );
+    const cotacao = findMultilegQuote({
+      multilegQuotes: props.cotacoesMultileg,
+      symbol: oferta.codigoSelecionado,
+    });
     if (cotacao) {
       if (oferta.cv === "compra") total += oferta.qtde * cotacao;
       else total -= oferta.qtde * cotacao;
@@ -88,8 +100,14 @@ const gcd2 = (a, b) => {
 
 export const verificaCalculoSemBook = (tabelaMultileg, cotacoesMultileg) => {
   return tabelaMultileg.some((oferta, index) => {
-    const book = buscaBook(cotacoesMultileg, oferta.codigoSelecionado);
-    const cotacao = buscaCotacao(cotacoesMultileg, oferta.codigoSelecionado);
+    const book = findMultilegBook({
+      multilegQuotes: cotacoesMultileg,
+      symbol: oferta.codigoSelecionado,
+    });
+    const cotacao = findMultilegQuote({
+      multilegQuotes: cotacoesMultileg,
+      symbol: oferta.codigoSelecionado,
+    });
     return (
       !book || (book.compra.price === 0 && book.venda.price === 0 && cotacao)
     );

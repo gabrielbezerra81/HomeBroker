@@ -8,9 +8,9 @@ import { ModalHeaderSemBook } from "shared/componentes/PopupHeader";
 import AbaMultileg from "telas/popups/multileg_/AbaMultileg";
 import { StorePrincipalContext, GlobalContext } from "redux/StoreCreation";
 import {
-  selecionarAdicionarAbaAction,
-  modificarAtributoAbaAction,
-  excluirAbaMultilegAction,
+  selectOrAddMultilegTabAction,
+  updateMultilegTabAction,
+  removeMultilegTabAction,
 } from "redux/actions/multileg/MultilegActions";
 import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
 
@@ -21,7 +21,7 @@ class Multileg extends React.Component {
   //     // Executar atualizar book e atualizar cotação
   //     //this.props.atualizarBookAction(nextProps, nextProps.multileg);
 
-  //     this.props.atualizarCotacaoMultilegAction(nextProps, nextProps.multileg);
+  //     this.props.updateMultilegQuotesAction(nextProps, nextProps.multileg);
   //   }
 
   //   return !_.isEqual(nextProps, this.props);
@@ -63,7 +63,7 @@ class Multileg extends React.Component {
             // @ts-ignore
             const keysPressionadas = arrayKeys.includes(event.key);
             if (!keysPressionadas) {
-              this.props.selecionarAdicionarAbaAction(key);
+              this.props.selectOrAddMultilegTabAction(key);
             }
           }}
           activeKey={this.props.abaSelecionada}
@@ -98,7 +98,7 @@ class Multileg extends React.Component {
                             icon="times"
                             className="saldoOpNegativo"
                             onClick={(e) => {
-                              this.props.excluirAbaMultilegAction(index);
+                              this.props.removeMultilegTabAction(index);
                               e.stopPropagation();
                             }}
                           />
@@ -107,7 +107,7 @@ class Multileg extends React.Component {
                             value={aba.nomeAba}
                             className="inputTituloAba"
                             onChange={(e) => {
-                              this.props.modificarAtributoAbaAction({
+                              this.props.updateMultilegTabAction({
                                 tabIndex: index,
                                 attributeName: "nomeAba",
                                 attributeValue: e.target.value,
@@ -199,9 +199,9 @@ export default compose(
   connect(
     mapStateToPropsMultileg,
     {
-      selecionarAdicionarAbaAction,
-      modificarAtributoAbaAction,
-      excluirAbaMultilegAction,
+      selectOrAddMultilegTabAction,
+      updateMultilegTabAction,
+      removeMultilegTabAction,
       // atualizarBookAction,
     },
     null,

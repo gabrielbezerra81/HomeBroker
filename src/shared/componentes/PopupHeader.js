@@ -10,7 +10,7 @@ import {
 } from "redux/actions/GlobalAppActions";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { abrirItemBarraLateralAction } from "redux/actions/telaPrincipal/TelaPrincipalActions";
-import { abrirFecharConfigComplAction } from "redux/actions/multileg/MultilegActions";
+import { openCloseMultilegExtraConfigsAction } from "redux/actions/multileg/MultilegActions";
 import { mudarVariavelOrdensExecAction } from "redux/actions/ordensExecucao/OrdensExecActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useStateGlobalStore from "hooks/useStateGlobalStore";
@@ -199,14 +199,15 @@ export const ModalHeaderLimpo = ({ titulo, name = "" }) => {
   let funcaoFechar;
 
   const dispatchStorePrincipal = useDispatchStorePrincipal();
-  const dispatch = useDispatchBoletas();
 
   if (["config_compra", "config_venda"].includes(name)) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const dispatch = useDispatchBoletas();
     funcaoFechar = (e) => dispatch(fecharFormConfigurarAction(e));
   } //
   else if (name === "config_complementar") {
     funcaoFechar = (e) =>
-      dispatchStorePrincipal(abrirFecharConfigComplAction());
+      dispatchStorePrincipal(openCloseMultilegExtraConfigsAction());
   }
 
   return (

@@ -3,8 +3,11 @@ import { connect } from "react-redux";
 import { Table, Row, Col, Button } from "react-bootstrap";
 import IconeConfigGrafico from "shared/componentes/IconeConfigGrafico";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
-import { modificarAtributoAbaAction } from "redux/actions/multileg/MultilegActions";
-import { buscaCotacao, buscaBook } from "redux/actions/multileg/utils";
+import { updateMultilegTabAction } from "redux/actions/multileg/MultilegActions";
+import {
+  findMultilegQuote,
+  findMultilegBook,
+} from "redux/actions/multileg/utils";
 import {
   calculoPreco,
   calcularTotal,
@@ -14,9 +17,9 @@ import InputFormatado from "shared/componentes/InputFormatado";
 import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
 import RowValidade from "telas/popups/multileg_/RowValidade";
 import {
-  enviarOrdemMultilegAction,
-  criarAlertaMultilegAction,
-  criarPosicaoMultilegAction,
+  sendMultilegOrderAction,
+  createMultilegAlertAction,
+  createMultilegPositionAction,
 } from "redux/actions/multileg/MultilegAPIAction";
 import NumberFormat from "react-number-format";
 import { StorePrincipalContext } from "redux/StoreCreation";
@@ -89,14 +92,14 @@ class Book extends React.Component {
               <tbody>
                 {props.multileg[indice].tabelaMultileg.map(
                   (item, indiceLinha) => {
-                    const book = buscaBook(
-                      props.cotacoesMultileg,
-                      item.codigoSelecionado
-                    );
-                    const cotacao = buscaCotacao(
-                      props.cotacoesMultileg,
-                      item.codigoSelecionado
-                    );
+                    const book = findMultilegBook({
+                      multilegQuotes: props.cotacoesMultileg,
+                      symbol: item.codigoSelecionado,
+                    });
+                    const cotacao = findMultilegQuote({
+                      multilegQuotes: props.cotacoesMultileg,
+                      symbol: item.codigoSelecionado,
+                    });
                     if (book)
                       return (
                         <tr key={indiceLinha}>
@@ -142,7 +145,7 @@ class Book extends React.Component {
               max={max}
               value={Number(props.multileg[indice].preco.replace(",", "."))}
               onChange={(event) => {
-                props.modificarAtributoAbaAction({
+                props.updateMultilegTabAction({
                   tabIndex: indice,
                   attributeName: "preco",
                   attributeValue: formatarNumDecimal(
@@ -157,7 +160,7 @@ class Book extends React.Component {
           <Col md={4}>
             <span
               onClick={() =>
-                props.modificarAtributoAbaAction({
+                props.updateMultilegTabAction({
                   tabIndex: indice,
                   attributeName: "preco",
                   attributeValue: formatarNumero(
@@ -178,7 +181,7 @@ class Book extends React.Component {
               onClick={
                 condicaoMed
                   ? () =>
-                      props.modificarAtributoAbaAction({
+                      props.updateMultilegTabAction({
                         tabIndex: indice,
                         attributeName: "preco",
                         attributeValue: formatarNumero(
@@ -198,7 +201,7 @@ class Book extends React.Component {
           <Col md={4}>
             <span
               onClick={() =>
-                props.modificarAtributoAbaAction({
+                props.updateMultilegTabAction({
                   tabIndex: indice,
                   attributeName: "preco",
                   attributeValue: formatarNumero(
@@ -235,7 +238,7 @@ class Book extends React.Component {
               step={0.01}
               value={renderPlaceholder ? "" : getPreco(props)}
               onChange={(valor) =>
-                props.modificarAtributoAbaAction({
+                props.updateMultilegTabAction({
                   tabIndex: indice,
                   attributeName: "preco",
                   attributeValue: valor,
@@ -284,7 +287,7 @@ class Book extends React.Component {
               variant="secondary"
               size="sm"
               onClick={() =>
-                props.modificarAtributoAbaAction({
+                props.updateMultilegTabAction({
                   tabIndex: indice,
                   attributeName: "limpar",
                   attributeValue: "",
@@ -298,7 +301,7 @@ class Book extends React.Component {
             <Button
               variant="primary"
               size="sm"
-              onClick={() => props.enviarOrdemMultilegAction(props.indice)}
+              onClick={() => props.sendMultilegOrderAction(props.indice)}
             >
               EXECUTAR
             </Button>
@@ -309,7 +312,7 @@ class Book extends React.Component {
             <Button
               variant="primary"
               size="sm"
-              onClick={() => props.criarAlertaMultilegAction(props.indice)}
+              onClick={() => props.createMultilegAlertAction(props.indice)}
               block
             >
               ALERTA DE OPERAÇÃO
@@ -321,7 +324,7 @@ class Book extends React.Component {
             <Button
               variant="primary"
               size="sm"
-              onClick={() => props.criarPosicaoMultilegAction(props.indice)}
+              onClick={() => props.createMultilegPositionAction(props.indice)}
               block
             >
               CRIAR POSIÇÃO
@@ -347,10 +350,10 @@ const mapStateToProps = (state) => ({
 export default connect(
   mapStateToProps,
   {
-    modificarAtributoAbaAction,
-    enviarOrdemMultilegAction,
-    criarAlertaMultilegAction,
-    criarPosicaoMultilegAction,
+    updateMultilegTabAction,
+    sendMultilegOrderAction,
+    createMultilegAlertAction,
+    createMultilegPositionAction,
   },
   null,
   { context: StorePrincipalContext }
@@ -402,7 +405,7 @@ const atualizarPrecoDinamicante = (props) => {
   novoPreco = formatarNumero(novoPreco, 2, ".", ",");
 
   if (preco !== novoPreco)
-    props.modificarAtributoAbaAction({
+    props.updateMultilegTabAction({
       tabIndex: props.indice,
       attributeName: "preco",
       attributeValue: novoPreco,
