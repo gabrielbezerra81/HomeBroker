@@ -231,16 +231,9 @@ export const listarOrdensExecAPI = (idToken) => {
     .set({ Authorization: `${idToken.tokenType} ${idToken.accessToken}` })
     .then((response) => {
       const { body } = response;
-      let ofertas = [];
+      const orders = body ? body : [];
 
-      console.log(body);
-      // TODO: fazer map
-
-      body.forEach((oferta) => {
-        ofertas.push(oferta);
-      });
-
-      return ofertas;
+      return orders;
     })
     .catch((erro) => {
       mostrarErroConsulta(erro, "");
@@ -255,9 +248,7 @@ export const listarPosicoesAPI = (idToken) => {
     .set({ Authorization: `${idToken.tokenType} ${idToken.accessToken}` })
     .retry(3, 2000)
     .then((response) => {
-      const { body } = response;
-      console.log(body);
-      return body;
+      return response.body;
     })
     .catch((erro) => {
       mostrarErroConsulta(erro, "");

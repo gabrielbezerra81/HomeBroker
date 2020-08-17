@@ -420,11 +420,11 @@ export const atualizarPrecosTHLAPI = ({ ids, dispatch, token }) => {
     }
   );
 
-  const novosPrecos = [];
+  const updatedPriceStructures = [];
 
   atualizaListaReativa(
     dispatch,
-    novosPrecos,
+    updatedPriceStructures,
     MUDAR_VARIAVEL_THL,
     "precosTabelaVencimentos",
     "setIntervalPrecosTHL"
@@ -432,12 +432,35 @@ export const atualizarPrecosTHLAPI = ({ ids, dispatch, token }) => {
 
   source.onmessage = function (event) {
     if (typeof event.data !== "undefined") {
-      var dados = JSON.parse(event.data);
-      const indice = novosPrecos.findIndex(
-        (estrutura) => estrutura.id === dados.id
-      );
-      if (indice !== -1) novosPrecos[indice] = dados;
-      else novosPrecos.push(dados);
+      const priceStructure = JSON.parse(event.data);
+
+      // console.log(priceStructure);
+
+      if (priceStructure.components.length === 2) {
+        const index = updatedPriceStructures.findIndex(
+          (estrutura) => estrutura.id === priceStructure.id
+        );
+
+        if (index !== -1) {
+          const { components, ...rest } = priceStructure;
+
+          components.forEach((componentItem) => {
+            const indexToUpdate = updatedPriceStructures[
+              index
+            ].components.findIndex(
+              (componentToUpdate) => componentToUpdate.id === componentItem.id
+            );
+
+            if (indexToUpdate !== -1)
+              Object.assign(
+                updatedPriceStructures[index].components[indexToUpdate],
+                componentItem
+              );
+          });
+
+          Object.assign(updatedPriceStructures[index], { ...rest });
+        } else updatedPriceStructures.push(priceStructure);
+      }
     }
   };
 
