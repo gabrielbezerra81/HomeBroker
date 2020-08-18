@@ -213,6 +213,7 @@ const calculatePricesBooks = (structure, symbol) => {
   };
 
   if (structure) {
+    columnPrices.prices = {};
     columnPrices.prices.max = formatarNumDecimal(structure.max);
     columnPrices.prices.min = formatarNumDecimal(structure.min);
 
@@ -228,7 +229,6 @@ const calculatePricesBooks = (structure, symbol) => {
   if (thisCellPrice) columnPrices.cellHasPrices = true;
 
   if (thisCellPrice && nextCellPrice) {
-    columnPrices.prices = {};
     columnPrices.prices.buy = formatarNumDecimal(thisCellPrice.compra);
     columnPrices.prices.buyQtty = formatarQuantidadeKMG(
       thisCellPrice.compraQtde
