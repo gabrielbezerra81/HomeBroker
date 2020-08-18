@@ -10,127 +10,96 @@ import { mudarVariavelTHLAction } from "redux/actions/thl/THLActions";
 import BookTHL, { selecionarBooks } from "telas/popups/thl/BookTHL";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
-export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
-  const { THLReducer: reduxState } = useStateStorePrincipal();
+export const CelulaMes = ({ cellData, id, isLastColumn }) => {
+  const { THLReducer: thlState } = useStateStorePrincipal();
   const dispatch = useDispatchStorePrincipal();
   const {
     precosTabelaVencimentos,
     booksSelecionados,
     codigoCelulaSelecionada,
-  } = reduxState;
+  } = thlState;
 
-  const ativo = itemColuna.symbol;
+  const symbol = cellData.symbol;
 
-  let compra, compraQtde, venda, vendaQtde, min, max, qtdeMontar, qtdeDesmont;
+  const symbolStrike = `${symbol.slice(4)} (${formatarNumDecimal(
+    cellData.strike
+  )})`;
 
-  const strike = formatarNumDecimal(itemColuna.strike);
-  const ativoStrike = `${ativo.slice(4)} (${strike})`;
-  const {
-    custodia,
-    executando,
-    qtdeExecutada,
-    qtdeOferta,
-  } = VerificaAtivoCustodia(itemColuna);
-  const estrutura = id
-    ? precosTabelaVencimentos.find(
-        (item) =>
-          item.id === id &&
-          item.components.some((comp) => comp.stock.symbol === ativo)
-      )
-    : null;
+  const { isCustody, isExecuting, execQtty, offerQtty } = CheckIsCutody(symbol);
 
-  let precosColuna, precosPar;
-  let booksMontar = [],
-    booksDesmontar = [];
-
-  if (estrutura) {
-    max = formatarNumDecimal(estrutura.max);
-    min = formatarNumDecimal(estrutura.min);
-
-    if (estrutura.components[0].stock.symbol === ativo) {
-      precosColuna = estrutura.components[0];
-      precosPar = estrutura.components[1];
-    } else {
-      precosColuna = estrutura.components[1];
-      precosPar = estrutura.components[0];
-    }
-  }
-
-  if (precosColuna && precosPar) {
-    compra = formatarNumDecimal(precosColuna.compra);
-    compraQtde = formatarQuantidadeKMG(precosColuna.compraQtde);
-    venda = formatarNumDecimal(precosColuna.venda);
-    vendaQtde = formatarQuantidadeKMG(precosColuna.vendaQtde);
-
-    qtdeMontar = formatarQuantidadeKMG(
-      Math.min(precosColuna.compraQtde, precosPar.vendaQtde)
-    );
-    qtdeDesmont = formatarQuantidadeKMG(
-      Math.min(precosColuna.vendaQtde, precosPar.compraQtde)
-    );
-
-    booksMontar = [
-      { ativo: precosColuna.stock.symbol, tipo: "venda" },
-      { ativo: precosPar.stock.symbol, tipo: "compra" },
-    ];
-    booksDesmontar = [
-      { ativo: precosColuna.stock.symbol, tipo: "compra" },
-      { ativo: precosPar.stock.symbol, tipo: "venda" },
-    ];
-  }
+  const structure = findStructureByIdAndSymbol(
+    precosTabelaVencimentos,
+    id,
+    symbol
+  );
 
   const {
-    corQtdeExecutando,
-    classeCorPrecos,
-    celulaSelecionada,
-    precosCelulaSelecionada,
-  } = classesDinamicas(reduxState, executando, ultimaColuna, estrutura, ativo);
+    mountBook,
+    demountBook,
+    prices,
+    cellHasPrices,
+  } = calculatePricesBooks(structure, symbol);
+
+  const styles = getStyleClasses({
+    thlState,
+    isExecuting,
+    isLastColumn,
+    structure,
+    symbol,
+  });
 
   return (
     <div className="containerColunaMes">
       <div
         tabIndex={0}
-        className={`divClicavel containerCelula${celulaSelecionada}`}
+        className={`divClicavel containerCelula${styles.selectedCell}`}
         onClick={() =>
-          selecionarCelula({ dispatch, ativo, id, codigoCelulaSelecionada })
+          selectCell({
+            dispatch,
+            symbol,
+            id,
+            selectedCellSymbol: codigoCelulaSelecionada,
+          })
         }
       >
         <div
           className={`itemAtivosQtde ${
-            custodia ? "itemAtivosQtdeCustodia" : ""
+            isCustody ? "itemAtivosQtdeCustodia" : ""
           }`}
         >
           <div className="itemAtivos">
-            {renderModelo(itemColuna.model)}
-            {ativoStrike} | id:{id}
+            {ModelImage(cellData.model)}
+            {symbolStrike}
           </div>
-          {custodia ? (
-            <div className={`itemQtde${corQtdeExecutando}`}>{qtdeOferta}</div>
+          {isCustody ? (
+            <div className={`itemQtde${styles.corQtdeExecutando}`}>
+              {offerQtty}
+            </div>
           ) : null}
         </div>
 
-        {precosColuna ? (
+        {cellHasPrices ? (
           <div className="bookAtivoTHL roxoTextoTHL">
             <BookTHL
-              preco={compra}
-              qtde={compraQtde}
+              preco={prices.buy}
+              qtde={prices.buyQtty}
               tipo="venda"
-              ativo={ativo}
+              ativo={symbol}
             />
             <BookTHL
-              preco={venda}
-              qtde={vendaQtde}
+              preco={prices.sell}
+              qtde={prices.sellQtty}
               tipo="compra"
-              ativo={ativo}
+              ativo={symbol}
             />
           </div>
         ) : null}
       </div>
 
       <div
-        className={`containerPrecoMontDesmont${classeCorPrecos}${precosCelulaSelecionada}`}
+        className={`containerPrecoMontDesmont${styles.classeCorPrecos}${styles.precosCelulaSelecionada}`}
       >
-        {!ultimaColuna && estrutura ? (
+        {!isLastColumn && structure ? (
           <>
             <div
               className="divClicavel"
@@ -138,12 +107,12 @@ export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
               onClick={() =>
                 selecionarBooks({
                   booksSelecionados,
-                  novosBooks: booksMontar,
+                  novosBooks: mountBook,
                   dispatch,
                 })
               }
             >
-              {max} | {qtdeMontar}
+              {prices.max} | {prices.mountQtty}
             </div>
             <div
               className="divClicavel"
@@ -151,12 +120,12 @@ export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
               onClick={() =>
                 selecionarBooks({
                   booksSelecionados,
-                  novosBooks: booksDesmontar,
+                  novosBooks: demountBook,
                   dispatch,
                 })
               }
             >
-              {min} | {qtdeDesmont}
+              {prices.min} | {prices.demountQtty}
             </div>
           </>
         ) : null}
@@ -165,10 +134,63 @@ export const CelulaMes = ({ itemColuna, id, ultimaColuna }) => {
   );
 };
 
-const renderModelo = (modelo) => {
+const CheckIsCutody = (cellSymbol) => {
+  let isExecuting = false;
+  let isCustody = false;
+  let execQtty = 0;
+  let offerQtty = 0;
+
+  const {
+    posicaoReducer: { posicoesCustodia },
+  } = useStateStorePrincipal();
+
+  isExecuting = posicoesCustodia.some((posicao) => {
+    const executingBuy = posicao.custodiaCompra.find(
+      (custCompra) => custCompra.ativo === cellSymbol
+    );
+    const executingSell = posicao.custodiaVenda.find(
+      (custVenda) => custVenda.ativo === cellSymbol
+    );
+    const custodyCondition = posicao.ativos.some(
+      (ativo) => ativo.symbol === cellSymbol
+    );
+    const executionCondition = executingBuy || executingSell;
+    if (custodyCondition) isCustody = true;
+    if (executingBuy) {
+      execQtty = executingBuy.qtdeExecutada;
+      offerQtty = executingBuy.qtdeOferta;
+    } else if (executingSell) {
+      execQtty = executingSell.qtdeExecutada;
+      offerQtty = executingSell.qtdeOferta;
+    }
+
+    return executionCondition;
+  });
+
+  return {
+    isExecuting,
+    isCustody,
+    execQtty,
+    offerQtty,
+  };
+};
+
+const findStructureByIdAndSymbol = (priceStructures, id, symbol) => {
+  const structure = id
+    ? priceStructures.find(
+        (priceItem) =>
+          priceItem.id === id &&
+          priceItem.components.some((comp) => comp.stock.symbol === symbol)
+      )
+    : null;
+
+  return structure;
+};
+
+const ModelImage = (modelName) => {
   return (
     <div className="mr-1">
-      {modelo === "EUROPEAN" ? (
+      {modelName === "EUROPEAN" ? (
         <img src={imgModeloEU} alt="" className="imgModeloTHL" />
       ) : (
         <ImgModeloUSA
@@ -180,103 +202,122 @@ const renderModelo = (modelo) => {
   );
 };
 
-const VerificaAtivoCustodia = (itemColuna) => {
-  let executando = false;
-  let custodia = false;
-  let qtdeExecutada = 0;
-  let qtdeOferta = 0;
-  const ativoCelula = itemColuna.symbol;
+const calculatePricesBooks = (structure, symbol) => {
+  let thisCellPrice, nextCellPrice;
 
-  const {
-    posicaoReducer: { posicoesCustodia },
-  } = useStateStorePrincipal();
+  const columnPrices = {
+    prices: null,
+    mountBook: null,
+    demountBook: null,
+    cellHasPrices: false,
+  };
 
-  executando = posicoesCustodia.some((posicao) => {
-    const execCompra = posicao.custodiaCompra.find(
-      (custCompra) => custCompra.ativo === ativoCelula
-    );
-    const execVenda = posicao.custodiaVenda.find(
-      (custVenda) => custVenda.ativo === ativoCelula
-    );
-    const condicaoCust = posicao.ativos.some(
-      (ativo) => ativo.symbol === ativoCelula
-    );
-    const condicaoExec = execCompra || execVenda;
-    if (condicaoCust) custodia = true;
-    if (execCompra) {
-      qtdeExecutada = execCompra.qtdeExecutada;
-      qtdeOferta = execCompra.qtdeOferta;
-    } else if (execVenda) {
-      qtdeExecutada = execVenda.qtdeExecutada;
-      qtdeOferta = execVenda.qtdeOferta;
+  if (structure) {
+    columnPrices.prices.max = formatarNumDecimal(structure.max);
+    columnPrices.prices.min = formatarNumDecimal(structure.min);
+
+    if (structure.components[0].stock.symbol === symbol) {
+      thisCellPrice = structure.components[0];
+      nextCellPrice = structure.components[1];
+    } else {
+      thisCellPrice = structure.components[1];
+      nextCellPrice = structure.components[0];
     }
-
-    return condicaoExec;
-  });
-
-  return { executando, custodia, qtdeExecutada, qtdeOferta };
-};
-
-const calculaCorPreco = (reduxState, estrutura) => {
-  let classe = "";
-  const { seletorMapaCalor, faixasMapaCalor } = reduxState;
-
-  if (
-    ["montar", "desmontar"].includes(seletorMapaCalor) &&
-    faixasMapaCalor &&
-    estrutura
-  ) {
-    const valor =
-      seletorMapaCalor === "montar"
-        ? +estrutura.max.toFixed(2)
-        : +estrutura.min.toFixed(2);
-    const indice = faixasMapaCalor.findIndex((faixa) => {
-      const min = faixa.min;
-      const max = faixa.max;
-
-      return valor >= min && valor <= max;
-    });
-    if (indice !== -1) classe = ` faixa${indice + 1}Mapa`;
   }
 
-  return classe;
+  if (thisCellPrice) columnPrices.cellHasPrices = true;
+
+  if (thisCellPrice && nextCellPrice) {
+    columnPrices.prices = {};
+    columnPrices.prices.buy = formatarNumDecimal(thisCellPrice.compra);
+    columnPrices.prices.buyQtty = formatarQuantidadeKMG(
+      thisCellPrice.compraQtde
+    );
+    columnPrices.prices.sell = formatarNumDecimal(thisCellPrice.venda);
+    columnPrices.prices.sellQtty = formatarQuantidadeKMG(
+      thisCellPrice.vendaQtde
+    );
+
+    columnPrices.prices.mountQtty = formatarQuantidadeKMG(
+      Math.min(thisCellPrice.compraQtde, nextCellPrice.vendaQtde)
+    );
+    columnPrices.prices.demountQtty = formatarQuantidadeKMG(
+      Math.min(thisCellPrice.vendaQtde, nextCellPrice.compraQtde)
+    );
+
+    columnPrices.mountBook = [
+      { ativo: thisCellPrice.stock.symbol, tipo: "venda" },
+      { ativo: nextCellPrice.stock.symbol, tipo: "compra" },
+    ];
+    columnPrices.demountBook = [
+      { ativo: thisCellPrice.stock.symbol, tipo: "compra" },
+      { ativo: nextCellPrice.stock.symbol, tipo: "venda" },
+    ];
+  }
+
+  return columnPrices;
 };
 
-const classesDinamicas = (
-  reduxState,
-  executando,
-  ultimaColuna,
-  estrutura,
-  ativo
-) => {
-  const { codigoCelulaSelecionada } = reduxState;
-  const corQtdeExecutando = executando ? " ativoExecutando" : "";
-  const classeCorPrecos = ultimaColuna
+const getStyleClasses = ({
+  thlState,
+  isExecuting,
+  isLastColumn,
+  structure,
+  symbol,
+}) => {
+  const { codigoCelulaSelecionada } = thlState;
+  const corQtdeExecutando = isExecuting ? " ativoExecutando" : "";
+  const classeCorPrecos = isLastColumn
     ? ""
-    : calculaCorPreco(reduxState, estrutura);
-  let celulaSelecionada = "";
+    : getPriceColumnColor(thlState, structure);
+  let selectedCell = "";
+
   let precosCelulaSelecionada = "";
-  if (codigoCelulaSelecionada === ativo) {
-    celulaSelecionada = " celulaSelecionada";
+  if (codigoCelulaSelecionada === symbol) {
+    selectedCell = " celulaSelecionada";
     precosCelulaSelecionada = " precosCelulaSelecionada";
   }
 
   return {
     corQtdeExecutando,
     classeCorPrecos,
-    celulaSelecionada,
+    selectedCell,
     precosCelulaSelecionada,
   };
 };
 
-export const selecionarCelula = (props) => {
-  const { ativo, codigoCelulaSelecionada, id, dispatch } = props;
-  let novoCodigo = "";
-  let novoID = null;
-  if (ativo !== codigoCelulaSelecionada) {
-    novoCodigo = ativo;
-    novoID = id;
+const getPriceColumnColor = (thlState, structure) => {
+  let styleClass = "";
+  const { seletorMapaCalor, faixasMapaCalor } = thlState;
+
+  if (
+    ["montar", "desmontar"].includes(seletorMapaCalor) &&
+    faixasMapaCalor &&
+    structure
+  ) {
+    const referenceValue =
+      seletorMapaCalor === "montar"
+        ? +structure.max.toFixed(2)
+        : +structure.min.toFixed(2);
+    const index = faixasMapaCalor.findIndex((faixa) => {
+      const min = faixa.min;
+      const max = faixa.max;
+
+      return referenceValue >= min && referenceValue <= max;
+    });
+    if (index !== -1) styleClass = ` faixa${index + 1}Mapa`;
   }
-  dispatch(mudarVariavelTHLAction("codigoCelulaSelecionada", novoCodigo));
-  dispatch(mudarVariavelTHLAction("idCelulaSelecionada", novoID));
+
+  return styleClass;
+};
+
+export const selectCell = ({ symbol, selectedCellSymbol, id, dispatch }) => {
+  let selectedSymbol = "";
+  let selectedId = null;
+  if (symbol !== selectedCellSymbol) {
+    selectedSymbol = symbol;
+    selectedId = id;
+  }
+  dispatch(mudarVariavelTHLAction("codigoCelulaSelecionada", selectedSymbol));
+  dispatch(mudarVariavelTHLAction("idCelulaSelecionada", selectedId));
 };

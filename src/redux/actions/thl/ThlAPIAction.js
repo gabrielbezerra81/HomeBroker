@@ -48,6 +48,7 @@ export const listarTabelaInicialTHLAPIAction = () => {
         strikeSelecionado,
         tipo
       );
+
       if (tabelaVencimentos.length > 0)
         atualizarPrecosTHL({
           tabelaVencimentos,

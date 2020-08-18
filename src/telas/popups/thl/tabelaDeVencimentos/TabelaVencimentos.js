@@ -296,8 +296,8 @@ const renderConteudoTabelaVencimentos = (
                   return (
                     <CelulaMes
                       id={id}
-                      itemColuna={linha.stocks[indiceStock]}
-                      ultimaColuna={idColunaTotal === id && indiceStock !== 0}
+                      cellData={linha.stocks[indiceStock]}
+                      isLastColumn={idColunaTotal === id && indiceStock !== 0}
                     />
                   );
                 } //
