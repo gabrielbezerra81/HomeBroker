@@ -73,25 +73,17 @@ const renderDivLogin = (props) => {
         onClick={() => props.deslogarUsuarioAction(props)}
         tabIndex={0}
       >
-        <Row className="botaoDeslogar">
-          <Col md={"0"} className="colLogout">
-            <MDBIcon icon="power-off" className="iconeDeslogar" />
-          </Col>
-          <Col md={4} className="colLogout">
-            <h6>LOGOUT</h6>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={"0"} className="colLogout">
-            <MDBIcon
-              icon="circle"
-              className="iconeStatusCirculo iconeStatusConectado"
-            />
-          </Col>
-          <Col md={4} className="colLogout">
-            <h6 className="textoConectado">CONECTADO</h6>
-          </Col>
-        </Row>
+        <div className="flexCenterCenter">
+          <MDBIcon icon="power-off" className="iconeDeslogar" />
+          <h6 className="textoLogout">LOGOUT</h6>
+        </div>
+        <div className="flexCenterCenter">
+          <MDBIcon
+            icon="circle"
+            className="iconeStatusCirculo iconeStatusConectado"
+          />
+          <h6 className="textoConectado">CONECTADO</h6>
+        </div>
       </div>
     );
   } else {
