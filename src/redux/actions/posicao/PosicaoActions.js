@@ -4,12 +4,12 @@ import {
   atualizarPosicaoAPI,
   atualizarCotacaoPosicaoAPI,
 } from "api/ReativosAPI";
-import { mudarVariavelPosicao, adicionaPosicao } from "./utils";
+import { updateOnePositionState, adicionaPosicao } from "./utils";
 import { getReducerStateStorePrincipal } from "hooks/utils";
 
-export const mudarVariavelPosicaoAction = (nome, valor) => {
+export const mudarVariavelPosicaoAction = (attributeName, attributeValue) => {
   return (dispatch) => {
-    dispatch(mudarVariavelPosicao({ nome, valor }));
+    dispatch(updateOnePositionState({ attributeName, attributeValue }));
   };
 };
 
@@ -26,8 +26,6 @@ export const listarPosicoesAction = (props) => {
 
     if (token) {
       const dados = await listarPosicoesAPI(token);
-
-      console.log(dados);
 
       const listaPosicoes = [];
       const arrayPrecos = [];
@@ -71,9 +69,24 @@ export const listarPosicoesAction = (props) => {
       //   token,
       // });
 
-      dispatch(mudarVariavelPosicaoAction("posicoesCustodia", listaPosicoes));
-      dispatch(mudarVariavelPosicaoAction("arrayPrecos", arrayPrecos));
-      dispatch(mudarVariavelPosicaoAction("arrayCotacoes", arrayCotacoes));
+      dispatch(
+        updateOnePositionState({
+          attributeName: "posicoesCustodia",
+          attributeValue: listaPosicoes,
+        })
+      );
+      dispatch(
+        updateOnePositionState({
+          attributeName: "arrayPrecos",
+          attributeValue: arrayPrecos,
+        })
+      );
+      dispatch(
+        updateOnePositionState({
+          attributeName: "arrayCotacoes",
+          attributeValue: arrayCotacoes,
+        })
+      );
     }
   };
 };
@@ -90,7 +103,12 @@ const atualizarPosicao = async ({
 
   const newSource = atualizarPosicaoAPI({ dispatch, listaPosicoes, token });
 
-  dispatch(mudarVariavelPosicaoAction("eventSourcePosicao", newSource));
+  dispatch(
+    updateOnePositionState({
+      attributeName: "eventSourcePosicao",
+      attributeValue: newSource,
+    })
+  );
 };
 
 const montaArrayCotacoes = async (listaPosicoes, tipoRetorno = "completo") => {
@@ -165,7 +183,12 @@ const atualizarEmblemas = ({
     token,
   });
 
-  dispatch(mudarVariavelPosicaoAction("eventSourceEmblema", newSource));
+  dispatch(
+    updateOnePositionState({
+      attributeName: "eventSourceEmblema",
+      attributeValue: newSource,
+    })
+  );
 };
 
 export const atualizarCotacoesPosicaoAction = () => {
@@ -221,5 +244,10 @@ const atualizarCotacoes = async ({
     token,
   });
 
-  dispatch(mudarVariavelPosicaoAction("eventSourceCotacoes", newSource));
+  dispatch(
+    updateOnePositionState({
+      attributeName: "eventSourceCotacoes",
+      attributeValue: newSource,
+    })
+  );
 };

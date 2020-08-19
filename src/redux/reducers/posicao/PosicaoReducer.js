@@ -20,7 +20,10 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case MUDAR_VARIAVEL_POSICAO_CUSTODIA:
-      return { ...state, [action.payload.nome]: action.payload.valor };
+      return {
+        ...state,
+        [action.payload.attributeName]: action.payload.attributeValue,
+      };
     default:
       return state;
   }

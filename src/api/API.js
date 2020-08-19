@@ -233,6 +233,8 @@ export const listarOrdensExecAPI = (idToken) => {
       const { body } = response;
       const orders = body ? body : [];
 
+      console.log("ordens: ", body);
+
       return orders;
     })
     .catch((erro) => {
@@ -248,6 +250,8 @@ export const listarPosicoesAPI = (idToken) => {
     .set({ Authorization: `${idToken.tokenType} ${idToken.accessToken}` })
     .retry(3, 2000)
     .then((response) => {
+      console.log("posição: ", response.body);
+
       return response.body;
     })
     .catch((erro) => {

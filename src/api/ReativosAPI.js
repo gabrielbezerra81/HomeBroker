@@ -1,6 +1,6 @@
 import {
   adicionaPosicao,
-  mudarVariavelPosicao,
+  updateOnePositionState,
 } from "redux/actions/posicao/utils";
 import {
   url_emblemaReativo_ids,
@@ -360,7 +360,12 @@ export const atualizarPosicaoAPI = ({ dispatch, listaPosicoes, token }) => {
         }
       });
 
-      dispatch(mudarVariavelPosicao("posicoesCustodia", novaLista));
+      dispatch(
+        updateOnePositionState({
+          attributeName: "posicoesCustodia",
+          attributeValue: novaLista,
+        })
+      );
     }
   };
 
@@ -386,7 +391,7 @@ export const atualizarOrdensExecAPI = ({
   // };
 
   // source.onerror = function (event) {
-  //   console.log(event);
+  //   console.log("ordens error:", event);
   // };
 
   source.onmessage = function (event) {
@@ -430,13 +435,19 @@ export const atualizarPrecosTHLAPI = ({ ids, dispatch, token }) => {
     "setIntervalPrecosTHL"
   );
 
+  source.onerror = function (event) {
+    console.log("thl price update error:", event);
+  };
+
   source.onmessage = function (event) {
     if (typeof event.data !== "undefined") {
       const priceStructure = JSON.parse(event.data);
 
+      // console.log(source);
+
       // console.log(priceStructure);
 
-      if (priceStructure.components.length === 2) {
+      if (true) {
         const index = updatedPriceStructures.findIndex(
           (estrutura) => estrutura.id === priceStructure.id
         );

@@ -1,10 +1,10 @@
 import { MUDAR_VARIAVEL_POSICAO_CUSTODIA } from "constants/MenuActionTypes";
 import ItemPosicao from "types/posicao/posicao";
 
-export const mudarVariavelPosicao = ({ nome, valor }) => {
+export const updateOnePositionState = ({ attributeName, attributeValue }) => {
   return {
     type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-    payload: { nome, valor },
+    payload: { attributeName, attributeValue },
   };
 };
 
