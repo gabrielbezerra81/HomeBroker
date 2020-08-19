@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 
-import { CelulaMes } from "./CelulaMes";
+import { BodyContentCell } from "./BodyContentCell";
 import InputStrikeSelecionado from "./InputStrikeSelecionado";
 import {
   formatarNumDecimal,
@@ -136,7 +136,7 @@ const TableBody = ({ strikeList, yearList, lastMonth }) => {
                 const id = IDs[indiceStock];
 
                 return (
-                  <CelulaMes
+                  <BodyContentCell
                     id={id}
                     cellData={linha.stocks[indiceStock]}
                     isLastColumn={idColunaTotal === id && indiceStock !== 0}

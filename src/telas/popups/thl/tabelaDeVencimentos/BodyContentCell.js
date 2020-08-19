@@ -10,7 +10,7 @@ import { mudarVariavelTHLAction } from "redux/actions/thl/THLActions";
 import BookTHL, { selecionarBooks } from "telas/popups/thl/BookTHL";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
-export const CelulaMes = ({ cellData, id, isLastColumn }) => {
+export const BodyContentCell = ({ cellData, id, isLastColumn }) => {
   const { THLReducer: thlState } = useStateStorePrincipal();
   const dispatch = useDispatchStorePrincipal();
   const {
@@ -73,7 +73,7 @@ export const CelulaMes = ({ cellData, id, isLastColumn }) => {
             {symbolStrike}
           </div>
           {isCustody ? (
-            <div className={`itemQtde${styles.corQtdeExecutando}`}>
+            <div className={`itemQtde${styles.yellowQttyIfExecuting}`}>
               {offerQtty}
             </div>
           ) : null}
@@ -97,9 +97,7 @@ export const CelulaMes = ({ cellData, id, isLastColumn }) => {
         ) : null}
       </div>
 
-      <div
-        className={`containerPrecoMontDesmont${styles.classeCorPrecos}${styles.precosCelulaSelecionada}`}
-      >
+      <div className={`containerPrecoMontDesmont${styles.heatMapColor}`}>
         {!isLastColumn && prices ? (
           <>
             <div
@@ -216,6 +214,10 @@ const calculatePricesBooks = (structure, symbol) => {
   // TODO: verificar presença de atributo com valor 0.0031415f
 
   if (structure && structure.components.length === 2) {
+    const hasForbiddenValue = checkForForbiddenValues(structure);
+
+    if (hasForbiddenValue) return columnPrices;
+
     const [componentA, componentB] = structure.components;
     columnPrices.prices = {};
     columnPrices.prices.max = formatarNumDecimal(structure.max);
@@ -262,6 +264,27 @@ const calculatePricesBooks = (structure, symbol) => {
   return columnPrices;
 };
 
+const checkForForbiddenValues = (structure) => {
+  let hasForbiddenValue = false;
+  const forbiddenValue = "0.0031415f";
+
+  if (structure.max === forbiddenValue || structure.min === forbiddenValue) {
+    hasForbiddenValue = true;
+
+    return hasForbiddenValue;
+  }
+
+  hasForbiddenValue = structure.components.some((component) => {
+    const hasValueInComponent = Object.keys(component).some(
+      (key) => component[key] === forbiddenValue
+    );
+
+    return hasValueInComponent;
+  });
+
+  return hasForbiddenValue;
+};
+
 const getStyleClasses = ({
   thlState,
   isExecuting,
@@ -270,27 +293,24 @@ const getStyleClasses = ({
   symbol,
 }) => {
   const { codigoCelulaSelecionada } = thlState;
-  const corQtdeExecutando = isExecuting ? " ativoExecutando" : "";
-  const classeCorPrecos = isLastColumn
+  const yellowQttyIfExecuting = isExecuting ? " ativoExecutando" : "";
+  const heatMapColor = isLastColumn
     ? ""
-    : getPriceColumnColor(thlState, structure);
+    : getHeatMapColor(thlState, structure);
   let selectedCell = "";
 
-  let precosCelulaSelecionada = "";
   if (codigoCelulaSelecionada === symbol) {
     selectedCell = " celulaSelecionada";
-    precosCelulaSelecionada = " precosCelulaSelecionada";
   }
 
   return {
-    corQtdeExecutando,
-    classeCorPrecos,
+    yellowQttyIfExecuting,
+    heatMapColor,
     selectedCell,
-    precosCelulaSelecionada,
   };
 };
 
-const getPriceColumnColor = (thlState, structure) => {
+const getHeatMapColor = (thlState, structure) => {
   let styleClass = "";
   const { seletorMapaCalor, faixasMapaCalor } = thlState;
 

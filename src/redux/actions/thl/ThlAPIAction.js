@@ -39,7 +39,6 @@ export const listarTabelaInicialTHLAPIAction = () => {
     } = getReducerStateStorePrincipal(getState(), "thl");
 
     if (ativo && strikeSelecionado && tipo) {
-      console.log("entrou aqui");
       dispatch(
         updateOneTHLState({ nome: "carregandoTabelaVencimentos", valor: true })
       );
