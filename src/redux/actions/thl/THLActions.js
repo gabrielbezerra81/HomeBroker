@@ -15,18 +15,18 @@ import { erro_exportar_ordens_multileg } from "constants/AlertaErros";
 import { searchMultilegSymbolData } from "redux/actions/multileg/MultilegAPIAction";
 import { calculoPreco } from "telas/popups/multileg_/CalculoPreco";
 import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
-import { mudarVariaveisTHL, mudarVariavelTHL } from "./utils";
+import { updateManyTHLState, updateOneTHLState } from "./utils";
 import { getReducerStateStorePrincipal } from "hooks/utils";
 
 export const mudarVariavelTHLAction = (nome, valor) => {
   return (dispatch) => {
-    dispatch(mudarVariavelTHL({ nome, valor }));
+    dispatch(updateOneTHLState({ nome, valor }));
   };
 };
 
 export const mudarVariaveisTHLAction = (payload) => {
   return (dispatch) => {
-    dispatch(mudarVariaveisTHL(payload));
+    dispatch(updateManyTHLState(payload));
   };
 };
 

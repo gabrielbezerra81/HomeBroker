@@ -8,7 +8,7 @@ import {
   pesquisarListaStrikeTHLAPI,
 } from "api/API";
 import { atualizarPrecosTHLAPI, atualizarCotacaoTHLAPI } from "api/ReativosAPI";
-import { mudarVariavelTHL, mudarVariaveisTHL } from "./utils";
+import { updateOneTHLState, updateManyTHLState } from "./utils";
 import { getReducerStateStorePrincipal } from "hooks/utils";
 
 export const pesquisarAtivoTHLAPIAction = () => {
@@ -19,7 +19,7 @@ export const pesquisarAtivoTHLAPIAction = () => {
 
     if (listaStrikes.length > 0) {
       dispatch(
-        mudarVariaveisTHL({
+        updateManyTHLState({
           listaStrikes,
           ativoPesquisado: ativoPesquisa.toUpperCase(),
         })
@@ -39,7 +39,10 @@ export const listarTabelaInicialTHLAPIAction = () => {
     } = getReducerStateStorePrincipal(getState(), "thl");
 
     if (ativo && strikeSelecionado && tipo) {
-      dispatch(mudarVariavelTHL("carregandoTabelaVencimentos", true));
+      console.log("entrou aqui");
+      dispatch(
+        updateOneTHLState({ nome: "carregandoTabelaVencimentos", valor: true })
+      );
 
       const { token } = getReducerStateStorePrincipal(getState(), "principal");
 
@@ -59,7 +62,7 @@ export const listarTabelaInicialTHLAPIAction = () => {
         });
 
       dispatch(
-        mudarVariaveisTHL({
+        updateManyTHLState({
           opcoesStrike: mapearTabelaVencimentos(tabelaVencimentos),
           carregandoTabelaVencimentos: false,
           codigoCelulaSelecionada: "",
@@ -73,7 +76,9 @@ export const listarTabelaInicialTHLAPIAction = () => {
 
 export const recalcularPrecosTHLAPIAction = () => {
   return async (dispatch, getState) => {
-    dispatch(mudarVariavelTHL("carregandoTabelaVencimentos", true));
+    dispatch(
+      updateOneTHLState({ nome: "carregandoTabelaVencimentos", valor: true })
+    );
 
     const {
       ativoPesquisado,
@@ -104,7 +109,7 @@ export const recalcularPrecosTHLAPIAction = () => {
     }
     setTimeout(() => {
       dispatch(
-        mudarVariaveisTHL({
+        updateManyTHLState({
           opcoesStrike: mapearTabelaVencimentos(tabelaVencimentos),
           celulaCalculada: codigoCelulaSelecionada,
           booksSelecionados: [],
@@ -141,7 +146,7 @@ const atualizarPrecosTHL = async ({
 
   const source = atualizarPrecosTHLAPI({ ids, dispatch, token });
   dispatch(
-    mudarVariaveisTHL({
+    updateManyTHLState({
       eventSourcePrecos: source,
       precosTabelaVencimentos: [],
     })
@@ -175,7 +180,7 @@ export const pesquisarCombinacoesTHLAPIAction = () => {
     const { token } = getReducerStateStorePrincipal(getState(), "principal");
 
     dispatch(
-      mudarVariaveisTHL({
+      updateManyTHLState({
         booksSelecionados: [],
         pesquisandoAtivo: true,
         carregandoCombinacoes: true,
@@ -204,7 +209,7 @@ export const pesquisarCombinacoesTHLAPIAction = () => {
     }
 
     dispatch(
-      mudarVariaveisTHL({
+      updateManyTHLState({
         pesquisandoAtivo: false,
         carregandoCombinacoes: false,
         combinacoesTabela: tabelaCombinacoes,
@@ -286,5 +291,7 @@ const atualizarCotacaoTHL = ({
     codigos,
     token,
   });
-  dispatch(mudarVariavelTHL("eventSourceCotacoesTHL", source));
+  dispatch(
+    updateOneTHLState({ nome: "eventSourceCotacoesTHL", valor: source })
+  );
 };
