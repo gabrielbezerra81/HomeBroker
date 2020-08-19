@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   formatarNumDecimal,
   formatarQuantidadeKMG,
@@ -27,26 +27,27 @@ export const CelulaMes = ({ cellData, id, isLastColumn }) => {
 
   const { isCustody, isExecuting, execQtty, offerQtty } = CheckIsCutody(symbol);
 
-  const structure = findStructureByIdAndSymbol(
-    precosTabelaVencimentos,
-    id,
-    symbol
+  const structure = useMemo(
+    () => findStructureByIdAndSymbol(precosTabelaVencimentos, id, symbol),
+    [precosTabelaVencimentos, id, symbol]
   );
 
-  const {
-    mountBook,
-    demountBook,
-    prices,
-    cellHasPrices,
-  } = calculatePricesBooks(structure, symbol);
+  const { mountBook, demountBook, prices, cellHasPrices } = useMemo(
+    () => calculatePricesBooks(structure, symbol),
+    [structure, symbol]
+  );
 
-  const styles = getStyleClasses({
-    thlState,
-    isExecuting,
-    isLastColumn,
-    structure,
-    symbol,
-  });
+  const styles = useMemo(
+    () =>
+      getStyleClasses({
+        thlState,
+        isExecuting,
+        isLastColumn,
+        structure,
+        symbol,
+      }),
+    [thlState, isExecuting, isLastColumn, structure, symbol]
+  );
 
   return (
     <div className="containerColunaMes">
@@ -99,7 +100,7 @@ export const CelulaMes = ({ cellData, id, isLastColumn }) => {
       <div
         className={`containerPrecoMontDesmont${styles.classeCorPrecos}${styles.precosCelulaSelecionada}`}
       >
-        {!isLastColumn && structure ? (
+        {!isLastColumn && prices ? (
           <>
             <div
               className="divClicavel"
@@ -212,17 +213,20 @@ const calculatePricesBooks = (structure, symbol) => {
     cellHasPrices: false,
   };
 
-  if (structure) {
+  // TODO: verificar presença de atributo com valor 0.0031415f
+
+  if (structure && structure.components.length === 2) {
+    const [componentA, componentB] = structure.components;
     columnPrices.prices = {};
     columnPrices.prices.max = formatarNumDecimal(structure.max);
     columnPrices.prices.min = formatarNumDecimal(structure.min);
 
-    if (structure.components[0].stock.symbol === symbol) {
-      thisCellPrice = structure.components[0];
-      nextCellPrice = structure.components[1];
+    if (componentA.stock.symbol === symbol) {
+      thisCellPrice = componentA;
+      nextCellPrice = componentB;
     } else {
-      thisCellPrice = structure.components[1];
-      nextCellPrice = structure.components[0];
+      thisCellPrice = componentB;
+      nextCellPrice = componentA;
     }
   }
 

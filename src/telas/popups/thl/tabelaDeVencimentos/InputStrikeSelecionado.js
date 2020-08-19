@@ -4,13 +4,13 @@ import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { mudarVariavelTHLAction } from "redux/actions/thl/THLActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
-export default ({ strikeLinha, indiceStrike }) => {
+export default ({ strikeLinha, indiceStrike, isTableEmpty }) => {
   const {
     THLReducer: { strikeSelecionado, listaStrikes },
   } = useStateStorePrincipal();
   const dispatch = useDispatchStorePrincipal();
 
-  if (Number(strikeSelecionado) === Number(strikeLinha)) {
+  if (Number(strikeSelecionado) === Number(strikeLinha) || isTableEmpty) {
     return (
       <div style={{ padding: "5px 0", width: "45px", textAlignLast: "end" }}>
         <FormControl

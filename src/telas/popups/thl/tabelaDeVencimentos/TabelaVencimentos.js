@@ -2,19 +2,20 @@
 import React, { useMemo, useEffect } from "react";
 import { Table } from "react-bootstrap";
 import moment from "moment";
+import "moment/locale/pt-br";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
-import {
-  formatarNumDecimal,
-  formatarQuantidadeKMG,
-} from "shared/utils/Formatacoes";
 import { listarTabelaInicialTHLAPIAction } from "redux/actions/thl/ThlAPIAction";
-import { CelulaMes } from "telas/popups/thl/tabelaDeVencimentos/CelulaMes";
 import InputStrikeSelecionado from "telas/popups/thl/tabelaDeVencimentos/InputStrikeSelecionado";
 import usePrevious from "hooks/usePrevious";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
+import TableBody from "./TableBody";
+import {
+  RenderDynamicColumnsByYearsAndMonths,
+  checkIfMonthHasContentInAnyLine,
+} from "./utils";
 
 export default React.memo(() => {
-  const { THLReducer: reduxState } = useStateStorePrincipal();
+  const { THLReducer: thlState } = useStateStorePrincipal();
   const dispatch = useDispatchStorePrincipal();
   const {
     opcoesStrike,
@@ -23,7 +24,7 @@ export default React.memo(() => {
     tipo,
     codigoCelulaSelecionada,
     celulaCalculada,
-  } = reduxState;
+  } = thlState;
 
   const strikesInteiros = useMemo(() => getStrikesInteiros(opcoesStrike), [
     opcoesStrike,
@@ -93,20 +94,24 @@ export default React.memo(() => {
             </div>
           </td>
           {/* renderiza as colunas com os nomes do meses */}
-          {renderElementoDinamico(
-            anos,
-            ultimoMes,
-            (indice, ano) => renderCelulaNomeMes(indice + 1, opcoesStrike, ano),
-            "colunaNomesMeses"
-          )}
+          {RenderDynamicColumnsByYearsAndMonths({
+            yearList: anos,
+            lastMonthToStop: ultimoMes,
+            elementToRender: (monthIndex, year) =>
+              renderMonthNameHeaderColumn({
+                month: monthIndex + 1,
+                tableData: opcoesStrike,
+                year: year,
+              }),
+            elementBaseKey: "colunaNomesMeses",
+          })}
         </tr>
         {opcoesStrike.length === 0 ? <OpcoesStrikeVazio /> : null}
-        {renderConteudoTabelaVencimentos(
-          reduxState,
-          strikesInteiros,
-          anos,
-          ultimoMes
-        )}
+        <TableBody
+          strikeList={strikesInteiros}
+          yearList={anos}
+          lastMonth={ultimoMes}
+        />
       </tbody>
     </Table>
   );
@@ -144,196 +149,19 @@ const getAnosUltimoMesTabela = (arrayVencimentos) => {
   return { anos: anos, ultimoMes: ultimoMes };
 };
 
-const renderElementoDinamico = (anos, ultimoMes, renderElemento, key) => {
-  const mesAtual = moment().month();
+const renderMonthNameHeaderColumn = ({ month, tableData, year }) => {
+  moment.locale("pt-br");
+  let monthName = moment.months()[month - 1];
 
-  return anos.map((ano, indiceAno) =>
-    meses.map((mes, indiceMes) => {
-      const celula = (
-        <td key={`${key}${ano}${mes}`}>{renderElemento(indiceMes, ano)}</td>
-      );
+  monthName =
+    monthName.charAt(0).toUpperCase() + monthName.substr(1, monthName.length);
 
-      // Meses anteriores
-      const condicaoPrimeiroAno = indiceMes >= mesAtual;
-      // Se estiver renderizando no ultimo ano, o mês não pode ser maior que o ultimo mês. Ex: opções do ano 2021 termina em junho
-      const condicaoUltimoAno = indiceMes <= ultimoMes - 1;
+  if (!checkIfMonthHasContentInAnyLine(tableData, month, year))
+    return monthName;
 
-      switch (indiceAno) {
-        case 0:
-          if (condicaoPrimeiroAno) return celula;
-          return null;
-        case anos.length - 1:
-          if (condicaoUltimoAno) return celula;
-          return null;
-        default:
-          return celula;
-      }
-    })
-  );
-};
-
-const renderConteudoTabelaVencimentos = (
-  reduxState,
-  strikesInteiros,
-  anos,
-  ultimoMes
-) => {
-  const { opcoesStrike, precosTabelaVencimentos } = reduxState;
-  const conteudoTabelaVencimentos = strikesInteiros.map(
-    (strike, indiceStrike) => {
-      const linhaStrike = (
-        <tr key={`strikeLine${indiceStrike}`} className="linhasStrike">
-          <td>
-            <InputStrikeSelecionado
-              strikeLinha={strike}
-              indiceStrike={indiceStrike}
-            />
-          </td>
-          <td>
-            <div className="colunaDividida colunaPrecoLinha">
-              <div></div>
-              <div></div>
-            </div>
-          </td>
-          {/* renderiza as colunas vazias na linha que contem o strike inteiro */}
-          {renderElementoDinamico(
-            anos,
-            ultimoMes,
-            (indice, ano) =>
-              renderCelulaNomeMes(indice + 1, opcoesStrike, ano, true),
-            "colunaMesLinhaStrike"
-          )}
-        </tr>
-      );
-
-      const vencimentosStrike = opcoesStrike.filter(
-        (linhaVencimentos) => parseInt(linhaVencimentos.strikeLine) === strike
-      );
-
-      const linhaVencimentos = vencimentosStrike.map((linha, indiceLinha) => {
-        const IDs = linha.structuresIds;
-        const idColunaTotal = IDs[IDs.length - 1];
-        const precosColunaTotal = precosTabelaVencimentos.find(
-          (estrutura) => estrutura.id === idColunaTotal
-        );
-
-        let precoTotalMontar = "";
-        let precoTotalDesmontar = "";
-        let precoMensalMontar = "";
-        let precoMensalDesmontar = "";
-
-        if (precosColunaTotal) {
-          let { max, min, components } = precosColunaTotal;
-
-          const qtdeMontar = formatarQuantidadeKMG(
-            Math.min(components[0].compraQtde, components[1].vendaQtde)
-          );
-          const qtdeDesmont = formatarQuantidadeKMG(
-            Math.min(components[0].vendaQtde, components[1].compraQtde)
-          );
-
-          const primeiroMes = moment(
-            components[0].stock.endBusiness,
-            "DD-MM-YYYY HH:mm:ss"
-          ).startOf("month");
-          const ultimoMes = moment(
-            components[1].stock.endBusiness,
-            "DD-MM-YYYY HH:mm:ss"
-          ).startOf("month");
-
-          const diferencaMeses = ultimoMes.diff(primeiroMes, "months");
-          const textoMeses = diferencaMeses === 1 ? "mês" : "meses";
-
-          precoMensalMontar = `${formatarNumDecimal(
-            max / (diferencaMeses || 1)
-          )} | ${diferencaMeses} ${textoMeses}`;
-          precoMensalDesmontar = `${formatarNumDecimal(
-            min / (diferencaMeses || 1)
-          )} | ${diferencaMeses} ${textoMeses}`;
-
-          max = formatarNumDecimal(max);
-          min = formatarNumDecimal(min);
-
-          precoTotalMontar = `${max} | ${qtdeMontar}`;
-          precoTotalDesmontar = `${min} | ${qtdeDesmont}`;
-        }
-
-        return (
-          <tr key={`linhaVenc${indiceLinha}`}>
-            <td>{formatarNumDecimal(linha.strikeLine)}</td>
-            <td>
-              <div className="colunaDividida colunaPrecoLinha">
-                <div>
-                  <div className="precoLinhaMontar">{precoTotalMontar}</div>
-                  <div className="precoLinhaDesmontar">
-                    {precoTotalDesmontar}
-                  </div>
-                </div>
-                <div>
-                  <div className="precoLinhaMontar">{precoMensalMontar}</div>
-                  <div className="precoLinhaDesmontar">
-                    {precoMensalDesmontar}
-                  </div>
-                </div>
-              </div>
-            </td>
-
-            {/* Colunas dos meses */}
-            {renderElementoDinamico(
-              anos,
-              ultimoMes,
-              (indiceMes, ano) => {
-                const indMes = indiceMes + 1;
-                const indiceStock = linha.stocks.findIndex(
-                  (itemColuna) =>
-                    itemColuna.vencimento.month() + 1 === indMes &&
-                    itemColuna.vencimento.year() === ano
-                );
-
-                if (indiceStock !== -1) {
-                  const id = IDs[indiceStock];
-
-                  return (
-                    <CelulaMes
-                      id={id}
-                      cellData={linha.stocks[indiceStock]}
-                      isLastColumn={idColunaTotal === id && indiceStock !== 0}
-                    />
-                  );
-                } //
-                else {
-                  const possuiVencimento = verificarMesPossuiVencimento(
-                    opcoesStrike,
-                    indMes,
-                    ano
-                  );
-
-                  return possuiVencimento ? colunaVazia : null;
-                }
-              },
-              "colunaVencimento"
-            )}
-          </tr>
-        );
-      });
-
-      return [linhaStrike, ...linhaVencimentos];
-    }
-  );
-  return conteudoTabelaVencimentos;
-};
-
-const renderCelulaNomeMes = (mes, opcoesStrike, ano, textoVazio = false) => {
-  let nomeMes = "";
-
-  // Texto com o nome do mês nas colunas de mês ou vazio nas linhas de Strike
-  if (!textoVazio) {
-    nomeMes = meses[mes - 1];
-  }
-  if (!verificarMesPossuiVencimento(opcoesStrike, mes, ano)) return nomeMes;
   return (
     <div style={{ display: "flex", height: "100%", justifyContent: "center" }}>
-      <div className="divNomeMes">{nomeMes}</div>
+      <div className="divNomeMes">{monthName}</div>
       <div className="containerPrecoMontDesmont">
         <div></div>
         <div></div>
@@ -342,56 +170,19 @@ const renderCelulaNomeMes = (mes, opcoesStrike, ano, textoVazio = false) => {
   );
 };
 
-const verificarMesPossuiVencimento = (opcoesStrike, mes, ano = "") => {
-  const stocks = [];
-
-  opcoesStrike.forEach((linha) => {
-    linha.stocks.forEach((stock) => {
-      stocks.push(stock);
-    });
-  });
-  return stocks.some(
-    (stock) =>
-      stock.vencimento.month() + 1 === mes && stock.vencimento.year() === ano
-  );
-};
-
 const OpcoesStrikeVazio = () => {
+  const {
+    THLReducer: { opcoesStrike },
+  } = useStateStorePrincipal();
+
+  const tableHasContent = !!opcoesStrike.length;
+
   return (
     <tr>
       <td>
-        <InputStrikeSelecionado indiceStrike={1} />
+        <InputStrikeSelecionado isTableEmpty={!tableHasContent} />
       </td>
       <td />
     </tr>
   );
 };
-
-const colunaVazia = (
-  <div className="containerColunaMes">
-    <div className="containerCelula">
-      <div>
-        <div className="itemAtivosQtde"></div>
-      </div>
-    </div>
-    <div className="containerPrecoMontDesmont">
-      <div></div>
-      <div></div>
-    </div>
-  </div>
-);
-
-const meses = [
-  "Janeiro",
-  "Fevereiro",
-  "Março",
-  "Abril",
-  "Maio",
-  "Junho",
-  "Julho",
-  "Agosto",
-  "Setembro",
-  "Outubro",
-  "Novembro",
-  "Dezembro",
-];
