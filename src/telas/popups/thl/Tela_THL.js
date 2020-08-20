@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import ReactResizeDetector from "react-resize-detector";
@@ -13,10 +13,6 @@ import ContainerTabelaCombinacoes, {
   calcularMargemBorda,
   verificarOverflow,
 } from "telas/popups/thl/tabelaCombinacoes/ContainerTabelaCombinacoes";
-
-// window.jQuery = require("jquery");
-// window.$ = window.jQuery;
-// require("fixed-header-table");
 
 class Tela_THL extends React.Component {
   componentDidMount() {
@@ -45,6 +41,20 @@ class Tela_THL extends React.Component {
   }
 
   ModalBody = () => {
+    const handleTHLResize = useCallback(() => {
+      const container = document.getElementsByClassName(
+        "containerTabelaComb"
+      )[0];
+      if (container.scrollWidth > container.clientWidth) {
+        container.classList.add("bordaRedimensionar");
+        container.style.height += verificarOverflow();
+      } else {
+        container.classList.remove("bordaRedimensionar");
+        container.style.height -= verificarOverflow();
+      }
+      calcularMargemBorda();
+    }, []);
+
     return (
       <PerfectScrollbar
         id="scrollbarTHL"
@@ -57,22 +67,7 @@ class Tela_THL extends React.Component {
           <MenuTopo />
           <ContainerTabelaVencimentos />
           <ContainerTabelaCombinacoes />
-          <ReactResizeDetector
-            handleWidth
-            onResize={(w, h) => {
-              const container = document.getElementsByClassName(
-                "containerTabelaComb"
-              )[0];
-              if (container.scrollWidth > container.clientWidth) {
-                container.classList.add("bordaRedimensionar");
-                container.style.height += verificarOverflow();
-              } else {
-                container.classList.remove("bordaRedimensionar");
-                container.style.height -= verificarOverflow();
-              }
-              calcularMargemBorda();
-            }}
-          />
+          <ReactResizeDetector handleWidth onResize={handleTHLResize} />
         </div>
       </PerfectScrollbar>
     );

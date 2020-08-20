@@ -7,51 +7,52 @@ export const RenderDynamicColumnsByYearsAndMonths = ({
   elementToRender,
   elementBaseKey,
 }) => {
-  const mesAtual = moment().month();
+  const currentMonth = moment().month();
 
   const months = moment.months();
 
-  return yearList.map((ano, indiceAno) =>
-    months.map((mes, indiceMes) => {
-      const celula = (
-        <td key={`${elementBaseKey}${ano}${mes}`}>
-          {elementToRender(indiceMes, ano)}
+  return yearList.map((year, yearIndex) =>
+    months.map((month, monthIndex) => {
+      const renderedCell = (
+        <td key={`${elementBaseKey}${year}${month}`}>
+          {elementToRender(monthIndex, year)}
         </td>
       );
 
-      // Meses anteriores
-      const condicaoPrimeiroAno = indiceMes >= mesAtual;
-      // Se estiver renderizando no ultimo ano, o mês não pode ser maior que o ultimo mês. Ex: opções do ano 2021 termina em junho
-      const condicaoUltimoAno = indiceMes <= lastMonthToStop - 1;
+      // Não pode mostrar celulas de meses passados
+      const shouldRenderInFirstYear = monthIndex >= currentMonth;
+      // Se estiver renderizando no ultimo ano, o mês não pode ser maior que o ultimo mês que tem vencimentos. Ex: opções do ano 2021 termina em junho, logo
+      // não deve ter celulas preenchidas em julho, agosto, etc.
+      const shouldRenderInLastYear = monthIndex <= lastMonthToStop - 1;
 
-      switch (indiceAno) {
+      switch (yearIndex) {
         case 0:
-          if (condicaoPrimeiroAno) return celula;
+          if (shouldRenderInFirstYear) return renderedCell;
           return null;
         case yearList.length - 1:
-          if (condicaoUltimoAno) return celula;
+          if (shouldRenderInLastYear) return renderedCell;
           return null;
         default:
-          return celula;
+          return renderedCell;
       }
     })
   );
 };
 
 export const checkIfMonthHasContentInAnyLine = (
-  opcoesStrike,
-  mes,
-  ano = ""
+  strikeOptions,
+  month,
+  year = ""
 ) => {
   const stocks = [];
 
-  opcoesStrike.forEach((linha) => {
+  strikeOptions.forEach((linha) => {
     linha.stocks.forEach((stock) => {
       stocks.push(stock);
     });
   });
   return stocks.some(
     (stock) =>
-      stock.vencimento.month() + 1 === mes && stock.vencimento.year() === ano
+      stock.vencimento.month() + 1 === month && stock.vencimento.year() === year
   );
 };

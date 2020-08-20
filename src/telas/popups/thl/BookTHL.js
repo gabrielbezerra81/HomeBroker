@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { mudarVariavelTHLAction } from "redux/actions/thl/THLActions";
 import { erro_selecaoBook_THL } from "constants/AlertaErros";
@@ -11,18 +11,21 @@ export default (props) => {
   } = useStateStorePrincipal();
   const dispatch = useDispatchStorePrincipal();
 
-  const indice = booksSelecionados.findIndex(
+  const selectedBookIndex = booksSelecionados.findIndex(
     (book) => book.ativo === ativo && book.tipo === tipo
   );
 
-  const tipoBook = tipo === "compra" ? "venda" : "compra";
+  const bookType = tipo === "compra" ? "venda" : "compra";
 
-  const bookSelecionado =
-    indice !== -1 ? ` bookSelecionado_${tipoBook}` : " bookNaoSelecionado";
+  const bookIsSelected = useMemo(() => {
+    return selectedBookIndex !== -1
+      ? ` bookSelecionado_${bookType}`
+      : " bookNaoSelecionado";
+  }, [selectedBookIndex, bookType]);
 
   return (
     <div
-      className={`divClicavel${bookSelecionado}`}
+      className={`divClicavel${bookIsSelected}`}
       tabIndex={0}
       onClick={(e) => {
         selecionarBooks({

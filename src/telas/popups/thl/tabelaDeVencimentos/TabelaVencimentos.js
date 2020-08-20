@@ -35,6 +35,7 @@ export default React.memo(() => {
   );
 
   const prevCodigoSelecionado = usePrevious(codigoCelulaSelecionada);
+  
   const prevCalculada = usePrevious(celulaCalculada);
 
   useEffect(() => {

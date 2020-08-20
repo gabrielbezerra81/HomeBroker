@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Form, InputGroup, Spinner } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import { Radio, Button, Tooltip } from "antd";
@@ -149,15 +149,15 @@ const RecalcularPrecos = () => {
   } = useStateStorePrincipal();
   const dispatch = useDispatchStorePrincipal();
 
-  const classeBotaoDesabilitado = !codigoCelulaSelecionada
-    ? " botaoDesabilitado"
-    : "";
+  const isDisabled = useMemo(() => {
+    return !codigoCelulaSelecionada ? " botaoDesabilitado" : "";
+  }, [codigoCelulaSelecionada]);
 
   return (
     <div className="containerBotaoMenuTopo iconeRecalcularPrecos">
       <BotaoMenuTopo
         texto={textoRecalcular}
-        condicaoVisibilidade={classeBotaoDesabilitado}
+        condicaoVisibilidade={isDisabled}
         icone={iconeRecalcularPrecos}
         onClick={() => dispatch(recalcularPrecosTHLAPIAction())}
       />
@@ -171,15 +171,16 @@ const Favoritar = () => {
     telaPrincipalReducer: { token },
   } = useStateStorePrincipal();
   const dispatch = useDispatchStorePrincipal();
-  const classeBotaoDesabilitado = !idCelulaSelecionada
-    ? " botaoDesabilitado"
-    : "";
+
+  const isDisabled = useMemo(() => {
+    return !idCelulaSelecionada ? " botaoDesabilitado" : "";
+  }, [idCelulaSelecionada]);
 
   return (
     <div className="containerBotaoMenuTopo containerBotaoFavoritar">
       <BotaoMenuTopo
         texto={textoFavoritar}
-        condicaoVisibilidade={classeBotaoDesabilitado}
+        condicaoVisibilidade={isDisabled}
         icone={iconeFavorito}
         onClick={() =>
           dispatch(favoritarTHLAPIAction({ idCelulaSelecionada, token }))
@@ -193,9 +194,11 @@ const CriarAlerta = () => {
     THLReducer: { idCelulaSelecionada },
   } = useStateStorePrincipal();
   const dispatch = useDispatchStorePrincipal();
-  const classeBotaoDesabilitado = !idCelulaSelecionada
-    ? " botaoDesabilitado"
-    : "";
+
+  const classeBotaoDesabilitado = useMemo(() => {
+    return !idCelulaSelecionada ? " botaoDesabilitado" : "";
+  }, [idCelulaSelecionada]);
+
   const actionProps = { idCelulaSelecionada };
 
   return (

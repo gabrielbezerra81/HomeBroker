@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import moment from "moment";
 
 import { BodyContentCell } from "./BodyContentCell";
@@ -18,14 +18,96 @@ const TableBody = ({ strikeList, yearList, lastMonth }) => {
 
   const { opcoesStrike, precosTabelaVencimentos } = thlState;
 
-  const bodyContent = strikeList.map((strike, strikeIndex) => {
-    const emptyLineWithStrike = (
-      <tr key={`strikeLine${strikeIndex}`} className="linhasStrike">
+  const calculatedDataToRender = useMemo(() => {
+    return strikeList.map((strike, strikeIndex) => {
+      const linesWithSameBaseStrike = opcoesStrike.filter(
+        (line) => parseInt(line.strikeLine) === strike
+      );
+
+      const linesDataToRender = linesWithSameBaseStrike.map(
+        (line, lineIndex) => {
+          const IDs = line.structuresIds;
+          const totalColumnId = IDs[IDs.length - 1];
+          const totalColumnPrices = precosTabelaVencimentos.find(
+            (structure) => structure.id === totalColumnId
+          );
+
+          let totalMountPrice = "";
+          let totalDemountPrice = "";
+          let monthMountPrice = "";
+          let monthDemountPrice = "";
+
+          if (totalColumnPrices && totalColumnPrices.components.length === 2) {
+            let { max, min, components } = totalColumnPrices;
+
+            const [componentA, componentB] = components;
+
+            const mountQtty = formatarQuantidadeKMG(
+              Math.min(componentA.compraQtde || 0, componentB.vendaQtde || 0)
+            );
+            const demountQtty = formatarQuantidadeKMG(
+              Math.min(componentA.vendaQtde || 0, componentB.compraQtde || 0)
+            );
+
+            const componentAMonth = moment(
+              componentA.stock.endBusiness,
+              "DD-MM-YYYY HH:mm:ss"
+            ).startOf("month");
+            const componentBMonth = moment(
+              componentB.stock.endBusiness,
+              "DD-MM-YYYY HH:mm:ss"
+            ).startOf("month");
+
+            const monthDiffBetweenComponents = componentBMonth.diff(
+              componentAMonth,
+              "months"
+            );
+            const monthText =
+              monthDiffBetweenComponents === 1 ? "mês" : "meses";
+
+            const mountPrice = formatarNumDecimal(
+              max / (monthDiffBetweenComponents || 1)
+            );
+            monthMountPrice = `${mountPrice} | ${monthDiffBetweenComponents} ${monthText}`;
+
+            const demountPrice = formatarNumDecimal(
+              min / (monthDiffBetweenComponents || 1)
+            );
+            monthDemountPrice = `${demountPrice} | ${monthDiffBetweenComponents} ${monthText}`;
+
+            max = formatarNumDecimal(max);
+            min = formatarNumDecimal(min);
+
+            totalMountPrice = `${max} | ${mountQtty}`;
+            totalDemountPrice = `${min} | ${demountQtty}`;
+          }
+
+          const lineData = {
+            formattedStrike: formatarNumDecimal(line.strikeLine),
+            totalMountPrice,
+            totalDemountPrice,
+            monthMountPrice,
+            monthDemountPrice,
+            totalColumnId,
+            structureIds: IDs,
+            stocks: line.stocks,
+          };
+
+          return lineData;
+        }
+      );
+
+      return { strike, linesData: linesDataToRender };
+    });
+  }, [strikeList, opcoesStrike, precosTabelaVencimentos]);
+
+  return calculatedDataToRender.map((data, index) => {
+    const { strike, linesData } = data;
+
+    const emptyLineWithIntegerStrike = (
+      <tr key={`strikeLine${index}`} className="linhasStrike">
         <td>
-          <InputStrikeSelecionado
-            strikeLinha={strike}
-            indiceStrike={strikeIndex}
-          />
+          <InputStrikeSelecionado strikeLinha={strike} indiceStrike={index} />
         </td>
         <td>
           <div className="colunaDividida colunaPrecoLinha">
@@ -38,7 +120,7 @@ const TableBody = ({ strikeList, yearList, lastMonth }) => {
           yearList,
           lastMonthToStop: lastMonth,
           elementToRender: (monthIndex, year) =>
-            renderEmptyColumn({
+            renderManyEmptyColumns({
               month: monthIndex + 1,
               tableData: opcoesStrike,
               year,
@@ -48,121 +130,73 @@ const TableBody = ({ strikeList, yearList, lastMonth }) => {
       </tr>
     );
 
-    const vencimentosStrike = opcoesStrike.filter(
-      (linhaVencimentos) => parseInt(linhaVencimentos.strikeLine) === strike
-    );
-
-    const linhaVencimentos = vencimentosStrike.map((linha, indiceLinha) => {
-      const IDs = linha.structuresIds;
-      const idColunaTotal = IDs[IDs.length - 1];
-      const precosColunaTotal = precosTabelaVencimentos.find(
-        (estrutura) => estrutura.id === idColunaTotal
-      );
-
-      let precoTotalMontar = "";
-      let precoTotalDesmontar = "";
-      let precoMensalMontar = "";
-      let precoMensalDesmontar = "";
-
-      if (precosColunaTotal && precosColunaTotal.components.length === 2) {
-        let { max, min, components } = precosColunaTotal;
-
-        const [componentA, componentB] = components;
-
-        const qtdeMontar = formatarQuantidadeKMG(
-          Math.min(componentA.compraQtde || 0, componentB.vendaQtde || 0)
-        );
-        const qtdeDesmont = formatarQuantidadeKMG(
-          Math.min(componentA.vendaQtde || 0, componentB.compraQtde || 0)
-        );
-
-        const primeiroMes = moment(
-          componentA.stock.endBusiness,
-          "DD-MM-YYYY HH:mm:ss"
-        ).startOf("month");
-        const ultimoMes = moment(
-          componentB.stock.endBusiness,
-          "DD-MM-YYYY HH:mm:ss"
-        ).startOf("month");
-
-        const diferencaMeses = ultimoMes.diff(primeiroMes, "months");
-        const textoMeses = diferencaMeses === 1 ? "mês" : "meses";
-
-        precoMensalMontar = `${formatarNumDecimal(
-          max / (diferencaMeses || 1)
-        )} | ${diferencaMeses} ${textoMeses}`;
-        precoMensalDesmontar = `${formatarNumDecimal(
-          min / (diferencaMeses || 1)
-        )} | ${diferencaMeses} ${textoMeses}`;
-
-        max = formatarNumDecimal(max);
-        min = formatarNumDecimal(min);
-
-        precoTotalMontar = `${max} | ${qtdeMontar}`;
-        precoTotalDesmontar = `${min} | ${qtdeDesmont}`;
-      }
-
+    const tableLinesWithContent = linesData.map((lineData, lineIndex) => {
       return (
-        <tr key={`linhaVenc${indiceLinha}`}>
-          <td>{formatarNumDecimal(linha.strikeLine)}</td>
+        <tr key={`linhaVenc${lineIndex}`}>
+          <td>{lineData.formattedStrike}</td>
           <td>
             <div className="colunaDividida colunaPrecoLinha">
               <div>
-                <div className="precoLinhaMontar">{precoTotalMontar}</div>
-                <div className="precoLinhaDesmontar">{precoTotalDesmontar}</div>
+                <div className="precoLinhaMontar">
+                  {lineData.totalMountPrice}
+                </div>
+                <div className="precoLinhaDesmontar">
+                  {lineData.totalDemountPrice}
+                </div>
               </div>
               <div>
-                <div className="precoLinhaMontar">{precoMensalMontar}</div>
+                <div className="precoLinhaMontar">
+                  {lineData.monthMountPrice}
+                </div>
                 <div className="precoLinhaDesmontar">
-                  {precoMensalDesmontar}
+                  {lineData.monthDemountPrice}
                 </div>
               </div>
             </div>
           </td>
-
           {/* Colunas dos meses */}
           {RenderDynamicColumnsByYearsAndMonths({
             yearList,
             lastMonthToStop: lastMonth,
-            elementToRender: (indiceMes, ano) => {
-              const indMes = indiceMes + 1;
-              const indiceStock = linha.stocks.findIndex(
+            elementBaseKey: "colunaVencimento",
+            elementToRender: (monthIndex, year) => {
+              const monthNumber = monthIndex + 1;
+              const stockIndex = lineData.stocks.findIndex(
                 (itemColuna) =>
-                  itemColuna.vencimento.month() + 1 === indMes &&
-                  itemColuna.vencimento.year() === ano
+                  itemColuna.vencimento.month() + 1 === monthNumber &&
+                  itemColuna.vencimento.year() === year
               );
 
-              if (indiceStock !== -1) {
-                const id = IDs[indiceStock];
+              if (stockIndex !== -1) {
+                const structureId = lineData.structureIds[stockIndex];
 
                 return (
                   <BodyContentCell
-                    id={id}
-                    cellData={linha.stocks[indiceStock]}
-                    isLastColumn={idColunaTotal === id && indiceStock !== 0}
+                    id={structureId}
+                    cellData={lineData.stocks[stockIndex]}
+                    isLastColumn={
+                      lineData.totalColumnId === structureId && stockIndex !== 0
+                    }
                   />
                 );
               } //
               else {
-                const possuiVencimento = checkIfMonthHasContentInAnyLine(
+                const monthHasContentInAnyLine = checkIfMonthHasContentInAnyLine(
                   opcoesStrike,
-                  indMes,
-                  ano
+                  monthNumber,
+                  year
                 );
 
-                return possuiVencimento ? emptyColumn : null;
+                return monthHasContentInAnyLine ? emptyColumn : null;
               }
             },
-            elementBaseKey: "colunaVencimento",
           })}
         </tr>
       );
     });
 
-    return [emptyLineWithStrike, ...linhaVencimentos];
+    return [emptyLineWithIntegerStrike, ...tableLinesWithContent];
   });
-
-  return bodyContent;
 };
 
 export default TableBody;
@@ -181,7 +215,7 @@ const emptyColumn = (
   </div>
 );
 
-const renderEmptyColumn = ({ month, tableData, year }) => {
+const renderManyEmptyColumns = ({ month, tableData, year }) => {
   if (!checkIfMonthHasContentInAnyLine(tableData, month, year)) return null;
 
   return (

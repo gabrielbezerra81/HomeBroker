@@ -79,6 +79,7 @@ export default React.memo(() => {
 
   //Bloqueia o scroll do container THL quando for rolar a tabela
   const bloquearScroll = alturaContainer === 102;
+
   useEffect(() => {
     var parent = document.getElementById("tabelaCombinacoes").childNodes[1];
 

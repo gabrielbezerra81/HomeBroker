@@ -11,7 +11,11 @@ import BookTHL, { selecionarBooks } from "telas/popups/thl/BookTHL";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export const BodyContentCell = ({ cellData, id, isLastColumn }) => {
-  const { THLReducer: thlState } = useStateStorePrincipal();
+  const {
+    THLReducer: thlState,
+    posicaoReducer: { posicoesCustodia },
+  } = useStateStorePrincipal();
+
   const dispatch = useDispatchStorePrincipal();
   const {
     precosTabelaVencimentos,
@@ -25,7 +29,9 @@ export const BodyContentCell = ({ cellData, id, isLastColumn }) => {
     cellData.strike
   )})`;
 
-  const { isCustody, isExecuting, execQtty, offerQtty } = CheckIsCutody(symbol);
+  const { isCustody, isExecuting, execQtty, offerQtty } = useMemo(() => {
+    return checkIsCutody(symbol, posicoesCustodia);
+  }, [symbol, posicoesCustodia]);
 
   const structure = useMemo(
     () => findStructureByIdAndSymbol(precosTabelaVencimentos, id, symbol),
@@ -133,15 +139,11 @@ export const BodyContentCell = ({ cellData, id, isLastColumn }) => {
   );
 };
 
-const CheckIsCutody = (cellSymbol) => {
+const checkIsCutody = (cellSymbol, posicoesCustodia) => {
   let isExecuting = false;
   let isCustody = false;
   let execQtty = 0;
   let offerQtty = 0;
-
-  const {
-    posicaoReducer: { posicoesCustodia },
-  } = useStateStorePrincipal();
 
   isExecuting = posicoesCustodia.some((posicao) => {
     const executingBuy = posicao.custodiaCompra.find(
@@ -294,9 +296,7 @@ const getStyleClasses = ({
 }) => {
   const { codigoCelulaSelecionada } = thlState;
   const yellowQttyIfExecuting = isExecuting ? " ativoExecutando" : "";
-  const heatMapColor = isLastColumn
-    ? ""
-    : getHeatMapColor(thlState, structure);
+  const heatMapColor = isLastColumn ? "" : getHeatMapColor(thlState, structure);
   let selectedCell = "";
 
   if (codigoCelulaSelecionada === symbol) {
