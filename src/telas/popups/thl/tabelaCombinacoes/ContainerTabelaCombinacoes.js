@@ -81,18 +81,25 @@ export default React.memo(() => {
   const bloquearScroll = alturaContainer === 102;
 
   useEffect(() => {
-    var parent = document.getElementById("tabelaCombinacoes").childNodes[1];
+    const blockTHLScrollTimeout = setTimeout(() => {
+      const parent = document.getElementById("tabelaCombinacoes").childNodes[1];
 
-    var scrollDiv = parent.lastChild;
+      const scrollDiv = parent.lastChild;
 
-    if (scrollDiv)
-      scrollDiv.addEventListener(
-        "wheel",
-        function (e) {
-          e.stopPropagation();
-        },
-        { passive: true }
-      );
+      if (scrollDiv) {
+        scrollDiv.addEventListener(
+          "wheel",
+          function (e) {
+            e.stopPropagation();
+          },
+          { passive: true }
+        );
+      }
+    }, 500);
+
+    return () => {
+      clearTimeout(blockTHLScrollTimeout);
+    };
   }, [bloquearScroll]);
 
   // Se o THL tiver sido rediomensionado e a tabela possuir scroll horizontal, ajusta a borda direita conforme for fazendo scroll
