@@ -76,7 +76,7 @@ export const BodyContentCell = ({ cellData, id, isLastColumn }) => {
         >
           <div className="itemAtivos">
             {ModelImage(cellData.model)}
-            {symbolStrike}
+            {symbolStrike} | id: {id}
           </div>
           {isCustody ? (
             <div className={`itemQtde${styles.yellowQttyIfExecuting}`}>
