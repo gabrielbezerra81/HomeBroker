@@ -18,7 +18,7 @@ const persistConfig = {
 
 const persistedReducerAppPrincipal = persistReducer<MainStoreState, any>(
   persistConfig,
-  reducersAppPrincipal
+  reducersAppPrincipal,
 );
 
 // @ts-ignore
@@ -32,7 +32,7 @@ const combinedReducers = combineReducers({
 export const storeAppPrincipal = createStore(
   persistedReducerAppPrincipal,
   {},
-  composeEnhancers(applyMiddleware(ReduxThunk)) //, LogRocket.reduxMiddleware()
+  composeEnhancers(applyMiddleware(ReduxThunk)), //, LogRocket.reduxMiddleware()
 );
 
 export const persistor = persistStore(storeAppPrincipal);
@@ -41,7 +41,7 @@ export const persistor = persistStore(storeAppPrincipal);
 export const globalStore = createStore(
   combinedReducers,
   {},
-  composeEnhancers(applyMiddleware(ReduxThunk)) //, LogRocket.reduxMiddleware()
+  composeEnhancers(applyMiddleware(ReduxThunk)), //, LogRocket.reduxMiddleware()
 );
 
 export const StorePrincipalContext = React.createContext<
