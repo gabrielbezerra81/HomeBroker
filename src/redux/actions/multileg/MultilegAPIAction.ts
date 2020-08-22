@@ -125,7 +125,7 @@ export const sendMultilegOrderAction = (tabIndex: number): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
       multilegReducer: { multileg },
-      telaPrincipalReducer: { contaSelecionada, token },
+      telaPrincipalReducer: { contaSelecionada },
     } = getState();
 
     const mountOrderProps = {

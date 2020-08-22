@@ -154,7 +154,7 @@ const atualizarPrecosTHL = async ({
 
 export const favoritarTHLAPIAction = (actionProps) => {
   return async (dispatch) => {
-    const { idCelulaSelecionada, token } = actionProps;
+    const { idCelulaSelecionada } = actionProps;
 
     travarDestravarClique("travar", "thl");
     const favoriteData = { structure: { id: idCelulaSelecionada } };

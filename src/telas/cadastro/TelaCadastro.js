@@ -1,32 +1,32 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import {
-  cadastrarUsuarioAction,
-  mudarDadosLoginAction,
-} from "redux/actions/telaPrincipal/TelaPrincipalActions";
+import { cadastrarUsuarioAction } from "redux/actions/telaPrincipal/TelaPrincipalActions";
 import { navigate } from "@reach/router";
 import FloatingLabelInput from "react-floating-label-input";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
-import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 const TelaCadastro = ({ path }) => {
-  const { telaPrincipalReducer: state } = useStateStorePrincipal();
-  const dispatch = useDispatchStorePrincipal();
+  const [user, setUser] = useState({
+    name: "",
+    username: "",
+    email: "",
+    password: "",
+  });
 
-  const {
-    nomeCadastro,
-    usernameCadastro,
-    emailCadastro,
-    senhaCadastro,
-  } = state;
+  const dispatch = useDispatchStorePrincipal();
 
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      dispatch(cadastrarUsuarioAction(state));
+      dispatch(cadastrarUsuarioAction(user));
     },
-    [dispatch, state]
+    [dispatch, user],
   );
+
+  const handleInputChange = useCallback((e) => {
+    const { name, value } = e.target;
+    setUser((oldUser) => ({ ...oldUser, [name]: value }));
+  }, []);
 
   return (
     <div className="backgroundLoginCadastro">
@@ -37,58 +37,45 @@ const TelaCadastro = ({ path }) => {
               <h4>Faça seu cadastro</h4>
               <FloatingLabelInput
                 className={`inputFlutuante ${
-                  nomeCadastro ? "flutuantePreenchido" : ""
+                  user.name ? "flutuantePreenchido" : ""
                 }`}
+                name="name"
                 id="inputNomeFlutuante"
                 label="Nome"
-                value={nomeCadastro}
-                onChange={(e) =>
-                  dispatch(
-                    mudarDadosLoginAction("nomeCadastro", e.target.value)
-                  )
-                }
+                value={user.name}
+                onChange={handleInputChange}
               />
               <FloatingLabelInput
                 className={`inputFlutuante ${
-                  usernameCadastro ? "flutuantePreenchido" : ""
+                  user.username ? "flutuantePreenchido" : ""
                 }`}
                 id="inputUserFlutuante"
                 label="Usuário"
-                value={usernameCadastro}
-                onChange={(e) =>
-                  dispatch(
-                    mudarDadosLoginAction("usernameCadastro", e.target.value)
-                  )
-                }
+                name="username"
+                value={user.username}
+                onChange={handleInputChange}
               />
               <FloatingLabelInput
                 className={`inputFlutuante ${
-                  emailCadastro ? "flutuantePreenchido" : ""
+                  user.email ? "flutuantePreenchido" : ""
                 }`}
                 id="inputEmailFlutuante"
                 label="E-mail"
-                value={emailCadastro}
-                onChange={(e) =>
-                  dispatch(
-                    mudarDadosLoginAction("emailCadastro", e.target.value)
-                  )
-                }
+                name="email"
+                value={user.email}
+                onChange={handleInputChange}
               />
               <FloatingLabelInput
                 className={`inputFlutuante ${
-                  senhaCadastro ? "flutuantePreenchido" : ""
+                  user.password ? "flutuantePreenchido" : ""
                 }`}
                 id="inputEmailFlutuante"
                 label="Senha"
                 name="password"
                 autoComplete="current-password"
                 type="password"
-                value={senhaCadastro}
-                onChange={(e) =>
-                  dispatch(
-                    mudarDadosLoginAction("senhaCadastro", e.target.value)
-                  )
-                }
+                value={user.password}
+                onChange={handleInputChange}
               />
               <Button
                 id="botaoCadastrar"

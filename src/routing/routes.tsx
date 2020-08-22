@@ -13,7 +13,7 @@ export const Routes = () => {
 
   useEffect(() => {
     api.defaults.headers.authorization = `${token.tokenType} ${token.accessToken}`;
-  }, []);
+  }, [token]);
 
   return (
     <Router>

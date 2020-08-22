@@ -1,29 +1,32 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
-import {
-  logarUsuarioAction,
-  mudarDadosLoginAction,
-} from "redux/actions/telaPrincipal/TelaPrincipalActions";
+import { logarUsuarioAction } from "redux/actions/telaPrincipal/TelaPrincipalActions";
 import FloatingLabelInput from "react-floating-label-input";
 import { navigate } from "@reach/router";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
-import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 const TelaLogin = ({ path }) => {
-  const {
-    telaPrincipalReducer: { inputUsuario, inputSenha },
-  } = useStateStorePrincipal();
+  const [user, setUser] = useState({
+    username: "gabrielAB",
+    password: "123456789",
+  });
 
   const dispatch = useDispatchStorePrincipal();
 
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      dispatch(logarUsuarioAction(inputUsuario, inputSenha));
+      dispatch(logarUsuarioAction(user.username, user.password));
+      setUser({ ...user, password: "" });
     },
-    [dispatch, inputUsuario, inputSenha]
+    [dispatch, user],
   );
+
+  const handleInputChange = useCallback((e) => {
+    const { name, value } = e.target;
+    setUser((oldUser) => ({ ...oldUser, [name]: value }));
+  }, []);
 
   return (
     <div className="backgroundLoginCadastro">
@@ -39,31 +42,27 @@ const TelaLogin = ({ path }) => {
             <div className="conteudoLogin">
               <FloatingLabelInput
                 className={`inputFlutuante ${
-                  inputUsuario ? "flutuantePreenchido" : ""
+                  user.username ? "flutuantePreenchido" : ""
                 }`}
                 id="inputUsuarioFlutuante"
-                autoComplete="username"
+                autoComplete="off"
+                name="username"
                 label="Usuário ou e-mail"
-                value={inputUsuario}
-                onChange={(e) =>
-                  dispatch(
-                    mudarDadosLoginAction("inputUsuario", e.target.value)
-                  )
-                }
+                value={user.username}
+                onChange={handleInputChange}
               />
 
               <FloatingLabelInput
                 className={`inputFlutuante ${
-                  inputSenha ? "flutuantePreenchido" : ""
+                  user.password ? "flutuantePreenchido" : ""
                 }`}
                 id="inputSenhaFlutuante"
+                name={"password"}
                 label="Senha"
                 type="password"
                 autoComplete="current-password"
-                value={inputSenha}
-                onChange={(e) =>
-                  dispatch(mudarDadosLoginAction("inputSenha", e.target.value))
-                }
+                value={user.password}
+                onChange={handleInputChange}
               />
 
               <Button id="botaoLogar" variant="primary" type="submit">

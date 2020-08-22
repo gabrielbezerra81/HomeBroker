@@ -238,7 +238,7 @@ export const finalizarAMercadoAction = ({ idOrdem, token }) => {
 
 export const aumentarQtdePrecoAction = (actionProps) => {
   return (dispatch) => {
-    const { ordemAtual, valorSomar, modo, token } = actionProps;
+    const { ordemAtual, valorSomar, modo } = actionProps;
     const { id } = ordemAtual;
     const ofertas = [...ordemAtual.offers];
     const arrayQtde = ofertas.map((oferta) => oferta.qtdeOferta);

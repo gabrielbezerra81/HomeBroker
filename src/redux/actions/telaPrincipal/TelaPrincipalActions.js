@@ -64,24 +64,19 @@ export const logarUsuarioAction = (email, senha) => {
   };
 };
 
-export const cadastrarUsuarioAction = (props) => {
+export const cadastrarUsuarioAction = (data) => {
   return async (dispatch) => {
     travarDestravarClique("travar", "botaoCadastrar");
     const role = ["ROLE_USER"];
 
-    const {
-      nomeCadastro,
-      usernameCadastro,
-      emailCadastro,
-      senhaCadastro,
-    } = props;
+    const { name, username, email, password } = data;
 
     const retornoCadastro = await realizarCadastroAPI({
-      name: nomeCadastro,
-      username: usernameCadastro,
-      email: emailCadastro,
+      name,
+      username,
+      email,
       role,
-      password: senhaCadastro,
+      password,
     });
 
     travarDestravarClique("destravar", "botaoCadastrar");

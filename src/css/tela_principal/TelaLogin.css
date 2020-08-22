@@ -102,14 +102,19 @@ div.inputFlutuante {
   background-clip: padding-box;
   border-bottom: 2px solid #fff;
   transition: all 0.3s ease-in-out;
+  background-color: transparent !important;
 }
 
 input.inputFlutuante {
   width: 100%;
   padding: 0.375rem 0.75rem;
   transition: all 0.3s ease-in-out;
-  background-color: transparent;
+  background-color: transparent !important;
   color: #fff !important;
+}
+
+input:-internal-autofill-selected {
+  background-color: transparent !important;
 }
 
 input.inputFlutuante:focus {

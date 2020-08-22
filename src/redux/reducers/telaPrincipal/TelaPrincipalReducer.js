@@ -20,15 +20,16 @@ const INITIAL_STATE = {
   listaCompletaAberta: false,
   multilegAberto: false,
   thlAberta: false,
-  inputUsuario: "gabrielAB",
-  inputSenha: "123456789",
   token: {},
-  nomeCadastro: "",
-  usernameCadastro: "",
-  emailCadastro: "",
-  senhaCadastro: "",
   conta: [],
   contaSelecionada: {},
+
+  // inputUsuario: "gabrielAB",
+  // inputSenha: "123456789",
+  // nomeCadastro: "",
+  // usernameCadastro: "",
+  // emailCadastro: "",
+  // senhaCadastro: "",
 };
 
 export default (state = INITIAL_STATE, { type, payload }) => {
@@ -59,7 +60,7 @@ export default (state = INITIAL_STATE, { type, payload }) => {
               "thlAberta",
             ],
             "telaprincipal",
-            false
+            false,
           ),
         };
       else return state;
