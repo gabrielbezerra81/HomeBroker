@@ -1,5 +1,4 @@
 import {
-  url_base,
   url_realizarLogin_usuario_senha,
   url_autenticacao_token,
   url_realizarCadastro_dados,
@@ -31,7 +30,7 @@ export const autenticacaoTokenAPI = () => {
 interface LoginData {
   accessToken: string;
   tokenType: string;
-  name: string;
+  name: string | null;
   refreshToken: string;
   accounts: Array<{
     corretora: string;
@@ -51,6 +50,8 @@ export const realizarLoginAPI = (
 ): Promise<LoginData | null> => {
   const payload = { username, password };
 
+  delete api.defaults.headers.authorization;
+
   return api
     .post<LoginData>(url_realizarLogin_usuario_senha, payload, {
       "axios-retry": {
@@ -63,6 +64,7 @@ export const realizarLoginAPI = (
       return response.data;
     })
     .catch((erro) => {
+      console.log(erro.response);
       mostrarErroConsulta(erro, erro_realizar_login);
       return null;
     });
