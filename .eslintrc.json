@@ -1,0 +1,51 @@
+{
+  "env": {
+    "browser": true,
+    "es2020": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 11,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "@typescript-eslint", "react-hooks"],
+  "rules": {
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
+    "import/prefer-default-export": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "camelcase": "off",
+    "jsx-quotes": "off",
+    "quotes": ["error", "double"],
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "global-require": "off",
+    "no-shadow": "off",
+    "react/prop-types": "off",
+    "react/jsx-props-no-spreading": "off",
+    "object-curly-newline": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "implicit-arrow-linebreak": "off",
+    "no-use-before-define": ["nofunc"]
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
+  }
+}

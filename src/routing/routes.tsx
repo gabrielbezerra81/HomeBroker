@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Router, Redirect, RouteComponentProps } from "@reach/router";
 import TelaLogin from "telas/login/TelaLogin";
 import TelaCadastro from "telas/cadastro/TelaCadastro";
 import TelaPrincipal from "telas/principal/TelaPrincipal";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
+import api from "api/apiConfig";
 
 export const Routes = () => {
+  const {
+    telaPrincipalReducer: { token },
+  } = useStateStorePrincipal();
+
+  useEffect(() => {
+    api.defaults.headers.authorization = `${token.tokenType} ${token.accessToken}`;
+  }, []);
+
   return (
     <Router>
       <TelaLogin path="/" />

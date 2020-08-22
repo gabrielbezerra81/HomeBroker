@@ -7,12 +7,6 @@ import {
 import { atualizarCotacaoMultilegAPI } from "api/ReativosAPI";
 import { calculoPreco } from "telas/popups/multileg_/CalculoPreco";
 import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
-import {
-  findClosestStrike,
-  AddNewMultilegQuote,
-  checkQuoteAlreadyAdded,
-  updateMultilegState,
-} from "./utils";
 import { MainThunkAction, MainThunkDispatch } from "types/ThunkActions";
 import {
   MultilegTab,
@@ -22,83 +16,90 @@ import {
 } from "types/multileg/multileg";
 import MultilegState from "types/multileg/MultilegState";
 import { typedAssign } from "types/utils";
+import {
+  findClosestStrike,
+  AddNewMultilegQuote,
+  checkQuoteAlreadyAdded,
+  updateMultilegState,
+} from "./utils";
 
 export const updateMultilegStateAction = (
   attributeName: string,
-  attributeValue: MultilegState[keyof MultilegState]
-): MainThunkAction => {
-  return (dispatch) => {
-    dispatch(updateMultilegState({ attributeName, attributeValue }));
-  };
+  attributeValue: MultilegState[keyof MultilegState],
+): MainThunkAction => (dispatch) => {
+  dispatch(updateMultilegState({ attributeName, attributeValue }));
 };
 
-export const openCloseMultilegExtraConfigsAction = (): MainThunkAction => {
-  return (dispatch, getState) => {
-    const {
-      multilegReducer: { configComplementarAberto },
-    } = getState();
+export const openCloseMultilegExtraConfigsAction = (): MainThunkAction => (
+  dispatch,
+  getState,
+) => {
+  const {
+    multilegReducer: { configComplementarAberto },
+  } = getState();
 
-    dispatch(
-      updateMultilegStateAction(
-        "configComplementarAberto",
-        !configComplementarAberto
-      )
-    );
-  };
+  dispatch(
+    updateMultilegStateAction(
+      "configComplementarAberto",
+      !configComplementarAberto,
+    ),
+  );
 };
 
-////
+/// /
 
-export const selectOrAddMultilegTabAction = (key: string): MainThunkAction => {
-  return (dispatch, getState) => {
-    const {
-      multilegReducer: { multileg },
-    } = getState();
+export const selectOrAddMultilegTabAction = (key: string): MainThunkAction => (
+  dispatch,
+  getState,
+) => {
+  const {
+    multilegReducer: { multileg },
+  } = getState();
 
-    if (key === "adicionar") {
-      let { multilegTabs, currentTab } = addMultilegTab(multileg);
-      dispatch(updateMultilegStateAction("multileg", multilegTabs));
-      dispatch(updateMultilegStateAction("abaSelecionada", currentTab));
-    } else {
-      dispatch(updateMultilegStateAction("abaSelecionada", key));
-    }
-  };
+  if (key === "adicionar") {
+    const { multilegTabs, currentTab } = addMultilegTab(multileg);
+    dispatch(updateMultilegStateAction("multileg", multilegTabs));
+    dispatch(updateMultilegStateAction("abaSelecionada", currentTab));
+  } else {
+    dispatch(updateMultilegStateAction("abaSelecionada", key));
+  }
 };
 
 export const addMultilegTab = (multilegTabs: MultilegTab[]) => {
-  let updatedMultilegTabs = cloneMultilegTabs(multilegTabs);
+  const updatedMultilegTabs = cloneMultilegTabs(multilegTabs);
 
   const newTab = cloneDeep(newMultilegTab);
-  newTab.nomeAba = "Ordem " + (updatedMultilegTabs.length + 1);
-  let currentTab = "tab" + updatedMultilegTabs.length;
+  newTab.nomeAba = `Ordem ${updatedMultilegTabs.length + 1}`;
+  const currentTab = `tab${updatedMultilegTabs.length}`;
 
   updatedMultilegTabs.push(newTab);
 
   return { multilegTabs: updatedMultilegTabs, currentTab };
 };
 
-////
+/// /
 
-export const removeMultilegTabAction = (tabIndex: number): MainThunkAction => {
-  return (dispatch, getState) => {
-    const {
-      multilegReducer: { multileg },
-    } = getState();
+export const removeMultilegTabAction = (tabIndex: number): MainThunkAction => (
+  dispatch,
+  getState,
+) => {
+  const {
+    multilegReducer: { multileg },
+  } = getState();
 
-    let updatedMultilegTabs = cloneMultilegTabs(multileg);
+  const updatedMultilegTabs = cloneMultilegTabs(multileg);
 
-    if (tabIndex > 0) {
-      const key = "tab" + (tabIndex - 1);
-      dispatch(updateMultilegStateAction("abaSelecionada", key));
-    }
+  if (tabIndex > 0) {
+    const key = `tab${tabIndex - 1}`;
+    dispatch(updateMultilegStateAction("abaSelecionada", key));
+  }
 
-    updatedMultilegTabs.splice(tabIndex, 1);
+  updatedMultilegTabs.splice(tabIndex, 1);
 
-    dispatch(updateMultilegStateAction("multileg", updatedMultilegTabs));
-  };
+  dispatch(updateMultilegStateAction("multileg", updatedMultilegTabs));
 };
 
-////
+/// /
 interface ChangeTabAttributeAction {
   tabIndex: number;
   attributeName: string;
@@ -109,25 +110,24 @@ export const updateMultilegTabAction = ({
   tabIndex,
   attributeName,
   attributeValue,
-}: ChangeTabAttributeAction): MainThunkAction => {
-  return async (dispatch, getState) => {
-    const {
-      multilegReducer: { multileg, cotacoesMultileg },
-    } = getState();
+}: ChangeTabAttributeAction): MainThunkAction => async (dispatch, getState) => {
+  const {
+    multilegReducer: { multileg, cotacoesMultileg },
+  } = getState();
 
-    const data = await updateMultilegTab({
-      multilegTabs: multileg,
-      tabIndex,
-      attributeName,
-      attributeValue,
-      multilegQuotes: cotacoesMultileg,
-    });
-    dispatch(updateMultilegStateAction("multileg", data.multilegTabs));
-    if (data.multilegQuotes)
-      dispatch(
-        updateMultilegStateAction("cotacoesMultileg", data.multilegQuotes)
-      );
-  };
+  const data = await updateMultilegTab({
+    multilegTabs: multileg,
+    tabIndex,
+    attributeName,
+    attributeValue,
+    multilegQuotes: cotacoesMultileg,
+  });
+  dispatch(updateMultilegStateAction("multileg", data.multilegTabs));
+  if (data.multilegQuotes) {
+    dispatch(
+      updateMultilegStateAction("cotacoesMultileg", data.multilegQuotes),
+    );
+  }
 };
 
 interface ChangeTabAttribute {
@@ -146,18 +146,22 @@ export const updateMultilegTab = async ({
   multilegQuotes,
 }: ChangeTabAttribute) => {
   travarDestravarClique("travar", "multileg");
-  let updatedMultilegtabs = cloneMultilegTabs(multilegTabs);
+
+  let value = attributeValue;
+
+  const updatedMultilegtabs = cloneMultilegTabs(multilegTabs);
   let updatedMultilegQuotes;
 
   if (attributeName === "limpar") {
     updatedMultilegtabs[tabIndex] = cloneDeep(newMultilegTab);
-    updatedMultilegtabs[tabIndex].nomeAba = "Ordem " + (tabIndex + 1);
+    updatedMultilegtabs[tabIndex].nomeAba = `Ordem ${tabIndex + 1}`;
   } else {
-    if (attributeName === "ativo")
-      attributeValue = attributeValue.toUpperCase();
+    if (attributeName === "ativo") {
+      value = value.toUpperCase();
+    }
 
     typedAssign(updatedMultilegtabs[tabIndex], {
-      [attributeName]: attributeValue,
+      [attributeName]: value,
     });
 
     if (attributeName === "vencimentoSelecionado" && multilegQuotes) {
@@ -178,14 +182,14 @@ export const updateMultilegTab = async ({
 
         AddNewMultilegQuote({
           multilegQuotes: updatedMultilegQuotes,
-          symbol: symbol,
+          symbol,
           quote,
         });
       }
 
       const options = await pesquisarStrikesMultilegAPI(
         symbol,
-        multilegTabs[tabIndex].vencimentoSelecionado
+        multilegTabs[tabIndex].vencimentoSelecionado,
       );
       if (options) {
         updatedMultilegtabs[tabIndex].opcoes = [...options];
@@ -203,7 +207,7 @@ export const updateMultilegTab = async ({
   };
 };
 
-////
+/// /
 
 interface ChangeTableOfferAttributeAction {
   tabIndex: number;
@@ -217,102 +221,102 @@ export const updateMultilegOfferAction = ({
   attributeName,
   attributeValue,
   lineIndex,
-}: ChangeTableOfferAttributeAction): MainThunkAction => {
-  return async (dispatch, getState) => {
-    travarDestravarClique("travar", "multileg");
+}: ChangeTableOfferAttributeAction): MainThunkAction => async (
+  dispatch,
+  getState,
+) => {
+  travarDestravarClique("travar", "multileg");
 
-    const {
-      telaPrincipalReducer: { token },
-      multilegReducer: {
-        eventSourceCotacao,
-        setIntervalCotacoesMultileg,
-        multileg,
-        cotacoesMultileg,
-      },
-    } = getState();
+  const {
+    telaPrincipalReducer: { token },
+    multilegReducer: {
+      eventSourceCotacao,
+      setIntervalCotacoesMultileg,
+      multileg,
+      cotacoesMultileg,
+    },
+  } = getState();
 
-    let updatedMultilegTabs = cloneMultilegTabs(multileg);
-    let multilegOffer = updatedMultilegTabs[tabIndex].tabelaMultileg[lineIndex];
-    let updatedMultilegQuotes: MultilegQuote[] = cloneMultilegQuotes(
-      cotacoesMultileg
-    );
+  const updatedMultilegTabs = cloneMultilegTabs(multileg);
+  const multilegOffer = updatedMultilegTabs[tabIndex].tabelaMultileg[lineIndex];
+  let updatedMultilegQuotes: MultilegQuote[] = cloneMultilegQuotes(
+    cotacoesMultileg,
+  );
 
-    const previousSymbol = multilegOffer.codigoSelecionado;
+  const previousSymbol = multilegOffer.codigoSelecionado;
 
-    if (attributeName === "tipo") {
-      if (attributeValue === "call") multilegOffer[attributeName] = "put";
-      else if (attributeValue === "put") multilegOffer[attributeName] = "call";
+  if (attributeName === "tipo") {
+    if (attributeValue === "call") multilegOffer[attributeName] = "put";
+    else if (attributeValue === "put") multilegOffer[attributeName] = "call";
+    setOfferSymbolAndModel(multilegOffer);
+  } //
+  else {
+    typedAssign(multilegOffer, { [attributeName]: attributeValue });
+    // Se a série for alterada, pesquisa novamente os strikes e códigos
+
+    if (attributeName === "serieSelecionada") {
+      const options = await pesquisarStrikesMultilegAPI(
+        multilegOffer.ativoAtual,
+        attributeValue,
+      );
+      if (options) {
+        multilegOffer.opcoes = [...options];
+
+        const foundOption = multilegOffer.opcoes.find((optionsItem) => {
+          const option = optionsItem as MultilegOption;
+          return option.strike === multilegOffer.strikeSelecionado;
+        });
+        // const cotacaoAnterior = cotacoesMultileg.find(
+        //   (cotacao) => cotacao.codigo === codigoAnterior
+        // );
+
+        if (!foundOption) {
+          multilegOffer.strikeSelecionado = findClosestStrike({
+            options,
+            symbolQuote: multilegOffer.strikeSelecionado,
+          });
+        }
+        setOfferSymbolAndModel(multilegOffer);
+        dispatch(updateMultilegStateAction("multileg", updatedMultilegTabs));
+      }
+    } //
+    else if (attributeName === "strikeSelecionado") {
       setOfferSymbolAndModel(multilegOffer);
     } //
-    else {
-      typedAssign(multilegOffer, { [attributeName]: attributeValue });
-      //Se a série for alterada, pesquisa novamente os strikes e códigos
+    else if (attributeName === "codigoSelecionado") {
+      setOfferModelTypeStrikeAndSeries(multilegOffer);
+    } //
+  }
 
-      if (attributeName === "serieSelecionada") {
-        const options = await pesquisarStrikesMultilegAPI(
-          multilegOffer.ativoAtual,
-          attributeValue
-        );
-        if (options) {
-          multilegOffer.opcoes = [...options];
+  if (previousSymbol !== multilegOffer.codigoSelecionado) {
+    // Se o código mudar, deve ser verificado se o novo código já está presente nos books
+    updatedMultilegQuotes = cloneMultilegQuotes(updatedMultilegQuotes);
 
-          const foundOption = multilegOffer.opcoes.find((optionsItem) => {
-            const option = optionsItem as MultilegOption;
-            return option.strike === multilegOffer.strikeSelecionado;
-          });
-          // const cotacaoAnterior = cotacoesMultileg.find(
-          //   (cotacao) => cotacao.codigo === codigoAnterior
-          // );
-
-          if (!foundOption) {
-            multilegOffer.strikeSelecionado = findClosestStrike({
-              options,
-              symbolQuote: multilegOffer.strikeSelecionado,
-            });
-          }
-          setOfferSymbolAndModel(multilegOffer);
-          dispatch(updateMultilegStateAction("multileg", updatedMultilegTabs));
-        }
-      } //
-      else if (attributeName === "strikeSelecionado") {
-        setOfferSymbolAndModel(multilegOffer);
-      } //
-      else if (attributeName === "codigoSelecionado") {
-        setOfferModelTypeStrikeAndSeries(multilegOffer);
-      } //
-    }
-
-    if (previousSymbol !== multilegOffer.codigoSelecionado) {
-      //Se o código mudar, deve ser verificado se o novo código já está presente nos books
-      updatedMultilegQuotes = cloneMultilegQuotes(updatedMultilegQuotes);
-
-      AddNewMultilegQuote({
-        multilegQuotes: updatedMultilegQuotes,
-        symbol: multilegOffer.codigoSelecionado,
-      });
-      dispatch(
-        updateMultilegStateAction("cotacoesMultileg", updatedMultilegQuotes)
-      );
-      updateMultilegQuotesAction({
-        dispatch,
-        token,
-        eventSourceMultilegQuotes: eventSourceCotacao,
-        setIntervalMultilegQuotes: setIntervalCotacoesMultileg,
-        multilegQuotes: updatedMultilegQuotes,
-      });
-    }
-    const tab = updatedMultilegTabs[tabIndex];
-    let tabPrice = calculoPreco(tab, "ultimo", updatedMultilegQuotes).toFixed(
-      2
+    AddNewMultilegQuote({
+      multilegQuotes: updatedMultilegQuotes,
+      symbol: multilegOffer.codigoSelecionado,
+    });
+    dispatch(
+      updateMultilegStateAction("cotacoesMultileg", updatedMultilegQuotes),
     );
+    updateMultilegQuotesAction({
+      dispatch,
+      token,
+      eventSourceMultilegQuotes: eventSourceCotacao,
+      setIntervalMultilegQuotes: setIntervalCotacoesMultileg,
+      multilegQuotes: updatedMultilegQuotes,
+    });
+  }
+  const tab = updatedMultilegTabs[tabIndex];
+  let tabPrice = calculoPreco(tab, "ultimo", updatedMultilegQuotes).toFixed(2);
 
-    tabPrice = formatarNumero(tabPrice, 2, ".", ",");
-    tab.preco = tabPrice;
+  tabPrice = formatarNumero(tabPrice, 2, ".", ",");
+  tab.preco = tabPrice;
 
-    if (attributeName !== "serieSelecionada")
-      dispatch(updateMultilegStateAction("multileg", updatedMultilegTabs));
-    travarDestravarClique("destravar", "multileg");
-  };
+  if (attributeName !== "serieSelecionada") {
+    dispatch(updateMultilegStateAction("multileg", updatedMultilegTabs));
+  }
+  travarDestravarClique("destravar", "multileg");
 };
 
 interface RemoveMultilegOffer {
@@ -323,20 +327,18 @@ interface RemoveMultilegOffer {
 export const removeMultilegOfferAction = ({
   tabIndex,
   lineIndex,
-}: RemoveMultilegOffer): MainThunkAction => {
-  return (dispatch, getState) => {
-    const {
-      multilegReducer: { multileg },
-    } = getState();
+}: RemoveMultilegOffer): MainThunkAction => (dispatch, getState) => {
+  const {
+    multilegReducer: { multileg },
+  } = getState();
 
-    let multilegTabs: MultilegTab[] = cloneMultilegTabs(multileg);
-    multilegTabs[tabIndex].tabelaMultileg.splice(lineIndex, 1);
+  const multilegTabs: MultilegTab[] = cloneMultilegTabs(multileg);
+  multilegTabs[tabIndex].tabelaMultileg.splice(lineIndex, 1);
 
-    dispatch(updateMultilegStateAction("multileg", multilegTabs));
-  };
+  dispatch(updateMultilegStateAction("multileg", multilegTabs));
 };
 
-////
+/// /
 
 interface AddMultilegOfferAction {
   tabIndex: number;
@@ -346,41 +348,37 @@ interface AddMultilegOfferAction {
 export const addMultilegOfferAction = ({
   tabIndex,
   offerType,
-}: AddMultilegOfferAction): MainThunkAction => {
-  return async (dispatch, getState) => {
-    travarDestravarClique("travar", "multileg");
+}: AddMultilegOfferAction): MainThunkAction => async (dispatch, getState) => {
+  travarDestravarClique("travar", "multileg");
 
-    const {
-      telaPrincipalReducer: { token },
-      multilegReducer: {
-        eventSourceCotacao,
-        setIntervalCotacoesMultileg,
-        multileg,
-        cotacoesMultileg,
-      },
-    } = getState();
+  const {
+    telaPrincipalReducer: { token },
+    multilegReducer: {
+      eventSourceCotacao,
+      setIntervalCotacoesMultileg,
+      multileg,
+      cotacoesMultileg,
+    },
+  } = getState();
 
-    const data = await addMultilegOffer({
-      multilegTabs: multileg,
-      offerType,
-      tabIndex,
-      multilegQuotes: cotacoesMultileg,
-    });
+  const data = await addMultilegOffer({
+    multilegTabs: multileg,
+    offerType,
+    tabIndex,
+    multilegQuotes: cotacoesMultileg,
+  });
 
-    updateMultilegQuotesAction({
-      dispatch,
-      token,
-      eventSourceMultilegQuotes: eventSourceCotacao,
-      setIntervalMultilegQuotes: setIntervalCotacoesMultileg,
-      multilegQuotes: data.multilegQuotes,
-    });
-    dispatch(updateMultilegStateAction("multileg", data.multilegTabs));
-    dispatch(
-      updateMultilegStateAction("cotacoesMultileg", data.multilegQuotes)
-    );
+  updateMultilegQuotesAction({
+    dispatch,
+    token,
+    eventSourceMultilegQuotes: eventSourceCotacao,
+    setIntervalMultilegQuotes: setIntervalCotacoesMultileg,
+    multilegQuotes: data.multilegQuotes,
+  });
+  dispatch(updateMultilegStateAction("multileg", data.multilegTabs));
+  dispatch(updateMultilegStateAction("cotacoesMultileg", data.multilegQuotes));
 
-    travarDestravarClique("destravar", "multileg");
-  };
+  travarDestravarClique("destravar", "multileg");
 };
 
 interface AddMultilegOffer {
@@ -396,10 +394,10 @@ export const addMultilegOffer = async ({
   tabIndex,
   multilegQuotes,
 }: AddMultilegOffer) => {
-  let updatedTabs: MultilegTab[] = cloneMultilegTabs(multilegTabs);
+  const updatedTabs: MultilegTab[] = cloneMultilegTabs(multilegTabs);
   multilegQuotes = cloneMultilegQuotes(multilegQuotes);
 
-  let offer: MultilegOffer = cloneDeep(newOffer);
+  const offer: MultilegOffer = cloneDeep(newOffer);
   let quote = 0;
 
   offer.ativoAtual = updatedTabs[tabIndex].ativoAtual;
@@ -434,7 +432,7 @@ export const addMultilegOffer = async ({
     quote,
   });
 
-  //Verifica se o book já foi inserindo, agilizando novas adições de ofertas sem esperar a API
+  // Verifica se o book já foi inserindo, agilizando novas adições de ofertas sem esperar a API
   // if (!verificaBookJaAdd(cotacoesMultileg, newSymbol)) {
   //   const book = await listarBookOfertaAPI(offer.codigoSelecionado);
   //   if (book) {
@@ -502,7 +500,6 @@ const setOfferSymbolAndModel = (multilegOffer: MultilegOffer) => {
     ) {
       multilegOffer.codigoSelecionado = option.symbol;
       multilegOffer.modelo = option.model;
-      return;
     }
   });
 };
@@ -516,8 +513,6 @@ const setOfferModelTypeStrikeAndSeries = (multilegOffer: MultilegOffer) => {
       multilegOffer.tipo = option.type === "CALL" ? "call" : "put";
       multilegOffer.strikeSelecionado = option.strike;
       multilegOffer.serieSelecionada = option.expiration;
-
-      return;
     }
   });
 };
@@ -530,7 +525,7 @@ interface updateMultilegQuotesAction {
   setIntervalMultilegQuotes: NodeJS.Timeout | null;
 }
 
-//Formato antigo
+// Formato antigo
 export const updateMultilegQuotesAction = ({
   dispatch,
   multilegQuotes,
@@ -562,17 +557,13 @@ export const updateMultilegQuotesAction = ({
   dispatch(updateMultilegStateAction("eventSourceCotacao", newSource));
 };
 
-export const cloneMultilegTabs = (multilegTabs: MultilegTab[]) => {
-  return multilegTabs.map((multilegTab) => {
-    return {
-      ...multilegTab,
-      opcoes: multilegTab.opcoes.map((option) => ({ ...option })),
-      vencimento: [...multilegTab.vencimento],
-      tabelaMultileg: multilegTab.tabelaMultileg.map((offer) => ({ ...offer })),
-    };
-  });
-};
+export const cloneMultilegTabs = (multilegTabs: MultilegTab[]) =>
+  multilegTabs.map((multilegTab) => ({
+    ...multilegTab,
+    opcoes: multilegTab.opcoes.map((option) => ({ ...option })),
+    vencimento: [...multilegTab.vencimento],
+    tabelaMultileg: multilegTab.tabelaMultileg.map((offer) => ({ ...offer })),
+  }));
 
-export const cloneMultilegQuotes = (multilegQuotes: MultilegQuote[]) => {
-  return multilegQuotes.map((quote) => ({ ...quote }));
-};
+export const cloneMultilegQuotes = (multilegQuotes: MultilegQuote[]) =>
+  multilegQuotes.map((quote) => ({ ...quote }));

@@ -157,8 +157,8 @@ export const favoritarTHLAPIAction = (actionProps) => {
     const { idCelulaSelecionada, token } = actionProps;
 
     travarDestravarClique("travar", "thl");
-    const json = { structure: { id: idCelulaSelecionada } };
-    await favoritarTHLAPI(JSON.stringify(json), token);
+    const favoriteData = { structure: { id: idCelulaSelecionada } };
+    await favoritarTHLAPI(favoriteData);
     travarDestravarClique("destravar", "thl");
   };
 };

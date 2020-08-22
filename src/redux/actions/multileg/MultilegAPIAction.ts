@@ -15,12 +15,16 @@ import {
   updateMultilegState,
 } from "./utils";
 import { MainThunkAction } from "types/ThunkActions";
-import { MultilegQuote, MultilegTab } from "types/multileg/multileg";
+import {
+  MultilegQuote,
+  MultilegTab,
+  MultilegOption,
+} from "types/multileg/multileg";
 
 ////
 
 export const searchMultilegSymbolAPIAction = (
-  tabIndex: number
+  tabIndex: number,
 ): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
@@ -37,7 +41,7 @@ export const searchMultilegSymbolAPIAction = (
       updateMultilegState({
         attributeName: "pesquisandoAtivo",
         attributeValue: true,
-      })
+      }),
     );
     const data = await searchMultilegSymbolData({
       multilegTabs: multileg,
@@ -53,7 +57,7 @@ export const searchMultilegSymbolAPIAction = (
       updateMultilegState({
         attributeName: "cotacoesMultileg",
         attributeValue: data.multilegQuotes,
-      })
+      }),
     );
     updateMultilegQuotesAction({
       dispatch,
@@ -66,7 +70,7 @@ export const searchMultilegSymbolAPIAction = (
       updateMultilegState({
         attributeName: "pesquisandoAtivo",
         attributeValue: false,
-      })
+      }),
     );
   };
 };
@@ -99,7 +103,9 @@ export const searchMultilegSymbolData = async ({
 
     const symbolIsOption = symbol !== data.ativoPrincipal ? true : false;
 
-    multilegTab.opcoes = [...data.opcoes].sort((a, b) => a.strike - b.strike);
+    multilegTab.opcoes = [...data.opcoes].sort(
+      (a: MultilegOption, b: MultilegOption) => a.strike - b.strike,
+    );
     multilegTab.vencimento = [...data.vencimentos];
     multilegTab.variacao = data.variacao;
     multilegTab.vencimentoSelecionado = multilegTab.opcoes[0].expiration;
@@ -133,14 +139,14 @@ export const sendMultilegOrderAction = (tabIndex: number): MainThunkAction => {
     travarDestravarClique("travar", "multileg");
 
     if (validateMultilegOrder(mountOrderProps))
-      await enviarOrdemAPI(multilegRequestData, token);
+      await enviarOrdemAPI(multilegRequestData);
 
     travarDestravarClique("destravar", "multileg");
   };
 };
 
 export const createMultilegAlertAction = (
-  tabIndex: number
+  tabIndex: number,
 ): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
@@ -164,7 +170,7 @@ export const createMultilegAlertAction = (
 };
 
 export const createMultilegPositionAction = (
-  tabIndex: number
+  tabIndex: number,
 ): MainThunkAction => {
   return async (dispatch, getState) => {
     const {

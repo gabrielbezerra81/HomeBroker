@@ -9,6 +9,7 @@ import { travarDestravarClique } from "api/API";
 import { realizarLoginAPI, realizarCadastroAPI } from "api/LoginAPI";
 import { navigate } from "@reach/router";
 import { persistor } from "redux/StoreCreation";
+import api from "api/apiConfig";
 
 const waitDispatch = 1000;
 
@@ -23,10 +24,12 @@ export const logarUsuarioAction = (email, senha) => {
     travarDestravarClique("travar", "botaoLogar");
 
     const data = await realizarLoginAPI(email, senha);
-    //const auth = await autenticacaoTokenAPI(token);
+    //const auth = await autenticacaoTokenAPI();
 
     if (data) {
       const { name, accessToken, tokenType, accounts } = data;
+
+      api.defaults.headers.authorization = `${tokenType} ${accessToken}`;
 
       await dispatch({
         type: MUDAR_DADOS_LOGIN,
@@ -66,13 +69,20 @@ export const cadastrarUsuarioAction = (props) => {
     travarDestravarClique("travar", "botaoCadastrar");
     const role = ["ROLE_USER"];
 
-    const retornoCadastro = await realizarCadastroAPI(
-      props.nomeCadastro,
-      props.usernameCadastro,
-      props.emailCadastro,
+    const {
+      nomeCadastro,
+      usernameCadastro,
+      emailCadastro,
+      senhaCadastro,
+    } = props;
+
+    const retornoCadastro = await realizarCadastroAPI({
+      name: nomeCadastro,
+      username: usernameCadastro,
+      email: emailCadastro,
       role,
-      props.senhaCadastro
-    );
+      password: senhaCadastro,
+    });
 
     travarDestravarClique("destravar", "botaoCadastrar");
     if (retornoCadastro) {
@@ -174,7 +184,7 @@ const resetarDadosReducerAction = ({
   let limparReducer = true;
   if (
     ["ordensExecucaoAberto", "listaCompletaAberta"].includes(
-      nameVariavelReducer
+      nameVariavelReducer,
     )
   )
     limparReducer = false;

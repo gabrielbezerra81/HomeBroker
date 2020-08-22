@@ -25,7 +25,7 @@ export const listarPosicoesAction = (props) => {
     } = getReducerStateStorePrincipal(getState(), "posicao");
 
     if (token) {
-      const dados = await listarPosicoesAPI(token);
+      const dados = await listarPosicoesAPI();
 
       const listaPosicoes = [];
       const arrayPrecos = [];

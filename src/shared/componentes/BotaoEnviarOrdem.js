@@ -15,7 +15,7 @@ export const BotaoEnviarOrdem = ({ props, tipoCompraVenda }) => {
         okText="Sim"
         cancelText="Não"
         onConfirm={() =>
-          props.enviarOrdemAction(props, contaSelecionada, token)
+          props.enviarOrdemAction(props, contaSelecionada)
         }
         title={
           <div style={{ width: "260px" }}>
@@ -36,7 +36,7 @@ export const BotaoEnviarOrdem = ({ props, tipoCompraVenda }) => {
       <Button
         variant={variacaoBotao}
         size="sm"
-        onClick={() => props.enviarOrdemAction(props, contaSelecionada, token)}
+        onClick={() => props.enviarOrdemAction(props, contaSelecionada)}
       >
         <h6>{tipoCompraVenda}</h6>
       </Button>

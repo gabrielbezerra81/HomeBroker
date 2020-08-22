@@ -60,11 +60,11 @@ const atualizarCotacaoBoletaAction = ({
   });
 };
 
-export const enviarOrdemAction = (props, contaSelecionada, token) => {
+export const enviarOrdemAction = (props, contaSelecionada) => {
   return async (dispatch) => {
     let json = [montaOrdemPrincipal(props, contaSelecionada)];
     if (validarOrdemBoleta(props, contaSelecionada))
-      await enviarOrdemAPI(json, token);
+      await enviarOrdemAPI(json);
   };
 };
 

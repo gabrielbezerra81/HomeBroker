@@ -1,8 +1,5 @@
-import request from "superagent";
-import retryDelay from "superagent-retry-delay";
 import { formatarDataDaAPI } from "shared/utils/Formatacoes";
 import {
-  url_base,
   url_pesquisarAtivoBoletas_codigo,
   url_listarBookOfertas_codigo,
   url_enviarOrdem,
@@ -44,18 +41,21 @@ import {
   sucesso_favoritar_thl,
   erro_favoritar_thl,
 } from "constants/AlertaErros";
-
-retryDelay(request);
+import api from "./apiConfig";
 
 const timeout = 8000;
 
 export const pesquisarAtivoAPI = (codigo) => {
-  return request
-    .get(`${url_base}${url_pesquisarAtivoBoletas_codigo}${codigo}`)
-    .timeout(timeout)
-    .retry(3, 2000)
+  return api
+    .get(`${url_pesquisarAtivoBoletas_codigo}${codigo}`, {
+      timeout,
+      "axios-retry": {
+        retries: 3,
+        retryDelay: () => 2000,
+      },
+    })
     .then((response) => {
-      const { body } = response;
+      const { data } = response;
       var dadosPesquisa;
       let oscilacao = "0,00";
       let cotacaoAtual = 0;
@@ -63,45 +63,45 @@ export const pesquisarAtivoAPI = (codigo) => {
 
       let ultimoHorario = "";
 
-      if (body.stock.market === "OddLot") stepQtde = 1;
-      else if (body.stock.market === "Forex") stepQtde = 0.01;
+      if (data.stock.market === "OddLot") stepQtde = 1;
+      else if (data.stock.market === "Forex") stepQtde = 0.01;
 
-      if (body.oscilacao) oscilacao = body.oscilacao;
+      if (data.oscilacao) oscilacao = data.oscilacao;
 
-      if (body.ultimo) cotacaoAtual = body.ultimo;
+      if (data.ultimo) cotacaoAtual = data.ultimo;
 
-      if (body.ultimoHorario)
+      if (data.ultimoHorario)
         ultimoHorario = formatarDataDaAPI(
-          body.ultimoHorario
+          data.ultimoHorario,
         ).toLocaleTimeString();
 
-      if (["EquityPut", "EquityCall"].includes(body.stock.market)) {
+      if (["EquityPut", "EquityCall"].includes(data.stock.market)) {
         dadosPesquisa = {
-          resultadoAtivo: body.stock.symbol,
-          strike: body.stock.strike,
-          tipo: body.stock.type,
-          model: body.stock.model,
+          resultadoAtivo: data.stock.symbol,
+          strike: data.stock.strike,
+          tipo: data.stock.type,
+          model: data.stock.model,
           vencimento: formatarDataDaAPI(
-            body.stock.endBusiness
+            data.stock.endBusiness,
           ).toLocaleDateString(),
-          symbol: body.stock.referenceStock.symbol,
+          symbol: data.stock.referenceStock.symbol,
           cotacaoAtual: cotacaoAtual,
           porcentagem: oscilacao,
           ultimoHorario: ultimoHorario,
           stepQtde: stepQtde,
           market: "tipo2",
-          ativo: body.stock.symbol,
+          ativo: data.stock.symbol,
         };
       } else {
         dadosPesquisa = {
-          resultadoAtivo: body.stock.symbol + ", " + body.stock.corporationName,
-          codigoEspecificacao: body.stock.specificationCode,
+          resultadoAtivo: data.stock.symbol + ", " + data.stock.corporationName,
+          codigoEspecificacao: data.stock.specificationCode,
           cotacaoAtual: cotacaoAtual,
           porcentagem: oscilacao,
           ultimoHorario: ultimoHorario,
           stepQtde: stepQtde,
           market: "tipo1",
-          ativo: body.stock.symbol,
+          ativo: data.stock.symbol,
         };
       }
       return dadosPesquisa;
@@ -126,14 +126,18 @@ export const listarBookOfertaAPI = (codigo_ativo) => {
     tabelaOfertasCompra: [],
     tabelaOfertasVenda: [],
   };
-  return request
-    .get(`${url_base}${url_listarBookOfertas_codigo}${codigo_ativo}`)
-    .timeout(timeout)
-    .retry(3, 2000)
+  return api
+    .get(`${url_listarBookOfertas_codigo}${codigo_ativo}`, {
+      timeout,
+      "axios-retry": {
+        retries: 3,
+        retryDelay: () => 2000,
+      },
+    })
     .then((response) => {
-      const { body } = response;
+      const { data } = response;
 
-      body.bookOffers.forEach((item) => {
+      data.bookOffers.forEach((item) => {
         if (item.type === "V") {
           tabelas.tabelaOfertasVenda.push(item);
         } else if (item.type === "C") {
@@ -151,17 +155,9 @@ export const listarBookOfertaAPI = (codigo_ativo) => {
     });
 };
 
-export const enviarOrdemAPI = (json, token) => {
-  const jsonStringBody = JSON.stringify(json);
-
-  return request
-    .post(`${url_base}${url_enviarOrdem}`)
-    .timeout(timeout)
-    .set({
-      "Content-Type": "application/json",
-      Authorization: `${token.tokenType} ${token.accessToken}`,
-    })
-    .send(jsonStringBody)
+export const enviarOrdemAPI = (data) => {
+  return api
+    .post(`${url_enviarOrdem}`, data, { timeout })
     .then((response) => {
       if (response.status === 201) alert(sucesso_enviar_ordem);
       else alert(erro_enviar_ordem);
@@ -174,10 +170,14 @@ export const enviarOrdemAPI = (json, token) => {
 export const pesquisarAtivoMultilegAPI = (codigo_ativo) => {
   var dados;
 
-  return request
-    .get(`${url_base}${url_pesquisarOpcoesVencimentos_codigo}${codigo_ativo}`)
-    .timeout(timeout)
-    .retry(3, 2000)
+  return api
+    .get(`${url_pesquisarOpcoesVencimentos_codigo}${codigo_ativo}`, {
+      timeout,
+      "axios-retry": {
+        retries: 3,
+        retryDelay: () => 2000,
+      },
+    })
     .then(async (response) => {
       dados = {
         opcoes: [],
@@ -188,10 +188,10 @@ export const pesquisarAtivoMultilegAPI = (codigo_ativo) => {
         ativoPrincipal: "",
       };
 
-      const { body } = response;
-      dados.opcoes = [...body.options];
-      dados.vencimentos = [...body.expirations];
-      dados.ativoPrincipal = body.stock.symbol;
+      const { data } = response;
+      dados.opcoes = [...data.options];
+      dados.vencimentos = [...data.expirations];
+      dados.ativoPrincipal = data.stock.symbol;
       const dadosAtivo = await pesquisarAtivoAPI(codigo_ativo);
       if (dadosAtivo) {
         dados.cotacaoAtual = Number(dadosAtivo.cotacaoAtual);
@@ -207,14 +207,19 @@ export const pesquisarAtivoMultilegAPI = (codigo_ativo) => {
 };
 
 export const pesquisarStrikesMultilegAPI = (codigo_ativo, vencimento) => {
-  return request
+  return api
     .get(
-      `${url_base}${url_pesquisarStrikes_codigo_vencimento}${codigo_ativo}/${vencimento}`
+      `${url_pesquisarStrikes_codigo_vencimento}${codigo_ativo}/${vencimento}`,
+      {
+        timeout,
+        "axios-retry": {
+          retries: 3,
+          retryDelay: () => 2000,
+        },
+      },
     )
-    .timeout(timeout)
-    .retry(3, 2000)
     .then((response) => {
-      return response.body;
+      return response.data;
     })
     .catch((erro) => {
       mostrarErroConsulta(erro);
@@ -223,17 +228,20 @@ export const pesquisarStrikesMultilegAPI = (codigo_ativo, vencimento) => {
     });
 };
 
-export const listarOrdensExecAPI = (idToken) => {
-  return request
-    .get(`${url_base}${url_listarOrdensExecucao_}`)
-    .timeout(timeout)
-    .retry(3, 2000)
-    .set({ Authorization: `${idToken.tokenType} ${idToken.accessToken}` })
+export const listarOrdensExecAPI = () => {
+  return api
+    .get(`${url_listarOrdensExecucao_}`, {
+      timeout,
+      "axios-retry": {
+        retries: 3,
+        retryDelay: () => 2000,
+      },
+    })
     .then((response) => {
-      const { body } = response;
-      const orders = body ? body : [];
+      const { data } = response;
+      const orders = data ? data : [];
 
-      console.log("ordens: ", body);
+      console.log("ordens: ", data);
 
       return orders;
     })
@@ -243,16 +251,19 @@ export const listarOrdensExecAPI = (idToken) => {
     });
 };
 
-export const listarPosicoesAPI = (idToken) => {
-  return request
-    .get(`${url_base}${url_listarPosicoes}`)
-    .timeout(timeout)
-    .set({ Authorization: `${idToken.tokenType} ${idToken.accessToken}` })
-    .retry(3, 2000)
+export const listarPosicoesAPI = () => {
+  return api
+    .get(`${url_listarPosicoes}`, {
+      timeout,
+      "axios-retry": {
+        retries: 3,
+        retryDelay: () => 2000,
+      },
+    })
     .then((response) => {
-      console.log("posição: ", response.body);
+      console.log("posição: ", response.data);
 
-      return response.body;
+      return response.data;
     })
     .catch((erro) => {
       mostrarErroConsulta(erro, "");
@@ -260,15 +271,15 @@ export const listarPosicoesAPI = (idToken) => {
     });
 };
 
-export const criarPosicaoMultilegAPI = (json) => {
-  const jsonStringBody = JSON.stringify(json);
-
-  return request
-    .post(`${url_base}${url_criarPosicaoMultileg_}`)
-    .timeout(timeout)
-    .retry(2, 2000)
-    .set({ "Content-Type": "application/json" })
-    .send(jsonStringBody)
+export const criarPosicaoMultilegAPI = (data) => {
+  return api
+    .post(`${url_criarPosicaoMultileg_}`, data, {
+      timeout,
+      "axios-retry": {
+        retries: 2,
+        retryDelay: () => 2000,
+      },
+    })
     .then((response) => {
       console.log("response", response);
       if (response.status === 201) alert(sucesso_criar_posicao);
@@ -279,15 +290,15 @@ export const criarPosicaoMultilegAPI = (json) => {
     });
 };
 
-export const criarAlertaOperacaoAPI = (json) => {
-  const jsonStringBody = JSON.stringify(json);
-
-  return request
-    .post(`${url_base}${url_criarAlertaOperacao_}`)
-    .timeout(timeout)
-    .retry(2, 2000)
-    .set({ "Content-Type": "application/json" })
-    .send(jsonStringBody)
+export const criarAlertaOperacaoAPI = (data) => {
+  return api
+    .post(`${url_criarAlertaOperacao_}`, data, {
+      timeout,
+      "axios-retry": {
+        retries: 2,
+        retryDelay: () => 2000,
+      },
+    })
     .then((response) => {
       if (response.status === 201) alert(sucesso_criar_alerta);
       else alert(erro_criar_alerta);
@@ -297,13 +308,11 @@ export const criarAlertaOperacaoAPI = (json) => {
     });
 };
 
-export const cancelarOrdemExecAPI = (id, token) => {
-  return request
-    .put(`${url_base}${url_cancelarOrdemExec_id}${id}`)
-    .set({
-      Authorization: `${token.tokenType} ${token.accessToken}`,
+export const cancelarOrdemExecAPI = (id) => {
+  return api
+    .put(`${url_cancelarOrdemExec_id}${id}`, {
+      timeout,
     })
-    .timeout(timeout)
     .then(() => {
       alert(sucesso_cancelar_ordem);
     })
@@ -312,13 +321,11 @@ export const cancelarOrdemExecAPI = (id, token) => {
     });
 };
 
-export const finalizarAMercadoAPI = (id, token) => {
-  return request
-    .put(`${url_base}${url_finalizarAMercado_id}${id}`)
-    .set({
-      Authorization: `${token.tokenType} ${token.accessToken}`,
+export const finalizarAMercadoAPI = (id) => {
+  return api
+    .put(`${url_finalizarAMercado_id}${id}`, {
+      timeout,
     })
-    .timeout(timeout)
     .then(() => {
       alert(sucesso_finalizar_a_mercado);
     })
@@ -327,10 +334,11 @@ export const finalizarAMercadoAPI = (id, token) => {
     });
 };
 
-export const incrementarQtdeOrdemExecAPI = (id, qtde, token) => {
-  return request
-    .put(`${url_base}${url_aumentarQtde_id_qtde}${id}/${qtde}`)
-    .timeout(timeout)
+export const incrementarQtdeOrdemExecAPI = (id, qtde) => {
+  return api
+    .put(`${url_aumentarQtde_id_qtde}${id}/${qtde}`, {
+      timeout,
+    })
     .then(() => {
       alert(sucesso_modificar_ordemExec);
     })
@@ -339,13 +347,11 @@ export const incrementarQtdeOrdemExecAPI = (id, qtde, token) => {
     });
 };
 
-export const incrementarPrecoOrdemExecAPI = (id, preco, token) => {
-  return request
-    .put(`${url_base}${url_aumentarPreco_id_valor}${id}/${preco}`)
-    .set({
-      Authorization: `${token.tokenType} ${token.accessToken}`,
+export const incrementarPrecoOrdemExecAPI = (id, preco) => {
+  return api
+    .put(`${url_aumentarPreco_id_valor}${id}/${preco}`, {
+      timeout,
     })
-    .timeout(timeout)
     .then(() => {
       alert(sucesso_modificar_ordemExec);
     })
@@ -355,11 +361,15 @@ export const incrementarPrecoOrdemExecAPI = (id, preco, token) => {
 };
 
 export const pesquisarListaStrikeTHLAPI = (ativo) => {
-  return request
-    .get(`${url_base}${url_pesquisarListaStrike_codigo}${ativo}`)
-    .timeout(timeout)
-    .retry(3, 2000)
-    .then((response) => response.body)
+  return api
+    .get(`${url_pesquisarListaStrike_codigo}${ativo}`, {
+      timeout,
+      "axios-retry": {
+        retries: 3,
+        retryDelay: () => 2000,
+      },
+    })
+    .then((response) => response.data)
     .catch((erro) => {
       mostrarErroConsulta(erro, erro_pesquisar_ativo);
       return [];
@@ -367,14 +377,19 @@ export const pesquisarListaStrikeTHLAPI = (ativo) => {
 };
 
 export const listarTabelaInicialTHLAPI = (ativo, strike, tipo) => {
-  return request
+  return api
     .get(
-      `${url_base}${url_listarTabelaInicialTHL_ativo_strike_tipo}${ativo}/${strike}/${tipo}`
+      `${url_listarTabelaInicialTHL_ativo_strike_tipo}${ativo}/${strike}/${tipo}`,
+      {
+        timeout,
+        "axios-retry": {
+          retries: 3,
+          retryDelay: () => 2000,
+        },
+      },
     )
-    .timeout(timeout)
-    .retry(3, 2000)
     .then((response) => {
-      return response.body;
+      return response.data;
     })
     .catch((erro) => {
       mostrarErroConsulta(erro, erro_listarTHL_thl);
@@ -386,15 +401,20 @@ export const recalcularPrecosTHLAPI = (
   ativo,
   ativoPesquisado,
   strike,
-  tipo
+  tipo,
 ) => {
-  return request
+  return api
     .get(
-      `${url_base}${url_recalcularPrecos_acao_ativo_strike_tipo}${ativo}/${ativoPesquisado}/${strike}/${tipo}`
+      `${url_recalcularPrecos_acao_ativo_strike_tipo}${ativo}/${ativoPesquisado}/${strike}/${tipo}`,
+      {
+        timeout,
+        "axios-retry": {
+          retries: 2,
+          retryDelay: () => 2000,
+        },
+      },
     )
-    .retry(2, 2000)
-    .timeout(timeout)
-    .then((response) => response.body)
+    .then((response) => response.data)
     .catch((erro) => {
       mostrarErroConsulta(erro, "");
       return [];
@@ -404,26 +424,26 @@ export const recalcularPrecosTHLAPI = (
 export const pesquisarCombinacoesTHLAPI = (ativo) => {
   const url = url_pesquisarCombinacoes_ativo.split(" ");
 
-  return request
-    .get(`${url_base}${url[0]}${ativo}${url[1]}`)
-    .retry(2, 2000)
-    .timeout(timeout * 3)
-    .then((response) => response.body)
+  return api
+    .get(`${url[0]}${ativo}${url[1]}`, {
+      timeout: timeout * 3,
+      "axios-retry": {
+        retries: 2,
+        retryDelay: () => 2000,
+      },
+    })
+    .then((response) => response.data)
     .catch((erro) => {
       mostrarErroConsulta(erro, erro_pesquisarCombinacoes_thl);
       return [];
     });
 };
 
-export const favoritarTHLAPI = (json, token) => {
-  return request
-    .post(`${url_base}${url_favoritarTHL_}`)
-    .timeout(timeout)
-    .set({
-      "Content-Type": "application/json",
-      Authorization: `${token.tokenType} ${token.accessToken}`,
+export const favoritarTHLAPI = (data) => {
+  return api
+    .post(`${url_favoritarTHL_}`, data, {
+      timeout,
     })
-    .send(json)
     .then(() => alert(sucesso_favoritar_thl))
     .catch((erro) => {
       mostrarErroConsulta(erro, erro_favoritar_thl);

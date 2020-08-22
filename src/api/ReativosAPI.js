@@ -36,7 +36,7 @@ export const atualizarBookAPI = ({ dispatch, codigos, tipo, token }) => {
       headers: {
         Authorization: `${token.tokenType} ${token.accessToken}`,
       },
-    }
+    },
   );
   source.onopen = function (event) {
     // console.log("open");
@@ -90,7 +90,7 @@ export const atualizarCotacaoMultilegAPI = ({
       headers: {
         Authorization: `${token.tokenType} ${token.accessToken}`,
       },
-    }
+    },
   );
 
   let listaCotacoes = arrayCotacoes;
@@ -100,7 +100,7 @@ export const atualizarCotacaoMultilegAPI = ({
     listaCotacoes,
     MODIFICAR_VARIAVEL_MULTILEG,
     "cotacoesMultileg",
-    "setIntervalCotacoesMultileg"
+    "setIntervalCotacoesMultileg",
   );
 
   source.onmessage = function (event) {
@@ -111,7 +111,7 @@ export const atualizarCotacaoMultilegAPI = ({
       const ativoRetornado = dados.symbol;
 
       const indice = listaCotacoes.findIndex(
-        (cotacao) => cotacao.codigo === ativoRetornado
+        (cotacao) => cotacao.codigo === ativoRetornado,
       );
 
       if (indice !== -1) {
@@ -144,7 +144,7 @@ export const atualizarCotacaoPosicaoAPI = ({
       headers: {
         Authorization: `${token.tokenType} ${token.accessToken}`,
       },
-    }
+    },
   );
 
   let listaCotacoes = arrayCotacoes;
@@ -154,7 +154,7 @@ export const atualizarCotacaoPosicaoAPI = ({
     listaCotacoes,
     MUDAR_VARIAVEL_POSICAO_CUSTODIA,
     "arrayCotacoes",
-    "setIntervalCotacoesPosicao"
+    "setIntervalCotacoesPosicao",
   );
 
   source.onmessage = function (event) {
@@ -167,7 +167,7 @@ export const atualizarCotacaoPosicaoAPI = ({
       const ativoRetornado = dados.symbol;
 
       const indice = listaCotacoes.findIndex(
-        (ativo) => ativo.codigo === ativoRetornado
+        (ativo) => ativo.codigo === ativoRetornado,
       );
 
       if (indice !== -1) {
@@ -198,7 +198,7 @@ export const atualizarCotacaoTHLAPI = ({
       headers: {
         Authorization: `${token.tokenType} ${token.accessToken}`,
       },
-    }
+    },
   );
 
   let listaCotacoes = arrayCotacoes;
@@ -208,7 +208,7 @@ export const atualizarCotacaoTHLAPI = ({
     listaCotacoes,
     MUDAR_VARIAVEL_THL,
     "arrayCotacoes",
-    "setIntervalCotacoesTHL"
+    "setIntervalCotacoesTHL",
   );
 
   source.onmessage = function (event) {
@@ -219,7 +219,7 @@ export const atualizarCotacaoTHLAPI = ({
       const ativoRetornado = dados.symbol;
 
       const indice = listaCotacoes.findIndex(
-        (ativo) => ativo.codigo === ativoRetornado
+        (ativo) => ativo.codigo === ativoRetornado,
       );
 
       if (indice !== -1) {
@@ -250,7 +250,7 @@ export const atualizarCotacaoBoletasAPI = ({
       headers: {
         Authorization: "my secret jwt token",
       },
-    }
+    },
   );
 
   source.onmessage = function (event) {
@@ -264,7 +264,7 @@ export const atualizarCotacaoBoletasAPI = ({
 
         if (dados.ultimoHorario)
           dadosPesquisa.ultimoHorario = formatarDataDaAPI(
-            dados.ultimoHorario
+            dados.ultimoHorario,
           ).toLocaleTimeString();
 
         dispatch({
@@ -284,7 +284,7 @@ export const atualizarEmblemasAPI = ({ dispatch, listaPrecos, ids, token }) => {
       headers: {
         Authorization: `${token.tokenType} ${token.accessToken}`,
       },
-    }
+    },
   );
 
   const novaLista = [...listaPrecos];
@@ -294,7 +294,7 @@ export const atualizarEmblemasAPI = ({ dispatch, listaPrecos, ids, token }) => {
     novaLista,
     MUDAR_VARIAVEL_POSICAO_CUSTODIA,
     "arrayPrecos",
-    "setIntervalEmblema"
+    "setIntervalEmblema",
   );
 
   source.onmessage = function (event) {
@@ -304,7 +304,7 @@ export const atualizarEmblemasAPI = ({ dispatch, listaPrecos, ids, token }) => {
       console.log(dados);
 
       const indice = novaLista.findIndex(
-        (posicao) => posicao.idEstrutura === dados.id
+        (posicao) => posicao.idEstrutura === dados.id,
       );
 
       if (indice !== -1) {
@@ -334,7 +334,7 @@ export const atualizarPosicaoAPI = ({ dispatch, listaPosicoes, token }) => {
       headers: {
         Authorization: `${token.tokenType} ${token.accessToken}`,
       },
-    }
+    },
   );
 
   source.onmessage = function (event) {
@@ -348,7 +348,7 @@ export const atualizarPosicaoAPI = ({ dispatch, listaPosicoes, token }) => {
       posicoes.forEach((novaPosicao) => {
         const indice = novaLista.findIndex(
           (posicao) =>
-            posicao.agrupadorPrincipal === novaPosicao.agrupadorPrincipal
+            posicao.agrupadorPrincipal === novaPosicao.agrupadorPrincipal,
         );
 
         if (indice !== -1) {
@@ -364,7 +364,7 @@ export const atualizarPosicaoAPI = ({ dispatch, listaPosicoes, token }) => {
         updateOnePositionState({
           attributeName: "posicoesCustodia",
           attributeValue: novaLista,
-        })
+        }),
       );
     }
   };
@@ -383,7 +383,7 @@ export const atualizarOrdensExecAPI = ({
       headers: {
         Authorization: `${token.tokenType} ${token.accessToken}`,
       },
-    }
+    },
   );
 
   // source.onopen = function (event) {
@@ -402,7 +402,7 @@ export const atualizarOrdensExecAPI = ({
         const novaTabela = [...listaOrdensExec];
         dados.orders.forEach((novaOrdem) => {
           const indice = novaTabela.findIndex(
-            (ordem) => ordem.id === novaOrdem.id
+            (ordem) => ordem.id === novaOrdem.id,
           );
           if (indice !== -1) novaTabela[indice] = novaOrdem;
           else novaTabela.unshift(novaOrdem);
@@ -422,7 +422,7 @@ export const atualizarPrecosTHLAPI = ({ ids, dispatch, token }) => {
       headers: {
         Authorization: `${token.tokenType} ${token.accessToken}`,
       },
-    }
+    },
   );
 
   const updatedPriceStructures = [];
@@ -432,7 +432,7 @@ export const atualizarPrecosTHLAPI = ({ ids, dispatch, token }) => {
     updatedPriceStructures,
     MUDAR_VARIAVEL_THL,
     "precosTabelaVencimentos",
-    "setIntervalPrecosTHL"
+    "setIntervalPrecosTHL",
   );
 
   source.onerror = function (event) {
@@ -449,7 +449,7 @@ export const atualizarPrecosTHLAPI = ({ ids, dispatch, token }) => {
 
       if (true) {
         const index = updatedPriceStructures.findIndex(
-          (estrutura) => estrutura.id === priceStructure.id
+          (estrutura) => estrutura.id === priceStructure.id,
         );
 
         if (index !== -1) {
@@ -459,13 +459,13 @@ export const atualizarPrecosTHLAPI = ({ ids, dispatch, token }) => {
             const indexToUpdate = updatedPriceStructures[
               index
             ].components.findIndex(
-              (componentToUpdate) => componentToUpdate.id === componentItem.id
+              (componentToUpdate) => componentToUpdate.id === componentItem.id,
             );
 
             if (indexToUpdate !== -1)
               Object.assign(
                 updatedPriceStructures[index].components[indexToUpdate],
-                componentItem
+                componentItem,
               );
           });
 
@@ -483,7 +483,7 @@ const atualizaListaReativa = (
   lista,
   actionType,
   nomeLista,
-  nomeSetInterval
+  nomeSetInterval,
 ) => {
   const atualizarLista = () => {
     dispatch({

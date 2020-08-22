@@ -45,7 +45,7 @@ export const listarOrdensExecAction = (props) => {
     const { token } = getReducerStateStorePrincipal(getState(), "principal");
 
     if (token) {
-      const ordensExec = await listarOrdensExecAPI(token);
+      const ordensExec = await listarOrdensExecAPI();
 
       dispatch({ type: LISTAR_ORDENS_EXECUCAO, payload: ordensExec });
 
@@ -223,7 +223,7 @@ export const abrirOrdensBoletaAction = (props, event, acao) => {
 export const cancelarOrdemExecAction = ({ idOrdem, token }) => {
   return async (dispatch) => {
     travarDestravarClique("travar", "ordens_execucao");
-    await cancelarOrdemExecAPI(idOrdem, token);
+    await cancelarOrdemExecAPI(idOrdem);
     travarDestravarClique("destravar", "ordens_execucao");
   };
 };
@@ -231,7 +231,7 @@ export const cancelarOrdemExecAction = ({ idOrdem, token }) => {
 export const finalizarAMercadoAction = ({ idOrdem, token }) => {
   return async (dispatch) => {
     travarDestravarClique("travar", "ordens_execucao");
-    await finalizarAMercadoAPI(idOrdem, token);
+    await finalizarAMercadoAPI(idOrdem);
     travarDestravarClique("destravar", "ordens_execucao");
   };
 };
@@ -250,7 +250,7 @@ export const aumentarQtdePrecoAction = (actionProps) => {
         const unidade = oferta.qtdeOferta / mdc;
         acrescimo += valorSomar * unidade;
       });
-      incrementarQtdeOrdemExecAPI(id, acrescimo, token);
+      incrementarQtdeOrdemExecAPI(id, acrescimo);
     } //
     else if (modo === "preco") {
       let precoTotal = 0;
@@ -259,7 +259,7 @@ export const aumentarQtdePrecoAction = (actionProps) => {
         precoTotal += oferta.precoEnvio * unidade;
       });
       precoTotal += valorSomar;
-      incrementarPrecoOrdemExecAPI(id, precoTotal, token);
+      incrementarPrecoOrdemExecAPI(id, precoTotal);
     }
   };
 };

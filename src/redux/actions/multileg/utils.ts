@@ -50,7 +50,7 @@ export const findClosestStrike = ({
         Math.abs(curr.strike - symbolQuote) <
         Math.abs(prev.strike - symbolQuote)
           ? curr
-          : prev
+          : prev,
       );
       return closestOption.strike;
     }
@@ -113,7 +113,7 @@ export const mountMultilegOrder = ({
     }
 
     mainOffer.price = Number(
-      multilegTab.preco.split(".").join("").replace(",", ".")
+      multilegTab.preco.split(".").join("").replace(",", "."),
     );
     mainOffer.expirationType = multilegTab.validadeSelect;
 
@@ -139,7 +139,7 @@ export const validateMultilegOrder = ({
   let orderIsValid = true;
 
   const qtty = multilegTab.tabelaMultileg.some(
-    (offer, index) => offer.qtde === 0
+    (offer, index) => offer.qtde === 0,
   );
   if (qtty) {
     orderIsValid = false;
@@ -147,7 +147,7 @@ export const validateMultilegOrder = ({
   }
 
   const symbols = multilegTab.tabelaMultileg.map(
-    (offer) => offer.codigoSelecionado
+    (offer) => offer.codigoSelecionado,
   );
 
   if (new Set(symbols).size !== symbols.length) {
@@ -168,7 +168,7 @@ export const validateMultilegOrder = ({
 interface AddNewMultilegQuote {
   multilegQuotes: MultilegQuote[];
   symbol: string;
-  quote?: number;
+  quote?: number | string;
 }
 
 export const AddNewMultilegQuote = ({
@@ -181,7 +181,7 @@ export const AddNewMultilegQuote = ({
   if (!quoteAlreadyAdded) {
     multilegQuotes.push({
       codigo: symbol,
-      valor: quote,
+      valor: Number(quote),
       compra: {
         price: null,
         qtty: null,
