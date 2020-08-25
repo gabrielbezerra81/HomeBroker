@@ -7,12 +7,12 @@ import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 export default (props) => {
   const { preco, qtde, tipo, ativo } = props;
   const {
-    THLReducer: { booksSelecionados },
+    thlReducer: { booksSelecionados },
   } = useStateStorePrincipal();
   const dispatch = useDispatchStorePrincipal();
 
   const selectedBookIndex = booksSelecionados.findIndex(
-    (book) => book.ativo === ativo && book.tipo === tipo
+    (book) => book.ativo === ativo && book.tipo === tipo,
   );
 
   const bookType = tipo === "compra" ? "venda" : "compra";
@@ -49,12 +49,13 @@ export const selecionarBooks = (props) => {
   qtdeAdicionar -= booksSelecionados.filter(
     (book) =>
       novosBooks.length === 2 &&
-      (book.ativo === novosBooks[0].ativo || book.ativo === novosBooks[1].ativo)
+      (book.ativo === novosBooks[0].ativo ||
+        book.ativo === novosBooks[1].ativo),
   ).length;
 
   novosBooks.forEach((novoBook) => {
     const indice = books.findIndex(
-      (book) => book.ativo === novoBook.ativo && book.tipo === novoBook.tipo
+      (book) => book.ativo === novoBook.ativo && book.tipo === novoBook.tipo,
     );
     if (indice === -1) {
       if (novosBooks.length === 1 && booksSelecionados.length === 6)

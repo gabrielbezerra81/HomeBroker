@@ -13,7 +13,7 @@ const persistConfig = {
   key: "root",
   storage,
   stateReconciler: autoMergeLevel1,
-  whitelist: ["telaPrincipalReducer"],
+  whitelist: ["systemReducer"],
 };
 
 const persistedReducerAppPrincipal = persistReducer<MainStoreState, any>(

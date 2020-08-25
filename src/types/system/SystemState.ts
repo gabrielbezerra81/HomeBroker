@@ -1,7 +1,7 @@
 import { Token, Account } from "./system";
 
 export default interface SystemState {
-  usuarioConectado: string;
+  usuarioConectado: string | null;
   menuLateralAberto: boolean;
   logado: boolean;
   valorLiquido: string;

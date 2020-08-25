@@ -8,7 +8,7 @@ import { getformatedDate } from "shared/utils/Formatacoes";
 import { MODIFICAR_VARIAVEL_MULTILEG } from "constants/MenuActionTypes";
 import MultilegState from "types/multileg/MultilegState";
 import { MultilegTab, MultilegQuote } from "types/multileg/multileg";
-import { Account } from "types/principal/system";
+import { Account } from "types/system/system";
 
 interface UpdateMultilegState {
   attributeName: string;

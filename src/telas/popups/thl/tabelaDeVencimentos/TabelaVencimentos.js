@@ -16,7 +16,7 @@ import {
 import { updateOneTHLState } from "redux/actions/thl/utils";
 
 export default React.memo(() => {
-  const { THLReducer: thlState } = useStateStorePrincipal();
+  const { thlReducer: thlState } = useStateStorePrincipal();
   const dispatch = useDispatchStorePrincipal();
   const {
     opcoesStrike,
@@ -202,7 +202,7 @@ const renderMonthNameHeaderColumn = ({ month, tableData, year }) => {
 
 const OpcoesStrikeVazio = () => {
   const {
-    THLReducer: { opcoesStrike },
+    thlReducer: { opcoesStrike },
   } = useStateStorePrincipal();
 
   const tableHasContent = !!opcoesStrike.length;

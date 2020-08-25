@@ -214,7 +214,7 @@ const mapStateToPropsGlobalStore = (state) => {
 };
 
 const mapStateToPropsStorePrincipal = (state) => ({
-  token: state.telaPrincipalReducer.token,
+  token: state.systemReducer.token,
 });
 
 const mapStateToPropsLocal = (state) => ({

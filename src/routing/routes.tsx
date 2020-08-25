@@ -8,7 +8,7 @@ import api from "api/apiConfig";
 
 export const Routes = () => {
   const {
-    telaPrincipalReducer: { token },
+    systemReducer: { token },
   } = useStateStorePrincipal();
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export const Routes = () => {
 
 const Home: React.FC<RouteComponentProps> = ({ path }) => {
   const {
-    telaPrincipalReducer: { logado },
+    systemReducer: { logado },
   } = useStateStorePrincipal();
 
   if (logado) return <TelaPrincipal />;

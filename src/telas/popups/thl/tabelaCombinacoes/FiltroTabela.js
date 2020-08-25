@@ -107,7 +107,7 @@ class InputsFiltroTabela extends React.Component {
     selectLabel,
     strikeMinLabel,
     strikeMaxLabel,
-    codigoLabel
+    codigoLabel,
   ) {
     const key = this.props.coluna.key;
     const select = this.props[key][selectLabel];
@@ -257,21 +257,21 @@ const opcoesInputSelect = (props, lib = "") => {
       <option key={`${key}${indice}`} value={opcao}>
         {opcao}
       </option>
-    )
+    ),
   );
 };
 
 const mapStateToProps = (state) => ({
-  combinacoesTabela: state.THLReducer.combinacoesTabela,
-  estrategia: state.THLReducer.estrategia,
-  grupo: state.THLReducer.grupo,
-  acaoUlt: state.THLReducer.acaoUlt,
-  spread: state.THLReducer.spread,
-  codigos: state.THLReducer.codigos,
-  montagem: state.THLReducer.montagem,
-  desmontagem: state.THLReducer.desmontagem,
-  vencimento: state.THLReducer.vencimento,
-  prazo: state.THLReducer.prazo,
+  combinacoesTabela: state.thlReducer.combinacoesTabela,
+  estrategia: state.thlReducer.estrategia,
+  grupo: state.thlReducer.grupo,
+  acaoUlt: state.thlReducer.acaoUlt,
+  spread: state.thlReducer.spread,
+  codigos: state.thlReducer.codigos,
+  montagem: state.thlReducer.montagem,
+  desmontagem: state.thlReducer.desmontagem,
+  vencimento: state.thlReducer.vencimento,
+  prazo: state.thlReducer.prazo,
 });
 
 export default connect(mapStateToProps, { mudarVariavelTHLAction }, null, {
@@ -284,26 +284,26 @@ export const FiltrarTabela = (reduxState) => {
 
   const filteredData = filtroEstrategia(
     combinacoesTabela,
-    reduxState.estrategia
+    reduxState.estrategia,
   );
 
   const filteredData2 = filtroGrupo(combinacoesTabela, reduxState.grupo);
   const filteredData3 = filtroAcaoUlt(
     combinacoesTabela,
     reduxState.acaoUlt,
-    arrayCotacoes
+    arrayCotacoes,
   );
   const filteredData4 = filtroSpread(combinacoesTabela, reduxState.spread);
   const filteredData5 = filtroCodigos(combinacoesTabela, reduxState.codigos);
   const filteredData6 = filtroMontagem(
     combinacoesTabela,
     reduxState.montagem,
-    "montagem"
+    "montagem",
   );
   const filteredData7 = filtroMontagem(
     combinacoesTabela,
     reduxState.desmontagem,
-    "desmontagem"
+    "desmontagem",
   );
 
   const filteredData8 = filtroVcto(combinacoesTabela, reduxState.vencimento);
@@ -319,7 +319,7 @@ export const FiltrarTabela = (reduxState) => {
     filteredData7,
     filteredData8,
     filteredData9,
-    "id"
+    "id",
   );
 };
 
@@ -327,12 +327,12 @@ const filtroEstrategia = (data, filterText) => {
   return data.filter((linha) =>
     linha.estrategia
       .toLocaleLowerCase()
-      .includes(filterText.toLocaleLowerCase())
+      .includes(filterText.toLocaleLowerCase()),
   );
 };
 const filtroGrupo = (data, filterText) => {
   return data.filter((linha) =>
-    linha.grupo.toLocaleLowerCase().includes(filterText.toLocaleLowerCase())
+    linha.grupo.toLocaleLowerCase().includes(filterText.toLocaleLowerCase()),
   );
 };
 const filtroAcaoUlt = (data, filterText, arrayCotacoes) => {
@@ -361,7 +361,7 @@ const filtroMontagem = (data, filterObj, atributo) => {
 const filtroVcto = (data, arrayVencimentos) => {
   if (arrayVencimentos.length)
     return data.filter((linha) =>
-      arrayVencimentos.includes(linha.vencimento.toLocaleLowerCase())
+      arrayVencimentos.includes(linha.vencimento.toLocaleLowerCase()),
     );
   return data;
 };
@@ -399,7 +399,7 @@ const filtrarLinha = (targetValue, filterObj, tipoFiltro) => {
       targetValue,
       filterObj.min,
       filterObj.max,
-      filterObj.select
+      filterObj.select,
     );
   else if (tipoFiltro === "numeroTexto")
     return filtragemNumeroTexto(targetValue, filterObj);
@@ -461,13 +461,13 @@ const filtragemNumeroTexto = (targetValue, filterObj) => {
     targetStrike1,
     strike1Min,
     strike1Max,
-    select
+    select,
   );
   const condicaoStrike2 = comparadorNumero(
     targetStrike2,
     strike2Min,
     strike2Max,
-    select2
+    select2,
   );
   const condicaoCodigo1 = comparadorTexto(targetSymbol1, codigo1);
   const condicaoCodigo2 = comparadorTexto(targetSymbol2, codigo2);

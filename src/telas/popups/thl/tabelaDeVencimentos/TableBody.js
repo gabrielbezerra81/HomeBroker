@@ -14,7 +14,7 @@ import {
 } from "./utils";
 
 const TableBody = ({ strikeList, yearList, lastMonth }) => {
-  const { THLReducer: thlState } = useStateStorePrincipal();
+  const { thlReducer: thlState } = useStateStorePrincipal();
 
   const { opcoesStrike, precosTabelaVencimentos } = thlState;
 

@@ -239,11 +239,11 @@ const mapStateToPropsGlobalStore = (state) => {
 };
 
 const mapStateToPropsOrdensExec = (state) => ({
-  tabelaOrdensExecucao: state.ordensExecReducer.tabelaOrdensExecucao,
-  ativo: state.ordensExecReducer.ativo,
-  opcoesOrdemAberto: state.ordensExecReducer.opcoesOrdemAberto,
-  ordemAtual: state.ordensExecReducer.ordemAtual,
-  token: state.telaPrincipalReducer.token,
+  tabelaOrdensExecucao: state.ordersExecReducer.tabelaOrdensExecucao,
+  ativo: state.ordersExecReducer.ativo,
+  opcoesOrdemAberto: state.ordersExecReducer.opcoesOrdemAberto,
+  ordemAtual: state.ordersExecReducer.ordemAtual,
+  token: state.systemReducer.token,
 });
 
 export default compose(

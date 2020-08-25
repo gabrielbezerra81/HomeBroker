@@ -94,7 +94,7 @@ class PosicaoAmpliadaResumida extends React.Component {
                                         <span key={indice}>
                                           +
                                           {formatarQuantidadeKMG(
-                                            oferta.qtdeOferta
+                                            oferta.qtdeOferta,
                                           )}
                                           <br />
                                         </span>
@@ -102,11 +102,11 @@ class PosicaoAmpliadaResumida extends React.Component {
                                         <span key={indice}>
                                           -
                                           {formatarQuantidadeKMG(
-                                            oferta.qtdeOferta
+                                            oferta.qtdeOferta,
                                           )}
                                           <br />
                                         </span>
-                                      )
+                                      ),
                                     )}
                                   </td>
                                   <td>
@@ -122,8 +122,8 @@ class PosicaoAmpliadaResumida extends React.Component {
                                       renderCV(
                                         oferta.oferta,
                                         oferta.operacao,
-                                        indice
-                                      )
+                                        indice,
+                                      ),
                                     )}
                                   </td>
                                   <td>{ordem.offers[0].precoEnvio}</td>
@@ -146,11 +146,11 @@ class PosicaoAmpliadaResumida extends React.Component {
 }
 
 const mapStateToPropsPosicao = (state) => ({
-  ordenacao: state.posicaoReducer.ordenacao,
-  tipoVisualizacao: state.posicaoReducer.tipoVisualizacao,
-  posicoesCustodia: state.posicaoReducer.posicoesCustodia,
-  arrayPrecos: state.posicaoReducer.arrayPrecos,
-  arrayPrecosID: state.posicaoReducer.arrayPrecosID,
+  ordenacao: state.positionReducer.ordenacao,
+  tipoVisualizacao: state.positionReducer.tipoVisualizacao,
+  posicoesCustodia: state.positionReducer.posicoesCustodia,
+  arrayPrecos: state.positionReducer.arrayPrecos,
+  arrayPrecosID: state.positionReducer.arrayPrecosID,
 });
 
 export default connect(mapStateToPropsPosicao, {}, null, {
@@ -225,8 +225,8 @@ const calculaAlturaRowAtivos = (posicoesCustodia) => {
       Math.max(
         posicao.custodiaCompra.length,
         posicao.custodiaVenda.length,
-        posicao.ativos.length
-      )
+        posicao.ativos.length,
+      ),
     );
   });
 
@@ -257,7 +257,7 @@ const calculaAlturaRowAtivos = (posicoesCustodia) => {
 
 const encontrarPrecosEmblema = (props, posicao) => {
   const precosEmblema = props.arrayPrecos.filter(
-    (preco) => preco.idEstrutura === posicao.idEstrutura
+    (preco) => preco.idEstrutura === posicao.idEstrutura,
   );
   if (precosEmblema.length) return precosEmblema[0];
   return null;

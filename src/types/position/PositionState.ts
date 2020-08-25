@@ -2,7 +2,7 @@ import {
   PositionItem,
   PositionPrice,
   PositionQuote,
-} from "types/posicao/posicao";
+} from "types/position/position";
 
 export default interface PositionState {
   ordenacao: string;

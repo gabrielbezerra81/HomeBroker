@@ -12,8 +12,8 @@ import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 export default (props) => {
   const dispatch = useDispatchStorePrincipal();
   const {
-    ordensExecReducer: state,
-    telaPrincipalReducer: { token },
+    ordersExecReducer: state,
+    systemReducer: { token },
   } = useStateStorePrincipal();
 
   const placeholder = props.modo.charAt(0).toUpperCase() + props.modo.slice(1);
@@ -51,7 +51,7 @@ export default (props) => {
                 valorSomar,
                 modo,
                 token,
-              })
+              }),
             );
           else alert(erro_opcoes_ordens_exec);
         }}

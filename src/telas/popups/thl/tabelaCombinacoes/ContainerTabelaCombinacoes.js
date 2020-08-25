@@ -12,7 +12,7 @@ const alturaLinha = 46;
 const escolhasOrdem = ["", "asc", "desc"];
 
 export default React.memo(() => {
-  const { THLReducer: reduxState } = useStateStorePrincipal();
+  const { thlReducer: reduxState } = useStateStorePrincipal();
   const {
     combinacoesTabela,
     estrategia,
@@ -50,7 +50,7 @@ export default React.memo(() => {
         data = ordenarTabela(state, data);
 
       setData(data);
-    }, 500)
+    }, 500),
   );
 
   useEffect(() => {
@@ -92,7 +92,7 @@ export default React.memo(() => {
           function (e) {
             e.stopPropagation();
           },
-          { passive: true }
+          { passive: true },
         );
       }
     }, 500);
@@ -160,7 +160,7 @@ export const calcularMargemBorda = () => {
 
     container.style.setProperty(
       "--width-tabela-combinacoes",
-      `calc(100% - ${right}px)`
+      `calc(100% - ${right}px)`,
     );
   }
 };
@@ -199,13 +199,13 @@ const ordenar = (array, key, ordem, arrayCotacoes) => {
         arrayCotacoes,
         item1[key].acao,
         "codigo",
-        "cotacao"
+        "cotacao",
       );
       valor2 = buscarNumeroArray(
         arrayCotacoes,
         item2[key].acao,
         "codigo",
-        "cotacao"
+        "cotacao",
       );
     } else {
       valor1 = item1[key];

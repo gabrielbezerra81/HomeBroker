@@ -56,7 +56,7 @@ class PosicaoEmLista extends React.Component {
                       props,
                       item,
                       "qtdeComposta",
-                      "colunaDividida"
+                      "colunaDividida",
                     )}
                     {listarAtributoComposto(props, item, "dealPrice")}
                     {listarAtributoComposto(props, item, "total")}
@@ -88,9 +88,9 @@ class PosicaoEmLista extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  posicoesCustodia: state.posicaoReducer.posicoesCustodia,
-  arrayCotacoes: state.posicaoReducer.arrayCotacoes,
-  arrayCotacoesID: state.posicaoReducer.arrayCotacoesID,
+  posicoesCustodia: state.positionReducer.posicoesCustodia,
+  arrayCotacoes: state.positionReducer.arrayCotacoes,
+  arrayCotacoesID: state.positionReducer.arrayCotacoesID,
 });
 
 export default connect(mapStateToProps, {}, null, {
@@ -113,7 +113,7 @@ const listarAtributoComposto = (
   props,
   posicao,
   atributo,
-  classeColunaDividida = ""
+  classeColunaDividida = "",
 ) => {
   let colunaTabela = posicao.ativos.map((oferta, index2) => {
     return (
@@ -140,7 +140,7 @@ let renderConteudoAtributoComposto = (props, posicao, oferta, atributo) => {
       break;
     case "precoUlt":
       const ativo = props.arrayCotacoes.find(
-        (ativo) => ativo.codigo === oferta.symbol
+        (ativo) => ativo.codigo === oferta.symbol,
       );
       const cotacao =
         ativo && ativo.cotacao ? formatarNumDecimal(ativo.cotacao) : "";

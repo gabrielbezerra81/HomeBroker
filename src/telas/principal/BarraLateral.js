@@ -142,13 +142,13 @@ const mapStateToPropsGlobalStore = (state) => {
 };
 
 const mapStateToPropsAppPrincipal = (state) => ({
-  ordensAberto: state.telaPrincipalReducer.ordensAberto,
-  ordensExecucaoAberto: state.telaPrincipalReducer.ordensExecucaoAberto,
-  relatorioDetalhadoAberto: state.telaPrincipalReducer.relatorioDetalhadoAberto,
-  listaCompletaAberta: state.telaPrincipalReducer.listaCompletaAberta,
-  menuLateralAberto: state.telaPrincipalReducer.menuLateralAberto,
-  multilegAberto: state.telaPrincipalReducer.multilegAberto,
-  thlAberta: state.telaPrincipalReducer.thlAberta,
+  ordensAberto: state.systemReducer.ordensAberto,
+  ordensExecucaoAberto: state.systemReducer.ordensExecucaoAberto,
+  relatorioDetalhadoAberto: state.systemReducer.relatorioDetalhadoAberto,
+  listaCompletaAberta: state.systemReducer.listaCompletaAberta,
+  menuLateralAberto: state.systemReducer.menuLateralAberto,
+  multilegAberto: state.systemReducer.multilegAberto,
+  thlAberta: state.systemReducer.thlAberta,
 });
 
 export default compose(

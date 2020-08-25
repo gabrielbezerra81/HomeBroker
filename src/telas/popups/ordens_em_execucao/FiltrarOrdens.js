@@ -23,7 +23,7 @@ class FiltrarOrdens extends React.Component {
                   onChange={(event) =>
                     this.props.mudarVariavelOrdensExecAction(
                       "ativoFiltrarOrdens",
-                      event.currentTarget.value
+                      event.currentTarget.value,
                     )
                   }
                 />
@@ -39,7 +39,7 @@ class FiltrarOrdens extends React.Component {
                   onChange={(event) =>
                     this.props.mudarVariavelOrdensExecAction(
                       "mercadoFiltrarOrdens",
-                      event.currentTarget.value
+                      event.currentTarget.value,
                     )
                   }
                 >
@@ -58,7 +58,7 @@ class FiltrarOrdens extends React.Component {
                   onChange={(event) =>
                     this.props.mudarVariavelOrdensExecAction(
                       "contaFiltrarOrdens",
-                      event.currentTarget.value
+                      event.currentTarget.value,
                     )
                   }
                 >
@@ -77,7 +77,7 @@ class FiltrarOrdens extends React.Component {
                   onChange={(event) =>
                     this.props.mudarVariavelOrdensExecAction(
                       "statusFiltrarOrdens",
-                      event.currentTarget.value
+                      event.currentTarget.value,
                     )
                   }
                 >
@@ -96,7 +96,7 @@ class FiltrarOrdens extends React.Component {
                   onChange={(event) =>
                     this.props.mudarVariavelOrdensExecAction(
                       "dataFiltrarOrdens",
-                      event.currentTarget.value
+                      event.currentTarget.value,
                     )
                   }
                 >
@@ -115,7 +115,7 @@ class FiltrarOrdens extends React.Component {
                   onChange={(event) =>
                     this.props.mudarVariavelOrdensExecAction(
                       "ofertaFiltrarOrdens",
-                      event.currentTarget.value
+                      event.currentTarget.value,
                     )
                   }
                 >
@@ -142,12 +142,12 @@ class FiltrarOrdens extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  ativoFiltrarOrdens: state.ordensExecReducer.ativoFiltrarOrdens,
-  mercadoFiltrarOrdens: state.ordensExecReducer.mercadoFiltrarOrdens,
-  contaFiltrarOrdens: state.ordensExecReducer.contaFiltrarOrdens,
-  statusFiltrarOrdens: state.ordensExecReducer.statusFiltrarOrdens,
-  dataFiltrarOrdens: state.ordensExecReducer.dataFiltrarOrdens,
-  ofertaFiltrarOrdens: state.ordensExecReducer.ofertaFiltrarOrdens,
+  ativoFiltrarOrdens: state.ordersExecReducer.ativoFiltrarOrdens,
+  mercadoFiltrarOrdens: state.ordersExecReducer.mercadoFiltrarOrdens,
+  contaFiltrarOrdens: state.ordersExecReducer.contaFiltrarOrdens,
+  statusFiltrarOrdens: state.ordersExecReducer.statusFiltrarOrdens,
+  dataFiltrarOrdens: state.ordersExecReducer.dataFiltrarOrdens,
+  ofertaFiltrarOrdens: state.ordersExecReducer.ofertaFiltrarOrdens,
 });
 
 export default connect(
@@ -157,5 +157,5 @@ export default connect(
     filtrarHistoricoOpAction,
   },
   null,
-  { context: StorePrincipalContext }
+  { context: StorePrincipalContext },
 )(FiltrarOrdens);

@@ -40,8 +40,9 @@ export const listarOrdensExecAction = (props) => {
   return async (dispatch, getState) => {
     const { eventSourceOrdensExec } = getReducerStateStorePrincipal(
       getState(),
-      "ordensExec"
+      "ordensExec",
     );
+
     const { token } = getReducerStateStorePrincipal(getState(), "principal");
 
     if (token) {
@@ -57,7 +58,7 @@ export const listarOrdensExecAction = (props) => {
             eventSourceOrdensExec,
             listaOrdensExec: ordensExec,
           }),
-        3000
+        3000,
       );
     }
   };
@@ -121,7 +122,7 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
         cotacoesMultileg = data.multilegQuotes;
 
         const opcao = multileg[indiceAba].opcoes.filter(
-          (opcao) => opcao.symbol === oferta.ativo
+          (opcao) => opcao.symbol === oferta.ativo,
         );
         let tipo = "";
         if (opcao.length > 0) tipo = opcao[0].type.toLowerCase();
@@ -152,7 +153,7 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
       let calculo = calculoPreco(
         multileg[indiceAba],
         "ultimo",
-        cotacoesMultileg
+        cotacoesMultileg,
       ).toFixed(2);
       calculo = formatarNumero(calculo, 2, ".", ",");
       multileg[indiceAba].preco = calculo;
@@ -321,7 +322,7 @@ const retornaDadosOferta = (ordemAtual, tipo) => {
     const ofertaPrincipal = ordemAtual.offers[0];
 
     const arrayAjustes = ordemAtual.offers.filter(
-      (oferta, index) => index !== 0
+      (oferta, index) => index !== 0,
     );
     const segundaOrdem = arrayAjustes[arrayAjustes.length - 1];
 

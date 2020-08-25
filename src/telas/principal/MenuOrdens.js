@@ -208,20 +208,20 @@ const mapStateToPropsGlobalStore = (state) => {
 };
 
 const mapStateToPropsAppPrincipal = (state) => ({
-  ordensAberto: state.telaPrincipalReducer.ordensAberto,
-  ordensExecucaoAberto: state.telaPrincipalReducer.ordensExecucaoAberto,
-  relatorioDetalhadoAberto: state.telaPrincipalReducer.relatorioDetalhadoAberto,
-  listaCompletaAberta: state.telaPrincipalReducer.listaCompletaAberta,
-  menuLateralAberto: state.telaPrincipalReducer.menuLateralAberto,
-  multilegAberto: state.telaPrincipalReducer.multilegAberto,
-  thlAberta: state.telaPrincipalReducer.thlAberta,
-  logado: state.telaPrincipalReducer.logado,
+  ordensAberto: state.systemReducer.ordensAberto,
+  ordensExecucaoAberto: state.systemReducer.ordensExecucaoAberto,
+  relatorioDetalhadoAberto: state.systemReducer.relatorioDetalhadoAberto,
+  listaCompletaAberta: state.systemReducer.listaCompletaAberta,
+  menuLateralAberto: state.systemReducer.menuLateralAberto,
+  multilegAberto: state.systemReducer.multilegAberto,
+  thlAberta: state.systemReducer.thlAberta,
+  logado: state.systemReducer.logado,
   eventSourceCotacao_Multileg: state.multilegReducer.eventSourceCotacao,
-  eventSourcePosicao_Posicao: state.posicaoReducer.eventSourcePosicao,
-  eventSourceEmblema_Posicao: state.posicaoReducer.eventSourceEmblema,
-  eventSourceCotacoes_Posicao: state.posicaoReducer.eventSourceCotacoes,
+  eventSourcePosicao_Posicao: state.positionReducer.eventSourcePosicao,
+  eventSourceEmblema_Posicao: state.positionReducer.eventSourceEmblema,
+  eventSourceCotacoes_Posicao: state.positionReducer.eventSourceCotacoes,
   eventSourceOrdensExec_OrdensExec:
-    state.ordensExecReducer.eventSourceOrdensExec,
+    state.ordersExecReducer.eventSourceOrdensExec,
 });
 
 export default compose(

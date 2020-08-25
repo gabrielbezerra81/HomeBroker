@@ -41,11 +41,11 @@ export const BoletasReducer = combineReducers({
 });
 
 export const reducersAppPrincipal = combineReducers({
-  telaPrincipalReducer: SystemReducer,
+  systemReducer: SystemReducer,
   multilegReducer: MultilegReducer,
-  posicaoReducer: PositionReducer,
-  ordensExecReducer: OrdensExecucaoReducer,
-  THLReducer: THLReducer,
+  positionReducer: PositionReducer,
+  ordersExecReducer: OrdensExecucaoReducer,
+  thlReducer: THLReducer,
 });
 
 export type BoletasState = ReturnType<typeof BoletasReducer>;

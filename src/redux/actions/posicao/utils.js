@@ -1,5 +1,5 @@
 import { MUDAR_VARIAVEL_POSICAO_CUSTODIA } from "constants/MenuActionTypes";
-import ItemPosicao from "types/posicao/posicao";
+import ItemPosicao from "types/position/position";
 
 export const updateOnePositionState = ({ attributeName, attributeValue }) => {
   return {

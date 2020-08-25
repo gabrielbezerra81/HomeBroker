@@ -6,9 +6,9 @@ import {
   actionType,
 } from "constants/ActionTypes";
 import { resetarEstadoRedux } from "redux/reducers/resetarEstadoReducer";
-import SystemState from "types/principal/SystemState";
+import SystemState from "types/system/SystemState";
 import Action from "types/Action";
-import { Token, Account } from "types/principal/system";
+import { Token, Account } from "types/system/system";
 
 const INITIAL_STATE: SystemState = {
   usuarioConectado: "",

@@ -49,7 +49,7 @@ class Book extends React.Component {
 
     const calculoSemBook = verificaCalculoSemBook(
       aba.tabelaMultileg,
-      cotacoesMultileg
+      cotacoesMultileg,
     );
 
     const renderPlaceholder = renderPlaceholderPreco(props);
@@ -118,7 +118,7 @@ class Book extends React.Component {
                         </tr>
                       );
                     return null;
-                  }
+                  },
                 )}
               </tbody>
             </Table>
@@ -149,7 +149,7 @@ class Book extends React.Component {
                   tabIndex: indice,
                   attributeName: "preco",
                   attributeValue: formatarNumDecimal(
-                    Number(event.currentTarget.value)
+                    Number(event.currentTarget.value),
                   ),
                 });
               }}
@@ -167,7 +167,7 @@ class Book extends React.Component {
                     Number(min).toFixed(2),
                     2,
                     ".",
-                    ","
+                    ",",
                   ),
                 })
               }
@@ -188,7 +188,7 @@ class Book extends React.Component {
                           Number((max + min) / 2).toFixed(2),
                           2,
                           ".",
-                          ","
+                          ",",
                         ),
                       })
                   : () => false
@@ -208,7 +208,7 @@ class Book extends React.Component {
                     Number(max).toFixed(2),
                     2,
                     ".",
-                    ","
+                    ",",
                   ),
                 })
               }
@@ -341,9 +341,9 @@ const mapStateToProps = (state) => ({
   multileg: state.multilegReducer.multileg,
   eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
   cotacoesMultileg: state.multilegReducer.cotacoesMultileg,
-  token: state.telaPrincipalReducer.token,
-  conta: state.telaPrincipalReducer.conta,
-  contaSelecionada: state.telaPrincipalReducer.contaSelecionada,
+  token: state.systemReducer.token,
+  conta: state.systemReducer.conta,
+  contaSelecionada: state.systemReducer.contaSelecionada,
   cotacoesMultilegID: state.multilegReducer.cotacoesMultilegID,
 });
 
@@ -356,7 +356,7 @@ export default connect(
     createMultilegPositionAction,
   },
   null,
-  { context: StorePrincipalContext }
+  { context: StorePrincipalContext },
 )(Book);
 
 const renderPlaceholderPreco = (props) => {
@@ -400,7 +400,7 @@ const atualizarPrecoDinamicante = (props) => {
   const preco = aba.preco;
 
   let novoPreco = calculoPreco(aba, "ultimo", props.cotacoesMultileg).toFixed(
-    2
+    2,
   );
   novoPreco = formatarNumero(novoPreco, 2, ".", ",");
 

@@ -1,5 +1,5 @@
 import { MUDAR_VARIAVEL_POSICAO_CUSTODIA } from "constants/MenuActionTypes";
-import PositionState from "types/posicao/PosicaoState";
+import PositionState from "types/position/PositionState";
 import Action from "types/Action";
 
 const INITIAL_STATE: PositionState = {

@@ -17,7 +17,7 @@ import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 export const ColunaHeader = ({ children, column }) => {
   const dispatch = useDispatchStorePrincipal();
   const {
-    THLReducer: { ordenacao },
+    thlReducer: { ordenacao },
   } = useStateStorePrincipal();
   let elementoColuna;
   let classNameColunaAcaoUlt = "";
@@ -136,7 +136,7 @@ export const ColunaTextoComum = (props) => {
 
 export const ColunaAcaoUlt = ({ children, row, column }) => {
   const {
-    THLReducer: { arrayCotacoes },
+    thlReducer: { arrayCotacoes },
   } = useStateStorePrincipal();
   const acao = children.acao;
 
@@ -187,7 +187,7 @@ export const ColunaMontagem = ({ children, row, column }) => {
 
   const dispatch = useDispatchStorePrincipal();
   const {
-    THLReducer: { booksSelecionados },
+    thlReducer: { booksSelecionados },
   } = useStateStorePrincipal();
 
   const preco = children;

@@ -26,7 +26,7 @@ import {
 export const updateMultilegStateAction = (
   attributeName: string,
   attributeValue: MultilegState[keyof MultilegState],
-): MainThunkAction => dispatch => {
+): MainThunkAction => (dispatch) => {
   dispatch(updateMultilegState({ attributeName, attributeValue }));
 };
 
@@ -228,7 +228,7 @@ export const updateMultilegOfferAction = ({
   travarDestravarClique("travar", "multileg");
 
   const {
-    telaPrincipalReducer: { token },
+    systemReducer: { token },
     multilegReducer: {
       eventSourceCotacao,
       setIntervalCotacoesMultileg,
@@ -262,7 +262,7 @@ export const updateMultilegOfferAction = ({
       if (options) {
         multilegOffer.opcoes = [...options];
 
-        const foundOption = multilegOffer.opcoes.find(optionsItem => {
+        const foundOption = multilegOffer.opcoes.find((optionsItem) => {
           const option = optionsItem as MultilegOption;
           return option.strike === multilegOffer.strikeSelecionado;
         });
@@ -352,7 +352,7 @@ export const addMultilegOfferAction = ({
   travarDestravarClique("travar", "multileg");
 
   const {
-    telaPrincipalReducer: { token },
+    systemReducer: { token },
     multilegReducer: {
       eventSourceCotacao,
       setIntervalCotacoesMultileg,
@@ -492,7 +492,7 @@ export const newMultilegTab: MultilegTab = {
 };
 
 const setOfferSymbolAndModel = (multilegOffer: MultilegOffer) => {
-  multilegOffer.opcoes.forEach(optionsItem => {
+  multilegOffer.opcoes.forEach((optionsItem) => {
     const option = optionsItem as MultilegOption;
     if (
       option.strike === multilegOffer.strikeSelecionado &&
@@ -505,7 +505,7 @@ const setOfferSymbolAndModel = (multilegOffer: MultilegOffer) => {
 };
 
 const setOfferModelTypeStrikeAndSeries = (multilegOffer: MultilegOffer) => {
-  multilegOffer.opcoes.forEach(optionsItem => {
+  multilegOffer.opcoes.forEach((optionsItem) => {
     const option = optionsItem as MultilegOption;
 
     if (option.symbol === multilegOffer.codigoSelecionado) {
@@ -541,7 +541,7 @@ export const updateMultilegQuotesAction = ({
   }
 
   const symbolsArray: string[] = [];
-  multilegQuotes.forEach(quote => {
+  multilegQuotes.forEach((quote) => {
     if (!symbolsArray.includes(quote.codigo)) symbolsArray.push(quote.codigo);
   });
 
@@ -558,12 +558,12 @@ export const updateMultilegQuotesAction = ({
 };
 
 export const cloneMultilegTabs = (multilegTabs: MultilegTab[]) =>
-  multilegTabs.map(multilegTab => ({
+  multilegTabs.map((multilegTab) => ({
     ...multilegTab,
-    opcoes: multilegTab.opcoes.map(option => ({ ...option })),
+    opcoes: multilegTab.opcoes.map((option) => ({ ...option })),
     vencimento: [...multilegTab.vencimento],
-    tabelaMultileg: multilegTab.tabelaMultileg.map(offer => ({ ...offer })),
+    tabelaMultileg: multilegTab.tabelaMultileg.map((offer) => ({ ...offer })),
   }));
 
 export const cloneMultilegQuotes = (multilegQuotes: MultilegQuote[]) =>
-  multilegQuotes.map(quote => ({ ...quote }));
+  multilegQuotes.map((quote) => ({ ...quote }));

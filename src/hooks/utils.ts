@@ -15,15 +15,15 @@ export const getReducerStateStorePrincipal = (
 ) => {
   switch (reducer) {
     case "thl":
-      return state.THLReducer;
+      return state.thlReducer;
     case "principal":
-      return state.telaPrincipalReducer;
+      return state.systemReducer;
     case "multileg":
       return state.multilegReducer;
     case "posicao":
-      return state.posicaoReducer;
+      return state.positionReducer;
     case "ordensExec":
-      return state.ordensExecReducer;
+      return state.ordersExecReducer;
     default:
       return state;
   }

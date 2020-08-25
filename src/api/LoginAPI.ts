@@ -10,7 +10,7 @@ import {
   erro_sessaoExpirada,
 } from "constants/AlertaErros";
 import { mostrarErroConsulta } from "api/API";
-import { Token, Account } from "types/principal/system";
+import { Token, Account } from "types/system/system";
 import api from "./apiConfig";
 
 const timeout = 10000;

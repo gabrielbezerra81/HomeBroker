@@ -6,7 +6,7 @@ import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export default ({ strikeLinha, indiceStrike, isTableEmpty }) => {
   const {
-    THLReducer: { strikeSelecionado, listaStrikes },
+    thlReducer: { strikeSelecionado, listaStrikes },
   } = useStateStorePrincipal();
   const dispatch = useDispatchStorePrincipal();
 
@@ -19,7 +19,7 @@ export default ({ strikeLinha, indiceStrike, isTableEmpty }) => {
           className="textInput"
           onChange={(e) =>
             dispatch(
-              mudarVariavelTHLAction("strikeSelecionado", e.target.value)
+              mudarVariavelTHLAction("strikeSelecionado", e.target.value),
             )
           }
         >

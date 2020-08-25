@@ -28,7 +28,7 @@ export const searchMultilegSymbolAPIAction = (
 ): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
-      telaPrincipalReducer: { token },
+      systemReducer: { token },
       multilegReducer: {
         eventSourceCotacao,
         setIntervalCotacoesMultileg,
@@ -125,7 +125,7 @@ export const sendMultilegOrderAction = (tabIndex: number): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
       multilegReducer: { multileg },
-      telaPrincipalReducer: { contaSelecionada },
+      systemReducer: { contaSelecionada },
     } = getState();
 
     const mountOrderProps = {
@@ -151,7 +151,7 @@ export const createMultilegAlertAction = (
   return async (dispatch, getState) => {
     const {
       multilegReducer: { multileg },
-      telaPrincipalReducer: { contaSelecionada },
+      systemReducer: { contaSelecionada },
     } = getState();
 
     const mountOrderProps = {
@@ -175,7 +175,7 @@ export const createMultilegPositionAction = (
   return async (dispatch, getState) => {
     const {
       multilegReducer: { multileg },
-      telaPrincipalReducer: { contaSelecionada },
+      systemReducer: { contaSelecionada },
     } = getState();
 
     const mountOrderProps = {

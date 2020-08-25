@@ -8,7 +8,7 @@ import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export default () => {
   const {
-    THLReducer: { carregandoTabelaVencimentos },
+    thlReducer: { carregandoTabelaVencimentos },
   } = useStateStorePrincipal();
 
   const [mouseDown, setMouseDown] = useState(false);
@@ -79,7 +79,7 @@ export default () => {
         container.scrollTop = scrollTop - movimentoY;
       }
     },
-    [mouseDown]
+    [mouseDown],
   );
 
   return (

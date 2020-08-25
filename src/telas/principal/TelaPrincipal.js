@@ -153,19 +153,19 @@ const mapStateToPropsGlobalStore = (state) => ({
 });
 
 const mapStateToPropsAppPrincipal = (state) => ({
-  ordensAberto: state.telaPrincipalReducer.ordensAberto,
-  ordensExecucaoAberto: state.telaPrincipalReducer.ordensExecucaoAberto,
-  relatorioDetalhadoAberto: state.telaPrincipalReducer.relatorioDetalhadoAberto,
-  listaCompletaAberta: state.telaPrincipalReducer.listaCompletaAberta,
-  menuLateralAberto: state.telaPrincipalReducer.menuLateralAberto,
-  multilegAberto: state.telaPrincipalReducer.multilegAberto,
-  thlAberta: state.telaPrincipalReducer.thlAberta,
-  token: state.telaPrincipalReducer.token,
-  usuarioConectado: state.telaPrincipalReducer.usuarioConectado,
+  ordensAberto: state.systemReducer.ordensAberto,
+  ordensExecucaoAberto: state.systemReducer.ordensExecucaoAberto,
+  relatorioDetalhadoAberto: state.systemReducer.relatorioDetalhadoAberto,
+  listaCompletaAberta: state.systemReducer.listaCompletaAberta,
+  menuLateralAberto: state.systemReducer.menuLateralAberto,
+  multilegAberto: state.systemReducer.multilegAberto,
+  thlAberta: state.systemReducer.thlAberta,
+  token: state.systemReducer.token,
+  usuarioConectado: state.systemReducer.usuarioConectado,
   // Posição
-  posicoesCustodia: state.posicaoReducer.posicoesCustodia,
-  arrayPrecos: state.posicaoReducer.arrayPrecos,
-  arrayCotacoes: state.posicaoReducer.arrayCotacoes,
+  posicoesCustodia: state.positionReducer.posicoesCustodia,
+  arrayPrecos: state.positionReducer.arrayPrecos,
+  arrayCotacoes: state.positionReducer.arrayCotacoes,
 });
 
 export default compose(

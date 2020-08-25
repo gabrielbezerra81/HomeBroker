@@ -12,8 +12,8 @@ import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export const BodyContentCell = ({ cellData, id, isLastColumn }) => {
   const {
-    THLReducer: thlState,
-    posicaoReducer: { posicoesCustodia },
+    thlReducer: thlState,
+    positionReducer: { posicoesCustodia },
   } = useStateStorePrincipal();
 
   const dispatch = useDispatchStorePrincipal();
@@ -26,7 +26,7 @@ export const BodyContentCell = ({ cellData, id, isLastColumn }) => {
   const symbol = cellData.symbol;
 
   const symbolStrike = `${symbol.slice(4)} (${formatarNumDecimal(
-    cellData.strike
+    cellData.strike,
   )})`;
 
   const { isCustody, isExecuting, execQtty, offerQtty } = useMemo(() => {
@@ -35,12 +35,12 @@ export const BodyContentCell = ({ cellData, id, isLastColumn }) => {
 
   const structure = useMemo(
     () => findStructureByIdAndSymbol(precosTabelaVencimentos, id, symbol),
-    [precosTabelaVencimentos, id, symbol]
+    [precosTabelaVencimentos, id, symbol],
   );
 
   const { mountBook, demountBook, prices, cellHasPrices } = useMemo(
     () => calculatePricesBooks(structure, symbol),
-    [structure, symbol]
+    [structure, symbol],
   );
 
   const styles = useMemo(
@@ -52,7 +52,7 @@ export const BodyContentCell = ({ cellData, id, isLastColumn }) => {
         structure,
         symbol,
       }),
-    [thlState, isExecuting, isLastColumn, structure, symbol]
+    [thlState, isExecuting, isLastColumn, structure, symbol],
   );
 
   return (
@@ -147,13 +147,13 @@ const checkIsCutody = (cellSymbol, posicoesCustodia) => {
 
   isExecuting = posicoesCustodia.some((posicao) => {
     const executingBuy = posicao.custodiaCompra.find(
-      (custCompra) => custCompra.ativo === cellSymbol
+      (custCompra) => custCompra.ativo === cellSymbol,
     );
     const executingSell = posicao.custodiaVenda.find(
-      (custVenda) => custVenda.ativo === cellSymbol
+      (custVenda) => custVenda.ativo === cellSymbol,
     );
     const custodyCondition = posicao.ativos.some(
-      (ativo) => ativo.symbol === cellSymbol
+      (ativo) => ativo.symbol === cellSymbol,
     );
     const executionCondition = executingBuy || executingSell;
     if (custodyCondition) isCustody = true;
@@ -181,7 +181,7 @@ const findStructureByIdAndSymbol = (priceStructures, id, symbol) => {
     ? priceStructures.find(
         (priceItem) =>
           priceItem.id === id &&
-          priceItem.components.some((comp) => comp.stock.symbol === symbol)
+          priceItem.components.some((comp) => comp.stock.symbol === symbol),
       )
     : null;
 
@@ -239,18 +239,18 @@ const calculatePricesBooks = (structure, symbol) => {
   if (thisCellPrice && nextCellPrice) {
     columnPrices.prices.buy = formatarNumDecimal(thisCellPrice.compra);
     columnPrices.prices.buyQtty = formatarQuantidadeKMG(
-      thisCellPrice.compraQtde
+      thisCellPrice.compraQtde,
     );
     columnPrices.prices.sell = formatarNumDecimal(thisCellPrice.venda);
     columnPrices.prices.sellQtty = formatarQuantidadeKMG(
-      thisCellPrice.vendaQtde
+      thisCellPrice.vendaQtde,
     );
 
     columnPrices.prices.mountQtty = formatarQuantidadeKMG(
-      Math.min(thisCellPrice.compraQtde, nextCellPrice.vendaQtde)
+      Math.min(thisCellPrice.compraQtde, nextCellPrice.vendaQtde),
     );
     columnPrices.prices.demountQtty = formatarQuantidadeKMG(
-      Math.min(thisCellPrice.vendaQtde, nextCellPrice.compraQtde)
+      Math.min(thisCellPrice.vendaQtde, nextCellPrice.compraQtde),
     );
 
     columnPrices.mountBook = [
@@ -278,7 +278,7 @@ const checkForForbiddenValues = (structure) => {
 
   hasForbiddenValue = structure.components.some((component) => {
     const hasValueInComponent = Object.keys(component).some(
-      (key) => component[key] === forbiddenValue
+      (key) => component[key] === forbiddenValue,
     );
 
     return hasValueInComponent;

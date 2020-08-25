@@ -9,7 +9,7 @@ import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export default React.memo(() => {
   const {
-    THLReducer: {
+    thlReducer: {
       seletorMapaCalor,
       faixasMapaCalor,
       precosTabelaVencimentos,
@@ -20,7 +20,7 @@ export default React.memo(() => {
 
   const { min, max } = useMemo(
     () => calcularPrecosMinMaxMapa(precosTabelaVencimentos, seletorMapaCalor),
-    [precosTabelaVencimentosID, seletorMapaCalor]
+    [precosTabelaVencimentosID, seletorMapaCalor],
   );
 
   useEffect(() => {
@@ -139,11 +139,11 @@ const calcularPrecosMinMaxMapa = (listaPrecos, seletorMapaCalor) => {
     const valorCalculo = seletorMapaCalor === "montar" ? "max" : "min";
 
     const minArray = listaPrecos.filter(
-      (estrutura) => estrutura[valorCalculo] !== null
+      (estrutura) => estrutura[valorCalculo] !== null,
     );
 
     const maxArray = listaPrecos.filter(
-      (estrutura) => estrutura[valorCalculo] !== null
+      (estrutura) => estrutura[valorCalculo] !== null,
     );
 
     precoMin = minArray.length ? Math.min(...minArray) : 0;

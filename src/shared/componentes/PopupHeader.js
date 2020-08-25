@@ -32,7 +32,7 @@ export const ModalHeader = ({
     appBoletasReducer: { appProps },
   } = useStateBoletas();
   const {
-    telaPrincipalReducer: { token },
+    systemReducer: { token },
   } = useStateStorePrincipal();
   const stateGlobalStore = useStateGlobalStore();
   const dispatchGlobal = useDispatchGlobalStore();
@@ -96,7 +96,7 @@ export const BookHeader = ({ headerClass, resetPosition }) => {
   const stateGlobalStore = useStateGlobalStore();
 
   const {
-    telaPrincipalReducer: { token },
+    systemReducer: { token },
   } = useStateStorePrincipal();
 
   const formShow = stateGlobalStore.show;
@@ -124,7 +124,7 @@ export const BookHeader = ({ headerClass, resetPosition }) => {
                   listarBookOfertaOnEnterAction({
                     codigoAtivo: event.target.value,
                     token,
-                  })
+                  }),
                 );
             }}
           />
@@ -175,7 +175,10 @@ export const ModalHeaderSemBook = React.memo(
             className="iconesHeader"
             onClick={() =>
               dispatchStorePrincipal(
-                abrirItemBarraLateralAction(abrirMenuProps, nomeVariavelReducer)
+                abrirItemBarraLateralAction(
+                  abrirMenuProps,
+                  nomeVariavelReducer,
+                ),
               )
             }
           >
@@ -191,7 +194,7 @@ export const ModalHeaderSemBook = React.memo(
         </div>
       </div>
     );
-  }
+  },
 );
 
 // form configurar ordem start stop
@@ -253,7 +256,7 @@ const getNomeVariavelReducer = (headerTitle) => {
 
 const GetAbrirMenuProps = () => {
   const {
-    telaPrincipalReducer: {
+    systemReducer: {
       ordensExecucaoAberto,
       relatorioDetalhadoAberto,
       listaCompletaAberta,
@@ -261,7 +264,7 @@ const GetAbrirMenuProps = () => {
       thlAberta,
     },
     multilegReducer: { eventSourceCotacao, setIntervalCotacoesMultileg },
-    THLReducer: { eventSourcePrecos, setIntervalPrecosTHL },
+    thlReducer: { eventSourcePrecos, setIntervalPrecosTHL },
   } = useStateStorePrincipal();
 
   const props = {
@@ -290,8 +293,8 @@ const GetAbrirMenuProps = () => {
   //   eventSourceCotacoes,
   //   setIntervalCotacoesPosicao,
   //   setIntervalEmblema,
-  // } = state.posicaoReducer;
-  // const { eventSourceOrdensExec } = state.ordensExecReducer;
+  // } = state.positionReducer;
+  // const { eventSourceOrdensExec } = state.ordersExecReducer;
 };
 
 const BotaoAbrirFiltrarOrdens = ({ headerTitle }) => {
@@ -299,7 +302,7 @@ const BotaoAbrirFiltrarOrdens = ({ headerTitle }) => {
 
   const dispatch = useDispatchStorePrincipal();
   const {
-    ordensExecReducer: { filtrarOrdensAberto },
+    ordersExecReducer: { filtrarOrdensAberto },
   } = useStateStorePrincipal();
 
   if (headerTitle === "HISTÓRICO DE OPERAÇÕES") {
@@ -312,8 +315,8 @@ const BotaoAbrirFiltrarOrdens = ({ headerTitle }) => {
           dispatch(
             mudarVariavelOrdensExecAction(
               "filtrarOrdensAberto",
-              !filtrarOrdensAberto
-            )
+              !filtrarOrdensAberto,
+            ),
           )
         }
       >

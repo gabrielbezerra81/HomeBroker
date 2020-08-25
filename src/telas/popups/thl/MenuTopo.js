@@ -44,7 +44,7 @@ export default () => {
 
 const InputPesquisa = () => {
   const {
-    THLReducer: { ativoPesquisa, tipo, pesquisandoAtivo },
+    thlReducer: { ativoPesquisa, tipo, pesquisandoAtivo },
   } = useStateStorePrincipal();
   const dispatch = useDispatchStorePrincipal();
 
@@ -59,8 +59,8 @@ const InputPesquisa = () => {
             dispatch(
               mudarVariavelTHLAction(
                 "ativoPesquisa",
-                event.currentTarget.value.toUpperCase()
-              )
+                event.currentTarget.value.toUpperCase(),
+              ),
             )
           }
         />
@@ -103,14 +103,14 @@ const InputPesquisa = () => {
 const EnviarOrdem = () => {
   const { divkey, zIndex } = useStateGlobalStore();
   const {
-    telaPrincipalReducer: { multilegAberto },
+    systemReducer: { multilegAberto },
     multilegReducer: {
       multileg,
       eventSource,
       eventSourceCotacao,
       cotacoesMultileg,
     },
-    THLReducer: { booksSelecionados },
+    thlReducer: { booksSelecionados },
   } = useStateStorePrincipal();
 
   const dispatchGlobal = useDispatchGlobalStore();
@@ -145,7 +145,7 @@ const EnviarOrdem = () => {
 
 const RecalcularPrecos = () => {
   const {
-    THLReducer: { codigoCelulaSelecionada },
+    thlReducer: { codigoCelulaSelecionada },
   } = useStateStorePrincipal();
   const dispatch = useDispatchStorePrincipal();
 
@@ -167,8 +167,8 @@ const RecalcularPrecos = () => {
 
 const Favoritar = () => {
   const {
-    THLReducer: { idCelulaSelecionada },
-    telaPrincipalReducer: { token },
+    thlReducer: { idCelulaSelecionada },
+    systemReducer: { token },
   } = useStateStorePrincipal();
   const dispatch = useDispatchStorePrincipal();
 
@@ -191,7 +191,7 @@ const Favoritar = () => {
 };
 const CriarAlerta = () => {
   const {
-    THLReducer: { idCelulaSelecionada },
+    thlReducer: { idCelulaSelecionada },
   } = useStateStorePrincipal();
   const dispatch = useDispatchStorePrincipal();
 

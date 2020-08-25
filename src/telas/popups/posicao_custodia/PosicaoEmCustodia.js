@@ -102,20 +102,20 @@ const mapStateToPropsGlobalStore = (state) => {
 };
 
 const mapStateToPropsPosicao = (state) => ({
-  ordenacao: state.posicaoReducer.ordenacao,
-  tipoVisualizacao: state.posicaoReducer.tipoVisualizacao,
-  ativoPesquisa: state.posicaoReducer.ativoPesquisa,
-  inputSelect: state.posicaoReducer.inputSelect,
-  eventSourceEmblema: state.posicaoReducer.eventSourceEmblema,
-  eventSourcePosicao: state.posicaoReducer.eventSourcePosicao,
-  eventSourceCotacoes: state.posicaoReducer.eventSourceCotacoes,
-  setIntervalEmblema: state.posicaoReducer.setIntervalEmblema,
-  setIntervalCotacoesPosicao: state.posicaoReducer.setIntervalCotacoesPosicao,
-  posicoesCustodia: state.posicaoReducer.posicoesCustodia,
-  arrayCotacoes: state.posicaoReducer.arrayCotacoes,
-  arrayPrecos: state.posicaoReducer.arrayPrecos,
-  arrayPrecosID: state.posicaoReducer.arrayPrecosID,
-  token: state.telaPrincipalReducer.token,
+  ordenacao: state.positionReducer.ordenacao,
+  tipoVisualizacao: state.positionReducer.tipoVisualizacao,
+  ativoPesquisa: state.positionReducer.ativoPesquisa,
+  inputSelect: state.positionReducer.inputSelect,
+  eventSourceEmblema: state.positionReducer.eventSourceEmblema,
+  eventSourcePosicao: state.positionReducer.eventSourcePosicao,
+  eventSourceCotacoes: state.positionReducer.eventSourceCotacoes,
+  setIntervalEmblema: state.positionReducer.setIntervalEmblema,
+  setIntervalCotacoesPosicao: state.positionReducer.setIntervalCotacoesPosicao,
+  posicoesCustodia: state.positionReducer.posicoesCustodia,
+  arrayCotacoes: state.positionReducer.arrayCotacoes,
+  arrayPrecos: state.positionReducer.arrayPrecos,
+  arrayPrecosID: state.positionReducer.arrayPrecosID,
+  token: state.systemReducer.token,
 });
 
 export default compose(

@@ -57,7 +57,7 @@ class BarraTopoTelaPrincipal extends React.Component {
                 onChange={(e) => {
                   const novoID = Number(e.currentTarget.value);
                   const novaConta = conta.filter(
-                    (item) => item.id === novoID
+                    (item) => item.id === novoID,
                   )[0];
 
                   props.mudarDadosLoginAction("contaSelecionada", novaConta);
@@ -101,14 +101,14 @@ class BarraTopoTelaPrincipal extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  usuarioConectado: state.telaPrincipalReducer.usuarioConectado,
-  valorLiquido: state.telaPrincipalReducer.valorLiquido,
-  valorComprar: state.telaPrincipalReducer.valorComprar,
-  ativo: state.telaPrincipalReducer.ativo,
-  menuLateralAberto: state.telaPrincipalReducer.menuLateralAberto,
-  logado: state.telaPrincipalReducer.logado,
-  conta: state.telaPrincipalReducer.conta,
-  contaSelecionada: state.telaPrincipalReducer.contaSelecionada,
+  usuarioConectado: state.systemReducer.usuarioConectado,
+  valorLiquido: state.systemReducer.valorLiquido,
+  valorComprar: state.systemReducer.valorComprar,
+  ativo: state.systemReducer.ativo,
+  menuLateralAberto: state.systemReducer.menuLateralAberto,
+  logado: state.systemReducer.logado,
+  conta: state.systemReducer.conta,
+  contaSelecionada: state.systemReducer.contaSelecionada,
 });
 
 export default connect(
@@ -118,5 +118,5 @@ export default connect(
     mudarDadosLoginAction,
   },
   null,
-  { context: StorePrincipalContext }
+  { context: StorePrincipalContext },
 )(BarraTopoTelaPrincipal);

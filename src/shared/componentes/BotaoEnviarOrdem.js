@@ -4,9 +4,9 @@ import { Popconfirm } from "antd";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export const BotaoEnviarOrdem = ({ props, tipoCompraVenda }) => {
-  const { telaPrincipalReducer } = useStateStorePrincipal();
+  const { systemReducer } = useStateStorePrincipal();
 
-  const { conta, contaSelecionada } = telaPrincipalReducer;
+  const { conta, contaSelecionada } = systemReducer;
   const variacaoBotao = tipoCompraVenda === "Comprar" ? "primary" : "danger";
 
   if (conta.length > 1) {
@@ -14,9 +14,7 @@ export const BotaoEnviarOrdem = ({ props, tipoCompraVenda }) => {
       <Popconfirm
         okText="Sim"
         cancelText="Não"
-        onConfirm={() =>
-          props.enviarOrdemAction(props, contaSelecionada)
-        }
+        onConfirm={() => props.enviarOrdemAction(props, contaSelecionada)}
         title={
           <div style={{ width: "260px" }}>
             Você possui mais de uma conta ativa. Tem certeza que a ordem é para

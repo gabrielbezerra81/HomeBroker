@@ -36,24 +36,24 @@ class MenuLateralUsuario extends React.Component {
   }
 }
 const mapStateToProps = (state) => ({
-  usuarioConectado: state.telaPrincipalReducer.usuarioConectado,
-  logado: state.telaPrincipalReducer.logado,
-  menuLateralAberto: state.telaPrincipalReducer.menuLateralAberto,
+  usuarioConectado: state.systemReducer.usuarioConectado,
+  logado: state.systemReducer.logado,
+  menuLateralAberto: state.systemReducer.menuLateralAberto,
   // Ordens Exec reativa
   eventSourceOrdensExec_OrdensExec:
-    state.ordensExecReducer.eventSourceOrdensExec,
+    state.ordersExecReducer.eventSourceOrdensExec,
   // Posicao Reativa
-  eventSourcePosicao_Posicao: state.posicaoReducer.eventSourcePosicao,
-  eventSourceEmblema_Posicao: state.posicaoReducer.eventSourceEmblema,
-  eventSourceCotacoes_Posicao: state.posicaoReducer.eventSourceCotacoes,
-  setIntervalEmblema_Posicao: state.posicaoReducer.setIntervalEmblema,
-  setIntervalCotacoes_Posicao: state.posicaoReducer.setIntervalCotacoesPosicao,
+  eventSourcePosicao_Posicao: state.positionReducer.eventSourcePosicao,
+  eventSourceEmblema_Posicao: state.positionReducer.eventSourceEmblema,
+  eventSourceCotacoes_Posicao: state.positionReducer.eventSourceCotacoes,
+  setIntervalEmblema_Posicao: state.positionReducer.setIntervalEmblema,
+  setIntervalCotacoes_Posicao: state.positionReducer.setIntervalCotacoesPosicao,
   // Multileg Reativo:
   eventSourceCotacao_Multileg: state.multilegReducer.eventSourceCotacao,
   setIntervalCotacoes_Multileg:
     state.multilegReducer.setIntervalCotacoesMultileg,
-  eventSourcePrecos_THL: state.THLReducer.eventSourcePrecos,
-  setIntervalPrecos_THL: state.THLReducer.setIntervalPrecosTHL,
+  eventSourcePrecos_THL: state.thlReducer.eventSourcePrecos,
+  setIntervalPrecos_THL: state.thlReducer.setIntervalPrecosTHL,
 });
 
 export default connect(
@@ -62,7 +62,7 @@ export default connect(
     deslogarUsuarioAction,
   },
   null,
-  { context: StorePrincipalContext }
+  { context: StorePrincipalContext },
 )(MenuLateralUsuario);
 
 const renderDivLogin = (props) => {

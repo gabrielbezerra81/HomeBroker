@@ -14,7 +14,7 @@ import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 export default React.memo(({ dataTabela, classeMargemScroll }) => {
   const {
-    THLReducer: { idCelulaSelecionada, codigoCelulaSelecionada },
+    thlReducer: { idCelulaSelecionada, codigoCelulaSelecionada },
   } = useStateStorePrincipal();
   const dispatch = useDispatchStorePrincipal();
 
@@ -45,7 +45,7 @@ export default React.memo(({ dataTabela, classeMargemScroll }) => {
           />
         );
       }),
-    [idCelulaSelecionada, codigoCelulaSelecionada]
+    [idCelulaSelecionada, codigoCelulaSelecionada],
   );
 
   const Td = useMemo(
@@ -60,7 +60,7 @@ export default React.memo(({ dataTabela, classeMargemScroll }) => {
         ></div>
       );
     },
-    [classeMargemScroll]
+    [classeMargemScroll],
   );
 
   return (
