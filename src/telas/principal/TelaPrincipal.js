@@ -14,16 +14,14 @@ import BarraLateral from "telas/principal/BarraLateral";
 import MenuOrdens from "telas/principal/MenuOrdens";
 
 const OrdensExecucao = React.lazy(() =>
-  import("telas/popups/ordens_em_execucao/OrdensExecucao")
+  import("telas/popups/ordens_em_execucao/OrdensExecucao"),
 );
-const Multileg = React.lazy(() =>
-  import("telas/popups/multileg_/Multileg")
-);
+const Multileg = React.lazy(() => import("telas/popups/multileg_/Multileg"));
 const PosicaoEmCustodia = React.lazy(() =>
-  import("telas/popups/posicao_custodia/PosicaoEmCustodia")
+  import("telas/popups/posicao_custodia/PosicaoEmCustodia"),
 );
 const RelatorioDetalhado = React.lazy(() =>
-  import("telas/popups/relatorio_detalhado/RelatorioDetalhado")
+  import("telas/popups/relatorio_detalhado/RelatorioDetalhado"),
 );
 const TelaTHL = React.lazy(() => import("telas/popups/thl/Tela_THL"));
 
@@ -151,7 +149,7 @@ const RenderMenus = ({
 };
 
 const mapStateToPropsGlobalStore = (state) => ({
-  zIndex: state.MainAppReducer.zIndex,
+  zIndex: state.GlobalReducer.zIndex,
 });
 
 const mapStateToPropsAppPrincipal = (state) => ({
@@ -177,7 +175,7 @@ export default compose(
       aumentarZindexAction,
     },
     null,
-    { context: GlobalContext }
+    { context: GlobalContext },
   ),
   connect(
     mapStateToPropsAppPrincipal,
@@ -189,8 +187,8 @@ export default compose(
     null,
     {
       context: StorePrincipalContext,
-    }
-  )
+    },
+  ),
 )(TelaPrincipal);
 
 /*

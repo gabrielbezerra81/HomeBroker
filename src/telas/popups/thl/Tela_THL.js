@@ -43,7 +43,7 @@ class Tela_THL extends React.Component {
   ModalBody = () => {
     const handleTHLResize = useCallback(() => {
       const container = document.getElementsByClassName(
-        "containerTabelaComb"
+        "containerTabelaComb",
       )[0];
       if (container.scrollWidth > container.clientWidth) {
         container.classList.add("bordaRedimensionar");
@@ -75,8 +75,8 @@ class Tela_THL extends React.Component {
 }
 
 const mapDateToPropsGlobal = (state) => ({
-  divkey: state.MainAppReducer.divkey,
-  zIndex: state.MainAppReducer.zIndex,
+  divkey: state.GlobalReducer.divkey,
+  zIndex: state.GlobalReducer.zIndex,
 });
 
 export default connect(mapDateToPropsGlobal, { aumentarZindexAction }, null, {

@@ -6,8 +6,11 @@ import {
   actionType,
 } from "constants/ActionTypes";
 import { resetarEstadoRedux } from "redux/reducers/resetarEstadoReducer";
+import SystemState from "types/principal/SystemState";
+import Action from "types/Action";
+import { Token, Account } from "types/principal/system";
 
-const INITIAL_STATE = {
+const INITIAL_STATE: SystemState = {
   usuarioConectado: "",
   menuLateralAberto: false,
   logado: false,
@@ -20,9 +23,9 @@ const INITIAL_STATE = {
   listaCompletaAberta: false,
   multilegAberto: false,
   thlAberta: false,
-  token: {},
+  token: {} as Token,
   conta: [],
-  contaSelecionada: {},
+  contaSelecionada: {} as Account,
 
   // inputUsuario: "gabrielAB",
   // inputSenha: "123456789",
@@ -32,7 +35,10 @@ const INITIAL_STATE = {
   // senhaCadastro: "",
 };
 
-export default (state = INITIAL_STATE, { type, payload }) => {
+export default (
+  state = INITIAL_STATE,
+  { type, payload }: Action,
+): SystemState => {
   switch (type) {
     case ABRIR_FECHAR_MENU_LATERAL:
       return { ...state, menuLateralAberto: payload };

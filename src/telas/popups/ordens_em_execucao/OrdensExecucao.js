@@ -22,7 +22,7 @@ class OrdensExecucao extends React.Component {
       this.props.aumentarZindexAction(
         "ordens_execucao",
         this.props.zIndex,
-        true
+        true,
       );
     }
   }
@@ -84,10 +84,10 @@ const modalBody = (props) => (
               item,
               index,
               props,
-              "ofertaPrincipal"
+              "ofertaPrincipal",
             );
             const ordensNext = item.nextOrders.map((ordemNext, ind) =>
-              renderOferta(ordemNext, "ON" + ind, props, "ordemNext")
+              renderOferta(ordemNext, "ON" + ind, props, "ordemNext"),
             );
 
             return [ofertaPrincipal, ...ordensNext];
@@ -225,7 +225,7 @@ const abrirOpcoesOrdem = (props, item) => {
     if (props.ordemAtual.id === item.id)
       props.mudarVariavelOrdensExecAction(
         "opcoesOrdemAberto",
-        !props.opcoesOrdemAberto
+        !props.opcoesOrdemAberto,
       );
     else props.mudarVariavelOrdensExecAction("opcoesOrdemAberto", true);
   } else props.mudarVariavelOrdensExecAction("opcoesOrdemAberto", true);
@@ -233,8 +233,8 @@ const abrirOpcoesOrdem = (props, item) => {
 
 const mapStateToPropsGlobalStore = (state) => {
   return {
-    divkey: state.MainAppReducer.divkey,
-    zIndex: state.MainAppReducer.zIndex,
+    divkey: state.GlobalReducer.divkey,
+    zIndex: state.GlobalReducer.zIndex,
   };
 };
 
@@ -251,7 +251,7 @@ export default compose(
     mapStateToPropsGlobalStore,
     { aumentarZindexAction, atualizarDivKeyAction },
     null,
-    { context: GlobalContext }
+    { context: GlobalContext },
   ),
   connect(
     mapStateToPropsOrdensExec,
@@ -260,6 +260,6 @@ export default compose(
       mudarVariavelOrdensExecAction,
     },
     null,
-    { context: StorePrincipalContext }
-  )
+    { context: StorePrincipalContext },
+  ),
 )(OrdensExecucao);

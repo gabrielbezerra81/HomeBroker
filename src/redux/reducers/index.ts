@@ -17,10 +17,10 @@ import {
 } from "constants/ActionTypes";
 import appBoletasReducer from "./boletas/appBoletasReducer";
 import THLReducer from "./thl/THLReducer";
-import TelaPrincipalReducer from "redux/reducers/telaPrincipal/TelaPrincipalReducer";
+import SystemReducer from "redux/reducers/system/SystemReducer";
 import MultilegReducer from "redux/reducers/multileg/MultilegReducer";
-import PosicaoReducer from "redux/reducers/posicao/PosicaoReducer";
-import OrdensExecucaoReducer from "redux/reducers/ordensExecucao/OrdensExecReducer";
+import PositionReducer from "redux/reducers/position/PositionReducer";
+import OrdensExecucaoReducer from "redux/reducers/ordersExecuting/OrdensExecReducer";
 
 export const BoletasReducer = combineReducers({
   bookOfertaReducer: bookOfertaReducer,
@@ -41,9 +41,9 @@ export const BoletasReducer = combineReducers({
 });
 
 export const reducersAppPrincipal = combineReducers({
-  telaPrincipalReducer: TelaPrincipalReducer,
+  telaPrincipalReducer: SystemReducer,
   multilegReducer: MultilegReducer,
-  posicaoReducer: PosicaoReducer,
+  posicaoReducer: PositionReducer,
   ordensExecReducer: OrdensExecucaoReducer,
   THLReducer: THLReducer,
 });

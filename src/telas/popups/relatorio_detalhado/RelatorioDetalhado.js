@@ -34,7 +34,7 @@ class RelatorioDetalhado extends React.Component {
       this.props.aumentarZindexAction(
         "relatorio_detalhado",
         this.props.zIndex,
-        true
+        true,
       );
     }
   }
@@ -234,8 +234,8 @@ const item = {
 
 const mapStateToPropsGlobalStore = (state) => {
   return {
-    divkey: state.MainAppReducer.divkey,
-    zIndex: state.MainAppReducer.zIndex,
+    divkey: state.GlobalReducer.divkey,
+    zIndex: state.GlobalReducer.zIndex,
   };
 };
 
@@ -243,5 +243,5 @@ export default connect(
   mapStateToPropsGlobalStore,
   { aumentarZindexAction },
   null,
-  { context: GlobalContext }
+  { context: GlobalContext },
 )(RelatorioDetalhado);

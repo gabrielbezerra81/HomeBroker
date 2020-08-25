@@ -84,7 +84,7 @@ class Multileg extends React.Component {
                         active={false}
                         onSelect={(key, event) => {
                           const keysPressionadas = arrayKeys.includes(
-                            event.key
+                            event.key,
                           );
                           if (keysPressionadas) {
                             event.stopPropagation();
@@ -187,8 +187,8 @@ const mapStateToPropsMultileg = (state) => ({
 
 const mapStateToPropsGlobalStore = (state) => {
   return {
-    divkey: state.MainAppReducer.divkey,
-    zIndex: state.MainAppReducer.zIndex,
+    divkey: state.GlobalReducer.divkey,
+    zIndex: state.GlobalReducer.zIndex,
   };
 };
 
@@ -205,6 +205,6 @@ export default compose(
       // atualizarBookAction,
     },
     null,
-    { context: StorePrincipalContext }
-  )
+    { context: StorePrincipalContext },
+  ),
 )(Multileg);

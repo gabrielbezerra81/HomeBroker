@@ -11,7 +11,7 @@ type reducerName =
 
 export const getReducerStateStorePrincipal = (
   state: MainStoreState,
-  reducer: reducerName
+  reducer: reducerName,
 ) => {
   switch (reducer) {
     case "thl":
@@ -31,12 +31,12 @@ export const getReducerStateStorePrincipal = (
 
 export const getReducerStateBoletas = (
   state: any,
-  namespace: "" | NamespacesType
+  namespace: "" | NamespacesType,
 ) => {
   if (namespace) return state[namespace];
   return state;
 };
 
 export const getMainReducerState = (state: any) => {
-  return state.MainAppReducer;
+  return state.GlobalReducer;
 };

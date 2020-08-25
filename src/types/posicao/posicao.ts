@@ -1,18 +1,18 @@
 import { typedAssign } from "types/utils";
 
-export interface ItemArrayPrecos {
+export interface PositionPrice {
   precoCompra: number;
   precoVenda: number;
   cotacaoAtual: number;
   idEstrutura: number;
 }
 
-export interface ItemArrayCotacoes {
+export interface PositionQuote {
   codigo: string;
   cotacao: number;
 }
 
-export interface IItemPosicao {
+export interface PositionItem {
   ativos: any[];
   precoCompra: number;
   precoVenda: number;
@@ -31,7 +31,7 @@ export interface IItemPosicao {
   agrupadorPrincipal: number;
 }
 
-export default class ItemPosicao implements IItemPosicao {
+export default class Position implements PositionItem {
   ativos: any[] = [];
   precoCompra: number = 0;
   precoVenda: number = 0;

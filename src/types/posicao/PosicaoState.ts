@@ -1,22 +1,22 @@
 import {
-  IItemPosicao,
-  ItemArrayPrecos,
-  ItemArrayCotacoes,
+  PositionItem,
+  PositionPrice,
+  PositionQuote,
 } from "types/posicao/posicao";
 
-export default interface PosicaoState {
+export default interface PositionState {
   ordenacao: string;
   tipoVisualizacao: "ampliado" | "lista" | "resumido" | "detalhada";
   ativoPesquisa: string;
   inputSelect: string;
-  posicoesCustodia: IItemPosicao[];
+  posicoesCustodia: PositionItem[];
   eventSourceEmblema: EventSource | null;
   setIntervalEmblema: NodeJS.Timeout | null;
   eventSourcePosicao: EventSource | null;
   eventSourceCotacoes: EventSource | null;
   setIntervalCotacoesPosicao: NodeJS.Timeout | null;
-  arrayPrecos: ItemArrayPrecos[];
+  arrayPrecos: PositionPrice[];
   arrayPrecosID: number;
-  arrayCotacoes: ItemArrayCotacoes[];
+  arrayCotacoes: PositionQuote[];
   arrayCotacoesID: number;
 }

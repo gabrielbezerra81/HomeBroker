@@ -50,8 +50,6 @@ export const listarTabelaInicialTHLAPIAction = (initialLoad = false) => {
       let lines = [];
       let structures = [];
       if (initialLoad) {
-        console.log("carga inicial");
-
         const data = await getTHLInitialDataAPI(symbol, type);
         lines = data.lines;
         structures = data.structures;
@@ -59,6 +57,8 @@ export const listarTabelaInicialTHLAPIAction = (initialLoad = false) => {
         const integerStrikes = [
           ...new Set(lines.map((line) => parseInt(line.strikeLine))),
         ];
+
+        console.log([...new Set([].map((line) => parseInt(line.strikeLine)))]);
 
         if (integerStrikes.length) {
           let strike = integerStrikes[0];
@@ -72,7 +72,6 @@ export const listarTabelaInicialTHLAPIAction = (initialLoad = false) => {
           );
         }
       } else {
-        console.log("carga secundária");
         const data = await getTHLDataWithStrikeAPI(
           symbol,
           selectedStrike,

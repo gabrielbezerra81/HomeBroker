@@ -200,10 +200,10 @@ class MenuOrdens extends Component {
 
 const mapStateToPropsGlobalStore = (state) => {
   return {
-    apps: state.MainAppReducer.apps,
-    show: state.MainAppReducer.show,
-    divkey: state.MainAppReducer.divkey,
-    zIndex: state.MainAppReducer.zIndex,
+    apps: state.GlobalReducer.apps,
+    show: state.GlobalReducer.show,
+    divkey: state.GlobalReducer.divkey,
+    zIndex: state.GlobalReducer.zIndex,
   };
 };
 
@@ -236,7 +236,7 @@ export default compose(
       aumentarZindexAction,
     },
     null,
-    { context: GlobalContext }
+    { context: GlobalContext },
   ),
   connect(
     mapStateToPropsAppPrincipal,
@@ -246,6 +246,6 @@ export default compose(
       abrirItemBarraLateralAction,
     },
     null,
-    { context: StorePrincipalContext }
-  )
+    { context: StorePrincipalContext },
+  ),
 )(MenuOrdens);

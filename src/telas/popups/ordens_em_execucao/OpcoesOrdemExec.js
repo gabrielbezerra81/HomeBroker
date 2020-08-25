@@ -143,10 +143,10 @@ const abrirFormOrdem = (event, props, acao) => {
 
 const mapStateToPropsGlobalStore = (state) => {
   return {
-    apps: state.MainAppReducer.apps,
-    show: state.MainAppReducer.show,
-    divkey: state.MainAppReducer.divkey,
-    zIndex: state.MainAppReducer.zIndex,
+    apps: state.GlobalReducer.apps,
+    show: state.GlobalReducer.show,
+    divkey: state.GlobalReducer.divkey,
+    zIndex: state.GlobalReducer.zIndex,
   };
 };
 
@@ -176,7 +176,7 @@ export default compose(
       receberDadosOrdemExecMainReducerAction,
     },
     null,
-    { context: GlobalContext }
+    { context: GlobalContext },
   ),
   connect(
     mapStateToPropsOpcoesOrdemExec,
@@ -190,6 +190,6 @@ export default compose(
       abrirOrdensBoletaAction,
     },
     null,
-    { context: StorePrincipalContext }
-  )
+    { context: StorePrincipalContext },
+  ),
 )(OpcoesOrdemExec);

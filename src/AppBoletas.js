@@ -45,7 +45,7 @@ const animate = (props, Componente) => {
         props.aumentarZindexAction(
           `${Componente.props.name}${props.appkey}`,
           props.zIndex,
-          props.show[props.indiceShow][Componente.props.name]
+          props.show[props.indiceShow][Componente.props.name],
         )
       }
     >
@@ -121,19 +121,22 @@ class AppBoletas extends React.Component {
           <CompraAgendada
             headerTitle="COMPRA AGENDADA"
             name="compra_agendada"
-          />
+          />,
         )}
         {animate(
           props,
           <CompraLimitada
             headerTitle="COMPRA LIMITADA"
             name="compra_limitada"
-          />
+          />,
         )}
 
         {animate(
           props,
-          <CompraMercado headerTitle="COMPRA A MERCADO" name="compra_mercado" />
+          <CompraMercado
+            headerTitle="COMPRA A MERCADO"
+            name="compra_mercado"
+          />,
         )}
 
         {animate(
@@ -141,7 +144,7 @@ class AppBoletas extends React.Component {
           <CompraStartStop
             headerTitle="COMPRA START STOP"
             name="compra_startstop"
-          />
+          />,
         )}
 
         {animate(
@@ -149,7 +152,7 @@ class AppBoletas extends React.Component {
           <CompraStartMovel
             headerTitle="COMPRA START MÓVEL"
             name="compra_startmovel"
-          />
+          />,
         )}
 
         {animate(
@@ -157,41 +160,41 @@ class AppBoletas extends React.Component {
           <CompraGainReducao
             headerTitle="GAIN / REDUÇÃO DE COMPRA"
             name="compra_gainreducao"
-          />
+          />,
         )}
 
         {animate(
           props,
-          <VendaAgendada headerTitle="VENDA AGENDADA" name="venda_agendada" />
+          <VendaAgendada headerTitle="VENDA AGENDADA" name="venda_agendada" />,
         )}
         {animate(
           props,
-          <VendaLimitada headerTitle="VENDA LIMITADA" name="venda_limitada" />
+          <VendaLimitada headerTitle="VENDA LIMITADA" name="venda_limitada" />,
         )}
         {animate(
           props,
-          <VendaMercado headerTitle="VENDA MERCADO" name="venda_mercado" />
+          <VendaMercado headerTitle="VENDA MERCADO" name="venda_mercado" />,
         )}
         {animate(
           props,
           <VendaStartStop
             headerTitle="VENDA START STOP"
             name="venda_startstop"
-          />
+          />,
         )}
         {animate(
           props,
           <VendaStopMovel
             headerTitle="VENDA STOP MÓVEL"
             name="venda_stopmovel"
-          />
+          />,
         )}
         {animate(
           props,
           <VendaGainReducao
             headerTitle="GAIN / REDUÇÃO DE VENDA"
             name="venda_gainreducao"
-          />
+          />,
         )}
       </div>
     );
@@ -200,13 +203,13 @@ class AppBoletas extends React.Component {
 
 const mapStateToPropsGlobalStore = (state) => {
   return {
-    apps: state.MainAppReducer.apps,
-    show: state.MainAppReducer.show,
-    divkey: state.MainAppReducer.divkey,
-    zIndex: state.MainAppReducer.zIndex,
-    dadosOrdemExec: state.MainAppReducer.dadosOrdemExec,
+    apps: state.GlobalReducer.apps,
+    show: state.GlobalReducer.show,
+    divkey: state.GlobalReducer.divkey,
+    zIndex: state.GlobalReducer.zIndex,
+    dadosOrdemExec: state.GlobalReducer.dadosOrdemExec,
     ultimaBoletaAbertaOrdemExec:
-      state.MainAppReducer.ultimaBoletaAbertaOrdemExec,
+      state.GlobalReducer.ultimaBoletaAbertaOrdemExec,
   };
 };
 
@@ -228,7 +231,7 @@ export default compose(
       receberDadosOrdemExecMainReducerAction,
     },
     null,
-    { context: GlobalContext }
+    { context: GlobalContext },
   ),
   connect(mapStateToPropsStorePrincipal, {}, null, {
     context: StorePrincipalContext,
@@ -238,5 +241,5 @@ export default compose(
     listarBookOfertaOnEnterAction,
     mudarInputHeaderAction,
     montarBoletaFromOrdemExecAction,
-  })
+  }),
 )(AppBoletas);

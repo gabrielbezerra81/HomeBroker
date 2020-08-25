@@ -31,7 +31,7 @@ class BarraLateral extends React.Component {
     return (
       <div
         className={`divBarraLateral${margemParaMenuLateral(
-          props.menuLateralAberto
+          props.menuLateralAberto,
         )}`}
         id="divBarraLateral"
       >
@@ -108,7 +108,7 @@ class BarraLateral extends React.Component {
             props.atualizarDivKeyAction("relatorio_detalhado");
             props.abrirItemBarraLateralAction(
               props,
-              "relatorioDetalhadoAberto"
+              "relatorioDetalhadoAberto",
             );
           }}
         >
@@ -134,10 +134,10 @@ class BarraLateral extends React.Component {
 
 const mapStateToPropsGlobalStore = (state) => {
   return {
-    apps: state.MainAppReducer.apps,
-    show: state.MainAppReducer.show,
-    divkey: state.MainAppReducer.divkey,
-    zIndex: state.MainAppReducer.zIndex,
+    apps: state.GlobalReducer.apps,
+    show: state.GlobalReducer.show,
+    divkey: state.GlobalReducer.divkey,
+    zIndex: state.GlobalReducer.zIndex,
   };
 };
 
@@ -158,7 +158,7 @@ export default compose(
     null,
     {
       context: GlobalContext,
-    }
+    },
   ),
   connect(
     mapStateToPropsAppPrincipal,
@@ -168,6 +168,6 @@ export default compose(
       mouseLeaveAction,
     },
     null,
-    { context: StorePrincipalContext }
-  )
+    { context: StorePrincipalContext },
+  ),
 )(BarraLateral);

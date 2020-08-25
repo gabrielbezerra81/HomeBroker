@@ -10,7 +10,7 @@ import {
   erro_sessaoExpirada,
 } from "constants/AlertaErros";
 import { mostrarErroConsulta } from "api/API";
-import { Token } from "types/principal/principal";
+import { Token, Account } from "types/principal/system";
 import api from "./apiConfig";
 
 const timeout = 10000;
@@ -32,16 +32,7 @@ interface LoginData {
   tokenType: string;
   name: string | null;
   refreshToken: string;
-  accounts: Array<{
-    corretora: string;
-    gateway: string;
-    id: number;
-    nome: string;
-    numero: string;
-    preferencia: any;
-    saldo: any;
-    sigla: string;
-  }>;
+  accounts: Array<Account>;
 }
 
 export const realizarLoginAPI = (

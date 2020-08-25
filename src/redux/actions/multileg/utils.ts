@@ -8,6 +8,7 @@ import { getformatedDate } from "shared/utils/Formatacoes";
 import { MODIFICAR_VARIAVEL_MULTILEG } from "constants/MenuActionTypes";
 import MultilegState from "types/multileg/MultilegState";
 import { MultilegTab, MultilegQuote } from "types/multileg/multileg";
+import { Account } from "types/principal/system";
 
 interface UpdateMultilegState {
   attributeName: string;
@@ -60,9 +61,7 @@ export const findClosestStrike = ({
 
 interface MountMultilegOrder {
   multilegTabs: MultilegTab[];
-  selectedAccount: {
-    id: string;
-  };
+  selectedAccount: Account;
   tabIndex: number;
 }
 
@@ -124,9 +123,7 @@ export const mountMultilegOrder = ({
 
 interface ValidateMultilegOrder {
   multilegTabs: MultilegTab[];
-  selectedAccount: {
-    id: string;
-  };
+  selectedAccount: Account;
   tabIndex: number;
 }
 

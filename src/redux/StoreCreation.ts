@@ -6,7 +6,7 @@ import { persistStore, persistReducer } from "redux-persist";
 // import LogRocket from "logrocket";
 import autoMergeLevel1 from "redux-persist/lib/stateReconciler/autoMergeLevel1";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
-import MainAppReducer from "redux/reducers/MainAppReducer";
+import GlobalReducer from "redux/reducers/GlobalReducer";
 import { reducersAppPrincipal, MainStoreState } from "redux/reducers";
 
 const persistConfig = {
@@ -25,7 +25,7 @@ const persistedReducerAppPrincipal = persistReducer<MainStoreState, any>(
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const combinedReducers = combineReducers({
-  MainAppReducer: MainAppReducer,
+  GlobalReducer,
 });
 
 //Usado para todos os outros dados gerais como os da tela principal

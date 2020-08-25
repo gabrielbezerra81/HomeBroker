@@ -96,8 +96,8 @@ const visualizacaoPosicao = (tipoVisualizacao) => {
 
 const mapStateToPropsGlobalStore = (state) => {
   return {
-    divkey: state.MainAppReducer.divkey,
-    zIndex: state.MainAppReducer.zIndex,
+    divkey: state.GlobalReducer.divkey,
+    zIndex: state.GlobalReducer.zIndex,
   };
 };
 
@@ -130,8 +130,8 @@ export default compose(
       atualizarEmblemasAction,
     },
     null,
-    { context: StorePrincipalContext }
-  )
+    { context: StorePrincipalContext },
+  ),
 )(PosicaoEmCustodia);
 
 const Linha1 = () => {
@@ -165,7 +165,7 @@ const Linha2 = ({ props }) => {
             onChange={(event) =>
               props.mudarVariavelPosicaoAction(
                 "ativoPesquisa",
-                event.currentTarget.value
+                event.currentTarget.value,
               )
             }
           />
@@ -189,7 +189,7 @@ const Linha2 = ({ props }) => {
             onChange={(event) =>
               props.mudarVariavelPosicaoAction(
                 "inputSelect",
-                event.currentTarget.value
+                event.currentTarget.value,
               )
             }
           >
