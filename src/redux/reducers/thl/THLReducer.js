@@ -18,6 +18,7 @@ const INITIAL_STATE = {
   idCelulaSelecionada: null,
   celulaCalculada: "",
   carregandoTabelaVencimentos: false,
+  shouldUpdateWithStrikeChange: true,
   booksSelecionados: [],
   faixasMapaCalor: null,
   precoMin: "", // faixa 1 mapa
@@ -60,7 +61,7 @@ const INITIAL_STATE = {
     41.0,
     44.0,
   ],
-  strikeSelecionado: 17,
+  strikeSelecionado: 21,
   precosTabelaVencimentos: [],
   eventSourcePrecos: null,
   setIntervalPrecosTHL: null,

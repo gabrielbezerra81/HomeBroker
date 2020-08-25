@@ -1,11 +1,12 @@
 import moment from "moment";
 import {
-  listarTabelaInicialTHLAPI,
+  getTHLDataWithStrikeAPI,
   recalcularPrecosTHLAPI,
   pesquisarCombinacoesTHLAPI,
   travarDestravarClique,
   favoritarTHLAPI,
   pesquisarListaStrikeTHLAPI,
+  getTHLInitialDataAPI,
 } from "api/API";
 import { atualizarPrecosTHLAPI, atualizarCotacaoTHLAPI } from "api/ReativosAPI";
 import { updateOneTHLState, updateManyTHLState } from "./utils";
@@ -22,52 +23,84 @@ export const pesquisarAtivoTHLAPIAction = () => {
         updateManyTHLState({
           listaStrikes,
           ativoPesquisado: ativoPesquisa.toUpperCase(),
-        })
+        }),
       );
     }
   };
 };
 
-export const listarTabelaInicialTHLAPIAction = () => {
+export const listarTabelaInicialTHLAPIAction = (initialLoad = false) => {
   return async (dispatch, getState) => {
     const {
-      tipo,
-      strikeSelecionado,
+      tipo: type,
+      strikeSelecionado: selectedStrike,
       setIntervalPrecosTHL,
-      ativoPesquisado: ativo,
+      ativoPesquisado: symbol,
       eventSourcePrecos,
     } = getReducerStateStorePrincipal(getState(), "thl");
 
-    if (ativo && strikeSelecionado && tipo) {
+    if (symbol && type) {
       dispatch(
-        updateOneTHLState({ nome: "carregandoTabelaVencimentos", valor: true })
+        updateOneTHLState({ nome: "carregandoTabelaVencimentos", valor: true }),
       );
 
       const { token } = getReducerStateStorePrincipal(getState(), "principal");
 
-      const tabelaVencimentos = await listarTabelaInicialTHLAPI(
-        ativo,
-        strikeSelecionado,
-        tipo
-      );
+      // quando fazer carga inicial
+      let lines = [];
+      let structures = [];
+      if (initialLoad) {
+        console.log("carga inicial");
 
-      if (tabelaVencimentos.length > 0)
-        atualizarPrecosTHL({
-          tabelaVencimentos,
-          dispatch,
-          setIntervalPrecosTHL,
-          sourcePrecos: eventSourcePrecos,
-          token,
-        });
+        const data = await getTHLInitialDataAPI(symbol, type);
+        lines = data.lines;
+        structures = data.structures;
+
+        const integerStrikes = [
+          ...new Set(lines.map((line) => parseInt(line.strikeLine))),
+        ];
+
+        if (integerStrikes.length) {
+          let strike = integerStrikes[0];
+          if (integerStrikes.length >= 2) strike = integerStrikes[1];
+
+          dispatch(
+            updateManyTHLState({
+              strikeSelecionado: strike,
+              shouldUpdateWithStrikeChange: false,
+            }),
+          );
+        }
+      } else {
+        console.log("carga secundária");
+        const data = await getTHLDataWithStrikeAPI(
+          symbol,
+          selectedStrike,
+          type,
+        );
+
+        lines = data;
+      }
+
+      if (lines.length > 0) {
+        // atualizarPrecosTHL({
+        //   tabelaVencimentos: lines,
+        //   dispatch,
+        //   setIntervalPrecosTHL,
+        //   sourcePrecos: eventSourcePrecos,
+        //   token,
+        // });
+      }
 
       dispatch(
         updateManyTHLState({
-          opcoesStrike: mapearTabelaVencimentos(tabelaVencimentos),
+          opcoesStrike: mapearTabelaVencimentos(lines),
           carregandoTabelaVencimentos: false,
           codigoCelulaSelecionada: "",
           celulaCalculada: "",
           booksSelecionados: [],
-        })
+          precosTabelaVencimentos: structures,
+        }),
       );
     }
   };
@@ -76,7 +109,7 @@ export const listarTabelaInicialTHLAPIAction = () => {
 export const recalcularPrecosTHLAPIAction = () => {
   return async (dispatch, getState) => {
     dispatch(
-      updateOneTHLState({ nome: "carregandoTabelaVencimentos", valor: true })
+      updateOneTHLState({ nome: "carregandoTabelaVencimentos", valor: true }),
     );
 
     const {
@@ -92,7 +125,7 @@ export const recalcularPrecosTHLAPIAction = () => {
       codigoCelulaSelecionada,
       ativoPesquisado,
       strikeSelecionado,
-      tipo
+      tipo,
     );
 
     const { token } = getReducerStateStorePrincipal(getState(), "principal");
@@ -113,7 +146,7 @@ export const recalcularPrecosTHLAPIAction = () => {
           celulaCalculada: codigoCelulaSelecionada,
           booksSelecionados: [],
           carregandoTabelaVencimentos: false,
-        })
+        }),
       );
     }, 3000);
   };
@@ -133,22 +166,22 @@ const atualizarPrecosTHL = async ({
     clearInterval(setIntervalPrecosTHL);
   }
 
-  let ids = "";
+  const ids = [
+    ...new Set(
+      tabelaVencimentos.reduce((acc, curr) => {
+        const idsSubArray = curr.structuresIds.map((id) => id);
 
-  tabelaVencimentos.forEach((linhaTabela) => {
-    linhaTabela.structuresIds.forEach((id) => {
-      if (id && !ids.includes(id)) ids += id + ",";
-    });
-  });
-
-  ids = ids.substring(0, ids.length - 1);
+        return [...acc, ...idsSubArray];
+      }, []),
+    ),
+  ].join(",");
 
   const source = atualizarPrecosTHLAPI({ ids, dispatch, token });
   dispatch(
     updateManyTHLState({
       eventSourcePrecos: source,
       precosTabelaVencimentos: [],
-    })
+    }),
   );
 };
 
@@ -185,7 +218,7 @@ export const pesquisarCombinacoesTHLAPIAction = () => {
         carregandoCombinacoes: true,
         codigoCelulaSelecionada: "",
         idCelulaSelecionada: null,
-      })
+      }),
     );
     const combinacoes = await pesquisarCombinacoesTHLAPI(ativoPesquisa);
 
@@ -213,7 +246,7 @@ export const pesquisarCombinacoesTHLAPIAction = () => {
         carregandoCombinacoes: false,
         combinacoesTabela: tabelaCombinacoes,
         arrayCotacoes,
-      })
+      }),
     );
   };
 };
@@ -223,7 +256,7 @@ export const montarTabelaCombinacoes = (tabelaAPI) => {
     (codigo) => {
       const cotacao = "";
       return { codigo, cotacao };
-    }
+    },
   );
 
   const tabelaCombinacoes = tabelaAPI.map((item, indice) => {
@@ -291,6 +324,6 @@ const atualizarCotacaoTHL = ({
     token,
   });
   dispatch(
-    updateOneTHLState({ nome: "eventSourceCotacoesTHL", valor: source })
+    updateOneTHLState({ nome: "eventSourceCotacoesTHL", valor: source }),
   );
 };

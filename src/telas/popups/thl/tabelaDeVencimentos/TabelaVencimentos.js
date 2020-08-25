@@ -13,6 +13,7 @@ import {
   RenderDynamicColumnsByYearsAndMonths,
   checkIfMonthHasContentInAnyLine,
 } from "./utils";
+import { updateOneTHLState } from "redux/actions/thl/utils";
 
 export default React.memo(() => {
   const { THLReducer: thlState } = useStateStorePrincipal();
@@ -24,6 +25,7 @@ export default React.memo(() => {
     tipo,
     codigoCelulaSelecionada,
     celulaCalculada,
+    shouldUpdateWithStrikeChange,
   } = thlState;
 
   const strikesInteiros = useMemo(() => getStrikesInteiros(opcoesStrike), [
@@ -31,15 +33,21 @@ export default React.memo(() => {
   ]);
   const { anos, ultimoMes } = useMemo(
     () => getAnosUltimoMesTabela(opcoesStrike),
-    [opcoesStrike]
+    [opcoesStrike],
   );
 
   const prevCodigoSelecionado = usePrevious(codigoCelulaSelecionada);
-  
+
   const prevCalculada = usePrevious(celulaCalculada);
 
+  const prevSymbol = usePrevious(ativoPesquisado);
+
+  const prevStrike = usePrevious(strikeSelecionado);
+
   useEffect(() => {
-    dispatch(listarTabelaInicialTHLAPIAction());
+    const initialLoad = true;
+    // Carga inicial ao montar se tiver os dados previamente fixados
+    dispatch(listarTabelaInicialTHLAPIAction(initialLoad));
   }, []);
 
   useEffect(() => {
@@ -52,7 +60,28 @@ export default React.memo(() => {
       }
     } //
     else {
-      dispatch(listarTabelaInicialTHLAPIAction());
+      const initialLoad = prevSymbol !== ativoPesquisado;
+
+      // Carregar listagem inicial ao mudar o código
+      if (initialLoad) dispatch(listarTabelaInicialTHLAPIAction(initialLoad));
+      // Partindo de uma tabela vazia em que o strikeSelecionado é nulo, faz a carga inicial da tabela e impede
+      // que carregue uma segunda vez para não substituir os dados quando a action atualizar o strikeSelecionado junto com a tabela
+      else if (prevStrike !== strikeSelecionado) {
+        // A carga inicial altera o strike, então aqui deverá ser verificado se é permitido atualizar a tabela
+        // ao mudar o strike. O padrão é permitir, exceto na carga inicial (mudanças de código).
+        if (shouldUpdateWithStrikeChange)
+          dispatch(listarTabelaInicialTHLAPIAction());
+        else {
+          dispatch(
+            updateOneTHLState({
+              nome: "shouldUpdateWithStrikeChange",
+              valor: true,
+            }),
+          );
+        }
+      }
+      //
+      else dispatch(listarTabelaInicialTHLAPIAction());
     }
   }, [
     ativoPesquisado,
@@ -122,8 +151,8 @@ const getStrikesInteiros = (arrayVencimentos) => {
   return [
     ...new Set(
       arrayVencimentos.map((linhaVencimento) =>
-        parseInt(linhaVencimento.strikeLine)
-      )
+        parseInt(linhaVencimento.strikeLine),
+      ),
     ),
   ];
 };
@@ -141,7 +170,7 @@ const getAnosUltimoMesTabela = (arrayVencimentos) => {
     });
     anos = [...new Set(vencimentos.map((vencimento) => vencimento.year()))];
     const meses = vencimentos.filter(
-      (vencimento) => vencimento.year() === anos[anos.length - 1]
+      (vencimento) => vencimento.year() === anos[anos.length - 1],
     );
     meses.sort((a, b) => a.diff(b));
     ultimoMes = meses[meses.length - 1].month() + 1;

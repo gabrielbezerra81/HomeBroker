@@ -238,12 +238,7 @@ export const listarOrdensExecAPI = () => {
       },
     })
     .then((response) => {
-      const { data } = response;
-      const orders = data ? data : [];
-
-      console.log("ordens: ", data);
-
-      return orders;
+      return response.data;
     })
     .catch((erro) => {
       mostrarErroConsulta(erro, "");
@@ -261,8 +256,6 @@ export const listarPosicoesAPI = () => {
       },
     })
     .then((response) => {
-      console.log("posição: ", response.data);
-
       return response.data;
     })
     .catch((erro) => {
@@ -376,7 +369,7 @@ export const pesquisarListaStrikeTHLAPI = (ativo) => {
     });
 };
 
-export const listarTabelaInicialTHLAPI = (ativo, strike, tipo) => {
+export const getTHLDataWithStrikeAPI = (ativo, strike, tipo) => {
   return api
     .get(
       `${url_listarTabelaInicialTHL_ativo_strike_tipo}${ativo}/${strike}/${tipo}`,
@@ -388,6 +381,24 @@ export const listarTabelaInicialTHLAPI = (ativo, strike, tipo) => {
         },
       },
     )
+    .then((response) => {
+      return response.data;
+    })
+    .catch((erro) => {
+      mostrarErroConsulta(erro, erro_listarTHL_thl);
+      return [];
+    });
+};
+
+export const getTHLInitialDataAPI = (symbol, type) => {
+  return api
+    .get(`${url_listarTabelaInicialTHL_ativo_strike_tipo}${symbol}/${type}`, {
+      timeout,
+      "axios-retry": {
+        retries: 3,
+        retryDelay: () => 2000,
+      },
+    })
     .then((response) => {
       return response.data;
     })

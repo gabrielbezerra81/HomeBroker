@@ -21,7 +21,7 @@ const TableBody = ({ strikeList, yearList, lastMonth }) => {
   const calculatedDataToRender = useMemo(() => {
     return strikeList.map((strike, strikeIndex) => {
       const linesWithSameBaseStrike = opcoesStrike.filter(
-        (line) => parseInt(line.strikeLine) === strike
+        (line) => parseInt(line.strikeLine) === strike,
       );
 
       const linesDataToRender = linesWithSameBaseStrike.map(
@@ -29,7 +29,7 @@ const TableBody = ({ strikeList, yearList, lastMonth }) => {
           const IDs = line.structuresIds;
           const totalColumnId = IDs[IDs.length - 1];
           const totalColumnPrices = precosTabelaVencimentos.find(
-            (structure) => structure.id === totalColumnId
+            (structure) => structure.id === totalColumnId,
           );
 
           let totalMountPrice = "";
@@ -43,35 +43,35 @@ const TableBody = ({ strikeList, yearList, lastMonth }) => {
             const [componentA, componentB] = components;
 
             const mountQtty = formatarQuantidadeKMG(
-              Math.min(componentA.compraQtde || 0, componentB.vendaQtde || 0)
+              Math.min(componentA.compraQtde || 0, componentB.vendaQtde || 0),
             );
             const demountQtty = formatarQuantidadeKMG(
-              Math.min(componentA.vendaQtde || 0, componentB.compraQtde || 0)
+              Math.min(componentA.vendaQtde || 0, componentB.compraQtde || 0),
             );
 
             const componentAMonth = moment(
               componentA.stock.endBusiness,
-              "DD-MM-YYYY HH:mm:ss"
+              "DD-MM-YYYY HH:mm:ss",
             ).startOf("month");
             const componentBMonth = moment(
               componentB.stock.endBusiness,
-              "DD-MM-YYYY HH:mm:ss"
+              "DD-MM-YYYY HH:mm:ss",
             ).startOf("month");
 
             const monthDiffBetweenComponents = componentBMonth.diff(
               componentAMonth,
-              "months"
+              "months",
             );
             const monthText =
               monthDiffBetweenComponents === 1 ? "mês" : "meses";
 
             const mountPrice = formatarNumDecimal(
-              max / (monthDiffBetweenComponents || 1)
+              max / (monthDiffBetweenComponents || 1),
             );
             monthMountPrice = `${mountPrice} | ${monthDiffBetweenComponents} ${monthText}`;
 
             const demountPrice = formatarNumDecimal(
-              min / (monthDiffBetweenComponents || 1)
+              min / (monthDiffBetweenComponents || 1),
             );
             monthDemountPrice = `${demountPrice} | ${monthDiffBetweenComponents} ${monthText}`;
 
@@ -94,7 +94,7 @@ const TableBody = ({ strikeList, yearList, lastMonth }) => {
           };
 
           return lineData;
-        }
+        },
       );
 
       return { strike, linesData: linesDataToRender };
@@ -164,7 +164,7 @@ const TableBody = ({ strikeList, yearList, lastMonth }) => {
               const stockIndex = lineData.stocks.findIndex(
                 (itemColuna) =>
                   itemColuna.vencimento.month() + 1 === monthNumber &&
-                  itemColuna.vencimento.year() === year
+                  itemColuna.vencimento.year() === year,
               );
 
               if (stockIndex !== -1) {
@@ -184,7 +184,7 @@ const TableBody = ({ strikeList, yearList, lastMonth }) => {
                 const monthHasContentInAnyLine = checkIfMonthHasContentInAnyLine(
                   opcoesStrike,
                   monthNumber,
-                  year
+                  year,
                 );
 
                 return monthHasContentInAnyLine ? emptyColumn : null;
