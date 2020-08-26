@@ -415,7 +415,12 @@ export const atualizarOrdensExecAPI = ({
   return source;
 };
 
-export const atualizarPrecosTHLAPI = ({ ids, dispatch, token }) => {
+export const atualizarPrecosTHLAPI = ({
+  ids,
+  dispatch,
+  token,
+  priceStructures,
+}) => {
   var source = new EventSource(
     `${url_base_reativa}${url_atualizarPrecosTHL_ids}${ids}`,
     {
@@ -425,7 +430,7 @@ export const atualizarPrecosTHLAPI = ({ ids, dispatch, token }) => {
     },
   );
 
-  const updatedPriceStructures = [];
+  const updatedPriceStructures = [...priceStructures];
 
   atualizaListaReativa(
     dispatch,

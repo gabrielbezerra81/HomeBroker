@@ -78,17 +78,19 @@ export const listarTabelaInicialTHLAPIAction = (initialLoad = false) => {
           type,
         );
 
-        lines = data;
+        structures = data.structures;
+        lines = data.lines;
       }
 
       if (lines.length > 0) {
-        // atualizarPrecosTHL({
-        //   tabelaVencimentos: lines,
-        //   dispatch,
-        //   setIntervalPrecosTHL,
-        //   sourcePrecos: eventSourcePrecos,
-        //   token,
-        // });
+        atualizarPrecosTHL({
+          tabelaVencimentos: lines,
+          dispatch,
+          setIntervalPrecosTHL,
+          sourcePrecos: eventSourcePrecos,
+          token,
+          priceStructures: structures,
+        });
       }
 
       dispatch(
@@ -118,6 +120,7 @@ export const recalcularPrecosTHLAPIAction = () => {
       eventSourcePrecos,
       setIntervalPrecosTHL,
       codigoCelulaSelecionada,
+      precosTabelaVencimentos,
     } = getReducerStateStorePrincipal(getState(), "thl");
 
     const tabelaVencimentos = await recalcularPrecosTHLAPI(
@@ -136,6 +139,7 @@ export const recalcularPrecosTHLAPIAction = () => {
         dispatch,
         setIntervalPrecosTHL,
         token,
+        priceStructures: precosTabelaVencimentos,
       });
     }
     setTimeout(() => {
@@ -153,6 +157,7 @@ export const recalcularPrecosTHLAPIAction = () => {
 
 const atualizarPrecosTHL = async ({
   tabelaVencimentos,
+  priceStructures,
   sourcePrecos,
   dispatch,
   setIntervalPrecosTHL,
@@ -175,11 +180,15 @@ const atualizarPrecosTHL = async ({
     ),
   ].join(",");
 
-  const source = atualizarPrecosTHLAPI({ ids, dispatch, token });
+  const source = atualizarPrecosTHLAPI({
+    ids,
+    dispatch,
+    token,
+    priceStructures,
+  });
   dispatch(
     updateManyTHLState({
       eventSourcePrecos: source,
-      precosTabelaVencimentos: [],
     }),
   );
 };
