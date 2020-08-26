@@ -24,6 +24,7 @@ import {
 import { formatarDataDaAPI } from "shared/utils/Formatacoes";
 
 import { EventSourcePolyfill } from "event-source-polyfill";
+import produce from "immer";
 
 var EventSource = EventSourcePolyfill;
 
@@ -430,7 +431,34 @@ export const atualizarPrecosTHLAPI = ({
     },
   );
 
-  const updatedPriceStructures = [...priceStructures];
+  const updatedPriceStructures = [];
+
+  function updateStructuresImmutable(state, updatedValue) {
+    return produce(state, (draft) => {
+      updatedValue.forEach((upItem) => {
+        const index = draft.findIndex((item) => item.id === upItem.id);
+        const updatedStructure = draft[index];
+
+        if (index !== -1) {
+          const { components, ...rest } = upItem;
+          Object.assign(updatedStructure, rest);
+
+          components.forEach((componentItem) => {
+            const indexToUpdate = updatedStructure.components.findIndex(
+              (componentToUpdate) => componentToUpdate.id === componentItem.id,
+            );
+
+            if (indexToUpdate !== -1) {
+              Object.assign(
+                updatedStructure.components[indexToUpdate],
+                componentItem,
+              );
+            }
+          });
+        }
+      });
+    });
+  }
 
   atualizaListaReativa(
     dispatch,
@@ -438,6 +466,7 @@ export const atualizarPrecosTHLAPI = ({
     MUDAR_VARIAVEL_THL,
     "precosTabelaVencimentos",
     "setIntervalPrecosTHL",
+    () => updateStructuresImmutable(priceStructures, updatedPriceStructures),
   );
 
   source.onerror = function (event) {
@@ -448,35 +477,7 @@ export const atualizarPrecosTHLAPI = ({
     if (typeof event.data !== "undefined") {
       const priceStructure = JSON.parse(event.data);
 
-      // console.log(source);
-
-      // console.log(priceStructure);
-
-      if (true) {
-        const index = updatedPriceStructures.findIndex(
-          (estrutura) => estrutura.id === priceStructure.id,
-        );
-
-        if (index !== -1) {
-          const { components, ...rest } = priceStructure;
-
-          components.forEach((componentItem) => {
-            const indexToUpdate = updatedPriceStructures[
-              index
-            ].components.findIndex(
-              (componentToUpdate) => componentToUpdate.id === componentItem.id,
-            );
-
-            if (indexToUpdate !== -1)
-              Object.assign(
-                updatedPriceStructures[index].components[indexToUpdate],
-                componentItem,
-              );
-          });
-
-          Object.assign(updatedPriceStructures[index], { ...rest });
-        } else updatedPriceStructures.push(priceStructure);
-      }
+      updatedPriceStructures.push(priceStructure);
     }
   };
 
@@ -489,13 +490,14 @@ const atualizaListaReativa = (
   actionType,
   nomeLista,
   nomeSetInterval,
+  immutableFunction,
 ) => {
   const atualizarLista = () => {
     dispatch({
       type: actionType,
       payload: {
         nome: nomeLista,
-        valor: lista,
+        valor: immutableFunction ? immutableFunction() : lista, //lista.map((item) => ({ ...item }))
       },
     });
     dispatch({

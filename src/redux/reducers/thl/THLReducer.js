@@ -1,3 +1,4 @@
+// import { setAutoFreeze } from "immer";
 import {
   MUDAR_VARIAVEL_THL,
   MUDAR_VARIAVEIS_THL,
@@ -7,6 +8,8 @@ import {
   montarTabelaCombinacoes,
   mapearTabelaVencimentos,
 } from "redux/actions/thl/ThlAPIAction";
+
+// setAutoFreeze(false);
 
 const INITIAL_STATE = {
   ativoPesquisa: "PETR4",
@@ -2751,6 +2754,7 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, [nome]: valorFormatado };
     case MUDAR_VARIAVEIS_THL:
       return { ...state, ...action.payload };
+
     default:
       return state;
   }
