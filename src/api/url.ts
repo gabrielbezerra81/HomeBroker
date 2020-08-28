@@ -3,7 +3,7 @@ export const url_base = "https://api.rendacontinua.com/api/"; //"http://173.249.
 export const url_base_reativa = "https://price.rendacontinua.com/";
 
 //Boletas de compra e venda
-export const url_pesquisarAtivoBoletas_codigo = "price/quote/";
+export const url_pesquisarAtivoBoletas_codigo = "price/quotes/";
 export const url_enviarOrdem = "order/list";
 
 //Book de ofertas
