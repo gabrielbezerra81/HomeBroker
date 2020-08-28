@@ -28,6 +28,8 @@ const combinedReducers = combineReducers({
   GlobalReducer,
 });
 
+type GlobalStoreState = ReturnType<typeof combinedReducers>;
+
 //Usado para todos os outros dados gerais como os da tela principal
 export const storeAppPrincipal = createStore(
   persistedReducerAppPrincipal,
@@ -48,7 +50,9 @@ export const StorePrincipalContext = React.createContext<
   ReactReduxContextValue<MainStoreState, any>
 >({ store: storeAppPrincipal, storeState: {} as MainStoreState });
 
-export const GlobalContext = React.createContext<ReactReduxContextValue>({
+export const GlobalContext = React.createContext<
+  ReactReduxContextValue<GlobalStoreState, any>
+>({
   store: globalStore,
-  storeState: {},
+  storeState: {} as GlobalStoreState,
 });

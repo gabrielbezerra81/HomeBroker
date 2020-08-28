@@ -404,7 +404,7 @@ export const getTHLInitialDataAPI = (symbol, type) => {
     })
     .catch((erro) => {
       mostrarErroConsulta(erro, erro_listarTHL_thl);
-      return [];
+      return { lines: [], structures: [] };
     });
 };
 

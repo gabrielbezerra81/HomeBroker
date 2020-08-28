@@ -17,14 +17,23 @@ import { MUDAR_ORDEM_EXEC_MAIN_REDUCER } from "constants/MenuActionTypes";
 const ContainerAppBoletas = React.lazy(() => import("ContainerAppBoletas"));
 
 export const criarMostrarAppAction = (apps, show, zindex, dispatch) => {
-  dispatch({ type: CRIAR_APP, apps: apps, show: show, zIndex: zindex + 1 });
+  dispatch({
+    type: CRIAR_APP,
+    payload: {
+      apps: apps,
+      show: show,
+      zIndex: zindex + 1,
+    },
+  });
 };
 export const mostrarAppAction = (apps, show, zindex, dispatch) => {
   dispatch({
     type: MOSTRAR_APP,
-    apps: apps,
-    show: show,
-    zIndex: zindex + 1,
+    payload: {
+      apps: apps,
+      show: show,
+      zIndex: zindex + 1,
+    },
   });
 };
 
@@ -67,7 +76,7 @@ export const abrirFormAction = (
   event,
   props,
   codigo_ativo = "",
-  nameOrdemExec = "" //identificação da boleta que irá ser aberta vindo das ordens em execução
+  nameOrdemExec = "", //identificação da boleta que irá ser aberta vindo das ordens em execução
 ) => {
   return (dispatch) => {
     let apps = [...props.apps];
@@ -150,7 +159,7 @@ const mostrarApp = (name, index, props, dispatch, codigo_ativo) => {
       listarBookOfertaOnEnterAction({
         codigoAtivo: codigo_ativo,
         token: props.token,
-      })
+      }),
     );
   }
 

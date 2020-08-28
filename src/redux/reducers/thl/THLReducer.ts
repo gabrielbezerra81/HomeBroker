@@ -8,10 +8,12 @@ import {
   montarTabelaCombinacoes,
   mapearTabelaVencimentos,
 } from "redux/actions/thl/ThlAPIAction";
+import THLState from "types/thl/THLState";
+import Action from "types/Action";
 
 // setAutoFreeze(false);
 
-const INITIAL_STATE = {
+const INITIAL_STATE: THLState = {
   ativoPesquisa: "PETR4",
   ativoPesquisado: "PETR4",
   pesquisandoAtivo: false,
@@ -2745,15 +2747,15 @@ const INITIAL_STATE = {
   // ],
 };
 
-export default (state = INITIAL_STATE, action) => {
-  switch (action.type) {
+export default (state = INITIAL_STATE, { type, payload }: Action): THLState => {
+  switch (type) {
     case MUDAR_VARIAVEL_THL:
-      const { nome, valor } = action.payload;
+      const { nome, valor } = payload;
       const valorFormatado =
         nome === "opcoesStrike" ? mapearTabelaVencimentos(valor) : valor;
       return { ...state, [nome]: valorFormatado };
     case MUDAR_VARIAVEIS_THL:
-      return { ...state, ...action.payload };
+      return { ...state, ...payload };
 
     default:
       return state;

@@ -58,8 +58,6 @@ export const listarTabelaInicialTHLAPIAction = (initialLoad = false) => {
           ...new Set(lines.map((line) => parseInt(line.strikeLine))),
         ];
 
-        console.log([...new Set([].map((line) => parseInt(line.strikeLine)))]);
-
         if (integerStrikes.length) {
           let strike = integerStrikes[0];
           if (integerStrikes.length >= 2) strike = integerStrikes[1];
