@@ -69,7 +69,7 @@
 }
 
 .textoValorGrafico {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   margin-bottom: 0;
 }
 
@@ -78,22 +78,22 @@
   font-weight: 400;
 }
 
-#ValorTotalGain {
-  top: 27%;
+.ValorTotalGain {
+  top: 28.5%;
   left: 68%;
 }
 
-#ValorTotalStop {
-  top: 80%;
+.ValorTotalStop {
+  top: 82%;
   left: 68%;
 }
 
-#ValorTotalGain_Venda {
-  top: 26.5%;
+.ValorTotalGain_Venda {
+  top: 28%;
   left: 68%;
 }
 
-#ValorTotalStop_Venda {
-  top: 78%;
+.ValorTotalStop_Venda {
+  top: 78.5%;
   left: 68%;
 }
