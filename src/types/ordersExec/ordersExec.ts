@@ -1,31 +1,59 @@
-// TODO: type reducer
-
 export interface Order {
   id: number;
-  offers: Array<any>;
-  nextOrders: Array<any>;
-  cadastro: any;
-  corretora: any;
-  conta: any;
-  operacao: any;
+  offers: Array<OrderExecOffer>;
+  nextOrders: Array<OrderExecOffer>;
+  cadastro: string;
+  corretora: string;
+  conta: string | undefined;
+  operacao: string;
   formName: string;
   validade: string;
   roteador: string;
 }
 
-export interface OrderExecOpenPopupData {
-  dadosPesquisa: any; // TODO:
+export interface OrderExecOffer {
+  modoExec: string;
   ativo: string;
-  qtde: number | string; // TODO:
-  entradaDisparo: number | string; // TODO:
-  entradaExec: number | string; // TODO:
+  oferta: string;
+  qtdeOferta: number;
+  qtdeExecutada: number;
+  qtdeCancelada: number | undefined;
+  precoDisparo: number | null;
+  precoEnvio: number | null;
+  precoLimite: number | null;
+  precoExecutado: number;
+  status: string | null;
+  msg: string | null;
+}
+
+export interface OrderExecOpenPopupData {
+  dadosPesquisa: {
+    resuladoAtivo: string;
+    codigoEspecificacao: string;
+    cotacaoAtual: number;
+    porcentagem: string;
+    ultimoHorario: string;
+    stepQtde: number;
+    market: string;
+    ativo: string;
+  };
+  ativo: string;
+  qtde: number;
+  entradaDisparo: number | null;
+  entradaExec: number | null;
   preco: string;
 
-  inicioDisparo: string;
-  gainDisparo: string;
-  gainExec: string;
-  stopDisparo: string;
-  stopExec: string;
-  ajustePadrao: string;
-  tabelaOrdens: Array<any>;
+  inicioDisparo: number | "";
+  gainDisparo: number | "";
+  gainExec: number | "";
+  stopDisparo: number | "";
+  stopExec: number | "";
+  ajustePadrao: number | "";
+  tabelaOrdens: Array<{
+    disparo: number;
+    stopAtual: number;
+    ajuste: number;
+    novoStop: number;
+    tipo: string;
+  }>;
 }
