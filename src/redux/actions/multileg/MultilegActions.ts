@@ -122,6 +122,11 @@ export const updateMultilegTabAction = ({
     attributeValue,
     multilegQuotes: cotacoesMultileg,
   });
+
+  if (attributeName === "limpar") {
+    console.log(data.multilegTabs);
+  }
+
   dispatch(updateMultilegStateAction("multileg", data.multilegTabs));
   if (data.multilegQuotes) {
     dispatch(
@@ -155,6 +160,8 @@ export const updateMultilegTab = async ({
   if (attributeName === "limpar") {
     updatedMultilegtabs[tabIndex] = cloneDeep(newMultilegTab);
     updatedMultilegtabs[tabIndex].nomeAba = `Ordem ${tabIndex + 1}`;
+
+    console.log("limpou,", updatedMultilegtabs[tabIndex]);
   } else {
     if (attributeName === "ativo") {
       value = value.toUpperCase();

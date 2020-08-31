@@ -24,11 +24,14 @@ class TabelaMultileg extends React.Component {
   componentDidUpdate(prevProps) {
     const { props } = this;
     const indiceAba = props.indice;
+
+    const currentLength = props.multileg[indiceAba].tabelaMultileg.length;
+
     if (
-      prevProps.multileg[indiceAba].tabelaMultileg.length !==
-      props.multileg[indiceAba].tabelaMultileg.length
+      prevProps.multileg[indiceAba].tabelaMultileg.length !== currentLength &&
+      currentLength
     ) {
-      const indiceLinha = props.multileg[indiceAba].tabelaMultileg.length - 1;
+      const indiceLinha = currentLength - 1;
       const linha = document.getElementById("ofertaMultileg" + indiceLinha);
       const input = linha.children[2].getElementsByTagName("input");
       input[0].select();
@@ -184,7 +187,7 @@ class TabelaMultileg extends React.Component {
                         props.multileg[indiceAba].tabelaMultileg[indiceLinha]
                           .codigoAberto,
                         item.tipo.toUpperCase(),
-                        item
+                        item,
                       )}
                     </Select>
                   </td>
@@ -254,7 +257,7 @@ class TabelaMultileg extends React.Component {
                   <td>{calculaColunaValor(props, item)}</td>
                 </tr>
               );
-            }
+            },
           )}
         </tbody>
       </Table>
@@ -298,7 +301,7 @@ export default connect(
     removeMultilegOfferAction,
   },
   null,
-  { context: StorePrincipalContext }
+  { context: StorePrincipalContext },
 )(TabelaMultileg);
 
 const renderCV = (cv, props, indiceLinha) => {
@@ -371,7 +374,7 @@ const renderCodigoOferta = (listaOpcoes, codigoAberto, tipoAtual, item) => {
         className="optionInputCodigo"
       >
         {listaOpcoes[0].symbol}
-      </Select.Option>
+      </Select.Option>,
     );
   } //
   else if (codigoAberto)
@@ -400,7 +403,7 @@ const renderCodigoOferta = (listaOpcoes, codigoAberto, tipoAtual, item) => {
             className="optionInputCodigo"
           >
             {codigo}
-          </Select.Option>
+          </Select.Option>,
         );
       }
     });
