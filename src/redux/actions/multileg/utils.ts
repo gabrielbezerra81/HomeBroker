@@ -44,9 +44,6 @@ export const findClosestStrike = ({
       return option.strike;
     } //
     else if (symbolQuote || symbolQuote === 0) {
-      console.log("entrou");
-      console.log(options.length);
-      console.log(symbol, symbolIsOption);
       const closestOption = options.reduce((prev, curr) =>
         Math.abs(curr.strike - symbolQuote) <
         Math.abs(prev.strike - symbolQuote)

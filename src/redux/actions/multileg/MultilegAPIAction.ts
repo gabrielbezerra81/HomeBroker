@@ -98,8 +98,6 @@ export const searchMultilegSymbolData = async ({
       symbol,
       quote: data.cotacaoAtual,
     });
-    console.log("ativo principal:", data.ativoPrincipal);
-    console.log("symbol===ativoPrin:", symbol === data.ativoPrincipal);
 
     const symbolIsOption = symbol !== data.ativoPrincipal ? true : false;
 

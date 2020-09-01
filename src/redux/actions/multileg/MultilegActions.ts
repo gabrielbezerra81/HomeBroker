@@ -123,10 +123,6 @@ export const updateMultilegTabAction = ({
     multilegQuotes: cotacoesMultileg,
   });
 
-  if (attributeName === "limpar") {
-    console.log(data.multilegTabs);
-  }
-
   dispatch(updateMultilegStateAction("multileg", data.multilegTabs));
   if (data.multilegQuotes) {
     dispatch(
@@ -194,10 +190,7 @@ export const updateMultilegTab = async ({
         });
       }
 
-      const options = await pesquisarStrikesMultilegAPI(
-        symbol,
-        multilegTabs[tabIndex].vencimentoSelecionado,
-      );
+      const options = await pesquisarStrikesMultilegAPI(symbol, attributeValue);
       if (options) {
         updatedMultilegtabs[tabIndex].opcoes = [...options];
         updatedMultilegtabs[tabIndex].strikeSelecionado = findClosestStrike({

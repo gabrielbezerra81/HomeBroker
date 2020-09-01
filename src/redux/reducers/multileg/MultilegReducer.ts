@@ -16,7 +16,7 @@ const INITIAL_STATE: MultilegState = {
   multileg: [
     {
       nomeAba: "Ordem 1",
-      ativo: "",
+      ativo: "PETR4",
       ativoAtual: "",
       variacao: 0,
       opcoes: [],
