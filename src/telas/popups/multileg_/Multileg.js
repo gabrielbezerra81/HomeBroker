@@ -38,7 +38,7 @@ class Multileg extends React.Component {
     return (
       <DraggableModal
         id="multileg"
-        renderModalBody={() => this.modalBody(this.props)}
+        renderModalBody={() => this.modalBody()}
         renderConfigComplementar={this.props.configComplementarAberto}
         renderHeader={() => (
           <ModalHeaderSemBook
@@ -54,104 +54,81 @@ class Multileg extends React.Component {
  
   */
 
-  modalBody = (props) => {
+  modalBody = () => {
     return (
-      <div>
-        <Tab.Container
-          id="tabBarMultileg"
-          onSelect={(key, event) => {
-            // @ts-ignore
-            const keysPressionadas = arrayKeys.includes(event.key);
-            if (!keysPressionadas) {
-              this.props.selectOrAddMultilegTabAction(key);
-            }
-          }}
-          activeKey={this.props.abaSelecionada}
-        >
-          <Row className="navTabMultileg">
-            <Nav>
+      <Tab.Container
+        onSelect={this.props.selectOrAddMultilegTabAction}
+        activeKey={this.props.abaSelecionada}
+      >
+        <Row className="navTabMultileg">
+          <Nav>
+            {this.props.multileg.map((aba, index) => {
+              return (
+                <Col md={"0"} key={index}>
+                  <Nav.Item>
+                    <Nav.Link
+                      eventKey={`tab${index}`}
+                      className={`${
+                        this.props.abaSelecionada === `tab${index}`
+                          ? "abaAtiva"
+                          : ""
+                      }`}
+                      active={false}
+                    >
+                      <div className="containerTituloAba">
+                        <MDBIcon
+                          icon="times"
+                          className="saldoOpNegativo"
+                          onClick={(e) => {
+                            this.props.removeMultilegTabAction(index);
+                            e.stopPropagation();
+                          }}
+                        />
+                        <Form.Control
+                          type="text"
+                          value={aba.nomeAba}
+                          className="inputTituloAba"
+                          onChange={(e) => {
+                            this.props.updateMultilegTabAction({
+                              tabIndex: index,
+                              attributeName: "nomeAba",
+                              attributeValue: e.target.value,
+                            });
+                          }}
+                        />
+                      </div>
+                    </Nav.Link>
+                  </Nav.Item>
+                </Col>
+              );
+            })}
+
+            <Col md={"0"}>
+              <Nav.Item>
+                <Nav.Link
+                  eventKey="adicionar"
+                  className="botaoAddAba divClicavel"
+                >
+                  +
+                </Nav.Link>
+              </Nav.Item>
+            </Col>
+          </Nav>
+        </Row>
+        <Row>
+          <Col md={12}>
+            <Tab.Content>
               {this.props.multileg.map((aba, index) => {
                 return (
-                  <Col md={"0"} key={index}>
-                    <Nav.Item>
-                      <Nav.Link
-                        eventKey={`tab${index}`}
-                        className={`abaNavTab ${
-                          this.props.abaSelecionada === `tab${index}`
-                            ? "abaAtiva"
-                            : ""
-                        }`}
-                        active={false}
-                        onSelect={(key, event) => {
-                          const keysPressionadas = arrayKeys.includes(
-                            event.key,
-                          );
-                          if (keysPressionadas) {
-                            event.stopPropagation();
-                            event.preventDefault();
-                            return key;
-                          }
-                        }}
-                      >
-                        <div className="containerTituloAba">
-                          <MDBIcon
-                            icon="times"
-                            className="saldoOpNegativo"
-                            onClick={(e) => {
-                              this.props.removeMultilegTabAction(index);
-                              e.stopPropagation();
-                            }}
-                          />
-                          <Form.Control
-                            type="text"
-                            value={aba.nomeAba}
-                            className="inputTituloAba"
-                            onChange={(e) => {
-                              this.props.updateMultilegTabAction({
-                                tabIndex: index,
-                                attributeName: "nomeAba",
-                                attributeValue: e.target.value,
-                              });
-                            }}
-                          />
-                        </div>
-                      </Nav.Link>
-                    </Nav.Item>
-                  </Col>
+                  <Tab.Pane eventKey={`tab${index}`} key={index + "tabpane"}>
+                    <AbaMultileg indice={index} />
+                  </Tab.Pane>
                 );
               })}
-
-              <Col md={"0"}>
-                <Nav.Item>
-                  <Nav.Link
-                    eventKey="adicionar"
-                    className="botaoAddAba divClicavel"
-                  >
-                    +
-                  </Nav.Link>
-                </Nav.Item>
-              </Col>
-            </Nav>
-          </Row>
-          <Row>
-            <Col md={12}>
-              <Tab.Content>
-                {this.props.multileg.map((aba, index) => {
-                  return (
-                    <Tab.Pane
-                      eventKey={`tab${index}`}
-                      className="abaNavTab"
-                      key={index + "tabpane"}
-                    >
-                      <AbaMultileg indice={index} />
-                    </Tab.Pane>
-                  );
-                })}
-              </Tab.Content>
-            </Col>
-          </Row>
-        </Tab.Container>
-      </div>
+            </Tab.Content>
+          </Col>
+        </Row>
+      </Tab.Container>
     );
   };
 

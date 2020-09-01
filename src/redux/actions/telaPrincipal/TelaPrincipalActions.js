@@ -1,3 +1,4 @@
+import produce from "immer";
 import {
   ABRIR_FECHAR_MENU_LATERAL,
   LOGAR_DESLOGAR_USUARIO,
@@ -12,6 +13,22 @@ import { persistor } from "redux/StoreCreation";
 import api from "api/apiConfig";
 
 const waitDispatch = 1000;
+
+export const updateOneSystemStateAction = (attributeName, attributeValue) => {
+  return (dispatch) => {
+    dispatch({
+      type: actionType.UPDATE_ONE_SYSTEM_STATE,
+      payload: { attributeName, attributeValue },
+    });
+  };
+};
+
+export const updateManySystemState = (payload) => {
+  return {
+    type: actionType.UPDATE_MANY_SYSTEM_STATE,
+    payload,
+  };
+};
 
 export const abrirFecharMenuLateralAction = (menuLateralAberto) => {
   return (dispatch) => {
@@ -85,6 +102,7 @@ export const cadastrarUsuarioAction = (data) => {
     }
   };
 };
+
 export const deslogarUsuarioAction = (props) => {
   return (dispatch) => {
     persistor
@@ -126,21 +144,36 @@ export const abrirItemBarraLateralAction = (props, nameVariavelReducer) => {
     }
   });
 
-  const visibilidadeMenu = !props[nameVariavelReducer];
+  const isVisible = props[nameVariavelReducer];
+  const updatedVisibility = !isVisible;
 
-  return (dispatch) => {
-    dispatch({
-      type: ABRIR_FECHAR_ITEM_BARRA_LATERAL,
-      payload: {
-        name: nameVariavelReducer,
-        valor: visibilidadeMenu,
-      },
-    });
-    resetarDadosReducerAction({
-      dispatch,
-      nameVariavelReducer,
-      visibilidadeMenu,
-    });
+  return (dispatch, getState) => {
+    const { selectedTab } = getState().systemReducer;
+
+    // Se estiver tentar abrir um popup fora da aba principal e ele já estiver aberto,
+    // impede que ele seja fechado e redireciona para a aba principal
+    if (selectedTab !== "tab0") {
+      dispatch(
+        updateManySystemState({
+          selectedTab: "tab0",
+          [nameVariavelReducer]: true,
+        }),
+      );
+    } //
+    else {
+      dispatch({
+        type: ABRIR_FECHAR_ITEM_BARRA_LATERAL,
+        payload: {
+          name: nameVariavelReducer,
+          valor: updatedVisibility,
+        },
+      });
+      resetarDadosReducerAction({
+        dispatch,
+        nameVariavelReducer,
+        visibilidadeMenu: updatedVisibility,
+      });
+    }
   };
 };
 
@@ -191,4 +224,31 @@ const resetarDadosReducerAction = ({
         payload: { name: nameVariavelReducer, limparReducer },
       });
     }, waitDispatch);
+};
+
+export const handleOpenMenusInMainTabAction = (menuChildren) => {
+  return (dispatch, getState) => {
+    const { openedMenus } = getState().systemReducer;
+
+    const updatedOpenedMenus = produce(openedMenus, (draft) => {
+      menuChildren.forEach((menuChildItem) => {
+        const menuIndex = draft.findIndex(
+          (menuItem) => menuItem.menuKey === menuChildItem.key,
+        );
+        if (menuChildItem.isOpen) {
+          if (menuIndex === -1) {
+            draft.push({
+              menuKey: menuChildItem.key,
+              tabKey: "tab0",
+            });
+          }
+        } //
+        else if (menuIndex !== -1) {
+          draft.splice(menuIndex, 1);
+        }
+      });
+    });
+
+    dispatch(updateOneSystemStateAction("openedMenus", updatedOpenedMenus));
+  };
 };

@@ -26,6 +26,9 @@ const INITIAL_STATE: SystemState = {
   token: {} as Token,
   conta: [],
   contaSelecionada: {} as Account,
+  mainTabs: [{ tabName: "Principal" }, { tabName: "Aba 2" }],
+  selectedTab: "tab0",
+  openedMenus: [],
 
   // inputUsuario: "gabrielAB",
   // inputSenha: "123456789",
@@ -34,6 +37,12 @@ const INITIAL_STATE: SystemState = {
   // emailCadastro: "",
   // senhaCadastro: "",
 };
+
+const {
+  RESET_REDUX_STATE,
+  UPDATE_ONE_SYSTEM_STATE,
+  UPDATE_MANY_SYSTEM_STATE,
+} = actionType;
 
 export default (
   state = INITIAL_STATE,
@@ -52,7 +61,13 @@ export default (
       return { ...state, [payload.name]: payload.valor };
     case MUDAR_DADOS_LOGIN:
       return { ...state, [payload.nomeVariavel]: payload.valor };
-    case actionType.RESET_REDUX_STATE:
+
+    case UPDATE_ONE_SYSTEM_STATE:
+      const { attributeName, attributeValue } = payload;
+      return { ...state, [attributeName]: attributeValue };
+    case UPDATE_MANY_SYSTEM_STATE:
+      return { ...state, ...payload };
+    case RESET_REDUX_STATE:
       if (["deslogar"].includes(payload.name))
         return {
           ...resetarEstadoRedux(

@@ -16,4 +16,12 @@ export default interface SystemState {
   token: Token;
   conta: Array<Account>;
   contaSelecionada: Account;
+  mainTabs: Array<{
+    tabName: string;
+  }>;
+  openedMenus: Array<{
+    menuKey: string;
+    tabKey: string;
+  }>;
+  selectedTab: string;
 }

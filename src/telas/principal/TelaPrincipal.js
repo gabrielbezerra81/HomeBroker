@@ -12,6 +12,7 @@ import { abrirItemBarraLateralAction } from "redux/actions/telaPrincipal/TelaPri
 import { listarPosicoesAction } from "redux/actions/posicao/PosicaoActions";
 import BarraLateral from "telas/principal/BarraLateral";
 import MenuOrdens from "telas/principal/MenuOrdens";
+import MainScreenTabs from "./MainScreenTabs";
 
 const OrdensExecucao = React.lazy(() =>
   import("telas/popups/ordens_em_execucao/OrdensExecucao"),
@@ -56,68 +57,70 @@ class TelaPrincipal extends React.Component {
       multilegAberto,
       thlAberta,
     } = props;
+
     return (
-      <div>
-        <div className="divTelaPrincipal">
-          <MenuLateralUsuario />
-          <div className="conteudoMenuPrincipal">
-            <BarraTopoTelaPrincipal />
-            <div style={{ display: "flex", height: "100%" }}>
-              <BarraLateral />
-              <div
-                id="menusTelaPrincipal"
-                className={margemParaMenuLateral(menuLateralAberto)}
-              >
-                <MenuOrdens />
+      <div className="divTelaPrincipal">
+        <MenuLateralUsuario />
+        <div className="conteudoMenuPrincipal">
+          <BarraTopoTelaPrincipal />
+          <BarraLateral />
 
-                <RenderMenus
-                  menuAberto={ordensExecucaoAberto}
-                  zIndex={zIndex}
-                  divkey={"ordens_execucao"}
-                  aumentarZindex={props.aumentarZindexAction}
-                  component={
-                    <OrdensExecucao headerTitle="HISTÓRICO DE OPERAÇÕES" />
-                  }
-                />
+          <div
+            id="menusTelaPrincipal"
+            className={margemParaMenuLateral(menuLateralAberto)}
+          >
+            <MainScreenTabs>
+              <RenderMenus
+                menuAberto={ordensExecucaoAberto}
+                zIndex={zIndex}
+                key="ordens_execucao"
+                divkey={"ordens_execucao"}
+                aumentarZindex={props.aumentarZindexAction}
+                component={
+                  <OrdensExecucao headerTitle="HISTÓRICO DE OPERAÇÕES" />
+                }
+              />
+              <RenderMenus
+                menuAberto={relatorioDetalhadoAberto}
+                zIndex={zIndex}
+                key="relatorio_detalhado"
+                divkey={"relatorio_detalhado"}
+                aumentarZindex={props.aumentarZindexAction}
+                component={
+                  <RelatorioDetalhado headerTitle="RELATÓRIO DETALHADO" />
+                }
+              />
+              <RenderMenus
+                menuAberto={listaCompletaAberta}
+                zIndex={zIndex}
+                key="posicao_custodia"
+                divkey={"posicao_custodia"}
+                aumentarZindex={props.aumentarZindexAction}
+                component={
+                  <PosicaoEmCustodia headerTitle="POSIÇÃO EM CUSTÓDIA" />
+                }
+              />
+              <RenderMenus
+                menuAberto={multilegAberto}
+                zIndex={zIndex}
+                key="multileg"
+                divkey={"multileg"}
+                aumentarZindex={props.aumentarZindexAction}
+                component={<Multileg headerTitle="MULTI ATIVOS" />}
+              />
+              <RenderMenus
+                menuAberto={thlAberta}
+                zIndex={zIndex}
+                key="thl"
+                divkey={"thl"}
+                aumentarZindex={props.aumentarZindexAction}
+                component={<TelaTHL headerTitle="THL" />}
+              />
+            </MainScreenTabs>
 
-                <RenderMenus
-                  menuAberto={relatorioDetalhadoAberto}
-                  zIndex={zIndex}
-                  divkey={"relatorio_detalhado"}
-                  aumentarZindex={props.aumentarZindexAction}
-                  component={
-                    <RelatorioDetalhado headerTitle="RELATÓRIO DETALHADO" />
-                  }
-                />
+            <MenuOrdens />
 
-                <RenderMenus
-                  menuAberto={listaCompletaAberta}
-                  zIndex={zIndex}
-                  divkey={"posicao_custodia"}
-                  aumentarZindex={props.aumentarZindexAction}
-                  component={
-                    <PosicaoEmCustodia headerTitle="POSIÇÃO EM CUSTÓDIA" />
-                  }
-                />
-
-                <RenderMenus
-                  menuAberto={multilegAberto}
-                  zIndex={zIndex}
-                  divkey={"multileg"}
-                  aumentarZindex={props.aumentarZindexAction}
-                  component={<Multileg headerTitle="MULTI ATIVOS" />}
-                />
-
-                {/* THL */}
-                <RenderMenus
-                  menuAberto={thlAberta}
-                  zIndex={zIndex}
-                  divkey={"thl"}
-                  aumentarZindex={props.aumentarZindexAction}
-                  component={<TelaTHL headerTitle="THL" />}
-                />
-              </div>
-            </div>
+            {/* THL */}
           </div>
         </div>
       </div>

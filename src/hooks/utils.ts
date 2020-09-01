@@ -1,5 +1,6 @@
 import { NamespacesType } from "constants/ActionTypes";
 import { MainStoreState } from "redux/reducers";
+import { $CombinedState } from "redux";
 
 type reducerName =
   | ""
@@ -8,6 +9,8 @@ type reducerName =
   | "multileg"
   | "posicao"
   | "ordensExec";
+type key = keyof Omit<MainStoreState, typeof $CombinedState>;
+type State = MainStoreState[key];
 
 export const getReducerStateStorePrincipal = (
   state: MainStoreState,
