@@ -102,29 +102,38 @@ export const atualizarCotacaoMultilegAPI = ({
     MODIFICAR_VARIAVEL_MULTILEG,
     "cotacoesMultileg",
     "setIntervalCotacoesMultileg",
+    () => listaCotacoes,
+    true,
   );
 
   source.onmessage = function (event) {
     if (typeof event.data !== "undefined") {
       var dados = JSON.parse(event.data);
 
-      const cotacaoAtual = dados.ultimo;
-      const ativoRetornado = dados.symbol;
+      const currentQuote = dados.ultimo;
+      const symbol = dados.symbol;
 
       const indice = listaCotacoes.findIndex(
-        (cotacao) => cotacao.codigo === ativoRetornado,
+        (cotacao) => cotacao.codigo === symbol,
       );
 
       if (indice !== -1) {
-        listaCotacoes[indice].valor = cotacaoAtual;
+        const oldQuote = listaCotacoes[indice].valor;
+
+        const oldBuyBook = listaCotacoes[indice].compra;
+        const oldSellBook = listaCotacoes[indice].venda;
+
+        if (currentQuote && oldQuote !== currentQuote)
+          listaCotacoes[indice].valor = currentQuote;
+
         listaCotacoes[indice].compra = {
-          price: dados.compra,
-          qtty: dados.compraQtde,
+          price: dados.compra || oldBuyBook.price,
+          qtty: dados.compraQtde || oldBuyBook.qtty,
           type: "C",
         };
         listaCotacoes[indice].venda = {
-          price: dados.venda,
-          qtty: dados.vendaQtde,
+          price: dados.venda || oldSellBook.price,
+          qtty: dados.vendaQtde || oldSellBook.qtty,
           type: "V",
         };
       }
@@ -486,14 +495,15 @@ const atualizaListaReativa = (
   actionType,
   nomeLista,
   nomeSetInterval,
-  immutableFunction,
+  immutableFunction = () => lista,
+  cancelTimeout = false,
 ) => {
   const atualizarLista = () => {
     dispatch({
       type: actionType,
       payload: {
         attributeName: nomeLista,
-        attributeValue: immutableFunction ? immutableFunction() : lista, //lista.map((item) => ({ ...item }))
+        attributeValue: immutableFunction(), //lista.map((item) => ({ ...item }))
       },
     });
     dispatch({
@@ -505,7 +515,7 @@ const atualizaListaReativa = (
     });
   };
 
-  setTimeout(atualizarLista, 1500);
+  if (!cancelTimeout) setTimeout(atualizarLista, 1500);
 
   const setPrecos = setInterval(atualizarLista, intervaloAttReativa);
 
