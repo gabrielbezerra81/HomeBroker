@@ -2750,10 +2750,12 @@ const INITIAL_STATE: THLState = {
 export default (state = INITIAL_STATE, { type, payload }: Action): THLState => {
   switch (type) {
     case MUDAR_VARIAVEL_THL:
-      const { nome, valor } = payload;
-      const valorFormatado =
-        nome === "opcoesStrike" ? mapearTabelaVencimentos(valor) : valor;
-      return { ...state, [nome]: valorFormatado };
+      const { attributeName, attributeValue } = payload;
+      const parsedValue =
+        attributeName === "opcoesStrike"
+          ? mapearTabelaVencimentos(attributeValue)
+          : attributeValue;
+      return { ...state, [attributeName]: parsedValue };
     case MUDAR_VARIAVEIS_THL:
       return { ...state, ...payload };
 

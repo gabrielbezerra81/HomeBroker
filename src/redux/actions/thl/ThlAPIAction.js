@@ -41,7 +41,10 @@ export const listarTabelaInicialTHLAPIAction = (initialLoad = false) => {
 
     if (symbol && type) {
       dispatch(
-        updateOneTHLState({ nome: "carregandoTabelaVencimentos", valor: true }),
+        updateOneTHLState({
+          attributeName: "carregandoTabelaVencimentos",
+          attributeValue: true,
+        }),
       );
 
       const { token } = getReducerStateStorePrincipal(getState(), "principal");
@@ -108,7 +111,10 @@ export const listarTabelaInicialTHLAPIAction = (initialLoad = false) => {
 export const recalcularPrecosTHLAPIAction = () => {
   return async (dispatch, getState) => {
     dispatch(
-      updateOneTHLState({ nome: "carregandoTabelaVencimentos", valor: true }),
+      updateOneTHLState({
+        attributeName: "carregandoTabelaVencimentos",
+        attributeValue: true,
+      }),
     );
 
     const {
@@ -330,6 +336,9 @@ const atualizarCotacaoTHL = ({
     token,
   });
   dispatch(
-    updateOneTHLState({ nome: "eventSourceCotacoesTHL", valor: source }),
+    updateOneTHLState({
+      attributeName: "eventSourceCotacoesTHL",
+      attributeValue: source,
+    }),
   );
 };

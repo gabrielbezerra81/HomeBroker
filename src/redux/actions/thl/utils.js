@@ -3,10 +3,10 @@ import {
   MUDAR_VARIAVEIS_THL,
 } from "constants/MenuActionTypes";
 
-export const updateOneTHLState = ({ nome, valor }) => {
+export const updateOneTHLState = ({ attributeName, attributeValue }) => {
   return {
     type: MUDAR_VARIAVEL_THL,
-    payload: { nome, valor },
+    payload: { attributeName, attributeValue },
   };
 };
 

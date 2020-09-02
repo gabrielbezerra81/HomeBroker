@@ -20,7 +20,7 @@ import { getReducerStateStorePrincipal } from "hooks/utils";
 
 export const mudarVariavelTHLAction = (nome, valor) => {
   return (dispatch) => {
-    dispatch(updateOneTHLState({ nome, valor }));
+    dispatch(updateOneTHLState({ attributeName: nome, attributeValue: valor }));
   };
 };
 

@@ -4,6 +4,8 @@ export const MODIFICAR_VARIAVEL_MULTILEG = "modificar_variavel_multileg";
 //POSICAO EM CUSTODIA
 export const MUDAR_VARIAVEL_POSICAO_CUSTODIA =
   "mudar_variavel_posicao_custodia";
+export const MUDAR_VARIAVEIS_POSICAO_CUSTODIA =
+  "mudar_variaveis_posicao_custodia";
 
 //ORDENS EM EXECUÇÃO
 export const MUDAR_VARIAVEL_ORDENS_EXEC = "mudar_variavel_ordens_exec";

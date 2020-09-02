@@ -74,8 +74,8 @@ export default React.memo(() => {
         else {
           dispatch(
             updateOneTHLState({
-              nome: "shouldUpdateWithStrikeChange",
-              valor: true,
+              attributeName: "shouldUpdateWithStrikeChange",
+              attributeValue: true,
             }),
           );
         }
