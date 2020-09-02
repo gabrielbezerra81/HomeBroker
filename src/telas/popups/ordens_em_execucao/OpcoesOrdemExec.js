@@ -162,7 +162,7 @@ const mapStateToPropsOpcoesOrdemExec = (state) => ({
   ...mapStateToPropsOrdensExec(state),
   multileg: state.multilegReducer.multileg,
   eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
-  multilegAberto: state.systemReducer.multilegAberto,
+  isOpenMultileg: state.systemReducer.isOpenMultileg,
   cotacoesMultileg: state.multilegReducer.cotacoesMultileg,
 });
 

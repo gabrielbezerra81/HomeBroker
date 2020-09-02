@@ -8,7 +8,7 @@ import {
   handleOpenMenusInMainTabAction,
 } from "redux/actions/telaPrincipal/TelaPrincipalActions";
 
-interface MenuChild {
+interface TabChild {
   key: string;
   index: number;
   props: {
@@ -25,11 +25,11 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
     systemReducer: {
       mainTabs,
       selectedTab,
-      ordensExecucaoAberto,
-      relatorioDetalhadoAberto,
-      listaCompletaAberta,
-      multilegAberto,
-      thlAberta,
+      isOpenOrdersExec,
+      isOpenDetailedReport,
+      isOpenPosition,
+      isOpenMultileg,
+      isOpenTHL,
       openedMenus,
     },
   } = useStateStorePrincipal();
@@ -37,20 +37,20 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
 
   const menuChildren = useMemo(() => {
     const menus = [
-      { key: "ordens_execucao", isOpen: ordensExecucaoAberto },
-      { key: "relatorio_detalhado", isOpen: relatorioDetalhadoAberto },
-      { key: "posicao_custodia", isOpen: listaCompletaAberta },
-      { key: "multileg", isOpen: multilegAberto },
-      { key: "thl", isOpen: thlAberta },
+      { key: "ordens_execucao", isOpen: isOpenOrdersExec },
+      { key: "relatorio_detalhado", isOpen: isOpenDetailedReport },
+      { key: "posicao_custodia", isOpen: isOpenPosition },
+      { key: "multileg", isOpen: isOpenMultileg },
+      { key: "thl", isOpen: isOpenTHL },
     ] as const;
 
     return menus;
   }, [
-    listaCompletaAberta,
-    multilegAberto,
-    ordensExecucaoAberto,
-    relatorioDetalhadoAberto,
-    thlAberta,
+    isOpenPosition,
+    isOpenMultileg,
+    isOpenOrdersExec,
+    isOpenDetailedReport,
+    isOpenTHL,
   ]);
 
   useEffect(() => {
@@ -73,7 +73,7 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
           <Nav>
             {mainTabs.map((tabItem, index) => {
               return (
-                <Col md={0} key={index}>
+                <Col key={index}>
                   <Nav.Item>
                     <Nav.Link
                       eventKey={`tab${index}`}
@@ -98,7 +98,7 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
               );
             })}
 
-            <Col md={0}>
+            <Col>
               <Nav.Item>
                 <Nav.Link
                   eventKey="adicionar"
@@ -118,10 +118,10 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
                   <Tab.Pane eventKey={`tab${index}`} key={index + "tabpane"}>
                     {openedMenus.map((openedMenu) => {
                       return children.find((childItem) => {
-                        const menuChild = childItem?.valueOf() as MenuChild;
+                        const tabChild = childItem?.valueOf() as TabChild;
 
                         return (
-                          openedMenu.menuKey === menuChild.key &&
+                          openedMenu.menuKey === tabChild.key &&
                           openedMenu.tabKey === `tab${index}`
                         );
                       });

@@ -44,7 +44,7 @@ class RelatorioDetalhado extends React.Component {
   componentDidUpdate(prevProps) {
     const {
       divkey,
-      relatorioDetalhadoAberto,
+      isOpenDetailedReport,
       aumentarZindexAction,
       zIndex,
     } = this.props;
@@ -54,7 +54,7 @@ class RelatorioDetalhado extends React.Component {
       previousDivkey: prevProps.divkey,
       currentDivkey: divkey,
       divkeyToCheck: "relatorio_detalhado",
-      popupVisibility: relatorioDetalhadoAberto,
+      popupVisibility: isOpenDetailedReport,
       updateFunction: aumentarZindexAction,
     });
   }
@@ -261,7 +261,7 @@ const mapStateToPropsGlobalStore = (state) => {
 
 const mapStateToPropsRelatorio = (state) => {
   return {
-    relatorioDetalhadoAberto: state.systemReducer.relatorioDetalhadoAberto,
+    isOpenDetailedReport: state.systemReducer.isOpenDetailedReport,
   };
 };
 

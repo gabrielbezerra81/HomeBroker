@@ -32,7 +32,7 @@ export default (
     case LISTAR_ORDENS_EXECUCAO:
       return { ...state, tabelaOrdensExecucao: payload };
     case actionType.RESET_REDUX_STATE:
-      if (["ordensExecucaoAberto", "deslogar"].includes(payload.name))
+      if (["isOpenOrdersExec", "deslogar"].includes(payload.name))
         return {
           ...resetarEstadoRedux(
             state,
@@ -44,7 +44,7 @@ export default (
         };
       else return state;
     // case ABRIR_FECHAR_ITEM_BARRA_LATERAL:
-    //   return action.payload.name === "ordensExecucaoAberto"
+    //   return action.payload.name === "isOpenOrdersExec"
     //     ? resetarEstadoRedux(
     //         state,
     //         INITIAL_STATE,
@@ -59,7 +59,7 @@ export default (
     //     state,
     //     INITIAL_STATE,
     //     [],
-    //     !action.payload.logado,
+    //     !action.payload.isLogged,
     //     "ordensExec"
     //   );
     default:

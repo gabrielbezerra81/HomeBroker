@@ -31,19 +31,14 @@ class PosicaoEmCustodia extends React.Component {
   }
   componentDidUpdate(prevProps) {
     const { props } = this;
-    const {
-      divkey,
-      listaCompletaAberta,
-      aumentarZindexAction,
-      zIndex,
-    } = props;
+    const { divkey, isOpenPosition, aumentarZindexAction, zIndex } = props;
 
     setPopupZIndexFromSecondaryTab({
       zIndex,
       previousDivkey: prevProps.divkey,
       currentDivkey: divkey,
       divkeyToCheck: "posicao_custodia",
-      popupVisibility: listaCompletaAberta,
+      popupVisibility: isOpenPosition,
       updateFunction: aumentarZindexAction,
     });
 
@@ -132,7 +127,7 @@ const mapStateToPropsPosicao = (state) => ({
   arrayPrecos: state.positionReducer.arrayPrecos,
   arrayPrecosID: state.positionReducer.arrayPrecosID,
   token: state.systemReducer.token,
-  listaCompletaAberta: state.systemReducer.listaCompletaAberta,
+  isOpenPosition: state.systemReducer.isOpenPosition,
 });
 
 export default compose(

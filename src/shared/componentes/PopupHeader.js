@@ -240,15 +240,15 @@ export const ModalHeaderLimpo = ({ titulo, name = "" }) => {
 const getNomeVariavelReducer = (headerTitle) => {
   switch (headerTitle) {
     case "HISTÓRICO DE OPERAÇÕES":
-      return "ordensExecucaoAberto";
+      return "isOpenOrdersExec";
     case "RELATÓRIO DETALHADO":
-      return "relatorioDetalhadoAberto";
+      return "isOpenDetailedReport";
     case "POSIÇÃO EM CUSTÓDIA":
-      return "listaCompletaAberta";
+      return "isOpenPosition";
     case "MULTI ATIVOS":
-      return "multilegAberto";
+      return "isOpenMultileg";
     case "THL":
-      return "thlAberta";
+      return "isOpenTHL";
     default:
       return "";
   }
@@ -257,22 +257,22 @@ const getNomeVariavelReducer = (headerTitle) => {
 const GetAbrirMenuProps = () => {
   const {
     systemReducer: {
-      ordensExecucaoAberto,
-      relatorioDetalhadoAberto,
-      listaCompletaAberta,
-      multilegAberto,
-      thlAberta,
+      isOpenOrdersExec,
+      isOpenDetailedReport,
+      isOpenPosition,
+      isOpenMultileg,
+      isOpenTHL,
     },
     multilegReducer: { eventSourceCotacao, setIntervalCotacoesMultileg },
     thlReducer: { eventSourcePrecos, setIntervalPrecosTHL },
   } = useStateStorePrincipal();
 
   const props = {
-    ordensExecucaoAberto,
-    relatorioDetalhadoAberto,
-    listaCompletaAberta,
-    multilegAberto,
-    thlAberta,
+    isOpenOrdersExec,
+    isOpenDetailedReport,
+    isOpenPosition,
+    isOpenMultileg,
+    isOpenTHL,
     eventSourceCotacao_Multileg: eventSourceCotacao,
     setIntervalCotacoes_Multileg: setIntervalCotacoesMultileg,
     // eventSourceEmblema_Posicao: eventSourceEmblema,

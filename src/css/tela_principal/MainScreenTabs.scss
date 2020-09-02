@@ -29,6 +29,10 @@
       text-align: center;
       text-decoration: none;
     }
+
+    .col {
+      padding: 0 4px;
+    }
   }
 
   .selectedTab {
@@ -48,26 +52,26 @@
       font-size: 12px;
       margin-top: 4px;
     }
-  }
 
-  input {
-    height: 11px;
-    background-color: transparent !important;
-    border: none;
-    width: 54px;
-    border-radius: 0;
-    padding: 5px 0px 5px 4px;
-    text-align: center;
-    flex: 1;
-    border-color: #333;
-    color: var(--color-text-primary) !important;
-    font-size: 0.8rem;
-    font-weight: 500;
-    box-sizing: content-box;
-  }
+    > input {
+      height: 11px;
+      background-color: transparent !important;
+      border: none;
+      width: 54px;
+      border-radius: 0;
+      padding: 5px 0px 5px 4px;
+      text-align: center;
+      flex: 1;
+      border-color: #333;
+      color: var(--color-text-primary) !important;
+      font-size: 0.8rem;
+      font-weight: 500;
+      box-sizing: content-box;
+    }
 
-  input:focus {
-    box-shadow: none;
+    input:focus {
+      box-shadow: none;
+    }
   }
 
   a.addTabButton.active {

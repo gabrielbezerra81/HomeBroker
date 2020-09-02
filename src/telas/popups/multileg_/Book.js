@@ -342,8 +342,8 @@ const mapStateToProps = (state) => ({
   eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
   cotacoesMultileg: state.multilegReducer.cotacoesMultileg,
   token: state.systemReducer.token,
-  conta: state.systemReducer.conta,
-  contaSelecionada: state.systemReducer.contaSelecionada,
+  accounts: state.systemReducer.accounts,
+  selectedAccount: state.systemReducer.selectedAccount,
   cotacoesMultilegID: state.multilegReducer.cotacoesMultilegID,
 });
 

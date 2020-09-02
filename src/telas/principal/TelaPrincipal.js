@@ -31,8 +31,8 @@ const startStyle = {
   pointerEvents: "none",
 };
 
-const margemParaMenuLateral = (menuLateralAberto) => {
-  if (menuLateralAberto) return "menuLateralAfastado";
+const margemParaMenuLateral = (isOpenLeftUserMenu) => {
+  if (isOpenLeftUserMenu) return "menuLateralAfastado";
   return "";
 };
 
@@ -41,8 +41,8 @@ class TelaPrincipal extends React.Component {
     this.props.listarOrdensExecAction();
     this.props.listarPosicoesAction(this.props);
 
-    // LogRocket.identify(this.props.usuarioConectado, {
-    //   name: this.props.usuarioConectado,
+    // LogRocket.identify(this.props.connectedUser, {
+    //   name: this.props.connectedUser,
     // });
   }
 
@@ -50,12 +50,12 @@ class TelaPrincipal extends React.Component {
     const { props } = this;
     const {
       zIndex,
-      menuLateralAberto,
-      ordensExecucaoAberto,
-      relatorioDetalhadoAberto,
-      listaCompletaAberta,
-      multilegAberto,
-      thlAberta,
+      isOpenLeftUserMenu,
+      isOpenOrdersExec,
+      isOpenDetailedReport,
+      isOpenPosition,
+      isOpenMultileg,
+      isOpenTHL,
     } = props;
 
     return (
@@ -67,11 +67,11 @@ class TelaPrincipal extends React.Component {
 
           <div
             id="menusTelaPrincipal"
-            className={margemParaMenuLateral(menuLateralAberto)}
+            className={margemParaMenuLateral(isOpenLeftUserMenu)}
           >
             <MainScreenTabs>
               <RenderMenus
-                menuAberto={ordensExecucaoAberto}
+                menuAberto={isOpenOrdersExec}
                 zIndex={zIndex}
                 key="ordens_execucao"
                 divkey={"ordens_execucao"}
@@ -81,7 +81,7 @@ class TelaPrincipal extends React.Component {
                 }
               />
               <RenderMenus
-                menuAberto={relatorioDetalhadoAberto}
+                menuAberto={isOpenDetailedReport}
                 zIndex={zIndex}
                 key="relatorio_detalhado"
                 divkey={"relatorio_detalhado"}
@@ -91,7 +91,7 @@ class TelaPrincipal extends React.Component {
                 }
               />
               <RenderMenus
-                menuAberto={listaCompletaAberta}
+                menuAberto={isOpenPosition}
                 zIndex={zIndex}
                 key="posicao_custodia"
                 divkey={"posicao_custodia"}
@@ -101,7 +101,7 @@ class TelaPrincipal extends React.Component {
                 }
               />
               <RenderMenus
-                menuAberto={multilegAberto}
+                menuAberto={isOpenMultileg}
                 zIndex={zIndex}
                 key="multileg"
                 divkey={"multileg"}
@@ -109,7 +109,7 @@ class TelaPrincipal extends React.Component {
                 component={<Multileg headerTitle="MULTI ATIVOS" />}
               />
               <RenderMenus
-                menuAberto={thlAberta}
+                menuAberto={isOpenTHL}
                 zIndex={zIndex}
                 key="thl"
                 divkey={"thl"}
@@ -156,15 +156,15 @@ const mapStateToPropsGlobalStore = (state) => ({
 });
 
 const mapStateToPropsAppPrincipal = (state) => ({
-  ordensAberto: state.systemReducer.ordensAberto,
-  ordensExecucaoAberto: state.systemReducer.ordensExecucaoAberto,
-  relatorioDetalhadoAberto: state.systemReducer.relatorioDetalhadoAberto,
-  listaCompletaAberta: state.systemReducer.listaCompletaAberta,
-  menuLateralAberto: state.systemReducer.menuLateralAberto,
-  multilegAberto: state.systemReducer.multilegAberto,
-  thlAberta: state.systemReducer.thlAberta,
+  isOpenOrdersHoverMenu: state.systemReducer.isOpenOrdersHoverMenu,
+  isOpenOrdersExec: state.systemReducer.isOpenOrdersExec,
+  isOpenDetailedReport: state.systemReducer.isOpenDetailedReport,
+  isOpenPosition: state.systemReducer.isOpenPosition,
+  isOpenLeftUserMenu: state.systemReducer.isOpenLeftUserMenu,
+  isOpenMultileg: state.systemReducer.isOpenMultileg,
+  isOpenTHL: state.systemReducer.isOpenTHL,
   token: state.systemReducer.token,
-  usuarioConectado: state.systemReducer.usuarioConectado,
+  connectedUser: state.systemReducer.connectedUser,
   // Posição
   posicoesCustodia: state.positionReducer.posicoesCustodia,
   arrayPrecos: state.positionReducer.arrayPrecos,
@@ -197,7 +197,7 @@ export default compose(
 /*
 
 <Animate
-                show={props.ordensExecucaoAberto}
+                show={props.isOpenOrdersExec}
                 duration={100}
                 transitionOnMount
                 stayMounted={false}
@@ -207,7 +207,7 @@ export default compose(
                   props.aumentarZindexAction(
                     "ordens_execucao",
                     props.zIndex,
-                    props.ordensExecucaoAberto
+                    props.isOpenOrdersExec
                   )
                 }
               >
@@ -217,7 +217,7 @@ export default compose(
                 />
               </Animate>
               <Animate
-                show={props.multilegAberto}
+                show={props.isOpenMultileg}
                 duration={100}
                 transitionOnMount
                 stayMounted={false}
@@ -227,7 +227,7 @@ export default compose(
                   props.aumentarZindexAction(
                     "multileg",
                     props.zIndex,
-                    props.multilegAberto
+                    props.isOpenMultileg
                   )
                 }
               >

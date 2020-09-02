@@ -25,19 +25,14 @@ class Tela_THL extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      divkey,
-      thlAberta,
-      aumentarZindexAction,
-      zIndex,
-    } = this.props;
+    const { divkey, isOpenTHL, aumentarZindexAction, zIndex } = this.props;
 
     setPopupZIndexFromSecondaryTab({
       zIndex,
       previousDivkey: prevProps.divkey,
       currentDivkey: divkey,
       divkeyToCheck: "thl",
-      popupVisibility: thlAberta,
+      popupVisibility: isOpenTHL,
       updateFunction: aumentarZindexAction,
     });
   }
@@ -100,7 +95,7 @@ const mapDateToPropsGlobal = (state) => ({
 });
 
 const mapStateToPropsTHL = (state) => ({
-  thlAberta: state.systemReducer.thlAberta,
+  isOpenTHL: state.systemReducer.isOpenTHL,
 });
 
 export default compose(

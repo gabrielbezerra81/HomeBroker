@@ -103,7 +103,7 @@ const InputPesquisa = () => {
 const EnviarOrdem = () => {
   const { divkey, zIndex } = useStateGlobalStore();
   const {
-    systemReducer: { multilegAberto },
+    systemReducer: { isOpenMultileg },
     multilegReducer: {
       multileg,
       eventSource,
@@ -118,7 +118,7 @@ const EnviarOrdem = () => {
 
   const props = {
     multileg,
-    multilegAberto,
+    isOpenMultileg,
     eventSource,
     eventSourceCotacao,
     cotacoesMultileg,

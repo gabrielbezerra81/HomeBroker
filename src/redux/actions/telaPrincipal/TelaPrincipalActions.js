@@ -30,9 +30,9 @@ export const updateManySystemState = (payload) => {
   };
 };
 
-export const abrirFecharMenuLateralAction = (menuLateralAberto) => {
+export const abrirFecharMenuLateralAction = (isOpenLeftUserMenu) => {
   return (dispatch) => {
-    dispatch({ type: ABRIR_FECHAR_MENU_LATERAL, payload: menuLateralAberto });
+    dispatch({ type: ABRIR_FECHAR_MENU_LATERAL, payload: isOpenLeftUserMenu });
   };
 };
 
@@ -55,21 +55,21 @@ export const logarUsuarioAction = (email, senha) => {
       await dispatch({
         type: LOGAR_DESLOGAR_USUARIO,
         payload: {
-          usuarioConectado: name,
-          logado: true,
+          connectedUser: name,
+          isLogged: true,
         },
       });
       await dispatch({
         type: MUDAR_DADOS_LOGIN,
         payload: {
-          nomeVariavel: "conta",
+          nomeVariavel: "accounts",
           valor: accounts,
         },
       });
       await dispatch({
         type: MUDAR_DADOS_LOGIN,
         payload: {
-          nomeVariavel: "contaSelecionada",
+          nomeVariavel: "selectedAccount",
           valor: accounts[0],
         },
       });
@@ -117,8 +117,8 @@ export const deslogarUsuarioAction = (props) => {
         dispatch({
           type: LOGAR_DESLOGAR_USUARIO,
           payload: {
-            usuarioConectado: "",
-            logado: false,
+            connectedUser: "",
+            isLogged: false,
           },
         });
 
@@ -215,11 +215,7 @@ const resetarDadosReducerAction = ({
   visibilidadeMenu,
 }) => {
   let limparReducer = true;
-  if (
-    ["ordensExecucaoAberto", "listaCompletaAberta"].includes(
-      nameVariavelReducer,
-    )
-  )
+  if (["isOpenOrdersExec", "isOpenPosition"].includes(nameVariavelReducer))
     limparReducer = false;
 
   if (!visibilidadeMenu)
@@ -264,19 +260,19 @@ const handleCloseMenusInMainTab = ({
     let menuKey = "";
 
     switch (isOpenAttribute) {
-      case "ordensExecucaoAberto":
+      case "isOpenOrdersExec":
         menuKey = "ordens_execucao";
         break;
-      case "relatorioDetalhadoAberto":
+      case "isOpenDetailedReport":
         menuKey = "relatorio_detalhado";
         break;
-      case "listaCompletaAberta":
+      case "isOpenPosition":
         menuKey = "posicao_custodia";
         break;
-      case "multilegAberto":
+      case "isOpenMultileg":
         menuKey = "multileg";
         break;
-      case "thlAberta":
+      case "isOpenTHL":
         menuKey = "thl";
         break;
       default:

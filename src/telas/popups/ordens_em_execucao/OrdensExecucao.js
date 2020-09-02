@@ -31,7 +31,7 @@ class OrdensExecucao extends React.Component {
   componentDidUpdate(prevProps) {
     const {
       divkey,
-      ordensExecucaoAberto,
+      isOpenOrdersExec,
       aumentarZindexAction,
       zIndex,
     } = this.props;
@@ -41,7 +41,7 @@ class OrdensExecucao extends React.Component {
       previousDivkey: prevProps.divkey,
       currentDivkey: divkey,
       divkeyToCheck: "ordens_execucao",
-      popupVisibility: ordensExecucaoAberto,
+      popupVisibility: isOpenOrdersExec,
       updateFunction: aumentarZindexAction,
     });
   }
@@ -263,7 +263,7 @@ const mapStateToPropsOrdensExec = (state) => ({
   opcoesOrdemAberto: state.ordersExecReducer.opcoesOrdemAberto,
   ordemAtual: state.ordersExecReducer.ordemAtual,
   token: state.systemReducer.token,
-  ordensExecucaoAberto: state.systemReducer.ordensExecucaoAberto,
+  isOpenOrdersExec: state.systemReducer.isOpenOrdersExec,
 });
 
 export default compose(

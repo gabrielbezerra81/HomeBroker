@@ -47,7 +47,7 @@ export default (
     case PESQUISAR_ATIVO_MULTILEG_API:
       return { ...state, multileg: payload };
     case actionType.RESET_REDUX_STATE:
-      if (["multilegAberto", "deslogar"].includes(payload.name))
+      if (["isOpenMultileg", "deslogar"].includes(payload.name))
         return {
           ...resetarEstadoRedux(
             state,

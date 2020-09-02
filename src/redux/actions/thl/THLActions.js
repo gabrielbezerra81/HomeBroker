@@ -42,7 +42,7 @@ export const abrirMultilegTHLAction = (props) => {
     } = getReducerStateStorePrincipal(getState(), "multileg");
 
     let {
-      multilegAberto,
+      isOpenMultileg,
       cotacoesMultileg,
       zIndex,
       dispatchGlobal,
@@ -50,9 +50,9 @@ export const abrirMultilegTHLAction = (props) => {
     } = props;
     dispatchGlobal(atualizarDivKeyAction("multileg"));
 
-    if (!multilegAberto) {
+    if (!isOpenMultileg) {
       props.multileg.pop();
-      dispatch(abrirItemBarraLateralAction(props, "multilegAberto"));
+      dispatch(abrirItemBarraLateralAction(props, "isOpenMultileg"));
     } else {
       //Traz para primeiro plano se já estiver aberto
       document.getElementById("multileg").style.zIndex = zIndex + 1;
@@ -85,7 +85,7 @@ export const abrirMultilegTHLAction = (props) => {
         cotacoesMultileg = data.multilegQuotes;
 
         const opcao = multileg[indiceAba].opcoes.filter(
-          (opcao) => opcao.symbol === book.ativo
+          (opcao) => opcao.symbol === book.ativo,
         );
 
         let tipo = "";
@@ -111,7 +111,7 @@ export const abrirMultilegTHLAction = (props) => {
       let calculo = calculoPreco(
         multileg[indiceAba],
         "ultimo",
-        cotacoesMultileg
+        cotacoesMultileg,
       ).toFixed(2);
       calculo = formatarNumero(calculo, 2, ".", ",");
       multileg[indiceAba].preco = calculo;

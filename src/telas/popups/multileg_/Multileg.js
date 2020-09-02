@@ -36,14 +36,14 @@ class Multileg extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { divkey, multilegAberto, aumentarZindexAction, zIndex } = this.props;
+    const { divkey, isOpenMultileg, aumentarZindexAction, zIndex } = this.props;
 
     setPopupZIndexFromSecondaryTab({
       zIndex,
       previousDivkey: prevProps.divkey,
       currentDivkey: divkey,
       divkeyToCheck: "multileg",
-      popupVisibility: multilegAberto,
+      popupVisibility: isOpenMultileg,
       updateFunction: aumentarZindexAction,
     });
   }
@@ -78,7 +78,7 @@ class Multileg extends React.Component {
           <Nav>
             {this.props.multileg.map((aba, index) => {
               return (
-                <Col md={"0"} key={index}>
+                <Col key={index}>
                   <Nav.Item>
                     <Nav.Link
                       eventKey={`tab${index}`}
@@ -117,7 +117,7 @@ class Multileg extends React.Component {
               );
             })}
 
-            <Col md={"0"}>
+            <Col>
               <Nav.Item>
                 <Nav.Link
                   eventKey="adicionar"
@@ -172,7 +172,7 @@ const mapStateToPropsMultileg = (state) => ({
   multileg: state.multilegReducer.multileg,
   abaSelecionada: state.multilegReducer.abaSelecionada,
   eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
-  multilegAberto: state.systemReducer.multilegAberto,
+  isOpenMultileg: state.systemReducer.isOpenMultileg,
 });
 
 const mapStateToPropsGlobalStore = (state) => {

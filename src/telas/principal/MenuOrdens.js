@@ -42,7 +42,7 @@ class MenuOrdens extends Component {
     if (
       this.props.divkey !== "" &&
       this.props.divkey === "divOrdens" &&
-      this.props.ordensAberto === true
+      this.props.isOpenOrdersHoverMenu === true
     ) {
       document.getElementById("divOrdens").style.zIndex = this.props.zIndex + 1;
       this.props.aumentarZindexAction("divOrdens", this.props.zIndex, true);
@@ -54,7 +54,7 @@ class MenuOrdens extends Component {
     return (
       <div>
         <Animate
-          show={props.ordensAberto}
+          show={props.isOpenOrdersHoverMenu}
           duration={100}
           preMount
           transitionOnMount
@@ -64,8 +64,8 @@ class MenuOrdens extends Component {
           <div
             className="divOrdens"
             id="divOrdens"
-            onMouseOver={() => props.mouseOverAction("ordensAberto")}
-            onMouseLeave={() => props.mouseLeaveAction("ordensAberto")}
+            onMouseOver={() => props.mouseOverAction("isOpenOrdersHoverMenu")}
+            onMouseLeave={() => props.mouseLeaveAction("isOpenOrdersHoverMenu")}
           >
             <Row className="rowOrdensTracejada">
               <img src={iconeCompra} alt="" />
@@ -183,7 +183,7 @@ class MenuOrdens extends Component {
                   alt="Multileg"
                   onClick={() => {
                     props.atualizarDivKeyAction("multileg");
-                    props.abrirItemBarraLateralAction(props, "multilegAberto");
+                    props.abrirItemBarraLateralAction(props, "isOpenMultileg");
                   }}
                   className="divClicavel"
                 />
@@ -208,14 +208,14 @@ const mapStateToPropsGlobalStore = (state) => {
 };
 
 const mapStateToPropsAppPrincipal = (state) => ({
-  ordensAberto: state.systemReducer.ordensAberto,
-  ordensExecucaoAberto: state.systemReducer.ordensExecucaoAberto,
-  relatorioDetalhadoAberto: state.systemReducer.relatorioDetalhadoAberto,
-  listaCompletaAberta: state.systemReducer.listaCompletaAberta,
-  menuLateralAberto: state.systemReducer.menuLateralAberto,
-  multilegAberto: state.systemReducer.multilegAberto,
-  thlAberta: state.systemReducer.thlAberta,
-  logado: state.systemReducer.logado,
+  isOpenOrdersHoverMenu: state.systemReducer.isOpenOrdersHoverMenu,
+  isOpenOrdersExec: state.systemReducer.isOpenOrdersExec,
+  isOpenDetailedReport: state.systemReducer.isOpenDetailedReport,
+  isOpenPosition: state.systemReducer.isOpenPosition,
+  isOpenLeftUserMenu: state.systemReducer.isOpenLeftUserMenu,
+  isOpenMultileg: state.systemReducer.isOpenMultileg,
+  isOpenTHL: state.systemReducer.isOpenTHL,
+  isLogged: state.systemReducer.isLogged,
   eventSourceCotacao_Multileg: state.multilegReducer.eventSourceCotacao,
   eventSourcePosicao_Posicao: state.positionReducer.eventSourcePosicao,
   eventSourceEmblema_Posicao: state.positionReducer.eventSourceEmblema,

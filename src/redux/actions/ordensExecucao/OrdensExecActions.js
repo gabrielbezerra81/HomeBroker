@@ -76,15 +76,15 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
 
     const item = props.ordemAtual;
 
-    let multilegAberto = props.multilegAberto;
+    let isOpenMultileg = props.isOpenMultileg;
 
     //Abrir Multileg
     props.atualizarDivKeyAction("multileg");
 
     //Se o multileg não estiver aberto, remove a primeira aba e abre o mesmo
-    if (!multilegAberto) {
+    if (!isOpenMultileg) {
       props.multileg.pop();
-      props.abrirItemBarraLateralAction(props, "multilegAberto");
+      props.abrirItemBarraLateralAction(props, "isOpenMultileg");
     } else {
       //Traz para primeiro plano se já estiver aberto
       document.getElementById("multileg").style.zIndex = props.zIndex + 1;

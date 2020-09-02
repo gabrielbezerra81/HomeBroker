@@ -14,12 +14,12 @@ class BarraTopoTelaPrincipal extends React.Component {
   render() {
     const { props } = this;
     const {
-      contaSelecionada,
-      menuLateralAberto,
-      conta,
-      valorLiquido,
-      valorComprar,
-      ativo,
+      selectedAccount,
+      isOpenLeftUserMenu,
+      accounts,
+      liquidValue,
+      buyingValue,
+      broker,
     } = props;
 
     return (
@@ -29,7 +29,7 @@ class BarraTopoTelaPrincipal extends React.Component {
             <div
               className="iconesMostrarMenu divClicavel"
               onClick={() => {
-                props.abrirFecharMenuLateralAction(!menuLateralAberto);
+                props.abrirFecharMenuLateralAction(!isOpenLeftUserMenu);
               }}
             >
               <IconeAbrirMenu
@@ -53,20 +53,20 @@ class BarraTopoTelaPrincipal extends React.Component {
               <FormControl
                 className="textInput"
                 as="select"
-                value={contaSelecionada ? contaSelecionada.id : ""}
+                value={selectedAccount ? selectedAccount.id : ""}
                 onChange={(e) => {
                   const novoID = Number(e.currentTarget.value);
-                  const novaConta = conta.filter(
+                  const novaConta = accounts.filter(
                     (item) => item.id === novoID,
                   )[0];
 
-                  props.mudarDadosLoginAction("contaSelecionada", novaConta);
+                  props.mudarDadosLoginAction("selectedAccount", novaConta);
                 }}
               >
-                {conta.map((item, indice) => {
+                {accounts.map((item, indice) => {
                   const gateway = item.gateway ? `, ${item.gateway}` : "";
                   return (
-                    <option value={item.id} key={`conta${indice}`}>
+                    <option value={item.id} key={`account${indice}`}>
                       {`${item.nome}, 
                     ${item.sigla}, 
                     ${item.numero}${gateway}`}
@@ -83,16 +83,16 @@ class BarraTopoTelaPrincipal extends React.Component {
             <h6 className="">VALOR LIQUIDO:</h6>
           </Col>
           <Col md={2}>
-            <h6 className="valorLiquido">{valorLiquido} R$</h6>
+            <h6 className="liquidValue">{liquidValue} R$</h6>
           </Col>
           <Col md={"0"}>
             <h6>COMPRAR:</h6>
           </Col>
           <Col>
-            <h6 className="valorComprar">{valorComprar} R$</h6>
+            <h6 className="buyingValue">{buyingValue} R$</h6>
           </Col>
           <Col md={"0"}>
-            <h4>{ativo}</h4>
+            <h4>{broker}</h4>
           </Col>
         </Row>
       </div>
@@ -101,14 +101,14 @@ class BarraTopoTelaPrincipal extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  usuarioConectado: state.systemReducer.usuarioConectado,
-  valorLiquido: state.systemReducer.valorLiquido,
-  valorComprar: state.systemReducer.valorComprar,
-  ativo: state.systemReducer.ativo,
-  menuLateralAberto: state.systemReducer.menuLateralAberto,
-  logado: state.systemReducer.logado,
-  conta: state.systemReducer.conta,
-  contaSelecionada: state.systemReducer.contaSelecionada,
+  connectedUser: state.systemReducer.connectedUser,
+  liquidValue: state.systemReducer.liquidValue,
+  buyingValue: state.systemReducer.buyingValue,
+  broker: state.systemReducer.broker,
+  isOpenLeftUserMenu: state.systemReducer.isOpenLeftUserMenu,
+  isLogged: state.systemReducer.isLogged,
+  accounts: state.systemReducer.accounts,
+  selectedAccount: state.systemReducer.selectedAccount,
 });
 
 export default connect(

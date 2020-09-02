@@ -123,12 +123,12 @@ export const sendMultilegOrderAction = (tabIndex: number): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
       multilegReducer: { multileg },
-      systemReducer: { contaSelecionada },
+      systemReducer: { selectedAccount },
     } = getState();
 
     const mountOrderProps = {
       multilegTabs: multileg,
-      selectedAccount: contaSelecionada,
+      selectedAccount: selectedAccount,
       tabIndex,
     };
 
@@ -149,12 +149,12 @@ export const createMultilegAlertAction = (
   return async (dispatch, getState) => {
     const {
       multilegReducer: { multileg },
-      systemReducer: { contaSelecionada },
+      systemReducer: { selectedAccount },
     } = getState();
 
     const mountOrderProps = {
       multilegTabs: multileg,
-      selectedAccount: contaSelecionada,
+      selectedAccount: selectedAccount,
       tabIndex,
     };
 
@@ -173,12 +173,12 @@ export const createMultilegPositionAction = (
   return async (dispatch, getState) => {
     const {
       multilegReducer: { multileg },
-      systemReducer: { contaSelecionada },
+      systemReducer: { selectedAccount },
     } = getState();
 
     const mountOrderProps = {
       multilegTabs: multileg,
-      selectedAccount: contaSelecionada,
+      selectedAccount: selectedAccount,
       tabIndex,
     };
 
