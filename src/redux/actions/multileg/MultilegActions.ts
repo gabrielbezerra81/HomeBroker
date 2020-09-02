@@ -171,7 +171,8 @@ export const updateMultilegTab = async ({
       // TODO: possível side effect
       updatedMultilegQuotes = cloneMultilegQuotes(multilegQuotes);
       const symbol = multilegTabs[tabIndex].ativoAtual;
-      multilegTabs[tabIndex].ativo = symbol;
+
+      updatedMultilegtabs[tabIndex].ativo = symbol;
 
       if (
         !checkQuoteAlreadyAdded({
