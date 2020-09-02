@@ -9,7 +9,7 @@ import {
   fecharFormConfigurarAction,
 } from "redux/actions/GlobalAppActions";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
-import { abrirItemBarraLateralAction } from "redux/actions/telaPrincipal/TelaPrincipalActions";
+import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 import { openCloseMultilegExtraConfigsAction } from "redux/actions/multileg/MultilegActions";
 import { mudarVariavelOrdensExecAction } from "redux/actions/ordensExecucao/OrdensExecActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";

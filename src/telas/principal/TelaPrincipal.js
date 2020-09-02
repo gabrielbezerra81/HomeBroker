@@ -8,7 +8,7 @@ import BarraTopoTelaPrincipal from "telas/principal/BarraTopoTelaPrincipal";
 import { StorePrincipalContext, GlobalContext } from "redux/StoreCreation";
 import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
 import { listarOrdensExecAction } from "redux/actions/ordensExecucao/OrdensExecActions";
-import { abrirItemBarraLateralAction } from "redux/actions/telaPrincipal/TelaPrincipalActions";
+import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 import { listarPosicoesAction } from "redux/actions/posicao/PosicaoActions";
 import BarraLateral from "telas/principal/BarraLateral";
 import MenuOrdens from "telas/principal/MenuOrdens";
@@ -119,8 +119,6 @@ class TelaPrincipal extends React.Component {
             </MainScreenTabs>
 
             <MenuOrdens />
-
-            {/* THL */}
           </div>
         </div>
       </div>

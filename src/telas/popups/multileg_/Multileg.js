@@ -145,26 +145,6 @@ class Multileg extends React.Component {
       </Tab.Container>
     );
   };
-
-  handleSelect = (key) => {
-    if (key === "adicionar") {
-      const { tabs } = this.state;
-
-      const newTabObject = {
-        name: `Sim ${tabs.length + 1}`,
-        content: `This is Tab ${tabs.length + 1}`,
-      };
-
-      this.setState({
-        tabs: [...tabs, newTabObject],
-        abaAtual: `tab${tabs.length}`,
-      });
-    } else {
-      this.setState({
-        abaAtual: key,
-      });
-    }
-  };
 }
 
 const mapStateToPropsMultileg = (state) => ({

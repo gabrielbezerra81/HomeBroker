@@ -7,8 +7,8 @@ import { StorePrincipalContext, GlobalContext } from "redux/StoreCreation";
 import {
   mouseOverAction,
   mouseLeaveAction,
-} from "redux/actions/telaPrincipal/TelaPrincipalActions";
-import { abrirItemBarraLateralAction } from "redux/actions/telaPrincipal/TelaPrincipalActions";
+} from "redux/actions/system/SystemActions";
+import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 import {
   atualizarDivKeyAction,
   abrirFormAction,

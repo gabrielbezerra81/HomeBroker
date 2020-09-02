@@ -3,7 +3,7 @@ import { Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
 import { getDiaSemana, getDiaEMes } from "shared/utils/Formatacoes";
 import { MDBIcon } from "mdbreact";
-import { deslogarUsuarioAction } from "redux/actions/telaPrincipal/TelaPrincipalActions";
+import { deslogarUsuarioAction } from "redux/actions/system/SystemActions";
 import { StorePrincipalContext } from "redux/StoreCreation";
 
 class MenuLateralUsuario extends React.Component {
