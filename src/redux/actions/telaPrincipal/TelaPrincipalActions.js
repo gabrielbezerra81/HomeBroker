@@ -148,7 +148,7 @@ export const abrirItemBarraLateralAction = (props, nameVariavelReducer) => {
   const updatedVisibility = !isVisible;
 
   return (dispatch, getState) => {
-    const { selectedTab } = getState().systemReducer;
+    const { selectedTab, openedMenus } = getState().systemReducer;
 
     // Se estiver tentar abrir um popup fora da aba principal e ele já estiver aberto,
     // impede que ele seja fechado e redireciona para a aba principal
@@ -161,13 +161,18 @@ export const abrirItemBarraLateralAction = (props, nameVariavelReducer) => {
       );
     } //
     else {
-      dispatch({
-        type: ABRIR_FECHAR_ITEM_BARRA_LATERAL,
-        payload: {
-          name: nameVariavelReducer,
-          valor: updatedVisibility,
-        },
+      const updateOpenedMenus = handleCloseMenusInMainTab({
+        isOpenAttribute: nameVariavelReducer,
+        visibility: updatedVisibility,
+        openedMenus,
       });
+
+      dispatch(
+        updateManySystemState({
+          [nameVariavelReducer]: updatedVisibility,
+          openedMenus: updateOpenedMenus,
+        }),
+      );
       resetarDadosReducerAction({
         dispatch,
         nameVariavelReducer,
@@ -242,13 +247,52 @@ export const handleOpenMenusInMainTabAction = (menuChildren) => {
               tabKey: "tab0",
             });
           }
-        } //
-        else if (menuIndex !== -1) {
-          // draft.splice(menuIndex, 1);
         }
       });
     });
 
     dispatch(updateOneSystemStateAction("openedMenus", updatedOpenedMenus));
   };
+};
+
+const handleCloseMenusInMainTab = ({
+  isOpenAttribute,
+  visibility,
+  openedMenus,
+}) => {
+  if (!visibility) {
+    let menuKey = "";
+
+    switch (isOpenAttribute) {
+      case "ordensExecucaoAberto":
+        menuKey = "ordens_execucao";
+        break;
+      case "relatorioDetalhadoAberto":
+        menuKey = "relatorio_detalhado";
+        break;
+      case "listaCompletaAberta":
+        menuKey = "posicao_custodia";
+        break;
+      case "multilegAberto":
+        menuKey = "multileg";
+        break;
+      case "thlAberta":
+        menuKey = "thl";
+        break;
+      default:
+        break;
+    }
+
+    const updatedOpenedMenus = produce(openedMenus, (draft) => {
+      const filtered = draft.filter(
+        (openedMenuItem) => openedMenuItem.menuKey !== menuKey,
+      );
+
+      return filtered;
+    });
+
+    return updatedOpenedMenus;
+  }
+
+  return openedMenus;
 };
