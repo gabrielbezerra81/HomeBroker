@@ -7,6 +7,7 @@ import {
   handleAddOrSelectTabAction,
   handleOpenMenusInMainTabAction,
   handleRemoveTabAction,
+  handleChangeTabPropsAction,
 } from "redux/actions/system/SystemActions";
 
 interface TabChild {
@@ -62,14 +63,45 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
     loadOpenedMenus();
   }, [dispatch, menuChildren]);
 
+  const handleTabSelect = useCallback(
+    (key, event: any) => {
+      // Não selecionar com tecla de espaço
+      if (event.keyCode === 32) {
+        const targetElement = event.target;
+        const { selectionStart, value } = targetElement;
+
+        const tabIndex = +selectedTab.substr(3);
+
+        const newTabName = [
+          value.slice(0, selectionStart),
+          event.key,
+          value.slice(selectionStart),
+        ].join("");
+
+        requestAnimationFrame(() => {
+          targetElement.setSelectionRange(
+            selectionStart + 1,
+            selectionStart + 1,
+          );
+        });
+
+        dispatch(
+          handleChangeTabPropsAction({
+            tabIndex,
+            attributeName: "tabName",
+            attributeValue: newTabName,
+          }),
+        );
+      } else {
+        dispatch(handleAddOrSelectTabAction(key));
+      }
+    },
+    [dispatch, selectedTab],
+  );
+
   return (
     <div id="MainScreenTabs">
-      <Tab.Container
-        onSelect={(key) => {
-          dispatch(handleAddOrSelectTabAction(key));
-        }}
-        activeKey={selectedTab}
-      >
+      <Tab.Container onSelect={handleTabSelect} activeKey={selectedTab}>
         <Row className="navContainer">
           <Nav>
             {mainTabs.map((tabItem, index) => {
@@ -97,7 +129,15 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
                         <Form.Control
                           type="text"
                           value={tabItem.tabName}
-                          onChange={(e) => {}}
+                          onChange={(e: any) => {
+                            dispatch(
+                              handleChangeTabPropsAction({
+                                tabIndex: index,
+                                attributeName: "tabName",
+                                attributeValue: e.target.value,
+                              }),
+                            );
+                          }}
                         />
                       </div>
                     </Nav.Link>

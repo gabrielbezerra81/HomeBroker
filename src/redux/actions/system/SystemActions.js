@@ -331,3 +331,19 @@ export const handleRemoveTabAction = (tabIndex) => {
     );
   };
 };
+
+export const handleChangeTabPropsAction = ({
+  tabIndex,
+  attributeName,
+  attributeValue,
+}) => {
+  return (dispatch, getState) => {
+    const { mainTabs } = getState().systemReducer;
+
+    const updatedMainTabs = produce(mainTabs, (draft) => {
+      draft[tabIndex][attributeName] = attributeValue;
+    });
+
+    dispatch(updateOneSystemStateAction("mainTabs", updatedMainTabs));
+  };
+};
