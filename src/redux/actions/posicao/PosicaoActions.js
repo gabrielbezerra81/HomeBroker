@@ -4,16 +4,20 @@ import {
   atualizarPosicaoAPI,
   atualizarCotacaoPosicaoAPI,
 } from "api/ReativosAPI";
-import { updateOnePositionState, adicionaPosicao } from "./utils";
+import {
+  updateOnePositionState,
+  adicionaPosicao,
+  updateManyPositionState,
+} from "./utils";
 import { getReducerStateStorePrincipal } from "hooks/utils";
 
 export const mudarVariavelPosicaoAction = (attributeName, attributeValue) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(updateOnePositionState({ attributeName, attributeValue }));
   };
 };
 
-export const listarPosicoesAction = props => {
+export const listarPosicoesAction = (props) => {
   return async (dispatch, getState) => {
     const { token } = getReducerStateStorePrincipal(getState(), "principal");
     const {
@@ -70,21 +74,10 @@ export const listarPosicoesAction = props => {
       // });
 
       dispatch(
-        updateOnePositionState({
-          attributeName: "posicoesCustodia",
-          attributeValue: listaPosicoes,
-        }),
-      );
-      dispatch(
-        updateOnePositionState({
-          attributeName: "arrayPrecos",
-          attributeValue: arrayPrecos,
-        }),
-      );
-      dispatch(
-        updateOnePositionState({
-          attributeName: "arrayCotacoes",
-          attributeValue: arrayCotacoes,
+        updateManyPositionState({
+          posicoesCustodia: listaPosicoes,
+          arrayPrecos,
+          arrayCotacoes,
         }),
       );
     }
@@ -113,9 +106,9 @@ const atualizarPosicao = async ({
 
 const montaArrayCotacoes = async (listaPosicoes, tipoRetorno = "completo") => {
   let arrayCodigos = [];
-  listaPosicoes.forEach(posicao => {
-    posicao.ativos.forEach(ativo => {
-      if (!arrayCodigos.some(item => item.codigo === ativo.symbol)) {
+  listaPosicoes.forEach((posicao) => {
+    posicao.ativos.forEach((ativo) => {
+      if (!arrayCodigos.some((item) => item.codigo === ativo.symbol)) {
         arrayCodigos.push({ codigo: ativo.symbol });
       }
     });
@@ -171,7 +164,7 @@ const atualizarEmblemas = ({
     clearInterval(setIntervalEmblema);
   }
 
-  listaPosicoes.forEach(posicao => {
+  listaPosicoes.forEach((posicao) => {
     ids += posicao.idEstrutura + ",";
   });
   ids = ids.substring(0, ids.length - 1);
@@ -231,7 +224,7 @@ const atualizarCotacoes = async ({
     clearInterval(setIntervalCotacoesPosicao);
   }
 
-  arrayCodigos.forEach(ativo => {
+  arrayCodigos.forEach((ativo) => {
     codigos += ativo.codigo + ",";
   });
 

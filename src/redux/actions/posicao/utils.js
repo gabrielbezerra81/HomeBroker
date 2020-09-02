@@ -1,10 +1,17 @@
-import { MUDAR_VARIAVEL_POSICAO_CUSTODIA } from "constants/MenuActionTypes";
+import { MUDAR_VARIAVEL_POSICAO_CUSTODIA, MUDAR_VARIAVEIS_POSICAO_CUSTODIA } from "constants/MenuActionTypes";
 import ItemPosicao from "types/position/position";
 
 export const updateOnePositionState = ({ attributeName, attributeValue }) => {
   return {
     type: MUDAR_VARIAVEL_POSICAO_CUSTODIA,
     payload: { attributeName, attributeValue },
+  };
+};
+
+export const updateManyPositionState = (payload) => {
+  return {
+    type: MUDAR_VARIAVEIS_POSICAO_CUSTODIA,
+    payload,
   };
 };
 

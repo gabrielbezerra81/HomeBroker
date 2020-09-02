@@ -1,4 +1,7 @@
-import { MUDAR_VARIAVEL_POSICAO_CUSTODIA } from "constants/MenuActionTypes";
+import {
+  MUDAR_VARIAVEL_POSICAO_CUSTODIA,
+  MUDAR_VARIAVEIS_POSICAO_CUSTODIA,
+} from "constants/MenuActionTypes";
 import PositionState from "types/position/PositionState";
 import Action from "types/Action";
 
@@ -29,6 +32,8 @@ export default (
         ...state,
         [payload.attributeName]: payload.attributeValue,
       };
+    case MUDAR_VARIAVEIS_POSICAO_CUSTODIA:
+      return { ...state, ...payload };
     default:
       return state;
   }
