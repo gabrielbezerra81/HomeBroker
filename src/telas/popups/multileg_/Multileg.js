@@ -1,8 +1,7 @@
 import React from "react";
-import { MDBIcon } from "mdbreact";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { Tab, Row, Col, Nav, Form } from "react-bootstrap";
+import { Tab, Row, Col, Nav } from "react-bootstrap";
 import DraggableModal from "shared/componentes/DraggableModal";
 import { ModalHeaderSemBook } from "shared/componentes/PopupHeader";
 import AbaMultileg from "telas/popups/multileg_/AbaMultileg";
@@ -10,12 +9,16 @@ import { StorePrincipalContext, GlobalContext } from "redux/StoreCreation";
 import {
   selectOrAddMultilegTabAction,
   updateMultilegTabAction,
-  removeMultilegTabAction,
 } from "redux/actions/multileg/MultilegActions";
 import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
 import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopupZIndexFromSecondaryTab";
+import TabTitle from "./TabTitle";
 
 class Multileg extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleMultilegTabSelect = this.handleMultilegTabSelect.bind(this);
+  }
   // shouldComponentUpdate(nextProps, nextState) {
   //   const multileg = this.props.multileg !== nextProps.multileg;
   //   if (multileg) {
@@ -52,7 +55,7 @@ class Multileg extends React.Component {
     return (
       <DraggableModal
         id="multileg"
-        renderModalBody={() => this.modalBody()}
+        renderModalBody={() => this.ModalBody()}
         renderConfigComplementar={this.props.configComplementarAberto}
         renderHeader={() => (
           <ModalHeaderSemBook
@@ -67,54 +70,44 @@ class Multileg extends React.Component {
   /*
  
   */
+  handleMultilegTabSelect(key, event) {
+    if (event.keyCode === 32) {
+      const targetElement = event.target;
+      const { selectionStart, value } = targetElement;
 
-  modalBody = () => {
+      const tabIndex = +this.props.abaSelecionada.substr(3);
+
+      const newTabName = [
+        value.slice(0, selectionStart),
+        event.key,
+        value.slice(selectionStart),
+      ].join("");
+
+      requestAnimationFrame(() => {
+        targetElement.setSelectionRange(selectionStart + 1, selectionStart + 1);
+      });
+
+      this.props.updateMultilegTabAction({
+        tabIndex,
+        attributeName: "nomeAba",
+        attributeValue: newTabName,
+      });
+    } //
+    else {
+      this.props.selectOrAddMultilegTabAction(key);
+    }
+  }
+
+  ModalBody = () => {
     return (
       <Tab.Container
-        onSelect={this.props.selectOrAddMultilegTabAction}
+        onSelect={this.handleMultilegTabSelect}
         activeKey={this.props.abaSelecionada}
       >
         <Row className="navTabMultileg">
           <Nav>
-            {this.props.multileg.map((aba, index) => {
-              return (
-                <Col key={index}>
-                  <Nav.Item>
-                    <Nav.Link
-                      eventKey={`tab${index}`}
-                      className={`${
-                        this.props.abaSelecionada === `tab${index}`
-                          ? "abaAtiva"
-                          : ""
-                      }`}
-                      active={false}
-                    >
-                      <div className="containerTituloAba">
-                        <MDBIcon
-                          icon="times"
-                          className="saldoOpNegativo"
-                          onClick={(e) => {
-                            this.props.removeMultilegTabAction(index);
-                            e.stopPropagation();
-                          }}
-                        />
-                        <Form.Control
-                          type="text"
-                          value={aba.nomeAba}
-                          className="inputTituloAba"
-                          onChange={(e) => {
-                            this.props.updateMultilegTabAction({
-                              tabIndex: index,
-                              attributeName: "nomeAba",
-                              attributeValue: e.target.value,
-                            });
-                          }}
-                        />
-                      </div>
-                    </Nav.Link>
-                  </Nav.Item>
-                </Col>
-              );
+            {this.props.multileg.map((_, index) => {
+              return <TabTitle tabIndex={index} key={`tabTitle${index}`} />;
             })}
 
             <Col>
@@ -132,7 +125,7 @@ class Multileg extends React.Component {
         <Row>
           <Col md={12}>
             <Tab.Content>
-              {this.props.multileg.map((aba, index) => {
+              {this.props.multileg.map((_, index) => {
                 return (
                   <Tab.Pane eventKey={`tab${index}`} key={index + "tabpane"}>
                     <AbaMultileg indice={index} />
@@ -171,7 +164,6 @@ export default compose(
     {
       selectOrAddMultilegTabAction,
       updateMultilegTabAction,
-      removeMultilegTabAction,
       // atualizarBookAction,
     },
     null,

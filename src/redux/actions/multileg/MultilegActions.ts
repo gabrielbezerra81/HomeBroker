@@ -46,8 +46,6 @@ export const openCloseMultilegExtraConfigsAction = (): MainThunkAction => (
   );
 };
 
-/// /
-
 export const selectOrAddMultilegTabAction = (key: string): MainThunkAction => (
   dispatch,
   getState,
@@ -77,8 +75,6 @@ export const addMultilegTab = (multilegTabs: MultilegTab[]) => {
   return { multilegTabs: updatedMultilegTabs, currentTab };
 };
 
-/// /
-
 export const removeMultilegTabAction = (tabIndex: number): MainThunkAction => (
   dispatch,
   getState,
@@ -99,7 +95,6 @@ export const removeMultilegTabAction = (tabIndex: number): MainThunkAction => (
   dispatch(updateMultilegStateAction("multileg", updatedMultilegTabs));
 };
 
-/// /
 interface ChangeTabAttributeAction {
   tabIndex: number;
   attributeName: string;
@@ -207,8 +202,6 @@ export const updateMultilegTab = async ({
     multilegQuotes: updatedMultilegQuotes,
   };
 };
-
-/// /
 
 interface ChangeTableOfferAttributeAction {
   tabIndex: number;
@@ -338,8 +331,6 @@ export const removeMultilegOfferAction = ({
 
   dispatch(updateMultilegStateAction("multileg", multilegTabs));
 };
-
-/// /
 
 interface AddMultilegOfferAction {
   tabIndex: number;
