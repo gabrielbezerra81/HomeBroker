@@ -496,15 +496,15 @@ const atualizaListaReativa = (
     dispatch({
       type: actionType,
       payload: {
-        nome: nomeLista,
-        valor: immutableFunction ? immutableFunction() : lista, //lista.map((item) => ({ ...item }))
+        attributeName: nomeLista,
+        attributeValue: immutableFunction ? immutableFunction() : lista, //lista.map((item) => ({ ...item }))
       },
     });
     dispatch({
       type: actionType,
       payload: {
-        nome: `${nomeLista}ID`,
-        valor: Math.random(),
+        attributeName: `${nomeLista}ID`,
+        attributeValue: Math.random(),
       },
     });
   };
@@ -516,8 +516,8 @@ const atualizaListaReativa = (
   dispatch({
     type: actionType,
     payload: {
-      nome: nomeSetInterval,
-      valor: setPrecos,
+      attributeName: nomeSetInterval,
+      attributeValue: setPrecos,
     },
   });
 };

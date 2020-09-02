@@ -528,6 +528,7 @@ export const updateMultilegQuotesAction = ({
   if (eventSourceMultilegQuotes) {
     eventSourceMultilegQuotes.close();
   }
+  console.log("cleared setInterval of quotes", setIntervalMultilegQuotes);
   if (setIntervalMultilegQuotes) {
     clearInterval(setIntervalMultilegQuotes);
   }
