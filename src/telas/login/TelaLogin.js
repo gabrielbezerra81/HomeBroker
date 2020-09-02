@@ -1,7 +1,10 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
-import { logarUsuarioAction } from "redux/actions/system/SystemActions";
+import {
+  logarUsuarioAction,
+  clearReduxStateFromStorageAction,
+} from "redux/actions/system/SystemActions";
 import FloatingLabelInput from "react-floating-label-input";
 import { navigate } from "@reach/router";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
@@ -27,6 +30,11 @@ const TelaLogin = ({ path }) => {
     const { name, value } = e.target;
     setUser((oldUser) => ({ ...oldUser, [name]: value }));
   }, []);
+
+  useEffect(() => {
+    console.log("cleared redux persist data");
+    dispatch(clearReduxStateFromStorageAction({}));
+  }, [dispatch]);
 
   return (
     <div className="backgroundLoginCadastro">

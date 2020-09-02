@@ -104,35 +104,13 @@ export const cadastrarUsuarioAction = (data) => {
 };
 
 export const deslogarUsuarioAction = (props) => {
-  return (dispatch) => {
-    persistor
-      .purge()
-      .then(() => {
-        Object.keys(props).forEach((key) => {
-          if (props[key]) {
-            if (key.includes("eventSource")) props[key].close();
-            else if (key.includes("setInterval")) clearInterval(props[key]);
-          }
-        });
-        dispatch({
-          type: LOGAR_DESLOGAR_USUARIO,
-          payload: {
-            connectedUser: "",
-            isLogged: false,
-          },
-        });
-
-        resetarDadosReducerAction({
-          nameVariavelReducer: "deslogar",
-          dispatch,
-          visibilidadeMenu: false,
-        });
-
-        navigate("/");
-      })
-      .catch((erro) => {
-        console.log("purge error: ", erro);
-      });
+  return async (dispatch) => {
+    try {
+      dispatch(clearReduxStateFromStorageAction(props));
+      navigate("/");
+    } catch (error) {
+      console.log("error when wiping redux data", error);
+    }
   };
 };
 
@@ -215,6 +193,7 @@ const resetarDadosReducerAction = ({
   visibilidadeMenu,
 }) => {
   let limparReducer = true;
+  // Não reseta os estados de Ordens em execução e da posição ao fechar o popup
   if (["isOpenOrdersExec", "isOpenPosition"].includes(nameVariavelReducer))
     limparReducer = false;
 
@@ -345,5 +324,31 @@ export const handleChangeTabPropsAction = ({
     });
 
     dispatch(updateOneSystemStateAction("mainTabs", updatedMainTabs));
+  };
+};
+
+export const clearReduxStateFromStorageAction = (props) => {
+  return async (dispatch) => {
+    await persistor.purge();
+
+    Object.keys(props).forEach((key) => {
+      if (props[key]) {
+        if (key.includes("eventSource")) props[key].close();
+        else if (key.includes("setInterval")) clearInterval(props[key]);
+      }
+    });
+    dispatch({
+      type: LOGAR_DESLOGAR_USUARIO,
+      payload: {
+        connectedUser: "",
+        isLogged: false,
+      },
+    });
+
+    resetarDadosReducerAction({
+      nameVariavelReducer: "deslogar",
+      dispatch,
+      visibilidadeMenu: false,
+    });
   };
 };
