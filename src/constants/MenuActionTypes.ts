@@ -1,5 +1,6 @@
 //MULTI ATIVOS
 export const MODIFICAR_VARIAVEL_MULTILEG = "modificar_variavel_multileg";
+export const MODIFICAR_VARIAVEIS_MULTILEG = "modificar_variaveis_multileg";
 
 //POSICAO EM CUSTODIA
 export const MUDAR_VARIAVEL_POSICAO_CUSTODIA =

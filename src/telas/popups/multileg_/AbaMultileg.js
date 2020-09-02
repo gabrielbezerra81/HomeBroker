@@ -186,11 +186,8 @@ class AbaMultileg extends React.Component {
 const mapStateToProps = (state) => ({
   configComplementarAberto: state.multilegReducer.configComplementarAberto,
   multileg: state.multilegReducer.multileg,
-  eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
   cotacoesMultileg: state.multilegReducer.cotacoesMultileg,
   pesquisandoAtivo: state.multilegReducer.pesquisandoAtivo,
-  setIntervalCotacoesMultileg:
-    state.multilegReducer.setIntervalCotacoesMultileg,
   cotacoesMultilegID: state.multilegReducer.cotacoesMultilegID,
 });
 

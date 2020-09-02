@@ -5,7 +5,10 @@ import {
 } from "constants/AlertaErros";
 
 import { getformatedDate } from "shared/utils/Formatacoes";
-import { MODIFICAR_VARIAVEL_MULTILEG } from "constants/MenuActionTypes";
+import {
+  MODIFICAR_VARIAVEL_MULTILEG,
+  MODIFICAR_VARIAVEIS_MULTILEG,
+} from "constants/MenuActionTypes";
 import MultilegState from "types/multileg/MultilegState";
 import { MultilegTab, MultilegQuote } from "types/multileg/multileg";
 import { Account } from "types/system/system";
@@ -15,13 +18,20 @@ interface UpdateMultilegState {
   attributeValue: MultilegState[keyof MultilegState];
 }
 
-export const updateMultilegState = ({
+export const updateOneMultilegState = ({
   attributeName,
   attributeValue,
 }: UpdateMultilegState) => {
   return {
     type: MODIFICAR_VARIAVEL_MULTILEG,
     payload: { attributeName, attributeValue },
+  };
+};
+
+export const updateManyMultilegState = (payload: any) => {
+  return {
+    type: MODIFICAR_VARIAVEIS_MULTILEG,
+    payload,
   };
 };
 

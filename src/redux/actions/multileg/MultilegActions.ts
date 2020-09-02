@@ -20,14 +20,14 @@ import {
   findClosestStrike,
   AddNewMultilegQuote,
   checkQuoteAlreadyAdded,
-  updateMultilegState,
+  updateOneMultilegState,
 } from "./utils";
 
 export const updateMultilegStateAction = (
   attributeName: string,
   attributeValue: MultilegState[keyof MultilegState],
 ): MainThunkAction => (dispatch) => {
-  dispatch(updateMultilegState({ attributeName, attributeValue }));
+  dispatch(updateOneMultilegState({ attributeName, attributeValue }));
 };
 
 export const openCloseMultilegExtraConfigsAction = (): MainThunkAction => (
@@ -528,7 +528,6 @@ export const updateMultilegQuotesAction = ({
   if (eventSourceMultilegQuotes) {
     eventSourceMultilegQuotes.close();
   }
-  console.log("cleared setInterval of quotes", setIntervalMultilegQuotes);
   if (setIntervalMultilegQuotes) {
     clearInterval(setIntervalMultilegQuotes);
   }

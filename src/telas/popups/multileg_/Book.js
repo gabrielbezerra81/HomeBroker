@@ -339,7 +339,6 @@ class Book extends React.Component {
 const mapStateToProps = (state) => ({
   configComplementarAberto: state.multilegReducer.configComplementarAberto,
   multileg: state.multilegReducer.multileg,
-  eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
   cotacoesMultileg: state.multilegReducer.cotacoesMultileg,
   token: state.systemReducer.token,
   accounts: state.systemReducer.accounts,
@@ -404,7 +403,10 @@ const atualizarPrecoDinamicante = (props) => {
   );
   novoPreco = formatarNumero(novoPreco, 2, ".", ",");
 
-  if (preco !== novoPreco)
+  console.log("preco antigo", preco);
+  console.log("preco atual", novoPreco);
+
+  if (preco !== novoPreco && !Number.isNaN(novoPreco))
     props.updateMultilegTabAction({
       tabIndex: props.indice,
       attributeName: "preco",

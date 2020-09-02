@@ -42,6 +42,8 @@ class TabelaMultileg extends React.Component {
     const { props } = this;
     const indiceAba = props.indice;
 
+    console.log(props.cotacoesMultileg);
+
     return (
       <Table
         variant="dark"
@@ -287,10 +289,7 @@ const calculaColunaValor = (props, oferta) => {
 
 const mapStateToProps = (state) => ({
   multileg: state.multilegReducer.multileg,
-  eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
   cotacoesMultileg: state.multilegReducer.cotacoesMultileg,
-  setIntervalCotacoesMultileg:
-    state.multilegReducer.setIntervalCotacoesMultileg,
   cotacoesMultilegID: state.multilegReducer.cotacoesMultilegID,
 });
 

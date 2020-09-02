@@ -5,14 +5,14 @@ import {
   criarAlertaOperacaoAPI,
   criarPosicaoMultilegAPI,
 } from "api/API";
-import { PESQUISAR_ATIVO_MULTILEG_API } from "constants/ApiActionTypes";
 import { updateMultilegQuotesAction } from "redux/actions/multileg/MultilegActions";
 import {
   mountMultilegOrder,
   validateMultilegOrder,
   AddNewMultilegQuote,
   findClosestStrike,
-  updateMultilegState,
+  updateOneMultilegState,
+  updateManyMultilegState,
 } from "./utils";
 import { MainThunkAction } from "types/ThunkActions";
 import {
@@ -38,7 +38,7 @@ export const searchMultilegSymbolAPIAction = (
     } = getState();
 
     dispatch(
-      updateMultilegState({
+      updateOneMultilegState({
         attributeName: "pesquisandoAtivo",
         attributeValue: true,
       }),
@@ -48,15 +48,11 @@ export const searchMultilegSymbolAPIAction = (
       tabIndex,
       multilegQuotes: cotacoesMultileg,
     });
-    dispatch({
-      type: PESQUISAR_ATIVO_MULTILEG_API,
-      payload: data.multilegTabs,
-    });
 
     dispatch(
-      updateMultilegState({
-        attributeName: "cotacoesMultileg",
-        attributeValue: data.multilegQuotes,
+      updateManyMultilegState({
+        cotacoesMultileg: data.multilegQuotes,
+        multileg: data.multilegTabs,
       }),
     );
     updateMultilegQuotesAction({
@@ -67,7 +63,7 @@ export const searchMultilegSymbolAPIAction = (
       setIntervalMultilegQuotes: setIntervalCotacoesMultileg,
     });
     dispatch(
-      updateMultilegState({
+      updateOneMultilegState({
         attributeName: "pesquisandoAtivo",
         attributeValue: false,
       }),

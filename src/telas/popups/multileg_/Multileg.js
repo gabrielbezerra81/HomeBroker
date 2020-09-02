@@ -144,7 +144,6 @@ const mapStateToPropsMultileg = (state) => ({
   configComplementarAberto: state.multilegReducer.configComplementarAberto,
   multileg: state.multilegReducer.multileg,
   abaSelecionada: state.multilegReducer.abaSelecionada,
-  eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
   isOpenMultileg: state.systemReducer.isOpenMultileg,
 });
 
