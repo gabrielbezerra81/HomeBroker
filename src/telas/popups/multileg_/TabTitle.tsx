@@ -8,7 +8,11 @@ import {
 } from "redux/actions/multileg/MultilegActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
-const TabTitle = ({ tabIndex }) => {
+interface TabTitleProps {
+  tabIndex: number;
+}
+
+const TabTitle: React.FC<TabTitleProps> = ({ tabIndex }) => {
   const {
     multilegReducer: { multileg, abaSelecionada },
   } = useStateStorePrincipal();
@@ -37,7 +41,7 @@ const TabTitle = ({ tabIndex }) => {
               value={multileg[tabIndex].nomeAba}
               className="inputTituloAba"
               onChange={(e) => {
-                const targetElement = e.target;
+                const targetElement = e.target as any;
                 const { selectionStart, value } = targetElement;
 
                 dispatch(
