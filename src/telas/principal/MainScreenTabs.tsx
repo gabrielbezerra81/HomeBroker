@@ -163,7 +163,7 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
             <Tab.Content>
               {mainTabs.map((_, index) => {
                 return (
-                  <Tab.Pane eventKey={`tab${index}`} key={index + "tabpane"}>
+                  <Tab.Pane className="popupContainer" eventKey={`tab${index}`} key={index + "tabpane"}>
                     {openedMenus.map((openedMenu) => {
                       return children.find((childItem) => {
                         const tabChild = childItem?.valueOf() as TabChild;

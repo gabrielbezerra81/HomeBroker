@@ -20,12 +20,6 @@
   margin-left: 216px !important;
 }
 
-/*Menus de posição, multileg e histórico*/
-#menusTelaPrincipal > div > div {
-  margin-bottom: 4px;
-  margin-top: 32px;
-}
-
 .divBarraTopo {
   background-image: linear-gradient(#444, #333, #222);
   width: 100%;
@@ -61,11 +55,11 @@
   font-size: 1.4rem;
 }
 
-.liquidValue {
+.valorLiquido {
   color: #40b65c;
 }
 
-.buyingValue {
+.valorComprar {
   color: #f89a30;
 }
 

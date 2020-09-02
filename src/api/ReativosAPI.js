@@ -162,8 +162,6 @@ export const atualizarCotacaoPosicaoAPI = ({
     if (typeof event.data !== "undefined") {
       var dados = JSON.parse(event.data);
 
-      console.log(dados);
-
       const cotacaoAtual = dados.ultimo;
       const ativoRetornado = dados.symbol;
 
@@ -301,8 +299,6 @@ export const atualizarEmblemasAPI = ({ dispatch, listaPrecos, ids, token }) => {
   source.onmessage = function (event) {
     if (typeof event.data !== "undefined") {
       var dados = JSON.parse(event.data);
-
-      console.log(dados);
 
       const indice = novaLista.findIndex(
         (posicao) => posicao.idEstrutura === dados.id,
