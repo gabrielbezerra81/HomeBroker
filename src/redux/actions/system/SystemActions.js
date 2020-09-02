@@ -1,4 +1,6 @@
 import produce from "immer";
+import _ from "lodash";
+
 import {
   ABRIR_FECHAR_MENU_LATERAL,
   LOGAR_DESLOGAR_USUARIO,
@@ -11,6 +13,8 @@ import { realizarLoginAPI, realizarCadastroAPI } from "api/LoginAPI";
 import { navigate } from "@reach/router";
 import { persistor } from "redux/StoreCreation";
 import api from "api/apiConfig";
+
+import { INITIAL_STATE as initialSystemState } from "../../reducers/system/SystemReducer";
 
 const waitDispatch = 1000;
 
@@ -333,8 +337,11 @@ export const clearReduxStateFromStorageAction = (props) => {
 
     Object.keys(props).forEach((key) => {
       if (props[key]) {
-        if (key.includes("eventSource")) props[key].close();
-        else if (key.includes("setInterval")) clearInterval(props[key]);
+        if (key.toLowerCase().includes("eventsource")) {
+          props[key].close();
+        } else if (key.toLowerCase().includes("setinterval")) {
+          clearInterval(props[key]);
+        }
       }
     });
     dispatch({
@@ -350,5 +357,29 @@ export const clearReduxStateFromStorageAction = (props) => {
       dispatch,
       visibilidadeMenu: false,
     });
+  };
+};
+
+export const checkIfSystemStateHasChangedShapeAction = () => {
+  return (dispatch, getState) => {
+    const { systemReducer, ...reducers } = getState();
+
+    const currentSystemKeys = Object.keys(systemReducer);
+    const expectedSystemKeys = Object.keys(initialSystemState);
+
+    const differenceBetweenStates = _.difference(
+      expectedSystemKeys,
+      currentSystemKeys,
+    );
+
+    const combinedMainStoreState = {};
+
+    Object.keys(reducers).forEach((key) => {
+      Object.assign(combinedMainStoreState, reducers[key]);
+    });
+
+    if (differenceBetweenStates.length > 0) {
+      dispatch(clearReduxStateFromStorageAction(combinedMainStoreState));
+    }
   };
 };

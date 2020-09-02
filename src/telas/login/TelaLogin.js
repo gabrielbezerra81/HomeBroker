@@ -32,7 +32,6 @@ const TelaLogin = ({ path }) => {
   }, []);
 
   useEffect(() => {
-    console.log("cleared redux persist data");
     dispatch(clearReduxStateFromStorageAction({}));
   }, [dispatch]);
 

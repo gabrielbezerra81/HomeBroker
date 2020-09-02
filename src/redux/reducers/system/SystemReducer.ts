@@ -10,7 +10,7 @@ import SystemState from "types/system/SystemState";
 import Action from "types/Action";
 import { Token, Account } from "types/system/system";
 
-const INITIAL_STATE: SystemState = {
+export const INITIAL_STATE: SystemState = {
   connectedUser: "",
   isOpenLeftUserMenu: false,
   isLogged: false,
