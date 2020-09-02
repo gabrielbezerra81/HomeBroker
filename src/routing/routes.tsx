@@ -26,10 +26,10 @@ export const Routes = () => {
 
 const Home: React.FC<RouteComponentProps> = ({ path }) => {
   const {
-    systemReducer: { logado },
+    systemReducer: { isLogged },
   } = useStateStorePrincipal();
 
-  if (logado) return <TelaPrincipal />;
+  if (isLogged) return <TelaPrincipal />;
 
   return <Redirect to="/" noThrow />;
 };

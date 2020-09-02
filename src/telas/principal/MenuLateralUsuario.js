@@ -3,15 +3,15 @@ import { Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
 import { getDiaSemana, getDiaEMes } from "shared/utils/Formatacoes";
 import { MDBIcon } from "mdbreact";
-import { deslogarUsuarioAction } from "redux/actions/telaPrincipal/TelaPrincipalActions";
+import { deslogarUsuarioAction } from "redux/actions/system/SystemActions";
 import { StorePrincipalContext } from "redux/StoreCreation";
 
 class MenuLateralUsuario extends React.Component {
   render() {
-    const { menuLateralAberto } = this.props;
+    const { isOpenLeftUserMenu } = this.props;
     return (
       <div
-        className={`divMenuLateral${visibilidade(menuLateralAberto)}`}
+        className={`divMenuLateral${visibilidade(isOpenLeftUserMenu)}`}
         id="divMenuLateral"
       >
         <div className="itemMenuLateral corAlternada">
@@ -20,7 +20,7 @@ class MenuLateralUsuario extends React.Component {
         <div className="itemMenuLateral">
           <Row>
             <Col>
-              <h6>{this.props.usuarioConectado}</h6>
+              <h6>{this.props.connectedUser}</h6>
             </Col>
           </Row>
         </div>
@@ -36,9 +36,9 @@ class MenuLateralUsuario extends React.Component {
   }
 }
 const mapStateToProps = (state) => ({
-  usuarioConectado: state.systemReducer.usuarioConectado,
-  logado: state.systemReducer.logado,
-  menuLateralAberto: state.systemReducer.menuLateralAberto,
+  connectedUser: state.systemReducer.connectedUser,
+  isLogged: state.systemReducer.isLogged,
+  isOpenLeftUserMenu: state.systemReducer.isOpenLeftUserMenu,
   // Ordens Exec reativa
   eventSourceOrdensExec_OrdensExec:
     state.ordersExecReducer.eventSourceOrdensExec,
@@ -66,7 +66,7 @@ export default connect(
 )(MenuLateralUsuario);
 
 const renderDivLogin = (props) => {
-  if (props.logado) {
+  if (props.isLogged) {
     return (
       <div
         className="divClicavel itemMenuLateral corAlternada"

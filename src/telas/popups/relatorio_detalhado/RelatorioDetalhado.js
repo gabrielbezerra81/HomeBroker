@@ -20,8 +20,10 @@ import EmblemaRelatorio from "telas/popups/relatorio_detalhado/EmblemaRelatorio"
 import Tabela3Resultado from "telas/popups/relatorio_detalhado/Tabela3Resultado";
 import Tabela4HistoricoOrdens from "telas/popups/relatorio_detalhado/Tabela4HistoricoOrdens";
 import { data } from "telas/popups/posicao_custodia/posicao_detalhada/GraficoPatrimonio";
-import { GlobalContext } from "redux/StoreCreation";
+import { GlobalContext, StorePrincipalContext } from "redux/StoreCreation";
 import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
+import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopupZIndexFromSecondaryTab";
+import { compose } from "redux";
 
 class RelatorioDetalhado extends React.Component {
   componentDidMount() {
@@ -37,6 +39,24 @@ class RelatorioDetalhado extends React.Component {
         true,
       );
     }
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      divkey,
+      isOpenDetailedReport,
+      aumentarZindexAction,
+      zIndex,
+    } = this.props;
+
+    setPopupZIndexFromSecondaryTab({
+      zIndex,
+      previousDivkey: prevProps.divkey,
+      currentDivkey: divkey,
+      divkeyToCheck: "relatorio_detalhado",
+      popupVisibility: isOpenDetailedReport,
+      updateFunction: aumentarZindexAction,
+    });
   }
 
   render() {
@@ -239,9 +259,17 @@ const mapStateToPropsGlobalStore = (state) => {
   };
 };
 
-export default connect(
-  mapStateToPropsGlobalStore,
-  { aumentarZindexAction },
-  null,
-  { context: GlobalContext },
+const mapStateToPropsRelatorio = (state) => {
+  return {
+    isOpenDetailedReport: state.systemReducer.isOpenDetailedReport,
+  };
+};
+
+export default compose(
+  connect(mapStateToPropsGlobalStore, { aumentarZindexAction }, null, {
+    context: GlobalContext,
+  }),
+  connect(mapStateToPropsRelatorio, {}, null, {
+    context: StorePrincipalContext,
+  }),
 )(RelatorioDetalhado);

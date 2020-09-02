@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import { cadastrarUsuarioAction } from "redux/actions/telaPrincipal/TelaPrincipalActions";
+import { cadastrarUsuarioAction } from "redux/actions/system/SystemActions";
 import { navigate } from "@reach/router";
 import FloatingLabelInput from "react-floating-label-input";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";

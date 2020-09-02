@@ -55,6 +55,14 @@
   text-align: center;
 }
 
+.navTabMultileg a:focus {
+  outline: none !important;
+}
+
+.navTabMultileg .col {
+  padding: 0 4px;
+}
+
 .abaAtiva {
   color: var(--color-text-primary) !important;
   background-color: rgb(40, 40, 40) !important;

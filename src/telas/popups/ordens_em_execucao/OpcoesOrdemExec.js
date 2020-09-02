@@ -19,7 +19,7 @@ import {
   aumentarQtdePrecoAction,
   abrirOrdensBoletaAction,
 } from "redux/actions/ordensExecucao/OrdensExecActions";
-import { abrirItemBarraLateralAction } from "redux/actions/telaPrincipal/TelaPrincipalActions";
+import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 import {
   atualizarDivKeyAction,
   abrirFormAction,
@@ -162,7 +162,7 @@ const mapStateToPropsOpcoesOrdemExec = (state) => ({
   ...mapStateToPropsOrdensExec(state),
   multileg: state.multilegReducer.multileg,
   eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
-  multilegAberto: state.systemReducer.multilegAberto,
+  isOpenMultileg: state.systemReducer.isOpenMultileg,
   cotacoesMultileg: state.multilegReducer.cotacoesMultileg,
 });
 

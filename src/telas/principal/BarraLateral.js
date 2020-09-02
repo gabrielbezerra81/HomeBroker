@@ -7,8 +7,8 @@ import { StorePrincipalContext, GlobalContext } from "redux/StoreCreation";
 import {
   mouseOverAction,
   mouseLeaveAction,
-} from "redux/actions/telaPrincipal/TelaPrincipalActions";
-import { abrirItemBarraLateralAction } from "redux/actions/telaPrincipal/TelaPrincipalActions";
+} from "redux/actions/system/SystemActions";
+import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 import {
   atualizarDivKeyAction,
   abrirFormAction,
@@ -20,8 +20,8 @@ import {
 Icone Ordens
 
 */
-const margemParaMenuLateral = (menuLateralAberto) => {
-  if (menuLateralAberto) return " divBarraLateralAfastada";
+const margemParaMenuLateral = (isOpenLeftUserMenu) => {
+  if (isOpenLeftUserMenu) return " divBarraLateralAfastada";
   return "";
 };
 
@@ -31,7 +31,7 @@ class BarraLateral extends React.Component {
     return (
       <div
         className={`divBarraLateral${margemParaMenuLateral(
-          props.menuLateralAberto,
+          props.isOpenLeftUserMenu,
         )}`}
         id="divBarraLateral"
       >
@@ -51,7 +51,7 @@ class BarraLateral extends React.Component {
           className="itemDivBarraLateral divClicavel"
           onClick={() => {
             props.atualizarDivKeyAction("thl");
-            props.abrirItemBarraLateralAction(props, "thlAberta");
+            props.abrirItemBarraLateralAction(props, "isOpenTHL");
           }}
         >
           <Icones viewBox="7 70 42 49" className="iconesBarraLateral"></Icones>
@@ -64,10 +64,12 @@ class BarraLateral extends React.Component {
           onMouseOver={() => {
             props.atualizarDivKeyAction("divOrdens");
 
-            if (!props.ordensAberto) props.mouseOverAction("ordensAberto");
+            if (!props.isOpenOrdersHoverMenu)
+              props.mouseOverAction("isOpenOrdersHoverMenu");
           }}
           onMouseLeave={() => {
-            if (props.ordensAberto) props.mouseLeaveAction("ordensAberto");
+            if (props.isOpenOrdersHoverMenu)
+              props.mouseLeaveAction("isOpenOrdersHoverMenu");
           }}
         >
           <Icones
@@ -81,7 +83,7 @@ class BarraLateral extends React.Component {
           className="itemDivBarraLateral divClicavel"
           onClick={() => {
             props.atualizarDivKeyAction("ordens_execucao");
-            props.abrirItemBarraLateralAction(props, "ordensExecucaoAberto");
+            props.abrirItemBarraLateralAction(props, "isOpenOrdersExec");
           }}
         >
           <Icones
@@ -95,7 +97,7 @@ class BarraLateral extends React.Component {
           className="itemDivBarraLateral divClicavel"
           onClick={() => {
             props.atualizarDivKeyAction("posicao_custodia");
-            props.abrirItemBarraLateralAction(props, "listaCompletaAberta");
+            props.abrirItemBarraLateralAction(props, "isOpenPosition");
           }}
         >
           <Icones viewBox="5 326 41 52" className="iconesBarraLateral"></Icones>
@@ -106,10 +108,7 @@ class BarraLateral extends React.Component {
           className="itemDivBarraLateral divClicavel"
           onClick={() => {
             props.atualizarDivKeyAction("relatorio_detalhado");
-            props.abrirItemBarraLateralAction(
-              props,
-              "relatorioDetalhadoAberto",
-            );
+            props.abrirItemBarraLateralAction(props, "isOpenDetailedReport");
           }}
         >
           <Icones viewBox="8 407 41 52" className="iconesBarraLateral"></Icones>
@@ -120,7 +119,7 @@ class BarraLateral extends React.Component {
           className="itemDivBarraLateral divClicavel"
           onClick={() => {
             props.atualizarDivKeyAction("posicao_custodia");
-            props.abrirItemBarraLateralAction(props, "listaCompletaAberta");
+            props.abrirItemBarraLateralAction(props, "isOpenPosition");
           }}
           style={{ display: "none" }}
         >
@@ -142,13 +141,13 @@ const mapStateToPropsGlobalStore = (state) => {
 };
 
 const mapStateToPropsAppPrincipal = (state) => ({
-  ordensAberto: state.systemReducer.ordensAberto,
-  ordensExecucaoAberto: state.systemReducer.ordensExecucaoAberto,
-  relatorioDetalhadoAberto: state.systemReducer.relatorioDetalhadoAberto,
-  listaCompletaAberta: state.systemReducer.listaCompletaAberta,
-  menuLateralAberto: state.systemReducer.menuLateralAberto,
-  multilegAberto: state.systemReducer.multilegAberto,
-  thlAberta: state.systemReducer.thlAberta,
+  isOpenOrdersHoverMenu: state.systemReducer.isOpenOrdersHoverMenu,
+  isOpenOrdersExec: state.systemReducer.isOpenOrdersExec,
+  isOpenDetailedReport: state.systemReducer.isOpenDetailedReport,
+  isOpenPosition: state.systemReducer.isOpenPosition,
+  isOpenLeftUserMenu: state.systemReducer.isOpenLeftUserMenu,
+  isOpenMultileg: state.systemReducer.isOpenMultileg,
+  isOpenTHL: state.systemReducer.isOpenTHL,
 });
 
 export default compose(

@@ -6,15 +6,15 @@ import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 export const BotaoEnviarOrdem = ({ props, tipoCompraVenda }) => {
   const { systemReducer } = useStateStorePrincipal();
 
-  const { conta, contaSelecionada } = systemReducer;
+  const { accounts, selectedAccount } = systemReducer;
   const variacaoBotao = tipoCompraVenda === "Comprar" ? "primary" : "danger";
 
-  if (conta.length > 1) {
+  if (accounts.length > 1) {
     return (
       <Popconfirm
         okText="Sim"
         cancelText="Não"
-        onConfirm={() => props.enviarOrdemAction(props, contaSelecionada)}
+        onConfirm={() => props.enviarOrdemAction(props, selectedAccount)}
         title={
           <div style={{ width: "260px" }}>
             Você possui mais de uma conta ativa. Tem certeza que a ordem é para
@@ -34,7 +34,7 @@ export const BotaoEnviarOrdem = ({ props, tipoCompraVenda }) => {
       <Button
         variant={variacaoBotao}
         size="sm"
-        onClick={() => props.enviarOrdemAction(props, contaSelecionada)}
+        onClick={() => props.enviarOrdemAction(props, selectedAccount)}
       >
         <h6>{tipoCompraVenda}</h6>
       </Button>

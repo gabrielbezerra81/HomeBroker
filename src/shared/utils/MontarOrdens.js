@@ -9,7 +9,7 @@ import { getformatedDate } from "shared/utils/Formatacoes";
 const CVStartStop = ["Compra Start Stop", "Venda Start Stop"];
 const CVStopMovel = ["Compra Stop Móvel", "Venda Stop Móvel"];
 
-export const validarOrdemBoleta = (props, contaSelecionada) => {
+export const validarOrdemBoleta = (props, selectedAccount) => {
   const { dadosPesquisa, qtde } = props;
   let valido = true;
 
@@ -29,7 +29,7 @@ export const validarOrdemBoleta = (props, contaSelecionada) => {
     }
   }
 
-  if (!contaSelecionada) {
+  if (!selectedAccount) {
     valido = false;
     alert(erro_validar_contaSelecionada);
   }
@@ -37,7 +37,7 @@ export const validarOrdemBoleta = (props, contaSelecionada) => {
   return valido;
 };
 
-export const montaOrdemPrincipal = (props, contaSelecionada) => {
+export const montaOrdemPrincipal = (props, selectedAccount) => {
   const { date, ordem, gainDisparo, stopDisparo, validadeSelect } = props;
 
   let json = {
@@ -48,7 +48,7 @@ export const montaOrdemPrincipal = (props, contaSelecionada) => {
   };
 
   //Dados da ordem
-  json.account.id = contaSelecionada.id;
+  json.account.id = selectedAccount.id;
   json.enabled = true;
   json.multiStocks = false;
   json.expiration = date.toLocaleString("pt-BR");
@@ -215,7 +215,7 @@ export const montaOfertaNext = (props, disparo, execucao, tipo, json) => {
   ordemNext.order.enabled = false;
   ordemNext.order.multiStocks = false;
   ordemNext.order.expiration = new Date(
-    "9999-01-01T00:00:00.000Z"
+    "9999-01-01T00:00:00.000Z",
   ).toLocaleString("pt-BR");
   ordemNext.order.status = "Suspensa";
   ordemNext.order.priority = 0;
@@ -224,7 +224,7 @@ export const montaOfertaNext = (props, disparo, execucao, tipo, json) => {
   ofertaNext.stock.symbol = dadosPesquisa.ativo;
   ofertaNext.expirationType = "GTC";
   ofertaNext.expiration = new Date("9999-01-01T00:00:00.000Z").toLocaleString(
-    "pt-BR"
+    "pt-BR",
   );
   ofertaNext.qtty = Number(qtde);
   ofertaNext.status = "Suspensa";

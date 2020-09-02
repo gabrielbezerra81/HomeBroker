@@ -11,21 +11,24 @@ import Action from "types/Action";
 import { Token, Account } from "types/system/system";
 
 const INITIAL_STATE: SystemState = {
-  usuarioConectado: "",
-  menuLateralAberto: false,
-  logado: false,
-  valorLiquido: "15.000,00",
-  valorComprar: "3.500,00",
-  ativo: "Bender",
-  ordensAberto: false,
-  ordensExecucaoAberto: false,
-  relatorioDetalhadoAberto: false,
-  listaCompletaAberta: false,
-  multilegAberto: false,
-  thlAberta: false,
+  connectedUser: "",
+  isOpenLeftUserMenu: false,
+  isLogged: false,
+  liquidValue: "15.000,00",
+  buyingValue: "3.500,00",
+  broker: "Bender",
+  isOpenOrdersHoverMenu: false,
+  isOpenOrdersExec: false,
+  isOpenDetailedReport: false,
+  isOpenPosition: false,
+  isOpenMultileg: false,
+  isOpenTHL: false,
   token: {} as Token,
-  conta: [],
-  contaSelecionada: {} as Account,
+  accounts: [],
+  selectedAccount: {} as Account,
+  mainTabs: [{ tabName: "Principal" }, { tabName: "Aba 2" }],
+  selectedTab: "tab0",
+  openedMenus: [],
 
   // inputUsuario: "gabrielAB",
   // inputSenha: "123456789",
@@ -35,16 +38,22 @@ const INITIAL_STATE: SystemState = {
   // senhaCadastro: "",
 };
 
+const {
+  RESET_REDUX_STATE,
+  UPDATE_ONE_SYSTEM_STATE,
+  UPDATE_MANY_SYSTEM_STATE,
+} = actionType;
+
 export default (
   state = INITIAL_STATE,
   { type, payload }: Action,
 ): SystemState => {
   switch (type) {
     case ABRIR_FECHAR_MENU_LATERAL:
-      return { ...state, menuLateralAberto: payload };
+      return { ...state, isOpenLeftUserMenu: payload };
     case LOGAR_DESLOGAR_USUARIO:
       return {
-        // ...resetarEstadoRedux(state, INITIAL_STATE, [], !payload.logado),
+        // ...resetarEstadoRedux(state, INITIAL_STATE, [], !payload.isLogged),
         ...state,
         ...payload,
       };
@@ -52,18 +61,24 @@ export default (
       return { ...state, [payload.name]: payload.valor };
     case MUDAR_DADOS_LOGIN:
       return { ...state, [payload.nomeVariavel]: payload.valor };
-    case actionType.RESET_REDUX_STATE:
+
+    case UPDATE_ONE_SYSTEM_STATE:
+      const { attributeName, attributeValue } = payload;
+      return { ...state, [attributeName]: attributeValue };
+    case UPDATE_MANY_SYSTEM_STATE:
+      return { ...state, ...payload };
+    case RESET_REDUX_STATE:
       if (["deslogar"].includes(payload.name))
         return {
           ...resetarEstadoRedux(
             state,
             INITIAL_STATE,
             [
-              "ordensExecucaoAberto",
-              "relatorioDetalhadoAberto",
-              "listaCompletaAberta",
-              "multilegAberto",
-              "thlAberta",
+              "isOpenOrdersExec",
+              "isOpenDetailedReport",
+              "isOpenPosition",
+              "isOpenMultileg",
+              "isOpenTHL",
             ],
             "telaprincipal",
             false,

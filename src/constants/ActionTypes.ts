@@ -80,6 +80,8 @@ export const ABRIR_FECHAR_MENU_LATERAL = "abrir_fechar_menu_lateral";
 export const LOGAR_DESLOGAR_USUARIO = "logar_deslogar_usuario";
 export const ABRIR_FECHAR_ITEM_BARRA_LATERAL =
   "abrir_fechar_item_barra_lateral";
+const UPDATE_ONE_SYSTEM_STATE = "update_one_system_state";
+const UPDATE_MANY_SYSTEM_STATE = "update_many_system_state"
 //
 
 export const ATUALIZAR_EVENT_SOURCE_BOLETAS = "atualizar_event_source_boletas";
@@ -87,7 +89,11 @@ export const ATUALIZAR_EVENT_SOURCE_BOLETAS = "atualizar_event_source_boletas";
 //TelaLogin
 export const MUDAR_DADOS_LOGIN = "mudar_dados_login";
 
-export const actionType = { RESET_REDUX_STATE: "RESET_REDUX_STATE" };
+export const actionType = {
+  RESET_REDUX_STATE: "reset_redux_state",
+  UPDATE_ONE_SYSTEM_STATE,
+  UPDATE_MANY_SYSTEM_STATE
+} as const;
 
 const namespaces = [
   COMPRA_AGENDADA_NAMESPACE,

@@ -23,7 +23,7 @@
 /*Menus de posição, multileg e histórico*/
 #menusTelaPrincipal > div > div {
   margin-bottom: 4px;
-  margin-top: 7px;
+  margin-top: 32px;
 }
 
 .divBarraTopo {
@@ -61,11 +61,11 @@
   font-size: 1.4rem;
 }
 
-.valorLiquido {
+.liquidValue {
   color: #40b65c;
 }
 
-.valorComprar {
+.buyingValue {
   color: #f89a30;
 }
 
@@ -136,7 +136,7 @@
   border-radius: 10px;
   border-bottom-left-radius: 50px;
   border-top-left-radius: 0;
-  margin-top: 225px;
+  margin-top: 200px;
   flex-direction: column;
   display: flex;
   position: absolute;

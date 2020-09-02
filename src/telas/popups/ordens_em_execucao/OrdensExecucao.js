@@ -11,8 +11,9 @@ import {
   atualizarDivKeyAction,
   aumentarZindexAction,
 } from "redux/actions/GlobalAppActions";
-import { abrirItemBarraLateralAction } from "redux/actions/telaPrincipal/TelaPrincipalActions";
+import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 import OpcoesOrdemExec from "telas/popups/ordens_em_execucao/OpcoesOrdemExec";
+import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopupZIndexFromSecondaryTab";
 
 class OrdensExecucao extends React.Component {
   componentDidMount() {
@@ -25,6 +26,24 @@ class OrdensExecucao extends React.Component {
         true,
       );
     }
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      divkey,
+      isOpenOrdersExec,
+      aumentarZindexAction,
+      zIndex,
+    } = this.props;
+
+    setPopupZIndexFromSecondaryTab({
+      zIndex,
+      previousDivkey: prevProps.divkey,
+      currentDivkey: divkey,
+      divkeyToCheck: "ordens_execucao",
+      popupVisibility: isOpenOrdersExec,
+      updateFunction: aumentarZindexAction,
+    });
   }
 
   render() {
@@ -244,6 +263,7 @@ const mapStateToPropsOrdensExec = (state) => ({
   opcoesOrdemAberto: state.ordersExecReducer.opcoesOrdemAberto,
   ordemAtual: state.ordersExecReducer.ordemAtual,
   token: state.systemReducer.token,
+  isOpenOrdersExec: state.systemReducer.isOpenOrdersExec,
 });
 
 export default compose(

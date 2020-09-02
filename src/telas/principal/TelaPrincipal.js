@@ -8,10 +8,11 @@ import BarraTopoTelaPrincipal from "telas/principal/BarraTopoTelaPrincipal";
 import { StorePrincipalContext, GlobalContext } from "redux/StoreCreation";
 import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
 import { listarOrdensExecAction } from "redux/actions/ordensExecucao/OrdensExecActions";
-import { abrirItemBarraLateralAction } from "redux/actions/telaPrincipal/TelaPrincipalActions";
+import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 import { listarPosicoesAction } from "redux/actions/posicao/PosicaoActions";
 import BarraLateral from "telas/principal/BarraLateral";
 import MenuOrdens from "telas/principal/MenuOrdens";
+import MainScreenTabs from "./MainScreenTabs";
 
 const OrdensExecucao = React.lazy(() =>
   import("telas/popups/ordens_em_execucao/OrdensExecucao"),
@@ -30,8 +31,8 @@ const startStyle = {
   pointerEvents: "none",
 };
 
-const margemParaMenuLateral = (menuLateralAberto) => {
-  if (menuLateralAberto) return "menuLateralAfastado";
+const margemParaMenuLateral = (isOpenLeftUserMenu) => {
+  if (isOpenLeftUserMenu) return "menuLateralAfastado";
   return "";
 };
 
@@ -40,8 +41,8 @@ class TelaPrincipal extends React.Component {
     this.props.listarOrdensExecAction();
     this.props.listarPosicoesAction(this.props);
 
-    // LogRocket.identify(this.props.usuarioConectado, {
-    //   name: this.props.usuarioConectado,
+    // LogRocket.identify(this.props.connectedUser, {
+    //   name: this.props.connectedUser,
     // });
   }
 
@@ -49,75 +50,75 @@ class TelaPrincipal extends React.Component {
     const { props } = this;
     const {
       zIndex,
-      menuLateralAberto,
-      ordensExecucaoAberto,
-      relatorioDetalhadoAberto,
-      listaCompletaAberta,
-      multilegAberto,
-      thlAberta,
+      isOpenLeftUserMenu,
+      isOpenOrdersExec,
+      isOpenDetailedReport,
+      isOpenPosition,
+      isOpenMultileg,
+      isOpenTHL,
     } = props;
+
     return (
-      <div>
-        <div className="divTelaPrincipal">
-          <MenuLateralUsuario />
-          <div className="conteudoMenuPrincipal">
-            <BarraTopoTelaPrincipal />
-            <div style={{ display: "flex", height: "100%" }}>
-              <BarraLateral />
-              <div
-                id="menusTelaPrincipal"
-                className={margemParaMenuLateral(menuLateralAberto)}
-              >
-                <MenuOrdens />
+      <div className="divTelaPrincipal">
+        <MenuLateralUsuario />
+        <div className="conteudoMenuPrincipal">
+          <BarraTopoTelaPrincipal />
+          <BarraLateral />
 
-                <RenderMenus
-                  menuAberto={ordensExecucaoAberto}
-                  zIndex={zIndex}
-                  divkey={"ordens_execucao"}
-                  aumentarZindex={props.aumentarZindexAction}
-                  component={
-                    <OrdensExecucao headerTitle="HISTÓRICO DE OPERAÇÕES" />
-                  }
-                />
+          <div
+            id="menusTelaPrincipal"
+            className={margemParaMenuLateral(isOpenLeftUserMenu)}
+          >
+            <MainScreenTabs>
+              <RenderMenus
+                menuAberto={isOpenOrdersExec}
+                zIndex={zIndex}
+                key="ordens_execucao"
+                divkey={"ordens_execucao"}
+                aumentarZindex={props.aumentarZindexAction}
+                component={
+                  <OrdensExecucao headerTitle="HISTÓRICO DE OPERAÇÕES" />
+                }
+              />
+              <RenderMenus
+                menuAberto={isOpenDetailedReport}
+                zIndex={zIndex}
+                key="relatorio_detalhado"
+                divkey={"relatorio_detalhado"}
+                aumentarZindex={props.aumentarZindexAction}
+                component={
+                  <RelatorioDetalhado headerTitle="RELATÓRIO DETALHADO" />
+                }
+              />
+              <RenderMenus
+                menuAberto={isOpenPosition}
+                zIndex={zIndex}
+                key="posicao_custodia"
+                divkey={"posicao_custodia"}
+                aumentarZindex={props.aumentarZindexAction}
+                component={
+                  <PosicaoEmCustodia headerTitle="POSIÇÃO EM CUSTÓDIA" />
+                }
+              />
+              <RenderMenus
+                menuAberto={isOpenMultileg}
+                zIndex={zIndex}
+                key="multileg"
+                divkey={"multileg"}
+                aumentarZindex={props.aumentarZindexAction}
+                component={<Multileg headerTitle="MULTI ATIVOS" />}
+              />
+              <RenderMenus
+                menuAberto={isOpenTHL}
+                zIndex={zIndex}
+                key="thl"
+                divkey={"thl"}
+                aumentarZindex={props.aumentarZindexAction}
+                component={<TelaTHL headerTitle="THL" />}
+              />
+            </MainScreenTabs>
 
-                <RenderMenus
-                  menuAberto={relatorioDetalhadoAberto}
-                  zIndex={zIndex}
-                  divkey={"relatorio_detalhado"}
-                  aumentarZindex={props.aumentarZindexAction}
-                  component={
-                    <RelatorioDetalhado headerTitle="RELATÓRIO DETALHADO" />
-                  }
-                />
-
-                <RenderMenus
-                  menuAberto={listaCompletaAberta}
-                  zIndex={zIndex}
-                  divkey={"posicao_custodia"}
-                  aumentarZindex={props.aumentarZindexAction}
-                  component={
-                    <PosicaoEmCustodia headerTitle="POSIÇÃO EM CUSTÓDIA" />
-                  }
-                />
-
-                <RenderMenus
-                  menuAberto={multilegAberto}
-                  zIndex={zIndex}
-                  divkey={"multileg"}
-                  aumentarZindex={props.aumentarZindexAction}
-                  component={<Multileg headerTitle="MULTI ATIVOS" />}
-                />
-
-                {/* THL */}
-                <RenderMenus
-                  menuAberto={thlAberta}
-                  zIndex={zIndex}
-                  divkey={"thl"}
-                  aumentarZindex={props.aumentarZindexAction}
-                  component={<TelaTHL headerTitle="THL" />}
-                />
-              </div>
-            </div>
+            <MenuOrdens />
           </div>
         </div>
       </div>
@@ -153,15 +154,15 @@ const mapStateToPropsGlobalStore = (state) => ({
 });
 
 const mapStateToPropsAppPrincipal = (state) => ({
-  ordensAberto: state.systemReducer.ordensAberto,
-  ordensExecucaoAberto: state.systemReducer.ordensExecucaoAberto,
-  relatorioDetalhadoAberto: state.systemReducer.relatorioDetalhadoAberto,
-  listaCompletaAberta: state.systemReducer.listaCompletaAberta,
-  menuLateralAberto: state.systemReducer.menuLateralAberto,
-  multilegAberto: state.systemReducer.multilegAberto,
-  thlAberta: state.systemReducer.thlAberta,
+  isOpenOrdersHoverMenu: state.systemReducer.isOpenOrdersHoverMenu,
+  isOpenOrdersExec: state.systemReducer.isOpenOrdersExec,
+  isOpenDetailedReport: state.systemReducer.isOpenDetailedReport,
+  isOpenPosition: state.systemReducer.isOpenPosition,
+  isOpenLeftUserMenu: state.systemReducer.isOpenLeftUserMenu,
+  isOpenMultileg: state.systemReducer.isOpenMultileg,
+  isOpenTHL: state.systemReducer.isOpenTHL,
   token: state.systemReducer.token,
-  usuarioConectado: state.systemReducer.usuarioConectado,
+  connectedUser: state.systemReducer.connectedUser,
   // Posição
   posicoesCustodia: state.positionReducer.posicoesCustodia,
   arrayPrecos: state.positionReducer.arrayPrecos,
@@ -194,7 +195,7 @@ export default compose(
 /*
 
 <Animate
-                show={props.ordensExecucaoAberto}
+                show={props.isOpenOrdersExec}
                 duration={100}
                 transitionOnMount
                 stayMounted={false}
@@ -204,7 +205,7 @@ export default compose(
                   props.aumentarZindexAction(
                     "ordens_execucao",
                     props.zIndex,
-                    props.ordensExecucaoAberto
+                    props.isOpenOrdersExec
                   )
                 }
               >
@@ -214,7 +215,7 @@ export default compose(
                 />
               </Animate>
               <Animate
-                show={props.multilegAberto}
+                show={props.isOpenMultileg}
                 duration={100}
                 transitionOnMount
                 stayMounted={false}
@@ -224,7 +225,7 @@ export default compose(
                   props.aumentarZindexAction(
                     "multileg",
                     props.zIndex,
-                    props.multilegAberto
+                    props.isOpenMultileg
                   )
                 }
               >
