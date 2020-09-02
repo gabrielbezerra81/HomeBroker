@@ -13,6 +13,7 @@ import {
   removeMultilegTabAction,
 } from "redux/actions/multileg/MultilegActions";
 import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
+import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopupZIndexFromSecondaryTab";
 
 class Multileg extends React.Component {
   // shouldComponentUpdate(nextProps, nextState) {
@@ -32,6 +33,19 @@ class Multileg extends React.Component {
       document.getElementById("multileg").style.zIndex = this.props.zIndex + 1;
       this.props.aumentarZindexAction("multileg", this.props.zIndex, true);
     }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { divkey, multilegAberto, aumentarZindexAction, zIndex } = this.props;
+
+    setPopupZIndexFromSecondaryTab({
+      zIndex,
+      previousDivkey: prevProps.divkey,
+      currentDivkey: divkey,
+      divkeyToCheck: "multileg",
+      popupVisibility: multilegAberto,
+      updateFunction: aumentarZindexAction,
+    });
   }
 
   render() {
@@ -153,13 +167,12 @@ class Multileg extends React.Component {
   };
 }
 
-const arrayKeys = ["ArrowUp", "ArrowRight", "ArrowDown", "ArrowLeft"];
-
 const mapStateToPropsMultileg = (state) => ({
   configComplementarAberto: state.multilegReducer.configComplementarAberto,
   multileg: state.multilegReducer.multileg,
   abaSelecionada: state.multilegReducer.abaSelecionada,
   eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
+  multilegAberto: state.systemReducer.multilegAberto,
 });
 
 const mapStateToPropsGlobalStore = (state) => {

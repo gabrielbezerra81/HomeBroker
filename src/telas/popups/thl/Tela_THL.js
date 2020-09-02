@@ -5,7 +5,7 @@ import ReactResizeDetector from "react-resize-detector";
 import DraggableModal from "shared/componentes/DraggableModal";
 import { ModalHeaderSemBook } from "shared/componentes/PopupHeader";
 import MapaCalor from "telas/popups/thl/MapaCalor";
-import { GlobalContext } from "redux/StoreCreation";
+import { GlobalContext, StorePrincipalContext } from "redux/StoreCreation";
 import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
 import MenuTopo from "telas/popups/thl/MenuTopo";
 import ContainerTabelaVencimentos from "telas/popups/thl/tabelaDeVencimentos/ContainerTabelaVencimentos";
@@ -13,6 +13,8 @@ import ContainerTabelaCombinacoes, {
   calcularMargemBorda,
   verificarOverflow,
 } from "telas/popups/thl/tabelaCombinacoes/ContainerTabelaCombinacoes";
+import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopupZIndexFromSecondaryTab";
+import { compose } from "redux";
 
 class Tela_THL extends React.Component {
   componentDidMount() {
@@ -20,6 +22,24 @@ class Tela_THL extends React.Component {
       document.getElementById("thl").style.zIndex = this.props.zIndex + 1;
       this.props.aumentarZindexAction("thl", this.props.zIndex, true);
     }
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      divkey,
+      thlAberta,
+      aumentarZindexAction,
+      zIndex,
+    } = this.props;
+
+    setPopupZIndexFromSecondaryTab({
+      zIndex,
+      previousDivkey: prevProps.divkey,
+      currentDivkey: divkey,
+      divkeyToCheck: "thl",
+      popupVisibility: thlAberta,
+      updateFunction: aumentarZindexAction,
+    });
   }
 
   render() {
@@ -79,6 +99,15 @@ const mapDateToPropsGlobal = (state) => ({
   zIndex: state.GlobalReducer.zIndex,
 });
 
-export default connect(mapDateToPropsGlobal, { aumentarZindexAction }, null, {
-  context: GlobalContext,
-})(Tela_THL);
+const mapStateToPropsTHL = (state) => ({
+  thlAberta: state.systemReducer.thlAberta,
+});
+
+export default compose(
+  connect(mapDateToPropsGlobal, { aumentarZindexAction }, null, {
+    context: GlobalContext,
+  }),
+  connect(mapStateToPropsTHL, {}, null, {
+    context: StorePrincipalContext,
+  }),
+)(Tela_THL);

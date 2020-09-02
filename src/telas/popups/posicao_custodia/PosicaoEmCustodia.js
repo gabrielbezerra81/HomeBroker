@@ -18,6 +18,7 @@ import {
 } from "redux/actions/posicao/PosicaoActions";
 import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
 import PosicaoDetalhada from "telas/popups/posicao_custodia/posicao_detalhada/PosicaoDetalhada";
+import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopupZIndexFromSecondaryTab";
 
 class PosicaoEmCustodia extends React.Component {
   componentDidMount() {
@@ -30,6 +31,21 @@ class PosicaoEmCustodia extends React.Component {
   }
   componentDidUpdate(prevProps) {
     const { props } = this;
+    const {
+      divkey,
+      listaCompletaAberta,
+      aumentarZindexAction,
+      zIndex,
+    } = props;
+
+    setPopupZIndexFromSecondaryTab({
+      zIndex,
+      previousDivkey: prevProps.divkey,
+      currentDivkey: divkey,
+      divkeyToCheck: "posicao_custodia",
+      popupVisibility: listaCompletaAberta,
+      updateFunction: aumentarZindexAction,
+    });
 
     if (
       props.eventSourcePosicao &&
@@ -116,6 +132,7 @@ const mapStateToPropsPosicao = (state) => ({
   arrayPrecos: state.positionReducer.arrayPrecos,
   arrayPrecosID: state.positionReducer.arrayPrecosID,
   token: state.systemReducer.token,
+  listaCompletaAberta: state.systemReducer.listaCompletaAberta,
 });
 
 export default compose(
