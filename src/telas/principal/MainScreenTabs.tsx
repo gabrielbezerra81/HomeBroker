@@ -1,12 +1,13 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useCallback } from "react";
 import { Tab, Row, Col, Nav, Form } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import {
-  updateOneSystemStateAction,
+  handleAddOrSelectTabAction,
   handleOpenMenusInMainTabAction,
-} from "redux/actions/telaPrincipal/TelaPrincipalActions";
+  handleRemoveTabAction,
+} from "redux/actions/system/SystemActions";
 
 interface TabChild {
   key: string;
@@ -65,7 +66,7 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
     <div id="MainScreenTabs">
       <Tab.Container
         onSelect={(key) => {
-          dispatch(updateOneSystemStateAction("selectedTab", key));
+          dispatch(handleAddOrSelectTabAction(key));
         }}
         activeKey={selectedTab}
       >
@@ -84,7 +85,14 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
                     >
                       <div className="titleContainer">
                         {index !== 0 && (
-                          <MDBIcon icon="times" className="saldoOpNegativo" />
+                          <MDBIcon
+                            icon="times"
+                            className="saldoOpNegativo"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              dispatch(handleRemoveTabAction(index));
+                            }}
+                          />
                         )}
                         <Form.Control
                           type="text"
@@ -101,7 +109,7 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
             <Col>
               <Nav.Item>
                 <Nav.Link
-                  eventKey="adicionar"
+                  eventKey="addTab"
                   className="addTabButton divClicavel"
                 >
                   +
