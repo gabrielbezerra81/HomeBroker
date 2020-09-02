@@ -124,16 +124,16 @@
 }
 
 .divOrdens {
+  position: fixed;
   width: 605px;
   border: 2px solid #888;
   border-left: none;
   border-radius: 10px;
   border-bottom-left-radius: 50px;
   border-top-left-radius: 0;
-  margin-top: 200px;
+  margin-top: 150px;
   flex-direction: column;
   display: flex;
-  position: absolute;
   background-color: rgb(15, 15, 15) !important;
 }
 
