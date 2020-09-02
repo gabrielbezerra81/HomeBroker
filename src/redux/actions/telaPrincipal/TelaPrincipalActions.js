@@ -244,7 +244,7 @@ export const handleOpenMenusInMainTabAction = (menuChildren) => {
           }
         } //
         else if (menuIndex !== -1) {
-          draft.splice(menuIndex, 1);
+          // draft.splice(menuIndex, 1);
         }
       });
     });
