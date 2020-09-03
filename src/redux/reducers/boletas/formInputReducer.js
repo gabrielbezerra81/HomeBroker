@@ -121,7 +121,7 @@ export const formatarNumero = (
   value,
   casaDecimal,
   separadorOrigem,
-  separadorResultado
+  separadorResultado,
 ) => {
   value = value.split(separadorOrigem);
   if (value[1] && value[1].length === 1) {

@@ -10,72 +10,72 @@ import {
   MUDAR_INPUT_CONFIGURAR,
   MUDAR_QTDE,
   MUDAR_ATRIBUTO_BOLETA,
-  REMOVE_ITEM_TABELA_ORDENS_MOVEL
+  REMOVE_ITEM_TABELA_ORDENS_MOVEL,
 } from "constants/ActionTypes";
 import { cloneDeep } from "lodash";
 
 export const mudarAtributoBoletaAction = (valor, namespace, atributo) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: `${MUDAR_ATRIBUTO_BOLETA}${namespace}`,
       atributo: atributo,
-      valor: valor
+      valor: valor,
     });
   };
 };
 
 export const mudarValidadeSelectAction = (event, namespace) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: `${MUDAR_VALIDADE_SELECT}${namespace}`,
-      payload: event.target.value
+      payload: event.target.value,
     });
   };
 };
 
 export const mudarDataAction = (data, namespace) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: `${MUDAR_DATA}${namespace}`,
-      payload: data
+      payload: data,
     });
   };
 };
 
-export const limparAction = namespace => {
-  return dispatch => {
+export const limparAction = (namespace) => {
+  return (dispatch) => {
     dispatch({
-      type: `${LIMPAR_FORMS}${namespace}`
+      type: `${LIMPAR_FORMS}${namespace}`,
     });
     dispatch({
-      type: LIMPAR_FORMS
+      type: LIMPAR_FORMS,
     });
   };
 };
 
 export const mudarAtivoAction = (event, namespace) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: `${MUDAR_ATIVO}${namespace}`,
-      payload: event.target.value.toUpperCase()
+      payload: event.target.value.toUpperCase(),
     });
   };
 };
 
 export const mudarAssinaturaAction = (event, namespace) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: `${MUDAR_ASSINATURA}${namespace}`,
-      payload: event.target.value
+      payload: event.target.value,
     });
   };
 };
 
 export const mudarCheckSalvarAssinaturaAction = (checked, namespace) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: `${MUDAR_CHECK_SALVA_ASSINATURA}${namespace}`,
-      payload: !checked
+      payload: !checked,
     });
   };
 };
@@ -91,14 +91,14 @@ export const adicionarItemTabelaGainReducaoAction = (props, namespace) => {
     disparo: Number(gainDisparo),
     execucao: Number(gainExec),
     qtde: parseInt(qtde),
-    total: total
+    total: total,
   };
   let tabelaGainReducao = [...props[props.namespace].tabelaGainReducao];
   tabelaGainReducao.push(itemTabela);
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: `${ADICIONAR_ITEM_TABELA_REDUCAO}${namespace}`,
-      payload: tabelaGainReducao
+      payload: tabelaGainReducao,
     });
   };
 };
@@ -106,25 +106,25 @@ export const adicionarItemTabelaGainReducaoAction = (props, namespace) => {
 export const adicionarItemTabelaStopMovel = (
   props,
   namespace,
-  tipo = "real"
+  tipo = "real",
 ) => {
   let retorno_tabela_ordens = montaTabelaOrdensStartStopMovel(
     props,
     tipo,
-    "venda"
+    "venda",
   );
   const atributo = retorno_tabela_ordens.atributo;
   const tabelaOrdens = retorno_tabela_ordens.tabela;
 
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: `${ADICIONA_ITEM_TABELA_ORDENS_VENDA}${namespace}`,
-      payload: { nome: atributo, valor: tabelaOrdens }
+      payload: { nome: atributo, valor: tabelaOrdens },
     });
     if (tipo === "real")
       dispatch({
         type: `${ADICIONA_ITEM_TABELA_ORDENS_VENDA}${namespace}`,
-        payload: { nome: "tabelaOrdensSimulacao", valor: [] }
+        payload: { nome: "tabelaOrdensSimulacao", valor: [] },
       });
   };
 };
@@ -132,25 +132,25 @@ export const adicionarItemTabelaStopMovel = (
 export const adicionarItemTabelaStartMovel = (
   props,
   namespace,
-  tipo = "real"
+  tipo = "real",
 ) => {
   let retorno_tabela_ordens = montaTabelaOrdensStartStopMovel(
     props,
     tipo,
-    "compra"
+    "compra",
   );
   const atributo = retorno_tabela_ordens.atributo;
   const tabelaOrdens = retorno_tabela_ordens.tabela;
 
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: `${ADICIONA_ITEM_TABELA_ORDENS_VENDA}${namespace}`,
-      payload: { nome: atributo, valor: tabelaOrdens }
+      payload: { nome: atributo, valor: tabelaOrdens },
     });
     if (tipo === "real")
       dispatch({
         type: `${ADICIONA_ITEM_TABELA_ORDENS_VENDA}${namespace}`,
-        payload: { nome: "tabelaOrdensSimulacao", valor: [] }
+        payload: { nome: "tabelaOrdensSimulacao", valor: [] },
       });
   };
 };
@@ -235,28 +235,28 @@ export const removerItemTabelaAction = (
   tabela,
   index,
   namespace,
-  tipoOrdem = ""
+  tipoOrdem = "",
 ) => {
   let novaTabela = [...tabela];
   novaTabela.splice(index, 1);
-  return dispatch => {
+  return (dispatch) => {
     if (actionType === REMOVE_ITEM_TABELA_ORDENS_MOVEL) {
       if (tipoOrdem === "real") {
         //Remove a simulação se adicionar novos ajustes
         dispatch({
           type: `${ADICIONA_ITEM_TABELA_ORDENS_VENDA}${namespace}`,
-          payload: { nome: "tabelaOrdensSimulacao", valor: [] }
+          payload: { nome: "tabelaOrdensSimulacao", valor: [] },
         });
         //Atualiza a tabela com os novos ajustes
         dispatch({
           type: `${actionType}${namespace}`,
-          payload: novaTabela
+          payload: novaTabela,
         });
       } else {
         //Remove um elemento da simulação
         dispatch({
           type: `${ADICIONA_ITEM_TABELA_ORDENS_VENDA}${namespace}`,
-          payload: { nome: "tabelaOrdensSimulacao", valor: novaTabela }
+          payload: { nome: "tabelaOrdensSimulacao", valor: novaTabela },
         });
       }
     }
@@ -264,7 +264,7 @@ export const removerItemTabelaAction = (
     else
       dispatch({
         type: `${actionType}${namespace}`,
-        payload: novaTabela
+        payload: novaTabela,
       });
   };
 };
@@ -272,44 +272,43 @@ export const removerItemTabelaAction = (
 export const mudarInputConfigAction = (event, namespace) => {
   const name = event.target.getAttribute("name");
 
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: `${MUDAR_INPUT_CONFIGURAR}${namespace}`,
       name: name,
-      payload: event.target.value
+      payload: event.target.value,
     });
   };
 };
 
 export const mudarQtdAction = (valor, namespace) => {
-  return dispatch => {
+  return (dispatch) => {
     let erro = "";
 
     dispatch({
       type: `${MUDAR_QTDE}${namespace}`,
-      payload: { qtde: valor, erro: erro }
+      payload: { qtde: valor, erro: erro },
     });
   };
 };
 //todo
-export const montarBoletaFromOrdemExecAction = props => {
-  return dispatch => {
+export const montarBoletaFromOrdemExecAction = (props) => {
+  return (dispatch) => {
     const dados = props.dadosOrdemExec;
-    let nomeBoleta = props.ultimaBoletaAbertaOrdemExec;
+    const namespace = props.ultimaBoletaAbertaOrdemExec;
 
-    const namespace = `_${nomeBoleta.toUpperCase()}`;
-
-    Object.keys(dados).forEach(prop => {
+    Object.keys(dados).forEach((prop) => {
+      // console.log(prop, dados[prop]);
       dispatch({
         type: `${MUDAR_ATRIBUTO_BOLETA}${namespace}`,
         atributo: prop,
-        valor: dados[prop]
+        valor: dados[prop],
       });
     });
 
     props.receberDadosOrdemExecMainReducerAction({
       dadosOrdemExec: null,
-      ultimaBoletaAbertaOrdemExec: ""
+      ultimaBoletaAbertaOrdemExec: "",
     });
   };
 };
@@ -319,5 +318,5 @@ const itemTabelaMovel = {
   stopAtual: 0,
   ajuste: 0,
   novoStop: 0,
-  tipo: ""
+  tipo: "",
 };
