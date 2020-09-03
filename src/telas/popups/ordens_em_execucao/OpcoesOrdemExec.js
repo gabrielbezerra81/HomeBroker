@@ -12,12 +12,12 @@ import InputSelectBotoes from "telas/popups/ordens_em_execucao/InputSelectBotoes
 import { erro_opcoes_ordens_exec } from "constants/AlertaErros";
 import { GlobalContext, StorePrincipalContext } from "redux/StoreCreation";
 import {
-  abrirOrdemNoMultilegAction,
+  openOrderInMultilegAction,
   mudarVariavelOrdensExecAction,
   cancelarOrdemExecAction,
   finalizarAMercadoAction,
   aumentarQtdePrecoAction,
-  abrirOrdensBoletaAction,
+  openOrderInBoletaAction,
 } from "redux/actions/ordensExecucao/OrdensExecActions";
 import {
   atualizarDivKeyAction,
@@ -44,7 +44,7 @@ class OpcoesOrdemExec extends React.Component {
   render() {
     const { props } = this;
 
-    const actionProps = { idOrdem: props.ordemAtual.id, token: props.token };
+    const actionProps = { idOrdem: props.ordemAtual.id };
 
     return (
       <div
@@ -133,9 +133,9 @@ const abrirFormOrdem = (event, props, acao) => {
     event.stopPropagation();
 
     if (props.ordemAtual.formName === "Multileg")
-      props.abrirOrdemNoMultilegAction(props, acao);
+      props.openOrderInMultilegAction(props, acao);
     else {
-      props.abrirOrdensBoletaAction(props, event, acao);
+      props.openOrderInBoletaAction(props, event, acao);
     }
   } else alert(erro_opcoes_ordens_exec);
 };
@@ -154,7 +154,6 @@ const mapStateToPropsOrdensExec = (state) => ({
   ativo: state.ordersExecReducer.ativo,
   opcoesOrdemAberto: state.ordersExecReducer.opcoesOrdemAberto,
   ordemAtual: state.ordersExecReducer.ordemAtual,
-  token: state.systemReducer.token,
 });
 
 export default compose(
@@ -173,11 +172,11 @@ export default compose(
     mapStateToPropsOrdensExec,
     {
       mudarVariavelOrdensExecAction,
-      abrirOrdemNoMultilegAction,
+      openOrderInMultilegAction,
       cancelarOrdemExecAction,
       finalizarAMercadoAction,
       aumentarQtdePrecoAction,
-      abrirOrdensBoletaAction,
+      openOrderInBoletaAction,
     },
     null,
     { context: StorePrincipalContext },
