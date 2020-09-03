@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Draggable from "react-draggable";
-import ConfigurarStop from "telas/popups/compra/compra_StartStop/ConfigurarStop";
-import ConfigurarStopVenda from "telas/popups/venda/venda_StartStop/ConfigurarStopVenda";
-import FiltrarOrdens from "telas/popups/ordens_em_execucao/FiltrarOrdens"; //posicaoFormCompraVenda
-import ConfigComplementar from "telas/popups/multileg_/ConfigComplementar";
+import ConfigurarStop from "screens/popups/compra/compra_StartStop/ConfigurarStop";
+import ConfigurarStopVenda from "screens/popups/venda/venda_StartStop/ConfigurarStopVenda";
+import FiltrarOrdens from "screens/popups/ordens_em_execucao/FiltrarOrdens"; //posicaoFormCompraVenda
+import ConfigComplementar from "screens/popups/multileg_/ConfigComplementar";
 import { Resizable } from "re-resizable";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 

@@ -3,7 +3,7 @@ import {
   MUDAR_VARIAVEL_THL,
   MUDAR_VARIAVEIS_THL,
 } from "constants/MenuActionTypes";
-import { tempData } from "telas/popups/thl/tabelaCombinacoes/tempData";
+import { tempData } from "screens/popups/thl/tabelaCombinacoes/tempData";
 import {
   montarTabelaCombinacoes,
   mapearTabelaVencimentos,

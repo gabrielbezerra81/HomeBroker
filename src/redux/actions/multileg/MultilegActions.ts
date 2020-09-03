@@ -5,7 +5,7 @@ import {
   pesquisarStrikesMultilegAPI,
 } from "api/API";
 import { atualizarCotacaoMultilegAPI } from "api/ReativosAPI";
-import { calculoPreco } from "telas/popups/multileg_/CalculoPreco";
+import { calculoPreco } from "screens/popups/multileg_/CalculoPreco";
 import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
 import { MainThunkAction, MainThunkDispatch } from "types/ThunkActions";
 import {

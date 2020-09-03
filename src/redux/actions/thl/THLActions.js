@@ -14,7 +14,7 @@ import {
 } from "redux/actions/multileg/MultilegActions";
 import { erro_exportar_ordens_multileg } from "constants/AlertaErros";
 import { searchMultilegSymbolData } from "redux/actions/multileg/MultilegAPIAction";
-import { calculoPreco } from "telas/popups/multileg_/CalculoPreco";
+import { calculoPreco } from "screens/popups/multileg_/CalculoPreco";
 import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
 import { updateManyTHLState, updateOneTHLState } from "./utils";
 import { updateManyMultilegState } from "../multileg/utils";

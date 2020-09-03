@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { Router, Redirect, RouteComponentProps } from "@reach/router";
-import TelaLogin from "telas/login/TelaLogin";
-import TelaCadastro from "telas/cadastro/TelaCadastro";
-import TelaPrincipal from "telas/principal/TelaPrincipal";
+import TelaLogin from "screens/login/TelaLogin";
+import TelaCadastro from "screens/signUp/TelaCadastro";
+import TelaPrincipal from "screens/home/TelaPrincipal";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import api from "api/apiConfig";
 
