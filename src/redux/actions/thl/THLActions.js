@@ -9,15 +9,14 @@ import {
   updateMultilegTab,
   updateMultilegQuotesAction,
   addMultilegOffer,
-  updateMultilegStateAction,
   cloneMultilegQuotes,
+  cloneMultilegTabs,
 } from "redux/actions/multileg/MultilegActions";
 import { erro_exportar_ordens_multileg } from "constants/AlertaErros";
 import { searchMultilegSymbolData } from "redux/actions/multileg/MultilegAPIAction";
 import { calculoPreco } from "telas/popups/multileg_/CalculoPreco";
 import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
 import { updateManyTHLState, updateOneTHLState } from "./utils";
-import { getReducerStateStorePrincipal } from "hooks/utils";
 import { updateManyMultilegState } from "../multileg/utils";
 
 export const mudarVariavelTHLAction = (nome, valor) => {
@@ -35,26 +34,31 @@ export const mudarVariaveisTHLAction = (payload) => {
 export const abrirMultilegTHLAction = (props) => {
   // Actions
   return async (dispatch, getState) => {
-    setPointerWhileAwaiting("travar", "thl", "body");
+    setPointerWhileAwaiting({
+      lockMode: "travar",
+      id: "menusTelaPrincipal",
+      parentID: "body",
+    });
 
-    const { token } = getReducerStateStorePrincipal(getState(), "principal");
     const {
-      eventSourceCotacao,
-      setIntervalCotacoesMultileg,
-    } = getReducerStateStorePrincipal(getState(), "multileg");
+      multilegReducer: {
+        eventSourceCotacao,
+        setIntervalCotacoesMultileg,
+        multileg,
+        cotacoesMultileg,
+      },
+      systemReducer: { isOpenMultileg, token },
+      thlReducer: { booksSelecionados },
+    } = getState();
 
-    let {
-      isOpenMultileg,
-      x, //cotacoesMultileg
-      zIndex,
-      dispatchGlobal,
-      booksSelecionados,
-    } = props;
+    let { zIndex, dispatchGlobal } = props;
+
+    const clonedMultilegTabs = cloneMultilegTabs(multileg);
 
     dispatchGlobal(atualizarDivKeyAction("multileg"));
 
     if (!isOpenMultileg) {
-      props.multileg.pop();
+      clonedMultilegTabs.pop();
       dispatch(abrirItemBarraLateralAction(props, "isOpenMultileg"));
     } else {
       //Traz para primeiro plano se já estiver aberto
@@ -62,69 +66,71 @@ export const abrirMultilegTHLAction = (props) => {
       dispatchGlobal(aumentarZindexAction("multileg", zIndex, true));
     }
 
-    let result = addMultilegTab(props.multileg);
+    let result = addMultilegTab(clonedMultilegTabs);
 
-    let multileg = result.multilegTabs;
-    let updatedMultilegQuotes = cloneMultilegQuotes(x);
-    const indiceAba = multileg.length - 1;
+    let updatedMultilegTabs = result.multilegTabs;
+    let updatedMultilegQuotes = cloneMultilegQuotes(cotacoesMultileg);
+    const tabIndex = updatedMultilegTabs.length - 1;
 
     try {
-      for (const [indiceOferta, book] of booksSelecionados.entries()) {
-        const dadosModificados = await updateMultilegTab({
-          multilegTabs: multileg,
-          tabIndex: indiceAba,
+      for (const [offerIndex, book] of booksSelecionados.entries()) {
+        let updatedData = await updateMultilegTab({
+          multilegTabs: updatedMultilegTabs,
+          tabIndex,
           attributeName: "ativo",
           attributeValue: book.ativo,
         });
 
-        multileg = dadosModificados.multilegTabs;
+        updatedMultilegTabs = updatedData.multilegTabs;
 
-        const data = await searchMultilegSymbolData({
-          multilegTabs: multileg,
-          tabIndex: indiceAba,
+        updatedData = await searchMultilegSymbolData({
+          multilegTabs: updatedMultilegTabs,
+          tabIndex,
           multilegQuotes: updatedMultilegQuotes,
         });
 
-        multileg = data.multilegTabs;
-        updatedMultilegQuotes = data.multilegQuotes;
+        updatedMultilegTabs = updatedData.multilegTabs;
+        updatedMultilegQuotes = updatedData.multilegQuotes;
 
-        const opcao = multileg[indiceAba].opcoes.filter(
-          (opcao) => opcao.symbol === book.ativo,
+        const options = updatedMultilegTabs[tabIndex].opcoes.filter(
+          (option) => option.symbol === book.ativo,
         );
 
-        let tipo = "";
-        if (opcao.length > 0) tipo = opcao[0].type.toLowerCase();
-        else tipo = "acao";
+        let offerType = "";
+        if (options.length > 0) offerType = options[0].type.toLowerCase();
+        else offerType = "acao";
 
         //Adicionar oferta
         const dadosMultileg = await addMultilegOffer({
-          multilegTabs: multileg,
-          offerType: tipo,
-          tabIndex: indiceAba,
+          multilegTabs: updatedMultilegTabs,
+          offerType,
+          tabIndex,
           multilegQuotes: updatedMultilegQuotes,
         });
-        multileg = dadosMultileg.multilegTabs;
+        updatedMultilegTabs = dadosMultileg.multilegTabs;
         updatedMultilegQuotes = dadosMultileg.multilegQuotes;
 
-        const ofertaNova = multileg[indiceAba].tabelaMultileg[indiceOferta];
+        const newOffer =
+          updatedMultilegTabs[tabIndex].tabelaMultileg[offerIndex];
 
-        ofertaNova.qtde = 100;
-        ofertaNova.cv = book.tipo;
+        newOffer.qtde = 100;
+        newOffer.cv = book.tipo;
       }
 
-      let calculo = calculoPreco(
-        multileg[indiceAba],
+      let tabPrice = calculoPreco(
+        updatedMultilegTabs[tabIndex],
         "ultimo",
         updatedMultilegQuotes,
       ).toFixed(2);
 
-      calculo = formatarNumero(calculo, 2, ".", ",");
-      multileg[indiceAba].preco = calculo;
+      tabPrice = formatarNumero(tabPrice, 2, ".", ",");
+      updatedMultilegTabs[tabIndex].preco = tabPrice;
     } catch (erro) {
       console.log(erro);
       alert(erro_exportar_ordens_multileg);
     }
-    result.multilegTabs = multileg;
+
+    result.multilegTabs = updatedMultilegTabs;
 
     dispatch(
       updateManyMultilegState({
@@ -142,6 +148,10 @@ export const abrirMultilegTHLAction = (props) => {
       token,
     });
 
-    setPointerWhileAwaiting("destravar", "thl", "body");
+    setPointerWhileAwaiting({
+      lockMode: "destravar",
+      id: "menusTelaPrincipal",
+      parentID: "body",
+    });
   };
 };

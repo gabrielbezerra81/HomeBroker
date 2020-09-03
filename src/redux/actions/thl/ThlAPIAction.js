@@ -201,10 +201,16 @@ export const favoritarTHLAPIAction = (actionProps) => {
   return async (dispatch) => {
     const { idCelulaSelecionada } = actionProps;
 
-    setPointerWhileAwaiting("travar", "thl");
+    setPointerWhileAwaiting({
+      lockMode: "travar",
+      id: "thl",
+    });
     const favoriteData = { structure: { id: idCelulaSelecionada } };
     await favoritarTHLAPI(favoriteData);
-    setPointerWhileAwaiting("destravar", "thl");
+    setPointerWhileAwaiting({
+      lockMode: "destravar",
+      id: "thl",
+    });
   };
 };
 
