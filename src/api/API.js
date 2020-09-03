@@ -461,11 +461,11 @@ export const favoritarTHLAPI = (data) => {
     });
 };
 
-export const setPointerWhileAwaiting = (
-  modo,
+export const setPointerWhileAwaiting = ({
+  lockMode,
   id,
   parentID = "menusTelaPrincipal",
-) => {
+}) => {
   const parent =
     parentID === "menusTelaPrincipal"
       ? document.getElementById(parentID)
@@ -473,13 +473,13 @@ export const setPointerWhileAwaiting = (
 
   const element = document.getElementById(id);
 
-  if (modo === "travar") {
+  if (lockMode === "travar") {
     if (element) {
       element.style.pointerEvents = "none";
     }
     if (parent) parent.style.cursor = "wait";
   }
-  if (modo === "destravar") {
+  if (lockMode === "destravar") {
     if (element) {
       element.style.pointerEvents = "all";
     }

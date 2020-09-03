@@ -42,7 +42,11 @@ export const abrirFecharMenuLateralAction = (isOpenLeftUserMenu) => {
 
 export const logarUsuarioAction = (email, senha) => {
   return async (dispatch, getState) => {
-    setPointerWhileAwaiting("travar", "botaoLogar", "body");
+    setPointerWhileAwaiting({
+      lockMode: "travar",
+      id: "botaoLogar",
+      parentID: "body",
+    });
 
     const data = await realizarLoginAPI(email, senha);
     //const auth = await autenticacaoTokenAPI();
@@ -81,13 +85,21 @@ export const logarUsuarioAction = (email, senha) => {
       navigate("/home");
     }
 
-    setPointerWhileAwaiting("destravar", "botaoLogar", "body");
+    setPointerWhileAwaiting({
+      lockMode: "destravar",
+      id: "botaoLogar",
+      parentID: "body",
+    });
   };
 };
 
 export const cadastrarUsuarioAction = (data) => {
   return async (dispatch) => {
-    setPointerWhileAwaiting("travar", "botaoCadastrar", "body");
+    setPointerWhileAwaiting({
+      lockMode: "travar",
+      id: "botaoCadastrar",
+      parentID: "body",
+    });
     const role = ["ROLE_USER"];
 
     const { name, username, email, password } = data;
@@ -100,7 +112,11 @@ export const cadastrarUsuarioAction = (data) => {
       password,
     });
 
-    setPointerWhileAwaiting("destravar", "botaoCadastrar", "body");
+    setPointerWhileAwaiting({
+      lockMode: "destravar",
+      id: "botaoCadastrar",
+      parentID: "body",
+    });
     if (retornoCadastro) {
       navigate("/");
     }

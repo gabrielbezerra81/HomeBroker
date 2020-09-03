@@ -141,7 +141,7 @@ export const updateMultilegTab = async ({
   attributeValue,
   multilegQuotes,
 }: ChangeTabAttribute) => {
-  setPointerWhileAwaiting("travar", "multileg");
+  setPointerWhileAwaiting({ lockMode: "travar", id: "multileg" });
 
   let value = attributeValue;
 
@@ -196,7 +196,7 @@ export const updateMultilegTab = async ({
       }
     }
   }
-  setPointerWhileAwaiting("destravar", "multileg");
+  setPointerWhileAwaiting({ lockMode: "destravar", id: "multileg" });
   return {
     multilegTabs: updatedMultilegtabs,
     multilegQuotes: updatedMultilegQuotes,
@@ -219,7 +219,7 @@ export const updateMultilegOfferAction = ({
   dispatch,
   getState,
 ) => {
-  setPointerWhileAwaiting("travar", "multileg");
+  setPointerWhileAwaiting({ lockMode: "travar", id: "multileg" });
 
   const {
     systemReducer: { token },
@@ -310,7 +310,7 @@ export const updateMultilegOfferAction = ({
   if (attributeName !== "serieSelecionada") {
     dispatch(updateMultilegStateAction("multileg", updatedMultilegTabs));
   }
-  setPointerWhileAwaiting("destravar", "multileg");
+  setPointerWhileAwaiting({ lockMode: "destravar", id: "multileg" });
 };
 
 interface RemoveMultilegOffer {
@@ -341,7 +341,7 @@ export const addMultilegOfferAction = ({
   tabIndex,
   offerType,
 }: AddMultilegOfferAction): MainThunkAction => async (dispatch, getState) => {
-  setPointerWhileAwaiting("travar", "multileg");
+  setPointerWhileAwaiting({ lockMode: "travar", id: "multileg" });
 
   const {
     systemReducer: { token },
@@ -370,7 +370,7 @@ export const addMultilegOfferAction = ({
   dispatch(updateMultilegStateAction("multileg", data.multilegTabs));
   dispatch(updateMultilegStateAction("cotacoesMultileg", data.multilegQuotes));
 
-  setPointerWhileAwaiting("destravar", "multileg");
+  setPointerWhileAwaiting({ lockMode: "destravar", id: "multileg" });
 };
 
 interface AddMultilegOffer {
