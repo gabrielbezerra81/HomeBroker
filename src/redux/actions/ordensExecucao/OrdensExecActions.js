@@ -16,12 +16,15 @@ import {
   updateMultilegQuotesAction,
   addMultilegOffer,
   updateMultilegStateAction,
+  cloneMultilegTabs,
+  cloneMultilegQuotes,
 } from "redux/actions/multileg/MultilegActions";
 import { searchMultilegSymbolData } from "redux/actions/multileg/MultilegAPIAction";
 import { erro_exportar_ordens_multileg } from "constants/AlertaErros";
 import { calculoPreco, calculoMDC } from "telas/popups/multileg_/CalculoPreco";
 import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
 import { getReducerStateStorePrincipal } from "hooks/utils";
+import { abrirItemBarraLateralAction } from "../system/SystemActions";
 
 export const mudarVariavelOrdensExecAction = (nome, valor) => {
   return (dispatch) => {
@@ -70,58 +73,62 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
 
     const { token } = getReducerStateStorePrincipal(getState(), "principal");
     const {
-      eventSourceCotacao,
-      setIntervalCotacoesMultileg,
-    } = getReducerStateStorePrincipal(getState(), "multileg");
+      multilegReducer: {
+        eventSourceCotacao,
+        setIntervalCotacoesMultileg,
+        multileg,
+        cotacoesMultileg,
+      },
+      systemReducer: { isOpenMultileg },
+      ordersExecReducer: { ordemAtual },
+    } = getState();
 
-    const item = props.ordemAtual;
-
-    let isOpenMultileg = props.isOpenMultileg;
+    const clonedMultilegTabs = cloneMultilegTabs(multileg);
 
     //Abrir Multileg
     props.atualizarDivKeyAction("multileg");
 
     //Se o multileg não estiver aberto, remove a primeira aba e abre o mesmo
     if (!isOpenMultileg) {
-      props.multileg.pop();
-      props.abrirItemBarraLateralAction(props, "isOpenMultileg");
+      clonedMultilegTabs.pop();
+      dispatch(abrirItemBarraLateralAction(props, "isOpenMultileg"));
     } else {
       //Traz para primeiro plano se já estiver aberto
       document.getElementById("multileg").style.zIndex = props.zIndex + 1;
       props.aumentarZindexAction("multileg", props.zIndex, true);
     }
 
-    //Adicionar aba
-    let objMultileg = addMultilegTab(props.multileg);
+    // Adicionar aba
+    let result = addMultilegTab(clonedMultilegTabs);
 
-    let multileg = objMultileg.multilegTabs;
-    let cotacoesMultileg = props.cotacoesMultileg;
-    const indiceAba = multileg.length - 1;
+    let updatedMultilegTabs = result.multilegTabs;
+    let updatedMultilegQuotes = cloneMultilegQuotes(cotacoesMultileg);
+    const indiceAba = updatedMultilegTabs.length - 1;
     //const arrayCodigos = [...new Set(item.offers.map(oferta => oferta.ativo))];
 
     try {
-      for (const [indiceOferta, oferta] of item.offers.entries()) {
+      for (const [indiceOferta, oferta] of ordemAtual.offers.entries()) {
         //Alterar ativo
 
         const dadosModificados = await updateMultilegTab({
-          multilegTabs: multileg,
+          multilegTabs: updatedMultilegTabs,
           tabIndex: indiceAba,
           attributeName: "ativo",
           attributeValue: oferta.ativo,
         });
 
-        multileg = dadosModificados.multilegTabs;
+        updatedMultilegTabs = dadosModificados.multilegTabs;
 
         //Pesquisar ativo
         const data = await searchMultilegSymbolData({
-          multilegTabs: multileg,
+          multilegTabs: updatedMultilegTabs,
           tabIndex: indiceAba,
-          multilegQuotes: cotacoesMultileg,
+          multilegQuotes: updatedMultilegQuotes,
         });
-        multileg = data.multilegTabs;
-        cotacoesMultileg = data.multilegQuotes;
+        updatedMultilegTabs = data.multilegTabs;
+        updatedMultilegQuotes = data.multilegQuotes;
 
-        const opcao = multileg[indiceAba].opcoes.filter(
+        const opcao = updatedMultilegTabs[indiceAba].opcoes.filter(
           (opcao) => opcao.symbol === oferta.ativo,
         );
         let tipo = "";
@@ -129,15 +136,16 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
         else tipo = "acao";
         //Adicionar oferta
         const dadosMultileg = await addMultilegOffer({
-          multilegTabs: multileg,
+          multilegTabs: updatedMultilegTabs,
           offerType: tipo,
           tabIndex: indiceAba,
-          multilegQuotes: cotacoesMultileg,
+          multilegQuotes: updatedMultilegQuotes,
         });
-        multileg = dadosMultileg.multilegTabs;
-        cotacoesMultileg = dadosMultileg.multilegQuotes;
+        updatedMultilegTabs = dadosMultileg.multilegTabs;
+        updatedMultilegQuotes = dadosMultileg.multilegQuotes;
 
-        const ofertaNova = multileg[indiceAba].tabelaMultileg[indiceOferta];
+        const ofertaNova =
+          updatedMultilegTabs[indiceAba].tabelaMultileg[indiceOferta];
 
         //Ações possíveis do menu de ordens em execução
         if (acao === "reabrir") {
@@ -151,27 +159,29 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
       }
 
       let calculo = calculoPreco(
-        multileg[indiceAba],
+        updatedMultilegTabs[indiceAba],
         "ultimo",
-        cotacoesMultileg,
+        updatedMultilegQuotes,
       ).toFixed(2);
       calculo = formatarNumero(calculo, 2, ".", ",");
-      multileg[indiceAba].preco = calculo;
+      updatedMultilegTabs[indiceAba].preco = calculo;
     } catch (erro) {
       console.log(erro);
       alert(erro_exportar_ordens_multileg);
     }
 
     //Disparar atualizações feitas com objeto multileg
-    objMultileg.abasMultileg = multileg;
+    result.abasMultileg = updatedMultilegTabs;
 
-    dispatch(updateMultilegStateAction("multileg", objMultileg.abasMultileg));
-    dispatch(updateMultilegStateAction("abaSelecionada", objMultileg.abaAtual));
-    dispatch(updateMultilegStateAction("cotacoesMultileg", cotacoesMultileg));
+    dispatch(updateMultilegStateAction("multileg", result.abasMultileg));
+    dispatch(updateMultilegStateAction("abaSelecionada", result.abaAtual));
+    dispatch(
+      updateMultilegStateAction("cotacoesMultileg", updatedMultilegQuotes),
+    );
 
     updateMultilegQuotesAction({
       dispatch,
-      multilegQuotes: cotacoesMultileg,
+      multilegQuotes: updatedMultilegQuotes,
       eventSourceMultilegQuotes: eventSourceCotacao,
       setIntervalMultilegQuotes: setIntervalCotacoesMultileg,
       token,
@@ -181,8 +191,11 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
 };
 
 export const abrirOrdensBoletaAction = (props, event, acao) => {
-  return async (dispatch) => {
-    const { ordemAtual } = props;
+  return async (dispatch, getState) => {
+    const {
+      ordersExecReducer: { ordemAtual },
+    } = getState();
+
     let nome = mapearOperacaoParaBoleta(ordemAtual.operacao);
 
     const oferta = ordemAtual.offers[0];

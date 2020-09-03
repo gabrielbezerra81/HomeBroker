@@ -19,7 +19,6 @@ import {
   aumentarQtdePrecoAction,
   abrirOrdensBoletaAction,
 } from "redux/actions/ordensExecucao/OrdensExecActions";
-import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 import {
   atualizarDivKeyAction,
   abrirFormAction,
@@ -158,14 +157,6 @@ const mapStateToPropsOrdensExec = (state) => ({
   token: state.systemReducer.token,
 });
 
-const mapStateToPropsOpcoesOrdemExec = (state) => ({
-  ...mapStateToPropsOrdensExec(state),
-  multileg: state.multilegReducer.multileg,
-  eventSourceCotacao: state.multilegReducer.eventSourceCotacao,
-  isOpenMultileg: state.systemReducer.isOpenMultileg,
-  cotacoesMultileg: state.multilegReducer.cotacoesMultileg,
-});
-
 export default compose(
   connect(
     mapStateToPropsGlobalStore,
@@ -179,9 +170,8 @@ export default compose(
     { context: GlobalContext },
   ),
   connect(
-    mapStateToPropsOpcoesOrdemExec,
+    mapStateToPropsOrdensExec,
     {
-      abrirItemBarraLateralAction,
       mudarVariavelOrdensExecAction,
       abrirOrdemNoMultilegAction,
       cancelarOrdemExecAction,

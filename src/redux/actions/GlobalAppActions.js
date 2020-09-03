@@ -227,18 +227,23 @@ const adicionarContainerAppBoletas = ({
   context,
   codigoBook,
 }) => {
+  const key = `containerBoleta${numeroAppsAbertos}`;
+
   const containerApp = (
     <ContainerAppBoletas
-      key={numeroAppsAbertos}
+      key={key}
       index={numeroAppsAbertos}
       indiceShow={numeroAppsAbertos}
-      context={context}
       codigoBook={codigoBook}
     />
   );
 
   if (numeroAppsAbertos === 0)
-    return <Suspense fallback={null}>{containerApp}</Suspense>;
+    return (
+      <Suspense key={key} fallback={null}>
+        {containerApp}
+      </Suspense>
+    );
 
   return containerApp;
 };
