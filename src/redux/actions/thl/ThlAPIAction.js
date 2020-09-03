@@ -3,7 +3,7 @@ import {
   getTHLDataWithStrikeAPI,
   recalcularPrecosTHLAPI,
   pesquisarCombinacoesTHLAPI,
-  travarDestravarClique,
+  setPointerWhileAwaiting,
   favoritarTHLAPI,
   pesquisarListaStrikeTHLAPI,
   getTHLInitialDataAPI,
@@ -201,10 +201,10 @@ export const favoritarTHLAPIAction = (actionProps) => {
   return async (dispatch) => {
     const { idCelulaSelecionada } = actionProps;
 
-    travarDestravarClique("travar", "thl");
+    setPointerWhileAwaiting("travar", "thl");
     const favoriteData = { structure: { id: idCelulaSelecionada } };
     await favoritarTHLAPI(favoriteData);
-    travarDestravarClique("destravar", "thl");
+    setPointerWhileAwaiting("destravar", "thl");
   };
 };
 

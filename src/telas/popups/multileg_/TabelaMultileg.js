@@ -42,8 +42,6 @@ class TabelaMultileg extends React.Component {
     const { props } = this;
     const indiceAba = props.indice;
 
-    console.log(props.cotacoesMultileg);
-
     return (
       <Table
         variant="dark"

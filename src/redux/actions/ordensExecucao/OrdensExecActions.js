@@ -1,7 +1,7 @@
 import { MUDAR_VARIAVEL_ORDENS_EXEC } from "constants/MenuActionTypes";
 import {
   listarOrdensExecAPI,
-  travarDestravarClique,
+  setPointerWhileAwaiting,
   cancelarOrdemExecAPI,
   finalizarAMercadoAPI,
   incrementarQtdeOrdemExecAPI,
@@ -15,7 +15,6 @@ import {
   updateMultilegTab,
   updateMultilegQuotesAction,
   addMultilegOffer,
-  updateMultilegStateAction,
   cloneMultilegTabs,
   cloneMultilegQuotes,
 } from "redux/actions/multileg/MultilegActions";
@@ -25,6 +24,8 @@ import { calculoPreco, calculoMDC } from "telas/popups/multileg_/CalculoPreco";
 import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
 import { getReducerStateStorePrincipal } from "hooks/utils";
 import { abrirItemBarraLateralAction } from "../system/SystemActions";
+import { updateManyMultilegState } from "../multileg/utils";
+import { isLength } from "lodash";
 
 export const mudarVariavelOrdensExecAction = (nome, valor) => {
   return (dispatch) => {
@@ -67,9 +68,9 @@ export const listarOrdensExecAction = (props) => {
   };
 };
 
-export const abrirOrdemNoMultilegAction = (props, acao = "") => {
+export const abrirOrdemNoMultilegAction = (props, action = "") => {
   return async (dispatch, getState) => {
-    travarDestravarClique("travar", "menusTelaPrincipal");
+    setPointerWhileAwaiting("travar", "menusTelaPrincipal", "body");
 
     const { token } = getReducerStateStorePrincipal(getState(), "principal");
     const {
@@ -103,80 +104,85 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
 
     let updatedMultilegTabs = result.multilegTabs;
     let updatedMultilegQuotes = cloneMultilegQuotes(cotacoesMultileg);
-    const indiceAba = updatedMultilegTabs.length - 1;
+    const tabIndex = updatedMultilegTabs.length - 1;
     //const arrayCodigos = [...new Set(item.offers.map(oferta => oferta.ativo))];
 
     try {
-      for (const [indiceOferta, oferta] of ordemAtual.offers.entries()) {
+      for (const [offerIndex, offer] of ordemAtual.offers.entries()) {
         //Alterar ativo
 
-        const dadosModificados = await updateMultilegTab({
+        let updatedData = await updateMultilegTab({
           multilegTabs: updatedMultilegTabs,
-          tabIndex: indiceAba,
+          tabIndex: tabIndex,
           attributeName: "ativo",
-          attributeValue: oferta.ativo,
+          attributeValue: offer.ativo,
         });
 
-        updatedMultilegTabs = dadosModificados.multilegTabs;
+        updatedMultilegTabs = updatedData.multilegTabs;
 
         //Pesquisar ativo
-        const data = await searchMultilegSymbolData({
+        updatedData = await searchMultilegSymbolData({
           multilegTabs: updatedMultilegTabs,
-          tabIndex: indiceAba,
+          tabIndex: tabIndex,
           multilegQuotes: updatedMultilegQuotes,
         });
-        updatedMultilegTabs = data.multilegTabs;
-        updatedMultilegQuotes = data.multilegQuotes;
+        updatedMultilegTabs = updatedData.multilegTabs;
+        updatedMultilegQuotes = updatedData.multilegQuotes;
 
-        const opcao = updatedMultilegTabs[indiceAba].opcoes.filter(
-          (opcao) => opcao.symbol === oferta.ativo,
+        const options = updatedMultilegTabs[tabIndex].opcoes.filter(
+          (opcao) => opcao.symbol === offer.ativo,
         );
-        let tipo = "";
-        if (opcao.length > 0) tipo = opcao[0].type.toLowerCase();
-        else tipo = "acao";
+        let offerType = "";
+        if (options.length > 0) offerType = options[0].type.toLowerCase();
+        else offerType = "acao";
+
         //Adicionar oferta
-        const dadosMultileg = await addMultilegOffer({
+        const multilegDataWithOffer = await addMultilegOffer({
           multilegTabs: updatedMultilegTabs,
-          offerType: tipo,
-          tabIndex: indiceAba,
+          offerType,
+          tabIndex: tabIndex,
           multilegQuotes: updatedMultilegQuotes,
         });
-        updatedMultilegTabs = dadosMultileg.multilegTabs;
-        updatedMultilegQuotes = dadosMultileg.multilegQuotes;
 
-        const ofertaNova =
-          updatedMultilegTabs[indiceAba].tabelaMultileg[indiceOferta];
+        updatedMultilegTabs = multilegDataWithOffer.multilegTabs;
+        updatedMultilegQuotes = multilegDataWithOffer.multilegQuotes;
+
+        const newOffer =
+          updatedMultilegTabs[tabIndex].tabelaMultileg[offerIndex];
 
         //Ações possíveis do menu de ordens em execução
-        if (acao === "reabrir") {
-          const qtdeCancelada = oferta.qtdeOferta - oferta.qtdeExecutada;
+        if (action === "reabrir") {
+          const canceledQtty = offer.qtdeOferta - offer.qtdeExecutada;
 
-          ofertaNova.qtde = qtdeCancelada;
-        } else ofertaNova.qtde = oferta.qtdeOferta;
-        if (acao === "oposta")
-          ofertaNova.cv = oferta.oferta === "C" ? "venda" : "compra";
-        else ofertaNova.cv = oferta.oferta === "C" ? "compra" : "venda";
+          newOffer.qtde = canceledQtty;
+        } else newOffer.qtde = offer.qtdeOferta;
+        if (action === "oposta")
+          newOffer.cv = offer.oferta === "C" ? "venda" : "compra";
+        else newOffer.cv = offer.oferta === "C" ? "compra" : "venda";
       }
 
-      let calculo = calculoPreco(
-        updatedMultilegTabs[indiceAba],
+      let tabPrice = calculoPreco(
+        updatedMultilegTabs[tabIndex],
         "ultimo",
         updatedMultilegQuotes,
       ).toFixed(2);
-      calculo = formatarNumero(calculo, 2, ".", ",");
-      updatedMultilegTabs[indiceAba].preco = calculo;
+
+      tabPrice = formatarNumero(tabPrice, 2, ".", ",");
+      updatedMultilegTabs[tabIndex].preco = tabPrice;
     } catch (erro) {
       console.log(erro);
       alert(erro_exportar_ordens_multileg);
     }
 
     //Disparar atualizações feitas com objeto multileg
-    result.abasMultileg = updatedMultilegTabs;
+    result.multilegTabs = updatedMultilegTabs;
 
-    dispatch(updateMultilegStateAction("multileg", result.abasMultileg));
-    dispatch(updateMultilegStateAction("abaSelecionada", result.abaAtual));
     dispatch(
-      updateMultilegStateAction("cotacoesMultileg", updatedMultilegQuotes),
+      updateManyMultilegState({
+        multileg: result.multilegTabs,
+        abaSelecionada: result.currentTab,
+        cotacoesMultileg: updatedMultilegQuotes,
+      }),
     );
 
     updateMultilegQuotesAction({
@@ -186,7 +192,7 @@ export const abrirOrdemNoMultilegAction = (props, acao = "") => {
       setIntervalMultilegQuotes: setIntervalCotacoesMultileg,
       token,
     });
-    travarDestravarClique("destravar", "menusTelaPrincipal");
+    setPointerWhileAwaiting("destravar", "menusTelaPrincipal", "body");
   };
 };
 
@@ -236,17 +242,17 @@ export const abrirOrdensBoletaAction = (props, event, acao) => {
 
 export const cancelarOrdemExecAction = ({ idOrdem, token }) => {
   return async (dispatch) => {
-    travarDestravarClique("travar", "ordens_execucao");
+    setPointerWhileAwaiting("travar", "ordens_execucao");
     await cancelarOrdemExecAPI(idOrdem);
-    travarDestravarClique("destravar", "ordens_execucao");
+    setPointerWhileAwaiting("destravar", "ordens_execucao");
   };
 };
 
 export const finalizarAMercadoAction = ({ idOrdem, token }) => {
   return async (dispatch) => {
-    travarDestravarClique("travar", "ordens_execucao");
+    setPointerWhileAwaiting("travar", "ordens_execucao");
     await finalizarAMercadoAPI(idOrdem);
-    travarDestravarClique("destravar", "ordens_execucao");
+    setPointerWhileAwaiting("destravar", "ordens_execucao");
   };
 };
 

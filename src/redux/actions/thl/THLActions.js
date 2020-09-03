@@ -1,4 +1,4 @@
-import { travarDestravarClique } from "api/API";
+import { setPointerWhileAwaiting } from "api/API";
 import {
   atualizarDivKeyAction,
   aumentarZindexAction,
@@ -10,6 +10,7 @@ import {
   updateMultilegQuotesAction,
   addMultilegOffer,
   updateMultilegStateAction,
+  cloneMultilegQuotes,
 } from "redux/actions/multileg/MultilegActions";
 import { erro_exportar_ordens_multileg } from "constants/AlertaErros";
 import { searchMultilegSymbolData } from "redux/actions/multileg/MultilegAPIAction";
@@ -17,6 +18,7 @@ import { calculoPreco } from "telas/popups/multileg_/CalculoPreco";
 import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
 import { updateManyTHLState, updateOneTHLState } from "./utils";
 import { getReducerStateStorePrincipal } from "hooks/utils";
+import { updateManyMultilegState } from "../multileg/utils";
 
 export const mudarVariavelTHLAction = (nome, valor) => {
   return (dispatch) => {
@@ -33,7 +35,7 @@ export const mudarVariaveisTHLAction = (payload) => {
 export const abrirMultilegTHLAction = (props) => {
   // Actions
   return async (dispatch, getState) => {
-    travarDestravarClique("travar", "thl");
+    setPointerWhileAwaiting("travar", "thl", "body");
 
     const { token } = getReducerStateStorePrincipal(getState(), "principal");
     const {
@@ -43,11 +45,12 @@ export const abrirMultilegTHLAction = (props) => {
 
     let {
       isOpenMultileg,
-      cotacoesMultileg,
+      x, //cotacoesMultileg
       zIndex,
       dispatchGlobal,
       booksSelecionados,
     } = props;
+
     dispatchGlobal(atualizarDivKeyAction("multileg"));
 
     if (!isOpenMultileg) {
@@ -59,9 +62,10 @@ export const abrirMultilegTHLAction = (props) => {
       dispatchGlobal(aumentarZindexAction("multileg", zIndex, true));
     }
 
-    let objMultileg = addMultilegTab(props.multileg);
+    let result = addMultilegTab(props.multileg);
 
-    let multileg = objMultileg.multilegTabs;
+    let multileg = result.multilegTabs;
+    let updatedMultilegQuotes = cloneMultilegQuotes(x);
     const indiceAba = multileg.length - 1;
 
     try {
@@ -78,11 +82,11 @@ export const abrirMultilegTHLAction = (props) => {
         const data = await searchMultilegSymbolData({
           multilegTabs: multileg,
           tabIndex: indiceAba,
-          multilegQuotes: cotacoesMultileg,
+          multilegQuotes: updatedMultilegQuotes,
         });
 
         multileg = data.multilegTabs;
-        cotacoesMultileg = data.multilegQuotes;
+        updatedMultilegQuotes = data.multilegQuotes;
 
         const opcao = multileg[indiceAba].opcoes.filter(
           (opcao) => opcao.symbol === book.ativo,
@@ -97,10 +101,10 @@ export const abrirMultilegTHLAction = (props) => {
           multilegTabs: multileg,
           offerType: tipo,
           tabIndex: indiceAba,
-          multilegQuotes: cotacoesMultileg,
+          multilegQuotes: updatedMultilegQuotes,
         });
         multileg = dadosMultileg.multilegTabs;
-        cotacoesMultileg = dadosMultileg.multilegQuotes;
+        updatedMultilegQuotes = dadosMultileg.multilegQuotes;
 
         const ofertaNova = multileg[indiceAba].tabelaMultileg[indiceOferta];
 
@@ -111,28 +115,33 @@ export const abrirMultilegTHLAction = (props) => {
       let calculo = calculoPreco(
         multileg[indiceAba],
         "ultimo",
-        cotacoesMultileg,
+        updatedMultilegQuotes,
       ).toFixed(2);
+
       calculo = formatarNumero(calculo, 2, ".", ",");
       multileg[indiceAba].preco = calculo;
     } catch (erro) {
       console.log(erro);
       alert(erro_exportar_ordens_multileg);
     }
-    objMultileg.abasMultileg = multileg;
+    result.multilegTabs = multileg;
 
-    dispatch(updateMultilegStateAction("multileg", objMultileg.abasMultileg));
-    dispatch(updateMultilegStateAction("abaSelecionada", objMultileg.abaAtual));
-    dispatch(updateMultilegStateAction("cotacoesMultileg", cotacoesMultileg));
+    dispatch(
+      updateManyMultilegState({
+        multileg: result.multilegTabs,
+        abaSelecionada: result.currentTab,
+        cotacoesMultileg: updatedMultilegQuotes,
+      }),
+    );
 
     updateMultilegQuotesAction({
       dispatch,
-      multilegQuotes: cotacoesMultileg,
+      multilegQuotes: updatedMultilegQuotes,
       eventSourceMultilegQuotes: eventSourceCotacao,
       setIntervalMultilegQuotes: setIntervalCotacoesMultileg,
       token,
     });
 
-    travarDestravarClique("destravar", "thl");
+    setPointerWhileAwaiting("destravar", "thl", "body");
   };
 };

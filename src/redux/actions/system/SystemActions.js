@@ -8,7 +8,7 @@ import {
   MUDAR_DADOS_LOGIN,
   actionType,
 } from "constants/ActionTypes";
-import { travarDestravarClique } from "api/API";
+import { setPointerWhileAwaiting } from "api/API";
 import { realizarLoginAPI, realizarCadastroAPI } from "api/LoginAPI";
 import { navigate } from "@reach/router";
 import { persistor } from "redux/StoreCreation";
@@ -42,7 +42,7 @@ export const abrirFecharMenuLateralAction = (isOpenLeftUserMenu) => {
 
 export const logarUsuarioAction = (email, senha) => {
   return async (dispatch, getState) => {
-    travarDestravarClique("travar", "botaoLogar");
+    setPointerWhileAwaiting("travar", "botaoLogar", "body");
 
     const data = await realizarLoginAPI(email, senha);
     //const auth = await autenticacaoTokenAPI();
@@ -81,13 +81,13 @@ export const logarUsuarioAction = (email, senha) => {
       navigate("/home");
     }
 
-    travarDestravarClique("destravar", "botaoLogar");
+    setPointerWhileAwaiting("destravar", "botaoLogar", "body");
   };
 };
 
 export const cadastrarUsuarioAction = (data) => {
   return async (dispatch) => {
-    travarDestravarClique("travar", "botaoCadastrar");
+    setPointerWhileAwaiting("travar", "botaoCadastrar", "body");
     const role = ["ROLE_USER"];
 
     const { name, username, email, password } = data;
@@ -100,7 +100,7 @@ export const cadastrarUsuarioAction = (data) => {
       password,
     });
 
-    travarDestravarClique("destravar", "botaoCadastrar");
+    setPointerWhileAwaiting("destravar", "botaoCadastrar", "body");
     if (retornoCadastro) {
       navigate("/");
     }

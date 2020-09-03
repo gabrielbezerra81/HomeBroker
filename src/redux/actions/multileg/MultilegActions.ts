@@ -1,7 +1,7 @@
 import { cloneDeep } from "lodash";
 import {
   pesquisarAtivoAPI,
-  travarDestravarClique,
+  setPointerWhileAwaiting,
   pesquisarStrikesMultilegAPI,
 } from "api/API";
 import { atualizarCotacaoMultilegAPI } from "api/ReativosAPI";
@@ -141,7 +141,7 @@ export const updateMultilegTab = async ({
   attributeValue,
   multilegQuotes,
 }: ChangeTabAttribute) => {
-  travarDestravarClique("travar", "multileg");
+  setPointerWhileAwaiting("travar", "multileg");
 
   let value = attributeValue;
 
@@ -196,7 +196,7 @@ export const updateMultilegTab = async ({
       }
     }
   }
-  travarDestravarClique("destravar", "multileg");
+  setPointerWhileAwaiting("destravar", "multileg");
   return {
     multilegTabs: updatedMultilegtabs,
     multilegQuotes: updatedMultilegQuotes,
@@ -219,7 +219,7 @@ export const updateMultilegOfferAction = ({
   dispatch,
   getState,
 ) => {
-  travarDestravarClique("travar", "multileg");
+  setPointerWhileAwaiting("travar", "multileg");
 
   const {
     systemReducer: { token },
@@ -310,7 +310,7 @@ export const updateMultilegOfferAction = ({
   if (attributeName !== "serieSelecionada") {
     dispatch(updateMultilegStateAction("multileg", updatedMultilegTabs));
   }
-  travarDestravarClique("destravar", "multileg");
+  setPointerWhileAwaiting("destravar", "multileg");
 };
 
 interface RemoveMultilegOffer {
@@ -341,7 +341,7 @@ export const addMultilegOfferAction = ({
   tabIndex,
   offerType,
 }: AddMultilegOfferAction): MainThunkAction => async (dispatch, getState) => {
-  travarDestravarClique("travar", "multileg");
+  setPointerWhileAwaiting("travar", "multileg");
 
   const {
     systemReducer: { token },
@@ -370,7 +370,7 @@ export const addMultilegOfferAction = ({
   dispatch(updateMultilegStateAction("multileg", data.multilegTabs));
   dispatch(updateMultilegStateAction("cotacoesMultileg", data.multilegQuotes));
 
-  travarDestravarClique("destravar", "multileg");
+  setPointerWhileAwaiting("destravar", "multileg");
 };
 
 interface AddMultilegOffer {

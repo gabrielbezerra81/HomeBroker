@@ -461,14 +461,29 @@ export const favoritarTHLAPI = (data) => {
     });
 };
 
-export const travarDestravarClique = (modo, id) => {
+export const setPointerWhileAwaiting = (
+  modo,
+  id,
+  parentID = "menusTelaPrincipal",
+) => {
+  const parent =
+    parentID === "menusTelaPrincipal"
+      ? document.getElementById(parentID)
+      : document.body;
+
+  const element = document.getElementById(id);
+
   if (modo === "travar") {
-    document.body.style.cursor = "wait";
-    document.getElementById(id).style.pointerEvents = "none";
+    if (element) {
+      element.style.pointerEvents = "none";
+    }
+    if (parent) parent.style.cursor = "wait";
   }
   if (modo === "destravar") {
-    document.body.style.cursor = "auto";
-    document.getElementById(id).style.pointerEvents = "all";
+    if (element) {
+      element.style.pointerEvents = "all";
+    }
+    if (parent) parent.style.cursor = "auto";
   }
 };
 

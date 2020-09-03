@@ -1,7 +1,7 @@
 import {
   pesquisarAtivoMultilegAPI,
   enviarOrdemAPI,
-  travarDestravarClique,
+  setPointerWhileAwaiting,
   criarAlertaOperacaoAPI,
   criarPosicaoMultilegAPI,
 } from "api/API";
@@ -130,12 +130,12 @@ export const sendMultilegOrderAction = (tabIndex: number): MainThunkAction => {
 
     const multilegRequestData = mountMultilegOrder(mountOrderProps);
 
-    travarDestravarClique("travar", "multileg");
+    setPointerWhileAwaiting("travar", "multileg");
 
     if (validateMultilegOrder(mountOrderProps))
       await enviarOrdemAPI(multilegRequestData);
 
-    travarDestravarClique("destravar", "multileg");
+    setPointerWhileAwaiting("destravar", "multileg");
   };
 };
 
@@ -156,10 +156,10 @@ export const createMultilegAlertAction = (
 
     const multilegRequestData = mountMultilegOrder(mountOrderProps);
 
-    travarDestravarClique("travar", "multileg");
+    setPointerWhileAwaiting("travar", "multileg");
     if (validateMultilegOrder(mountOrderProps))
       await criarAlertaOperacaoAPI(multilegRequestData);
-    travarDestravarClique("destravar", "multileg");
+    setPointerWhileAwaiting("destravar", "multileg");
   };
 };
 
@@ -180,9 +180,9 @@ export const createMultilegPositionAction = (
 
     const multilegRequestData = mountMultilegOrder(mountOrderProps);
 
-    travarDestravarClique("travar", "multileg");
+    setPointerWhileAwaiting("travar", "multileg");
     if (validateMultilegOrder(mountOrderProps))
       await criarPosicaoMultilegAPI(multilegRequestData);
-    travarDestravarClique("destravar", "multileg");
+    setPointerWhileAwaiting("destravar", "multileg");
   };
 };
