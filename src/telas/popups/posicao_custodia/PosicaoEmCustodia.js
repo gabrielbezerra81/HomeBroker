@@ -120,8 +120,6 @@ const mapStateToPropsPosicao = (state) => ({
   eventSourceEmblema: state.positionReducer.eventSourceEmblema,
   eventSourcePosicao: state.positionReducer.eventSourcePosicao,
   eventSourceCotacoes: state.positionReducer.eventSourceCotacoes,
-  setIntervalEmblema: state.positionReducer.setIntervalEmblema,
-  setIntervalCotacoesPosicao: state.positionReducer.setIntervalCotacoesPosicao,
   posicoesCustodia: state.positionReducer.posicoesCustodia,
   arrayCotacoes: state.positionReducer.arrayCotacoes,
   arrayPrecos: state.positionReducer.arrayPrecos,
