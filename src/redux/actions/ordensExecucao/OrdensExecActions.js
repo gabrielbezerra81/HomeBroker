@@ -25,7 +25,7 @@ import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
 import { getReducerStateStorePrincipal } from "hooks/utils";
 import { abrirItemBarraLateralAction } from "../system/SystemActions";
 import { updateManyMultilegState } from "../multileg/utils";
-import { isLength } from "lodash";
+import * as ActionTypes from "constants/ActionTypes";
 
 export const mudarVariavelOrdensExecAction = (nome, valor) => {
   return (dispatch) => {
@@ -68,11 +68,14 @@ export const listarOrdensExecAction = (props) => {
   };
 };
 
-export const abrirOrdemNoMultilegAction = (props, action = "") => {
+export const openOrderInMultilegAction = (props, action = "") => {
   return async (dispatch, getState) => {
-    setPointerWhileAwaiting("travar", "menusTelaPrincipal", "body");
+    setPointerWhileAwaiting({
+      lockMode: "travar",
+      id: "menusTelaPrincipal",
+      parentID: "body",
+    });
 
-    const { token } = getReducerStateStorePrincipal(getState(), "principal");
     const {
       multilegReducer: {
         eventSourceCotacao,
@@ -80,7 +83,7 @@ export const abrirOrdemNoMultilegAction = (props, action = "") => {
         multileg,
         cotacoesMultileg,
       },
-      systemReducer: { isOpenMultileg },
+      systemReducer: { isOpenMultileg, token },
       ordersExecReducer: { ordemAtual },
     } = getState();
 
@@ -130,7 +133,7 @@ export const abrirOrdemNoMultilegAction = (props, action = "") => {
         updatedMultilegQuotes = updatedData.multilegQuotes;
 
         const options = updatedMultilegTabs[tabIndex].opcoes.filter(
-          (opcao) => opcao.symbol === offer.ativo,
+          (option) => option.symbol === offer.ativo,
         );
         let offerType = "";
         if (options.length > 0) offerType = options[0].type.toLowerCase();
@@ -192,67 +195,73 @@ export const abrirOrdemNoMultilegAction = (props, action = "") => {
       setIntervalMultilegQuotes: setIntervalCotacoesMultileg,
       token,
     });
-    setPointerWhileAwaiting("destravar", "menusTelaPrincipal", "body");
+    setPointerWhileAwaiting({
+      lockMode: "destravar",
+      id: "menusTelaPrincipal",
+      parentID: "body",
+    });
   };
 };
 
-export const abrirOrdensBoletaAction = (props, event, acao) => {
+export const openOrderInBoletaAction = (props, event, menuAction) => {
   return async (dispatch, getState) => {
     const {
       ordersExecReducer: { ordemAtual },
     } = getState();
 
-    let nome = mapearOperacaoParaBoleta(ordemAtual.operacao);
+    let { boletaName, namespace } = mapOperationToBoletaName(
+      ordemAtual.operacao,
+    );
 
-    const oferta = ordemAtual.offers[0];
-    const dadosPesquisa = await pesquisarAtivoAPI(ordemAtual.offers[0].ativo);
+    const offer = ordemAtual.offers[0];
+    const symbolData = await pesquisarAtivoAPI(ordemAtual.offers[0].ativo);
 
-    let qtde = oferta.qtdeOferta;
-    if (acao === "reabrir") {
-      qtde = oferta.qtdeOferta - oferta.qtdeExecutada;
+    let qtty = offer.qtdeOferta;
+    if (menuAction === "reabrir") {
+      qtty = offer.qtdeOferta - offer.qtdeExecutada;
     }
-    if (acao === "oposta") {
-      let nomeSplit = nome.split("_");
-      if (nomeSplit[0] === "compra") nomeSplit[0] = "venda";
-      else if (nomeSplit[0] === "venda") nomeSplit[0] = "compra";
-      if (nome === "compra_startmovel") nomeSplit[1] = "stopmovel";
+    if (menuAction === "oposta") {
+      let [type, popupName] = boletaName.split("_");
+      if (type === "compra") type = "venda";
+      else if (type === "venda") type = "compra";
+      if (boletaName === "compra_startmovel") popupName = "stopmovel";
 
-      nome = nomeSplit.join("_");
+      boletaName = [type, popupName].join("");
     }
 
-    const dados = {
+    const boletaPopupData = {
       dadosOrdemExec: {
-        dadosPesquisa: dadosPesquisa,
-        ativo: oferta.ativo,
-        qtde: qtde,
-        entradaDisparo: oferta.precoDisparo,
-        entradaExec: oferta.precoEnvio,
-        preco: oferta.precoEnvio ? oferta.precoEnvio.toString() : "",
-        ...retornaDadosOferta(ordemAtual, nome),
+        dadosPesquisa: symbolData,
+        ativo: offer.ativo,
+        qtde: qtty,
+        entradaDisparo: offer.precoDisparo,
+        entradaExec: offer.precoEnvio,
+        preco: offer.precoEnvio ? offer.precoEnvio.toString() : "",
+        ...retornaDadosOferta(ordemAtual, boletaName),
       },
-      ultimaBoletaAbertaOrdemExec: nome,
+      ultimaBoletaAbertaOrdemExec: namespace,
     };
 
-    if (nome) {
-      props.receberDadosOrdemExecMainReducerAction(dados);
-      props.abrirFormAction(event, props, "", nome);
+    if (boletaName) {
+      props.receberDadosOrdemExecMainReducerAction(boletaPopupData);
+      props.abrirFormAction(event, props, "", boletaName);
     }
   };
 };
 
-export const cancelarOrdemExecAction = ({ idOrdem, token }) => {
+export const cancelarOrdemExecAction = ({ idOrdem }) => {
   return async (dispatch) => {
-    setPointerWhileAwaiting("travar", "ordens_execucao");
+    setPointerWhileAwaiting({ lockMode: "travar", id: "ordens_execucao" });
     await cancelarOrdemExecAPI(idOrdem);
-    setPointerWhileAwaiting("destravar", "ordens_execucao");
+    setPointerWhileAwaiting({ lockMode: "destravar", id: "ordens_execucao" });
   };
 };
 
-export const finalizarAMercadoAction = ({ idOrdem, token }) => {
+export const finalizarAMercadoAction = ({ idOrdem }) => {
   return async (dispatch) => {
-    setPointerWhileAwaiting("travar", "ordens_execucao");
+    setPointerWhileAwaiting({ lockMode: "travar", id: "ordens_execucao" });
     await finalizarAMercadoAPI(idOrdem);
-    setPointerWhileAwaiting("destravar", "ordens_execucao");
+    setPointerWhileAwaiting({ lockMode: "destravar", id: "ordens_execucao" });
   };
 };
 
@@ -284,31 +293,57 @@ export const aumentarQtdePrecoAction = (actionProps) => {
   };
 };
 
-const mapearOperacaoParaBoleta = (operacao) => {
+const mapOperationToBoletaName = (operacao) => {
+  const data = {
+    boletaName: "",
+    namespace: "",
+  };
   switch (operacao) {
     case "Compra a Mercado":
-      return "compra_mercado";
+      data.boletaName = "compra_mercado";
+      data.namespace = ActionTypes.COMPRA_MERCADO_NAMESPACE;
+      break;
     case "Compra Limitada":
-      return "compra_limitada";
+      data.boletaName = "compra_limitada";
+      data.namespace = ActionTypes.COMPRA_LIMITADA_NAMESPACE;
+      break;
     case "Compra Agendada":
-      return "compra_agendada";
+      data.boletaName = "compra_agendada";
+      data.namespace = ActionTypes.COMPRA_AGENDADA_NAMESPACE;
+      break;
     case "Compra Start Stop":
-      return "compra_startstop";
+      data.boletaName = "compra_startstop";
+      data.namespace = ActionTypes.COMPRA_STARTSTOP_NAMESPACE;
+      break;
     case "Compra Stop Móvel":
-      return "compra_startmovel";
+      data.boletaName = "compra_startmovel";
+      data.namespace = ActionTypes.COMPRA_STARTMOVEL_NAMESPACE;
+      break;
     case "Venda a Mercado":
-      return "venda_mercado";
+      data.boletaName = "venda_mercado";
+      data.namespace = ActionTypes.VENDA_MERCADO_NAMESPACE;
+      break;
     case "Venda Limitada":
-      return "venda_limitada";
+      data.boletaName = "venda_limitada";
+      data.namespace = ActionTypes.VENDA_LIMITADA_NAMESPACE;
+      break;
     case "Venda Agendada":
-      return "venda_agendada";
+      data.boletaName = "venda_agendada";
+      data.namespace = ActionTypes.VENDA_AGENDADA_NAMESPACE;
+      break;
     case "Venda Start Stop":
-      return "venda_startstop";
+      data.boletaName = "venda_startstop";
+      data.namespace = ActionTypes.VENDA_STARTSTOP_NAMESPACE;
+      break;
     case "Venda Stop Móvel":
-      return "venda_stopmovel";
+      data.boletaName = "venda_stopmovel";
+      data.namespace = ActionTypes.VENDA_STOPMOVEL_NAMESPACE;
+      break;
     default:
-      return "";
+      return data;
   }
+
+  return data;
 };
 
 const retornaDadosOferta = (ordemAtual, tipo) => {
