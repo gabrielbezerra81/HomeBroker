@@ -39,21 +39,6 @@ const mapStateToProps = (state) => ({
   connectedUser: state.systemReducer.connectedUser,
   isLogged: state.systemReducer.isLogged,
   isOpenLeftUserMenu: state.systemReducer.isOpenLeftUserMenu,
-  // Ordens Exec reativa
-  eventSourceOrdensExec_OrdensExec:
-    state.ordersExecReducer.eventSourceOrdensExec,
-  // Posicao Reativa
-  eventSourcePosicao_Posicao: state.positionReducer.eventSourcePosicao,
-  eventSourceEmblema_Posicao: state.positionReducer.eventSourceEmblema,
-  eventSourceCotacoes_Posicao: state.positionReducer.eventSourceCotacoes,
-  setIntervalEmblema_Posicao: state.positionReducer.setIntervalEmblema,
-  setIntervalCotacoes_Posicao: state.positionReducer.setIntervalCotacoesPosicao,
-  // Multileg Reativo:
-  eventSourceCotacao_Multileg: state.multilegReducer.eventSourceCotacao,
-  setIntervalCotacoes_Multileg:
-    state.multilegReducer.setIntervalCotacoesMultileg,
-  eventSourcePrecos_THL: state.thlReducer.eventSourcePrecos,
-  setIntervalPrecos_THL: state.thlReducer.setIntervalPrecosTHL,
 });
 
 export default connect(
@@ -70,7 +55,7 @@ const renderDivLogin = (props) => {
     return (
       <div
         className="divClicavel itemMenuLateral corAlternada"
-        onClick={() => props.deslogarUsuarioAction(props)}
+        onClick={() => props.deslogarUsuarioAction()}
         tabIndex={0}
       >
         <div className="flexCenterCenter">
@@ -91,7 +76,7 @@ const renderDivLogin = (props) => {
       <div
         tabIndex={0}
         className="divClicavel itemMenuLateral corAlternada"
-        onClick={() => props.deslogarUsuarioAction(props)}
+        onClick={() => props.deslogarUsuarioAction()}
       >
         <Row className="botaoDeslogar">
           <Col md={"0"} className="colLogout">
