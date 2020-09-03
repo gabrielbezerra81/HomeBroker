@@ -51,13 +51,14 @@ export default (
     case actionType.RESET_REDUX_STATE:
       if (["isOpenMultileg", "deslogar"].includes(payload.name))
         return {
-          ...resetarEstadoRedux(
+          ...resetarEstadoRedux({
             state,
-            INITIAL_STATE,
-            ["multileg", "cotacoesMultileg"],
-            "multileg",
-            payload.limparReducer,
-          ),
+            initialState: INITIAL_STATE,
+            omitions: ["multileg", "cotacoesMultileg"],
+            reducerName: "multileg",
+            shouldClearAllProps: payload.limparReducer,
+            shouldClearEventSources: true,
+          }),
         };
       else return state;
     default:

@@ -70,19 +70,19 @@ export default (
     case RESET_REDUX_STATE:
       if (["deslogar"].includes(payload.name))
         return {
-          ...resetarEstadoRedux(
+          ...resetarEstadoRedux({
             state,
-            INITIAL_STATE,
-            [
+            initialState: INITIAL_STATE,
+            omitions: [
               "isOpenOrdersExec",
               "isOpenDetailedReport",
               "isOpenPosition",
               "isOpenMultileg",
               "isOpenTHL",
             ],
-            "telaprincipal",
-            false,
-          ),
+            reducerName: "telaprincipal",
+            shouldClearAllProps: false,
+          }),
         };
       else return state;
     default:

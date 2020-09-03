@@ -4,18 +4,28 @@ import {
   cloneMultilegQuotes,
 } from "redux/actions/multileg/MultilegActions";
 
-export const resetarEstadoRedux = (
+export const resetarEstadoRedux = ({
   state,
-  estadoInicial,
-  omissoes = [],
-  reducer,
-  limparTudo
-) => {
+  initialState,
+  omitions = [],
+  reducerName,
+  shouldClearAllProps,
+  shouldClearEventSources = false,
+}) => {
   let mutableProps = {};
   let pick = {};
 
-  if (limparTudo)
-    switch (reducer) {
+  if (shouldClearEventSources) {
+    Object.keys(state).forEach((key) => {
+      if (key.toLowerCase().includes("eventsource") && state[key])
+        state[key].close();
+      if (key.toLowerCase().includes("setinterval") && state[key])
+        clearInterval(state[key]);
+    });
+  }
+
+  if (shouldClearAllProps)
+    switch (reducerName) {
       case "multileg":
         mutableProps = {
           multileg: cloneMultilegTabs(multileg.multileg),
@@ -28,16 +38,18 @@ export const resetarEstadoRedux = (
           eventSourceOrdensExec: null,
         };
         break;
+      case "thl":
+        break;
       default:
         break;
     }
-  else pick = { ..._.pick(state, [...omissoes]) };
+  else pick = { ..._.pick(state, [...omitions]) };
 
-  if (!omissoes.length) return { ...estadoInicial, ...mutableProps };
-  if (omissoes.length) {
+  if (!omitions.length) return { ...initialState, ...mutableProps };
+  if (omitions.length) {
     return {
       ...pick,
-      ..._.omit(estadoInicial, [...omissoes]),
+      ..._.omit(initialState, [...omitions]),
       ...mutableProps,
     };
   }

@@ -10,6 +10,8 @@ import {
 } from "redux/actions/thl/ThlAPIAction";
 import THLState from "types/thl/THLState";
 import Action from "types/Action";
+import { actionType } from "constants/ActionTypes";
+import { resetarEstadoRedux } from "../resetarEstadoReducer";
 
 // setAutoFreeze(false);
 
@@ -2758,7 +2760,19 @@ export default (state = INITIAL_STATE, { type, payload }: Action): THLState => {
       return { ...state, [attributeName]: parsedValue };
     case MUDAR_VARIAVEIS_THL:
       return { ...state, ...payload };
-
+    case actionType.RESET_REDUX_STATE:
+      if (["isOpenTHL", "deslogar"].includes(payload.name))
+        return {
+          ...resetarEstadoRedux({
+            state,
+            initialState: INITIAL_STATE,
+            omitions: [],
+            reducerName: "thl",
+            shouldClearAllProps: payload.limparReducer,
+            shouldClearEventSources: true,
+          }),
+        };
+      else return state;
     default:
       return state;
   }

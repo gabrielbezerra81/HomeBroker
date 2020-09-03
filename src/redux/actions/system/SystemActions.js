@@ -123,10 +123,13 @@ export const cadastrarUsuarioAction = (data) => {
   };
 };
 
-export const deslogarUsuarioAction = (props) => {
-  return async (dispatch) => {
+export const deslogarUsuarioAction = () => {
+  return async (dispatch, getState) => {
     try {
-      dispatch(clearReduxStateFromStorageAction(props));
+      const state = getState();
+      const combinedMainStore = combineMainStoreStateFromReducers(state);
+
+      dispatch(clearReduxStateFromStorageAction(combinedMainStore));
       navigate("/");
     } catch (error) {
       console.log("error when wiping redux data", error);
@@ -135,13 +138,6 @@ export const deslogarUsuarioAction = (props) => {
 };
 
 export const abrirItemBarraLateralAction = (props, nameVariavelReducer) => {
-  Object.keys(props).forEach((key) => {
-    if (props[key]) {
-      if (key.includes("eventSource")) props[key].close();
-      else if (key.includes("setInterval")) clearInterval(props[key]);
-    }
-  });
-
   const isVisible = props[nameVariavelReducer];
   const updatedVisibility = !isVisible;
 
@@ -150,7 +146,8 @@ export const abrirItemBarraLateralAction = (props, nameVariavelReducer) => {
 
     // Se estiver tentar abrir um popup fora da aba principal e ele já estiver aberto,
     // impede que ele seja fechado e redireciona para a aba principal
-    if (selectedTab !== "tab0") {
+    const isTryingToOpenFromSecondaryTab = selectedTab !== "tab0";
+    if (isTryingToOpenFromSecondaryTab) {
       dispatch(
         updateManySystemState({
           selectedTab: "tab0",
@@ -171,6 +168,7 @@ export const abrirItemBarraLateralAction = (props, nameVariavelReducer) => {
           openedMenus: updateOpenedMenus,
         }),
       );
+
       resetarDadosReducerAction({
         dispatch,
         nameVariavelReducer,
@@ -388,14 +386,19 @@ export const checkIfSystemStateHasChangedShapeAction = () => {
       currentSystemKeys,
     );
 
-    const combinedMainStoreState = {};
-
-    Object.keys(reducers).forEach((key) => {
-      Object.assign(combinedMainStoreState, reducers[key]);
-    });
-
     if (differenceBetweenStates.length > 0) {
-      dispatch(clearReduxStateFromStorageAction(combinedMainStoreState));
+      const combinedMainStore = combineMainStoreStateFromReducers(reducers);
+      dispatch(clearReduxStateFromStorageAction(combinedMainStore));
     }
   };
+};
+
+const combineMainStoreStateFromReducers = (reducers) => {
+  const combinedMainStoreState = {};
+
+  Object.keys(reducers).forEach((key) => {
+    Object.assign(combinedMainStoreState, reducers[key]);
+  });
+
+  return combinedMainStoreState;
 };

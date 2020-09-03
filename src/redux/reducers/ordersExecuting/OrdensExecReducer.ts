@@ -34,13 +34,13 @@ export default (
     case actionType.RESET_REDUX_STATE:
       if (["isOpenOrdersExec", "deslogar"].includes(payload.name))
         return {
-          ...resetarEstadoRedux(
+          ...resetarEstadoRedux({
             state,
-            INITIAL_STATE,
-            ["tabelaOrdensExecucao", "eventSourceOrdensExec"],
-            "ordensExec",
-            payload.limparReducer,
-          ),
+            initialState: INITIAL_STATE,
+            omitions: ["tabelaOrdensExecucao", "eventSourceOrdensExec"],
+            reducerName: "ordensExec",
+            shouldClearAllProps: payload.limparReducer,
+          }),
         };
       else return state;
     // case ABRIR_FECHAR_ITEM_BARRA_LATERAL:

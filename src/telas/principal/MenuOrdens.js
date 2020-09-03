@@ -216,12 +216,6 @@ const mapStateToPropsAppPrincipal = (state) => ({
   isOpenMultileg: state.systemReducer.isOpenMultileg,
   isOpenTHL: state.systemReducer.isOpenTHL,
   isLogged: state.systemReducer.isLogged,
-  eventSourceCotacao_Multileg: state.multilegReducer.eventSourceCotacao,
-  eventSourcePosicao_Posicao: state.positionReducer.eventSourcePosicao,
-  eventSourceEmblema_Posicao: state.positionReducer.eventSourceEmblema,
-  eventSourceCotacoes_Posicao: state.positionReducer.eventSourceCotacoes,
-  eventSourceOrdensExec_OrdensExec:
-    state.ordersExecReducer.eventSourceOrdensExec,
 });
 
 export default compose(
