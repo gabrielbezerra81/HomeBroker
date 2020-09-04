@@ -52,151 +52,150 @@ class MenuOrdens extends Component {
   render() {
     const { props } = this;
     return (
-      <div>
-        <Animate
-          show={props.isOpenOrdersHoverMenu}
-          duration={100}
-          preMount
-          transitionOnMount
-          stayMounted={true}
-          start={startStyle}
+      <Animate
+        show={props.isOpenOrdersHoverMenu}
+        duration={100}
+        preMount
+        transitionOnMount
+        stayMounted={true}
+        start={startStyle}
+      >
+        <div
+          className="divOrdens"
+          id="divOrdens"
+          onMouseOver={() => props.mouseOverAction("isOpenOrdersHoverMenu")}
+          onMouseLeave={() => props.mouseLeaveAction("isOpenOrdersHoverMenu")}
         >
-          <div
-            className="divOrdens"
-            id="divOrdens"
-            onMouseOver={() => props.mouseOverAction("isOpenOrdersHoverMenu")}
-            onMouseLeave={() => props.mouseLeaveAction("isOpenOrdersHoverMenu")}
-          >
-            <Row className="rowOrdensTracejada">
-              <img src={iconeCompra} alt="" />
-              <div className="divBotaoFormulario">
-                <img
-                  src={iconeCompraMercado}
-                  alt=""
-                  onClick={(event) => props.abrirFormAction(event, props)}
-                  data-name="compra_mercado"
-                  className="divClicavel"
-                />
-                <span>A mercado</span>
-              </div>
-              <div className="divBotaoFormulario">
-                <img
-                  src={iconeCompraLimitada}
-                  alt=""
-                  onClick={(event) => props.abrirFormAction(event, props)}
-                  data-name="compra_limitada"
-                  className="divClicavel"
-                />
-                <span>Limitada</span>
-              </div>
-              <div className="divBotaoFormulario">
-                <img
-                  src={iconeCompraAgendada}
-                  alt=""
-                  onClick={(event) => props.abrirFormAction(event, props)}
-                  data-name="compra_agendada"
-                  className="divClicavel"
-                />
-                <span>Agendada</span>
-              </div>
-              <div className="divBotaoFormulario">
-                <img
-                  src={iconeCompraStartStop}
-                  alt=""
-                  onClick={(event) => props.abrirFormAction(event, props)}
-                  data-name="compra_startstop"
-                  className="divClicavel"
-                />
-                <span>Start/Stop</span>
-              </div>
-              <div className="divBotaoFormulario">
-                <img
-                  src={iconeCompraStartMovel}
-                  alt=""
-                  onClick={(event) => props.abrirFormAction(event, props)}
-                  data-
-                  data-name="compra_startmovel"
-                  className="divClicavel"
-                />
-                <span>Start Móvel</span>
-              </div>
-            </Row>
-            <Row className="rowOrdensTracejada">
-              <img src={iconeVenda} alt="" className="imagemVenda" />
-              <div className="divBotaoFormulario">
-                <img
-                  src={iconeVendaMercado}
-                  alt=""
-                  data-name="venda_mercado"
-                  onClick={(event) => props.abrirFormAction(event, props)}
-                  className="divClicavel"
-                />
-                <span>A mercado</span>
-              </div>
-              <div className="divBotaoFormulario">
-                <img
-                  src={iconeVendaLimitada}
-                  alt=""
-                  data-
-                  data-name="venda_limitada"
-                  onClick={(event) => props.abrirFormAction(event, props)}
-                  className="divClicavel"
-                />
-                <span>Limitada</span>
-              </div>
-              <div className="divBotaoFormulario">
-                <img
-                  src={iconeVendaAgendada}
-                  alt=""
-                  data-name="venda_agendada"
-                  onClick={(event) => props.abrirFormAction(event, props)}
-                  className="divClicavel"
-                />
-                <span>Agendada</span>
-              </div>
-              <div className="divBotaoFormulario">
-                <img
-                  src={iconeVendaStartStop}
-                  alt=""
-                  data-name="venda_startstop"
-                  onClick={(event) => props.abrirFormAction(event, props)}
-                  className="divClicavel"
-                />
-                <span>Start/Stop</span>
-              </div>
-              <div className="divBotaoFormulario">
-                <img
-                  src={iconeVendaStopMovel}
-                  alt=""
-                  data-name="venda_stopmovel"
-                  onClick={(event) => props.abrirFormAction(event, props)}
-                  className="divClicavel"
-                />
-                <span>Stop Móvel</span>
-              </div>
-            </Row>
-            <Row className="rowSpeciais">
-              <span className="mr-5">ESPECIAIS</span>
-              <div className="divBotaoFormulario">
-                <img
-                  src={iconeMultileg}
-                  alt="Multileg"
-                  onClick={() => {
-                    props.atualizarDivKeyAction("multileg");
-                    props.abrirItemBarraLateralAction(props, "isOpenMultileg");
-                  }}
-                  className="divClicavel"
-                />
-                <span>MULTILEG</span>
-              </div>
-            </Row>
-          </div>
-        </Animate>
-        {props.apps.map((appBoleta) => appBoleta)}
-      </div>
+          <Row className="rowOrdensTracejada">
+            <img src={iconeCompra} alt="" />
+            <div className="divBotaoFormulario">
+              <img
+                src={iconeCompraMercado}
+                alt=""
+                onClick={(event) => props.abrirFormAction(event, props)}
+                data-name="compra_mercado"
+                className="divClicavel"
+              />
+              <span>A mercado</span>
+            </div>
+            <div className="divBotaoFormulario">
+              <img
+                src={iconeCompraLimitada}
+                alt=""
+                onClick={(event) => props.abrirFormAction(event, props)}
+                data-name="compra_limitada"
+                className="divClicavel"
+              />
+              <span>Limitada</span>
+            </div>
+            <div className="divBotaoFormulario">
+              <img
+                src={iconeCompraAgendada}
+                alt=""
+                onClick={(event) => props.abrirFormAction(event, props)}
+                data-name="compra_agendada"
+                className="divClicavel"
+              />
+              <span>Agendada</span>
+            </div>
+            <div className="divBotaoFormulario">
+              <img
+                src={iconeCompraStartStop}
+                alt=""
+                onClick={(event) => props.abrirFormAction(event, props)}
+                data-name="compra_startstop"
+                className="divClicavel"
+              />
+              <span>Start/Stop</span>
+            </div>
+            <div className="divBotaoFormulario">
+              <img
+                src={iconeCompraStartMovel}
+                alt=""
+                onClick={(event) => props.abrirFormAction(event, props)}
+                data-
+                data-name="compra_startmovel"
+                className="divClicavel"
+              />
+              <span>Start Móvel</span>
+            </div>
+          </Row>
+          <Row className="rowOrdensTracejada">
+            <img src={iconeVenda} alt="" className="imagemVenda" />
+            <div className="divBotaoFormulario">
+              <img
+                src={iconeVendaMercado}
+                alt=""
+                data-name="venda_mercado"
+                onClick={(event) => props.abrirFormAction(event, props)}
+                className="divClicavel"
+              />
+              <span>A mercado</span>
+            </div>
+            <div className="divBotaoFormulario">
+              <img
+                src={iconeVendaLimitada}
+                alt=""
+                data-
+                data-name="venda_limitada"
+                onClick={(event) => props.abrirFormAction(event, props)}
+                className="divClicavel"
+              />
+              <span>Limitada</span>
+            </div>
+            <div className="divBotaoFormulario">
+              <img
+                src={iconeVendaAgendada}
+                alt=""
+                data-name="venda_agendada"
+                onClick={(event) => props.abrirFormAction(event, props)}
+                className="divClicavel"
+              />
+              <span>Agendada</span>
+            </div>
+            <div className="divBotaoFormulario">
+              <img
+                src={iconeVendaStartStop}
+                alt=""
+                data-name="venda_startstop"
+                onClick={(event) => props.abrirFormAction(event, props)}
+                className="divClicavel"
+              />
+              <span>Start/Stop</span>
+            </div>
+            <div className="divBotaoFormulario">
+              <img
+                src={iconeVendaStopMovel}
+                alt=""
+                data-name="venda_stopmovel"
+                onClick={(event) => props.abrirFormAction(event, props)}
+                className="divClicavel"
+              />
+              <span>Stop Móvel</span>
+            </div>
+          </Row>
+          <Row className="rowSpeciais">
+            <span className="mr-5">ESPECIAIS</span>
+            <div className="divBotaoFormulario">
+              <img
+                src={iconeMultileg}
+                alt="Multileg"
+                onClick={() => {
+                  props.atualizarDivKeyAction("multileg");
+                  props.abrirItemBarraLateralAction(props, "isOpenMultileg");
+                }}
+                className="divClicavel"
+              />
+              <span>MULTILEG</span>
+            </div>
+          </Row>
+        </div>
+      </Animate>
     );
   }
 }
+
+/* {props.apps.map((appBoleta) => appBoleta)} */
 
 const mapStateToPropsGlobalStore = (state) => {
   return {

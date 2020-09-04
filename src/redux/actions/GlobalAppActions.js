@@ -14,7 +14,7 @@ import {
 } from "constants/ActionTypes";
 import { MUDAR_ORDEM_EXEC_MAIN_REDUCER } from "constants/MenuActionTypes";
 
-const ContainerAppBoletas = React.lazy(() => import("ContainerAppBoletas"));
+const ContainerAppBoletas = React.lazy(() => import("screens/popups/boletas/ContainerAppBoletas"));
 
 export const criarMostrarAppAction = (apps, show, zindex, dispatch) => {
   dispatch({

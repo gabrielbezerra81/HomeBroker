@@ -1,21 +1,17 @@
-import React, { Suspense } from "react";
-import { Animate } from "react-show";
-import { compose } from "redux";
+import React from "react";
 import { connect } from "react-redux";
 // import LogRocket from "logrocket";
 import MenuLateralUsuario from "screens/home/MenuLateralUsuario";
 import BarraTopoTelaPrincipal from "screens/home/BarraTopoTelaPrincipal";
 import { StorePrincipalContext, GlobalContext } from "redux/StoreCreation";
-import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
 import { listarOrdensExecAction } from "redux/actions/ordensExecucao/OrdensExecActions";
-import {
-  abrirItemBarraLateralAction,
-  checkIfSystemStateHasChangedShapeAction,
-} from "redux/actions/system/SystemActions";
+import { checkIfSystemStateHasChangedShapeAction } from "redux/actions/system/SystemActions";
 import { listarPosicoesAction } from "redux/actions/posicao/PosicaoActions";
 import BarraLateral from "screens/home/BarraLateral";
 import MenuOrdens from "screens/home/MenuOrdens";
 import MainScreenTabs from "./MainScreenTabs";
+import PopupContainer from "./PopupContainer";
+import { compose } from "redux";
 
 const OrdensExecucao = React.lazy(() =>
   import("screens/popups/ordens_em_execucao/OrdensExecucao"),
@@ -28,11 +24,6 @@ const RelatorioDetalhado = React.lazy(() =>
   import("screens/popups/relatorio_detalhado/RelatorioDetalhado"),
 );
 const TelaTHL = React.lazy(() => import("screens/popups/thl/Tela_THL"));
-
-const startStyle = {
-  opacity: 0,
-  pointerEvents: "none",
-};
 
 const margemParaMenuLateral = (isOpenLeftUserMenu) => {
   if (isOpenLeftUserMenu) return "menuLateralAfastado";
@@ -51,16 +42,15 @@ class TelaPrincipal extends React.Component {
   }
 
   render() {
-    const { props } = this;
     const {
-      zIndex,
       isOpenLeftUserMenu,
       isOpenOrdersExec,
       isOpenDetailedReport,
       isOpenPosition,
       isOpenMultileg,
       isOpenTHL,
-    } = props;
+      apps: AppBoletas,
+    } = this.props;
 
     return (
       <div className="divTelaPrincipal">
@@ -74,53 +64,44 @@ class TelaPrincipal extends React.Component {
             className={margemParaMenuLateral(isOpenLeftUserMenu)}
           >
             <MainScreenTabs>
-              <RenderMenus
-                menuAberto={isOpenOrdersExec}
-                zIndex={zIndex}
+              <PopupContainer
+                isOpen={isOpenOrdersExec}
                 key="ordens_execucao"
-                divkey={"ordens_execucao"}
-                aumentarZindex={props.aumentarZindexAction}
-                component={
-                  <OrdensExecucao headerTitle="HISTÓRICO DE OPERAÇÕES" />
-                }
-              />
-              <RenderMenus
-                menuAberto={isOpenDetailedReport}
-                zIndex={zIndex}
-                key="relatorio_detalhado"
-                divkey={"relatorio_detalhado"}
-                aumentarZindex={props.aumentarZindexAction}
-                component={
-                  <RelatorioDetalhado headerTitle="RELATÓRIO DETALHADO" />
-                }
-              />
-              <RenderMenus
-                menuAberto={isOpenPosition}
-                zIndex={zIndex}
+                divKey={"ordens_execucao"}
+              >
+                <OrdensExecucao headerTitle="HISTÓRICO DE OPERAÇÕES" />
+              </PopupContainer>
+
+              <PopupContainer
+                isOpen={isOpenPosition}
                 key="posicao_custodia"
-                divkey={"posicao_custodia"}
-                aumentarZindex={props.aumentarZindexAction}
-                component={
-                  <PosicaoEmCustodia headerTitle="POSIÇÃO EM CUSTÓDIA" />
-                }
-              />
-              <RenderMenus
-                menuAberto={isOpenMultileg}
-                zIndex={zIndex}
+                divKey={"posicao_custodia"}
+              >
+                <PosicaoEmCustodia headerTitle="POSIÇÃO EM CUSTÓDIA" />
+              </PopupContainer>
+
+              <PopupContainer
+                isOpen={isOpenDetailedReport}
+                key="relatorio_detalhado"
+                divKey={"relatorio_detalhado"}
+              >
+                <RelatorioDetalhado headerTitle="RELATÓRIO DETALHADO" />
+              </PopupContainer>
+
+              <PopupContainer
+                isOpen={isOpenMultileg}
                 key="multileg"
-                divkey={"multileg"}
-                aumentarZindex={props.aumentarZindexAction}
-                component={<Multileg headerTitle="MULTI ATIVOS" />}
-              />
-              <RenderMenus
-                menuAberto={isOpenTHL}
-                zIndex={zIndex}
-                key="thl"
-                divkey={"thl"}
-                aumentarZindex={props.aumentarZindexAction}
-                component={<TelaTHL headerTitle="THL" />}
-              />
+                divKey={"multileg"}
+              >
+                <Multileg headerTitle="MULTI ATIVOS" />
+              </PopupContainer>
+
+              <PopupContainer isOpen={isOpenTHL} key="thl" divKey={"thl"}>
+                <TelaTHL headerTitle="THL" />
+              </PopupContainer>
             </MainScreenTabs>
+
+            {AppBoletas}
 
             <MenuOrdens />
           </div>
@@ -130,31 +111,8 @@ class TelaPrincipal extends React.Component {
   }
 }
 
-const RenderMenus = ({
-  menuAberto,
-  zIndex,
-  divkey,
-  aumentarZindex,
-  component,
-}) => {
-  return (
-    <Suspense fallback={null}>
-      <Animate
-        show={menuAberto}
-        duration={100}
-        transitionOnMount
-        stayMounted={false}
-        start={startStyle}
-        onClick={() => aumentarZindex(divkey, zIndex, menuAberto)}
-      >
-        {component}
-      </Animate>
-    </Suspense>
-  );
-};
-
 const mapStateToPropsGlobalStore = (state) => ({
-  zIndex: state.GlobalReducer.zIndex,
+  apps: state.GlobalReducer.apps,
 });
 
 const mapStateToPropsAppPrincipal = (state) => ({
@@ -165,27 +123,13 @@ const mapStateToPropsAppPrincipal = (state) => ({
   isOpenLeftUserMenu: state.systemReducer.isOpenLeftUserMenu,
   isOpenMultileg: state.systemReducer.isOpenMultileg,
   isOpenTHL: state.systemReducer.isOpenTHL,
-  token: state.systemReducer.token,
-  connectedUser: state.systemReducer.connectedUser,
-  // Posição
-  posicoesCustodia: state.positionReducer.posicoesCustodia,
-  arrayPrecos: state.positionReducer.arrayPrecos,
-  arrayCotacoes: state.positionReducer.arrayCotacoes,
 });
 
 export default compose(
-  connect(
-    mapStateToPropsGlobalStore,
-    {
-      aumentarZindexAction,
-    },
-    null,
-    { context: GlobalContext },
-  ),
+  connect(mapStateToPropsGlobalStore, {}, null, { context: GlobalContext }),
   connect(
     mapStateToPropsAppPrincipal,
     {
-      abrirItemBarraLateralAction,
       listarOrdensExecAction,
       listarPosicoesAction,
       checkIfSystemStateHasChangedShapeAction,

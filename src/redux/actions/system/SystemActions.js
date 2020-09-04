@@ -224,7 +224,10 @@ const resetarDadosReducerAction = ({
     }, waitDispatch);
 };
 
-export const handleOpenMenusInMainTabAction = (menuChildren) => {
+export const handleOpenMenusInMainScreenTabsAction = (
+  menuChildren,
+  tabKey = "tab0",
+) => {
   return (dispatch, getState) => {
     const { openedMenus } = getState().systemReducer;
 
@@ -237,11 +240,27 @@ export const handleOpenMenusInMainTabAction = (menuChildren) => {
           if (menuIndex === -1) {
             draft.push({
               menuKey: menuChildItem.key,
-              tabKey: "tab0",
+              tabKey,
             });
           }
         }
       });
+    });
+
+    dispatch(updateOneSystemStateAction("openedMenus", updatedOpenedMenus));
+  };
+};
+
+export const handleCloseMenusAction = ({ isOpenAttribute, visibility }) => {
+  return (dispatch, getState) => {
+    const {
+      systemReducer: { openedMenus },
+    } = getState();
+
+    const updatedOpenedMenus = handleCloseMenusInMainTab({
+      openedMenus,
+      isOpenAttribute,
+      visibility,
     });
 
     dispatch(updateOneSystemStateAction("openedMenus", updatedOpenedMenus));
@@ -273,6 +292,7 @@ const handleCloseMenusInMainTab = ({
         menuKey = "thl";
         break;
       default:
+        menuKey = isOpenAttribute;
         break;
     }
 

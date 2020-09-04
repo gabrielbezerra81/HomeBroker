@@ -3,7 +3,7 @@ import { Provider, connect } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import ReduxThunk from "redux-thunk";
 import { BoletasReducer } from "redux/reducers/index";
-import AppBoletas from "AppBoletas";
+import AppBoletas from "screens/popups/boletas/AppBoletas";
 import { GlobalContext } from "redux/StoreCreation";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

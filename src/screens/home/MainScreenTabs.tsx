@@ -5,7 +5,7 @@ import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import {
   handleAddOrSelectTabAction,
-  handleOpenMenusInMainTabAction,
+  handleOpenMenusInMainScreenTabsAction,
   handleRemoveTabAction,
   handleChangeTabPropsAction,
 } from "redux/actions/system/SystemActions";
@@ -57,7 +57,7 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
 
   useEffect(() => {
     function loadOpenedMenus() {
-      dispatch(handleOpenMenusInMainTabAction(menuChildren));
+      dispatch(handleOpenMenusInMainScreenTabsAction(menuChildren));
     }
 
     loadOpenedMenus();
@@ -163,7 +163,11 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
             <Tab.Content>
               {mainTabs.map((_, index) => {
                 return (
-                  <Tab.Pane className="popupContainer" eventKey={`tab${index}`} key={index + "tabpane"}>
+                  <Tab.Pane
+                    className="popupContainer"
+                    eventKey={`tab${index}`}
+                    key={index + "tabpane"}
+                  >
                     {openedMenus.map((openedMenu) => {
                       return children.find((childItem) => {
                         const tabChild = childItem?.valueOf() as TabChild;
@@ -185,4 +189,4 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
   );
 };
 
-export default MainScreenTabs;
+export default React.memo(MainScreenTabs);

@@ -1,20 +1,19 @@
 import React from "react";
-import { Animate } from "react-show";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import BookOfertas from "./screens/popups/book_Ofertas/BookOfertas";
+import BookOfertas from "../book_Ofertas/BookOfertas";
 import CompraAgendada from "screens/popups/compra/compra_Agendada/CompraAgendada";
 import CompraLimitada from "screens/popups/compra/compra_Limitada/CompraLimitada";
 import CompraMercado from "screens/popups/compra/compra_Mercado/CompraMercado";
 import CompraStartStop from "screens/popups/compra/compra_StartStop/CompraStartStop";
 import CompraStartMovel from "screens/popups/compra/compra_StartMovel/CompraStartMovel";
 import CompraGainReducao from "screens/popups/compra/compra_GainReducao/CompraGainReducao";
-import VendaAgendada from "./screens/popups/venda/venda_Agendada/VendaAgendada";
-import VendaLimitada from "./screens/popups/venda/venda_Limitada/VendaLimitada";
-import VendaMercado from "./screens/popups/venda/venda_Mercado/VendaMercado";
-import VendaStartStop from "./screens/popups/venda/venda_StartStop/VendaStartStop";
-import VendaStopMovel from "./screens/popups/venda/venda_StopMovel/VendaStopMovel";
-import VendaGainReducao from "./screens/popups/venda/venda_GainReducao/VendaGainReducao";
+import VendaAgendada from "../venda/venda_Agendada/VendaAgendada";
+import VendaLimitada from "../venda/venda_Limitada/VendaLimitada";
+import VendaMercado from "../venda/venda_Mercado/VendaMercado";
+import VendaStartStop from "../venda/venda_StartStop/VendaStartStop";
+import VendaStopMovel from "../venda/venda_StopMovel/VendaStopMovel";
+import VendaGainReducao from "../venda/venda_GainReducao/VendaGainReducao";
 import { GlobalContext, StorePrincipalContext } from "redux/StoreCreation";
 import {
   fecharFormAction,
@@ -26,33 +25,7 @@ import {
 import { listarBookOfertaOnEnterAction } from "redux/actions/boletas/bookOfertaAPIActions";
 import { mudarInputHeaderAction } from "redux/actions/boletas/bookOfertaActions";
 import { montarBoletaFromOrdemExecAction } from "redux/actions/boletas/formInputActions";
-
-const startStyle = {
-  opacity: 0,
-  pointerEvents: "none",
-};
-
-const animate = (props, Componente) => {
-  return (
-    <Animate
-      show={props.show[props.indiceShow][Componente.props.name]}
-      duration={props.show[props.indiceShow][Componente.props.name] ? 100 : 0}
-      transitionOnMount
-      preMount
-      start={startStyle}
-      id={`${Componente.props.name}${props.appkey}`}
-      onClick={() =>
-        props.aumentarZindexAction(
-          `${Componente.props.name}${props.appkey}`,
-          props.zIndex,
-          props.show[props.indiceShow][Componente.props.name],
-        )
-      }
-    >
-      {Componente}
-    </Animate>
-  );
-};
+import Boleta from "screens/popups/boletas/Boleta";
 
 class AppBoletas extends React.Component {
   componentDidMount() {
@@ -115,87 +88,133 @@ class AppBoletas extends React.Component {
 
     return (
       <div className="App">
-        {animate(props, <BookOfertas name="book" />)}
-        {animate(
-          props,
+        <Boleta
+          appKey={props.appkey}
+          boletaName="book"
+          visibilityIndex={props.indiceShow}
+        >
+          <BookOfertas name="book" />
+        </Boleta>
+
+        <Boleta
+          appKey={props.appkey}
+          boletaName="compra_agendada"
+          visibilityIndex={props.indiceShow}
+        >
           <CompraAgendada
             headerTitle="COMPRA AGENDADA"
             name="compra_agendada"
-          />,
-        )}
-        {animate(
-          props,
+          />
+        </Boleta>
+
+        <Boleta
+          appKey={props.appkey}
+          boletaName="compra_limitada"
+          visibilityIndex={props.indiceShow}
+        >
           <CompraLimitada
             headerTitle="COMPRA LIMITADA"
             name="compra_limitada"
-          />,
-        )}
+          />
+        </Boleta>
 
-        {animate(
-          props,
-          <CompraMercado
-            headerTitle="COMPRA A MERCADO"
-            name="compra_mercado"
-          />,
-        )}
+        <Boleta
+          appKey={props.appkey}
+          boletaName="compra_mercado"
+          visibilityIndex={props.indiceShow}
+        >
+          <CompraMercado headerTitle="COMPRA A MERCADO" name="compra_mercado" />
+        </Boleta>
 
-        {animate(
-          props,
+        <Boleta
+          appKey={props.appkey}
+          boletaName="compra_startstop"
+          visibilityIndex={props.indiceShow}
+        >
           <CompraStartStop
             headerTitle="COMPRA START STOP"
             name="compra_startstop"
-          />,
-        )}
+          />
+        </Boleta>
 
-        {animate(
-          props,
+        <Boleta
+          appKey={props.appkey}
+          boletaName="compra_startmovel"
+          visibilityIndex={props.indiceShow}
+        >
           <CompraStartMovel
             headerTitle="COMPRA START MÓVEL"
             name="compra_startmovel"
-          />,
-        )}
+          />
+        </Boleta>
 
-        {animate(
-          props,
+        <Boleta
+          appKey={props.appkey}
+          boletaName="compra_gainreducao"
+          visibilityIndex={props.indiceShow}
+        >
           <CompraGainReducao
             headerTitle="GAIN / REDUÇÃO DE COMPRA"
             name="compra_gainreducao"
-          />,
-        )}
+          />
+        </Boleta>
 
-        {animate(
-          props,
-          <VendaAgendada headerTitle="VENDA AGENDADA" name="venda_agendada" />,
-        )}
-        {animate(
-          props,
-          <VendaLimitada headerTitle="VENDA LIMITADA" name="venda_limitada" />,
-        )}
-        {animate(
-          props,
-          <VendaMercado headerTitle="VENDA MERCADO" name="venda_mercado" />,
-        )}
-        {animate(
-          props,
+        <Boleta
+          appKey={props.appkey}
+          boletaName="venda_agendada"
+          visibilityIndex={props.indiceShow}
+        >
+          <VendaAgendada headerTitle="VENDA AGENDADA" name="venda_agendada" />
+        </Boleta>
+
+        <Boleta
+          appKey={props.appkey}
+          boletaName="venda_limitada"
+          visibilityIndex={props.indiceShow}
+        >
+          <VendaLimitada headerTitle="VENDA LIMITADA" name="venda_limitada" />
+        </Boleta>
+
+        <Boleta
+          appKey={props.appkey}
+          boletaName="venda_mercado"
+          visibilityIndex={props.indiceShow}
+        >
+          <VendaMercado headerTitle="VENDA MERCADO" name="venda_mercado" />
+        </Boleta>
+
+        <Boleta
+          appKey={props.appkey}
+          boletaName="venda_startstop"
+          visibilityIndex={props.indiceShow}
+        >
           <VendaStartStop
             headerTitle="VENDA START STOP"
             name="venda_startstop"
-          />,
-        )}
-        {animate(
-          props,
+          />
+        </Boleta>
+
+        <Boleta
+          appKey={props.appkey}
+          boletaName="venda_stopmovel"
+          visibilityIndex={props.indiceShow}
+        >
           <VendaStopMovel
             headerTitle="VENDA STOP MÓVEL"
             name="venda_stopmovel"
-          />,
-        )}
-        {animate(
-          props,
+          />
+        </Boleta>
+
+        <Boleta
+          appKey={props.appkey}
+          boletaName="venda_gainreducao"
+          visibilityIndex={props.indiceShow}
+        >
           <VendaGainReducao
             headerTitle="GAIN / REDUÇÃO DE VENDA"
             name="venda_gainreducao"
-          />,
-        )}
+          />
+        </Boleta>
       </div>
     );
   }
