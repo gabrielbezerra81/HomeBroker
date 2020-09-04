@@ -167,7 +167,7 @@ export const enviarOrdemAPI = (data) => {
     });
 };
 
-export const pesquisarAtivoMultilegAPI = (codigo_ativo) => {
+export const pesquisarAtivoMultilegAPI = async (codigo_ativo) => {
   var dados;
 
   return api
@@ -206,7 +206,7 @@ export const pesquisarAtivoMultilegAPI = (codigo_ativo) => {
     });
 };
 
-export const pesquisarStrikesMultilegAPI = (codigo_ativo, vencimento) => {
+export const pesquisarStrikesMultilegAPI = async (codigo_ativo, vencimento) => {
   return api
     .get(
       `${url_pesquisarStrikes_codigo_vencimento}${codigo_ativo}/${vencimento}`,

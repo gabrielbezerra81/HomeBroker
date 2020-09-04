@@ -341,7 +341,11 @@ export const addMultilegOfferAction = ({
   tabIndex,
   offerType,
 }: AddMultilegOfferAction): MainThunkAction => async (dispatch, getState) => {
-  setPointerWhileAwaiting({ lockMode: "travar", id: "multileg" });
+  setPointerWhileAwaiting({
+    lockMode: "travar",
+    id: "multileg",
+    parentID: "body",
+  });
 
   const {
     systemReducer: { token },
@@ -370,7 +374,11 @@ export const addMultilegOfferAction = ({
   dispatch(updateMultilegStateAction("multileg", data.multilegTabs));
   dispatch(updateMultilegStateAction("cotacoesMultileg", data.multilegQuotes));
 
-  setPointerWhileAwaiting({ lockMode: "destravar", id: "multileg" });
+  setPointerWhileAwaiting({
+    lockMode: "destravar",
+    id: "multileg",
+    parentID: "body",
+  });
 };
 
 interface AddMultilegOffer {
