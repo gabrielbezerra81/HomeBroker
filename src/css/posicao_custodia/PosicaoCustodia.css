@@ -132,22 +132,22 @@ th .colunaDividida div {
 }
 
 .rowListagenItens {
-  display: flex;
-  flex-wrap: wrap;
-  width: 1040px;
-  padding-left: 7px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 16px;
+  row-gap: 8px;
+  padding: 8px 16px 0;
 }
 
 .rowListagenItens > div {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: flex-end;
 }
 
 .rowAtivosEmblema {
   justify-content: space-evenly;
   align-items: flex-end;
-  /* height: 55.75px; */
   margin: 0 !important;
 }
 

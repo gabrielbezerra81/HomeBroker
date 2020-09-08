@@ -13,134 +13,132 @@ import { StorePrincipalContext } from "redux/StoreCreation";
 class PosicaoAmpliadaResumida extends React.Component {
   render() {
     const { props } = this;
-    const styleRowAtivo = calculaAlturaRowAtivos(props.posicoesCustodia);
+    // const styleRowAtivo = calculaAlturaRowAtivos(props.posicoesCustodia);
     return (
-      <Row style={{ justifyContent: "center" }}>
-        <div className="rowListagenItens">
-          {props.posicoesCustodia.map((item, index) => (
-            <div key={index} className="mt-2 ml-2 mr-2">
-              <Row
-                className="rowAtivosEmblema"
-                id={"posicao" + index}
-                style={styleRowAtivo[index]}
-              >
-                {renderAtivo(item)}
+      <div className="rowListagenItens">
+        {props.posicoesCustodia.map((item, index) => (
+          <div key={index}>
+            <Row
+              className="rowAtivosEmblema"
+              id={"posicao" + index}
+              // style={styleRowAtivo[index]}
+            >
+              {renderAtivo(item)}
 
-                {item.custodiaCompra.length > 0 ? (
-                  <Col md={"0"}>
-                    {item.custodiaCompra.map((itemCustodiaCompra, index2) => (
-                      <h6
-                        key={`custodiaCompra${index2}`}
-                        className="itemCustodiaCompra"
-                      >
-                        {itemCustodiaCompra.ativo} (
-                        {itemCustodiaCompra.qtdeExecutada / 1000}K)
-                      </h6>
-                    ))}
-                  </Col>
-                ) : null}
-                {item.custodiaVenda.length > 0 ? (
-                  <Col md={"0"}>
-                    {item.custodiaVenda.map((itemCustodiaVenda, index2) => (
-                      <h6
-                        key={`custodiaVenda${index2}`}
-                        className="itemCustodiaVenda"
-                      >
-                        {itemCustodiaVenda.ativo} (-
-                        {itemCustodiaVenda.qtdeExecutada / 1000}K)
-                      </h6>
-                    ))}
-                  </Col>
-                ) : null}
-              </Row>
+              {item.custodiaCompra.length > 0 ? (
+                <Col md={"0"}>
+                  {item.custodiaCompra.map((itemCustodiaCompra, index2) => (
+                    <h6
+                      key={`custodiaCompra${index2}`}
+                      className="itemCustodiaCompra"
+                    >
+                      {itemCustodiaCompra.ativo} (
+                      {itemCustodiaCompra.qtdeExecutada / 1000}K)
+                    </h6>
+                  ))}
+                </Col>
+              ) : null}
+              {item.custodiaVenda.length > 0 ? (
+                <Col md={"0"}>
+                  {item.custodiaVenda.map((itemCustodiaVenda, index2) => (
+                    <h6
+                      key={`custodiaVenda${index2}`}
+                      className="itemCustodiaVenda"
+                    >
+                      {itemCustodiaVenda.ativo} (-
+                      {itemCustodiaVenda.qtdeExecutada / 1000}K)
+                    </h6>
+                  ))}
+                </Col>
+              ) : null}
+            </Row>
 
-              <div className="mcontent containerEmblema">
-                <EmblemaSimples
-                  item={item}
-                  precosEmblema={encontrarPrecosEmblema(props, item)}
-                  emblemaMaior={props.emblemaMaior}
-                  arrayPrecosID={props.arrayPrecosID}
-                />
-                {props.tipoVisualizacao === "ampliado" ? (
-                  <div>
-                    <div className="flexCenterCenter">
-                      <Col md={"0"} className="m-2">
-                        Resultado: {formatarNumDecimal(item.total)}
+            <div className="mcontent containerEmblema">
+              <EmblemaSimples
+                item={item}
+                precosEmblema={encontrarPrecosEmblema(props, item)}
+                emblemaMaior={props.emblemaMaior}
+                arrayPrecosID={props.arrayPrecosID}
+              />
+              {props.tipoVisualizacao === "ampliado" ? (
+                <div>
+                  <div className="flexCenterCenter">
+                    <Col md={"0"} className="m-2">
+                      Resultado: {formatarNumDecimal(item.total)}
+                    </Col>
+                    <Col md={"0"} className="m-2">
+                      {renderValorPorcentagem(item.variacaoGanho)}
+                    </Col>
+                  </div>
+                  {item.executando.length > 0 ? (
+                    <div className="text-align-center">
+                      <Col md={12}>
+                        <span>Executando</span>
                       </Col>
-                      <Col md={"0"} className="m-2">
-                        {renderValorPorcentagem(item.variacaoGanho)}
-                      </Col>
-                    </div>
-                    {item.executando.length > 0 ? (
-                      <div className="text-align-center">
-                        <Col md={12}>
-                          <span>Executando</span>
-                        </Col>
-                        <Row className="rowTabela">
-                          <Table
-                            variant="dark"
-                            bordered={false}
-                            borderless
-                            striped
-                            className="tabelaExecutando text-center mt-1"
-                            style={{ tableLayout: "auto" }}
-                          >
-                            <tbody className="verticalAlignColunaTabela">
-                              {item.executando.map((ordem, index3) => (
-                                <tr key={index3}>
-                                  <td>
-                                    {ordem.offers.map((oferta, indice) =>
-                                      oferta.oferta === "C" ? (
-                                        <span key={indice}>
-                                          +
-                                          {formatarQuantidadeKMG(
-                                            oferta.qtdeOferta,
-                                          )}
-                                          <br />
-                                        </span>
-                                      ) : (
-                                        <span key={indice}>
-                                          -
-                                          {formatarQuantidadeKMG(
-                                            oferta.qtdeOferta,
-                                          )}
-                                          <br />
-                                        </span>
-                                      ),
-                                    )}
-                                  </td>
-                                  <td>
-                                    {ordem.offers.map((oferta, indice) => (
+                      <Row className="rowTabela">
+                        <Table
+                          variant="dark"
+                          bordered={false}
+                          borderless
+                          striped
+                          className="tabelaExecutando text-center mt-1"
+                          style={{ tableLayout: "auto" }}
+                        >
+                          <tbody className="verticalAlignColunaTabela">
+                            {item.executando.map((ordem, index3) => (
+                              <tr key={index3}>
+                                <td>
+                                  {ordem.offers.map((oferta, indice) =>
+                                    oferta.oferta === "C" ? (
                                       <span key={indice}>
-                                        {oferta.ativo}
+                                        +
+                                        {formatarQuantidadeKMG(
+                                          oferta.qtdeOferta,
+                                        )}
                                         <br />
                                       </span>
-                                    ))}
-                                  </td>
-                                  <td>
-                                    {ordem.offers.map((oferta, indice) =>
-                                      renderCV(
-                                        oferta.oferta,
-                                        oferta.operacao,
-                                        indice,
-                                      ),
-                                    )}
-                                  </td>
-                                  <td>{ordem.offers[0].precoEnvio}</td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </Table>
-                        </Row>
-                      </div>
-                    ) : null}
-                  </div>
-                ) : null}
-              </div>
+                                    ) : (
+                                      <span key={indice}>
+                                        -
+                                        {formatarQuantidadeKMG(
+                                          oferta.qtdeOferta,
+                                        )}
+                                        <br />
+                                      </span>
+                                    ),
+                                  )}
+                                </td>
+                                <td>
+                                  {ordem.offers.map((oferta, indice) => (
+                                    <span key={indice}>
+                                      {oferta.ativo}
+                                      <br />
+                                    </span>
+                                  ))}
+                                </td>
+                                <td>
+                                  {ordem.offers.map((oferta, indice) =>
+                                    renderCV(
+                                      oferta.oferta,
+                                      oferta.operacao,
+                                      indice,
+                                    ),
+                                  )}
+                                </td>
+                                <td>{ordem.offers[0].precoEnvio}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </Table>
+                      </Row>
+                    </div>
+                  ) : null}
+                </div>
+              ) : null}
             </div>
-          ))}
-        </div>
-      </Row>
+          </div>
+        ))}
+      </div>
     );
   }
 }
