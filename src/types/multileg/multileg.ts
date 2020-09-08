@@ -46,7 +46,6 @@ export interface MultilegOffer {
   serie: Array<string>;
   serieSelecionada: string;
   codigoSelecionado: string;
-  codigoAberto: boolean;
   tipo: "call" | "put";
   modelo: "EUROPEAN" | "AMERICAN";
   despernamento: number;

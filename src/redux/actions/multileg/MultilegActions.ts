@@ -467,7 +467,6 @@ export const newOffer: MultilegOffer = {
   serie: [],
   serieSelecionada: "",
   codigoSelecionado: "",
-  codigoAberto: false,
   tipo: "call",
   modelo: "AMERICAN",
   despernamento: 1000,
