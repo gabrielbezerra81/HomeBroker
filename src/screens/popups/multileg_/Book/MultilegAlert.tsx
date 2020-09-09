@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect, useMemo } from "react";
 import { Row, Col, Button, Form } from "react-bootstrap";
+import { MDBIcon } from "mdbreact";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { createMultilegAlertAction } from "redux/actions/multileg/MultilegAPIAction";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
@@ -100,12 +101,23 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
       }
   }, [maxNumberOfOffers, previousNumberOfOffers]);
 
+  const openedAlertClass = useMemo(() => {
+    return multileg[tabIndex].isAlertOpen ? " openedAlert" : "";
+  }, [multileg, tabIndex]);
+
   return (
     <>
       <Row className="mb-2">
         <Col md={9} className="ml-4 pr-0">
-          <Button variant="primary" size="sm" onClick={handleToggleAlert} block>
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={handleToggleAlert}
+            block
+            className={`toggleAlertButton${openedAlertClass}`}
+          >
             ALERTA DE OPERAÇÃO
+            <MDBIcon icon="angle-down" />
           </Button>
         </Col>
       </Row>
@@ -117,8 +129,8 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
             as="select"
             className="textInput"
           >
-            <option value={"Bid"}>Compra</option>
-            <option value={"Ask"}>Venda</option>
+            <option value={"Bid"}>Oferta de compra</option>
+            <option value={"Ask"}>Oferta de venda</option>
             <option value={"Last"}>Último</option>
           </Form.Control>
           <Form.Control
@@ -127,8 +139,8 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
             as="select"
             className="textInput"
           >
-            <option value={"Less"}>Menor</option>
-            <option value={"Greater"}>Maior</option>
+            <option value={"Less"}>Menor ou igual {"<="}</option>
+            <option value={"Greater"}>Maior ou igual {">="}</option>
           </Form.Control>
           <Form.Control
             value={comment}
