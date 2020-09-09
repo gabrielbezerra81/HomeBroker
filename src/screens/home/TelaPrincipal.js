@@ -9,9 +9,10 @@ import { checkIfSystemStateHasChangedShapeAction } from "redux/actions/system/Sy
 import { listarPosicoesAction } from "redux/actions/posicao/PosicaoActions";
 import BarraLateral from "screens/home/BarraLateral";
 import MenuOrdens from "screens/home/MenuOrdens";
-import MainScreenTabs from "./MainScreenTabs";
+import MainScreenTabs from "./Tabs/MainScreenTabs";
 import PopupContainer from "./PopupContainer";
 import { compose } from "redux";
+import QuoteBoxContainer from "./QuoteBox/QuoteBoxContainer";
 
 const OrdensExecucao = React.lazy(() =>
   import("screens/popups/ordens_em_execucao/OrdensExecucao"),
@@ -102,6 +103,8 @@ class TelaPrincipal extends React.Component {
             </MainScreenTabs>
 
             {AppBoletas}
+
+            <QuoteBoxContainer />
 
             <MenuOrdens />
           </div>

@@ -162,6 +162,12 @@ table > tbody > tr:nth-child(odd) > th {
   justify-content: center;
 }
 
+.flexSpaceBetweenCenter{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .flexAlignEnd {
   display: flex;
   align-items: flex-end;

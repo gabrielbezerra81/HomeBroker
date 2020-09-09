@@ -1,0 +1,80 @@
+.quoteBoxContainer {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  column-gap: 16px;
+  row-gap: 16px;
+  padding: 0px 48px 16px;
+  margin-top: 16px;
+  overflow: visible;
+
+  .buyText {
+    color: #336699;
+  }
+
+  .sellText {
+    color: #996666;
+  }
+
+  .quoteBox {
+    min-width: 140px;
+    align-self: flex-end;
+
+    .boxHeader {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      padding: 0 5px;
+      justify-content: center;
+      align-items: flex-end;
+
+      strong {
+        line-height: 17px;
+      }
+
+      .codeColumn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        span {
+          color: #ccc;
+          line-height: 14px;
+          margin-left: 8px;
+        }
+      }
+    }
+
+    .boxContent {
+      min-height: 110px;
+      padding: 4px;
+      border-width: 0.3rem;
+      margin-right: 0;
+
+      footer {
+        > div:first-child {
+          margin-bottom: -6px;
+        }
+        > div:last-child {
+          margin-top: -12px;
+        }
+
+        .sliderBuyColor::-webkit-slider-runnable-track,
+        .sliderSellColor::-webkit-slider-runnable-track {
+          border-radius: 0;
+          height: 6px;
+        }
+
+        .sliderBuyColor::-webkit-slider-thumb,
+        .sliderSellColor::-webkit-slider-thumb {
+          margin-top: -2px;
+        }
+
+        .sliderBuyColor::-webkit-slider-runnable-track {
+          background-color: #336699;
+        }
+        .sliderSellColor::-webkit-slider-runnable-track {
+          background-color: #996666;
+        }
+      }
+    }
+  }
+}
