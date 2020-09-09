@@ -8,7 +8,7 @@ import {
   url_listarOrdensExecucao_,
   url_listarPosicoes,
   url_criarPosicaoMultileg_,
-  url_criarAlertaOperacao_,
+  url_criarAlertaOperacao_param_operator,
   url_cancelarOrdemExec_id,
   url_finalizarAMercado_id,
   url_aumentarQtde_id_qtde,
@@ -283,9 +283,9 @@ export const criarPosicaoMultilegAPI = (data) => {
     });
 };
 
-export const criarAlertaOperacaoAPI = (data) => {
+export const criarAlertaOperacaoAPI = ({ param, operator, data }) => {
   return api
-    .post(`${url_criarAlertaOperacao_}`, data, {
+    .post(`${url_criarAlertaOperacao_param_operator}${param}/${operator}`, data, {
       timeout,
       "axios-retry": {
         retries: 2,

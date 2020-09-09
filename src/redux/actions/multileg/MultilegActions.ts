@@ -15,7 +15,6 @@ import {
   MultilegOption,
 } from "types/multileg/multileg";
 import MultilegState from "types/multileg/MultilegState";
-import { typedAssign } from "types/utils";
 import {
   findClosestStrike,
   AddNewMultilegQuote,
@@ -97,7 +96,7 @@ export const removeMultilegTabAction = (tabIndex: number): MainThunkAction => (
 
 interface ChangeTabAttributeAction {
   tabIndex: number;
-  attributeName: string;
+  attributeName: keyof MultilegTab | "limpar";
   attributeValue: any;
 }
 
@@ -129,7 +128,7 @@ export const updateMultilegTabAction = ({
 interface ChangeTabAttribute {
   multilegTabs: Array<MultilegTab>;
   tabIndex: number;
-  attributeName: string;
+  attributeName: keyof MultilegTab | "limpar";
   attributeValue: any;
   multilegQuotes?: Array<MultilegQuote>;
 }
@@ -158,7 +157,7 @@ export const updateMultilegTab = async ({
       value = value.toUpperCase();
     }
 
-    typedAssign(updatedMultilegtabs[tabIndex], {
+    Object.assign(updatedMultilegtabs[tabIndex], {
       [attributeName]: value,
     });
 
@@ -245,7 +244,7 @@ export const updateMultilegOfferAction = ({
     setOfferSymbolAndModel(multilegOffer);
   } //
   else {
-    typedAssign(multilegOffer, { [attributeName]: attributeValue });
+    Object.assign(multilegOffer, { [attributeName]: attributeValue });
     // Se a série for alterada, pesquisa novamente os strikes e códigos
 
     if (attributeName === "serieSelecionada") {
@@ -488,6 +487,7 @@ export const newMultilegTab: MultilegTab = {
   validadeSelect: "DAY",
   date: new Date(),
   tabelaMultileg: [],
+  isAlertOpen: false,
 };
 
 const setOfferSymbolAndModel = (multilegOffer: MultilegOffer) => {

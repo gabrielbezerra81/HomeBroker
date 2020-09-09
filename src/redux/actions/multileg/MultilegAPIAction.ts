@@ -139,9 +139,19 @@ export const sendMultilegOrderAction = (tabIndex: number): MainThunkAction => {
   };
 };
 
-export const createMultilegAlertAction = (
-  tabIndex: number,
-): MainThunkAction => {
+interface CreateAlertProps {
+  tabIndex: number;
+  param: string;
+  operator: string;
+  comment: string;
+}
+
+export const createMultilegAlertAction = ({
+  tabIndex,
+  param,
+  operator,
+  comment,
+}: CreateAlertProps): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
       multilegReducer: { multileg },
@@ -158,7 +168,11 @@ export const createMultilegAlertAction = (
 
     setPointerWhileAwaiting({ lockMode: "travar", id: "multileg" });
     if (validateMultilegOrder(mountOrderProps))
-      await criarAlertaOperacaoAPI(multilegRequestData);
+      await criarAlertaOperacaoAPI({
+        param,
+        operator,
+        data: multilegRequestData,
+      });
     setPointerWhileAwaiting({ lockMode: "destravar", id: "multileg" });
   };
 };

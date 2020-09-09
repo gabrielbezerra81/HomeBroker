@@ -18,12 +18,12 @@ import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
 import RowValidade from "screens/popups/multileg_/RowValidade";
 import {
   sendMultilegOrderAction,
-  createMultilegAlertAction,
   createMultilegPositionAction,
 } from "redux/actions/multileg/MultilegAPIAction";
 import NumberFormat from "react-number-format";
 import { StorePrincipalContext } from "redux/StoreCreation";
 import { aviso_calculo_preco_multileg } from "constants/AlertaErros";
+import MultilegAlert from "./MultilegAlert";
 
 class Book extends React.Component {
   componentDidUpdate(prevProps) {
@@ -34,8 +34,8 @@ class Book extends React.Component {
 
   render() {
     const { props } = this;
-    const { indice, cotacoesMultileg } = props;
-    const aba = props.multileg[indice];
+    const { indice: tabIndex, cotacoesMultileg } = props;
+    const aba = props.multileg[tabIndex];
 
     const total = calcularTotal(props);
     const min = calculoPreco(aba, "min", cotacoesMultileg);
@@ -90,7 +90,7 @@ class Book extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                {props.multileg[indice].tabelaMultileg.map(
+                {props.multileg[tabIndex].tabelaMultileg.map(
                   (item, indiceLinha) => {
                     const book = findMultilegBook({
                       multilegQuotes: props.cotacoesMultileg,
@@ -143,10 +143,10 @@ class Book extends React.Component {
               step="0.01"
               min={min}
               max={max}
-              value={Number(props.multileg[indice].preco.replace(",", "."))}
+              value={Number(props.multileg[tabIndex].preco.replace(",", "."))}
               onChange={(event) => {
                 props.updateMultilegTabAction({
-                  tabIndex: indice,
+                  tabIndex,
                   attributeName: "preco",
                   attributeValue: formatarNumDecimal(
                     Number(event.currentTarget.value),
@@ -161,7 +161,7 @@ class Book extends React.Component {
             <span
               onClick={() =>
                 props.updateMultilegTabAction({
-                  tabIndex: indice,
+                  tabIndex,
                   attributeName: "preco",
                   attributeValue: formatarNumero(
                     Number(min).toFixed(2),
@@ -182,7 +182,7 @@ class Book extends React.Component {
                 condicaoMed
                   ? () =>
                       props.updateMultilegTabAction({
-                        tabIndex: indice,
+                        tabIndex,
                         attributeName: "preco",
                         attributeValue: formatarNumero(
                           Number((max + min) / 2).toFixed(2),
@@ -202,7 +202,7 @@ class Book extends React.Component {
             <span
               onClick={() =>
                 props.updateMultilegTabAction({
-                  tabIndex: indice,
+                  tabIndex,
                   attributeName: "preco",
                   attributeValue: formatarNumero(
                     Number(max).toFixed(2),
@@ -239,7 +239,7 @@ class Book extends React.Component {
               value={renderPlaceholder ? "" : getPreco(props)}
               onChange={(valor) =>
                 props.updateMultilegTabAction({
-                  tabIndex: indice,
+                  tabIndex,
                   attributeName: "preco",
                   attributeValue: valor,
                 })
@@ -279,46 +279,30 @@ class Book extends React.Component {
           <Col className="mr-1"></Col>
         </Row>
 
-        {RowValidade(props, props.multileg[indice])}
+        {RowValidade(props, props.multileg[tabIndex])}
 
-        <Row className="mb-2">
-          <Col md={4} className="ml-4">
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={() =>
-                props.updateMultilegTabAction({
-                  tabIndex: indice,
-                  attributeName: "limpar",
-                  attributeValue: "",
-                })
-              }
-            >
-              LIMPAR
-            </Button>
-          </Col>
-          <Col className="mr-1">
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={() => props.sendMultilegOrderAction(props.indice)}
-            >
-              EXECUTAR
-            </Button>
-          </Col>
-        </Row>
-        <Row className="mb-2">
-          <Col md={9} className="ml-4 pr-0">
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={() => props.createMultilegAlertAction(props.indice)}
-              block
-            >
-              ALERTA DE OPERAÇÃO
-            </Button>
-          </Col>
-        </Row>
+        <div className="cleanExecuteButtonsRow">
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() =>
+              props.updateMultilegTabAction({
+                tabIndex,
+                attributeName: "limpar",
+                attributeValue: "",
+              })
+            }
+          >
+            LIMPAR
+          </Button>
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={() => props.sendMultilegOrderAction(props.indice)}
+          >
+            EXECUTAR
+          </Button>
+        </div>
         <Row className="mb-2">
           <Col md={9} className="ml-4 pr-0">
             <Button
@@ -331,6 +315,7 @@ class Book extends React.Component {
             </Button>
           </Col>
         </Row>
+        <MultilegAlert tabIndex={tabIndex} />
       </div>
     );
   }
@@ -351,7 +336,6 @@ export default connect(
   {
     updateMultilegTabAction,
     sendMultilegOrderAction,
-    createMultilegAlertAction,
     createMultilegPositionAction,
   },
   null,

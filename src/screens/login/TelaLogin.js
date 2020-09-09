@@ -11,8 +11,8 @@ import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 
 const TelaLogin = ({ path }) => {
   const [user, setUser] = useState({
-    username: "",
-    password: "",
+    username: "gabrielAB",
+    password: "123456789",
   });
 
   const dispatch = useDispatchStorePrincipal();

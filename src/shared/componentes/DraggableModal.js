@@ -7,6 +7,7 @@ import ConfigComplementar from "screens/popups/multileg_/ConfigComplementar";
 import { Resizable } from "re-resizable";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
+
 class BSModal extends Component {
   constructor(props) {
     super(props);

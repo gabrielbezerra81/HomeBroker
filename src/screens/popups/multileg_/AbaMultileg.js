@@ -16,7 +16,7 @@ import {
   formatarVencimento,
 } from "shared/utils/Formatacoes";
 import { searchMultilegSymbolAPIAction } from "redux/actions/multileg/MultilegAPIAction";
-import Book from "screens/popups/multileg_/Book";
+import Book from "screens/popups/multileg_/Book/Book";
 import { Select } from "antd";
 import { StorePrincipalContext } from "redux/StoreCreation";
 

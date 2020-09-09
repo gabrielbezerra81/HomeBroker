@@ -12,6 +12,7 @@ export interface MultilegTab {
   validadeSelect: "DAY" | "SPECIFIED_DAY" | "GTC";
   date: Date;
   tabelaMultileg: Array<MultilegOffer>;
+  isAlertOpen: boolean;
 }
 
 export interface MultilegOption {

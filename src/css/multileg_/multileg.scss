@@ -1,11 +1,19 @@
 #multileg {
   width: 1255px;
   margin-left: 5px;
+
+  .tab-content,
+  .tab-pane {
+    height: 100%;
+  }
 }
 
 #multileg .mcontent {
   font-size: 0.75rem;
   padding: 0;
+  overflow: hidden;
+  transition: height 0.3s ease;
+  height: auto;
 }
 
 #multileg input,
@@ -29,6 +37,21 @@
 
 .divBook {
   max-width: 229.25px;
+}
+
+.cleanExecuteButtonsRow {
+  padding: 0 26px 0 24px;
+  justify-content: space-between;
+  display: flex;
+  margin-bottom: 8px;
+
+  button {
+    flex: 1;
+  }
+
+  button + button {
+    margin-left: 8px;
+  }
 }
 
 .navTabMultileg {
@@ -109,6 +132,7 @@ a.botaoAddAba.active {
 .containerAbaMultileg {
   display: flex;
   color: #be9117;
+  height: 100%;
 }
 
 .containerAbaMultileg > div:first-child {

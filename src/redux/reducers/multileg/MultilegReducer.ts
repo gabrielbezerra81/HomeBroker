@@ -30,6 +30,7 @@ const INITIAL_STATE: MultilegState = {
       validadeSelect: "DAY",
       date: new Date(),
       tabelaMultileg: [],
+      isAlertOpen: false,
     },
   ],
   eventSource: null, //Book

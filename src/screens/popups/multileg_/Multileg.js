@@ -13,6 +13,7 @@ import {
 import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
 import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopupZIndexFromSecondaryTab";
 import TabTitle from "./TabTitle";
+import { collapseElement } from "shared/utils/AnimateHeight";
 
 class Multileg extends React.Component {
   constructor(props) {
@@ -35,6 +36,19 @@ class Multileg extends React.Component {
     if (this.props.divkey !== "" && this.props.divkey === "multileg") {
       document.getElementById("multileg").style.zIndex = this.props.zIndex + 1;
       this.props.aumentarZindexAction("multileg", this.props.zIndex, true);
+    }
+
+    const multilegElement = document.getElementById("multileg");
+    var section = multilegElement?.querySelector(".mcontent");
+    if (section) {
+      var isCollapsed = section.getAttribute("data-collapsed") === "true";
+      section.setAttribute("data-collapsed", "true");
+      if (!isCollapsed) {
+        collapseElement({
+          element: section,
+          height: 410,
+        });
+      }
     }
   }
 
@@ -122,7 +136,7 @@ class Multileg extends React.Component {
             </Col>
           </Nav>
         </Row>
-        <Row>
+        <Row style={{ height: "100%" }}>
           <Col md={12}>
             <Tab.Content>
               {this.props.multileg.map((_, index) => {
