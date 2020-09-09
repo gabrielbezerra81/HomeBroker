@@ -162,6 +162,7 @@ export const createMultilegAlertAction = ({
       multilegTabs: multileg,
       selectedAccount: selectedAccount,
       tabIndex,
+      comment,
     };
 
     const multilegRequestData = mountMultilegOrder(mountOrderProps);

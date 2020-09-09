@@ -70,12 +70,14 @@ interface MountMultilegOrder {
   multilegTabs: MultilegTab[];
   selectedAccount: Account;
   tabIndex: number;
+  comment?: string;
 }
 
 export const mountMultilegOrder = ({
   multilegTabs,
   selectedAccount,
   tabIndex,
+  comment,
 }: MountMultilegOrder) => {
   let multilegTab = [...multilegTabs][tabIndex];
 
@@ -84,6 +86,7 @@ export const mountMultilegOrder = ({
     tradeName: {},
     offers: [],
     next: [],
+    comment,
   };
   multilegOrder.account.id = selectedAccount.id;
   multilegOrder.enabled = true;
