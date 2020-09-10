@@ -163,6 +163,7 @@ th .colunaDividida div {
 
 .containerEmblema {
   padding: 0.4rem;
+  border-width: 0.3rem;
 }
 
 .containerEmblema h3 {
