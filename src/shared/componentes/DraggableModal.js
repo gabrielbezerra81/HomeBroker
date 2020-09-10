@@ -8,7 +8,7 @@ import { Resizable } from "re-resizable";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 
-class BSModal extends Component {
+class DragglableModal extends Component {
   constructor(props) {
     super(props);
 
@@ -78,7 +78,7 @@ class BSModal extends Component {
   }
 }
 
-export default BSModal;
+export default DragglableModal;
 
 const RenderFiltrarOrdens = () => {
   const { ordersExecReducer } = useStateStorePrincipal();

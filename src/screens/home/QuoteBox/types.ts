@@ -2,7 +2,6 @@ export interface BoxProps {
   buy: number;
   sell: number;
   quote: number;
-  variation: number;
   min: number;
   max: number;
   book: {
