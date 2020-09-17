@@ -104,9 +104,9 @@ class TelaPrincipal extends React.Component {
 
             {AppBoletas}
 
-            <QuoteBoxContainer />
-
             <MenuOrdens />
+
+            <QuoteBoxContainer />
           </div>
         </div>
       </div>
