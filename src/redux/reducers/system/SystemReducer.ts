@@ -29,6 +29,14 @@ export const INITIAL_STATE: SystemState = {
   mainTabs: [{ tabName: "Principal" }, { tabName: "Aba 2" }],
   selectedTab: "tab0",
   openedMenus: [],
+  boxesVisibility: [
+    { boxKey: "box1", visibility: true },
+    { boxKey: "box2", visibility: false },
+    { boxKey: "box3", visibility: true },
+    { boxKey: "box4", visibility: false },
+    { boxKey: "box5", visibility: true },
+    { boxKey: "box6", visibility: true },
+  ],
 
   // inputUsuario: "gabrielAB",
   // inputSenha: "123456789",

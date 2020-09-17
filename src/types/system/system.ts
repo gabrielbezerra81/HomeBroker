@@ -13,3 +13,8 @@ export interface Account {
   corretora: string;
   id: number;
 }
+
+export interface BoxVisibility {
+  boxKey: string;
+  visibility: boolean;
+}

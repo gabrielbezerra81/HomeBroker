@@ -1,17 +1,35 @@
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
+import produce from "immer";
 import Draggable from "react-draggable";
+import { RiCloseCircleFill } from "react-icons/ri";
+import { AiFillMinusCircle } from "react-icons/ai";
 
 import { ImArrowUp, ImArrowDown } from "react-icons/im";
 import { BoxProps, Code, FormattedBox } from "./types";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
+import useStateStorePrincipal from "hooks/useStateStorePrincipal";
+import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
+import { updateOneSystemStateAction } from "redux/actions/system/SystemActions";
 
 interface QuoteBoxProps {
   quoteBox: BoxProps;
 }
 
 const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
+  const {
+    systemReducer: { boxesVisibility },
+  } = useStateStorePrincipal();
+
+  const dispatch = useDispatchStorePrincipal();
+
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
+
+  const boxIndex = useMemo(() => {
+    return boxesVisibility.findIndex(
+      (boxItem) => boxItem.boxKey === `box${quoteBox.id}`,
+    );
+  }, [boxesVisibility, quoteBox.id]);
 
   const formattedBox: FormattedBox = useMemo(() => {
     const box = {} as FormattedBox;
@@ -33,23 +51,39 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
     return quoteBox.dayOscilation >= 0 ? "sliderBuyColor" : "sliderSellColor";
   }, [quoteBox]);
 
+  const visibilityClass = useMemo(() => {
+    return boxesVisibility[boxIndex]?.visibility ? "" : "hiddenBoxContent";
+  }, [boxIndex, boxesVisibility]);
+
+  const handleMinimize = useCallback(() => {
+    const updatedBoxesVisibility = produce(boxesVisibility, (draft) => {
+      draft[boxIndex].visibility = !draft[boxIndex].visibility;
+    });
+
+    dispatch(
+      updateOneSystemStateAction("boxesVisibility", updatedBoxesVisibility),
+    );
+  }, [boxesVisibility, dispatch, boxIndex]);
+
+  const handleClose = useCallback(() => {
+    console.log("close");
+  }, []);
+
   return (
     <Draggable
       enableUserSelectHack={isDragging}
       handle=".mcontent"
       position={position}
       onStart={() => {
-        console.log("start");
         setIsDragging(true);
       }}
       onStop={() => {
-        console.log("stop");
         setIsDragging(false);
       }}
       onDrag={(e, data) => setPosition(data)}
     >
       <div className="quoteBox">
-        <div className="boxHeader">
+        <div className="symbolsContainer">
           <div>
             {quoteBox.codes.map(
               (code, index) =>
@@ -67,12 +101,17 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
             )}
           </div>
         </div>
-        <div className="mcontent boxContent">
+        <div className={`mcontent boxContent ${visibilityClass}`}>
           <header>
+            <AiFillMinusCircle size={20} fill="#444" onClick={handleMinimize} />
+            <RiCloseCircleFill size={20} fill="#444" onClick={handleClose} />
+          </header>
+
+          <section>
             <div className="flexSpaceBetweenCenter">
-              <strong className="buyText">COMPRA</strong>
+              <strong>COMPRA</strong>
               <strong>Médio</strong>
-              <strong className="sellText">VENDA</strong>
+              <strong>VENDA</strong>
             </div>
             <div className="containerSliderTopo">
               <div className="sliderTopo"></div>
@@ -80,26 +119,26 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
               <div className="sliderTopo"></div>
             </div>
             <div className="flexSpaceBetweenCenter">
-              <span>{formattedBox.buy}</span>
-              <span>{formattedBox.sell}</span>
+              <span className="highlightedText">{formattedBox.buy}</span>
+              <span className="highlightedText">{formattedBox.sell}</span>
             </div>
-          </header>
+          </section>
 
           <main>
             <div className="buyBook">
               <div>
-                <span>Qtde</span>
-                <span>Preço</span>
+                <span className="highlightedText">Qtde</span>
+                <span className="highlightedText">Preço</span>
               </div>
               {formattedBox.book.buy.map((book, index) => (
                 <div key={`buyBook${index}`}>
-                  <span className="buyText">{book.qtty}</span>
-                  <span className="buyText">{book.price}</span>
+                  <span>{book.qtty}</span>
+                  <span>{book.price}</span>
                 </div>
               ))}
             </div>
             <div className="quoteContainer">
-              <strong>{formattedBox.quote}</strong>
+              <strong className="highlightedText">{formattedBox.quote}</strong>
               <span>
                 <DayOscilation
                   dayOscilation={quoteBox.dayOscilation}
@@ -109,13 +148,13 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
             </div>
             <div className="sellBook">
               <div>
-                <span>Qtde</span>
-                <span>Preço</span>
+                <span className="highlightedText">Qtde</span>
+                <span className="highlightedText">Preço</span>
               </div>
               {formattedBox.book.buy.map((book, index) => (
                 <div key={`buyBook${index}`}>
-                  <span className="sellText">{book.qtty}</span>
-                  <span className="sellText">{book.price}</span>
+                  <span>{book.qtty}</span>
+                  <span>{book.price}</span>
                 </div>
               ))}
             </div>
@@ -123,8 +162,8 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
 
           <footer>
             <div className="flexSpaceBetweenCenter">
-              <span>Min</span>
-              <span>Max</span>
+              <span className="highlightedText">Min</span>
+              <span className="highlightedText">Max</span>
             </div>
             <input
               type="range"
@@ -137,8 +176,8 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
               //value={item.valorAcao}
             />
             <div className="flexSpaceBetweenCenter">
-              <span>{formattedBox.min}</span>
-              <span>{formattedBox.max}</span>
+              <span className="highlightedText">{formattedBox.min}</span>
+              <span className="highlightedText">{formattedBox.max}</span>
             </div>
           </footer>
         </div>

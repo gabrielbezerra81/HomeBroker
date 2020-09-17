@@ -1,4 +1,4 @@
-import { Token, Account } from "./system";
+import { Token, Account, BoxVisibility } from "./system";
 
 export default interface SystemState {
   connectedUser: string | null;
@@ -24,4 +24,5 @@ export default interface SystemState {
     tabKey: string;
   }>;
   selectedTab: string;
+  boxesVisibility: Array<BoxVisibility>;
 }

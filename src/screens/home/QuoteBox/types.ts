@@ -1,4 +1,5 @@
 export interface BoxProps {
+  id: number;
   buy: number;
   sell: number;
   quote: number;
