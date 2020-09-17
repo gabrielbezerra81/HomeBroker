@@ -1,3 +1,4 @@
+import { BoxProps } from "screens/home/QuoteBox/types";
 import { Token, Account, BoxVisibility } from "./system";
 
 export default interface SystemState {
@@ -24,5 +25,6 @@ export default interface SystemState {
     tabKey: string;
   }>;
   selectedTab: string;
+  quoteBoxes: Array<BoxProps>;
   boxesVisibility: Array<BoxVisibility>;
 }

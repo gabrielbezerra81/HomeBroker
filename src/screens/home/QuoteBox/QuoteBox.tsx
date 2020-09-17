@@ -9,7 +9,10 @@ import { BoxProps, Code, FormattedBox } from "./types";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
-import { updateOneSystemStateAction } from "redux/actions/system/SystemActions";
+import {
+  updateManySystemState,
+  updateOneSystemStateAction,
+} from "redux/actions/system/SystemActions";
 
 interface QuoteBoxProps {
   quoteBox: BoxProps;
@@ -17,7 +20,7 @@ interface QuoteBoxProps {
 
 const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
   const {
-    systemReducer: { boxesVisibility },
+    systemReducer: { boxesVisibility, selectedTab, openedMenus, quoteBoxes },
   } = useStateStorePrincipal();
 
   const dispatch = useDispatchStorePrincipal();
@@ -52,6 +55,16 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
   }, [quoteBox]);
 
   const visibilityClass = useMemo(() => {
+    const shouldShowBox = openedMenus.some(
+      (menuItem) =>
+        menuItem.menuKey === `box${quoteBox.id}` &&
+        menuItem.tabKey === selectedTab,
+    );
+
+    return shouldShowBox ? {} : { display: "none" };
+  }, [openedMenus, quoteBox.id, selectedTab]);
+
+  const minimizedClass = useMemo(() => {
     return boxesVisibility[boxIndex]?.visibility ? "" : "hiddenBoxContent";
   }, [boxIndex, boxesVisibility]);
 
@@ -66,8 +79,36 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
   }, [boxesVisibility, dispatch, boxIndex]);
 
   const handleClose = useCallback(() => {
-    console.log("close");
-  }, []);
+    const updatedOpenedMenus = produce(openedMenus, (draft) => {
+      return draft.filter(
+        (menuItem) => menuItem.menuKey !== `box${quoteBox.id}`,
+      );
+    });
+
+    const updatedBoxesVisibility = produce(boxesVisibility, (draft) => {
+      draft.splice(boxIndex, 1);
+    });
+
+    const updatedQuoteBoxes = produce(quoteBoxes, (draft) => {
+      const index = draft.findIndex((boxItem) => boxItem.id === quoteBox.id);
+
+      if (index >= 0) draft.splice(index, 1);
+    });
+    dispatch(
+      updateManySystemState({
+        openedMenus: updatedOpenedMenus,
+        boxesVisibility: updatedBoxesVisibility,
+        quoteBoxes: updatedQuoteBoxes,
+      }),
+    );
+  }, [
+    boxIndex,
+    boxesVisibility,
+    openedMenus,
+    quoteBox.id,
+    quoteBoxes,
+    dispatch,
+  ]);
 
   return (
     <Draggable
@@ -82,7 +123,7 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
       }}
       onDrag={(e, data) => setPosition(data)}
     >
-      <div className="quoteBox">
+      <div className="quoteBox" style={visibilityClass}>
         <div className="symbolsContainer">
           <div>
             {quoteBox.codes.map(
@@ -101,7 +142,7 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
             )}
           </div>
         </div>
-        <div className={`mcontent boxContent ${visibilityClass}`}>
+        <div className={`mcontent boxContent ${minimizedClass}`}>
           <header>
             <AiFillMinusCircle size={20} fill="#444" onClick={handleMinimize} />
             <RiCloseCircleFill size={20} fill="#444" onClick={handleClose} />
