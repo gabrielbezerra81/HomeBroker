@@ -18,6 +18,7 @@
 
 .quoteBox {
   position: relative !important;
+  height: 0px;
 
   span,
   strong {
@@ -35,6 +36,11 @@
     justify-content: center;
     align-items: flex-end;
     height: 108px;
+    pointer-events: none;
+
+    > div {
+      pointer-events: all;
+    }
 
     strong {
       line-height: 18px;

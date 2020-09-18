@@ -13,7 +13,7 @@ import { mostrarErroConsulta } from "api/API";
 import { Token, Account } from "types/system/system";
 import api from "./apiConfig";
 
-const timeout = 10000;
+const timeout = 25000;
 
 export const autenticacaoTokenAPI = () => {
   return api
