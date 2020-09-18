@@ -14,6 +14,7 @@
   .mcontent {
     margin-right: 0;
     padding-bottom: 15px;
+    background-color: #000;
     // overflow: auto;
   }
 
@@ -47,7 +48,7 @@
   z-index: 1;
   height: 40px;
   padding: 5px 0;
-  background-color: var(--color-background);
+  background-color: #000; //var(--color-background);
   z-index: 3;
 
   &::after {
