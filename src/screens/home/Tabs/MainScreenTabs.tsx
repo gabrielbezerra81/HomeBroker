@@ -119,7 +119,6 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
                         {index !== 0 && (
                           <MDBIcon
                             icon="times"
-                            className="saldoOpNegativo"
                             onClick={(e) => {
                               e.stopPropagation();
                               dispatch(handleRemoveTabAction(index));

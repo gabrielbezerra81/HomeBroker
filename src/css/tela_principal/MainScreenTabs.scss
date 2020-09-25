@@ -63,6 +63,12 @@
     i {
       font-size: 12px;
       margin-top: 4px;
+      color: #666;
+      transition: color 0.2s;
+
+      &:hover {
+        color: #ce202a;
+      }
     }
 
     > input {
