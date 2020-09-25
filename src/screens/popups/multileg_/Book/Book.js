@@ -24,6 +24,7 @@ import NumberFormat from "react-number-format";
 import { StorePrincipalContext } from "redux/StoreCreation";
 import { aviso_calculo_preco_multileg } from "constants/AlertaErros";
 import MultilegAlert from "./MultilegAlert";
+import { MDBIcon } from "mdbreact";
 
 class Book extends React.Component {
   componentDidUpdate(prevProps) {
@@ -34,7 +35,11 @@ class Book extends React.Component {
 
   render() {
     const { props } = this;
-    const { indice: tabIndex, cotacoesMultileg } = props;
+    const {
+      indice: tabIndex,
+      cotacoesMultileg,
+      multilegButtonsVisibility,
+    } = props;
     const aba = props.multileg[tabIndex];
 
     const total = calcularTotal(props);
@@ -281,41 +286,60 @@ class Book extends React.Component {
 
         {RowValidade(props, props.multileg[tabIndex])}
 
-        <div className="cleanExecuteButtonsRow">
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={() =>
-              props.updateMultilegTabAction({
-                tabIndex,
-                attributeName: "limpar",
-                attributeValue: "",
-              })
-            }
-          >
-            LIMPAR
-          </Button>
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={() => props.sendMultilegOrderAction(props.indice)}
-          >
-            EXECUTAR
-          </Button>
-        </div>
-        <Row className="mb-2">
-          <Col md={9} className="ml-4 pr-0">
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={() => props.createMultilegPositionAction(props.indice)}
-              block
-            >
-              CRIAR POSIÇÃO
-            </Button>
-          </Col>
-        </Row>
-        <MultilegAlert tabIndex={tabIndex} />
+        {multilegButtonsVisibility ? (
+          <>
+            <div className="cleanExecuteButtonsRow">
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() =>
+                  props.updateMultilegTabAction({
+                    tabIndex,
+                    attributeName: "limpar",
+                    attributeValue: "",
+                  })
+                }
+              >
+                LIMPAR
+              </Button>
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={() => props.sendMultilegOrderAction(props.indice)}
+              >
+                EXECUTAR
+              </Button>
+            </div>
+            <Row className="mb-2">
+              <Col md={9} className="ml-4 pr-0">
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={() =>
+                    props.createMultilegPositionAction(props.indice)
+                  }
+                  block
+                >
+                  CRIAR POSIÇÃO
+                </Button>
+              </Col>
+            </Row>
+            <MultilegAlert tabIndex={tabIndex} />
+          </>
+        ) : (
+          <Row className="mb-2">
+            <Col md={9} className="ml-4 pr-0">
+              <Button
+                variant="primary"
+                size="sm"
+                block
+                className={`toggleAlertButton`}
+              >
+                ADICIONAR BOX
+              </Button>
+            </Col>
+          </Row>
+        )}
       </div>
     );
   }
@@ -329,6 +353,7 @@ const mapStateToProps = (state) => ({
   accounts: state.systemReducer.accounts,
   selectedAccount: state.systemReducer.selectedAccount,
   cotacoesMultilegID: state.multilegReducer.cotacoesMultilegID,
+  multilegButtonsVisibility: state.multilegReducer.multilegButtonsVisibility,
 });
 
 export default connect(

@@ -33,6 +33,8 @@ class Multileg extends React.Component {
   // }
 
   componentDidMount() {
+    const { multilegButtonsVisibility } = this.props;
+
     if (this.props.divkey !== "" && this.props.divkey === "multileg") {
       document.getElementById("multileg").style.zIndex = this.props.zIndex + 1;
       this.props.aumentarZindexAction("multileg", this.props.zIndex, true);
@@ -43,10 +45,13 @@ class Multileg extends React.Component {
     if (section) {
       var isCollapsed = section.getAttribute("data-collapsed") === "true";
       section.setAttribute("data-collapsed", "true");
+
+      const popupHeight = multilegButtonsVisibility ? 410 : 345;
+
       if (!isCollapsed) {
         collapseElement({
           element: section,
-          height: 410,
+          height: popupHeight,
         });
       }
     }
@@ -158,6 +163,7 @@ const mapStateToPropsMultileg = (state) => ({
   configComplementarAberto: state.multilegReducer.configComplementarAberto,
   multileg: state.multilegReducer.multileg,
   abaSelecionada: state.multilegReducer.abaSelecionada,
+  multilegButtonsVisibility: state.multilegReducer.multilegButtonsVisibility,
   isOpenMultileg: state.systemReducer.isOpenMultileg,
 });
 
