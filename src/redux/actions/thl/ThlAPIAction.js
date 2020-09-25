@@ -184,17 +184,19 @@ const atualizarPrecosTHL = async ({
     ),
   ].join(",");
 
-  const source = atualizarPrecosTHLAPI({
-    ids,
-    dispatch,
-    token,
-    priceStructures,
-  });
-  dispatch(
-    updateManyTHLState({
-      eventSourcePrecos: source,
-    }),
-  );
+  if (ids) {
+    const source = atualizarPrecosTHLAPI({
+      ids,
+      dispatch,
+      token,
+      priceStructures,
+    });
+    dispatch(
+      updateManyTHLState({
+        eventSourcePrecos: source,
+      }),
+    );
+  }
 };
 
 export const favoritarTHLAPIAction = (actionProps) => {
@@ -333,18 +335,21 @@ const atualizarCotacaoTHL = ({
   arrayCotacoes.forEach((ativo) => {
     codigos += ativo.codigo + ",";
   });
+  
   codigos = codigos.substring(0, codigos.length - 1);
 
-  const source = atualizarCotacaoTHLAPI({
-    dispatch,
-    arrayCotacoes,
-    codigos,
-    token,
-  });
-  dispatch(
-    updateOneTHLState({
-      attributeName: "eventSourceCotacoesTHL",
-      attributeValue: source,
-    }),
-  );
+  if (codigos) {
+    const source = atualizarCotacaoTHLAPI({
+      dispatch,
+      arrayCotacoes,
+      codigos,
+      token,
+    });
+    dispatch(
+      updateOneTHLState({
+        attributeName: "eventSourceCotacoesTHL",
+        attributeValue: source,
+      }),
+    );
+  }
 };

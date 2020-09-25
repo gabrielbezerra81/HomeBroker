@@ -356,22 +356,26 @@ export const addMultilegOfferAction = ({
     },
   } = getState();
 
-  const data = await addMultilegOffer({
-    multilegTabs: multileg,
-    offerType,
-    tabIndex,
-    multilegQuotes: cotacoesMultileg,
-  });
+  if (multileg[tabIndex].tabelaMultileg.length < 6) {
+    const data = await addMultilegOffer({
+      multilegTabs: multileg,
+      offerType,
+      tabIndex,
+      multilegQuotes: cotacoesMultileg,
+    });
 
-  updateMultilegQuotesAction({
-    dispatch,
-    token,
-    eventSourceMultilegQuotes: eventSourceCotacao,
-    setIntervalMultilegQuotes: setIntervalCotacoesMultileg,
-    multilegQuotes: data.multilegQuotes,
-  });
-  dispatch(updateMultilegStateAction("multileg", data.multilegTabs));
-  dispatch(updateMultilegStateAction("cotacoesMultileg", data.multilegQuotes));
+    updateMultilegQuotesAction({
+      dispatch,
+      token,
+      eventSourceMultilegQuotes: eventSourceCotacao,
+      setIntervalMultilegQuotes: setIntervalCotacoesMultileg,
+      multilegQuotes: data.multilegQuotes,
+    });
+    dispatch(updateMultilegStateAction("multileg", data.multilegTabs));
+    dispatch(
+      updateMultilegStateAction("cotacoesMultileg", data.multilegQuotes),
+    );
+  }
 
   setPointerWhileAwaiting({
     lockMode: "destravar",
@@ -546,14 +550,16 @@ export const updateMultilegQuotesAction = ({
 
   const symbols = symbolsArray.join(",");
 
-  const newSource = atualizarCotacaoMultilegAPI({
-    dispatch,
-    codigos: symbols,
-    arrayCotacoes: multilegQuotes,
-    token,
-  });
+  if (symbols) {
+    const newSource = atualizarCotacaoMultilegAPI({
+      dispatch,
+      codigos: symbols,
+      arrayCotacoes: multilegQuotes,
+      token,
+    });
 
-  dispatch(updateMultilegStateAction("eventSourceCotacao", newSource));
+    dispatch(updateMultilegStateAction("eventSourceCotacao", newSource));
+  }
 };
 
 export const cloneMultilegTabs = (multilegTabs: MultilegTab[]) =>

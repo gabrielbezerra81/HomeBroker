@@ -47,17 +47,19 @@ const atualizarCotacaoBoletaAction = ({
 }) => {
   const codigo = dadosPesquisa.ativo;
 
-  const newSource = atualizarCotacaoBoletasAPI({
-    dispatch,
-    codigos: codigo,
-    dadosPesquisa,
-    namespace,
-  });
+  if (codigo) {
+    const newSource = atualizarCotacaoBoletasAPI({
+      dispatch,
+      codigos: codigo,
+      dadosPesquisa,
+      namespace,
+    });
 
-  dispatch({
-    type: `${ATUALIZAR_EVENT_SOURCE_BOLETAS}${namespace}`,
-    payload: newSource,
-  });
+    dispatch({
+      type: `${ATUALIZAR_EVENT_SOURCE_BOLETAS}${namespace}`,
+      payload: newSource,
+    });
+  }
 };
 
 export const enviarOrdemAction = (props, selectedAccount) => {

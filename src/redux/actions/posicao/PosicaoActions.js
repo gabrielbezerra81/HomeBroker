@@ -230,17 +230,19 @@ const atualizarCotacoes = async ({
 
   codigos = codigos.substring(0, codigos.length - 1);
 
-  const newSource = atualizarCotacaoPosicaoAPI({
-    dispatch,
-    arrayCotacoes,
-    codigos,
-    token,
-  });
+  if (codigos) {
+    const newSource = atualizarCotacaoPosicaoAPI({
+      dispatch,
+      arrayCotacoes,
+      codigos,
+      token,
+    });
 
-  dispatch(
-    updateOnePositionState({
-      attributeName: "eventSourceCotacoes",
-      attributeValue: newSource,
-    }),
-  );
+    dispatch(
+      updateOnePositionState({
+        attributeName: "eventSourceCotacoes",
+        attributeValue: newSource,
+      }),
+    );
+  }
 };
