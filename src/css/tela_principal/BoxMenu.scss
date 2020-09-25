@@ -1,0 +1,43 @@
+.BoxMenuMainScreen {
+  margin-left: 4px;
+
+  div:first-child {
+    width: 28px;
+    height: 27px;
+    padding: 4px 0 0px;
+    background-color: #282828;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    span {
+      color: #fafafa;
+      font-size: 8px;
+    }
+
+    img {
+      width: 16px;
+    }
+  }
+
+  div:last-child {
+    background-color: #282828;
+    width: 168px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px 4px 4px;
+
+    span {
+      color: #fafafa;
+      line-height: 16px;
+    }
+
+    svg {
+      color: #b1b2b1;
+      cursor: pointer;
+      align-self: flex-end;
+    }
+  }
+}

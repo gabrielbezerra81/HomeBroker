@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 // import LogRocket from "logrocket";
 import MenuLateralUsuario from "screens/home/MenuLateralUsuario";
@@ -6,7 +6,6 @@ import BarraTopoTelaPrincipal from "screens/home/BarraTopoTelaPrincipal";
 import { StorePrincipalContext, GlobalContext } from "redux/StoreCreation";
 import { listarOrdensExecAction } from "redux/actions/ordensExecucao/OrdensExecActions";
 import {
-  abrirItemBarraLateralAction,
   checkIfSystemStateHasChangedShapeAction,
   deslogarUsuarioAction,
 } from "redux/actions/system/SystemActions";
@@ -17,12 +16,8 @@ import MainScreenTabs from "./Tabs/MainScreenTabs";
 import PopupContainer from "./PopupContainer";
 import { compose } from "redux";
 import QuoteBoxContainer from "./QuoteBox/QuoteBoxContainer";
-import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
-import { updateOneMultilegState } from "redux/actions/multileg/utils";
-import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
-import { atualizarDivKeyAction } from "redux/actions/GlobalAppActions";
-import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import api from "api/apiConfig";
+import AddBoxMenu from "./QuoteBox/AddBoxMenu";
 
 const OrdensExecucao = React.lazy(() =>
   import("screens/popups/ordens_em_execucao/OrdensExecucao"),
@@ -53,7 +48,7 @@ class TelaPrincipal extends React.Component {
       },
       function (error) {
         if (error.response.status === 401) {
-          alert("Sua sessão expirou! Faça login novamente.");
+          // alert("Sua sessão expirou! Faça login novamente.");
           this.props.deslogarUsuarioAction();
         } else {
           return Promise.reject(error);
@@ -126,7 +121,7 @@ class TelaPrincipal extends React.Component {
               </PopupContainer>
             </MainScreenTabs>
 
-            {/* <AddBoxMenu /> */}
+            <AddBoxMenu />
 
             {AppBoletas}
 
@@ -170,43 +165,6 @@ export default compose(
     },
   ),
 )(TelaPrincipal);
-
-const AddBoxMenu = () => {
-  const dispatch = useDispatchStorePrincipal();
-  const dispatchGlobal = useDispatchGlobalStore();
-
-  const {
-    systemReducer: { isOpenMultileg },
-    multilegReducer: { multilegButtonsVisibility },
-  } = useStateStorePrincipal();
-
-  useEffect(() => {
-    if (!multilegButtonsVisibility) {
-      dispatchGlobal(atualizarDivKeyAction("multileg"));
-      dispatch(
-        abrirItemBarraLateralAction({ isOpenMultileg }, "isOpenMultileg"),
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [multilegButtonsVisibility]);
-
-  return (
-    <div>
-      <button
-        onClick={() => {
-          dispatch(
-            updateOneMultilegState({
-              attributeName: "multilegButtonsVisibility",
-              attributeValue: false,
-            }),
-          );
-        }}
-      >
-        Box de Cotação
-      </button>
-    </div>
-  );
-};
 
 /*
 

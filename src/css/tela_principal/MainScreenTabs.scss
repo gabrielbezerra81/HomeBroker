@@ -1,6 +1,11 @@
 #MainScreenTabs {
   padding-top: 16px;
   display: flex;
+  margin-left: 32px;
+
+  .row:nth-child(2) {
+    height: 8px;
+  }
 
   // popup container
 

@@ -34,7 +34,8 @@ import "./posicao_custodia/PosicaoDetalhada.css";
 import "./relatorio_detalhado/RelatorioDetalhado.css";
 import "./tela_principal/TelaLogin.css";
 import "./tela_principal/TelaCadastro.css";
-import "./tela_principal/QuoteBox.scss"
+import "./tela_principal/QuoteBox.scss";
+import "./tela_principal/BoxMenu.scss";
 import "./tela_thl/thl.scss";
 import "./tela_thl/combinacoes.scss";
 import "./tela_thl/vencimentos.scss";
