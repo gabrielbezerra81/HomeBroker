@@ -15,6 +15,7 @@ import { persistor } from "redux/StoreCreation";
 import api from "api/apiConfig";
 
 import { INITIAL_STATE as initialSystemState } from "../../reducers/system/SystemReducer";
+import { updateOneMultilegState } from "../multileg/utils";
 
 const waitDispatch = 1000;
 
@@ -162,6 +163,15 @@ export const abrirItemBarraLateralAction = (props, nameVariavelReducer) => {
         openedMenus,
       });
 
+      // if (nameVariavelReducer === "isOpenMultileg" && !updatedVisibility) {
+      //   dispatch(
+      //     updateOneMultilegState({
+      //       attributeName: "multilegButtonsVisibility",
+      //       attributeValue: true,
+      //     }),
+      //   );
+      // }
+
       dispatch(
         updateManySystemState({
           [nameVariavelReducer]: updatedVisibility,
@@ -215,13 +225,15 @@ const resetarDadosReducerAction = ({
   if (["isOpenOrdersExec", "isOpenPosition"].includes(nameVariavelReducer))
     limparReducer = false;
 
+  const timer = nameVariavelReducer === "isOpenMultileg" ? 0 : waitDispatch;
+
   if (!visibilidadeMenu)
     setTimeout(() => {
       dispatch({
         type: actionType.RESET_REDUX_STATE,
         payload: { name: nameVariavelReducer, limparReducer },
       });
-    }, waitDispatch);
+    }, timer);
 };
 
 export const handleOpenMenusInMainScreenTabsAction = (
@@ -315,16 +327,18 @@ export const handleAddOrSelectTabAction = (eventKey) => {
     const { mainTabs } = getState().systemReducer;
 
     if (eventKey === "addTab") {
-      const updatedMainTabs = produce(mainTabs, (draft) => {
-        draft.push({ tabName: `Aba ${draft.length + 1}` });
-      });
+      if (mainTabs.length < 11) {
+        const updatedMainTabs = produce(mainTabs, (draft) => {
+          draft.push({ tabName: `Aba ${draft.length + 1}` });
+        });
 
-      dispatch(
-        updateManySystemState({
-          mainTabs: updatedMainTabs,
-          selectedTab: `tab${updatedMainTabs.length - 1}`,
-        }),
-      );
+        dispatch(
+          updateManySystemState({
+            mainTabs: updatedMainTabs,
+            selectedTab: `tab${updatedMainTabs.length - 1}`,
+          }),
+        );
+      }
     } //
     else {
       dispatch(updateOneSystemStateAction("selectedTab", eventKey));
