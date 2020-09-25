@@ -42,14 +42,16 @@ class TelaPrincipal extends React.Component {
     this.props.listarPosicoesAction(this.props);
     this.props.checkIfSystemStateHasChangedShapeAction();
 
+    const { deslogarUsuarioAction } = this.props;
+
     api.interceptors.response.use(
       function (response) {
         return response;
       },
       function (error) {
         if (error.response.status === 401) {
-          // alert("Sua sessão expirou! Faça login novamente.");
-          this.props.deslogarUsuarioAction();
+          alert("Sua sessão expirou! Faça login novamente.");
+          deslogarUsuarioAction();
         } else {
           return Promise.reject(error);
         }
