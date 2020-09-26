@@ -3,7 +3,7 @@
   display: flex;
   margin-left: 32px;
 
-  .row:nth-child(2) {
+  > .row:nth-child(2) {
     height: 8px;
   }
 
