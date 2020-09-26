@@ -469,12 +469,12 @@ export const favoritarTHLAPI = (data) => {
 };
 
 export const addQuoteBoxAPI = (groupName, data) => {
-  console.log(groupName, JSON.stringify(data));
   return api
     .post(`${url_addQuoteBox_groupName}${groupName}`, data, {
       timeout,
     })
-    .then(() => {
+    .then((response) => {
+      console.log(response.data);
       alert(success_add_box);
     })
     .catch((erro) => {
@@ -506,6 +506,16 @@ export const setPointerWhileAwaiting = ({
     }
     if (parent) parent.style.cursor = "auto";
   }
+};
+
+export const listQuoteBoxesAPI = () => {
+  return api
+    .get(`favorite`)
+    .then((response) => response.data)
+    .catch((erro) => {
+      mostrarErroConsulta(erro, "");
+      return [];
+    });
 };
 
 export const mostrarErroConsulta = (erro, mensagem) => {
