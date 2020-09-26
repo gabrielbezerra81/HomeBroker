@@ -37,6 +37,14 @@ const margemParaMenuLateral = (isOpenLeftUserMenu) => {
 };
 
 class TelaPrincipal extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      shouldAlertSessionExpired: true,
+    };
+  }
+
   componentDidMount() {
     this.props.listarOrdensExecAction();
     this.props.listarPosicoesAction(this.props);
@@ -48,12 +56,15 @@ class TelaPrincipal extends React.Component {
       function (response) {
         return response;
       },
-      function (error) {
+      (error) => {
         if (error.response.status === 401) {
           console.log(error);
           console.log(error.response);
-          alert("Sua sessão expirou! Faça login novamente.");
-          deslogarUsuarioAction();
+          if (this.state.shouldAlertSessionExpired) {
+            alert("Sua sessão expirou! Faça login novamente.");
+            this.setState({ shouldAlertSessionExpired: false });
+            deslogarUsuarioAction();
+          }
         } else {
           return Promise.reject(error);
         }
