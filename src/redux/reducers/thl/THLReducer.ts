@@ -68,7 +68,7 @@ const INITIAL_STATE: THLState = {
     41.0,
     44.0,
   ],
-  strikeSelecionado: 21,
+  strikeSelecionado: "",
   precosTabelaVencimentos: [],
   eventSourcePrecos: null,
   setIntervalPrecosTHL: null,

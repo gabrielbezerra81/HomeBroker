@@ -66,7 +66,7 @@ export default React.memo(() => {
       if (initialLoad) dispatch(listarTabelaInicialTHLAPIAction(initialLoad));
       // Partindo de uma tabela vazia em que o strikeSelecionado é nulo, faz a carga inicial da tabela e impede
       // que carregue uma segunda vez para não substituir os dados quando a action atualizar o strikeSelecionado junto com a tabela
-      else if (prevStrike !== strikeSelecionado) {
+      else if (Number(prevStrike) !== Number(strikeSelecionado)) {
         // A carga inicial altera o strike, então aqui deverá ser verificado se é permitido atualizar a tabela
         // ao mudar o strike. O padrão é permitir, exceto na carga inicial (mudanças de código).
         if (shouldUpdateWithStrikeChange)

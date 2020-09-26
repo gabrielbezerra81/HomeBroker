@@ -72,7 +72,8 @@ export const listarTabelaInicialTHLAPIAction = (initialLoad = false) => {
             }),
           );
         }
-      } else {
+      } //
+      else {
         const data = await getTHLDataWithStrikeAPI(
           symbol,
           selectedStrike,
@@ -335,7 +336,7 @@ const atualizarCotacaoTHL = ({
   arrayCotacoes.forEach((ativo) => {
     codigos += ativo.codigo + ",";
   });
-  
+
   codigos = codigos.substring(0, codigos.length - 1);
 
   if (codigos) {
