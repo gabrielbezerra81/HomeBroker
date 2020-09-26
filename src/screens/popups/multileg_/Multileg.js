@@ -13,7 +13,7 @@ import {
 import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
 import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopupZIndexFromSecondaryTab";
 import TabTitle from "./TabTitle";
-import { collapseElement } from "shared/utils/AnimateHeight";
+import { collapseElement, updateHeight } from "shared/utils/AnimateHeight";
 
 class Multileg extends React.Component {
   constructor(props) {
@@ -58,7 +58,14 @@ class Multileg extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { divkey, isOpenMultileg, aumentarZindexAction, zIndex } = this.props;
+    const {
+      divkey,
+      isOpenMultileg,
+      aumentarZindexAction,
+      zIndex,
+      multileg,
+      multilegButtonsVisibility,
+    } = this.props;
 
     setPopupZIndexFromSecondaryTab({
       zIndex,
@@ -68,6 +75,25 @@ class Multileg extends React.Component {
       popupVisibility: isOpenMultileg,
       updateFunction: aumentarZindexAction,
     });
+
+    const previousNumberOfOffers = Math.max(
+      ...prevProps.multileg.map((tab) => tab.tabelaMultileg.length),
+    );
+
+    const maxNumberOfOffers = Math.max(
+      ...multileg.map((tab) => tab.tabelaMultileg.length),
+    );
+
+    if (previousNumberOfOffers !== maxNumberOfOffers) {
+      if (previousNumberOfOffers || previousNumberOfOffers === 0) {
+        const multilegElement = document.getElementById("multileg");
+        var section = multilegElement?.querySelector(".mcontent");
+
+        const popupHeight = multilegButtonsVisibility ? 410 : 345;
+
+        updateHeight(section, popupHeight, 26 * maxNumberOfOffers);
+      }
+    }
   }
 
   render() {

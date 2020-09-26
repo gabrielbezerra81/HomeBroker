@@ -19,12 +19,12 @@ import RowValidade from "screens/popups/multileg_/RowValidade";
 import {
   sendMultilegOrderAction,
   createMultilegPositionAction,
+  addQuoteBoxFromMultilegAction,
 } from "redux/actions/multileg/MultilegAPIAction";
 import NumberFormat from "react-number-format";
 import { StorePrincipalContext } from "redux/StoreCreation";
 import { aviso_calculo_preco_multileg } from "constants/AlertaErros";
 import MultilegAlert from "./MultilegAlert";
-import { MDBIcon } from "mdbreact";
 
 class Book extends React.Component {
   componentDidUpdate(prevProps) {
@@ -334,6 +334,9 @@ class Book extends React.Component {
                 size="sm"
                 block
                 className={`toggleAlertButton`}
+                onClick={() => {
+                  this.props.addQuoteBoxFromMultilegAction(tabIndex);
+                }}
               >
                 ADICIONAR BOX
               </Button>
@@ -362,6 +365,7 @@ export default connect(
     updateMultilegTabAction,
     sendMultilegOrderAction,
     createMultilegPositionAction,
+    addQuoteBoxFromMultilegAction,
   },
   null,
   { context: StorePrincipalContext },

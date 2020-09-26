@@ -91,16 +91,6 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [multileg[tabIndex].isAlertOpen]);
 
-  useEffect(() => {
-    if (previousNumberOfOffers !== maxNumberOfOffers)
-      if (previousNumberOfOffers || previousNumberOfOffers === 0) {
-        const multilegElement = document.getElementById("multileg");
-        var section = multilegElement?.querySelector(".mcontent");
-
-        updateHeight(section, 410, 26 * maxNumberOfOffers);
-      }
-  }, [maxNumberOfOffers, previousNumberOfOffers]);
-
   const openedAlertClass = useMemo(() => {
     return multileg[tabIndex].isAlertOpen ? " openedAlert" : "";
   }, [multileg, tabIndex]);

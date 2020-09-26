@@ -4,6 +4,7 @@ import {
   setPointerWhileAwaiting,
   criarAlertaOperacaoAPI,
   criarPosicaoMultilegAPI,
+  addQuoteBoxAPI,
 } from "api/API";
 import { updateMultilegQuotesAction } from "redux/actions/multileg/MultilegActions";
 import {
@@ -198,6 +199,38 @@ export const createMultilegPositionAction = (
     setPointerWhileAwaiting({ lockMode: "travar", id: "multileg" });
     if (validateMultilegOrder(mountOrderProps))
       await criarPosicaoMultilegAPI(multilegRequestData);
+    setPointerWhileAwaiting({ lockMode: "destravar", id: "multileg" });
+  };
+};
+
+export const addQuoteBoxFromMultilegAction = (
+  tabIndex: number,
+): MainThunkAction => {
+  return async (dispatch, getState) => {
+    const {
+      multilegReducer: { multileg },
+      systemReducer: { selectedAccount, selectedTab },
+    } = getState();
+
+    const tabName = multileg[tabIndex].nomeAba;
+
+    const configData = { tabKey: selectedTab };
+
+    const mountOrderProps = {
+      multilegTabs: multileg,
+      selectedAccount: selectedAccount,
+      tabIndex,
+      comment: JSON.stringify({ configuration: configData }),
+    };
+
+    const multilegRequestData = mountMultilegOrder(mountOrderProps);
+
+    setPointerWhileAwaiting({ lockMode: "travar", id: "multileg" });
+
+    if (validateMultilegOrder(mountOrderProps)) {
+      await addQuoteBoxAPI(tabName, multilegRequestData);
+    }
+
     setPointerWhileAwaiting({ lockMode: "destravar", id: "multileg" });
   };
 };

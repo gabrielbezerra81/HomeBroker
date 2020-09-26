@@ -18,6 +18,7 @@ import {
   url_recalcularPrecos_acao_ativo_strike_tipo,
   url_pesquisarCombinacoes_ativo,
   url_favoritarTHL_,
+  url_addQuoteBox_groupName,
 } from "api/url";
 
 import {
@@ -40,6 +41,8 @@ import {
   erro_pesquisarCombinacoes_thl,
   sucesso_favoritar_thl,
   erro_favoritar_thl,
+  error_add_box,
+  success_add_box,
 } from "constants/AlertaErros";
 import api from "./apiConfig";
 
@@ -285,13 +288,17 @@ export const criarPosicaoMultilegAPI = (data) => {
 
 export const criarAlertaOperacaoAPI = ({ param, operator, data }) => {
   return api
-    .post(`${url_criarAlertaOperacao_param_operator}${param}/${operator}`, data, {
-      timeout,
-      "axios-retry": {
-        retries: 2,
-        retryDelay: () => 2000,
+    .post(
+      `${url_criarAlertaOperacao_param_operator}${param}/${operator}`,
+      data,
+      {
+        timeout,
+        "axios-retry": {
+          retries: 2,
+          retryDelay: () => 2000,
+        },
       },
-    })
+    )
     .then((response) => {
       if (response.status === 201) alert(sucesso_criar_alerta);
       else alert(erro_criar_alerta);
@@ -458,6 +465,20 @@ export const favoritarTHLAPI = (data) => {
     .then(() => alert(sucesso_favoritar_thl))
     .catch((erro) => {
       mostrarErroConsulta(erro, erro_favoritar_thl);
+    });
+};
+
+export const addQuoteBoxAPI = (groupName, data) => {
+  console.log(groupName, JSON.stringify(data));
+  return api
+    .post(`${url_addQuoteBox_groupName}${groupName}`, data, {
+      timeout,
+    })
+    .then(() => {
+      alert(success_add_box);
+    })
+    .catch((erro) => {
+      mostrarErroConsulta(erro, error_add_box);
     });
 };
 

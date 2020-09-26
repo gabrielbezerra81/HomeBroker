@@ -50,6 +50,8 @@ class TelaPrincipal extends React.Component {
       },
       function (error) {
         if (error.response.status === 401) {
+          console.log(error);
+          console.log(error.response);
           alert("Sua sessão expirou! Faça login novamente.");
           deslogarUsuarioAction();
         } else {

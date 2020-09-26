@@ -70,7 +70,7 @@ interface MountMultilegOrder {
   multilegTabs: MultilegTab[];
   selectedAccount: Account;
   tabIndex: number;
-  comment?: string;
+  comment?: any;
 }
 
 export const mountMultilegOrder = ({
