@@ -91,7 +91,7 @@ class Multileg extends React.Component {
 
         const popupHeight = multilegButtonsVisibility ? 410 : 345;
 
-        updateHeight(section, popupHeight, 26 * maxNumberOfOffers);
+        updateHeight(section, popupHeight, 27 * maxNumberOfOffers);
       }
     }
   }

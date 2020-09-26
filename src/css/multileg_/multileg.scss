@@ -312,15 +312,19 @@ a.botaoAddAba.active {
 .tabelaBook {
   color: #ddd;
   padding: 20px;
-}
 
-.tabelaBook thead {
-  color: #be9117;
-}
+  thead {
+    color: #be9117;
+  }
 
-.tabelaBook td {
-  padding: 4px !important;
-  height: 26px !important;
+  tbody tr {
+    height: 27px;
+  }
+
+  td {
+    padding: 4px !important;
+    height: 26px !important;
+  }
 }
 
 .textoCompra {
