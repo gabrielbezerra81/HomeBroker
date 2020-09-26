@@ -220,7 +220,7 @@ export const addQuoteBoxFromMultilegAction = (
       multilegTabs: multileg,
       selectedAccount: selectedAccount,
       tabIndex,
-      comment: JSON.stringify({ configuration: configData }),
+      comment: JSON.stringify(configData),
     };
 
     const multilegRequestData = mountMultilegOrder(mountOrderProps);
