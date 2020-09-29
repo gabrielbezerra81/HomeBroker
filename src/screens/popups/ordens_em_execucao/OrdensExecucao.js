@@ -238,16 +238,20 @@ const classeOrdem = (tipo, props, item) => {
 };
 
 const abrirOpcoesOrdem = (props, item) => {
-  props.mudarVariavelOrdensExecAction("ordemAtual", item);
-
   if (props.ordemAtual) {
-    if (props.ordemAtual.id === item.id)
-      props.mudarVariavelOrdensExecAction(
-        "opcoesOrdemAberto",
-        !props.opcoesOrdemAberto,
-      );
-    else props.mudarVariavelOrdensExecAction("opcoesOrdemAberto", true);
-  } else props.mudarVariavelOrdensExecAction("opcoesOrdemAberto", true);
+    if (props.ordemAtual.id === item.id) {
+      props.mudarVariavelOrdensExecAction("opcoesOrdemAberto", false);
+      props.mudarVariavelOrdensExecAction("ordemAtual", null);
+    } //
+    else {
+      props.mudarVariavelOrdensExecAction("ordemAtual", item);
+      props.mudarVariavelOrdensExecAction("opcoesOrdemAberto", true);
+    }
+  } //
+  else {
+    props.mudarVariavelOrdensExecAction("ordemAtual", item);
+    props.mudarVariavelOrdensExecAction("opcoesOrdemAberto", true);
+  }
 };
 
 const mapStateToPropsGlobalStore = (state) => {
