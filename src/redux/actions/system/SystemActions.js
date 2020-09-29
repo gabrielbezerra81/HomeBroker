@@ -263,6 +263,18 @@ export const handleOpenMenusInMainScreenTabsAction = (
   };
 };
 
+export const handleAddBoxesToTabsAction = (openedBoxes) => {
+  return (dispatch, getState) => {
+    const { openedMenus } = getState().systemReducer;
+
+    const updatedOpenedMenus = produce(openedMenus, (draft) => {
+      draft.push(...openedBoxes);
+    });
+
+    dispatch(updateOneSystemStateAction("openedMenus", updatedOpenedMenus));
+  };
+};
+
 export const handleCloseMenusAction = ({ isOpenAttribute, visibility }) => {
   return (dispatch, getState) => {
     const {

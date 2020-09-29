@@ -26,8 +26,9 @@ export const erro_pesquisarCombinacoes_thl =
   "Falha ao exibir combinações das travas de linha";
 export const erro_favoritar_thl = "Falha ao tentar adicionar aos favoritos";
 export const sucesso_favoritar_thl = "Item favoritado com sucesso";
-export const error_add_box = "Falha ao tentar adicionar box de cotação"
-export const success_add_box = "Box adicionado com sucesso!"
+export const error_add_box = "Falha ao tentar adicionar box de cotação";
+export const success_add_box = "Box adicionado com sucesso!";
+export const error_delete_box = "Falha ao tentar deletar box de cotação";
 
 // Alertas Validação
 

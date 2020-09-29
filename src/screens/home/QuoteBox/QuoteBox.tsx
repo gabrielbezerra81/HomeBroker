@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
 import produce from "immer";
-import Draggable from "react-draggable";
+import Draggable, { DraggableData } from "react-draggable";
 import { RiCloseCircleFill } from "react-icons/ri";
 import { AiFillMinusCircle } from "react-icons/ai";
 
@@ -13,6 +13,7 @@ import {
   updateManySystemState,
   updateOneSystemStateAction,
 } from "redux/actions/system/SystemActions";
+import { deleteQuoteBoxAPI } from "api/API";
 
 interface QuoteBoxProps {
   quoteBox: BoxProps;
@@ -78,29 +79,37 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
     );
   }, [boxesVisibility, dispatch, boxIndex]);
 
-  const handleClose = useCallback(() => {
-    const updatedOpenedMenus = produce(openedMenus, (draft) => {
-      return draft.filter(
-        (menuItem) => menuItem.menuKey !== `box${quoteBox.id}`,
-      );
-    });
+  const handleClose = useCallback(async () => {
+    try {
+      const shouldDelete = await deleteQuoteBoxAPI(quoteBox.id);
 
-    const updatedBoxesVisibility = produce(boxesVisibility, (draft) => {
-      draft.splice(boxIndex, 1);
-    });
+      if (shouldDelete) {
+        const updatedOpenedMenus = produce(openedMenus, (draft) => {
+          return draft.filter(
+            (menuItem) => menuItem.menuKey !== `box${quoteBox.id}`,
+          );
+        });
 
-    const updatedQuoteBoxes = produce(quoteBoxes, (draft) => {
-      const index = draft.findIndex((boxItem) => boxItem.id === quoteBox.id);
+        const updatedBoxesVisibility = produce(boxesVisibility, (draft) => {
+          draft.splice(boxIndex, 1);
+        });
 
-      if (index >= 0) draft.splice(index, 1);
-    });
-    dispatch(
-      updateManySystemState({
-        openedMenus: updatedOpenedMenus,
-        boxesVisibility: updatedBoxesVisibility,
-        quoteBoxes: updatedQuoteBoxes,
-      }),
-    );
+        const updatedQuoteBoxes = produce(quoteBoxes, (draft) => {
+          const index = draft.findIndex(
+            (boxItem) => boxItem.id === quoteBox.id,
+          );
+
+          if (index >= 0) draft.splice(index, 1);
+        });
+        dispatch(
+          updateManySystemState({
+            openedMenus: updatedOpenedMenus,
+            boxesVisibility: updatedBoxesVisibility,
+            quoteBoxes: updatedQuoteBoxes,
+          }),
+        );
+      }
+    } catch (error) {}
   }, [
     boxIndex,
     boxesVisibility,
@@ -110,18 +119,26 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
     dispatch,
   ]);
 
+  const onStartDragging = useCallback(() => {
+    setIsDragging(true);
+  }, []);
+
+  const onStopDragging = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  const onDrag = useCallback((e, data: DraggableData) => {
+    setPosition(data);
+  }, []);
+
   return (
     <Draggable
       enableUserSelectHack={isDragging}
       handle=".mcontent"
       position={position}
-      onStart={() => {
-        setIsDragging(true);
-      }}
-      onStop={() => {
-        setIsDragging(false);
-      }}
-      onDrag={(e, data) => setPosition(data)}
+      onStart={onStartDragging}
+      onStop={onStopDragging}
+      onDrag={onDrag}
     >
       <div className="quoteBox" style={visibilityClass}>
         <div className="symbolsContainer">

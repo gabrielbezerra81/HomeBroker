@@ -43,6 +43,7 @@ import {
   erro_favoritar_thl,
   error_add_box,
   success_add_box,
+  error_delete_box,
 } from "constants/AlertaErros";
 import api from "./apiConfig";
 
@@ -397,7 +398,7 @@ export const getTHLDataWithStrikeAPI = (ativo, strike, tipo) => {
     });
 };
 
-export const getTHLInitialDataAPI = (symbol, type) => {
+export const getTHLInitialDataAPI = async (symbol, type) => {
   return api
     .get(`${url_listarTabelaInicialTHL_ativo_strike_tipo}${symbol}/${type}`, {
       timeout,
@@ -415,7 +416,7 @@ export const getTHLInitialDataAPI = (symbol, type) => {
     });
 };
 
-export const recalcularPrecosTHLAPI = (
+export const recalcularPrecosTHLAPI = async (
   ativo,
   ativoPesquisado,
   strike,
@@ -439,7 +440,7 @@ export const recalcularPrecosTHLAPI = (
     });
 };
 
-export const pesquisarCombinacoesTHLAPI = (ativo) => {
+export const pesquisarCombinacoesTHLAPI = async (ativo) => {
   const url = url_pesquisarCombinacoes_ativo.split(" ");
 
   return api
@@ -457,7 +458,7 @@ export const pesquisarCombinacoesTHLAPI = (ativo) => {
     });
 };
 
-export const favoritarTHLAPI = (data) => {
+export const favoritarTHLAPI = async (data) => {
   return api
     .post(`${url_favoritarTHL_}`, data, {
       timeout,
@@ -468,7 +469,7 @@ export const favoritarTHLAPI = (data) => {
     });
 };
 
-export const addQuoteBoxAPI = (groupName, data) => {
+export const addQuoteBoxAPI = async (groupName, data) => {
   return api
     .post(`${url_addQuoteBox_groupName}${groupName}`, data, {
       timeout,
@@ -477,8 +478,8 @@ export const addQuoteBoxAPI = (groupName, data) => {
       console.log(response.data);
       alert(success_add_box);
     })
-    .catch((erro) => {
-      mostrarErroConsulta(erro, error_add_box);
+    .catch((error) => {
+      mostrarErroConsulta(error, error_add_box);
     });
 };
 
@@ -508,13 +509,23 @@ export const setPointerWhileAwaiting = ({
   }
 };
 
-export const listQuoteBoxesAPI = () => {
+export const listQuoteBoxesAPI = async () => {
   return api
     .get(`favorite`)
     .then((response) => response.data)
-    .catch((erro) => {
-      mostrarErroConsulta(erro, "");
+    .catch((error) => {
+      mostrarErroConsulta(error, "");
       return [];
+    });
+};
+
+export const deleteQuoteBoxAPI = async (boxID) => {
+  return api
+    .delete(`favorite/${boxID}`)
+    .then(() => true)
+    .catch((error) => {
+      mostrarErroConsulta(error, error_delete_box);
+      return false;
     });
 };
 
