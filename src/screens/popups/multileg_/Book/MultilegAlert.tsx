@@ -5,11 +5,7 @@ import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { createMultilegAlertAction } from "redux/actions/multileg/MultilegAPIAction";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import usePrevious from "hooks/usePrevious";
-import {
-  updateHeight,
-  expandElement,
-  collapseElement,
-} from "shared/utils/AnimateHeight";
+import { expandElement, collapseElement } from "shared/utils/AnimateHeight";
 import { updateMultilegTabAction } from "redux/actions/multileg/MultilegActions";
 
 interface MultilegAlertProps {

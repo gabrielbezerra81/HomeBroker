@@ -84,7 +84,10 @@ class Multileg extends React.Component {
       ...multileg.map((tab) => tab.tabelaMultileg.length),
     );
 
-    if (previousNumberOfOffers !== maxNumberOfOffers) {
+    if (
+      previousNumberOfOffers !== maxNumberOfOffers ||
+      prevProps.multilegButtonsVisibility !== multilegButtonsVisibility
+    ) {
       if (previousNumberOfOffers || previousNumberOfOffers === 0) {
         const multilegElement = document.getElementById("multileg");
         var section = multilegElement?.querySelector(".mcontent");

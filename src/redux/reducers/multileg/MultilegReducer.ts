@@ -39,6 +39,7 @@ const INITIAL_STATE: MultilegState = {
   cotacoesMultileg: [],
   cotacoesMultilegID: 0,
   multilegButtonsVisibility: true,
+  createAlertButtonVisibility: false,
 };
 
 export default (

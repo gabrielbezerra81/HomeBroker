@@ -39,6 +39,7 @@ class Book extends React.Component {
       indice: tabIndex,
       cotacoesMultileg,
       multilegButtonsVisibility,
+      createAlertButtonVisibility,
     } = props;
     const aba = props.multileg[tabIndex];
 
@@ -286,7 +287,7 @@ class Book extends React.Component {
 
         {RowValidade(props, props.multileg[tabIndex])}
 
-        {multilegButtonsVisibility ? (
+        {multilegButtonsVisibility && !createAlertButtonVisibility && (
           <>
             <div className="cleanExecuteButtonsRow">
               <Button
@@ -326,7 +327,9 @@ class Book extends React.Component {
             </Row>
             <MultilegAlert tabIndex={tabIndex} />
           </>
-        ) : (
+        )}
+
+        {!multilegButtonsVisibility && !createAlertButtonVisibility && (
           <Row className="mb-2">
             <Col md={9} className="ml-4 pr-0">
               <Button
@@ -343,6 +346,10 @@ class Book extends React.Component {
             </Col>
           </Row>
         )}
+
+        {!multilegButtonsVisibility && createAlertButtonVisibility && (
+          <MultilegAlert tabIndex={tabIndex} />
+        )}
       </div>
     );
   }
@@ -357,6 +364,8 @@ const mapStateToProps = (state) => ({
   selectedAccount: state.systemReducer.selectedAccount,
   cotacoesMultilegID: state.multilegReducer.cotacoesMultilegID,
   multilegButtonsVisibility: state.multilegReducer.multilegButtonsVisibility,
+  createAlertButtonVisibility:
+    state.multilegReducer.createAlertButtonVisibility,
 });
 
 export default connect(

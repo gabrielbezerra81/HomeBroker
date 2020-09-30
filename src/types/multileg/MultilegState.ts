@@ -15,4 +15,5 @@ export default interface MultilegState {
   cotacoesMultileg: Array<MultilegQuote>;
   cotacoesMultilegID: number;
   multilegButtonsVisibility: boolean;
+  createAlertButtonVisibility: boolean;
 }
