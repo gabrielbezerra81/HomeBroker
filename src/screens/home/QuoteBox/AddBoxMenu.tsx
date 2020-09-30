@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { updateOneMultilegState } from "redux/actions/multileg/utils";
@@ -10,6 +10,7 @@ import boxIcon from "assets/boxIcon.png";
 import boxMenuArrow from "assets/boxMenuArrow.png";
 
 import { IoMdAddCircle } from "react-icons/io";
+import { updateHeight } from "shared/utils/AnimateHeight";
 
 const AddBoxMenu: React.FC = () => {
   const dispatch = useDispatchStorePrincipal();
@@ -17,18 +18,29 @@ const AddBoxMenu: React.FC = () => {
 
   const {
     systemReducer: { isOpenMultileg },
-    multilegReducer: { multilegButtonsVisibility },
   } = useStateStorePrincipal();
 
-  useEffect(() => {
-    if (!multilegButtonsVisibility) {
-      dispatchGlobal(atualizarDivKeyAction("multileg"));
-      dispatch(
-        abrirItemBarraLateralAction({ isOpenMultileg }, "isOpenMultileg"),
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [multilegButtonsVisibility]);
+  const handleOpenMultileg = useCallback(() => {
+    dispatch(
+      updateOneMultilegState({
+        attributeName: "multilegButtonsVisibility",
+        attributeValue: false,
+      }),
+    );
+
+    dispatchGlobal(atualizarDivKeyAction("multileg"));
+    dispatch(abrirItemBarraLateralAction({ isOpenMultileg }, "isOpenMultileg"));
+  }, [dispatch, dispatchGlobal, isOpenMultileg]);
+
+  // useEffect(() => {
+  //   if (!multilegButtonsVisibility) {
+  //     dispatchGlobal(atualizarDivKeyAction("multileg"));
+  //     dispatch(
+  //       abrirItemBarraLateralAction({ isOpenMultileg }, "isOpenMultileg"),
+  //     );
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [multilegButtonsVisibility]);
 
   return (
     <div className="BoxMenuMainScreen">
@@ -39,17 +51,7 @@ const AddBoxMenu: React.FC = () => {
       <div>
         <img src={boxIcon} height={17} alt="" color="#b1b2b1" />
         <span>Box de Cotação</span>
-        <IoMdAddCircle
-          size={16}
-          onClick={() => {
-            dispatch(
-              updateOneMultilegState({
-                attributeName: "multilegButtonsVisibility",
-                attributeValue: false,
-              }),
-            );
-          }}
-        />
+        <IoMdAddCircle size={16} onClick={handleOpenMultileg} />
       </div>
     </div>
   );

@@ -1,5 +1,8 @@
 .BoxMenuMainScreen {
   margin-left: 4px;
+  position: fixed;
+  z-index: 999;
+  background-color: #000;
 
   div:first-child {
     width: 28px;
