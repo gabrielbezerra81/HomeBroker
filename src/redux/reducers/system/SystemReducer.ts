@@ -163,6 +163,7 @@ export const INITIAL_STATE: SystemState = {
   isOpenPosition: false,
   isOpenMultileg: false,
   isOpenTHL: false,
+  isOpenRightSideMenu: true,
   token: {} as Token,
   accounts: [],
   selectedAccount: {} as Account,

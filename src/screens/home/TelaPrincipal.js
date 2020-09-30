@@ -18,6 +18,7 @@ import { compose } from "redux";
 import QuoteBoxContainer from "./QuoteBox/QuoteBoxContainer";
 import api from "api/apiConfig";
 import AddBoxMenu from "./QuoteBox/AddBoxMenu";
+import RightSideMenu from "./RightSideMenu/RightSideMenu";
 
 const OrdensExecucao = React.lazy(() =>
   import("screens/popups/ordens_em_execucao/OrdensExecucao"),
@@ -135,6 +136,8 @@ class TelaPrincipal extends React.Component {
                 <TelaTHL headerTitle="THL" />
               </PopupContainer>
             </MainScreenTabs>
+
+            <RightSideMenu />
 
             <AddBoxMenu />
 

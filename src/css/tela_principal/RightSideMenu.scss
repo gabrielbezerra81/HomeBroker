@@ -1,0 +1,51 @@
+.rightSideMenu {
+  position: fixed;
+  height: 100vh;
+
+  right: 0px;
+  margin-top: -8px;
+  display: flex;
+
+  .menuContent {
+    padding: 20px 12px;
+    transition-duration: 0.2s;
+    transition-property: width opacity;
+    overflow: hidden;
+    width: 192px;
+
+    &.closedRightMenu {
+      width: 0;
+      opacity: 0;
+      padding: 20px 0;
+    }
+  }
+}
+
+.rightSideBar {
+  background-color: #444;
+  width: 43px;
+
+  > div {
+    height: 65px;
+    width: 43px;
+    border-bottom: 1px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  > div:first-child {
+    height: 43px;
+    width: 43px;
+
+    > i {
+      color: #fff;
+      transition: transform 0.2s;
+      cursor: pointer;
+
+      &.arrowRotateToRight {
+        transform: rotateZ(180deg);
+      }
+    }
+  }
+}
