@@ -9,6 +9,7 @@ import {
   handleRemoveTabAction,
   handleChangeTabPropsAction,
 } from "redux/actions/system/SystemActions";
+import usePrevious from "hooks/usePrevious";
 
 interface TabChild {
   key: string;
@@ -33,6 +34,8 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
       isOpenMultileg,
       isOpenTHL,
       openedMenus,
+      isOpenLeftUserMenu,
+      isOpenRightSideMenu,
     },
   } = useStateStorePrincipal();
   const dispatch = useDispatchStorePrincipal();
@@ -99,10 +102,71 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
     [dispatch, selectedTab],
   );
 
+  const previousIsOpenLeftUserMenu = usePrevious(isOpenLeftUserMenu);
+  const previousIsOpenRightMenu = usePrevious(isOpenRightSideMenu);
+
+  useEffect(() => {
+    const tabElement = document.getElementById("MainScreenTabs");
+
+    const elements = tabElement?.getElementsByClassName("navContainer");
+
+    if (elements) {
+      const navContainer = elements.item(0) as HTMLElement;
+
+      const initialLeftMenu = isOpenLeftUserMenu ? " - 132px" : "";
+      const initialRightMenu = isOpenRightSideMenu ? " - 192px" : "";
+
+      navContainer.style.width =
+        "calc(100% - 43px - 81px - 32px - 3px" +
+        initialLeftMenu +
+        initialRightMenu +
+        ")";
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const tabElement = document.getElementById("MainScreenTabs");
+
+    const elements = tabElement?.getElementsByClassName("navContainer");
+
+    if (elements && previousIsOpenLeftUserMenu !== undefined) {
+      const navContainer = elements.item(0) as HTMLElement;
+
+      const currentWidth = navContainer.style.width.replace(")", "");
+
+      if (isOpenLeftUserMenu) {
+        navContainer.style.width = currentWidth + " - 132px)";
+      } else {
+        navContainer.style.width = currentWidth.replace(" - 132px", "");
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpenLeftUserMenu]);
+
+  useEffect(() => {
+    const tabElement = document.getElementById("MainScreenTabs");
+
+    const elements = tabElement?.getElementsByClassName("navContainer");
+
+    if (elements && previousIsOpenRightMenu !== undefined) {
+      const navContainer = elements.item(0) as HTMLElement;
+
+      const currentWidth = navContainer.style.width.replace(")", "");
+
+      if (isOpenRightSideMenu) {
+        navContainer.style.width = currentWidth + " - 192px)";
+      } else {
+        navContainer.style.width = currentWidth.replace(" - 192px", "");
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpenRightSideMenu]);
+
   return (
     <div id="MainScreenTabs">
       <Tab.Container onSelect={handleTabSelect} activeKey={selectedTab}>
-        <Row className="navContainer">
+        <Row className={`navContainer`}>
           <Nav>
             {mainTabs.map((tabItem, index) => {
               return (
