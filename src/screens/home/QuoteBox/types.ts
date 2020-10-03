@@ -1,5 +1,6 @@
 export interface BoxProps {
   id: number;
+  structureID: number;
   buy: number;
   sell: number;
   quote: number;

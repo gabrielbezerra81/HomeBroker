@@ -11,144 +11,144 @@ import Action from "types/Action";
 import { Token, Account } from "types/system/system";
 import { BoxProps } from "screens/home/QuoteBox/types";
 
-var boxes: BoxProps[] = [
-  {
-    id: 1,
-    buy: 2.5,
-    sell: 2.6,
-    quote: 24.57,
-    min: 0,
-    max: 3.6,
-    dayOscilation: -0.54,
-    book: {
-      buy: [
-        {
-          qtty: 43300,
-          price: 26.71,
-        },
-        {
-          qtty: 9800,
-          price: 26.7,
-        },
-        {
-          qtty: 9800,
-          price: 26.7,
-        },
-      ],
-      sell: [
-        {
-          qtty: 43300,
-          price: 26.71,
-        },
-        {
-          qtty: 9800,
-          price: 26.7,
-        },
-        {
-          qtty: 9800,
-          price: 26.7,
-        },
-      ],
-    },
-    codes: [
-      { symbol: "BRZU", type: "buy", qtty: 100 },
-      { symbol: "GDX", type: "sell", qtty: -100 },
-    ],
-  },
-  {
-    id: 2,
-    buy: 2.5,
-    sell: 2.6,
-    quote: 24.57,
-    min: 0,
-    max: 3.6,
-    dayOscilation: -0.54,
-    book: {
-      buy: [
-        {
-          qtty: 43300,
-          price: 26.71,
-        },
-        {
-          qtty: 9800,
-          price: 26.7,
-        },
-        {
-          qtty: 9800,
-          price: 26.7,
-        },
-      ],
-      sell: [
-        {
-          qtty: 43300,
-          price: 26.71,
-        },
-        {
-          qtty: 9800,
-          price: 26.7,
-        },
-        {
-          qtty: 9800,
-          price: 26.7,
-        },
-      ],
-    },
-    codes: [
-      { symbol: "BRZU", type: "buy", qtty: 100 },
-      { symbol: "BRZU", type: "buy", qtty: 100 },
-      { symbol: "BRZU", type: "buy", qtty: 100 },
-      { symbol: "GDX", type: "sell", qtty: -100 },
-    ],
-  },
-  {
-    id: 3,
-    buy: 2.5,
-    sell: 2.6,
-    quote: 24.57,
-    min: 0,
-    max: 3.6,
-    dayOscilation: 21.54,
-    book: {
-      buy: [
-        {
-          qtty: 43300,
-          price: 26.71,
-        },
-        {
-          qtty: 9800,
-          price: 26.7,
-        },
-        {
-          qtty: 9800,
-          price: 26.7,
-        },
-      ],
-      sell: [
-        {
-          qtty: 43300,
-          price: 26.71,
-        },
-        {
-          qtty: 9800,
-          price: 26.7,
-        },
-        {
-          qtty: 9800,
-          price: 26.7,
-        },
-      ],
-    },
-    codes: [
-      { symbol: "BRZU", type: "buy", qtty: 100 },
-      { symbol: "GDX", type: "sell", qtty: -100 },
-      { symbol: "GDX", type: "sell", qtty: -100 },
-      { symbol: "GDX", type: "sell", qtty: -100 },
-      { symbol: "GDX", type: "sell", qtty: -100 },
-      { symbol: "GDX", type: "sell", qtty: -100 },
-      { symbol: "GDX", type: "sell", qtty: -100 },
-    ],
-  },
-];
+// var boxes: BoxProps[] = [
+//   {
+//     id: 1,
+//     buy: 2.5,
+//     sell: 2.6,
+//     quote: 24.57,
+//     min: 0,
+//     max: 3.6,
+//     dayOscilation: -0.54,
+//     book: {
+//       buy: [
+//         {
+//           qtty: 43300,
+//           price: 26.71,
+//         },
+//         {
+//           qtty: 9800,
+//           price: 26.7,
+//         },
+//         {
+//           qtty: 9800,
+//           price: 26.7,
+//         },
+//       ],
+//       sell: [
+//         {
+//           qtty: 43300,
+//           price: 26.71,
+//         },
+//         {
+//           qtty: 9800,
+//           price: 26.7,
+//         },
+//         {
+//           qtty: 9800,
+//           price: 26.7,
+//         },
+//       ],
+//     },
+//     codes: [
+//       { symbol: "BRZU", type: "buy", qtty: 100 },
+//       { symbol: "GDX", type: "sell", qtty: -100 },
+//     ],
+//   },
+//   {
+//     id: 2,
+//     buy: 2.5,
+//     sell: 2.6,
+//     quote: 24.57,
+//     min: 0,
+//     max: 3.6,
+//     dayOscilation: -0.54,
+//     book: {
+//       buy: [
+//         {
+//           qtty: 43300,
+//           price: 26.71,
+//         },
+//         {
+//           qtty: 9800,
+//           price: 26.7,
+//         },
+//         {
+//           qtty: 9800,
+//           price: 26.7,
+//         },
+//       ],
+//       sell: [
+//         {
+//           qtty: 43300,
+//           price: 26.71,
+//         },
+//         {
+//           qtty: 9800,
+//           price: 26.7,
+//         },
+//         {
+//           qtty: 9800,
+//           price: 26.7,
+//         },
+//       ],
+//     },
+//     codes: [
+//       { symbol: "BRZU", type: "buy", qtty: 100 },
+//       { symbol: "BRZU", type: "buy", qtty: 100 },
+//       { symbol: "BRZU", type: "buy", qtty: 100 },
+//       { symbol: "GDX", type: "sell", qtty: -100 },
+//     ],
+//   },
+//   {
+//     id: 3,
+//     buy: 2.5,
+//     sell: 2.6,
+//     quote: 24.57,
+//     min: 0,
+//     max: 3.6,
+//     dayOscilation: 21.54,
+//     book: {
+//       buy: [
+//         {
+//           qtty: 43300,
+//           price: 26.71,
+//         },
+//         {
+//           qtty: 9800,
+//           price: 26.7,
+//         },
+//         {
+//           qtty: 9800,
+//           price: 26.7,
+//         },
+//       ],
+//       sell: [
+//         {
+//           qtty: 43300,
+//           price: 26.71,
+//         },
+//         {
+//           qtty: 9800,
+//           price: 26.7,
+//         },
+//         {
+//           qtty: 9800,
+//           price: 26.7,
+//         },
+//       ],
+//     },
+//     codes: [
+//       { symbol: "BRZU", type: "buy", qtty: 100 },
+//       { symbol: "GDX", type: "sell", qtty: -100 },
+//       { symbol: "GDX", type: "sell", qtty: -100 },
+//       { symbol: "GDX", type: "sell", qtty: -100 },
+//       { symbol: "GDX", type: "sell", qtty: -100 },
+//       { symbol: "GDX", type: "sell", qtty: -100 },
+//       { symbol: "GDX", type: "sell", qtty: -100 },
+//     ],
+//   },
+// ];
 
 export const INITIAL_STATE: SystemState = {
   connectedUser: "",
@@ -170,15 +170,15 @@ export const INITIAL_STATE: SystemState = {
   mainTabs: [{ tabName: "Principal" }, { tabName: "Aba 2" }],
   selectedTab: "tab0",
   openedMenus: [
-    { menuKey: "box1", tabKey: "tab0" },
-    { menuKey: "box2", tabKey: "tab0" },
-    { menuKey: "box3", tabKey: "tab1" },
+    // { menuKey: "box1", tabKey: "tab0" },
+    // { menuKey: "box2", tabKey: "tab0" },
+    // { menuKey: "box3", tabKey: "tab1" },
   ],
-  quoteBoxes: boxes,
+  quoteBoxes: [],
   boxesVisibility: [
-    { boxKey: "box1", visibility: true },
-    { boxKey: "box2", visibility: false },
-    { boxKey: "box3", visibility: true },
+    // { boxKey: "box1", visibility: true },
+    // { boxKey: "box2", visibility: false },
+    // { boxKey: "box3", visibility: true },
   ],
 
   // inputUsuario: "gabrielAB",

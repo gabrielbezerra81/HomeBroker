@@ -184,16 +184,20 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
 
           <main>
             <div className="buyBook">
-              <div>
-                <span className="highlightedText">Qtde</span>
-                <span className="highlightedText">Preço</span>
-              </div>
-              {formattedBox.book.buy.map((book, index) => (
-                <div key={`buyBook${index}`}>
-                  <span>{book.qtty}</span>
-                  <span>{book.price}</span>
-                </div>
-              ))}
+              {!!formattedBox.book.buy.length && (
+                <>
+                  <div>
+                    <span className="highlightedText">Qtde</span>
+                    <span className="highlightedText">Preço</span>
+                  </div>
+                  {formattedBox.book.buy.map((book, index) => (
+                    <div key={`buyBook${index}`}>
+                      <span>{book.qtty}</span>
+                      <span>{book.price}</span>
+                    </div>
+                  ))}
+                </>
+              )}
             </div>
             <div className="quoteContainer">
               <strong className="highlightedText">{formattedBox.quote}</strong>
@@ -205,16 +209,20 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
               </span>
             </div>
             <div className="sellBook">
-              <div>
-                <span className="highlightedText">Qtde</span>
-                <span className="highlightedText">Preço</span>
-              </div>
-              {formattedBox.book.buy.map((book, index) => (
-                <div key={`buyBook${index}`}>
-                  <span>{book.qtty}</span>
-                  <span>{book.price}</span>
-                </div>
-              ))}
+              {!!formattedBox.book.sell.length && (
+                <>
+                  <div>
+                    <span className="highlightedText">Qtde</span>
+                    <span className="highlightedText">Preço</span>
+                  </div>
+                  {formattedBox.book.buy.map((book, index) => (
+                    <div key={`buyBook${index}`}>
+                      <span>{book.qtty}</span>
+                      <span>{book.price}</span>
+                    </div>
+                  ))}
+                </>
+              )}
             </div>
           </main>
 

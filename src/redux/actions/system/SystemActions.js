@@ -265,13 +265,38 @@ export const handleOpenMenusInMainScreenTabsAction = (
 
 export const handleAddBoxesToTabsAction = (openedBoxes) => {
   return (dispatch, getState) => {
-    const { openedMenus } = getState().systemReducer;
+    const { openedMenus, boxesVisibility } = getState().systemReducer;
 
     const updatedOpenedMenus = produce(openedMenus, (draft) => {
-      draft.push(...openedBoxes);
+      openedBoxes.forEach((boxItem) => {
+        const alreadyAdded = openedMenus.some(
+          (menuItem) => menuItem.menuKey === boxItem.menuKey,
+        );
+
+        if (!alreadyAdded) {
+          draft.push(boxItem);
+        }
+      });
     });
 
-    dispatch(updateOneSystemStateAction("openedMenus", updatedOpenedMenus));
+    const updatedBoxesVisibility = produce(boxesVisibility, (draft) => {
+      openedBoxes.forEach((boxItem) => {
+        const alreadyAdded = boxesVisibility.some(
+          (visibility) => boxItem.menuKey === visibility.boxKey,
+        );
+
+        if (!alreadyAdded) {
+          draft.push({ boxKey: boxItem.menuKey, visibility: true });
+        }
+      });
+    });
+
+    dispatch(
+      updateManySystemState({
+        openedMenus: updatedOpenedMenus,
+        boxesVisibility: updatedBoxesVisibility,
+      }),
+    );
   };
 };
 
