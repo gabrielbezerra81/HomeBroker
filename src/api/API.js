@@ -49,7 +49,7 @@ import api from "./apiConfig";
 
 const timeout = 8000;
 
-export const pesquisarAtivoAPI = (codigo) => {
+export const pesquisarAtivoAPI = async (codigo) => {
   return api
     .get(`${url_pesquisarAtivoBoletas_codigo}${codigo}`, {
       timeout,
@@ -111,7 +111,8 @@ export const pesquisarAtivoAPI = (codigo) => {
       return dadosPesquisa;
     })
     .catch((erro) => {
-      mostrarErroConsulta(erro, erro_pesquisar_ativo);
+      // TODO: ativar alerta quando Adriano subir correção
+      // mostrarErroConsulta(erro, erro_pesquisar_ativo);
       return {
         resultadoAtivo: "",
         codigoEspecificacao: "",
@@ -196,13 +197,16 @@ export const pesquisarAtivoMultilegAPI = async (codigo_ativo) => {
       dados.opcoes = [...data.options];
       dados.vencimentos = [...data.expirations];
       dados.ativoPrincipal = data.stock.symbol;
-      const dadosAtivo = await pesquisarAtivoAPI(codigo_ativo);
-      if (dadosAtivo) {
-        dados.cotacaoAtual = Number(dadosAtivo.cotacaoAtual);
-        dados.variacao = Number(dadosAtivo.porcentagem);
 
-        return dados;
+      const { data: quoteData } = await api.get(
+        `${url_pesquisarAtivoBoletas_codigo}${codigo_ativo}`,
+      );
+
+      if (quoteData) {
+        dados.cotacaoAtual = Number(quoteData.ultimo || 0);
+        dados.variacao = Number(quoteData.porcentagem || 0);
       }
+      return dados;
     })
     .catch((erro) => {
       mostrarErroConsulta(erro, erro_pesquisar_ativo);

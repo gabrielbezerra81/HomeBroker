@@ -1,4 +1,5 @@
-import { listarPosicoesAPI, pesquisarAtivoAPI } from "api/API";
+import { listarPosicoesAPI } from "api/API";
+import { url_pesquisarAtivoBoletas_codigo } from "api/url";
 import {
   atualizarEmblemasAPI,
   atualizarPosicaoAPI,
@@ -10,6 +11,7 @@ import {
   updateManyPositionState,
 } from "./utils";
 import { getReducerStateStorePrincipal } from "hooks/utils";
+import api from "api/apiConfig";
 
 export const mudarVariavelPosicaoAction = (attributeName, attributeValue) => {
   return (dispatch) => {
@@ -117,10 +119,13 @@ const montaArrayCotacoes = async (listaPosicoes, tipoRetorno = "completo") => {
 
   for (var [indice] in arrayCodigos) {
     const ativo = arrayCodigos[indice];
-    const dadosAtivo = await pesquisarAtivoAPI(ativo.codigo);
-    if (dadosAtivo) {
-      const cotacao = dadosAtivo.cotacaoAtual;
-      ativo.cotacao = cotacao;
+
+    const response = await api.get(
+      `${url_pesquisarAtivoBoletas_codigo}${ativo.codigo}`,
+    );
+
+    if (response.data) {
+      ativo.cotacao = response.data.ultimo;
     }
   }
   return arrayCodigos;
