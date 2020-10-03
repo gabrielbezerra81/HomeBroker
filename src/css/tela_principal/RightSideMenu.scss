@@ -32,16 +32,28 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: opacity 0.2s;
+
+    cursor: pointer;
+
+    &.menuItemHidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    &:focus {
+      outline: none;
+      border-width: 0 0 1px;
+    }
   }
 
   > div:first-child {
-    height: 43px;
+    height: 32px;
     width: 43px;
 
     > i {
       color: #fff;
       transition: transform 0.2s;
-      cursor: pointer;
 
       &.arrowRotateToRight {
         transform: rotateZ(180deg);

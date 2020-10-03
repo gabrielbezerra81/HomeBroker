@@ -25,21 +25,21 @@ const RightSideMenu: React.FC = () => {
     return isOpenRightSideMenu ? "" : "closedRightMenu";
   }, [isOpenRightSideMenu]);
 
+  const menuItemOpacity = useMemo(() => {
+    return isOpenRightSideMenu ? "" : "menuItemHidden";
+  }, [isOpenRightSideMenu]);
+
   return (
     <div className="rightSideMenu">
       <div className="rightSideBar">
-        <div>
-          <MDBIcon
-            className={arrowRotationClass}
-            icon="angle-left"
-            size="lg"
-            onClick={handleChangeMenuVisibility}
-          />
+        <div tabIndex={0} onClick={handleChangeMenuVisibility}>
+          <MDBIcon className={arrowRotationClass} icon="angle-left" size="lg" />
         </div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+
+        <div className={menuItemOpacity}></div>
+        <div className={menuItemOpacity}></div>
+        <div className={menuItemOpacity}></div>
+        <div className={menuItemOpacity}></div>
       </div>
       <div className={`menuContent ${closedMenuContentClass}`}></div>
     </div>
