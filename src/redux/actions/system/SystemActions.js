@@ -15,7 +15,6 @@ import { persistor } from "redux/StoreCreation";
 import api from "api/apiConfig";
 
 import { INITIAL_STATE as initialSystemState } from "../../reducers/system/SystemReducer";
-import { updateOneMultilegState } from "../multileg/utils";
 
 const waitDispatch = 1000;
 
@@ -260,43 +259,6 @@ export const handleOpenMenusInMainScreenTabsAction = (
     });
 
     dispatch(updateOneSystemStateAction("openedMenus", updatedOpenedMenus));
-  };
-};
-
-export const handleAddBoxesToTabsAction = (openedBoxes) => {
-  return (dispatch, getState) => {
-    const { openedMenus, boxesVisibility } = getState().systemReducer;
-
-    const updatedOpenedMenus = produce(openedMenus, (draft) => {
-      openedBoxes.forEach((boxItem) => {
-        const alreadyAdded = openedMenus.some(
-          (menuItem) => menuItem.menuKey === boxItem.menuKey,
-        );
-
-        if (!alreadyAdded) {
-          draft.push(boxItem);
-        }
-      });
-    });
-
-    const updatedBoxesVisibility = produce(boxesVisibility, (draft) => {
-      openedBoxes.forEach((boxItem) => {
-        const alreadyAdded = boxesVisibility.some(
-          (visibility) => boxItem.menuKey === visibility.boxKey,
-        );
-
-        if (!alreadyAdded) {
-          draft.push({ boxKey: boxItem.menuKey, visibility: true });
-        }
-      });
-    });
-
-    dispatch(
-      updateManySystemState({
-        openedMenus: updatedOpenedMenus,
-        boxesVisibility: updatedBoxesVisibility,
-      }),
-    );
   };
 };
 
