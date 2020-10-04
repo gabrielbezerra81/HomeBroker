@@ -38,25 +38,25 @@ const QuoteBoxContainer: React.FC = () => {
 
         const codes = structure.components.map((component: any) => {
           return {
-            qtty: component.qtty * 100,
+            qtty: component.qtty,
             symbol: component.stock.symbol,
-            type: "buy" || "sell",
+            type: component.qtty >= 0 ? "buy" : "sell",
           };
         });
 
         const box: BoxProps = {
           id: boxItem.id,
           structureID: structure.id,
-          max: structure.max,
-          min: structure.min,
+          max: 0,
+          min: 0,
           quote: structure.last,
           codes,
-          dayOscilation: 0,
-          buy: 0,
-          sell: 0,
+          dayOscilation: structure.change || 0,
+          buy: structure.max,
+          sell: structure.min,
           book: {
-            buy: [],
-            sell: [],
+            buy: structure.bookBuy || [],
+            sell: structure.bookSell || [],
           },
         };
 

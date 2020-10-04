@@ -479,8 +479,9 @@ export const addQuoteBoxAPI = async (groupName, data) => {
       timeout,
     })
     .then((response) => {
-      console.log(response.data);
       alert(success_add_box);
+
+      return response.data;
     })
     .catch((error) => {
       mostrarErroConsulta(error, error_add_box);

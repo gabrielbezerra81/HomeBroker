@@ -228,7 +228,10 @@ export const addQuoteBoxFromMultilegAction = (
     setPointerWhileAwaiting({ lockMode: "travar", id: "multileg" });
 
     if (validateMultilegOrder(mountOrderProps)) {
-      await addQuoteBoxAPI(tabName, multilegRequestData);
+      const data = await addQuoteBoxAPI(tabName, multilegRequestData);
+
+      if (data) {
+      }
     }
 
     setPointerWhileAwaiting({ lockMode: "destravar", id: "multileg" });
