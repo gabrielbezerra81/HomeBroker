@@ -489,6 +489,31 @@ export const atualizarPrecosTHLAPI = ({
   return source;
 };
 
+export const updateBoxDataAPI = ({ ids, dispatch, token }) => {
+  var source = new EventSource(
+    `${url_base_reativa}${url_atualizarPrecosTHL_ids}${ids}`,
+    {
+      headers: {
+        Authorization: `${token.tokenType} ${token.accessToken}`,
+      },
+    },
+  );
+
+  source.onerror = function (event) {
+    // console.log("box update error:", event);
+  };
+
+  source.onmessage = function (event) {
+    if (typeof event.data !== "undefined") {
+      const boxData = JSON.parse(event.data);
+
+      console.log(boxData);
+    }
+  };
+
+  return source;
+};
+
 const atualizaListaReativa = (
   dispatch,
   lista,

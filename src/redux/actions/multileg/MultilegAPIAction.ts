@@ -22,8 +22,6 @@ import {
   MultilegOption,
 } from "types/multileg/multileg";
 import { addBoxFromAPIAction } from "../system/boxesActions";
-import produce from "immer";
-import { updateOneSystemStateAction } from "../system/SystemActions";
 
 ////
 
@@ -212,7 +210,7 @@ export const addQuoteBoxFromMultilegAction = (
   return async (dispatch, getState) => {
     const {
       multilegReducer: { multileg },
-      systemReducer: { selectedAccount, selectedTab, quoteBoxes },
+      systemReducer: { selectedAccount, selectedTab },
     } = getState();
 
     const tabName = multileg[tabIndex].nomeAba;

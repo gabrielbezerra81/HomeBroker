@@ -409,6 +409,7 @@ const renderSymbolOptionsDropdown = ({
               parsedOption.strike +
               " " +
               parsedOption.symbol;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const [callSymbol, strike, putSymbol] = strikeWithSymbols.split(" ");
 
         let value = parsedType === "CALL" ? callSymbol : putSymbol;

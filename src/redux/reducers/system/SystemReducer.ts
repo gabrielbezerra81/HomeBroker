@@ -9,7 +9,6 @@ import { resetarEstadoRedux } from "redux/reducers/resetarEstadoReducer";
 import SystemState from "types/system/SystemState";
 import Action from "types/Action";
 import { Token, Account } from "types/system/system";
-import { BoxProps } from "screens/home/QuoteBox/types";
 
 // var boxes: BoxProps[] = [
 //   {
@@ -187,6 +186,7 @@ export const INITIAL_STATE: SystemState = {
   // usernameCadastro: "",
   // emailCadastro: "",
   // senhaCadastro: "",
+  boxEventSource: null,
 };
 
 const {

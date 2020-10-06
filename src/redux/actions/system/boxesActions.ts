@@ -6,6 +6,7 @@ import {
   updateOneSystemStateAction,
 } from "./SystemActions";
 import { BoxProps } from "screens/home/QuoteBox/types";
+import { updateBoxDataAPI } from "api/ReativosAPI";
 
 interface OpenedBoxes {
   menuKey: string;
@@ -72,6 +73,7 @@ export const addBoxFromAPIAction = (data: any[]): MainThunkAction => {
       });
     });
 
+    dispatch(handleBoxUpdatesAction(updatedQuoteBoxes));
     dispatch(handleAddBoxesToTabsAction(openedBoxes));
     dispatch(updateOneSystemStateAction("quoteBoxes", updatedQuoteBoxes));
   };
@@ -113,5 +115,31 @@ export const handleAddBoxesToTabsAction = (
         boxesVisibility: updatedBoxesVisibility,
       }),
     );
+  };
+};
+
+const handleBoxUpdatesAction = (quoteBoxes: BoxProps[]): MainThunkAction => {
+  return (dispatch, getState) => {
+    const {
+      systemReducer: { token, boxEventSource },
+    } = getState();
+
+    if (boxEventSource && boxEventSource.close) {
+      boxEventSource.close();
+    }
+
+    const idArray: string[] = [];
+
+    quoteBoxes.forEach((boxItem) => {
+      if (!idArray.includes(boxItem.structureID.toString())) {
+        idArray.push(boxItem.structureID.toString());
+      }
+    });
+
+    const ids = idArray.join(",");
+
+    const boxSource = updateBoxDataAPI({ ids, token, dispatch });
+
+    dispatch(updateOneSystemStateAction("boxEventSource", boxSource));
   };
 };

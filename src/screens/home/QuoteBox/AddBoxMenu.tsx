@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { updateOneMultilegState } from "redux/actions/multileg/utils";
@@ -10,7 +10,6 @@ import boxIcon from "assets/boxIcon.png";
 import boxMenuArrow from "assets/boxMenuArrow.png";
 
 import { IoMdAddCircle } from "react-icons/io";
-import { updateHeight } from "shared/utils/AnimateHeight";
 
 const AddBoxMenu: React.FC = () => {
   const dispatch = useDispatchStorePrincipal();

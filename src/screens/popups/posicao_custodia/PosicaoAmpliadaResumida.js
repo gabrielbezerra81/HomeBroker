@@ -7,7 +7,6 @@ import {
   formatarQuantidadeKMG,
 } from "shared/utils/Formatacoes";
 import EmblemaSimples from "shared/componentes/EmblemaSimples";
-import _ from "lodash";
 import { StorePrincipalContext } from "redux/StoreCreation";
 
 class PosicaoAmpliadaResumida extends React.Component {
@@ -214,44 +213,44 @@ const renderCV = (cv, operacao, indice) => {
   );
 };
 
-const calculaAlturaRowAtivos = (posicoesCustodia) => {
-  let arrayQtdeCustodia = [];
+// const calculaAlturaRowAtivos = (posicoesCustodia) => {
+//   let arrayQtdeCustodia = [];
 
-  //Calcula o numero máximo de linhas de ativos para cada emblema. resultado => array de 42 elementos contendo a altura de cada emblema
-  posicoesCustodia.forEach((posicao) => {
-    arrayQtdeCustodia.push(
-      Math.max(
-        posicao.custodiaCompra.length,
-        posicao.custodiaVenda.length,
-        posicao.ativos.length,
-      ),
-    );
-  });
+//   //Calcula o numero máximo de linhas de ativos para cada emblema. resultado => array de 42 elementos contendo a altura de cada emblema
+//   posicoesCustodia.forEach((posicao) => {
+//     arrayQtdeCustodia.push(
+//       Math.max(
+//         posicao.custodiaCompra.length,
+//         posicao.custodiaVenda.length,
+//         posicao.ativos.length,
+//       ),
+//     );
+//   });
 
-  //Faz um agrupamento dividindo o array em pequenos arrays de 4 elementos para cada linha de 4 emblemas. resultado => [[1,2,0,0],[1,2,0,0]]
-  var groupSize = 4;
-  arrayQtdeCustodia = _.map(arrayQtdeCustodia, function (item, index) {
-    return index % groupSize === 0
-      ? arrayQtdeCustodia.slice(index, index + groupSize)
-      : null;
-  }).filter(function (item) {
-    return item;
-  });
-  //Calcula a altura máxima de cada linha baseando-se no emblema com maior número de linhas.
-  const alturasRowAtivo = arrayQtdeCustodia.map((array) => Math.max(...array));
+//   //Faz um agrupamento dividindo o array em pequenos arrays de 4 elementos para cada linha de 4 emblemas. resultado => [[1,2,0,0],[1,2,0,0]]
+//   var groupSize = 4;
+//   arrayQtdeCustodia = _.map(arrayQtdeCustodia, function (item, index) {
+//     return index % groupSize === 0
+//       ? arrayQtdeCustodia.slice(index, index + groupSize)
+//       : null;
+//   }).filter(function (item) {
+//     return item;
+//   });
+//   //Calcula a altura máxima de cada linha baseando-se no emblema com maior número de linhas.
+//   const alturasRowAtivo = arrayQtdeCustodia.map((array) => Math.max(...array));
 
-  const arrayStyles = [];
+//   const arrayStyles = [];
 
-  //Retorna um array de estilos do mesmo do tamanho do array de posições
-  alturasRowAtivo.forEach((rows) => {
-    let altura = 19;
-    if (rows > 1) altura = altura * rows;
-    const style = { height: altura + "px" };
-    arrayStyles.push(style, style, style, style);
-  });
+//   //Retorna um array de estilos do mesmo do tamanho do array de posições
+//   alturasRowAtivo.forEach((rows) => {
+//     let altura = 19;
+//     if (rows > 1) altura = altura * rows;
+//     const style = { height: altura + "px" };
+//     arrayStyles.push(style, style, style, style);
+//   });
 
-  return arrayStyles;
-};
+//   return arrayStyles;
+// };
 
 const encontrarPrecosEmblema = (props, posicao) => {
   const precosEmblema = props.arrayPrecos.filter(

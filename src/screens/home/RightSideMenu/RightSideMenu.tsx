@@ -1,4 +1,3 @@
-import { Divider } from "antd";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import { MDBIcon } from "mdbreact";

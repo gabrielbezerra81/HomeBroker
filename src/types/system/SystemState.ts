@@ -28,4 +28,5 @@ export default interface SystemState {
   selectedTab: string;
   quoteBoxes: Array<BoxProps>;
   boxesVisibility: Array<BoxVisibility>;
+  boxEventSource: EventSource | null;
 }
