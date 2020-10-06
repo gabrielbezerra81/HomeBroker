@@ -253,7 +253,7 @@ class Book extends React.Component {
             />
           </Col>
         </Row>
-        <Row className="mr-2">
+        <Row className="mr-2 rowPrecoTotal">
           <Col md={4} className="ml-2">
             <h6>Total</h6>
           </Col>

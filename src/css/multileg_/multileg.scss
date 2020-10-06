@@ -37,6 +37,18 @@
 
 .divBook {
   max-width: 229.25px;
+
+  .rowPrecoTotal {
+    padding-bottom: 18px;
+
+    .col:nth-child(2) {
+      > span {
+        width: 124px;
+        position: absolute;
+        right: 17px;
+      }
+    }
+  }
 }
 
 .cleanExecuteButtonsRow {
