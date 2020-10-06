@@ -25,15 +25,15 @@ export const url_pesquisarStrikes_codigo_vencimento =
   "stocks/findBySymbolAndEndDate/";
 export const url_criarPosicaoMultileg_ = "position/list";
 export const url_criarAlertaOperacao_param_operator = "advice/by-order/";
-export const url_addQuoteBox_groupName = "favorite/by-order/"
+export const url_addQuoteBox_groupName = "favorite/by-order/";
 
 //Posição
 export const url_listarPosicoes = "position";
 
 //Reativos
-export const url_cotacaoReativa_codigos = "quotes/symbols?symbols=";
-export const url_bookReativo_codigos = "books/symbols?symbols=";
-export const url_emblemaReativo_ids = "structures/ids?ids="; //Id estrutura
+export const url_cotacaoReativa_codigos = "quotes?subjects=";
+export const url_bookReativo_codigos = "books?subjects=";
+export const url_emblemaReativo_ids = "structures?subjects="; //Id estrutura
 export const url_ordensExecReativas_idUser = "orders/user/";
 export const url_posicaoReativa_idUser = "position/user/";
 
@@ -55,7 +55,7 @@ export const url_realizarCadastro_dados = "auth/signup";
 export const url_pesquisarListaStrike_codigo = "stocks/strikes/integer/";
 export const url_listarTabelaInicialTHL_ativo_strike_tipo =
   "structure/thl/list/";
-export const url_atualizarPrecosTHL_ids = "structures/ids?ids=";
+export const url_atualizarPrecosTHL_ids = "structures?subjects=";
 export const url_recalcularPrecos_acao_ativo_strike_tipo = "structure/thl/ids/";
 export const url_criarAlertaTHL_boolMontagem_ = "advice/structure/";
 export const url_favoritarTHL_ = "favorite";
