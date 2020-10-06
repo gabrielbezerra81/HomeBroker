@@ -6,7 +6,7 @@
 
   div:first-child {
     width: 28px;
-    height: 27px;
+    height: 24px;
     padding: 4px 0 0px;
     background-color: #282828;
     display: flex;
@@ -31,6 +31,14 @@
     align-items: center;
     justify-content: space-between;
     padding: 2px 4px 4px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+
+    &.showBoxMenu {
+      opacity: 1;
+      pointer-events: all;
+    }
 
     span {
       color: #fafafa;

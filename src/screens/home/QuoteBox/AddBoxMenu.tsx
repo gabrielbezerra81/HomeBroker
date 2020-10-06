@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { updateOneMultilegState } from "redux/actions/multileg/utils";
@@ -19,6 +19,8 @@ const AddBoxMenu: React.FC = () => {
   const {
     systemReducer: { isOpenMultileg },
   } = useStateStorePrincipal();
+
+  const [menuVisibility, setMenuVisibility] = useState(false);
 
   const handleOpenMultileg = useCallback(() => {
     dispatch(
@@ -42,13 +44,25 @@ const AddBoxMenu: React.FC = () => {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [multilegButtonsVisibility]);
 
+  const handleShowOnHover = useCallback(() => setMenuVisibility(true), []);
+
+  const handleHideOnLeave = useCallback(() => setMenuVisibility(false), []);
+
+  const visibilityClass = useMemo(() => {
+    return menuVisibility ? "showBoxMenu" : "";
+  }, [menuVisibility]);
+
   return (
     <div className="BoxMenuMainScreen">
-      <div>
+      <div onMouseOver={handleShowOnHover} onMouseLeave={handleHideOnLeave}>
         <img src={boxMenuArrow} alt="" />
         <span>MENU</span>
       </div>
-      <div>
+      <div
+        className={visibilityClass}
+        onMouseOver={handleShowOnHover}
+        onMouseLeave={handleHideOnLeave}
+      >
         <img src={boxIcon} height={17} alt="" color="#b1b2b1" />
         <span>Box de Cotação</span>
         <IoMdAddCircle size={16} onClick={handleOpenMultileg} />
