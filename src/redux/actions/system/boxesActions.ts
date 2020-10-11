@@ -138,8 +138,10 @@ const handleBoxUpdatesAction = (quoteBoxes: BoxProps[]): MainThunkAction => {
 
     const ids = idArray.join(",");
 
-    const boxSource = updateBoxDataAPI({ ids, token, dispatch });
+    if (ids) {
+      const boxSource = updateBoxDataAPI({ ids, token, dispatch, quoteBoxes });
 
-    dispatch(updateOneSystemStateAction("boxEventSource", boxSource));
+      dispatch(updateOneSystemStateAction("boxEventSource", boxSource));
+    }
   };
 };
