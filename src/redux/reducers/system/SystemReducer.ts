@@ -187,7 +187,7 @@ export const INITIAL_STATE: SystemState = {
   // emailCadastro: "",
   // senhaCadastro: "",
   boxEventSource: null,
-  activeItemRightSideMenu: "favoritos",
+  activeItemRightSideMenu: "FAVORITOS",
 };
 
 const {

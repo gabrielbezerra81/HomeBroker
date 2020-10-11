@@ -12,6 +12,21 @@
     transition-property: width opacity;
     overflow: hidden;
     width: 192px;
+    display: flex;
+    flex-direction: column;
+
+    > span {
+      color: #d2d5d2;
+      font-size: 14px;
+      line-height: 16px;
+      margin-bottom: 24px;
+    }
+
+    button {
+      height: 30px;
+      max-height: 30px;
+      padding: 0;
+    }
 
     &.closedRightMenu {
       width: 0;

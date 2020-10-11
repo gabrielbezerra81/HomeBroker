@@ -13,6 +13,7 @@ import favoritesIcon from "assets/menuLateralDireito/favoritos.png";
 import alertIcon from "assets/menuLateralDireito/alerta.png";
 import ordersIcon from "assets/menuLateralDireito/ordensExecucao.png";
 import positionIcon from "assets/menuLateralDireito/posicaoResumida.png";
+import Alert from "./Alert";
 
 const RightSideMenu: React.FC = () => {
   const {
@@ -65,43 +66,47 @@ const RightSideMenu: React.FC = () => {
         </div>
 
         <div
-          className={`${menuItemOpacity} ${isItemActive("favoritos")}`}
+          className={`${menuItemOpacity} ${isItemActive("FAVORITOS")}`}
           tabIndex={0}
-          data-name="favoritos"
+          data-name="FAVORITOS"
           onClick={handleMenuItemSelect}
         >
           {/* <FavoritesIcon /> */}
           <img src={favoritesIcon} alt="" />
         </div>
         <div
-          className={`${menuItemOpacity} ${isItemActive("alertas")}`}
+          className={`${menuItemOpacity} ${isItemActive("ALERTAS")}`}
           tabIndex={0}
-          data-name="alertas"
+          data-name="ALERTAS"
           onClick={handleMenuItemSelect}
         >
           {/* <AlertIcon /> */}
           <img src={alertIcon} alt="" />
         </div>
         <div
-          className={`${menuItemOpacity} ${isItemActive("ordens")}`}
+          className={`${menuItemOpacity} ${isItemActive("ORDENS EM EXECUÇÃO")}`}
           tabIndex={0}
-          data-name="ordens"
+          data-name="ORDENS EM EXECUÇÃO"
           onClick={handleMenuItemSelect}
         >
           {/* <OrdersIcon /> */}
           <img src={ordersIcon} alt="" />
         </div>
         <div
-          className={`${menuItemOpacity} ${isItemActive("posicao")}`}
+          className={`${menuItemOpacity} ${isItemActive("POSIÇÃO RESUMIDA")}`}
           tabIndex={0}
-          data-name="posicao"
+          data-name="POSIÇÃO RESUMIDA"
           onClick={handleMenuItemSelect}
         >
           {/* <PositionIcon /> */}
           <img src={positionIcon} alt="" />
         </div>
       </div>
-      <div className={`menuContent ${closedMenuContentClass}`}></div>
+      <div className={`menuContent ${closedMenuContentClass}`}>
+        <span>{activeItem}</span>
+
+        {activeItem === "ALERTAS" && <Alert />}
+      </div>
     </div>
   );
 };

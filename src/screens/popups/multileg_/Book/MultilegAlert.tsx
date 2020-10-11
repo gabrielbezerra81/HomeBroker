@@ -16,7 +16,7 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
   const dispatch = useDispatchStorePrincipal();
 
   const {
-    multilegReducer: { multileg },
+    multilegReducer: { multileg, multilegButtonsVisibility },
   } = useStateStorePrincipal();
 
   const [param, setParam] = useState("Bid");
@@ -53,6 +53,10 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
     [comment, dispatch, operator, param, tabIndex],
   );
 
+  const multilegHeight = useMemo(() => {
+    return multilegButtonsVisibility ? 410 : 345;
+  }, [multilegButtonsVisibility]);
+
   useEffect(() => {
     if (previousNumberOfOffers || previousNumberOfOffers === 0) {
       const multilegElement = document.getElementById("multileg");
@@ -67,7 +71,7 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
           if (isCollapsed) {
             expandElement({
               element: section,
-              height: 410,
+              height: multilegHeight,
               extraDynamicHeight: 26 * maxNumberOfOffers,
               extraHeight: 12,
             });
@@ -77,7 +81,7 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
           if (!isCollapsed && !isAnyAlertOpen) {
             collapseElement({
               element: section,
-              height: 410,
+              height: multilegHeight,
               extraDynamicHeight: 26 * maxNumberOfOffers,
             });
           }
