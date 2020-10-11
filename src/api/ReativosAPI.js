@@ -25,6 +25,7 @@ import { formatarDataDaAPI } from "shared/utils/Formatacoes";
 
 import { EventSourcePolyfill } from "event-source-polyfill";
 import produce from "immer";
+import { actionType } from "constants/ActionTypes";
 
 var EventSource = EventSourcePolyfill;
 
@@ -335,7 +336,7 @@ export const atualizarEmblemasAPI = ({ dispatch, listaPrecos, ids, token }) => {
 
 export const atualizarPosicaoAPI = ({ dispatch, listaPosicoes, token }) => {
   var source = new EventSource(
-    `${url_base_reativa}${url_posicaoReativa_idUser}`,
+    `https://price.rendacontinua.com/${url_posicaoReativa_idUser}`,
     {
       headers: {
         Authorization: `${token.tokenType} ${token.accessToken}`,
@@ -384,7 +385,7 @@ export const atualizarOrdensExecAPI = ({
   listaOrdensExec,
 }) => {
   var source = new EventSource(
-    `${url_base_reativa}${url_ordensExecReativas_idUser}`,
+    `https://price.rendacontinua.com/${url_ordensExecReativas_idUser}`,
     {
       headers: {
         Authorization: `${token.tokenType} ${token.accessToken}`,
@@ -489,7 +490,7 @@ export const atualizarPrecosTHLAPI = ({
   return source;
 };
 
-export const updateBoxDataAPI = ({ ids, dispatch, token }) => {
+export const updateBoxDataAPI = ({ ids, dispatch, token, quoteBoxes }) => {
   var source = new EventSource(
     `${url_base_reativa}${url_atualizarPrecosTHL_ids}${ids}`,
     {
@@ -497,6 +498,27 @@ export const updateBoxDataAPI = ({ ids, dispatch, token }) => {
         Authorization: `${token.tokenType} ${token.accessToken}`,
       },
     },
+  );
+
+  const updatedBoxes = produce(quoteBoxes, (draft) => {
+    draft[0].id += 1;
+    draft[0].id -= 1;
+  });
+
+  const immutableFunction = (boxes) => {
+    return produce(boxes, (draft) => {
+      draft[0].id += 1;
+      draft[0].id -= 1;
+    });
+  };
+
+  atualizaListaReativa(
+    dispatch,
+    updatedBoxes,
+    actionType.UPDATE_ONE_SYSTEM_STATE,
+    "quoteBoxes",
+    "setIntervalBox",
+    () => immutableFunction(updatedBoxes),
   );
 
   source.onerror = function (event) {
@@ -507,7 +529,47 @@ export const updateBoxDataAPI = ({ ids, dispatch, token }) => {
     if (typeof event.data !== "undefined") {
       const boxData = JSON.parse(event.data);
 
-      console.log(boxData);
+      boxData.forEach((boxItem) => {
+        const boxIndex = updatedBoxes.findIndex(
+          (upBox) => upBox.structure.id === boxItem.structure.id,
+        );
+
+        if (boxIndex !== -1) {
+          [
+            ["last", "quote"],
+            ["max", "buy"],
+            ["min", "sell"],
+          ].forEach((keyMap) => {
+            const [key, mappedKey] = keyMap;
+
+            if (boxItem[key] || boxItem[key] === 0) {
+              updatedBoxes[boxIndex][mappedKey] = boxItem[key];
+            }
+          }); // buy = max ; sell = min ; quote = last
+
+          [
+            ["bookBuy", "buy"],
+            ["bookSell", "sell"],
+          ].forEach((keyMap) => {
+            const [key, mappedKey] = keyMap;
+
+            if (boxItem[key] && boxItem[key].length) {
+              updatedBoxes[boxIndex].book[mappedKey] = boxItem[key];
+            }
+          }); // book.buy ; book.sell
+
+          boxItem.structure.components.forEach((component) => {
+            const componentIndex = updatedBoxes[
+              boxIndex
+            ].structure.components.findIndex(
+              (upComponent) => upComponent.id === component.id,
+            );
+
+            if (componentIndex) {
+            }
+          });
+        }
+      });
     }
   };
 
