@@ -29,4 +29,5 @@ export default interface SystemState {
   quoteBoxes: Array<BoxProps>;
   boxesVisibility: Array<BoxVisibility>;
   boxEventSource: EventSource | null;
+  activeItemRightSideMenu: string;
 }

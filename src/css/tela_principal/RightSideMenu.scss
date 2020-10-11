@@ -33,8 +33,25 @@
     align-items: center;
     justify-content: center;
     transition: opacity 0.2s;
-
     cursor: pointer;
+
+    svg path {
+      transition: stroke 0.2s;
+    }
+
+    &.activeItem {
+      img {
+        filter: brightness(1.2);
+      }
+
+      svg path {
+        stroke: #ccc;
+      }
+    }
+
+    img {
+      max-width: 32px;
+    }
 
     &.menuItemHidden {
       opacity: 0;
