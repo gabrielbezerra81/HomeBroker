@@ -13,9 +13,9 @@ import { mostrarErroConsulta } from "api/API";
 import { Token, Account } from "types/system/system";
 import api from "./apiConfig";
 
-const timeout = 25000;
+const timeout = 30000;
 
-export const autenticacaoTokenAPI = () => {
+export const autenticacaoTokenAPI = async () => {
   return api
     .get(`${url_autenticacao_token}`, {
       timeout,

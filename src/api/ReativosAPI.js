@@ -336,7 +336,7 @@ export const atualizarEmblemasAPI = ({ dispatch, listaPrecos, ids, token }) => {
 
 export const atualizarPosicaoAPI = ({ dispatch, listaPosicoes, token }) => {
   var source = new EventSource(
-    `https://price.rendacontinua.com/${url_posicaoReativa_idUser}`,
+    `${url_base_reativa}${url_posicaoReativa_idUser}`,
     {
       headers: {
         Authorization: `${token.tokenType} ${token.accessToken}`,
@@ -385,7 +385,7 @@ export const atualizarOrdensExecAPI = ({
   listaOrdensExec,
 }) => {
   var source = new EventSource(
-    `https://price.rendacontinua.com/${url_ordensExecReativas_idUser}`,
+    `${url_base_reativa}${url_ordensExecReativas_idUser}`,
     {
       headers: {
         Authorization: `${token.tokenType} ${token.accessToken}`,
