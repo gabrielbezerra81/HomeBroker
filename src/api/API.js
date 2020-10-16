@@ -47,7 +47,7 @@ import {
 } from "constants/AlertaErros";
 import api from "./apiConfig";
 
-const timeout = 8000;
+const timeout = 20000;
 
 export const pesquisarAtivoAPI = async (codigo) => {
   return api

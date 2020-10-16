@@ -160,7 +160,7 @@ const atualizarEmblemas = ({
   setIntervalEmblema,
   token,
 }) => {
-  let ids = "";
+  let ids = [];
 
   if (eventSourceEmblema) {
     eventSourceEmblema.close();
@@ -170,23 +170,25 @@ const atualizarEmblemas = ({
   }
 
   listaPosicoes.forEach((posicao) => {
-    ids += posicao.idEstrutura + ",";
+    ids.push(posicao.idEstrutura);
   });
-  ids = ids.substring(0, ids.length - 1);
+  ids = ids.join(",");
 
-  const newSource = atualizarEmblemasAPI({
-    dispatch,
-    ids,
-    listaPrecos,
-    token,
-  });
+  if (ids.length) {
+    const newSource = atualizarEmblemasAPI({
+      dispatch,
+      ids,
+      listaPrecos,
+      token,
+    });
 
-  dispatch(
-    updateOnePositionState({
-      attributeName: "eventSourceEmblema",
-      attributeValue: newSource,
-    }),
-  );
+    dispatch(
+      updateOnePositionState({
+        attributeName: "eventSourceEmblema",
+        attributeValue: newSource,
+      }),
+    );
+  }
 };
 
 export const atualizarCotacoesPosicaoAction = () => {
