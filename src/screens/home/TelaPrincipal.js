@@ -42,7 +42,8 @@ class TelaPrincipal extends React.Component {
     super(props);
 
     this.state = {
-      shouldAlertSessionExpired: true,
+      shouldAlertSessionExpired: false,
+      previousShouldAlert: null,
     };
   }
 
@@ -51,20 +52,18 @@ class TelaPrincipal extends React.Component {
     this.props.listarPosicoesAction(this.props);
     this.props.checkIfSystemStateHasChangedShapeAction();
 
-    const { deslogarUsuarioAction } = this.props;
-
     api.interceptors.response.use(
       function (response) {
         return response;
       },
       (error) => {
         if (error.response.status === 401) {
-          console.log(error);
-          console.log(error.response);
           if (this.state.shouldAlertSessionExpired) {
             alert("Sua sessão expirou! Faça login novamente.");
-            this.setState({ shouldAlertSessionExpired: false });
-            deslogarUsuarioAction();
+            this.setState({
+              shouldAlertSessionExpired: true,
+              previousShouldAlert: this.state.shouldAlertSessionExpired,
+            });
           }
         } else {
           return Promise.reject(error);
@@ -75,6 +74,18 @@ class TelaPrincipal extends React.Component {
     // LogRocket.identify(this.props.connectedUser, {
     //   name: this.props.connectedUser,
     // });
+  }
+
+  componentDidUpdate() {
+    const { deslogarUsuarioAction } = this.props;
+
+    if (
+      this.state.shouldAlertSessionExpired !== this.state.previousShouldAlert &&
+      this.state.shouldAlertSessionExpired
+    ) {
+      console.log("sessão expirada");
+      // deslogarUsuarioAction();
+    }
   }
 
   render() {
