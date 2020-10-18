@@ -162,7 +162,7 @@ export const INITIAL_STATE: SystemState = {
   isOpenPosition: false,
   isOpenMultileg: false,
   isOpenTHL: false,
-  isOpenRightSideMenu: true,
+  isOpenRightSideMenu: false,
   token: {} as Token,
   accounts: [],
   selectedAccount: {} as Account,
@@ -187,7 +187,7 @@ export const INITIAL_STATE: SystemState = {
   // emailCadastro: "",
   // senhaCadastro: "",
   boxEventSource: null,
-  activeItemRightSideMenu: "FAVORITOS",
+  activeItemRightSideMenu: "ALERTAS",
 };
 
 const {

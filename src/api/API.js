@@ -236,7 +236,7 @@ export const pesquisarStrikesMultilegAPI = async (codigo_ativo, vencimento) => {
     });
 };
 
-export const listarOrdensExecAPI = () => {
+export const listarOrdensExecAPI = async () => {
   return api
     .get(`${url_listarOrdensExecucao_}`, {
       timeout,
@@ -254,7 +254,7 @@ export const listarOrdensExecAPI = () => {
     });
 };
 
-export const listarPosicoesAPI = () => {
+export const listarPosicoesAPI = async () => {
   return api
     .get(`${url_listarPosicoes}`, {
       timeout,

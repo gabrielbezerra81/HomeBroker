@@ -160,7 +160,7 @@ const atualizarEmblemas = ({
   setIntervalEmblema,
   token,
 }) => {
-  let ids = [];
+  let idArray = [];
 
   if (eventSourceEmblema) {
     eventSourceEmblema.close();
@@ -170,11 +170,11 @@ const atualizarEmblemas = ({
   }
 
   listaPosicoes.forEach((posicao) => {
-    ids.push(posicao.idEstrutura);
+    idArray.push(posicao.idEstrutura);
   });
-  ids = ids.join(",");
+  const ids = idArray.join(",");
 
-  if (ids.length) {
+  if (ids) {
     const newSource = atualizarEmblemasAPI({
       dispatch,
       ids,
@@ -220,7 +220,6 @@ const atualizarCotacoes = async ({
   eventSourceCotacoes,
   setIntervalCotacoesPosicao,
 }) => {
-  let codigos = "";
   const arrayCodigos = await montaArrayCotacoes(listaPosicoes, "codigos");
 
   if (eventSourceCotacoes) {
@@ -231,11 +230,7 @@ const atualizarCotacoes = async ({
     clearInterval(setIntervalCotacoesPosicao);
   }
 
-  arrayCodigos.forEach((ativo) => {
-    codigos += ativo.codigo + ",";
-  });
-
-  codigos = codigos.substring(0, codigos.length - 1);
+  const codigos = arrayCodigos.join(",");
 
   if (codigos) {
     const newSource = atualizarCotacaoPosicaoAPI({

@@ -1,0 +1,113 @@
+#resumedOrderScroll {
+  .ps__rail-y {
+    display: none;
+  }
+}
+
+.orderScrollButton {
+  color: #fff;
+  margin: 0 auto;
+  cursor: pointer;
+  transition: opacity 0.1s;
+
+  &:focus {
+    outline: none;
+  }
+
+  &.hiddenButton {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.resumedOrderContainer {
+  .buyType {
+    background-color: #0cc45b;
+  }
+
+  .sellType {
+    background-color: #ff0020;
+  }
+}
+
+.resumedOrderItem {
+  height: 42px;
+  border-radius: 6px;
+  background: #333333;
+  padding: 4px;
+  width: 100%;
+
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+
+  & + .resumedOrderItem {
+    margin-top: 8px;
+  }
+
+  .progress {
+    position: absolute;
+    height: 100%;
+    background: #108242;
+    background-image: linear-gradient(
+      105deg,
+      #3fb349 25%,
+      #108242 26%,
+      #108242 50%,
+      #3fb349 52%,
+      #3fb349 75%,
+      #108242 77%,
+      #108242 100%
+    );
+    background-size: 31.06px 115.91px;
+    width: 0%;
+    left: 0;
+    transition: width 0.2s;
+    opacity: 0.46;
+  }
+
+  span {
+    font-size: 12px;
+    color: #ccc;
+    line-height: 14px;
+  }
+
+  .offersContainer {
+    flex: 1;
+    margin-right: 8px;
+    z-index: 1;
+  }
+
+  .offer {
+    height: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .offerType {
+      height: 14px;
+      width: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      padding-right: 1px;
+
+      strong {
+        color: #fff;
+        line-height: 10px;
+        font-size: 10px;
+        font-weight: 700;
+      }
+    }
+
+    .symbol {
+      font-size: 15px;
+      line-height: 17px;
+      color: #bcbcbc;
+      min-width: 65px;
+      font-weight: 500;
+    }
+  }
+}

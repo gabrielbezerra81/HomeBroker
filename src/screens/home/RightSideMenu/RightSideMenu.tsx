@@ -1,7 +1,7 @@
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import { MDBIcon } from "mdbreact";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { updateOneSystemStateAction } from "redux/actions/system/SystemActions";
 
 // import { ReactComponent as FavoritesIcon } from "assets/menuLateralDireito/favoritos.svg";
@@ -14,6 +14,8 @@ import alertIcon from "assets/menuLateralDireito/alerta.png";
 import ordersIcon from "assets/menuLateralDireito/ordensExecucao.png";
 import positionIcon from "assets/menuLateralDireito/posicaoResumida.png";
 import Alert from "./Alert";
+import ResumedPosition from "./ResumedPosition/ResumedPosition";
+import ResumedOrder from "./ResumedOrder/ResumedOrder";
 
 const RightSideMenu: React.FC = () => {
   const {
@@ -64,16 +66,6 @@ const RightSideMenu: React.FC = () => {
         <div tabIndex={0} onClick={handleChangeMenuVisibility}>
           <MDBIcon className={arrowRotationClass} icon="angle-left" size="lg" />
         </div>
-
-        <div
-          className={`${menuItemOpacity} ${isItemActive("FAVORITOS")}`}
-          tabIndex={0}
-          data-name="FAVORITOS"
-          onClick={handleMenuItemSelect}
-        >
-          {/* <FavoritesIcon /> */}
-          <img src={favoritesIcon} alt="" />
-        </div>
         <div
           className={`${menuItemOpacity} ${isItemActive("ALERTAS")}`}
           tabIndex={0}
@@ -102,10 +94,17 @@ const RightSideMenu: React.FC = () => {
           <img src={positionIcon} alt="" />
         </div>
       </div>
-      <div className={`menuContent ${closedMenuContentClass}`}>
+      <div className={`menuContent ${closedMenuContentClass}`} id="container1">
         <span>{activeItem}</span>
 
-        {activeItem === "ALERTAS" && <Alert />}
+        {isOpenRightSideMenu && (
+          <>
+            {activeItem === "ALERTAS" && <Alert />}
+
+            {activeItem === "POSIÇÃO RESUMIDA" && <ResumedPosition />}
+            {activeItem === "ORDENS EM EXECUÇÃO" && <ResumedOrder />}
+          </>
+        )}
       </div>
     </div>
   );

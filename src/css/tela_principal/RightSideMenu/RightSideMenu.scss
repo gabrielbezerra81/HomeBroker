@@ -7,13 +7,15 @@
   display: flex;
 
   .menuContent {
-    padding: 20px 12px;
+    padding: 20px 12px 56px;
     transition-duration: 0.2s;
     transition-property: width opacity;
     overflow: hidden;
     width: 192px;
     display: flex;
     flex-direction: column;
+
+    position: relative;
 
     > span {
       color: #d2d5d2;

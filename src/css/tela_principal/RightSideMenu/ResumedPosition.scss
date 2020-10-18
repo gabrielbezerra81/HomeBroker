@@ -1,0 +1,82 @@
+#resumedPositionScroll {
+  .ps__rail-y {
+    display: none;
+  }
+}
+
+.positionScrollButton {
+  color: #fff;
+  margin: 0 auto;
+  cursor: pointer;
+  transition: opacity 0.1s;
+
+  &:focus {
+    outline: none;
+  }
+
+  &.hiddenButton {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.resumedPositionContainer {
+  .buyText {
+    color: #207fa5;
+  }
+
+  .sellText {
+    color: #996666;
+  }
+}
+
+.resumedPositionItem {
+  height: 40px;
+  border-radius: 6px;
+  background: #333333;
+  padding: 4px;
+  display: inline-flex;
+  flex-direction: row;
+
+  & + .resumedPositionItem {
+    margin-top: 8px;
+  }
+
+  > div:not(:last-child) {
+    display: flex;
+    flex-direction: column;
+
+    & + div {
+      margin-left: 4px;
+    }
+
+    > span:first-child {
+      font-size: 15px;
+      line-height: 17px;
+    }
+
+    > span:last-child {
+      color: #ccc;
+      font-size: 12px;
+      line-height: 14px;
+    }
+  }
+
+  > div:last-child {
+    display: flex;
+    flex-direction: column;
+    margin-left: 6px;
+
+    > span:first-child {
+      font-size: 12px;
+      line-height: 14px;
+    }
+
+    > span:last-child {
+      color: #ccc;
+      font-size: 17px;
+      line-height: 20px;
+      font-weight: 500;
+    }
+  }
+}
