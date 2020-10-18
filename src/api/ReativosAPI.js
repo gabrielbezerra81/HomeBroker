@@ -88,11 +88,11 @@ export const atualizarCotacaoMultilegAPI = ({
 }) => {
   var source = new EventSource(
     `${url_base_reativa}${url_cotacaoReativa_codigos}${codigos}`,
-    {
-      headers: {
-        Authorization: `${token.tokenType} ${token.accessToken}`,
-      },
-    },
+    // {
+    //   headers: {
+    //     Authorization: `${token.tokenType} ${token.accessToken}`,
+    //   },
+    // },
   );
 
   let listaCotacoes = arrayCotacoes;
@@ -143,6 +143,7 @@ export const atualizarCotacaoMultilegAPI = ({
   return source;
 };
 
+// TODO: retirar da execução se n tiver aberto
 export const atualizarCotacaoPosicaoAPI = ({
   dispatch,
   codigos,
@@ -151,11 +152,11 @@ export const atualizarCotacaoPosicaoAPI = ({
 }) => {
   var source = new EventSource(
     `${url_base_reativa}${url_cotacaoReativa_codigos}${codigos}`,
-    {
-      headers: {
-        Authorization: `${token.tokenType} ${token.accessToken}`,
-      },
-    },
+    // {
+    //   headers: {
+    //     Authorization: `${token.tokenType} ${token.accessToken}`,
+    //   },
+    // },
   );
 
   let listaCotacoes = arrayCotacoes;
@@ -203,11 +204,11 @@ export const atualizarCotacaoTHLAPI = ({
 }) => {
   var source = new EventSource(
     `${url_base_reativa}${url_cotacaoReativa_codigos}${codigos}`,
-    {
-      headers: {
-        Authorization: `${token.tokenType} ${token.accessToken}`,
-      },
-    },
+    // {
+    //   headers: {
+    //     Authorization: `${token.tokenType} ${token.accessToken}`,
+    //   },
+    // },
   );
 
   let listaCotacoes = arrayCotacoes;
@@ -255,11 +256,11 @@ export const atualizarCotacaoBoletasAPI = ({
 }) => {
   var source = new EventSource(
     `${url_base_reativa}${url_cotacaoReativa_codigos}${codigos}`,
-    {
-      headers: {
-        Authorization: "my secret jwt token",
-      },
-    },
+    // {
+    //   headers: {
+    //     Authorization: "my secret jwt token",
+    //   },
+    // },
   );
 
   source.onmessage = function (event) {
@@ -286,14 +287,15 @@ export const atualizarCotacaoBoletasAPI = ({
   return source;
 };
 
+// TODO: retirar da execução se n tiver aberto
 export const atualizarEmblemasAPI = ({ dispatch, listaPrecos, ids, token }) => {
   var source = new EventSource(
     `${url_base_reativa}${url_emblemaReativo_ids}${ids}`,
-    {
-      headers: {
-        Authorization: `${token.tokenType} ${token.accessToken}`,
-      },
-    },
+    // {
+    //   headers: {
+    //     Authorization: `${token.tokenType} ${token.accessToken}`,
+    //   },
+    // },
   );
 
   const novaLista = [...listaPrecos];
@@ -430,11 +432,11 @@ export const atualizarPrecosTHLAPI = ({
 }) => {
   var source = new EventSource(
     `${url_base_reativa}${url_atualizarPrecosTHL_ids}${ids}`,
-    {
-      headers: {
-        Authorization: `${token.tokenType} ${token.accessToken}`,
-      },
-    },
+    // {
+    //   headers: {
+    //     Authorization: `${token.tokenType} ${token.accessToken}`,
+    //   },
+    // },
   );
 
   const updatedPriceStructures = [];
