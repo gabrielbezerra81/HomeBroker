@@ -7,13 +7,14 @@
   display: flex;
 
   .menuContent {
-    padding: 20px 12px 56px;
+    padding: 20px 8px 56px;
     transition-duration: 0.2s;
     transition-property: width opacity;
     overflow: hidden;
-    width: 192px;
+    width: 214px;
     display: flex;
     flex-direction: column;
+    background: #000;
 
     position: relative;
 

@@ -21,6 +21,10 @@
 }
 
 .resumedPositionContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
   .buyText {
     color: #207fa5;
   }
@@ -35,7 +39,7 @@
   border-radius: 6px;
   background: #333333;
   padding: 4px;
-  display: inline-flex;
+  display: flex;
   flex-direction: row;
 
   & + .resumedPositionItem {

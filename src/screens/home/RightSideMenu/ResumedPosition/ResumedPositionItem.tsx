@@ -36,18 +36,18 @@ const ResumedPositionItem: React.FC<ResumedPositionItemProps> = ({
           </span>
         </div>
       ))}
-      <div>
-        <span className="buyText">BRZU</span>
-        <span>+100</span>
-      </div>
-      <div>
-        <span className="sellText">GDX</span>
-        <span>-100</span>
-      </div>
-      <div>
-        <span className="sellText">GDX</span>
-        <span>-100</span>
-      </div>
+      {/* <div>
+          <span className="buyText">BRZU</span>
+          <span>+100</span>
+        </div>
+        <div>
+          <span className="buyText">BRZU</span>
+          <span>+100</span>
+        </div>
+        <div>
+          <span className="sellText">GDX</span>
+          <span>-100</span>
+        </div> */}
       <div>
         <span className={position.oscilacao >= 0 ? "buyText" : "sellText"}>
           {formattedData.oscilation}%

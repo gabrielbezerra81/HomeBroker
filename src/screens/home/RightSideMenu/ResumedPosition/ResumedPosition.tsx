@@ -64,7 +64,7 @@ const ResumedPosition: React.FC = () => {
         options={{ wheelPropagation: false }}
         onScrollY={handleDisplayArrowChange}
       >
-        <div className="resumedPositionContainer" id="container2">
+        <div className="resumedPositionContainer">
           {posicoesCustodia.map((positionItem, index) => {
             return (
               <ResumedPositionItem

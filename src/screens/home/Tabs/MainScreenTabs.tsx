@@ -114,7 +114,7 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
       const navContainer = elements.item(0) as HTMLElement;
 
       const initialLeftMenu = isOpenLeftUserMenu ? " - 132px" : "";
-      const initialRightMenu = isOpenRightSideMenu ? " - 192px" : "";
+      const initialRightMenu = isOpenRightSideMenu ? " - 214px" : "";
 
       navContainer.style.width =
         "calc(100% - 43px - 81px - 32px - 3px" +
@@ -155,9 +155,9 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
       const currentWidth = navContainer.style.width.replace(")", "");
 
       if (isOpenRightSideMenu) {
-        navContainer.style.width = currentWidth + " - 192px)";
+        navContainer.style.width = currentWidth + " - 214px)";
       } else {
-        navContainer.style.width = currentWidth.replace(" - 192px", "");
+        navContainer.style.width = currentWidth.replace(" - 214px", "");
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

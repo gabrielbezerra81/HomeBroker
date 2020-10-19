@@ -94,7 +94,7 @@ const RightSideMenu: React.FC = () => {
           <img src={positionIcon} alt="" />
         </div>
       </div>
-      <div className={`menuContent ${closedMenuContentClass}`} id="container1">
+      <div className={`menuContent ${closedMenuContentClass}`}>
         <span>{activeItem}</span>
 
         {isOpenRightSideMenu && (
