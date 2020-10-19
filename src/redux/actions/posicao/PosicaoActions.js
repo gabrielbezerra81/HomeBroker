@@ -127,12 +127,16 @@ const montaArrayCotacoes = async (listaPosicoes, tipoRetorno = "completo") => {
   for (var [indice] in arrayCodigos) {
     const ativo = arrayCodigos[indice];
 
-    const response = await api.get(
-      `${url_pesquisarAtivoBoletas_codigo}${ativo.codigo}`,
-    );
+    try {
+      const response = await api.get(
+        `${url_pesquisarAtivoBoletas_codigo}${ativo.codigo}`,
+      );
 
-    if (response.data) {
-      ativo.cotacao = response.data.ultimo;
+      if (response.data) {
+        ativo.cotacao = response.data.ultimo;
+      }
+    } catch (error) {
+      ativo.cotacao = 0;
     }
   }
   return arrayCodigos;
