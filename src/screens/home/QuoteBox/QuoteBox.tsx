@@ -136,7 +136,7 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
 
   //   if (box) {
   //     const { x, y } = box.getBoundingClientRect();
-  //     setPosition({ x: x - 80, y });
+  //     setPosition({ x: x - 116, y: y - 85 });
   //     // box.style.position = "absolute";
   //   }
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -155,6 +155,7 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
         className="quoteBox"
         style={{
           ...visibilityClass,
+          // position: position.x === 0 ? "relative" : "absolute",
         }}
         id={quoteBox.id + ""}
       >
