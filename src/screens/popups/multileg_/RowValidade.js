@@ -31,12 +31,12 @@ const renderFormData = (props, abaMultileg) => (
       })
     }
     dateFormat="dd/MM/yyyy"
-    popperPlacement="top-start"
+    popperPlacement="top-end"
     autoFocus
     customInput={formSelect(
       props,
       getformatedDate(abaMultileg.date),
-      abaMultileg
+      abaMultileg,
     )}
   />
 );
