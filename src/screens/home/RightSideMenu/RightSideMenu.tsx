@@ -1,7 +1,7 @@
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import { MDBIcon } from "mdbreact";
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import React, { useCallback, useMemo } from "react";
 import { updateOneSystemStateAction } from "redux/actions/system/SystemActions";
 
 // import { ReactComponent as FavoritesIcon } from "assets/menuLateralDireito/favoritos.svg";
@@ -9,7 +9,6 @@ import { updateOneSystemStateAction } from "redux/actions/system/SystemActions";
 // import { ReactComponent as OrdersIcon } from "assets/menuLateralDireito/ordens.svg";
 // import { ReactComponent as PositionIcon } from "assets/menuLateralDireito/posicao.svg";
 
-import favoritesIcon from "assets/menuLateralDireito/favoritos.png";
 import alertIcon from "assets/menuLateralDireito/alerta.png";
 import ordersIcon from "assets/menuLateralDireito/ordensExecucao.png";
 import positionIcon from "assets/menuLateralDireito/posicaoResumida.png";
