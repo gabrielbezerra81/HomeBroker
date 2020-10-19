@@ -519,7 +519,7 @@ export const updateBoxDataAPI = ({ ids, dispatch, token, quoteBoxes }) => {
     updatedBoxes,
     actionType.UPDATE_ONE_SYSTEM_STATE,
     "quoteBoxes",
-    "setIntervalBox",
+    "boxSetInterval",
     () => immutableFunction(updatedBoxes),
   );
 
@@ -531,7 +531,9 @@ export const updateBoxDataAPI = ({ ids, dispatch, token, quoteBoxes }) => {
     if (typeof event.data !== "undefined") {
       const boxData = JSON.parse(event.data);
 
-      boxData.forEach((boxItem) => {
+      console.log(boxData);
+
+      [].forEach((boxItem) => {
         const boxIndex = updatedBoxes.findIndex(
           (upBox) => upBox.structure.id === boxItem.structure.id,
         );
