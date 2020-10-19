@@ -92,7 +92,7 @@ const atualizarPosicao = async ({
   eventSourcePosicao,
   token,
 }) => {
-  if (eventSourcePosicao) {
+  if (eventSourcePosicao && eventSourcePosicao.close) {
     eventSourcePosicao.close();
   }
 
@@ -162,7 +162,7 @@ const atualizarEmblemas = ({
 }) => {
   let idArray = [];
 
-  if (eventSourceEmblema) {
+  if (eventSourceEmblema && eventSourceEmblema.close) {
     eventSourceEmblema.close();
   }
   if (setIntervalEmblema) {
@@ -222,7 +222,7 @@ const atualizarCotacoes = async ({
 }) => {
   const arrayCodigos = await montaArrayCotacoes(listaPosicoes, "codigos");
 
-  if (eventSourceCotacoes) {
+  if (eventSourceCotacoes && eventSourceCotacoes.close) {
     eventSourceCotacoes.close();
   }
   if (setIntervalCotacoesPosicao) {

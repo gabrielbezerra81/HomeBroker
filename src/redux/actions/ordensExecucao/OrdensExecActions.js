@@ -20,7 +20,10 @@ import {
 } from "redux/actions/multileg/MultilegActions";
 import { searchMultilegSymbolData } from "redux/actions/multileg/MultilegAPIAction";
 import { erro_exportar_ordens_multileg } from "constants/AlertaErros";
-import { calculoPreco, calculoMDC } from "screens/popups/multileg_/CalculoPreco";
+import {
+  calculoPreco,
+  calculoMDC,
+} from "screens/popups/multileg_/CalculoPreco";
 import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
 import { getReducerStateStorePrincipal } from "hooks/utils";
 import { abrirItemBarraLateralAction } from "../system/SystemActions";
@@ -455,7 +458,7 @@ const atualizarOrdensExec = ({
   token,
   listaOrdensExec,
 }) => {
-  if (eventSourceOrdensExec) {
+  if (eventSourceOrdensExec && eventSourceOrdensExec.close) {
     eventSourceOrdensExec.close();
   }
 
