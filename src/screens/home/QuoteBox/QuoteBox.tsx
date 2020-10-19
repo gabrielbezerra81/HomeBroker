@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import produce from "immer";
 import Draggable, { DraggableData } from "react-draggable";
 import { RiCloseCircleFill } from "react-icons/ri";
@@ -131,6 +131,17 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
     setPosition(data);
   }, []);
 
+  // useEffect(() => {
+  //   const box = document.getElementById(`${quoteBox.id}`);
+
+  //   if (box) {
+  //     const { x, y } = box.getBoundingClientRect();
+  //     setPosition({ x: x - 80, y });
+  //     // box.style.position = "absolute";
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+
   return (
     <Draggable
       enableUserSelectHack={isDragging}
@@ -140,7 +151,13 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
       onStop={onStopDragging}
       onDrag={onDrag}
     >
-      <div className="quoteBox" style={visibilityClass}>
+      <div
+        className="quoteBox"
+        style={{
+          ...visibilityClass,
+        }}
+        id={quoteBox.id + ""}
+      >
         <div className="symbolsContainer">
           <div>
             {quoteBox.codes.map(
@@ -177,8 +194,12 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
               <div className="sliderTopo"></div>
             </div>
             <div className="flexSpaceBetweenCenter">
-              <span className="highlightedText">{formattedBox.buy}</span>
-              <span className="highlightedText">{formattedBox.sell}</span>
+              <span className="highlightedText">
+                {formattedBox.buy || "0,00"}
+              </span>
+              <span className="highlightedText">
+                {formattedBox.sell || "0,00"}
+              </span>
             </div>
           </section>
 
@@ -200,7 +221,9 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
               )}
             </div>
             <div className="quoteContainer">
-              <strong className="highlightedText">{formattedBox.quote}</strong>
+              <strong className="highlightedText">
+                {formattedBox.quote || "0,00"}
+              </strong>
               <span>
                 <DayOscilation
                   dayOscilation={quoteBox.dayOscilation}

@@ -4,7 +4,7 @@
   column-gap: 12px;
   row-gap: 16px;
   padding: 0px 32px 16px;
-  margin-top: 0px;
+  margin-top: 32px;
   overflow: visible;
 
   .buyText {
@@ -17,8 +17,11 @@
 }
 
 .quoteBox {
-  position: relative !important;
-  height: 0px;
+  // position: relative !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-width: 237px;
 
   span,
   strong {
@@ -35,7 +38,7 @@
     padding: 0 5px;
     justify-content: center;
     align-items: flex-end;
-    height: 108px;
+    // height: 108px;
     pointer-events: none;
 
     > div {
