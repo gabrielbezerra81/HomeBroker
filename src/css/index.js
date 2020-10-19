@@ -1,5 +1,5 @@
 import "./global.scss";
-import "./App.css";
+import "./AppBoletas.scss";
 import "./estilo_geral_formCompraVenda/FormGenerico.css";
 import "./BookOfertas.css";
 import "./estilo_geral_formCompraVenda/FormInterno.css";

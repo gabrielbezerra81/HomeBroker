@@ -87,7 +87,7 @@ class AppBoletas extends React.Component {
     const { props } = this;
 
     return (
-      <div className="App">
+      <div className="AppBoletas">
         <Boleta
           appKey={props.appkey}
           boletaName="book"
