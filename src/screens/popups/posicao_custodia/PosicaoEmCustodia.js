@@ -28,7 +28,23 @@ class PosicaoEmCustodia extends React.Component {
         props.zIndex + 1;
       props.aumentarZindexAction("posicao_custodia", props.zIndex, true);
     }
+
+    props.atualizarEmblemasAction();
+    props.atualizarCotacoesPosicaoAction();
   }
+
+  componentWillUnmount() {
+    const { eventSourceEmblema, eventSourceCotacoes } = this.props;
+
+    if (eventSourceEmblema && eventSourceEmblema.close) {
+      eventSourceEmblema.close();
+    }
+
+    if (eventSourceCotacoes && eventSourceCotacoes.close) {
+      eventSourceCotacoes.close();
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const { props } = this;
     const { divkey, isOpenPosition, aumentarZindexAction, zIndex } = props;
