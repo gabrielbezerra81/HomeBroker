@@ -58,13 +58,10 @@ class TelaPrincipal extends React.Component {
       },
       (error) => {
         if (error.response.status === 401) {
-          if (this.state.shouldAlertSessionExpired) {
-            alert("Sua sessão expirou! Faça login novamente.");
-            this.setState({
-              shouldAlertSessionExpired: true,
-              previousShouldAlert: this.state.shouldAlertSessionExpired,
-            });
-          }
+          this.setState({
+            shouldAlertSessionExpired: true,
+            previousShouldAlert: this.state.shouldAlertSessionExpired,
+          });
         } else {
           return Promise.reject(error);
         }
@@ -83,7 +80,7 @@ class TelaPrincipal extends React.Component {
       this.state.shouldAlertSessionExpired !== this.state.previousShouldAlert &&
       this.state.shouldAlertSessionExpired
     ) {
-      console.log("sessão expirada");
+      // alert("Sua sessão expirou! Faça login novamente.");
       // deslogarUsuarioAction();
     }
   }
