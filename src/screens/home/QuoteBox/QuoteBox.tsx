@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import produce from "immer";
 import Draggable, { DraggableData } from "react-draggable";
 import { RiCloseCircleFill } from "react-icons/ri";
@@ -14,6 +14,7 @@ import {
   updateOneSystemStateAction,
 } from "redux/actions/system/SystemActions";
 import { deleteQuoteBoxAPI } from "api/API";
+import { handleBoxUpdatesAction } from "redux/actions/system/boxesActions";
 
 interface QuoteBoxProps {
   quoteBox: BoxProps;
@@ -101,6 +102,7 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
 
           if (index >= 0) draft.splice(index, 1);
         });
+
         dispatch(
           updateManySystemState({
             openedMenus: updatedOpenedMenus,
@@ -108,6 +110,8 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
             quoteBoxes: updatedQuoteBoxes,
           }),
         );
+
+        dispatch(handleBoxUpdatesAction(updatedQuoteBoxes));
       }
     } catch (error) {}
   }, [

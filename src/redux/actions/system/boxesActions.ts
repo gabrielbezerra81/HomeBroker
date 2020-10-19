@@ -118,7 +118,7 @@ export const handleAddBoxesToTabsAction = (
   };
 };
 
-const handleBoxUpdatesAction = (quoteBoxes: BoxProps[]): MainThunkAction => {
+export const handleBoxUpdatesAction = (quoteBoxes: BoxProps[]): MainThunkAction => {
   return (dispatch, getState) => {
     const {
       systemReducer: { token, boxEventSource, boxSetInterval },
