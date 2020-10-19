@@ -63,6 +63,7 @@ class TabelaMultileg extends React.Component {
                   offer={item}
                   tabIndex={tabIndex}
                   lineIndex={lineIndex}
+                  key={`offer${lineIndex}`}
                 />
               );
             },
