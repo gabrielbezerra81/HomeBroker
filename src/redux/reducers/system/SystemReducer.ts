@@ -187,6 +187,7 @@ export const INITIAL_STATE: SystemState = {
   // emailCadastro: "",
   // senhaCadastro: "",
   boxEventSource: null,
+  boxSetInterval: null,
   activeItemRightSideMenu: "ALERTAS",
 };
 

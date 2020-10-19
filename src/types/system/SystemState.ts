@@ -29,5 +29,6 @@ export default interface SystemState {
   quoteBoxes: Array<BoxProps>;
   boxesVisibility: Array<BoxVisibility>;
   boxEventSource: EventSource | null;
+  boxSetInterval: NodeJS.Timeout | null;
   activeItemRightSideMenu: string;
 }

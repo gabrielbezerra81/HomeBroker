@@ -121,11 +121,15 @@ export const handleAddBoxesToTabsAction = (
 const handleBoxUpdatesAction = (quoteBoxes: BoxProps[]): MainThunkAction => {
   return (dispatch, getState) => {
     const {
-      systemReducer: { token, boxEventSource },
+      systemReducer: { token, boxEventSource, boxSetInterval },
     } = getState();
 
     if (boxEventSource && boxEventSource.close) {
       boxEventSource.close();
+    }
+
+    if (boxSetInterval) {
+      clearInterval(boxSetInterval);
     }
 
     const idArray: string[] = [];
