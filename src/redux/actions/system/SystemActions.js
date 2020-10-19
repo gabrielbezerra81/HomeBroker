@@ -52,7 +52,7 @@ export const logarUsuarioAction = (email, senha) => {
     //const auth = await autenticacaoTokenAPI();
 
     if (data) {
-      const { username, accessToken, tokenType, accounts } = data;
+      const { accessToken, tokenType, accounts, nickName } = data;
 
       api.defaults.headers.authorization = `${tokenType} ${accessToken}`;
 
@@ -63,7 +63,7 @@ export const logarUsuarioAction = (email, senha) => {
       await dispatch({
         type: LOGAR_DESLOGAR_USUARIO,
         payload: {
-          connectedUser: username,
+          connectedUser: nickName,
           isLogged: true,
         },
       });
