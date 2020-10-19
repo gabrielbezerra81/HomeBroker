@@ -1,6 +1,6 @@
 // export const cors_anywhere = "https://cors-anywhere.herokuapp.com/";
 export const url_base = "https://api.rendacontinua.com/api/"; //"http://173.249.37.183:8080/api/";
-export const url_base_reativa = "http://62.171.190.108:8090/"; //"https://quotes.rendacontinua.com/";
+export const url_base_reativa = "https://62.171.190.108:8090/"; //"https://quotes.rendacontinua.com/";
 
 //Boletas de compra e venda
 export const url_pesquisarAtivoBoletas_codigo = "price/quotes/";
