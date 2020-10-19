@@ -42,13 +42,13 @@ const ResumedPosition: React.FC = () => {
     const bar = document.getElementById("resumedPositionScroll");
 
     if (bar) {
-      if (bar.scrollHeight > bar.clientHeight) {
+      if (bar.scrollHeight > bar.clientHeight && posicoesCustodia.length > 0) {
         setHasOverflow(true);
       } else {
         setHasOverflow(false);
       }
     }
-  }, []);
+  }, [posicoesCustodia.length]);
 
   const scrollButtonVisibility = useMemo(() => {
     return shouldDisplayArrow ? "" : "hiddenButton";
