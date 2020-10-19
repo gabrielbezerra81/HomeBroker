@@ -17,7 +17,7 @@
 }
 
 .quoteBox {
-  // position: relative !important;
+  position: relative !important;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -38,7 +38,7 @@
     padding: 0 5px;
     justify-content: center;
     align-items: flex-end;
-    height: 108px;
+    // height: 108px;
     pointer-events: none;
 
     > div {
