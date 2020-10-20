@@ -39,6 +39,7 @@ import "./tela_principal/BoxMenu.scss";
 import "./tela_principal/RightSideMenu/RightSideMenu.scss";
 import "./tela_principal/RightSideMenu/ResumedPosition.scss";
 import "./tela_principal/RightSideMenu/ResumedOrder.scss";
+import "./tela_principal/RightSideMenu/Alert.scss";
 import "./tela_thl/thl.scss";
 import "./tela_thl/combinacoes.scss";
 import "./tela_thl/vencimentos.scss";

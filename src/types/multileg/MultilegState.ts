@@ -1,4 +1,4 @@
-import { MultilegTab, MultilegQuote } from "./multileg";
+import { MultilegTab, MultilegQuote, AlertAPI } from "./multileg";
 
 export default interface MultilegState {
   configComplementarAberto: boolean;
@@ -14,4 +14,5 @@ export default interface MultilegState {
   setIntervalCotacoesMultileg: NodeJS.Timeout | null;
   cotacoesMultileg: Array<MultilegQuote>;
   cotacoesMultilegID: number;
+  alerts: Array<AlertAPI>;
 }

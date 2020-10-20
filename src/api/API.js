@@ -19,6 +19,7 @@ import {
   url_pesquisarCombinacoes_ativo,
   url_favoritarTHL_,
   url_addQuoteBox_groupName,
+  url_listarAlertas,
 } from "api/url";
 
 import {
@@ -47,7 +48,7 @@ import {
 } from "constants/AlertaErros";
 import api from "./apiConfig";
 
-const timeout = 20000;
+const timeout = 25000;
 
 export const pesquisarAtivoAPI = async (codigo) => {
   return api
@@ -488,6 +489,39 @@ export const addQuoteBoxAPI = async (groupName, data) => {
     });
 };
 
+export const listQuoteBoxesAPI = async () => {
+  return api
+    .get(`favorite`)
+    .then((response) => response.data)
+    .catch((error) => {
+      mostrarErroConsulta(error, "");
+      return [];
+    });
+};
+
+export const deleteQuoteBoxAPI = async (boxID) => {
+  return api
+    .delete(`favorite/${boxID}`)
+    .then(() => true)
+    .catch((error) => {
+      mostrarErroConsulta(error, error_delete_box);
+      return false;
+    });
+};
+
+export const listAlertsAPI = async () => {
+  return api
+    .get(url_listarAlertas)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.log(error);
+
+      return [];
+    });
+};
+
 export const setPointerWhileAwaiting = ({
   lockMode,
   id,
@@ -514,28 +548,9 @@ export const setPointerWhileAwaiting = ({
   }
 };
 
-export const listQuoteBoxesAPI = async () => {
-  return api
-    .get(`favorite`)
-    .then((response) => response.data)
-    .catch((error) => {
-      mostrarErroConsulta(error, "");
-      return [];
-    });
-};
-
-export const deleteQuoteBoxAPI = async (boxID) => {
-  return api
-    .delete(`favorite/${boxID}`)
-    .then(() => true)
-    .catch((error) => {
-      mostrarErroConsulta(error, error_delete_box);
-      return false;
-    });
-};
-
 export const mostrarErroConsulta = (erro, mensagem) => {
   console.log(erro);
+  console.log(erro.response);
   if (erro.timeout) {
     alert(erro_timeout);
   } else if (mensagem) alert(mensagem);

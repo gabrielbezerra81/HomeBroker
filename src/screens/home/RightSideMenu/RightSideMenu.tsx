@@ -12,7 +12,7 @@ import { updateOneSystemStateAction } from "redux/actions/system/SystemActions";
 import alertIcon from "assets/menuLateralDireito/alerta.png";
 import ordersIcon from "assets/menuLateralDireito/ordensExecucao.png";
 import positionIcon from "assets/menuLateralDireito/posicaoResumida.png";
-import Alert from "./Alert";
+import Alert from "./Alert/Alert";
 import ResumedPosition from "./ResumedPosition/ResumedPosition";
 import ResumedOrder from "./ResumedOrder/ResumedOrder";
 

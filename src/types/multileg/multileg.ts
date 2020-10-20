@@ -53,3 +53,20 @@ export interface MultilegOffer {
   prioridade: number;
   ativoAtual: string;
 }
+
+export interface AlertAPI {
+  id: number;
+  param: "Bid" | "Ask" | "Last";
+  operator: "Less" | "Greater";
+  expiration: string;
+  price: number;
+  structure: {
+    id: number;
+    components: Array<{
+      qtty: number;
+      stock: {
+        symbol: string;
+      };
+    }>;
+  };
+}
