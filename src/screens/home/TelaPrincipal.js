@@ -62,9 +62,8 @@ class TelaPrincipal extends React.Component {
             shouldAlertSessionExpired: true,
             previousShouldAlert: this.state.shouldAlertSessionExpired,
           });
-        } else {
-          return Promise.reject(error);
         }
+        return Promise.reject(error);
       },
     );
 

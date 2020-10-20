@@ -72,7 +72,7 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
             expandElement({
               element: section,
               height: multilegHeight,
-              extraDynamicHeight: 26 * maxNumberOfOffers,
+              extraDynamicHeight: 27 * maxNumberOfOffers,
               extraHeight: 12,
             });
             section.setAttribute("data-collapsed", "false");
@@ -82,7 +82,7 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
             collapseElement({
               element: section,
               height: multilegHeight,
-              extraDynamicHeight: 26 * maxNumberOfOffers,
+              extraDynamicHeight: 27 * maxNumberOfOffers,
             });
           }
         }

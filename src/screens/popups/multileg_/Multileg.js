@@ -89,10 +89,16 @@ class Multileg extends React.Component {
       prevProps.multilegButtonsVisibility !== multilegButtonsVisibility
     ) {
       if (previousNumberOfOffers || previousNumberOfOffers === 0) {
+        const isAnyAlertOpen = multileg.some((tab) => tab.isAlertOpen);
+
         const multilegElement = document.getElementById("multileg");
         var section = multilegElement?.querySelector(".mcontent");
 
-        const popupHeight = multilegButtonsVisibility ? 410 : 345;
+        let popupHeight = multilegButtonsVisibility ? 410 : 345;
+
+        if (isAnyAlertOpen) {
+          popupHeight += 109;
+        }
 
         updateHeight(section, popupHeight, 27 * maxNumberOfOffers);
       }
