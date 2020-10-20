@@ -16,6 +16,18 @@ const ResumedPositionItem: React.FC<ResumedPositionItemProps> = ({
     };
   }, [position]);
 
+  const notInCustodyCodes = useMemo(() => {
+    return position.ativos.filter(
+      (symbolCode, index) =>
+        !position.custodiaCompra.find(
+          (custodyItem) => custodyItem.ativo === symbolCode.symbol,
+        ) &&
+        !position.custodiaVenda.find(
+          (custodyItem) => custodyItem.ativo === symbolCode.symbol,
+        ),
+    );
+  }, [position.ativos, position.custodiaCompra, position.custodiaVenda]);
+
   return (
     <div className="resumedPositionItem">
       {position.custodiaCompra.map((custodyItem, index) => (
@@ -36,18 +48,12 @@ const ResumedPositionItem: React.FC<ResumedPositionItemProps> = ({
           </span>
         </div>
       ))}
-      {/* <div>
-          <span className="buyText">BRZU</span>
-          <span>+100</span>
+      {notInCustodyCodes.map((symbolCode, index) => (
+        <div key={`${symbolCode.symbol}${index}`}>
+          <span style={{ color: "#ddd" }}>{symbolCode.symbol}</span>
+          <span>0</span>
         </div>
-        <div>
-          <span className="buyText">BRZU</span>
-          <span>+100</span>
-        </div>
-        <div>
-          <span className="sellText">GDX</span>
-          <span>-100</span>
-        </div> */}
+      ))}
       <div>
         <span className={position.oscilacao >= 0 ? "buyText" : "sellText"}>
           {formattedData.oscilation}%
