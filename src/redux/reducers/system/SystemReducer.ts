@@ -189,6 +189,8 @@ export const INITIAL_STATE: SystemState = {
   boxEventSource: null,
   boxSetInterval: null,
   activeItemRightSideMenu: "ALERTAS",
+  multilegButtonsVisibility: true,
+  createAlertButtonVisibility: false,
 };
 
 const {

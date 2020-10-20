@@ -38,8 +38,6 @@ const INITIAL_STATE: MultilegState = {
   setIntervalCotacoesMultileg: null,
   cotacoesMultileg: [],
   cotacoesMultilegID: 0,
-  multilegButtonsVisibility: true,
-  createAlertButtonVisibility: false,
 };
 
 export default (

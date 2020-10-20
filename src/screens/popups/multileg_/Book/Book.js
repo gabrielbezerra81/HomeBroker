@@ -363,9 +363,9 @@ const mapStateToProps = (state) => ({
   accounts: state.systemReducer.accounts,
   selectedAccount: state.systemReducer.selectedAccount,
   cotacoesMultilegID: state.multilegReducer.cotacoesMultilegID,
-  multilegButtonsVisibility: state.multilegReducer.multilegButtonsVisibility,
+  multilegButtonsVisibility: state.systemReducer.multilegButtonsVisibility,
   createAlertButtonVisibility:
-    state.multilegReducer.createAlertButtonVisibility,
+    state.systemReducer.createAlertButtonVisibility,
 });
 
 export default connect(

@@ -164,9 +164,8 @@ export const abrirItemBarraLateralAction = (props, nameVariavelReducer) => {
 
       // if (nameVariavelReducer === "isOpenMultileg" && !updatedVisibility) {
       //   dispatch(
-      //     updateOneMultilegState({
-      //       attributeName: "multilegButtonsVisibility",
-      //       attributeValue: true,
+      //     updateManySystemState({
+      //       multilegButtonsVisibility:true,
       //     }),
       //   );
       // }

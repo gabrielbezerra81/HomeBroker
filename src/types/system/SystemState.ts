@@ -31,4 +31,6 @@ export default interface SystemState {
   boxEventSource: EventSource | null;
   boxSetInterval: NodeJS.Timeout | null;
   activeItemRightSideMenu: string;
+  multilegButtonsVisibility: boolean;
+  createAlertButtonVisibility: boolean;
 }

@@ -28,9 +28,9 @@ import {
 import {
   mouseOverAction,
   mouseLeaveAction,
+  updateOneSystemStateAction,
 } from "redux/actions/system/SystemActions";
 import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
-import { updateOneMultilegState } from "redux/actions/multileg/utils";
 
 const startStyle = {
   opacity: 0,
@@ -184,10 +184,11 @@ class MenuOrdens extends Component {
                 onClick={() => {
                   props.atualizarDivKeyAction("multileg");
                   props.abrirItemBarraLateralAction(props, "isOpenMultileg");
-                  props.updateOneMultilegState({
-                    attributeName: "multilegButtonsVisibility",
-                    attributeValue: true,
-                  });
+
+                  props.updateOneSystemStateAction(
+                    "multilegButtonsVisibility",
+                    true,
+                  );
                 }}
                 className="divClicavel"
               />
@@ -242,7 +243,7 @@ export default compose(
       mouseOverAction,
       mouseLeaveAction,
       abrirItemBarraLateralAction,
-      updateOneMultilegState,
+      updateOneSystemStateAction,
     },
     null,
     { context: StorePrincipalContext },

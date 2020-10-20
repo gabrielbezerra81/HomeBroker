@@ -4,8 +4,10 @@ import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import React, { useCallback } from "react";
 import { Button } from "react-bootstrap";
 import { atualizarDivKeyAction } from "redux/actions/GlobalAppActions";
-import { updateManyMultilegState } from "redux/actions/multileg/utils";
-import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
+import {
+  abrirItemBarraLateralAction,
+  updateManySystemState,
+} from "redux/actions/system/SystemActions";
 
 const Alert: React.FC = () => {
   const dispatchGlobal = useDispatchGlobalStore();
@@ -16,7 +18,7 @@ const Alert: React.FC = () => {
 
   const handleOpenMultileg = useCallback(() => {
     dispatch(
-      updateManyMultilegState({
+      updateManySystemState({
         multilegButtonsVisibility: false,
         createAlertButtonVisibility: true,
       }),

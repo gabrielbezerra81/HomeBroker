@@ -14,6 +14,4 @@ export default interface MultilegState {
   setIntervalCotacoesMultileg: NodeJS.Timeout | null;
   cotacoesMultileg: Array<MultilegQuote>;
   cotacoesMultilegID: number;
-  multilegButtonsVisibility: boolean;
-  createAlertButtonVisibility: boolean;
 }

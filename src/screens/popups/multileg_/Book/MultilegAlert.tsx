@@ -16,7 +16,8 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
   const dispatch = useDispatchStorePrincipal();
 
   const {
-    multilegReducer: { multileg, multilegButtonsVisibility },
+    multilegReducer: { multileg },
+    systemReducer: { multilegButtonsVisibility },
   } = useStateStorePrincipal();
 
   const [param, setParam] = useState("Bid");

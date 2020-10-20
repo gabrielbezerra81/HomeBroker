@@ -1,7 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
+import { abrirItemBarraLateralAction, updateOneSystemStateAction } from "redux/actions/system/SystemActions";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
-import { updateOneMultilegState } from "redux/actions/multileg/utils";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 import { atualizarDivKeyAction } from "redux/actions/GlobalAppActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
@@ -22,12 +21,7 @@ const AddBoxMenu: React.FC = () => {
   const [menuVisibility, setMenuVisibility] = useState(false);
 
   const handleOpenMultileg = useCallback(() => {
-    dispatch(
-      updateOneMultilegState({
-        attributeName: "multilegButtonsVisibility",
-        attributeValue: false,
-      }),
-    );
+    dispatch(updateOneSystemStateAction("multilegButtonsVisibility", false));
 
     dispatchGlobal(atualizarDivKeyAction("multileg"));
     dispatch(abrirItemBarraLateralAction({ isOpenMultileg }, "isOpenMultileg"));
