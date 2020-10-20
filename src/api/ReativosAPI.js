@@ -1,3 +1,5 @@
+// @collapse
+
 import {
   adicionaPosicao,
   updateOnePositionState,
@@ -88,11 +90,11 @@ export const atualizarCotacaoMultilegAPI = ({
 }) => {
   var source = new EventSource(
     `${url_base_reativa}${url_cotacaoReativa_codigos}${codigos}`,
-    // {
-    //   headers: {
-    //     Authorization: `${token.tokenType} ${token.accessToken}`,
-    //   },
-    // },
+    {
+      headers: {
+        Authorization: `${token.tokenType} ${token.accessToken}`,
+      },
+    },
   );
 
   let listaCotacoes = arrayCotacoes;
@@ -152,11 +154,11 @@ export const atualizarCotacaoPosicaoAPI = ({
 }) => {
   var source = new EventSource(
     `${url_base_reativa}${url_cotacaoReativa_codigos}${codigos}`,
-    // {
-    //   headers: {
-    //     Authorization: `${token.tokenType} ${token.accessToken}`,
-    //   },
-    // },
+    {
+      headers: {
+        Authorization: `${token.tokenType} ${token.accessToken}`,
+      },
+    },
   );
 
   let listaCotacoes = arrayCotacoes;
@@ -204,11 +206,11 @@ export const atualizarCotacaoTHLAPI = ({
 }) => {
   var source = new EventSource(
     `${url_base_reativa}${url_cotacaoReativa_codigos}${codigos}`,
-    // {
-    //   headers: {
-    //     Authorization: `${token.tokenType} ${token.accessToken}`,
-    //   },
-    // },
+    {
+      headers: {
+        Authorization: `${token.tokenType} ${token.accessToken}`,
+      },
+    },
   );
 
   let listaCotacoes = arrayCotacoes;
@@ -291,11 +293,11 @@ export const atualizarCotacaoBoletasAPI = ({
 export const atualizarEmblemasAPI = ({ dispatch, listaPrecos, ids, token }) => {
   var source = new EventSource(
     `${url_base_reativa}${url_emblemaReativo_ids}${ids}`,
-    // {
-    //   headers: {
-    //     Authorization: `${token.tokenType} ${token.accessToken}`,
-    //   },
-    // },
+    {
+      headers: {
+        Authorization: `${token.tokenType} ${token.accessToken}`,
+      },
+    },
   );
 
   const novaLista = [...listaPrecos];
@@ -432,11 +434,11 @@ export const atualizarPrecosTHLAPI = ({
 }) => {
   var source = new EventSource(
     `${url_base_reativa}${url_atualizarPrecosTHL_ids}${ids}`,
-    // {
-    //   headers: {
-    //     Authorization: `${token.tokenType} ${token.accessToken}`,
-    //   },
-    // },
+    {
+      headers: {
+        Authorization: `${token.tokenType} ${token.accessToken}`,
+      },
+    },
   );
 
   const updatedPriceStructures = [];
