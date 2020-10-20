@@ -56,11 +56,12 @@ export default (
           ...resetarEstadoRedux({
             state,
             initialState: INITIAL_STATE,
-            omitions: ["multileg", "cotacoesMultileg"],
+            omitions: ["multileg", "cotacoesMultileg", "alerts"],
             reducerName: "multileg",
             shouldClearAllProps: payload.limparReducer,
             shouldClearEventSources: true,
           }),
+          alerts: state.alerts,
         };
       else return state;
     default:
