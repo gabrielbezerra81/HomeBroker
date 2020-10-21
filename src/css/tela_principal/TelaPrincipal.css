@@ -64,7 +64,7 @@
 }
 
 .divBarraLateral {
-  background-color: #333333;
+  background: linear-gradient(#333, #222);
   width: 85px;
   display: flex;
   flex-direction: column;

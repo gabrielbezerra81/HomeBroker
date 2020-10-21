@@ -78,7 +78,7 @@ const Alert: React.FC = () => {
     }
 
     loadAlerts();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
