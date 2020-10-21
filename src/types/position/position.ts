@@ -13,6 +13,7 @@ export interface PositionQuote {
 }
 
 export interface PositionItem {
+  id: number;
   ativos: any[];
   precoCompra: number;
   precoVenda: number;
@@ -32,6 +33,7 @@ export interface PositionItem {
 }
 
 export default class Position implements PositionItem {
+  id: number = 0;
   ativos: any[] = [];
   precoCompra: number = 0;
   precoVenda: number = 0;

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { PositionItem } from "types/position/position";
 
@@ -9,6 +9,8 @@ interface ResumedPositionItemProps {
 const ResumedPositionItem: React.FC<ResumedPositionItemProps> = ({
   position,
 }) => {
+  const [hasOverflow, setHasOverflow] = useState(false);
+
   const formattedData = useMemo(() => {
     return {
       quote: formatarNumDecimal(position.cotacaoAtual, 3),
@@ -28,8 +30,16 @@ const ResumedPositionItem: React.FC<ResumedPositionItemProps> = ({
     );
   }, [position.ativos, position.custodiaCompra, position.custodiaVenda]);
 
+  useEffect(() => {
+    const positionItem = document.getElementById(`positionItem${position.id}`);
+
+    if (positionItem) {
+      setHasOverflow(positionItem.getBoundingClientRect().width > 198);
+    }
+  }, [position.id]);
+
   return (
-    <div className="resumedPositionItem">
+    <div className="resumedPositionItem" id={`positionItem${position.id}`}>
       {position.custodiaCompra.map((custodyItem, index) => (
         <div key={`${custodyItem.ativo}${index}`}>
           <span className="buyText">{custodyItem.ativo}</span>
