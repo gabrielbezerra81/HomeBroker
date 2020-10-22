@@ -189,6 +189,10 @@ class MenuOrdens extends Component {
                     "multilegButtonsVisibility",
                     true,
                   );
+                  props.updateOneSystemStateAction(
+                    "createAlertButtonVisibility",
+                    false,
+                  );
                 }}
                 className="divClicavel"
               />
