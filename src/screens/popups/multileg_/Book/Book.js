@@ -25,10 +25,16 @@ import NumberFormat from "react-number-format";
 import { StorePrincipalContext } from "redux/StoreCreation";
 import { aviso_calculo_preco_multileg } from "constants/AlertaErros";
 import MultilegAlert from "./MultilegAlert";
+import CustomButton from "shared/componentes/Button";
 
 class Book extends React.Component {
   componentDidUpdate(prevProps) {
-    if (prevProps.cotacoesMultilegID !== this.props.cotacoesMultilegID) {
+    const { indice: tabIndex, multileg } = this.props;
+
+    if (
+      prevProps.multileg[tabIndex].tabelaMultileg.length >
+      multileg[tabIndex].tabelaMultileg.length
+    ) {
       atualizarPrecoDinamicante(this.props);
     }
   }
@@ -303,13 +309,11 @@ class Book extends React.Component {
               >
                 LIMPAR
               </Button>
-              <Button
-                variant="primary"
-                size="sm"
+              <CustomButton
                 onClick={() => props.sendMultilegOrderAction(props.indice)}
               >
                 EXECUTAR
-              </Button>
+              </CustomButton>
             </div>
             <Row className="mb-2">
               <Col md={9} className="ml-4 pr-0">
@@ -364,8 +368,7 @@ const mapStateToProps = (state) => ({
   selectedAccount: state.systemReducer.selectedAccount,
   cotacoesMultilegID: state.multilegReducer.cotacoesMultilegID,
   multilegButtonsVisibility: state.systemReducer.multilegButtonsVisibility,
-  createAlertButtonVisibility:
-    state.systemReducer.createAlertButtonVisibility,
+  createAlertButtonVisibility: state.systemReducer.createAlertButtonVisibility,
 });
 
 export default connect(
