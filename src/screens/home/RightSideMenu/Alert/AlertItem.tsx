@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FaLongArrowAltUp, FaLongArrowAltDown } from "react-icons/fa";
 import moment from "moment";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
@@ -9,6 +9,18 @@ interface AlertItemProps {
 }
 
 const AlertItem: React.FC<AlertItemProps> = ({ alert }) => {
+  const [hasOverflow, setHasOverflow] = useState(() => {
+    const symbolsArray: string[] = [];
+
+    alert.structure.components.forEach((componentItem) => {
+      symbolsArray.push(componentItem.stock.symbol);
+    });
+
+    const symbols = symbolsArray.join("");
+
+    return symbols.length > 13;
+  });
+
   const formattedData = useMemo(() => {
     return {
       price: formatarNumDecimal(alert.price, 2),
@@ -29,8 +41,45 @@ const AlertItem: React.FC<AlertItemProps> = ({ alert }) => {
     }
   }, [alert.param]);
 
-  return (
-    <div className="alertItem">
+  useEffect(() => {
+    const positionItem = document.getElementById(`alertItem${alert.id}`);
+
+    if (positionItem) {
+      setHasOverflow(positionItem.getBoundingClientRect().width > 198);
+    }
+  }, [alert.id]);
+
+  return hasOverflow ? (
+    <>
+      {alert.structure.components.map((componentItem, index) => (
+        <div
+          className="alertItem"
+          key={`${componentItem.stock.symbol}${index}`}
+        >
+          <div>
+            <span style={{ color: "#ddd" }}>{componentItem.stock.symbol}</span>
+            <span>
+              {componentItem.qtty > 0
+                ? `+${componentItem.qtty}`
+                : componentItem.qtty}
+            </span>
+          </div>
+          <div>
+            <span>
+              {formattedData.price}{" "}
+              {alert.operator === "Less" ? (
+                <FaLongArrowAltDown fill={arrowColor} />
+              ) : (
+                <FaLongArrowAltUp fill={arrowColor} />
+              )}
+            </span>
+            <span>val: {formattedData.expiration}</span>
+          </div>
+        </div>
+      ))}
+    </>
+  ) : (
+    <div className="alertItem" id={`alertItem${alert.id}`}>
       {alert.structure.components.map((componentItem, index) => (
         <div key={`${componentItem.stock.symbol}${index}`}>
           <span style={{ color: "#ddd" }}>{componentItem.stock.symbol}</span>

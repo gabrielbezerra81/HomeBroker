@@ -9,15 +9,6 @@ interface ResumedPositionItemProps {
 const ResumedPositionItem: React.FC<ResumedPositionItemProps> = ({
   position,
 }) => {
-  const [hasOverflow, setHasOverflow] = useState(false);
-
-  const formattedData = useMemo(() => {
-    return {
-      quote: formatarNumDecimal(position.cotacaoAtual, 3),
-      oscilation: formatarNumDecimal(position.oscilacao),
-    };
-  }, [position]);
-
   const notInCustodyCodes = useMemo(() => {
     return position.ativos.filter(
       (symbolCode, index) =>
@@ -30,6 +21,33 @@ const ResumedPositionItem: React.FC<ResumedPositionItemProps> = ({
     );
   }, [position.ativos, position.custodiaCompra, position.custodiaVenda]);
 
+  const [hasOverflow, setHasOverflow] = useState(() => {
+    const symbolsArray: string[] = [];
+
+    notInCustodyCodes.forEach((notInCustodyItem) => {
+      symbolsArray.push(notInCustodyItem.symbol);
+    });
+
+    position.custodiaCompra.forEach((custodyItem) => {
+      symbolsArray.push(custodyItem.ativo);
+    });
+
+    position.custodiaVenda.forEach((custodyItem) => {
+      symbolsArray.push(custodyItem.ativo);
+    });
+
+    const symbols = symbolsArray.join("");
+
+    return symbols.length > 13;
+  });
+
+  const formattedData = useMemo(() => {
+    return {
+      quote: formatarNumDecimal(position.cotacaoAtual, 3),
+      oscilation: formatarNumDecimal(position.oscilacao),
+    };
+  }, [position]);
+
   useEffect(() => {
     const positionItem = document.getElementById(`positionItem${position.id}`);
 
@@ -38,7 +56,60 @@ const ResumedPositionItem: React.FC<ResumedPositionItemProps> = ({
     }
   }, [position.id]);
 
-  return (
+  return hasOverflow ? (
+    <>
+      {position.custodiaCompra.map((custodyItem, index) => (
+        <div className="resumedPositionItem">
+          <div>
+            <span className="buyText">{custodyItem.ativo}</span>
+            <span>
+              {custodyItem.qtdeExecutada >= 0 ? "+" : "-"}
+              {custodyItem.qtdeExecutada}
+            </span>
+          </div>
+          <div>
+            <span className={position.oscilacao >= 0 ? "buyText" : "sellText"}>
+              {formattedData.oscilation}%
+            </span>
+            <span>{formattedData.quote}</span>
+          </div>
+        </div>
+      ))}
+      {position.custodiaVenda.map((custodyItem, index) => (
+        <div className="resumedPositionItem">
+          <div key={`${custodyItem.ativo}${index}`}>
+            <span className="sellText">{custodyItem.ativo}</span>
+            <span>
+              {custodyItem.qtdeExecutada >= 0 ? "+" : "-"}
+              {custodyItem.qtdeExecutada}
+            </span>
+          </div>
+          <div>
+            <span className={position.oscilacao >= 0 ? "buyText" : "sellText"}>
+              {formattedData.oscilation}%
+            </span>
+            <span>{formattedData.quote}</span>
+          </div>
+          s
+        </div>
+      ))}
+
+      {notInCustodyCodes.map((symbolCode, index) => (
+        <div className="resumedPositionItem">
+          <div key={`${symbolCode.symbol}${index}`}>
+            <span style={{ color: "#ddd" }}>{symbolCode.symbol}</span>
+            <span>0</span>
+          </div>
+          <div>
+            <span className={position.oscilacao >= 0 ? "buyText" : "sellText"}>
+              {formattedData.oscilation}%
+            </span>
+            <span>{formattedData.quote}</span>
+          </div>
+        </div>
+      ))}
+    </>
+  ) : (
     <div className="resumedPositionItem" id={`positionItem${position.id}`}>
       {position.custodiaCompra.map((custodyItem, index) => (
         <div key={`${custodyItem.ativo}${index}`}>
