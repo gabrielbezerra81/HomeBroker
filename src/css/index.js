@@ -49,6 +49,7 @@ import "./componentes_customizados/InputFormatado.css";
 import "./componentes_customizados/IconeConfigGrafico.css";
 import "./componentes_customizados/EmblemaSimples.css";
 import "./componentes_customizados/IconeSeta.css";
+import "./componentes_customizados/CustomButton.scss";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./componentes_customizados/SelectANTD.css";

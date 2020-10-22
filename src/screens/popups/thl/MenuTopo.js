@@ -189,6 +189,7 @@ const Favoritar = () => {
     </div>
   );
 };
+
 const CriarAlerta = () => {
   const {
     thlReducer: { idCelulaSelecionada },
