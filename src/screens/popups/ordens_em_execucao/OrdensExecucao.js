@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Row, Table, ProgressBar } from "react-bootstrap";
 import DraggableModal from "shared/componentes/DraggableModal";
 import { ModalHeaderSemBook } from "shared/componentes/PopupHeader";
@@ -11,9 +11,10 @@ import {
   atualizarDivKeyAction,
   aumentarZindexAction,
 } from "redux/actions/GlobalAppActions";
-import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 import OpcoesOrdemExec from "screens/popups/ordens_em_execucao/OpcoesOrdemExec";
 import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopupZIndexFromSecondaryTab";
+import useStateStorePrincipal from "hooks/useStateStorePrincipal";
+import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 
 class OrdensExecucao extends React.Component {
   componentDidMount() {
@@ -50,7 +51,7 @@ class OrdensExecucao extends React.Component {
     return (
       <DraggableModal
         id="ordens_execucao"
-        renderModalBody={() => modalBody(this.props)}
+        renderModalBody={() => <ModalBody />}
         renderDivFiltrarOrdens={true}
         renderHeader={() => (
           <ModalHeaderSemBook
@@ -64,77 +65,115 @@ class OrdensExecucao extends React.Component {
   }
 }
 
-const modalBody = (props) => (
-  <div className="bodyOrdensExecucao">
-    <Row>
-      <Table
-        variant="dark"
-        bordered={false}
-        borderless
-        className="tableOrdensExecucao text-center"
-        responsive="lg"
-      >
-        <thead>
-          <tr>
-            <th>Progresso</th>
-            <th>Cadastro</th>
-            <th>Corretora</th>
-            <th>Conta</th>
-            <th>Operação</th>
-            <th>Modo Exec</th>
-            <th>Ativo</th>
-            <th>Oferta</th>
-            <th>Qtde Oferta</th>
-            <th>Qtde Executada</th>
-            <th>Qtde Cancelada</th>
-            <th>Preço Disparo</th>
-            <th>Preço Envio</th>
-            <th>Preço Limite</th>
-            <th>Preço Executado</th>
-            <th>Validade</th>
-            <th>Roteador</th>
-            <th>St</th>
-            <th>Msg</th>
-          </tr>
-        </thead>
-        <tbody className="verticalAlignColunaTabela">
-          {props.tabelaOrdensExecucao.map((item, index) => {
-            const ofertaPrincipal = renderOferta(
-              item,
-              index,
-              props,
-              "ofertaPrincipal",
-            );
-            const ordensNext = item.nextOrders.map((ordemNext, ind) =>
-              renderOferta(ordemNext, "ON" + ind, props, "ordemNext"),
-            );
+const ModalBody = () => {
+  const {
+    ordersExecReducer: { ordemAtual, tabelaOrdensExecucao, opcoesOrdemAberto },
+  } = useStateStorePrincipal();
 
-            return [ofertaPrincipal, ...ordensNext];
-          })}
-        </tbody>
-      </Table>
-      {props.tabelaOrdensExecucao.map((item, index) => {
-        if (props.opcoesOrdemAberto && item.id === props.ordemAtual.id) {
-          const line = document.getElementById(item.id);
+  const dispatch = useDispatchStorePrincipal();
 
-          if (line) {
-            const { height: lineHeight } = line.getBoundingClientRect();
+  const [initialTop, setInitialTop] = useState(null);
 
-            return (
-              // @ts-ignore
-              <OpcoesOrdemExec
-                style={{ top: `${line.offsetTop + 40 + lineHeight}px` }}
-                id="opcoes_ordens"
-                key={`opcoes${item.id}`}
-              />
-            );
-          }
-        }
-        return null;
-      })}
-    </Row>
-  </div>
-);
+  useEffect(() => {
+    if (ordemAtual) {
+      const line = document.getElementById(ordemAtual.id);
+
+      if (line) {
+        const { height: lineHeight } = line.getBoundingClientRect();
+
+        setInitialTop(line.offsetTop + 40 + lineHeight);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const top = useMemo(() => {
+    if (ordemAtual) {
+      const line = document.getElementById(ordemAtual.id);
+
+      if (line) {
+        const { height: lineHeight } = line.getBoundingClientRect();
+
+        setInitialTop(null);
+
+        return line.offsetTop + 40 + lineHeight;
+      }
+    }
+
+    return null;
+  }, [ordemAtual]);
+
+  const offerProps = useMemo(() => {
+    return {
+      ordemAtual,
+      updateOneOrdersExecStateAction: (...data) => {
+        dispatch(updateOneOrdersExecStateAction(...data));
+      },
+    };
+  }, [dispatch, ordemAtual]);
+
+  return (
+    <div className="bodyOrdensExecucao">
+      <Row>
+        <Table
+          variant="dark"
+          bordered={false}
+          borderless
+          className="tableOrdensExecucao text-center"
+          responsive="lg"
+        >
+          <thead>
+            <tr>
+              <th>Progresso</th>
+              <th>Cadastro</th>
+              <th>Corretora</th>
+              <th>Conta</th>
+              <th>Operação</th>
+              <th>Modo Exec</th>
+              <th>Ativo</th>
+              <th>Oferta</th>
+              <th>Qtde Oferta</th>
+              <th>Qtde Executada</th>
+              <th>Qtde Cancelada</th>
+              <th>Preço Disparo</th>
+              <th>Preço Envio</th>
+              <th>Preço Limite</th>
+              <th>Preço Executado</th>
+              <th>Validade</th>
+              <th>Roteador</th>
+              <th>St</th>
+              <th>Msg</th>
+            </tr>
+          </thead>
+          <tbody className="verticalAlignColunaTabela">
+            {tabelaOrdensExecucao.map((item, index) => {
+              const ofertaPrincipal = renderOferta(
+                item,
+                index,
+                offerProps,
+                "ofertaPrincipal",
+              );
+              const ordensNext = item.nextOrders.map((ordemNext, ind) =>
+                renderOferta(ordemNext, "ON" + ind, offerProps, "ordemNext"),
+              );
+
+              return [ofertaPrincipal, ...ordensNext];
+            })}
+          </tbody>
+        </Table>
+        {opcoesOrdemAberto && ordemAtual && !!(top || initialTop) && (
+          <OpcoesOrdemExec
+            style={{
+              top: `${top || initialTop}px`,
+            }}
+            id="opcoes_ordens"
+            key={`opcoes${ordemAtual.id}`}
+          />
+        )}
+      </Row>
+    </div>
+  );
+};
 
 const retornaData = (dataString) => {
   return formatarDataDaAPI(dataString).toLocaleString();
@@ -281,7 +320,6 @@ export default compose(
   connect(
     mapStateToPropsOrdensExec,
     {
-      abrirItemBarraLateralAction,
       updateOneOrdersExecStateAction,
     },
     null,
