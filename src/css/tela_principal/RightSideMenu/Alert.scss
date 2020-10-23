@@ -35,9 +35,26 @@
   }
 }
 
+.alertItemContainer {
+  display: flex;
+  flex-direction: column;
+
+  & + .alertItemContainer {
+    margin-top: 4px;
+  }
+
+  button {
+    border: none;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
 .alertItem {
   height: 40px;
-  border-radius: 6px;
+  border-radius: 6px; 
   background: linear-gradient(rgb(70, 70, 70), rgb(30, 30, 30)); //
   padding: 4px;
   display: flex;
