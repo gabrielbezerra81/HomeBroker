@@ -144,7 +144,7 @@ export const sendMultilegOrderAction = (tabIndex: number): MainThunkAction => {
     if (validateMultilegOrder(mountOrderProps)) {
       const data = await enviarOrdemAPI(multilegRequestData);
 
-      if (data.length) {
+      if (data && data.length) {
         const updatedOrders = produce(tabelaOrdensExecucao, (draft) => {
           draft.push(data[0]);
         });
@@ -196,17 +196,17 @@ export const createMultilegAlertAction = ({
         data: multilegRequestData,
       });
 
-      // if (data) {
-      //   const updatedAlerts = produce(alerts, (draft) => {
-      //     draft.push(data);
-      //   });
-      //   dispatch(
-      //     updateOneMultilegState({
-      //       attributeName: "alerts",
-      //       attributeValue: updatedAlerts,
-      //     }),
-      //   );
-      // }
+      if (data && data.length) {
+        const updatedAlerts = produce(alerts, (draft) => {
+          draft.push(data);
+        });
+        dispatch(
+          updateOneMultilegState({
+            attributeName: "alerts",
+            attributeValue: updatedAlerts,
+          }),
+        );
+      }
     }
     setPointerWhileAwaiting({ lockMode: "destravar", id: "multileg" });
   };
