@@ -65,7 +65,7 @@ const ResumedOrder: React.FC = () => {
         options={{ wheelPropagation: false }}
         onScrollY={handleDisplayArrowChange}
       >
-        <div className="resumedOrderContainer">
+        <div className="resumedOrdersContainer">
           {tabelaOrdensExecucao.map((orderItem) => (
             <ResumedOrderItem key={orderItem.id} order={orderItem} />
           ))}
