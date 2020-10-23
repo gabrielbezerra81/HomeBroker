@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Row, Table, ProgressBar } from "react-bootstrap";
 import DraggableModal from "shared/componentes/DraggableModal";
 import { ModalHeaderSemBook } from "shared/componentes/PopupHeader";
-import { formatarDataDaAPI } from "shared/utils/Formatacoes";
+import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { GlobalContext, StorePrincipalContext } from "redux/StoreCreation";
@@ -112,6 +112,26 @@ const ModalBody = () => {
     };
   }, [dispatch, ordemAtual]);
 
+  const formattedOrders = useMemo(() => {
+    return tabelaOrdensExecucao.map((orderItem) => {
+      const offers = orderItem.offers.map((offerItem) => {
+        const formattedPrices = {};
+
+        ["precoDisparo", "precoEnvio", "precoLimite", "precoExecutado"].forEach(
+          (key) => {
+            if (offerItem[key] || offerItem[key] === 0) {
+              formattedPrices[key] = formatarNumDecimal(offerItem[key]);
+            }
+          },
+        );
+
+        return { ...offerItem, formattedPrices };
+      });
+
+      return { ...orderItem, offers };
+    });
+  }, [tabelaOrdensExecucao]);
+
   return (
     <div className="bodyOrdensExecucao">
       <Row>
@@ -146,15 +166,21 @@ const ModalBody = () => {
             </tr>
           </thead>
           <tbody className="verticalAlignColunaTabela">
-            {tabelaOrdensExecucao.map((item, index) => {
+            {formattedOrders.map((orderItem, index) => {
               const ofertaPrincipal = renderOferta(
-                item,
+                orderItem,
                 index,
                 offerProps,
                 "ofertaPrincipal",
               );
-              const ordensNext = item.nextOrders.map((ordemNext, ind) =>
-                renderOferta(ordemNext, "ON" + ind, offerProps, "ordemNext"),
+              const ordensNext = orderItem.nextOrders.map(
+                (nextOrder, nextIndex) =>
+                  renderOferta(
+                    nextOrder,
+                    "ON" + nextIndex,
+                    offerProps,
+                    "ordemNext",
+                  ),
               );
 
               return [ofertaPrincipal, ...ordensNext];
@@ -175,27 +201,23 @@ const ModalBody = () => {
   );
 };
 
-const retornaData = (dataString) => {
-  return formatarDataDaAPI(dataString).toLocaleString();
-};
-
-const renderOferta = (item, index, props, tipo) => {
+const renderOferta = (order, index, props, tipo) => {
   let qtdeOferta = 0;
   let qtdeExecutada = 0;
 
-  item.offers.forEach((oferta) => {
+  order.offers.forEach((oferta) => {
     qtdeOferta += oferta.qtdeOferta;
     qtdeExecutada += oferta.qtdeExecutada;
   });
 
   return (
     <tr
-      id={item.id}
-      key={item.id}
-      className={classeOrdem(tipo, props, item)}
+      id={order.id}
+      key={order.id}
+      className={classeOrdem(tipo, props, order)}
       onClick={
         tipo === "ofertaPrincipal"
-          ? () => abrirOpcoesOrdem(props, item)
+          ? () => abrirOpcoesOrdem(props, order)
           : () => false
       }
     >
@@ -209,31 +231,31 @@ const renderOferta = (item, index, props, tipo) => {
         />
       </td>
       <td>
-        <span>{retornaData(item.cadastro)}</span>
+        <span>{order.cadastro}</span>
       </td>
-      <td>{item.corretora}</td>
-      <td>{item.conta}</td>
-      <td>{item.operacao}</td>
-      <td>{listarAtributoComposto(item.offers, "modoExec", "nao")}</td>
-      <td>{listarAtributoComposto(item.offers, "ativo", "sim")}</td>
-      <td>{listarAtributoComposto(item.offers, "oferta", "sim")}</td>
-      <td>{listarAtributoComposto(item.offers, "qtdeOferta", "sim")}</td>
-      <td>{listarAtributoComposto(item.offers, "qtdeExecutada", "sim")}</td>
-      <td>{listarAtributoComposto(item.offers, "qtdeCancelada", "sim")}</td>
+      <td>{order.corretora}</td>
+      <td>{order.conta}</td>
+      <td>{order.operacao}</td>
+      <td>{listarAtributoComposto(order.offers, "modoExec", "nao")}</td>
+      <td>{listarAtributoComposto(order.offers, "ativo", "sim")}</td>
+      <td>{listarAtributoComposto(order.offers, "oferta", "sim")}</td>
+      <td>{listarAtributoComposto(order.offers, "qtdeOferta", "sim")}</td>
+      <td>{listarAtributoComposto(order.offers, "qtdeExecutada", "sim")}</td>
+      <td>{listarAtributoComposto(order.offers, "qtdeCancelada", "sim")}</td>
 
-      <td>{listarAtributoComposto(item.offers, "precoDisparo", "sim")}</td>
+      <td>{listarAtributoComposto(order.offers, "precoDisparo", "sim")}</td>
       <td>
-        {item.formName === "Multileg"
-          ? item.offers[0].precoEnvio
-          : listarAtributoComposto(item.offers, "precoEnvio", "sim")}
+        {order.formName === "Multileg"
+          ? order.offers[0].formattedPrices.precoEnvio
+          : listarAtributoComposto(order.offers, "precoEnvio", "sim")}
       </td>
-      <td>{listarAtributoComposto(item.offers, "precoLimite", "sim")}</td>
-      <td>{listarAtributoComposto(item.offers, "precoExecutado", "sim")}</td>
-      <td>{retornaData(item.validade)}</td>
-      <td>{item.roteador}</td>
-      <td>{listarAtributoComposto(item.offers, "status", "nao")}</td>
+      <td>{listarAtributoComposto(order.offers, "precoLimite", "sim")}</td>
+      <td>{listarAtributoComposto(order.offers, "precoExecutado", "sim")}</td>
+      <td>{order.validade}</td>
+      <td>{order.roteador}</td>
+      <td>{listarAtributoComposto(order.offers, "status", "nao")}</td>
 
-      <td>{listarAtributoComposto(item.offers, "msg", "nao")}</td>
+      <td>{listarAtributoComposto(order.offers, "msg", "nao")}</td>
     </tr>
   );
 };
@@ -244,19 +266,24 @@ const classeOfertaVenda = (oferta) => {
 };
 
 const listarAtributoComposto = (listaOfertas, atributo, classeCor) => {
-  return listaOfertas.map((oferta, index2) => {
+  return listaOfertas.map((offer, index2) => {
     if (
-      oferta.modoExec === "ajuste" &&
+      offer.modoExec === "ajuste" &&
       ["qtdeOferta", "qtdeExecutada", "precoExecutado"].includes(atributo)
     )
       return null;
 
+    let value = offer[atributo];
+
+    if (atributo.includes("preco"))
+      value = offer.formattedPrices[atributo] || "";
+
     return (
       <span
         key={index2 + atributo}
-        className={classeCor === "sim" ? classeOfertaVenda(oferta) : ""}
+        className={classeCor === "sim" ? classeOfertaVenda(offer) : ""}
       >
-        {oferta[atributo]}
+        {value}
         <br />
       </span>
     );

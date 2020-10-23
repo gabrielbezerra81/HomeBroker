@@ -78,8 +78,8 @@ const ResumedOrderItem: React.FC<ResumedOrderItemProps> = ({ order }) => {
       >
         <div className="progress" style={{ width: `${progress}%` }}></div>
         <div className="offersContainer">
-          {order.offers.map((offerItem) => (
-            <div className="offer">
+          {order.offers.map((offerItem, index) => (
+            <div className="offer" key={`${offerItem.ativo}${index}`}>
               <div
                 className={`offerType ${
                   offerItem.oferta === "C" ? "buyType" : "sellType"

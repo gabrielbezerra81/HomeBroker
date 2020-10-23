@@ -88,7 +88,7 @@ export const getDiaEMes = () => {
 export const formatarNumDecimal = function (
   num,
   maximumFractionDigits = 3,
-  minimumFractionDigits = 2
+  minimumFractionDigits = 2,
 ) {
   if (!num && num !== 0) return "0";
   return num.toLocaleString("pt-BR", {
