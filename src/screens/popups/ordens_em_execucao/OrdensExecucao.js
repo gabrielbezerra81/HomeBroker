@@ -6,7 +6,7 @@ import { formatarDataDaAPI } from "shared/utils/Formatacoes";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { GlobalContext, StorePrincipalContext } from "redux/StoreCreation";
-import { mudarVariavelOrdensExecAction } from "redux/actions/ordensExecucao/OrdensExecActions";
+import { updateOneOrdersExecStateAction } from "redux/actions/ordensExecucao/OrdensExecActions";
 import {
   atualizarDivKeyAction,
   aumentarZindexAction,
@@ -115,14 +115,15 @@ const modalBody = (props) => (
       </Table>
       {props.tabelaOrdensExecucao.map((item, index) => {
         if (props.opcoesOrdemAberto && item.id === props.ordemAtual.id) {
-          const linha = document.getElementById(item.id);
+          const line = document.getElementById(item.id);
 
-          if (linha) {
-            const top = linha.offsetTop;
+          if (line) {
+            const { height: lineHeight } = line.getBoundingClientRect();
+
             return (
               // @ts-ignore
               <OpcoesOrdemExec
-                style={{ top: `${top + 80}px` }}
+                style={{ top: `${line.offsetTop + 40 + lineHeight}px` }}
                 id="opcoes_ordens"
                 key={`opcoes${item.id}`}
               />
@@ -240,17 +241,17 @@ const classeOrdem = (tipo, props, item) => {
 const abrirOpcoesOrdem = (props, item) => {
   if (props.ordemAtual) {
     if (props.ordemAtual.id === item.id) {
-      props.mudarVariavelOrdensExecAction("opcoesOrdemAberto", false);
-      props.mudarVariavelOrdensExecAction("ordemAtual", null);
+      props.updateOneOrdersExecStateAction("opcoesOrdemAberto", false);
+      props.updateOneOrdersExecStateAction("ordemAtual", null);
     } //
     else {
-      props.mudarVariavelOrdensExecAction("ordemAtual", item);
-      props.mudarVariavelOrdensExecAction("opcoesOrdemAberto", true);
+      props.updateOneOrdersExecStateAction("ordemAtual", item);
+      props.updateOneOrdersExecStateAction("opcoesOrdemAberto", true);
     }
   } //
   else {
-    props.mudarVariavelOrdensExecAction("ordemAtual", item);
-    props.mudarVariavelOrdensExecAction("opcoesOrdemAberto", true);
+    props.updateOneOrdersExecStateAction("ordemAtual", item);
+    props.updateOneOrdersExecStateAction("opcoesOrdemAberto", true);
   }
 };
 
@@ -281,7 +282,7 @@ export default compose(
     mapStateToPropsOrdensExec,
     {
       abrirItemBarraLateralAction,
-      mudarVariavelOrdensExecAction,
+      updateOneOrdersExecStateAction,
     },
     null,
     { context: StorePrincipalContext },
