@@ -48,7 +48,7 @@ import {
 } from "constants/AlertaErros";
 import api from "./apiConfig";
 
-const timeout = 25000;
+const timeout = 45000;
 
 export const pesquisarAtivoAPI = async (codigo) => {
   return api
@@ -161,12 +161,12 @@ export const listarBookOfertaAPI = (codigo_ativo) => {
     });
 };
 
-export const enviarOrdemAPI = (data) => {
+export const enviarOrdemAPI = async (data) => {
   return api
     .post(`${url_enviarOrdem}`, data, { timeout })
     .then((response) => {
-      if (response.status === 201) alert(sucesso_enviar_ordem);
-      else alert(erro_enviar_ordem);
+      alert(sucesso_enviar_ordem);
+      return response.data;
     })
     .catch((erro) => {
       mostrarErroConsulta(erro, erro_enviar_ordem);
@@ -292,7 +292,7 @@ export const criarPosicaoMultilegAPI = (data) => {
     });
 };
 
-export const criarAlertaOperacaoAPI = ({ param, operator, data }) => {
+export const criarAlertaOperacaoAPI = async ({ param, operator, data }) => {
   return api
     .post(
       `${url_criarAlertaOperacao_param_operator}${param}/${operator}`,
@@ -306,8 +306,8 @@ export const criarAlertaOperacaoAPI = ({ param, operator, data }) => {
       },
     )
     .then((response) => {
-      if (response.status === 201) alert(sucesso_criar_alerta);
-      else alert(erro_criar_alerta);
+      alert(sucesso_criar_alerta);
+      return response.data;
     })
     .catch((erro) => {
       mostrarErroConsulta(erro, erro_criar_alerta);

@@ -22,6 +22,8 @@ import {
   MultilegOption,
 } from "types/multileg/multileg";
 import { addBoxFromAPIAction } from "../system/boxesActions";
+import produce from "immer";
+import { LISTAR_ORDENS_EXECUCAO } from "constants/ApiActionTypes";
 
 ////
 
@@ -122,6 +124,7 @@ export const sendMultilegOrderAction = (tabIndex: number): MainThunkAction => {
     const {
       multilegReducer: { multileg },
       systemReducer: { selectedAccount },
+      ordersExecReducer: { tabelaOrdensExecucao },
     } = getState();
 
     const mountOrderProps = {
@@ -132,12 +135,28 @@ export const sendMultilegOrderAction = (tabIndex: number): MainThunkAction => {
 
     const multilegRequestData = mountMultilegOrder(mountOrderProps);
 
-    setPointerWhileAwaiting({ lockMode: "travar", id: "multileg" });
+    setPointerWhileAwaiting({
+      lockMode: "travar",
+      id: "multileg",
+      parentID: "body",
+    });
 
-    if (validateMultilegOrder(mountOrderProps))
-      await enviarOrdemAPI(multilegRequestData);
+    if (validateMultilegOrder(mountOrderProps)) {
+      const data = await enviarOrdemAPI(multilegRequestData);
 
-    setPointerWhileAwaiting({ lockMode: "destravar", id: "multileg" });
+      if (data.length) {
+        const updatedOrders = produce(tabelaOrdensExecucao, (draft) => {
+          draft.push(data[0]);
+        });
+        dispatch({ type: LISTAR_ORDENS_EXECUCAO, payload: updatedOrders });
+      }
+    }
+
+    setPointerWhileAwaiting({
+      lockMode: "destravar",
+      id: "multileg",
+      parentID: "body",
+    });
   };
 };
 
@@ -156,7 +175,7 @@ export const createMultilegAlertAction = ({
 }: CreateAlertProps): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
-      multilegReducer: { multileg },
+      multilegReducer: { multileg, alerts },
       systemReducer: { selectedAccount },
     } = getState();
 
@@ -170,12 +189,25 @@ export const createMultilegAlertAction = ({
     const multilegRequestData = mountMultilegOrder(mountOrderProps);
 
     setPointerWhileAwaiting({ lockMode: "travar", id: "multileg" });
-    if (validateMultilegOrder(mountOrderProps))
-      await criarAlertaOperacaoAPI({
+    if (validateMultilegOrder(mountOrderProps)) {
+      const data = await criarAlertaOperacaoAPI({
         param,
         operator,
         data: multilegRequestData,
       });
+
+      // if (data) {
+      //   const updatedAlerts = produce(alerts, (draft) => {
+      //     draft.push(data);
+      //   });
+      //   dispatch(
+      //     updateOneMultilegState({
+      //       attributeName: "alerts",
+      //       attributeValue: updatedAlerts,
+      //     }),
+      //   );
+      // }
+    }
     setPointerWhileAwaiting({ lockMode: "destravar", id: "multileg" });
   };
 };
