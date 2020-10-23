@@ -63,7 +63,7 @@ const ResumedOrderItem: React.FC<ResumedOrderItemProps> = ({ order }) => {
 
   return (
     <div className="orderContainer">
-      <header style={{ opacity: headerVisible ? 1 : 0 }}>
+      <header className="itemHeader" style={{ opacity: headerVisible ? 1 : 0 }}>
         <button onClick={handleSearch}>
           <FiSearch size={20} stroke="#444" />
         </button>

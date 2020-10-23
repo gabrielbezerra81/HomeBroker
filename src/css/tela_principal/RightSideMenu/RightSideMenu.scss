@@ -37,6 +37,33 @@
       opacity: 0;
       padding: 20px 0;
     }
+
+    header.itemHeader {
+      display: flex;
+      height: 20px;
+      align-items: center;
+      justify-content: flex-end;
+      transition: opacity 0.2s;
+      margin-bottom: 3px;
+
+      > button {
+        padding: 0;
+        background-color: transparent;
+        transition: opacity 0.2s;
+
+        &:hover {
+          opacity: 0.6;
+        }
+      }
+
+      > button:first-child {
+        margin-right: 2px;
+
+        svg {
+          stroke-width: 3px;
+        }
+      }
+    }
   }
 }
 
