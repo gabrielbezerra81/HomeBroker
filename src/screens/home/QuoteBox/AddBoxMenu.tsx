@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from "react";
 import {
   abrirItemBarraLateralAction,
-  updateOneSystemStateAction,
+  updateManySystemState,
 } from "redux/actions/system/SystemActions";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
@@ -24,10 +24,17 @@ const AddBoxMenu: React.FC = () => {
   const [menuVisibility, setMenuVisibility] = useState(false);
 
   const handleOpenMultileg = useCallback(() => {
-    dispatch(updateOneSystemStateAction("multilegButtonsVisibility", false));
+    dispatch(
+      updateManySystemState({
+        multilegButtonsVisibility: false,
+        createAlertButtonVisibility: false,
+      }),
+    );
 
     dispatchGlobal(atualizarDivKeyAction("multileg"));
-    dispatch(abrirItemBarraLateralAction({ isOpenMultileg }, "isOpenMultileg"));
+    dispatch(
+      abrirItemBarraLateralAction({ isOpenMultileg }, "isOpenMultileg", true),
+    );
   }, [dispatch, dispatchGlobal, isOpenMultileg]);
 
   // useEffect(() => {

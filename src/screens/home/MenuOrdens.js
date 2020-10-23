@@ -183,7 +183,11 @@ class MenuOrdens extends Component {
                 alt="Multileg"
                 onClick={() => {
                   props.atualizarDivKeyAction("multileg");
-                  props.abrirItemBarraLateralAction(props, "isOpenMultileg");
+                  props.abrirItemBarraLateralAction(
+                    props,
+                    "isOpenMultileg",
+                    true,
+                  );
 
                   props.updateOneSystemStateAction(
                     "multilegButtonsVisibility",

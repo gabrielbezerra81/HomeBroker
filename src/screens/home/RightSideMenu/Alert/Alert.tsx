@@ -18,7 +18,6 @@ import {
   updateManySystemState,
 } from "redux/actions/system/SystemActions";
 import AlertItem from "./AlertItem";
-import api from "api/apiConfig";
 import { listAlertsAPI } from "api/API";
 import { updateOneMultilegState } from "redux/actions/multileg/utils";
 
@@ -45,7 +44,9 @@ const Alert: React.FC = () => {
     );
 
     dispatchGlobal(atualizarDivKeyAction("multileg"));
-    dispatch(abrirItemBarraLateralAction({ isOpenMultileg }, "isOpenMultileg"));
+    dispatch(
+      abrirItemBarraLateralAction({ isOpenMultileg }, "isOpenMultileg", true),
+    );
   }, [dispatch, dispatchGlobal, isOpenMultileg]);
 
   const handleDisplayArrowChange = useCallback((container: HTMLElement) => {
