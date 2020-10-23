@@ -1,5 +1,8 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { abrirItemBarraLateralAction, updateOneSystemStateAction } from "redux/actions/system/SystemActions";
+import {
+  abrirItemBarraLateralAction,
+  updateOneSystemStateAction,
+} from "redux/actions/system/SystemActions";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 import { atualizarDivKeyAction } from "redux/actions/GlobalAppActions";
@@ -55,10 +58,11 @@ const AddBoxMenu: React.FC = () => {
         className={visibilityClass}
         onMouseOver={handleShowOnHover}
         onMouseLeave={handleHideOnLeave}
+        onClick={handleOpenMultileg}
       >
         <img src={boxIcon} height={17} alt="" color="#b1b2b1" />
         <span>Box de Cotação</span>
-        <IoMdAddCircle size={16} onClick={handleOpenMultileg} />
+        <IoMdAddCircle size={16} />
       </div>
     </div>
   );
