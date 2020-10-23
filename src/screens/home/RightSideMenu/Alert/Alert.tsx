@@ -99,7 +99,9 @@ const Alert: React.FC = () => {
 
   return (
     <>
-      <Button onClick={handleOpenMultileg}>Novo +</Button>
+      <Button className="alertButton" onClick={handleOpenMultileg}>
+        Novo +
+      </Button>
       <PerfectScroll
         containerRef={(ref) => {
           containerRef.current = ref;
