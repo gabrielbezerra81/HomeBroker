@@ -7,12 +7,17 @@ import {
   formatarQuantidadeKMG,
 } from "shared/utils/Formatacoes";
 import { Order } from "types/ordersExec/ordersExec";
+import { updateManyOrdersExecStateAction } from "redux/actions/ordensExecucao/OrdensExecActions";
+import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
+import { updateOneSystemStateAction } from "redux/actions/system/SystemActions";
 
 interface ResumedOrderItemProps {
   order: Order;
 }
 
 const ResumedOrderItem: React.FC<ResumedOrderItemProps> = ({ order }) => {
+  const dispatch = useDispatchStorePrincipal();
+
   const [headerVisible, setHeaderVisible] = useState(false);
 
   const progress = useMemo(() => {
@@ -46,7 +51,15 @@ const ResumedOrderItem: React.FC<ResumedOrderItemProps> = ({ order }) => {
 
   const handleClose = useCallback(() => {}, []);
 
-  const handleSearch = useCallback(() => {}, []);
+  const handleSearch = useCallback(() => {
+    dispatch(updateOneSystemStateAction("isOpenOrdersExec", true));
+    dispatch(
+      updateManyOrdersExecStateAction({
+        ordemAtual: order,
+        opcoesOrdemAberto: true,
+      }),
+    );
+  }, [dispatch, order]);
 
   return (
     <div className="orderContainer">
