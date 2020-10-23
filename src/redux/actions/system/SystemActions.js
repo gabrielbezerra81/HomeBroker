@@ -137,9 +137,13 @@ export const deslogarUsuarioAction = () => {
   };
 };
 
-export const abrirItemBarraLateralAction = (props, nameVariavelReducer) => {
+export const abrirItemBarraLateralAction = (
+  props,
+  nameVariavelReducer,
+  forceVisibility = null,
+) => {
   const isVisible = props[nameVariavelReducer];
-  const updatedVisibility = !isVisible;
+  let updatedVisibility = !isVisible;
 
   return (dispatch, getState) => {
     const { selectedTab, openedMenus } = getState().systemReducer;
@@ -156,19 +160,20 @@ export const abrirItemBarraLateralAction = (props, nameVariavelReducer) => {
       );
     } //
     else {
-      const updateOpenedMenus = handleCloseMenusInMainTab({
+      let updateOpenedMenus = handleCloseMenusInMainTab({
         isOpenAttribute: nameVariavelReducer,
         visibility: updatedVisibility,
         openedMenus,
       });
 
-      // if (nameVariavelReducer === "isOpenMultileg" && !updatedVisibility) {
-      //   dispatch(
-      //     updateManySystemState({
-      //       multilegButtonsVisibility:true,
-      //     }),
-      //   );
-      // }
+      if (forceVisibility === true || forceVisibility === false) {
+        // Se estiver querendo manter o estado atual de visibilidade, não precisa alterar.
+        if (forceVisibility === isVisible) {
+          updateOpenedMenus = openedMenus;
+        }
+
+        updatedVisibility = forceVisibility;
+      }
 
       dispatch(
         updateManySystemState({
