@@ -1,4 +1,7 @@
-import { MUDAR_VARIAVEL_ORDENS_EXEC, MUDA_VARIAVEIS_ORDENS_EXEC } from "constants/MenuActionTypes";
+import {
+  MUDAR_VARIAVEL_ORDENS_EXEC,
+  MUDA_VARIAVEIS_ORDENS_EXEC,
+} from "constants/MenuActionTypes";
 import {
   listarOrdensExecAPI,
   setPointerWhileAwaiting,
@@ -263,17 +266,33 @@ export const openOrderInBoletaAction = (props, event, menuAction) => {
 
 export const cancelarOrdemExecAction = ({ idOrdem }) => {
   return async (dispatch) => {
-    setPointerWhileAwaiting({ lockMode: "travar", id: "ordens_execucao" });
+    setPointerWhileAwaiting({
+      lockMode: "travar",
+      id: "ordens_execucao",
+      parentID: "body",
+    });
     await cancelarOrdemExecAPI(idOrdem);
-    setPointerWhileAwaiting({ lockMode: "destravar", id: "ordens_execucao" });
+    setPointerWhileAwaiting({
+      lockMode: "destravar",
+      id: "ordens_execucao",
+      parentID: "body",
+    });
   };
 };
 
 export const finalizarAMercadoAction = ({ idOrdem }) => {
   return async (dispatch) => {
-    setPointerWhileAwaiting({ lockMode: "travar", id: "ordens_execucao" });
+    setPointerWhileAwaiting({
+      lockMode: "travar",
+      id: "ordens_execucao",
+      parentID: "body",
+    });
     await finalizarAMercadoAPI(idOrdem);
-    setPointerWhileAwaiting({ lockMode: "destravar", id: "ordens_execucao" });
+    setPointerWhileAwaiting({
+      lockMode: "destravar",
+      id: "ordens_execucao",
+      parentID: "body",
+    });
   };
 };
 
