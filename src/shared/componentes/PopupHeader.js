@@ -11,7 +11,7 @@ import {
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 import { openCloseMultilegExtraConfigsAction } from "redux/actions/multileg/MultilegActions";
-import { mudarVariavelOrdensExecAction } from "redux/actions/ordensExecucao/OrdensExecActions";
+import { updateOneOrdersExecStateAction } from "redux/actions/ordensExecucao/OrdensExecActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useStateGlobalStore from "hooks/useStateGlobalStore";
 import useDispatchBoletas from "hooks/useDispatchBoletas";
@@ -313,7 +313,7 @@ const BotaoAbrirFiltrarOrdens = ({ headerTitle }) => {
         style={{ marginRight: "6px" }}
         onClick={() =>
           dispatch(
-            mudarVariavelOrdensExecAction(
+            updateOneOrdersExecStateAction(
               "filtrarOrdensAberto",
               !filtrarOrdensAberto,
             ),

@@ -4,7 +4,7 @@ import { Select } from "antd";
 import { erro_opcoes_ordens_exec } from "constants/AlertaErros";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import {
-  mudarVariavelOrdensExecAction,
+  updateOneOrdersExecStateAction,
   aumentarQtdePrecoAction,
 } from "redux/actions/ordensExecucao/OrdensExecActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
@@ -27,8 +27,8 @@ export default (props) => {
         <span
           className="input-group-text iconeProcurar divClicavel botoesInputSelect"
           onClick={() => {
-            dispatch(mudarVariavelOrdensExecAction(nomeOpen, !open));
-            dispatch(mudarVariavelOrdensExecAction("sinalInputSelect", "-"));
+            dispatch(updateOneOrdersExecStateAction(nomeOpen, !open));
+            dispatch(updateOneOrdersExecStateAction("sinalInputSelect", "-"));
           }}
         >
           -
@@ -56,7 +56,7 @@ export default (props) => {
           else alert(erro_opcoes_ordens_exec);
         }}
         onDropdownVisibleChange={() =>
-          dispatch(mudarVariavelOrdensExecAction(nomeOpen, false))
+          dispatch(updateOneOrdersExecStateAction(nomeOpen, false))
         }
       >
         {options(sinalInputSelect, modo)}
@@ -66,8 +66,8 @@ export default (props) => {
         <span
           className="input-group-text iconeProcurar divClicavel botoesInputSelect"
           onClick={() => {
-            dispatch(mudarVariavelOrdensExecAction(nomeOpen, !open));
-            dispatch(mudarVariavelOrdensExecAction("sinalInputSelect", "+"));
+            dispatch(updateOneOrdersExecStateAction(nomeOpen, !open));
+            dispatch(updateOneOrdersExecStateAction("sinalInputSelect", "+"));
           }}
         >
           +

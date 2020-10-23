@@ -13,7 +13,7 @@ import { erro_opcoes_ordens_exec } from "constants/AlertaErros";
 import { GlobalContext, StorePrincipalContext } from "redux/StoreCreation";
 import {
   openOrderInMultilegAction,
-  mudarVariavelOrdensExecAction,
+  updateOneOrdersExecStateAction,
   cancelarOrdemExecAction,
   finalizarAMercadoAction,
   aumentarQtdePrecoAction,
@@ -117,8 +117,8 @@ class OpcoesOrdemExec extends React.Component {
           className="divClicavel"
           tabIndex={0}
           onClick={() => {
-            props.mudarVariavelOrdensExecAction("opcoesOrdemAberto", false);
-            props.mudarVariavelOrdensExecAction("ordemAtual", null);
+            props.updateOneOrdersExecStateAction("opcoesOrdemAberto", false);
+            props.updateOneOrdersExecStateAction("ordemAtual", null);
           }}
         >
           <img src={iconeFecharMenuOpcoesOrdem} width="27" alt=""></img>
@@ -171,7 +171,7 @@ export default compose(
   connect(
     mapStateToPropsOrdensExec,
     {
-      mudarVariavelOrdensExecAction,
+      updateOneOrdersExecStateAction,
       openOrderInMultilegAction,
       cancelarOrdemExecAction,
       finalizarAMercadoAction,

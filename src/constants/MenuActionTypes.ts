@@ -10,6 +10,7 @@ export const MUDAR_VARIAVEIS_POSICAO_CUSTODIA =
 
 //ORDENS EM EXECUÇÃO
 export const MUDAR_VARIAVEL_ORDENS_EXEC = "mudar_variavel_ordens_exec";
+export const MUDA_VARIAVEIS_ORDENS_EXEC = "muda_variaveis_ordens_exec";
 export const MUDAR_ORDEM_EXEC_MAIN_REDUCER = "mudar_ordem_exec_main_reducer";
 
 //THL

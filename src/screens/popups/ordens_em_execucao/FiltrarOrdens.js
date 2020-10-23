@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Col, Row, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import {
-  mudarVariavelOrdensExecAction,
+  updateOneOrdersExecStateAction,
   filtrarHistoricoOpAction,
 } from "redux/actions/ordensExecucao/OrdensExecActions";
 import { StorePrincipalContext } from "redux/StoreCreation";
@@ -21,7 +21,7 @@ class FiltrarOrdens extends React.Component {
                   className="textInput"
                   value={this.props.ativoFiltrarOrdens}
                   onChange={(event) =>
-                    this.props.mudarVariavelOrdensExecAction(
+                    this.props.updateOneOrdersExecStateAction(
                       "ativoFiltrarOrdens",
                       event.currentTarget.value,
                     )
@@ -37,7 +37,7 @@ class FiltrarOrdens extends React.Component {
                   className="textInput"
                   value={this.props.mercadoFiltrarOrdens}
                   onChange={(event) =>
-                    this.props.mudarVariavelOrdensExecAction(
+                    this.props.updateOneOrdersExecStateAction(
                       "mercadoFiltrarOrdens",
                       event.currentTarget.value,
                     )
@@ -56,7 +56,7 @@ class FiltrarOrdens extends React.Component {
                   className="textInput"
                   value={this.props.contaFiltrarOrdens}
                   onChange={(event) =>
-                    this.props.mudarVariavelOrdensExecAction(
+                    this.props.updateOneOrdersExecStateAction(
                       "contaFiltrarOrdens",
                       event.currentTarget.value,
                     )
@@ -75,7 +75,7 @@ class FiltrarOrdens extends React.Component {
                   className="textInput"
                   value={this.props.statusFiltrarOrdens}
                   onChange={(event) =>
-                    this.props.mudarVariavelOrdensExecAction(
+                    this.props.updateOneOrdersExecStateAction(
                       "statusFiltrarOrdens",
                       event.currentTarget.value,
                     )
@@ -94,7 +94,7 @@ class FiltrarOrdens extends React.Component {
                   className="textInput"
                   value={this.props.dataFiltrarOrdens}
                   onChange={(event) =>
-                    this.props.mudarVariavelOrdensExecAction(
+                    this.props.updateOneOrdersExecStateAction(
                       "dataFiltrarOrdens",
                       event.currentTarget.value,
                     )
@@ -113,7 +113,7 @@ class FiltrarOrdens extends React.Component {
                   className="textInput"
                   value={this.props.ofertaFiltrarOrdens}
                   onChange={(event) =>
-                    this.props.mudarVariavelOrdensExecAction(
+                    this.props.updateOneOrdersExecStateAction(
                       "ofertaFiltrarOrdens",
                       event.currentTarget.value,
                     )
@@ -153,7 +153,7 @@ const mapStateToProps = (state) => ({
 export default connect(
   mapStateToProps,
   {
-    mudarVariavelOrdensExecAction,
+    updateOneOrdersExecStateAction,
     filtrarHistoricoOpAction,
   },
   null,

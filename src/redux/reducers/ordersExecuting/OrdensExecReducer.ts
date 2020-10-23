@@ -1,4 +1,4 @@
-import { MUDAR_VARIAVEL_ORDENS_EXEC } from "constants/MenuActionTypes";
+import { MUDAR_VARIAVEL_ORDENS_EXEC, MUDA_VARIAVEIS_ORDENS_EXEC } from "constants/MenuActionTypes";
 import { LISTAR_ORDENS_EXECUCAO } from "constants/ApiActionTypes";
 import { actionType } from "constants/ActionTypes";
 import { resetarEstadoRedux } from "redux/reducers/resetarEstadoReducer";
@@ -29,6 +29,8 @@ export default (
   switch (type) {
     case MUDAR_VARIAVEL_ORDENS_EXEC:
       return { ...state, [payload.nome]: payload.valor };
+    case MUDA_VARIAVEIS_ORDENS_EXEC:
+      return { ...state, ...payload };
     case LISTAR_ORDENS_EXECUCAO:
       return { ...state, tabelaOrdensExecucao: payload };
     case actionType.RESET_REDUX_STATE:

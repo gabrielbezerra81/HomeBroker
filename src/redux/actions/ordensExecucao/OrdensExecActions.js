@@ -1,4 +1,4 @@
-import { MUDAR_VARIAVEL_ORDENS_EXEC } from "constants/MenuActionTypes";
+import { MUDAR_VARIAVEL_ORDENS_EXEC, MUDA_VARIAVEIS_ORDENS_EXEC } from "constants/MenuActionTypes";
 import {
   listarOrdensExecAPI,
   setPointerWhileAwaiting,
@@ -30,11 +30,20 @@ import { abrirItemBarraLateralAction } from "../system/SystemActions";
 import { updateManyMultilegState } from "../multileg/utils";
 import * as ActionTypes from "constants/ActionTypes";
 
-export const mudarVariavelOrdensExecAction = (nome, valor) => {
+export const updateOneOrdersExecStateAction = (nome, valor) => {
   return (dispatch) => {
     dispatch({
       type: MUDAR_VARIAVEL_ORDENS_EXEC,
       payload: { nome, valor },
+    });
+  };
+};
+
+export const updateManyOrdersExecStateAction = (payload) => {
+  return (dispatch) => {
+    dispatch({
+      type: MUDA_VARIAVEIS_ORDENS_EXEC,
+      payload,
     });
   };
 };
@@ -468,7 +477,13 @@ const atualizarOrdensExec = ({
     token,
   });
 
-  dispatch(mudarVariavelOrdensExecAction("eventSourceOrdensExec", eventSource));
+  dispatch(
+    updateOneOrdersExecStateAction("eventSourceOrdensExec", eventSource),
+  );
 
   return eventSource;
+};
+
+export const openOrdersExecFromRightMenuAction = () => {
+  return (dispatch, getState) => {};
 };
