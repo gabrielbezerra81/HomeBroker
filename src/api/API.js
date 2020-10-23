@@ -45,6 +45,7 @@ import {
   error_add_box,
   success_add_box,
   error_delete_box,
+  error_delete_alert,
 } from "constants/AlertaErros";
 import api from "./apiConfig";
 
@@ -113,7 +114,7 @@ export const pesquisarAtivoAPI = async (codigo) => {
     })
     .catch((erro) => {
       // TODO: ativar alerta quando Adriano subir correção
-      // mostrarErroConsulta(erro, erro_pesquisar_ativo);
+      // showAPIErrorAndAlert(erro, erro_pesquisar_ativo);
       return {
         resultadoAtivo: "",
         codigoEspecificacao: "",
@@ -156,7 +157,7 @@ export const listarBookOfertaAPI = (codigo_ativo) => {
       return tabelas;
     })
     .catch((erro) => {
-      mostrarErroConsulta(erro, erro_listarBook);
+      showAPIErrorAndAlert(erro, erro_listarBook);
       return tabelas;
     });
 };
@@ -169,7 +170,7 @@ export const enviarOrdemAPI = async (data) => {
       return response.data;
     })
     .catch((erro) => {
-      mostrarErroConsulta(erro, erro_enviar_ordem);
+      showAPIErrorAndAlert(erro, erro_enviar_ordem);
     });
 };
 
@@ -210,7 +211,7 @@ export const pesquisarAtivoMultilegAPI = async (codigo_ativo) => {
       return dados;
     })
     .catch((erro) => {
-      mostrarErroConsulta(erro, erro_pesquisar_ativo);
+      showAPIErrorAndAlert(erro, erro_pesquisar_ativo);
       return null;
     });
 };
@@ -231,7 +232,7 @@ export const pesquisarStrikesMultilegAPI = async (codigo_ativo, vencimento) => {
       return response.data;
     })
     .catch((erro) => {
-      mostrarErroConsulta(erro);
+      showAPIErrorAndAlert(erro);
       console.log(erro, "");
       return [];
     });
@@ -250,7 +251,7 @@ export const listarOrdensExecAPI = async () => {
       return response.data;
     })
     .catch((erro) => {
-      mostrarErroConsulta(erro, "");
+      showAPIErrorAndAlert(erro, "");
       return [];
     });
 };
@@ -268,7 +269,7 @@ export const listarPosicoesAPI = async () => {
       return response.data;
     })
     .catch((erro) => {
-      mostrarErroConsulta(erro, "");
+      showAPIErrorAndAlert(erro, "");
       return [];
     });
 };
@@ -288,7 +289,7 @@ export const criarPosicaoMultilegAPI = (data) => {
       else alert(erro_criar_posicao);
     })
     .catch((erro) => {
-      mostrarErroConsulta(erro, erro_criar_posicao);
+      showAPIErrorAndAlert(erro, erro_criar_posicao);
     });
 };
 
@@ -310,7 +311,7 @@ export const criarAlertaOperacaoAPI = async ({ param, operator, data }) => {
       return response.data;
     })
     .catch((erro) => {
-      mostrarErroConsulta(erro, erro_criar_alerta);
+      showAPIErrorAndAlert(erro, erro_criar_alerta);
     });
 };
 
@@ -323,7 +324,7 @@ export const cancelarOrdemExecAPI = (id) => {
       alert(sucesso_cancelar_ordem);
     })
     .catch((erro) => {
-      mostrarErroConsulta(erro, erro_cancelar_ordem);
+      showAPIErrorAndAlert(erro, erro_cancelar_ordem);
     });
 };
 
@@ -336,7 +337,7 @@ export const finalizarAMercadoAPI = (id) => {
       alert(sucesso_finalizar_a_mercado);
     })
     .catch((erro) => {
-      mostrarErroConsulta(erro, erro_finalizar_a_mercado);
+      showAPIErrorAndAlert(erro, erro_finalizar_a_mercado);
     });
 };
 
@@ -349,7 +350,7 @@ export const incrementarQtdeOrdemExecAPI = (id, qtde) => {
       alert(sucesso_modificar_ordemExec);
     })
     .catch((erro) => {
-      mostrarErroConsulta(erro, erro_modificar_ordemExec);
+      showAPIErrorAndAlert(erro, erro_modificar_ordemExec);
     });
 };
 
@@ -362,7 +363,7 @@ export const incrementarPrecoOrdemExecAPI = (id, preco) => {
       alert(sucesso_modificar_ordemExec);
     })
     .catch((erro) => {
-      mostrarErroConsulta(erro, erro_modificar_ordemExec);
+      showAPIErrorAndAlert(erro, erro_modificar_ordemExec);
     });
 };
 
@@ -377,7 +378,7 @@ export const pesquisarListaStrikeTHLAPI = (ativo) => {
     })
     .then((response) => response.data)
     .catch((erro) => {
-      mostrarErroConsulta(erro, erro_pesquisar_ativo);
+      showAPIErrorAndAlert(erro, erro_pesquisar_ativo);
       return [];
     });
 };
@@ -398,7 +399,7 @@ export const getTHLDataWithStrikeAPI = (ativo, strike, tipo) => {
       return response.data;
     })
     .catch((erro) => {
-      mostrarErroConsulta(erro, erro_listarTHL_thl);
+      showAPIErrorAndAlert(erro, erro_listarTHL_thl);
       return [];
     });
 };
@@ -416,7 +417,7 @@ export const getTHLInitialDataAPI = async (symbol, type) => {
       return response.data;
     })
     .catch((erro) => {
-      mostrarErroConsulta(erro, erro_listarTHL_thl);
+      showAPIErrorAndAlert(erro, erro_listarTHL_thl);
       return { lines: [], structures: [] };
     });
 };
@@ -440,7 +441,7 @@ export const recalcularPrecosTHLAPI = async (
     )
     .then((response) => response.data)
     .catch((erro) => {
-      mostrarErroConsulta(erro, "");
+      showAPIErrorAndAlert(erro, "");
       return [];
     });
 };
@@ -458,7 +459,7 @@ export const pesquisarCombinacoesTHLAPI = async (ativo) => {
     })
     .then((response) => response.data)
     .catch((erro) => {
-      mostrarErroConsulta(erro, erro_pesquisarCombinacoes_thl);
+      showAPIErrorAndAlert(erro, erro_pesquisarCombinacoes_thl);
       return [];
     });
 };
@@ -470,7 +471,7 @@ export const favoritarTHLAPI = async (data) => {
     })
     .then(() => alert(sucesso_favoritar_thl))
     .catch((erro) => {
-      mostrarErroConsulta(erro, erro_favoritar_thl);
+      showAPIErrorAndAlert(erro, erro_favoritar_thl);
     });
 };
 
@@ -485,7 +486,7 @@ export const addQuoteBoxAPI = async (groupName, data) => {
       return response.data;
     })
     .catch((error) => {
-      mostrarErroConsulta(error, error_add_box);
+      showAPIErrorAndAlert(error, error_add_box);
     });
 };
 
@@ -494,7 +495,7 @@ export const listQuoteBoxesAPI = async () => {
     .get(`favorite`)
     .then((response) => response.data)
     .catch((error) => {
-      mostrarErroConsulta(error, "");
+      showAPIErrorAndAlert(error, "");
       return [];
     });
 };
@@ -504,7 +505,7 @@ export const deleteQuoteBoxAPI = async (boxID) => {
     .delete(`favorite/${boxID}`)
     .then(() => true)
     .catch((error) => {
-      mostrarErroConsulta(error, error_delete_box);
+      showAPIErrorAndAlert(error, error_delete_box);
       return false;
     });
 };
@@ -519,6 +520,15 @@ export const listAlertsAPI = async () => {
       console.log(error);
 
       return [];
+    });
+};
+
+export const disableAlertAPI = async (id) => {
+  return api
+    .put(`advice/${id}`)
+    .then((response) => response.data)
+    .catch((error) => {
+      showAPIErrorAndAlert(error, error_delete_alert);
     });
 };
 
@@ -548,7 +558,7 @@ export const setPointerWhileAwaiting = ({
   }
 };
 
-export const mostrarErroConsulta = (erro, mensagem) => {
+export const showAPIErrorAndAlert = (erro, mensagem) => {
   console.log(erro);
   console.log(erro.response);
   if (erro.timeout) {

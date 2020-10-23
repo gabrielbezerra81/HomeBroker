@@ -9,7 +9,7 @@ import {
   erro_realizar_cadastro,
   erro_sessaoExpirada,
 } from "constants/AlertaErros";
-import { mostrarErroConsulta } from "api/API";
+import { showAPIErrorAndAlert } from "api/API";
 import { Token, Account } from "types/system/system";
 import api from "./apiConfig";
 
@@ -22,7 +22,7 @@ export const autenticacaoTokenAPI = async () => {
     })
     .then((response) => response.data)
     .catch((erro) => {
-      mostrarErroConsulta(erro, erro_realizar_login);
+      showAPIErrorAndAlert(erro, erro_realizar_login);
       return null;
     });
 };
@@ -56,7 +56,7 @@ export const realizarLoginAPI = (
     })
     .catch((erro) => {
       console.log(erro.response);
-      mostrarErroConsulta(erro, erro_realizar_login);
+      showAPIErrorAndAlert(erro, erro_realizar_login);
       return null;
     });
 };
@@ -74,7 +74,7 @@ export const realizarCadastroAPI = (data: SignUpData) => {
     .post(url_realizarCadastro_dados, data)
     .then(() => true)
     .catch((erro) => {
-      mostrarErroConsulta(erro, erro_realizar_cadastro);
+      showAPIErrorAndAlert(erro, erro_realizar_cadastro);
       return false;
     });
 };
@@ -86,7 +86,7 @@ export const verificarTokenAPI = (token: Token) => {
       return response.data;
     })
     .catch((erro) => {
-      mostrarErroConsulta(erro, erro_sessaoExpirada);
+      showAPIErrorAndAlert(erro, erro_sessaoExpirada);
       return null;
     });
 };
@@ -100,7 +100,7 @@ export const verificarTokenAPI = (token: Token) => {
 //       return response.data;
 //     })
 //     .catch((erro) => {
-//       mostrarErroConsulta(erro, erro_realizar_login);
+//       showAPIErrorAndAlert(erro, erro_realizar_login);
 //       return null;
 //     });
 // };
@@ -114,7 +114,7 @@ export const verificarTokenAPI = (token: Token) => {
 //       return response.data;
 //     })
 //     .catch((erro) => {
-//       mostrarErroConsulta(erro, erro_realizar_login);
+//       showAPIErrorAndAlert(erro, erro_realizar_login);
 //       return null;
 //     });
 // };
