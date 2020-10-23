@@ -523,12 +523,13 @@ export const listAlertsAPI = async () => {
     });
 };
 
-export const disableAlertAPI = async (id) => {
+export const updateAlertAPI = async (id, payload) => {
   return api
-    .put(`advice/${id}`)
-    .then((response) => response.data)
+    .put(`advice/${id}`, payload)
+    .then((response) => ({ data: response.data, success: true }))
     .catch((error) => {
       showAPIErrorAndAlert(error, error_delete_alert);
+      return { data: null, success: false };
     });
 };
 

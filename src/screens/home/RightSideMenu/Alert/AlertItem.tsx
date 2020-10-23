@@ -6,7 +6,7 @@ import moment from "moment";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { AlertAPI } from "types/multileg/multileg";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
-import { disableAlertAPI } from "api/API";
+import { updateAlertAPI } from "api/API";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 import {
   abrirItemBarraLateralAction,
@@ -14,6 +14,8 @@ import {
 } from "redux/actions/system/SystemActions";
 import { atualizarDivKeyAction } from "redux/actions/GlobalAppActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
+import produce from "immer";
+import { updateOneMultilegState } from "redux/actions/multileg/utils";
 
 interface AlertItemProps {
   alert: AlertAPI;
@@ -25,6 +27,7 @@ const AlertItem: React.FC<AlertItemProps> = ({ alert: alertItem }) => {
 
   const {
     systemReducer: { isOpenMultileg },
+    multilegReducer: { alerts },
   } = useStateStorePrincipal();
 
   const [hasOverflow, setHasOverflow] = useState(() => {
@@ -47,10 +50,21 @@ const AlertItem: React.FC<AlertItemProps> = ({ alert: alertItem }) => {
   );
 
   const handleClose = useCallback(async () => {
-    const data = await disableAlertAPI(alertItem.id);
+    const response = await updateAlertAPI(alertItem.id, { status: "Disabled" });
 
-    console.log(data);
-  }, [alertItem]);
+    if (response.success) {
+      const updatedAlerts = produce(alerts, (draft) => {
+        return draft.filter((item) => item.id !== alertItem.id);
+      });
+
+      dispatch(
+        updateOneMultilegState({
+          attributeName: "alerts",
+          attributeValue: updatedAlerts,
+        }),
+      );
+    }
+  }, [alertItem.id, alerts, dispatch]);
 
   const handleSearch = useCallback(() => {
     dispatch(
