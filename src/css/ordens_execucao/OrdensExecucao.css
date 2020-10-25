@@ -1,6 +1,5 @@
 #ordens_execucao {
   width: 1060px;
-  margin-top: 85px;
 }
 
 .po1 {
@@ -49,8 +48,8 @@ span.colunasOfertaVenda {
 .divFiltrarOrdens {
   width: 750px !important;
   height: 80px !important;
-  position: absolute;
-  top: -85px;
+  /* position: absolute;
+  top: -85px; */
   padding-bottom: 0 !important;
   display: flex;
   align-items: center;

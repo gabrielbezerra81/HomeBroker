@@ -7,7 +7,6 @@ import ConfigComplementar from "screens/popups/multileg_/ConfigComplementar";
 import { Resizable } from "re-resizable";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
-
 class DragglableModal extends Component {
   constructor(props) {
     super(props);
@@ -56,6 +55,7 @@ class DragglableModal extends Component {
             draggableData: draggableData,
           });
         }}
+        bounds={{ left: -16, top: -34 }}
       >
         {this.props.id === "thl" ? (
           <Resizable

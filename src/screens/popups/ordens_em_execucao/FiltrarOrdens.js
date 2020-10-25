@@ -8,6 +8,22 @@ import {
 import { StorePrincipalContext } from "redux/StoreCreation";
 
 class FiltrarOrdens extends React.Component {
+  // componentDidMount() {
+  //   const ordersPopup = document.getElementById("ordens_execucao");
+
+  //   if (ordersPopup) {
+  //     ordersPopup.style.marginTop = "85px";
+  //   }
+  // }
+
+  // componentWillUnmount() {
+  //   const ordersPopup = document.getElementById("ordens_execucao");
+
+  //   if (ordersPopup) {
+  //     ordersPopup.style.marginTop = "0px";
+  //   }
+  // }
+
   render() {
     return (
       <div className="mcontent divFiltrarOrdens">
