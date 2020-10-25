@@ -29,7 +29,10 @@ import {
 } from "screens/popups/multileg_/CalculoPreco";
 import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
 import { getReducerStateStorePrincipal } from "hooks/utils";
-import { abrirItemBarraLateralAction } from "../system/SystemActions";
+import {
+  abrirItemBarraLateralAction,
+  updateManySystemState,
+} from "../system/SystemActions";
 import { updateManyMultilegState } from "../multileg/utils";
 import * as ActionTypes from "constants/ActionTypes";
 
@@ -116,6 +119,13 @@ export const openOrderInMultilegAction = (props, action = "") => {
       document.getElementById("multileg").style.zIndex = props.zIndex + 1;
       props.aumentarZindexAction("multileg", props.zIndex, true);
     }
+
+    dispatch(
+      updateManySystemState({
+        multilegButtonsVisibility: true,
+        createAlertButtonVisibility: false,
+      }),
+    );
 
     // Adicionar aba
     let result = addMultilegTab(clonedMultilegTabs);

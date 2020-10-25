@@ -3,7 +3,10 @@ import {
   atualizarDivKeyAction,
   aumentarZindexAction,
 } from "redux/actions/GlobalAppActions";
-import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
+import {
+  abrirItemBarraLateralAction,
+  updateManySystemState,
+} from "redux/actions/system/SystemActions";
 import {
   addMultilegTab,
   updateMultilegTab,
@@ -65,6 +68,13 @@ export const abrirMultilegTHLAction = (props) => {
       document.getElementById("multileg").style.zIndex = zIndex + 1;
       dispatchGlobal(aumentarZindexAction("multileg", zIndex, true));
     }
+
+    dispatch(
+      updateManySystemState({
+        multilegButtonsVisibility: true,
+        createAlertButtonVisibility: false,
+      }),
+    );
 
     let result = addMultilegTab(clonedMultilegTabs);
 
