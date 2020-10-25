@@ -198,7 +198,7 @@ export const createMultilegAlertAction = ({
 
       if (data && data.length) {
         const updatedAlerts = produce(alerts, (draft) => {
-          draft.push(data);
+          draft.push(data[0]);
         });
         dispatch(
           updateOneMultilegState({
