@@ -77,6 +77,10 @@ const MultilegOfferItem: React.FC<MultilegOfferProps> = ({
     [offer.opcoes, offer.tipo],
   );
 
+  const isOption = useMemo(() => {
+    return offer.ativoAtual !== offer.codigoSelecionado;
+  }, [offer.ativoAtual, offer.codigoSelecionado]);
+
   return (
     <tr key={lineIndex} id={`ofertaMultileg${lineIndex}`}>
       <td
@@ -189,26 +193,26 @@ const MultilegOfferItem: React.FC<MultilegOfferProps> = ({
         </Select>
       </td>
       <td>
-        <div
-          className="divClicavel"
-          tabIndex={0}
-          onClick={() =>
-            dispatch(
-              updateMultilegOfferAction({
-                tabIndex,
-                attributeName: "tipo",
-                attributeValue: offer.tipo,
-                lineIndex,
-              }),
-            )
-          }
-        >
-          {offer.tipo.toUpperCase()}
-        </div>
+        {isOption && (
+          <div
+            className="divClicavel"
+            tabIndex={0}
+            onClick={() =>
+              dispatch(
+                updateMultilegOfferAction({
+                  tabIndex,
+                  attributeName: "tipo",
+                  attributeValue: offer.tipo,
+                  lineIndex,
+                }),
+              )
+            }
+          >
+            {offer.tipo.toUpperCase()}
+          </div>
+        )}
       </td>
-      <td>
-        <Model model={offer.modelo} />
-      </td>
+      <td>{isOption && <Model model={offer.modelo} />}</td>
       <td>
         <Form.Group>
           <InputFormatado
