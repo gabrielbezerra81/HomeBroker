@@ -213,6 +213,10 @@ a.botaoAddAba.active {
 .tableMultileg {
   color: #ddd;
   padding: 20px;
+
+  tbody tr {
+    height: 27px;
+  }
 }
 
 .tableMultileg thead {

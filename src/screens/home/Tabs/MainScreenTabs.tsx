@@ -1,15 +1,14 @@
 import React, { useEffect, useMemo, useCallback } from "react";
-import { Tab, Row, Col, Nav, Form } from "react-bootstrap";
-import { MDBIcon } from "mdbreact";
+import { Tab, Row, Col, Nav } from "react-bootstrap";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import {
   handleAddOrSelectTabAction,
   handleOpenMenusInMainScreenTabsAction,
-  handleRemoveTabAction,
   handleChangeTabPropsAction,
 } from "redux/actions/system/SystemActions";
 import usePrevious from "hooks/usePrevious";
+import TabButton from "./TabButton";
 
 interface TabChild {
   key: string;
@@ -38,6 +37,7 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
       isOpenRightSideMenu,
     },
   } = useStateStorePrincipal();
+
   const dispatch = useDispatchStorePrincipal();
 
   const menuChildren = useMemo(() => {
@@ -69,6 +69,7 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
   const handleTabSelect = useCallback(
     (key, event: any) => {
       // Não selecionar com tecla de espaço
+
       if (event.keyCode === 32) {
         const targetElement = event.target;
         const { selectionStart, value } = targetElement;
@@ -169,44 +170,7 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
         <Row className={`navContainer`}>
           <Nav>
             {mainTabs.map((tabItem, index) => {
-              return (
-                <Col key={index}>
-                  <Nav.Item>
-                    <Nav.Link
-                      eventKey={`tab${index}`}
-                      className={
-                        selectedTab === `tab${index}` ? "selectedTab" : ""
-                      }
-                      active={false}
-                    >
-                      <div className="titleContainer">
-                        {index !== 0 && (
-                          <MDBIcon
-                            icon="times"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              dispatch(handleRemoveTabAction(index));
-                            }}
-                          />
-                        )}
-                        <Form.Control
-                          type="text"
-                          value={tabItem.tabName}
-                          onChange={(e: any) => {
-                            dispatch(
-                              handleChangeTabPropsAction({
-                                tabIndex: index,
-                                attributeName: "tabName",
-                                attributeValue: e.target.value,
-                              }),
-                            );
-                          }}
-                        />
-                      </div>
-                    </Nav.Link>
-                  </Nav.Item>
-                </Col>
-              );
+              return <TabButton tab={tabItem} tabIndex={index} />;
             })}
 
             <Col>
