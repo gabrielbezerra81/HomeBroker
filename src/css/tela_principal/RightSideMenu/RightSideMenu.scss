@@ -6,6 +6,32 @@
   margin-top: -8px;
   display: flex;
 
+  .barVisibilityButton {
+    background: linear-gradient(#333, #222);
+    height: 32px;
+    width: 43px;
+    border-bottom: 1px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+      border-width: 0 0 1px;
+    }
+
+    > i {
+      color: #fff;
+      transition: transform 0.2s;
+
+      &.arrowRotateToRight {
+        transform: rotateZ(180deg);
+      }
+    }
+  }
+
   .menuContent {
     padding: 20px 8px 56px;
     transition-duration: 0.2s;
@@ -69,7 +95,14 @@
 
 .rightSideBar {
   background: linear-gradient(#333, #222);
+  transition: opacity 0.2s;
   width: 43px;
+  flex: 1;
+  height: 100%;
+
+  &.hiddenSideBar {
+    opacity: 0;
+  }
 
   > div {
     height: 65px;
@@ -107,20 +140,6 @@
     &:focus {
       outline: none;
       border-width: 0 0 1px;
-    }
-  }
-
-  > div:first-child {
-    height: 32px;
-    width: 43px;
-
-    > i {
-      color: #fff;
-      transition: transform 0.2s;
-
-      &.arrowRotateToRight {
-        transform: rotateZ(180deg);
-      }
     }
   }
 }

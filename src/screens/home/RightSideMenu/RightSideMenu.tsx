@@ -59,38 +59,50 @@ const RightSideMenu: React.FC = () => {
     return isOpenRightSideMenu ? "" : "menuItemHidden";
   }, [isOpenRightSideMenu]);
 
+  const hiddenSideBarClass = useMemo(() => {
+    return isOpenRightSideMenu ? "" : "hiddenSideBar";
+  }, [isOpenRightSideMenu]);
+
   return (
     <div className="rightSideMenu">
-      <div className="rightSideBar">
-        <div tabIndex={0} onClick={handleChangeMenuVisibility}>
+      <div>
+        <div
+          className="barVisibilityButton"
+          tabIndex={0}
+          onClick={handleChangeMenuVisibility}
+        >
           <MDBIcon className={arrowRotationClass} icon="angle-left" size="lg" />
         </div>
-        <div
-          className={`${menuItemOpacity} ${isItemActive("ALERTAS")}`}
-          tabIndex={0}
-          data-name="ALERTAS"
-          onClick={handleMenuItemSelect}
-        >
-          {/* <AlertIcon /> */}
-          <img src={alertIcon} alt="" />
-        </div>
-        <div
-          className={`${menuItemOpacity} ${isItemActive("ORDENS EM EXECUÇÃO")}`}
-          tabIndex={0}
-          data-name="ORDENS EM EXECUÇÃO"
-          onClick={handleMenuItemSelect}
-        >
-          {/* <OrdersIcon /> */}
-          <img src={ordersIcon} alt="" />
-        </div>
-        <div
-          className={`${menuItemOpacity} ${isItemActive("POSIÇÃO RESUMIDA")}`}
-          tabIndex={0}
-          data-name="POSIÇÃO RESUMIDA"
-          onClick={handleMenuItemSelect}
-        >
-          {/* <PositionIcon /> */}
-          <img src={positionIcon} alt="" />
+        <div className={`rightSideBar ${hiddenSideBarClass}`}>
+          <div
+            className={`${menuItemOpacity} ${isItemActive("ALERTAS")}`}
+            tabIndex={0}
+            data-name="ALERTAS"
+            onClick={handleMenuItemSelect}
+          >
+            {/* <AlertIcon /> */}
+            <img src={alertIcon} alt="" />
+          </div>
+          <div
+            className={`${menuItemOpacity} ${isItemActive(
+              "ORDENS EM EXECUÇÃO",
+            )}`}
+            tabIndex={0}
+            data-name="ORDENS EM EXECUÇÃO"
+            onClick={handleMenuItemSelect}
+          >
+            {/* <OrdersIcon /> */}
+            <img src={ordersIcon} alt="" />
+          </div>
+          <div
+            className={`${menuItemOpacity} ${isItemActive("POSIÇÃO RESUMIDA")}`}
+            tabIndex={0}
+            data-name="POSIÇÃO RESUMIDA"
+            onClick={handleMenuItemSelect}
+          >
+            {/* <PositionIcon /> */}
+            <img src={positionIcon} alt="" />
+          </div>
         </div>
       </div>
       <div className={`menuContent ${closedMenuContentClass}`}>
