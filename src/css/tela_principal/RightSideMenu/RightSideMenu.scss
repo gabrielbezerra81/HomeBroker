@@ -6,6 +6,8 @@
   margin-top: -8px;
   display: flex;
 
+  z-index: 9999;
+
   .barVisibilityButton {
     background: linear-gradient(#333, #222);
     height: 32px;
