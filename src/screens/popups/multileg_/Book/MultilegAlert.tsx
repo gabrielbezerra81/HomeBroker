@@ -5,7 +5,11 @@ import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { createMultilegAlertAction } from "redux/actions/multileg/MultilegAPIAction";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import usePrevious from "hooks/usePrevious";
-import { expandElement, collapseElement } from "shared/utils/AnimateHeight";
+import {
+  expandElement,
+  collapseElement,
+  updateHeight,
+} from "shared/utils/AnimateHeight";
 import { updateMultilegTabAction } from "redux/actions/multileg/MultilegActions";
 
 interface MultilegAlertProps {
@@ -25,8 +29,8 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
   const [comment, setComment] = useState("");
 
   const isAnyAlertOpen = useMemo(() => {
-    return multileg.some((tab) => tab.isAlertOpen);
-  }, [multileg]);
+    return multileg.some((tab, index) => tab.isAlertOpen && index !== tabIndex);
+  }, [multileg, tabIndex]);
 
   const maxNumberOfOffers = useMemo(() => {
     return Math.max(...multileg.map((tab) => tab.tabelaMultileg.length));
@@ -59,36 +63,79 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
   }, [multilegButtonsVisibility]);
 
   useEffect(() => {
-    if (previousNumberOfOffers || previousNumberOfOffers === 0) {
-      const multilegElement = document.getElementById("multileg");
-      var section = multilegElement?.querySelector(".mcontent");
+    function adjustMultilegHeight() {
+      if (previousNumberOfOffers || previousNumberOfOffers === 0) {
+        const multilegElement = document.getElementById("multileg");
+        var mcontent = multilegElement?.querySelector(".mcontent");
 
-      if (section) {
-        var isCollapsed = section.getAttribute("data-collapsed") === "true";
+        if (mcontent) {
+          // var isCollapsed = mcontent.getAttribute("data-collapsed") === "true";
+          // const thisAlertOpen = multileg[tabIndex].isAlertOpen;
 
-        if (!isCollapsed && multileg[tabIndex].isAlertOpen) {
-        } //
-        else {
-          if (isCollapsed) {
-            expandElement({
-              element: section,
-              height: multilegHeight,
-              extraDynamicHeight: 27 * maxNumberOfOffers,
-              extraHeight: 12,
-            });
-            section.setAttribute("data-collapsed", "false");
-          }
+          // const offersHeight = 27 * maxNumberOfOffers;
 
-          if (!isCollapsed && !isAnyAlertOpen) {
-            collapseElement({
-              element: section,
-              height: multilegHeight,
-              extraDynamicHeight: 27 * maxNumberOfOffers,
-            });
-          }
+          const heights = multileg.map((tabItem) => {
+            const alertHeight = tabItem.isAlertOpen ? 108 : 0;
+
+            return tabItem.tabelaMultileg.length * 27 + alertHeight;
+          });
+
+          const maxHeight = Math.max(...heights);
+
+          updateHeight(mcontent, multilegHeight + maxHeight);
+
+          // // Caso 3.1 false, true
+          // if (!isCollapsed && thisAlertOpen) {
+          //   console.log("3.1");
+          //   updateHeight(mcontent, multilegHeight, offersHeight + 108);
+          //   return;
+          // } //
+
+          // // Caso 1
+          // if (!isCollapsed && !thisAlertOpen) {
+          //   // Caso 1.1
+          //   if (!isAnyAlertOpen) {
+          //     console.log("1.1");
+          //     collapseElement({
+          //       element: mcontent,
+          //       height: multilegHeight,
+          //       extraDynamicHeight: offersHeight,
+          //     });
+          //     return;
+          //   }
+          //   // Caso 1.2
+          //   else {
+          //     updateHeight(mcontent, multilegHeight + maxHeight);
+
+          //     console.log("1.2");
+          //     return;
+          //   }
+          // }
+
+          // // Caso 2
+          // if (isCollapsed && thisAlertOpen) {
+          //   // Caso 2.1
+          //   if (!isAnyAlertOpen) {
+          //     console.log("2.1");
+          //     expandElement({
+          //       element: mcontent,
+          //       height: multilegHeight,
+          //       extraDynamicHeight: offersHeight,
+          //       extraHeight: 12,
+          //     });
+          //     mcontent.setAttribute("data-collapsed", "false");
+          //     return;
+          //   } // Caso 2.2
+          //   else {
+          //     console.log("2.2");
+          //     return;
+          //   }
+          // }
         }
       }
     }
+
+    adjustMultilegHeight();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [multileg[tabIndex].isAlertOpen]);
 
