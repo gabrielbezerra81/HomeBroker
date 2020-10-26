@@ -1,22 +1,68 @@
 import React, { Component } from "react";
 import Draggable from "react-draggable";
+import { connect } from "react-redux";
+
 import ConfigurarStop from "screens/popups/compra/compra_StartStop/ConfigurarStop";
 import ConfigurarStopVenda from "screens/popups/venda/venda_StartStop/ConfigurarStopVenda";
 import FiltrarOrdens from "screens/popups/ordens_em_execucao/FiltrarOrdens"; //posicaoFormCompraVenda
 import ConfigComplementar from "screens/popups/multileg_/ConfigComplementar";
 import { Resizable } from "re-resizable";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
+import { StorePrincipalContext } from "redux/StoreCreation";
+
+const limitY = 75;
 
 class DragglableModal extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { draggableData: { x: 0, y: 0 } };
+    this.state = {
+      draggableData: { x: 0, y: 0 },
+      bounds: undefined,
+      limitX: 88,
+    };
     this.resetPosition = this.resetPosition.bind(this);
+    this.onStartDragging = this.onStartDragging.bind(this);
+  }
+
+  componentDidMount() {
+    let limitX = 88;
+
+    if (this.props.isOpenLeftUserMenu) {
+      limitX = 220;
+    }
+
+    this.setState({ ...this.state, limitX });
+  }
+
+  componentDidUpdate(prevProps) {
+    const { isOpenLeftUserMenu } = this.props;
+
+    if (prevProps.isOpenLeftUserMenu !== isOpenLeftUserMenu) {
+      let limitX = 88;
+
+      if (isOpenLeftUserMenu) limitX = 220;
+
+      this.setState({ ...this.state, limitX });
+    }
   }
 
   resetPosition() {
-    this.setState({ draggableData: { x: 0, y: 0 } });
+    this.setState({ ...this.state, draggableData: { x: 0, y: 0 } });
+  }
+
+  onStartDragging(e, data) {
+    if (!this.state.bounds) {
+      const bound = data.node.getBoundingClientRect();
+
+      this.setState({
+        ...this.state,
+        bounds: {
+          left: -1 * bound.x + this.state.limitX,
+          top: -1 * bound.y + limitY,
+        },
+      });
+    }
   }
 
   render() {
@@ -49,13 +95,14 @@ class DragglableModal extends Component {
         handle=".mheader"
         position={this.state.draggableData}
         defaultPosition={{ x: 0, y: 0 }}
+        onStart={this.onStartDragging}
         onDrag={(e, draggableData) => {
           e.preventDefault();
           this.setState({
             draggableData: draggableData,
           });
         }}
-        bounds={{ left: -16, top: -34 }}
+        bounds={this.state.bounds}
       >
         {this.props.id === "thl" ? (
           <Resizable
@@ -78,7 +125,13 @@ class DragglableModal extends Component {
   }
 }
 
-export default DragglableModal;
+const mapStateToProps = (state) => ({
+  isOpenLeftUserMenu: state.systemReducer.isOpenLeftUserMenu,
+});
+
+export default connect(mapStateToProps, {}, null, {
+  context: StorePrincipalContext,
+})(DragglableModal);
 
 const RenderFiltrarOrdens = () => {
   const { ordersExecReducer } = useStateStorePrincipal();

@@ -20,15 +20,34 @@ interface QuoteBoxProps {
   quoteBox: BoxProps;
 }
 
+const limitY = 80;
+
 const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
   const {
-    systemReducer: { boxesVisibility, selectedTab, openedMenus, quoteBoxes },
+    systemReducer: {
+      boxesVisibility,
+      selectedTab,
+      openedMenus,
+      quoteBoxes,
+      isOpenLeftUserMenu,
+    },
   } = useStateStorePrincipal();
 
   const dispatch = useDispatchStorePrincipal();
 
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
+  const [bounds, setBounds] = useState<
+    | {
+        left: number;
+        top: number;
+      }
+    | undefined
+  >(undefined);
+
+  const limitX = useMemo(() => {
+    return isOpenLeftUserMenu ? 220 : 88;
+  }, [isOpenLeftUserMenu]);
 
   const boxIndex = useMemo(() => {
     return boxesVisibility.findIndex(
@@ -123,17 +142,33 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
     dispatch,
   ]);
 
-  const onStartDragging = useCallback(() => {
-    setIsDragging(true);
-  }, []);
+  const onStartDragging = useCallback(
+    (e, data: DraggableData) => {
+      setIsDragging(true);
+
+      if (!bounds) {
+        const bound = data.node.getBoundingClientRect();
+
+        setBounds({ left: -1 * bound.x + limitX, top: -1 * bound.y + limitY });
+      }
+    },
+    [bounds, limitX],
+  );
 
   const onStopDragging = useCallback(() => {
     setIsDragging(false);
   }, []);
 
-  const onDrag = useCallback((e, data: DraggableData) => {
-    setPosition(data);
-  }, []);
+  const onDrag = useCallback(
+    (e, data: DraggableData) => {
+      if (!bounds) {
+        return;
+      }
+
+      setPosition({ x: data.x, y: data.y });
+    },
+    [bounds],
+  );
 
   // useEffect(() => {
   //   const box = document.getElementById(`${quoteBox.id}`);
@@ -154,6 +189,7 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
       onStart={onStartDragging}
       onStop={onStopDragging}
       onDrag={onDrag}
+      bounds={bounds}
     >
       <div
         className="quoteBox"

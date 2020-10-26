@@ -20,7 +20,7 @@ const ResumedOrderItem: React.FC<ResumedOrderItemProps> = ({ order }) => {
 
   const [headerVisible, setHeaderVisible] = useState(false);
 
-  const progress = useMemo(() => {
+  const progress = useMemo(() => { 
     const initial = { offerQtty: 0, execQtty: 0 };
 
     const qttyValues = order.offers.reduce((acc, cur) => {
