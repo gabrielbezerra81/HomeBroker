@@ -200,6 +200,11 @@ export const openOrderInMultilegAction = (props, action = "") => {
     } catch (erro) {
       console.log(erro);
       alert(erro_exportar_ordens_multileg);
+      setPointerWhileAwaiting({
+        lockMode: "destravar",
+        id: "menusTelaPrincipal",
+        parentID: "body",
+      });
     }
 
     //Disparar atualizações feitas com objeto multileg

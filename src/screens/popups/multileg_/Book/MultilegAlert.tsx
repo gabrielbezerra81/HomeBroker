@@ -21,7 +21,7 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
 
   const {
     multilegReducer: { multileg },
-    systemReducer: { multilegButtonsVisibility },
+    systemReducer: { multilegButtonsVisibility, createAlertButtonVisibility },
   } = useStateStorePrincipal();
 
   const [param, setParam] = useState("Bid");
@@ -59,7 +59,7 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
   );
 
   const multilegHeight = useMemo(() => {
-    return multilegButtonsVisibility ? 410 : 345;
+    return multilegButtonsVisibility ? 410 : 312;
   }, [multilegButtonsVisibility]);
 
   useEffect(() => {
@@ -143,23 +143,60 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
     return multileg[tabIndex].isAlertOpen ? " openedAlert" : "";
   }, [multileg, tabIndex]);
 
+  const shouldDisplayToggleButton = useMemo(() => {
+    if (!multilegButtonsVisibility && createAlertButtonVisibility) {
+      dispatch(
+        updateMultilegTabAction({
+          tabIndex,
+          attributeName: "isAlertOpen",
+          attributeValue: true,
+        }),
+      );
+      return false;
+    }
+
+    return true;
+  }, [
+    createAlertButtonVisibility,
+    dispatch,
+    multilegButtonsVisibility,
+    tabIndex,
+  ]);
+
+  const shouldDisplayButtons = useMemo(() => {
+    if (multilegButtonsVisibility && multileg[tabIndex].isAlertOpen)
+      return true;
+
+    if (!multilegButtonsVisibility && createAlertButtonVisibility) return true;
+
+    return false;
+  }, [
+    createAlertButtonVisibility,
+    multileg,
+    multilegButtonsVisibility,
+    tabIndex,
+  ]);
+
   return (
     <>
-      <Row className="mb-2">
-        <Col md={9} className="ml-4 pr-0">
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={handleToggleAlert}
-            block
-            className={`toggleAlertButton${openedAlertClass}`}
-          >
-            ALERTA DE OPERAÇÃO
-            <MDBIcon icon="angle-down" />
-          </Button>
-        </Col>
-      </Row>
-      {multileg[tabIndex].isAlertOpen && (
+      {shouldDisplayToggleButton && (
+        <Row className="mb-2">
+          <Col md={9} className="ml-4 pr-0">
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={handleToggleAlert}
+              block
+              className={`toggleAlertButton${openedAlertClass}`}
+            >
+              ALERTA DE OPERAÇÃO
+              <MDBIcon icon="angle-down" />
+            </Button>
+          </Col>
+        </Row>
+      )}
+
+      {shouldDisplayButtons && (
         <div className="multilegAlertContent">
           <Form.Control
             value={param}
@@ -188,7 +225,7 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
           />
 
           <Button onClick={handleCreateAlert} size="sm">
-            ENVIAR
+            Cadastrar Alerta
           </Button>
         </div>
       )}

@@ -65,6 +65,7 @@ class Multileg extends React.Component {
       zIndex,
       multileg,
       multilegButtonsVisibility,
+      createAlertButtonVisibility,
     } = this.props;
 
     setPopupZIndexFromSecondaryTab({
@@ -86,7 +87,8 @@ class Multileg extends React.Component {
 
     if (
       previousNumberOfOffers !== maxNumberOfOffers ||
-      prevProps.multilegButtonsVisibility !== multilegButtonsVisibility
+      prevProps.multilegButtonsVisibility !== multilegButtonsVisibility ||
+      prevProps.createAlertButtonVisibility !== createAlertButtonVisibility
     ) {
       if (previousNumberOfOffers || previousNumberOfOffers === 0) {
         const isAnyAlertOpen = multileg.some((tab) => tab.isAlertOpen);
@@ -94,11 +96,21 @@ class Multileg extends React.Component {
         const multilegElement = document.getElementById("multileg");
         var section = multilegElement?.querySelector(".mcontent");
 
-        let popupHeight = multilegButtonsVisibility ? 410 : 345;
+        let popupHeight = 345;
 
-        if (isAnyAlertOpen) {
+        if (multilegButtonsVisibility && !createAlertButtonVisibility)
+          popupHeight = 410;
+        else if (!multilegButtonsVisibility && createAlertButtonVisibility)
+          popupHeight = 312;
+
+        if (
+          isAnyAlertOpen &&
+          (multilegButtonsVisibility || createAlertButtonVisibility)
+        ) {
           popupHeight += 109;
         }
+
+        console.log(popupHeight);
 
         updateHeight(section, popupHeight, 27 * maxNumberOfOffers);
       }
@@ -199,6 +211,7 @@ const mapStateToPropsMultileg = (state) => ({
   multileg: state.multilegReducer.multileg,
   abaSelecionada: state.multilegReducer.abaSelecionada,
   multilegButtonsVisibility: state.systemReducer.multilegButtonsVisibility,
+  createAlertButtonVisibility: state.systemReducer.createAlertButtonVisibility,
   isOpenMultileg: state.systemReducer.isOpenMultileg,
 });
 
