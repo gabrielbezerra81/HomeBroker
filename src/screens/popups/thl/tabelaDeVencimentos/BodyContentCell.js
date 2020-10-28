@@ -319,10 +319,14 @@ const getHeatMapColor = (thlState, structure) => {
     faixasMapaCalor &&
     structure
   ) {
-    const referenceValue =
-      seletorMapaCalor === "montar"
-        ? +structure.max.toFixed(2)
-        : +structure.min.toFixed(2);
+    let referenceValue = 0;
+
+    if (seletorMapaCalor === "montar" && structure.max) {
+      referenceValue = structure.max.toFixed(2);
+    } else if (structure.min) {
+      referenceValue = structure.min.toFixed(2);
+    }
+
     const index = faixasMapaCalor.findIndex((faixa) => {
       const min = faixa.min;
       const max = faixa.max;

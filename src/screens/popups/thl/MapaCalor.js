@@ -138,17 +138,17 @@ const calcularPrecosMinMaxMapa = (listaPrecos, seletorMapaCalor) => {
   if (listaPrecos.length) {
     const valorCalculo = seletorMapaCalor === "montar" ? "max" : "min";
 
-    const minArray = listaPrecos.filter(
-      (estrutura) => estrutura[valorCalculo] !== null,
-    );
+    const minMaxArray = listaPrecos
+      .filter(
+        (estrutura) =>
+          !!estrutura[valorCalculo] || estrutura[valorCalculo] === 0,
+      )
+      .map((structureItem) => structureItem[valorCalculo]);
 
-    const maxArray = listaPrecos.filter(
-      (estrutura) => estrutura[valorCalculo] !== null,
-    );
-
-    precoMin = minArray.length ? Math.min(...minArray) : 0;
-    precoMax = maxArray.length ? Math.max(...maxArray) : 0;
+    precoMin = minMaxArray.length ? Math.min(...minMaxArray) : 0;
+    precoMax = minMaxArray.length ? Math.max(...minMaxArray) : 0;
   }
+
   return { min: precoMin, max: precoMax };
 };
 
