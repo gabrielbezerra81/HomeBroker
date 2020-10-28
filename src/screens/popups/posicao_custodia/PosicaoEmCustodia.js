@@ -23,25 +23,54 @@ import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopup
 class PosicaoEmCustodia extends React.Component {
   componentDidMount() {
     const { props } = this;
+    const { eventSourceEmblema, eventSourceCotacoes, posicoesCustodia } = props;
+
     if (props.divkey !== "" && props.divkey === "posicao_custodia") {
       document.getElementById("posicao_custodia").style.zIndex =
         props.zIndex + 1;
       props.aumentarZindexAction("posicao_custodia", props.zIndex, true);
     }
 
-    props.atualizarEmblemasAction();
-    props.atualizarCotacoesPosicaoAction();
+    // Começa a atualizar emblemas e cotações ao abrir a posição, exceto quando recarrega a página,
+    // pois isso é feito pela própria action de listar posição
+    if (posicoesCustodia.length) {
+      if (
+        (eventSourceEmblema && eventSourceEmblema.readyState === 2) ||
+        !eventSourceEmblema
+      ) {
+        props.atualizarEmblemasAction();
+      }
+
+      if (
+        (eventSourceCotacoes && eventSourceCotacoes.readyState === 2) ||
+        !eventSourceCotacoes
+      ) {
+        props.atualizarCotacoesPosicaoAction();
+      }
+    }
   }
 
+  // Limpa eventSources e timers
   componentWillUnmount() {
-    const { eventSourceEmblema, eventSourceCotacoes } = this.props;
+    const {
+      eventSourceEmblema,
+      eventSourceCotacoes,
+      setIntervalEmblema,
+      setIntervalCotacoesPosicao,
+    } = this.props;
 
     if (eventSourceEmblema && eventSourceEmblema.close) {
       eventSourceEmblema.close();
     }
+    if (setIntervalEmblema) {
+      clearInterval(setIntervalEmblema);
+    }
 
     if (eventSourceCotacoes && eventSourceCotacoes.close) {
       eventSourceCotacoes.close();
+    }
+    if (setIntervalCotacoesPosicao) {
+      clearInterval(setIntervalCotacoesPosicao);
     }
   }
 
@@ -134,8 +163,10 @@ const mapStateToPropsPosicao = (state) => ({
   ativoPesquisa: state.positionReducer.ativoPesquisa,
   inputSelect: state.positionReducer.inputSelect,
   eventSourceEmblema: state.positionReducer.eventSourceEmblema,
+  setIntervalEmblema: state.positionReducer.setIntervalEmblema,
   eventSourcePosicao: state.positionReducer.eventSourcePosicao,
   eventSourceCotacoes: state.positionReducer.eventSourceCotacoes,
+  setIntervalCotacoesPosicao: state.positionReducer.setIntervalCotacoesPosicao,
   posicoesCustodia: state.positionReducer.posicoesCustodia,
   arrayCotacoes: state.positionReducer.arrayCotacoes,
   arrayPrecos: state.positionReducer.arrayPrecos,
