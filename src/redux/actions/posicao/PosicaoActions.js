@@ -124,21 +124,35 @@ const montaArrayCotacoes = async (listaPosicoes, tipoRetorno = "completo") => {
   });
   if (tipoRetorno === "codigos") return arrayCodigos;
 
-  for (var [indice] in arrayCodigos) {
-    const ativo = arrayCodigos[indice];
+  const joinedSymbols = arrayCodigos.map((item) => item.codigo).join(",");
 
-    try {
-      const response = await api.get(
-        `${url_pesquisarAtivoBoletas_codigo}${ativo.codigo}`,
-      );
+  // pesquisa em lote da cotação dos códigos da posição
+  try {
+    const response = await api.get(
+      `price/quotes/symbols?symbols=${joinedSymbols}`,
+    );
 
-      if (response.data) {
-        ativo.cotacao = response.data.ultimo;
-      }
-    } catch (error) {
-      ativo.cotacao = 0;
+    if (response.data) {
+      const symbolsDataArray = response.data;
+
+      arrayCodigos.forEach((codeItem) => {
+        const matchingSymbolIndex = symbolsDataArray.findIndex(
+          (symbolData) => codeItem.codigo === symbolData.symbol,
+        );
+
+        if (matchingSymbolIndex !== -1) {
+          codeItem.cotacao = symbolsDataArray[matchingSymbolIndex].ultimo || 0;
+        } else {
+          codeItem.cotacao = 0;
+        }
+      });
     }
+  } catch (error) {
+    arrayCodigos.forEach((codeItem) => {
+      codeItem.cotacao = 0;
+    });
   }
+
   return arrayCodigos;
 };
 
