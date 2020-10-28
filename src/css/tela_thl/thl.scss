@@ -66,6 +66,24 @@
   .input-group {
     width: 135px;
   }
+
+  .quote {
+    color: #e79939;
+    font-weight: 600;
+    font-size: 20px;
+    align-self: flex-end;
+    line-height: 24px;
+    margin-left: 16px;
+  }
+
+  .dayOscilation {
+    color: #b1902c;
+    font-weight: 500;
+    font-size: 16px;
+    align-self: flex-end;
+    line-height: 20px;
+    margin: 0 16px;
+  }
 }
 
 .radioGroupTipo {

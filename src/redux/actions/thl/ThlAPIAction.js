@@ -11,6 +11,7 @@ import {
 import { atualizarPrecosTHLAPI, atualizarCotacaoTHLAPI } from "api/ReativosAPI";
 import { updateOneTHLState, updateManyTHLState } from "./utils";
 import { getReducerStateStorePrincipal } from "hooks/utils";
+import api from "api/apiConfig";
 
 export const pesquisarAtivoTHLAPIAction = () => {
   return async (dispatch, getState) => {
@@ -49,6 +50,9 @@ export const listarTabelaInicialTHLAPIAction = (initialLoad = false) => {
 
       const { token } = getReducerStateStorePrincipal(getState(), "principal");
 
+      let quote = 0;
+      let dayOscilation = 0;
+
       // quando fazer carga inicial
       let lines = [];
       let structures = [];
@@ -84,6 +88,20 @@ export const listarTabelaInicialTHLAPIAction = (initialLoad = false) => {
         lines = data.lines;
       }
 
+      try {
+        const symbolResponse = await api.get(`price/quotes/${symbol}`);
+
+        if (symbolResponse.data) {
+          const { data } = symbolResponse;
+          if (data.ultimo) {
+            quote = data.ultimo;
+          }
+          if (data.oscilacao) {
+            dayOscilation = data.oscilacao;
+          }
+        }
+      } catch (error) {}
+
       if (lines.length > 0) {
         atualizarPrecosTHL({
           tabelaVencimentos: lines,
@@ -103,6 +121,8 @@ export const listarTabelaInicialTHLAPIAction = (initialLoad = false) => {
           celulaCalculada: "",
           booksSelecionados: [],
           precosTabelaVencimentos: structures,
+          quote,
+          dayOscilation,
         }),
       );
     }

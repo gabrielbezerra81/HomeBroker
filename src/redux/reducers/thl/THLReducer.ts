@@ -16,6 +16,8 @@ import { resetarEstadoRedux } from "../resetarEstadoReducer";
 // setAutoFreeze(false);
 
 const INITIAL_STATE: THLState = {
+  quote: 0,
+  dayOscilation: 0,
   ativoPesquisa: "PETR4",
   ativoPesquisado: "PETR4",
   pesquisandoAtivo: false,

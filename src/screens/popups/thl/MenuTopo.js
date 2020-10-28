@@ -21,6 +21,7 @@ import iconeCriarAlerta from "assets/THL/iconeCriarAlerta.svg";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useStateGlobalStore from "hooks/useStateGlobalStore";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
+import { formatarNumDecimal } from "shared/utils/Formatacoes";
 
 const textoRecalcular =
   "Para recalcular os preços das estruturas é preciso selecionar uma Opção.";
@@ -44,9 +45,19 @@ export default () => {
 
 const InputPesquisa = () => {
   const {
-    thlReducer: { ativoPesquisa, tipo, pesquisandoAtivo },
+    thlReducer: { ativoPesquisa, tipo, pesquisandoAtivo, quote, dayOscilation },
   } = useStateStorePrincipal();
   const dispatch = useDispatchStorePrincipal();
+
+  const formattedData = useMemo(() => {
+    const formattedQuote = formatarNumDecimal(quote);
+
+    const formattedOscilation = `${
+      dayOscilation >= 0 ? "+" : "-"
+    }${formatarNumDecimal(dayOscilation)}%`;
+
+    return { quote: formattedQuote, dayOscilation: formattedOscilation };
+  }, [dayOscilation, quote]);
 
   return (
     <div className="containerPesquisaAtivo inverted-border-radius">
@@ -82,6 +93,8 @@ const InputPesquisa = () => {
           </span>
         </InputGroup.Append>
       </InputGroup>
+      <span className="quote">{formattedData.quote}</span>
+      <span className="dayOscilation">{formattedData.dayOscilation}</span>
       <Radio.Group
         className="radioGroupTipo"
         value={tipo}

@@ -8,6 +8,8 @@ import {
 } from "./thl";
 
 export default interface THLState {
+  quote: number;
+  dayOscilation: number;
   ativoPesquisa: string;
   ativoPesquisado: string;
   pesquisandoAtivo: boolean;
