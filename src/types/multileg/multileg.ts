@@ -62,6 +62,7 @@ export interface AlertAPI {
   price: number;
   structure: {
     id: number;
+    symbol: string;
     components: Array<{
       qtty: number;
       stock: {

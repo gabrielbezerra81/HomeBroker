@@ -83,7 +83,7 @@ const AlertItem: React.FC<AlertItemProps> = ({ alert: alertItem }) => {
   const formattedData = useMemo(() => {
     return {
       price: formatarNumDecimal(alertItem.price, 2),
-      expiration: moment("20/10/2020 22:00:00", "DD/MM/YYYY HH:mm:ss").format(
+      expiration: moment(alertItem.expiration, "DD/MM/YYYY HH:mm:ss").format(
         "DD/MM/YY",
       ),
     };
