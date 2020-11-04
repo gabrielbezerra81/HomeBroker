@@ -31,6 +31,9 @@ const INITIAL_STATE: MultilegState = {
       date: new Date(),
       tabelaMultileg: [],
       isAlertOpen: false,
+      operator: "Less",
+      param: "Bid",
+      comment: "",
     },
   ],
   eventSource: null, //Book

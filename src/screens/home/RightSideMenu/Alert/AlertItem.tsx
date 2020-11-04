@@ -16,6 +16,7 @@ import { atualizarDivKeyAction } from "redux/actions/GlobalAppActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import produce from "immer";
 import { updateOneMultilegState } from "redux/actions/multileg/utils";
+import { openAlertInMultileg } from "redux/actions/multileg/AlertsAction";
 
 interface AlertItemProps {
   alert: AlertAPI;
@@ -67,18 +68,8 @@ const AlertItem: React.FC<AlertItemProps> = ({ alert: alertItem }) => {
   }, [alertItem.id, alerts, dispatch]);
 
   const handleSearch = useCallback(() => {
-    dispatch(
-      updateManySystemState({
-        multilegButtonsVisibility: false,
-        createAlertButtonVisibility: true,
-      }),
-    );
-
-    dispatchGlobal(atualizarDivKeyAction("multileg"));
-    dispatch(
-      abrirItemBarraLateralAction({ isOpenMultileg }, "isOpenMultileg", true),
-    );
-  }, [dispatch, dispatchGlobal, isOpenMultileg]);
+    dispatch(openAlertInMultileg(alertItem, dispatchGlobal));
+  }, [alertItem, dispatch, dispatchGlobal]);
 
   const formattedData = useMemo(() => {
     return {

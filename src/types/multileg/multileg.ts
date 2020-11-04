@@ -13,6 +13,9 @@ export interface MultilegTab {
   date: Date;
   tabelaMultileg: Array<MultilegOffer>;
   isAlertOpen: boolean;
+  param: "Bid" | "Ask" | "Last";
+  operator: "Less" | "Greater";
+  comment: string;
 }
 
 export interface MultilegOption {
@@ -58,6 +61,7 @@ export interface AlertAPI {
   id: number;
   param: "Bid" | "Ask" | "Last";
   operator: "Less" | "Greater";
+  comment: string;
   expiration: string;
   price: number;
   structure: {
@@ -67,6 +71,10 @@ export interface AlertAPI {
       qtty: number;
       stock: {
         symbol: string;
+        option: boolean;
+        type: "CALL" | "PUT" | undefined;
+        model: string;
+        strike: number;
       };
     }>;
   };

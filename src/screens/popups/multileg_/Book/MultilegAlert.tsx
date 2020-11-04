@@ -1,15 +1,11 @@
-import React, { useState, useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { Row, Col, Button, Form } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { createMultilegAlertAction } from "redux/actions/multileg/MultilegAPIAction";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import usePrevious from "hooks/usePrevious";
-import {
-  expandElement,
-  collapseElement,
-  updateHeight,
-} from "shared/utils/AnimateHeight";
+import { updateHeight } from "shared/utils/AnimateHeight";
 import { updateMultilegTabAction } from "redux/actions/multileg/MultilegActions";
 
 interface MultilegAlertProps {
@@ -24,13 +20,9 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
     systemReducer: { multilegButtonsVisibility, createAlertButtonVisibility },
   } = useStateStorePrincipal();
 
-  const [param, setParam] = useState("Bid");
-  const [operator, setOperator] = useState("Less");
-  const [comment, setComment] = useState("");
-
-  const isAnyAlertOpen = useMemo(() => {
-    return multileg.some((tab, index) => tab.isAlertOpen && index !== tabIndex);
-  }, [multileg, tabIndex]);
+  // const isAnyAlertOpen = useMemo(() => {
+  //   return multileg.some((tab, index) => tab.isAlertOpen && index !== tabIndex);
+  // }, [multileg, tabIndex]);
 
   const maxNumberOfOffers = useMemo(() => {
     return Math.max(...multileg.map((tab) => tab.tabelaMultileg.length));
@@ -50,12 +42,21 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
     );
   }, [dispatch, multileg, tabIndex]);
 
-  const handleCreateAlert = useCallback(
-    () =>
+  const handleCreateAlert = useCallback(() => {
+    dispatch(createMultilegAlertAction(tabIndex));
+  }, [dispatch, tabIndex]);
+
+  const handleInputChange = useCallback(
+    (e) => {
       dispatch(
-        createMultilegAlertAction({ tabIndex, param, operator, comment }),
-      ),
-    [comment, dispatch, operator, param, tabIndex],
+        updateMultilegTabAction({
+          tabIndex,
+          attributeName: e.target.name,
+          attributeValue: e.target.value,
+        }),
+      );
+    },
+    [dispatch, tabIndex],
   );
 
   const multilegHeight = useMemo(() => {
@@ -199,8 +200,9 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
       {shouldDisplayButtons && (
         <div className="multilegAlertContent">
           <Form.Control
-            value={param}
-            onChange={(e) => setParam(e.target.value)}
+            value={multileg[tabIndex].param}
+            name="param"
+            onChange={handleInputChange}
             as="select"
             className="textInput"
           >
@@ -209,8 +211,9 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
             <option value={"Last"}>Último</option>
           </Form.Control>
           <Form.Control
-            value={operator}
-            onChange={(e) => setOperator(e.target.value)}
+            value={multileg[tabIndex].operator}
+            name="operator"
+            onChange={handleInputChange}
             as="select"
             className="textInput"
           >
@@ -218,8 +221,9 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
             <option value={"Greater"}>Maior ou igual {">="}</option>
           </Form.Control>
           <Form.Control
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
+            value={multileg[tabIndex].comment}
+            name="comment"
+            onChange={handleInputChange}
             className="textInput"
             placeholder="Comentários"
           />

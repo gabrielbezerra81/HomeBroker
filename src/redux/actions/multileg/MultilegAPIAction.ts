@@ -160,24 +160,16 @@ export const sendMultilegOrderAction = (tabIndex: number): MainThunkAction => {
   };
 };
 
-interface CreateAlertProps {
-  tabIndex: number;
-  param: string;
-  operator: string;
-  comment: string;
-}
-
-export const createMultilegAlertAction = ({
-  tabIndex,
-  param,
-  operator,
-  comment,
-}: CreateAlertProps): MainThunkAction => {
+export const createMultilegAlertAction = (
+  tabIndex: number,
+): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
       multilegReducer: { multileg, alerts },
       systemReducer: { selectedAccount },
     } = getState();
+
+    const { param, operator, comment } = multileg[tabIndex];
 
     const mountOrderProps = {
       multilegTabs: multileg,

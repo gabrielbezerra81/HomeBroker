@@ -50,6 +50,7 @@ export const erro_exportar_ordens_multileg = "Falha ao abrir ordem na Multileg";
 export const erro_opcoes_ordens_exec = "Selecione uma ordem";
 export const erro_timeout = "Não foi possível se conectar ao servidor remoto";
 export const erro_sessaoExpirada = "Sessão expirada, faça login novamente.";
+export const error_open_alert = "Falha ao abrir alerta para edição";
 
 // Avisos
 export const aviso_calculo_preco_multileg =

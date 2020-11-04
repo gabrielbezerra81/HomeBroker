@@ -492,6 +492,9 @@ export const newMultilegTab: MultilegTab = {
   date: new Date(),
   tabelaMultileg: [],
   isAlertOpen: false,
+  operator: "Less",
+  param: "Bid",
+  comment: "",
 };
 
 const setOfferSymbolAndModel = (multilegOffer: MultilegOffer) => {
