@@ -148,12 +148,14 @@ export const recalcularPrecosTHLAPIAction = () => {
       precosTabelaVencimentos,
     } = getReducerStateStorePrincipal(getState(), "thl");
 
-    const tabelaVencimentos = await recalcularPrecosTHLAPI(
+    const data = await recalcularPrecosTHLAPI(
       codigoCelulaSelecionada,
       ativoPesquisado,
       strikeSelecionado,
       tipo,
     );
+
+    const { lines: tabelaVencimentos } = data;
 
     const { token } = getReducerStateStorePrincipal(getState(), "principal");
 
