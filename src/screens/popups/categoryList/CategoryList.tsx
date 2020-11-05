@@ -138,6 +138,38 @@ const CategoryList: React.FC = () => {
         <div className="mcontent">
           <ModalHeaderClean headerClass="border-green" onClose={onClose} />
 
+          <div className="listHeader">
+            <table className="categoryTable">
+              <thead>
+                <tr>
+                  <th>Ativo</th>
+                  <th>Preço</th>
+                  <th>Oscilação</th>
+                  <th>Osc YTD</th>
+                </tr>
+              </thead>
+            </table>
+            <table className="categoryTable">
+              <thead>
+                <tr>
+                  <th>Ativo</th>
+                  <th>Preço</th>
+                  <th>Oscilação</th>
+                  <th>Osc YTD</th>
+                </tr>
+              </thead>
+            </table>
+            <table className="categoryTable">
+              <thead>
+                <tr>
+                  <th>Ativo</th>
+                  <th>Preço</th>
+                  <th>Oscilação</th>
+                  <th>Osc YTD</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
           <main ref={masonryRef}>
             {formattedCategoryList.map((categoryItem, index) => {
               order += 1;
@@ -174,12 +206,11 @@ var list: Category[] = [
         oscilation: 3.95,
         yearOscilation: -35.19,
       },
-
       {
-        symbol: "BEEF3",
-        price: 12.96,
-        oscilation: -9.94,
-        yearOscilation: 0.93,
+        symbol: "BKBR3",
+        price: 9.64,
+        oscilation: 9.17,
+        yearOscilation: -65.19,
       },
       {
         symbol: "BKBR3",

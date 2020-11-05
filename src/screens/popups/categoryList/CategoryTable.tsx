@@ -23,16 +23,7 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
 }) => {
   return (
     <Table className="categoryTable" striped={false} style={{ order }}>
-      <thead>
-        <tr>
-          <th>Ativo</th>
-          <th>Preço</th>
-          <th>Oscilação</th>
-          <th>Osc YTD</th>
-        </tr>
-      </thead>
-
-      <tbody>
+        <tbody>
         <tr className="categoryTitle">
           <td colSpan={4}>{category.title}</td>
         </tr>
