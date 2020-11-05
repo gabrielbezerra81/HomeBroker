@@ -15,6 +15,7 @@ export default interface SystemState {
   isOpenMultileg: boolean;
   isOpenTHL: boolean;
   isOpenRightSideMenu: boolean;
+  isOpenCategoryList: boolean;
   token: Token;
   accounts: Array<Account>;
   selectedAccount: Account;

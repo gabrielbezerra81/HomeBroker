@@ -5,6 +5,11 @@
     background-color: rgb(35, 35, 35);
     border-width: 3px;
     padding-bottom: 16px;
+    overflow: hidden;
+  }
+
+  .mheader {
+    background-color: #000;
   }
 
   .listHeader {
@@ -78,6 +83,7 @@
       background-color: rgb(35, 35, 35) !important;
       border: none;
       text-align: center;
+      color: var(--color-text-dark);
 
       &:last-child {
         border-right: 0px solid transparent;

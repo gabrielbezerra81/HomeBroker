@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Table } from "react-bootstrap";
 
 interface CategoryTableProps {
@@ -13,13 +13,11 @@ interface CategoryTableProps {
     }>;
   };
   order: number;
-  renderTHead: boolean;
 }
 
 const CategoryTable: React.FC<CategoryTableProps> = ({
   category,
   order,
-  renderTHead,
 }) => {
   return (
     <Table className="categoryTable" striped={false} style={{ order }}>

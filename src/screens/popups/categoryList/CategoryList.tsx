@@ -12,8 +12,13 @@ import Draggable, { DraggableData } from "react-draggable";
 import { ModalHeaderClean } from "shared/componentes/PopupHeader";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import CategoryTable from "./CategoryTable";
-
-import { MDBRow } from "mdbreact";
+import bringToForegroundOnMount from "shared/utils/PopupLifeCycle/bringToForegroundOnMount";
+import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
+import useStateGlobalStore from "hooks/useStateGlobalStore";
+import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
+import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopupZIndexFromSecondaryTab";
+import usePrevious from "hooks/usePrevious";
+import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 
 interface Category {
   title: string;
@@ -30,10 +35,18 @@ const limitY = 80;
 
 const CategoryList: React.FC = () => {
   const {
-    systemReducer: { isOpenLeftUserMenu },
+    systemReducer: { isOpenLeftUserMenu, selectedTab, isOpenCategoryList },
   } = useStateStorePrincipal();
 
+  const dispatchGlobal = useDispatchGlobalStore();
+  const {
+    zIndex: currentZIndex,
+    divkey: currentDivKey,
+  } = useStateGlobalStore();
+
   const masonryRef = useRef<any>(null);
+
+  const previousDivkey = usePrevious(currentDivKey);
 
   const [categoryList, setCategoryList] = useState<Category[]>(list);
 
@@ -81,7 +94,11 @@ const CategoryList: React.FC = () => {
     [bounds],
   );
 
-  const onClose = useCallback(() => {}, []);
+  const onClose = useCallback(() => {
+    dispatch(
+      abrirItemBarraLateralAction({ isOpenCategoryList }, "isOpenCategoryList"),
+    );
+  }, [dispatch, isOpenCategoryList]);
 
   const formattedCategoryList = useMemo(() => {
     return categoryList.map((category) => {
@@ -119,7 +136,33 @@ const CategoryList: React.FC = () => {
       });
       container.style.height = Math.max(...colHeights) + "px";
     }
+  }, [selectedTab]);
+
+  useEffect(() => {
+    bringToForegroundOnMount({
+      popupDivKey: "categoryList",
+      currentDivKey,
+      currentZIndex,
+      increaseZIndex: () =>
+        dispatchGlobal(
+          aumentarZindexAction("categoryList", currentZIndex, true),
+        ),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setPopupZIndexFromSecondaryTab({
+      zIndex: currentZIndex,
+      previousDivkey,
+      currentDivkey: currentDivKey,
+      divkeyToCheck: "categoryList",
+      popupVisibility: isOpenCategoryList,
+      updateFunction: (...data) =>
+        dispatchGlobal(aumentarZindexAction(...data)),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentDivKey, isOpenCategoryList]);
 
   let order = -1;
 
@@ -183,7 +226,6 @@ const CategoryList: React.FC = () => {
                   key={categoryItem.title}
                   category={categoryItem}
                   order={order}
-                  renderTHead={index < 3}
                 />
               );
             })}

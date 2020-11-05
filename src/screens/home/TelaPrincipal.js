@@ -93,6 +93,7 @@ class TelaPrincipal extends React.Component {
       isOpenPosition,
       isOpenMultileg,
       isOpenTHL,
+      isOpenCategoryList,
       apps: AppBoletas,
     } = this.props;
 
@@ -143,6 +144,14 @@ class TelaPrincipal extends React.Component {
               <PopupContainer isOpen={isOpenTHL} key="thl" divKey={"thl"}>
                 <TelaTHL headerTitle="THL" />
               </PopupContainer>
+
+              <PopupContainer
+                isOpen={isOpenCategoryList}
+                key="category_list"
+                divKey="categoryList"
+              >
+                <CategoryList />
+              </PopupContainer>
             </MainScreenTabs>
 
             <RightSideMenu />
@@ -152,8 +161,6 @@ class TelaPrincipal extends React.Component {
             {AppBoletas}
 
             <MenuOrdens />
-
-            <CategoryList />
 
             <QuoteBoxContainer />
           </div>
@@ -175,6 +182,7 @@ const mapStateToPropsAppPrincipal = (state) => ({
   isOpenLeftUserMenu: state.systemReducer.isOpenLeftUserMenu,
   isOpenMultileg: state.systemReducer.isOpenMultileg,
   isOpenTHL: state.systemReducer.isOpenTHL,
+  isOpenCategoryList: state.systemReducer.isOpenCategoryList,
 });
 
 export default compose(

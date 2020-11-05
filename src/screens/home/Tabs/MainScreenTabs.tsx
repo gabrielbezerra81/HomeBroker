@@ -35,6 +35,7 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
       openedMenus,
       isOpenLeftUserMenu,
       isOpenRightSideMenu,
+      isOpenCategoryList,
     },
   } = useStateStorePrincipal();
 
@@ -47,15 +48,17 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
       { key: "posicao_custodia", isOpen: isOpenPosition },
       { key: "multileg", isOpen: isOpenMultileg },
       { key: "thl", isOpen: isOpenTHL },
+      { key: "category_list", isOpen: isOpenCategoryList },
     ] as const;
 
     return menus;
   }, [
-    isOpenPosition,
-    isOpenMultileg,
     isOpenOrdersExec,
     isOpenDetailedReport,
+    isOpenPosition,
+    isOpenMultileg,
     isOpenTHL,
+    isOpenCategoryList,
   ]);
 
   useEffect(() => {
