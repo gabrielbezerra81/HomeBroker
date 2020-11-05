@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col, Button, Form } from "react-bootstrap";
-import { ModalHeaderLimpo } from "shared/componentes/PopupHeader";
+import { ModalHeaderClean } from "shared/componentes/PopupHeader";
 import { connect } from "react-redux";
 import { updateMultilegStateAction } from "redux/actions/multileg/MultilegActions";
 import { StorePrincipalContext } from "redux/StoreCreation";
@@ -9,7 +9,7 @@ class ConfigComplementar extends React.Component {
   render() {
     return (
       <div className="mcontent config_complementar">
-        <ModalHeaderLimpo
+        <ModalHeaderClean
           titulo="CONFIGURAÇÃO COMPLEMENTAR"
           name="config_complementar"
         />
@@ -27,7 +27,7 @@ class ConfigComplementar extends React.Component {
                 onChange={(event) =>
                   this.props.updateMultilegStateAction(
                     "horaInicial",
-                    event.currentTarget.value
+                    event.currentTarget.value,
                   )
                 }
               />
@@ -45,7 +45,7 @@ class ConfigComplementar extends React.Component {
                 onChange={(event) =>
                   this.props.updateMultilegStateAction(
                     "horaFinal",
-                    event.currentTarget.value
+                    event.currentTarget.value,
                   )
                 }
               />
@@ -63,7 +63,7 @@ class ConfigComplementar extends React.Component {
                 onChange={(event) =>
                   this.props.updateMultilegStateAction(
                     "modoExec",
-                    event.currentTarget.value
+                    event.currentTarget.value,
                   )
                 }
               >
@@ -82,7 +82,7 @@ class ConfigComplementar extends React.Component {
                 onChange={(event) =>
                   this.props.updateMultilegStateAction(
                     "apregoarOferta",
-                    event.currentTarget.checked
+                    event.currentTarget.checked,
                   )
                 }
               />

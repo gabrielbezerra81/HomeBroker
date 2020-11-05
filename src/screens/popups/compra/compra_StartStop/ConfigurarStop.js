@@ -12,14 +12,14 @@ import {
 import { mudarInputConfigAction } from "redux/actions/boletas/formInputActions";
 import { CalculoValorTotalAgendada } from "shared/utils/CalculoValorTotal";
 import { fecharFormConfigurarAction } from "redux/actions/GlobalAppActions";
-import { ModalHeaderLimpo } from "shared/componentes/PopupHeader";
+import { ModalHeaderClean } from "shared/componentes/PopupHeader";
 import GraficoInputsConfigStartStop from "shared/componentes/GraficoInputsConfigStartStop";
 
 class ConfigurarStop extends React.Component {
   render() {
     return (
       <div className="configDiv mcontent">
-        <ModalHeaderLimpo
+        <ModalHeaderClean
           funcaoFechar={(event) => this.props.fecharFormConfigurarAction(event)}
           titulo="CONFIGURAR STOP"
           name="config_compra"
@@ -44,18 +44,18 @@ const modalBody = (props) => (
       CalculoValorTotalAgendada(
         props.gainDisparoConfig1,
         props.gainExecConfig1,
-        props.qtde
+        props.qtde,
       ),
-      "ValorTotalGain1_CONFIGURAR"
+      "ValorTotalGain1_CONFIGURAR",
     )}
     {TextoValorTotalGrafico(
       "",
       CalculoValorTotalAgendada(
         props.stopDisparoConfig1,
         props.stopExecConfig1,
-        props.qtde
+        props.qtde,
       ),
-      "ValorTotalStop1_CONFIGURAR"
+      "ValorTotalStop1_CONFIGURAR",
     )}
     <IconeConfigGrafico
       className="ConfigGain1Grafico_CONFIGURAR"
@@ -89,18 +89,18 @@ const modalBody = (props) => (
       CalculoValorTotalAgendada(
         props.gainDisparoConfig2,
         props.gainExecConfig2,
-        props.qtde
+        props.qtde,
       ),
-      "ValorTotalGain2_CONFIGURAR"
+      "ValorTotalGain2_CONFIGURAR",
     )}
     {TextoValorTotalGrafico(
       "",
       CalculoValorTotalAgendada(
         props.stopDisparoConfig2,
         props.stopExecConfig2,
-        props.qtde
+        props.qtde,
       ),
-      "ValorTotalStop2_CONFIGURAR"
+      "ValorTotalStop2_CONFIGURAR",
     )}
   </div>
 );

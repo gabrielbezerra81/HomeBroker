@@ -20,7 +20,7 @@ import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 import useStateBoletas from "hooks/useStateBoletas";
 
 // Apenas para boletas de compra e venda
-export const ModalHeader = ({
+export const ModalHeader: React.FC<any> = ({
   headerTitle,
   headerClass,
   resetPosition,
@@ -87,7 +87,7 @@ export const ModalHeader = ({
   );
 };
 
-export const BookHeader = ({ headerClass, resetPosition }) => {
+export const BookHeader: React.FC<any> = ({ headerClass, resetPosition }) => {
   const {
     bookOfertaReducer: { inputHeader, eventSource },
     appBoletasReducer: { appProps },
@@ -117,7 +117,7 @@ export const BookHeader = ({ headerClass, resetPosition }) => {
             onChange={(event) =>
               dispatch(mudarInputHeaderAction(event.target.value))
             }
-            onKeyUp={(event) => {
+            onKeyUp={(event: any) => {
               //event.preventDefault();
               if (event.key === "Enter")
                 dispatch(
@@ -155,7 +155,7 @@ export const BookHeader = ({ headerClass, resetPosition }) => {
 };
 
 // Menus multileg, posição, thl, ordens exec, relatorio
-export const ModalHeaderSemBook = React.memo(
+export const ModalHeaderSemBook: React.FC<any> = React.memo(
   ({ headerTitle, headerClass, name }) => {
     const dispatchStorePrincipal = useDispatchStorePrincipal();
     const nomeVariavelReducer = getNomeVariavelReducer(headerTitle);
@@ -198,19 +198,27 @@ export const ModalHeaderSemBook = React.memo(
 );
 
 // form configurar ordem start stop
-export const ModalHeaderLimpo = ({ titulo, name = "" }) => {
-  let funcaoFechar;
+export const ModalHeaderClean: React.FC<any> = ({
+  titulo,
+  name = "",
+  onClose,
+}) => {
+  let funcaoFechar: any;
 
   const dispatchStorePrincipal = useDispatchStorePrincipal();
 
   if (["config_compra", "config_venda"].includes(name)) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const dispatch = useDispatchBoletas();
-    funcaoFechar = (e) => dispatch(fecharFormConfigurarAction(e));
+    funcaoFechar = (e: any) => dispatch(fecharFormConfigurarAction(e));
   } //
   else if (name === "config_complementar") {
-    funcaoFechar = (e) =>
+    funcaoFechar = (e: any) =>
       dispatchStorePrincipal(openCloseMultilegExtraConfigsAction());
+  }
+
+  if (onClose) {
+    funcaoFechar = onClose;
   }
 
   return (
@@ -237,7 +245,7 @@ export const ModalHeaderLimpo = ({ titulo, name = "" }) => {
   );
 };
 
-const getNomeVariavelReducer = (headerTitle) => {
+const getNomeVariavelReducer = (headerTitle: string) => {
   switch (headerTitle) {
     case "HISTÓRICO DE OPERAÇÕES":
       return "isOpenOrdersExec";
@@ -297,7 +305,7 @@ const GetAbrirMenuProps = () => {
   // const { eventSourceOrdensExec } = state.ordersExecReducer;
 };
 
-const BotaoAbrirFiltrarOrdens = ({ headerTitle }) => {
+const BotaoAbrirFiltrarOrdens: React.FC<any> = ({ headerTitle }) => {
   let botaoAbrirFiltrarOrdens = <div></div>;
 
   const dispatch = useDispatchStorePrincipal();

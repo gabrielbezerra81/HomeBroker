@@ -1,0 +1,123 @@
+#categoryList {
+  width: 1100px;
+
+  .mcontent {
+    background-color: rgb(35, 35, 35);
+    border-width: 3px;
+    padding-bottom: 16px;
+  }
+
+  .masonry-with-columns {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-height: 1000px;
+  }
+
+  main {
+    // display: grid;
+    // grid-template-columns: repeat(3, 1fr);
+    // grid-template-rows: min-content;
+
+    // padding-bottom: 12px;
+    // align-items: flex-start;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-height: 1000px;
+
+    &::after {
+      content: "";
+      background-color: transparent;
+      height: 10px;
+      position: absolute;
+
+      bottom: 2px;
+      left: 360px;
+      height: calc(100% - 35px);
+      width: 2px;
+      box-shadow: 2px 0px 0 0 var(--color-border-light);
+    }
+
+    &::before {
+      content: "";
+      background-color: transparent;
+      height: 50px;
+      position: absolute;
+
+      bottom: 2px;
+      left: 722px;
+      height: calc(100% - 35px);
+      width: 2px;
+      box-shadow: 2px 0px 0 0 var(--color-border-light);
+    }
+  }
+
+  .categoryTable {
+    font-weight: 500;
+    margin: 0 !important;
+    border-spacing: 0px !important;
+    border-collapse: separate;
+    max-width: 361px;
+    // border: 0px solid var(--color-border-light);
+    // border-top-width: 0px;
+    // border-bottom-width: 0px;
+
+    // grid-column: auto;
+    // align-self: flex-start;
+
+    // &:nth-child(n + 4) {
+    //   border-top-width: 0px;
+    // }
+
+    th {
+      background-color: #000;
+      border-color: var(--color-border-light);
+      border-top: none;
+      text-align: center;
+      border-top: 2px solid var(--color-border-light);
+
+      &:last-child {
+        border-right: 0px solid transparent;
+      }
+    }
+
+    td {
+      background-color: rgb(35, 35, 35) !important;
+      border: none;
+      text-align: center;
+
+      &:last-child {
+        border-right: 0px solid transparent;
+      }
+    }
+
+    // td:first-child,
+    // th:first-child {
+    //   padding-left: 12px !important;
+    // }
+    // td:last-child,
+    // th:last-child {
+    //   padding-right: 12px !important;
+    // }
+
+    .positiveColor {
+      color: rgb(99, 175, 86);
+    }
+
+    .negativeColor {
+      color: rgb(221, 54, 37);
+    }
+
+    .categoryTitle {
+      td {
+        text-align: center;
+        font-weight: 500;
+        color: #f7e39c;
+        border-top: 1px solid var(--color-border-light);
+        border-bottom: 3px solid var(--color-border-light);
+      }
+    }
+  }
+}

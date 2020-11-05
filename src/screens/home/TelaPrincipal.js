@@ -19,6 +19,7 @@ import QuoteBoxContainer from "./QuoteBox/QuoteBoxContainer";
 import api from "api/apiConfig";
 import AddBoxMenu from "./QuoteBox/AddBoxMenu";
 import RightSideMenu from "./RightSideMenu/RightSideMenu";
+import CategoryList from "screens/popups/categoryList/CategoryList";
 
 const OrdensExecucao = React.lazy(() =>
   import("screens/popups/ordens_em_execucao/OrdensExecucao"),
@@ -151,6 +152,8 @@ class TelaPrincipal extends React.Component {
             {AppBoletas}
 
             <MenuOrdens />
+
+            <CategoryList />
 
             <QuoteBoxContainer />
           </div>

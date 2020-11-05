@@ -12,14 +12,14 @@ import {
 import { mudarInputConfigAction } from "redux/actions/boletas/formInputActions";
 import { CalculoValorTotalAgendada } from "shared/utils/CalculoValorTotal";
 import { fecharFormConfigurarAction } from "redux/actions/GlobalAppActions";
-import { ModalHeaderLimpo } from "shared/componentes/PopupHeader";
+import { ModalHeaderClean } from "shared/componentes/PopupHeader";
 import GraficoInputsConfigStartStop from "shared/componentes/GraficoInputsConfigStartStop";
 
 class ConfigurarStopVenda extends React.Component {
   render() {
     return (
       <div className="configDiv mcontent">
-        <ModalHeaderLimpo titulo="CONFIGURAR STOP" name="config_venda" />
+        <ModalHeaderClean titulo="CONFIGURAR STOP" name="config_venda" />
 
         {modalBody(this.props)}
       </div>
@@ -41,18 +41,18 @@ const modalBody = (props) => (
       CalculoValorTotalAgendada(
         props.stopDisparoConfig1,
         props.stopExecConfig1,
-        props.qtde
+        props.qtde,
       ),
-      "ValorTotalStop1_CONFIGURAR_VENDA"
+      "ValorTotalStop1_CONFIGURAR_VENDA",
     )}
     {TextoValorTotalGrafico(
       "TOTAL",
       CalculoValorTotalAgendada(
         props.gainDisparoConfig1,
         props.gainExecConfig1,
-        props.qtde
+        props.qtde,
       ),
-      "ValorTotalGain1_CONFIGURAR_VENDA"
+      "ValorTotalGain1_CONFIGURAR_VENDA",
     )}
     <IconeConfigGrafico className="ConfigGain1Grafico_CONFIGURAR_VENDA" />
     <IconeConfigGrafico className="ConfigStop1Grafico_CONFIGURAR_VENDA" />
@@ -69,18 +69,18 @@ const modalBody = (props) => (
       CalculoValorTotalAgendada(
         props.stopDisparoConfig2,
         props.stopExecConfig2,
-        props.qtde
+        props.qtde,
       ),
-      "ValorTotalStop2_CONFIGURAR_VENDA"
+      "ValorTotalStop2_CONFIGURAR_VENDA",
     )}
     {TextoValorTotalGrafico(
       "TOTAL",
       CalculoValorTotalAgendada(
         props.gainDisparoConfig2,
         props.gainExecConfig2,
-        props.qtde
+        props.qtde,
       ),
-      "ValorTotalGain2_CONFIGURAR_VENDA"
+      "ValorTotalGain2_CONFIGURAR_VENDA",
     )}
     <GraficoInputsConfigStartStop
       namespace={VENDA_STARTSTOP_NAMESPACE}

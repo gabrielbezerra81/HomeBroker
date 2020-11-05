@@ -44,6 +44,8 @@ import "./tela_thl/thl.scss";
 import "./tela_thl/combinacoes.scss";
 import "./tela_thl/vencimentos.scss";
 
+import "./category_list/CategoryList.scss";
+
 import "./componentes_customizados/CustomCheckbox.css";
 import "./componentes_customizados/InputFormatado.css";
 import "./componentes_customizados/IconeConfigGrafico.css";

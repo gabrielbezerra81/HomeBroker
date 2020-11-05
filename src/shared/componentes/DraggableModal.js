@@ -66,7 +66,7 @@ class DragglableModal extends Component {
   }
 
   render() {
-    const { classConfigAberto, id } = this.props;
+    const { classConfigAberto, id, handle } = this.props;
     const formulario = (
       <div
         id={id !== "thl" ? id : ""}
@@ -92,7 +92,7 @@ class DragglableModal extends Component {
     return (
       <Draggable
         enableUserSelectHack={false}
-        handle=".mheader"
+        handle={handle ? handle : ".mheader"}
         position={this.state.draggableData}
         defaultPosition={{ x: 0, y: 0 }}
         onStart={this.onStartDragging}

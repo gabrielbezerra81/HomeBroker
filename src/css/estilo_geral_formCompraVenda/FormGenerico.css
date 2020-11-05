@@ -29,6 +29,11 @@
   justify-content: center;
 }
 
+.mheader button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 input {
   color: black !important;
 }

@@ -110,8 +110,6 @@ class Multileg extends React.Component {
           popupHeight += 109;
         }
 
-        console.log(popupHeight);
-
         updateHeight(section, popupHeight, 27 * maxNumberOfOffers);
       }
     }
