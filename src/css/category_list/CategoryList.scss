@@ -7,13 +7,6 @@
     padding-bottom: 16px;
   }
 
-  .masonry-with-columns {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    max-height: 1000px;
-  }
-
   .listHeader {
     display: flex;
 
@@ -27,13 +20,6 @@
   }
 
   main {
-    // display: grid;
-    // grid-template-columns: repeat(3, 1fr);
-    // grid-template-rows: min-content;
-
-    // padding-bottom: 12px;
-    // align-items: flex-start;
-
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -46,10 +32,11 @@
       position: absolute;
 
       bottom: 2px;
-      left: 360px;
+      left: 361px;
       height: calc(100% - 35px);
-      width: 2px;
-      box-shadow: 2px 0px 0 0 var(--color-border-light);
+      width: 3px;
+      box-shadow: 3px 0px 0 0 var(--color-border-light);
+      z-index: 6;
     }
 
     &::before {
@@ -61,8 +48,9 @@
       bottom: 2px;
       left: 722px;
       height: calc(100% - 35px);
-      width: 2px;
-      box-shadow: 2px 0px 0 0 var(--color-border-light);
+      width: 3px;
+      box-shadow: 3px 0px 0 0 var(--color-border-light);
+      z-index: 6;
     }
   }
 
@@ -73,16 +61,6 @@
     border-collapse: separate;
     max-width: 361px;
     table-layout: fixed;
-    // border: 0px solid var(--color-border-light);
-    // border-top-width: 0px;
-    // border-bottom-width: 0px;
-
-    // grid-column: auto;
-    // align-self: flex-start;
-
-    // &:nth-child(n + 4) {
-    //   border-top-width: 0px;
-    // }
 
     th {
       background-color: #000;
@@ -106,21 +84,20 @@
       }
     }
 
-    // td:first-child,
-    // th:first-child {
-    //   padding-left: 12px !important;
-    // }
-    // td:last-child,
-    // th:last-child {
-    //   padding-right: 12px !important;
-    // }
-
     .positiveColor {
       color: rgb(99, 175, 86);
     }
 
+    .positiveBackground {
+      background-color: rgb(99, 175, 86);
+    }
+
     .negativeColor {
       color: rgb(221, 54, 37);
+    }
+
+    .negativeBackground {
+      background-color: rgb(221, 54, 37);
     }
 
     .categoryTitle {
@@ -130,6 +107,25 @@
         color: #f7e39c;
         border-top: 3px solid var(--color-border-light);
         border-bottom: 3px solid var(--color-border-light);
+      }
+    }
+
+    .yearOscColumn {
+      position: relative;
+
+      span {
+        z-index: 1;
+        background-color: transparent;
+        position: relative;
+      }
+
+      div {
+        position: absolute;
+        width: 30px;
+        height: 15px;
+        right: 1px;
+        margin: 3px 0;
+        z-index: 0;
       }
     }
   }

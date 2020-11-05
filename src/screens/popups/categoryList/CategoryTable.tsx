@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Table } from "react-bootstrap";
 
 interface CategoryTableProps {
@@ -23,7 +23,7 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
 }) => {
   return (
     <Table className="categoryTable" striped={false} style={{ order }}>
-        <tbody>
+      <tbody>
         <tr className="categoryTitle">
           <td colSpan={4}>{category.title}</td>
         </tr>
@@ -38,7 +38,17 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
             >
               {line.formattedOscilation}
             </td>
-            <td>{line.formattedYearOscilation}</td>
+            <td className="yearOscColumn">
+              <div
+                className={
+                  line.yearOscilation >= 0
+                    ? "positiveBackground"
+                    : "negativeBackground"
+                }
+                style={{ width: 91 * (line.yearOscilation / 100) }}
+              />
+              <span>{line.formattedYearOscilation}</span>
+            </td>
           </tr>
         ))}
       </tbody>
