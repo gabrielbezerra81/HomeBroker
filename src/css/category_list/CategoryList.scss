@@ -67,6 +67,32 @@
     max-width: 361px;
     table-layout: fixed;
 
+    .flashPositive {
+      animation: flashPositive 0.2s;
+    }
+
+    .flashNegative {
+      animation: negativePositive 0.2s;
+    }
+
+    @keyframes flashPositive {
+      0% {
+        background-color: transparent;
+      }
+      100% {
+        background-color: rgb(99, 175, 86);
+      }
+    }
+
+    @keyframes negativePositive {
+      0% {
+        background-color: transparent;
+      }
+      100% {
+        background-color: rgb(221, 54, 37);
+      }
+    }
+
     th {
       background-color: #000;
       border-color: var(--color-border-light);

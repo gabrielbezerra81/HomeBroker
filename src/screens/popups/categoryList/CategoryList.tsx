@@ -123,6 +123,7 @@ const CategoryList: React.FC = () => {
     });
   }, [categoryList]);
 
+  // Organizar tabelas com masonry layout
   useEffect(() => {
     const numCols = 3;
     const colHeights = Array(numCols).fill(0);
@@ -138,6 +139,7 @@ const CategoryList: React.FC = () => {
     }
   }, [selectedTab]);
 
+  // Trazer para primeiro plano ao montar
   useEffect(() => {
     bringToForegroundOnMount({
       popupDivKey: "categoryList",
@@ -151,6 +153,7 @@ const CategoryList: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Trazer para primeiro plano ao tentar abrir não estando na aba principal
   useEffect(() => {
     setPopupZIndexFromSecondaryTab({
       zIndex: currentZIndex,
@@ -165,6 +168,22 @@ const CategoryList: React.FC = () => {
   }, [currentDivKey, isOpenCategoryList]);
 
   let order = -1;
+
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     setCategoryList((oldList) => {
+  //       const updatedCategoryList = produce(oldList, (draft) => {
+  //         draft[0].lines[0].price = Math.random();
+  //         draft[0].lines[1].price = Math.random();
+  //         draft[1].lines[0].price = Math.random();
+  //         draft[2].lines[0].price = Math.random();
+  //         draft[3].lines[0].price = Math.random();
+  //       });
+
+  //       return updatedCategoryList;
+  //     });
+  //   }, 4000);
+  // }, []);
 
   return (
     <Draggable
@@ -255,7 +274,7 @@ var list: Category[] = [
         yearOscilation: -65.19,
       },
       {
-        symbol: "BKBR3",
+        symbol: "BKER3",
         price: 9.64,
         oscilation: 9.17,
         yearOscilation: -65.19,
