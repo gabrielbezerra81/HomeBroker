@@ -13,9 +13,14 @@ interface CategoryTableProps {
     }>;
   };
   order: number;
+  renderTHead: boolean;
 }
 
-const CategoryTable: React.FC<CategoryTableProps> = ({ category, order }) => {
+const CategoryTable: React.FC<CategoryTableProps> = ({
+  category,
+  order,
+  renderTHead,
+}) => {
   return (
     <Table className="categoryTable" striped={false} style={{ order }}>
       <thead>
@@ -26,6 +31,7 @@ const CategoryTable: React.FC<CategoryTableProps> = ({ category, order }) => {
           <th>Osc YTD</th>
         </tr>
       </thead>
+
       <tbody>
         <tr className="categoryTitle">
           <td colSpan={4}>{category.title}</td>

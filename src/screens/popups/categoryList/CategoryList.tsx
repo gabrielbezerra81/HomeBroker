@@ -151,6 +151,7 @@ const CategoryList: React.FC = () => {
                   key={categoryItem.title}
                   category={categoryItem}
                   order={order}
+                  renderTHead={index < 3}
                 />
               );
             })}
