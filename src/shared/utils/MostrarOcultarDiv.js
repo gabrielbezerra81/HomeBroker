@@ -1,4 +1,4 @@
-export const ocultarDIV = divID => {
+const ocultarDIV = divID => {
   var element = document.getElementById(divID);
   element.classList.remove("visible");
   element.classList.add("hide");
@@ -16,7 +16,7 @@ export const ocultarDIV = divID => {
   }
 };
 
-export const mostrarDIV = divID => {
+const mostrarDIV = divID => {
   var element = document.getElementById(divID);
   element.classList.remove("hide");
   element.classList.add("visible");

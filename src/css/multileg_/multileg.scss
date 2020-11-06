@@ -472,9 +472,15 @@ a.botaoAddAba.active {
   line-height: 16px !important;
 }
 
-.inputCodigo input {
-  height: 17px !important;
-  text-align: center !important;
+.inputCodigo {
+  input {
+    height: 17px !important;
+    text-align: center !important;
+  }
+
+  i {
+    color: #ddd !important;
+  }
 }
 
 .inputCodigoDropdown {

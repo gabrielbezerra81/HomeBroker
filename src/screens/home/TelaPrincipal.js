@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 // import LogRocket from "logrocket";
-import MenuLateralUsuario from "screens/home/MenuLateralUsuario";
+import MenuLateralUsuario from "screens/home/UserLeftSideMenu";
 import BarraTopoTelaPrincipal from "screens/home/BarraTopoTelaPrincipal";
 import { StorePrincipalContext, GlobalContext } from "redux/StoreCreation";
 import { listarOrdensExecAction } from "redux/actions/ordensExecucao/OrdensExecActions";

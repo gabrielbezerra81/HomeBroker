@@ -23,7 +23,7 @@ import "./venda/VendaGainReducao.css";
 import "./venda/VendaFormConfigurar.css";
 
 import "./tela_principal/TelaPrincipal.css";
-import "./tela_principal/MenuLateralUsuario.css";
+import "./tela_principal/UserLeftSideMenu.scss";
 import "./tela_principal/MainScreenTabs.scss";
 import "./ordens_execucao/OrdensExecucao.css";
 import "./ordens_execucao/OpcoesOrdemExec.css";

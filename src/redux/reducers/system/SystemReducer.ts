@@ -193,6 +193,9 @@ export const INITIAL_STATE: SystemState = {
   activeItemRightSideMenu: "ALERTAS",
   multilegButtonsVisibility: true,
   createAlertButtonVisibility: false,
+  updateMode: "reactive",
+  updateInterval: 3000,
+  isLeftSideMenuConfigOpen: false,
 };
 
 const {

@@ -1,0 +1,161 @@
+.divMenuLateral {
+  background-color: #1d1d1d;
+  height: 100vh;
+  transition-property: width opacity;
+  transition: 0.4s;
+  border-right: 1px solid #888;
+  width: 132px;
+  position: fixed;
+  padding-top: 45px;
+
+  &.hide {
+    opacity: 0;
+    pointer-events: none;
+    width: 0px;
+  }
+
+  > div:nth-child(odd) {
+    background-color: #333;
+  }
+}
+
+.itemMenuLateral {
+  height: 70px;
+  color: #ddd;
+  display: grid;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  border-radius: 0;
+}
+
+.itemMenuLateral .row {
+  align-items: center;
+  justify-content: center;
+}
+
+.colLogout {
+  padding: 0 0 0 0;
+}
+
+.textoLogout {
+  line-height: 1;
+}
+
+.textoConectado {
+  font-size: 0.55rem;
+  margin-left: 0.3rem;
+  line-height: 1;
+}
+
+.iconeDeslogar {
+  font-size: 0.9rem;
+  padding-right: 0.4rem;
+}
+
+.iconeStatusCirculo {
+  font-size: 0.4rem;
+  padding-left: 0.3rem;
+  padding-right: 0.1rem;
+}
+
+.iconeStatusConectado {
+  color: rgb(0, 255, 0);
+}
+
+.iconeStatusDesconectado {
+  color: red;
+}
+
+.updateModeSelector {
+  color: #c9ccc8;
+  height: 30px;
+  overflow: hidden;
+  transition: height 0.2s;
+
+  > button {
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    color: #c9ccc8;
+    font-size: 14px;
+    padding: 4px 0;
+    border-bottom: 1px solid #888;
+
+    &:focus {
+      outline: none;
+    }
+
+    svg {
+      line-height: 14px;
+      margin-left: 2px;
+      vertical-align: sub;
+      transition: transform 0.3s;
+    }
+  }
+
+  main {
+    padding: 2px 12px 8px;
+  }
+
+  .ant-radio-group {
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+
+    .ant-radio-wrapper {
+      align-items: center;
+      display: flex;
+      margin-top: 4px;
+    }
+
+    label {
+      color: var(--color-text-primary);
+    }
+  }
+
+  .updateIntervalSelect {
+    margin-top: 4px;
+
+    > div {
+      background-color: #585959;
+      border: none;
+      border-radius: 1px;
+      width: 90px;
+      color: var(--color-text-primary);
+    }
+
+    svg {
+      color: #ddd !important;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 2px;
+      bottom: 0;
+      right: 26px;
+
+      box-shadow: 1px 0 0 0 #a8a9a9;
+    }
+  }
+
+  &.expandedConfig {
+    height: 123px;
+
+    .ant-radio-group {
+      opacity: 1;
+    }
+
+    > button {
+      svg {
+        transform: rotateZ(-180deg);
+      }
+    }
+  }
+}
+
+.updateIntervalDropdown {
+  background-color: #333 !important;
+}

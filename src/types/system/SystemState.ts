@@ -34,4 +34,7 @@ export default interface SystemState {
   activeItemRightSideMenu: string;
   multilegButtonsVisibility: boolean;
   createAlertButtonVisibility: boolean;
+  updateMode: "reactive" | "proactive";
+  updateInterval: number;
+  isLeftSideMenuConfigOpen: boolean;
 }
