@@ -10,7 +10,6 @@ import {
 import {
   addMultilegTab,
   updateMultilegTab,
-  updateMultilegQuotesAction,
   addMultilegOffer,
   cloneMultilegQuotes,
   cloneMultilegTabs,
@@ -149,14 +148,6 @@ export const abrirMultilegTHLAction = (props) => {
         cotacoesMultileg: updatedMultilegQuotes,
       }),
     );
-
-    updateMultilegQuotesAction({
-      dispatch,
-      multilegQuotes: updatedMultilegQuotes,
-      eventSourceMultilegQuotes: eventSourceCotacao,
-      setIntervalMultilegQuotes: setIntervalCotacoesMultileg,
-      token,
-    });
 
     setPointerWhileAwaiting({
       lockMode: "destravar",

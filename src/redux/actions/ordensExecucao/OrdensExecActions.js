@@ -16,7 +16,6 @@ import { LISTAR_ORDENS_EXECUCAO } from "constants/ApiActionTypes";
 import {
   addMultilegTab,
   updateMultilegTab,
-  updateMultilegQuotesAction,
   addMultilegOffer,
   cloneMultilegTabs,
   cloneMultilegQuotes,
@@ -218,13 +217,6 @@ export const openOrderInMultilegAction = (props, action = "") => {
       }),
     );
 
-    updateMultilegQuotesAction({
-      dispatch,
-      multilegQuotes: updatedMultilegQuotes,
-      eventSourceMultilegQuotes: eventSourceCotacao,
-      setIntervalMultilegQuotes: setIntervalCotacoesMultileg,
-      token,
-    });
     setPointerWhileAwaiting({
       lockMode: "destravar",
       id: "menusTelaPrincipal",

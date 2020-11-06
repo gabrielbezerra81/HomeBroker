@@ -1,9 +1,7 @@
 import { setPointerWhileAwaiting } from "api/API";
 import { error_open_alert } from "constants/AlertaErros";
-import produce from "immer";
 import { Dispatch } from "redux";
 import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
-import { calculoPreco } from "screens/popups/multileg_/CalculoPreco";
 import { AlertAPI } from "types/multileg/multileg";
 import { MainThunkAction } from "types/ThunkActions";
 import { atualizarDivKeyAction } from "../GlobalAppActions";
@@ -16,7 +14,6 @@ import {
   addMultilegTab,
   cloneMultilegQuotes,
   cloneMultilegTabs,
-  updateMultilegQuotesAction,
   updateMultilegTab,
 } from "./MultilegActions";
 import { searchMultilegSymbolData } from "./MultilegAPIAction";
@@ -170,14 +167,6 @@ export const openAlertInMultileg = (
         cotacoesMultileg: updatedMultilegQuotes,
       }),
     );
-
-    updateMultilegQuotesAction({
-      dispatch,
-      multilegQuotes: updatedMultilegQuotes,
-      eventSourceMultilegQuotes: eventSourceCotacao,
-      setIntervalMultilegQuotes: setIntervalCotacoesMultileg,
-      token,
-    });
 
     setPointerWhileAwaiting({
       lockMode: "destravar",

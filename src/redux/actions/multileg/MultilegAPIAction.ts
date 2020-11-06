@@ -6,7 +6,7 @@ import {
   criarPosicaoMultilegAPI,
   addQuoteBoxAPI,
 } from "api/API";
-import { updateMultilegQuotesAction } from "redux/actions/multileg/MultilegActions";
+import { cloneMultilegTabs } from "redux/actions/multileg/MultilegActions";
 import {
   mountMultilegOrder,
   validateMultilegOrder,
@@ -59,13 +59,7 @@ export const searchMultilegSymbolAPIAction = (
         multileg: data.multilegTabs,
       }),
     );
-    updateMultilegQuotesAction({
-      dispatch,
-      multilegQuotes: data.multilegQuotes,
-      eventSourceMultilegQuotes: eventSourceCotacao,
-      token,
-      setIntervalMultilegQuotes: setIntervalCotacoesMultileg,
-    });
+
     dispatch(
       updateOneMultilegState({
         attributeName: "pesquisandoAtivo",
@@ -86,8 +80,8 @@ export const searchMultilegSymbolData = async ({
   multilegTabs,
   tabIndex,
 }: searchSymbolData) => {
-  let updatedMultilegTabs = [...multilegTabs];
-  let multilegTab = multilegTabs[tabIndex];
+  let updatedMultilegTabs = cloneMultilegTabs(multilegTabs);
+  let multilegTab = updatedMultilegTabs[tabIndex];
   const symbol = multilegTab.ativo;
 
   const data = await pesquisarAtivoMultilegAPI(symbol);

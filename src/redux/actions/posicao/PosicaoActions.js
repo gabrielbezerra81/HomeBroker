@@ -19,7 +19,7 @@ export const mudarVariavelPosicaoAction = (attributeName, attributeValue) => {
   };
 };
 
-export const listarPosicoesAction = (props) => {
+export const listarPosicoesAction = () => {
   return async (dispatch, getState) => {
     const { token, isOpenPosition } = getReducerStateStorePrincipal(
       getState(),

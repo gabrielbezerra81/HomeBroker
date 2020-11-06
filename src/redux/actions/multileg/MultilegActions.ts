@@ -20,6 +20,7 @@ import {
   AddNewMultilegQuote,
   checkQuoteAlreadyAdded,
   updateOneMultilegState,
+  updateManyMultilegState,
 } from "./utils";
 
 export const updateMultilegStateAction = (
@@ -55,8 +56,12 @@ export const selectOrAddMultilegTabAction = (key: string): MainThunkAction => (
 
   if (key === "adicionar") {
     const { multilegTabs, currentTab } = addMultilegTab(multileg);
-    dispatch(updateMultilegStateAction("multileg", multilegTabs));
-    dispatch(updateMultilegStateAction("abaSelecionada", currentTab));
+    dispatch(
+      updateManyMultilegState({
+        multileg: multilegTabs,
+        abaSelecionada: currentTab,
+      }),
+    );
   } else {
     dispatch(updateMultilegStateAction("abaSelecionada", key));
   }
@@ -292,13 +297,6 @@ export const updateMultilegOfferAction = ({
     dispatch(
       updateMultilegStateAction("cotacoesMultileg", updatedMultilegQuotes),
     );
-    updateMultilegQuotesAction({
-      dispatch,
-      token,
-      eventSourceMultilegQuotes: eventSourceCotacao,
-      setIntervalMultilegQuotes: setIntervalCotacoesMultileg,
-      multilegQuotes: updatedMultilegQuotes,
-    });
   }
   const tab = updatedMultilegTabs[tabIndex];
   let tabPrice = calculoPreco(tab, "ultimo", updatedMultilegQuotes).toFixed(2);
@@ -364,13 +362,6 @@ export const addMultilegOfferAction = ({
       multilegQuotes: cotacoesMultileg,
     });
 
-    updateMultilegQuotesAction({
-      dispatch,
-      token,
-      eventSourceMultilegQuotes: eventSourceCotacao,
-      setIntervalMultilegQuotes: setIntervalCotacoesMultileg,
-      multilegQuotes: data.multilegQuotes,
-    });
     dispatch(updateMultilegStateAction("multileg", data.multilegTabs));
     dispatch(
       updateMultilegStateAction("cotacoesMultileg", data.multilegQuotes),
@@ -523,47 +514,13 @@ const setOfferModelTypeStrikeAndSeries = (multilegOffer: MultilegOffer) => {
   });
 };
 
-interface updateMultilegQuotesAction {
+interface UpdateMultilegQuotesProps {
   dispatch: MainThunkDispatch;
   multilegQuotes: MultilegQuote[];
   token: { accessToken: string; tokenType: string };
   eventSourceMultilegQuotes: EventSource | null;
   setIntervalMultilegQuotes: NodeJS.Timeout | null;
 }
-
-// Formato antigo
-export const updateMultilegQuotesAction = ({
-  dispatch,
-  multilegQuotes,
-  eventSourceMultilegQuotes,
-  setIntervalMultilegQuotes,
-  token,
-}: updateMultilegQuotesAction) => {
-  if (eventSourceMultilegQuotes) {
-    eventSourceMultilegQuotes.close();
-  }
-  if (setIntervalMultilegQuotes) {
-    clearInterval(setIntervalMultilegQuotes);
-  }
-
-  const symbolsArray: string[] = [];
-  multilegQuotes.forEach((quote) => {
-    if (!symbolsArray.includes(quote.codigo)) symbolsArray.push(quote.codigo);
-  });
-
-  const symbols = symbolsArray.join(",");
-
-  if (symbols) {
-    const newSource = atualizarCotacaoMultilegAPI({
-      dispatch,
-      codigos: symbols,
-      arrayCotacoes: multilegQuotes,
-      token,
-    });
-
-    dispatch(updateMultilegStateAction("eventSourceCotacao", newSource));
-  }
-};
 
 export const cloneMultilegTabs = (multilegTabs: MultilegTab[]) =>
   multilegTabs.map((multilegTab) => ({
@@ -575,3 +532,41 @@ export const cloneMultilegTabs = (multilegTabs: MultilegTab[]) =>
 
 export const cloneMultilegQuotes = (multilegQuotes: MultilegQuote[]) =>
   multilegQuotes.map((quote) => ({ ...quote }));
+
+export const startReactiveMultilegUpdateAction = (): MainThunkAction => {
+  return (dispatch, getState) => {
+    const {
+      systemReducer: { token },
+      multilegReducer: {
+        cotacoesMultileg: multilegQuotes,
+        eventSourceCotacao: eventSourceMultilegQuotes,
+        setIntervalCotacoesMultileg: setIntervalMultilegQuotes,
+      },
+    } = getState();
+
+    if (eventSourceMultilegQuotes) {
+      eventSourceMultilegQuotes.close();
+    }
+    if (setIntervalMultilegQuotes) {
+      clearInterval(setIntervalMultilegQuotes);
+    }
+
+    const symbolsArray: string[] = [];
+    multilegQuotes.forEach((quote) => {
+      if (!symbolsArray.includes(quote.codigo)) symbolsArray.push(quote.codigo);
+    });
+
+    const symbols = symbolsArray.join(",");
+
+    if (symbols) {
+      const newSource = atualizarCotacaoMultilegAPI({
+        dispatch,
+        codigos: symbols,
+        arrayCotacoes: multilegQuotes,
+        token,
+      });
+
+      dispatch(updateMultilegStateAction("eventSourceCotacao", newSource));
+    }
+  };
+};

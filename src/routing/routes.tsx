@@ -5,6 +5,7 @@ import TelaCadastro from "screens/signUp/TelaCadastro";
 import TelaPrincipal from "screens/home/TelaPrincipal";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import api from "api/apiConfig";
+import UpdateManager from "updateManager/UpdateManager";
 
 export const Routes = () => {
   const {
@@ -16,11 +17,14 @@ export const Routes = () => {
   }, [token]);
 
   return (
-    <Router>
-      <TelaLogin path="/" />
-      <TelaCadastro path="/cadastro" />
-      <Home path="/home" />
-    </Router>
+    <>
+      <Router>
+        <TelaLogin path="/" />
+        <TelaCadastro path="/cadastro" />
+        <Home path="/home" />
+      </Router>
+      <UpdateManager />
+    </>
   );
 };
 
