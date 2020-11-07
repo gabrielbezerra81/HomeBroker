@@ -10,12 +10,14 @@ import {
 } from "api/API";
 import { atualizarPrecosTHLAPI, atualizarCotacaoTHLAPI } from "api/ReativosAPI";
 import { updateOneTHLState, updateManyTHLState } from "./utils";
-import { getReducerStateStorePrincipal } from "hooks/utils";
 import api from "api/apiConfig";
+import { MainThunkAction } from "types/ThunkActions";
 
-export const pesquisarAtivoTHLAPIAction = () => {
+export const pesquisarAtivoTHLAPIAction = (): MainThunkAction => {
   return async (dispatch, getState) => {
-    const { ativoPesquisa } = getReducerStateStorePrincipal(getState(), "thl");
+    const {
+      thlReducer: { ativoPesquisa },
+    } = getState();
 
     const listaStrikes = await pesquisarListaStrikeTHLAPI(ativoPesquisa);
 
@@ -30,15 +32,17 @@ export const pesquisarAtivoTHLAPIAction = () => {
   };
 };
 
-export const listarTabelaInicialTHLAPIAction = (initialLoad = false) => {
+export const listarTabelaInicialTHLAPIAction = (
+  initialLoad = false,
+): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
-      tipo: type,
-      strikeSelecionado: selectedStrike,
-      setIntervalPrecosTHL,
-      ativoPesquisado: symbol,
-      eventSourcePrecos,
-    } = getReducerStateStorePrincipal(getState(), "thl");
+      thlReducer: {
+        tipo: type,
+        strikeSelecionado: selectedStrike,
+        ativoPesquisado: symbol,
+      },
+    } = getState();
 
     if (symbol && type) {
       dispatch(
@@ -47,8 +51,6 @@ export const listarTabelaInicialTHLAPIAction = (initialLoad = false) => {
           attributeValue: true,
         }),
       );
-
-      const { token } = getReducerStateStorePrincipal(getState(), "principal");
 
       let quote = 0;
       let dayOscilation = 0;
@@ -62,7 +64,7 @@ export const listarTabelaInicialTHLAPIAction = (initialLoad = false) => {
         structures = data.structures;
 
         const integerStrikes = [
-          ...new Set(lines.map((line) => parseInt(line.strikeLine))),
+          ...new Set(lines.map((line: any) => parseInt(line.strikeLine))),
         ];
 
         if (integerStrikes.length) {
@@ -102,17 +104,6 @@ export const listarTabelaInicialTHLAPIAction = (initialLoad = false) => {
         }
       } catch (error) {}
 
-      if (lines.length > 0) {
-        atualizarPrecosTHL({
-          tabelaVencimentos: lines,
-          dispatch,
-          setIntervalPrecosTHL,
-          sourcePrecos: eventSourcePrecos,
-          token,
-          priceStructures: structures,
-        });
-      }
-
       dispatch(
         updateManyTHLState({
           opcoesStrike: mapearTabelaVencimentos(lines),
@@ -129,7 +120,7 @@ export const listarTabelaInicialTHLAPIAction = (initialLoad = false) => {
   };
 };
 
-export const recalcularPrecosTHLAPIAction = () => {
+export const recalcularPrecosTHLAPIAction = (): MainThunkAction => {
   return async (dispatch, getState) => {
     dispatch(
       updateOneTHLState({
@@ -139,14 +130,13 @@ export const recalcularPrecosTHLAPIAction = () => {
     );
 
     const {
-      ativoPesquisado,
-      strikeSelecionado,
-      tipo,
-      eventSourcePrecos,
-      setIntervalPrecosTHL,
-      codigoCelulaSelecionada,
-      precosTabelaVencimentos,
-    } = getReducerStateStorePrincipal(getState(), "thl");
+      thlReducer: {
+        ativoPesquisado,
+        strikeSelecionado,
+        tipo,
+        codigoCelulaSelecionada,
+      },
+    } = getState();
 
     const data = await recalcularPrecosTHLAPI(
       codigoCelulaSelecionada,
@@ -157,18 +147,6 @@ export const recalcularPrecosTHLAPIAction = () => {
 
     const { lines: tabelaVencimentos } = data;
 
-    const { token } = getReducerStateStorePrincipal(getState(), "principal");
-
-    if (tabelaVencimentos.length) {
-      atualizarPrecosTHL({
-        tabelaVencimentos,
-        sourcePrecos: eventSourcePrecos,
-        dispatch,
-        setIntervalPrecosTHL,
-        token,
-        priceStructures: precosTabelaVencimentos,
-      });
-    }
     setTimeout(() => {
       dispatch(
         updateManyTHLState({
@@ -182,47 +160,88 @@ export const recalcularPrecosTHLAPIAction = () => {
   };
 };
 
-const atualizarPrecosTHL = async ({
-  tabelaVencimentos,
-  priceStructures,
-  sourcePrecos,
-  dispatch,
-  setIntervalPrecosTHL,
-  token,
-}) => {
-  if (sourcePrecos) {
-    sourcePrecos.close();
-  }
-  if (setIntervalPrecosTHL) {
-    clearInterval(setIntervalPrecosTHL);
-  }
+export const startReactiveThlStructuresUpdateAction = (): MainThunkAction => {
+  return (dispatch, getState) => {
+    const {
+      thlReducer: {
+        eventSourcePrecos: esource_thlStructures,
+        setIntervalPrecosTHL: interval_thlStructures,
+        opcoesStrike: thlLines,
+        precosTabelaVencimentos: priceStructures,
+      },
+      systemReducer: { token },
+    } = getState();
 
-  const ids = [
-    ...new Set(
-      tabelaVencimentos.reduce((acc, curr) => {
-        const idsSubArray = curr.structuresIds.map((id) => id);
+    if (esource_thlStructures && esource_thlStructures.close) {
+      esource_thlStructures.close();
+    }
+    if (interval_thlStructures) {
+      clearInterval(interval_thlStructures);
+    }
 
-        return [...acc, ...idsSubArray];
-      }, []),
-    ),
-  ].join(",");
+    const idList = thlLines.reduce((acc: number[], curr) => {
+      const idsSubArray = curr.structuresIds.map((id) => id);
 
-  if (ids) {
-    const source = atualizarPrecosTHLAPI({
-      ids,
-      dispatch,
-      token,
-      priceStructures,
-    });
-    dispatch(
-      updateManyTHLState({
-        eventSourcePrecos: source,
-      }),
-    );
-  }
+      return [...acc, ...idsSubArray];
+    }, []);
+
+    const ids = [...new Set(idList)].join(",");
+
+    if (ids) {
+      const source = atualizarPrecosTHLAPI({
+        ids,
+        dispatch,
+        token,
+        priceStructures,
+      });
+      dispatch(
+        updateManyTHLState({
+          eventSourcePrecos: source,
+        }),
+      );
+    }
+  };
 };
 
-export const favoritarTHLAPIAction = (actionProps) => {
+export const startProactiveThlStructuresUpdateAction = (): MainThunkAction => {
+  return (dispatch, getState) => {
+    const {
+      thlReducer: {
+        eventSourcePrecos: esource_thlStructures,
+        setIntervalPrecosTHL: interval_thlStructures,
+        opcoesStrike: thlLines,
+        precosTabelaVencimentos: priceStructures,
+      },
+      systemReducer: { token },
+    } = getState();
+
+    if (esource_thlStructures) {
+      esource_thlStructures.close();
+    }
+    if (interval_thlStructures) {
+      clearInterval(interval_thlStructures);
+    }
+
+    const idList = thlLines.reduce((acc: number[], curr) => {
+      const idsSubArray = curr.structuresIds.map((id) => id);
+
+      return [...acc, ...idsSubArray];
+    }, []);
+
+    const ids = [...new Set(idList)].join(",");
+
+    if (ids) {
+    }
+  };
+};
+
+interface FavoriteProps {
+  idCelulaSelecionada: number;
+}
+
+export const favoritarTHLAPIAction = (
+  actionProps: FavoriteProps,
+): MainThunkAction => {
   return async (dispatch) => {
     const { idCelulaSelecionada } = actionProps;
 
@@ -239,20 +258,17 @@ export const favoritarTHLAPIAction = (actionProps) => {
   };
 };
 
-export const criarAlertaTHLAPIAction = (actionProps) => {
+export const criarAlertaTHLAPIAction = (actionProps: any): MainThunkAction => {
   return (dispatch) => {
     // const { idCelulaSelecionada } = actionProps;
   };
 };
 
-export const pesquisarCombinacoesTHLAPIAction = () => {
+export const pesquisarCombinacoesTHLAPIAction = (): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
-      ativoPesquisa,
-      eventSourceCotacoesTHL,
-      setIntervalCotacoesTHL,
-    } = getReducerStateStorePrincipal(getState(), "thl");
-    const { token } = getReducerStateStorePrincipal(getState(), "principal");
+      thlReducer: { ativoPesquisa },
+    } = getState();
 
     dispatch(
       updateManyTHLState({
@@ -266,21 +282,13 @@ export const pesquisarCombinacoesTHLAPIAction = () => {
     const combinacoes = await pesquisarCombinacoesTHLAPI(ativoPesquisa);
 
     //limpar setInterval e eventSource
-    let tabelaCombinacoes = [],
-      arrayCotacoes = [];
+    let tabelaCombinacoes = [];
+    let arrayCotacoes: Array<{ codigo: any; cotacao: any }> = [];
 
     if (combinacoes.length) {
       const result = montarTabelaCombinacoes(combinacoes);
       tabelaCombinacoes = result.tabelaCombinacoes;
       arrayCotacoes = result.arrayCotacoes;
-
-      atualizarCotacaoTHL({
-        dispatch,
-        arrayCotacoes,
-        token,
-        eventSourceCotacoesTHL,
-        setIntervalCotacoesTHL,
-      });
     }
 
     dispatch(
@@ -294,7 +302,7 @@ export const pesquisarCombinacoesTHLAPIAction = () => {
   };
 };
 
-export const montarTabelaCombinacoes = (tabelaAPI) => {
+export const montarTabelaCombinacoes = (tabelaAPI: any[]) => {
   const arrayCotacoes = [...new Set(tabelaAPI.map((item) => item.symbol))].map(
     (codigo) => {
       const cotacao = "";
@@ -302,8 +310,8 @@ export const montarTabelaCombinacoes = (tabelaAPI) => {
     },
   );
 
-  const tabelaCombinacoes = tabelaAPI.map((item, indice) => {
-    const linha = {};
+  const tabelaCombinacoes = tabelaAPI.map((item: any, indice) => {
+    const linha: any = {};
     linha.id = item.id;
     linha.estrategia = item.name;
     linha.grupo = item.group || "";
@@ -327,13 +335,13 @@ export const montarTabelaCombinacoes = (tabelaAPI) => {
   return { tabelaCombinacoes, arrayCotacoes };
 };
 
-export function mapearTabelaVencimentos(dataTabela) {
-  return dataTabela.map((linhaStrike) => {
-    const novaLinhaStrike = {
+export function mapearTabelaVencimentos(dataTabela: any) {
+  return dataTabela.map((linhaStrike: any) => {
+    const novaLinhaStrike: any = {
       strikeLine: linhaStrike.strikeLine,
       structuresIds: [...linhaStrike.structuresIds],
     };
-    novaLinhaStrike.stocks = linhaStrike.stocks.map((stock) => {
+    novaLinhaStrike.stocks = linhaStrike.stocks.map((stock: any) => {
       const data = moment(stock.endBusiness, "DD-MM-YYYY HH:mm:ss");
       const novoStock = { ...stock, vencimento: data };
 
@@ -344,35 +352,74 @@ export function mapearTabelaVencimentos(dataTabela) {
   });
 }
 
-const atualizarCotacaoTHL = ({
-  dispatch,
-  arrayCotacoes,
-  setIntervalCotacoesTHL,
-  eventSourceCotacoesTHL,
-  token,
-}) => {
-  if (setIntervalCotacoesTHL) clearInterval(setIntervalCotacoesTHL);
-  if (eventSourceCotacoesTHL) eventSourceCotacoesTHL.close();
+export const startReactiveThlQuoteUpdateAction = (): MainThunkAction => {
+  return (dispatch, getState) => {
+    const {
+      thlReducer: {
+        eventSourceCotacoesTHL: esource_thlQuote,
+        setIntervalCotacoesTHL: interval_thlQuote,
+        arrayCotacoes: thlQuotes,
+      },
+      systemReducer: { token },
+    } = getState();
 
-  let codigos = "";
-  arrayCotacoes.forEach((ativo) => {
-    codigos += ativo.codigo + ",";
-  });
+    if (interval_thlQuote) {
+      clearInterval(interval_thlQuote);
+    }
+    if (esource_thlQuote && esource_thlQuote.close) {
+      esource_thlQuote.close();
+    }
 
-  codigos = codigos.substring(0, codigos.length - 1);
-
-  if (codigos) {
-    const source = atualizarCotacaoTHLAPI({
-      dispatch,
-      arrayCotacoes,
-      codigos,
-      token,
+    let codigos = "";
+    thlQuotes.forEach((ativo) => {
+      codigos += ativo.codigo + ",";
     });
-    dispatch(
-      updateOneTHLState({
-        attributeName: "eventSourceCotacoesTHL",
-        attributeValue: source,
-      }),
-    );
-  }
+
+    codigos = codigos.substring(0, codigos.length - 1);
+
+    if (codigos) {
+      const source = atualizarCotacaoTHLAPI({
+        dispatch,
+        arrayCotacoes: thlQuotes,
+        codigos,
+        token,
+      });
+      dispatch(
+        updateOneTHLState({
+          attributeName: "eventSourceCotacoesTHL",
+          attributeValue: source,
+        }),
+      );
+    }
+  };
+};
+
+export const startProactiveThlQuoteUpdateAction = (): MainThunkAction => {
+  return (dispatch, getState) => {
+    const {
+      thlReducer: {
+        eventSourceCotacoesTHL: esource_thlQuote,
+        setIntervalCotacoesTHL: interval_thlQuote,
+        arrayCotacoes: thlQuotes,
+      },
+      systemReducer: { token },
+    } = getState();
+
+    if (interval_thlQuote) {
+      clearInterval(interval_thlQuote);
+    }
+    if (esource_thlQuote && esource_thlQuote.close) {
+      esource_thlQuote.close();
+    }
+
+    let codigos = "";
+    thlQuotes.forEach((ativo) => {
+      codigos += ativo.codigo + ",";
+    });
+
+    codigos = codigos.substring(0, codigos.length - 1);
+
+    if (codigos) {
+    }
+  };
 };

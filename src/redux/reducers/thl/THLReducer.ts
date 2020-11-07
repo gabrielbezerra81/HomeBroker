@@ -1,4 +1,3 @@
-// import { setAutoFreeze } from "immer";
 import {
   MUDAR_VARIAVEL_THL,
   MUDAR_VARIAVEIS_THL,
@@ -13,13 +12,11 @@ import Action from "types/Action";
 import { actionType } from "constants/ActionTypes";
 import { resetarEstadoRedux } from "../resetarEstadoReducer";
 
-// setAutoFreeze(false);
-
 const INITIAL_STATE: THLState = {
   quote: 0,
   dayOscilation: 0,
-  ativoPesquisa: "PETR4",
-  ativoPesquisado: "PETR4",
+  ativoPesquisa: "",
+  ativoPesquisado: "",
   pesquisandoAtivo: false,
   tipo: "CALL",
   opcoesStrike: mapearTabelaVencimentos([]),

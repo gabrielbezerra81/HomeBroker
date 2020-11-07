@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import MultilegUpdateManager from "./MultilegUpdateManager";
 import OrdersUpdateManager from "./OrdersUpdateManager";
 import PositionUpdateManager from "./PositionUpdateManager";
+import THLUpdateManager from "./THLUpdateManager";
 
 const UpdateManager: React.FC = () => {
   const {
@@ -24,6 +25,7 @@ const UpdateManager: React.FC = () => {
       <MultilegUpdateManager />
       <OrdersUpdateManager />
       <PositionUpdateManager />
+      <THLUpdateManager />
     </>
   );
 };
