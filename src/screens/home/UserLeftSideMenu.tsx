@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo } from "react";
 import { Row, Col } from "react-bootstrap";
 import { FaCaretDown } from "react-icons/fa";
 import { getDiaSemana, getDiaEMes } from "shared/utils/Formatacoes";
