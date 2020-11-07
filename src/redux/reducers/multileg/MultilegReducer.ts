@@ -61,7 +61,6 @@ export default (
             omitions: ["multileg", "cotacoesMultileg", "alerts"],
             reducerName: "multileg",
             shouldClearAllProps: payload.limparReducer,
-            shouldClearEventSources: true,
           }),
           alerts: state.alerts,
         };

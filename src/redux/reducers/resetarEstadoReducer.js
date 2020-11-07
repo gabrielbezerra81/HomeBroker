@@ -10,19 +10,9 @@ export const resetarEstadoRedux = ({
   omitions = [],
   reducerName,
   shouldClearAllProps,
-  shouldClearEventSources = false,
 }) => {
   let mutableProps = {};
   let pick = {};
-
-  if (shouldClearEventSources) {
-    Object.keys(state).forEach((key) => {
-      if (key.toLowerCase().includes("esource") && state[key])
-        state[key].close();
-      if (key.toLowerCase().includes("interval") && state[key])
-        clearInterval(state[key]);
-    });
-  }
 
   if (shouldClearAllProps)
     switch (reducerName) {

@@ -2768,7 +2768,6 @@ export default (state = INITIAL_STATE, { type, payload }: Action): THLState => {
             omitions: [],
             reducerName: "thl",
             shouldClearAllProps: payload.limparReducer,
-            shouldClearEventSources: true,
           }),
         };
       else return state;
