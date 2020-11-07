@@ -145,7 +145,6 @@ export const atualizarCotacaoMultilegAPI = ({
   return source;
 };
 
-
 export const atualizarCotacaoPosicaoAPI = ({
   dispatch,
   codigos,
@@ -520,7 +519,7 @@ export const updateBoxDataAPI = ({ ids, dispatch, token, quoteBoxes }) => {
     updatedBoxes,
     actionType.UPDATE_ONE_SYSTEM_STATE,
     "quoteBoxes",
-    "boxSetInterval",
+    "interval_box",
     () => immutableFunction(updatedBoxes),
   );
 

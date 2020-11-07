@@ -120,15 +120,15 @@ export const handleAddBoxesToTabsAction = (
 export const startReactiveBoxUpdateAction = (): MainThunkAction => {
   return (dispatch, getState) => {
     const {
-      systemReducer: { token, boxEventSource, boxSetInterval, quoteBoxes },
+      systemReducer: { token, esource_box, interval_box, quoteBoxes },
     } = getState();
 
-    if (boxEventSource && boxEventSource.close) {
-      boxEventSource.close();
+    if (esource_box && esource_box.close) {
+      esource_box.close();
     }
 
-    if (boxSetInterval) {
-      clearInterval(boxSetInterval);
+    if (interval_box) {
+      clearInterval(interval_box);
     }
 
     const idArray: string[] = [];
@@ -144,7 +144,7 @@ export const startReactiveBoxUpdateAction = (): MainThunkAction => {
     if (ids) {
       const boxSource = updateBoxDataAPI({ ids, token, dispatch, quoteBoxes });
 
-      dispatch(updateOneSystemStateAction("boxEventSource", boxSource));
+      dispatch(updateOneSystemStateAction("esource_box", boxSource));
     }
   };
 };
@@ -152,15 +152,15 @@ export const startReactiveBoxUpdateAction = (): MainThunkAction => {
 export const startProactiveBoxUpdateAction = (): MainThunkAction => {
   return (dispatch, getState) => {
     const {
-      systemReducer: { boxEventSource, boxSetInterval, quoteBoxes },
+      systemReducer: { esource_box, interval_box, quoteBoxes },
     } = getState();
 
-    if (boxEventSource && boxEventSource.close) {
-      boxEventSource.close();
+    if (esource_box && esource_box.close) {
+      esource_box.close();
     }
 
-    if (boxSetInterval) {
-      clearInterval(boxSetInterval);
+    if (interval_box) {
+      clearInterval(interval_box);
     }
 
     const idArray: string[] = [];

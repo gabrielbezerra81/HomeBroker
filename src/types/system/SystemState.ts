@@ -29,8 +29,8 @@ export default interface SystemState {
   selectedTab: string;
   quoteBoxes: Array<BoxProps>;
   boxesVisibility: Array<BoxVisibility>;
-  boxEventSource: EventSource | null;
-  boxSetInterval: NodeJS.Timeout | null;
+  esource_box: EventSource | null;
+  interval_box: NodeJS.Timeout | null;
   activeItemRightSideMenu: string;
   multilegButtonsVisibility: boolean;
   createAlertButtonVisibility: boolean;
