@@ -119,8 +119,7 @@ const EnviarOrdem = () => {
     systemReducer: { isOpenMultileg },
     multilegReducer: {
       multileg,
-      eventSource,
-      eventSourceCotacao,
+      esource_boletaQuote,
       cotacoesMultileg,
     },
     thlReducer: { booksSelecionados },
@@ -132,8 +131,7 @@ const EnviarOrdem = () => {
   const props = {
     multileg,
     isOpenMultileg,
-    eventSource,
-    eventSourceCotacao,
+    esource_boletaQuote,
     cotacoesMultileg,
     divkey,
     zIndex,

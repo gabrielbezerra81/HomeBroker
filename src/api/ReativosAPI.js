@@ -104,7 +104,7 @@ export const atualizarCotacaoMultilegAPI = ({
     listaCotacoes,
     MODIFICAR_VARIAVEL_MULTILEG,
     "cotacoesMultileg",
-    "setIntervalCotacoesMultileg",
+    "interval_multilegQuotes",
     () => listaCotacoes,
     true,
   );

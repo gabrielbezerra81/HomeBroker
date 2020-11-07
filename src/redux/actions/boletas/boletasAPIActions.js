@@ -13,8 +13,8 @@ import { mudarAtributoBoletaAction } from "redux/actions/boletas/formInputAction
 
 export const pesquisarAtivoOnEnterAction = (props, namespace) => {
   return async (dispatch, getState) => {
-    if (props.eventSourceCotacao) {
-      props.eventSourceCotacao.close();
+    if (props.esource_boletaQuote) {
+      props.esource_boletaQuote.close();
     }
     dispatch(mudarAtributoBoletaAction(true, namespace, "pesquisandoAtivo"));
 

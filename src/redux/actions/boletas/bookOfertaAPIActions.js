@@ -8,9 +8,9 @@ import { getReducerStateBoletas } from "hooks/utils";
 
 export const listarBookOfertaOnEnterAction = ({ codigoAtivo, token }) => {
   return async (dispatch, getState) => {
-    const { eventSource } = getReducerStateBoletas(
+    const { esource_offersBook } = getReducerStateBoletas(
       getState(),
-      "bookOfertaReducer"
+      "bookOfertaReducer",
     );
 
     document.body.style.cursor = "wait";
@@ -26,8 +26,8 @@ export const listarBookOfertaOnEnterAction = ({ codigoAtivo, token }) => {
         tabelaOfertasVenda: new Array(5).fill({ price: "", qtty: "" }, 0, 5),
       };
 
-    if (eventSource) {
-      eventSource.close();
+    if (esource_offersBook) {
+      esource_offersBook.close();
     }
 
     setTimeout(() => {

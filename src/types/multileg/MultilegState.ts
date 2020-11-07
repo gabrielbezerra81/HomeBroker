@@ -9,9 +9,8 @@ export default interface MultilegState {
   modoExec: string;
   apregoarOferta: boolean;
   multileg: Array<MultilegTab>;
-  eventSource: EventSource | null; //Book
-  eventSourceCotacao: EventSource | null;
-  setIntervalCotacoesMultileg: NodeJS.Timeout | null;
+  esource_multilegQuotes: EventSource | null;
+  interval_multilegQuotes: NodeJS.Timeout | null;
   cotacoesMultileg: Array<MultilegQuote>;
   cotacoesMultilegID: number;
   alerts: Array<AlertAPI>;

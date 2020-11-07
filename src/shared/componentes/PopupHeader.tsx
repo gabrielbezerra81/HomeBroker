@@ -26,7 +26,7 @@ export const ModalHeader: React.FC<any> = ({
   resetPosition,
   name,
   ativo,
-  eventSourceCotacao,
+  esource_boletaQuote,
 }) => {
   const {
     appBoletasReducer: { appProps },
@@ -70,7 +70,7 @@ export const ModalHeader: React.FC<any> = ({
           onClick={() => {
             resetPosition();
             dispatchGlobal(fecharFormAction(formShow, name, appkey));
-            if (eventSourceCotacao) eventSourceCotacao.close();
+            if (esource_boletaQuote) esource_boletaQuote.close();
           }}
         >
           <span className="fa-stack">
@@ -89,7 +89,7 @@ export const ModalHeader: React.FC<any> = ({
 
 export const BookHeader: React.FC<any> = ({ headerClass, resetPosition }) => {
   const {
-    bookOfertaReducer: { inputHeader, eventSource },
+    bookOfertaReducer: { inputHeader, esource_offersBook },
     appBoletasReducer: { appProps },
   } = useStateBoletas();
 
@@ -136,7 +136,7 @@ export const BookHeader: React.FC<any> = ({ headerClass, resetPosition }) => {
             onClick={() => {
               dispatchGlobal(fecharFormAction(formShow, "book", appkey));
               resetPosition();
-              if (eventSource) eventSource.close();
+              if (esource_offersBook) esource_offersBook.close();
             }}
           >
             <span className="fa-stack hoverIconeFechar">
@@ -271,7 +271,7 @@ const GetAbrirMenuProps = () => {
       isOpenMultileg,
       isOpenTHL,
     },
-    multilegReducer: { eventSourceCotacao, setIntervalCotacoesMultileg },
+    multilegReducer: { esource_multilegQuotes, interval_multilegQuotes },
     thlReducer: { esource_thlStructures, interval_thlStructures },
   } = useStateStorePrincipal();
 
@@ -281,8 +281,8 @@ const GetAbrirMenuProps = () => {
     isOpenPosition,
     isOpenMultileg,
     isOpenTHL,
-    eventSourceCotacao_Multileg: eventSourceCotacao,
-    setIntervalCotacoes_Multileg: setIntervalCotacoesMultileg,
+    eventSourceCotacao_Multileg: esource_multilegQuotes,
+    setIntervalCotacoes_Multileg: interval_multilegQuotes,
     // esource_emblem_Posicao: esource_emblem,
     // interval_emblem_Posicao: interval_emblem,
     // esource_position_Posicao: esource_position,

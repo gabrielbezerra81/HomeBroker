@@ -14,8 +14,8 @@ const MultilegUpdateManager: React.FC = () => {
     multilegReducer: {
       multileg,
       abaSelecionada,
-      eventSourceCotacao,
-      setIntervalCotacoesMultileg,
+      esource_multilegQuotes,
+      interval_multilegQuotes,
     },
   } = useStateStorePrincipal();
 
@@ -105,12 +105,12 @@ const MultilegUpdateManager: React.FC = () => {
   // Para atualização ao fechar multileg
   useEffect(() => {
     if (!isOpenMultileg && previousIsOpenMultileg) {
-      if (eventSourceCotacao && eventSourceCotacao.close) {
-        eventSourceCotacao.close();
+      if (esource_multilegQuotes && esource_multilegQuotes.close) {
+        esource_multilegQuotes.close();
       }
 
-      if (setIntervalCotacoesMultileg) {
-        clearInterval(setIntervalCotacoesMultileg);
+      if (interval_multilegQuotes) {
+        clearInterval(interval_multilegQuotes);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

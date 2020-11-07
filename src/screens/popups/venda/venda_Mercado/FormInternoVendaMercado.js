@@ -38,7 +38,7 @@ class FormInternoVendaMercado extends React.Component {
               <h6 className="valorTotalText">
                 {CalculoValorAproximadoMercado(
                   this.props.qtde,
-                  this.props.dadosPesquisa
+                  this.props.dadosPesquisa,
                 )}
               </h6>
             </Col>
@@ -92,7 +92,7 @@ const mapStateToProps = (state) => ({
   assinatura: state.vendaMercadoReducer.assinatura,
   checkSalvarAssinatura: state.vendaMercadoReducer.checkSalvarAssinatura,
   dadosPesquisa: state.vendaMercadoReducer.dadosPesquisa,
-  eventSourceCotacao: state.vendaMercadoReducer.eventSourceCotacao,
+  esource_boletaQuote: state.vendaMercadoReducer.esource_boletaQuote,
 });
 
 export default connect(mapStateToProps, {

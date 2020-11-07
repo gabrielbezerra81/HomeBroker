@@ -3,11 +3,11 @@ import {
   MUDAR_STOPLOSS_BOOK,
   MUDAR_GAIN_BOOK,
   MUDAR_INPUTHEADER_BOOK,
-  LIMPAR_FORMS
+  LIMPAR_FORMS,
 } from "constants/ActionTypes";
 import {
   LISTAR_BOOK_OFERTAS,
-  ATUALIZAR_SOURCE_EVENT_BOOK_OFERTAS
+  ATUALIZAR_SOURCE_EVENT_BOOK_OFERTAS,
 } from "constants/ApiActionTypes";
 
 const INITIAL_STATE = {
@@ -18,7 +18,7 @@ const INITIAL_STATE = {
   inputHeader: "",
   tabelaOfertasCompra: new Array(5).fill({ price: "", qtty: "" }, 0, 5),
   tabelaOfertasVenda: new Array(5).fill({ price: "", qtty: "" }, 0, 5),
-  eventSource: null
+  esource_offersBook: null,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -37,10 +37,10 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         tabelaOfertasCompra: action.payload.tabelaOfertasCompra,
-        tabelaOfertasVenda: action.payload.tabelaOfertasVenda
+        tabelaOfertasVenda: action.payload.tabelaOfertasVenda,
       };
     case ATUALIZAR_SOURCE_EVENT_BOOK_OFERTAS:
-      return { ...state, eventSource: action.payload };
+      return { ...state, esource_offersBook: action.payload };
     default:
       return state;
   }

@@ -75,7 +75,7 @@ class FormInternoCompraLimitada extends React.Component<Props> {
                       this.props.mudarAtributoBoletaAction(
                         valor,
                         COMPRA_LIMITADA_NAMESPACE,
-                        "preco"
+                        "preco",
                       )
                     }
                   />
@@ -141,7 +141,7 @@ const mapStateToProps = (state: BoletasState) => ({
   preco: state.compraLimitadaReducer.preco,
   checkSalvarAssinatura: state.compraLimitadaReducer.checkSalvarAssinatura,
   dadosPesquisa: state.compraLimitadaReducer.dadosPesquisa,
-  eventSourceCotacao: state.compraLimitadaReducer.eventSourceCotacao,
+  esource_boletaQuote: state.compraLimitadaReducer.esource_boletaQuote,
 });
 
 const mapDispatch = {

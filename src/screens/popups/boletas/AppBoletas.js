@@ -237,7 +237,7 @@ const mapStateToPropsStorePrincipal = (state) => ({
 });
 
 const mapStateToPropsLocal = (state) => ({
-  eventSourceBook_Book: state.bookOfertaReducer.eventSource,
+  eventSourceBook_Book: state.bookOfertaReducer.esource_offersBook,
 });
 
 export default compose(

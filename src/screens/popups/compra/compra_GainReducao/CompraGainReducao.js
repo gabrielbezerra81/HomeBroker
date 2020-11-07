@@ -21,7 +21,7 @@ class CompraGainReducao extends React.Component {
             resetPosition={resetPosition}
             name={this.props.name}
             ativo={this.props.ativo}
-            eventSourceCotacao={this.props.eventSourceCotacao}
+            esource_boletaQuote={this.props.esource_boletaQuote}
           />
         )}
       />
@@ -41,7 +41,7 @@ const modalBody = () => (
 
 const mapStateToProps = (state) => ({
   ativo: state.compraGainReducao.ativo,
-  eventSourceCotacao: state.compraGainReducao.eventSourceCotacao,
+  esource_boletaQuote: state.compraGainReducao.esource_boletaQuote,
 });
 
 export default connect(mapStateToProps, {})(CompraGainReducao);

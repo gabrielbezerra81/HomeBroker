@@ -26,7 +26,7 @@ class VendaMercado extends React.Component {
             resetPosition={resetPosition}
             name={this.props.name}
             ativo={this.props.ativo}
-            eventSourceCotacao={this.props.eventSourceCotacao}
+            esource_boletaQuote={this.props.esource_boletaQuote}
           />
         )}
       />
@@ -46,7 +46,7 @@ const modalBody = (props) => (
 
 const mapStateToProps = (state) => ({
   ativo: state.vendaMercadoReducer.ativo,
-  eventSourceCotacao: state.vendaMercadoReducer.eventSourceCotacao,
+  esource_boletaQuote: state.vendaMercadoReducer.esource_boletaQuote,
 });
 
 export default connect(mapStateToProps, {})(VendaMercado);

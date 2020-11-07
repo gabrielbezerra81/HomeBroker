@@ -460,13 +460,13 @@ export const startReactiveOrdersUpdateAction = () => {
       esource_ordersExec.close();
     }
 
-    const eventSource = atualizarOrdensExecAPI({
+    const source = atualizarOrdensExecAPI({
       dispatch,
       listaOrdensExec: tabelaOrdensExecucao,
       token,
     });
 
-    dispatch(updateOneOrdersExecStateAction("esource_ordersExec", eventSource));
+    dispatch(updateOneOrdersExecStateAction("esource_ordersExec", source));
   };
 };
 

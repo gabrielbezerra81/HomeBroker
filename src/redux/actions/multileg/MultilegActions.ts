@@ -527,16 +527,16 @@ export const startReactiveMultilegUpdateAction = (): MainThunkAction => {
       systemReducer: { token },
       multilegReducer: {
         cotacoesMultileg: multilegQuotes,
-        eventSourceCotacao: eventSourceMultilegQuotes,
-        setIntervalCotacoesMultileg: setIntervalMultilegQuotes,
+        esource_multilegQuotes,
+        interval_multilegQuotes,
       },
     } = getState();
 
-    if (eventSourceMultilegQuotes) {
-      eventSourceMultilegQuotes.close();
+    if (esource_multilegQuotes) {
+      esource_multilegQuotes.close();
     }
-    if (setIntervalMultilegQuotes) {
-      clearInterval(setIntervalMultilegQuotes);
+    if (interval_multilegQuotes) {
+      clearInterval(interval_multilegQuotes);
     }
 
     const symbolsArray: string[] = [];
@@ -554,7 +554,7 @@ export const startReactiveMultilegUpdateAction = (): MainThunkAction => {
         token,
       });
 
-      dispatch(updateMultilegStateAction("eventSourceCotacao", newSource));
+      dispatch(updateMultilegStateAction("esource_multilegQuotes", newSource));
     }
   };
 };
@@ -563,13 +563,13 @@ export const startProactiveMultilegUpdateAction = (): MainThunkAction => {
   return (dispatch, getState) => {
     const {
       multilegReducer: {
-        eventSourceCotacao: eventSourceMultilegQuotes,
-        setIntervalCotacoesMultileg: setIntervalMultilegQuotes,
+        esource_multilegQuotes,
+        interval_multilegQuotes: setIntervalMultilegQuotes,
       },
     } = getState();
 
-    if (eventSourceMultilegQuotes) {
-      eventSourceMultilegQuotes.close();
+    if (esource_multilegQuotes) {
+      esource_multilegQuotes.close();
     }
     if (setIntervalMultilegQuotes) {
       clearInterval(setIntervalMultilegQuotes);

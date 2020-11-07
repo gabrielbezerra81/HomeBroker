@@ -27,7 +27,7 @@ class VendaStartStop extends React.Component {
             resetPosition={resetPosition}
             name={this.props.name}
             ativo={this.props.ativo}
-            eventSourceCotacao={this.props.eventSourceCotacao}
+            esource_boletaQuote={this.props.esource_boletaQuote}
           />
         )}
         renderConfigForm={this.props.config_venda}
@@ -50,7 +50,7 @@ const modalBody = (props) => (
 const mapStateToProps = (state) => ({
   config_venda: state.appBoletasReducer.config_venda,
   ativo: state.vendaStartStopReducer.ativo,
-  eventSourceCotacao: state.vendaStartStopReducer.eventSourceCotacao,
+  esource_boletaQuote: state.vendaStartStopReducer.esource_boletaQuote,
 });
 
 export default connect(mapStateToProps, {})(VendaStartStop);

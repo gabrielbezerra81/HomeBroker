@@ -25,7 +25,7 @@ class CompraLimitada extends React.Component<Props> {
             resetPosition={resetPosition}
             name={this.props.name}
             ativo={this.props.ativo}
-            eventSourceCotacao={this.props.eventSourceCotacao}
+            esource_boletaQuote={this.props.esource_boletaQuote}
           />
         )}
       />
@@ -45,7 +45,7 @@ const modalBody = () => (
 
 const mapStateToProps = (state: BoletasState) => ({
   ativo: state.compraLimitadaReducer.ativo,
-  eventSourceCotacao: state.compraLimitadaReducer.eventSourceCotacao,
+  esource_boletaQuote: state.compraLimitadaReducer.esource_boletaQuote,
 });
 
 const connector = connect(mapStateToProps, {});

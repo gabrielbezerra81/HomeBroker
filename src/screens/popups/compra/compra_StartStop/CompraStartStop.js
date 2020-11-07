@@ -23,7 +23,7 @@ class CompraStartStop extends React.Component {
             resetPosition={resetPosition}
             name={this.props.name}
             ativo={this.props.ativo}
-            eventSourceCotacao={this.props.eventSourceCotacao}
+            esource_boletaQuote={this.props.esource_boletaQuote}
           />
         )}
         renderConfigForm={this.props.config_compra}
@@ -46,7 +46,7 @@ const modalBody = (props) => (
 const mapStateToProps = (state) => ({
   config_compra: state.appBoletasReducer.config_compra,
   ativo: state.compraStartStopReducer.ativo,
-  eventSourceCotacao: state.compraStartStopReducer.eventSourceCotacao,
+  esource_boletaQuote: state.compraStartStopReducer.esource_boletaQuote,
 });
 
 export default connect(mapStateToProps, {})(CompraStartStop);

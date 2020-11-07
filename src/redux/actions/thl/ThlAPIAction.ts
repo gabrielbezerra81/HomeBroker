@@ -279,7 +279,7 @@ export const pesquisarCombinacoesTHLAPIAction = (): MainThunkAction => {
     );
     const combinacoes = await pesquisarCombinacoesTHLAPI(ativoPesquisa);
 
-    //limpar setInterval e eventSource
+    //limpar setInterval e event Source
     let tabelaCombinacoes = [];
     let arrayCotacoes: Array<{ codigo: any; cotacao: any }> = [];
 

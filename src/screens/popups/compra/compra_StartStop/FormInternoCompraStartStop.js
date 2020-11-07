@@ -83,7 +83,7 @@ const mapStateToProps = (state) => ({
   assinatura: state.compraStartStopReducer.assinatura,
   checkSalvarAssinatura: state.compraStartStopReducer.checkSalvarAssinatura,
   dadosPesquisa: state.compraStartStopReducer.dadosPesquisa,
-  eventSourceCotacao: state.compraStartStopReducer.eventSourceCotacao,
+  esource_boletaQuote: state.compraStartStopReducer.esource_boletaQuote,
 });
 
 export default compose(
@@ -100,5 +100,5 @@ export default compose(
     pesquisarAtivoOnEnterAction,
     enviarOrdemAction,
   }),
-  connect(mapStateToPropsConfigurarStop, {})
+  connect(mapStateToPropsConfigurarStop, {}),
 )(FormInternoCompraStartStop);

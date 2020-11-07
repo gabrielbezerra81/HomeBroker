@@ -58,7 +58,7 @@ class FormInternoVendaStopMovel extends React.Component {
                       props.mudarAtributoBoletaAction(
                         valor,
                         VENDA_STOPMOVEL_NAMESPACE,
-                        "ajusteAssimetrico"
+                        "ajusteAssimetrico",
                       )
                     }
                   />
@@ -70,7 +70,7 @@ class FormInternoVendaStopMovel extends React.Component {
                   onClick={() =>
                     props.adicionarItemTabelaStopMovel(
                       props,
-                      VENDA_STOPMOVEL_NAMESPACE
+                      VENDA_STOPMOVEL_NAMESPACE,
                     )
                   }
                   className="operation-icons"
@@ -112,7 +112,7 @@ class FormInternoVendaStopMovel extends React.Component {
                     props.adicionarItemTabelaStopMovel(
                       props,
                       VENDA_STOPMOVEL_NAMESPACE,
-                      "simulacao"
+                      "simulacao",
                     )
                   }
                 >
@@ -143,7 +143,7 @@ const mapStateToProps = (state) => ({
   assinatura: state.vendaStopMovel.assinatura,
   checkSalvarAssinatura: state.vendaStopMovel.checkSalvarAssinatura,
   dadosPesquisa: state.vendaStopMovel.dadosPesquisa,
-  eventSourceCotacao: state.vendaStopMovel.eventSourceCotacao,
+  esource_boletaQuote: state.vendaStopMovel.esource_boletaQuote,
   tabelaOrdensSimulacao: state.vendaStopMovel.tabelaOrdensSimulacao,
 });
 

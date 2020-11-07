@@ -69,7 +69,7 @@ const INITIAL_STATE = {
   stopExecConfig2: "",
   qtde: "",
   erro: "",
-  eventSourceCotacao: null,
+  esource_boletaQuote: null,
 };
 
 export default (namespace) => (state = INITIAL_STATE, action) => {
@@ -111,7 +111,7 @@ export default (namespace) => (state = INITIAL_STATE, action) => {
     case `${PESQUISAR_ATIVO_BOLETA_API}${namespace}`:
       return { ...state, dadosPesquisa: action.payload };
     case `${ATUALIZAR_EVENT_SOURCE_BOLETAS}${namespace}`:
-      return { ...state, eventSourceCotacao: action.payload };
+      return { ...state, esource_boletaQuote: action.payload };
     default:
       return state;
   }

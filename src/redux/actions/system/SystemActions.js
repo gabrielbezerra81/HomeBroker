@@ -388,7 +388,7 @@ export const clearReduxStateFromStorageAction = (props) => {
 
     Object.keys(props).forEach((key) => {
       if (props[key]) {
-        if (key.toLowerCase().includes("source") && props[key].close) {
+        if (key.toLowerCase().includes("esource") && props[key].close) {
           props[key].close();
         } else if (key.toLowerCase().includes("interval")) {
           clearInterval(props[key]);
