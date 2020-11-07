@@ -91,11 +91,9 @@ const PositionUpdateManager: React.FC = () => {
       positionList.length
     ) {
       if (updateMode === "reactive") {
-        console.log("att reativa de posição");
         dispatch(startReactivePositionUpdateAction());
       } //
       else {
-        console.log("att proativa de posição");
         dispatch(startProactivePositionUpdateAction());
       }
     }
@@ -103,15 +101,12 @@ const PositionUpdateManager: React.FC = () => {
     // Condição para executar toda vez que abrir o popup de posição
     if (isOpenPosition && positionList.length) {
       if (updateMode === "reactive") {
-        console.log("att reativa de emblemas");
-
         dispatch(startReactiveEmblemUpdateAction());
         dispatch(startReactivePositionQuoteUpdateAction());
       } //
       else {
         dispatch(startProactiveEmblemUpdateAction());
         dispatch(startProactivePositionQuoteUpdateAction());
-        console.log("att proativa de emblemas");
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

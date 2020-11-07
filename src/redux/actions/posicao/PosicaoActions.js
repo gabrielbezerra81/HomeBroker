@@ -214,11 +214,7 @@ export const startReactivePositionQuoteUpdateAction = () => {
 export const startProactivePositionUpdateAction = () => {
   return (dispatch, getState) => {
     const {
-      positionReducer: {
-        eventSourcePosicao: esource_position,
-        posicoesCustodia: positionList,
-      },
-      systemReducer: { token },
+      positionReducer: { eventSourcePosicao: esource_position },
     } = getState();
 
     if (esource_position && esource_position.close) {
@@ -236,7 +232,6 @@ export const startProactiveEmblemUpdateAction = () => {
         eventSourceEmblema: esource_emblem,
         setIntervalEmblema: interval_emblem,
       },
-      systemReducer: { token },
     } = getState();
 
     let idArray = [];
@@ -266,9 +261,7 @@ export const startProactivePositionQuoteUpdateAction = () => {
         posicoesCustodia: positionList,
         eventSourceCotacoes: esource_positionQuote,
         setIntervalCotacoesPosicao: interval_positionQuote,
-        arrayCotacoes: positionQuotes,
       },
-      systemReducer: { token },
     } = getState();
 
     const symbolList = await montaArrayCotacoes(positionList, "codigos");

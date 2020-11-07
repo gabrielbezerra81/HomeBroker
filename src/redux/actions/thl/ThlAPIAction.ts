@@ -210,9 +210,7 @@ export const startProactiveThlStructuresUpdateAction = (): MainThunkAction => {
         eventSourcePrecos: esource_thlStructures,
         setIntervalPrecosTHL: interval_thlStructures,
         opcoesStrike: thlLines,
-        precosTabelaVencimentos: priceStructures,
       },
-      systemReducer: { token },
     } = getState();
 
     if (esource_thlStructures) {
@@ -402,7 +400,6 @@ export const startProactiveThlQuoteUpdateAction = (): MainThunkAction => {
         setIntervalCotacoesTHL: interval_thlQuote,
         arrayCotacoes: thlQuotes,
       },
-      systemReducer: { token },
     } = getState();
 
     if (interval_thlQuote) {

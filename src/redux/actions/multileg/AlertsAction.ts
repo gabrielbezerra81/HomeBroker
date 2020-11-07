@@ -25,13 +25,8 @@ export const openAlertInMultileg = (
 ): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
-      multilegReducer: {
-        eventSourceCotacao,
-        setIntervalCotacoesMultileg,
-        multileg,
-        cotacoesMultileg,
-      },
-      systemReducer: { isOpenMultileg, token },
+      multilegReducer: { multileg, cotacoesMultileg },
+      systemReducer: { isOpenMultileg },
     } = getState();
 
     const { price, param, operator, comment } = alertItem;

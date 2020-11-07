@@ -226,13 +226,7 @@ export const updateMultilegOfferAction = ({
   setPointerWhileAwaiting({ lockMode: "travar", id: "multileg" });
 
   const {
-    systemReducer: { token },
-    multilegReducer: {
-      eventSourceCotacao,
-      setIntervalCotacoesMultileg,
-      multileg,
-      cotacoesMultileg,
-    },
+    multilegReducer: { multileg, cotacoesMultileg },
   } = getState();
 
   const updatedMultilegTabs = cloneMultilegTabs(multileg);
@@ -345,13 +339,7 @@ export const addMultilegOfferAction = ({
   });
 
   const {
-    systemReducer: { token },
-    multilegReducer: {
-      eventSourceCotacao,
-      setIntervalCotacoesMultileg,
-      multileg,
-      cotacoesMultileg,
-    },
+    multilegReducer: { multileg, cotacoesMultileg },
   } = getState();
 
   if (multileg[tabIndex].tabelaMultileg.length < 6) {
@@ -574,9 +562,7 @@ export const startReactiveMultilegUpdateAction = (): MainThunkAction => {
 export const startProactiveMultilegUpdateAction = (): MainThunkAction => {
   return (dispatch, getState) => {
     const {
-      systemReducer: { token },
       multilegReducer: {
-        cotacoesMultileg: multilegQuotes,
         eventSourceCotacao: eventSourceMultilegQuotes,
         setIntervalCotacoesMultileg: setIntervalMultilegQuotes,
       },

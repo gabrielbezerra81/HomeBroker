@@ -32,13 +32,7 @@ export const searchMultilegSymbolAPIAction = (
 ): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
-      systemReducer: { token },
-      multilegReducer: {
-        eventSourceCotacao,
-        setIntervalCotacoesMultileg,
-        multileg,
-        cotacoesMultileg,
-      },
+      multilegReducer: { multileg, cotacoesMultileg },
     } = getState();
 
     dispatch(

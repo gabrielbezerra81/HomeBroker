@@ -173,7 +173,13 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
         <Row className={`navContainer`}>
           <Nav>
             {mainTabs.map((tabItem, index) => {
-              return <TabButton tab={tabItem} tabIndex={index} />;
+              return (
+                <TabButton
+                  key={`tabButton${index}`}
+                  tab={tabItem}
+                  tabIndex={index}
+                />
+              );
             })}
 
             <Col>

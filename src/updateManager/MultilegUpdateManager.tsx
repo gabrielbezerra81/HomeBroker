@@ -1,7 +1,7 @@
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import usePrevious from "hooks/usePrevious";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   startProactiveMultilegUpdateAction,
   startReactiveMultilegUpdateAction,
@@ -25,14 +25,6 @@ const MultilegUpdateManager: React.FC = () => {
   const previousUpdateMode = usePrevious(updateMode);
   const previousUpdateInterval = usePrevious(updateInterval);
   const previousMultileg = usePrevious(multileg);
-
-  const verifyVisibilityChange = useCallback((previous, current) => {
-    if (previous !== undefined && previous !== current) {
-      return true;
-    }
-
-    return false;
-  }, []);
 
   // Iniciar atualização
   useEffect(() => {

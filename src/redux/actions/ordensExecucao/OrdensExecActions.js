@@ -94,13 +94,8 @@ export const openOrderInMultilegAction = (props, action = "") => {
     });
 
     const {
-      multilegReducer: {
-        eventSourceCotacao,
-        setIntervalCotacoesMultileg,
-        multileg,
-        cotacoesMultileg,
-      },
-      systemReducer: { isOpenMultileg, token },
+      multilegReducer: { multileg, cotacoesMultileg },
+      systemReducer: { isOpenMultileg },
       ordersExecReducer: { ordemAtual },
     } = getState();
 
@@ -534,8 +529,7 @@ export const startReactiveOrdersUpdateAction = () => {
 export const startProactiveOrdersUpdateAction = () => {
   return (dispatch, getState) => {
     const {
-      systemReducer: { token },
-      ordersExecReducer: { eventSourceOrdensExec, tabelaOrdensExecucao },
+      ordersExecReducer: { eventSourceOrdensExec },
     } = getState();
 
     if (eventSourceOrdensExec && eventSourceOrdensExec.close) {
