@@ -2,7 +2,10 @@ import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import usePrevious from "hooks/usePrevious";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import React, { useCallback, useEffect } from "react";
-import { startReactiveMultilegUpdateAction } from "redux/actions/multileg/MultilegActions";
+import {
+  startProactiveMultilegUpdateAction,
+  startReactiveMultilegUpdateAction,
+} from "redux/actions/multileg/MultilegActions";
 import checkIfUpdateConfigChanged from "./utils";
 
 const MultilegUpdateManager: React.FC = () => {
@@ -18,6 +21,7 @@ const MultilegUpdateManager: React.FC = () => {
 
   const dispatch = useDispatchStorePrincipal();
 
+  const previousIsOpenMultileg = usePrevious(isOpenMultileg);
   const previousUpdateMode = usePrevious(updateMode);
   const previousUpdateInterval = usePrevious(updateInterval);
   const previousMultileg = usePrevious(multileg);
@@ -30,6 +34,7 @@ const MultilegUpdateManager: React.FC = () => {
     return false;
   }, []);
 
+  // Iniciar atualização
   useEffect(() => {
     function checkIfMultilegChanged() {
       const tabIndex = Number(abaSelecionada.replace("tab", ""));
@@ -83,11 +88,10 @@ const MultilegUpdateManager: React.FC = () => {
 
     function startUpdate() {
       if (updateMode === "reactive") {
-        console.log("começou atualização reativa da multileg");
         dispatch(startReactiveMultilegUpdateAction());
       } //
       else {
-        console.log("atualização proativa da multileg");
+        dispatch(startProactiveMultilegUpdateAction());
       }
     }
 
@@ -108,9 +112,7 @@ const MultilegUpdateManager: React.FC = () => {
 
   // Para atualização ao fechar multileg
   useEffect(() => {
-    if (!isOpenMultileg) {
-      console.log("clear Multileg");
-
+    if (!isOpenMultileg && previousIsOpenMultileg) {
       if (eventSourceCotacao && eventSourceCotacao.close) {
         eventSourceCotacao.close();
       }
