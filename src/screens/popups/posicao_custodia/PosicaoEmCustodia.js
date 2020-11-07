@@ -19,7 +19,6 @@ import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopup
 class PosicaoEmCustodia extends React.Component {
   componentDidMount() {
     const { props } = this;
-    const { eventSourceEmblema, eventSourceCotacoes, posicoesCustodia } = props;
 
     if (props.divkey !== "" && props.divkey === "posicao_custodia") {
       document.getElementById("posicao_custodia").style.zIndex =
@@ -83,24 +82,24 @@ class PosicaoEmCustodia extends React.Component {
       updateFunction: aumentarZindexAction,
     });
 
-    if (
-      props.eventSourcePosicao &&
-      props.eventSourceEmblema &&
-      props.eventSourceCotacoes
-    ) {
-      if (props.posicoesCustodia.length !== props.arrayPrecos.length) {
-        if (prevProps.posicoesCustodia !== props.posicoesCustodia) {
-          if (
-            props.posicoesCustodia.length &&
-            props.arrayPrecos.length &&
-            props.arrayCotacoes.length
-          ) {
-            // props.atualizarEmblemasAction();
-            // props.atualizarCotacoesPosicaoAction();
-          }
-        }
-      }
-    }
+    // if (
+    //   props.eventSourcePosicao &&
+    //   props.eventSourceEmblema &&
+    //   props.eventSourceCotacoes
+    // ) {
+    //   if (props.posicoesCustodia.length !== props.arrayPrecos.length) {
+    //     if (prevProps.posicoesCustodia !== props.posicoesCustodia) {
+    //       if (
+    //         props.posicoesCustodia.length &&
+    //         props.arrayPrecos.length &&
+    //         props.arrayCotacoes.length
+    //       ) {
+    //         // props.atualizarEmblemasAction();
+    //         // props.atualizarCotacoesPosicaoAction();
+    //       }
+    //     }
+    //   }
+    // }
   }
 
   render() {
@@ -158,15 +157,6 @@ const mapStateToPropsPosicao = (state) => ({
   tipoVisualizacao: state.positionReducer.tipoVisualizacao,
   ativoPesquisa: state.positionReducer.ativoPesquisa,
   inputSelect: state.positionReducer.inputSelect,
-  eventSourceEmblema: state.positionReducer.eventSourceEmblema,
-  setIntervalEmblema: state.positionReducer.setIntervalEmblema,
-  eventSourcePosicao: state.positionReducer.eventSourcePosicao,
-  eventSourceCotacoes: state.positionReducer.eventSourceCotacoes,
-  setIntervalCotacoesPosicao: state.positionReducer.setIntervalCotacoesPosicao,
-  posicoesCustodia: state.positionReducer.posicoesCustodia,
-  arrayCotacoes: state.positionReducer.arrayCotacoes,
-  arrayPrecos: state.positionReducer.arrayPrecos,
-  arrayPrecosID: state.positionReducer.arrayPrecosID,
   token: state.systemReducer.token,
   isOpenPosition: state.systemReducer.isOpenPosition,
 });
