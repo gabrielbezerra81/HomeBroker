@@ -1,5 +1,7 @@
+import usePrevious from "hooks/usePrevious";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import React, { useEffect } from "react";
+import BoxUpdateManager from "./BoxUpdateManager";
 import MultilegUpdateManager from "./MultilegUpdateManager";
 import OrdersUpdateManager from "./OrdersUpdateManager";
 import PositionUpdateManager from "./PositionUpdateManager";
@@ -10,8 +12,10 @@ const UpdateManager: React.FC = () => {
     systemReducer: { isLogged },
   } = useStateStorePrincipal();
 
+  const previousIsLogged = usePrevious(isLogged);
+
   useEffect(() => {
-    if (!isLogged) {
+    if (!isLogged && previousIsLogged) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLogged]);
@@ -26,6 +30,7 @@ const UpdateManager: React.FC = () => {
       <OrdersUpdateManager />
       <PositionUpdateManager />
       <THLUpdateManager />
+      <BoxUpdateManager />
     </>
   );
 };
