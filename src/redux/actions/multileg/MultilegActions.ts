@@ -570,3 +570,23 @@ export const startReactiveMultilegUpdateAction = (): MainThunkAction => {
     }
   };
 };
+
+export const startProactiveMultilegUpdateAction = (): MainThunkAction => {
+  return (dispatch, getState) => {
+    const {
+      systemReducer: { token },
+      multilegReducer: {
+        cotacoesMultileg: multilegQuotes,
+        eventSourceCotacao: eventSourceMultilegQuotes,
+        setIntervalCotacoesMultileg: setIntervalMultilegQuotes,
+      },
+    } = getState();
+
+    if (eventSourceMultilegQuotes) {
+      eventSourceMultilegQuotes.close();
+    }
+    if (setIntervalMultilegQuotes) {
+      clearInterval(setIntervalMultilegQuotes);
+    }
+  };
+};
