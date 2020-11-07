@@ -167,7 +167,7 @@ export const atualizarCotacaoPosicaoAPI = ({
     listaCotacoes,
     MUDAR_VARIAVEL_POSICAO_CUSTODIA,
     "arrayCotacoes",
-    "setIntervalCotacoesPosicao",
+    "interval_positionQuote",
   );
 
   source.onmessage = function (event) {
@@ -305,7 +305,7 @@ export const atualizarEmblemasAPI = ({ dispatch, listaPrecos, ids, token }) => {
     novaLista,
     MUDAR_VARIAVEL_POSICAO_CUSTODIA,
     "arrayPrecos",
-    "setIntervalEmblema",
+    "interval_emblem",
   );
 
   source.onmessage = function (event) {

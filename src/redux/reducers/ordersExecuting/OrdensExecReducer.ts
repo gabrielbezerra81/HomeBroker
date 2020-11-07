@@ -1,4 +1,7 @@
-import { MUDAR_VARIAVEL_ORDENS_EXEC, MUDA_VARIAVEIS_ORDENS_EXEC } from "constants/MenuActionTypes";
+import {
+  MUDAR_VARIAVEL_ORDENS_EXEC,
+  MUDA_VARIAVEIS_ORDENS_EXEC,
+} from "constants/MenuActionTypes";
 import { LISTAR_ORDENS_EXECUCAO } from "constants/ApiActionTypes";
 import { actionType } from "constants/ActionTypes";
 import { resetarEstadoRedux } from "redux/reducers/resetarEstadoReducer";
@@ -18,7 +21,7 @@ const INITIAL_STATE: OrdersExecState = {
   selectQtdeAberto: false,
   selectPrecoAberto: false,
   sinalInputSelect: "+",
-  eventSourceOrdensExec: null,
+  esource_ordersExec: null,
   filtrarOrdensAberto: false,
 };
 
@@ -39,7 +42,7 @@ export default (
           ...resetarEstadoRedux({
             state,
             initialState: INITIAL_STATE,
-            omitions: ["tabelaOrdensExecucao", "eventSourceOrdensExec"],
+            omitions: ["tabelaOrdensExecucao", "esource_ordersExec"],
             reducerName: "ordensExec",
             shouldClearAllProps: payload.limparReducer,
           }),
@@ -50,7 +53,7 @@ export default (
     //     ? resetarEstadoRedux(
     //         state,
     //         INITIAL_STATE,
-    //         ["tabelaOrdensExecucao", "eventSourceOrdensExec"],
+    //         ["tabelaOrdensExecucao", "esource_ordersExec"],
     //         !action.payload.valor,
     //         "ordensExec",
     //         false

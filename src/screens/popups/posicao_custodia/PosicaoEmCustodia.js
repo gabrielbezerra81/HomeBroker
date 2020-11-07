@@ -30,15 +30,15 @@ class PosicaoEmCustodia extends React.Component {
     // pois isso é feito pela própria action de listar posição
     // if (posicoesCustodia.length) {
     //   if (
-    //     (eventSourceEmblema && eventSourceEmblema.readyState === 2) ||
-    //     !eventSourceEmblema
+    //     (esource_emblem && esource_emblem.readyState === 2) ||
+    //     !esource_emblem
     //   ) {
     //     props.atualizarEmblemasAction();
     //   }
 
     //   if (
-    //     (eventSourceCotacoes && eventSourceCotacoes.readyState === 2) ||
-    //     !eventSourceCotacoes
+    //     (esource_positionQuote && esource_positionQuote.readyState === 2) ||
+    //     !esource_positionQuote
     //   ) {
     //     props.atualizarCotacoesPosicaoAction();
     //   }
@@ -48,24 +48,24 @@ class PosicaoEmCustodia extends React.Component {
   // Limpa eventSources e timers
   // componentWillUnmount() {
   //   const {
-  //     eventSourceEmblema,
-  //     eventSourceCotacoes,
-  //     setIntervalEmblema,
-  //     setIntervalCotacoesPosicao,
+  //     esource_emblem,
+  //     esource_positionQuote,
+  //     interval_emblem,
+  //     interval_positionQuote,
   //   } = this.props;
 
-  //   if (eventSourceEmblema && eventSourceEmblema.close) {
-  //     eventSourceEmblema.close();
+  //   if (esource_emblem && esource_emblem.close) {
+  //     esource_emblem.close();
   //   }
-  //   if (setIntervalEmblema) {
-  //     clearInterval(setIntervalEmblema);
+  //   if (interval_emblem) {
+  //     clearInterval(interval_emblem);
   //   }
 
-  //   if (eventSourceCotacoes && eventSourceCotacoes.close) {
-  //     eventSourceCotacoes.close();
+  //   if (esource_positionQuote && esource_positionQuote.close) {
+  //     esource_positionQuote.close();
   //   }
-  //   if (setIntervalCotacoesPosicao) {
-  //     clearInterval(setIntervalCotacoesPosicao);
+  //   if (interval_positionQuote) {
+  //     clearInterval(interval_positionQuote);
   //   }
   // }
 
@@ -83,9 +83,9 @@ class PosicaoEmCustodia extends React.Component {
     });
 
     // if (
-    //   props.eventSourcePosicao &&
-    //   props.eventSourceEmblema &&
-    //   props.eventSourceCotacoes
+    //   props.esource_position &&
+    //   props.esource_emblem &&
+    //   props.esource_positionQuote
     // ) {
     //   if (props.posicoesCustodia.length !== props.arrayPrecos.length) {
     //     if (prevProps.posicoesCustodia !== props.posicoesCustodia) {

@@ -97,10 +97,7 @@ const montaArrayCotacoes = async (listaPosicoes, tipoRetorno = "completo") => {
 export const startReactivePositionUpdateAction = () => {
   return (dispatch, getState) => {
     const {
-      positionReducer: {
-        eventSourcePosicao: esource_position,
-        posicoesCustodia: positionList,
-      },
+      positionReducer: { esource_position, posicoesCustodia: positionList },
       systemReducer: { token },
     } = getState();
 
@@ -116,7 +113,7 @@ export const startReactivePositionUpdateAction = () => {
 
     dispatch(
       updateOnePositionState({
-        attributeName: "eventSourcePosicao",
+        attributeName: "esource_position",
         attributeValue: source,
       }),
     );
@@ -129,8 +126,8 @@ export const startReactiveEmblemUpdateAction = () => {
     const {
       positionReducer: {
         posicoesCustodia: positionList,
-        eventSourceEmblema: esource_emblem,
-        setIntervalEmblema: interval_emblem,
+        esource_emblem,
+        interval_emblem,
       },
       systemReducer: { token },
     } = getState();
@@ -159,7 +156,7 @@ export const startReactiveEmblemUpdateAction = () => {
 
       dispatch(
         updateOnePositionState({
-          attributeName: "eventSourceEmblema",
+          attributeName: "esource_emblem",
           attributeValue: newSource,
         }),
       );
@@ -173,8 +170,8 @@ export const startReactivePositionQuoteUpdateAction = () => {
     const {
       positionReducer: {
         posicoesCustodia: positionList,
-        eventSourceCotacoes: esource_positionQuote,
-        setIntervalCotacoesPosicao: interval_positionQuote,
+        esource_positionQuote,
+        interval_positionQuote,
         arrayCotacoes: positionQuotes,
       },
       systemReducer: { token },
@@ -202,7 +199,7 @@ export const startReactivePositionQuoteUpdateAction = () => {
 
       dispatch(
         updateOnePositionState({
-          attributeName: "eventSourceCotacoes",
+          attributeName: "esource_positionQuote",
           attributeValue: newSource,
         }),
       );
@@ -214,7 +211,7 @@ export const startReactivePositionQuoteUpdateAction = () => {
 export const startProactivePositionUpdateAction = () => {
   return (dispatch, getState) => {
     const {
-      positionReducer: { eventSourcePosicao: esource_position },
+      positionReducer: { esource_position },
     } = getState();
 
     if (esource_position && esource_position.close) {
@@ -229,8 +226,8 @@ export const startProactiveEmblemUpdateAction = () => {
     const {
       positionReducer: {
         posicoesCustodia: positionList,
-        eventSourceEmblema: esource_emblem,
-        setIntervalEmblema: interval_emblem,
+        esource_emblem,
+        interval_emblem,
       },
     } = getState();
 
@@ -259,8 +256,8 @@ export const startProactivePositionQuoteUpdateAction = () => {
     const {
       positionReducer: {
         posicoesCustodia: positionList,
-        eventSourceCotacoes: esource_positionQuote,
-        setIntervalCotacoesPosicao: interval_positionQuote,
+        esource_positionQuote,
+        interval_positionQuote,
       },
     } = getState();
 

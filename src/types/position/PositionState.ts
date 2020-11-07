@@ -10,11 +10,11 @@ export default interface PositionState {
   ativoPesquisa: string;
   inputSelect: string;
   posicoesCustodia: PositionItem[];
-  eventSourceEmblema: EventSource | null;
-  setIntervalEmblema: NodeJS.Timeout | null;
-  eventSourcePosicao: EventSource | null;
-  eventSourceCotacoes: EventSource | null;
-  setIntervalCotacoesPosicao: NodeJS.Timeout | null;
+  esource_emblem: EventSource | null;
+  interval_emblem: NodeJS.Timeout | null;
+  esource_position: EventSource | null;
+  esource_positionQuote: EventSource | null;
+  interval_positionQuote: NodeJS.Timeout | null;
   arrayPrecos: PositionPrice[];
   arrayPrecosID: number;
   arrayCotacoes: PositionQuote[];

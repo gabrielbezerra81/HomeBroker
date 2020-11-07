@@ -17,10 +17,10 @@ const PositionUpdateManager: React.FC = () => {
   const {
     systemReducer: { updateMode, updateInterval, isOpenPosition },
     positionReducer: {
-      eventSourceEmblema: esource_emblem,
-      eventSourceCotacoes: esource_positionQuote,
-      setIntervalEmblema: interval_emblem,
-      setIntervalCotacoesPosicao: interval_positionQuote,
+      esource_emblem,
+      esource_positionQuote: esource_positionQuote,
+      interval_emblem: interval_emblem,
+      interval_positionQuote: interval_positionQuote,
       posicoesCustodia: positionList,
       arrayPrecos: positionPrices,
       arrayCotacoes: positionQuotes,

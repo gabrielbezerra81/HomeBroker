@@ -283,12 +283,12 @@ const GetAbrirMenuProps = () => {
     isOpenTHL,
     eventSourceCotacao_Multileg: eventSourceCotacao,
     setIntervalCotacoes_Multileg: setIntervalCotacoesMultileg,
-    // eventSourceEmblema_Posicao: eventSourceEmblema,
-    // setIntervalEmblema_Posicao: setIntervalEmblema,
-    // eventSourcePosicao_Posicao: eventSourcePosicao,
-    // eventSourceCotacoes_Posicao: eventSourceCotacoes,
-    // setIntervalCotacoes_Posicao: setIntervalCotacoesPosicao,
-    // eventSourceOrdensExec_OrdensExec: eventSourceOrdensExec,
+    // esource_emblem_Posicao: esource_emblem,
+    // interval_emblem_Posicao: interval_emblem,
+    // esource_position_Posicao: esource_position,
+    // esource_positionQuote_Posicao: esource_positionQuote,
+    // setIntervalCotacoes_Posicao: interval_positionQuote,
+    // esource_ordersExec_OrdensExec: esource_ordersExec,
     esource_thlStructures_THL: esource_thlStructures,
     setIntervalPrecos_THL: interval_thlStructures,
   };
@@ -296,13 +296,13 @@ const GetAbrirMenuProps = () => {
   return props;
 
   // const {
-  //   eventSourceEmblema,
-  //   eventSourcePosicao,
-  //   eventSourceCotacoes,
-  //   setIntervalCotacoesPosicao,
-  //   setIntervalEmblema,
+  //   esource_emblem,
+  //   esource_position,
+  //   esource_positionQuote,
+  //   interval_positionQuote,
+  //   interval_emblem,
   // } = state.positionReducer;
-  // const { eventSourceOrdensExec } = state.ordersExecReducer;
+  // const { esource_ordersExec } = state.ordersExecReducer;
 };
 
 const BotaoAbrirFiltrarOrdens: React.FC<any> = ({ headerTitle }) => {

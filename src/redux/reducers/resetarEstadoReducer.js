@@ -35,7 +35,7 @@ export const resetarEstadoRedux = ({
       case "ordensExec":
         mutableProps = {
           tabelaOrdensExecucao: [],
-          eventSourceOrdensExec: null,
+          esource_ordersExec: null,
         };
         break;
       case "thl":
