@@ -49,13 +49,13 @@ const OrdersUpdateManager: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Atualização inicial
   useEffect(() => {
     if (
       Array.isArray(previousOrdersExecList) &&
       previousOrdersExecList.length === 0 &&
       ordersExecList.length
     ) {
-      console.log("atualização inicial");
       if (updateMode === "reactive") {
         dispatch(startReactiveOrdersUpdateAction());
       } //

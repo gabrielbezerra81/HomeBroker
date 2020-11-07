@@ -3,16 +3,24 @@ import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import usePrevious from "hooks/usePrevious";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import checkIfUpdateConfigChanged from "./utils";
-import { listPositionAction } from "redux/actions/posicao/PosicaoActions";
+import {
+  listPositionAction,
+  startReactivePositionUpdateAction,
+  startReactiveEmblemUpdateAction,
+  startReactivePositionQuoteUpdateAction,
+  startProactivePositionUpdateAction,
+  startProactiveEmblemUpdateAction,
+  startProactivePositionQuoteUpdateAction,
+} from "redux/actions/posicao/PosicaoActions";
 
 const PositionUpdateManager: React.FC = () => {
   const {
     systemReducer: { updateMode, updateInterval, isOpenPosition },
     positionReducer: {
-      eventSourceEmblema,
-      eventSourceCotacoes,
-      setIntervalEmblema,
-      setIntervalCotacoesPosicao,
+      eventSourceEmblema: esource_emblem,
+      eventSourceCotacoes: esource_positionQuote,
+      setIntervalEmblema: interval_emblem,
+      setIntervalCotacoesPosicao: interval_positionQuote,
       posicoesCustodia: positionList,
       arrayPrecos: positionPrices,
       arrayCotacoes: positionQuotes,
@@ -24,14 +32,29 @@ const PositionUpdateManager: React.FC = () => {
   const previousIsOpenPosition = usePrevious(isOpenPosition);
   const previousUpdateMode = usePrevious(updateMode);
   const previousUpdateInterval = usePrevious(updateInterval);
+  const previousPositionList = usePrevious(positionList);
 
+  // Gerenciar mudanças no modo de atualização
   useEffect(() => {
     function startUpdate() {
       if (updateMode === "reactive") {
-        console.log("começou atualização reativa da posição");
+        console.log("att reativa da posição");
+        dispatch(startReactivePositionUpdateAction());
+
+        if (isOpenPosition) {
+          console.log("att reativa de emblemas");
+          dispatch(startReactiveEmblemUpdateAction());
+          dispatch(startReactivePositionQuoteUpdateAction());
+        }
       } //
       else {
-        console.log("atualização proativa da posição");
+        console.log("att proativa da posição");
+        dispatch(startProactivePositionUpdateAction());
+        if (isOpenPosition) {
+          console.log("att proativa de emblemas");
+          dispatch(startProactiveEmblemUpdateAction());
+          dispatch(startProactivePositionQuoteUpdateAction());
+        }
       }
     }
 
@@ -53,31 +76,64 @@ const PositionUpdateManager: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateInterval, updateMode, dispatch]);
 
+  // Listagem inicial da posição ao fazer login
   useEffect(() => {
     dispatch(listPositionAction());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // TODO: implementar atualização inicial
-  useEffect(() => {}, []);
+  // Disparar atualização inicial
+  useEffect(() => {
+    // Condição para executar apenas uma vez logo após a listagem inicial
+    if (
+      Array.isArray(previousPositionList) &&
+      previousPositionList.length === 0 &&
+      positionList.length
+    ) {
+      if (updateMode === "reactive") {
+        console.log("att reativa de posição");
+        dispatch(startReactivePositionUpdateAction());
+      } //
+      else {
+        console.log("att proativa de posição");
+        dispatch(startProactivePositionUpdateAction());
+      }
+    }
 
-  // Para atualização ao fechar posição
+    // Condição para executar toda vez que abrir o popup de posição
+    if (isOpenPosition && positionList.length) {
+      if (updateMode === "reactive") {
+        console.log("att reativa de emblemas");
+
+        dispatch(startReactiveEmblemUpdateAction());
+        dispatch(startReactivePositionQuoteUpdateAction());
+      } //
+      else {
+        dispatch(startProactiveEmblemUpdateAction());
+        dispatch(startProactivePositionQuoteUpdateAction());
+        console.log("att proativa de emblemas");
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, positionList.length, isOpenPosition]);
+
+  // Parar atualização ao fechar posição
   useEffect(() => {
     if (!isOpenPosition && previousIsOpenPosition) {
-      if (eventSourceEmblema && eventSourceEmblema.close) {
-        eventSourceEmblema.close();
+      if (esource_emblem && esource_emblem.close) {
+        esource_emblem.close();
       }
 
-      if (setIntervalEmblema) {
-        clearInterval(setIntervalEmblema);
+      if (interval_emblem) {
+        clearInterval(interval_emblem);
       }
 
-      if (eventSourceCotacoes && eventSourceCotacoes.close) {
-        eventSourceCotacoes.close();
+      if (esource_positionQuote && esource_positionQuote.close) {
+        esource_positionQuote.close();
       }
 
-      if (setIntervalCotacoesPosicao) {
-        clearInterval(setIntervalCotacoesPosicao);
+      if (interval_positionQuote) {
+        clearInterval(interval_positionQuote);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -87,33 +143,3 @@ const PositionUpdateManager: React.FC = () => {
 };
 
 export default PositionUpdateManager;
-
-/**
- 
-      atualizarPosicao({
-        dispatch,
-        listaPosicoes,
-        token,
-        eventSourcePosicao,
-      });
-
-      if (isOpenPosition) {
-        atualizarEmblemas({
-          dispatch,
-          token,
-          listaPosicoes,
-          listaPrecos: arrayPrecos,
-          eventSourceEmblema,
-          setIntervalEmblema,
-        });
-        atualizarCotacoes({
-          dispatch,
-          listaPosicoes,
-          arrayCotacoes,
-          eventSourceCotacoes,
-          setIntervalCotacoesPosicao,
-          token,
-        });
-      }
-
- */

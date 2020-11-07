@@ -11,11 +11,7 @@ import { ReactComponent as IconeAmpliado } from "assets/check-box-empty.svg";
 import PosicaoEmLista from "screens/popups/posicao_custodia/PosicaoLista";
 import PosicaoAmpliadaResumida from "screens/popups/posicao_custodia/PosicaoAmpliadaResumida";
 import { StorePrincipalContext, GlobalContext } from "redux/StoreCreation";
-import {
-  mudarVariavelPosicaoAction,
-  atualizarCotacoesPosicaoAction,
-  atualizarEmblemasAction,
-} from "redux/actions/posicao/PosicaoActions";
+import { mudarVariavelPosicaoAction } from "redux/actions/posicao/PosicaoActions";
 import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
 import PosicaoDetalhada from "screens/popups/posicao_custodia/posicao_detalhada/PosicaoDetalhada";
 import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopupZIndexFromSecondaryTab";
@@ -183,8 +179,6 @@ export default compose(
     mapStateToPropsPosicao,
     {
       mudarVariavelPosicaoAction,
-      atualizarCotacoesPosicaoAction,
-      atualizarEmblemasAction,
     },
     null,
     { context: StorePrincipalContext },
