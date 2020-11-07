@@ -18,25 +18,41 @@ import useDispatchBoletas from "hooks/useDispatchBoletas";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 
 import useStateBoletas from "hooks/useStateBoletas";
+import { BoletaNamespace } from "constants/ActionTypes";
+
+interface ModalHeaderProps {
+  headerTitle?: any;
+  headerClass?: any;
+  resetPosition?: any;
+  name?: any;
+  ativo?: any;
+  namespace?: any;
+}
 
 // Apenas para boletas de compra e venda
-export const ModalHeader: React.FC<any> = ({
+export const ModalHeader: React.FC<ModalHeaderProps> = ({
   headerTitle,
   headerClass,
   resetPosition,
   name,
   ativo,
-  esource_boletaQuote,
+  namespace,
 }) => {
+  const boletaState = useStateBoletas();
   const {
     appBoletasReducer: { appProps },
-  } = useStateBoletas();
+  } = boletaState;
+
+  const { esource_boletaQuote } = boletaState[namespace as BoletaNamespace];
+
   const {
     systemReducer: { token },
   } = useStateStorePrincipal();
   const stateGlobalStore = useStateGlobalStore();
+
   const dispatchGlobal = useDispatchGlobalStore();
   const dispatch = useDispatchBoletas();
+
   const formShow = stateGlobalStore.show;
   const { appkey } = appProps;
   const abrirBookProps = {

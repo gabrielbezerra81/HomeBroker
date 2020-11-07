@@ -141,7 +141,6 @@ const mapStateToProps = (state: BoletasState) => ({
   preco: state.compraLimitadaReducer.preco,
   checkSalvarAssinatura: state.compraLimitadaReducer.checkSalvarAssinatura,
   dadosPesquisa: state.compraLimitadaReducer.dadosPesquisa,
-  esource_boletaQuote: state.compraLimitadaReducer.esource_boletaQuote,
 });
 
 const mapDispatch = {

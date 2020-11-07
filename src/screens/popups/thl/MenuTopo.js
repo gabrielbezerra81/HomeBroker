@@ -117,11 +117,7 @@ const EnviarOrdem = () => {
   const { divkey, zIndex } = useStateGlobalStore();
   const {
     systemReducer: { isOpenMultileg },
-    multilegReducer: {
-      multileg,
-      esource_boletaQuote,
-      cotacoesMultileg,
-    },
+    multilegReducer: { multileg, cotacoesMultileg },
     thlReducer: { booksSelecionados },
   } = useStateStorePrincipal();
 
@@ -131,7 +127,6 @@ const EnviarOrdem = () => {
   const props = {
     multileg,
     isOpenMultileg,
-    esource_boletaQuote,
     cotacoesMultileg,
     divkey,
     zIndex,

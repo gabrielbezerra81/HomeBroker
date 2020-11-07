@@ -6,6 +6,7 @@ import FormInternoCompraAgendada from "./FormInternoCompraAgendada";
 import GraficoCompraAgendada from "./GraficoCompraAgendada";
 import BodyHeaderCompraAgendada from "./BodyHeaderCompraAgendada";
 import { ModalHeader } from "shared/componentes/PopupHeader";
+import { COMPRA_AGENDADA_NAMESPACE } from "constants/ActionTypes";
 
 class CompraAgendada extends React.Component {
   render() {
@@ -20,7 +21,7 @@ class CompraAgendada extends React.Component {
             resetPosition={resetPosition}
             name={this.props.name}
             ativo={this.props.ativo}
-            esource_boletaQuote={this.props.esource_boletaQuote}
+            namespace={COMPRA_AGENDADA_NAMESPACE}
           />
         )}
       />
@@ -40,7 +41,6 @@ const modalBody = (props) => (
 
 const mapStateToProps = (state) => ({
   ativo: state.compraAgendadaReducer.ativo,
-  esource_boletaQuote: state.compraAgendadaReducer.esource_boletaQuote,
 });
 
 export default connect(mapStateToProps, {})(CompraAgendada);

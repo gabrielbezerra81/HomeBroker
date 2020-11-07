@@ -7,6 +7,7 @@ import FormInternoVendaGainReducao from "./FormInternoVendaGainReducao";
 import GraficoVendaGainReducao from "./GraficoVendaGainReducao";
 import BodyHeaderVendaGainReducao from "./BodyHeaderVendaGainReducao";
 import { ModalHeader } from "shared/componentes/PopupHeader";
+import { VENDA_GAINREDUCAO_NAMESPACE } from "constants/ActionTypes";
 
 class VendaGainReducao extends React.Component {
   render() {
@@ -21,7 +22,7 @@ class VendaGainReducao extends React.Component {
             resetPosition={resetPosition}
             name={this.props.name}
             ativo={this.props.ativo}
-            esource_boletaQuote={this.props.esource_boletaQuote}
+            namespace={VENDA_GAINREDUCAO_NAMESPACE}
           />
         )}
       />
@@ -41,7 +42,6 @@ const modalBody = () => (
 
 const mapStateToProps = (state) => ({
   ativo: state.vendaGainReducao.ativo,
-  esource_boletaQuote: state.vendaGainReducao.esource_boletaQuote,
 });
 
 export default connect(mapStateToProps, {})(VendaGainReducao);

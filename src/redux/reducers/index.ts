@@ -24,7 +24,6 @@ import OrdensExecucaoReducer from "redux/reducers/ordersExecuting/OrdensExecRedu
 
 export const BoletasReducer = combineReducers({
   bookOfertaReducer: bookOfertaReducer,
-  formInputReducer: formInputReducer("_DEMAIS"),
   compraAgendadaReducer: formInputReducer(COMPRA_AGENDADA_NAMESPACE),
   compraLimitadaReducer: formInputReducer(COMPRA_LIMITADA_NAMESPACE),
   compraMercadoReducer: formInputReducer(COMPRA_MERCADO_NAMESPACE),

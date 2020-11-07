@@ -13,23 +13,27 @@ import { mudarAtributoBoletaAction } from "redux/actions/boletas/formInputAction
 
 export const pesquisarAtivoOnEnterAction = (props, namespace) => {
   return async (dispatch, getState) => {
-    if (props.esource_boletaQuote) {
-      props.esource_boletaQuote.close();
+    const appBoletasState = getState();
+
+    const { esource_boletaQuote, ativo, qtde } = appBoletasState[namespace];
+
+    if (esource_boletaQuote) {
+      esource_boletaQuote.close();
     }
     dispatch(mudarAtributoBoletaAction(true, namespace, "pesquisandoAtivo"));
 
-    const dadosPesquisa = await pesquisarAtivoAPI(props.ativo);
+    const dadosPesquisa = await pesquisarAtivoAPI(ativo);
 
     if (dadosPesquisa) {
       dispatch({
         type: `${PESQUISAR_ATIVO_BOLETA_API}${namespace}`,
         payload: dadosPesquisa,
       });
-      const qtde = mudarTipoInputQtde(dadosPesquisa, props.qtde);
+      const newQtde = mudarTipoInputQtde(dadosPesquisa, qtde);
       dispatch({
         type: `${MUDAR_QTDE}${namespace}`,
         payload: {
-          qtde: qtde,
+          qtde: newQtde,
           erro: "",
         },
       });

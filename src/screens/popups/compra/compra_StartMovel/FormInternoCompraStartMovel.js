@@ -149,7 +149,6 @@ const mapStateToProps = (state) => ({
   assinatura: state.compraStartMovelReducer.assinatura,
   checkSalvarAssinatura: state.compraStartMovelReducer.checkSalvarAssinatura,
   dadosPesquisa: state.compraStartMovelReducer.dadosPesquisa,
-  esource_boletaQuote: state.compraStartMovelReducer.esource_boletaQuote,
   tabelaOrdensSimulacao: state.compraStartMovelReducer.tabelaOrdensSimulacao,
 });
 

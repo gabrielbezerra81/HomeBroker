@@ -7,6 +7,7 @@ import FormInternoVendaLimitada from "./FormInternoVendaLimitada";
 import GraficoVendaLimitada from "./GraficoVendaLimitada";
 import BodyHeaderVendaLimitada from "./BodyHeaderVendaLimitada";
 import { ModalHeader } from "shared/componentes/PopupHeader";
+import { VENDA_LIMITADA_NAMESPACE } from "constants/ActionTypes";
 
 class VendaLimitada extends React.Component {
   componentDidMount() {
@@ -26,7 +27,7 @@ class VendaLimitada extends React.Component {
             resetPosition={resetPosition}
             name={this.props.name}
             ativo={this.props.ativo}
-            esource_boletaQuote={this.props.esource_boletaQuote}
+            namespace={VENDA_LIMITADA_NAMESPACE}
           />
         )}
       />
@@ -46,7 +47,6 @@ const modalBody = (props) => (
 
 const mapStateToProps = (state) => ({
   ativo: state.vendaLimitadaReducer.ativo,
-  esource_boletaQuote: state.vendaLimitadaReducer.esource_boletaQuote,
 });
 
 export default connect(mapStateToProps, {})(VendaLimitada);

@@ -8,6 +8,7 @@ import GraficoVendaStartStop from "./GraficoVendaStartStop";
 import BodyHeaderVendaStartStop from "./BodyHeaderVendaStartStop";
 import { ModalHeader } from "shared/componentes/PopupHeader";
 import {} from "redux/actions/boletas/AppBoletasActions";
+import { VENDA_STARTSTOP_NAMESPACE } from "constants/ActionTypes";
 
 class VendaStartStop extends React.Component {
   componentDidMount() {
@@ -27,7 +28,7 @@ class VendaStartStop extends React.Component {
             resetPosition={resetPosition}
             name={this.props.name}
             ativo={this.props.ativo}
-            esource_boletaQuote={this.props.esource_boletaQuote}
+            namespace={VENDA_STARTSTOP_NAMESPACE}
           />
         )}
         renderConfigForm={this.props.config_venda}
@@ -50,7 +51,6 @@ const modalBody = (props) => (
 const mapStateToProps = (state) => ({
   config_venda: state.appBoletasReducer.config_venda,
   ativo: state.vendaStartStopReducer.ativo,
-  esource_boletaQuote: state.vendaStartStopReducer.esource_boletaQuote,
 });
 
 export default connect(mapStateToProps, {})(VendaStartStop);

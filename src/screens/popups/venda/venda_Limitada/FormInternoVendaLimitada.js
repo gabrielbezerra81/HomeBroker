@@ -133,7 +133,6 @@ const mapStateToProps = (state) => ({
   preco: state.vendaLimitadaReducer.preco,
   checkSalvarAssinatura: state.vendaLimitadaReducer.checkSalvarAssinatura,
   dadosPesquisa: state.vendaLimitadaReducer.dadosPesquisa,
-  esource_boletaQuote: state.vendaLimitadaReducer.esource_boletaQuote,
 });
 
 export default connect(mapStateToProps, {

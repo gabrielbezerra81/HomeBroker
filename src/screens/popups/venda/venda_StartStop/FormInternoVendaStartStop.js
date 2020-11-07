@@ -80,7 +80,6 @@ const mapStateToProps = (state) => ({
   assinatura: state.vendaStartStopReducer.assinatura,
   checkSalvarAssinatura: state.vendaStartStopReducer.checkSalvarAssinatura,
   dadosPesquisa: state.vendaStartStopReducer.dadosPesquisa,
-  esource_boletaQuote: state.vendaStartStopReducer.esource_boletaQuote,
 });
 
 export default compose(
