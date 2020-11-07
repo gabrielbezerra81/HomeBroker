@@ -145,7 +145,7 @@ export const atualizarCotacaoMultilegAPI = ({
   return source;
 };
 
-// TODO: retirar da execução se n tiver aberto
+
 export const atualizarCotacaoPosicaoAPI = ({
   dispatch,
   codigos,
@@ -289,7 +289,6 @@ export const atualizarCotacaoBoletasAPI = ({
   return source;
 };
 
-// TODO: retirar da execução se n tiver aberto
 export const atualizarEmblemasAPI = ({ dispatch, listaPrecos, ids, token }) => {
   var source = new EventSource(
     `${url_base_reativa}${url_emblemaReativo_ids}${ids}`,

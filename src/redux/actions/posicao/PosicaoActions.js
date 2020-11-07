@@ -19,7 +19,7 @@ export const mudarVariavelPosicaoAction = (attributeName, attributeValue) => {
   };
 };
 
-export const listarPosicoesAction = () => {
+export const listPositionAction = () => {
   return async (dispatch, getState) => {
     const { token, isOpenPosition } = getReducerStateStorePrincipal(
       getState(),
@@ -55,32 +55,6 @@ export const listarPosicoesAction = () => {
       // listaPosicoes.splice(0, 19);
       // arrayPrecos.splice(0, 19);
       arrayCotacoes = await montaArrayCotacoes(listaPosicoes);
-
-      atualizarPosicao({
-        dispatch,
-        listaPosicoes,
-        token,
-        eventSourcePosicao,
-      });
-
-      if (isOpenPosition) {
-        atualizarEmblemas({
-          dispatch,
-          token,
-          listaPosicoes,
-          listaPrecos: arrayPrecos,
-          eventSourceEmblema,
-          setIntervalEmblema,
-        });
-        atualizarCotacoes({
-          dispatch,
-          listaPosicoes,
-          arrayCotacoes,
-          eventSourceCotacoes,
-          setIntervalCotacoesPosicao,
-          token,
-        });
-      }
 
       dispatch(
         updateManyPositionState({

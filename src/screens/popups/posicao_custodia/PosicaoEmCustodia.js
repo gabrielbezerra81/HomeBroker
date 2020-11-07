@@ -33,46 +33,46 @@ class PosicaoEmCustodia extends React.Component {
 
     // Começa a atualizar emblemas e cotações ao abrir a posição, exceto quando recarrega a página,
     // pois isso é feito pela própria action de listar posição
-    if (posicoesCustodia.length) {
-      if (
-        (eventSourceEmblema && eventSourceEmblema.readyState === 2) ||
-        !eventSourceEmblema
-      ) {
-        props.atualizarEmblemasAction();
-      }
+    // if (posicoesCustodia.length) {
+    //   if (
+    //     (eventSourceEmblema && eventSourceEmblema.readyState === 2) ||
+    //     !eventSourceEmblema
+    //   ) {
+    //     props.atualizarEmblemasAction();
+    //   }
 
-      if (
-        (eventSourceCotacoes && eventSourceCotacoes.readyState === 2) ||
-        !eventSourceCotacoes
-      ) {
-        props.atualizarCotacoesPosicaoAction();
-      }
-    }
+    //   if (
+    //     (eventSourceCotacoes && eventSourceCotacoes.readyState === 2) ||
+    //     !eventSourceCotacoes
+    //   ) {
+    //     props.atualizarCotacoesPosicaoAction();
+    //   }
+    // }
   }
 
   // Limpa eventSources e timers
-  componentWillUnmount() {
-    const {
-      eventSourceEmblema,
-      eventSourceCotacoes,
-      setIntervalEmblema,
-      setIntervalCotacoesPosicao,
-    } = this.props;
+  // componentWillUnmount() {
+  //   const {
+  //     eventSourceEmblema,
+  //     eventSourceCotacoes,
+  //     setIntervalEmblema,
+  //     setIntervalCotacoesPosicao,
+  //   } = this.props;
 
-    if (eventSourceEmblema && eventSourceEmblema.close) {
-      eventSourceEmblema.close();
-    }
-    if (setIntervalEmblema) {
-      clearInterval(setIntervalEmblema);
-    }
+  //   if (eventSourceEmblema && eventSourceEmblema.close) {
+  //     eventSourceEmblema.close();
+  //   }
+  //   if (setIntervalEmblema) {
+  //     clearInterval(setIntervalEmblema);
+  //   }
 
-    if (eventSourceCotacoes && eventSourceCotacoes.close) {
-      eventSourceCotacoes.close();
-    }
-    if (setIntervalCotacoesPosicao) {
-      clearInterval(setIntervalCotacoesPosicao);
-    }
-  }
+  //   if (eventSourceCotacoes && eventSourceCotacoes.close) {
+  //     eventSourceCotacoes.close();
+  //   }
+  //   if (setIntervalCotacoesPosicao) {
+  //     clearInterval(setIntervalCotacoesPosicao);
+  //   }
+  // }
 
   componentDidUpdate(prevProps) {
     const { props } = this;
@@ -99,8 +99,8 @@ class PosicaoEmCustodia extends React.Component {
             props.arrayPrecos.length &&
             props.arrayCotacoes.length
           ) {
-            props.atualizarEmblemasAction();
-            props.atualizarCotacoesPosicaoAction();
+            // props.atualizarEmblemasAction();
+            // props.atualizarCotacoesPosicaoAction();
           }
         }
       }
