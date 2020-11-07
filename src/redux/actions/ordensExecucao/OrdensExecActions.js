@@ -57,12 +57,12 @@ export const filtrarHistoricoOpAction = () => {
   return (dispatch) => {};
 };
 
-export const listarOrdensExecAction = (props) => {
+export const listOrdersExecAction = (props) => {
   return async (dispatch, getState) => {
-    const { eventSourceOrdensExec } = getReducerStateStorePrincipal(
-      getState(),
-      "ordensExec",
-    );
+    // const { eventSourceOrdensExec } = getReducerStateStorePrincipal(
+    //   getState(),
+    //   "ordensExec",
+    // );
 
     const { token } = getReducerStateStorePrincipal(getState(), "principal");
 
@@ -71,16 +71,16 @@ export const listarOrdensExecAction = (props) => {
 
       dispatch({ type: LISTAR_ORDENS_EXECUCAO, payload: ordensExec });
 
-      setTimeout(
-        () =>
-          atualizarOrdensExec({
-            dispatch,
-            token,
-            eventSourceOrdensExec,
-            listaOrdensExec: ordensExec,
-          }),
-        3000,
-      );
+      // setTimeout(
+      //   () =>
+      //     atualizarOrdensExec({
+      //       dispatch,
+      //       token,
+      //       eventSourceOrdensExec,
+      //       listaOrdensExec: ordensExec,
+      //     }),
+      //   3000,
+      // );
     }
   };
 };
@@ -487,27 +487,61 @@ const retornaDadosOferta = (ordemAtual, tipo) => {
 //   };
 // };
 
-const atualizarOrdensExec = ({
-  dispatch,
-  eventSourceOrdensExec,
-  token,
-  listaOrdensExec,
-}) => {
-  if (eventSourceOrdensExec && eventSourceOrdensExec.close) {
-    eventSourceOrdensExec.close();
-  }
+// const atualizarOrdensExec = ({
+//   dispatch,
+//   eventSourceOrdensExec,
+//   token,
+//   listaOrdensExec,
+// }) => {
+//   if (eventSourceOrdensExec && eventSourceOrdensExec.close) {
+//     eventSourceOrdensExec.close();
+//   }
 
-  const eventSource = atualizarOrdensExecAPI({
-    dispatch,
-    listaOrdensExec,
-    token,
-  });
+//   const eventSource = atualizarOrdensExecAPI({
+//     dispatch,
+//     listaOrdensExec,
+//     token,
+//   });
 
-  dispatch(
-    updateOneOrdersExecStateAction("eventSourceOrdensExec", eventSource),
-  );
+//   dispatch(
+//     updateOneOrdersExecStateAction("eventSourceOrdensExec", eventSource),
+//   );
+// };
 
-  return eventSource;
+export const startReactiveOrdersUpdateAction = () => {
+  return (dispatch, getState) => {
+    const {
+      systemReducer: { token },
+      ordersExecReducer: { eventSourceOrdensExec, tabelaOrdensExecucao },
+    } = getState();
+
+    if (eventSourceOrdensExec && eventSourceOrdensExec.close) {
+      eventSourceOrdensExec.close();
+    }
+
+    const eventSource = atualizarOrdensExecAPI({
+      dispatch,
+      listaOrdensExec: tabelaOrdensExecucao,
+      token,
+    });
+
+    dispatch(
+      updateOneOrdersExecStateAction("eventSourceOrdensExec", eventSource),
+    );
+  };
+};
+
+export const startProactiveOrdersUpdateAction = () => {
+  return (dispatch, getState) => {
+    const {
+      systemReducer: { token },
+      ordersExecReducer: { eventSourceOrdensExec, tabelaOrdensExecucao },
+    } = getState();
+
+    if (eventSourceOrdensExec && eventSourceOrdensExec.close) {
+      eventSourceOrdensExec.close();
+    }
+  };
 };
 
 export const openOrdersExecFromRightMenuAction = () => {
