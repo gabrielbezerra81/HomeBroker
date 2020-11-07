@@ -164,8 +164,8 @@ export const startReactiveThlStructuresUpdateAction = (): MainThunkAction => {
   return (dispatch, getState) => {
     const {
       thlReducer: {
-        eventSourcePrecos: esource_thlStructures,
-        setIntervalPrecosTHL: interval_thlStructures,
+        esource_thlStructures: esource_thlStructures,
+        interval_thlStructures: interval_thlStructures,
         opcoesStrike: thlLines,
         precosTabelaVencimentos: priceStructures,
       },
@@ -196,7 +196,7 @@ export const startReactiveThlStructuresUpdateAction = (): MainThunkAction => {
       });
       dispatch(
         updateManyTHLState({
-          eventSourcePrecos: source,
+          esource_thlStructures: source,
         }),
       );
     }
@@ -207,8 +207,8 @@ export const startProactiveThlStructuresUpdateAction = (): MainThunkAction => {
   return (dispatch, getState) => {
     const {
       thlReducer: {
-        eventSourcePrecos: esource_thlStructures,
-        setIntervalPrecosTHL: interval_thlStructures,
+        esource_thlStructures: esource_thlStructures,
+        interval_thlStructures: interval_thlStructures,
         opcoesStrike: thlLines,
       },
     } = getState();
@@ -354,8 +354,8 @@ export const startReactiveThlQuoteUpdateAction = (): MainThunkAction => {
   return (dispatch, getState) => {
     const {
       thlReducer: {
-        eventSourceCotacoesTHL: esource_thlQuote,
-        setIntervalCotacoesTHL: interval_thlQuote,
+        esource_thlQuotes: esource_thlQuote,
+        interval_thlQuotes: interval_thlQuote,
         arrayCotacoes: thlQuotes,
       },
       systemReducer: { token },
@@ -384,7 +384,7 @@ export const startReactiveThlQuoteUpdateAction = (): MainThunkAction => {
       });
       dispatch(
         updateOneTHLState({
-          attributeName: "eventSourceCotacoesTHL",
+          attributeName: "esource_thlQuotes",
           attributeValue: source,
         }),
       );
@@ -396,8 +396,8 @@ export const startProactiveThlQuoteUpdateAction = (): MainThunkAction => {
   return (dispatch, getState) => {
     const {
       thlReducer: {
-        eventSourceCotacoesTHL: esource_thlQuote,
-        setIntervalCotacoesTHL: interval_thlQuote,
+        esource_thlQuotes: esource_thlQuote,
+        interval_thlQuotes: interval_thlQuote,
         arrayCotacoes: thlQuotes,
       },
     } = getState();

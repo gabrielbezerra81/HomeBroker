@@ -28,8 +28,8 @@ export default interface THLState {
   listaStrikes: Array<number>;
   strikeSelecionado: number | "";
   precosTabelaVencimentos: Array<PriceStructure>;
-  eventSourcePrecos: EventSource | null;
-  setIntervalPrecosTHL: NodeJS.Timeout | null;
+  esource_thlStructures: EventSource | null;
+  interval_thlStructures: NodeJS.Timeout | null;
   precosTabelaVencimentosID: number; // Como são enviados arrays mutados no setInterval, será enviado um id que muda a cada dispatch
 
   /* Tabela de combinações */
@@ -55,8 +55,8 @@ export default interface THLState {
   prazo: Array<number>;
   arrayCotacoes: Array<THLQuote>;
   arrayCotacoesID: number;
-  eventSourceCotacoesTHL: EventSource | null;
-  setIntervalCotacoesTHL: NodeJS.Timeout | null;
+  esource_thlQuotes: EventSource | null;
+  interval_thlQuotes: NodeJS.Timeout | null;
   ordenacao: {
     key: string;
     valor: 0 | 1 | 2;

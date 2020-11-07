@@ -15,10 +15,10 @@ const THLUpdateManager: React.FC = () => {
     systemReducer: { updateMode, updateInterval, isOpenTHL },
     thlReducer: {
       opcoesStrike: thlLines,
-      eventSourceCotacoesTHL: esource_thlQuotes,
-      eventSourcePrecos: esource_thlStructures,
-      setIntervalCotacoesTHL: interval_thlQuotes,
-      setIntervalPrecosTHL: interval_thlStructures,
+      esource_thlQuotes,
+      esource_thlStructures,
+      interval_thlQuotes,
+      interval_thlStructures,
       combinacoesTabela: thlCombinations,
     },
   } = useStateStorePrincipal();

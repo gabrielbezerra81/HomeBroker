@@ -219,7 +219,7 @@ export const atualizarCotacaoTHLAPI = ({
     listaCotacoes,
     MUDAR_VARIAVEL_THL,
     "arrayCotacoes",
-    "setIntervalCotacoesTHL",
+    "interval_thlQuotes",
   );
 
   source.onmessage = function (event) {
@@ -473,7 +473,7 @@ export const atualizarPrecosTHLAPI = ({
     updatedPriceStructures,
     MUDAR_VARIAVEL_THL,
     "precosTabelaVencimentos",
-    "setIntervalPrecosTHL",
+    "interval_thlStructures",
     () => updateStructuresImmutable(priceStructures, updatedPriceStructures),
   );
 

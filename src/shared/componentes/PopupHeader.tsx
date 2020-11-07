@@ -272,7 +272,7 @@ const GetAbrirMenuProps = () => {
       isOpenTHL,
     },
     multilegReducer: { eventSourceCotacao, setIntervalCotacoesMultileg },
-    thlReducer: { eventSourcePrecos, setIntervalPrecosTHL },
+    thlReducer: { esource_thlStructures, interval_thlStructures },
   } = useStateStorePrincipal();
 
   const props = {
@@ -289,8 +289,8 @@ const GetAbrirMenuProps = () => {
     // eventSourceCotacoes_Posicao: eventSourceCotacoes,
     // setIntervalCotacoes_Posicao: setIntervalCotacoesPosicao,
     // eventSourceOrdensExec_OrdensExec: eventSourceOrdensExec,
-    eventSourcePrecos_THL: eventSourcePrecos,
-    setIntervalPrecos_THL: setIntervalPrecosTHL,
+    esource_thlStructures_THL: esource_thlStructures,
+    setIntervalPrecos_THL: interval_thlStructures,
   };
 
   return props;

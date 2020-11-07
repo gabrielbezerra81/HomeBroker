@@ -69,8 +69,8 @@ const INITIAL_STATE: THLState = {
   ],
   strikeSelecionado: "",
   precosTabelaVencimentos: [],
-  eventSourcePrecos: null,
-  setIntervalPrecosTHL: null,
+  esource_thlStructures: null,
+  interval_thlStructures: null,
   precosTabelaVencimentosID: 0, // Como são enviados arrays mutados no setInterval, será enviado um id que muda a cada dispatch
 
   /* Tabela de combinações */
@@ -96,8 +96,8 @@ const INITIAL_STATE: THLState = {
   prazo: [],
   arrayCotacoes: [],
   arrayCotacoesID: 0,
-  eventSourceCotacoesTHL: null,
-  setIntervalCotacoesTHL: null,
+  esource_thlQuotes: null,
+  interval_thlQuotes: null,
   ordenacao: {
     key: "",
     valor: 0,

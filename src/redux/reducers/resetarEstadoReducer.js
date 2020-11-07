@@ -17,9 +17,9 @@ export const resetarEstadoRedux = ({
 
   if (shouldClearEventSources) {
     Object.keys(state).forEach((key) => {
-      if (key.toLowerCase().includes("eventsource") && state[key])
+      if (key.toLowerCase().includes("source") && state[key])
         state[key].close();
-      if (key.toLowerCase().includes("setinterval") && state[key])
+      if (key.toLowerCase().includes("interval") && state[key])
         clearInterval(state[key]);
     });
   }
