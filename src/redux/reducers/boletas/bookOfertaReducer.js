@@ -4,6 +4,7 @@ import {
   MUDAR_GAIN_BOOK,
   MUDAR_INPUTHEADER_BOOK,
   LIMPAR_FORMS,
+  UPDATE_MANY_OFFER_BOOK,
 } from "constants/ActionTypes";
 import {
   LISTAR_BOOK_OFERTAS,
@@ -19,6 +20,7 @@ const INITIAL_STATE = {
   tabelaOfertasCompra: new Array(5).fill({ price: "", qtty: "" }, 0, 5),
   tabelaOfertasVenda: new Array(5).fill({ price: "", qtty: "" }, 0, 5),
   esource_offersBook: null,
+  searchedSymbol: "",
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -41,6 +43,8 @@ export default (state = INITIAL_STATE, action) => {
       };
     case ATUALIZAR_SOURCE_EVENT_BOOK_OFERTAS:
       return { ...state, esource_offersBook: action.payload };
+    case UPDATE_MANY_OFFER_BOOK:
+      return { ...state, ...action.payload };
     default:
       return state;
   }

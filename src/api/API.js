@@ -132,6 +132,7 @@ export const listarBookOfertaAPI = (codigo_ativo) => {
   let tabelas = {
     tabelaOfertasCompra: [],
     tabelaOfertasVenda: [],
+    success: false,
   };
   return api
     .get(`${url_listarBookOfertas_codigo}${codigo_ativo}`, {
@@ -153,6 +154,8 @@ export const listarBookOfertaAPI = (codigo_ativo) => {
       });
       tabelas.tabelaOfertasCompra.sort((a, b) => b.price - a.price);
       tabelas.tabelaOfertasVenda.sort((a, b) => b.price - a.price);
+
+      tabelas.success = true;
 
       return tabelas;
     })

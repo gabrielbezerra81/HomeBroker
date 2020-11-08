@@ -164,8 +164,8 @@ export const startReactiveThlStructuresUpdateAction = (): MainThunkAction => {
   return (dispatch, getState) => {
     const {
       thlReducer: {
-        esource_thlStructures: esource_thlStructures,
-        interval_thlStructures: interval_thlStructures,
+        esource_thlStructures,
+        interval_thlStructures,
         opcoesStrike: thlLines,
         precosTabelaVencimentos: priceStructures,
       },
@@ -207,8 +207,8 @@ export const startProactiveThlStructuresUpdateAction = (): MainThunkAction => {
   return (dispatch, getState) => {
     const {
       thlReducer: {
-        esource_thlStructures: esource_thlStructures,
-        interval_thlStructures: interval_thlStructures,
+        esource_thlStructures,
+        interval_thlStructures,
         opcoesStrike: thlLines,
       },
     } = getState();
@@ -354,18 +354,18 @@ export const startReactiveThlQuoteUpdateAction = (): MainThunkAction => {
   return (dispatch, getState) => {
     const {
       thlReducer: {
-        esource_thlQuotes: esource_thlQuote,
-        interval_thlQuotes: interval_thlQuote,
+        esource_thlQuotes,
+        interval_thlQuotes,
         arrayCotacoes: thlQuotes,
       },
       systemReducer: { token },
     } = getState();
 
-    if (interval_thlQuote) {
-      clearInterval(interval_thlQuote);
+    if (interval_thlQuotes) {
+      clearInterval(interval_thlQuotes);
     }
-    if (esource_thlQuote && esource_thlQuote.close) {
-      esource_thlQuote.close();
+    if (esource_thlQuotes && esource_thlQuotes.close) {
+      esource_thlQuotes.close();
     }
 
     let codigos = "";
@@ -396,17 +396,17 @@ export const startProactiveThlQuoteUpdateAction = (): MainThunkAction => {
   return (dispatch, getState) => {
     const {
       thlReducer: {
-        esource_thlQuotes: esource_thlQuote,
-        interval_thlQuotes: interval_thlQuote,
+        esource_thlQuotes,
+        interval_thlQuotes,
         arrayCotacoes: thlQuotes,
       },
     } = getState();
 
-    if (interval_thlQuote) {
-      clearInterval(interval_thlQuote);
+    if (interval_thlQuotes) {
+      clearInterval(interval_thlQuotes);
     }
-    if (esource_thlQuote && esource_thlQuote.close) {
-      esource_thlQuote.close();
+    if (esource_thlQuotes && esource_thlQuotes.close) {
+      esource_thlQuotes.close();
     }
 
     let codigos = "";

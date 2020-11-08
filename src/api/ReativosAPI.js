@@ -33,9 +33,9 @@ var EventSource = EventSourcePolyfill;
 
 const intervaloAttReativa = 6000;
 
-export const atualizarBookAPI = ({ dispatch, codigos, tipo, token }) => {
+export const atualizarBookAPI = ({ dispatch, symbol, token }) => {
   var source = new EventSource(
-    `${url_base_reativa}${url_bookReativo_codigos}${codigos}`,
+    `${url_base_reativa}${url_bookReativo_codigos}${symbol}`,
     {
       headers: {
         Authorization: `${token.tokenType} ${token.accessToken}`,
@@ -49,34 +49,32 @@ export const atualizarBookAPI = ({ dispatch, codigos, tipo, token }) => {
   source.onmessage = function (event) {
     if (typeof event.data !== "undefined") {
       // console.log("chegou");
-      let tabelas = {
+      let bookTables = {
         tabelaOfertasCompra: [],
         tabelaOfertasVenda: [],
       };
 
-      var dados = JSON.parse(event.data);
+      var data = JSON.parse(event.data);
 
       //   let ativoRetornado = dados.symbol;
-      if (dados.bookOffers) {
-        let bookNovo = [...dados.bookOffers];
+      if (data.bookOffers) {
+        let newBooks = [...data.bookOffers];
 
-        bookNovo.forEach((item) => {
+        newBooks.forEach((item) => {
           if (item.type === "V") {
-            tabelas.tabelaOfertasVenda.push(item);
+            bookTables.tabelaOfertasVenda.push(item);
           } else if (item.type === "C") {
-            tabelas.tabelaOfertasCompra.push(item);
+            bookTables.tabelaOfertasCompra.push(item);
           }
         });
-        tabelas.tabelaOfertasCompra.sort((a, b) => b.price - a.price);
-        tabelas.tabelaOfertasVenda.sort((a, b) => b.price - a.price);
+        bookTables.tabelaOfertasCompra.sort((a, b) => b.price - a.price);
+        bookTables.tabelaOfertasVenda.sort((a, b) => b.price - a.price);
       }
 
-      if (tipo === "book") {
-        dispatch({
-          type: LISTAR_BOOK_OFERTAS,
-          payload: tabelas,
-        });
-      }
+      dispatch({
+        type: LISTAR_BOOK_OFERTAS,
+        payload: bookTables,
+      });
     }
   };
   return source;

@@ -18,9 +18,9 @@ const PositionUpdateManager: React.FC = () => {
     systemReducer: { updateMode, updateInterval, isOpenPosition },
     positionReducer: {
       esource_emblem,
-      esource_positionQuote: esource_positionQuote,
-      interval_emblem: interval_emblem,
-      interval_positionQuote: interval_positionQuote,
+      esource_positionQuote,
+      interval_emblem,
+      interval_positionQuote,
       posicoesCustodia: positionList,
       arrayPrecos: positionPrices,
       arrayCotacoes: positionQuotes,

@@ -3,6 +3,7 @@ export const MUDAR_QTDE = "mudar_qtde";
 export const MUDAR_STOPLOSS_BOOK = "mudar_stoploss_book";
 export const MUDAR_GAIN_BOOK = "mudar_gain_book";
 export const MUDAR_INPUTHEADER_BOOK = "mudar_inputheader_book";
+export const UPDATE_MANY_OFFER_BOOK = "update_many_offer_book"
 
 export const MUDAR_ATRIBUTO_BOLETA = "mudar_atributo_boleta";
 
