@@ -7,6 +7,7 @@ import FormInternoVendaAgendada from "./FormInternoVendaAgendada";
 import GraficoVendaAgendada from "./GraficoVendaAgendada";
 import BodyHeaderVendaAgendada from "./BodyHeaderVendaAgendada";
 import { ModalHeader } from "shared/componentes/PopupHeader";
+import { VENDA_AGENDADA_NAMESPACE } from "constants/ActionTypes";
 
 class VendaAgendada extends React.Component {
   componentDidMount() {
@@ -24,7 +25,7 @@ class VendaAgendada extends React.Component {
             resetPosition={resetPosition}
             name={this.props.name}
             ativo={this.props.ativo}
-            eventSourceCotacao={this.props.eventSourceCotacao}
+            namespace={VENDA_AGENDADA_NAMESPACE}
           />
         )}
       />
@@ -44,7 +45,6 @@ const modalBody = (props) => (
 
 const mapStateToProps = (state) => ({
   ativo: state.vendaAgendadaReducer.ativo,
-  eventSourceCotacao: state.vendaAgendadaReducer.eventSourceCotacao,
 });
 
 export default connect(mapStateToProps, {})(VendaAgendada);

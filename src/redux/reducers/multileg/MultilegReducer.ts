@@ -36,9 +36,8 @@ const INITIAL_STATE: MultilegState = {
       comment: "",
     },
   ],
-  eventSource: null, //Book
-  eventSourceCotacao: null,
-  setIntervalCotacoesMultileg: null,
+  esource_multilegQuotes: null,
+  interval_multilegQuotes: null,
   cotacoesMultileg: [],
   cotacoesMultilegID: 0,
   alerts: [],
@@ -62,7 +61,6 @@ export default (
             omitions: ["multileg", "cotacoesMultileg", "alerts"],
             reducerName: "multileg",
             shouldClearAllProps: payload.limparReducer,
-            shouldClearEventSources: true,
           }),
           alerts: state.alerts,
         };

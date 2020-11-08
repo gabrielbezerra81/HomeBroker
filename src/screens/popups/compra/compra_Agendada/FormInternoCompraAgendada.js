@@ -48,7 +48,7 @@ class FormInternoCompraAgendada extends React.Component {
                       this.props.mudarAtributoBoletaAction(
                         valor,
                         COMPRA_AGENDADA_NAMESPACE,
-                        "entradaDisparo"
+                        "entradaDisparo",
                       )
                     }
                   />
@@ -65,7 +65,7 @@ class FormInternoCompraAgendada extends React.Component {
                       this.props.mudarAtributoBoletaAction(
                         valor,
                         COMPRA_AGENDADA_NAMESPACE,
-                        "entradaExec"
+                        "entradaExec",
                       )
                     }
                   />
@@ -80,7 +80,7 @@ class FormInternoCompraAgendada extends React.Component {
                 {CalculoValorTotalAgendada(
                   this.props.entradaDisparo,
                   this.props.entradaExec,
-                  this.props.qtde
+                  this.props.qtde,
                 )}
               </h6>
             </Col>
@@ -139,7 +139,6 @@ const mapStateToProps = (state) => ({
   checkSalvarAssinatura: state.compraAgendadaReducer.checkSalvarAssinatura,
   qtde: state.compraAgendadaReducer.qtde,
   dadosPesquisa: state.compraAgendadaReducer.dadosPesquisa,
-  eventSourceCotacao: state.compraAgendadaReducer.eventSourceCotacao,
 });
 
 export default connect(mapStateToProps, {

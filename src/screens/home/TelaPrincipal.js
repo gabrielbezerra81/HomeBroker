@@ -4,12 +4,10 @@ import { connect } from "react-redux";
 import MenuLateralUsuario from "screens/home/UserLeftSideMenu";
 import BarraTopoTelaPrincipal from "screens/home/BarraTopoTelaPrincipal";
 import { StorePrincipalContext, GlobalContext } from "redux/StoreCreation";
-import { listarOrdensExecAction } from "redux/actions/ordensExecucao/OrdensExecActions";
 import {
   checkIfSystemStateHasChangedShapeAction,
   deslogarUsuarioAction,
 } from "redux/actions/system/SystemActions";
-import { listarPosicoesAction } from "redux/actions/posicao/PosicaoActions";
 import BarraLateral from "screens/home/BarraLateral";
 import MenuOrdens from "screens/home/MenuOrdens";
 import MainScreenTabs from "./Tabs/MainScreenTabs";
@@ -49,8 +47,6 @@ class TelaPrincipal extends React.Component {
   }
 
   componentDidMount() {
-    this.props.listarOrdensExecAction();
-    this.props.listarPosicoesAction(this.props);
     this.props.checkIfSystemStateHasChangedShapeAction();
 
     api.interceptors.response.use(
@@ -190,8 +186,6 @@ export default compose(
   connect(
     mapStateToPropsAppPrincipal,
     {
-      listarOrdensExecAction,
-      listarPosicoesAction,
       checkIfSystemStateHasChangedShapeAction,
       deslogarUsuarioAction,
     },

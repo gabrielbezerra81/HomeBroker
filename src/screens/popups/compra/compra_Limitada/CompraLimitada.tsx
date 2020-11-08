@@ -9,6 +9,7 @@ import BodyHeaderCompraLimitada from "./BodyHeaderCompraLimitada";
 import { ModalHeader } from "shared/componentes/PopupHeader";
 import { BoletasState } from "redux/reducers";
 import BoletasOrderType from "types/boletasOrderType";
+import { COMPRA_LIMITADA_NAMESPACE } from "constants/ActionTypes";
 
 class CompraLimitada extends React.Component<Props> {
   render() {
@@ -25,7 +26,7 @@ class CompraLimitada extends React.Component<Props> {
             resetPosition={resetPosition}
             name={this.props.name}
             ativo={this.props.ativo}
-            eventSourceCotacao={this.props.eventSourceCotacao}
+            namespace={COMPRA_LIMITADA_NAMESPACE}
           />
         )}
       />
@@ -45,7 +46,6 @@ const modalBody = () => (
 
 const mapStateToProps = (state: BoletasState) => ({
   ativo: state.compraLimitadaReducer.ativo,
-  eventSourceCotacao: state.compraLimitadaReducer.eventSourceCotacao,
 });
 
 const connector = connect(mapStateToProps, {});

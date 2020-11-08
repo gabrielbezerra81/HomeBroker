@@ -80,7 +80,6 @@ const mapStateToProps = (state) => ({
   assinatura: state.vendaStartStopReducer.assinatura,
   checkSalvarAssinatura: state.vendaStartStopReducer.checkSalvarAssinatura,
   dadosPesquisa: state.vendaStartStopReducer.dadosPesquisa,
-  eventSourceCotacao: state.vendaStartStopReducer.eventSourceCotacao,
 });
 
 export default compose(
@@ -97,5 +96,5 @@ export default compose(
     enviarOrdemAction,
     mudarAtributoBoletaAction,
   }),
-  connect(mapStateToPropsConfigStopVenda, {})
+  connect(mapStateToPropsConfigStopVenda, {}),
 )(FormInternoVendaStartStop);

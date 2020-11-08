@@ -226,13 +226,7 @@ export const updateMultilegOfferAction = ({
   setPointerWhileAwaiting({ lockMode: "travar", id: "multileg" });
 
   const {
-    systemReducer: { token },
-    multilegReducer: {
-      eventSourceCotacao,
-      setIntervalCotacoesMultileg,
-      multileg,
-      cotacoesMultileg,
-    },
+    multilegReducer: { multileg, cotacoesMultileg },
   } = getState();
 
   const updatedMultilegTabs = cloneMultilegTabs(multileg);
@@ -345,13 +339,7 @@ export const addMultilegOfferAction = ({
   });
 
   const {
-    systemReducer: { token },
-    multilegReducer: {
-      eventSourceCotacao,
-      setIntervalCotacoesMultileg,
-      multileg,
-      cotacoesMultileg,
-    },
+    multilegReducer: { multileg, cotacoesMultileg },
   } = getState();
 
   if (multileg[tabIndex].tabelaMultileg.length < 6) {
@@ -539,16 +527,16 @@ export const startReactiveMultilegUpdateAction = (): MainThunkAction => {
       systemReducer: { token },
       multilegReducer: {
         cotacoesMultileg: multilegQuotes,
-        eventSourceCotacao: eventSourceMultilegQuotes,
-        setIntervalCotacoesMultileg: setIntervalMultilegQuotes,
+        esource_multilegQuotes,
+        interval_multilegQuotes,
       },
     } = getState();
 
-    if (eventSourceMultilegQuotes) {
-      eventSourceMultilegQuotes.close();
+    if (esource_multilegQuotes) {
+      esource_multilegQuotes.close();
     }
-    if (setIntervalMultilegQuotes) {
-      clearInterval(setIntervalMultilegQuotes);
+    if (interval_multilegQuotes) {
+      clearInterval(interval_multilegQuotes);
     }
 
     const symbolsArray: string[] = [];
@@ -566,7 +554,25 @@ export const startReactiveMultilegUpdateAction = (): MainThunkAction => {
         token,
       });
 
-      dispatch(updateMultilegStateAction("eventSourceCotacao", newSource));
+      dispatch(updateMultilegStateAction("esource_multilegQuotes", newSource));
+    }
+  };
+};
+
+export const startProactiveMultilegUpdateAction = (): MainThunkAction => {
+  return (dispatch, getState) => {
+    const {
+      multilegReducer: {
+        esource_multilegQuotes,
+        interval_multilegQuotes: setIntervalMultilegQuotes,
+      },
+    } = getState();
+
+    if (esource_multilegQuotes) {
+      esource_multilegQuotes.close();
+    }
+    if (setIntervalMultilegQuotes) {
+      clearInterval(setIntervalMultilegQuotes);
     }
   };
 };

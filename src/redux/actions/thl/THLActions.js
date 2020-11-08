@@ -43,13 +43,8 @@ export const abrirMultilegTHLAction = (props) => {
     });
 
     const {
-      multilegReducer: {
-        eventSourceCotacao,
-        setIntervalCotacoesMultileg,
-        multileg,
-        cotacoesMultileg,
-      },
-      systemReducer: { isOpenMultileg, token },
+      multilegReducer: { multileg, cotacoesMultileg },
+      systemReducer: { isOpenMultileg },
       thlReducer: { booksSelecionados },
     } = getState();
 

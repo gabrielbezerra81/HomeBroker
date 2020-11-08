@@ -57,30 +57,14 @@ export const filtrarHistoricoOpAction = () => {
   return (dispatch) => {};
 };
 
-export const listarOrdensExecAction = (props) => {
+export const listOrdersExecAction = (props) => {
   return async (dispatch, getState) => {
-    const { eventSourceOrdensExec } = getReducerStateStorePrincipal(
-      getState(),
-      "ordensExec",
-    );
-
     const { token } = getReducerStateStorePrincipal(getState(), "principal");
 
     if (token) {
       const ordensExec = await listarOrdensExecAPI();
 
       dispatch({ type: LISTAR_ORDENS_EXECUCAO, payload: ordensExec });
-
-      setTimeout(
-        () =>
-          atualizarOrdensExec({
-            dispatch,
-            token,
-            eventSourceOrdensExec,
-            listaOrdensExec: ordensExec,
-          }),
-        3000,
-      );
     }
   };
 };
@@ -94,13 +78,8 @@ export const openOrderInMultilegAction = (props, action = "") => {
     });
 
     const {
-      multilegReducer: {
-        eventSourceCotacao,
-        setIntervalCotacoesMultileg,
-        multileg,
-        cotacoesMultileg,
-      },
-      systemReducer: { isOpenMultileg, token },
+      multilegReducer: { multileg, cotacoesMultileg },
+      systemReducer: { isOpenMultileg },
       ordersExecReducer: { ordemAtual },
     } = getState();
 
@@ -470,44 +449,37 @@ const retornaDadosOferta = (ordemAtual, tipo) => {
   return dadosOferta;
 };
 
-// const atualizarOrdensExecAction = (props) => {
-//   return (dispatch, getState) => {
-//     const {
-//       eventSourceOrdensExec,
-//       tabelaOrdensExecucao,
-//     } = getReducerStateStorePrincipal(getState(), "ordensExec");
-//     const { token } = getReducerStateStorePrincipal(getState(), "principal");
+export const startReactiveOrdersUpdateAction = () => {
+  return (dispatch, getState) => {
+    const {
+      systemReducer: { token },
+      ordersExecReducer: { esource_ordersExec, tabelaOrdensExecucao },
+    } = getState();
 
-//     atualizarOrdensExec({
-//       dispatch,
-//       listaOrdensExec: tabelaOrdensExecucao,
-//       eventSourceOrdensExec,
-//       token,
-//     });
-//   };
-// };
+    if (esource_ordersExec && esource_ordersExec.close) {
+      esource_ordersExec.close();
+    }
 
-const atualizarOrdensExec = ({
-  dispatch,
-  eventSourceOrdensExec,
-  token,
-  listaOrdensExec,
-}) => {
-  if (eventSourceOrdensExec && eventSourceOrdensExec.close) {
-    eventSourceOrdensExec.close();
-  }
+    const source = atualizarOrdensExecAPI({
+      dispatch,
+      listaOrdensExec: tabelaOrdensExecucao,
+      token,
+    });
 
-  const eventSource = atualizarOrdensExecAPI({
-    dispatch,
-    listaOrdensExec,
-    token,
-  });
+    dispatch(updateOneOrdersExecStateAction("esource_ordersExec", source));
+  };
+};
 
-  dispatch(
-    updateOneOrdersExecStateAction("eventSourceOrdensExec", eventSource),
-  );
+export const startProactiveOrdersUpdateAction = () => {
+  return (dispatch, getState) => {
+    const {
+      ordersExecReducer: { esource_ordersExec },
+    } = getState();
 
-  return eventSource;
+    if (esource_ordersExec && esource_ordersExec.close) {
+      esource_ordersExec.close();
+    }
+  };
 };
 
 export const openOrdersExecFromRightMenuAction = () => {

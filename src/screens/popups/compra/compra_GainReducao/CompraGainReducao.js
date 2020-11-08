@@ -7,6 +7,7 @@ import FormInternoCompraGainReducao from "./FormInternoCompraGainReducao";
 import GraficoCompraGainReducao from "./GraficoCompraGainReducao";
 import BodyHeaderCompraGainReducao from "./BodyHeaderCompraGainReducao";
 import { ModalHeader } from "shared/componentes/PopupHeader";
+import { COMPRA_GAINREDUCAO_NAMESPACE } from "constants/ActionTypes";
 
 class CompraGainReducao extends React.Component {
   render() {
@@ -21,7 +22,7 @@ class CompraGainReducao extends React.Component {
             resetPosition={resetPosition}
             name={this.props.name}
             ativo={this.props.ativo}
-            eventSourceCotacao={this.props.eventSourceCotacao}
+            namespace={COMPRA_GAINREDUCAO_NAMESPACE}
           />
         )}
       />
@@ -41,7 +42,6 @@ const modalBody = () => (
 
 const mapStateToProps = (state) => ({
   ativo: state.compraGainReducao.ativo,
-  eventSourceCotacao: state.compraGainReducao.eventSourceCotacao,
 });
 
 export default connect(mapStateToProps, {})(CompraGainReducao);

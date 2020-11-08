@@ -26,6 +26,20 @@ import { listarBookOfertaOnEnterAction } from "redux/actions/boletas/bookOfertaA
 import { mudarInputHeaderAction } from "redux/actions/boletas/bookOfertaActions";
 import { montarBoletaFromOrdemExecAction } from "redux/actions/boletas/formInputActions";
 import Boleta from "screens/popups/boletas/Boleta";
+import {
+  COMPRA_AGENDADA_NAMESPACE,
+  COMPRA_GAINREDUCAO_NAMESPACE,
+  COMPRA_LIMITADA_NAMESPACE,
+  COMPRA_MERCADO_NAMESPACE,
+  COMPRA_STARTMOVEL_NAMESPACE,
+  COMPRA_STARTSTOP_NAMESPACE,
+  VENDA_AGENDADA_NAMESPACE,
+  VENDA_GAINREDUCAO_NAMESPACE,
+  VENDA_LIMITADA_NAMESPACE,
+  VENDA_MERCADO_NAMESPACE,
+  VENDA_STARTSTOP_NAMESPACE,
+  VENDA_STOPMOVEL_NAMESPACE,
+} from "constants/ActionTypes";
 
 class AppBoletas extends React.Component {
   componentDidMount() {
@@ -100,6 +114,7 @@ class AppBoletas extends React.Component {
           appKey={props.appkey}
           boletaName="compra_agendada"
           visibilityIndex={props.indiceShow}
+          namespace={COMPRA_AGENDADA_NAMESPACE}
         >
           <CompraAgendada
             headerTitle="COMPRA AGENDADA"
@@ -111,6 +126,7 @@ class AppBoletas extends React.Component {
           appKey={props.appkey}
           boletaName="compra_limitada"
           visibilityIndex={props.indiceShow}
+          namespace={COMPRA_LIMITADA_NAMESPACE}
         >
           <CompraLimitada
             headerTitle="COMPRA LIMITADA"
@@ -122,6 +138,7 @@ class AppBoletas extends React.Component {
           appKey={props.appkey}
           boletaName="compra_mercado"
           visibilityIndex={props.indiceShow}
+          namespace={COMPRA_MERCADO_NAMESPACE}
         >
           <CompraMercado headerTitle="COMPRA A MERCADO" name="compra_mercado" />
         </Boleta>
@@ -130,6 +147,7 @@ class AppBoletas extends React.Component {
           appKey={props.appkey}
           boletaName="compra_startstop"
           visibilityIndex={props.indiceShow}
+          namespace={COMPRA_STARTSTOP_NAMESPACE}
         >
           <CompraStartStop
             headerTitle="COMPRA START STOP"
@@ -141,6 +159,7 @@ class AppBoletas extends React.Component {
           appKey={props.appkey}
           boletaName="compra_startmovel"
           visibilityIndex={props.indiceShow}
+          namespace={COMPRA_STARTMOVEL_NAMESPACE}
         >
           <CompraStartMovel
             headerTitle="COMPRA START MÓVEL"
@@ -152,6 +171,7 @@ class AppBoletas extends React.Component {
           appKey={props.appkey}
           boletaName="compra_gainreducao"
           visibilityIndex={props.indiceShow}
+          namespace={COMPRA_GAINREDUCAO_NAMESPACE}
         >
           <CompraGainReducao
             headerTitle="GAIN / REDUÇÃO DE COMPRA"
@@ -163,6 +183,7 @@ class AppBoletas extends React.Component {
           appKey={props.appkey}
           boletaName="venda_agendada"
           visibilityIndex={props.indiceShow}
+          namespace={VENDA_AGENDADA_NAMESPACE}
         >
           <VendaAgendada headerTitle="VENDA AGENDADA" name="venda_agendada" />
         </Boleta>
@@ -171,6 +192,7 @@ class AppBoletas extends React.Component {
           appKey={props.appkey}
           boletaName="venda_limitada"
           visibilityIndex={props.indiceShow}
+          namespace={VENDA_LIMITADA_NAMESPACE}
         >
           <VendaLimitada headerTitle="VENDA LIMITADA" name="venda_limitada" />
         </Boleta>
@@ -179,6 +201,7 @@ class AppBoletas extends React.Component {
           appKey={props.appkey}
           boletaName="venda_mercado"
           visibilityIndex={props.indiceShow}
+          namespace={VENDA_MERCADO_NAMESPACE}
         >
           <VendaMercado headerTitle="VENDA MERCADO" name="venda_mercado" />
         </Boleta>
@@ -187,6 +210,7 @@ class AppBoletas extends React.Component {
           appKey={props.appkey}
           boletaName="venda_startstop"
           visibilityIndex={props.indiceShow}
+          namespace={VENDA_STARTSTOP_NAMESPACE}
         >
           <VendaStartStop
             headerTitle="VENDA START STOP"
@@ -198,6 +222,7 @@ class AppBoletas extends React.Component {
           appKey={props.appkey}
           boletaName="venda_stopmovel"
           visibilityIndex={props.indiceShow}
+          namespace={VENDA_STOPMOVEL_NAMESPACE}
         >
           <VendaStopMovel
             headerTitle="VENDA STOP MÓVEL"
@@ -209,6 +234,7 @@ class AppBoletas extends React.Component {
           appKey={props.appkey}
           boletaName="venda_gainreducao"
           visibilityIndex={props.indiceShow}
+          namespace={VENDA_GAINREDUCAO_NAMESPACE}
         >
           <VendaGainReducao
             headerTitle="GAIN / REDUÇÃO DE VENDA"
@@ -237,7 +263,7 @@ const mapStateToPropsStorePrincipal = (state) => ({
 });
 
 const mapStateToPropsLocal = (state) => ({
-  eventSourceBook_Book: state.bookOfertaReducer.eventSource,
+  eventSourceBook_Book: state.bookOfertaReducer.esource_offersBook,
 });
 
 export default compose(

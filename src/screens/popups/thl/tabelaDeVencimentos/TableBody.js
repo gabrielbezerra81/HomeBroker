@@ -89,7 +89,7 @@ const TableBody = ({ strikeList, yearList, lastMonth }) => {
             monthMountPrice,
             monthDemountPrice,
             totalColumnId,
-            structureIds: IDs,
+            structuresIds: IDs,
             stocks: line.stocks,
           };
 
@@ -168,7 +168,7 @@ const TableBody = ({ strikeList, yearList, lastMonth }) => {
               );
 
               if (stockIndex !== -1) {
-                const structureId = lineData.structureIds[stockIndex];
+                const structureId = lineData.structuresIds[stockIndex];
 
                 return (
                   <BodyContentCell

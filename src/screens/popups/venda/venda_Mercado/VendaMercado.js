@@ -7,6 +7,7 @@ import FormInternoVendaMercado from "./FormInternoVendaMercado";
 import GraficoVendaMercado from "./GraficoVendaMercado";
 import BodyHeaderVendaMercado from "./BodyHeaderVendaMercado";
 import { ModalHeader } from "shared/componentes/PopupHeader";
+import { VENDA_MERCADO_NAMESPACE } from "constants/ActionTypes";
 
 class VendaMercado extends React.Component {
   componentDidMount() {
@@ -26,7 +27,7 @@ class VendaMercado extends React.Component {
             resetPosition={resetPosition}
             name={this.props.name}
             ativo={this.props.ativo}
-            eventSourceCotacao={this.props.eventSourceCotacao}
+            namespace={VENDA_MERCADO_NAMESPACE}
           />
         )}
       />
@@ -46,7 +47,6 @@ const modalBody = (props) => (
 
 const mapStateToProps = (state) => ({
   ativo: state.vendaMercadoReducer.ativo,
-  eventSourceCotacao: state.vendaMercadoReducer.eventSourceCotacao,
 });
 
 export default connect(mapStateToProps, {})(VendaMercado);

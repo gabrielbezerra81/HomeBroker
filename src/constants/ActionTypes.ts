@@ -3,6 +3,7 @@ export const MUDAR_QTDE = "mudar_qtde";
 export const MUDAR_STOPLOSS_BOOK = "mudar_stoploss_book";
 export const MUDAR_GAIN_BOOK = "mudar_gain_book";
 export const MUDAR_INPUTHEADER_BOOK = "mudar_inputheader_book";
+export const UPDATE_MANY_OFFER_BOOK = "update_many_offer_book"
 
 export const MUDAR_ATRIBUTO_BOLETA = "mudar_atributo_boleta";
 
@@ -81,7 +82,7 @@ export const LOGAR_DESLOGAR_USUARIO = "logar_deslogar_usuario";
 export const ABRIR_FECHAR_ITEM_BARRA_LATERAL =
   "abrir_fechar_item_barra_lateral";
 const UPDATE_ONE_SYSTEM_STATE = "update_one_system_state";
-const UPDATE_MANY_SYSTEM_STATE = "update_many_system_state"
+const UPDATE_MANY_SYSTEM_STATE = "update_many_system_state";
 //
 
 export const ATUALIZAR_EVENT_SOURCE_BOLETAS = "atualizar_event_source_boletas";
@@ -92,7 +93,7 @@ export const MUDAR_DADOS_LOGIN = "mudar_dados_login";
 export const actionType = {
   RESET_REDUX_STATE: "reset_redux_state",
   UPDATE_ONE_SYSTEM_STATE,
-  UPDATE_MANY_SYSTEM_STATE
+  UPDATE_MANY_SYSTEM_STATE,
 } as const;
 
 const namespaces = [
@@ -113,3 +114,8 @@ const namespaces = [
 ] as const;
 
 export type NamespacesType = typeof namespaces[number];
+
+export type BoletaNamespace = Exclude<
+  NamespacesType,
+  "bookOfertaReducer" | "appBoletasReducer"
+>;

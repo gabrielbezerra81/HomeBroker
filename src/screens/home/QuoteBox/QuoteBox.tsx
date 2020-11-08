@@ -14,7 +14,6 @@ import {
   updateOneSystemStateAction,
 } from "redux/actions/system/SystemActions";
 import { deleteQuoteBoxAPI } from "api/API";
-import { handleBoxUpdatesAction } from "redux/actions/system/boxesActions";
 
 interface QuoteBoxProps {
   quoteBox: BoxProps;
@@ -129,8 +128,6 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
             quoteBoxes: updatedQuoteBoxes,
           }),
         );
-
-        dispatch(handleBoxUpdatesAction(updatedQuoteBoxes));
       }
     } catch (error) {}
   }, [

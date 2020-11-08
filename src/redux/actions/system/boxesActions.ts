@@ -73,7 +73,6 @@ export const addBoxFromAPIAction = (data: any[]): MainThunkAction => {
       });
     });
 
-    dispatch(handleBoxUpdatesAction(updatedQuoteBoxes));
     dispatch(handleAddBoxesToTabsAction(openedBoxes));
     dispatch(updateOneSystemStateAction("quoteBoxes", updatedQuoteBoxes));
   };
@@ -118,20 +117,18 @@ export const handleAddBoxesToTabsAction = (
   };
 };
 
-export const handleBoxUpdatesAction = (
-  quoteBoxes: BoxProps[],
-): MainThunkAction => {
+export const startReactiveBoxUpdateAction = (): MainThunkAction => {
   return (dispatch, getState) => {
     const {
-      systemReducer: { token, boxEventSource, boxSetInterval },
+      systemReducer: { token, esource_box, interval_box, quoteBoxes },
     } = getState();
 
-    if (boxEventSource && boxEventSource.close) {
-      boxEventSource.close();
+    if (esource_box && esource_box.close) {
+      esource_box.close();
     }
 
-    if (boxSetInterval) {
-      clearInterval(boxSetInterval);
+    if (interval_box) {
+      clearInterval(interval_box);
     }
 
     const idArray: string[] = [];
@@ -147,7 +144,36 @@ export const handleBoxUpdatesAction = (
     if (ids) {
       const boxSource = updateBoxDataAPI({ ids, token, dispatch, quoteBoxes });
 
-      dispatch(updateOneSystemStateAction("boxEventSource", boxSource));
+      dispatch(updateOneSystemStateAction("esource_box", boxSource));
+    }
+  };
+};
+
+export const startProactiveBoxUpdateAction = (): MainThunkAction => {
+  return (dispatch, getState) => {
+    const {
+      systemReducer: { esource_box, interval_box, quoteBoxes },
+    } = getState();
+
+    if (esource_box && esource_box.close) {
+      esource_box.close();
+    }
+
+    if (interval_box) {
+      clearInterval(interval_box);
+    }
+
+    const idArray: string[] = [];
+
+    quoteBoxes.forEach((boxItem) => {
+      if (!idArray.includes(boxItem.structureID.toString())) {
+        idArray.push(boxItem.structureID.toString());
+      }
+    });
+
+    const ids = idArray.join(",");
+
+    if (ids) {
     }
   };
 };

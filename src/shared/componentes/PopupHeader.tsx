@@ -18,25 +18,41 @@ import useDispatchBoletas from "hooks/useDispatchBoletas";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 
 import useStateBoletas from "hooks/useStateBoletas";
+import { BoletaNamespace } from "constants/ActionTypes";
+
+interface ModalHeaderProps {
+  headerTitle?: any;
+  headerClass?: any;
+  resetPosition?: any;
+  name?: any;
+  ativo?: any;
+  namespace?: any;
+}
 
 // Apenas para boletas de compra e venda
-export const ModalHeader: React.FC<any> = ({
+export const ModalHeader: React.FC<ModalHeaderProps> = ({
   headerTitle,
   headerClass,
   resetPosition,
   name,
   ativo,
-  eventSourceCotacao,
+  namespace,
 }) => {
+  const boletaState = useStateBoletas();
   const {
     appBoletasReducer: { appProps },
-  } = useStateBoletas();
+  } = boletaState;
+
+  const { esource_boletaQuote } = boletaState[namespace as BoletaNamespace];
+
   const {
     systemReducer: { token },
   } = useStateStorePrincipal();
   const stateGlobalStore = useStateGlobalStore();
+
   const dispatchGlobal = useDispatchGlobalStore();
   const dispatch = useDispatchBoletas();
+
   const formShow = stateGlobalStore.show;
   const { appkey } = appProps;
   const abrirBookProps = {
@@ -70,7 +86,7 @@ export const ModalHeader: React.FC<any> = ({
           onClick={() => {
             resetPosition();
             dispatchGlobal(fecharFormAction(formShow, name, appkey));
-            if (eventSourceCotacao) eventSourceCotacao.close();
+            if (esource_boletaQuote) esource_boletaQuote.close();
           }}
         >
           <span className="fa-stack">
@@ -89,7 +105,7 @@ export const ModalHeader: React.FC<any> = ({
 
 export const BookHeader: React.FC<any> = ({ headerClass, resetPosition }) => {
   const {
-    bookOfertaReducer: { inputHeader, eventSource },
+    bookOfertaReducer: { inputHeader, esource_offersBook },
     appBoletasReducer: { appProps },
   } = useStateBoletas();
 
@@ -136,7 +152,7 @@ export const BookHeader: React.FC<any> = ({ headerClass, resetPosition }) => {
             onClick={() => {
               dispatchGlobal(fecharFormAction(formShow, "book", appkey));
               resetPosition();
-              if (eventSource) eventSource.close();
+              if (esource_offersBook) esource_offersBook.close();
             }}
           >
             <span className="fa-stack hoverIconeFechar">
@@ -271,8 +287,8 @@ const GetAbrirMenuProps = () => {
       isOpenMultileg,
       isOpenTHL,
     },
-    multilegReducer: { eventSourceCotacao, setIntervalCotacoesMultileg },
-    thlReducer: { eventSourcePrecos, setIntervalPrecosTHL },
+    multilegReducer: { esource_multilegQuotes, interval_multilegQuotes },
+    thlReducer: { esource_thlStructures, interval_thlStructures },
   } = useStateStorePrincipal();
 
   const props = {
@@ -281,28 +297,28 @@ const GetAbrirMenuProps = () => {
     isOpenPosition,
     isOpenMultileg,
     isOpenTHL,
-    eventSourceCotacao_Multileg: eventSourceCotacao,
-    setIntervalCotacoes_Multileg: setIntervalCotacoesMultileg,
-    // eventSourceEmblema_Posicao: eventSourceEmblema,
-    // setIntervalEmblema_Posicao: setIntervalEmblema,
-    // eventSourcePosicao_Posicao: eventSourcePosicao,
-    // eventSourceCotacoes_Posicao: eventSourceCotacoes,
-    // setIntervalCotacoes_Posicao: setIntervalCotacoesPosicao,
-    // eventSourceOrdensExec_OrdensExec: eventSourceOrdensExec,
-    eventSourcePrecos_THL: eventSourcePrecos,
-    setIntervalPrecos_THL: setIntervalPrecosTHL,
+    eventSourceCotacao_Multileg: esource_multilegQuotes,
+    setIntervalCotacoes_Multileg: interval_multilegQuotes,
+    // esource_emblem_Posicao: esource_emblem,
+    // interval_emblem_Posicao: interval_emblem,
+    // esource_position_Posicao: esource_position,
+    // esource_positionQuote_Posicao: esource_positionQuote,
+    // setIntervalCotacoes_Posicao: interval_positionQuote,
+    // esource_ordersExec_OrdensExec: esource_ordersExec,
+    esource_thlStructures_THL: esource_thlStructures,
+    setIntervalPrecos_THL: interval_thlStructures,
   };
 
   return props;
 
   // const {
-  //   eventSourceEmblema,
-  //   eventSourcePosicao,
-  //   eventSourceCotacoes,
-  //   setIntervalCotacoesPosicao,
-  //   setIntervalEmblema,
+  //   esource_emblem,
+  //   esource_position,
+  //   esource_positionQuote,
+  //   interval_positionQuote,
+  //   interval_emblem,
   // } = state.positionReducer;
-  // const { eventSourceOrdensExec } = state.ordersExecReducer;
+  // const { esource_ordersExec } = state.ordersExecReducer;
 };
 
 const BotaoAbrirFiltrarOrdens: React.FC<any> = ({ headerTitle }) => {

@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import React, { useCallback, useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
@@ -11,8 +12,8 @@ import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 
 const TelaLogin = ({ path }) => {
   const [user, setUser] = useState({
-    username: "",
-    password: "",
+    username: location.hostname === "localhost" ? "gabrielAB" : "",
+    password: location.hostname === "localhost" ? "123456789" : "",
   });
 
   const dispatch = useDispatchStorePrincipal();

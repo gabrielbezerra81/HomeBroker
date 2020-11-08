@@ -7,6 +7,7 @@ import FormInternoCompraStartStop from "./FormInternoCompraStartStop";
 import GraficoCompraStartStop from "./GraficoCompraStartStop";
 import BodyHeaderCompraStartStop from "./BodyHeaderCompraStartStop";
 import { ModalHeader } from "shared/componentes/PopupHeader";
+import { COMPRA_STARTSTOP_NAMESPACE } from "constants/ActionTypes";
 
 class CompraStartStop extends React.Component {
   render() {
@@ -23,7 +24,7 @@ class CompraStartStop extends React.Component {
             resetPosition={resetPosition}
             name={this.props.name}
             ativo={this.props.ativo}
-            eventSourceCotacao={this.props.eventSourceCotacao}
+            namespace={COMPRA_STARTSTOP_NAMESPACE}
           />
         )}
         renderConfigForm={this.props.config_compra}
@@ -46,7 +47,6 @@ const modalBody = (props) => (
 const mapStateToProps = (state) => ({
   config_compra: state.appBoletasReducer.config_compra,
   ativo: state.compraStartStopReducer.ativo,
-  eventSourceCotacao: state.compraStartStopReducer.eventSourceCotacao,
 });
 
 export default connect(mapStateToProps, {})(CompraStartStop);

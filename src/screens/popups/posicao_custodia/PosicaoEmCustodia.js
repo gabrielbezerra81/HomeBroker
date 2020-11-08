@@ -11,11 +11,7 @@ import { ReactComponent as IconeAmpliado } from "assets/check-box-empty.svg";
 import PosicaoEmLista from "screens/popups/posicao_custodia/PosicaoLista";
 import PosicaoAmpliadaResumida from "screens/popups/posicao_custodia/PosicaoAmpliadaResumida";
 import { StorePrincipalContext, GlobalContext } from "redux/StoreCreation";
-import {
-  mudarVariavelPosicaoAction,
-  atualizarCotacoesPosicaoAction,
-  atualizarEmblemasAction,
-} from "redux/actions/posicao/PosicaoActions";
+import { mudarVariavelPosicaoAction } from "redux/actions/posicao/PosicaoActions";
 import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
 import PosicaoDetalhada from "screens/popups/posicao_custodia/posicao_detalhada/PosicaoDetalhada";
 import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopupZIndexFromSecondaryTab";
@@ -23,7 +19,6 @@ import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopup
 class PosicaoEmCustodia extends React.Component {
   componentDidMount() {
     const { props } = this;
-    const { eventSourceEmblema, eventSourceCotacoes, posicoesCustodia } = props;
 
     if (props.divkey !== "" && props.divkey === "posicao_custodia") {
       document.getElementById("posicao_custodia").style.zIndex =
@@ -33,46 +28,46 @@ class PosicaoEmCustodia extends React.Component {
 
     // Começa a atualizar emblemas e cotações ao abrir a posição, exceto quando recarrega a página,
     // pois isso é feito pela própria action de listar posição
-    if (posicoesCustodia.length) {
-      if (
-        (eventSourceEmblema && eventSourceEmblema.readyState === 2) ||
-        !eventSourceEmblema
-      ) {
-        props.atualizarEmblemasAction();
-      }
+    // if (posicoesCustodia.length) {
+    //   if (
+    //     (esource_emblem && esource_emblem.readyState === 2) ||
+    //     !esource_emblem
+    //   ) {
+    //     props.atualizarEmblemasAction();
+    //   }
 
-      if (
-        (eventSourceCotacoes && eventSourceCotacoes.readyState === 2) ||
-        !eventSourceCotacoes
-      ) {
-        props.atualizarCotacoesPosicaoAction();
-      }
-    }
+    //   if (
+    //     (esource_positionQuote && esource_positionQuote.readyState === 2) ||
+    //     !esource_positionQuote
+    //   ) {
+    //     props.atualizarCotacoesPosicaoAction();
+    //   }
+    // }
   }
 
   // Limpa eventSources e timers
-  componentWillUnmount() {
-    const {
-      eventSourceEmblema,
-      eventSourceCotacoes,
-      setIntervalEmblema,
-      setIntervalCotacoesPosicao,
-    } = this.props;
+  // componentWillUnmount() {
+  //   const {
+  //     esource_emblem,
+  //     esource_positionQuote,
+  //     interval_emblem,
+  //     interval_positionQuote,
+  //   } = this.props;
 
-    if (eventSourceEmblema && eventSourceEmblema.close) {
-      eventSourceEmblema.close();
-    }
-    if (setIntervalEmblema) {
-      clearInterval(setIntervalEmblema);
-    }
+  //   if (esource_emblem && esource_emblem.close) {
+  //     esource_emblem.close();
+  //   }
+  //   if (interval_emblem) {
+  //     clearInterval(interval_emblem);
+  //   }
 
-    if (eventSourceCotacoes && eventSourceCotacoes.close) {
-      eventSourceCotacoes.close();
-    }
-    if (setIntervalCotacoesPosicao) {
-      clearInterval(setIntervalCotacoesPosicao);
-    }
-  }
+  //   if (esource_positionQuote && esource_positionQuote.close) {
+  //     esource_positionQuote.close();
+  //   }
+  //   if (interval_positionQuote) {
+  //     clearInterval(interval_positionQuote);
+  //   }
+  // }
 
   componentDidUpdate(prevProps) {
     const { props } = this;
@@ -87,24 +82,24 @@ class PosicaoEmCustodia extends React.Component {
       updateFunction: aumentarZindexAction,
     });
 
-    if (
-      props.eventSourcePosicao &&
-      props.eventSourceEmblema &&
-      props.eventSourceCotacoes
-    ) {
-      if (props.posicoesCustodia.length !== props.arrayPrecos.length) {
-        if (prevProps.posicoesCustodia !== props.posicoesCustodia) {
-          if (
-            props.posicoesCustodia.length &&
-            props.arrayPrecos.length &&
-            props.arrayCotacoes.length
-          ) {
-            props.atualizarEmblemasAction();
-            props.atualizarCotacoesPosicaoAction();
-          }
-        }
-      }
-    }
+    // if (
+    //   props.esource_position &&
+    //   props.esource_emblem &&
+    //   props.esource_positionQuote
+    // ) {
+    //   if (props.posicoesCustodia.length !== props.arrayPrecos.length) {
+    //     if (prevProps.posicoesCustodia !== props.posicoesCustodia) {
+    //       if (
+    //         props.posicoesCustodia.length &&
+    //         props.arrayPrecos.length &&
+    //         props.arrayCotacoes.length
+    //       ) {
+    //         // props.atualizarEmblemasAction();
+    //         // props.atualizarCotacoesPosicaoAction();
+    //       }
+    //     }
+    //   }
+    // }
   }
 
   render() {
@@ -162,15 +157,6 @@ const mapStateToPropsPosicao = (state) => ({
   tipoVisualizacao: state.positionReducer.tipoVisualizacao,
   ativoPesquisa: state.positionReducer.ativoPesquisa,
   inputSelect: state.positionReducer.inputSelect,
-  eventSourceEmblema: state.positionReducer.eventSourceEmblema,
-  setIntervalEmblema: state.positionReducer.setIntervalEmblema,
-  eventSourcePosicao: state.positionReducer.eventSourcePosicao,
-  eventSourceCotacoes: state.positionReducer.eventSourceCotacoes,
-  setIntervalCotacoesPosicao: state.positionReducer.setIntervalCotacoesPosicao,
-  posicoesCustodia: state.positionReducer.posicoesCustodia,
-  arrayCotacoes: state.positionReducer.arrayCotacoes,
-  arrayPrecos: state.positionReducer.arrayPrecos,
-  arrayPrecosID: state.positionReducer.arrayPrecosID,
   token: state.systemReducer.token,
   isOpenPosition: state.systemReducer.isOpenPosition,
 });
@@ -183,8 +169,6 @@ export default compose(
     mapStateToPropsPosicao,
     {
       mudarVariavelPosicaoAction,
-      atualizarCotacoesPosicaoAction,
-      atualizarEmblemasAction,
     },
     null,
     { context: StorePrincipalContext },

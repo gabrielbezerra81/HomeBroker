@@ -1,8 +1,11 @@
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import usePrevious from "hooks/usePrevious";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
-import React, { useCallback, useEffect } from "react";
-import { startReactiveMultilegUpdateAction } from "redux/actions/multileg/MultilegActions";
+import React, { useEffect } from "react";
+import {
+  startProactiveMultilegUpdateAction,
+  startReactiveMultilegUpdateAction,
+} from "redux/actions/multileg/MultilegActions";
 import checkIfUpdateConfigChanged from "./utils";
 
 const MultilegUpdateManager: React.FC = () => {
@@ -11,25 +14,19 @@ const MultilegUpdateManager: React.FC = () => {
     multilegReducer: {
       multileg,
       abaSelecionada,
-      eventSourceCotacao,
-      setIntervalCotacoesMultileg,
+      esource_multilegQuotes,
+      interval_multilegQuotes,
     },
   } = useStateStorePrincipal();
 
   const dispatch = useDispatchStorePrincipal();
 
+  const previousIsOpenMultileg = usePrevious(isOpenMultileg);
   const previousUpdateMode = usePrevious(updateMode);
   const previousUpdateInterval = usePrevious(updateInterval);
   const previousMultileg = usePrevious(multileg);
 
-  const verifyVisibilityChange = useCallback((previous, current) => {
-    if (previous !== undefined && previous !== current) {
-      return true;
-    }
-
-    return false;
-  }, []);
-
+  // Iniciar atualização
   useEffect(() => {
     function checkIfMultilegChanged() {
       const tabIndex = Number(abaSelecionada.replace("tab", ""));
@@ -83,11 +80,10 @@ const MultilegUpdateManager: React.FC = () => {
 
     function startUpdate() {
       if (updateMode === "reactive") {
-        console.log("começou atualização reativa da multileg");
         dispatch(startReactiveMultilegUpdateAction());
       } //
       else {
-        console.log("atualização proativa da multileg");
+        dispatch(startProactiveMultilegUpdateAction());
       }
     }
 
@@ -108,15 +104,13 @@ const MultilegUpdateManager: React.FC = () => {
 
   // Para atualização ao fechar multileg
   useEffect(() => {
-    if (!isOpenMultileg) {
-      console.log("clear Multileg");
-
-      if (eventSourceCotacao && eventSourceCotacao.close) {
-        eventSourceCotacao.close();
+    if (!isOpenMultileg && previousIsOpenMultileg) {
+      if (esource_multilegQuotes && esource_multilegQuotes.close) {
+        esource_multilegQuotes.close();
       }
 
-      if (setIntervalCotacoesMultileg) {
-        clearInterval(setIntervalCotacoesMultileg);
+      if (interval_multilegQuotes) {
+        clearInterval(interval_multilegQuotes);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

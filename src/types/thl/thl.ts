@@ -1,6 +1,6 @@
 export interface DueDatesTableItem {
   strikeLine: number;
-  structureIds: Array<number>;
+  structuresIds: Array<number>;
   stocks: Array<
     Stock & {
       vencimento: string;

@@ -13,6 +13,6 @@ export default interface OrdersExecState {
   selectQtdeAberto: boolean;
   selectPrecoAberto: boolean;
   sinalInputSelect: "+" | "-";
-  eventSourceOrdensExec: EventSource | null;
+  esource_ordersExec: EventSource | null;
   filtrarOrdensAberto: boolean;
 }

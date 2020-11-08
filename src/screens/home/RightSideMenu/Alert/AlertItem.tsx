@@ -8,11 +8,7 @@ import { AlertAPI } from "types/multileg/multileg";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { updateAlertAPI } from "api/API";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
-import {
-  abrirItemBarraLateralAction,
-  updateManySystemState,
-} from "redux/actions/system/SystemActions";
-import { atualizarDivKeyAction } from "redux/actions/GlobalAppActions";
+import {} from "redux/actions/system/SystemActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import produce from "immer";
 import { updateOneMultilegState } from "redux/actions/multileg/utils";
@@ -27,7 +23,6 @@ const AlertItem: React.FC<AlertItemProps> = ({ alert: alertItem }) => {
   const dispatch = useDispatchStorePrincipal();
 
   const {
-    systemReducer: { isOpenMultileg },
     multilegReducer: { alerts },
   } = useStateStorePrincipal();
 

@@ -7,6 +7,7 @@ import FormInternoCompraStartMovel from "./FormInternoCompraStartMovel";
 import GraficoCompraStartMovel from "./GraficoCompraStartMovel";
 import BodyHeaderCompraStartMovel from "./BodyHeaderCompraStartMovel";
 import { ModalHeader } from "shared/componentes/PopupHeader";
+import { COMPRA_STARTMOVEL_NAMESPACE } from "constants/ActionTypes";
 
 class CompraStarMovel extends React.Component {
   render() {
@@ -23,7 +24,7 @@ class CompraStarMovel extends React.Component {
             resetPosition={resetPosition}
             name={this.props.name}
             ativo={this.props.ativo}
-            eventSourceCotacao={this.props.eventSourceCotacao}
+            namespace={COMPRA_STARTMOVEL_NAMESPACE}
           />
         )}
       />
@@ -43,7 +44,6 @@ const modalBody = () => (
 
 const mapStateToProps = (state) => ({
   ativo: state.compraStartMovelReducer.ativo,
-  eventSourceCotacao: state.compraStartMovelReducer.eventSourceCotacao,
 });
 
 export default connect(mapStateToProps, {})(CompraStarMovel);

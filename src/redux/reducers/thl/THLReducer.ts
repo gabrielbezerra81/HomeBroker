@@ -1,4 +1,3 @@
-// import { setAutoFreeze } from "immer";
 import {
   MUDAR_VARIAVEL_THL,
   MUDAR_VARIAVEIS_THL,
@@ -13,13 +12,11 @@ import Action from "types/Action";
 import { actionType } from "constants/ActionTypes";
 import { resetarEstadoRedux } from "../resetarEstadoReducer";
 
-// setAutoFreeze(false);
-
 const INITIAL_STATE: THLState = {
   quote: 0,
   dayOscilation: 0,
-  ativoPesquisa: "PETR4",
-  ativoPesquisado: "PETR4",
+  ativoPesquisa: "",
+  ativoPesquisado: "",
   pesquisandoAtivo: false,
   tipo: "CALL",
   opcoesStrike: mapearTabelaVencimentos([]),
@@ -72,8 +69,8 @@ const INITIAL_STATE: THLState = {
   ],
   strikeSelecionado: "",
   precosTabelaVencimentos: [],
-  eventSourcePrecos: null,
-  setIntervalPrecosTHL: null,
+  esource_thlStructures: null,
+  interval_thlStructures: null,
   precosTabelaVencimentosID: 0, // Como são enviados arrays mutados no setInterval, será enviado um id que muda a cada dispatch
 
   /* Tabela de combinações */
@@ -99,8 +96,8 @@ const INITIAL_STATE: THLState = {
   prazo: [],
   arrayCotacoes: [],
   arrayCotacoesID: 0,
-  eventSourceCotacoesTHL: null,
-  setIntervalCotacoesTHL: null,
+  esource_thlQuotes: null,
+  interval_thlQuotes: null,
   ordenacao: {
     key: "",
     valor: 0,
@@ -2771,7 +2768,6 @@ export default (state = INITIAL_STATE, { type, payload }: Action): THLState => {
             omitions: [],
             reducerName: "thl",
             shouldClearAllProps: payload.limparReducer,
-            shouldClearEventSources: true,
           }),
         };
       else return state;

@@ -63,8 +63,12 @@ const RightSideMenu: React.FC = () => {
     return isOpenRightSideMenu ? "" : "hiddenSideBar";
   }, [isOpenRightSideMenu]);
 
+  const menuCollapsedClass = useMemo(() => {
+    return isOpenRightSideMenu ? "" : " collapsed";
+  }, [isOpenRightSideMenu]);
+
   return (
-    <div className="rightSideMenu">
+    <div className={`rightSideMenu${menuCollapsedClass}`}>
       <div>
         <div
           className="barVisibilityButton"

@@ -1,5 +1,4 @@
 import { listarPosicoesAPI } from "api/API";
-import { url_pesquisarAtivoBoletas_codigo } from "api/url";
 import {
   atualizarEmblemasAPI,
   atualizarPosicaoAPI,
@@ -10,7 +9,6 @@ import {
   adicionaPosicao,
   updateManyPositionState,
 } from "./utils";
-import { getReducerStateStorePrincipal } from "hooks/utils";
 import api from "api/apiConfig";
 
 export const mudarVariavelPosicaoAction = (attributeName, attributeValue) => {
@@ -19,98 +17,37 @@ export const mudarVariavelPosicaoAction = (attributeName, attributeValue) => {
   };
 };
 
-export const listarPosicoesAction = () => {
+export const listPositionAction = () => {
   return async (dispatch, getState) => {
-    const { token, isOpenPosition } = getReducerStateStorePrincipal(
-      getState(),
-      "principal",
+    const dados = await listarPosicoesAPI();
+
+    const listaPosicoes = [];
+    const arrayPrecos = [];
+    let arrayCotacoes = [];
+
+    dados.forEach((grupoPosicao) => {
+      const posicao = adicionaPosicao(grupoPosicao);
+      const preco = {
+        precoCompra: posicao[0].precoCompra,
+        precoVenda: posicao[0].precoVenda,
+        cotacaoAtual: posicao[0].cotacaoAtual,
+        idEstrutura: posicao[0].idEstrutura,
+      };
+      arrayPrecos.push(preco);
+      listaPosicoes.push(...posicao);
+    });
+    // listaPosicoes.splice(0, 19);
+    // arrayPrecos.splice(0, 19);
+    arrayCotacoes = await montaArrayCotacoes(listaPosicoes);
+
+    dispatch(
+      updateManyPositionState({
+        posicoesCustodia: listaPosicoes,
+        arrayPrecos,
+        arrayCotacoes,
+      }),
     );
-
-    const {
-      eventSourcePosicao,
-      eventSourceEmblema,
-      setIntervalEmblema,
-      eventSourceCotacoes,
-      setIntervalCotacoesPosicao,
-    } = getReducerStateStorePrincipal(getState(), "posicao");
-
-    if (token) {
-      const dados = await listarPosicoesAPI();
-
-      const listaPosicoes = [];
-      const arrayPrecos = [];
-      let arrayCotacoes = [];
-
-      dados.forEach((grupoPosicao) => {
-        const posicao = adicionaPosicao(grupoPosicao);
-        const preco = {
-          precoCompra: posicao[0].precoCompra,
-          precoVenda: posicao[0].precoVenda,
-          cotacaoAtual: posicao[0].cotacaoAtual,
-          idEstrutura: posicao[0].idEstrutura,
-        };
-        arrayPrecos.push(preco);
-        listaPosicoes.push(...posicao);
-      });
-      // listaPosicoes.splice(0, 19);
-      // arrayPrecos.splice(0, 19);
-      arrayCotacoes = await montaArrayCotacoes(listaPosicoes);
-
-      atualizarPosicao({
-        dispatch,
-        listaPosicoes,
-        token,
-        eventSourcePosicao,
-      });
-
-      if (isOpenPosition) {
-        atualizarEmblemas({
-          dispatch,
-          token,
-          listaPosicoes,
-          listaPrecos: arrayPrecos,
-          eventSourceEmblema,
-          setIntervalEmblema,
-        });
-        atualizarCotacoes({
-          dispatch,
-          listaPosicoes,
-          arrayCotacoes,
-          eventSourceCotacoes,
-          setIntervalCotacoesPosicao,
-          token,
-        });
-      }
-
-      dispatch(
-        updateManyPositionState({
-          posicoesCustodia: listaPosicoes,
-          arrayPrecos,
-          arrayCotacoes,
-        }),
-      );
-    }
   };
-};
-
-const atualizarPosicao = async ({
-  dispatch,
-  listaPosicoes,
-  eventSourcePosicao,
-  token,
-}) => {
-  if (eventSourcePosicao && eventSourcePosicao.close) {
-    eventSourcePosicao.close();
-  }
-
-  const newSource = atualizarPosicaoAPI({ dispatch, listaPosicoes, token });
-
-  dispatch(
-    updateOnePositionState({
-      attributeName: "eventSourcePosicao",
-      attributeValue: newSource,
-    }),
-  );
 };
 
 const montaArrayCotacoes = async (listaPosicoes, tipoRetorno = "completo") => {
@@ -156,120 +93,187 @@ const montaArrayCotacoes = async (listaPosicoes, tipoRetorno = "completo") => {
   return arrayCodigos;
 };
 
-export const atualizarEmblemasAction = () => {
+// position
+export const startReactivePositionUpdateAction = () => {
   return (dispatch, getState) => {
-    const { token } = getReducerStateStorePrincipal(getState(), "principal");
     const {
-      eventSourceEmblema,
-      setIntervalEmblema,
-      arrayPrecos,
-      posicoesCustodia,
-    } = getReducerStateStorePrincipal(getState(), "posicao");
+      positionReducer: { esource_position, posicoesCustodia: positionList },
+      systemReducer: { token },
+    } = getState();
 
-    atualizarEmblemas({
+    if (esource_position && esource_position.close) {
+      esource_position.close();
+    }
+
+    const source = atualizarPosicaoAPI({
       dispatch,
-      listaPrecos: arrayPrecos,
-      listaPosicoes: posicoesCustodia,
-      token,
-      eventSourceEmblema,
-      setIntervalEmblema,
-    });
-  };
-};
-
-const atualizarEmblemas = ({
-  dispatch,
-  listaPosicoes,
-  eventSourceEmblema,
-  listaPrecos,
-  setIntervalEmblema,
-  token,
-}) => {
-  let idArray = [];
-
-  if (eventSourceEmblema && eventSourceEmblema.close) {
-    eventSourceEmblema.close();
-  }
-  if (setIntervalEmblema) {
-    clearInterval(setIntervalEmblema);
-  }
-
-  listaPosicoes.forEach((posicao) => {
-    idArray.push(posicao.idEstrutura);
-  });
-  const ids = idArray.join(",");
-
-  if (ids) {
-    const newSource = atualizarEmblemasAPI({
-      dispatch,
-      ids,
-      listaPrecos,
+      listaPosicoes: positionList,
       token,
     });
 
     dispatch(
       updateOnePositionState({
-        attributeName: "eventSourceEmblema",
-        attributeValue: newSource,
+        attributeName: "esource_position",
+        attributeValue: source,
       }),
     );
-  }
-};
-
-export const atualizarCotacoesPosicaoAction = () => {
-  return (dispatch, getState) => {
-    const { token } = getReducerStateStorePrincipal(getState(), "principal");
-    const {
-      eventSourceCotacoes,
-      setIntervalCotacoesPosicao,
-      posicoesCustodia,
-      arrayCotacoes,
-    } = getReducerStateStorePrincipal(getState(), "posicao");
-
-    atualizarCotacoes({
-      dispatch,
-      arrayCotacoes,
-      listaPosicoes: posicoesCustodia,
-      eventSourceCotacoes,
-      setIntervalCotacoesPosicao,
-      token,
-    });
   };
 };
 
-const atualizarCotacoes = async ({
-  dispatch,
-  listaPosicoes,
-  arrayCotacoes,
-  token,
-  eventSourceCotacoes,
-  setIntervalCotacoesPosicao,
-}) => {
-  const arrayCodigos = await montaArrayCotacoes(listaPosicoes, "codigos");
+// emblem
+export const startReactiveEmblemUpdateAction = () => {
+  return (dispatch, getState) => {
+    const {
+      positionReducer: {
+        posicoesCustodia: positionList,
+        esource_emblem,
+        interval_emblem,
+      },
+      systemReducer: { token },
+    } = getState();
 
-  if (eventSourceCotacoes && eventSourceCotacoes.close) {
-    eventSourceCotacoes.close();
-  }
-  if (setIntervalCotacoesPosicao) {
-    // quem disparar pela segunda vez deve ter essa var no connect
-    clearInterval(setIntervalCotacoesPosicao);
-  }
+    let idArray = [];
 
-  const codigos = arrayCodigos.join(",");
+    if (esource_emblem && esource_emblem.close) {
+      esource_emblem.close();
+    }
+    if (interval_emblem) {
+      clearInterval(interval_emblem);
+    }
 
-  if (codigos) {
-    const newSource = atualizarCotacaoPosicaoAPI({
-      dispatch,
-      arrayCotacoes,
-      codigos,
-      token,
+    positionList.forEach((posicao) => {
+      idArray.push(posicao.idEstrutura);
     });
+    const ids = idArray.join(",");
 
-    dispatch(
-      updateOnePositionState({
-        attributeName: "eventSourceCotacoes",
-        attributeValue: newSource,
-      }),
-    );
-  }
+    if (ids) {
+      const newSource = atualizarEmblemasAPI({
+        dispatch,
+        ids,
+        listaPrecos: positionList,
+        token,
+      });
+
+      dispatch(
+        updateOnePositionState({
+          attributeName: "esource_emblem",
+          attributeValue: newSource,
+        }),
+      );
+    }
+  };
+};
+
+// quote
+export const startReactivePositionQuoteUpdateAction = () => {
+  return async (dispatch, getState) => {
+    const {
+      positionReducer: {
+        posicoesCustodia: positionList,
+        esource_positionQuote,
+        interval_positionQuote,
+        arrayCotacoes: positionQuotes,
+      },
+      systemReducer: { token },
+    } = getState();
+
+    const symbolList = await montaArrayCotacoes(positionList, "codigos");
+
+    if (esource_positionQuote && esource_positionQuote.close) {
+      esource_positionQuote.close();
+    }
+    if (interval_positionQuote) {
+      // quem disparar pela segunda vez deve ter essa var no connect
+      clearInterval(interval_positionQuote);
+    }
+
+    const symbols = symbolList.join(",");
+
+    if (symbols) {
+      const newSource = atualizarCotacaoPosicaoAPI({
+        dispatch,
+        arrayCotacoes: positionQuotes,
+        codigos: symbols,
+        token,
+      });
+
+      dispatch(
+        updateOnePositionState({
+          attributeName: "esource_positionQuote",
+          attributeValue: newSource,
+        }),
+      );
+    }
+  };
+};
+
+// position
+export const startProactivePositionUpdateAction = () => {
+  return (dispatch, getState) => {
+    const {
+      positionReducer: { esource_position },
+    } = getState();
+
+    if (esource_position && esource_position.close) {
+      esource_position.close();
+    }
+  };
+};
+
+// emblem
+export const startProactiveEmblemUpdateAction = () => {
+  return (dispatch, getState) => {
+    const {
+      positionReducer: {
+        posicoesCustodia: positionList,
+        esource_emblem,
+        interval_emblem,
+      },
+    } = getState();
+
+    let idArray = [];
+
+    if (esource_emblem && esource_emblem.close) {
+      esource_emblem.close();
+    }
+    if (interval_emblem) {
+      clearInterval(interval_emblem);
+    }
+
+    positionList.forEach((posicao) => {
+      idArray.push(posicao.idEstrutura);
+    });
+    const ids = idArray.join(",");
+
+    if (ids) {
+    }
+  };
+};
+
+// quote
+export const startProactivePositionQuoteUpdateAction = () => {
+  return async (dispatch, getState) => {
+    const {
+      positionReducer: {
+        posicoesCustodia: positionList,
+        esource_positionQuote,
+        interval_positionQuote,
+      },
+    } = getState();
+
+    const symbolList = await montaArrayCotacoes(positionList, "codigos");
+
+    if (esource_positionQuote && esource_positionQuote.close) {
+      esource_positionQuote.close();
+    }
+    if (interval_positionQuote) {
+      // quem disparar pela segunda vez deve ter essa var no connect
+      clearInterval(interval_positionQuote);
+    }
+
+    const symbols = symbolList.join(",");
+
+    if (symbols) {
+    }
+  };
 };

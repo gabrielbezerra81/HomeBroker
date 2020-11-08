@@ -34,7 +34,7 @@ class FormInternoVendaLimitada extends React.Component {
       this.props.mudarAtributoBoletaAction(
         Number(this.props.preco).toFixed(2),
         VENDA_LIMITADA_NAMESPACE,
-        "preco"
+        "preco",
       );
     }
   }
@@ -70,7 +70,7 @@ class FormInternoVendaLimitada extends React.Component {
                       this.props.mudarAtributoBoletaAction(
                         valor,
                         VENDA_LIMITADA_NAMESPACE,
-                        "preco"
+                        "preco",
                       )
                     }
                   />
@@ -133,7 +133,6 @@ const mapStateToProps = (state) => ({
   preco: state.vendaLimitadaReducer.preco,
   checkSalvarAssinatura: state.vendaLimitadaReducer.checkSalvarAssinatura,
   dadosPesquisa: state.vendaLimitadaReducer.dadosPesquisa,
-  eventSourceCotacao: state.vendaLimitadaReducer.eventSourceCotacao,
 });
 
 export default connect(mapStateToProps, {

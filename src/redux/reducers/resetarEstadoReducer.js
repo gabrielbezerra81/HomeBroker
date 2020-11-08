@@ -10,19 +10,9 @@ export const resetarEstadoRedux = ({
   omitions = [],
   reducerName,
   shouldClearAllProps,
-  shouldClearEventSources = false,
 }) => {
   let mutableProps = {};
   let pick = {};
-
-  if (shouldClearEventSources) {
-    Object.keys(state).forEach((key) => {
-      if (key.toLowerCase().includes("eventsource") && state[key])
-        state[key].close();
-      if (key.toLowerCase().includes("setinterval") && state[key])
-        clearInterval(state[key]);
-    });
-  }
 
   if (shouldClearAllProps)
     switch (reducerName) {
@@ -35,7 +25,7 @@ export const resetarEstadoRedux = ({
       case "ordensExec":
         mutableProps = {
           tabelaOrdensExecucao: [],
-          eventSourceOrdensExec: null,
+          esource_ordersExec: null,
         };
         break;
       case "thl":

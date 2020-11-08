@@ -11,55 +11,61 @@ import {
 } from "constants/ActionTypes";
 import { mudarAtributoBoletaAction } from "redux/actions/boletas/formInputActions";
 
-export const pesquisarAtivoOnEnterAction = (props, namespace) => {
+export const pesquisarAtivoOnEnterAction = (namespace) => {
   return async (dispatch, getState) => {
-    if (props.eventSourceCotacao) {
-      props.eventSourceCotacao.close();
-    }
+    const appBoletasState = getState();
+
+    const { ativo, qtde } = appBoletasState[namespace];
+
     dispatch(mudarAtributoBoletaAction(true, namespace, "pesquisandoAtivo"));
 
-    const dadosPesquisa = await pesquisarAtivoAPI(props.ativo);
+    const dadosPesquisa = await pesquisarAtivoAPI(ativo);
 
     if (dadosPesquisa) {
       dispatch({
         type: `${PESQUISAR_ATIVO_BOLETA_API}${namespace}`,
         payload: dadosPesquisa,
       });
-      const qtde = mudarTipoInputQtde(dadosPesquisa, props.qtde);
+      const newQtde = mudarTipoInputQtde(dadosPesquisa, qtde);
       dispatch({
         type: `${MUDAR_QTDE}${namespace}`,
         payload: {
-          qtde: qtde,
+          qtde: newQtde,
           erro: "",
         },
       });
 
       dispatch(mudarAtributoBoletaAction(false, namespace, "pesquisandoAtivo"));
-      atualizarCotacaoBoletaAction({ dispatch, dadosPesquisa, namespace });
     }
   };
 };
 
-const atualizarCotacaoBoletaAction = ({
-  dispatch,
-  dadosPesquisa,
-  namespace,
-}) => {
-  const codigo = dadosPesquisa.ativo;
+export const startBoletaQuoteUpdateAction = (namespace) => {
+  return (dispatch, getState) => {
+    const appBoletasState = getState();
 
-  if (codigo) {
-    const newSource = atualizarCotacaoBoletasAPI({
-      dispatch,
-      codigos: codigo,
-      dadosPesquisa,
-      namespace,
-    });
+    const { esource_boletaQuote, dadosPesquisa } = appBoletasState[namespace];
 
-    dispatch({
-      type: `${ATUALIZAR_EVENT_SOURCE_BOLETAS}${namespace}`,
-      payload: newSource,
-    });
-  }
+    if (esource_boletaQuote) {
+      esource_boletaQuote.close();
+    }
+
+    const codigo = dadosPesquisa.ativo;
+
+    if (codigo) {
+      const newSource = atualizarCotacaoBoletasAPI({
+        dispatch,
+        codigos: codigo,
+        dadosPesquisa,
+        namespace,
+      });
+
+      dispatch({
+        type: `${ATUALIZAR_EVENT_SOURCE_BOLETAS}${namespace}`,
+        payload: newSource,
+      });
+    }
+  };
 };
 
 export const enviarOrdemAction = (props, selectedAccount) => {

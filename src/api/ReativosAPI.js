@@ -33,9 +33,9 @@ var EventSource = EventSourcePolyfill;
 
 const intervaloAttReativa = 6000;
 
-export const atualizarBookAPI = ({ dispatch, codigos, tipo, token }) => {
+export const atualizarBookAPI = ({ dispatch, symbol, token }) => {
   var source = new EventSource(
-    `${url_base_reativa}${url_bookReativo_codigos}${codigos}`,
+    `${url_base_reativa}${url_bookReativo_codigos}${symbol}`,
     {
       headers: {
         Authorization: `${token.tokenType} ${token.accessToken}`,
@@ -49,34 +49,32 @@ export const atualizarBookAPI = ({ dispatch, codigos, tipo, token }) => {
   source.onmessage = function (event) {
     if (typeof event.data !== "undefined") {
       // console.log("chegou");
-      let tabelas = {
+      let bookTables = {
         tabelaOfertasCompra: [],
         tabelaOfertasVenda: [],
       };
 
-      var dados = JSON.parse(event.data);
+      var data = JSON.parse(event.data);
 
       //   let ativoRetornado = dados.symbol;
-      if (dados.bookOffers) {
-        let bookNovo = [...dados.bookOffers];
+      if (data.bookOffers) {
+        let newBooks = [...data.bookOffers];
 
-        bookNovo.forEach((item) => {
+        newBooks.forEach((item) => {
           if (item.type === "V") {
-            tabelas.tabelaOfertasVenda.push(item);
+            bookTables.tabelaOfertasVenda.push(item);
           } else if (item.type === "C") {
-            tabelas.tabelaOfertasCompra.push(item);
+            bookTables.tabelaOfertasCompra.push(item);
           }
         });
-        tabelas.tabelaOfertasCompra.sort((a, b) => b.price - a.price);
-        tabelas.tabelaOfertasVenda.sort((a, b) => b.price - a.price);
+        bookTables.tabelaOfertasCompra.sort((a, b) => b.price - a.price);
+        bookTables.tabelaOfertasVenda.sort((a, b) => b.price - a.price);
       }
 
-      if (tipo === "book") {
-        dispatch({
-          type: LISTAR_BOOK_OFERTAS,
-          payload: tabelas,
-        });
-      }
+      dispatch({
+        type: LISTAR_BOOK_OFERTAS,
+        payload: bookTables,
+      });
     }
   };
   return source;
@@ -104,7 +102,7 @@ export const atualizarCotacaoMultilegAPI = ({
     listaCotacoes,
     MODIFICAR_VARIAVEL_MULTILEG,
     "cotacoesMultileg",
-    "setIntervalCotacoesMultileg",
+    "interval_multilegQuotes",
     () => listaCotacoes,
     true,
   );
@@ -145,7 +143,6 @@ export const atualizarCotacaoMultilegAPI = ({
   return source;
 };
 
-// TODO: retirar da execução se n tiver aberto
 export const atualizarCotacaoPosicaoAPI = ({
   dispatch,
   codigos,
@@ -168,7 +165,7 @@ export const atualizarCotacaoPosicaoAPI = ({
     listaCotacoes,
     MUDAR_VARIAVEL_POSICAO_CUSTODIA,
     "arrayCotacoes",
-    "setIntervalCotacoesPosicao",
+    "interval_positionQuote",
   );
 
   source.onmessage = function (event) {
@@ -220,7 +217,7 @@ export const atualizarCotacaoTHLAPI = ({
     listaCotacoes,
     MUDAR_VARIAVEL_THL,
     "arrayCotacoes",
-    "setIntervalCotacoesTHL",
+    "interval_thlQuotes",
   );
 
   source.onmessage = function (event) {
@@ -289,7 +286,6 @@ export const atualizarCotacaoBoletasAPI = ({
   return source;
 };
 
-// TODO: retirar da execução se n tiver aberto
 export const atualizarEmblemasAPI = ({ dispatch, listaPrecos, ids, token }) => {
   var source = new EventSource(
     `${url_base_reativa}${url_emblemaReativo_ids}${ids}`,
@@ -307,7 +303,7 @@ export const atualizarEmblemasAPI = ({ dispatch, listaPrecos, ids, token }) => {
     novaLista,
     MUDAR_VARIAVEL_POSICAO_CUSTODIA,
     "arrayPrecos",
-    "setIntervalEmblema",
+    "interval_emblem",
   );
 
   source.onmessage = function (event) {
@@ -475,7 +471,7 @@ export const atualizarPrecosTHLAPI = ({
     updatedPriceStructures,
     MUDAR_VARIAVEL_THL,
     "precosTabelaVencimentos",
-    "setIntervalPrecosTHL",
+    "interval_thlStructures",
     () => updateStructuresImmutable(priceStructures, updatedPriceStructures),
   );
 
@@ -521,7 +517,7 @@ export const updateBoxDataAPI = ({ ids, dispatch, token, quoteBoxes }) => {
     updatedBoxes,
     actionType.UPDATE_ONE_SYSTEM_STATE,
     "quoteBoxes",
-    "boxSetInterval",
+    "interval_box",
     () => immutableFunction(updatedBoxes),
   );
 

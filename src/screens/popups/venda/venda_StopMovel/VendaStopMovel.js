@@ -7,6 +7,7 @@ import FormInternoVendaStopMovel from "./FormInternoVendaStopMovel";
 import GraficoVendaStopMovel from "./GraficoVendaStopMovel";
 import BodyHeaderVendaStopMovel from "./BodyHeaderVendaStopMovel";
 import { ModalHeader } from "shared/componentes/PopupHeader";
+import { VENDA_STOPMOVEL_NAMESPACE } from "constants/ActionTypes";
 
 class VendaStopMovel extends React.Component {
   componentDidMount() {
@@ -26,7 +27,7 @@ class VendaStopMovel extends React.Component {
             resetPosition={resetPosition}
             name={this.props.name}
             ativo={this.props.ativo}
-            eventSourceCotacao={this.props.eventSourceCotacao}
+            namespace={VENDA_STOPMOVEL_NAMESPACE}
           />
         )}
       />
@@ -46,7 +47,6 @@ const modalBody = () => (
 
 const mapStateToProps = (state) => ({
   ativo: state.vendaStopMovel.ativo,
-  eventSourceCotacao: state.vendaStopMovel.eventSourceCotacao,
 });
 
 export default connect(mapStateToProps, {})(VendaStopMovel);

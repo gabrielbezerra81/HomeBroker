@@ -64,14 +64,14 @@ const InputPesquisa = ({ props, namespace }) => {
         onKeyPress={(event) => {
           //event.preventDefault();
           if (event.key === "Enter") {
-            props.pesquisarAtivoOnEnterAction(props, namespace);
+            props.pesquisarAtivoOnEnterAction(namespace);
           }
         }}
       />
       <InputGroup.Append className="inputAtivoAppend">
         <span
           className="iconeProcurar divClicavel iconePesquisarBoletas"
-          onClick={() => props.pesquisarAtivoOnEnterAction(props, namespace)}
+          onClick={() => props.pesquisarAtivoOnEnterAction(namespace)}
         >
           {pesquisandoAtivo ? (
             <Spinner

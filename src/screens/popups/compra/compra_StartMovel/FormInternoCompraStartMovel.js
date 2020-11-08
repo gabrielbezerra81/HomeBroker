@@ -59,7 +59,7 @@ class FormInternoCompraStartMovel extends React.Component {
                       props.mudarAtributoBoletaAction(
                         valor,
                         COMPRA_STARTMOVEL_NAMESPACE,
-                        "ajusteAssimetrico"
+                        "ajusteAssimetrico",
                       )
                     }
                   />
@@ -71,7 +71,7 @@ class FormInternoCompraStartMovel extends React.Component {
                   onClick={() =>
                     props.adicionarItemTabelaStartMovel(
                       props,
-                      COMPRA_STARTMOVEL_NAMESPACE
+                      COMPRA_STARTMOVEL_NAMESPACE,
                     )
                   }
                   className="operation-icons"
@@ -118,7 +118,7 @@ class FormInternoCompraStartMovel extends React.Component {
                     props.adicionarItemTabelaStartMovel(
                       props,
                       COMPRA_STARTMOVEL_NAMESPACE,
-                      "simulacao"
+                      "simulacao",
                     )
                   }
                 >
@@ -149,7 +149,6 @@ const mapStateToProps = (state) => ({
   assinatura: state.compraStartMovelReducer.assinatura,
   checkSalvarAssinatura: state.compraStartMovelReducer.checkSalvarAssinatura,
   dadosPesquisa: state.compraStartMovelReducer.dadosPesquisa,
-  eventSourceCotacao: state.compraStartMovelReducer.eventSourceCotacao,
   tabelaOrdensSimulacao: state.compraStartMovelReducer.tabelaOrdensSimulacao,
 });
 
