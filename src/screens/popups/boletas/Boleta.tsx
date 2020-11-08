@@ -12,12 +12,16 @@ import {
   handleOpenMenusInMainScreenTabsAction,
   handleCloseMenusAction,
 } from "redux/actions/system/SystemActions";
+import BoletaUpdateManager from "./BoletaUpdateManager";
+import { BoletaNamespace } from "constants/ActionTypes";
+import BookUpdateManager from "./BookUpdateManager";
 
 interface BoletaContainerProps {
   children: React.ReactNode;
   boletaName: string;
   visibilityIndex: number;
   appKey: number;
+  namespace?: BoletaNamespace;
 }
 
 const startStyle = {
@@ -30,6 +34,7 @@ const Boleta: React.FC<BoletaContainerProps> = ({
   boletaName,
   visibilityIndex,
   appKey,
+  namespace,
 }) => {
   const {
     systemReducer: { selectedTab, openedMenus },
@@ -45,8 +50,6 @@ const Boleta: React.FC<BoletaContainerProps> = ({
   const previousVisibility = usePrevious(visibility);
 
   useEffect(() => {
-    console.log(previousVisibility, visibility);
-
     // Houve mudança de visibilidade: deve adicionar ou remover um elemento de openedMenus
     if (previousVisibility !== visibility) {
       const openedMenu = [
@@ -103,6 +106,10 @@ const Boleta: React.FC<BoletaContainerProps> = ({
       }
     >
       {children}
+      {boletaName === "book" && <BookUpdateManager />}
+      {boletaName !== "book" && namespace && (
+        <BoletaUpdateManager namespace={namespace} />
+      )}
     </Animate>
   );
 };

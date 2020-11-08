@@ -30,6 +30,7 @@ const INITIAL_STATE = {
     ultimoHorario: "",
     stepQtde: 100,
     market: "",
+    ativo: "",
   },
   pesquisandoAtivo: false,
   ativo: "PETR4",
