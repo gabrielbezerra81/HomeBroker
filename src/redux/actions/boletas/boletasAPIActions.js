@@ -1,6 +1,9 @@
 import { pesquisarAtivoAPI, enviarOrdemAPI } from "api/API";
 import { atualizarCotacaoBoletasAPI } from "api/ReativosAPI";
-import { PESQUISAR_ATIVO_BOLETA_API } from "constants/ApiActionTypes";
+import {
+  LISTAR_ORDENS_EXECUCAO,
+  PESQUISAR_ATIVO_BOLETA_API,
+} from "constants/ApiActionTypes";
 import {
   montaOrdemPrincipal,
   validarOrdemBoleta,
@@ -10,6 +13,8 @@ import {
   MUDAR_QTDE,
 } from "constants/ActionTypes";
 import { mudarAtributoBoletaAction } from "redux/actions/boletas/formInputActions";
+import produce from "immer";
+import { storeAppPrincipal } from "redux/StoreCreation";
 
 export const pesquisarAtivoOnEnterAction = (namespace) => {
   return async (dispatch, getState) => {
@@ -69,9 +74,25 @@ export const startBoletaQuoteUpdateAction = (namespace) => {
 };
 
 export const enviarOrdemAction = (props, selectedAccount) => {
-  return async (dispatch) => {
+  return async () => {
+    const {
+      ordersExecReducer: { tabelaOrdensExecucao },
+    } = storeAppPrincipal.getState();
+
     let json = [montaOrdemPrincipal(props, selectedAccount)];
-    if (validarOrdemBoleta(props, selectedAccount)) await enviarOrdemAPI(json);
+    if (validarOrdemBoleta(props, selectedAccount)) {
+      const data = await enviarOrdemAPI(json);
+
+      if (data && data.length) {
+        const updatedOrders = produce(tabelaOrdensExecucao, (draft) => {
+          draft.push(data[0]);
+        });
+        storeAppPrincipal.dispatch({
+          type: LISTAR_ORDENS_EXECUCAO,
+          payload: updatedOrders,
+        });
+      }
+    }
   };
 };
 
