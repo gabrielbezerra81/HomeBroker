@@ -13,11 +13,14 @@ import {
   RECEBER_APPKEYLOCAL,
 } from "constants/ActionTypes";
 import { MUDAR_ORDEM_EXEC_MAIN_REDUCER } from "constants/MenuActionTypes";
+import { globalStore } from "redux/StoreCreation";
 
-const ContainerAppBoletas = React.lazy(() => import("screens/popups/boletas/ContainerAppBoletas"));
+const ContainerAppBoletas = React.lazy(() =>
+  import("screens/popups/boletas/ContainerAppBoletas"),
+);
 
-export const criarMostrarAppAction = (apps, show, zindex, dispatch) => {
-  dispatch({
+export const criarMostrarAppAction = (apps, show, zindex) => {
+  globalStore.dispatch({
     type: CRIAR_APP,
     payload: {
       apps: apps,
@@ -26,8 +29,8 @@ export const criarMostrarAppAction = (apps, show, zindex, dispatch) => {
     },
   });
 };
-export const mostrarAppAction = (apps, show, zindex, dispatch) => {
-  dispatch({
+export const mostrarAppAction = (apps, show, zindex) => {
+  globalStore.dispatch({
     type: MOSTRAR_APP,
     payload: {
       apps: apps,
@@ -37,8 +40,8 @@ export const mostrarAppAction = (apps, show, zindex, dispatch) => {
   });
 };
 
-export const atualizarShowAction = (show, dispatch) => {
-  dispatch({ type: ATUALIZAR_SHOW, payload: show });
+export const atualizarShowAction = (show) => {
+  globalStore.dispatch({ type: ATUALIZAR_SHOW, payload: show });
 };
 
 export const atualizarDivKeyAction = (divkey) => {
@@ -47,8 +50,8 @@ export const atualizarDivKeyAction = (divkey) => {
   };
 };
 
-export const atualizarDivKeyAction2 = (divkey, dispatch) => {
-  dispatch({ type: ATUALIZAR_DIVKEY, payload: divkey });
+export const atualizarDivKeyAction2 = (divkey) => {
+  globalStore.dispatch({ type: ATUALIZAR_DIVKEY, payload: divkey });
 };
 
 export const fecharFormAction = (show, divkey, appkey) => {
@@ -78,7 +81,7 @@ export const abrirFormAction = (
   codigo_ativo = "",
   nameOrdemExec = "", //identificação da boleta que irá ser aberta vindo das ordens em execução
 ) => {
-  return (dispatch) => {
+  return () => {
     let apps = [...props.apps];
     let name;
 
@@ -90,31 +93,31 @@ export const abrirFormAction = (
     let length = apps.length;
 
     if (length === 0) {
-      criarMostrarApp(name, props, dispatch, codigo_ativo);
+      criarMostrarApp(name, props, codigo_ativo);
     } else {
       //percorrer array de show e ver se todos já estão abertos. Se sim, criar e mostrar um novo. Senão, apenas mostrar
       let show = [...props.show];
 
       let todosAbertos = show.every((element, index) => {
         if (element[name] === false) {
-          mostrarApp(name, index, props, dispatch, codigo_ativo);
+          mostrarApp(name, index, props, codigo_ativo);
           return false;
         } else return true;
       });
 
       if (todosAbertos) {
-        criarMostrarApp(name, props, dispatch, codigo_ativo);
+        criarMostrarApp(name, props, codigo_ativo);
       }
     }
   };
 };
 
 //Cria um sub-app e altera o estado de visibilidade da boleta escolhida
-const criarMostrarApp = (name, props, dispatch, codigo_ativo) => {
+const criarMostrarApp = (name, props, codigo_ativo) => {
   let apps = [...props.apps];
   let show = [...props.show];
 
-  atualizarDivKeyAction2(`${name}${apps.length}`, dispatch);
+  atualizarDivKeyAction2(`${name}${apps.length}`);
   show.push({
     book: false,
     compra_agendada: false,
@@ -133,7 +136,7 @@ const criarMostrarApp = (name, props, dispatch, codigo_ativo) => {
     config_venda: false,
   });
   //Faz o dispatch dos dados de visibilidade das boletas
-  atualizarShowAction(show, dispatch);
+  atualizarShowAction(show);
   const length = show.length;
 
   //escolher o que vai ser mostrado
@@ -146,11 +149,11 @@ const criarMostrarApp = (name, props, dispatch, codigo_ativo) => {
   });
 
   apps.push(sub);
-  criarMostrarAppAction(apps, show, props.zIndex, dispatch);
+  criarMostrarAppAction(apps, show, props.zIndex);
 };
 
 //Muda o estado de visibilidade de uma determinada boleta no ultimo appBoletas criado
-const mostrarApp = (name, index, props, dispatch, codigo_ativo) => {
+const mostrarApp = (name, index, props, codigo_ativo) => {
   if (name === "book" && codigo_ativo) {
     // Quando abrir o book a partir de uma boleta de compra ou venda
     const dispatchBoleta = props.dispatch;
@@ -165,10 +168,10 @@ const mostrarApp = (name, index, props, dispatch, codigo_ativo) => {
 
   let apps = [...props.apps];
   let show = [...props.show];
-  atualizarDivKeyAction2(`${name}${index}`, dispatch);
+  atualizarDivKeyAction2(`${name}${index}`);
   show[index] = { ...show[index] };
   show[index][name] = true;
-  mostrarAppAction(apps, show, props.zIndex, dispatch);
+  mostrarAppAction(apps, show, props.zIndex);
 };
 
 //Usado apenas na store local de cada sub-app para abrir os forms de configuração de start/stop movel
@@ -182,7 +185,7 @@ export const abrirFormConfigurarAction = (event, props) => {
       payload: true,
     });
 
-    aumentarZindex(props.zIndex, dispatch);
+    aumentarZindex(props.zIndex);
   };
 };
 
@@ -199,9 +202,9 @@ export const fecharFormConfigurarAction = (event) => {
 };
 
 //Apenas para form configurar
-export const aumentarZindex = (zIndex, dispatch) => {
+export const aumentarZindex = (zIndex) => {
   zIndex = zIndex + 1;
-  dispatch({ type: AUMENTAR_ZINDEX, payload: zIndex });
+  globalStore.dispatch({ type: AUMENTAR_ZINDEX, payload: zIndex });
 };
 
 export const receberAppPropsAction = (appProps) => {
