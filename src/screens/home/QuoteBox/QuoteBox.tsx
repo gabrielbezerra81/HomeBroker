@@ -216,6 +216,9 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
         </div>
         <div className={`mcontent boxContent ${minimizedClass}`}>
           <header>
+            <span style={{ left: 12, position: "absolute" }}>
+              id: {quoteBox.structureID}
+            </span>
             <AiFillMinusCircle size={20} fill="#444" onClick={handleMinimize} />
             <RiCloseCircleFill size={20} fill="#444" onClick={handleClose} />
           </header>
