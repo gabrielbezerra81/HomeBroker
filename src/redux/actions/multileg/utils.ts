@@ -84,6 +84,9 @@ export const mountMultilegOrder = ({
   let multilegOrder: any = {
     account: {},
     tradeName: {},
+    executionStrategy: {
+      id: multilegTab.selectedStrategy,
+    },
     offers: [],
     next: [],
     comment,

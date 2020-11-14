@@ -67,7 +67,7 @@ const multileg = {
       operator: "Less",
       param: "Bid",
       comment: "",
-      selectedStrategy: "mercado",
+      selectedStrategy: 1,
     },
   ],
   cotacoesMultileg: [],

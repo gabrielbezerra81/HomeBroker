@@ -1,5 +1,5 @@
-export const multilegBaseHeight = 372;
+export const multilegBaseHeight = 366;
 
-export const multilegNormalHeight = 437;
+export const multilegNormalHeight = 431;
 
-export const multilegWithAlertHeight = 339;
+export const multilegWithAlertHeight = 333;

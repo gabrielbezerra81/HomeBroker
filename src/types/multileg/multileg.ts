@@ -16,7 +16,7 @@ export interface MultilegTab {
   param: "Bid" | "Ask" | "Last";
   operator: "Less" | "Greater";
   comment: string;
-  selectedStrategy: string;
+  selectedStrategy: number;
 }
 
 export interface MultilegOption {

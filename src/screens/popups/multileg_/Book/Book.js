@@ -301,12 +301,12 @@ class Book extends React.Component {
                 props.updateMultilegTabAction({
                   tabIndex,
                   attributeName: "selectedStrategy",
-                  attributeValue: e.target.value,
+                  attributeValue: Number(e.target.value),
                 })
               }
             >
               {executionStrategies.map((strategyItem) => (
-                <option key={strategyItem.sigla} value={strategyItem.sigla}>
+                <option key={strategyItem.sigla} value={strategyItem.id}>
                   {strategyItem.sigla}
                 </option>
               ))}

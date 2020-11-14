@@ -34,7 +34,7 @@ const INITIAL_STATE: MultilegState = {
       operator: "Less",
       param: "Bid",
       comment: "",
-      selectedStrategy: "mercado",
+      selectedStrategy: 1,
     },
   ],
   esource_multilegQuotes: null,
