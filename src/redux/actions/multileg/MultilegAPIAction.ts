@@ -6,7 +6,10 @@ import {
   criarPosicaoMultilegAPI,
   addQuoteBoxAPI,
 } from "api/API";
-import { cloneMultilegTabs } from "redux/actions/multileg/MultilegActions";
+import {
+  cloneMultilegTabs,
+  updateMultilegStateAction,
+} from "redux/actions/multileg/MultilegActions";
 import {
   mountMultilegOrder,
   validateMultilegOrder,
@@ -24,6 +27,8 @@ import {
 import { addBoxFromAPIAction } from "../system/boxesActions";
 import produce from "immer";
 import { LISTAR_ORDENS_EXECUCAO } from "constants/ApiActionTypes";
+import { atualizarCotacaoMultilegAPI } from "api/reactive/ReativosAPI";
+import { getProactiveMultilegQuotesAPI } from "api/proactive/ProativosAPI";
 
 ////
 
@@ -249,5 +254,105 @@ export const addQuoteBoxFromMultilegAction = (
     }
 
     setPointerWhileAwaiting({ lockMode: "destravar", id: "multileg" });
+  };
+};
+
+export const startReactiveMultilegUpdateAction = (): MainThunkAction => {
+  return (dispatch, getState) => {
+    const {
+      systemReducer: { token },
+      multilegReducer: {
+        cotacoesMultileg: multilegQuotes,
+        esource_multilegQuotes,
+        interval_multilegQuotes,
+      },
+    } = getState();
+
+    if (esource_multilegQuotes) {
+      esource_multilegQuotes.close();
+    }
+    if (interval_multilegQuotes) {
+      clearInterval(interval_multilegQuotes);
+    }
+
+    const symbolsArray: string[] = [];
+    multilegQuotes.forEach((quote) => {
+      if (!symbolsArray.includes(quote.codigo)) symbolsArray.push(quote.codigo);
+    });
+
+    const symbols = symbolsArray.join(",");
+
+    if (symbols) {
+      const newSource = atualizarCotacaoMultilegAPI({
+        dispatch,
+        codigos: symbols,
+        arrayCotacoes: multilegQuotes,
+        token,
+      });
+
+      dispatch(updateMultilegStateAction("esource_multilegQuotes", newSource));
+    }
+  };
+};
+
+export const startProactiveMultilegUpdateAction = (): MainThunkAction => {
+  return (dispatch, getState) => {
+    const {
+      multilegReducer: {
+        cotacoesMultileg: multilegQuotes,
+        esource_multilegQuotes,
+        interval_multilegQuotes,
+      },
+      systemReducer: { updateInterval },
+    } = getState();
+
+    if (esource_multilegQuotes) {
+      esource_multilegQuotes.close();
+    }
+
+    if (interval_multilegQuotes) {
+      clearInterval(interval_multilegQuotes);
+    }
+
+    const symbolsArray: string[] = [];
+    multilegQuotes.forEach((quote) => {
+      if (!symbolsArray.includes(quote.codigo)) symbolsArray.push(quote.codigo);
+    });
+
+    const symbols = symbolsArray.join(",");
+
+    if (symbols) {
+      const interval = setInterval(async () => {
+        const data = await getProactiveMultilegQuotesAPI(symbols);
+
+        const updatedQuotes = produce(multilegQuotes, (draft) => {
+          draft.forEach((quoteToUpdateItem) => {
+            const updatedQuote = data.find(
+              (updatedItem) => updatedItem.codigo === quoteToUpdateItem.codigo,
+            );
+
+            if (updatedQuote) {
+              quoteToUpdateItem.valor = updatedQuote.valor;
+              quoteToUpdateItem.compra = updatedQuote.compra;
+              quoteToUpdateItem.venda = updatedQuote.venda;
+            }
+          });
+        });
+
+        dispatch(
+          updateOneMultilegState({
+            attributeName: "cotacoesMultileg",
+            attributeValue: updatedQuotes,
+          }),
+        );
+      }, updateInterval);
+
+      dispatch(
+        updateOneMultilegState({
+          attributeName: "interval_multilegQuotes",
+          attributeValue: interval,
+        }),
+      );
+    }
   };
 };

@@ -5,7 +5,7 @@ import React, { useEffect } from "react";
 import {
   startProactiveMultilegUpdateAction,
   startReactiveMultilegUpdateAction,
-} from "redux/actions/multileg/MultilegActions";
+} from "redux/actions/multileg/MultilegAPIAction";
 import checkIfUpdateConfigChanged from "./utils";
 
 const MultilegUpdateManager: React.FC = () => {
@@ -94,6 +94,8 @@ const MultilegUpdateManager: React.FC = () => {
       previousUpdateInterval,
       updateInterval,
     });
+
+    console.log(hasMultilegChanged);
 
     if (isOpenMultileg && (hasMultilegChanged || hasUpdateConfigChanged)) {
       startUpdate();
