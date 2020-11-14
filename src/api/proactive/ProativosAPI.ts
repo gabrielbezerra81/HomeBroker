@@ -172,3 +172,59 @@ export const getProactiveBoxAPI = async (structureIds: string) => {
       return [];
     });
 };
+
+interface PositionQuoteResponse {
+  symbol: string;
+  ultimo: number;
+}
+
+export const getProactivePositionQuotesAPI = async (symbols: string) => {
+  return proactiveAPI
+    .get<PositionQuoteResponse[]>(`${url_multiQuote_quotes}${symbols}`)
+    .then((response) => {
+      if (response.data && response.data.length) {
+        return response.data.map((quoteItem) => ({
+          codigo: quoteItem.symbol,
+          cotacao: quoteItem.ultimo,
+        }));
+      }
+
+      return [];
+    })
+    .catch((error) => {
+      return [];
+    });
+};
+
+interface PositionEmblemResponse {
+  min: number;
+  max: number;
+  last: number;
+  id: number;
+}
+
+export const getProactivePositionEmblemsAPI = async (structureIds: string) => {
+  return proactiveAPI
+    .get<PositionEmblemResponse[]>(`${url_multiStructure_ids}${structureIds}`)
+    .then((response) => {
+      // {
+      //   precoCompra: dados.min,
+      //   precoVenda: dados.max,
+      //   cotacaoAtual: dados.last,
+      //   idEstrutura: dados.id,
+      // }
+      if (response.data && response.data.length) {
+        return response.data.map((structureItem) => ({
+          precoCompra: structureItem.min,
+          precoVenda: structureItem.max,
+          cotacaoAtual: structureItem.last,
+          idEstrutura: structureItem.id,
+        }));
+      }
+
+      return [];
+    })
+    .catch((error) => {
+      return [];
+    });
+};

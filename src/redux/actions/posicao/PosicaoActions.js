@@ -10,6 +10,10 @@ import {
   updateManyPositionState,
 } from "./utils";
 import api from "api/apiConfig";
+import {
+  getProactivePositionEmblemsAPI,
+  getProactivePositionQuotesAPI,
+} from "api/proactive/ProativosAPI";
 
 export const mudarVariavelPosicaoAction = (attributeName, attributeValue) => {
   return (dispatch) => {
@@ -187,7 +191,7 @@ export const startReactivePositionQuoteUpdateAction = () => {
       clearInterval(interval_positionQuote);
     }
 
-    const symbols = symbolList.join(",");
+    const symbols = symbolList.map((quoteItem) => quoteItem.codigo).join(",");
 
     if (symbols) {
       const newSource = atualizarCotacaoPosicaoAPI({
@@ -229,6 +233,7 @@ export const startProactiveEmblemUpdateAction = () => {
         esource_emblem,
         interval_emblem,
       },
+      systemReducer: { updateInterval },
     } = getState();
 
     let idArray = [];
@@ -246,6 +251,23 @@ export const startProactiveEmblemUpdateAction = () => {
     const ids = idArray.join(",");
 
     if (ids) {
+      const interval = setInterval(async () => {
+        const updatedEmblems = await getProactivePositionEmblemsAPI(ids);
+
+        dispatch(
+          updateOnePositionState({
+            attributeName: "arrayPrecos",
+            attributeValue: updatedEmblems,
+          }),
+        );
+      }, updateInterval);
+
+      dispatch(
+        updateOnePositionState({
+          attributeName: "interval_emblem",
+          attributeValue: interval,
+        }),
+      );
     }
   };
 };
@@ -259,6 +281,7 @@ export const startProactivePositionQuoteUpdateAction = () => {
         esource_positionQuote,
         interval_positionQuote,
       },
+      systemReducer: { updateInterval },
     } = getState();
 
     const symbolList = await montaArrayCotacoes(positionList, "codigos");
@@ -267,13 +290,29 @@ export const startProactivePositionQuoteUpdateAction = () => {
       esource_positionQuote.close();
     }
     if (interval_positionQuote) {
-      // quem disparar pela segunda vez deve ter essa var no connect
       clearInterval(interval_positionQuote);
     }
 
-    const symbols = symbolList.join(",");
+    const symbols = symbolList.map((quoteItem) => quoteItem.codigo).join(",");
 
     if (symbols) {
+      const interval = setInterval(async () => {
+        const updatedQuotes = await getProactivePositionQuotesAPI(symbols);
+
+        dispatch(
+          updateOnePositionState({
+            attributeName: "arrayCotacoes",
+            attributeValue: updatedQuotes,
+          }),
+        );
+      }, updateInterval);
+
+      dispatch(
+        updateOnePositionState({
+          attributeName: "interval_positionQuote",
+          attributeValue: interval,
+        }),
+      );
     }
   };
 };
