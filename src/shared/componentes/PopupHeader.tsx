@@ -108,7 +108,7 @@ export const ModalHeader: React.FC<ModalHeaderProps> = ({
 
 export const BookHeader: React.FC<any> = ({ headerClass, resetPosition }) => {
   const {
-    bookOfertaReducer: { inputHeader, esource_offersBook },
+    bookOfertaReducer: { inputHeader, esource_offersBook, interval_offersBook },
     appBoletasReducer: { appProps },
   } = useStateBoletas();
 
@@ -142,7 +142,6 @@ export const BookHeader: React.FC<any> = ({ headerClass, resetPosition }) => {
                 dispatch(
                   listarBookOfertaOnEnterAction({
                     codigoAtivo: event.target.value,
-                    token,
                   }),
                 );
             }}
@@ -155,7 +154,12 @@ export const BookHeader: React.FC<any> = ({ headerClass, resetPosition }) => {
             onClick={() => {
               dispatchGlobal(fecharFormAction(formShow, "book", appkey));
               resetPosition();
-              if (esource_offersBook) esource_offersBook.close();
+              if (esource_offersBook) {
+                esource_offersBook.close();
+              }
+              if (interval_offersBook) {
+                clearInterval(interval_offersBook);
+              }
             }}
           >
             <span className="fa-stack hoverIconeFechar">

@@ -161,7 +161,6 @@ const mostrarApp = (name, index, props, codigo_ativo) => {
     dispatchBoleta(
       listarBookOfertaOnEnterAction({
         codigoAtivo: codigo_ativo,
-        token: props.token,
       }),
     );
   }

@@ -20,6 +20,7 @@ const INITIAL_STATE = {
   tabelaOfertasCompra: new Array(5).fill({ price: "", qtty: "" }, 0, 5),
   tabelaOfertasVenda: new Array(5).fill({ price: "", qtty: "" }, 0, 5),
   esource_offersBook: null,
+  interval_offersBook: null,
   searchedSymbol: "",
 };
 

@@ -62,7 +62,6 @@ class AppBoletas extends React.Component {
       props.mudarInputHeaderAction(props.codigoBook);
       props.listarBookOfertaOnEnterAction({
         codigoAtivo: props.codigoBook,
-        token: props.token,
       });
     }
     //Disparar montagem de ordem vinda das ordens em execução ao criar App Local

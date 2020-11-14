@@ -72,4 +72,43 @@ export const getProactiveMultilegQuotesAPI = async (
     });
 };
 
+interface BookResponse {
+  bookBuy: Array<{
+    price: number;
+    qtty: number;
+  }>;
+  bookSell: Array<{
+    price: number;
+    qtty: number;
+  }>;
+}
+
+export const getProactiveOffersBookAPI = async (symbol: string) => {
+  return proactiveAPI
+    .get<BookResponse[]>(`${url_multiQuote_quotes}${symbol}`)
+    .then((response) => {
+      if (response.data && response.data.length) {
+        const data = response.data.map((quoteItem) => {
+          return {
+            bookBuy: quoteItem.bookBuy.map((bookItem) => ({
+              price: bookItem.price,
+              qtty: bookItem.qtty,
+            })),
+            bookSell: quoteItem.bookSell.map((bookItem) => ({
+              price: bookItem.price,
+              qtty: bookItem.qtty,
+            })),
+          };
+        });
+
+        return data[0];
+      }
+
+      return null;
+    })
+    .catch((error) => {
+      return null;
+    });
+};
+
 export const getProactiveThlStructureAPI = async (structureIds: string) => {};

@@ -95,8 +95,6 @@ const MultilegUpdateManager: React.FC = () => {
       updateInterval,
     });
 
-    console.log(hasMultilegChanged);
-
     if (isOpenMultileg && (hasMultilegChanged || hasUpdateConfigChanged)) {
       startUpdate();
     }

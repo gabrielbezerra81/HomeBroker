@@ -1,13 +1,13 @@
 import { listarBookOfertaAPI } from "api/API";
+import { getProactiveOffersBookAPI } from "api/proactive/ProativosAPI";
 import { atualizarBookAPI } from "api/reactive/ReativosAPI";
 import { UPDATE_MANY_OFFER_BOOK } from "constants/ActionTypes";
 import { ATUALIZAR_SOURCE_EVENT_BOOK_OFERTAS } from "constants/ApiActionTypes";
-import { Token } from "types/system/system";
+import { storeAppPrincipal } from "redux/StoreCreation";
 import { BoletasThunkAction } from "types/ThunkActions";
 
 interface ListBookProps {
   codigoAtivo: string;
-  token: Token;
 }
 
 interface BookTableResponse {
@@ -24,9 +24,16 @@ interface BookTableResponse {
 
 export const listarBookOfertaOnEnterAction = ({
   codigoAtivo,
-  token,
 }: ListBookProps): BoletasThunkAction => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const {
+      bookOfertaReducer: { searchedSymbol: previousSymbol },
+    } = getState();
+
+    const {
+      systemReducer: { updateMode },
+    } = storeAppPrincipal.getState();
+
     document.body.style.cursor = "wait";
 
     const data: BookTableResponse = await listarBookOfertaAPI(codigoAtivo);
@@ -38,7 +45,7 @@ export const listarBookOfertaOnEnterAction = ({
       tabelaOfertasVenda: data.tabelaOfertasVenda,
     };
 
-    let searchedSymbol = codigoAtivo;
+    const searchedSymbol = codigoAtivo;
     let shouldAlert = false;
 
     if (
@@ -51,6 +58,15 @@ export const listarBookOfertaOnEnterAction = ({
       };
 
       shouldAlert = true;
+    }
+
+    if (previousSymbol === searchedSymbol) {
+      if (updateMode === "reactive") {
+        dispatch(startReactiveOffersBookUpdateAction());
+      } //
+      else {
+        dispatch(startProactiveOffersBookUpdateAction());
+      }
     }
 
     dispatch({
@@ -68,41 +84,85 @@ export const listarBookOfertaOnEnterAction = ({
   };
 };
 
-export const startReactiveOffersBookUpdateAction = (
-  token: Token,
-): BoletasThunkAction => {
+export const startReactiveOffersBookUpdateAction = (): BoletasThunkAction => {
   return (dispatch, getState) => {
     const {
-      bookOfertaReducer: { esource_offersBook, searchedSymbol },
+      bookOfertaReducer: {
+        esource_offersBook,
+        searchedSymbol,
+        interval_offersBook,
+      },
     } = getState();
+
+    const {
+      systemReducer: { token },
+    } = storeAppPrincipal.getState();
 
     if (esource_offersBook) {
       esource_offersBook.close();
     }
 
-    setTimeout(() => {
-      const source = atualizarBookAPI({
-        dispatch,
-        symbol: searchedSymbol,
-        token,
-      });
-      dispatch({ type: ATUALIZAR_SOURCE_EVENT_BOOK_OFERTAS, payload: source });
-    }, 3000);
+    if (interval_offersBook) {
+      clearInterval(interval_offersBook);
+    }
+
+    if (searchedSymbol) {
+      setTimeout(() => {
+        const source = atualizarBookAPI({
+          dispatch,
+          symbol: searchedSymbol,
+          token,
+        });
+        dispatch({
+          type: ATUALIZAR_SOURCE_EVENT_BOOK_OFERTAS,
+          payload: source,
+        });
+      }, 3000);
+    }
   };
 };
 
 export const startProactiveOffersBookUpdateAction = (): BoletasThunkAction => {
   return (dispatch, getState) => {
     const {
-      bookOfertaReducer: { esource_offersBook, searchedSymbol },
+      bookOfertaReducer: {
+        esource_offersBook,
+        searchedSymbol,
+        interval_offersBook,
+      },
     } = getState();
+
+    const {
+      systemReducer: { updateInterval },
+    } = storeAppPrincipal.getState();
 
     if (esource_offersBook) {
       esource_offersBook.close();
     }
 
-    setTimeout(() => {
-      // dispatch({ type: ATUALIZAR_SOURCE_EVENT_BOOK_OFERTAS, payload: source });
-    }, 3000);
+    if (interval_offersBook) {
+      clearInterval(interval_offersBook);
+    }
+
+    if (searchedSymbol) {
+      const interval = setInterval(async () => {
+        const data = await getProactiveOffersBookAPI(searchedSymbol);
+
+        if (data) {
+          dispatch({
+            type: UPDATE_MANY_OFFER_BOOK,
+            payload: {
+              tabelaOfertasCompra: data.bookBuy,
+              tabelaOfertasVenda: data.bookSell,
+            },
+          });
+        }
+      }, updateInterval);
+
+      dispatch({
+        type: UPDATE_MANY_OFFER_BOOK,
+        payload: { interval_offersBook: interval },
+      });
+    }
   };
 };

@@ -11,7 +11,7 @@ import {
 
 const BookUpdateManager: React.FC = () => {
   const {
-    systemReducer: { updateMode, updateInterval, token },
+    systemReducer: { updateMode, updateInterval },
   } = useStateStorePrincipal();
 
   const { searchedSymbol } = useStateBoletas().bookOfertaReducer;
@@ -33,7 +33,7 @@ const BookUpdateManager: React.FC = () => {
 
     function startUpdate() {
       if (updateMode === "reactive") {
-        dispatch(startReactiveOffersBookUpdateAction(token));
+        dispatch(startReactiveOffersBookUpdateAction());
       } //
       else if (updateMode === "proactive") {
         dispatch(startProactiveOffersBookUpdateAction());
