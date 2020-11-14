@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Row, Col, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 import CustomButton from "shared/componentes/Button";
 
@@ -30,7 +30,7 @@ const OperationButtons: React.FC<Props> = ({ tabIndex }) => {
   if (multilegButtonsVisibility && !createAlertButtonVisibility) {
     return (
       <>
-        <div className="cleanExecuteButtonsRow">
+        <div className="operationButtonRow">
           <Button
             variant="secondary"
             size="sm"
@@ -52,18 +52,16 @@ const OperationButtons: React.FC<Props> = ({ tabIndex }) => {
             EXECUTAR
           </CustomButton>
         </div>
-        <Row className="mb-2">
-          <Col md={9} className="ml-4 pr-0">
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={() => dispatch(createMultilegPositionAction(tabIndex))}
-              block
-            >
-              CRIAR POSIÇÃO
-            </Button>
-          </Col>
-        </Row>
+        <div className="operationButtonRow">
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={() => dispatch(createMultilegPositionAction(tabIndex))}
+            block
+          >
+            CRIAR POSIÇÃO
+          </Button>
+        </div>
         <MultilegAlertButtons tabIndex={tabIndex} />
       </>
     );
@@ -71,21 +69,19 @@ const OperationButtons: React.FC<Props> = ({ tabIndex }) => {
 
   if (!multilegButtonsVisibility && !createAlertButtonVisibility) {
     return (
-      <Row className="mb-2">
-        <Col md={9} className="ml-4 pr-0">
-          <Button
-            variant="primary"
-            size="sm"
-            block
-            className={`toggleAlertButton`}
-            onClick={() => {
-              dispatch(addQuoteBoxFromMultilegAction(tabIndex));
-            }}
-          >
-            ADICIONAR BOX
-          </Button>
-        </Col>
-      </Row>
+      <div className="operationButtonRow">
+        <Button
+          variant="primary"
+          size="sm"
+          block
+          className={`toggleAlertButton`}
+          onClick={() => {
+            dispatch(addQuoteBoxFromMultilegAction(tabIndex));
+          }}
+        >
+          ADICIONAR BOX
+        </Button>
+      </div>
     );
   }
 

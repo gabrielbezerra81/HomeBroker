@@ -48,10 +48,28 @@
       }
     }
   }
+
+  .multilegInputGroup {
+    > div:first-child {
+      padding-right: 0;
+
+      h6 {
+        font-size: 0.9rem;
+      }
+    }
+
+    > div:nth-child(2) {
+      padding: 0;
+
+      &.inputPaddingRight {
+        padding-right: 11px;
+      }
+    }
+  }
 }
 
-.cleanExecuteButtonsRow {
-  padding: 0 26px 0 24px;
+.operationButtonRow {
+  padding: 0 23px 0 24px;
   justify-content: space-between;
   display: flex;
   margin-bottom: 8px;
@@ -353,6 +371,7 @@ a.botaoAddAba.active {
 
 .colInputRange {
   height: 15px;
+  padding-right: 9px;
 }
 
 .inputRangeMultileg {

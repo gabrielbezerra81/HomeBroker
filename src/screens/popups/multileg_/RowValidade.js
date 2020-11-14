@@ -4,8 +4,8 @@ import { Col, Row, Form } from "react-bootstrap";
 import { getformatedDate } from "shared/utils/Formatacoes";
 
 export default (props, abaMultileg) => (
-  <Row className="mr-2 mb-2">
-    <Col md={4} className="ml-2">
+  <Row className="mr-2 mb-2 multilegInputGroup">
+    <Col md={5} className="ml-2">
       <h6>Validade</h6>
     </Col>
 

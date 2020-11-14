@@ -184,20 +184,18 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
   return (
     <>
       {shouldDisplayToggleButton && (
-        <Row className="mb-2">
-          <Col md={9} className="ml-4 pr-0">
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={handleToggleAlert}
-              block
-              className={`toggleAlertButton${openedAlertClass}`}
-            >
-              ALERTA DE OPERAÇÃO
-              <MDBIcon icon="angle-down" />
-            </Button>
-          </Col>
-        </Row>
+        <div className="operationButtonRow">
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={handleToggleAlert}
+            block
+            className={`toggleAlertButton${openedAlertClass}`}
+          >
+            ALERTA DE OPERAÇÃO
+            <MDBIcon icon="angle-down" />
+          </Button>
+        </div>
       )}
 
       {shouldDisplayButtons && (

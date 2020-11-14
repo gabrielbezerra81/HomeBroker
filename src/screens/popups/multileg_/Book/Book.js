@@ -231,11 +231,11 @@ class Book extends React.Component {
             </Col>
           </Row>
         ) : null}
-        <Row className="mr-2 mb-2">
-          <Col md={4} className="ml-2">
+        <Row className="mr-2 mb-2 multilegInputGroup">
+          <Col md={5} className="ml-2">
             <h6>Preço</h6>
           </Col>
-          <Col className="mr-1">
+          <Col className="mr-1 inputPaddingRight">
             <InputFormatado
               placeholder={renderPlaceholder ? "Informe as qtdes" : ""}
               allowNegative
@@ -253,8 +253,8 @@ class Book extends React.Component {
             />
           </Col>
         </Row>
-        <Row className="mr-2 rowPrecoTotal">
-          <Col md={4} className="ml-2">
+        <Row className="mr-2 rowPrecoTotal multilegInputGroup">
+          <Col md={5} className="ml-2">
             <h6>Total</h6>
           </Col>
           <Col className="mr-0 text-align-center">
@@ -287,9 +287,9 @@ class Book extends React.Component {
 
         {RowValidade(props, props.multileg[tabIndex])}
 
-        <Row className="mr-2 mb-2">
-          <Col md={4} className="ml-2">
-            <h6>Estratégia</h6>
+        <Row className="mr-2 mb-2 multilegInputGroup">
+          <Col md={5} className="ml-2">
+            <h6>Modo Exec.</h6>
           </Col>
 
           <Col>
