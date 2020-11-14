@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import { Form, InputGroup, Spinner } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import { Radio, Button, Tooltip } from "antd";
@@ -49,6 +49,13 @@ const InputPesquisa = () => {
   } = useStateStorePrincipal();
   const dispatch = useDispatchStorePrincipal();
 
+  const handleSearchThlTables = useCallback(() => {
+    if (!pesquisandoAtivo) {
+      dispatch(pesquisarAtivoTHLAPIAction());
+      dispatch(pesquisarCombinacoesTHLAPIAction());
+    }
+  }, [dispatch, pesquisandoAtivo]);
+
   const formattedData = useMemo(() => {
     const formattedQuote = formatarNumDecimal(quote);
 
@@ -66,6 +73,11 @@ const InputPesquisa = () => {
           className="inputAtivo"
           type="text"
           value={ativoPesquisa.toUpperCase()}
+          onKeyPress={(e) => {
+            if (e.key === "Enter") {
+              handleSearchThlTables();
+            }
+          }}
           onChange={(event) =>
             dispatch(
               mudarVariavelTHLAction(
@@ -78,12 +90,7 @@ const InputPesquisa = () => {
         <InputGroup.Append className="inputAtivoAppend">
           <span
             className="input-group-text iconeProcurar divClicavel"
-            onClick={() => {
-              if (!pesquisandoAtivo) {
-                dispatch(pesquisarAtivoTHLAPIAction());
-                dispatch(pesquisarCombinacoesTHLAPIAction());
-              }
-            }}
+            onClick={handleSearchThlTables}
           >
             {pesquisandoAtivo ? (
               <Spinner animation="border" variant="light" size="sm" />

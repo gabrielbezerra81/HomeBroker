@@ -8,10 +8,17 @@ import {
   pesquisarListaStrikeTHLAPI,
   getTHLInitialDataAPI,
 } from "api/API";
-import { atualizarPrecosTHLAPI, atualizarCotacaoTHLAPI } from "api/reactive/ReativosAPI";
+import {
+  atualizarPrecosTHLAPI,
+  atualizarCotacaoTHLAPI,
+} from "api/reactive/ReativosAPI";
 import { updateOneTHLState, updateManyTHLState } from "./utils";
 import api from "api/apiConfig";
 import { MainThunkAction } from "types/ThunkActions";
+import {
+  getProactiveThlQuotesAPI,
+  getProactiveThlStructureAPI,
+} from "api/proactive/ProativosAPI";
 
 export const pesquisarAtivoTHLAPIAction = (): MainThunkAction => {
   return async (dispatch, getState) => {
@@ -211,6 +218,7 @@ export const startProactiveThlStructuresUpdateAction = (): MainThunkAction => {
         interval_thlStructures,
         opcoesStrike: thlLines,
       },
+      systemReducer: { updateInterval },
     } = getState();
 
     if (esource_thlStructures) {
@@ -229,6 +237,23 @@ export const startProactiveThlStructuresUpdateAction = (): MainThunkAction => {
     const ids = [...new Set(idList)].join(",");
 
     if (ids) {
+      const interval = setInterval(async () => {
+        const data = await getProactiveThlStructureAPI(ids);
+
+        dispatch(
+          updateOneTHLState({
+            attributeName: "precosTabelaVencimentos",
+            attributeValue: data,
+          }),
+        );
+      }, updateInterval);
+
+      dispatch(
+        updateOneTHLState({
+          attributeName: "interval_thlStructures",
+          attributeValue: interval,
+        }),
+      );
     }
   };
 };
@@ -400,6 +425,7 @@ export const startProactiveThlQuoteUpdateAction = (): MainThunkAction => {
         interval_thlQuotes,
         arrayCotacoes: thlQuotes,
       },
+      systemReducer: { updateInterval },
     } = getState();
 
     if (interval_thlQuotes) {
@@ -409,14 +435,32 @@ export const startProactiveThlQuoteUpdateAction = (): MainThunkAction => {
       esource_thlQuotes.close();
     }
 
-    let codigos = "";
+    const symbolArray: string[] = [];
+
     thlQuotes.forEach((ativo) => {
-      codigos += ativo.codigo + ",";
+      symbolArray.push(ativo.codigo);
     });
 
-    codigos = codigos.substring(0, codigos.length - 1);
+    const symbols = symbolArray.join(",");
 
-    if (codigos) {
+    if (symbols) {
+      const interval = setInterval(async () => {
+        const data = await getProactiveThlQuotesAPI(symbols);
+
+        dispatch(
+          updateOneTHLState({
+            attributeName: "arrayCotacoes",
+            attributeValue: data,
+          }),
+        );
+      }, updateInterval);
+
+      dispatch(
+        updateOneTHLState({
+          attributeName: "interval_thlQuotes",
+          attributeValue: interval,
+        }),
+      );
     }
   };
 };

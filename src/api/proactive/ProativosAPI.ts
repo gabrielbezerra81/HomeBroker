@@ -1,5 +1,10 @@
-import { url_singleQuote_quote, url_multiQuote_quotes } from "api/url";
+import {
+  url_singleQuote_quote,
+  url_multiQuote_quotes,
+  url_multiStructure_ids,
+} from "api/url";
 import { MultilegQuote } from "types/multileg/multileg";
+import { THLQuote } from "types/thl/thl";
 import proactiveAPI from "./proactiveConfig";
 
 interface BoletaResponse {
@@ -111,4 +116,44 @@ export const getProactiveOffersBookAPI = async (symbol: string) => {
     });
 };
 
-export const getProactiveThlStructureAPI = async (structureIds: string) => {};
+export const getProactiveThlStructureAPI = async (structureIds: string) => {
+  return proactiveAPI
+    .get(`${url_multiStructure_ids}${structureIds}`)
+    .then((response) => {
+      if (response.data && response.data.length) {
+        return response.data;
+      }
+
+      return [];
+    })
+    .catch((error) => {
+      console.log(error);
+
+      return [];
+    });
+};
+
+interface ThlQuoteResponse {
+  symbol: string;
+  ultimo: number;
+}
+
+export const getProactiveThlQuotesAPI = async (
+  symbols: string,
+): Promise<THLQuote[]> => {
+  return proactiveAPI
+    .get<ThlQuoteResponse[]>(`${url_multiQuote_quotes}${symbols}`)
+    .then((response) => {
+      if (response.data && response.data.length) {
+        return response.data.map((quoteItem) => ({
+          codigo: quoteItem.symbol,
+          cotacao: quoteItem.ultimo,
+        }));
+      }
+
+      return [];
+    })
+    .catch((error) => {
+      return [];
+    });
+};
