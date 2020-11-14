@@ -3,7 +3,7 @@ import {
   atualizarEmblemasAPI,
   atualizarPosicaoAPI,
   atualizarCotacaoPosicaoAPI,
-} from "api/ReativosAPI";
+} from "api/reactive/ReativosAPI";
 import {
   updateOnePositionState,
   adicionaPosicao,

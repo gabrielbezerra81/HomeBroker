@@ -86,6 +86,7 @@ const UPDATE_MANY_SYSTEM_STATE = "update_many_system_state";
 //
 
 export const ATUALIZAR_EVENT_SOURCE_BOLETAS = "atualizar_event_source_boletas";
+export const UPDATE_MANY_BOLETA = "update_many_boleta"
 
 //TelaLogin
 export const MUDAR_DADOS_LOGIN = "mudar_dados_login";

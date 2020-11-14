@@ -15,6 +15,7 @@ import {
   MUDAR_QTDE,
   MUDAR_ATRIBUTO_BOLETA,
   ATUALIZAR_EVENT_SOURCE_BOLETAS,
+  UPDATE_MANY_BOLETA,
 } from "constants/ActionTypes";
 import { PESQUISAR_ATIVO_BOLETA_API } from "constants/ApiActionTypes";
 
@@ -71,6 +72,7 @@ const INITIAL_STATE = {
   qtde: "",
   erro: "",
   esource_boletaQuote: null,
+  interval_boletaQuote: null,
 };
 
 export default (namespace) => (state = INITIAL_STATE, action) => {
@@ -113,6 +115,8 @@ export default (namespace) => (state = INITIAL_STATE, action) => {
       return { ...state, dadosPesquisa: action.payload };
     case `${ATUALIZAR_EVENT_SOURCE_BOLETAS}${namespace}`:
       return { ...state, esource_boletaQuote: action.payload };
+    case `${UPDATE_MANY_BOLETA}${namespace}`:
+      return { ...state, ...action.payload };
     default:
       return state;
   }

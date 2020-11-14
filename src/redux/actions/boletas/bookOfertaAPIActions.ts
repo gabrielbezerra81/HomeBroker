@@ -1,5 +1,5 @@
 import { listarBookOfertaAPI } from "api/API";
-import { atualizarBookAPI } from "api/ReativosAPI";
+import { atualizarBookAPI } from "api/reactive/ReativosAPI";
 import { UPDATE_MANY_OFFER_BOOK } from "constants/ActionTypes";
 import { ATUALIZAR_SOURCE_EVENT_BOOK_OFERTAS } from "constants/ApiActionTypes";
 import { Token } from "types/system/system";

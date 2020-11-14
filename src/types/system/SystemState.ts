@@ -1,4 +1,4 @@
-import { BoxProps } from "screens/home/QuoteBox/types";
+import { BoxProps } from "screens/popups/quoteBox/types";
 import { Token, Account, BoxVisibility } from "./system";
 
 export default interface SystemState {

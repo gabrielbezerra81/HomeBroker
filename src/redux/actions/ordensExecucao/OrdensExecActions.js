@@ -11,7 +11,7 @@ import {
   incrementarPrecoOrdemExecAPI,
   pesquisarAtivoAPI,
 } from "api/API";
-import { atualizarOrdensExecAPI } from "api/ReativosAPI";
+import { atualizarOrdensExecAPI } from "api/reactive/ReativosAPI";
 import { LISTAR_ORDENS_EXECUCAO } from "constants/ApiActionTypes";
 import {
   addMultilegTab,

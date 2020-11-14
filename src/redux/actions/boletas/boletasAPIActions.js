@@ -1,5 +1,5 @@
 import { pesquisarAtivoAPI, enviarOrdemAPI } from "api/API";
-import { atualizarCotacaoBoletasAPI } from "api/ReativosAPI";
+import { atualizarCotacaoBoletasAPI } from "api/reactive/ReativosAPI";
 import {
   LISTAR_ORDENS_EXECUCAO,
   PESQUISAR_ATIVO_BOLETA_API,
@@ -11,10 +11,13 @@ import {
 import {
   ATUALIZAR_EVENT_SOURCE_BOLETAS,
   MUDAR_QTDE,
+  UPDATE_MANY_BOLETA,
 } from "constants/ActionTypes";
 import { mudarAtributoBoletaAction } from "redux/actions/boletas/formInputActions";
 import produce from "immer";
 import { storeAppPrincipal } from "redux/StoreCreation";
+import { getProactiveBoletaQuoteAPI } from "api/proactive/ProativosAPI";
+import { formatarDataDaAPI } from "shared/utils/Formatacoes";
 
 export const pesquisarAtivoOnEnterAction = (namespace) => {
   return async (dispatch, getState) => {
@@ -45,14 +48,22 @@ export const pesquisarAtivoOnEnterAction = (namespace) => {
   };
 };
 
-export const startBoletaQuoteUpdateAction = (namespace) => {
+export const startReactiveBoletaQuoteUpdateAction = (namespace) => {
   return (dispatch, getState) => {
     const appBoletasState = getState();
 
-    const { esource_boletaQuote, dadosPesquisa } = appBoletasState[namespace];
+    const {
+      esource_boletaQuote,
+      dadosPesquisa,
+      interval_boletaQuote,
+    } = appBoletasState[namespace];
 
     if (esource_boletaQuote) {
       esource_boletaQuote.close();
+    }
+
+    if (interval_boletaQuote) {
+      clearInterval(interval_boletaQuote);
     }
 
     const codigo = dadosPesquisa.ativo;
@@ -101,4 +112,56 @@ const mudarTipoInputQtde = (dadosPesquisa, qtde) => {
   if (dadosPesquisa.stepQtde === 0.01) novaQtde = novaQtde * 1;
   else novaQtde = Math.floor(novaQtde);
   return novaQtde;
+};
+
+export const startProactiveBoletaQuoteUpdateAction = (namespace) => {
+  return async (dispatch, getState) => {
+    const appBoletasState = getState();
+    const {
+      systemReducer: { updateInterval },
+    } = storeAppPrincipal.getState();
+
+    const {
+      esource_boletaQuote,
+      dadosPesquisa,
+      interval_boletaQuote,
+    } = appBoletasState[namespace];
+
+    if (esource_boletaQuote) {
+      esource_boletaQuote.close();
+    }
+
+    if (interval_boletaQuote) {
+      clearInterval(interval_boletaQuote);
+    }
+
+    const { ativo: symbol } = dadosPesquisa;
+
+    if (symbol) {
+      const interval = setInterval(async () => {
+        const data = await getProactiveBoletaQuoteAPI(symbol);
+
+        if (data) {
+          const { quote, lastDate } = data;
+
+          const updatedSearchData = produce(dadosPesquisa, (draft) => {
+            draft.cotacaoAtual = quote;
+            draft.ultimoHorario = formatarDataDaAPI(
+              lastDate,
+            ).toLocaleTimeString();
+          });
+
+          dispatch({
+            type: `${PESQUISAR_ATIVO_BOLETA_API}${namespace}`,
+            payload: updatedSearchData,
+          });
+        }
+      }, updateInterval);
+
+      dispatch({
+        type: `${UPDATE_MANY_BOLETA}${namespace}`,
+        payload: { interval_boletaQuote: interval },
+      });
+    }
+  };
 };

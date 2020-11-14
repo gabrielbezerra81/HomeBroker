@@ -1,22 +1,22 @@
 import React from "react";
 import { connect } from "react-redux";
 // import LogRocket from "logrocket";
-import MenuLateralUsuario from "screens/home/UserLeftSideMenu";
-import BarraTopoTelaPrincipal from "screens/home/BarraTopoTelaPrincipal";
+import MenuLateralUsuario from "screens/home/userLeftSideMenu/UserLeftSideMenu";
+import BarraTopoTelaPrincipal from "screens/home/topBar/BarraTopoTelaPrincipal";
 import { StorePrincipalContext, GlobalContext } from "redux/StoreCreation";
 import {
   checkIfSystemStateHasChangedShapeAction,
   deslogarUsuarioAction,
 } from "redux/actions/system/SystemActions";
-import BarraLateral from "screens/home/BarraLateral";
-import MenuOrdens from "screens/home/MenuOrdens";
-import MainScreenTabs from "./Tabs/MainScreenTabs";
+import BarraLateral from "screens/home/leftBar/BarraLateral";
+import MenuOrdens from "screens/home/boletasHoverMenu/MenuOrdens";
+import MainScreenTabs from "./mainScreenTabs/MainScreenTabs";
 import PopupContainer from "./PopupContainer";
 import { compose } from "redux";
-import QuoteBoxContainer from "./QuoteBox/QuoteBoxContainer";
+import QuoteBoxContainer from "../popups/quoteBox/QuoteBoxContainer";
 import api from "api/apiConfig";
-import AddBoxMenu from "./QuoteBox/AddBoxMenu";
-import RightSideMenu from "./RightSideMenu/RightSideMenu";
+import AddBoxMenu from "../popups/quoteBox/AddBoxMenu";
+import RightSideMenu from "./rightSideMenu/RightSideMenu";
 import CategoryList from "screens/popups/categoryList/CategoryList";
 
 const OrdensExecucao = React.lazy(() =>

@@ -4,7 +4,10 @@ import usePrevious from "hooks/usePrevious";
 import useStateBoletas from "hooks/useStateBoletas";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import React, { useEffect } from "react";
-import { startBoletaQuoteUpdateAction } from "redux/actions/boletas/boletasAPIActions";
+import {
+  startProactiveBoletaQuoteUpdateAction,
+  startReactiveBoletaQuoteUpdateAction,
+} from "redux/actions/boletas/boletasAPIActions";
 import checkIfUpdateConfigChanged from "updateManager/utils";
 
 interface BoletaUpdateManagerProps {
@@ -37,9 +40,10 @@ const BoletaUpdateManager: React.FC<BoletaUpdateManagerProps> = ({
 
     function startUpdate() {
       if (updateMode === "reactive") {
-        dispatch(startBoletaQuoteUpdateAction(namespace));
+        dispatch(startReactiveBoletaQuoteUpdateAction(namespace));
       } //
       else if (updateMode === "proactive") {
+        dispatch(startProactiveBoletaQuoteUpdateAction(namespace));
       }
     }
 

@@ -5,8 +5,8 @@ import {
   updateManySystemState,
   updateOneSystemStateAction,
 } from "./SystemActions";
-import { BoxProps } from "screens/home/QuoteBox/types";
-import { updateBoxDataAPI } from "api/ReativosAPI";
+import { BoxProps } from "screens/popups/quoteBox/types";
+import { updateBoxDataAPI } from "api/reactive/ReativosAPI";
 
 interface OpenedBoxes {
   menuKey: string;

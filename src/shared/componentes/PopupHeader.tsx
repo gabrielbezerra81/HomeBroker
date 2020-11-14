@@ -43,7 +43,9 @@ export const ModalHeader: React.FC<ModalHeaderProps> = ({
     appBoletasReducer: { appProps },
   } = boletaState;
 
-  const { esource_boletaQuote } = boletaState[namespace as BoletaNamespace];
+  const { esource_boletaQuote, interval_boletaQuote } = boletaState[
+    namespace as BoletaNamespace
+  ];
 
   const {
     systemReducer: { token },
@@ -87,6 +89,7 @@ export const ModalHeader: React.FC<ModalHeaderProps> = ({
             resetPosition();
             dispatchGlobal(fecharFormAction(formShow, name, appkey));
             if (esource_boletaQuote) esource_boletaQuote.close();
+            if (interval_boletaQuote) clearInterval(interval_boletaQuote);
           }}
         >
           <span className="fa-stack">

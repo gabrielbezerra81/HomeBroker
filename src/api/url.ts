@@ -1,6 +1,7 @@
 // export const cors_anywhere = "https://cors-anywhere.herokuapp.com/";
 export const url_base = "https://api.rendacontinua.com/api/"; //"http://173.249.37.183:8080/api/";
 export const url_base_reativa = "http://62.171.190.108:8090/"; //"https://quotes.rendacontinua.com/";
+export const url_base_proactive = "https://rcv.rendacontinua.com/";
 
 //Boletas de compra e venda
 export const url_pesquisarAtivoBoletas_codigo = "price/quotes/";
@@ -62,3 +63,9 @@ export const url_favoritarTHL_ = "favorite";
 export const url_pesquisarCombinacoes_ativo = "structure/list/ /CalendarLine";
 
 export const url_listarAlertas = "advice/working";
+
+// Proactive
+export const url_singleQuote_quote = "quotes/";
+export const url_multiQuote_quotes = "quotes/symbols?symbols=";
+export const url_singleStructure_id = "structures/";
+export const url_multiStructure_ids = "structures/ids?ids=";

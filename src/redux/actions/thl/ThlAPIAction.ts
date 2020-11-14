@@ -8,7 +8,7 @@ import {
   pesquisarListaStrikeTHLAPI,
   getTHLInitialDataAPI,
 } from "api/API";
-import { atualizarPrecosTHLAPI, atualizarCotacaoTHLAPI } from "api/ReativosAPI";
+import { atualizarPrecosTHLAPI, atualizarCotacaoTHLAPI } from "api/reactive/ReativosAPI";
 import { updateOneTHLState, updateManyTHLState } from "./utils";
 import api from "api/apiConfig";
 import { MainThunkAction } from "types/ThunkActions";
