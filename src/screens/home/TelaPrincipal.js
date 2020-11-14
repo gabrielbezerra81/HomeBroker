@@ -16,7 +16,7 @@ import { compose } from "redux";
 import QuoteBoxContainer from "../popups/quoteBox/QuoteBoxContainer";
 import api from "api/apiConfig";
 import AddBoxMenu from "../popups/quoteBox/AddBoxMenu";
-import RightSideMenu from "./rightSideMenu/RightSideMenu";
+import RightSideMenu from "./rrightSideMenu/RightSideMenu";
 import CategoryList from "screens/popups/categoryList/CategoryList";
 
 const OrdensExecucao = React.lazy(() =>
