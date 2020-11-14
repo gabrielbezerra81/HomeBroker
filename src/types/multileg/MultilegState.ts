@@ -1,4 +1,9 @@
-import { MultilegTab, MultilegQuote, AlertAPI } from "./multileg";
+import {
+  MultilegTab,
+  MultilegQuote,
+  AlertAPI,
+  ExecutionStrategy,
+} from "./multileg";
 
 export default interface MultilegState {
   configComplementarAberto: boolean;
@@ -14,4 +19,5 @@ export default interface MultilegState {
   cotacoesMultileg: Array<MultilegQuote>;
   cotacoesMultilegID: number;
   alerts: Array<AlertAPI>;
+  executionStrategies: Array<ExecutionStrategy>;
 }

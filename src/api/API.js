@@ -536,6 +536,21 @@ export const updateAlertAPI = async (id, payload) => {
     });
 };
 
+export const getMultilegExecStrategiesAPI = async () => {
+  return api
+    .get("execucao")
+    .then((response) => {
+      if (response.data && response.data.length) {
+        return response.data;
+      }
+
+      return [];
+    })
+    .catch((error) => {
+      return [];
+    });
+};
+
 export const setPointerWhileAwaiting = ({
   lockMode,
   id,

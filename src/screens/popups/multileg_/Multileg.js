@@ -14,6 +14,8 @@ import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
 import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopupZIndexFromSecondaryTab";
 import TabTitle from "./TabTitle";
 import { collapseElement, updateHeight } from "shared/utils/AnimateHeight";
+import { getMultilegExecStrategiesAPIAction } from "redux/actions/multileg/MultilegAPIAction";
+import { multilegBaseHeight, multilegNormalHeight, multilegWithAlertHeight } from "./constants";
 
 class Multileg extends React.Component {
   constructor(props) {
@@ -35,6 +37,8 @@ class Multileg extends React.Component {
   componentDidMount() {
     const { multilegButtonsVisibility } = this.props;
 
+    this.props.getMultilegExecStrategiesAPIAction();
+
     if (this.props.divkey !== "" && this.props.divkey === "multileg") {
       document.getElementById("multileg").style.zIndex = this.props.zIndex + 1;
       this.props.aumentarZindexAction("multileg", this.props.zIndex, true);
@@ -46,7 +50,7 @@ class Multileg extends React.Component {
       var isCollapsed = section.getAttribute("data-collapsed") === "true";
       section.setAttribute("data-collapsed", "true");
 
-      const popupHeight = multilegButtonsVisibility ? 410 : 345;
+      const popupHeight = multilegButtonsVisibility ? multilegNormalHeight : multilegBaseHeight;
 
       if (!isCollapsed) {
         collapseElement({
@@ -96,12 +100,12 @@ class Multileg extends React.Component {
         const multilegElement = document.getElementById("multileg");
         var section = multilegElement?.querySelector(".mcontent");
 
-        let popupHeight = 345;
+        let popupHeight = multilegBaseHeight;
 
         if (multilegButtonsVisibility && !createAlertButtonVisibility)
-          popupHeight = 410;
+          popupHeight = multilegNormalHeight;
         else if (!multilegButtonsVisibility && createAlertButtonVisibility)
-          popupHeight = 312;
+          popupHeight = multilegWithAlertHeight;
 
         if (
           isAnyAlertOpen &&
@@ -229,6 +233,7 @@ export default compose(
     {
       selectOrAddMultilegTabAction,
       updateMultilegTabAction,
+      getMultilegExecStrategiesAPIAction,
       // atualizarBookAction,
     },
     null,

@@ -34,6 +34,7 @@ const INITIAL_STATE: MultilegState = {
       operator: "Less",
       param: "Bid",
       comment: "",
+      selectedStrategy: "mercado",
     },
   ],
   esource_multilegQuotes: null,
@@ -41,6 +42,7 @@ const INITIAL_STATE: MultilegState = {
   cotacoesMultileg: [],
   cotacoesMultilegID: 0,
   alerts: [],
+  executionStrategies: [],
 };
 
 export default (

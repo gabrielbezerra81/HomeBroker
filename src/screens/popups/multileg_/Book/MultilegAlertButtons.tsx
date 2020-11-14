@@ -7,6 +7,7 @@ import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import usePrevious from "hooks/usePrevious";
 import { updateHeight } from "shared/utils/AnimateHeight";
 import { updateMultilegTabAction } from "redux/actions/multileg/MultilegActions";
+import { multilegNormalHeight, multilegWithAlertHeight } from "../constants";
 
 interface MultilegAlertProps {
   tabIndex: number;
@@ -60,7 +61,9 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
   );
 
   const multilegHeight = useMemo(() => {
-    return multilegButtonsVisibility ? 410 : 312;
+    return multilegButtonsVisibility
+      ? multilegNormalHeight
+      : multilegWithAlertHeight;
   }, [multilegButtonsVisibility]);
 
   useEffect(() => {

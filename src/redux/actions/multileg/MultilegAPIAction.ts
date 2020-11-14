@@ -5,6 +5,7 @@ import {
   criarAlertaOperacaoAPI,
   criarPosicaoMultilegAPI,
   addQuoteBoxAPI,
+  getMultilegExecStrategiesAPI,
 } from "api/API";
 import {
   cloneMultilegTabs,
@@ -354,5 +355,18 @@ export const startProactiveMultilegUpdateAction = (): MainThunkAction => {
         }),
       );
     }
+  };
+};
+
+export const getMultilegExecStrategiesAPIAction = (): MainThunkAction => {
+  return async (dispatch) => {
+    const executionStrategies = await getMultilegExecStrategiesAPI();
+
+    dispatch(
+      updateOneMultilegState({
+        attributeName: "executionStrategies",
+        attributeValue: executionStrategies,
+      }),
+    );
   };
 };

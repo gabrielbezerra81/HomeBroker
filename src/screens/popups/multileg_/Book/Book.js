@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Table, Row, Col, Button } from "react-bootstrap";
+import { Table, Row, Col, Form } from "react-bootstrap";
 import IconeConfigGrafico from "shared/componentes/IconeConfigGrafico";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { updateMultilegTabAction } from "redux/actions/multileg/MultilegActions";
@@ -24,8 +24,7 @@ import {
 import NumberFormat from "react-number-format";
 import { StorePrincipalContext } from "redux/StoreCreation";
 import { aviso_calculo_preco_multileg } from "constants/AlertaErros";
-import MultilegAlert from "./MultilegAlert";
-import CustomButton from "shared/componentes/Button";
+import OperationButtons from "./OperationButtons";
 
 class Book extends React.Component {
   componentDidUpdate(prevProps) {
@@ -41,12 +40,7 @@ class Book extends React.Component {
 
   render() {
     const { props } = this;
-    const {
-      indice: tabIndex,
-      cotacoesMultileg,
-      multilegButtonsVisibility,
-      createAlertButtonVisibility,
-    } = props;
+    const { indice: tabIndex, cotacoesMultileg, executionStrategies } = props;
     const aba = props.multileg[tabIndex];
 
     const total = calcularTotal(props);
@@ -293,67 +287,34 @@ class Book extends React.Component {
 
         {RowValidade(props, props.multileg[tabIndex])}
 
-        {multilegButtonsVisibility && !createAlertButtonVisibility && (
-          <>
-            <div className="cleanExecuteButtonsRow">
-              <Button
-                variant="secondary"
-                size="sm"
-                onClick={() =>
-                  props.updateMultilegTabAction({
-                    tabIndex,
-                    attributeName: "limpar",
-                    attributeValue: "",
-                  })
-                }
-              >
-                LIMPAR
-              </Button>
-              <CustomButton
-                onClick={() => props.sendMultilegOrderAction(props.indice)}
-              >
-                EXECUTAR
-              </CustomButton>
-            </div>
-            <Row className="mb-2">
-              <Col md={9} className="ml-4 pr-0">
-                <Button
-                  variant="primary"
-                  size="sm"
-                  onClick={() =>
-                    props.createMultilegPositionAction(props.indice)
-                  }
-                  block
-                >
-                  CRIAR POSIÇÃO
-                </Button>
-              </Col>
-            </Row>
-            <MultilegAlert tabIndex={tabIndex} />
-          </>
-        )}
+        <Row className="mr-2 mb-2">
+          <Col md={4} className="ml-2">
+            <h6>Estratégia</h6>
+          </Col>
 
-        {!multilegButtonsVisibility && !createAlertButtonVisibility && (
-          <Row className="mb-2">
-            <Col md={9} className="ml-4 pr-0">
-              <Button
-                variant="primary"
-                size="sm"
-                block
-                className={`toggleAlertButton`}
-                onClick={() => {
-                  this.props.addQuoteBoxFromMultilegAction(tabIndex);
-                }}
-              >
-                ADICIONAR BOX
-              </Button>
-            </Col>
-          </Row>
-        )}
+          <Col>
+            <Form.Control
+              as="select"
+              value={props.multileg[tabIndex].selectedStrategy}
+              className="textInput strategyInput"
+              onChange={(e) =>
+                props.updateMultilegTabAction({
+                  tabIndex,
+                  attributeName: "selectedStrategy",
+                  attributeValue: e.target.value,
+                })
+              }
+            >
+              {executionStrategies.map((strategyItem) => (
+                <option key={strategyItem.sigla} value={strategyItem.sigla}>
+                  {strategyItem.sigla}
+                </option>
+              ))}
+            </Form.Control>
+          </Col>
+        </Row>
 
-        {!multilegButtonsVisibility && createAlertButtonVisibility && (
-          <MultilegAlert tabIndex={tabIndex} />
-        )}
+        <OperationButtons tabIndex={tabIndex} />
       </div>
     );
   }
@@ -367,8 +328,7 @@ const mapStateToProps = (state) => ({
   accounts: state.systemReducer.accounts,
   selectedAccount: state.systemReducer.selectedAccount,
   cotacoesMultilegID: state.multilegReducer.cotacoesMultilegID,
-  multilegButtonsVisibility: state.systemReducer.multilegButtonsVisibility,
-  createAlertButtonVisibility: state.systemReducer.createAlertButtonVisibility,
+  executionStrategies: state.multilegReducer.executionStrategies,
 });
 
 export default connect(

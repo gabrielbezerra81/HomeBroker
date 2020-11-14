@@ -477,6 +477,7 @@ export const newMultilegTab: MultilegTab = {
   operator: "Less",
   param: "Bid",
   comment: "",
+  selectedStrategy: "mercado",
 };
 
 const setOfferSymbolAndModel = (multilegOffer: MultilegOffer) => {

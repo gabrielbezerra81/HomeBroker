@@ -45,6 +45,7 @@ export const resetarEstadoRedux = ({
   }
 };
 
+// MultilegTab
 const multileg = {
   multileg: [
     {
@@ -66,6 +67,7 @@ const multileg = {
       operator: "Less",
       param: "Bid",
       comment: "",
+      selectedStrategy: "mercado",
     },
   ],
   cotacoesMultileg: [],

@@ -16,6 +16,7 @@ export interface MultilegTab {
   param: "Bid" | "Ask" | "Last";
   operator: "Less" | "Greater";
   comment: string;
+  selectedStrategy: string;
 }
 
 export interface MultilegOption {
@@ -78,4 +79,12 @@ export interface AlertAPI {
       };
     }>;
   };
+}
+
+export interface ExecutionStrategy {
+  id: number;
+  boleta: string;
+  name: string;
+  sigla: string;
+  trigger: number | null;
 }
