@@ -53,7 +53,7 @@ const BoxUpdateManager: React.FC = () => {
       updateInterval,
     });
 
-    if ((hasUpdateConfigChanged || hasBoxesChanged) && quoteBoxes.length) {
+    if (hasUpdateConfigChanged || hasBoxesChanged) {
       startUpdate();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

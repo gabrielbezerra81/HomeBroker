@@ -157,3 +157,18 @@ export const getProactiveThlQuotesAPI = async (
       return [];
     });
 };
+
+export const getProactiveBoxAPI = async (structureIds: string) => {
+  return proactiveAPI
+    .get(`${url_multiStructure_ids}${structureIds}`)
+    .then((response) => {
+      if (response.data && response.data.length) {
+        return response.data;
+      }
+
+      return [];
+    })
+    .catch((error) => {
+      return [];
+    });
+};

@@ -7,6 +7,7 @@ import {
 } from "./SystemActions";
 import { BoxProps } from "screens/popups/quoteBox/types";
 import { updateBoxDataAPI } from "api/reactive/ReativosAPI";
+import { getProactiveBoxAPI } from "api/proactive/ProativosAPI";
 
 interface OpenedBoxes {
   menuKey: string;
@@ -56,6 +57,7 @@ export const addBoxFromAPIAction = (data: any[]): MainThunkAction => {
           buy: structure.bookBuy || [],
           sell: structure.bookSell || [],
         },
+        configuration: boxItem.configuration,
       };
 
       return box;
@@ -63,12 +65,14 @@ export const addBoxFromAPIAction = (data: any[]): MainThunkAction => {
 
     const updatedQuoteBoxes = produce(quoteBoxes, (draft) => {
       boxes.forEach((newBoxItem) => {
-        const alreadyAdded = quoteBoxes.some(
+        const boxIndex = quoteBoxes.findIndex(
           (boxItem) => boxItem.id === newBoxItem.id,
         );
 
-        if (!alreadyAdded) {
+        if (boxIndex === -1) {
           draft.push(newBoxItem);
+        } else {
+          draft[boxIndex] = newBoxItem;
         }
       });
     });
@@ -152,7 +156,7 @@ export const startReactiveBoxUpdateAction = (): MainThunkAction => {
 export const startProactiveBoxUpdateAction = (): MainThunkAction => {
   return (dispatch, getState) => {
     const {
-      systemReducer: { esource_box, interval_box, quoteBoxes },
+      systemReducer: { esource_box, interval_box, quoteBoxes, updateInterval },
     } = getState();
 
     if (esource_box && esource_box.close) {
@@ -174,6 +178,30 @@ export const startProactiveBoxUpdateAction = (): MainThunkAction => {
     const ids = idArray.join(",");
 
     if (ids) {
+      const interval = setInterval(async () => {
+        const structures = await getProactiveBoxAPI(ids);
+
+        const updatedBoxData = quoteBoxes.map((boxItem) => {
+          const boxFromAPI: any = {
+            id: boxItem.id,
+            configuration: boxItem.configuration,
+          };
+
+          const updatedStructure = structures.find(
+            (structureItem: any) => structureItem.id === boxItem.structureID,
+          );
+
+          if (updatedStructure) {
+            boxFromAPI.structure = updatedStructure;
+          }
+
+          return boxFromAPI;
+        });
+
+        dispatch(addBoxFromAPIAction(updatedBoxData));
+      }, updateInterval);
+
+      dispatch(updateOneSystemStateAction("interval_box", interval));
     }
   };
 };

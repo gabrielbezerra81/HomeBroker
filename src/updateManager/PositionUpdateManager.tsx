@@ -65,6 +65,8 @@ const PositionUpdateManager: React.FC = () => {
       updateInterval,
     });
 
+    // TODO: proactive => Verificar a questão dos lengths iguais a 0. No caso do Box, onde há deleção. Precisa executar
+    //                    novamente quando os arrays zeram.
     if (
       hasUpdateConfigChanged &&
       positionList.length &&

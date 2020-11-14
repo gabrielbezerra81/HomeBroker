@@ -38,6 +38,8 @@ const OrdersUpdateManager: React.FC = () => {
       updateInterval,
     });
 
+    // TODO: proactive => verificar se ordersExecList.length pode ser 0. No caso do box, onde há deleção, quando apagava o ultimo
+    //                    deveria executar novamente
     if (hasUpdateConfigChanged && ordersExecList.length) {
       startUpdate();
     }

@@ -12,6 +12,7 @@ export interface BoxProps {
   };
   dayOscilation: number;
   codes: Array<Code>;
+  configuration: string;
 }
 
 export interface Code {
