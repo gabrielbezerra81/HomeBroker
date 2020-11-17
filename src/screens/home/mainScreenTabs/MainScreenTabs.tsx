@@ -63,10 +63,13 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
 
   useEffect(() => {
     function loadOpenedMenus() {
-      dispatch(handleOpenMenusInMainScreenTabsAction(menuChildren));
+      dispatch(
+        handleOpenMenusInMainScreenTabsAction(menuChildren, selectedTab),
+      );
     }
 
     loadOpenedMenus();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, menuChildren]);
 
   const handleTabSelect = useCallback(

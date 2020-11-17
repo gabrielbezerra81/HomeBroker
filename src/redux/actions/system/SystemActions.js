@@ -151,43 +151,70 @@ export const abrirItemBarraLateralAction = (
     // Se estiver tentar abrir um popup fora da aba principal e ele já estiver aberto,
     // impede que ele seja fechado e redireciona para a aba principal
     const isTryingToOpenFromSecondaryTab = selectedTab !== "tab0";
-    if (isTryingToOpenFromSecondaryTab) {
+    if (
+      isTryingToOpenFromSecondaryTab &&
+      nameVariavelReducer !== "isOpenMultileg"
+    ) {
       dispatch(
         updateManySystemState({
           selectedTab: "tab0",
           [nameVariavelReducer]: true,
         }),
       );
+      return;
     } //
-    else {
-      let updateOpenedMenus = handleCloseMenusInMainTab({
-        isOpenAttribute: nameVariavelReducer,
-        visibility: updatedVisibility,
-        openedMenus,
+
+    const multilegIndex = openedMenus.findIndex(
+      (openedMenuItem) => openedMenuItem.menuKey === "multileg",
+    );
+
+    // Traz a multileg para a aba atual se estiver tentando abrir com ele já aberto em outra aba
+    if (
+      nameVariavelReducer === "isOpenMultileg" &&
+      isVisible &&
+      multilegIndex !== -1 &&
+      openedMenus[multilegIndex].tabKey !== selectedTab
+    ) {
+      const updatedOpenedMenus = produce(openedMenus, (draft) => {
+        draft[multilegIndex].tabKey = selectedTab;
       });
-
-      if (forceVisibility === true || forceVisibility === false) {
-        // Se estiver querendo manter o estado atual de visibilidade, não precisa alterar.
-        if (forceVisibility === isVisible) {
-          updateOpenedMenus = openedMenus;
-        }
-
-        updatedVisibility = forceVisibility;
-      }
 
       dispatch(
         updateManySystemState({
-          [nameVariavelReducer]: updatedVisibility,
-          openedMenus: updateOpenedMenus,
+          openedMenus: updatedOpenedMenus,
+          [nameVariavelReducer]: true,
         }),
       );
-
-      resetarDadosReducerAction({
-        dispatch,
-        nameVariavelReducer,
-        visibilidadeMenu: updatedVisibility,
-      });
+      return;
     }
+
+    let updateOpenedMenus = handleCloseMenusInMainTab({
+      isOpenAttribute: nameVariavelReducer,
+      visibility: updatedVisibility,
+      openedMenus,
+    });
+
+    if (forceVisibility === true || forceVisibility === false) {
+      // Se estiver querendo manter o estado atual de visibilidade, não precisa alterar.
+      if (forceVisibility === isVisible) {
+        updateOpenedMenus = openedMenus;
+      }
+
+      updatedVisibility = forceVisibility;
+    }
+
+    dispatch(
+      updateManySystemState({
+        [nameVariavelReducer]: updatedVisibility,
+        openedMenus: updateOpenedMenus,
+      }),
+    );
+
+    resetarDadosReducerAction({
+      dispatch,
+      nameVariavelReducer,
+      visibilidadeMenu: updatedVisibility,
+    });
   };
 };
 
