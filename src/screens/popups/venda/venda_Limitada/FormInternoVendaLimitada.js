@@ -21,7 +21,7 @@ import {
   pesquisarAtivoOnEnterAction,
   enviarOrdemAction,
 } from "redux/actions/boletas/boletasAPIActions";
-import InputFormatado from "shared/componentes/InputFormatado";
+import CustomInput from "shared/componentes/CustomInput";
 import { RowGainStopFormInternoConectada } from "shared/componentes/RowInputsFormatadosFormInterno";
 import { BotaoEnviarOrdem } from "shared/componentes/BotaoEnviarOrdem";
 
@@ -61,8 +61,8 @@ class FormInternoVendaLimitada extends React.Component {
               <Col className="colTextInput">
                 <Form.Group>
                   <Form.Label />
-                  <InputFormatado
-                    tipoInput="preco"
+                  <CustomInput
+                    type="preco"
                     step={stepPreco}
                     precision={precisao}
                     value={this.props.preco}

@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Form, InputGroup, Spinner } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
-import InputFormatado from "shared/componentes/InputFormatado";
+import CustomInput from "shared/componentes/CustomInput";
 import { useSelector } from "react-redux";
 
 export default RowAtivoQtdeBoletas;
@@ -25,8 +25,8 @@ function RowAtivoQtdeBoletas(props, namespace) {
       <Col className="colTextInput">
         <Form.Group>
           <Form.Label>Qtde</Form.Label>
-          <InputFormatado
-            tipoInput={tipoInputQtde}
+          <CustomInput
+            type={tipoInputQtde}
             step={props.dadosPesquisa.stepQtde}
             value={props.qtde}
             onChange={(valor) => props.mudarQtdAction(valor, namespace)}

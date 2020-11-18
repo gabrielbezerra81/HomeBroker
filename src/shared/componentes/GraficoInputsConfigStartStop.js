@@ -3,38 +3,38 @@ import { connect } from "react-redux";
 import { Form } from "react-bootstrap";
 import { mapStateToPropsInputsPreco } from "shared/componentes/GraficoInputs";
 import { mudarAtributoBoletaAction } from "redux/actions/boletas/formInputActions";
-import InputFormatado from "shared/componentes/InputFormatado";
+import CustomInput from "shared/componentes/CustomInput";
 
 class GraficoInputsConfigStartStop extends React.Component {
   render() {
     const inputGain1 = (
       <div>
-        <InputFormatado
-          tipoInput="preco"
+        <CustomInput
+          type="preco"
           step={0.01}
           className={`GainDisparoGrafico_CONFIGURAR${this.props.posicionamento}`}
-          inputGrafico="containerInputGrafico"
+          containerClassName="containerInputGrafico"
           value={this.props[this.props.namespace].gainDisparoConfig1}
           onChange={(valor) =>
             this.props.mudarAtributoBoletaAction(
               valor,
               this.props.namespace,
-              "gainDisparoConfig1"
+              "gainDisparoConfig1",
             )
           }
           name="gainDisparoConfig1"
         />
-        <InputFormatado
-          tipoInput="preco"
+        <CustomInput
+          type="preco"
           step={0.01}
           className={`GainExecGrafico_CONFIGURAR${this.props.posicionamento}`}
-          inputGrafico="containerInputGrafico"
+          containerClassName="containerInputGrafico"
           value={this.props[this.props.namespace].gainExecConfig1}
           onChange={(valor) =>
             this.props.mudarAtributoBoletaAction(
               valor,
               this.props.namespace,
-              "gainExecConfig1"
+              "gainExecConfig1",
             )
           }
           name="gainExecConfig1"
@@ -44,32 +44,32 @@ class GraficoInputsConfigStartStop extends React.Component {
 
     const inputStop1 = (
       <div>
-        <InputFormatado
-          tipoInput="preco"
+        <CustomInput
+          type="preco"
           step={0.01}
           className={`StopDisparoGrafico_CONFIGURAR${this.props.posicionamento}`}
-          inputGrafico="containerInputGrafico"
+          containerClassName="containerInputGrafico"
           value={this.props[this.props.namespace].stopDisparoConfig1}
           onChange={(valor) =>
             this.props.mudarAtributoBoletaAction(
               valor,
               this.props.namespace,
-              "stopDisparoConfig1"
+              "stopDisparoConfig1",
             )
           }
           name="stopDisparoConfig1"
         />
-        <InputFormatado
-          tipoInput="preco"
+        <CustomInput
+          type="preco"
           step={0.01}
           className={`StopExecGrafico_CONFIGURAR${this.props.posicionamento}`}
-          inputGrafico="containerInputGrafico"
+          containerClassName="containerInputGrafico"
           value={this.props[this.props.namespace].stopExecConfig1}
           onChange={(valor) =>
             this.props.mudarAtributoBoletaAction(
               valor,
               this.props.namespace,
-              "stopExecConfig1"
+              "stopExecConfig1",
             )
           }
           name="stopExecConfig1"
@@ -79,32 +79,32 @@ class GraficoInputsConfigStartStop extends React.Component {
 
     const inputGain2 = (
       <div>
-        <InputFormatado
-          tipoInput="preco"
+        <CustomInput
+          type="preco"
           step={0.01}
           className={`GainDisparoGrafico2_CONFIGURAR${this.props.posicionamento}`}
-          inputGrafico="containerInputGrafico"
+          containerClassName="containerInputGrafico"
           value={this.props[this.props.namespace].gainDisparoConfig2}
           onChange={(valor) =>
             this.props.mudarAtributoBoletaAction(
               valor,
               this.props.namespace,
-              "gainDisparoConfig2"
+              "gainDisparoConfig2",
             )
           }
           name="gainDisparoConfig2"
         />
-        <InputFormatado
-          tipoInput="preco"
+        <CustomInput
+          type="preco"
           step={0.01}
           className={`GainExecGrafico2_CONFIGURAR${this.props.posicionamento}`}
-          inputGrafico="containerInputGrafico"
+          containerClassName="containerInputGrafico"
           value={this.props[this.props.namespace].gainExecConfig2}
           onChange={(valor) =>
             this.props.mudarAtributoBoletaAction(
               valor,
               this.props.namespace,
-              "gainExecConfig2"
+              "gainExecConfig2",
             )
           }
           name="gainExecConfig2"
@@ -114,32 +114,32 @@ class GraficoInputsConfigStartStop extends React.Component {
 
     const inputStop2 = (
       <div>
-        <InputFormatado
-          tipoInput="preco"
+        <CustomInput
+          type="preco"
           step={0.01}
           className={`StopDisparoGrafico2_CONFIGURAR${this.props.posicionamento}`}
-          inputGrafico="containerInputGrafico"
+          containerClassName="containerInputGrafico"
           value={this.props[this.props.namespace].stopDisparoConfig2}
           onChange={(valor) =>
             this.props.mudarAtributoBoletaAction(
               valor,
               this.props.namespace,
-              "stopDisparoConfig2"
+              "stopDisparoConfig2",
             )
           }
           name="stopDisparoConfig2"
         />
-        <InputFormatado
-          tipoInput="preco"
+        <CustomInput
+          type="preco"
           step={0.01}
           className={`StopExecGrafico2_CONFIGURAR${this.props.posicionamento}`}
-          inputGrafico="containerInputGrafico"
+          containerClassName="containerInputGrafico"
           value={this.props[this.props.namespace].stopExecConfig2}
           onChange={(valor) =>
             this.props.mudarAtributoBoletaAction(
               valor,
               this.props.namespace,
-              "stopExecConfig2"
+              "stopExecConfig2",
             )
           }
           name="stopExecConfig2"

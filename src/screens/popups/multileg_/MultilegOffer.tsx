@@ -3,7 +3,7 @@ import { Form } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import { Select } from "antd";
 
-import InputFormatado from "shared/componentes/InputFormatado";
+import CustomInput from "shared/componentes/CustomInput";
 import { formatarVencimento } from "shared/utils/Formatacoes";
 import {
   findMultilegQuote,
@@ -101,9 +101,8 @@ const MultilegOfferItem: React.FC<MultilegOfferProps> = ({
       </td>
       <td>
         <Form.Group>
-          <InputFormatado
-            name="qtde"
-            tipoInput="quantidade"
+          <CustomInput
+            type="quantidade"
             step={100}
             autoSelect
             value={offer.qtde}
@@ -215,9 +214,8 @@ const MultilegOfferItem: React.FC<MultilegOfferProps> = ({
       <td>{isOption && <Model model={offer.modelo} />}</td>
       <td>
         <Form.Group>
-          <InputFormatado
-            name="qtde"
-            tipoInput="quantidade"
+          <CustomInput
+            type="quantidade"
             step={100}
             value={offer.despernamento}
             onChange={(value: any) =>

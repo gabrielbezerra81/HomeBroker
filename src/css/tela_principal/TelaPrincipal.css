@@ -74,6 +74,7 @@
   margin-top: 45px;
   margin-left: 0;
   transition: margin-left 0.4s;
+  z-index: 9999;
 }
 
 .divBarraLateralAfastada {

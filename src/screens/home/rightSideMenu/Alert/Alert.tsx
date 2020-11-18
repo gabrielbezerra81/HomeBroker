@@ -40,6 +40,7 @@ const Alert: React.FC = () => {
       updateManySystemState({
         multilegButtonsVisibility: false,
         createAlertButtonVisibility: true,
+        isOpenRightSideMenu: false,
       }),
     );
 

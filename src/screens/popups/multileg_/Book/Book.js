@@ -13,7 +13,7 @@ import {
   calcularTotal,
   verificaCalculoSemBook,
 } from "screens/popups/multileg_/CalculoPreco";
-import InputFormatado from "shared/componentes/InputFormatado";
+import CustomInput from "shared/componentes/CustomInput";
 import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
 import RowValidade from "screens/popups/multileg_/RowValidade";
 import {
@@ -236,11 +236,11 @@ class Book extends React.Component {
             <h6>Preço</h6>
           </Col>
           <Col className="mr-1 inputPaddingRight">
-            <InputFormatado
+            <CustomInput
               placeholder={renderPlaceholder ? "Informe as qtdes" : ""}
               allowNegative
               autoSelect
-              tipoInput="precoNegativo"
+              type="precoNegativo"
               step={0.01}
               value={renderPlaceholder ? "" : getPreco(props)}
               onChange={(valor) =>

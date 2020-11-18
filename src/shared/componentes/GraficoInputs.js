@@ -1,9 +1,7 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 import { connect } from "react-redux";
-import InputFormatado, {
-  boxShadowInput,
-} from "shared/componentes/InputFormatado";
+import CustomInput, { boxShadowInput } from "shared/componentes/CustomInput";
 import { mudarAtributoBoletaAction } from "redux/actions/boletas/formInputActions";
 import {
   COMPRA_AGENDADA_NAMESPACE,
@@ -26,67 +24,67 @@ class GraficoInputs extends React.Component {
       case "graficoTipoAgendada":
         return (
           <div>
-            <InputFormatado
-              tipoInput="preco"
+            <CustomInput
+              type="preco"
               step={0.01}
               className={`gainDisparo_Agendada ${boxShadowInput(
-                "gainDisparo_Agendada"
+                "gainDisparo_Agendada",
               )}`}
-              inputGrafico={`GainDisparoGrafico_${this.props.cv} containerInputGrafico`}
+              containerClassName={`GainDisparoGrafico_${this.props.cv} containerInputGrafico`}
               value={this.props[this.props.namespace].gainDisparo}
               onChange={(valor) =>
                 this.props.mudarAtributoBoletaAction(
                   valor,
                   this.props.namespace,
-                  "gainDisparo"
+                  "gainDisparo",
                 )
               }
             />
-            <InputFormatado
-              tipoInput="preco"
+            <CustomInput
+              type="preco"
               step={0.01}
               className={`gainExec_Agendada ${boxShadowInput(
-                "gainExec_Agendada"
+                "gainExec_Agendada",
               )}`}
-              inputGrafico={`GainExecGrafico_${this.props.cv} containerInputGrafico`}
+              containerClassName={`GainExecGrafico_${this.props.cv} containerInputGrafico`}
               value={this.props[this.props.namespace].gainExec}
               onChange={(valor) =>
                 this.props.mudarAtributoBoletaAction(
                   valor,
                   this.props.namespace,
-                  "gainExec"
+                  "gainExec",
                 )
               }
             />
-            <InputFormatado
-              tipoInput="preco"
+            <CustomInput
+              type="preco"
               step={0.01}
               className={`stopDisparo_Agendada ${boxShadowInput(
-                "stopDisparo_Agendada"
+                "stopDisparo_Agendada",
               )}`}
-              inputGrafico={`StopDisparoGrafico_${this.props.cv} containerInputGrafico`}
+              containerClassName={`StopDisparoGrafico_${this.props.cv} containerInputGrafico`}
               value={this.props[this.props.namespace].stopDisparo}
               onChange={(valor) =>
                 this.props.mudarAtributoBoletaAction(
                   valor,
                   this.props.namespace,
-                  "stopDisparo"
+                  "stopDisparo",
                 )
               }
             />
-            <InputFormatado
-              tipoInput="preco"
+            <CustomInput
+              type="preco"
               step={0.01}
               className={`stopExec_Agendada ${boxShadowInput(
-                "stopExec_Agendada"
+                "stopExec_Agendada",
               )}`}
-              inputGrafico={`StopExecGrafico_${this.props.cv} containerInputGrafico`}
+              containerClassName={`StopExecGrafico_${this.props.cv} containerInputGrafico`}
               value={this.props[this.props.namespace].stopExec}
               onChange={(valor) =>
                 this.props.mudarAtributoBoletaAction(
                   valor,
                   this.props.namespace,
-                  "stopExec"
+                  "stopExec",
                 )
               }
             />
@@ -95,33 +93,33 @@ class GraficoInputs extends React.Component {
       case "tipoStartMovel":
         return (
           <div>
-            <InputFormatado
-              tipoInput="preco"
+            <CustomInput
+              type="preco"
               step={0.01}
               className={`stopDisparo_Movel ${boxShadowInput(
-                "stopDisparo_Movel"
+                "stopDisparo_Movel",
               )}`}
-              inputGrafico={`StopDisparoGrafico_${this.props.cv} containerInputGrafico TamanhoInputGrafico_StartMovel`}
+              containerClassName={`StopDisparoGrafico_${this.props.cv} containerInputGrafico TamanhoInputGrafico_StartMovel`}
               value={this.props[this.props.namespace].stopDisparo}
               onChange={(valor) =>
                 this.props.mudarAtributoBoletaAction(
                   valor,
                   this.props.namespace,
-                  "stopDisparo"
+                  "stopDisparo",
                 )
               }
             />
-            <InputFormatado
-              tipoInput="preco"
+            <CustomInput
+              type="preco"
               step={0.01}
               className={`stopExec_Movel ${boxShadowInput("stopExec_Movel")}`}
-              inputGrafico={`StopExecGrafico_${this.props.cv} containerInputGrafico TamanhoInputGrafico_StartMovel`}
+              containerClassName={`StopExecGrafico_${this.props.cv} containerInputGrafico TamanhoInputGrafico_StartMovel`}
               value={this.props[this.props.namespace].stopExec}
               onChange={(valor) =>
                 this.props.mudarAtributoBoletaAction(
                   valor,
                   this.props.namespace,
-                  "stopExec"
+                  "stopExec",
                 )
               }
             />
@@ -132,27 +130,27 @@ class GraficoInputs extends React.Component {
               }
               onChange={() => false}
             />
-            <InputFormatado
-              tipoInput="preco"
+            <CustomInput
+              type="preco"
               step={0.01}
               className={`inicioDisparo_Movel ${boxShadowInput(
-                "inicioDisparo_Movel"
+                "inicioDisparo_Movel",
               )}`}
-              inputGrafico={`Disparo1AjusteGrafico_${this.props.cv} containerInputGrafico TamanhoInputGrafico_StartMovel`}
+              containerClassName={`Disparo1AjusteGrafico_${this.props.cv} containerInputGrafico TamanhoInputGrafico_StartMovel`}
               value={this.props[this.props.namespace].inicioDisparo}
               onChange={(valor) =>
                 this.props.mudarAtributoBoletaAction(
                   valor,
                   this.props.namespace,
-                  "inicioDisparo"
+                  "inicioDisparo",
                 )
               }
             />
-            {/* <InputFormatado
-              tipoInput="preco"
+            {/* <CustomInput
+              type="preco"
               step={0.01}
               id={`DisparoMaisAjusteGrafico_${this.props.cv}`}
-              inputGrafico="containerInputGrafico TamanhoInputGrafico_StartMovel"
+              containerClassName="containerInputGrafico TamanhoInputGrafico_StartMovel"
               value={this.props[this.props.namespace].disparoMaisAjuste}
               onChange={valor =>
                 this.props.mudarAtributoBoletaAction(
@@ -163,11 +161,11 @@ class GraficoInputs extends React.Component {
               }
             /> */}
 
-            {/* <InputFormatado
-              tipoInput="preco"
+            {/* <CustomInput
+              type="preco"
               step={0.01}
               id={`StopMais1AjusteGrafico_${this.props.cv}`}
-              inputGrafico="containerInputGrafico TamanhoInputGrafico_StartMovel"
+              containerClassName="containerInputGrafico TamanhoInputGrafico_StartMovel"
               value={this.props[this.props.namespace].stopMais1Ajuste}
               onChange={valor =>
                 this.props.mudarAtributoBoletaAction(
@@ -177,11 +175,11 @@ class GraficoInputs extends React.Component {
                 )
               }
             /> */}
-            {/* <InputFormatado
-              tipoInput="preco"
+            {/* <CustomInput
+              type="preco"
               step={0.01}
               id={`StopAnteriorAjusteGrafico_${this.props.cv}`}
-              inputGrafico="containerInputGrafico TamanhoInputGrafico_StartMovel"
+              containerClassName="containerInputGrafico TamanhoInputGrafico_StartMovel"
               value={this.props[this.props.namespace].stopAnteriorAjuste}
               onChange={valor =>
                 this.props.mudarAtributoBoletaAction(
@@ -196,45 +194,45 @@ class GraficoInputs extends React.Component {
       case "tipoGainReducao":
         return (
           <div>
-            <InputFormatado
-              tipoInput="preco"
+            <CustomInput
+              type="preco"
               step={0.01}
-              inputGrafico={`Reducao1Grafico_${this.props.cv} containerInputGrafico TamanhoInputGrafico_GainReducao`}
+              containerClassName={`Reducao1Grafico_${this.props.cv} containerInputGrafico TamanhoInputGrafico_GainReducao`}
               value={this.props[this.props.namespace].reducao1}
               onChange={(valor) =>
                 this.props.mudarAtributoBoletaAction(
                   valor,
                   this.props.namespace,
-                  "reducao1"
+                  "reducao1",
                 )
               }
             />
 
-            <InputFormatado
-              tipoInput="preco"
+            <CustomInput
+              type="preco"
               step={0.01}
-              inputGrafico={`Reducao2Grafico_${this.props.cv} containerInputGrafico TamanhoInputGrafico_GainReducao`}
+              containerClassName={`Reducao2Grafico_${this.props.cv} containerInputGrafico TamanhoInputGrafico_GainReducao`}
               value={this.props[this.props.namespace].reducao2}
               onChange={(valor) =>
                 this.props.mudarAtributoBoletaAction(
                   valor,
                   this.props.namespace,
-                  "reducao2"
+                  "reducao2",
                 )
               }
             />
 
-            <InputFormatado
-              tipoInput="preco"
+            <CustomInput
+              type="preco"
               step={0.01}
               className={`GainGrafico_${this.props.cv}`}
-              inputGrafico={`GainGrafico_${this.props.cv} containerInputGrafico TamanhoInputGrafico_GainReducao`}
+              containerClassName={`GainGrafico_${this.props.cv} containerInputGrafico TamanhoInputGrafico_GainReducao`}
               value={this.props[this.props.namespace].gain}
               onChange={(valor) =>
                 this.props.mudarAtributoBoletaAction(
                   valor,
                   this.props.namespace,
-                  "gain"
+                  "gain",
                 )
               }
             />

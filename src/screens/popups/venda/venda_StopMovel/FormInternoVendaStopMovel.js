@@ -23,7 +23,7 @@ import {
   pesquisarAtivoOnEnterAction,
   enviarOrdemAction,
 } from "redux/actions/boletas/boletasAPIActions";
-import InputFormatado from "shared/componentes/InputFormatado";
+import CustomInput from "shared/componentes/CustomInput";
 import { RowInputsStopMovelConectada } from "shared/componentes/RowInputsFormatadosFormInterno";
 import { BotaoEnviarOrdem } from "shared/componentes/BotaoEnviarOrdem";
 
@@ -50,8 +50,8 @@ class FormInternoVendaStopMovel extends React.Component {
               <Col className="colTextInput colInputAjusteAssimetrico">
                 <Form.Group>
                   <Form.Label>Valor</Form.Label>
-                  <InputFormatado
-                    tipoInput="preco"
+                  <CustomInput
+                    type="preco"
                     step={0.01}
                     value={props.ajusteAssimetrico}
                     onChange={(valor) =>

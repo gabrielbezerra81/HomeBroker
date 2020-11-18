@@ -22,7 +22,7 @@ import {
   pesquisarAtivoOnEnterAction,
   enviarOrdemAction,
 } from "redux/actions/boletas/boletasAPIActions";
-import InputFormatado from "shared/componentes/InputFormatado";
+import CustomInput from "shared/componentes/CustomInput";
 import { RowGainStopFormInternoConectada } from "shared/componentes/RowInputsFormatadosFormInterno";
 import { BotaoEnviarOrdem } from "shared/componentes/BotaoEnviarOrdem";
 
@@ -40,8 +40,8 @@ class FormInternoCompraAgendada extends React.Component {
               <Col className="colTextInput">
                 <Form.Group>
                   <Form.Label>Disparo</Form.Label>
-                  <InputFormatado
-                    tipoInput="preco"
+                  <CustomInput
+                    type="preco"
                     step={0.01}
                     value={this.props.entradaDisparo}
                     onChange={(valor) =>
@@ -57,8 +57,8 @@ class FormInternoCompraAgendada extends React.Component {
               <Col className="colTextInput">
                 <Form.Group>
                   <Form.Label>Execução</Form.Label>
-                  <InputFormatado
-                    tipoInput="preco"
+                  <CustomInput
+                    type="preco"
                     step={0.01}
                     value={this.props.entradaExec}
                     onChange={(valor) =>
