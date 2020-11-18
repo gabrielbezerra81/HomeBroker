@@ -426,7 +426,7 @@ const comparadorNumero = (targetValue, min, max, select) => {
       break;
     case "=":
       if (minNumber) {
-        return targetValue === Number(minNumber);
+        return targetValue.toString().includes(minNumber.toString());
       }
       break;
     default:
