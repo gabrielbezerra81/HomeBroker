@@ -140,7 +140,7 @@ export const sendMultilegOrderAction = (tabIndex: number): MainThunkAction => {
 
       if (data && data.length) {
         const updatedOrders = produce(tabelaOrdensExecucao, (draft) => {
-          draft.push(data[0]);
+          draft.unshift(data[0]);
         });
         dispatch({ type: LISTAR_ORDENS_EXECUCAO, payload: updatedOrders });
       }

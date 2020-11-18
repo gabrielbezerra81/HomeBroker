@@ -96,7 +96,7 @@ export const enviarOrdemAction = (props, selectedAccount) => {
 
       if (data && data.length) {
         const updatedOrders = produce(tabelaOrdensExecucao, (draft) => {
-          draft.push(data[0]);
+          draft.unshift(data[0]);
         });
         storeAppPrincipal.dispatch({
           type: LISTAR_ORDENS_EXECUCAO,
