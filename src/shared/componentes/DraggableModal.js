@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import Draggable from "react-draggable";
 import { connect } from "react-redux";
 
-import ConfigurarStop from "screens/popups/compra/compra_StartStop/ConfigurarStop";
-import ConfigurarStopVenda from "screens/popups/venda/venda_StartStop/ConfigurarStopVenda";
+import ConfigurarStop from "screens/popups/boletas/compra/compra_StartStop/ConfigurarStop";
+import ConfigurarStopVenda from "screens/popups/boletas/venda/venda_StartStop/ConfigurarStopVenda";
 import FiltrarOrdens from "screens/popups/ordens_em_execucao/FiltrarOrdens"; //posicaoFormCompraVenda
 import ConfigComplementar from "screens/popups/multileg_/ConfigComplementar";
 import { Resizable } from "re-resizable";

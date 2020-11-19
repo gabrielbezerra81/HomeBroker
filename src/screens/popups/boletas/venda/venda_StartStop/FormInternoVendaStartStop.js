@@ -21,7 +21,7 @@ import {
   pesquisarAtivoOnEnterAction,
   enviarOrdemAction,
 } from "redux/actions/boletas/boletasAPIActions";
-import { mapStateToPropsConfigStopVenda } from "screens/popups/venda/venda_StartStop/ConfigurarStopVenda";
+import { mapStateToPropsConfigStopVenda } from "screens/popups/boletas/venda/venda_StartStop/ConfigurarStopVenda";
 import { BotaoEnviarOrdem } from "shared/componentes/BotaoEnviarOrdem";
 import InputGroupBoleta from "shared/componentes/InternalForm/InputGroupBoleta";
 

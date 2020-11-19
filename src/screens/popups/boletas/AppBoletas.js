@@ -1,19 +1,19 @@
 import React from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import BookOfertas from "../book_Ofertas/BookOfertas";
-import CompraAgendada from "screens/popups/compra/compra_Agendada/CompraAgendada";
-import CompraLimitada from "screens/popups/compra/compra_Limitada/CompraLimitada";
-import CompraMercado from "screens/popups/compra/compra_Mercado/CompraMercado";
-import CompraStartStop from "screens/popups/compra/compra_StartStop/CompraStartStop";
-import CompraStartMovel from "screens/popups/compra/compra_StartMovel/CompraStartMovel";
-import CompraGainReducao from "screens/popups/compra/compra_GainReducao/CompraGainReducao";
-import VendaAgendada from "../venda/venda_Agendada/VendaAgendada";
-import VendaLimitada from "../venda/venda_Limitada/VendaLimitada";
-import VendaMercado from "../venda/venda_Mercado/VendaMercado";
-import VendaStartStop from "../venda/venda_StartStop/VendaStartStop";
-import VendaStopMovel from "../venda/venda_StopMovel/VendaStopMovel";
-import VendaGainReducao from "../venda/venda_GainReducao/VendaGainReducao";
+import BookOfertas from "./book_Ofertas/BookOfertas";
+import CompraAgendada from "screens/popups/boletas/compra/compra_Agendada/CompraAgendada";
+import CompraLimitada from "screens/popups/boletas/compra/compra_Limitada/CompraLimitada";
+import CompraMercado from "screens/popups/boletas/compra/compra_Mercado/CompraMercado";
+import CompraStartStop from "screens/popups/boletas/compra/compra_StartStop/CompraStartStop";
+import CompraStartMovel from "screens/popups/boletas/compra/compra_StartMovel/CompraStartMovel";
+import CompraGainReducao from "screens/popups/boletas/compra/compra_GainReducao/CompraGainReducao";
+import VendaAgendada from "./venda/venda_Agendada/VendaAgendada";
+import VendaLimitada from "./venda/venda_Limitada/VendaLimitada";
+import VendaMercado from "./venda/venda_Mercado/VendaMercado";
+import VendaStartStop from "./venda/venda_StartStop/VendaStartStop";
+import VendaStopMovel from "./venda/venda_StopMovel/VendaStopMovel";
+import VendaGainReducao from "./venda/venda_GainReducao/VendaGainReducao";
 import { GlobalContext, StorePrincipalContext } from "redux/StoreCreation";
 import {
   fecharFormAction,
