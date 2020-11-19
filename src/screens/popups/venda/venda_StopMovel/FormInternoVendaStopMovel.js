@@ -28,8 +28,35 @@ import { BotaoEnviarOrdem } from "shared/componentes/BotaoEnviarOrdem";
 import InputGroupStopMovel from "shared/componentes/InternalForm/InputGroupStopMovel";
 
 class FormInternoVendaStopMovel extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      adjustmentStep: 0.01,
+      adjustmentPrecision: 2,
+    };
+  }
+
+  componentDidUpdate(prevProps) {
+    const { dadosPesquisa } = this.props;
+    if (prevProps.dadosPesquisa.stepQtde !== dadosPesquisa.stepQtde) {
+      let step = 0.01;
+      let precision = 2;
+
+      if (dadosPesquisa.stepQtde === 0.01) {
+        step = 0.00001;
+        precision = 5;
+      }
+
+      this.setState({ adjustmentStep: step, adjustmentPrecision: precision });
+    }
+  }
+
   render() {
     const { props } = this;
+
+    const { adjustmentStep, adjustmentPrecision } = this.state;
+
     return (
       <Col className="colFormInterno">
         <div className="divAsModalContainer formInternoCompraStartMovel">
@@ -50,7 +77,8 @@ class FormInternoVendaStopMovel extends React.Component {
                   <Form.Label>Valor</Form.Label>
                   <CustomInput
                     type="preco"
-                    step={0.01}
+                    step={adjustmentStep}
+                    precision={adjustmentPrecision}
                     value={props.ajusteAssimetrico}
                     onChange={(valor) =>
                       props.mudarAtributoBoletaAction(
@@ -73,7 +101,7 @@ class FormInternoVendaStopMovel extends React.Component {
                   }
                   className="operation-icons"
                 >
-                  <MDBIcon icon="plus-circle" size="2x" />
+                  <MDBIcon icon="plus-circle" size="1x" />
                 </Button>
               </Col>
             </Row>

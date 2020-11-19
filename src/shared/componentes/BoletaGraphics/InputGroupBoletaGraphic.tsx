@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Form } from "react-bootstrap";
 import CustomInput, { boxShadowInput } from "shared/componentes/CustomInput";
 import { mudarAtributoBoletaAction } from "redux/actions/boletas/formInputActions";
@@ -12,12 +12,32 @@ interface Props {
   boletaType: string;
 }
 
-const InputGroupBoletaGraphic: React.FC<Props> = ({ boletaType, namespace, cv }) => {
+const InputGroupBoletaGraphic: React.FC<Props> = ({
+  boletaType,
+  namespace,
+  cv,
+}) => {
   const dispatch = useDispatchBoletas();
 
   const boletasState = useStateBoletas();
 
   const currentBoleta = boletasState[namespace];
+
+  const { dadosPesquisa } = currentBoleta;
+
+  const inputConfig = useMemo(() => {
+    const config = {
+      step: 0.01,
+      precision: 2,
+    };
+
+    if (dadosPesquisa.stepQtde === 0.01) {
+      config.step = 0.00001;
+      config.precision = 5;
+    }
+
+    return config;
+  }, [dadosPesquisa.stepQtde]);
 
   switch (boletaType) {
     case "graficoTipoAgendada":
@@ -25,7 +45,8 @@ const InputGroupBoletaGraphic: React.FC<Props> = ({ boletaType, namespace, cv })
         <div>
           <CustomInput
             type="preco"
-            step={0.01}
+            step={inputConfig.step}
+            precision={inputConfig.precision}
             className={`gainDisparo_Agendada ${boxShadowInput(
               "gainDisparo_Agendada",
             )}`}
@@ -39,7 +60,8 @@ const InputGroupBoletaGraphic: React.FC<Props> = ({ boletaType, namespace, cv })
           />
           <CustomInput
             type="preco"
-            step={0.01}
+            step={inputConfig.step}
+            precision={inputConfig.precision}
             className={`gainExec_Agendada ${boxShadowInput(
               "gainExec_Agendada",
             )}`}
@@ -51,7 +73,8 @@ const InputGroupBoletaGraphic: React.FC<Props> = ({ boletaType, namespace, cv })
           />
           <CustomInput
             type="preco"
-            step={0.01}
+            step={inputConfig.step}
+            precision={inputConfig.precision}
             className={`stopDisparo_Agendada ${boxShadowInput(
               "stopDisparo_Agendada",
             )}`}
@@ -65,7 +88,8 @@ const InputGroupBoletaGraphic: React.FC<Props> = ({ boletaType, namespace, cv })
           />
           <CustomInput
             type="preco"
-            step={0.01}
+            step={inputConfig.step}
+            precision={inputConfig.precision}
             className={`stopExec_Agendada ${boxShadowInput(
               "stopExec_Agendada",
             )}`}
@@ -82,7 +106,8 @@ const InputGroupBoletaGraphic: React.FC<Props> = ({ boletaType, namespace, cv })
         <div>
           <CustomInput
             type="preco"
-            step={0.01}
+            step={inputConfig.step}
+            precision={inputConfig.precision}
             className={`stopDisparo_Movel ${boxShadowInput(
               "stopDisparo_Movel",
             )}`}
@@ -96,7 +121,8 @@ const InputGroupBoletaGraphic: React.FC<Props> = ({ boletaType, namespace, cv })
           />
           <CustomInput
             type="preco"
-            step={0.01}
+            step={inputConfig.step}
+            precision={inputConfig.precision}
             className={`stopExec_Movel ${boxShadowInput("stopExec_Movel")}`}
             containerClassName={`StopExecGrafico_${cv} containerInputGrafico TamanhoInputGrafico_StartMovel`}
             value={currentBoleta.stopExec}
@@ -111,7 +137,8 @@ const InputGroupBoletaGraphic: React.FC<Props> = ({ boletaType, namespace, cv })
           />
           <CustomInput
             type="preco"
-            step={0.01}
+            step={inputConfig.step}
+            precision={inputConfig.precision}
             className={`inicioDisparo_Movel ${boxShadowInput(
               "inicioDisparo_Movel",
             )}`}
@@ -125,7 +152,8 @@ const InputGroupBoletaGraphic: React.FC<Props> = ({ boletaType, namespace, cv })
           />
           {/* <CustomInput
             type="preco"
-            step={0.01}
+            step={inputConfig.step}
+            precision={inputConfig.precision}
             id={`DisparoMaisAjusteGrafico_${cv}`}
             containerClassName="containerInputGrafico TamanhoInputGrafico_StartMovel"
             value={currentBoleta.disparoMaisAjuste}
@@ -140,7 +168,8 @@ const InputGroupBoletaGraphic: React.FC<Props> = ({ boletaType, namespace, cv })
 
           {/* <CustomInput
             type="preco"
-            step={0.01}
+            step={inputConfig.step}
+            precision={inputConfig.precision}
             id={`StopMais1AjusteGrafico_${cv}`}
             containerClassName="containerInputGrafico TamanhoInputGrafico_StartMovel"
             value={currentBoleta.stopMais1Ajuste}
@@ -154,7 +183,8 @@ const InputGroupBoletaGraphic: React.FC<Props> = ({ boletaType, namespace, cv })
           /> */}
           {/* <CustomInput
             type="preco"
-            step={0.01}
+            step={inputConfig.step}
+            precision={inputConfig.precision}
             id={`StopAnteriorAjusteGrafico_${cv}`}
             containerClassName="containerInputGrafico TamanhoInputGrafico_StartMovel"
             value={currentBoleta.stopAnteriorAjuste}
@@ -173,7 +203,8 @@ const InputGroupBoletaGraphic: React.FC<Props> = ({ boletaType, namespace, cv })
         <div>
           <CustomInput
             type="preco"
-            step={0.01}
+            step={inputConfig.step}
+            precision={inputConfig.precision}
             containerClassName={`Reducao1Grafico_${cv} containerInputGrafico TamanhoInputGrafico_GainReducao`}
             value={currentBoleta.reducao1}
             onChange={(valor) =>
@@ -183,7 +214,8 @@ const InputGroupBoletaGraphic: React.FC<Props> = ({ boletaType, namespace, cv })
 
           <CustomInput
             type="preco"
-            step={0.01}
+            step={inputConfig.step}
+            precision={inputConfig.precision}
             containerClassName={`Reducao2Grafico_${cv} containerInputGrafico TamanhoInputGrafico_GainReducao`}
             value={currentBoleta.reducao2}
             onChange={(valor) =>
@@ -193,7 +225,8 @@ const InputGroupBoletaGraphic: React.FC<Props> = ({ boletaType, namespace, cv })
 
           <CustomInput
             type="preco"
-            step={0.01}
+            step={inputConfig.step}
+            precision={inputConfig.precision}
             className={`GainGrafico_${cv}`}
             containerClassName={`GainGrafico_${cv} containerInputGrafico TamanhoInputGrafico_GainReducao`}
             value={currentBoleta.gain}

@@ -2,7 +2,7 @@ import { BoletaNamespace } from "constants/ActionTypes";
 import useDispatchBoletas from "hooks/useDispatchBoletas";
 import useStateBoletas from "hooks/useStateBoletas";
 import { MDBIcon } from "mdbreact";
-import React from "react";
+import React, { useMemo } from "react";
 import { Button, Col, Row, Form } from "react-bootstrap";
 import { mostrarErroQtdeOnBlurAction } from "redux/actions/boletas/bookOfertaActions";
 import {
@@ -23,6 +23,32 @@ const InputGroupGainReducao: React.FC<Props> = ({ namespace }) => {
 
   const currentBoleta = boletasState[namespace];
 
+  const { dadosPesquisa } = currentBoleta;
+
+  const priceInputConfig = useMemo(() => {
+    const config = {
+      step: 0.01,
+      precision: 2,
+    };
+
+    if (dadosPesquisa.stepQtde === 0.01) {
+      config.step = 0.00001;
+      config.precision = 5;
+    }
+
+    return config;
+  }, [dadosPesquisa.stepQtde]);
+
+  const typeInputQtty = useMemo(() => {
+    let inputType: "preco" | "quantidade" = "quantidade";
+
+    if (dadosPesquisa.stepQtde === 0.01) {
+      inputType = "preco";
+    }
+
+    return inputType;
+  }, [dadosPesquisa.stepQtde]);
+
   return (
     <div>
       <Row>
@@ -31,7 +57,8 @@ const InputGroupGainReducao: React.FC<Props> = ({ namespace }) => {
             <Form.Label>Disparo</Form.Label>
             <CustomInput
               type="preco"
-              step={0.01}
+              step={priceInputConfig.step}
+              precision={priceInputConfig.precision}
               value={currentBoleta.gainDisparo}
               onChange={(valor) =>
                 dispatch(
@@ -46,7 +73,8 @@ const InputGroupGainReducao: React.FC<Props> = ({ namespace }) => {
             <Form.Label>Execução</Form.Label>
             <CustomInput
               type="preco"
-              step={0.01}
+              step={priceInputConfig.step}
+              precision={priceInputConfig.precision}
               value={currentBoleta.gainExec}
               onChange={(valor) =>
                 dispatch(
@@ -60,8 +88,8 @@ const InputGroupGainReducao: React.FC<Props> = ({ namespace }) => {
           <Form.Group>
             <Form.Label>Qtde</Form.Label>
             <CustomInput
-              type="quantidade"
-              step={100}
+              type={typeInputQtty}
+              step={dadosPesquisa.stepQtde}
               value={currentBoleta.qtde}
               onChange={(valor) => dispatch(mudarQtdAction(valor, namespace))}
               onBlur={() =>

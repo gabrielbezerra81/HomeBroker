@@ -21,6 +21,22 @@ const InputGroupGraphicConfigStartStop: React.FC<Props> = ({
 
   const currentBoleta = boletasState[namespace];
 
+  const { dadosPesquisa } = currentBoleta;
+
+  const inputConfig = useMemo(() => {
+    const config = {
+      step: 0.01,
+      precision: 2,
+    };
+
+    if (dadosPesquisa.stepQtde === 0.01) {
+      config.step = 0.00001;
+      config.precision = 5;
+    }
+
+    return config;
+  }, [dadosPesquisa.stepQtde]);
+
   const positionClass = useMemo(() => {
     if (cv === "compra") {
       return "";
@@ -33,7 +49,8 @@ const InputGroupGraphicConfigStartStop: React.FC<Props> = ({
     <div>
       <CustomInput
         type="preco"
-        step={0.01}
+        step={inputConfig.step}
+        precision={inputConfig.precision}
         containerClassName={`containerInputGrafico GainDisparoGrafico_CONFIGURAR${positionClass}`}
         value={currentBoleta.gainDisparoConfig1}
         onChange={(valor) =>
@@ -45,7 +62,8 @@ const InputGroupGraphicConfigStartStop: React.FC<Props> = ({
       />
       <CustomInput
         type="preco"
-        step={0.01}
+        step={inputConfig.step}
+        precision={inputConfig.precision}
         containerClassName={`containerInputGrafico GainExecGrafico_CONFIGURAR${positionClass}`}
         value={currentBoleta.gainExecConfig1}
         onChange={(valor) =>
@@ -62,7 +80,8 @@ const InputGroupGraphicConfigStartStop: React.FC<Props> = ({
     <div>
       <CustomInput
         type="preco"
-        step={0.01}
+        step={inputConfig.step}
+        precision={inputConfig.precision}
         containerClassName={`containerInputGrafico StopDisparoGrafico_CONFIGURAR${positionClass}`}
         value={currentBoleta.stopDisparoConfig1}
         onChange={(valor) =>
@@ -74,7 +93,8 @@ const InputGroupGraphicConfigStartStop: React.FC<Props> = ({
       />
       <CustomInput
         type="preco"
-        step={0.01}
+        step={inputConfig.step}
+        precision={inputConfig.precision}
         containerClassName={`containerInputGrafico StopExecGrafico_CONFIGURAR${positionClass}`}
         value={currentBoleta.stopExecConfig1}
         onChange={(valor) =>
@@ -91,7 +111,8 @@ const InputGroupGraphicConfigStartStop: React.FC<Props> = ({
     <div>
       <CustomInput
         type="preco"
-        step={0.01}
+        step={inputConfig.step}
+        precision={inputConfig.precision}
         containerClassName={`containerInputGrafico GainDisparoGrafico2_CONFIGURAR${positionClass}`}
         value={currentBoleta.gainDisparoConfig2}
         onChange={(valor) =>
@@ -103,7 +124,8 @@ const InputGroupGraphicConfigStartStop: React.FC<Props> = ({
       />
       <CustomInput
         type="preco"
-        step={0.01}
+        step={inputConfig.step}
+        precision={inputConfig.precision}
         containerClassName={`containerInputGrafico GainExecGrafico2_CONFIGURAR${positionClass}`}
         value={currentBoleta.gainExecConfig2}
         onChange={(valor) =>
@@ -120,7 +142,8 @@ const InputGroupGraphicConfigStartStop: React.FC<Props> = ({
     <div>
       <CustomInput
         type="preco"
-        step={0.01}
+        step={inputConfig.step}
+        precision={inputConfig.precision}
         containerClassName={`containerInputGrafico StopDisparoGrafico2_CONFIGURAR${positionClass}`}
         value={currentBoleta.stopDisparoConfig2}
         onChange={(valor) =>
@@ -132,7 +155,8 @@ const InputGroupGraphicConfigStartStop: React.FC<Props> = ({
       />
       <CustomInput
         type="preco"
-        step={0.01}
+        step={inputConfig.step}
+        precision={inputConfig.precision}
         containerClassName={`containerInputGrafico StopExecGrafico2_CONFIGURAR${positionClass}`}
         value={currentBoleta.stopExecConfig2}
         onChange={(valor) =>

@@ -28,30 +28,39 @@ import { BoletasState } from "redux/reducers";
 import BoletasOrderType from "types/boletasOrderType";
 import InputGroupBoleta from "shared/componentes/InternalForm/InputGroupBoleta";
 
-class FormInternoCompraLimitada extends React.Component<Props> {
-  // componentDidUpdate(prevProps) {
-  //   const prevStepQtde = prevProps.dadosPesquisa.stepQtde;
-  //   const stepQtde = this.props.dadosPesquisa.stepQtde;
+interface State {
+  priceStep: number;
+  pricePrecision: number;
+}
 
-  //   if (prevStepQtde !== stepQtde && stepQtde === 100) {
-  //     this.props.mudarAtributoBoletaAction(
-  //       Number(this.props.preco).toFixed(2),
-  //       COMPRA_LIMITADA_NAMESPACE,
-  //       "preco"
-  //     );
-  //   }
-  // }
+class FormInternoCompraLimitada extends React.Component<Props, State> {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      priceStep: 0.01,
+      pricePrecision: 2,
+    };
+  }
+
+  componentDidUpdate(prevProps: any) {
+    const { dadosPesquisa } = this.props;
+    if (prevProps.dadosPesquisa.stepQtde !== dadosPesquisa.stepQtde) {
+      let step = 0.01;
+      let precision = 2;
+
+      if (dadosPesquisa.stepQtde === 0.01) {
+        step = 0.00001;
+        precision = 5;
+      }
+
+      this.setState({ priceStep: step, pricePrecision: precision });
+    }
+  }
 
   render() {
-    const { dadosPesquisa } = this.props;
+    const { priceStep, pricePrecision } = this.state;
 
-    const { stepQtde } = dadosPesquisa;
-    let stepPreco = 0.01,
-      precisao = 2;
-    if (stepQtde === 0.01) {
-      stepPreco = 0.00001;
-      precisao = 5;
-    }
     return (
       <Col className="colFormInterno">
         <div className="divAsModalContainer">
@@ -67,9 +76,9 @@ class FormInternoCompraLimitada extends React.Component<Props> {
                   <Form.Label />
                   <CustomInput
                     type="preco"
-                    step={stepPreco}
+                    step={priceStep}
                     id="compralim"
-                    precision={precisao}
+                    precision={pricePrecision}
                     value={this.props.preco}
                     onChange={(valor: number | string) =>
                       this.props.mudarAtributoBoletaAction(

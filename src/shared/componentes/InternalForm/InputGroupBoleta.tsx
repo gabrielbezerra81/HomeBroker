@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Row, Col, Form } from "react-bootstrap";
 import CustomInput, { boxShadowInput } from "shared/componentes/CustomInput";
 import { mudarAtributoBoletaAction } from "redux/actions/boletas/formInputActions";
@@ -30,6 +30,22 @@ const InputGroupBoleta: React.FC<Props> = ({
 
   const currentBoleta = boletasState[namespace];
 
+  const { dadosPesquisa } = currentBoleta;
+
+  const priceInputConfig = useMemo(() => {
+    const config = {
+      step: 0.01,
+      precision: 2,
+    };
+
+    if (dadosPesquisa.stepQtde === 0.01) {
+      config.step = 0.00001;
+      config.precision = 5;
+    }
+
+    return config;
+  }, [dadosPesquisa.stepQtde]);
+
   const rowGain = (
     <Row>
       <Col md={2} className="colLabelInput">
@@ -48,7 +64,8 @@ const InputGroupBoleta: React.FC<Props> = ({
             className={`gainDisparo_Agendada ${boxShadowInput(
               "gainDisparo_Agendada",
             )}`}
-            step={0.01}
+            step={priceInputConfig.step}
+            precision={priceInputConfig.precision}
             value={currentBoleta.gainDisparo}
             onChange={(valor) =>
               dispatch(
@@ -63,7 +80,8 @@ const InputGroupBoleta: React.FC<Props> = ({
           <Form.Label>Execução</Form.Label>
           <CustomInput
             type="preco"
-            step={0.01}
+            step={priceInputConfig.step}
+            precision={priceInputConfig.precision}
             className={`gainExec_Agendada ${boxShadowInput(
               "gainExec_Agendada",
             )}`}
@@ -93,7 +111,8 @@ const InputGroupBoleta: React.FC<Props> = ({
             className={`stopDisparo_Agendada ${boxShadowInput(
               "stopDisparo_Agendada",
             )}`}
-            step={0.01}
+            step={priceInputConfig.step}
+            precision={priceInputConfig.precision}
             value={currentBoleta.stopDisparo}
             onChange={(valor) =>
               dispatch(
@@ -111,7 +130,8 @@ const InputGroupBoleta: React.FC<Props> = ({
             className={`stopExec_Agendada ${boxShadowInput(
               "stopExec_Agendada",
             )}`}
-            step={0.01}
+            step={priceInputConfig.step}
+            precision={priceInputConfig.precision}
             value={currentBoleta.stopExec}
             onChange={(valor) =>
               dispatch(mudarAtributoBoletaAction(valor, namespace, "stopExec"))

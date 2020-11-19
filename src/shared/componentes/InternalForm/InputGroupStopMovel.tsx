@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 import { BoletaNamespace } from "constants/ActionTypes";
 import useDispatchBoletas from "hooks/useDispatchBoletas";
@@ -18,6 +18,22 @@ const InputGroupStopMovel: React.FC<Props> = ({ namespace }) => {
 
   const currentBoleta = boletasState[namespace];
 
+  const { dadosPesquisa } = currentBoleta;
+
+  const priceInputConfig = useMemo(() => {
+    const config = {
+      step: 0.01,
+      precision: 2,
+    };
+
+    if (dadosPesquisa.stepQtde === 0.01) {
+      config.step = 0.00001;
+      config.precision = 5;
+    }
+
+    return config;
+  }, [dadosPesquisa.stepQtde]);
+
   return (
     <div>
       <Row>
@@ -29,7 +45,8 @@ const InputGroupStopMovel: React.FC<Props> = ({ namespace }) => {
             <Form.Label>Disparo</Form.Label>
             <CustomInput
               type="preco"
-              step={0.01}
+              step={priceInputConfig.step}
+              precision={priceInputConfig.precision}
               className={`inicioDisparo_Movel ${boxShadowInput(
                 "inicioDisparo_Movel",
               )}`}
@@ -47,7 +64,8 @@ const InputGroupStopMovel: React.FC<Props> = ({ namespace }) => {
             <Form.Label>Ajuste padrão</Form.Label>
             <CustomInput
               type="preco"
-              step={0.01}
+              step={priceInputConfig.step}
+              precision={priceInputConfig.precision}
               value={currentBoleta.ajustePadrao}
               onChange={(valor) =>
                 dispatch(
@@ -68,7 +86,8 @@ const InputGroupStopMovel: React.FC<Props> = ({ namespace }) => {
             <Form.Label>Disparo</Form.Label>
             <CustomInput
               type="preco"
-              step={0.01}
+              step={priceInputConfig.step}
+              precision={priceInputConfig.precision}
               className={`stopDisparo_Movel ${boxShadowInput(
                 "stopDisparo_Movel",
               )}`}
@@ -87,7 +106,8 @@ const InputGroupStopMovel: React.FC<Props> = ({ namespace }) => {
             <CustomInput
               type="preco"
               className={`stopExec_Movel ${boxShadowInput("stopExec_Movel")}`}
-              step={0.01}
+              step={priceInputConfig.step}
+              precision={priceInputConfig.precision}
               value={currentBoleta.stopExec}
               onChange={(valor) =>
                 dispatch(
