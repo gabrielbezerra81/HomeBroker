@@ -527,3 +527,32 @@ export const cloneMultilegTabs = (multilegTabs: MultilegTab[]) =>
 
 export const cloneMultilegQuotes = (multilegQuotes: MultilegQuote[]) =>
   multilegQuotes.map((quote) => ({ ...quote }));
+
+export const updateMultilegPriceAction = (
+  tabIndex: number,
+): MainThunkAction => {
+  return (dispatch, getState) => {
+    const {
+      multilegReducer: { multileg, cotacoesMultileg },
+    } = getState();
+
+    const tab = multileg[tabIndex];
+    const price = tab.preco;
+
+    let newPrice = calculoPreco(tab, "ultimo", cotacoesMultileg).toFixed(2);
+    newPrice = formatarNumero(newPrice, 2, ".", ",");
+
+    // console.log("preco antigo", preco);
+    // console.log("preco atual", novoPreco);
+
+    if (price !== newPrice && !Number.isNaN(newPrice)) {
+      dispatch(
+        updateMultilegTabAction({
+          tabIndex,
+          attributeName: "preco",
+          attributeValue: newPrice,
+        }),
+      );
+    }
+  };
+};
