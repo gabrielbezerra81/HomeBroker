@@ -68,6 +68,7 @@ const multileg = {
       param: "Bid",
       comment: "",
       selectedStrategy: 1,
+      market: "",
     },
   ],
   cotacoesMultileg: [],

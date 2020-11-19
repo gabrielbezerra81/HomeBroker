@@ -35,6 +35,7 @@ const INITIAL_STATE: MultilegState = {
       param: "Bid",
       comment: "",
       selectedStrategy: 1,
+      market: "",
     },
   ],
   esource_multilegQuotes: null,

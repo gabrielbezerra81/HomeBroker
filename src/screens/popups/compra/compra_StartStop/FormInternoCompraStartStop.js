@@ -22,8 +22,8 @@ import {
   enviarOrdemAction,
 } from "redux/actions/boletas/boletasAPIActions";
 import { mapStateToPropsConfigurarStop } from "screens/popups/compra/compra_StartStop/ConfigurarStop";
-import { RowGainStopFormInternoConectada } from "shared/componentes/RowInputsFormatadosFormInterno";
 import { BotaoEnviarOrdem } from "shared/componentes/BotaoEnviarOrdem";
+import InputGroupBoleta from "shared/componentes/InternalForm/InputGroupBoleta";
 
 class FormInternoCompraStartStop extends React.Component {
   render() {
@@ -33,11 +33,11 @@ class FormInternoCompraStartStop extends React.Component {
           <Form>
             {RowAtivoQtdeBoletas(this.props, COMPRA_STARTSTOP_NAMESPACE)}
           </Form>
-          <RowGainStopFormInternoConectada
+          <InputGroupBoleta
             namespace={COMPRA_STARTSTOP_NAMESPACE}
             cv="compra"
-            iconeConfigGain="compra_gainreducao"
-            iconeConfigStop="venda_stopmovel"
+            popupToOpenGain="compra_gainreducao"
+            popupToOpenStop="venda_stopmovel"
           />
 
           {RowFormValidade(this.props, COMPRA_STARTSTOP_NAMESPACE)}

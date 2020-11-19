@@ -23,8 +23,8 @@ import {
   enviarOrdemAction,
 } from "redux/actions/boletas/boletasAPIActions";
 import CustomInput from "shared/componentes/CustomInput";
-import { RowGainStopFormInternoConectada } from "shared/componentes/RowInputsFormatadosFormInterno";
 import { BotaoEnviarOrdem } from "shared/componentes/BotaoEnviarOrdem";
+import InputGroupBoleta from "shared/componentes/InternalForm/InputGroupBoleta";
 
 class FormInternoCompraAgendada extends React.Component {
   render() {
@@ -86,11 +86,11 @@ class FormInternoCompraAgendada extends React.Component {
             </Col>
           </Row>
 
-          <RowGainStopFormInternoConectada
+          <InputGroupBoleta
             namespace={COMPRA_AGENDADA_NAMESPACE}
             cv="compra"
-            iconeConfigGain="compra_gainreducao"
-            iconeConfigStop="venda_stopmovel"
+            popupToOpenGain="compra_gainreducao"
+            popupToOpenStop="venda_stopmovel"
           />
 
           {RowFormValidade(this.props, COMPRA_AGENDADA_NAMESPACE)}

@@ -408,7 +408,9 @@ export const addMultilegOffer = async ({
 
   if (!checkQuoteAlreadyAdded({ multilegQuotes, symbol: newSymbol })) {
     const symbolData = await pesquisarAtivoAPI(offer.codigoSelecionado);
-    if (symbolData) quote = Number(symbolData.cotacaoAtual);
+    if (symbolData) {
+      quote = Number(symbolData.cotacaoAtual);
+    }
   }
 
   AddNewMultilegQuote({
@@ -478,6 +480,7 @@ export const newMultilegTab: MultilegTab = {
   param: "Bid",
   comment: "",
   selectedStrategy: 1,
+  market: "",
 };
 
 const setOfferSymbolAndModel = (multilegOffer: MultilegOffer) => {

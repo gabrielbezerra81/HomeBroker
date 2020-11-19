@@ -11,7 +11,7 @@ import {
 } from "shared/componentes/TextoGraficoBoletas";
 import { COMPRA_AGENDADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalAgendada } from "shared/utils/CalculoValorTotal";
-import GraficoInputs from "shared/componentes/GraficoInputs";
+import InputGroupBoletaGraphic from "shared/componentes/BoletaGraphics/InputGroupBoletaGraphic";
 
 class GraficoCompraAgendada extends React.Component {
   render() {
@@ -19,9 +19,9 @@ class GraficoCompraAgendada extends React.Component {
       <Col className="colGrafico">
         <div className="imgContainer">
           <img src={img} className="imgChart" alt="" />
-          <GraficoInputs
+          <InputGroupBoletaGraphic
             namespace={COMPRA_AGENDADA_NAMESPACE}
-            tipoBoleta="graficoTipoAgendada"
+            boletaType="graficoTipoAgendada"
             cv="CA"
           />
           <Form.Control
@@ -42,18 +42,18 @@ class GraficoCompraAgendada extends React.Component {
             CalculoValorTotalAgendada(
               this.props.gainDisparo,
               this.props.gainExec,
-              this.props.qtde
+              this.props.qtde,
             ),
-            "ValorTotalGain"
+            "ValorTotalGain",
           )}
           {TextoValorTotalGrafico(
             "",
             CalculoValorTotalAgendada(
               this.props.stopDisparo,
               this.props.stopExec,
-              this.props.qtde
+              this.props.qtde,
             ),
-            "ValorTotalStop"
+            "ValorTotalStop",
           )}
           <IconeConfigGrafico
             className="ConfigGainGrafico_CA"

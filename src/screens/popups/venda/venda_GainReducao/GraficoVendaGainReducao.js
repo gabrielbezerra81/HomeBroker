@@ -7,7 +7,7 @@ import {
   TextoCotacaoAtualGrafico,
 } from "shared/componentes/TextoGraficoBoletas";
 import { VENDA_GAINREDUCAO_NAMESPACE } from "constants/ActionTypes";
-import GraficoInputs from "shared/componentes/GraficoInputs";
+import InputGroupBoletaGraphic from "shared/componentes/BoletaGraphics/InputGroupBoletaGraphic";
 
 class GraficoVendaGainReducao extends React.Component {
   render() {
@@ -16,9 +16,9 @@ class GraficoVendaGainReducao extends React.Component {
         <div className="imgContainer">
           <img src={img} className="imgChart" alt="" />
           <Form>
-            <GraficoInputs
+            <InputGroupBoletaGraphic
               namespace={VENDA_GAINREDUCAO_NAMESPACE}
-              tipoBoleta="tipoGainReducao"
+              boletaType="tipoGainReducao"
               cv="VGR"
             />
           </Form>

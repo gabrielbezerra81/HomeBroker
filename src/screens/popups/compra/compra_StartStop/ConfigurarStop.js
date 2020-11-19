@@ -13,7 +13,7 @@ import { mudarInputConfigAction } from "redux/actions/boletas/formInputActions";
 import { CalculoValorTotalAgendada } from "shared/utils/CalculoValorTotal";
 import { fecharFormConfigurarAction } from "redux/actions/GlobalAppActions";
 import { ModalHeaderClean } from "shared/componentes/PopupHeader";
-import GraficoInputsConfigStartStop from "shared/componentes/GraficoInputsConfigStartStop";
+import InputGroupGraphicConfigStartStop from "shared/componentes/BoletaGraphics/InputGroupGraphicConfigStartStop";
 
 class ConfigurarStop extends React.Component {
   render() {
@@ -73,10 +73,9 @@ const modalBody = (props) => (
       className="ConfigStop2Grafico_CONFIGURAR"
       name="venda_stopmovel"
     />
-    <GraficoInputsConfigStartStop
+    <InputGroupGraphicConfigStartStop
       namespace={COMPRA_STARTSTOP_NAMESPACE}
       cv="compra"
-      posicionamento=""
     />
     {LabelInputGrafico("Disparo", "TextoGainDisparo2_CONFIGURAR")}
     {LabelInputGrafico("Execução", "TextoGainExecucao2_CONFIGURAR")}

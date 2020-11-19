@@ -10,7 +10,7 @@ import {
   TextoMenorGrafico,
 } from "shared/componentes/TextoGraficoBoletas";
 import { COMPRA_STARTMOVEL_NAMESPACE } from "constants/ActionTypes";
-import GraficoInputs from "shared/componentes/GraficoInputs";
+import InputGroupBoletaGraphic from "shared/componentes/BoletaGraphics/InputGroupBoletaGraphic";
 
 class GraficoCompraStartMovel extends React.Component {
   render() {
@@ -20,16 +20,16 @@ class GraficoCompraStartMovel extends React.Component {
         <div className="imgContainer">
           <img src={img} className="imgChart" alt="" />
           <Form>
-            <GraficoInputs
+            <InputGroupBoletaGraphic
               namespace={COMPRA_STARTMOVEL_NAMESPACE}
-              tipoBoleta="tipoStartMovel"
+              boletaType="tipoStartMovel"
               cv="CSM"
             />
           </Form>
           {LabelInputGrafico("Disparo Móvel", "TextoGainDisparo_CSM")}
           {LabelInputGrafico(
             "Disparo Móvel - 1º ajuste",
-            "TextoDisparoMaisAjuste_CSM"
+            "TextoDisparoMaisAjuste_CSM",
           )}
           {LabelInputGrafico("Disparo Stop", "TextoStopDisparo_CSM")}
           {LabelInputGrafico("Execução", "TextoStopExecucao_CSM")}
@@ -41,11 +41,11 @@ class GraficoCompraStartMovel extends React.Component {
 
           {TextoMenorGrafico(
             "Stop - 1º ajuste",
-            "TextoMenorGrafico_Stop1ajuste_CSM"
+            "TextoMenorGrafico_Stop1ajuste_CSM",
           )}
           {TextoMenorGrafico(
             "Stop anterior - 2º ajuste",
-            "TextoMenorGrafico_StopAnterior_CSM"
+            "TextoMenorGrafico_StopAnterior_CSM",
           )}
           {TextoMenorGrafico("1º Ajuste", "TextoMenorGrafico_Ajuste1_CSM")}
           {TextoMenorGrafico("2º Ajuste", "TextoMenorGrafico_Ajuste2_CSM")}
@@ -88,29 +88,29 @@ const renderTextos = (props) => {
   if (linha1) {
     ajuste1 = TextoMenorGrafico(
       Number(linha1.ajuste).toFixed(2),
-      "ValorAjuste1Grafico_CSM"
+      "ValorAjuste1Grafico_CSM",
     );
     ajuste3 = TextoMenorGrafico(
       Number(linha1.ajuste).toFixed(2),
-      "ValorAjuste3Grafico_CSM"
+      "ValorAjuste3Grafico_CSM",
     );
     stopMais1Ajuste = TextoMenorGrafico(
       Number(linha1.novoStop).toFixed(2),
-      "StopMais1AjusteGrafico_CSM"
+      "StopMais1AjusteGrafico_CSM",
     );
     disparoMaisAjuste = TextoMenorGrafico(
       Number(props.inicioDisparo - linha1.ajuste).toFixed(2),
-      "DisparoMaisAjusteGrafico_CSM"
+      "DisparoMaisAjusteGrafico_CSM",
     );
   }
   if (linha2) {
     ajuste2 = TextoMenorGrafico(
       Number(linha2.ajuste).toFixed(2),
-      "ValorAjuste2Grafico_CSM"
+      "ValorAjuste2Grafico_CSM",
     );
     stopAnteriorAjuste = TextoMenorGrafico(
       Number(linha2.novoStop).toFixed(2),
-      "StopAnteriorAjusteGrafico_CSM"
+      "StopAnteriorAjusteGrafico_CSM",
     );
   }
 

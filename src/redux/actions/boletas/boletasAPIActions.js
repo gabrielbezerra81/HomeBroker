@@ -10,7 +10,6 @@ import {
 } from "shared/utils/MontarOrdens";
 import {
   ATUALIZAR_EVENT_SOURCE_BOLETAS,
-  MUDAR_QTDE,
   UPDATE_MANY_BOLETA,
 } from "constants/ActionTypes";
 import { mudarAtributoBoletaAction } from "redux/actions/boletas/formInputActions";
@@ -23,7 +22,7 @@ export const pesquisarAtivoOnEnterAction = (namespace) => {
   return async (dispatch, getState) => {
     const appBoletasState = getState();
 
-    const { ativo, qtde } = appBoletasState[namespace];
+    const { ativo } = appBoletasState[namespace];
 
     dispatch(mudarAtributoBoletaAction(true, namespace, "pesquisandoAtivo"));
 
@@ -34,14 +33,15 @@ export const pesquisarAtivoOnEnterAction = (namespace) => {
         type: `${PESQUISAR_ATIVO_BOLETA_API}${namespace}`,
         payload: dadosPesquisa,
       });
-      const newQtde = mudarTipoInputQtde(dadosPesquisa, qtde);
-      dispatch({
-        type: `${MUDAR_QTDE}${namespace}`,
-        payload: {
-          qtde: newQtde,
-          erro: "",
-        },
-      });
+      // TODO: Incluir essa validação dentro do input
+      // const newQtde = mudarTipoInputQtde(dadosPesquisa, qtde);
+      // dispatch({
+      //   type: `${MUDAR_QTDE}${namespace}`,
+      //   payload: {
+      //     qtde: newQtde,
+      //     erro: "",
+      //   },
+      // });
 
       dispatch(mudarAtributoBoletaAction(false, namespace, "pesquisandoAtivo"));
     }
@@ -105,13 +105,6 @@ export const enviarOrdemAction = (props, selectedAccount) => {
       }
     }
   };
-};
-
-const mudarTipoInputQtde = (dadosPesquisa, qtde) => {
-  let novaQtde = qtde;
-  if (dadosPesquisa.stepQtde === 0.01) novaQtde = novaQtde * 1;
-  else novaQtde = Math.floor(novaQtde);
-  return novaQtde;
 };
 
 export const startProactiveBoletaQuoteUpdateAction = (namespace) => {

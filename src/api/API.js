@@ -196,9 +196,11 @@ export const pesquisarAtivoMultilegAPI = async (codigo_ativo) => {
         variacao: 0,
         cotacaoAtual: 0,
         ativoPrincipal: "",
+        market: "",
       };
 
       const { data } = response;
+
       dados.opcoes = [...data.options];
       dados.vencimentos = [...data.expirations];
       dados.ativoPrincipal = data.stock.symbol;
@@ -206,6 +208,8 @@ export const pesquisarAtivoMultilegAPI = async (codigo_ativo) => {
       const { data: quoteData } = await api.get(
         `${url_pesquisarAtivoBoletas_codigo}${codigo_ativo}`,
       );
+
+      dados.market = quoteData.stock.market;
 
       if (quoteData) {
         dados.cotacaoAtual = Number(quoteData.ultimo || 0);

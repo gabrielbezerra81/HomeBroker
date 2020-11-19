@@ -108,6 +108,7 @@ export const searchMultilegSymbolData = async ({
       symbolIsOption,
     });
     multilegTab.ativoAtual = data.ativoPrincipal;
+    multilegTab.market = data.market;
   }
 
   return { multilegTabs: updatedMultilegTabs, multilegQuotes };

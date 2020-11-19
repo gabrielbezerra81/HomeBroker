@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo } from "react";
-import { Row, Col, Button, Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { createMultilegAlertAction } from "redux/actions/multileg/MultilegAPIAction";

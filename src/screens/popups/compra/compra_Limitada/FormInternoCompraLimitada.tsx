@@ -23,10 +23,10 @@ import {
   enviarOrdemAction,
 } from "redux/actions/boletas/boletasAPIActions";
 import CustomInput from "shared/componentes/CustomInput";
-import { RowGainStopFormInternoConectada } from "shared/componentes/RowInputsFormatadosFormInterno";
 import { BotaoEnviarOrdem } from "shared/componentes/BotaoEnviarOrdem";
 import { BoletasState } from "redux/reducers";
 import BoletasOrderType from "types/boletasOrderType";
+import InputGroupBoleta from "shared/componentes/InternalForm/InputGroupBoleta";
 
 class FormInternoCompraLimitada extends React.Component<Props> {
   // componentDidUpdate(prevProps) {
@@ -89,11 +89,11 @@ class FormInternoCompraLimitada extends React.Component<Props> {
             </Row>
           </Form>
 
-          <RowGainStopFormInternoConectada
+          <InputGroupBoleta
             namespace={COMPRA_LIMITADA_NAMESPACE}
             cv="compra"
-            iconeConfigGain="compra_gainreducao"
-            iconeConfigStop="venda_stopmovel"
+            popupToOpenGain="compra_gainreducao"
+            popupToOpenStop="venda_stopmovel"
           />
 
           {RowFormValidade(this.props, COMPRA_LIMITADA_NAMESPACE)}

@@ -11,7 +11,7 @@ import {
 } from "shared/componentes/TextoGraficoBoletas";
 import { COMPRA_LIMITADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalAgendada } from "shared/utils/CalculoValorTotal";
-import GraficoInputs from "shared/componentes/GraficoInputs";
+import InputGroupBoletaGraphic from "shared/componentes/BoletaGraphics/InputGroupBoletaGraphic";
 import { BoletasState } from "redux/reducers";
 
 class GraficoCompraLimitada extends React.Component<PropsFromRedux> {
@@ -21,9 +21,9 @@ class GraficoCompraLimitada extends React.Component<PropsFromRedux> {
         <div className="imgContainer">
           <img src={img} className="imgChart" alt="" />
           <Form>
-            <GraficoInputs
+            <InputGroupBoletaGraphic
               namespace={COMPRA_LIMITADA_NAMESPACE}
-              tipoBoleta="graficoTipoAgendada"
+              boletaType="graficoTipoAgendada"
               cv="CA"
             />
             <Form.Control
@@ -44,18 +44,18 @@ class GraficoCompraLimitada extends React.Component<PropsFromRedux> {
             CalculoValorTotalAgendada(
               this.props.gainDisparo,
               this.props.gainExec,
-              this.props.qtde
+              this.props.qtde,
             ),
-            "ValorTotalGain"
+            "ValorTotalGain",
           )}
           {TextoValorTotalGrafico(
             "",
             CalculoValorTotalAgendada(
               this.props.stopDisparo,
               this.props.stopExec,
-              this.props.qtde
+              this.props.qtde,
             ),
-            "ValorTotalStop"
+            "ValorTotalStop",
           )}
           <IconeConfigGrafico
             className="ConfigGainGrafico_CA"

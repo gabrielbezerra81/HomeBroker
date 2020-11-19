@@ -10,7 +10,6 @@ import {
   mudarAtivoAction,
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction,
-  adicionarItemTabelaGainReducaoAction,
 } from "redux/actions/boletas/formInputActions";
 import RowFormValidade from "shared/componentes/RowFormValidade";
 import RowFormAssinatura from "shared/componentes/RowFormAssinatura";
@@ -18,8 +17,8 @@ import { COMPRA_GAINREDUCAO_NAMESPACE } from "constants/ActionTypes";
 import TabelaGainReducao from "./TabelaGainReducao";
 import { compraGainReducaoAction } from "redux/actions/boletas/AppBoletasActions";
 import { pesquisarAtivoOnEnterAction } from "redux/actions/boletas/boletasAPIActions";
-import { RowInputsGainReducaoConectada } from "shared/componentes/RowInputsFormatadosFormInterno";
 import { BotaoEnviarOrdem } from "shared/componentes/BotaoEnviarOrdem";
+import InputGroupGainReducao from "shared/componentes/InternalForm/InputGroupGainReducao";
 
 class FormInternoCompraGainReducao extends React.Component {
   render() {
@@ -34,9 +33,7 @@ class FormInternoCompraGainReducao extends React.Component {
             </Col>
           </Row>
           <Form className="item">
-            <RowInputsGainReducaoConectada
-              namespace={COMPRA_GAINREDUCAO_NAMESPACE}
-            />
+            <InputGroupGainReducao namespace={COMPRA_GAINREDUCAO_NAMESPACE} />
           </Form>
           {RowFormValidade(this.props, COMPRA_GAINREDUCAO_NAMESPACE)}
 
@@ -99,7 +96,6 @@ export default connect(mapStateToProps, {
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction,
   mostrarErroQtdeOnBlurAction,
-  adicionarItemTabelaGainReducaoAction,
   compraGainReducaoAction,
   pesquisarAtivoOnEnterAction,
 })(FormInternoCompraGainReducao);

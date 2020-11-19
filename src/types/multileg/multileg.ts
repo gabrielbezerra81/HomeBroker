@@ -2,6 +2,7 @@ export interface MultilegTab {
   nomeAba: string;
   ativo: string;
   ativoAtual: string;
+  market: string;
   variacao: number;
   opcoes: Array<MultilegOption>;
   codigoAberto: boolean;

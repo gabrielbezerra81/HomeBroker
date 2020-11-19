@@ -10,15 +10,14 @@ import {
   mudarAtivoAction,
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction,
-  adicionarItemTabelaGainReducaoAction,
 } from "redux/actions/boletas/formInputActions";
 import RowFormValidade from "shared/componentes/RowFormValidade";
 import RowFormAssinatura from "shared/componentes/RowFormAssinatura";
 import { VENDA_GAINREDUCAO_NAMESPACE } from "constants/ActionTypes";
 import TabelaGainReducao from "./TabelaGainReducao";
 import { pesquisarAtivoOnEnterAction } from "redux/actions/boletas/boletasAPIActions";
-import { RowInputsGainReducaoConectada } from "shared/componentes/RowInputsFormatadosFormInterno";
 import { BotaoEnviarOrdem } from "shared/componentes/BotaoEnviarOrdem";
+import InputGroupGainReducao from "shared/componentes/InternalForm/InputGroupGainReducao";
 
 class FormInternoVendaGainReducao extends React.Component {
   render() {
@@ -33,9 +32,7 @@ class FormInternoVendaGainReducao extends React.Component {
             </Col>
           </Row>
           <Form className="item">
-            <RowInputsGainReducaoConectada
-              namespace={VENDA_GAINREDUCAO_NAMESPACE}
-            />
+            <InputGroupGainReducao namespace={VENDA_GAINREDUCAO_NAMESPACE} />
           </Form>
           {RowFormValidade(this.props, VENDA_GAINREDUCAO_NAMESPACE)}
 
@@ -95,6 +92,5 @@ export default connect(mapStateToProps, {
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction,
   mostrarErroQtdeOnBlurAction,
-  adicionarItemTabelaGainReducaoAction,
   pesquisarAtivoOnEnterAction,
 })(FormInternoVendaGainReducao);

@@ -22,22 +22,23 @@ import {
   enviarOrdemAction,
 } from "redux/actions/boletas/boletasAPIActions";
 import CustomInput from "shared/componentes/CustomInput";
-import { RowGainStopFormInternoConectada } from "shared/componentes/RowInputsFormatadosFormInterno";
 import { BotaoEnviarOrdem } from "shared/componentes/BotaoEnviarOrdem";
+import InputGroupBoleta from "shared/componentes/InternalForm/InputGroupBoleta";
 
 class FormInternoVendaLimitada extends React.Component {
-  componentDidUpdate(prevProps) {
-    const prevStepQtde = prevProps.dadosPesquisa.stepQtde;
-    const stepQtde = this.props.dadosPesquisa.stepQtde;
+  // componentDidUpdate(prevProps) {
+  //   const prevStepQtde = prevProps.dadosPesquisa.stepQtde;
+  //   const stepQtde = this.props.dadosPesquisa.stepQtde;
 
-    if (prevStepQtde !== stepQtde && stepQtde === 100) {
-      this.props.mudarAtributoBoletaAction(
-        Number(this.props.preco).toFixed(2),
-        VENDA_LIMITADA_NAMESPACE,
-        "preco",
-      );
-    }
-  }
+  //   if (prevStepQtde !== stepQtde && stepQtde === 100) {
+  //     this.props.mudarAtributoBoletaAction(
+  //       Number(this.props.preco).toFixed(2),
+  //       VENDA_LIMITADA_NAMESPACE,
+  //       "preco",
+  //     );
+  //   }
+  // }
+
   render() {
     const { dadosPesquisa } = this.props;
     const { stepQtde } = dadosPesquisa;
@@ -84,11 +85,11 @@ class FormInternoVendaLimitada extends React.Component {
             </Row>
           </Form>
 
-          <RowGainStopFormInternoConectada
+          <InputGroupBoleta
             namespace={VENDA_LIMITADA_NAMESPACE}
             cv="venda"
-            iconeConfigGain="venda_gainreducao"
-            iconeConfigStop="venda_stopmovel"
+            popupToOpenGain="venda_gainreducao"
+            popupToOpenStop="venda_stopmovel"
           />
 
           {RowFormValidade(this.props, VENDA_LIMITADA_NAMESPACE)}

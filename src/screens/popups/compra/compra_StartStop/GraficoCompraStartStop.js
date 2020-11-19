@@ -12,7 +12,7 @@ import {
 import { COMPRA_STARTSTOP_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalAgendada } from "shared/utils/CalculoValorTotal";
 import { abrirFormConfigurarAction } from "redux/actions/GlobalAppActions";
-import GraficoInputs from "shared/componentes/GraficoInputs";
+import InputGroupBoletaGraphic from "shared/componentes/BoletaGraphics/InputGroupBoletaGraphic";
 
 class GraficoCompraStartStop extends React.Component {
   render() {
@@ -21,9 +21,9 @@ class GraficoCompraStartStop extends React.Component {
         <div className="imgContainer">
           <img src={graficoCompraStartStop} className="imgChart" alt="" />
           <Form>
-            <GraficoInputs
+            <InputGroupBoletaGraphic
               namespace={COMPRA_STARTSTOP_NAMESPACE}
-              tipoBoleta="graficoTipoAgendada"
+              boletaType="graficoTipoAgendada"
               cv="CA"
             />
             <Form.Control
@@ -52,18 +52,18 @@ class GraficoCompraStartStop extends React.Component {
             CalculoValorTotalAgendada(
               this.props.gainDisparo,
               this.props.gainExec,
-              this.props.qtde
+              this.props.qtde,
             ),
-            "ValorTotalGain"
+            "ValorTotalGain",
           )}
           {TextoValorTotalGrafico(
             "",
             CalculoValorTotalAgendada(
               this.props.stopDisparo,
               this.props.stopExec,
-              this.props.qtde
+              this.props.qtde,
             ),
-            "ValorTotalStop"
+            "ValorTotalStop",
           )}
         </div>
       </Col>

@@ -80,22 +80,27 @@ export const mudarCheckSalvarAssinaturaAction = (checked, namespace) => {
   };
 };
 
-export const adicionarItemTabelaGainReducaoAction = (props, namespace) => {
-  const { gainDisparo, gainExec, qtde } = props[props.namespace];
+export const adicionarItemTabelaGainReducaoAction = (namespace) => {
+  return (dispatch, getState) => {
+    const boletasState = getState();
 
-  let total = Number(qtde) * Number(gainExec);
-  if (gainExec === "0.00" || gainExec === "" || gainExec === "0") {
-    total = Number(qtde) * Number(gainDisparo);
-  }
-  const itemTabela = {
-    disparo: Number(gainDisparo),
-    execucao: Number(gainExec),
-    qtde: parseInt(qtde),
-    total: total,
-  };
-  let tabelaGainReducao = [...props[props.namespace].tabelaGainReducao];
-  tabelaGainReducao.push(itemTabela);
-  return (dispatch) => {
+    const currentBoleta = boletasState[namespace];
+
+    const { gainDisparo, gainExec, qtde } = currentBoleta;
+
+    let total = Number(qtde) * Number(gainExec);
+    if (gainExec === "0.00" || gainExec === "" || gainExec === "0") {
+      total = Number(qtde) * Number(gainDisparo);
+    }
+    const itemTabela = {
+      disparo: Number(gainDisparo),
+      execucao: Number(gainExec),
+      qtde: parseInt(qtde),
+      total: total,
+    };
+    let tabelaGainReducao = [...currentBoleta.tabelaGainReducao];
+    tabelaGainReducao.push(itemTabela);
+
     dispatch({
       type: `${ADICIONAR_ITEM_TABELA_REDUCAO}${namespace}`,
       payload: tabelaGainReducao,

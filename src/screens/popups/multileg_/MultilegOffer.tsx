@@ -38,7 +38,7 @@ const MultilegOfferItem: React.FC<MultilegOfferProps> = ({
   const dispatch = useDispatchStorePrincipal();
 
   const {
-    multilegReducer: { cotacoesMultileg },
+    multilegReducer: { cotacoesMultileg, multileg },
   } = useStateStorePrincipal();
 
   const [isOpenCodeDropdown, setIsOpenCodeDropdown] = useState(false);
@@ -81,6 +81,20 @@ const MultilegOfferItem: React.FC<MultilegOfferProps> = ({
     return offer.ativoAtual !== offer.codigoSelecionado;
   }, [offer.ativoAtual, offer.codigoSelecionado]);
 
+  const qttyInputConfig = useMemo(() => {
+    const config = {
+      step: 100,
+      type: "quantidade",
+    };
+
+    if (multileg[tabIndex].market === "Forex") {
+      config.step = 0.01;
+      config.type = "preco";
+    }
+
+    return config;
+  }, [multileg, tabIndex]);
+
   return (
     <tr key={lineIndex} id={`ofertaMultileg${lineIndex}`}>
       <td
@@ -102,8 +116,8 @@ const MultilegOfferItem: React.FC<MultilegOfferProps> = ({
       <td>
         <Form.Group>
           <CustomInput
-            type="quantidade"
-            step={100}
+            type={qttyInputConfig.type as any}
+            step={qttyInputConfig.step}
             autoSelect
             value={offer.qtde}
             onChange={(value: any) =>

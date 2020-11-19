@@ -24,8 +24,8 @@ import {
   enviarOrdemAction,
 } from "redux/actions/boletas/boletasAPIActions";
 import CustomInput from "shared/componentes/CustomInput";
-import { RowInputsStopMovelConectada } from "shared/componentes/RowInputsFormatadosFormInterno";
 import { BotaoEnviarOrdem } from "shared/componentes/BotaoEnviarOrdem";
+import InputGroupStopMovel from "shared/componentes/InternalForm/InputGroupStopMovel";
 
 class FormInternoVendaStopMovel extends React.Component {
   render() {
@@ -36,9 +36,7 @@ class FormInternoVendaStopMovel extends React.Component {
           <Form>
             {RowAtivoQtdeBoletas(props, VENDA_STOPMOVEL_NAMESPACE)}
 
-            <RowInputsStopMovelConectada
-              namespace={VENDA_STOPMOVEL_NAMESPACE}
-            />
+            <InputGroupStopMovel namespace={VENDA_STOPMOVEL_NAMESPACE} />
           </Form>
 
           {RowFormValidade(props, VENDA_STOPMOVEL_NAMESPACE)}
