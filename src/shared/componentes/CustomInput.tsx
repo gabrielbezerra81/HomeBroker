@@ -1,9 +1,10 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import NumberFormat from "react-number-format";
 import CurrencyInput from "react-intl-number-input";
 import { MDBIcon } from "mdbreact";
 import Repeatable from "react-repeatable";
 import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
+import usePrevious from "hooks/usePrevious";
 
 interface Props {
   precision?: number;
@@ -20,6 +21,7 @@ interface Props {
   onKeyPress?: (...data: any) => any;
   containerClassName?: string;
   allowNegative?: boolean;
+  name?: string;
 }
 
 const CustomInput: React.FC<Props> = ({
@@ -37,6 +39,7 @@ const CustomInput: React.FC<Props> = ({
   onKeyPress = () => {},
   containerClassName = "",
   allowNegative = false,
+  name,
 }) => {
   var input: React.ReactNode;
 
@@ -91,16 +94,31 @@ const CustomInput: React.FC<Props> = ({
     }
   }, [allowNegative, handleChange, precision, step, type, value]);
 
+  const previousStep = usePrevious(step);
+
+  useEffect(() => {
+    if (previousStep && previousStep !== step) {
+      const newValue = validateValueOnPrecisionChange({
+        previousStep,
+        step,
+        value,
+      });
+
+      handleChange(newValue);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step, value, handleChange]);
+
   if (type === "preco")
     input = (
       <CurrencyInput
-        id={id}
         placeholder={placeholder}
         locale="pt-BR"
         className={`form-control textInput inputFormatado ${className}`}
         precision={precision}
         step={step}
         value={value}
+        name={name}
         onChange={(event: any, double: number) => handleChange(double)}
         onBlur={onBlur}
         onKeyPress={onKeyPress}
@@ -179,7 +197,7 @@ const CustomInput: React.FC<Props> = ({
     );
 
   return (
-    <div className={`containerInput ${containerClassName}`} id={id}>
+    <div className={`containerInput ${containerClassName}`}>
       {input}
       {readOnly ? null : (
         <div className="divContainerBotoes">
@@ -224,4 +242,29 @@ export const boxShadowInput = (classe: string) => {
   }
 
   return activeElement.className.includes(classe) ? "inputFocado" : "";
+};
+
+interface ValidateProps {
+  previousStep: number;
+  step: number;
+  value: any;
+}
+
+const validateValueOnPrecisionChange = ({
+  previousStep,
+  step,
+  value,
+}: ValidateProps) => {
+  let newValue = value;
+
+  const [_, fractionDigits] = step.toString().split(".");
+
+  const precision = fractionDigits ? fractionDigits.length : 0;
+
+  if (step < previousStep) {
+    newValue = newValue * 1;
+  } else {
+    newValue = +Number(newValue).toFixed(precision);
+  }
+  return newValue;
 };
