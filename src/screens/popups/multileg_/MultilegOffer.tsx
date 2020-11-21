@@ -45,7 +45,7 @@ const MultilegOfferItem: React.FC<MultilegOfferProps> = ({
 
   const quote = getQuote(cotacoesMultileg, offer);
 
-  const offerValue = useMemo(() => {
+  const { offerValue, highlightLast } = useMemo(() => {
     return calculateOfferValue(cotacoesMultileg, offer);
   }, [cotacoesMultileg, offer]);
 
@@ -272,7 +272,11 @@ const MultilegOfferItem: React.FC<MultilegOfferProps> = ({
           </Form.Control>
         </Form.Group>
       </td>
-      <td>{quote}</td>
+      <td className="">
+        <span className={highlightLast ? "neutralBorderColor" : ""}>
+          {quote}
+        </span>
+      </td>
       <td>{offerValue}</td>
     </tr>
   );
@@ -285,6 +289,7 @@ const calculateOfferValue = (
   offer: MultilegOffer,
 ) => {
   let value;
+  let highlightLast = false;
   const book = findMultilegBook({
     multilegQuotes,
     symbol: offer.codigoSelecionado,
@@ -298,9 +303,13 @@ const calculateOfferValue = (
   else {
     const quote = getQuote(multilegQuotes, offer);
     value = Number(quote.replace(",", "."));
+    highlightLast = true;
   }
 
-  return formatarNumDecimal(offer.qtde * value);
+  return {
+    offerValue: formatarNumDecimal(offer.qtde * value),
+    highlightLast,
+  };
 };
 
 interface CVProps {

@@ -114,6 +114,47 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, multileg, tabIndex]);
 
+  const multilegBooks = useMemo(() => {
+    return multileg[tabIndex].tabelaMultileg.map((offerItem, lineIndex) => {
+      const offerBook = {
+        buy: {
+          price: "",
+          qtty: "",
+          highlight: false,
+        },
+        sell: {
+          price: "",
+          qtty: "",
+          highlight: false,
+        },
+      };
+
+      const symbolBook = findMultilegBook({
+        multilegQuotes: cotacoesMultileg,
+        symbol: offerItem.codigoSelecionado,
+      });
+
+      if (symbolBook) {
+        if (symbolBook.compra && symbolBook.compra.price !== null) {
+          offerBook.buy.qtty = renderQtdeBook(symbolBook.compra) || "";
+          offerBook.buy.price = formatarNumDecimal(symbolBook.compra.price);
+          if (offerItem.cv === "venda") {
+            offerBook.buy.highlight = true;
+          }
+        }
+        if (symbolBook.venda && symbolBook.venda.price !== null) {
+          offerBook.sell.price = formatarNumDecimal(symbolBook.venda.price);
+          offerBook.sell.qtty = renderQtdeBook(symbolBook.venda) || "";
+          if (offerItem.cv === "compra") {
+            offerBook.sell.highlight = true;
+          }
+        }
+      }
+
+      return offerBook;
+    });
+  }, [cotacoesMultileg, multileg, tabIndex]);
+
   return (
     <div className="divBook">
       <Row>
@@ -151,33 +192,35 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
               </tr>
             </thead>
             <tbody>
-              {multileg[tabIndex].tabelaMultileg.map((item, indiceLinha) => {
-                const book = findMultilegBook({
-                  multilegQuotes: cotacoesMultileg,
-                  symbol: item.codigoSelecionado,
-                });
-                const cotacao = findMultilegQuote({
-                  multilegQuotes: cotacoesMultileg,
-                  symbol: item.codigoSelecionado,
-                });
-                if (book)
-                  return (
-                    <tr key={indiceLinha}>
-                      <td>{renderQtdeBook(book.compra)}</td>
-                      <td>
-                        {(book.compra && book.compra.price) || cotacao
-                          ? formatarNumDecimal(book.compra.price)
-                          : null}
-                      </td>
-                      <td>
-                        {(book.venda && book.venda.price) || cotacao
-                          ? formatarNumDecimal(book.venda.price)
-                          : null}
-                      </td>
-                      <td>{renderQtdeBook(book.venda)}</td>
-                    </tr>
-                  );
-                return null;
+              {multilegBooks.map((bookItem, lineIndex) => {
+                return (
+                  <tr key={lineIndex}>
+                    <td>{bookItem.buy.qtty}</td>
+                    <td className="priceColumn">
+                      <span
+                        className={
+                          bookItem.buy.highlight
+                            ? "buyBorderColor"
+                            : ""
+                        }
+                      >
+                        {bookItem.buy.price}
+                      </span>
+                    </td>
+                    <td className="priceColumn">
+                      <span
+                        className={
+                          bookItem.sell.highlight
+                            ? "sellBorderColor"
+                            : ""
+                        }
+                      >
+                        {bookItem.sell.price}
+                      </span>
+                    </td>
+                    <td>{bookItem.sell.qtty}</td>
+                  </tr>
+                );
               })}
             </tbody>
           </Table>

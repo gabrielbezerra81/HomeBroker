@@ -247,6 +247,22 @@ a.botaoAddAba.active {
 
 .tableMultileg td {
   padding: 3px !important;
+
+  // Coluna Ult.Neg.
+  &:nth-child(11) {
+    padding: 0 !important;
+    vertical-align: middle;
+
+    span {
+      border-radius: 4px;
+      border: 1px solid transparent;
+      width: 100%;
+      display: flex;
+      height: 25px;
+      align-items: center;
+      justify-content: center;
+    }
+  }
 }
 
 .tableMultileg tbody tr td > .form-group {
@@ -357,6 +373,21 @@ a.botaoAddAba.active {
   td {
     padding: 4px !important;
     height: 26px !important;
+  }
+
+  .priceColumn {
+    padding: 0 !important;
+    vertical-align: middle;
+
+    span {
+      border-radius: 4px;
+      border: 1px solid transparent;
+      width: 100%;
+      display: flex;
+      height: 25px;
+      align-items: center;
+      justify-content: center;
+    }
   }
 }
 
@@ -523,4 +554,16 @@ a.botaoAddAba.active {
 
 .strategyInput {
   width: 113.52px;
+}
+
+.buyBorderColor {
+  border-color: var(--color-buy-primary-blue);
+}
+
+.sellBorderColor {
+  border-color: var(--color-sell-primary-red);
+}
+
+.neutralBorderColor {
+  border-color: #ddd !important;
 }

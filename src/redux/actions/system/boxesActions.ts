@@ -132,7 +132,7 @@ export const startReactiveBoxUpdateAction = (): MainThunkAction => {
       esource_box.close();
     }
 
-    if (interval_box) {
+    if (interval_box !== null) {
       clearInterval(interval_box);
     }
 
@@ -164,7 +164,7 @@ export const startProactiveBoxUpdateAction = (): MainThunkAction => {
       esource_box.close();
     }
 
-    if (interval_box) {
+    if (interval_box !== null) {
       clearInterval(interval_box);
     }
 
