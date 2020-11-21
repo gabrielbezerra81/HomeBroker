@@ -58,6 +58,7 @@ export const addBoxFromAPIAction = (data: any[]): MainThunkAction => {
           sell: structure.bookSell || [],
         },
         configuration: boxItem.configuration,
+        structure,
       };
 
       return box;
@@ -197,6 +198,8 @@ export const startProactiveBoxUpdateAction = (): MainThunkAction => {
 
           if (updatedStructure) {
             boxFromAPI.structure = updatedStructure;
+          } else {
+            boxFromAPI.structure = boxItem.structure;
           }
 
           return boxFromAPI;

@@ -13,6 +13,7 @@ export interface BoxProps {
   dayOscilation: number;
   codes: Array<Code>;
   configuration: string;
+  structure: any;
 }
 
 export interface Code {

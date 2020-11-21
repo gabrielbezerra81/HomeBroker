@@ -279,7 +279,7 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
                     <span className="highlightedText">Qtde</span>
                     <span className="highlightedText">Preço</span>
                   </div>
-                  {formattedBox.book.buy.map((book, index) => (
+                  {formattedBox.book.sell.map((book, index) => (
                     <div key={`buyBook${index}`}>
                       <span>{book.qtty}</span>
                       <span>{book.price}</span>
