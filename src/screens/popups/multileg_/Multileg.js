@@ -15,7 +15,11 @@ import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopup
 import TabTitle from "./TabTitle";
 import { collapseElement, updateHeight } from "shared/utils/AnimateHeight";
 import { getMultilegExecStrategiesAPIAction } from "redux/actions/multileg/MultilegAPIAction";
-import { multilegBaseHeight, multilegNormalHeight, multilegWithAlertHeight } from "./constants";
+import {
+  multilegBaseHeight,
+  multilegNormalHeight,
+  multilegWithAlertHeight,
+} from "./constants";
 
 class Multileg extends React.Component {
   constructor(props) {
@@ -35,7 +39,10 @@ class Multileg extends React.Component {
   // }
 
   componentDidMount() {
-    const { multilegButtonsVisibility } = this.props;
+    const {
+      multilegButtonsVisibility,
+      createAlertButtonVisibility,
+    } = this.props;
 
     this.props.getMultilegExecStrategiesAPIAction();
 
@@ -50,7 +57,12 @@ class Multileg extends React.Component {
       var isCollapsed = section.getAttribute("data-collapsed") === "true";
       section.setAttribute("data-collapsed", "true");
 
-      const popupHeight = multilegButtonsVisibility ? multilegNormalHeight : multilegBaseHeight;
+      let popupHeight = multilegBaseHeight;
+
+      if (multilegButtonsVisibility && !createAlertButtonVisibility)
+        popupHeight = multilegNormalHeight;
+      else if (!multilegButtonsVisibility && createAlertButtonVisibility)
+        popupHeight = multilegWithAlertHeight + 109;
 
       if (!isCollapsed) {
         collapseElement({
