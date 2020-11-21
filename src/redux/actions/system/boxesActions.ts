@@ -181,6 +181,10 @@ export const startProactiveBoxUpdateAction = (): MainThunkAction => {
       const interval = setInterval(async () => {
         const structures = await getProactiveBoxAPI(ids);
 
+        if (!structures.length) {
+          return;
+        }
+
         const updatedBoxData = quoteBoxes.map((boxItem) => {
           const boxFromAPI: any = {
             id: boxItem.id,
