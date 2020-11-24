@@ -29,13 +29,18 @@ const TelaLogin = ({ path }) => {
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      // keycloak.login({
-      //   redirectUri: redirectURL,
-      // });
-      dispatch(logarUsuarioAction(user.username, user.password));
-      setUser({ ...user, password: "" });
+
+      if (location.hostname === "localhost") {
+        dispatch(logarUsuarioAction(user.username, user.password));
+        setUser({ ...user, password: "" });
+      } //
+      else {
+        keycloak.login({
+          redirectUri: redirectURL,
+        });
+      }
     },
-    [dispatch, user],
+    [dispatch, keycloak, user],
   );
 
   const handleInputChange = useCallback((e) => {

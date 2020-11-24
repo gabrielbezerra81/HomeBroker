@@ -87,7 +87,7 @@ const Logged: React.FC<RouteComponentProps> = ({ path }) => {
           console.log(response.data);
         })
         .catch((error) => {
-          console.log(error.response);
+          console.log("error", error.response);
           setFetchingAPI(false);
         })
         .finally(() => {
