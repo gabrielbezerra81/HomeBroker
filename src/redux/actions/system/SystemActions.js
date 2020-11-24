@@ -10,7 +10,7 @@ import {
 } from "constants/ActionTypes";
 import { setPointerWhileAwaiting } from "api/API";
 import { realizarLoginAPI, realizarCadastroAPI } from "api/LoginAPI";
-import { navigate } from "@reach/router";
+import {  navigate } from "@reach/router";
 import { persistor } from "redux/StoreCreation";
 import api from "api/apiConfig";
 

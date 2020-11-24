@@ -9,6 +9,12 @@ import {
 import FloatingLabelInput from "react-floating-label-input";
 import { navigate } from "@reach/router";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
+import { useKeycloak } from "@react-keycloak/web";
+
+const redirectURL =
+  location.hostname === "localhost"
+    ? "http://localhost:3000/logged"
+    : "https://homebroker-react.herokuapp.com/logged";
 
 const TelaLogin = ({ path }) => {
   const [user, setUser] = useState({
@@ -18,9 +24,14 @@ const TelaLogin = ({ path }) => {
 
   const dispatch = useDispatchStorePrincipal();
 
+  const { keycloak } = useKeycloak();
+
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
+      // keycloak.login({
+      //   redirectUri: redirectURL,
+      // });
       dispatch(logarUsuarioAction(user.username, user.password));
       setUser({ ...user, password: "" });
     },
