@@ -1,5 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { setAutoFreeze } from "immer";
+
+import { ReactKeycloakProvider } from "@react-keycloak/web";
+import keycloak from "Keycloak";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/index";
 import "@fortawesome/fontawesome-free/css/all.css";
@@ -15,17 +20,21 @@ import {
   persistor,
 } from "redux/StoreCreation";
 
+setAutoFreeze(false);
+
 ReactDOM.render(
-  <Provider store={globalStore} context={GlobalContext}>
-    <Provider store={storeAppPrincipal} context={StorePrincipalContext}>
-      <PersistGate loading={null} persistor={persistor}>
-        <PerfectScrollbar id="scrollbarPrincipal">
-          <Routes />
-        </PerfectScrollbar>
-      </PersistGate>
+  <ReactKeycloakProvider authClient={keycloak}>
+    <Provider store={globalStore} context={GlobalContext}>
+      <Provider store={storeAppPrincipal} context={StorePrincipalContext}>
+        <PersistGate loading={null} persistor={persistor}>
+          <PerfectScrollbar id="scrollbarPrincipal">
+            <Routes />
+          </PerfectScrollbar>
+        </PersistGate>
+      </Provider>
     </Provider>
-  </Provider>,
-  document.getElementById("root")
+  </ReactKeycloakProvider>,
+  document.getElementById("root"),
 );
 
 // If you want your app to work offline and load faster, you can change
