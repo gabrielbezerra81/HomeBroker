@@ -66,7 +66,7 @@ const Logged: React.FC<RouteComponentProps> = ({ path }) => {
   console.log(code);
 
   useEffect(() => {
-    if ("") {
+    if (code) {
       axios
         .post(
           `https://auth.rendacontinua.com/auth/realms/auth_sso/protocol/openid-connect/token`,
