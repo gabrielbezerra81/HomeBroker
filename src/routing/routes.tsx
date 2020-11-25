@@ -72,7 +72,7 @@ const Logged: React.FC<RouteComponentProps> = ({ path }) => {
           `https://auth.rendacontinua.com/auth/realms/auth_sso/protocol/openid-connect/token`,
           qs.stringify({
             code,
-            redirect_uri: "http://localhost:3000/home",
+            redirect_uri: "https://homebroker-react.herokuapp.com/logged",
             grant_type: "authorization_code",
             client_id: "broker_react",
             client_secret: "367afb37-8884-42c3-b5b6-b455b9b7db59",
