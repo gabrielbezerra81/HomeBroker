@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Nav, Col, Form } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 
@@ -18,6 +18,8 @@ interface TabButtonProps {
 const TabButton: React.FC<TabButtonProps> = ({ tabIndex, tab }, ref) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
+  const [disabledEdit, setDisabledEdit] = useState(true);
+
   const {
     systemReducer: { selectedTab },
   } = useStateStorePrincipal();
@@ -34,8 +36,6 @@ const TabButton: React.FC<TabButtonProps> = ({ tabIndex, tab }, ref) => {
 
   const handleTabNameChange = useCallback(
     (e: any) => {
-      console.log(e);
-
       dispatch(
         handleChangeTabPropsAction({
           tabIndex,
@@ -56,6 +56,24 @@ const TabButton: React.FC<TabButtonProps> = ({ tabIndex, tab }, ref) => {
     [],
   );
 
+  const handleAllowEditOnDoubleClick = useCallback(() => {
+    setDisabledEdit(false);
+  }, []);
+
+  const resetDisabledOnBlur = useCallback(() => {
+    setDisabledEdit(true);
+  }, []);
+
+  useEffect(() => {
+    if (selectedTab !== `tab${tabIndex}`) {
+      setDisabledEdit(true);
+    }
+
+    return () => {
+      setDisabledEdit(true);
+    };
+  }, [selectedTab, tabIndex]);
+
   return (
     <Col>
       <Nav.Item>
@@ -63,17 +81,20 @@ const TabButton: React.FC<TabButtonProps> = ({ tabIndex, tab }, ref) => {
           eventKey={`tab${tabIndex}`}
           className={selectedTab === `tab${tabIndex}` ? "selectedTab" : ""}
           active={false}
+          onDoubleClick={handleAllowEditOnDoubleClick}
         >
           <div className="titleContainer">
             {tabIndex !== 0 && (
               <MDBIcon icon="times" onClick={handleRemoveTab} />
             )}
             <Form.Control
+              disabled={disabledEdit}
               ref={inputRef}
               type="text"
               value={tab.tabName}
               onChange={handleTabNameChange}
               onKeyPress={handleBlurOnEnter}
+              onBlur={resetDisabledOnBlur}
             />
           </div>
         </Nav.Link>
