@@ -36,7 +36,8 @@ export const Routes = () => {
   return (
     <>
       <Router>
-        <TelaLogin path="/" />
+        <TelaLogin path="/" keycloakLogin={false} />
+        <TelaLogin path="/keycloak" keycloakLogin />
         <TelaCadastro path="/cadastro" />
         <Home path="/home" />
         <Logged path="/logged" />

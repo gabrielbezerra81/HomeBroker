@@ -16,7 +16,7 @@ const redirectURL =
     ? "http://localhost:3000/logged"
     : "https://homebroker-react.herokuapp.com/logged";
 
-const TelaLogin = ({ path }) => {
+const TelaLogin = ({ path, keycloakLogin }) => {
   const [user, setUser] = useState({
     username: location.hostname === "localhost" ? "gabrielAB" : "",
     password: location.hostname === "localhost" ? "123456789" : "",
@@ -30,17 +30,17 @@ const TelaLogin = ({ path }) => {
     (e) => {
       e.preventDefault();
 
-      if (location.hostname === "localhost") {
-        dispatch(logarUsuarioAction(user.username, user.password));
-        setUser({ ...user, password: "" });
-      } //
-      else {
+      if (keycloakLogin) {
         keycloak.login({
           redirectUri: redirectURL,
         });
+      } //
+      else {
+        dispatch(logarUsuarioAction(user.username, user.password));
+        setUser({ ...user, password: "" });
       }
     },
-    [dispatch, keycloak, user],
+    [dispatch, keycloak, keycloakLogin, user],
   );
 
   const handleInputChange = useCallback((e) => {
