@@ -22,6 +22,9 @@ interface Props {
   containerClassName?: string;
   allowNegative?: boolean;
   name?: string;
+  renderArrows?: boolean;
+  theme?: "light" | "dark";
+  suffix?: string;
 }
 
 const CustomInput: React.FC<Props> = ({
@@ -40,6 +43,9 @@ const CustomInput: React.FC<Props> = ({
   containerClassName = "",
   allowNegative = false,
   name,
+  renderArrows = true,
+  theme = "light",
+  suffix = "",
 }) => {
   var input: React.ReactNode;
 
@@ -47,35 +53,13 @@ const CustomInput: React.FC<Props> = ({
     return readOnly ? () => {} : onChange;
   }, [onChange, readOnly]);
 
-  const onUp = useCallback(() => {
-    let valorAnterior = value;
+  const onUp = useCallback(
+    (event) => {
+      let valorAnterior = value;
 
-    let resultado;
-
-    //Tira todos os pontos e vírgulas do número e o transforma em um número decimal com ponto com separador
-    if (["precoNegativo", "quantidade"].includes(type))
-      valorAnterior = valorAnterior
-        .toString()
-        .split(".")
-        .join("")
-        .replace(",", ".");
-
-    resultado = Number(Number(valorAnterior) + Number(step));
-
-    if (type === "preco" || type === "precoNegativo") {
-      resultado = Number(resultado).toFixed(precision);
-    }
-    if (type === "precoNegativo") {
-      resultado = resultado.toString().replace(".", ",");
-    }
-    handleChange(resultado);
-  }, [value, type, step, handleChange, precision]);
-
-  const onDown = useCallback(() => {
-    let valorAnterior = value;
-    if (valorAnterior > 0 || allowNegative) {
       let resultado;
 
+      //Tira todos os pontos e vírgulas do número e o transforma em um número decimal com ponto com separador
       if (["precoNegativo", "quantidade"].includes(type))
         valorAnterior = valorAnterior
           .toString()
@@ -83,16 +67,44 @@ const CustomInput: React.FC<Props> = ({
           .join("")
           .replace(",", ".");
 
-      resultado = Number(Number(valorAnterior) - step);
+      resultado = Number(Number(valorAnterior) + Number(step));
+
       if (type === "preco" || type === "precoNegativo") {
-        resultado = resultado.toFixed(precision);
+        resultado = Number(resultado).toFixed(precision);
       }
       if (type === "precoNegativo") {
         resultado = resultado.toString().replace(".", ",");
       }
-      handleChange(resultado);
-    }
-  }, [allowNegative, handleChange, precision, step, type, value]);
+      handleChange(resultado, event);
+    },
+    [value, type, step, handleChange, precision],
+  );
+
+  const onDown = useCallback(
+    (event) => {
+      let valorAnterior = value;
+      if (valorAnterior > 0 || allowNegative) {
+        let resultado;
+
+        if (["precoNegativo", "quantidade"].includes(type))
+          valorAnterior = valorAnterior
+            .toString()
+            .split(".")
+            .join("")
+            .replace(",", ".");
+
+        resultado = Number(Number(valorAnterior) - step);
+        if (type === "preco" || type === "precoNegativo") {
+          resultado = resultado.toFixed(precision);
+        }
+        if (type === "precoNegativo") {
+          resultado = resultado.toString().replace(".", ",");
+        }
+        handleChange(resultado, event);
+      }
+    },
+    [allowNegative, handleChange, precision, step, type, value],
+  );
 
   const previousStep = usePrevious(step);
 
@@ -109,6 +121,10 @@ const CustomInput: React.FC<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step, value, handleChange]);
 
+  const themeClass = useMemo(() => {
+    return theme === "light" ? "" : "darkCustomInput";
+  }, [theme]);
+
   if (type === "preco")
     input = (
       <CurrencyInput
@@ -119,8 +135,9 @@ const CustomInput: React.FC<Props> = ({
         step={step}
         value={value}
         name={name}
-        onChange={(event: any, double: number) => handleChange(double)}
+        onChange={(event: any, double: number) => handleChange(double, event)}
         onBlur={onBlur}
+        suffix={suffix}
         onKeyPress={onKeyPress}
         prefix={value < 0 ? "- " : ""}
         onFocus={(event: React.FocusEvent<HTMLInputElement>) => {
@@ -128,9 +145,9 @@ const CustomInput: React.FC<Props> = ({
         }}
         onKeyUp={(event: React.KeyboardEvent<HTMLInputElement>) => {
           if (event.key === "ArrowUp") {
-            onUp();
+            onUp(event);
           } else if (event.key === "ArrowDown") {
-            onDown();
+            onDown(event);
           }
         }}
       />
@@ -156,9 +173,9 @@ const CustomInput: React.FC<Props> = ({
         onKeyPress={onKeyPress}
         onKeyUp={(event) => {
           if (event.key === "ArrowUp") {
-            onUp();
+            onUp(event);
           } else if (event.key === "ArrowDown") {
-            onDown();
+            onDown(event);
           }
         }}
       />
@@ -167,7 +184,7 @@ const CustomInput: React.FC<Props> = ({
     input = (
       <NumberFormat
         placeholder={placeholder}
-        className="form-control textInput"
+        className={`form-control textInput`}
         thousandSeparator="."
         decimalSeparator=","
         value={value}
@@ -188,28 +205,29 @@ const CustomInput: React.FC<Props> = ({
         }}
         onKeyUp={(event) => {
           if (event.key === "ArrowUp") {
-            onUp();
+            onUp(event);
           } else if (event.key === "ArrowDown") {
-            onDown();
+            onDown(event);
           }
         }}
       />
     );
 
   return (
-    <div className={`containerInput ${containerClassName}`}>
+    <div className={`containerInput ${containerClassName} ${themeClass}`}>
       {input}
-      {readOnly ? null : (
+      {readOnly || !renderArrows ? null : (
         <div className="divContainerBotoes">
           <Repeatable
             repeatDelay={600}
             repeatInterval={40}
             onPress={(event: any) => {
               event.preventDefault();
-              onUp();
+              onUp(event);
             }}
             onHold={onUp}
             className="divRepetidor"
+            name={name}
           >
             <MDBIcon icon="caret-up" className="divClicavel" />
           </Repeatable>
@@ -218,7 +236,7 @@ const CustomInput: React.FC<Props> = ({
             repeatInterval={40}
             onPress={(event: any) => {
               event.preventDefault();
-              onDown();
+              onDown(event);
             }}
             onHold={onDown}
             className="divRepetidor"

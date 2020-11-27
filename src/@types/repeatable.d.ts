@@ -5,6 +5,7 @@ declare module "react-repeatable" {
     onPress: (event: any) => any;
     onHold: (data: any) => any;
     className?: string;
+    name?: string;
   }
 
   export default class Repeatable extends React.Component<

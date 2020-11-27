@@ -106,3 +106,18 @@ button {
 h6 {
   margin-bottom: 0rem;
 }
+
+.darkInputSelect {
+  background-color: #272827;
+  border-color: #272827;
+  border-radius: 0;
+  color: #d2d5d2 !important;
+  height: 15px;
+  padding: 0;
+  font-size: 11px;
+
+  &:focus {
+    background-color: #272827;
+    border-color: #272827;
+  }
+}

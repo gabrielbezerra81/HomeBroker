@@ -41,7 +41,7 @@
   width: 18% !important;
 }
 
-.inputGrafico:focus {
+.graphQuoteInput:focus {
   background-color: var(--color-input-background-light);
   box-shadow: 0 0 0px 3.5px var(--color-input-box-shadow);
 }
@@ -96,4 +96,15 @@
 .ValorTotalStop_Venda {
   top: 78.5%;
   left: 68%;
+}
+
+.graphQuoteInput {
+  width: 39%;
+  height: 11px;
+  position: absolute !important;
+  background-color: transparent;
+  border-color: transparent;
+  text-align: center;
+  font-size: 70%;
+  font-weight: 400;
 }

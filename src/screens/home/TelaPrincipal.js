@@ -18,6 +18,7 @@ import api from "api/apiConfig";
 import AddBoxMenu from "../popups/quoteBox/AddBoxMenu";
 import RightSideMenu from "./rightSideMenu/RightSideMenu";
 import CategoryList from "screens/popups/categoryList/CategoryList";
+import InitialPlanner from "screens/popups/financialPlanner/InitialPlanner";
 
 const OrdensExecucao = React.lazy(() =>
   import("screens/popups/ordens_em_execucao/OrdensExecucao"),
@@ -90,6 +91,7 @@ class TelaPrincipal extends React.Component {
       isOpenMultileg,
       isOpenTHL,
       isOpenCategoryList,
+      isOpenInitialPlanner,
       apps: AppBoletas,
     } = this.props;
 
@@ -148,6 +150,14 @@ class TelaPrincipal extends React.Component {
               >
                 <CategoryList />
               </PopupContainer>
+
+              <PopupContainer
+                isOpen={isOpenInitialPlanner}
+                key="initialPlanner"
+                divKey="initialPlanner"
+              >
+                <InitialPlanner />
+              </PopupContainer>
             </MainScreenTabs>
 
             <RightSideMenu />
@@ -179,6 +189,7 @@ const mapStateToPropsAppPrincipal = (state) => ({
   isOpenMultileg: state.systemReducer.isOpenMultileg,
   isOpenTHL: state.systemReducer.isOpenTHL,
   isOpenCategoryList: state.systemReducer.isOpenCategoryList,
+  isOpenInitialPlanner: state.systemReducer.isOpenInitialPlanner,
 });
 
 export default compose(

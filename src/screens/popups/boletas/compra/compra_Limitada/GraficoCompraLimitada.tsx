@@ -27,7 +27,7 @@ class GraficoCompraLimitada extends React.Component<PropsFromRedux> {
               cv="CA"
             />
             <Form.Control
-              className="inputGrafico CotacaoAtualGrafico_CA"
+              className="graphQuoteInput CotacaoAtualGrafico_CA"
               value={this.props.dadosPesquisa.cotacaoAtual}
               onChange={() => false}
             />

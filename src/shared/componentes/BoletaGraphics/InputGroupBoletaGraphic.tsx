@@ -131,7 +131,7 @@ const InputGroupBoletaGraphic: React.FC<Props> = ({
             }
           />
           <Form.Control
-            className={`inputGrafico CotacaoAtualGrafico_${cv}`}
+            className={`graphQuoteInput CotacaoAtualGrafico_${cv}`}
             value={currentBoleta.dadosPesquisa.cotacaoAtual}
             onChange={() => false}
           />
@@ -236,7 +236,7 @@ const InputGroupBoletaGraphic: React.FC<Props> = ({
           />
 
           <Form.Control
-            className={`CotacaoAtualGrafico_${cv} inputGrafico`}
+            className={`CotacaoAtualGrafico_${cv} graphQuoteInput`}
             value={currentBoleta.dadosPesquisa.cotacaoAtual}
             onChange={() => false}
           />

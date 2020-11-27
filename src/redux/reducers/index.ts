@@ -21,6 +21,7 @@ import SystemReducer from "redux/reducers/system/SystemReducer";
 import MultilegReducer from "redux/reducers/multileg/MultilegReducer";
 import PositionReducer from "redux/reducers/position/PositionReducer";
 import OrdensExecucaoReducer from "redux/reducers/ordersExecuting/OrdensExecReducer";
+import FinancialPlannerReducer from "./financialPlanner/FinancialPlannerReducer";
 
 export const BoletasReducer = combineReducers({
   bookOfertaReducer: bookOfertaReducer,
@@ -45,6 +46,7 @@ export const reducersAppPrincipal = combineReducers({
   positionReducer: PositionReducer,
   ordersExecReducer: OrdensExecucaoReducer,
   thlReducer: THLReducer,
+  financialPlannerReducer: FinancialPlannerReducer,
 });
 
 export type BoletasState = ReturnType<typeof BoletasReducer>;

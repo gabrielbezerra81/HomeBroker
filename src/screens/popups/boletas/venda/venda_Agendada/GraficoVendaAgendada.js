@@ -26,7 +26,7 @@ class GraficoVendaAgendada extends React.Component {
               cv="VA"
             />
             <Form.Control
-              className="inputGrafico CotacaoAtualGrafico_VA"
+              className="graphQuoteInput CotacaoAtualGrafico_VA"
               value={this.props.dadosPesquisa.cotacaoAtual}
               onChange={() => false}
             />

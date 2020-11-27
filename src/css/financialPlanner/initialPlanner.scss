@@ -1,0 +1,64 @@
+#initialPlanner {
+  width: 900px;
+
+  .mheader {
+    padding-bottom: 2px;
+
+    h6 {
+      font-size: 18px;
+    }
+  }
+
+  .mcontent {
+    background-color: #0f0f0f;
+    > div {
+      display: flex;
+    }
+  }
+
+  .inputsAndGraphContainer {
+    flex: 1;
+    background-color: #27282740;
+    border-right: 3px solid #000;
+    padding: 12px 8px 8px 4px;
+
+    h6 {
+      font-weight: 400;
+    }
+
+    > div {
+      display: flex;
+
+      & + div {
+        margin-top: 8px;
+      }
+
+      h6 {
+        line-height: 15px;
+        font-size: 13px;
+        min-width: 135px;
+
+        &:first-child {
+          text-align: right;
+          padding-right: 8px;
+        }
+
+        &:last-child {
+          padding-left: 8px;
+        }
+      }
+
+      .containerInput,
+      select {
+        max-width: 100px;
+      }
+    }
+  }
+
+  .projectionContainer {
+    flex: 1;
+    background-color: #27282740;
+    border-left: 3px solid #000;
+    height: 300px;
+  }
+}

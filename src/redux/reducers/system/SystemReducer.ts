@@ -170,6 +170,7 @@ export const INITIAL_STATE: SystemState = {
   mainTabs: [{ tabName: "Principal" }, { tabName: "Aba 2" }],
   selectedTab: "tab0",
   openedMenus: [
+    // { menuKey: "initialPlanner", tabKey: "tab0" },
     // { menuKey: "category_list", tabKey: "tab0" },
     // { menuKey: "box1", tabKey: "tab0" },
     // { menuKey: "box2", tabKey: "tab0" },
@@ -196,6 +197,7 @@ export const INITIAL_STATE: SystemState = {
   updateMode: "proactive",
   updateInterval: 3000,
   isLeftSideMenuConfigOpen: false,
+  isOpenInitialPlanner: false,
 };
 
 const {
