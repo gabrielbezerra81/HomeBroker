@@ -28,7 +28,7 @@ export default class GraficoPatrimonio extends React.Component {
         >
           <XAxis dataKey="dia" height={18}></XAxis>
           <YAxis width={35}></YAxis>
-          <Tooltip></Tooltip>
+          <Tooltip labelStyle={{ color: "#000" }}></Tooltip>
           <Legend></Legend>
           <CartesianGrid strokeDasharray="5 5" stroke="#444"></CartesianGrid>
           <ReferenceLine y={0} stroke="#888" />
