@@ -18,7 +18,7 @@ export default (props) => {
 
   const placeholder = props.modo.charAt(0).toUpperCase() + props.modo.slice(1);
   const { ordemAtual, sinalInputSelect } = state;
-  const { nomeOpen, modo } = props;
+  const { nomeOpen, modo, disabled = false } = props;
   const open = state[nomeOpen];
 
   return (
@@ -27,8 +27,12 @@ export default (props) => {
         <span
           className="input-group-text iconeProcurar divClicavel botoesInputSelect"
           onClick={() => {
-            dispatch(updateOneOrdersExecStateAction(nomeOpen, !open));
-            dispatch(updateOneOrdersExecStateAction("sinalInputSelect", "-"));
+            if (disabled) {
+              alert("Essa ordem expirou, não é possível realizar essa ação");
+            } else {
+              dispatch(updateOneOrdersExecStateAction(nomeOpen, !open));
+              dispatch(updateOneOrdersExecStateAction("sinalInputSelect", "-"));
+            }
           }}
         >
           -
@@ -44,16 +48,22 @@ export default (props) => {
         showArrow={false}
         className="selectQtde"
         onSelect={(valorSomar) => {
-          if (ordemAtual)
-            dispatch(
-              aumentarQtdePrecoAction({
-                ordemAtual,
-                valorSomar,
-                modo,
-                token,
-              }),
-            );
-          else alert(erro_opcoes_ordens_exec);
+          if (disabled) {
+            alert("Essa ordem expirou, não é possível realizar essa ação");
+          } else {
+            if (ordemAtual) {
+              dispatch(
+                aumentarQtdePrecoAction({
+                  ordemAtual,
+                  valorSomar,
+                  modo,
+                  token,
+                }),
+              );
+            } else {
+              alert(erro_opcoes_ordens_exec);
+            }
+          }
         }}
         onDropdownVisibleChange={() =>
           dispatch(updateOneOrdersExecStateAction(nomeOpen, false))
@@ -66,8 +76,12 @@ export default (props) => {
         <span
           className="input-group-text iconeProcurar divClicavel botoesInputSelect"
           onClick={() => {
-            dispatch(updateOneOrdersExecStateAction(nomeOpen, !open));
-            dispatch(updateOneOrdersExecStateAction("sinalInputSelect", "+"));
+            if (disabled) {
+              alert("Essa ordem expirou, não é possível realizar essa ação");
+            } else {
+              dispatch(updateOneOrdersExecStateAction(nomeOpen, !open));
+              dispatch(updateOneOrdersExecStateAction("sinalInputSelect", "+"));
+            }
           }}
         >
           +

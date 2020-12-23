@@ -117,13 +117,13 @@ const ModalBody = () => {
       const offers = orderItem.offers.map((offerItem) => {
         const formattedPrices = {};
 
-        ["precoDisparo", "precoEnvio", "precoLimite", "precoExecutado"].forEach(
-          (key) => {
-            if (offerItem[key] || offerItem[key] === 0) {
-              formattedPrices[key] = formatarNumDecimal(offerItem[key]);
-            }
-          },
-        );
+        [
+          ("precoDisparo", "precoEnvio", "precoLimite", "precoExecutado"),
+        ].forEach((key) => {
+          if (offerItem[key] || offerItem[key] === 0) {
+            formattedPrices[key] = formatarNumDecimal(offerItem[key]);
+          }
+        });
 
         return { ...offerItem, formattedPrices };
       });

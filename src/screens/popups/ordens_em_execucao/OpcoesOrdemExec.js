@@ -1,6 +1,9 @@
 import React from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
+
+import moment from "moment";
+
 import iconeCancelarOrdem from "assets/OrdensExecucao/iconeCancelarOrdem.svg";
 import iconeEditarOrdem from "assets/OrdensExecucao/iconeEditarOrdem.svg";
 import iconeFinalizarAMercado from "assets/OrdensExecucao/iconeFinalizarAMercado.svg";
@@ -27,6 +30,14 @@ import {
 } from "redux/actions/GlobalAppActions";
 
 class OpcoesOrdemExec extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isExpired: false,
+    };
+  }
+
   shouldComponentUpdate(nextProps) {
     return (
       this.props !== nextProps &&
@@ -36,15 +47,25 @@ class OpcoesOrdemExec extends React.Component {
   }
   componentDidMount() {
     const { props } = this;
+    const { ordemAtual } = props;
 
     document.getElementById(props.id).style.zIndex = props.zIndex + 1;
     props.aumentarZindexAction(props.id, props.zIndex, true);
+
+    const isExpired = moment(
+      ordemAtual.validade,
+      "DD MM YYYY hh:mm:ss",
+    ).isAfter(new Date());
+
+    this.setState({ isExpired });
   }
 
   render() {
-    const { props } = this;
+    const { props, state } = this;
 
     const actionProps = { idOrdem: props.ordemAtual.id };
+
+    const { isExpired } = state;
 
     return (
       <div
@@ -56,8 +77,12 @@ class OpcoesOrdemExec extends React.Component {
           className="divClicavel"
           tabIndex={0}
           onClick={() => {
-            if (props.ordemAtual) props.cancelarOrdemExecAction(actionProps);
-            else alert(erro_opcoes_ordens_exec);
+            if (isExpired) {
+              alert("Essa ordem expirou, não é possível realizar essa ação");
+            } else {
+              if (props.ordemAtual) props.cancelarOrdemExecAction(actionProps);
+              else alert(erro_opcoes_ordens_exec);
+            }
           }}
         >
           <img src={iconeCancelarOrdem} width="27" alt=""></img>
@@ -67,20 +92,36 @@ class OpcoesOrdemExec extends React.Component {
         <div
           className="divClicavel"
           tabIndex={0}
-          onClick={(e) => abrirFormOrdem(e, props, "")}
+          onClick={(e) => {
+            if (isExpired) {
+              alert("Essa ordem expirou, não é possível realizar essa ação");
+            } else abrirFormOrdem(e, props, "");
+          }}
         >
           <img src={iconeEditarOrdem} width="27" alt=""></img>
           <h6>Editar Ordem</h6>
         </div>
-        <InputSelectBotoes nomeOpen="selectQtdeAberto" modo="qtde" />
-        <InputSelectBotoes nomeOpen="selectPrecoAberto" modo="preco" />
+        <InputSelectBotoes
+          nomeOpen="selectQtdeAberto"
+          modo="qtde"
+          disabled={isExpired}
+        />
+        <InputSelectBotoes
+          nomeOpen="selectPrecoAberto"
+          modo="preco"
+          disabled={isExpired}
+        />
 
         <div
           className="divClicavel"
           tabIndex={0}
           onClick={() => {
-            if (props.ordemAtual) props.finalizarAMercadoAction(actionProps);
-            else alert(erro_opcoes_ordens_exec);
+            if (isExpired) {
+              alert("Essa ordem expirou, não é possível realizar essa ação");
+            } else {
+              if (props.ordemAtual) props.finalizarAMercadoAction(actionProps);
+              else alert(erro_opcoes_ordens_exec);
+            }
           }}
         >
           <img src={iconeFinalizarAMercado} width="27" alt=""></img>
