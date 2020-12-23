@@ -205,16 +205,19 @@ export const pesquisarAtivoMultilegAPI = async (codigo_ativo) => {
       dados.vencimentos = [...data.expirations];
       dados.ativoPrincipal = data.stock.symbol;
 
-      const { data: quoteData } = await api.get(
-        `${url_pesquisarAtivoBoletas_codigo}${codigo_ativo}`,
-      );
+      try {
+        const { data: quoteData } = await api.get(
+          `${url_pesquisarAtivoBoletas_codigo}${codigo_ativo}`,
+        );
 
-      dados.market = quoteData.stock.market;
+        dados.market = quoteData.stock.market;
 
-      if (quoteData) {
-        dados.cotacaoAtual = Number(quoteData.ultimo || 0);
-        dados.variacao = Number(quoteData.porcentagem || 0);
-      }
+        if (quoteData) {
+          dados.cotacaoAtual = Number(quoteData.ultimo || 0);
+          dados.variacao = Number(quoteData.porcentagem || 0);
+        }
+      } catch (error) {}
+      
       return dados;
     })
     .catch((erro) => {
