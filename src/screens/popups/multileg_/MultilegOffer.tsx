@@ -277,7 +277,11 @@ const MultilegOfferItem: React.FC<MultilegOfferProps> = ({
           {quote}
         </span>
       </td>
-      <td>{offerValue}</td>
+      <td>
+        <span style={{ color: offer.cv === "compra" ? "#a5746b" : "#098fc7" }}>
+          {offerValue}
+        </span>
+      </td>
     </tr>
   );
 };

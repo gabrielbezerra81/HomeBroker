@@ -6,10 +6,7 @@ import {
   updateMultilegPriceAction,
   updateMultilegTabAction,
 } from "redux/actions/multileg/MultilegActions";
-import {
-  findMultilegQuote,
-  findMultilegBook,
-} from "redux/actions/multileg/utils";
+import { findMultilegBook } from "redux/actions/multileg/utils";
 import {
   calculoPreco,
   calcularTotal,
@@ -199,9 +196,7 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
                     <td className="priceColumn">
                       <span
                         className={
-                          bookItem.buy.highlight
-                            ? "buyBorderColor"
-                            : ""
+                          bookItem.buy.highlight ? "buyBorderColor" : ""
                         }
                       >
                         {bookItem.buy.price}
@@ -210,9 +205,7 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
                     <td className="priceColumn">
                       <span
                         className={
-                          bookItem.sell.highlight
-                            ? "sellBorderColor"
-                            : ""
+                          bookItem.sell.highlight ? "sellBorderColor" : ""
                         }
                       >
                         {bookItem.sell.price}
