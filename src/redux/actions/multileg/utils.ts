@@ -96,7 +96,9 @@ export const mountMultilegOrder = ({
   multilegOrder.multiStocks = true;
   if (multilegTab.validadeSelect === "DAY")
     multilegOrder.expiration = getformatedDate(new Date()) + " 22:00:00";
-  else {
+  else if (multilegTab.validadeSelect === "GTC") {
+    multilegOrder.expiration = "31/12/9999 22:00:00";
+  } else {
     multilegOrder.expiration = multilegTab.date.toLocaleString("pt-BR");
   }
   multilegOrder.status = "Nova";
@@ -120,7 +122,9 @@ export const mountMultilegOrder = ({
 
     if (multilegTab.validadeSelect === "DAY")
       mainOffer.expiration = getformatedDate(new Date()) + " 22:00:00";
-    else {
+    else if (multilegTab.validadeSelect === "GTC") {
+      mainOffer.expiration = "31/12/9999 22:00:00";
+    } else {
       mainOffer.expiration = multilegTab.date.toLocaleString("pt-BR");
     }
 
