@@ -557,11 +557,11 @@ a.botaoAddAba.active {
 }
 
 .buyBorderColor {
-  border-color: var(--color-buy-primary-blue);
+  border-color: var(--color-buy-primary-blue) !important;
 }
 
 .sellBorderColor {
-  border-color: var(--color-sell-primary-red);
+  border-color: var(--color-sell-primary-red) !important;
 }
 
 .neutralBorderColor {
