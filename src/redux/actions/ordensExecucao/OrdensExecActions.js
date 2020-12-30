@@ -34,6 +34,7 @@ import {
 } from "../system/SystemActions";
 import { updateManyMultilegState } from "../multileg/utils";
 import * as ActionTypes from "constants/ActionTypes";
+import { getProactiveOrdersExecAPI } from "api/proactive/ProativosAPI";
 
 export const updateOneOrdersExecStateAction = (nome, valor) => {
   return (dispatch) => {
@@ -455,11 +456,19 @@ export const startReactiveOrdersUpdateAction = () => {
   return (dispatch, getState) => {
     const {
       systemReducer: { token },
-      ordersExecReducer: { esource_ordersExec, tabelaOrdensExecucao },
+      ordersExecReducer: {
+        esource_ordersExec,
+        tabelaOrdensExecucao,
+        interval_ordersExec,
+      },
     } = getState();
 
     if (esource_ordersExec && esource_ordersExec.close) {
       esource_ordersExec.close();
+    }
+
+    if (interval_ordersExec) {
+      clearInterval(interval_ordersExec);
     }
 
     const source = atualizarOrdensExecAPI({
@@ -475,11 +484,36 @@ export const startReactiveOrdersUpdateAction = () => {
 export const startProactiveOrdersUpdateAction = () => {
   return (dispatch, getState) => {
     const {
-      ordersExecReducer: { esource_ordersExec },
+      ordersExecReducer: {
+        esource_ordersExec,
+        tabelaOrdensExecucao,
+        interval_ordersExec,
+      },
+      systemReducer: { updateInterval },
     } = getState();
 
     if (esource_ordersExec && esource_ordersExec.close) {
       esource_ordersExec.close();
+    }
+
+    if (interval_ordersExec) {
+      clearInterval(interval_ordersExec);
+    }
+
+    const idsList = tabelaOrdensExecucao.map((order) => order.id);
+
+    const ids = idsList.join(",");
+
+    if (ids) {
+      const interval = setInterval(async () => {
+        const data = await getProactiveOrdersExecAPI(ids);
+
+        dispatch(
+          updateManyOrdersExecStateAction({ tabelaOrdensExecucao: data }),
+        );
+      }, updateInterval);
+
+      dispatch(updateOneOrdersExecStateAction("interval_ordersExec", interval));
     }
   };
 };

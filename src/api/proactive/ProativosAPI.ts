@@ -1,7 +1,9 @@
+import api from "api/apiConfig";
 import {
   url_singleQuote_quote,
   url_multiQuote_quotes,
   url_multiStructure_ids,
+  url_ordersExec_ids,
 } from "api/url";
 import { MultilegQuote } from "types/multileg/multileg";
 import { THLQuote } from "types/thl/thl";
@@ -224,7 +226,22 @@ export const getProactivePositionEmblemsAPI = async (structureIds: string) => {
 
       return [];
     })
-    .catch((error) => {
+    .catch(() => {
+      return [];
+    });
+};
+
+export const getProactiveOrdersExecAPI = async (ids: string) => {
+  return api
+    .get(`${url_ordersExec_ids}${ids}`)
+    .then((response) => {
+      if (response.data && response.data.length) {
+        return response.data;
+      }
+
+      return [];
+    })
+    .catch(() => {
       return [];
     });
 };

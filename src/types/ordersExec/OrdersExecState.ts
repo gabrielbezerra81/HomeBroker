@@ -14,5 +14,6 @@ export default interface OrdersExecState {
   selectPrecoAberto: boolean;
   sinalInputSelect: "+" | "-";
   esource_ordersExec: EventSource | null;
+  interval_ordersExec: NodeJS.Timeout | null;
   filtrarOrdensAberto: boolean;
 }

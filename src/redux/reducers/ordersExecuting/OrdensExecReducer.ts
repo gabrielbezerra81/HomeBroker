@@ -23,6 +23,7 @@ const INITIAL_STATE: OrdersExecState = {
   sinalInputSelect: "+",
   esource_ordersExec: null,
   filtrarOrdensAberto: false,
+  interval_ordersExec: null,
 };
 
 export default (
