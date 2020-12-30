@@ -91,6 +91,11 @@ export const mountMultilegOrder = ({
     next: [],
     comment,
   };
+
+  if (multilegTab.editingOrderId) {
+    multilegOrder.id = multilegTab.editingOrderId;
+  }
+
   multilegOrder.account.id = selectedAccount.id;
   multilegOrder.enabled = true;
   multilegOrder.multiStocks = true;

@@ -36,6 +36,7 @@ const INITIAL_STATE: MultilegState = {
       comment: "",
       selectedStrategy: 1,
       market: "",
+      editingOrderId: null,
     },
   ],
   esource_multilegQuotes: null,

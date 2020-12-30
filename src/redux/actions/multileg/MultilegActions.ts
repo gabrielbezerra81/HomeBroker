@@ -481,6 +481,7 @@ export const newMultilegTab: MultilegTab = {
   comment: "",
   selectedStrategy: 1,
   market: "",
+  editingOrderId: null,
 };
 
 const setOfferSymbolAndModel = (multilegOffer: MultilegOffer) => {

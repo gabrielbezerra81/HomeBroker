@@ -18,6 +18,7 @@ export interface MultilegTab {
   operator: "Less" | "Greater";
   comment: string;
   selectedStrategy: number;
+  editingOrderId: number | null;
 }
 
 export interface MultilegOption {

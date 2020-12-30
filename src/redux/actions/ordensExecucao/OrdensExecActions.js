@@ -188,6 +188,8 @@ export const openOrderInMultilegAction = (props, action = "") => {
     //Disparar atualizações feitas com objeto multileg
     result.multilegTabs = updatedMultilegTabs;
 
+    result.multilegTabs[tabIndex].editingOrderId = ordemAtual.id;
+
     dispatch(
       updateManyMultilegState({
         multileg: result.multilegTabs,

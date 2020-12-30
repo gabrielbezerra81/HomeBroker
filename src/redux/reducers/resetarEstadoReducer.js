@@ -69,6 +69,7 @@ const multileg = {
       comment: "",
       selectedStrategy: 1,
       market: "",
+      editingOrderId: null,
     },
   ],
   cotacoesMultileg: [],
