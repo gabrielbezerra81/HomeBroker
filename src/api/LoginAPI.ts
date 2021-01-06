@@ -4,6 +4,10 @@ import {
   url_realizarCadastro_dados,
   url_verificarToken_token,
 } from "api/url";
+
+import axios from "axios";
+import qs from "qs";
+
 import {
   erro_realizar_login,
   erro_realizar_cadastro,
@@ -87,6 +91,39 @@ export const verificarTokenAPI = (token: Token) => {
     })
     .catch((erro) => {
       showAPIErrorAndAlert(erro, erro_sessaoExpirada);
+      return null;
+    });
+};
+
+export const keycloakLoginAPI = async (code: string, redirect_uri: string) => {
+  return axios
+    .post(
+      `https://auth.rendacontinua.com/auth/realms/auth_sso/protocol/openid-connect/token`,
+      qs.stringify({
+        code,
+        redirect_uri,
+        grant_type: "authorization_code",
+        client_id: "broker_react",
+        client_secret: "367afb37-8884-42c3-b5b6-b455b9b7db59",
+      }),
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      },
+    )
+    .then((response) => {
+      const authData = response.data;
+
+      const { token_type, access_token } = authData;
+
+      api.defaults.headers.authorization = `${token_type} ${access_token}`;
+
+      return authData;
+    })
+    .catch((error) => {
+      console.log("error", error.response);
+
       return null;
     });
 };

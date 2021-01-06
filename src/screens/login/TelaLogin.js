@@ -33,37 +33,6 @@ const TelaLogin = ({ path, keycloakLogin }) => {
         } else {
           console.log("Authenticated");
         }
-
-        // localStorage.setItem("react-token", keycloak.token || "");
-        // localStorage.setItem(
-        //   "react-refresh-token",
-        //   keycloak.refreshToken || "",
-        // );
-
-        // setTimeout(() => {
-        //   keycloak
-        //     .updateToken(70)
-        //     .success((refreshed) => {
-        //       if (refreshed) {
-        //         console.log("Token refreshed" + refreshed);
-        //       } else {
-        //         console.log(
-        //           "Token not refreshed, valid for " +
-        //             Math.round(
-        //               (keycloak.tokenParsed && keycloak.tokenParsed.exp
-        //                 ? keycloak.tokenParsed.exp
-        //                 : 0) +
-        //                 (keycloak.timeSkew || 0) -
-        //                 new Date().getTime() / 1000,
-        //             ) +
-        //             " seconds",
-        //         );
-        //       }
-        //     })
-        //     .error(() => {
-        //       console.log("Failed to refresh token");
-        //     });
-        // }, 60000);
       })
       .error(() => {
         console.log("Authenticated Failed");
@@ -164,3 +133,34 @@ const TelaLogin = ({ path, keycloakLogin }) => {
 };
 
 export default TelaLogin;
+
+// localStorage.setItem("react-token", keycloak.token || "");
+// localStorage.setItem(
+//   "react-refresh-token",
+//   keycloak.refreshToken || "",
+// );
+
+// setTimeout(() => {
+//   keycloak
+//     .updateToken(70)
+//     .success((refreshed) => {
+//       if (refreshed) {
+//         console.log("Token refreshed" + refreshed);
+//       } else {
+//         console.log(
+//           "Token not refreshed, valid for " +
+//             Math.round(
+//               (keycloak.tokenParsed && keycloak.tokenParsed.exp
+//                 ? keycloak.tokenParsed.exp
+//                 : 0) +
+//                 (keycloak.timeSkew || 0) -
+//                 new Date().getTime() / 1000,
+//             ) +
+//             " seconds",
+//         );
+//       }
+//     })
+//     .error(() => {
+//       console.log("Failed to refresh token");
+//     });
+// }, 60000);
