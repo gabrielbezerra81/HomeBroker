@@ -38,79 +38,71 @@ const OpenAlert: React.FC<RouteComponentProps & { id?: string }> = ({
 
   const [, code] = routerLocation.href.split("code=");
 
-    // Iniciar keycloak
-    useEffect(() => {
-      keycloak
-        .init({ onLoad: "login-required", redirectUri: redirectURL + id })
-        .success((auth) => {
-          if (!auth) {
-            window.location.reload();
-          } else {
-            console.log("Authenticated");
-          }
-        })
-        .error(() => {
-          console.log("Authenticated Failed");
-        });
-    }, [id]);
-
-    // Buscar token
-    useEffect(() => {
-      async function login() {
-        if (code) {
-          const authData = await keycloakLoginAPI(code, redirectURL + id);
-
-          const { token_type, access_token } = authData;
-
-          dispatch(
-            updateManySystemState({
-              token: {
-                tokenType: token_type,
-                accessToken: access_token,
-              },
-              authData,
-              isLogged: true,
-            }),
-          );
+  // Iniciar keycloak
+  useEffect(() => {
+    keycloak
+      .init({ onLoad: "login-required", redirectUri: redirectURL + id })
+      .success((auth) => {
+        if (!auth) {
+          window.location.reload();
+        } else {
+          console.log("Authenticated");
         }
+      })
+      .error(() => {
+        console.log("Authenticated Failed");
+      });
+  }, [id]);
+
+  // Buscar token
+  useEffect(() => {
+    async function login() {
+      if (code) {
+        const authData = await keycloakLoginAPI(code, redirectURL + id);
+
+        const { token_type, access_token } = authData;
+
+        dispatch(
+          updateManySystemState({
+            token: {
+              tokenType: token_type,
+              accessToken: access_token,
+            },
+            authData,
+            isLogged: true,
+          }),
+        );
       }
+    }
 
-      login();
-    }, [code, dispatch, id]);
+    login();
+  }, [code, dispatch, id]);
 
-    // Abrir alerta na multileg
-    useEffect(() => {
-      async function openAlert() {
-        if (isLogged && id) {
-          const alerts: AlertAPI[] = await listAlertsAPI();
+  // Abrir alerta na multileg
+  useEffect(() => {
+    async function openAlert() {
+      if (isLogged && id) {
+        const alerts: AlertAPI[] = await listAlertsAPI();
 
-          const alertItem = alerts.find(
-            (alertItem) => alertItem.id === Number(id),
-          );
+        const alertItem = alerts.find(
+          (alertItem) => alertItem.id === Number(id),
+        );
 
-          if (alertItem) {
-            dispatch(openAlertInMultileg(alertItem, dispatchGlobal));
-          }
-
-          setFetchingAlerts(false);
+        if (alertItem) {
+          dispatch(openAlertInMultileg(alertItem, dispatchGlobal));
         }
-      }
 
-      openAlert();
-    }, [dispatch, dispatchGlobal, id, isLogged]);
+        setFetchingAlerts(false);
+      }
+    }
+
+    openAlert();
+  }, [dispatch, dispatchGlobal, id, isLogged]);
 
   if (!isLogged || fetchingAlerts) {
     return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-          flexDirection: "column",
-        }}
-      >
-        <h5 style={{ color: "#ddd", marginBottom: 16 }}>Carregando...</h5>
+      <div style={containerStyle}>
+        <h5 style={textStyle}>Carregando...</h5>
         <Spinner animation="border" variant="primary" />
       </div>
     );
@@ -120,3 +112,13 @@ const OpenAlert: React.FC<RouteComponentProps & { id?: string }> = ({
 };
 
 export default OpenAlert;
+
+const containerStyle: React.CSSProperties = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "100vh",
+  flexDirection: "column",
+};
+
+const textStyle: React.CSSProperties = { color: "#ddd", marginBottom: 16 };
