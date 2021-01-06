@@ -1,5 +1,5 @@
 import { BoxProps } from "screens/popups/quoteBox/types";
-import { Token, Account, BoxVisibility } from "./system";
+import { Token, Account, BoxVisibility, AuthData } from "./system";
 
 export default interface SystemState {
   connectedUser: string | null;
@@ -16,8 +16,9 @@ export default interface SystemState {
   isOpenTHL: boolean;
   isOpenRightSideMenu: boolean;
   isOpenCategoryList: boolean;
-  isOpenInitialPlanner:boolean;
+  isOpenInitialPlanner: boolean;
   token: Token;
+  authData: AuthData | null;
   accounts: Array<Account>;
   selectedAccount: Account;
   mainTabs: Array<{

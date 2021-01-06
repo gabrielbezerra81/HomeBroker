@@ -10,7 +10,7 @@ import {
 } from "constants/ActionTypes";
 import { setPointerWhileAwaiting } from "api/API";
 import { realizarLoginAPI, realizarCadastroAPI } from "api/LoginAPI";
-import {  navigate } from "@reach/router";
+import { navigate } from "@reach/router";
 import { persistor } from "redux/StoreCreation";
 import api from "api/apiConfig";
 
@@ -56,31 +56,15 @@ export const logarUsuarioAction = (email, senha) => {
 
       api.defaults.headers.authorization = `${tokenType} ${accessToken}`;
 
-      await dispatch({
-        type: MUDAR_DADOS_LOGIN,
-        payload: { nomeVariavel: "token", valor: { accessToken, tokenType } },
-      });
-      await dispatch({
-        type: LOGAR_DESLOGAR_USUARIO,
-        payload: {
+      dispatch(
+        updateManySystemState({
+          token: { accessToken, tokenType },
           connectedUser: nickName,
           isLogged: true,
-        },
-      });
-      await dispatch({
-        type: MUDAR_DADOS_LOGIN,
-        payload: {
-          nomeVariavel: "accounts",
-          valor: accounts,
-        },
-      });
-      await dispatch({
-        type: MUDAR_DADOS_LOGIN,
-        payload: {
-          nomeVariavel: "selectedAccount",
-          valor: accounts[0],
-        },
-      });
+          accounts,
+          selectedAccount: accounts[0],
+        }),
+      );
 
       navigate("/home");
     }

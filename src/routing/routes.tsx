@@ -1,37 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
-import qs from "qs";
-
-import {
-  Router,
-  Redirect,
-  RouteComponentProps,
-  useLocation,
-} from "@reach/router";
+import { Router, Redirect, RouteComponentProps } from "@reach/router";
 import TelaLogin from "screens/login/TelaLogin";
 import TelaCadastro from "screens/signUp/TelaCadastro";
 import TelaPrincipal from "screens/home/TelaPrincipal";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import api from "api/apiConfig";
 import UpdateManager from "updateManager/UpdateManager";
-import { useKeycloak } from "@react-keycloak/web";
-
-import axios from "axios";
+import LoginRedirect from "screens/login/LoginRedirect";
 
 export const Routes = () => {
   const {
     systemReducer: { token },
   } = useStateStorePrincipal();
 
-  const { keycloak } = useKeycloak();
-
   useEffect(() => {
     api.defaults.headers.authorization = `${token.tokenType} ${token.accessToken}`;
   }, [token]);
-
-  useEffect(() => {
-    keycloak.init({ onLoad: "login-required" });
-  }, [keycloak]);
 
   return (
     <>
@@ -40,7 +25,7 @@ export const Routes = () => {
         <TelaLogin path="/keycloak" keycloakLogin />
         <TelaCadastro path="/cadastro" />
         <Home path="/home" />
-        <Logged path="/logged" />
+        <LoginRedirect path="/logged" />
       </Router>
       <UpdateManager />
     </>
@@ -53,53 +38,6 @@ const Home: React.FC<RouteComponentProps> = ({ path }) => {
   } = useStateStorePrincipal();
 
   if (isLogged) return <TelaPrincipal />;
-
-  return <Redirect to="/" noThrow />;
-};
-
-const Logged: React.FC<RouteComponentProps> = ({ path }) => {
-  const [fetchingAPI, setFetchingAPI] = useState(true);
-
-  const routerLocation = useLocation();
-
-  const [, code] = routerLocation.href.split("code=");
-
-  console.log(code);
-
-  useEffect(() => {
-    if (code) {
-      axios
-        .post(
-          `https://auth.rendacontinua.com/auth/realms/auth_sso/protocol/openid-connect/token`,
-          qs.stringify({
-            code,
-            redirect_uri: "https://homebroker-react.herokuapp.com/logged",
-            grant_type: "authorization_code",
-            client_id: "broker_react",
-            client_secret: "367afb37-8884-42c3-b5b6-b455b9b7db59",
-          }),
-          {
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-          },
-        )
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((error) => {
-          console.log("error", error.response);
-          setFetchingAPI(false);
-        })
-        .finally(() => {
-          setFetchingAPI(false);
-        });
-    }
-  }, [code]);
-
-  if (fetchingAPI) {
-    return null;
-  }
 
   return <Redirect to="/" noThrow />;
 };

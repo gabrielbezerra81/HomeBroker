@@ -35,7 +35,7 @@ interface LoginData {
   accounts: Array<Account>;
 }
 
-export const realizarLoginAPI = (
+export const realizarLoginAPI = async (
   username: string,
   password: string,
 ): Promise<LoginData | null> => {

@@ -9,7 +9,7 @@ import {
 import FloatingLabelInput from "react-floating-label-input";
 import { navigate } from "@reach/router";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
-import { useKeycloak } from "@react-keycloak/web";
+import keycloak from "Keycloak";
 
 const redirectURL =
   location.hostname === "localhost"
@@ -24,23 +24,65 @@ const TelaLogin = ({ path, keycloakLogin }) => {
 
   const dispatch = useDispatchStorePrincipal();
 
-  const { keycloak } = useKeycloak();
+  const keycloakAuth = useCallback(() => {
+    keycloak
+      .init({ onLoad: "login-required", redirectUri: redirectURL })
+      .success((auth) => {
+        if (!auth) {
+          window.location.reload();
+        } else {
+          console.log("Authenticated");
+        }
+
+        // localStorage.setItem("react-token", keycloak.token || "");
+        // localStorage.setItem(
+        //   "react-refresh-token",
+        //   keycloak.refreshToken || "",
+        // );
+
+        // setTimeout(() => {
+        //   keycloak
+        //     .updateToken(70)
+        //     .success((refreshed) => {
+        //       if (refreshed) {
+        //         console.log("Token refreshed" + refreshed);
+        //       } else {
+        //         console.log(
+        //           "Token not refreshed, valid for " +
+        //             Math.round(
+        //               (keycloak.tokenParsed && keycloak.tokenParsed.exp
+        //                 ? keycloak.tokenParsed.exp
+        //                 : 0) +
+        //                 (keycloak.timeSkew || 0) -
+        //                 new Date().getTime() / 1000,
+        //             ) +
+        //             " seconds",
+        //         );
+        //       }
+        //     })
+        //     .error(() => {
+        //       console.log("Failed to refresh token");
+        //     });
+        // }, 60000);
+      })
+      .error(() => {
+        console.log("Authenticated Failed");
+      });
+  }, []);
 
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
 
       if (keycloakLogin) {
-        keycloak.login({
-          redirectUri: redirectURL,
-        });
+        keycloakAuth();
       } //
       else {
         dispatch(logarUsuarioAction(user.username, user.password));
         setUser({ ...user, password: "" });
       }
     },
-    [dispatch, keycloak, keycloakLogin, user],
+    [dispatch, keycloakLogin, user, keycloakAuth],
   );
 
   const handleInputChange = useCallback((e) => {

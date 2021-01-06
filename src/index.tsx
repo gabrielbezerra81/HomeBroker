@@ -2,9 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { setAutoFreeze } from "immer";
 
-import { ReactKeycloakProvider } from "@react-keycloak/web";
-import keycloak from "Keycloak";
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/index";
 import "@fortawesome/fontawesome-free/css/all.css";
@@ -23,17 +20,15 @@ import {
 setAutoFreeze(false);
 
 ReactDOM.render(
-  <ReactKeycloakProvider authClient={keycloak}>
-    <Provider store={globalStore} context={GlobalContext}>
-      <Provider store={storeAppPrincipal} context={StorePrincipalContext}>
-        <PersistGate loading={null} persistor={persistor}>
-          <PerfectScrollbar id="scrollbarPrincipal">
-            <Routes />
-          </PerfectScrollbar>
-        </PersistGate>
-      </Provider>
+  <Provider store={globalStore} context={GlobalContext}>
+    <Provider store={storeAppPrincipal} context={StorePrincipalContext}>
+      <PersistGate loading={null} persistor={persistor}>
+        <PerfectScrollbar id="scrollbarPrincipal">
+          <Routes />
+        </PerfectScrollbar>
+      </PersistGate>
     </Provider>
-  </ReactKeycloakProvider>,
+  </Provider>,
   document.getElementById("root"),
 );
 

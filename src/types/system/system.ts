@@ -3,6 +3,16 @@ export interface Token {
   accessToken: string;
 }
 
+export interface AuthData {
+  token_type: string;
+  access_token: string;
+  expires_in: number;
+  id_token: string;
+  refresh_expires_in: number;
+  refresh_token: string;
+  session_state: string;
+}
+
 export interface Account {
   sigla: string;
   gateway: string | null;
