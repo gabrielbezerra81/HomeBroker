@@ -1,4 +1,5 @@
 import { Redirect, RouteComponentProps, useLocation } from "@reach/router";
+import { Spinner } from "react-bootstrap";
 import { listAlertsAPI } from "api/API";
 import { keycloakLoginAPI } from "api/LoginAPI";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
@@ -37,69 +38,82 @@ const OpenAlert: React.FC<RouteComponentProps & { id?: string }> = ({
 
   const [, code] = routerLocation.href.split("code=");
 
-  // Iniciar keycloak
-  useEffect(() => {
-    keycloak
-      .init({ onLoad: "login-required", redirectUri: redirectURL + id })
-      .success((auth) => {
-        if (!auth) {
-          window.location.reload();
-        } else {
-          console.log("Authenticated");
+    // Iniciar keycloak
+    useEffect(() => {
+      keycloak
+        .init({ onLoad: "login-required", redirectUri: redirectURL + id })
+        .success((auth) => {
+          if (!auth) {
+            window.location.reload();
+          } else {
+            console.log("Authenticated");
+          }
+        })
+        .error(() => {
+          console.log("Authenticated Failed");
+        });
+    }, [id]);
+
+    // Buscar token
+    useEffect(() => {
+      async function login() {
+        if (code) {
+          const authData = await keycloakLoginAPI(code, redirectURL + id);
+
+          const { token_type, access_token } = authData;
+
+          dispatch(
+            updateManySystemState({
+              token: {
+                tokenType: token_type,
+                accessToken: access_token,
+              },
+              authData,
+              isLogged: true,
+            }),
+          );
         }
-      })
-      .error(() => {
-        console.log("Authenticated Failed");
-      });
-  }, [id]);
-
-  // Buscar token
-  useEffect(() => {
-    async function login() {
-      if (code) {
-        const authData = await keycloakLoginAPI(code, redirectURL + id);
-
-        const { token_type, access_token } = authData;
-
-        dispatch(
-          updateManySystemState({
-            token: {
-              tokenType: token_type,
-              accessToken: access_token,
-            },
-            authData,
-            isLogged: true,
-          }),
-        );
       }
-    }
 
-    login();
-  }, [code, dispatch, id]);
+      login();
+    }, [code, dispatch, id]);
 
-  // Abrir alerta na multileg
-  useEffect(() => {
-    async function openAlert() {
-      if (isLogged && id) {
-        const alerts: AlertAPI[] = await listAlertsAPI();
+    // Abrir alerta na multileg
+    useEffect(() => {
+      async function openAlert() {
+        if (isLogged && id) {
+          const alerts: AlertAPI[] = await listAlertsAPI();
 
-        const alertItem = alerts.find(
-          (alertItem) => alertItem.id === Number(id),
-        );
+          const alertItem = alerts.find(
+            (alertItem) => alertItem.id === Number(id),
+          );
 
-        if (alertItem) {
-          dispatch(openAlertInMultileg(alertItem, dispatchGlobal));
+          if (alertItem) {
+            dispatch(openAlertInMultileg(alertItem, dispatchGlobal));
+          }
+
+          setFetchingAlerts(false);
         }
-
-        setFetchingAlerts(false);
       }
-    }
 
-    openAlert();
-  }, [dispatch, dispatchGlobal, id, isLogged]);
+      openAlert();
+    }, [dispatch, dispatchGlobal, id, isLogged]);
 
   if (!isLogged || fetchingAlerts) {
-    return null;
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          flexDirection: "column",
+        }}
+      >
+        <h5 style={{ color: "#ddd", marginBottom: 16 }}>Carregando...</h5>
+        <Spinner animation="border" variant="primary" />
+      </div>
+    );
   }
 
   return <Redirect to="/home" noThrow />;
