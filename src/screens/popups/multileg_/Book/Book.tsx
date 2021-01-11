@@ -245,9 +245,9 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
                   tabIndex,
                   attributeName: "preco",
                   attributeValue: formatarNumDecimal(
-                    Number(event.currentTarget.value),
+                    Number(event.currentTarget.value)
                   ),
-                }),
+                })
               );
             }}
           />
@@ -265,9 +265,9 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
                     Number(min).toFixed(2),
                     2,
                     ".",
-                    ",",
+                    ","
                   ),
-                }),
+                })
               )
             }
             className="divClicavel"
@@ -288,9 +288,9 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
                           Number((max + min) / 2).toFixed(2),
                           2,
                           ".",
-                          ",",
+                          ","
                         ),
-                      }),
+                      })
                     )
                 : () => false
             }
@@ -310,9 +310,9 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
                     Number(max).toFixed(2),
                     2,
                     ".",
-                    ",",
+                    ","
                   ),
-                }),
+                })
               )
             }
             className="divClicavel"
@@ -347,7 +347,7 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
                   tabIndex,
                   attributeName: "preco",
                   attributeValue: valor,
-                }),
+                })
               )
             }
           />
@@ -403,7 +403,7 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
                   tabIndex,
                   attributeName: "selectedStrategy",
                   attributeValue: Number(e.target.value),
-                }),
+                })
               )
             }
           >
