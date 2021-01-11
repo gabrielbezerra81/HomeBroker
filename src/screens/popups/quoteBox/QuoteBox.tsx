@@ -6,7 +6,10 @@ import { AiFillMinusCircle } from "react-icons/ai";
 
 import { ImArrowUp, ImArrowDown } from "react-icons/im";
 import { BoxProps, Code, FormattedBox } from "./types";
-import { formatarNumDecimal } from "shared/utils/Formatacoes";
+import {
+  formatarNumDecimal,
+  formatarQuantidadeKMG,
+} from "shared/utils/Formatacoes";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import {
@@ -50,7 +53,7 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
 
   const boxIndex = useMemo(() => {
     return boxesVisibility.findIndex(
-      (boxItem) => boxItem.boxKey === `box${quoteBox.id}`,
+      (boxItem) => boxItem.boxKey === `box${quoteBox.id}`
     );
   }, [boxesVisibility, quoteBox.id]);
 
@@ -63,7 +66,32 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
       if (typeof quoteBox[parsedKey] === "number") {
         box[parsedKey] = formatarNumDecimal(quoteBox[parsedKey], 2, 2);
       } //
-      else {
+      else if (parsedKey === "book" && quoteBox.book) {
+        box.book = { buy: [], sell: [] };
+
+        box.book.buy = quoteBox.book.buy
+          .filter(
+            (bookLine) =>
+              bookLine.price.toString() !== "0.0031415" &&
+              bookLine.qtty.toString() !== "0.0031415"
+          )
+          .map((bookLine) => ({
+            ...bookLine,
+            formattedQtty: formatarQuantidadeKMG(bookLine.qtty),
+            formattedPrice: formatarNumDecimal(bookLine.price),
+          }));
+        box.book.sell = quoteBox.book.sell
+          .filter(
+            (bookLine) =>
+              bookLine.price.toString() !== "0.0031415" &&
+              bookLine.qtty.toString() !== "0.0031415"
+          )
+          .map((bookLine) => ({
+            ...bookLine,
+            formattedQtty: formatarQuantidadeKMG(bookLine.qtty),
+            formattedPrice: formatarNumDecimal(bookLine.price),
+          }));
+      } else {
         box[parsedKey] = quoteBox[parsedKey] as any;
       }
     });
@@ -78,7 +106,7 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
     const shouldShowBox = openedMenus.some(
       (menuItem) =>
         menuItem.menuKey === `box${quoteBox.id}` &&
-        menuItem.tabKey === selectedTab,
+        menuItem.tabKey === selectedTab
     );
 
     return shouldShowBox ? {} : { display: "none" };
@@ -94,7 +122,7 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
     });
 
     dispatch(
-      updateOneSystemStateAction("boxesVisibility", updatedBoxesVisibility),
+      updateOneSystemStateAction("boxesVisibility", updatedBoxesVisibility)
     );
   }, [boxesVisibility, dispatch, boxIndex]);
 
@@ -105,7 +133,7 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
       if (shouldDelete) {
         const updatedOpenedMenus = produce(openedMenus, (draft) => {
           return draft.filter(
-            (menuItem) => menuItem.menuKey !== `box${quoteBox.id}`,
+            (menuItem) => menuItem.menuKey !== `box${quoteBox.id}`
           );
         });
 
@@ -115,7 +143,7 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
 
         const updatedQuoteBoxes = produce(quoteBoxes, (draft) => {
           const index = draft.findIndex(
-            (boxItem) => boxItem.id === quoteBox.id,
+            (boxItem) => boxItem.id === quoteBox.id
           );
 
           if (index >= 0) draft.splice(index, 1);
@@ -126,7 +154,7 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
             openedMenus: updatedOpenedMenus,
             boxesVisibility: updatedBoxesVisibility,
             quoteBoxes: updatedQuoteBoxes,
-          }),
+          })
         );
       }
     } catch (error) {}
@@ -149,7 +177,7 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
         setBounds({ left: -1 * bound.x + limitX, top: -1 * bound.y + limitY });
       }
     },
-    [bounds, limitX],
+    [bounds, limitX]
   );
 
   const onStopDragging = useCallback(() => {
@@ -164,7 +192,7 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
 
       setPosition({ x: data.x, y: data.y });
     },
-    [bounds],
+    [bounds]
   );
 
   // useEffect(() => {
@@ -202,7 +230,7 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
               (code, index) =>
                 code.type === "buy" && (
                   <CodeColumn key={`${code.symbol}${index}`} code={code} />
-                ),
+                )
             )}
           </div>
           <div>
@@ -210,7 +238,7 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
               (code, index) =>
                 code.type === "sell" && (
                   <CodeColumn key={`${code.symbol}${index}`} code={code} />
-                ),
+                )
             )}
           </div>
         </div>
@@ -254,8 +282,8 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
                   </div>
                   {formattedBox.book.buy.map((book, index) => (
                     <div key={`buyBook${index}`}>
-                      <span>{book.qtty}</span>
-                      <span>{book.price}</span>
+                      <span>{book.formattedQtty}</span>
+                      <span>{book.formattedPrice}</span>
                     </div>
                   ))}
                 </>
@@ -281,8 +309,8 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
                   </div>
                   {formattedBox.book.sell.map((book, index) => (
                     <div key={`buyBook${index}`}>
-                      <span>{book.qtty}</span>
-                      <span>{book.price}</span>
+                      <span>{book.formattedQtty}</span>
+                      <span>{book.formattedPrice}</span>
                     </div>
                   ))}
                 </>

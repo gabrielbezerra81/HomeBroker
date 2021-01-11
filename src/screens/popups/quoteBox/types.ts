@@ -7,8 +7,8 @@ export interface BoxProps {
   min: number;
   max: number;
   book: {
-    buy: Array<{ qtty: number; price: number }>;
-    sell: Array<{ qtty: number; price: number }>;
+    buy: Array<{ qtty: number; price: number; [key: string]: any }>;
+    sell: Array<{ qtty: number; price: number; [key: string]: any }>;
   };
   dayOscilation: number;
   codes: Array<Code>;
