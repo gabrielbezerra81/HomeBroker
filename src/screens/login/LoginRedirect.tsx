@@ -38,7 +38,7 @@ const LoginRedirect: React.FC<RouteComponentProps> = ({ path }) => {
             },
             authData,
             isLogged: true,
-          }),
+          })
         );
       }
     }
