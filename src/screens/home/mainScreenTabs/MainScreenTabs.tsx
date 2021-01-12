@@ -37,6 +37,7 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
       isOpenRightSideMenu,
       isOpenCategoryList,
       isOpenInitialPlanner,
+      isOpenDetailedPlanner,
     },
   } = useStateStorePrincipal();
 
@@ -51,6 +52,7 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
       { key: "thl", isOpen: isOpenTHL },
       { key: "category_list", isOpen: isOpenCategoryList },
       { key: "initialPlanner", isOpen: isOpenInitialPlanner },
+      { key: "detailedPlanner", isOpen: isOpenDetailedPlanner },
     ] as const;
 
     return menus;
@@ -62,12 +64,13 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
     isOpenTHL,
     isOpenCategoryList,
     isOpenInitialPlanner,
+    isOpenDetailedPlanner,
   ]);
 
   useEffect(() => {
     function loadOpenedMenus() {
       dispatch(
-        handleOpenMenusInMainScreenTabsAction(menuChildren, selectedTab),
+        handleOpenMenusInMainScreenTabsAction(menuChildren, selectedTab)
       );
     }
 
@@ -94,7 +97,7 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
         requestAnimationFrame(() => {
           targetElement.setSelectionRange(
             selectionStart + 1,
-            selectionStart + 1,
+            selectionStart + 1
           );
         });
 
@@ -103,13 +106,13 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
             tabIndex,
             attributeName: "tabName",
             attributeValue: newTabName,
-          }),
+          })
         );
       } else {
         dispatch(handleAddOrSelectTabAction(key));
       }
     },
-    [dispatch, selectedTab],
+    [dispatch, selectedTab]
   );
 
   const previousIsOpenLeftUserMenu = usePrevious(isOpenLeftUserMenu);

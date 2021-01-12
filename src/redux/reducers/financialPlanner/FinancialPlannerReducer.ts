@@ -3,15 +3,15 @@ import Action from "types/Action";
 import FinancialPlannerState from "types/financialPlanner/FinancialPlannerState";
 
 const INITIAL_STATE: FinancialPlannerState = {
-  initialValue: 0,
-  mensalValue: 0,
-  interestRate: 0,
-  period: 10,
+  initialValue: 1000,
+  mensalValue: 100,
+  interestRate: 1,
+  period: 1,
 };
 
 export default (
   state = INITIAL_STATE,
-  { type, payload }: Action,
+  { type, payload }: Action
 ): FinancialPlannerState => {
   switch (type) {
     case UPDATE_MANY_FINANCIAL_PLANNER:

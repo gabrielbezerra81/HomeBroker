@@ -17,6 +17,7 @@ export default interface SystemState {
   isOpenRightSideMenu: boolean;
   isOpenCategoryList: boolean;
   isOpenInitialPlanner: boolean;
+  isOpenDetailedPlanner: boolean;
   token: Token;
   authData: AuthData | null;
   accounts: Array<Account>;

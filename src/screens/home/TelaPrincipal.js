@@ -19,16 +19,17 @@ import AddBoxMenu from "../popups/quoteBox/AddBoxMenu";
 import RightSideMenu from "./rightSideMenu/RightSideMenu";
 import CategoryList from "screens/popups/categoryList/CategoryList";
 import InitialPlanner from "screens/popups/financialPlanner/InitialPlanner";
+import DetailedPlanner from "screens/popups/financialPlanner/DetailedPlanner";
 
 const OrdensExecucao = React.lazy(() =>
-  import("screens/popups/ordens_em_execucao/OrdensExecucao"),
+  import("screens/popups/ordens_em_execucao/OrdensExecucao")
 );
 const Multileg = React.lazy(() => import("screens/popups/multileg_/Multileg"));
 const PosicaoEmCustodia = React.lazy(() =>
-  import("screens/popups/posicao_custodia/PosicaoEmCustodia"),
+  import("screens/popups/posicao_custodia/PosicaoEmCustodia")
 );
 const RelatorioDetalhado = React.lazy(() =>
-  import("screens/popups/relatorio_detalhado/RelatorioDetalhado"),
+  import("screens/popups/relatorio_detalhado/RelatorioDetalhado")
 );
 const TelaTHL = React.lazy(() => import("screens/popups/thl/Tela_THL"));
 
@@ -62,7 +63,7 @@ class TelaPrincipal extends React.Component {
           });
         }
         return Promise.reject(error);
-      },
+      }
     );
 
     // LogRocket.identify(this.props.connectedUser, {
@@ -92,6 +93,7 @@ class TelaPrincipal extends React.Component {
       isOpenTHL,
       isOpenCategoryList,
       isOpenInitialPlanner,
+      isOpenDetailedPlanner,
       apps: AppBoletas,
     } = this.props;
 
@@ -158,6 +160,14 @@ class TelaPrincipal extends React.Component {
               >
                 <InitialPlanner />
               </PopupContainer>
+
+              <PopupContainer
+                isOpen={isOpenDetailedPlanner}
+                key="detailedPlanner"
+                divKey="detailedPlanner"
+              >
+                <DetailedPlanner />
+              </PopupContainer>
             </MainScreenTabs>
 
             <RightSideMenu />
@@ -190,6 +200,7 @@ const mapStateToPropsAppPrincipal = (state) => ({
   isOpenTHL: state.systemReducer.isOpenTHL,
   isOpenCategoryList: state.systemReducer.isOpenCategoryList,
   isOpenInitialPlanner: state.systemReducer.isOpenInitialPlanner,
+  isOpenDetailedPlanner: state.systemReducer.isOpenDetailedPlanner,
 });
 
 export default compose(
@@ -203,8 +214,8 @@ export default compose(
     null,
     {
       context: StorePrincipalContext,
-    },
-  ),
+    }
+  )
 )(TelaPrincipal);
 
 /*

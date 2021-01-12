@@ -59,6 +59,18 @@
     .graphContainer {
       border-top: 1px solid #777;
       padding-top: 8px;
+
+      .recharts-cartesian-grid-vertical {
+        line:first-child {
+          stroke-opacity: 0;
+        }
+      }
+
+      .recharts-cartesian-grid-horizontal {
+        line:not(:last-child) {
+          stroke-opacity: 0;
+        }
+      }
     }
   }
 
