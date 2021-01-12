@@ -83,6 +83,10 @@ const InitialPlanner: React.FC = () => {
   const projections = useMemo(() => {
     const projections: MonthProjection[] = [];
 
+    if (!initialValue || !interestRate || !period) {
+      return [];
+    }
+
     const monthlyValue = mensalValue || 0;
 
     let investment = initialValue;
@@ -303,6 +307,7 @@ const InitialPlanner: React.FC = () => {
                     contentStyle={tooltipContentStyle}
                     labelStyle={labelStyle}
                     labelFormatter={(label) => "Mês " + label.toString()}
+                    formatter={(value) => formatarNumDecimal(value, 2)}
                   />
                   <Legend
                     iconSize={9}
@@ -346,7 +351,6 @@ const InitialPlanner: React.FC = () => {
                     <th></th>
                     <th></th>
                     <th></th>
-
                     <th colSpan={2}>Rendimento no período</th>
                     <th colSpan={2}>Rendimento Total</th>
                     <th></th>
