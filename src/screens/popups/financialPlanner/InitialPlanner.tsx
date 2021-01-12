@@ -342,6 +342,16 @@ const InitialPlanner: React.FC = () => {
               <Table borderless striped={false}>
                 <thead>
                   <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+
+                    <th colSpan={2}>Rendimento no período</th>
+                    <th colSpan={2}>Rendimento Total</th>
+                    <th></th>
+                  </tr>
+                  <tr>
                     <th>Período</th>
                     <th>Aporte</th>
                     <th>Aporte Base de Cálc</th>
