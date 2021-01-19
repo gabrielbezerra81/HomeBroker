@@ -1,6 +1,9 @@
 import React from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
+
+import { AiFillForward } from "react-icons/ai";
+
 import iconeListaCompleta from "assets/iconeListaCompleta.png";
 import { ReactComponent as Icones } from "assets/IconesBarraLateral.svg";
 import { StorePrincipalContext, GlobalContext } from "redux/StoreCreation";
@@ -114,17 +117,17 @@ class BarraLateral extends React.Component {
           <Icones viewBox="8 407 41 52" className="iconesBarraLateral"></Icones>
           <h6>HISTÓRICO</h6>
         </div>
+
         <div
           tabIndex={0}
           className="itemDivBarraLateral divClicavel"
           onClick={() => {
-            props.atualizarDivKeyAction("posicao_custodia");
-            props.abrirItemBarraLateralAction(props, "isOpenPosition");
+            props.atualizarDivKeyAction("initialPlanner");
+            props.abrirItemBarraLateralAction(props, "isOpenInitialPlanner");
           }}
-          style={{ display: "none" }}
         >
-          <img src={iconeListaCompleta} alt="Lista completa" />
-          <h6>LISTA COMPLETA</h6>
+          <AiFillForward color="#8ba5c2" size={40} />
+          <h6>PROJEÇÕES</h6>
         </div>
       </div>
     );
@@ -170,3 +173,21 @@ export default compose(
     { context: StorePrincipalContext },
   ),
 )(BarraLateral);
+
+/*
+
+ <div
+          tabIndex={0}
+          className="itemDivBarraLateral divClicavel"
+          onClick={() => {
+            props.atualizarDivKeyAction("posicao_custodia");
+            props.abrirItemBarraLateralAction(props, "isOpenPosition");
+          }}
+          style={{ display: "none" }}
+        >
+          <img src={iconeListaCompleta} alt="Lista completa" />
+          <h6>LISTA COMPLETA</h6>
+        </div>
+
+
+*/

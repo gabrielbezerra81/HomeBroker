@@ -172,7 +172,7 @@ export const INITIAL_STATE: SystemState = {
   selectedTab: "tab0",
   openedMenus: [
     // { menuKey: "initialPlanner", tabKey: "tab0" },
-    { menuKey: "detailedPlanner", tabKey: "tab0" },
+    // { menuKey: "detailedPlanner", tabKey: "tab0" },
     // { menuKey: "category_list", tabKey: "tab0" },
     // { menuKey: "box1", tabKey: "tab0" },
     // { menuKey: "box2", tabKey: "tab0" },
@@ -200,7 +200,7 @@ export const INITIAL_STATE: SystemState = {
   updateInterval: 3000,
   isLeftSideMenuConfigOpen: false,
   isOpenInitialPlanner: false,
-  isOpenDetailedPlanner: false,
+  isOpenDetailedPlanner: true,
 };
 
 const {

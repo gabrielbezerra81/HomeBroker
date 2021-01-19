@@ -274,76 +274,78 @@ const InitialPlanner: React.FC = () => {
               </div>
 
               <div>
-                <h6>Total</h6>
+                <h6>Total:</h6>
                 <h6>{result?.formattedTotal}</h6>
                 <span></span>
               </div>
 
-              <ResponsiveContainer
-                className="graphContainer"
-                width="100%"
-                height={250}
-              >
-                <LineChart data={formattedMonthsProjection}>
-                  <CartesianGrid
-                    strokeDasharray="5 5"
-                    stroke="#B1B2B1"
-                    horizontal={false}
-                  />
-                  <XAxis
-                    label={{
-                      value: "Mês",
-                      fill: "#D2D5D2",
-                      position: "insideBottom",
-                      offset: -1,
-                    }}
-                    dataKey={(item) => {
-                      return Number(item.period.replace("Mês ", ""));
-                    }}
-                    type="number"
-                    tickCount={tickCount}
-                    tick={tickStyle}
-                    axisLine={axisStyle}
-                  />
-                  <YAxis tick={tickStyle} axisLine={axisStyle} />
-                  <Tooltip
-                    contentStyle={tooltipContentStyle}
-                    labelStyle={labelStyle}
-                    labelFormatter={(label) => "Mês " + label.toString()}
-                    formatter={(value: any) => formatarNumDecimal(value, 2)}
-                  />
-                  <Legend
-                    iconSize={9}
-                    iconType="rect"
-                    wrapperStyle={labelStyle}
-                  />
+              {!!projections.length && (
+                <ResponsiveContainer
+                  className="graphContainer"
+                  width="100%"
+                  height={250}
+                >
+                  <LineChart data={formattedMonthsProjection}>
+                    <CartesianGrid
+                      strokeDasharray="5 5"
+                      stroke="#B1B2B1"
+                      horizontal={false}
+                    />
+                    <XAxis
+                      label={{
+                        value: "Mês",
+                        fill: "#D2D5D2",
+                        position: "insideBottom",
+                        offset: -1,
+                      }}
+                      dataKey={(item) => {
+                        return Number(item.period.replace("Mês ", ""));
+                      }}
+                      type="number"
+                      tickCount={tickCount}
+                      tick={tickStyle}
+                      axisLine={axisStyle}
+                    />
+                    <YAxis tick={tickStyle} axisLine={axisStyle} />
+                    <Tooltip
+                      contentStyle={tooltipContentStyle}
+                      labelStyle={labelStyle}
+                      labelFormatter={(label) => "Mês " + label.toString()}
+                      formatter={(value: any) => formatarNumDecimal(value, 2)}
+                    />
+                    <Legend
+                      iconSize={9}
+                      iconType="rect"
+                      wrapperStyle={labelStyle}
+                    />
 
-                  <Line
-                    type="monotone"
-                    dataKey="total"
-                    stroke="#009933"
-                    strokeWidth={3}
-                    dot={false}
-                    name="Dinheiro Acumulado"
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="investment"
-                    stroke="#CC3333"
-                    strokeWidth={3}
-                    dot={false}
-                    name="Dinheiro Investido"
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="totalIncome"
-                    stroke="#FFFF00"
-                    strokeWidth={3}
-                    dot={false}
-                    name="Total em Juros"
-                  />
-                </LineChart>
-              </ResponsiveContainer>
+                    <Line
+                      type="monotone"
+                      dataKey="total"
+                      stroke="#009933"
+                      strokeWidth={3}
+                      dot={false}
+                      name="Dinheiro Acumulado"
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="investment"
+                      stroke="#CC3333"
+                      strokeWidth={3}
+                      dot={false}
+                      name="Dinheiro Investido"
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="totalIncome"
+                      stroke="#FFFF00"
+                      strokeWidth={3}
+                      dot={false}
+                      name="Total em Juros"
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              )}
             </div>
 
             <div className="projectionContainer">
