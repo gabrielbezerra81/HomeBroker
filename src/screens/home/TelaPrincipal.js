@@ -19,7 +19,7 @@ import AddBoxMenu from "../popups/quoteBox/AddBoxMenu";
 import RightSideMenu from "./rightSideMenu/RightSideMenu";
 import CategoryList from "screens/popups/categoryList/CategoryList";
 import InitialPlanner from "screens/popups/financialPlanner/InitialPlanner";
-import DetailedPlanner from "screens/popups/financialPlanner/DetailedPlanner";
+import DetailedPlanner from "screens/popups/financialPlanner/DetailedPlanner/DetailedPlanner";
 
 const OrdensExecucao = React.lazy(() =>
   import("screens/popups/ordens_em_execucao/OrdensExecucao")

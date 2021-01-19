@@ -134,20 +134,23 @@ const InitialPlanner: React.FC = () => {
     dispatch(
       abrirItemBarraLateralAction(
         { isOpenInitialPlanner },
-        "isOpenInitialPlanner"
-      )
+        "isOpenInitialPlanner",
+      ),
     );
   }, [dispatch, isOpenInitialPlanner]);
 
-  const handleInputChange = (value: any, event: any) => {
-    const { name } = event.target;
+  const handleInputChange = useCallback(
+    (value: any, event: any) => {
+      const { name } = event.target;
 
-    dispatch(
-      updateManyFinancialPlannerAction({
-        [name]: value,
-      })
-    );
-  };
+      dispatch(
+        updateManyFinancialPlannerAction({
+          [name]: value,
+        }),
+      );
+    },
+    [dispatch],
+  );
 
   const formattedMonthsProjection = useMemo(() => {
     return projections.map((monthItem, index) => ({
@@ -254,7 +257,7 @@ const InitialPlanner: React.FC = () => {
                   <option value={2}>2 anos</option>
                   <option value={5}>5 anos</option>
                   <option value={10}>10 anos</option>
-                </FormControl>{" "}
+                </FormControl>
                 <span></span>
               </div>
 
@@ -307,7 +310,7 @@ const InitialPlanner: React.FC = () => {
                     contentStyle={tooltipContentStyle}
                     labelStyle={labelStyle}
                     labelFormatter={(label) => "Mês " + label.toString()}
-                    formatter={(value) => formatarNumDecimal(value, 2)}
+                    formatter={(value: any) => formatarNumDecimal(value, 2)}
                   />
                   <Legend
                     iconSize={9}

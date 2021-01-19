@@ -1,0 +1,195 @@
+.plannerProjection {
+  padding: 0 6px;
+  border-right: 1px solid #b7b7b7;
+  margin-bottom: 8px;
+
+  > div.firstRow {
+    display: flex;
+
+    select + select,
+    select + div {
+      margin-top: 8px;
+    }
+
+    select,
+    .containerInput {
+      max-width: 100px;
+      text-align-last: center;
+    }
+
+    .inputGroup {
+      display: flex;
+      align-items: center;
+
+      &:first-child {
+        margin-top: 32px;
+      }
+
+      & + .inputGroup {
+        margin-top: 8px;
+      }
+
+      span {
+        min-width: 100px;
+        line-height: 15px;
+      }
+    }
+
+    .graphContainer {
+      flex: 1;
+      position: relative;
+
+      > h6 {
+        position: absolute;
+        bottom: 16px;
+        left: 64px;
+        display: block;
+        font-size: 14px;
+      }
+
+      .recharts-layer .recharts-pie-sector {
+        path {
+          // stroke: #000;
+          stroke-width: 0px;
+        }
+      }
+
+      .recharts-legend-wrapper {
+        right: 72px !important;
+        top: -8px !important;
+
+        .customLegendContainer {
+          margin-top: 4px;
+
+          > div {
+            > .inner-circle {
+              display: inline-block;
+              width: 14px;
+              height: 14px;
+              border-radius: 50%;
+              border-style: solid;
+              border-width: 2px;
+              background-color: rgba(0, 0, 0, 0);
+              margin-right: 6px;
+              vertical-align: middle;
+            }
+
+            span:not(.inner-circle) {
+              display: inline-block;
+              font-size: 12px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .planningTable {
+    background-color: transparent !important;
+    margin-bottom: 8px;
+
+    th {
+      font-weight: 500;
+      color: #aa88bc;
+      text-align: center;
+    }
+
+    th,
+    td {
+      border: none;
+
+      &:first-child {
+        // padding-left: 2px !important;
+      }
+    }
+
+    td {
+      background-color: #272827 !important;
+      font-size: 12px;
+      text-align: center;
+      padding-top: 2px !important;
+      padding-bottom: 2px !important;
+      line-height: 14px;
+    }
+
+    .cellContent {
+      display: flex;
+      justify-content: center;
+
+      input {
+        text-align: center;
+      }
+
+      &.periodCell {
+        > .darkInputSimpleInput {
+          width: 14px;
+          padding-top: 2px;
+        }
+
+        select {
+          min-width: 55px;
+        }
+      }
+
+      > select {
+        min-width: 44px;
+      }
+
+      .containerInput {
+        // max-width: 50px;
+        padding-top: 0;
+        padding-bottom: 0;
+        border: 1px solid transparent;
+
+        input {
+          padding-right: 0 !important;
+        }
+      }
+    }
+
+    tr {
+      &:not(:first-child) {
+        border-top: 6px solid #0f0f0f;
+      }
+
+      &:last-child {
+        td {
+          background-color: transparent !important;
+          padding-bottom: 8px !important;
+
+          &:first-child {
+            text-align: left;
+          }
+
+          &:nth-child(n + 4) {
+            border-bottom: 1px solid #b7b7b7;
+          }
+
+          &:nth-child(4) {
+            color: #aa88bc;
+          }
+
+          &:nth-child(5) {
+            color: #108242;
+          }
+
+          &:nth-child(6) {
+            color: #956968;
+          }
+        }
+      }
+    }
+  }
+
+  .includeLineRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .simulationButton {
+    background-color: #272827;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+}

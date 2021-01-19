@@ -107,7 +107,8 @@ h6 {
   margin-bottom: 0rem;
 }
 
-.darkInputSelect {
+.darkInputSelect,
+.darkInputSimpleInput {
   background-color: #272827;
   border-color: #272827;
   border-radius: 0;
@@ -119,5 +120,21 @@ h6 {
   &:focus {
     background-color: #272827;
     border-color: #272827;
+  }
+}
+
+.brokerCustomButton {
+  border: none;
+  background-color: transparent;
+  line-height: normal;
+  transition: opacity 0.2s;
+  color: #ddd;
+
+  &:focus {
+    outline: none !important;
+  }
+
+  &:hover {
+    opacity: 0.6;
   }
 }

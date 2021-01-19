@@ -1,0 +1,120 @@
+#detailedPlanner {
+  width: 1280px;
+
+  @import "./plannerProjection.scss";
+  @import "./resultPerformance.scss";
+
+  .mheader {
+    padding-bottom: 2px;
+
+    h6 {
+      font-size: 18px;
+    }
+  }
+
+  .mcontent {
+    background-color: #0f0f0f;
+    overflow: hidden;
+  }
+
+  .topContent {
+    display: flex;
+    margin-top: 16px;
+
+    > div {
+      flex: 1;
+      min-height: 150px;
+    }
+  }
+
+  .walletEvolutionContainer {
+    width: 100%;
+
+    border-top: 1px solid #b7b7b7;
+    padding: 12px 8px;
+
+    .content {
+      display: flex;
+      margin-top: 16px;
+
+      > table {
+        flex: 1;
+      }
+
+      .walletEvoTable {
+        background-color: transparent !important;
+
+        th {
+          font-weight: 500;
+        }
+
+        th,
+        td {
+          padding: 0px 16px !important;
+        }
+      }
+
+      > .recharts-responsive-container {
+        flex: 2;
+
+        .recharts-layer.recharts-line-dots {
+          circle {
+            fill: #0f0f0f;
+          }
+        }
+
+        .recharts-legend-wrapper {
+          .walletEvolutionLegend {
+            display: flex;
+            margin-top: 4px;
+            align-items: center;
+            justify-content: center;
+
+            > div {
+              & + div {
+                margin-left: 16px;
+              }
+
+              > .inner-circle {
+                display: inline-block;
+                width: 14px;
+                height: 14px;
+                border-radius: 50%;
+                border-style: solid;
+                border-width: 4px;
+                background-color: rgba(0, 0, 0, 0);
+                margin-right: 6px;
+                vertical-align: middle;
+              }
+
+              span:not(.inner-circle) {
+                display: inline-block;
+                font-size: 12px;
+              }
+            }
+          }
+        }
+
+        .recharts-cartesian-grid-vertical {
+          line:first-child {
+            stroke-opacity: 0;
+          }
+
+          line:last-child {
+            stroke-dasharray: none;
+          }
+        }
+
+        .recharts-cartesian-grid-horizontal {
+          line:not(:last-child) {
+            stroke-opacity: 0;
+          }
+
+          line:last-child {
+            stroke-dasharray: none;
+          }
+        }
+      }
+    }
+  }
+}

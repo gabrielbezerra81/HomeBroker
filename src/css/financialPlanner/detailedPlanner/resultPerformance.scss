@@ -1,0 +1,160 @@
+.resultPerformance {
+  padding: 0 6px;
+  margin-bottom: 8px;
+
+  .graphContainer {
+    flex: 1;
+    position: relative;
+
+    > h6 {
+      position: absolute;
+      bottom: 16px;
+      left: 64px;
+      display: block;
+      font-size: 14px;
+    }
+
+    .recharts-layer .recharts-pie-sector {
+      path {
+        // stroke: #000;
+        stroke-width: 0px;
+      }
+    }
+
+    .recharts-legend-wrapper {
+      left: 240px !important;
+      top: -8px !important;
+
+      .customLegendContainer {
+        margin-top: 4px;
+
+        > div {
+          > .inner-circle {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border-style: solid;
+            border-width: 2px;
+            background-color: rgba(0, 0, 0, 0);
+            margin-right: 6px;
+            vertical-align: middle;
+          }
+
+          span:not(.inner-circle) {
+            display: inline-block;
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+
+  .resultTable {
+    background-color: transparent !important;
+    margin-bottom: 8px;
+
+    th {
+      font-weight: 500;
+      color: #aa88bc;
+      text-align: center;
+    }
+
+    th,
+    td {
+      border: none;
+
+      &:first-child {
+        // padding-left: 2px !important;
+      }
+
+      &:last-child {
+        min-width: 140px;
+        color: #d2d5d2;
+      }
+    }
+
+    td {
+      background-color: #272827 !important;
+      font-size: 12px;
+      text-align: center;
+      padding-top: 2px !important;
+      padding-bottom: 2px !important;
+      line-height: 14px;
+    }
+
+    .cellContent {
+      display: flex;
+      justify-content: center;
+
+      input {
+        text-align: center;
+      }
+
+      &.periodCell {
+        > .darkInputSimpleInput {
+          width: 14px;
+          padding-top: 2px;
+        }
+
+        select {
+          min-width: 55px;
+        }
+      }
+
+      > select {
+        min-width: 44px;
+      }
+
+      .containerInput {
+        // max-width: 50px;
+        padding-top: 0;
+        padding-bottom: 0;
+        border: 1px solid transparent;
+
+        input {
+          padding-right: 0 !important;
+        }
+      }
+    }
+
+    tr {
+      &:not(:first-child) {
+        border-top: 6px solid #0f0f0f;
+      }
+
+      &:last-child {
+        td {
+          background-color: transparent !important;
+          padding-bottom: 8px !important;
+
+          &:first-child {
+            text-align: left;
+          }
+
+          &:nth-child(n + 2):not(:last-child) {
+            border-bottom: 1px solid #b7b7b7;
+          }
+
+          &:nth-child(2) {
+            color: #aa88bc;
+          }
+
+          &:nth-child(3) {
+            color: #108242;
+          }
+
+          &:nth-child(4) {
+            color: #956968;
+          }
+        }
+      }
+    }
+  }
+
+  .includeLineRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

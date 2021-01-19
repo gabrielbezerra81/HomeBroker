@@ -142,10 +142,10 @@ export default TelaLogin;
 
 // setTimeout(() => {
 //   keycloak
-//     .updateToken(70)
+//     .updateToken(280)
 //     .success((refreshed) => {
 //       if (refreshed) {
-//         console.log("Token refreshed" + refreshed);
+//         alert("Token refreshed" + refreshed);
 //       } else {
 //         console.log(
 //           "Token not refreshed, valid for " +
@@ -161,6 +161,6 @@ export default TelaLogin;
 //       }
 //     })
 //     .error(() => {
-//       console.log("Failed to refresh token");
+//       alert("Failed to refresh token");
 //     });
 // }, 60000);

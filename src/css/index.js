@@ -47,7 +47,7 @@ import "./tela_thl/vencimentos.scss";
 import "./category_list/CategoryList.scss";
 
 import "./financialPlanner/initialPlanner.scss";
-import "./financialPlanner/detailedPlanner.scss";
+import "./financialPlanner/detailedPlanner/detailedPlanner.scss";
 
 import "./componentes_customizados/CustomCheckbox.css";
 import "./componentes_customizados/CustomInput.scss";
