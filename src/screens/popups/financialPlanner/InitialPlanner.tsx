@@ -12,6 +12,7 @@ import {
 } from "recharts";
 
 import moment from "moment";
+import "moment/locale/pt-br";
 
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
@@ -66,9 +67,6 @@ const InitialPlanner: React.FC = () => {
     const total = gained + addedValue;
     const totalInvested = initialValue + monthlyValue * months;
     const totalIncome = total - totalInvested;
-
-    console.log(gained);
-    console.log(addedValue);
 
     const res = {
       totalInvested,
@@ -162,7 +160,10 @@ const InitialPlanner: React.FC = () => {
 
   const formattedMonthsProjection = useMemo(() => {
     return projections.map((monthItem, index) => {
-      const formattedPeriod = moment(monthItem.period).format("MMM/YYYY");
+      let formattedPeriod = moment(monthItem.period).format("MMM/YYYY");
+
+      formattedPeriod =
+        formattedPeriod.substr(0, 1).toUpperCase() + formattedPeriod.substr(1);
 
       return {
         ...monthItem,
@@ -321,7 +322,11 @@ const InitialPlanner: React.FC = () => {
                       contentStyle={tooltipContentStyle}
                       labelStyle={labelStyle}
                       labelFormatter={(label, payload) => {
-                        console.log(label, payload);
+                        if (payload && payload.length) {
+                          const [line1] = payload as any;
+
+                          return line1.payload.formattedPeriod;
+                        }
 
                         return "Mês " + label.toString();
                       }}
