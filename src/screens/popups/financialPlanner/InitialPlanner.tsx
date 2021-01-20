@@ -11,6 +11,8 @@ import {
   CartesianGrid,
 } from "recharts";
 
+import moment from "moment";
+
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import DraggablePopup from "shared/componentes/DraggablePopup/DraggablePopup";
@@ -29,8 +31,8 @@ interface MonthProjection {
   total: number;
   calcBase: number;
   investment: number;
-  monthPercent: number;
   totalPercent: number;
+  period: Date;
   [key: string]: any;
 }
 
@@ -98,21 +100,27 @@ const InitialPlanner: React.FC = () => {
     let total = initialValue;
 
     for (let index = 1; index <= months; index++) {
-      investment += monthlyValue;
+      const date = new Date();
 
-      const calcBase = total + monthlyValue;
+      date.setMonth(index - 1);
+
+      let calcBase = total;
 
       const monthIncome = total * monthRate ** 1;
 
-      const monthPercent = (monthIncome / calcBase) * 100;
+      // const monthPercent = (monthIncome / calcBase) * 100;
 
-      total += total * monthRate ** 1;
+      total += monthIncome;
 
-      total += monthlyValue;
+      if (index > 1) {
+        calcBase += monthlyValue;
+        total += monthlyValue;
+        investment += monthlyValue;
+      }
 
       const totalIncome = +Number(total - investment).toFixed(2);
 
-      const totalPercent = totalIncome / (investment - initialValue);
+      const totalPercent = (totalIncome / investment) * 100;
 
       projections.push({
         rentability: interestRate,
@@ -122,8 +130,8 @@ const InitialPlanner: React.FC = () => {
         total: investment + totalIncome,
         calcBase,
         investment,
-        monthPercent,
         totalPercent,
+        period: date,
       });
     }
 
@@ -153,19 +161,23 @@ const InitialPlanner: React.FC = () => {
   );
 
   const formattedMonthsProjection = useMemo(() => {
-    return projections.map((monthItem, index) => ({
-      ...monthItem,
-      period: `Mês ${index + 1}`,
-      formattedInvestment: formatarNumDecimal(monthItem.investment, 2),
-      formattedRentability: formatarNumDecimal(monthItem.rentability, 2),
-      formattedMonthIncome: formatarNumDecimal(monthItem.monthIncome, 2),
-      formattedTotalIncome: formatarNumDecimal(monthItem.totalIncome, 2),
-      formattedResult: formatarNumDecimal(monthItem.result, 2),
-      formattedTotal: formatarNumDecimal(monthItem.total, 2),
-      formattedCalcBase: formatarNumDecimal(monthItem.calcBase, 2),
-      formattedMonthPercent: formatarNumDecimal(monthItem.monthPercent, 2),
-      formattedTotalPercent: formatarNumDecimal(monthItem.totalPercent, 2),
-    }));
+    return projections.map((monthItem, index) => {
+      const formattedPeriod = moment(monthItem.period).format("MMM/YYYY");
+
+      return {
+        ...monthItem,
+        formattedInvestment: formatarNumDecimal(monthItem.investment, 2),
+        formattedRentability: formatarNumDecimal(monthItem.rentability, 2),
+        formattedMonthIncome: formatarNumDecimal(monthItem.monthIncome, 2),
+        formattedTotalIncome: formatarNumDecimal(monthItem.totalIncome, 2),
+        formattedResult: formatarNumDecimal(monthItem.result, 2),
+        formattedTotal: formatarNumDecimal(monthItem.total, 2),
+        formattedCalcBase: formatarNumDecimal(monthItem.calcBase, 2),
+        formattedTotalPercent: formatarNumDecimal(monthItem.totalPercent, 2),
+        formattedPeriod,
+        month: index + 1,
+      };
+    });
   }, [projections]);
 
   const tickCount = useMemo(() => {
@@ -298,9 +310,7 @@ const InitialPlanner: React.FC = () => {
                         position: "insideBottom",
                         offset: -1,
                       }}
-                      dataKey={(item) => {
-                        return Number(item.period.replace("Mês ", ""));
-                      }}
+                      dataKey={(item) => item.month}
                       type="number"
                       tickCount={tickCount}
                       tick={tickStyle}
@@ -310,7 +320,11 @@ const InitialPlanner: React.FC = () => {
                     <Tooltip
                       contentStyle={tooltipContentStyle}
                       labelStyle={labelStyle}
-                      labelFormatter={(label) => "Mês " + label.toString()}
+                      labelFormatter={(label, payload) => {
+                        console.log(label, payload);
+
+                        return "Mês " + label.toString();
+                      }}
                       formatter={(value: any) => formatarNumDecimal(value, 2)}
                     />
                     <Legend
@@ -356,14 +370,16 @@ const InitialPlanner: React.FC = () => {
                     <th></th>
                     <th></th>
                     <th></th>
+                    <th></th>
                     <th colSpan={2}>Rendimento no período</th>
                     <th colSpan={2}>Rendimento Total</th>
                     <th></th>
                   </tr>
                   <tr>
+                    <th>ORD.</th>
                     <th>Período</th>
                     <th>Aporte</th>
-                    <th>Aporte Base de Cálc</th>
+                    <th>Base de Cálc</th>
                     <th>Rentabilidade</th>
                     <th>Valor</th>
                     <th>%</th>
@@ -373,14 +389,15 @@ const InitialPlanner: React.FC = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {formattedMonthsProjection.map((monthItem) => (
-                    <tr key={monthItem.period}>
-                      <td>{monthItem.period}</td>
+                  {formattedMonthsProjection.map((monthItem, index) => (
+                    <tr key={monthItem.formattedPeriod}>
+                      <td>{index + 1}</td>
+                      <td>{monthItem.formattedPeriod}</td>
                       <td>{formatarNumDecimal(mensalValue, 2)}</td>
                       <td>{monthItem.formattedCalcBase}</td>
                       <td>{monthItem.formattedRentability} %</td>
                       <td>{monthItem.formattedMonthIncome}</td>
-                      <td>{monthItem.formattedMonthPercent}</td>
+                      <td>{monthItem.formattedRentability}</td>
                       <td>{monthItem.formattedTotalIncome}</td>
                       <td>{monthItem.formattedTotalPercent}</td>
                       <td>{monthItem.formattedTotal}</td>

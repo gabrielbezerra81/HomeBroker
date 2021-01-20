@@ -3,9 +3,9 @@ import Action from "types/Action";
 import FinancialPlannerState from "types/financialPlanner/FinancialPlannerState";
 
 const INITIAL_STATE: FinancialPlannerState = {
-  initialValue: 0,
-  mensalValue: 0,
-  interestRate: 0,
+  initialValue: 1000,
+  mensalValue: 100,
+  interestRate: 1,
   period: 1,
 };
 

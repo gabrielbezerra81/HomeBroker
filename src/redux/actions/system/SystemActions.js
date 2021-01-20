@@ -69,7 +69,7 @@ export const logarUsuarioAction = (email, senha) => {
           isLogged: true,
           accounts,
           selectedAccount: accounts[0],
-        })
+        }),
       );
 
       navigate("/home");
@@ -122,7 +122,7 @@ export const deslogarUsuarioAction = () => {
       dispatch(clearReduxStateFromStorageAction(combinedMainStore));
       navigate(
         "https://auth.rendacontinua.com/auth/realms/auth_sso/protocol/openid-connect/logout?redirect_uri=" +
-          redirectURL
+          redirectURL,
       );
     } catch (error) {
       console.log("error when wiping redux data", error.response);
@@ -133,7 +133,7 @@ export const deslogarUsuarioAction = () => {
 export const abrirItemBarraLateralAction = (
   props,
   nameVariavelReducer,
-  forceVisibility = null
+  forceVisibility = null,
 ) => {
   const isVisible = props[nameVariavelReducer];
   let updatedVisibility = !isVisible;
@@ -152,13 +152,13 @@ export const abrirItemBarraLateralAction = (
         updateManySystemState({
           selectedTab: "tab0",
           [nameVariavelReducer]: true,
-        })
+        }),
       );
       return;
     } //
 
     const multilegIndex = openedMenus.findIndex(
-      (openedMenuItem) => openedMenuItem.menuKey === "multileg"
+      (openedMenuItem) => openedMenuItem.menuKey === "multileg",
     );
 
     // Traz a multileg para a aba atual se estiver tentando abrir com ele já aberto em outra aba
@@ -176,7 +176,7 @@ export const abrirItemBarraLateralAction = (
         updateManySystemState({
           openedMenus: updatedOpenedMenus,
           [nameVariavelReducer]: true,
-        })
+        }),
       );
       return;
     }
@@ -200,7 +200,7 @@ export const abrirItemBarraLateralAction = (
       updateManySystemState({
         [nameVariavelReducer]: updatedVisibility,
         openedMenus: updateOpenedMenus,
-      })
+      }),
     );
 
     resetarDadosReducerAction({
@@ -261,7 +261,7 @@ const resetarDadosReducerAction = ({
 
 export const handleOpenMenusInMainScreenTabsAction = (
   menuChildren,
-  tabKey = "tab0"
+  tabKey = "tab0",
 ) => {
   return (dispatch, getState) => {
     const { openedMenus } = getState().systemReducer;
@@ -269,7 +269,7 @@ export const handleOpenMenusInMainScreenTabsAction = (
     const updatedOpenedMenus = produce(openedMenus, (draft) => {
       menuChildren.forEach((menuChildItem) => {
         const menuIndex = draft.findIndex(
-          (menuItem) => menuItem.menuKey === menuChildItem.key
+          (menuItem) => menuItem.menuKey === menuChildItem.key,
         );
         if (menuChildItem.isOpen) {
           if (menuIndex === -1) {
@@ -333,7 +333,7 @@ const handleCloseMenusInMainTab = ({
 
     const updatedOpenedMenus = produce(openedMenus, (draft) => {
       const filtered = draft.filter(
-        (openedMenuItem) => openedMenuItem.menuKey !== menuKey
+        (openedMenuItem) => openedMenuItem.menuKey !== menuKey,
       );
 
       return filtered;
@@ -359,7 +359,7 @@ export const handleAddOrSelectTabAction = (eventKey) => {
           updateManySystemState({
             mainTabs: updatedMainTabs,
             selectedTab: `tab${updatedMainTabs.length - 1}`,
-          })
+          }),
         );
       }
     } //
@@ -381,7 +381,7 @@ export const handleRemoveTabAction = (tabIndex) => {
       updateManySystemState({
         mainTabs: updatedMainTabs,
         selectedTab: `tab${tabIndex - 1}`,
-      })
+      }),
     );
   };
 };
@@ -440,7 +440,7 @@ export const checkIfSystemStateHasChangedShapeAction = () => {
 
     const differenceBetweenStates = _.difference(
       expectedSystemKeys,
-      currentSystemKeys
+      currentSystemKeys,
     );
 
     if (differenceBetweenStates.length > 0) {
