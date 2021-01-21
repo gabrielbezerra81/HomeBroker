@@ -55,6 +55,7 @@ const InitialPlanner: React.FC = () => {
     ratePeriodicity,
     periodValue,
     periodicity,
+    listing,
   } = initialPlanner;
 
   const dispatch = useDispatchStorePrincipal();
@@ -71,10 +72,10 @@ const InitialPlanner: React.FC = () => {
     const rate = interestRate / 100;
 
     const gained = initialValue * (1 + rate) ** months;
-    const addedValue = (monthlyValue * ((1 + rate) ** months - 1)) / rate;
+    const addedValue = (monthlyValue * ((1 + rate) ** (months - 1) - 1)) / rate;
 
     const total = gained + addedValue;
-    const totalInvested = initialValue + monthlyValue * months;
+    const totalInvested = initialValue + monthlyValue * (months - 1);
     const totalIncome = total - totalInvested;
 
     const res = {
@@ -102,7 +103,11 @@ const InitialPlanner: React.FC = () => {
 
     const monthRate = interestRate / 100;
 
-    const months = periodValue * 12;
+    let months = periodValue;
+
+    if (periodicity === "anos") {
+      months *= 12;
+    }
 
     let total = initialValue;
 
@@ -129,7 +134,7 @@ const InitialPlanner: React.FC = () => {
 
       const totalPercent = (totalIncome / investment) * 100;
 
-      projections.push({
+      const projection = {
         rentability: interestRate,
         monthIncome,
         totalIncome: totalIncome,
@@ -139,11 +144,18 @@ const InitialPlanner: React.FC = () => {
         investment,
         totalPercent,
         period: date,
-      });
+      };
+
+      // if (periodicity === "anos") {
+      //   if (index % 12 === 0) {
+      //     projections.push(projection);
+      //   }
+      // } //
+      projections.push(projection);
     }
 
     return projections;
-  }, [periodValue, contribution, initialValue, interestRate]);
+  }, [initialValue, interestRate, periodValue, contribution, periodicity]);
 
   const onClose = useCallback(() => {
     dispatch(
@@ -168,7 +180,17 @@ const InitialPlanner: React.FC = () => {
   );
 
   const formattedMonthsProjection = useMemo(() => {
-    return projections.map((monthItem, index) => {
+    let filtered = projections;
+
+    if (listing === "anual") {
+      filtered = filtered.filter(
+        (_, index) => index + 1 !== 0 && (index + 1) % 12 === 0,
+      );
+    } //
+    else if (listing === "semanal") {
+    }
+
+    return filtered.map((monthItem, index) => {
       let formattedPeriod = moment(monthItem.period).format("MMM/YYYY");
 
       formattedPeriod =
@@ -188,7 +210,7 @@ const InitialPlanner: React.FC = () => {
         month: index + 1,
       };
     });
-  }, [projections]);
+  }, [listing, projections]);
 
   return (
     <DraggablePopup
