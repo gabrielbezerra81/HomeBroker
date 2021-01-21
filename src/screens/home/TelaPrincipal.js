@@ -18,7 +18,7 @@ import api from "api/apiConfig";
 import AddBoxMenu from "../popups/quoteBox/AddBoxMenu";
 import RightSideMenu from "./rightSideMenu/RightSideMenu";
 import CategoryList from "screens/popups/categoryList/CategoryList";
-import InitialPlanner from "screens/popups/financialPlanner/InitialPlanner";
+import InitialPlanner from "screens/popups/financialPlanner/InitialPlanner/InitialPlanner";
 import DetailedPlanner from "screens/popups/financialPlanner/DetailedPlanner/DetailedPlanner";
 
 const OrdensExecucao = React.lazy(() =>

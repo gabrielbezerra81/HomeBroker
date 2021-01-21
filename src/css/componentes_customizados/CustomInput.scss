@@ -2,6 +2,12 @@
   display: flex;
   position: relative;
 
+  .suffix {
+    font-size: 10px;
+    position: absolute;
+    right: 4px;
+  }
+
   &.containerInputGrafico {
     width: 39%;
     height: 11px;

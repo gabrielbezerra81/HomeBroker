@@ -29,7 +29,7 @@
       font-weight: 400;
     }
 
-    > div:not(.graphContainer) {
+    > div.simulatorRow {
       display: flex;
 
       & + div {
@@ -44,6 +44,11 @@
         &:first-child {
           text-align: right;
           padding-right: 8px;
+          color: #aa88bc;
+        }
+
+        &.totalValueText {
+          color: #0377a7;
         }
 
         &:last-child {
@@ -52,8 +57,20 @@
       }
 
       .containerInput,
-      select {
+      select,
+      .darkSimpleInput {
         max-width: 100px;
+        text-align: center;
+      }
+
+      .darkInputSelect {
+        margin-left: 8px;
+      }
+
+      .interestRateInput {
+        input {
+          width: 77%;
+        }
       }
     }
 
@@ -81,14 +98,36 @@
     border-left: 3px solid #000;
     padding: 8px;
 
+    > div:first-child {
+      display: flex;
+      align-items: center;
+
+      span {
+        color: #aa88bc;
+        margin-right: 4px;
+      }
+
+      select {
+        width: 80px;
+      }
+    }
+
     > table {
       text-align: center;
       background-color: transparent !important;
 
       thead {
+        tr:first-child {
+          color: #836990;
+        }
+
         tr:last-child {
           th:nth-child(4) {
             min-width: 90px;
+          }
+
+          th {
+            color: #aa88bc;
           }
         }
       }
@@ -96,6 +135,18 @@
       td {
         background-color: transparent !important;
         padding: 0 0px !important;
+
+        &:nth-child(n + 4) {
+          color: RGBA(181, 179, 244, 0.76);
+        }
+
+        &:nth-child(1),
+        &:nth-child(2),
+        &:nth-child(3),
+        &:nth-child(4),
+        &:last-child {
+          color: RGBA(245, 224, 141, 0.56);
+        }
       }
 
       tr:nth-child(odd) {

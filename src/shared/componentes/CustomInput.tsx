@@ -25,6 +25,7 @@ interface Props {
   renderArrows?: boolean;
   theme?: "light" | "dark";
   suffix?: string;
+  suffixStyle?: React.CSSProperties;
 }
 
 const CustomInput: React.FC<Props> = ({
@@ -46,6 +47,7 @@ const CustomInput: React.FC<Props> = ({
   renderArrows = true,
   theme = "light",
   suffix = "",
+  suffixStyle = {},
 }) => {
   var input: React.ReactNode;
 
@@ -137,7 +139,7 @@ const CustomInput: React.FC<Props> = ({
         name={name}
         onChange={(event: any, double: number) => handleChange(double, event)}
         onBlur={onBlur}
-        suffix={suffix}
+        // suffix={suffix}
         onKeyPress={onKeyPress}
         prefix={value < 0 ? "- " : ""}
         onFocus={(event: React.FocusEvent<HTMLInputElement>) => {
@@ -215,6 +217,11 @@ const CustomInput: React.FC<Props> = ({
 
   return (
     <div className={`containerInput ${containerClassName} ${themeClass}`}>
+      {!!suffix && (
+        <span style={suffixStyle} className="suffix">
+          {suffix}
+        </span>
+      )}
       {input}
       {readOnly || !renderArrows ? null : (
         <div className="divContainerBotoes">

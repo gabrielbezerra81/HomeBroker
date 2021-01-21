@@ -121,7 +121,7 @@
       }
 
       &.periodCell {
-        > .darkInputSimpleInput {
+        > .darkSimpleInput {
           width: 14px;
           padding-top: 2px;
         }
@@ -140,10 +140,6 @@
         padding-top: 0;
         padding-bottom: 0;
         border: 1px solid transparent;
-
-        input {
-          padding-right: 0 !important;
-        }
       }
     }
 

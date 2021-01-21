@@ -180,7 +180,7 @@ const PlannerProjection: React.FC = () => {
                 <td>
                   <div className="cellContent periodCell">
                     <FormControl
-                      className="darkInputSimpleInput"
+                      className="darkSimpleInput"
                       name="periodValue"
                       maxLength={2}
                       placeholder="0"
@@ -198,7 +198,7 @@ const PlannerProjection: React.FC = () => {
                 <td>
                   <div className="cellContent">
                     <FormControl
-                      className="darkInputSimpleInput"
+                      className="darkSimpleInput"
                       name="investmentType"
                       placeholder="Investimento"
                     />
