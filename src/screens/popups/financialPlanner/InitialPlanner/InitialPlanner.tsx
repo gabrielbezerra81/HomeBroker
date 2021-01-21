@@ -14,6 +14,8 @@ import { FormControl } from "react-bootstrap";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import ProjectionTable from "./ProjectionTable";
 import ProjectionGraph from "./ProjectionGraph";
+import { InitialPlannerData } from "types/financialPlanner/FinancialPlannerState";
+import { convertYearTaxToMonthly } from "../utils";
 
 export interface MonthProjection {
   rentability: number;
@@ -65,11 +67,20 @@ const InitialPlanner: React.FC = () => {
       return null;
     }
 
-    const monthlyValue = contribution || 0;
+    const monthlyValue = convertContribution({
+      contribution,
+      contributionPeriodicity,
+      ratePeriodicity,
+    });
 
     const months = periodValue * 12;
 
-    const rate = interestRate / 100;
+    let rate = interestRate / 100;
+
+    // conversão de anual para mensal
+    if (ratePeriodicity === "por ano") {
+      rate = convertYearTaxToMonthly(rate);
+    }
 
     const gained = initialValue * (1 + rate) ** months;
     const addedValue = (monthlyValue * ((1 + rate) ** (months - 1) - 1)) / rate;
@@ -88,7 +99,14 @@ const InitialPlanner: React.FC = () => {
     };
 
     return res;
-  }, [initialValue, contribution, periodValue, interestRate]);
+  }, [
+    initialValue,
+    interestRate,
+    periodValue,
+    contribution,
+    contributionPeriodicity,
+    ratePeriodicity,
+  ]);
 
   const projections = useMemo(() => {
     const projections: MonthProjection[] = [];
@@ -97,11 +115,19 @@ const InitialPlanner: React.FC = () => {
       return [];
     }
 
-    const monthlyValue = contribution || 0;
+    const monthlyValue = convertContribution({
+      contribution,
+      contributionPeriodicity,
+      ratePeriodicity,
+    });
 
     let investment = initialValue;
 
-    const monthRate = interestRate / 100;
+    let monthRate = interestRate / 100;
+
+    if (ratePeriodicity === "por ano") {
+      monthRate = convertYearTaxToMonthly(monthRate);
+    }
 
     let months = periodValue;
 
@@ -155,7 +181,15 @@ const InitialPlanner: React.FC = () => {
     }
 
     return projections;
-  }, [initialValue, interestRate, periodValue, contribution, periodicity]);
+  }, [
+    initialValue,
+    interestRate,
+    periodValue,
+    contribution,
+    contributionPeriodicity,
+    ratePeriodicity,
+    periodicity,
+  ]);
 
   const onClose = useCallback(() => {
     dispatch(
@@ -211,6 +245,21 @@ const InitialPlanner: React.FC = () => {
       };
     });
   }, [listing, projections]);
+
+  const periodOptions = useMemo(() => {
+    const options = [];
+
+    if (ratePeriodicity === "por semana") {
+      options.push(<option value={"semanas"}>semana(s)</option>);
+    }
+
+    options.push(
+      <option value={"meses"}>mês(es)</option>,
+      <option value={"anos"}>ano(s)</option>,
+    );
+
+    return options;
+  }, [ratePeriodicity]);
 
   return (
     <DraggablePopup
@@ -309,9 +358,7 @@ const InitialPlanner: React.FC = () => {
                   onChange={(e) => handleInputChange(e.target.value, e)}
                   value={periodicity}
                 >
-                  <option value={"semanas"}>semana(s)</option>
-                  <option value={"meses"}>mês(es)</option>
-                  <option value={"anos"}>ano(s)</option>
+                  {periodOptions}
                 </FormControl>
                 {/* <span></span> */}
               </div>
@@ -346,3 +393,49 @@ const InitialPlanner: React.FC = () => {
 };
 
 export default InitialPlanner;
+
+function convertContribution({
+  contribution,
+  contributionPeriodicity,
+  ratePeriodicity,
+}: Pick<
+  InitialPlannerData,
+  "contribution" | "contributionPeriodicity" | "ratePeriodicity"
+>) {
+  // a taxa utilizada no cálculo é transformada para mês
+  if (ratePeriodicity === "por ano") {
+    if (contributionPeriodicity === "por mês") {
+      return contribution;
+    } //
+    else if (contributionPeriodicity === "por semana") {
+      return contribution * 4;
+    } //
+    else if (contributionPeriodicity === "por ano") {
+      return contribution / 12;
+    } //
+  }
+
+  if (ratePeriodicity === "por mês") {
+    if (contributionPeriodicity === "por ano") {
+      return contribution / 12;
+    } //
+    else if (contributionPeriodicity === "por semana") {
+      return contribution * 4;
+    }
+  }
+
+  if (ratePeriodicity === "por semana") {
+    if (contributionPeriodicity === "por ano") {
+      return contribution / 52.1429;
+    } //
+    if (contributionPeriodicity === "por mês") {
+      return contribution / 4;
+    } //
+  }
+
+  if (contributionPeriodicity === ratePeriodicity) {
+    return contribution;
+  }
+
+  return contribution;
+}

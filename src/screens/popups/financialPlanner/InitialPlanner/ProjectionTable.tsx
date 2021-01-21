@@ -6,6 +6,7 @@ import { MonthProjection, FormattedProjection } from "./InitialPlanner";
 
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
+import { convertYearTaxToMonthly } from "../utils";
 
 interface Props {
   data: Array<MonthProjection & FormattedProjection>;
@@ -18,7 +19,12 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
 
   const dispatch = useDispatchStorePrincipal();
 
-  const { contribution, listing, ratePeriodicity } = initialPlanner;
+  const {
+    contribution,
+    listing,
+    ratePeriodicity,
+    interestRate,
+  } = initialPlanner;
 
   const formattedContribution = useMemo(
     () => formatarNumDecimal(contribution, 2),
@@ -52,6 +58,18 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
 
     return options;
   }, [ratePeriodicity]);
+
+  const formattedRate = useMemo(() => {
+    if (ratePeriodicity === "por ano") {
+      if (listing === "mensal") {
+        return formatarNumDecimal(
+          convertYearTaxToMonthly(interestRate / 100) * 100,
+        );
+      }
+    }
+
+    return formatarNumDecimal(interestRate);
+  }, [ratePeriodicity, listing, interestRate]);
 
   return (
     <div className="projectionContainer">
@@ -101,7 +119,7 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
               <td>
                 {listing === "anual"
                   ? monthItem.formattedTotalPercent
-                  : monthItem.formattedRentability}
+                  : formattedRate}
               </td>
               <td>{monthItem.formattedTotalIncome}</td>
               <td>{monthItem.formattedTotalPercent}</td>
