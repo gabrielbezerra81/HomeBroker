@@ -94,9 +94,15 @@ const AlertItem: React.FC<AlertItemProps> = ({ alert: alertItem }) => {
     }
   }, [alertItem.id]);
 
+  const headerStyle: React.CSSProperties = useMemo(() => {
+    return headerVisible
+      ? { opacity: 1, pointerEvents: "auto" }
+      : { opacity: 0, pointerEvents: "none" };
+  }, [headerVisible]);
+
   return (
     <div className="alertItemContainer">
-      <header className="itemHeader" style={{ opacity: headerVisible ? 1 : 0 }}>
+      <header className="itemHeader" style={headerStyle}>
         <button onClick={handleSearch}>
           <FiSearch size={20} stroke="#444" />
         </button>

@@ -4,6 +4,37 @@
   }
 }
 
+.newAlertButton {
+  border: 3px solid #ecc849;
+  margin: -20px -8px 24px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  color: #ecc849;
+  font-size: 20px;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  > div {
+    height: 27px;
+    width: 27px;
+    // border-radius: 50%;
+    background-color: #ecc849;
+    position: absolute;
+    right: 14px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
 .alertScrollButton {
   color: #fff;
   margin: 0 auto;
@@ -24,7 +55,6 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-top: 24px;
 
   .buyText {
     color: #207fa5;

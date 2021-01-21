@@ -32,6 +32,9 @@ import {
 } from "redux/actions/system/SystemActions";
 import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 
+import specialsIcon from "assets/specialsIcon.png";
+import multilegIcon from "assets/multilegIcon.png";
+
 const startStyle = {
   opacity: 0,
   pointerEvents: "none",
@@ -176,10 +179,10 @@ class MenuOrdens extends Component {
             </div>
           </Row>
           <Row className="rowSpeciais">
-            <span className="mr-5">ESPECIAIS</span>
+            <img src={specialsIcon} alt="Especiais" />
             <div className="divBotaoFormulario">
               <img
-                src={iconeMultileg}
+                src={multilegIcon}
                 alt="Multileg"
                 onClick={() => {
                   props.atualizarDivKeyAction("multileg");
@@ -200,7 +203,6 @@ class MenuOrdens extends Component {
                 }}
                 className="divClicavel"
               />
-              <span>MULTILEG</span>
             </div>
           </Row>
         </div>

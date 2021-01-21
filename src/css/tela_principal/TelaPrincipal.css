@@ -168,6 +168,12 @@
 .rowSpeciais {
   justify-content: flex-start !important;
   padding-left: 2.5rem;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.rowSpeciais > img {
+  margin-right: 48px;
 }
 
 .divBotaoFormulario {

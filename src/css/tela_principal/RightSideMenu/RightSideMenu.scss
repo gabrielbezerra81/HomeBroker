@@ -52,18 +52,23 @@
     position: relative;
 
     > span {
-      color: #d2d5d2;
+      color: #fff;
       font-size: 14px;
       line-height: 16px;
-      margin-bottom: 24px;
       font-weight: 500;
+
+      margin: -20px -8px 24px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    button.alertButton {
-      height: 30px;
-      max-height: 30px;
-      padding: 0;
-    }
+    // button.alertButton {
+    //   height: 30px;
+    //   max-height: 30px;
+    //   padding: 0;
+    // }
 
     &.closedRightMenu {
       width: 0;

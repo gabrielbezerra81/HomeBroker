@@ -6,8 +6,10 @@ import React, {
   useState,
 } from "react";
 import { FiChevronDown } from "react-icons/fi";
-import { Button } from "react-bootstrap";
+import { TiPlusOutline } from "react-icons/ti";
 import PerfectScroll from "react-perfect-scrollbar";
+
+import borderedPlusIcon from "assets/borderedPlus.png";
 
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
@@ -101,9 +103,15 @@ const Alert: React.FC = () => {
 
   return (
     <>
-      <Button className="alertButton" onClick={handleOpenMultileg}>
-        Novo +
-      </Button>
+      <button
+        onClick={handleOpenMultileg}
+        className="brokerCustomButton newAlertButton"
+      >
+        <h6>ALERTAS</h6>
+        <div>
+          <img src={borderedPlusIcon} alt="+" />
+        </div>
+      </button>
       <PerfectScroll
         containerRef={(ref) => {
           containerRef.current = ref;

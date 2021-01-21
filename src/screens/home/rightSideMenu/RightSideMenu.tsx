@@ -67,6 +67,25 @@ const RightSideMenu: React.FC = () => {
     return isOpenRightSideMenu ? "" : " collapsed";
   }, [isOpenRightSideMenu]);
 
+  const activeItemTitleStyle = useMemo(() => {
+    const style: React.CSSProperties = {
+      backgroundColor: "transparent",
+    };
+
+    switch (activeItem) {
+      case "POSIÇÃO RESUMIDA":
+        style.backgroundColor = "#207FA5";
+        break;
+      case "ORDENS EM EXECUÇÃO":
+        style.backgroundColor = "#0F8E46";
+        break;
+      default:
+        break;
+    }
+
+    return style;
+  }, [activeItem]);
+
   return (
     <div className={`rightSideMenu${menuCollapsedClass}`}>
       <div>
@@ -110,8 +129,9 @@ const RightSideMenu: React.FC = () => {
         </div>
       </div>
       <div className={`menuContent ${closedMenuContentClass}`}>
-        <span>{activeItem}</span>
-
+        {activeItem !== "ALERTAS" && (
+          <span style={activeItemTitleStyle}>{activeItem}</span>
+        )}
         {isOpenRightSideMenu && (
           <>
             {activeItem === "ALERTAS" && <Alert />}
