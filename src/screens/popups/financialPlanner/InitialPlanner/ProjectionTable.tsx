@@ -98,7 +98,11 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
               <td>{formattedContribution}</td>
               <td>{monthItem.formattedCalcBase}</td>
               <td>{monthItem.formattedMonthIncome}</td>
-              <td>{monthItem.formattedRentability}</td>
+              <td>
+                {listing === "anual"
+                  ? monthItem.formattedTotalPercent
+                  : monthItem.formattedRentability}
+              </td>
               <td>{monthItem.formattedTotalIncome}</td>
               <td>{monthItem.formattedTotalPercent}</td>
               <td>{monthItem.formattedTotal}</td>
