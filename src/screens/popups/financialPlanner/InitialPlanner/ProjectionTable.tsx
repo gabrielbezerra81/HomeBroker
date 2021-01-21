@@ -18,7 +18,7 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
 
   const dispatch = useDispatchStorePrincipal();
 
-  const { contribution, listing } = initialPlanner;
+  const { contribution, listing, ratePeriodicity } = initialPlanner;
 
   const formattedContribution = useMemo(
     () => formatarNumDecimal(contribution, 2),
@@ -38,6 +38,21 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
     [dispatch, initialPlanner],
   );
 
+  const listingOptions = useMemo(() => {
+    const options = [];
+
+    if (ratePeriodicity === "por semana") {
+      options.push(<option value={"semanal"}>semanal</option>);
+    }
+
+    options.push(
+      <option value={"mensal"}>mensal</option>,
+      <option value={"anual"}>anual</option>,
+    );
+
+    return options;
+  }, [ratePeriodicity]);
+
   return (
     <div className="projectionContainer">
       <div>
@@ -49,9 +64,7 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
           onChange={(e) => handleInputChange(e.target.value, e)}
           value={listing}
         >
-          <option value={"semanal"}>semanal</option>
-          <option value={"mensal"}>mensal</option>
-          <option value={"anual"}>anual</option>
+          {listingOptions}
         </FormControl>
       </div>
       <Table borderless striped={false}>
