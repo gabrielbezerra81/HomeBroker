@@ -113,7 +113,7 @@ const MultilegOfferItem: React.FC<MultilegOfferProps> = ({
       <td>
         <CV offerCV={offer.cv} lineIndex={lineIndex} tabIndex={tabIndex} />
       </td>
-      <td>
+      <td className="qtdeColumn" >
         <Form.Group>
           <CustomInput
             type={qttyInputConfig.type as any}
