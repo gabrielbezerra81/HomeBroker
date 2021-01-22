@@ -92,40 +92,78 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
             <th></th>
             <th></th>
             <th></th>
-            <th colSpan={2}>Rendimento no período</th>
-            <th colSpan={2}>Rendimento Total</th>
+            <th colSpan={4}>Rendimento</th>
             <th></th>
           </tr>
+          <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th colSpan={2}>Período</th>
+            <th colSpan={2}>Total</th>
+            <th></th>
+          </tr>
+
           <tr>
             <th>ORD.</th>
             <th>Período</th>
             <th>Aporte</th>
             <th>Base de Cálc</th>
-            <th>Valor</th>
             <th>%</th>
             <th>Valor</th>
             <th>%</th>
+            <th>Valor</th>
             <th>Acumulado</th>
           </tr>
         </thead>
         <tbody>
-          {data.map((monthItem, index) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{monthItem.formattedPeriod}</td>
-              <td>{formattedContribution}</td>
-              <td>{monthItem.formattedCalcBase}</td>
-              <td>{monthItem.formattedMonthIncome}</td>
-              <td>
-                {listing === "anual"
-                  ? monthItem.formattedTotalPercent
-                  : formattedRate}
-              </td>
-              <td>{monthItem.formattedTotalIncome}</td>
-              <td>{monthItem.formattedTotalPercent}</td>
-              <td>{monthItem.formattedTotal}</td>
-            </tr>
-          ))}
+          {data.map((monthItem, index) => {
+            let showContribution = true;
+
+            if (
+              ["por mês", "por ano"].includes(ratePeriodicity) &&
+              listing === "mensal" &&
+              index === 0
+            ) {
+              showContribution = false;
+            }
+
+            if (ratePeriodicity === "por semana") {
+              if (listing === "semanal") {
+                // TODO: corrigir isso, pois o aporte não entra só na 1ª semana, mas nas 3 seguintes sim.
+                if (index < 4) {
+                  showContribution = false;
+                }
+              }
+
+              if (listing === "mensal") {
+                if (index === 0) {
+                  showContribution = false;
+                }
+              }
+            }
+
+            return (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{monthItem.formattedPeriod}</td>
+                <td>{showContribution && formattedContribution}</td>
+                <td>{monthItem.formattedCalcBase}</td>
+                <td>
+                  {listing === "anual"
+                    ? monthItem.formattedTotalPercent
+                    : formattedRate}
+                </td>
+                <td>{monthItem.formattedMonthIncome}</td>
+
+                <td>{monthItem.formattedTotalPercent}</td>
+                <td>{monthItem.formattedTotalIncome}</td>
+
+                <td>{monthItem.formattedTotal}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </Table>
     </div>

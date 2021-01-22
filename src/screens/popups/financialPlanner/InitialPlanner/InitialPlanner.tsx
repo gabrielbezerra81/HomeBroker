@@ -93,6 +93,7 @@ const InitialPlanner: React.FC = () => {
     }
 
     if (ratePeriodicity === "por semana") {
+       // TODO: corrigir isso, pois o aporte não entra só na 1ª semana, mas nas 3 seguintes sim.
       excludedPeriodsFromContrib = 4;
     }
 
@@ -157,6 +158,7 @@ const InitialPlanner: React.FC = () => {
     let excludedPeriodsFromContrib = 1;
 
     if (ratePeriodicity === "por semana") {
+       // TODO: corrigir isso, pois o aporte não entra só na 1ª semana, mas nas 3 seguintes sim.
       excludedPeriodsFromContrib = 4;
     }
 
