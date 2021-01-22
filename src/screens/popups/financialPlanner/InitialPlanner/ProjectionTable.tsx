@@ -131,8 +131,7 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
 
             if (ratePeriodicity === "por semana") {
               if (listing === "semanal") {
-                // TODO: corrigir isso, pois o aporte não entra só na 1ª semana, mas nas 3 seguintes sim.
-                if (index < 4) {
+                if (index < 1) {
                   showContribution = false;
                 }
               }
