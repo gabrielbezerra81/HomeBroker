@@ -35,19 +35,9 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
     (value: any, event: any) => {
       const { name } = event.target;
 
-      const payload = { ...initialPlanner, [name]: value };
-
-      if (
-        name === "ratePeriodicity" &&
-        initialPlanner.ratePeriodicity === "por semana" &&
-        value !== initialPlanner.ratePeriodicity
-      ) {
-        payload.listing = "mensal";
-      }
-
       dispatch(
         updateManyFinancialPlannerAction({
-          initialPlanner: payload,
+          initialPlanner: { ...initialPlanner, [name]: value },
         }),
       );
     },

@@ -189,7 +189,7 @@ const InitialPlanner: React.FC = () => {
 
       let period = new Date(date);
 
-      if (ratePeriodicity === "por mês") {
+      if (["por mês", "por ano"].includes(ratePeriodicity)) {
         date.setMonth(date.getMonth() + 1);
       }
 
@@ -232,9 +232,19 @@ const InitialPlanner: React.FC = () => {
     (value: any, event: any) => {
       const { name } = event.target;
 
+      const payload = { ...initialPlanner, [name]: value };
+
+      if (
+        name === "ratePeriodicity" &&
+        initialPlanner.ratePeriodicity === "por semana"
+      ) {
+        payload.listing = "mensal";
+        payload.periodicity = "meses";
+      }
+
       dispatch(
         updateManyFinancialPlannerAction({
-          initialPlanner: { ...initialPlanner, [name]: value },
+          initialPlanner: payload,
         }),
       );
     },
@@ -248,9 +258,15 @@ const InitialPlanner: React.FC = () => {
       listing === "anual" &&
       ["por mês", "por ano"].includes(ratePeriodicity)
     ) {
-      filtered = filtered.filter(
-        (_, index) => index + 1 !== 0 && (index + 1) % 12 === 0,
-      );
+      filtered = filtered.filter((_, index) => {
+        const hasFullYear = (index + 1) % 12 === 0;
+
+        if (!hasFullYear && index + 1 === filtered.length) {
+          return true;
+        }
+
+        return hasFullYear;
+      });
     } //
     else if (ratePeriodicity === "por semana" && listing !== "semanal") {
       filtered = filterWeeklyProjections(filtered, listing);
@@ -263,7 +279,6 @@ const InitialPlanner: React.FC = () => {
         formattedPeriod.substr(0, 1).toUpperCase() + formattedPeriod.substr(1);
 
       if (listing === "semanal") {
-        console.log(listing);
         formattedPeriod = `Semana ${index + 1}`;
       }
 

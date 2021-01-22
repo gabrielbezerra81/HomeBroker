@@ -76,7 +76,12 @@ export function filterWeeklyProjections(
     const nextProjection = projections[index + 1];
 
     if (compareFunction === "getFullYear") {
-      if ((index + 1) % 52 !== 0) {
+      const hasFullYear = (index + 1) % 52 === 0;
+      if (!hasFullYear) {
+        if (index + 1 === projections.length) {
+          return true;
+        }
+
         return false;
       }
     }
