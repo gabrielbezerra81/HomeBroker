@@ -2,14 +2,14 @@ import React, { useMemo, useCallback } from "react";
 import { FormControl, Table } from "react-bootstrap";
 import { updateManyFinancialPlannerAction } from "redux/actions/financialPlanner/financialPlannerActions";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
-import { MonthProjection, FormattedProjection } from "./InitialPlanner";
+import { Projection, FormattedProjection } from "./InitialPlanner";
 
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
-import { convertYearTaxToMonthly } from "../utils";
+import { convertInterestRate } from "../utils";
 
 interface Props {
-  data: Array<MonthProjection & FormattedProjection>;
+  data: Array<Projection & FormattedProjection>;
 }
 
 const ProjectionTable: React.FC<Props> = ({ data }) => {
@@ -35,9 +35,19 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
     (value: any, event: any) => {
       const { name } = event.target;
 
+      const payload = { ...initialPlanner, [name]: value };
+
+      if (
+        name === "ratePeriodicity" &&
+        initialPlanner.ratePeriodicity === "por semana" &&
+        value !== initialPlanner.ratePeriodicity
+      ) {
+        payload.listing = "mensal";
+      }
+
       dispatch(
         updateManyFinancialPlannerAction({
-          initialPlanner: { ...initialPlanner, [name]: value },
+          initialPlanner: payload,
         }),
       );
     },
@@ -63,7 +73,7 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
     if (ratePeriodicity === "por ano") {
       if (listing === "mensal") {
         return formatarNumDecimal(
-          convertYearTaxToMonthly(interestRate / 100) * 100,
+          convertInterestRate(interestRate / 100, "year", "month") * 100,
         );
       }
     }
@@ -110,7 +120,7 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
         </thead>
         <tbody>
           {data.map((monthItem, index) => (
-            <tr key={monthItem.formattedPeriod}>
+            <tr key={index}>
               <td>{index + 1}</td>
               <td>{monthItem.formattedPeriod}</td>
               <td>{formattedContribution}</td>

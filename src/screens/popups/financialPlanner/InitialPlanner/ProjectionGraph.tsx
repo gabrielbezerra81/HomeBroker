@@ -13,10 +13,10 @@ import {
 
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 
-import { MonthProjection, FormattedProjection } from "./InitialPlanner";
+import { Projection, FormattedProjection } from "./InitialPlanner";
 
 interface Props {
-  data: Array<MonthProjection & FormattedProjection>;
+  data: Array<Projection & FormattedProjection>;
 }
 const ProjectionGraph: React.FC<Props> = ({ data }) => {
   const tickCount = useMemo(() => {
