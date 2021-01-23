@@ -73,6 +73,10 @@ export const calcularTotal = (props) => {
   let total = 0;
   let aba = props.multileg[props.indice];
 
+  const price = aba.preco
+    ? Number(aba.preco.split(".").join("").replace(",", "."))
+    : 0;
+
   aba.tabelaMultileg.forEach((oferta) => {
     const cotacao = findMultilegQuote({
       multilegQuotes: props.cotacoesMultileg,
@@ -80,7 +84,7 @@ export const calcularTotal = (props) => {
     });
     if (cotacao) {
       if (oferta.cv === "compra") total += oferta.qtde * cotacao;
-      else total -= oferta.qtde * cotacao;
+      else total -= oferta.qtde * cotacao; //cotacao;
     }
   });
   return total;
