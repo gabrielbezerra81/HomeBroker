@@ -66,14 +66,14 @@ const ProjectionGraph: React.FC<Props> = ({ data }) => {
         <Tooltip
           contentStyle={tooltipContentStyle}
           labelStyle={labelStyle}
-          labelFormatter={(label, payload) => {
+          labelFormatter={(label: any, payload: any) => {
             if (payload && payload.length) {
               const [line1] = payload as any;
 
               return line1.payload.formattedPeriod;
             }
 
-            return "Mês " + label.toString();
+            return <>{"Mês " + label.toString()}</>;
           }}
           formatter={(value: any) => formatarNumDecimal(value, 2)}
         />
