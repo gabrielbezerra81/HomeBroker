@@ -1,6 +1,9 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { Form, Table } from "react-bootstrap";
+
 import { MultiBoxData } from "types/multiBox/MultiBoxState";
+
+import { IoMdRepeat } from "react-icons/io";
 
 import cBuyIcon from "assets/multiBox/cBuyIcon.png";
 import cogIcon from "assets/multiBox/cogIcon.png";
@@ -8,12 +11,17 @@ import openInNewIcon from "assets/multiBox/openInNewIcon.png";
 import pSellIcon from "assets/multiBox/pSellIcon.png";
 import zoomIcon from "assets/multiBox/zoomIcon.png";
 import MultiBoxOffer from "./MultiBoxOffer";
+import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 interface Props {
   multiBox: MultiBoxData;
 }
 
 const Tab5: React.FC<Props> = ({ multiBox }) => {
+  const {
+    multiBoxReducer: { strikeViewMode },
+  } = useStateStorePrincipal();
+
   const handleSearch = useCallback(() => {}, []);
 
   const handleBuy = useCallback(() => {}, []);
@@ -27,6 +35,8 @@ const Tab5: React.FC<Props> = ({ multiBox }) => {
   const handleCall = useCallback(() => {}, []);
 
   const handlePut = useCallback(() => {}, []);
+
+  const handleStrikeViewChange = useCallback(() => {}, []);
 
   return (
     <div className="multiBoxTab5">
@@ -77,7 +87,15 @@ const Tab5: React.FC<Props> = ({ multiBox }) => {
             <tr>
               <th>C/V</th>
               <th>Qtde</th>
-              <th>Strike</th>
+              <th>
+                Strike
+                <button
+                  className="brokerCustomButton"
+                  onClick={handleStrikeViewChange}
+                >
+                  <IoMdRepeat color="#C4C4C4" />
+                </button>
+              </th>
               <th>Vencimento</th>
               <th>Tipo</th>
               <th>Modelo</th>

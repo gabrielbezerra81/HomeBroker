@@ -1,26 +1,23 @@
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import React, { useCallback, useMemo } from "react";
+
+import { FaCaretDown } from "react-icons/fa";
+
+import { Select } from "antd";
+
 import CustomInput from "shared/componentes/CustomInput";
 
 import modelEUImage from "assets/modeloEU.png";
 import modelUSAImage from "assets/modeloUSA2.svg";
+import useStateStorePrincipal from "hooks/useStateStorePrincipal";
+import { FormControl } from "react-bootstrap";
 
 const MultiBoxOffer: React.FC = () => {
   const dispatch = useDispatchStorePrincipal();
 
-  const qttyInputConfig = useMemo(() => {
-    const config = {
-      step: 100,
-      type: "quantidade",
-    };
-
-    // if (multileg[tabIndex].market === "Forex") {
-    //   config.step = 0.01;
-    //   config.type = "preco";
-    // }
-
-    return config;
-  }, []);
+  const {
+    multiBoxReducer: { strikeViewMode },
+  } = useStateStorePrincipal();
 
   const handleQttyChange = useCallback((value: any) => {
     //   dispatch(
@@ -37,6 +34,45 @@ const MultiBoxOffer: React.FC = () => {
 
   const handleModelChange = useCallback(() => {}, []);
 
+  const handleStrikechange = useCallback((value: any) => {}, []);
+
+  const qttyInputConfig = useMemo(() => {
+    const config = {
+      step: 100,
+      type: "quantidade",
+    };
+
+    // if (multileg[tabIndex].market === "Forex") {
+    //   config.step = 0.01;
+    //   config.type = "preco";
+    // }
+
+    return config;
+  }, []);
+
+  const strikeOptions = useMemo(() => {
+    const options: Array<{ label: string; value: any }> = [
+      {
+        label: "12,32",
+        value: 12.32,
+      },
+      {
+        label: "12,33",
+        value: 12.33,
+      },
+    ];
+
+    return options.map((option) => (
+      <Select.Option
+        key={option.value}
+        value={option.value}
+        className="optionInputCodigo"
+      >
+        {option.label}
+      </Select.Option>
+    ));
+  }, []);
+
   return (
     <tr>
       <td>
@@ -51,8 +87,27 @@ const MultiBoxOffer: React.FC = () => {
           onChange={handleQttyChange}
         />
       </td>
-      <td></td>
-      <td></td>
+      <td className="strikeColumn">
+        <Select
+          size="small"
+          dropdownClassName="strikeSelectDropdown"
+          value={12.32}
+          showSearch
+          optionFilterProp="children"
+          notFoundContent="Strike não encontrado"
+          className="strikeSelect"
+          suffixIcon={<FaCaretDown color="#ddd" />}
+          onChange={handleStrikechange}
+        >
+          {strikeOptions}
+        </Select>
+      </td>
+      <td>
+        <FormControl as="select" className="darkInputSelect dueDateSelect" name="period">
+          <option value={"21/12/2020"}>21/12/2020</option>
+          <option value={"21/12/2021"}>21/12/2021</option>
+        </FormControl>
+      </td>
       <td>
         <button
           className="brokerCustomButton typeButton"

@@ -6,4 +6,5 @@ export interface MultiBoxData {
 
 export default interface MultiBoxState {
   boxes: Array<MultiBoxData>;
+  strikeViewMode: "code" | "strike";
 }

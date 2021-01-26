@@ -59,7 +59,7 @@
 
     .form-group {
       padding: 0;
-      max-width: 80px;
+      max-width: 120px;
 
       &:first-child {
         margin-right: 6px;
@@ -120,12 +120,25 @@
         background-color: transparent;
         color: #ccae44;
         font-weight: 400;
+
+        .brokerCustomButton {
+          padding: 0;
+          svg {
+            margin-bottom: 2px;
+            margin-left: 2px;
+          }
+        }
       }
 
       td {
         background-color: transparent !important;
         padding-top: 0 !important;
         padding-bottom: 0 !important;
+
+        &.strikeColumn {
+          position: relative;
+          min-width: 86px;
+        }
       }
 
       .containerInput {
@@ -178,6 +191,47 @@
           vertical-align: bottom;
         }
       }
+
+      .strikeSelect {
+        position: absolute;
+        top: 0;
+        left: 1px;
+
+        > div {
+          background-color: #333 !important;
+          color: var(--color-text-primary) !important;
+          width: 80px !important;
+          border: none;
+          height: 17px !important;
+          text-align: center !important;
+          font-size: 0.73rem !important;
+        }
+
+        .ant-select-selection__rendered {
+          height: 17px !important;
+          line-height: 16px !important;
+        }
+
+        input {
+          height: 17px !important;
+          text-align: center !important;
+        }
+
+        i {
+          color: #ddd !important;
+        }
+      }
+
+      .dueDateSelect {
+        height: 17px;
+        background-color: #333;
+        border-radius: 4px;
+      }
     }
   }
+}
+
+.strikeSelectDropdown {
+  background-color: #333 !important;
+  font-weight: 500;
 }

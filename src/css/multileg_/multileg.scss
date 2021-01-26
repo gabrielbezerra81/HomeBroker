@@ -516,22 +516,22 @@ a.botaoAddAba.active {
   width: 87px;
 }
 
-.inputCodigo > div {
-  background-color: #333 !important;
-  color: var(--color-text-primary) !important;
-  width: 175px !important;
-  border: none;
-  height: 17px !important;
-  text-align: center !important;
-  font-size: 0.73rem !important;
-}
-
-.inputCodigo .ant-select-selection__rendered {
-  height: 17px !important;
-  line-height: 16px !important;
-}
-
 .inputCodigo {
+  > div {
+    background-color: #333 !important;
+    color: var(--color-text-primary) !important;
+    width: 175px !important;
+    border: none;
+    height: 17px !important;
+    text-align: center !important;
+    font-size: 0.73rem !important;
+  }
+
+  .ant-select-selection__rendered {
+    height: 17px !important;
+    line-height: 16px !important;
+  }
+
   input {
     height: 17px !important;
     text-align: center !important;
