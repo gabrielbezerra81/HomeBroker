@@ -9,6 +9,7 @@ import { MultiBoxData } from "types/multiBox/MultiBoxState";
 import produce from "immer";
 import { updateMultiBoxAction } from "redux/actions/multiBox/multiBoxActions";
 import Tab5 from "./Tab5/Tab5";
+import Tab4 from "./tab4/Tab4";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -131,6 +132,7 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
 
         {/*minimizedClass  */}
         <div className={`mcontent boxContent `}>
+          {multiBox.activeTab === "4" && <Tab4 multiBox={multiBox} />}
           {multiBox.activeTab === "5" && <Tab5 multiBox={multiBox} />}
           <div className="tabButtons">
             <button
