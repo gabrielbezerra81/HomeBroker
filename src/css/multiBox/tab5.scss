@@ -1,0 +1,182 @@
+.multiBoxTab5 {
+  padding: 0 4px;
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--color-border-light);
+    margin: -1px 0 2px 0;
+    padding: 4px 0px;
+
+    .brokerCustomButton {
+      padding: 0;
+    }
+
+    img {
+      height: 20px;
+    }
+
+    .buySellButton {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin: 0 3px;
+
+      .brokerCustomButton {
+        display: flex;
+
+        img {
+          max-height: 16px;
+          max-width: 25.8px;
+        }
+      }
+    }
+
+    .openInNewIcon {
+      height: 14px;
+    }
+
+    .darkSimpleInput {
+      border-radius: 4px;
+      max-width: 45%;
+      height: 20px;
+    }
+  }
+
+  .strikeDateRow {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--color-border-light);
+    margin: -1px 0 2px 0;
+    padding: 4px 0px 8px;
+
+    .darkSimpleInput {
+      border-radius: 4px;
+      height: 20px;
+    }
+
+    .form-group {
+      padding: 0;
+      max-width: 80px;
+
+      &:first-child {
+        margin-right: 6px;
+      }
+
+      .form-label {
+        color: #ccae44;
+      }
+    }
+
+    .callPutContainer {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      margin-left: 8px;
+
+      > button {
+        border-radius: 6px;
+        height: 20px;
+        padding: 0 6px;
+      }
+
+      button:first-child {
+        background: #0d6721;
+        margin-right: 6px;
+      }
+
+      button:last-child {
+        background: #9c243a;
+      }
+    }
+  }
+
+  .finishButton {
+    background: #7095df;
+    border-radius: 6px;
+    height: 28px;
+    margin-left: auto;
+    margin-right: 4px;
+    width: 70px;
+    display: block;
+  }
+
+  .offersContainer {
+    padding: 8px 0 0;
+
+    > table {
+      text-align: center;
+      background-color: transparent !important;
+
+      tbody {
+        tr:not(:first-child) {
+          border-top: 6px solid transparent;
+        }
+      }
+
+      th {
+        background-color: transparent;
+        color: #ccae44;
+        font-weight: 400;
+      }
+
+      td {
+        background-color: transparent !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+      }
+
+      .containerInput {
+        max-width: 60px;
+
+        input {
+          background-color: #333;
+          border-color: #333;
+          color: var(--color-text-primary) !important;
+          box-sizing: content-box;
+        }
+      }
+
+      .buySellSelector {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        > button {
+          background-color: #444;
+          font-size: 10px;
+          font-weight: 600 !important;
+          width: 16px;
+          height: 16px;
+          border-radius: 5px;
+          margin: 1px 1px 0 1px;
+          padding: 0;
+        }
+      }
+
+      .buySelector {
+        background-color: #28a745 !important;
+      }
+
+      .sellSelector {
+        background-color: red !important;
+      }
+
+      .typeButton {
+        font-size: 14px;
+      }
+
+      .modelButton {
+        padding: 0;
+
+        img {
+          height: 18px;
+          vertical-align: bottom;
+        }
+      }
+    }
+  }
+}

@@ -18,4 +18,7 @@ export const MUDAR_VARIAVEL_THL = "mudar_variavel_thl";
 export const MUDAR_VARIAVEIS_THL = "mudar_variaveis_thl";
 
 // Planejador financeiro
-export const UPDATE_MANY_FINANCIAL_PLANNER = "update_many_financial_planner"
+export const UPDATE_MANY_FINANCIAL_PLANNER = "update_many_financial_planner";
+
+// MultiBox
+export const UPDATE_MANY_MULTIBOX = "update_many_multibox";

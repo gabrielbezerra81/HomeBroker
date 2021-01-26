@@ -49,6 +49,8 @@ import "./category_list/CategoryList.scss";
 import "./financialPlanner/initialPlanner/initialPlanner.scss";
 import "./financialPlanner/detailedPlanner/detailedPlanner.scss";
 
+import "./multiBox/multiBox.scss"
+
 import "./componentes_customizados/CustomCheckbox.css";
 import "./componentes_customizados/CustomInput.scss";
 import "./componentes_customizados/IconeConfigGrafico.css";

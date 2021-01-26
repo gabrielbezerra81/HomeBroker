@@ -1,0 +1,122 @@
+.multiBoxContainer {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(320px, 320px));
+  column-gap: 12px;
+  row-gap: 16px;
+  padding: 0px 32px 16px;
+  margin-top: 32px;
+  overflow: visible;
+
+  .buyText {
+    color: #336699;
+  }
+
+  .sellText {
+    color: #996666;
+  }
+}
+
+.multiBox {
+  //   position: relative !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-width: 320px;
+
+  .hiddenBoxContent {
+    height: 37px !important;
+  }
+
+  .boxContent {
+    border-width: 0.3rem;
+    margin-right: 0;
+    background-color: #000;
+    transition: height 0.2s;
+    min-height: 227px;
+
+    padding-bottom: 16px;
+
+    .tabButtons {
+      position: absolute;
+      display: flex;
+      justify-content: space-around;
+      left: 0;
+      right: 0;
+      bottom: -6px;
+
+      > .brokerCustomButton {
+        width: 16px;
+        height: 16px;
+        background: var(--color-border-light);
+        border-radius: 50%;
+        padding: 0;
+
+        &:hover {
+          opacity: 1;
+        }
+
+        &.selected {
+          .selectedCircle {
+            background: #c910a0;
+          }
+        }
+
+        .selectedCircle {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          margin: auto;
+          transition: background-color 0.2s;
+        }
+      }
+    }
+
+    > header {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      border-bottom: 1px solid var(--color-border-light);
+      margin: -1px 0 2px 0;
+      padding: 0 4px 1px;
+
+      svg {
+        cursor: pointer;
+
+        &:hover {
+          fill: #007bff;
+        }
+      }
+    }
+  }
+}
+
+.multiBox .tab4 {
+  .SLIDER {
+    > div:first-child {
+      margin-bottom: -6px;
+    }
+    > div:last-child {
+      margin-top: -12px;
+    }
+
+    .sliderBuyColor::-webkit-slider-runnable-track,
+    .sliderSellColor::-webkit-slider-runnable-track {
+      border-radius: 0;
+      height: 6px;
+    }
+
+    .sliderBuyColor::-webkit-slider-thumb,
+    .sliderSellColor::-webkit-slider-thumb {
+      margin-top: -2px;
+    }
+
+    .sliderBuyColor::-webkit-slider-runnable-track {
+      background-color: #336699;
+    }
+    .sliderSellColor::-webkit-slider-runnable-track {
+      background-color: #996666;
+    }
+  }
+}
+
+@import "./tab5.scss";

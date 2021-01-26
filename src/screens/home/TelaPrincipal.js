@@ -20,16 +20,17 @@ import RightSideMenu from "./rightSideMenu/RightSideMenu";
 import CategoryList from "screens/popups/categoryList/CategoryList";
 import InitialPlanner from "screens/popups/financialPlanner/InitialPlanner/InitialPlanner";
 import DetailedPlanner from "screens/popups/financialPlanner/DetailedPlanner/DetailedPlanner";
+import MultiBoxContainer from "screens/popups/multiBox/MultiBoxContainer";
 
 const OrdensExecucao = React.lazy(() =>
-  import("screens/popups/ordens_em_execucao/OrdensExecucao")
+  import("screens/popups/ordens_em_execucao/OrdensExecucao"),
 );
 const Multileg = React.lazy(() => import("screens/popups/multileg_/Multileg"));
 const PosicaoEmCustodia = React.lazy(() =>
-  import("screens/popups/posicao_custodia/PosicaoEmCustodia")
+  import("screens/popups/posicao_custodia/PosicaoEmCustodia"),
 );
 const RelatorioDetalhado = React.lazy(() =>
-  import("screens/popups/relatorio_detalhado/RelatorioDetalhado")
+  import("screens/popups/relatorio_detalhado/RelatorioDetalhado"),
 );
 const TelaTHL = React.lazy(() => import("screens/popups/thl/Tela_THL"));
 
@@ -63,7 +64,7 @@ class TelaPrincipal extends React.Component {
           });
         }
         return Promise.reject(error);
-      }
+      },
     );
 
     // LogRocket.identify(this.props.connectedUser, {
@@ -179,6 +180,8 @@ class TelaPrincipal extends React.Component {
             <MenuOrdens />
 
             <QuoteBoxContainer />
+
+            <MultiBoxContainer />
           </div>
         </div>
       </div>
@@ -214,8 +217,8 @@ export default compose(
     null,
     {
       context: StorePrincipalContext,
-    }
-  )
+    },
+  ),
 )(TelaPrincipal);
 
 /*

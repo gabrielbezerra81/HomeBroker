@@ -200,7 +200,7 @@ export const INITIAL_STATE: SystemState = {
   updateInterval: 3000,
   isLeftSideMenuConfigOpen: false,
   isOpenInitialPlanner: false,
-  isOpenDetailedPlanner: true,
+  isOpenDetailedPlanner: false,
 };
 
 const {
