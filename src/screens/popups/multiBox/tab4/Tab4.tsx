@@ -106,7 +106,7 @@ const Tab4: React.FC<Props> = ({ multiBox }) => {
               <SymbolCard
                 data={{
                   code: "L260",
-                  offerType: "V",
+                  offerType: "P",
                   model: "EUROPEAN",
                   strike: "26,00",
                   viewMode: "code",

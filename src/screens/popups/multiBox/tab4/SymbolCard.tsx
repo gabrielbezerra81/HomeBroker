@@ -3,7 +3,7 @@ import { formatarNumDecimal } from "shared/utils/Formatacoes";
 
 interface Props {
   data: {
-    offerType: "C" | "V";
+    offerType: "C" | "P";
     viewMode: "strike" | "code";
     dueDate: string;
     model: "EUROPEAN" | "AMERICAN";
@@ -39,10 +39,19 @@ const SymbolCard: React.FC<Props> = ({
     return "european";
   }, [model]);
 
+  const modelStyle = useMemo(() => {
+    if (offerType === "C") {
+      return { fontSize: 16 };
+    }
+    return {};
+  }, [offerType]);
+
   return (
     <div className="symbolCardContainer">
       {model === "AMERICAN" ? (
-        <div className={`model ${modelClass}`}>{offerType}</div>
+        <div style={modelStyle} className={`model ${modelClass}`}>
+          {offerType}
+        </div>
       ) : (
         <div className={`model ${modelClass}`}>{offerType}</div>
       )}
