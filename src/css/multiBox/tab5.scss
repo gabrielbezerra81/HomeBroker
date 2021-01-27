@@ -1,6 +1,11 @@
 .multiBoxTab5 {
   padding: 0 4px;
 
+  select,
+  input {
+    text-align: center;
+  }
+
   header {
     display: flex;
     align-items: center;
@@ -52,17 +57,20 @@
     margin: -1px 0 2px 0;
     padding: 4px 0px 8px;
 
-    .darkSimpleInput {
-      border-radius: 4px;
-      height: 20px;
-    }
-
     .form-group {
       padding: 0;
       max-width: 120px;
 
+      .darkInputSelect {
+        border-radius: 4px;
+        height: 20px;
+        width: 80px;
+      }
+
       &:first-child {
-        margin-right: 6px;
+        .darkInputSelect {
+          width: 120px;
+        }
       }
 
       .form-label {
@@ -234,4 +242,9 @@
 .strikeSelectDropdown {
   background-color: #333 !important;
   font-weight: 500;
+}
+
+.tab5StrikeOption {
+  font-size: 0.73rem !important;
+  padding: 5px 7px !important;
 }

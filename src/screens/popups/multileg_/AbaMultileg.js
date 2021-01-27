@@ -11,10 +11,7 @@ import {
   addMultilegOfferAction,
 } from "redux/actions/multileg/MultilegActions";
 import { findMultilegQuote } from "redux/actions/multileg/utils";
-import {
-  formatarNumDecimal,
-  formatarVencimento,
-} from "shared/utils/Formatacoes";
+import { formatarNumDecimal, formatExpiration } from "shared/utils/Formatacoes";
 import { searchMultilegSymbolAPIAction } from "redux/actions/multileg/MultilegAPIAction";
 import Book from "screens/popups/multileg_/Book/Book";
 import { Select } from "antd";
@@ -124,9 +121,9 @@ class AbaMultileg extends React.Component {
                         key={vencimento + indice + Math.random()}
                         value={vencimento}
                       >
-                        {formatarVencimento(vencimento)}
+                        {formatExpiration(vencimento)}
                       </option>
-                    )
+                    ),
                   )}
                 </Form.Control>
               </Form.Group>
@@ -199,7 +196,7 @@ export default connect(
     addMultilegOfferAction,
   },
   null,
-  { context: StorePrincipalContext }
+  { context: StorePrincipalContext },
 )(AbaMultileg);
 
 const renderSeta = (valor) => {
@@ -230,7 +227,7 @@ const renderSerie = (props) => {
     let strikeSymbol = renderStrikeSymbol(
       item,
       index,
-      props.multileg[indice].opcoes
+      props.multileg[indice].opcoes,
     );
     if (strikeSymbol) listaSerie.push(strikeSymbol);
   });

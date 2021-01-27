@@ -104,7 +104,7 @@ export const formatarDataDaAPI = (dataAPI) => {
   return new Date(`${data[1]}/${data[0]}/${data[2]} ${hora}`);
 };
 
-export const formatarVencimento = (string) => {
+export const formatExpiration = (string) => {
   string = string.split("-");
   string[2] = Number(Number(string[2]) + 1) + "";
   let dateString = string.join("-");

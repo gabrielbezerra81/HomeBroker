@@ -6,8 +6,7 @@ import { AiFillMinusCircle } from "react-icons/ai";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { MultiBoxData } from "types/multiBox/MultiBoxState";
-import produce from "immer";
-import { updateMultiBoxAction } from "redux/actions/multiBox/multiBoxActions";
+import { updateBoxAttrAction } from "redux/actions/multiBox/multiBoxActions";
 import Tab5 from "./Tab5/Tab5";
 import Tab4 from "./tab4/Tab4";
 
@@ -69,13 +68,13 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
 
   const handleBoxTabChange = useCallback(
     (e) => {
-      const updatedMultiBox = produce(multiBox, (draft) => {
-        const tab = e.currentTarget.name.replace("tab", "");
+      const newSelectedTab = e.currentTarget.name.replace("tab", "");
 
-        draft.activeTab = tab;
-      });
-
-      dispatch(updateMultiBoxAction(updatedMultiBox));
+      dispatch(
+        updateBoxAttrAction(multiBox.id, {
+          activeTab: newSelectedTab,
+        }),
+      );
     },
     [dispatch, multiBox],
   );

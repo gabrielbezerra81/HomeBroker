@@ -14,8 +14,9 @@ export const updateManyMultiBoxAction = (
   };
 };
 
-export const updateMultiBoxAction = (
-  multiBox: Partial<MultiBoxData>,
+export const updateBoxAttrAction = (
+  id: string,
+  payload: Partial<MultiBoxData>,
 ): MainThunkAction => {
   return (dispatch, getState) => {
     const {
@@ -23,10 +24,10 @@ export const updateMultiBoxAction = (
     } = getState();
 
     const updatedBoxes = produce(boxes, (draft) => {
-      const index = draft.findIndex((box) => box.id === multiBox.id);
+      const index = draft.findIndex((box) => box.id === id);
 
       if (index !== -1) {
-        Object.assign(draft[index], multiBox);
+        Object.assign(draft[index], payload);
       }
     });
 

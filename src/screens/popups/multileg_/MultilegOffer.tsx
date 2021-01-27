@@ -4,12 +4,11 @@ import { MDBIcon } from "mdbreact";
 import { Select } from "antd";
 
 import CustomInput from "shared/componentes/CustomInput";
-import { formatarVencimento } from "shared/utils/Formatacoes";
 import {
   findMultilegQuote,
   findMultilegBook,
 } from "redux/actions/multileg/utils";
-import { formatarNumDecimal } from "shared/utils/Formatacoes";
+import { formatarNumDecimal, formatExpiration } from "shared/utils/Formatacoes";
 import modelEUImage from "assets/modeloEU.png";
 import modelUSAImage from "assets/modeloUSA2.svg";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
@@ -113,7 +112,7 @@ const MultilegOfferItem: React.FC<MultilegOfferProps> = ({
       <td>
         <CV offerCV={offer.cv} lineIndex={lineIndex} tabIndex={tabIndex} />
       </td>
-      <td className="qtdeColumn" >
+      <td className="qtdeColumn">
         <Form.Group>
           <CustomInput
             type={qttyInputConfig.type as any}
@@ -153,7 +152,7 @@ const MultilegOfferItem: React.FC<MultilegOfferProps> = ({
           >
             {offer.serie.map((serie, serieIndex) => (
               <option key={serie + serieIndex} value={serie}>
-                {formatarVencimento(serie)}
+                {formatExpiration(serie)}
               </option>
             ))}
           </Form.Control>
