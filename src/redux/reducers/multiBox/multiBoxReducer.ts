@@ -3,7 +3,7 @@ import Action from "types/Action";
 import { UPDATE_MANY_MULTIBOX } from "constants/MenuActionTypes";
 
 const INITIAL_STATE: MultiBoxState = {
-  boxes: [{ id: "asdasd12312312", activeTab: "5", minimized: false }],
+  boxes: [{ id: "asdasd12312312", activeTab: "4", minimized: false }],
   strikeViewMode: "strike",
 };
 

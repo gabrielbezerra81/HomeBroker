@@ -5,7 +5,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: -1px 0 16px 0;
+    margin: -1px 0 8px 0;
     padding: 4px 8px;
 
     .brokerCustomButton {
@@ -52,6 +52,170 @@
 
     .openInNewIcon {
       height: 14px;
+    }
+  }
+
+  > table {
+    text-align: center;
+    background-color: transparent !important;
+
+    .brokerCustomButton {
+      padding: 0;
+    }
+
+    thead {
+      tr:first-child {
+        th:nth-child(2) {
+          border-bottom: 1px solid #ccae44 !important;
+        }
+      }
+    }
+
+    th {
+      font-weight: 400;
+
+      &.yellowColumns {
+        color: #ccae44;
+      }
+
+      &.blueColumns {
+        color: #80c7e4;
+      }
+
+      .brokerCustomButton {
+        svg {
+          margin-bottom: 2px;
+          margin-left: 2px;
+        }
+      }
+    }
+
+    .buyColor {
+      color: #098abf;
+    }
+
+    .sellColor {
+      color: #a5746b;
+    }
+
+    td:nth-child(3) {
+      color: #bfdce8;
+    }
+
+    th:nth-child(3) {
+      color: #fff;
+    }
+
+    th:nth-child(4),
+    th:nth-child(5),
+    td:nth-child(4),
+    td:nth-child(5) {
+      color: #80c7e4;
+    }
+
+    th:nth-child(6),
+    th:nth-child(7),
+    td:nth-child(6),
+    td:nth-child(7) {
+      color: #fda6f4;
+    }
+
+    tr:nth-child(odd) td {
+      background-color: transparent !important;
+    }
+
+    td {
+      &:nth-child(1) {
+        font-weight: bold;
+      }
+    }
+
+    tbody {
+      tr:not(:first-child) {
+        border-top: 5px solid transparent;
+      }
+    }
+  }
+
+  .tab4InputRangeContainer {
+    padding: 0 24px;
+
+    > div {
+      display: flex;
+      justify-content: space-between;
+
+      span {
+        line-height: 14px;
+      }
+    }
+  }
+
+  .tab4InputRange {
+    background-color: transparent !important;
+    height: 11px;
+  }
+
+  .tab4InputRange::-webkit-slider-runnable-track {
+    background-color: #444 !important;
+    height: 8px;
+  }
+
+  .tab4InputRange::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    background: #ffff00 !important;
+    box-shadow: 0 0 1px 2px #eaad15 !important;
+    height: 12px !important;
+    width: 12px !important;
+    margin-top: -2px !important;
+  }
+}
+
+.symbolCardContainer {
+  display: flex;
+  border: 1px solid #b0b0b0;
+  border-radius: 5px;
+  padding-right: 2px;
+  align-items: center;
+  margin-right: 4px;
+
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+
+  .model {
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 19px;
+    width: 19px;
+    border-right: 1px solid #b0b0b0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+
+    &.european {
+      background-image: url("../../assets/multiBox/europeanCardIcon.png");
+      color: #b7b7b7;
+    }
+
+    &.american {
+      background-image: url("../../assets/multiBox/americanCardIcon.png");
+      color: #2b3561;
+      font-size: 18px;
+    }
+  }
+
+  img {
+    height: 19px;
+    border-right: 1px solid #b0b0b0;
+  }
+
+  h6 {
+    font-size: 14px;
+    font-weight: bold;
+
+    &:nth-child(2) {
+      margin: 0 4px;
     }
   }
 }
