@@ -22,14 +22,10 @@
       height: 20px;
     }
 
-    .buySellButton {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      margin: 0 3px;
-
+    .searchOptionsButton {
       .brokerCustomButton {
         display: flex;
+        flex-direction: column;
 
         img {
           max-height: 16px;
@@ -59,18 +55,34 @@
 
     .form-group {
       padding: 0;
-      max-width: 120px;
+      max-width: 165px;
 
       .darkInputSelect {
         border-radius: 4px;
         height: 20px;
         width: 80px;
+        background-color: #333;
+      }
+
+      .optionStrikeSelect {
+        > div {
+          height: 20px !important;
+          width: 165px !important;
+          font-size: 0.71rem !important;
+        }
+
+        .ant-select-selection__rendered {
+          height: 20px !important;
+          line-height: 20px !important;
+        }
+
+        .ant-select-arrow {
+          right: 5px !important;
+        }
       }
 
       &:first-child {
-        .darkInputSelect {
-          width: 120px;
-        }
+        margin-right: 0px;
       }
 
       .form-label {
@@ -200,41 +212,43 @@
         }
       }
 
-      .strikeSelect {
-        position: absolute;
-        top: 0;
-        left: 1px;
-
-        > div {
-          background-color: #333 !important;
-          color: var(--color-text-primary) !important;
-          width: 80px !important;
-          border: none;
-          height: 17px !important;
-          text-align: center !important;
-          font-size: 0.73rem !important;
-        }
-
-        .ant-select-selection__rendered {
-          height: 17px !important;
-          line-height: 16px !important;
-        }
-
-        input {
-          height: 17px !important;
-          text-align: center !important;
-        }
-
-        i {
-          color: #ddd !important;
-        }
-      }
-
       .dueDateSelect {
         height: 17px;
         background-color: #333;
         border-radius: 4px;
       }
+
+      .offerStrikeSelect {
+        position: absolute;
+        top: 0;
+        left: 1px;
+      }
+    }
+  }
+
+  .strikeSelect {
+    > div {
+      background-color: #333 !important;
+      color: var(--color-text-primary) !important;
+      width: 80px !important;
+      border: none;
+      height: 17px !important;
+      text-align: center !important;
+      font-size: 0.73rem !important;
+    }
+
+    .ant-select-selection__rendered {
+      height: 17px !important;
+      line-height: 16px !important;
+    }
+
+    input {
+      height: 17px !important;
+      text-align: center !important;
+    }
+
+    i {
+      color: #ddd !important;
     }
   }
 }
@@ -242,6 +256,7 @@
 .strikeSelectDropdown {
   background-color: #333 !important;
   font-weight: 500;
+  width: 180px !important;
 }
 
 .tab5StrikeOption {

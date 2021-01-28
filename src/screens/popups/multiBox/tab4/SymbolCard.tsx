@@ -1,19 +1,17 @@
 import React, { useMemo } from "react";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
+import { TopSymbols } from "types/multiBox/MultiBoxState";
 
 interface Props {
-  data: {
-    offerType: "C" | "P";
-    viewMode: "strike" | "code";
-    dueDate: string;
-    model: "EUROPEAN" | "AMERICAN";
-    strike: number | string;
-    code: string;
-  };
+  data: TopSymbols;
+  showQtty?: boolean;
+  showQttyPlus?: boolean;
 }
 
 const SymbolCard: React.FC<Props> = ({
-  data: { offerType, strike, dueDate, viewMode, code, model },
+  data: { offerType, strike, expiration, viewMode, code, model, qtty },
+  showQtty = false,
+  showQttyPlus = false,
 }) => {
   const textColorClass = useMemo(() => {
     if (offerType === "C") {
@@ -46,8 +44,23 @@ const SymbolCard: React.FC<Props> = ({
     return {};
   }, [offerType]);
 
+  const formattedQtty = useMemo(() => {
+    let formattedQtty = offerType === "C" ? `${qtty}` : `-${qtty}`;
+
+    if (showQttyPlus && qtty > 0) {
+      formattedQtty = formattedQtty.padStart(2, "+");
+    }
+
+    return formattedQtty;
+  }, [offerType, qtty, showQttyPlus]);
+
   return (
     <div className="symbolCardContainer">
+      {showQtty && (
+        <span className={`cardQtty ${textColorClass}`}>
+          {formattedQtty}
+        </span>
+      )}
       {model === "AMERICAN" ? (
         <div style={modelStyle} className={`model ${modelClass}`}>
           {offerType}
@@ -58,7 +71,7 @@ const SymbolCard: React.FC<Props> = ({
       <h6 className={textColorClass}>
         {viewMode === "strike" ? formattedStrike : code}
       </h6>
-      <h6 className={textColorClass}>{dueDate}</h6>
+      <h6 className={textColorClass}>{expiration}</h6>
     </div>
   );
 };

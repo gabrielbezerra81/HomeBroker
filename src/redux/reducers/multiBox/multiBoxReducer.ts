@@ -16,10 +16,10 @@ const INITIAL_STATE: MultiBoxState = {
       selectedStrike: 0,
       selectedExpiration: "",
       boxOffers: [],
+      strikeViewMode: "strike",
       //tab5
     },
   ],
-  strikeViewMode: "strike",
 };
 
 export default (

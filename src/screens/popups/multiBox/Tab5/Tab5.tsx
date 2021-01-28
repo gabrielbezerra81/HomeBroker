@@ -4,6 +4,8 @@ import { Select } from "antd";
 
 import { MultiBoxData } from "types/multiBox/MultiBoxState";
 
+import { FaCaretDown } from "react-icons/fa";
+
 import { IoMdRepeat } from "react-icons/io";
 
 import cBuyIcon from "assets/multiBox/cBuyIcon.png";
@@ -12,7 +14,6 @@ import openInNewIcon from "assets/multiBox/openInNewIcon.png";
 import pSellIcon from "assets/multiBox/pSellIcon.png";
 import zoomIcon from "assets/multiBox/zoomIcon.png";
 import MultiBoxOffer from "./MultiBoxOffer";
-import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { updateBoxAttrAction } from "redux/actions/multiBox/multiBoxActions";
 import { formatExpiration } from "shared/utils/Formatacoes";
@@ -23,10 +24,6 @@ interface Props {
 }
 
 const Tab5: React.FC<Props> = ({ multiBox }) => {
-  const {
-    multiBoxReducer: { strikeViewMode },
-  } = useStateStorePrincipal();
-
   const dispatch = useDispatchStorePrincipal();
 
   const {
@@ -36,6 +33,7 @@ const Tab5: React.FC<Props> = ({ multiBox }) => {
     expirations,
     stockOptions,
     id,
+    strikeViewMode,
   } = multiBox;
 
   const handleInputChange = useCallback(
@@ -59,13 +57,11 @@ const Tab5: React.FC<Props> = ({ multiBox }) => {
     [dispatch, multiBox.id],
   );
 
-  const handleSearch = useCallback(() => {
+  const handleSearchStock = useCallback(() => {}, []);
+
+  const handleSearchOptions = useCallback(() => {
     dispatch(handleSearchBoxSymbolAction(id, symbolInput));
   }, [dispatch, id, symbolInput]);
-
-  const handleBuy = useCallback(() => {}, []);
-
-  const handleSell = useCallback(() => {}, []);
 
   const handleOpenInMultileg = useCallback(() => {}, []);
 
@@ -75,7 +71,15 @@ const Tab5: React.FC<Props> = ({ multiBox }) => {
 
   const handlePut = useCallback(() => {}, []);
 
-  const handleStrikeViewChange = useCallback(() => {}, []);
+  const handleStrikeViewChange = useCallback(() => {
+    const viewMode = strikeViewMode === "code" ? "strike" : "code";
+
+    dispatch(
+      updateBoxAttrAction(multiBox.id, {
+        strikeViewMode: viewMode,
+      }),
+    );
+  }, [dispatch, multiBox.id, strikeViewMode]);
 
   const strikeOptions = useMemo(() => {
     const dropdownOptions = stockOptions
@@ -111,7 +115,11 @@ const Tab5: React.FC<Props> = ({ multiBox }) => {
   const expirationOptions = useMemo(() => {
     return expirations.map((expiration) => {
       const formattedExpiration = formatExpiration(expiration);
-      return <option value={expiration}>{formattedExpiration}</option>;
+      return (
+        <option key={expiration} value={expiration}>
+          {formattedExpiration}
+        </option>
+      );
     });
   }, [expirations]);
 
@@ -126,18 +134,16 @@ const Tab5: React.FC<Props> = ({ multiBox }) => {
           onKeyPress={(event: any) => {
             //event.preventDefault();
             if (event.key === "Enter") {
-              handleSearch();
+              handleSearchOptions();
             }
           }}
         />
-        <button className="brokerCustomButton" onClick={handleSearch}>
+        <button className="brokerCustomButton" onClick={handleSearchStock}>
           <img src={zoomIcon} alt="" />
         </button>
-        <div className="buySellButton" onClick={handleBuy}>
-          <button className="brokerCustomButton">
+        <div className="searchOptionsButton">
+          <button className="brokerCustomButton" onClick={handleSearchOptions}>
             <img src={cBuyIcon} alt="" />
-          </button>
-          <button className="brokerCustomButton" onClick={handleSell}>
             <img src={pSellIcon} alt="" />
           </button>
         </div>
@@ -153,21 +159,30 @@ const Tab5: React.FC<Props> = ({ multiBox }) => {
       <div className="strikeDateRow">
         <Form.Group>
           <Form.Label>Strike</Form.Label>
-          <Form.Control
-            as="select"
-            className="darkInputSelect"
-            name="selectedExpiration"
-            value={selectedExpiration}
-            onChange={handleInputChange}
-          ></Form.Control>
-          {/* <Select
-            className="darkInputSelect"
-            // name="selectedStrike"
+          <Select
+            className="strikeSelect optionStrikeSelect"
             value={selectedStrike || ""}
-            onChange={handleInputChange}
+            onChange={(value: any) => {
+              handleInputChange({
+                currentTarget: {
+                  name: "selectedStrike",
+                  value,
+                },
+              });
+            }}
+            dropdownClassName="strikeSelectDropdown"
+            size="small"
+            showSearch
+            optionFilterProp="children"
+            notFoundContent={
+              strikeOptions.length > 0
+                ? "Código não encontrado"
+                : "Pesquise um ativo"
+            }
+            suffixIcon={<FaCaretDown color="#ddd" />}
           >
             {strikeOptions}
-          </Select> */}
+          </Select>
         </Form.Group>
         <Form.Group>
           <Form.Label>Vencimento</Form.Label>
@@ -212,10 +227,9 @@ const Tab5: React.FC<Props> = ({ multiBox }) => {
             </tr>
           </thead>
           <tbody>
-            <MultiBoxOffer />
-            <MultiBoxOffer />
-            <MultiBoxOffer />
-            <MultiBoxOffer />
+            {multiBox.boxOffers.map((offer, index) => (
+              <MultiBoxOffer key={index} />
+            ))}
           </tbody>
         </Table>
       </div>

@@ -8,11 +8,7 @@ export const handleSearchBoxSymbolAction = (
   id: string,
   symbol: string,
 ): MainThunkAction => {
-  return async (dispatch, getState) => {
-    const {
-      multiBoxReducer: {},
-    } = getState();
-
+  return async (dispatch) => {
     const data = await pesquisarAtivoMultilegAPI(symbol);
 
     if (data) {

@@ -16,7 +16,7 @@ const MultiBoxOffer: React.FC = () => {
   const dispatch = useDispatchStorePrincipal();
 
   const {
-    multiBoxReducer: { strikeViewMode },
+    multiBoxReducer: {},
   } = useStateStorePrincipal();
 
   const handleQttyChange = useCallback((value: any) => {
@@ -95,7 +95,7 @@ const MultiBoxOffer: React.FC = () => {
           showSearch
           optionFilterProp="children"
           notFoundContent="Strike não encontrado"
-          className="strikeSelect"
+          className="strikeSelect offerStrikeSelect"
           suffixIcon={<FaCaretDown color="#ddd" />}
           onChange={handleStrikechange}
         >
@@ -103,7 +103,11 @@ const MultiBoxOffer: React.FC = () => {
         </Select>
       </td>
       <td>
-        <FormControl as="select" className="darkInputSelect dueDateSelect" name="period">
+        <FormControl
+          as="select"
+          className="darkInputSelect dueDateSelect"
+          name="period"
+        >
           <option value={"21/12/2020"}>21/12/2020</option>
           <option value={"21/12/2021"}>21/12/2021</option>
         </FormControl>

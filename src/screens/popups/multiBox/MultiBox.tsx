@@ -1,14 +1,18 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Draggable, { DraggableData } from "react-draggable";
+
+import moment from "moment";
+
 import { RiCloseCircleFill } from "react-icons/ri";
 import { AiFillMinusCircle } from "react-icons/ai";
 
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
-import { MultiBoxData } from "types/multiBox/MultiBoxState";
+import { MultiBoxData, TopSymbols } from "types/multiBox/MultiBoxState";
 import { updateBoxAttrAction } from "redux/actions/multiBox/multiBoxActions";
 import Tab5 from "./Tab5/Tab5";
 import Tab4 from "./tab4/Tab4";
+import SymbolCard from "./tab4/SymbolCard";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -19,10 +23,11 @@ const limitY = 80;
 const MultiBox: React.FC<Props> = ({ multiBox }) => {
   const {
     systemReducer: { selectedTab, openedMenus, isOpenLeftUserMenu },
-    multiBoxReducer: {},
   } = useStateStorePrincipal();
 
   const dispatch = useDispatchStorePrincipal();
+
+  const { strikeViewMode } = multiBox;
 
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -90,6 +95,38 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const topSymbols = useMemo(() => {
+    const symbols: TopSymbols[] = multiBox.boxOffers.map((offer) => {
+      const [year, month, day] = offer.selectedExpiration
+        .split("-")
+        .map((value) => Number(value));
+
+      const expirationDate = new Date(year, month - 1, day);
+
+      const dateDiff = moment(expirationDate).diff(new Date(), "days") + "d";
+
+      return {
+        qtty: offer.qtty,
+        code: offer.selectedCode,
+        model: offer.model,
+        strike: offer.selectedStrike,
+        offerType: offer.offerType === "C" ? "C" : "P",
+        viewMode: strikeViewMode,
+        expiration: dateDiff,
+      };
+    });
+
+    return symbols;
+  }, [multiBox.boxOffers, strikeViewMode]);
+
+  const americanTopSymbols = useMemo(() => {
+    return topSymbols.filter((item) => item.model === "AMERICAN");
+  }, [topSymbols]);
+
+  const europeanTopSymbols = useMemo(() => {
+    return topSymbols.filter((item) => item.model === "EUROPEAN");
+  }, [topSymbols]);
+
   return (
     <Draggable
       enableUserSelectHack={isDragging}
@@ -109,25 +146,18 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
         }
         id={multiBox.id}
       >
-        {/* <div className="symbolsContainer">
+        <div className="topSymbolsContainer">
           <div>
-            {quoteBox.codes.map(
-              (code, index) =>
-                code.type === "buy" && (
-                  <CodeColumn key={`${code.symbol}${index}`} code={code} />
-                ),
-            )}
+            {americanTopSymbols.map((topSymbol, index) => (
+              <SymbolCard data={topSymbol} key={index} showQtty />
+            ))}
           </div>
           <div>
-            {quoteBox.codes.map(
-              (code, index) =>
-                code.type === "sell" && (
-                  <CodeColumn key={`${code.symbol}${index}`} code={code} />
-                ),
-            )}
+            {europeanTopSymbols.map((topSymbol, index) => (
+              <SymbolCard data={topSymbol} key={index} showQtty />
+            ))}
           </div>
         </div>
-         */}
 
         {/*minimizedClass  */}
         <div className={`mcontent boxContent `}>
@@ -196,20 +226,6 @@ export default MultiBox;
 function isSelected(tabKey: string, activeTab: string) {
   return tabKey === activeTab ? " selected" : "";
 }
-
-const DayOscilation = ({ dayOscilation, formattedDayOscilation }: any) => {
-  if (dayOscilation >= 0)
-    return (
-      <>
-        <span style={{ color: "#138342" }}>+{formattedDayOscilation}%</span>
-      </>
-    );
-  return (
-    <>
-      <span style={{ color: "#EC0C00" }}>{formattedDayOscilation}%</span>
-    </>
-  );
-};
 
 // const boxIndex = useMemo(() => {
 //   return boxesVisibility.findIndex(

@@ -17,6 +17,16 @@ export interface BoxOffer {
   model: "AMERICAN" | "EUROPEAN";
 }
 
+export interface TopSymbols {
+  qtty: number;
+  offerType: "C" | "P";
+  viewMode: "strike" | "code";
+  expiration: string;
+  model: "EUROPEAN" | "AMERICAN";
+  strike: number | string;
+  code: string;
+}
+
 export interface MultiBoxData {
   id: string;
   activeTab: "1" | "2" | "3" | "4" | "5";
@@ -28,9 +38,9 @@ export interface MultiBoxData {
   selectedStrike: number;
   selectedExpiration: string;
   boxOffers: Array<BoxOffer>;
+  strikeViewMode: "code" | "strike";
 }
 
 export default interface MultiBoxState {
   boxes: Array<MultiBoxData>;
-  strikeViewMode: "code" | "strike";
 }

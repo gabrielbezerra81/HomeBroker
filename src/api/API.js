@@ -178,8 +178,6 @@ export const enviarOrdemAPI = async (data) => {
 };
 
 export const pesquisarAtivoMultilegAPI = async (codigo_ativo) => {
-  var dados;
-
   return api
     .get(`${url_pesquisarOpcoesVencimentos_codigo}${codigo_ativo}`, {
       timeout,
@@ -189,7 +187,7 @@ export const pesquisarAtivoMultilegAPI = async (codigo_ativo) => {
       },
     })
     .then(async (response) => {
-      dados = {
+      const dados = {
         opcoes: [],
         vencimentos: [],
         //cotacaoAtual: 0,
@@ -217,7 +215,7 @@ export const pesquisarAtivoMultilegAPI = async (codigo_ativo) => {
           dados.variacao = Number(quoteData.porcentagem || 0);
         }
       } catch (error) {}
-      
+
       return dados;
     })
     .catch((erro) => {

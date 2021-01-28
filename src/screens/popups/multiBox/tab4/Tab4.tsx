@@ -85,12 +85,13 @@ const Tab4: React.FC<Props> = ({ multiBox }) => {
             <td>
               <SymbolCard
                 data={{
+                  qtty: 1,
                   code: "L260",
                   offerType: "C",
                   model: "AMERICAN",
                   strike: "",
                   viewMode: "code",
-                  dueDate: "25d",
+                  expiration: "25d",
                 }}
               />
             </td>
@@ -105,12 +106,13 @@ const Tab4: React.FC<Props> = ({ multiBox }) => {
             <td>
               <SymbolCard
                 data={{
+                  qtty: -1,
                   code: "L260",
                   offerType: "P",
                   model: "EUROPEAN",
                   strike: "26,00",
                   viewMode: "code",
-                  dueDate: "25d",
+                  expiration: "25d",
                 }}
               />
             </td>
