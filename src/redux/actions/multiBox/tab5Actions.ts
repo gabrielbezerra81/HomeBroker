@@ -54,26 +54,30 @@ export const handleAddStockOfferAction = (
   id: string,
   symbol: string,
 ): MainThunkAction => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const {
       multiBoxReducer: { boxes },
     } = getState();
 
-    const multiBox = boxes.find((box) => box.id === id);
+    // Adicionar stock symbol às ofertas
 
-    if (multiBox) {
+    const data = await pesquisarAtivoMultilegAPI(symbol);
+
+    if (data) {
+      const stockSymbol = data.ativoPrincipal;
+
       const offers = [
         {
           model: "",
           offerType: "C",
           qtty: 1,
-          selectedCode: symbol,
+          selectedCode: stockSymbol,
           selectedExpiration: "2100-01-01",
           selectedStrike: -1,
           type: "",
           stockOptions: [],
           expirations: [],
-          stockSymbol: multiBox.stockSymbol,
+          stockSymbol,
         },
       ] as any;
 
