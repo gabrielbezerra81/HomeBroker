@@ -9,7 +9,7 @@ interface Props {
 }
 
 const SymbolCard: React.FC<Props> = ({
-  data: { offerType, strike, expiration, viewMode, code, model, qtty },
+  data: { offerType, strike, expiration, viewMode, code, model, qtty, type },
   showQtty = false,
   showQttyPlus = false,
 }) => {
@@ -54,6 +54,8 @@ const SymbolCard: React.FC<Props> = ({
     return formattedQtty;
   }, [offerType, qtty, showQttyPlus]);
 
+  const typeLetter = useMemo(() => type.substr(0, 1), [type]);
+
   return (
     <div className="symbolCardContainer">
       {showQtty && (
@@ -61,10 +63,10 @@ const SymbolCard: React.FC<Props> = ({
       )}
       {model === "AMERICAN" ? (
         <div style={modelStyle} className={`model ${modelClass}`}>
-          {offerType}
+          {typeLetter}
         </div>
       ) : (
-        <div className={`model ${modelClass}`}>{offerType}</div>
+        <div className={`model ${modelClass}`}>{typeLetter}</div>
       )}
       <h6 className={textColorClass}>
         {viewMode === "strike" && strike !== -1 ? formattedStrike : code}

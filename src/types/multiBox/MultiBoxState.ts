@@ -22,12 +22,13 @@ export interface BoxOffer {
 
 export interface TopSymbols {
   qtty: number;
-  offerType: "C" | "P";
+  offerType: "C" | "V";
   viewMode: "strike" | "code";
   expiration: string;
   model: "EUROPEAN" | "AMERICAN";
   strike: number | string;
   code: string;
+  type: "CALL" | "PUT";
 }
 
 export interface MultiBoxData {

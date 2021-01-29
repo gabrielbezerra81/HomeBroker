@@ -105,15 +105,17 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
 
       const dateDiff = moment(expirationDate).diff(new Date(), "days") + "d";
 
-      return {
+      const topSymbol: TopSymbols = {
         qtty: offer.qtty,
         code: offer.selectedCode,
         model: offer.model,
         strike: offer.selectedStrike,
-        offerType: offer.offerType === "C" ? "C" : "P",
+        offerType: offer.offerType,
         viewMode: strikeViewMode,
         expiration: offer.model ? dateDiff : "",
+        type: offer.type,
       };
+      return topSymbol;
     });
 
     return symbols;

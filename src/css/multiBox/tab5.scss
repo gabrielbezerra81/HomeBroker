@@ -155,6 +155,11 @@
         padding-top: 0 !important;
         padding-bottom: 0 !important;
 
+        &:nth-child(3),
+        &:nth-child(5) {
+          padding: 0 3px !important;
+        }
+
         &.closeColumn {
           .brokerCustomButton {
             padding: 0;

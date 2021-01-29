@@ -3,7 +3,7 @@
 
 .multiBoxContainer {
   display: grid;
-  grid-template-columns: repeat(5, minmax(400px, 400px));
+  grid-template-columns: repeat(3, minmax(413px, 413px));
   column-gap: 12px;
   row-gap: 16px;
   padding: 0px 32px 16px;
@@ -24,7 +24,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  min-width: 400px;
+  min-width: 413px;
 
   .hiddenBoxContent {
     height: 37px !important;

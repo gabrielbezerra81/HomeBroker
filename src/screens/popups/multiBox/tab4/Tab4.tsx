@@ -92,6 +92,7 @@ const Tab4: React.FC<Props> = ({ multiBox }) => {
                   strike: "",
                   viewMode: "code",
                   expiration: "25d",
+                  type: "CALL",
                 }}
               />
             </td>
@@ -108,11 +109,12 @@ const Tab4: React.FC<Props> = ({ multiBox }) => {
                 data={{
                   qtty: -1,
                   code: "L260",
-                  offerType: "P",
+                  offerType: "V",
                   model: "EUROPEAN",
                   strike: "26,00",
                   viewMode: "code",
                   expiration: "25d",
+                  type: "PUT",
                 }}
               />
             </td>
