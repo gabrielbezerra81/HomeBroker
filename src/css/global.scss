@@ -139,4 +139,8 @@ h6 {
   }
 }
 
+.show.tooltip {
+  z-index: 99999999999 !important;
+}
+
 // In your global style.css file, try: @import '~antd/dist/antd.css';
