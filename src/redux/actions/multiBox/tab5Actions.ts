@@ -50,6 +50,31 @@ export const handleSearchBoxSymbolAction = (
   };
 };
 
+export const handleRemoveOfferAction = (
+  boxId: string,
+  offerIndex: number,
+): MainThunkAction => {
+  return (dispatch, getState) => {
+    const {
+      multiBoxReducer: { boxes },
+    } = getState();
+
+    const multiBox = boxes.find((box) => box.id === boxId);
+
+    if (multiBox) {
+      const updatedOffers = produce(multiBox.boxOffers, (draft) => {
+        draft.splice(offerIndex, 1);
+      });
+
+      dispatch(
+        updateBoxAttrAction(boxId, {
+          boxOffers: updatedOffers,
+        }),
+      );
+    }
+  };
+};
+
 export const handleAddStockOfferAction = (
   id: string,
   symbol: string,
@@ -63,25 +88,27 @@ export const handleAddStockOfferAction = (
 
     const data = await pesquisarAtivoMultilegAPI(symbol);
 
-    if (data) {
+    const multiBox = boxes.find((box) => box.id === id);
+
+    if (data && multiBox) {
       const stockSymbol = data.ativoPrincipal;
 
-      const offers = [
-        {
-          model: "",
-          offerType: "C",
-          qtty: 1,
-          selectedCode: stockSymbol,
-          selectedExpiration: "2100-01-01",
-          selectedStrike: -1,
-          type: "",
-          stockOptions: [],
-          expirations: [],
-          stockSymbol,
-        },
-      ] as any;
+      const offers = {
+        model: "",
+        offerType: "C",
+        qtty: 1,
+        selectedCode: stockSymbol,
+        selectedExpiration: "2100-01-01",
+        selectedStrike: -1,
+        type: "",
+        stockOptions: [],
+        expirations: [],
+        stockSymbol,
+      } as any;
 
-      dispatch(updateBoxAttrAction(id, { boxOffers: offers }));
+      dispatch(
+        updateBoxAttrAction(id, { boxOffers: [...multiBox.boxOffers, offers] }),
+      );
     }
   };
 };
@@ -108,22 +135,24 @@ export const handleAddOptionOfferAction = (
       );
 
       if (option) {
-        const offers = [
-          {
-            offerType: "C",
-            qtty: 1,
-            selectedExpiration: selectedExpiration,
-            selectedStrike: selectedStrike,
-            type: option.type,
-            model: option.model,
-            selectedCode: option.symbol,
-            stockOptions: multiBox.stockOptions,
-            expirations: multiBox.expirations,
-            stockSymbol: multiBox.stockSymbol,
-          },
-        ] as any;
+        const offers = {
+          offerType: "C",
+          qtty: 1,
+          selectedExpiration: selectedExpiration,
+          selectedStrike: selectedStrike,
+          type: option.type,
+          model: option.model,
+          selectedCode: option.symbol,
+          stockOptions: multiBox.stockOptions,
+          expirations: multiBox.expirations,
+          stockSymbol: multiBox.stockSymbol,
+        } as any;
 
-        dispatch(updateBoxAttrAction(id, { boxOffers: offers }));
+        dispatch(
+          updateBoxAttrAction(id, {
+            boxOffers: [...multiBox.boxOffers, offers],
+          }),
+        );
       }
     }
   };

@@ -104,32 +104,34 @@ const Tab5: React.FC<Props> = ({ multiBox }) => {
   }, [dispatch, multiBox.id, strikeViewMode]);
 
   const strikeOptions = useMemo(() => {
-    const dropdownOptions = stockOptions
-      .filter((_, index) => index % 2 === 0)
-      .map((option, index) => {
-        const label =
-          option.type === "CALL"
-            ? option.symbol +
-              " " +
-              option.strike +
-              " " +
-              stockOptions[index + 1].symbol
-            : stockOptions[index + 1].symbol +
-              " " +
-              option.strike +
-              " " +
-              option.symbol;
+    const dropdownOptions = stockOptions.map((option, index) => {
+      if (index % 2 !== 0) {
+        return null;
+      }
 
-        return (
-          <Select.Option
-            className="tab5StrikeOption"
-            key={option.strike}
-            value={option.strike}
-          >
-            {label}
-          </Select.Option>
-        );
-      });
+      const label =
+        option.type === "CALL"
+          ? option.symbol +
+            " " +
+            option.strike +
+            " " +
+            stockOptions[index + 1].symbol
+          : stockOptions[index + 1].symbol +
+            " " +
+            option.strike +
+            " " +
+            option.symbol;
+
+      return (
+        <Select.Option
+          className="tab5StrikeOption"
+          key={option.strike}
+          value={option.strike}
+        >
+          {label}
+        </Select.Option>
+      );
+    });
 
     return dropdownOptions;
   }, [stockOptions]);

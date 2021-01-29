@@ -13,7 +13,7 @@ const persistConfig = {
   key: "root",
   storage,
   stateReconciler: autoMergeLevel1,
-  whitelist: ["systemReducer"],
+  whitelist: ["systemReducer", "multiBoxReducer"], // "multiBoxReducer"
 };
 
 const persistedReducerAppPrincipal = persistReducer<MainStoreState, any>(

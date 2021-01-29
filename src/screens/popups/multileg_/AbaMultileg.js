@@ -224,36 +224,33 @@ const renderSerie = (props) => {
   let listaSerie = [];
 
   props.multileg[indice].opcoes.forEach((item, index) => {
-    let strikeSymbol = renderStrikeSymbol(
-      item,
-      index,
-      props.multileg[indice].opcoes,
-    );
-    if (strikeSymbol) listaSerie.push(strikeSymbol);
+    if (index % 2 === 0) {
+      let strikeSymbol = renderStrikeSymbol(
+        item,
+        index,
+        props.multileg[indice].opcoes,
+      );
+
+      listaSerie.push(strikeSymbol);
+    }
   });
 
   return listaSerie;
 };
 
 const renderStrikeSymbol = (item, indice, listaOpcoes) => {
-  if (indice % 2 === 0) {
-    const texto =
-      item.type === "CALL"
-        ? item.symbol + " " + item.strike + " " + listaOpcoes[indice + 1].symbol
-        : listaOpcoes[indice + 1].symbol +
-          " " +
-          item.strike +
-          " " +
-          item.symbol;
+  const texto =
+    item.type === "CALL"
+      ? item.symbol + " " + item.strike + " " + listaOpcoes[indice + 1].symbol
+      : listaOpcoes[indice + 1].symbol + " " + item.strike + " " + item.symbol;
 
-    return (
-      <Select.Option
-        className="optionInputCodigo"
-        key={Math.random()}
-        value={item.strike}
-      >
-        {texto}
-      </Select.Option>
-    );
-  }
+  return (
+    <Select.Option
+      className="optionInputCodigo"
+      key={Math.random()}
+      value={item.strike}
+    >
+      {texto}
+    </Select.Option>
+  );
 };

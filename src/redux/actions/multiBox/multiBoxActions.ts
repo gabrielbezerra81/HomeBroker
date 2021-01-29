@@ -27,15 +27,7 @@ export const updateBoxAttrAction = (
       const index = draft.findIndex((box) => box.id === id);
 
       if (index !== -1) {
-        if (payload.boxOffers) {
-          payload.boxOffers.forEach((offer) => {
-            draft[index].boxOffers.push(offer);
-          });
-        } //
-        else {
-          delete payload.boxOffers;
-          Object.assign(draft[index], payload);
-        }
+        Object.assign(draft[index], payload);
       }
     });
 

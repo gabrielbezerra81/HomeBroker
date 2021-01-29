@@ -12,7 +12,10 @@ import modelUSAImage from "assets/modeloUSA2.svg";
 import { FormControl } from "react-bootstrap";
 import { BoxOffer } from "types/multiBox/MultiBoxState";
 import { formatExpiration } from "shared/utils/Formatacoes";
-import { handleChangeBoxOfferAction } from "redux/actions/multiBox/tab5Actions";
+import {
+  handleChangeBoxOfferAction,
+  handleRemoveOfferAction,
+} from "redux/actions/multiBox/tab5Actions";
 import { FiX } from "react-icons/fi";
 
 interface Props {
@@ -40,7 +43,9 @@ const MultiBoxOffer: React.FC<Props> = ({
 }) => {
   const dispatch = useDispatchStorePrincipal();
 
-  const handleRemoveOffer = useCallback(() => {}, []);
+  const handleRemoveOffer = useCallback(() => {
+    dispatch(handleRemoveOfferAction(boxId, offerIndex));
+  }, [boxId, dispatch, offerIndex]);
 
   const handleQttyChange = useCallback(
     (value: any) => {
@@ -114,49 +119,53 @@ const MultiBoxOffer: React.FC<Props> = ({
   }, []);
 
   const codeOptions = useMemo(() => {
-    const dropdownOptions = stockOptions
-      .filter((_, index) => index % 2 === 0)
-      .map((option, index) => {
-        const label =
-          option.type === "CALL"
-            ? option.symbol +
-              " " +
-              option.strike +
-              " " +
-              stockOptions[index + 1].symbol
-            : stockOptions[index + 1].symbol +
-              " " +
-              option.strike +
-              " " +
-              option.symbol;
+    const dropdownOptions = stockOptions.map((option, index) => {
+      if (index % 2 !== 0) {
+        return null;
+      }
 
-        return (
-          <Select.Option
-            className="tab5StrikeOption"
-            key={Math.random()}
-            value={option.strike}
-          >
-            {label}
-          </Select.Option>
-        );
-      });
+      const label =
+        option.type === "CALL"
+          ? option.symbol +
+            " " +
+            option.strike +
+            " " +
+            stockOptions[index + 1].symbol
+          : stockOptions[index + 1].symbol +
+            " " +
+            option.strike +
+            " " +
+            option.symbol;
+
+      return (
+        <Select.Option
+          className="tab5StrikeOption"
+          key={Math.random()}
+          value={option.strike}
+        >
+          {label}
+        </Select.Option>
+      );
+    });
 
     return dropdownOptions;
   }, [stockOptions]);
 
   const strikeOptions = useMemo(() => {
-    return stockOptions
-      .filter((_, index) => index % 2 === 0)
-      .map((option) => {
-        let label = option.strike.toString();
-        let value = option.strike;
+    return stockOptions.map((option, index) => {
+      if (index % 2 !== 0) {
+        return null;
+      }
 
-        return (
-          <Select.Option className="tab5StrikeOption" key={value} value={value}>
-            {label}
-          </Select.Option>
-        );
-      });
+      let label = option.strike.toString();
+      let value = option.strike;
+
+      return (
+        <Select.Option className="tab5StrikeOption" key={value} value={value}>
+          {label}
+        </Select.Option>
+      );
+    });
   }, [stockOptions]);
 
   const expirationOptions = useMemo(() => {
