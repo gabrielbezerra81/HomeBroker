@@ -39,6 +39,7 @@
 
     > div {
       pointer-events: all;
+      max-width: 170px;
     }
 
     .symbolCardContainer + .symbolCardContainer {
@@ -110,18 +111,16 @@
 }
 
 .symbolCardContainer {
-  display: flex;
+  display: inline-flex;
   border: 1px solid #b0b0b0;
   border-radius: 5px;
-  padding-right: 2px;
+  padding-right: 4px;
   align-items: center;
   margin-right: 4px;
 
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;
   position: relative;
-
-  max-width: 98px;
 
   .buyColor {
     color: #098abf;
