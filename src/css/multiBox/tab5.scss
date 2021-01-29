@@ -67,7 +67,7 @@
       .optionStrikeSelect {
         > div {
           height: 20px !important;
-          width: 165px !important;
+          width: 170px !important;
           font-size: 0.71rem !important;
         }
 
@@ -157,7 +157,11 @@
 
         &.strikeColumn {
           position: relative;
-          min-width: 86px;
+          min-width: 92px;
+        }
+
+        &.typeColumn {
+          min-width: 47px;
         }
       }
 
@@ -203,13 +207,9 @@
         color: #c4c4c4;
       }
 
-      .modelButton {
-        padding: 0;
-
-        img {
-          height: 18px;
-          vertical-align: bottom;
-        }
+      img.modelImg {
+        height: 18px;
+        vertical-align: bottom;
       }
 
       .dueDateSelect {
@@ -222,6 +222,10 @@
         position: absolute;
         top: 0;
         left: 1px;
+
+        > div {
+          width: 90px !important;
+        }
       }
     }
   }

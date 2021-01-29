@@ -421,7 +421,7 @@ const renderSymbolOptionsDropdown = ({
   } //
   // Se for opção, as visualizações são diferentes quando o dropdown está aberto. Quando o dropdown está aberto,
   // mostra os códigos de call e put junto com o strike. Caso contrário, mostra apenas o código selecionado.
-  else if (isDropdownOpen)
+  else if (isDropdownOpen) {
     options.forEach((option, indice) => {
       const parsedOption = option as MultilegOption;
       if (indice % 2 === 0) {
@@ -453,7 +453,7 @@ const renderSymbolOptionsDropdown = ({
         );
       }
     });
-  else {
+  } else {
     options.forEach((option) => {
       symbolList.push(
         <Select.Option

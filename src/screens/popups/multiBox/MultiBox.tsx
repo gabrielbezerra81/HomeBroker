@@ -112,7 +112,7 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
         strike: offer.selectedStrike,
         offerType: offer.offerType === "C" ? "C" : "P",
         viewMode: strikeViewMode,
-        expiration: dateDiff,
+        expiration: offer.model ? dateDiff : "",
       };
     });
 
@@ -120,7 +120,9 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
   }, [multiBox.boxOffers, strikeViewMode]);
 
   const americanTopSymbols = useMemo(() => {
-    return topSymbols.filter((item) => item.model === "AMERICAN");
+    return topSymbols.filter(
+      (item) => item.model === "AMERICAN" || !item.model,
+    );
   }, [topSymbols]);
 
   const europeanTopSymbols = useMemo(() => {

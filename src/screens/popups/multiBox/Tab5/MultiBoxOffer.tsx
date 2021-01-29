@@ -9,32 +9,92 @@ import CustomInput from "shared/componentes/CustomInput";
 
 import modelEUImage from "assets/modeloEU.png";
 import modelUSAImage from "assets/modeloUSA2.svg";
-import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import { FormControl } from "react-bootstrap";
+import { BoxOffer } from "types/multiBox/MultiBoxState";
+import { formatExpiration } from "shared/utils/Formatacoes";
+import { handleChangeBoxOfferAction } from "redux/actions/multiBox/tab5Actions";
 
-const MultiBoxOffer: React.FC = () => {
+interface Props {
+  data: BoxOffer;
+  strikeViewMode: "code" | "strike";
+  offerIndex: number;
+  boxId: string;
+}
+
+const MultiBoxOffer: React.FC<Props> = ({
+  data: {
+    offerType,
+    qtty,
+    selectedStrike,
+    selectedCode,
+    selectedExpiration,
+    type,
+    model,
+    expirations,
+    stockOptions,
+  },
+  strikeViewMode,
+  offerIndex,
+  boxId,
+}) => {
   const dispatch = useDispatchStorePrincipal();
 
-  const {
-    multiBoxReducer: {},
-  } = useStateStorePrincipal();
+  const handleQttyChange = useCallback(
+    (value: any) => {
+      dispatch(
+        handleChangeBoxOfferAction({
+          boxId,
+          offerIndex,
+          attr: "qtty",
+          value,
+        }),
+      );
+    },
+    [boxId, dispatch, offerIndex],
+  );
 
-  const handleQttyChange = useCallback((value: any) => {
-    //   dispatch(
-    //     updateMultilegOfferAction({
-    //       tabIndex,
-    //       attributeName: "qtde",
-    //       attributeValue: value,
-    //       lineIndex,
-    //     }),
-    //   );
-  }, []);
+  const handleTypeChange = useCallback(() => {
+    const value = type === "CALL" ? "PUT" : "CALL";
 
-  const handleTypeChange = useCallback(() => {}, []);
+    dispatch(
+      handleChangeBoxOfferAction({
+        boxId,
+        offerIndex,
+        attr: "type",
+        value,
+      }),
+    );
+  }, [boxId, dispatch, offerIndex, type]);
 
-  const handleModelChange = useCallback(() => {}, []);
+  const handleStrikeChange = useCallback(
+    (value: any) => {
+      dispatch(
+        handleChangeBoxOfferAction({
+          boxId,
+          offerIndex,
+          attr: "selectedStrike",
+          value,
+        }),
+      );
+    },
+    [boxId, dispatch, offerIndex],
+  );
 
-  const handleStrikechange = useCallback((value: any) => {}, []);
+  const handleExpirationChange = useCallback(
+    (e) => {
+      const { value } = e.currentTarget;
+
+      dispatch(
+        handleChangeBoxOfferAction({
+          boxId,
+          offerIndex,
+          attr: "selectedExpiration",
+          value,
+        }),
+      );
+    },
+    [boxId, dispatch, offerIndex],
+  );
 
   const qttyInputConfig = useMemo(() => {
     const config = {
@@ -50,40 +110,78 @@ const MultiBoxOffer: React.FC = () => {
     return config;
   }, []);
 
-  const strikeOptions = useMemo(() => {
-    const options: Array<{ label: string; value: any }> = [
-      {
-        label: "12,32",
-        value: 12.32,
-      },
-      {
-        label: "12,33",
-        value: 12.33,
-      },
-    ];
+  const codeOptions = useMemo(() => {
+    const dropdownOptions = stockOptions
+      .filter((_, index) => index % 2 === 0)
+      .map((option, index) => {
+        const label =
+          option.type === "CALL"
+            ? option.symbol +
+              " " +
+              option.strike +
+              " " +
+              stockOptions[index + 1].symbol
+            : stockOptions[index + 1].symbol +
+              " " +
+              option.strike +
+              " " +
+              option.symbol;
 
-    return options.map((option) => (
-      <Select.Option
-        key={option.value}
-        value={option.value}
-        className="optionInputCodigo"
-      >
-        {option.label}
-      </Select.Option>
-    ));
-  }, []);
+        return (
+          <Select.Option
+            className="tab5StrikeOption"
+            key={Math.random()}
+            value={option.strike}
+          >
+            {label}
+          </Select.Option>
+        );
+      });
+
+    return dropdownOptions;
+  }, [stockOptions]);
+
+  const strikeOptions = useMemo(() => {
+    return stockOptions
+      .filter((_, index) => index % 2 === 0)
+      .map((option) => {
+        let label = option.strike.toString();
+        let value = option.strike;
+
+        return (
+          <Select.Option className="tab5StrikeOption" key={value} value={value}>
+            {label}
+          </Select.Option>
+        );
+      });
+  }, [stockOptions]);
+
+  const expirationOptions = useMemo(() => {
+    return expirations.map((expiration) => {
+      const formattedExpiration = formatExpiration(expiration);
+      return (
+        <option key={expiration} value={expiration}>
+          {formattedExpiration}
+        </option>
+      );
+    });
+  }, [expirations]);
 
   return (
     <tr>
       <td>
-        <BuySellSelector offerCV={"compra"} tabIndex={0} lineIndex={0} />
+        <BuySellSelector
+          offerCV={offerType}
+          boxId={boxId}
+          offerIndex={offerIndex}
+        />
       </td>
       <td>
         <CustomInput
           type={qttyInputConfig.type as any}
           step={qttyInputConfig.step}
           autoSelect
-          value={""}
+          value={qtty}
           onChange={handleQttyChange}
         />
       </td>
@@ -91,15 +189,17 @@ const MultiBoxOffer: React.FC = () => {
         <Select
           size="small"
           dropdownClassName="strikeSelectDropdown"
-          value={12.32}
           showSearch
           optionFilterProp="children"
           notFoundContent="Strike não encontrado"
           className="strikeSelect offerStrikeSelect"
           suffixIcon={<FaCaretDown color="#ddd" />}
-          onChange={handleStrikechange}
+          value={strikeViewMode === "strike" ? selectedStrike : selectedCode}
+          onChange={handleStrikeChange}
         >
-          {strikeOptions}
+          {strikeViewMode === "strike" && strikeOptions}
+
+          {strikeViewMode === "code" && codeOptions}
         </Select>
       </td>
       <td>
@@ -107,26 +207,22 @@ const MultiBoxOffer: React.FC = () => {
           as="select"
           className="darkInputSelect dueDateSelect"
           name="period"
+          value={selectedExpiration}
+          onChange={handleExpirationChange}
         >
-          <option value={"21/12/2020"}>21/12/2020</option>
-          <option value={"21/12/2021"}>21/12/2021</option>
+          {expirationOptions}
         </FormControl>
       </td>
-      <td>
+      <td className="typeColumn">
         <button
           className="brokerCustomButton typeButton"
           onClick={handleTypeChange}
         >
-          CALL
+          {type}
         </button>
       </td>
       <td>
-        <button
-          className="brokerCustomButton modelButton"
-          onClick={handleModelChange}
-        >
-          <Model model="AMERICAN" />
-        </button>
+        <Model model={model} />
       </td>
     </tr>
   );
@@ -136,21 +232,21 @@ export default MultiBoxOffer;
 
 interface BuySellProps {
   offerCV: any;
-  tabIndex: number;
-  lineIndex: number;
+  boxId: string;
+  offerIndex: number;
 }
 
 const BuySellSelector: React.FC<BuySellProps> = ({
   offerCV,
-  tabIndex,
-  lineIndex,
+  boxId,
+  offerIndex,
 }) => {
   const dispatch = useDispatchStorePrincipal();
 
   const offerType = useMemo(() => {
     const type = { buy: "", sell: "" };
 
-    if (offerCV === "compra") {
+    if (offerCV === "C") {
       type.buy = "buySelector";
     } else {
       type.sell = "sellSelector";
@@ -159,22 +255,34 @@ const BuySellSelector: React.FC<BuySellProps> = ({
     return type;
   }, [offerCV]);
 
-  const handleTypeChange = useCallback((e) => {
-    // const value = e.currentTarget.name;
-  }, []);
+  const handleTypeChange = useCallback(
+    (e) => {
+      const value = e.currentTarget.name;
+
+      dispatch(
+        handleChangeBoxOfferAction({
+          boxId,
+          offerIndex,
+          attr: "offerType",
+          value,
+        }),
+      );
+    },
+    [boxId, dispatch, offerIndex],
+  );
 
   return (
     <div className="buySellSelector">
       <button
         className={`brokerCustomButton ${offerType.buy}`}
-        name="compra"
+        name="C"
         onClick={handleTypeChange}
       >
         C
       </button>
       <button
         className={`brokerCustomButton ${offerType.sell}`}
-        name="venda"
+        name="V"
         onClick={handleTypeChange}
       >
         V
@@ -188,8 +296,28 @@ interface ModelProps {
 }
 
 const Model: React.FC<ModelProps> = ({ model }) => {
-  if (model === "EUROPEAN") return <img src={modelEUImage} alt="EUROPEAN" />;
+  if (model === "EUROPEAN")
+    return <img className="modelImg" src={modelEUImage} alt="EUROPEAN" />;
   else if (model === "AMERICAN")
-    return <img src={modelUSAImage} alt="AMERICAN" />;
+    return <img className="modelImg" src={modelUSAImage} alt="AMERICAN" />;
   else return null;
 };
+
+/**
+ 
+
+  const codeOptionsDropdownClosed = useMemo(() => {
+    return stockOptions.map((option, index) => {
+      return (
+        <Select.Option
+          key={Math.random()}
+          value={option.strike}
+          className="tab5StrikeOption"
+        >
+          {option.symbol}
+        </Select.Option>
+      );
+    });
+  }, [stockOptions]);
+
+ */

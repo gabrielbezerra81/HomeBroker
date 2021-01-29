@@ -57,9 +57,7 @@ const SymbolCard: React.FC<Props> = ({
   return (
     <div className="symbolCardContainer">
       {showQtty && (
-        <span className={`cardQtty ${textColorClass}`}>
-          {formattedQtty}
-        </span>
+        <span className={`cardQtty ${textColorClass}`}>{formattedQtty}</span>
       )}
       {model === "AMERICAN" ? (
         <div style={modelStyle} className={`model ${modelClass}`}>
@@ -69,7 +67,7 @@ const SymbolCard: React.FC<Props> = ({
         <div className={`model ${modelClass}`}>{offerType}</div>
       )}
       <h6 className={textColorClass}>
-        {viewMode === "strike" ? formattedStrike : code}
+        {viewMode === "strike" && strike !== -1 ? formattedStrike : code}
       </h6>
       <h6 className={textColorClass}>{expiration}</h6>
     </div>

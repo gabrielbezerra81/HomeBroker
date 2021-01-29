@@ -17,7 +17,12 @@ import MultiBoxOffer from "./MultiBoxOffer";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { updateBoxAttrAction } from "redux/actions/multiBox/multiBoxActions";
 import { formatExpiration } from "shared/utils/Formatacoes";
-import { handleSearchBoxSymbolAction } from "redux/actions/multiBox/tab5Actions";
+import {
+  getUpdatedOptionsWhenExpirationChanges,
+  handleAddOptionOfferAction,
+  handleAddStockOfferAction,
+  handleSearchBoxSymbolAction,
+} from "redux/actions/multiBox/tab5Actions";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -34,30 +39,43 @@ const Tab5: React.FC<Props> = ({ multiBox }) => {
     stockOptions,
     id,
     strikeViewMode,
+    stockSymbol,
   } = multiBox;
 
   const handleInputChange = useCallback(
-    (e) => {
+    async (e) => {
       const { name } = e.currentTarget;
 
       let value = e.currentTarget.value;
+
+      const payload = {};
 
       if (name === "selectedStrike") {
         value = Number(value);
       } else if (name === "symbolInput") {
         value = value.toLocaleUpperCase();
+      } //
+      else if (name === "selectedExpiration") {
+        const data = await getUpdatedOptionsWhenExpirationChanges({
+          stockSymbol,
+          selectedStrike,
+          selectedExpiration: value,
+        });
+        Object.assign(payload, data);
       }
 
-      dispatch(
-        updateBoxAttrAction(multiBox.id, {
-          [name]: value,
-        }),
-      );
+      Object.assign(payload, {
+        [name]: value,
+      });
+
+      dispatch(updateBoxAttrAction(id, payload));
     },
-    [dispatch, multiBox.id],
+    [dispatch, id, selectedStrike, stockSymbol],
   );
 
-  const handleSearchStock = useCallback(() => {}, []);
+  const handleSearchStock = useCallback(() => {
+    dispatch(handleAddStockOfferAction(id, symbolInput));
+  }, [dispatch, id, symbolInput]);
 
   const handleSearchOptions = useCallback(() => {
     dispatch(handleSearchBoxSymbolAction(id, symbolInput));
@@ -67,9 +85,13 @@ const Tab5: React.FC<Props> = ({ multiBox }) => {
 
   const handleConfig = useCallback(() => {}, []);
 
-  const handleCall = useCallback(() => {}, []);
+  const handleCall = useCallback(() => {
+    dispatch(handleAddOptionOfferAction(id, "CALL"));
+  }, [dispatch, id]);
 
-  const handlePut = useCallback(() => {}, []);
+  const handlePut = useCallback(() => {
+    dispatch(handleAddOptionOfferAction(id, "PUT"));
+  }, [dispatch, id]);
 
   const handleStrikeViewChange = useCallback(() => {
     const viewMode = strikeViewMode === "code" ? "strike" : "code";
@@ -228,7 +250,13 @@ const Tab5: React.FC<Props> = ({ multiBox }) => {
           </thead>
           <tbody>
             {multiBox.boxOffers.map((offer, index) => (
-              <MultiBoxOffer key={index} />
+              <MultiBoxOffer
+                data={offer}
+                strikeViewMode={strikeViewMode}
+                key={index}
+                boxId={id}
+                offerIndex={index}
+              />
             ))}
           </tbody>
         </Table>

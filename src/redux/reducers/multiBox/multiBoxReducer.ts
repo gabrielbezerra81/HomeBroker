@@ -11,6 +11,7 @@ const INITIAL_STATE: MultiBoxState = {
       //tab5
       symbolInput: "PETR4",
       searchedSymbol: "",
+      stockSymbol: "",
       stockOptions: [],
       expirations: [],
       selectedStrike: 0,

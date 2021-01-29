@@ -15,6 +15,9 @@ export interface BoxOffer {
   selectedExpiration: string;
   type: "CALL" | "PUT";
   model: "AMERICAN" | "EUROPEAN";
+  stockOptions: Array<BoxStockOption>;
+  expirations: Array<string>;
+  stockSymbol: string;
 }
 
 export interface TopSymbols {
@@ -33,6 +36,7 @@ export interface MultiBoxData {
   minimized: boolean;
   symbolInput: string;
   searchedSymbol: string;
+  stockSymbol: string;
   stockOptions: Array<BoxStockOption>;
   expirations: Array<string>;
   selectedStrike: number;
