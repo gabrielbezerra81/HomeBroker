@@ -86,9 +86,14 @@ export const handleAddStockOfferAction = (
 
     // Adicionar stock symbol às ofertas
 
-    const data = await pesquisarAtivoMultilegAPI(symbol);
-
     const multiBox = boxes.find((box) => box.id === id);
+
+    if (multiBox && multiBox.boxOffers.length === 6) {
+      alert("Número máximo de 6 ofertas atingido");
+      return;
+    }
+
+    const data = await pesquisarAtivoMultilegAPI(symbol);
 
     if (data && multiBox) {
       const stockSymbol = data.ativoPrincipal;
@@ -125,6 +130,11 @@ export const handleAddOptionOfferAction = (
     const multiBox = boxes.find((box) => box.id === id);
 
     if (multiBox) {
+      if (multiBox.boxOffers.length === 6) {
+        alert("Número máximo de 6 ofertas atingido");
+        return;
+      }
+
       const { selectedExpiration, selectedStrike, stockOptions } = multiBox;
 
       const option = stockOptions.find(
