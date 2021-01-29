@@ -13,6 +13,7 @@ import { FormControl } from "react-bootstrap";
 import { BoxOffer } from "types/multiBox/MultiBoxState";
 import { formatExpiration } from "shared/utils/Formatacoes";
 import { handleChangeBoxOfferAction } from "redux/actions/multiBox/tab5Actions";
+import { FiX } from "react-icons/fi";
 
 interface Props {
   data: BoxOffer;
@@ -38,6 +39,8 @@ const MultiBoxOffer: React.FC<Props> = ({
   boxId,
 }) => {
   const dispatch = useDispatchStorePrincipal();
+
+  const handleRemoveOffer = useCallback(() => {}, []);
 
   const handleQttyChange = useCallback(
     (value: any) => {
@@ -169,6 +172,11 @@ const MultiBoxOffer: React.FC<Props> = ({
 
   return (
     <tr>
+      <td className="closeColumn">
+        <button onClick={handleRemoveOffer} className="brokerCustomButton">
+          <FiX color="#ce202a" size={10} strokeWidth={3} />
+        </button>
+      </td>
       <td>
         <BuySellSelector
           offerCV={offerType}

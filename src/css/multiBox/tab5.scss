@@ -155,6 +155,16 @@
         padding-top: 0 !important;
         padding-bottom: 0 !important;
 
+        &.closeColumn {
+          .brokerCustomButton {
+            padding: 0;
+
+            svg {
+              vertical-align: baseline;
+            }
+          }
+        }
+
         &.strikeColumn {
           position: relative;
           min-width: 92px;

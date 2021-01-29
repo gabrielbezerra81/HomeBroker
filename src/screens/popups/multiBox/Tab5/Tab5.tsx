@@ -232,6 +232,7 @@ const Tab5: React.FC<Props> = ({ multiBox }) => {
         <Table borderless striped={false}>
           <thead>
             <tr>
+              <th></th>
               <th>C/V</th>
               <th>Qtde</th>
               <th>
