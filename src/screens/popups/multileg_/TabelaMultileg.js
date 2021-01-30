@@ -1,5 +1,5 @@
 import React from "react";
-import { Table } from "react-bootstrap";
+import { Spinner, Table } from "react-bootstrap";
 import { connect } from "react-redux";
 import {
   updateMultilegOfferAction,
@@ -27,8 +27,7 @@ class TabelaMultileg extends React.Component {
   }
 
   render() {
-    const { props } = this;
-    const tabIndex = props.indice;
+    const { loadingOffers, indice: tabIndex, multileg } = this.props;
 
     return (
       <Table
@@ -56,18 +55,24 @@ class TabelaMultileg extends React.Component {
           </tr>
         </thead>
         <tbody>
-          {props.multileg[props.indice].tabelaMultileg.map(
-            (item, lineIndex) => {
-              return (
-                <MultilegOfferItem
-                  offer={item}
-                  tabIndex={tabIndex}
-                  lineIndex={lineIndex}
-                  key={`offer${lineIndex}`}
-                />
-              );
-            },
+          {loadingOffers && (
+            <tr>
+              <td className="multilegOffersSpinners" colSpan={12}>
+                <span>Carregando ofertas...</span>
+                <Spinner animation="border" role="status"></Spinner>
+              </td>
+            </tr>
           )}
+          {multileg[tabIndex].tabelaMultileg.map((item, lineIndex) => {
+            return (
+              <MultilegOfferItem
+                offer={item}
+                tabIndex={tabIndex}
+                lineIndex={lineIndex}
+                key={`offer${lineIndex}`}
+              />
+            );
+          })}
         </tbody>
       </Table>
     );
@@ -76,6 +81,7 @@ class TabelaMultileg extends React.Component {
 
 const mapStateToProps = (state) => ({
   multileg: state.multilegReducer.multileg,
+  loadingOffers: state.multilegReducer.loadingOffers,
 });
 
 export default connect(

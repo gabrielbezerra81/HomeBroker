@@ -22,6 +22,7 @@ import {
   addMultilegTab,
   cloneMultilegQuotes,
   cloneMultilegTabs,
+  updateMultilegStateAction,
   updateMultilegTab,
 } from "../multileg/MultilegActions";
 import { searchMultilegSymbolData } from "../multileg/MultilegAPIAction";
@@ -323,6 +324,8 @@ export const handleExportBoxToMultilegAction = ({
       systemReducer: { isOpenMultileg },
     } = getState();
 
+    dispatch(updateMultilegStateAction("loadingOffers", true));
+
     let { zIndex, dispatchGlobal } = globalProps;
 
     const box = boxes.find((box) => box.id === boxId);
@@ -441,6 +444,8 @@ export const handleExportBoxToMultilegAction = ({
         }),
       );
     }
+
+    dispatch(updateMultilegStateAction("loadingOffers", false));
   };
 };
 

@@ -20,4 +20,5 @@ export default interface MultilegState {
   cotacoesMultilegID: number;
   alerts: Array<AlertAPI>;
   executionStrategies: Array<ExecutionStrategy>;
+  loadingOffers: boolean;
 }

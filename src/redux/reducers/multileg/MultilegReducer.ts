@@ -45,6 +45,7 @@ const INITIAL_STATE: MultilegState = {
   cotacoesMultilegID: 0,
   alerts: [],
   executionStrategies: [],
+  loadingOffers: false,
 };
 
 export default (

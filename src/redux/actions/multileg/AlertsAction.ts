@@ -14,6 +14,7 @@ import {
   addMultilegTab,
   cloneMultilegQuotes,
   cloneMultilegTabs,
+  updateMultilegStateAction,
   updateMultilegTab,
 } from "./MultilegActions";
 import { searchMultilegSymbolData } from "./MultilegAPIAction";
@@ -33,11 +34,7 @@ export const openAlertInMultileg = (
     // multileg[0].isAlertOpen = true;
     // multileg[0].ativoAtual = alertItem.structure.symbol;
 
-    setPointerWhileAwaiting({
-      lockMode: "travar",
-      id: "menusTelaPrincipal",
-      parentID: "body",
-    });
+    dispatch(updateMultilegStateAction("loadingOffers", true));
 
     dispatch(
       updateManySystemState({
@@ -163,10 +160,6 @@ export const openAlertInMultileg = (
       }),
     );
 
-    setPointerWhileAwaiting({
-      lockMode: "destravar",
-      id: "menusTelaPrincipal",
-      parentID: "body",
-    });
+    dispatch(updateMultilegStateAction("loadingOffers", false));
   };
 };

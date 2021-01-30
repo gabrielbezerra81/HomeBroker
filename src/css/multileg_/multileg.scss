@@ -39,6 +39,21 @@
         color: #ff9a2c !important;
       }
     }
+
+    .multilegOffersSpinners {
+      padding: 6px 0 !important;
+      vertical-align: middle;
+
+      > span {
+        margin-right: 6px;
+        vertical-align: text-bottom;
+      }
+
+      > div {
+        height: 22px;
+        width: 22px;
+      }
+    }
   }
 }
 

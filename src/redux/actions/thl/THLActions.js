@@ -1,4 +1,3 @@
-import { setPointerWhileAwaiting } from "api/API";
 import {
   atualizarDivKeyAction,
   aumentarZindexAction,
@@ -13,6 +12,7 @@ import {
   addMultilegOffer,
   cloneMultilegQuotes,
   cloneMultilegTabs,
+  updateMultilegStateAction,
 } from "redux/actions/multileg/MultilegActions";
 import { erro_exportar_ordens_multileg } from "constants/AlertaErros";
 import { searchMultilegSymbolData } from "redux/actions/multileg/MultilegAPIAction";
@@ -36,12 +36,6 @@ export const mudarVariaveisTHLAction = (payload) => {
 export const abrirMultilegTHLAction = (props) => {
   // Actions
   return async (dispatch, getState) => {
-    setPointerWhileAwaiting({
-      lockMode: "travar",
-      id: "menusTelaPrincipal",
-      parentID: "body",
-    });
-
     const {
       multilegReducer: { multileg, cotacoesMultileg },
       systemReducer: { isOpenMultileg },
@@ -49,6 +43,8 @@ export const abrirMultilegTHLAction = (props) => {
     } = getState();
 
     let { zIndex, dispatchGlobal } = props;
+
+    dispatch(updateMultilegStateAction("loadingOffers", true));
 
     const clonedMultilegTabs = cloneMultilegTabs(multileg);
 
@@ -144,10 +140,6 @@ export const abrirMultilegTHLAction = (props) => {
       }),
     );
 
-    setPointerWhileAwaiting({
-      lockMode: "destravar",
-      id: "menusTelaPrincipal",
-      parentID: "body",
-    });
+    dispatch(updateMultilegStateAction("loadingOffers", false));
   };
 };

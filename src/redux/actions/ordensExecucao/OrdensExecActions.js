@@ -19,6 +19,7 @@ import {
   addMultilegOffer,
   cloneMultilegTabs,
   cloneMultilegQuotes,
+  updateMultilegStateAction,
 } from "redux/actions/multileg/MultilegActions";
 import { searchMultilegSymbolData } from "redux/actions/multileg/MultilegAPIAction";
 import { erro_exportar_ordens_multileg } from "constants/AlertaErros";
@@ -72,17 +73,13 @@ export const listOrdersExecAction = (props) => {
 
 export const openOrderInMultilegAction = (props, action = "") => {
   return async (dispatch, getState) => {
-    setPointerWhileAwaiting({
-      lockMode: "travar",
-      id: "menusTelaPrincipal",
-      parentID: "body",
-    });
-
     const {
       multilegReducer: { multileg, cotacoesMultileg },
       systemReducer: { isOpenMultileg },
       ordersExecReducer: { ordemAtual },
     } = getState();
+
+    dispatch(updateMultilegStateAction("loadingOffers", true));
 
     const clonedMultilegTabs = cloneMultilegTabs(multileg);
 
@@ -199,11 +196,7 @@ export const openOrderInMultilegAction = (props, action = "") => {
       }),
     );
 
-    setPointerWhileAwaiting({
-      lockMode: "destravar",
-      id: "menusTelaPrincipal",
-      parentID: "body",
-    });
+    dispatch(updateMultilegStateAction("loadingOffers", false));
   };
 };
 
