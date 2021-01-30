@@ -31,6 +31,18 @@ export interface TopSymbols {
   type: "CALL" | "PUT";
 }
 
+export interface SymbolToolTipInfo {
+  corporationName?: string;
+  market: string;
+  symbol: string;
+  specificationCode?: string;
+  type?: "CALL" | "PUT";
+  model?: "EUROPEAN" | "AMERICAN";
+  strike: number;
+  endBusiness: string;
+  option: boolean;
+}
+
 export interface MultiBoxData {
   id: string;
   activeTab: "1" | "2" | "3" | "4" | "5";

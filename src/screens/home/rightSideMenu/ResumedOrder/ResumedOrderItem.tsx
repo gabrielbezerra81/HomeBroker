@@ -1,7 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { RiCloseCircleFill } from "react-icons/ri";
 import { FiSearch } from "react-icons/fi";
-import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import {
   formatarNumDecimal,
   formatarQuantidadeKMG,
@@ -10,6 +9,7 @@ import { Order } from "types/ordersExec/ordersExec";
 import { updateManyOrdersExecStateAction } from "redux/actions/ordensExecucao/OrdensExecActions";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { updateOneSystemStateAction } from "redux/actions/system/SystemActions";
+import CustomTooltip from "shared/componentes/CustomTooltip";
 
 interface ResumedOrderItemProps {
   order: Order;
@@ -20,7 +20,7 @@ const ResumedOrderItem: React.FC<ResumedOrderItemProps> = ({ order }) => {
 
   const [headerVisible, setHeaderVisible] = useState(false);
 
-  const progress = useMemo(() => { 
+  const progress = useMemo(() => {
     const initial = { offerQtty: 0, execQtty: 0 };
 
     const qttyValues = order.offers.reduce((acc, cur) => {
@@ -97,48 +97,34 @@ const ResumedOrderItem: React.FC<ResumedOrderItemProps> = ({ order }) => {
           ))}
         </div>
 
-        <OverlayTrigger
-          placement="top"
-          overlay={({ arrowProps, ...props }) => (
-            <Tooltip
-              id={`tooltip${order.id}`}
-              {...props}
-              arrowProps={{
-                ...arrowProps,
-                style: {
-                  ...arrowProps.style,
-                  bottom: 0,
-                  color: "#4c4b4b",
-                },
-              }}
-              className="resumedOrderTooltip"
-            >
-              <div>
-                <header>
-                  <span>Preço</span>
-                </header>
+        <CustomTooltip
+          id={order.id}
+          content={
+            <div>
+              <header>
+                <span>Preço</span>
+              </header>
 
-                <main>
-                  <div>
-                    <span>Disparo</span>
-                    <span>{formattedPrices.trigger}</span>
-                  </div>
-                  <div>
-                    <span>Envio</span>
-                    <span>{formattedPrices.send}</span>
-                  </div>
-                  <div>
-                    <span>Limite</span>
-                    <span>{formattedPrices.limit}</span>
-                  </div>
-                  <div>
-                    <span>Executado</span>
-                    <span>{formattedPrices.executed}</span>
-                  </div>
-                </main>
-              </div>
-            </Tooltip>
-          )}
+              <main>
+                <div>
+                  <span>Disparo</span>
+                  <span>{formattedPrices.trigger}</span>
+                </div>
+                <div>
+                  <span>Envio</span>
+                  <span>{formattedPrices.send}</span>
+                </div>
+                <div>
+                  <span>Limite</span>
+                  <span>{formattedPrices.limit}</span>
+                </div>
+                <div>
+                  <span>Executado</span>
+                  <span>{formattedPrices.executed}</span>
+                </div>
+              </main>
+            </div>
+          }
         >
           <span>
             R${" "}
@@ -146,7 +132,7 @@ const ResumedOrderItem: React.FC<ResumedOrderItemProps> = ({ order }) => {
               order.offers[0].precoDisparo || order.offers[0].precoEnvio || 0,
             )}
           </span>
-        </OverlayTrigger>
+        </CustomTooltip>
       </button>
     </div>
   );

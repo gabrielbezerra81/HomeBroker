@@ -111,6 +111,7 @@
 }
 
 .symbolCardContainer {
+  padding: 0;
   display: inline-flex;
   border: 1px solid #b0b0b0;
   border-radius: 5px;
@@ -121,6 +122,10 @@
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;
   position: relative;
+
+  &:hover {
+    opacity: 1;
+  }
 
   .buyColor {
     color: #098abf;
@@ -174,5 +179,35 @@
 
   div + h6 {
     margin: 0 4px;
+  }
+}
+
+.boxTopSymbolTooltip {
+  margin-bottom: 2px !important;
+
+  header {
+    justify-content: flex-end;
+
+    .brokerCustomButton {
+      padding: 0;
+      margin-top: 1px;
+
+      svg {
+        vertical-align: baseline;
+      }
+    }
+  }
+
+  main {
+    padding-top: 4px !important;
+    > div {
+      > span {
+        padding-bottom: 4px !important;
+
+        &:first-child {
+          padding-right: 4px !important;
+        }
+      }
+    }
   }
 }

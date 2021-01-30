@@ -70,3 +70,5 @@ export const url_multiQuote_quotes = "quotes/symbols?symbols=";
 export const url_singleStructure_id = "structures/";
 export const url_multiStructure_ids = "structures/ids?ids=";
 export const url_ordersExec_ids = "order/working/ids?ids=";
+
+export const url_stockInfo_symbol = "stocks/info/";

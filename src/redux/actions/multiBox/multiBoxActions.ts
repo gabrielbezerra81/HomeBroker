@@ -1,3 +1,4 @@
+import { getSymbolInfoAPI } from "api/symbolAPI";
 import { UPDATE_MANY_MULTIBOX } from "constants/MenuActionTypes";
 import produce from "immer";
 import MultiBoxState, { MultiBoxData } from "types/multiBox/MultiBoxState";
@@ -34,3 +35,21 @@ export const updateBoxAttrAction = (
     dispatch(updateManyMultiBoxAction({ boxes: updatedBoxes }));
   };
 };
+
+export const getSymbolToolTipInfoAction = (symbol: string): MainThunkAction => {
+  return async (dispatch) => {};
+};
+
+/*
+
+           “Descrição”: “nome do atributo do json” 
+Empresa: corporationName  
+Mercado: market
+Ativo: symbol +  specificationCode
+Tipo: type
+Modelo: model
+Strike: strike
+Vencimento: endBusiness
+
+
+*/

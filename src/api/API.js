@@ -282,7 +282,7 @@ export const listarPosicoesAPI = async () => {
     });
 };
 
-export const criarPosicaoMultilegAPI = (data) => {
+export const criarPosicaoMultilegAPI = async (data) => {
   return api
     .post(`${url_criarPosicaoMultileg_}`, data, {
       timeout,
@@ -323,7 +323,7 @@ export const criarAlertaOperacaoAPI = async ({ param, operator, data }) => {
     });
 };
 
-export const cancelarOrdemExecAPI = (id) => {
+export const cancelarOrdemExecAPI = async (id) => {
   return api
     .put(`${url_cancelarOrdemExec_id}${id}`, {
       timeout,
@@ -336,7 +336,7 @@ export const cancelarOrdemExecAPI = (id) => {
     });
 };
 
-export const finalizarAMercadoAPI = (id) => {
+export const finalizarAMercadoAPI = async (id) => {
   return api
     .put(`${url_finalizarAMercado_id}${id}`, {
       timeout,
@@ -349,7 +349,7 @@ export const finalizarAMercadoAPI = (id) => {
     });
 };
 
-export const incrementarQtdeOrdemExecAPI = (id, qtde) => {
+export const incrementarQtdeOrdemExecAPI = async (id, qtde) => {
   return api
     .put(`${url_aumentarQtde_id_qtde}${id}/${qtde}`, {
       timeout,
@@ -362,7 +362,7 @@ export const incrementarQtdeOrdemExecAPI = (id, qtde) => {
     });
 };
 
-export const incrementarPrecoOrdemExecAPI = (id, preco) => {
+export const incrementarPrecoOrdemExecAPI = async (id, preco) => {
   return api
     .put(`${url_aumentarPreco_id_valor}${id}/${preco}`, {
       timeout,
@@ -375,7 +375,7 @@ export const incrementarPrecoOrdemExecAPI = (id, preco) => {
     });
 };
 
-export const pesquisarListaStrikeTHLAPI = (ativo) => {
+export const pesquisarListaStrikeTHLAPI = async (ativo) => {
   return api
     .get(`${url_pesquisarListaStrike_codigo}${ativo}`, {
       timeout,
@@ -391,7 +391,7 @@ export const pesquisarListaStrikeTHLAPI = (ativo) => {
     });
 };
 
-export const getTHLDataWithStrikeAPI = (ativo, strike, tipo) => {
+export const getTHLDataWithStrikeAPI = async (ativo, strike, tipo) => {
   return api
     .get(
       `${url_listarTabelaInicialTHL_ativo_strike_tipo}${ativo}/${strike}/${tipo}`,

@@ -49,14 +49,15 @@ import "./category_list/CategoryList.scss";
 import "./financialPlanner/initialPlanner/initialPlanner.scss";
 import "./financialPlanner/detailedPlanner/detailedPlanner.scss";
 
-import "./multiBox/multiBox.scss"
-
 import "./componentes_customizados/CustomCheckbox.css";
 import "./componentes_customizados/CustomInput.scss";
 import "./componentes_customizados/IconeConfigGrafico.css";
 import "./componentes_customizados/EmblemaSimples.css";
 import "./componentes_customizados/IconeSeta.css";
 import "./componentes_customizados/CustomButton.scss";
+import "./componentes_customizados/CustomTooltip.scss";
+
+import "./multiBox/multiBox.scss";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./componentes_customizados/SelectANTD.css";

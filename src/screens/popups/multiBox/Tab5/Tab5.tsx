@@ -21,8 +21,11 @@ import {
   getUpdatedOptionsWhenExpirationChanges,
   handleAddOptionOfferAction,
   handleAddStockOfferAction,
+  handleExportBoxToMultilegAction,
   handleSearchBoxSymbolAction,
 } from "redux/actions/multiBox/tab5Actions";
+import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
+import useStateGlobalStore from "hooks/useStateGlobalStore";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -30,6 +33,9 @@ interface Props {
 
 const Tab5: React.FC<Props> = ({ multiBox }) => {
   const dispatch = useDispatchStorePrincipal();
+  const dispatchGlobal = useDispatchGlobalStore();
+
+  const { zIndex } = useStateGlobalStore();
 
   const {
     symbolInput,
@@ -81,7 +87,17 @@ const Tab5: React.FC<Props> = ({ multiBox }) => {
     dispatch(handleSearchBoxSymbolAction(id, symbolInput));
   }, [dispatch, id, symbolInput]);
 
-  const handleOpenInMultileg = useCallback(() => {}, []);
+  const handleOpenInMultileg = useCallback(() => {
+    dispatch(
+      handleExportBoxToMultilegAction({
+        boxId: id,
+        globalProps: {
+          dispatchGlobal,
+          zIndex,
+        },
+      }),
+    );
+  }, [dispatch, dispatchGlobal, id, zIndex]);
 
   const handleConfig = useCallback(() => {}, []);
 
