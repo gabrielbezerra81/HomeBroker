@@ -23,6 +23,7 @@ import {
   handleAddStockOfferAction,
   handleExportBoxToMultilegAction,
   handleSearchBoxSymbolAction,
+  handleConcludeTab5Action,
 } from "redux/actions/multiBox/tab5Actions";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 import useStateGlobalStore from "hooks/useStateGlobalStore";
@@ -118,6 +119,10 @@ const Tab5: React.FC<Props> = ({ multiBox }) => {
       }),
     );
   }, [dispatch, multiBox.id, strikeViewMode]);
+
+  const handleConclude = useCallback(() => {
+    dispatch(handleConcludeTab5Action(id));
+  }, [dispatch, id]);
 
   const strikeOptions = useMemo(() => {
     const dropdownOptions = stockOptions.map((option, index) => {
@@ -280,7 +285,12 @@ const Tab5: React.FC<Props> = ({ multiBox }) => {
           </tbody>
         </Table>
       </div>
-      <button className="brokerCustomButton finishButton">Concluir</button>
+      <button
+        onClick={handleConclude}
+        className="brokerCustomButton finishButton"
+      >
+        Concluir
+      </button>
     </div>
   );
 };

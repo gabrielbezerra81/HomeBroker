@@ -20,7 +20,7 @@ export interface BoxOffer {
   stockSymbol: string;
 }
 
-export interface TopSymbols {
+export interface TopSymbol {
   qtty: number;
   offerType: "C" | "V";
   viewMode: "strike" | "code";
@@ -56,6 +56,7 @@ export interface MultiBoxData {
   selectedExpiration: string;
   boxOffers: Array<BoxOffer>;
   strikeViewMode: "code" | "strike";
+  topSymbols: Array<TopSymbol>;
 }
 
 export default interface MultiBoxState {

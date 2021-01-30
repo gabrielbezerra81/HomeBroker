@@ -1,3 +1,5 @@
+import moment from "moment";
+
 import {
   pesquisarAtivoMultilegAPI,
   pesquisarStrikesMultilegAPI,
@@ -10,8 +12,9 @@ import {
   BoxOffer,
   BoxStockOption,
   MultiBoxData,
+  TopSymbol,
 } from "types/multiBox/MultiBoxState";
-import { MultilegOffer } from "types/multileg/multileg";
+
 import { MainThunkAction } from "types/ThunkActions";
 import {
   atualizarDivKeyAction,
@@ -446,6 +449,46 @@ export const handleExportBoxToMultilegAction = ({
     }
 
     dispatch(updateMultilegStateAction("loadingOffers", false));
+  };
+};
+
+export const handleConcludeTab5Action = (
+  boxId: string,
+): MainThunkAction => {
+  return (dispatch, getState) => {
+    const {
+      multiBoxReducer: { boxes },
+    } = getState();
+
+    const multiBox = boxes.find((box) => box.id === boxId);
+
+    if (multiBox) {
+      const topSymbols: TopSymbol[] = multiBox.boxOffers.map((offer) => {
+        const [year, month, day] = offer.selectedExpiration
+          .split("-")
+          .map((value) => Number(value));
+
+        const expirationDate = new Date(year, month - 1, day);
+
+        const dateDiff = moment(expirationDate).diff(new Date(), "days") + "d";
+
+        const topSymbol: TopSymbol = {
+          qtty: offer.qtty,
+          code: offer.selectedCode,
+          model: offer.model,
+          strike: offer.selectedStrike,
+          offerType: offer.offerType,
+          viewMode: multiBox.strikeViewMode,
+          expiration: offer.model ? dateDiff : "",
+          type: offer.type,
+        };
+        return topSymbol;
+      });
+
+      dispatch(
+        updateBoxAttrAction(multiBox.id, { topSymbols, activeTab: "1" }),
+      );
+    }
   };
 };
 

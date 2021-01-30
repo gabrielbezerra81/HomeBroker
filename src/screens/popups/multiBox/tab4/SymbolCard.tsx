@@ -1,12 +1,12 @@
 import { getSymbolInfoAPI } from "api/symbolAPI";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { FiX } from "react-icons/fi";
 import CustomTooltip from "shared/componentes/CustomTooltip";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
-import { SymbolToolTipInfo, TopSymbols } from "types/multiBox/MultiBoxState";
+import { SymbolToolTipInfo, TopSymbol } from "types/multiBox/MultiBoxState";
 
 interface Props {
-  data: TopSymbols;
+  data: TopSymbol;
   showQtty?: boolean;
   showQttyPlus?: boolean;
 }

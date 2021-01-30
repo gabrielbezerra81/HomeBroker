@@ -1,14 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Draggable, { DraggableData } from "react-draggable";
 
-import moment from "moment";
-
 import { RiCloseCircleFill } from "react-icons/ri";
 import { AiFillMinusCircle } from "react-icons/ai";
 
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
-import { MultiBoxData, TopSymbols } from "types/multiBox/MultiBoxState";
+import { MultiBoxData } from "types/multiBox/MultiBoxState";
 import { updateBoxAttrAction } from "redux/actions/multiBox/multiBoxActions";
 import Tab5 from "./Tab5/Tab5";
 import Tab4 from "./tab4/Tab4";
@@ -22,12 +20,12 @@ const limitY = 80;
 
 const MultiBox: React.FC<Props> = ({ multiBox }) => {
   const {
-    systemReducer: { selectedTab, openedMenus, isOpenLeftUserMenu },
+    systemReducer: { isOpenLeftUserMenu },
   } = useStateStorePrincipal();
 
   const dispatch = useDispatchStorePrincipal();
 
-  const { strikeViewMode } = multiBox;
+  const { topSymbols } = multiBox;
 
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -94,32 +92,6 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const topSymbols = useMemo(() => {
-    const symbols: TopSymbols[] = multiBox.boxOffers.map((offer) => {
-      const [year, month, day] = offer.selectedExpiration
-        .split("-")
-        .map((value) => Number(value));
-
-      const expirationDate = new Date(year, month - 1, day);
-
-      const dateDiff = moment(expirationDate).diff(new Date(), "days") + "d";
-
-      const topSymbol: TopSymbols = {
-        qtty: offer.qtty,
-        code: offer.selectedCode,
-        model: offer.model,
-        strike: offer.selectedStrike,
-        offerType: offer.offerType,
-        viewMode: strikeViewMode,
-        expiration: offer.model ? dateDiff : "",
-        type: offer.type,
-      };
-      return topSymbol;
-    });
-
-    return symbols;
-  }, [multiBox.boxOffers, strikeViewMode]);
 
   const americanTopSymbols = useMemo(() => {
     return topSymbols.filter(
