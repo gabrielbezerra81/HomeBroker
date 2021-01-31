@@ -12,6 +12,7 @@ import boxIcon from "assets/boxIcon.png";
 import boxMenuArrow from "assets/boxMenuArrow.png";
 
 import { IoMdAddCircle } from "react-icons/io";
+import { addMultiBoxAction } from "redux/actions/multiBox/multiBoxActions";
 
 const AddBoxMenu: React.FC = () => {
   const dispatch = useDispatchStorePrincipal();
@@ -24,18 +25,19 @@ const AddBoxMenu: React.FC = () => {
   const [menuVisibility, setMenuVisibility] = useState(false);
 
   const handleOpenMultileg = useCallback(() => {
-    dispatch(
-      updateManySystemState({
-        multilegButtonsVisibility: false,
-        createAlertButtonVisibility: false,
-      }),
-    );
+    dispatch(addMultiBoxAction());
+    // dispatch(
+    //   updateManySystemState({
+    //     multilegButtonsVisibility: false,
+    //     createAlertButtonVisibility: false,
+    //   }),
+    // );
 
-    dispatchGlobal(atualizarDivKeyAction("multileg"));
-    dispatch(
-      abrirItemBarraLateralAction({ isOpenMultileg }, "isOpenMultileg", true),
-    );
-  }, [dispatch, dispatchGlobal, isOpenMultileg]);
+    // dispatchGlobal(atualizarDivKeyAction("multileg"));
+    // dispatch(
+    //   abrirItemBarraLateralAction({ isOpenMultileg }, "isOpenMultileg", true),
+    // );
+  }, [dispatch]);
 
   // useEffect(() => {
   //   if (!multilegButtonsVisibility) {
