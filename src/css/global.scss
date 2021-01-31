@@ -107,6 +107,14 @@ h6 {
   margin-bottom: 0rem;
 }
 
+.darkSimpleInput {
+  &:-webkit-autofill {
+    box-shadow: 0 0 0px 1000px #272827 inset;
+    -webkit-text-fill-color: #d2d5d2 !important;
+    -webkit-box-shadow: 0 0 0px 1000px #272827 inset;
+  }
+}
+
 .darkInputSelect,
 .darkSimpleInput {
   background-color: #272827;

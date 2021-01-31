@@ -1,13 +1,13 @@
 import moment from "moment";
 
 import {
+  addQuoteBoxAPI,
   pesquisarAtivoMultilegAPI,
   pesquisarStrikesMultilegAPI,
+  setPointerWhileAwaiting,
 } from "api/API";
-import { erro_exportar_ordens_multileg } from "constants/AlertaErros";
 import produce from "immer";
-import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
-import { calculoPreco } from "screens/popups/multileg_/CalculoPreco";
+
 import {
   BoxOffer,
   BoxStockOption,
@@ -16,28 +16,21 @@ import {
 } from "types/multiBox/MultiBoxState";
 
 import { MainThunkAction } from "types/ThunkActions";
+
+import { updateMultilegStateAction } from "../multileg/MultilegActions";
+
 import {
-  atualizarDivKeyAction,
-  aumentarZindexAction,
-} from "../GlobalAppActions";
-import {
-  addMultilegOffer,
-  addMultilegTab,
-  cloneMultilegQuotes,
-  cloneMultilegTabs,
-  updateMultilegStateAction,
-  updateMultilegTab,
-} from "../multileg/MultilegActions";
-import { searchMultilegSymbolData } from "../multileg/MultilegAPIAction";
-import { findClosestStrike, updateManyMultilegState } from "../multileg/utils";
-import {
-  abrirItemBarraLateralAction,
-  updateManySystemState,
-} from "../system/SystemActions";
+  findClosestStrike,
+  mountMultilegOrder,
+  updateManyMultilegState,
+  validateMultilegOrder,
+} from "../multileg/utils";
+
 import {
   updateBoxAttrAction,
   updateManyMultiBoxAction,
 } from "./multiBoxActions";
+import { exportBoxToMultileg } from "./util";
 
 export const handleSearchBoxSymbolAction = (
   id: string,
@@ -70,6 +63,9 @@ export const handleSearchBoxSymbolAction = (
       });
 
       dispatch(updateBoxAttrAction(id, payload));
+    } //
+    else {
+      // alert("Falha ao pesquisar código");
     }
   };
 };
@@ -138,6 +134,9 @@ export const handleAddStockOfferAction = (
       dispatch(
         updateBoxAttrAction(id, { boxOffers: [...multiBox.boxOffers, offers] }),
       );
+    } //
+    else {
+      // alert("Falha ao pesquisar código");
     }
   };
 };
@@ -321,140 +320,22 @@ export const handleExportBoxToMultilegAction = ({
   globalProps,
 }: ExportToMultilegProps): MainThunkAction => {
   return async (dispatch, getState) => {
-    const {
-      multiBoxReducer: { boxes },
-      multilegReducer: { multileg, cotacoesMultileg },
-      systemReducer: { isOpenMultileg },
-    } = getState();
-
     dispatch(updateMultilegStateAction("loadingOffers", true));
 
-    let { zIndex, dispatchGlobal } = globalProps;
+    const data = await exportBoxToMultileg({
+      boxId,
+      dispatch,
+      getState,
+      ...globalProps,
+    });
 
-    const box = boxes.find((box) => box.id === boxId);
-
-    if (box) {
-      const clonedMultilegTabs = cloneMultilegTabs(multileg);
-
-      dispatchGlobal(atualizarDivKeyAction("multileg"));
-
-      if (!isOpenMultileg) {
-        clonedMultilegTabs.pop();
-        dispatch(
-          abrirItemBarraLateralAction({ isOpenMultileg }, "isOpenMultileg"),
-        );
-      } else {
-        //Traz para primeiro plano se já estiver aberto
-        const multilegPopup = document.getElementById("multileg");
-        if (multilegPopup) {
-          multilegPopup.style.zIndex = `${zIndex + 1}`;
-          dispatchGlobal(aumentarZindexAction("multileg", zIndex, true));
-        }
-      }
-
-      dispatch(
-        updateManySystemState({
-          multilegButtonsVisibility: true,
-          createAlertButtonVisibility: false,
-        }),
-      );
-
-      // Adicionar nova aba
-      let result = addMultilegTab(clonedMultilegTabs);
-
-      let updatedMultilegTabs = result.multilegTabs;
-      let updatedMultilegQuotes = cloneMultilegQuotes(cotacoesMultileg);
-      const tabIndex = updatedMultilegTabs.length - 1;
-
-      dispatch(
-        updateManyMultilegState({
-          multileg: result.multilegTabs,
-          abaSelecionada: result.currentTab,
-        }),
-      );
-
-      try {
-        for (const [offerIndex, offer] of box.boxOffers.entries()) {
-          let updatedData = await updateMultilegTab({
-            multilegTabs: updatedMultilegTabs,
-            tabIndex,
-            attributeName: "ativo",
-            attributeValue: offer.selectedCode,
-          });
-
-          updatedMultilegTabs = updatedData.multilegTabs;
-
-          updatedData = await searchMultilegSymbolData({
-            multilegTabs: updatedMultilegTabs,
-            tabIndex,
-            multilegQuotes: updatedMultilegQuotes,
-          });
-
-          updatedMultilegTabs = updatedData.multilegTabs;
-
-          if (updatedData.multilegQuotes) {
-            updatedMultilegQuotes = updatedData.multilegQuotes;
-          }
-
-          const options = updatedMultilegTabs[tabIndex].opcoes.filter(
-            (option) => option.symbol === offer.selectedCode,
-          );
-
-          let offerType: any = "";
-          if (options.length > 0) offerType = options[0].type.toLowerCase();
-          else offerType = "acao";
-
-          //Adicionar oferta
-          const dadosMultileg = await addMultilegOffer({
-            multilegTabs: updatedMultilegTabs,
-            offerType,
-            tabIndex,
-            multilegQuotes: updatedMultilegQuotes,
-          });
-          updatedMultilegTabs = dadosMultileg.multilegTabs;
-          updatedMultilegQuotes = dadosMultileg.multilegQuotes;
-
-          const newOffer =
-            updatedMultilegTabs[tabIndex].tabelaMultileg[offerIndex];
-
-          newOffer.qtde = 100;
-          newOffer.cv = offer.offerType === "C" ? "compra" : "venda";
-
-          //
-        }
-
-        let tabPrice = calculoPreco(
-          updatedMultilegTabs[tabIndex],
-          "ultimo",
-          updatedMultilegQuotes,
-        ).toFixed(2);
-
-        tabPrice = formatarNumero(tabPrice, 2, ".", ",");
-        updatedMultilegTabs[tabIndex].preco = tabPrice;
-      } catch (error) {
-        console.log(error);
-        alert(erro_exportar_ordens_multileg);
-      }
-
-      // Efetuar atualizações feitas com objeto multileg no bloco try/catch
-      result.multilegTabs = updatedMultilegTabs;
-
-      dispatch(
-        updateManyMultilegState({
-          multileg: result.multilegTabs,
-          abaSelecionada: result.currentTab,
-          cotacoesMultileg: updatedMultilegQuotes,
-        }),
-      );
-    }
+    dispatch(updateManyMultilegState(data));
 
     dispatch(updateMultilegStateAction("loadingOffers", false));
   };
 };
 
-export const handleConcludeTab5Action = (
-  boxId: string,
-): MainThunkAction => {
+export const handleConcludeTab5Action = (boxId: string): MainThunkAction => {
   return (dispatch, getState) => {
     const {
       multiBoxReducer: { boxes },
@@ -489,6 +370,63 @@ export const handleConcludeTab5Action = (
         updateBoxAttrAction(multiBox.id, { topSymbols, activeTab: "1" }),
       );
     }
+  };
+};
+
+interface AddNewBoxIn {
+  dispatchGlobal: any;
+  zIndex: number;
+  boxId: string;
+}
+
+export const addNewBoxIn = ({
+  boxId,
+  dispatchGlobal,
+  zIndex,
+}: AddNewBoxIn): MainThunkAction => {
+  return async (dispatch, getState) => {
+    const {
+      systemReducer: { selectedAccount, selectedTab },
+    } = getState();
+
+    // Obtem os dados no formato do multileg, porém não dispara a abertura da multileg
+    const data = await exportBoxToMultileg({
+      boxId,
+      dispatch,
+      getState,
+      zIndex,
+      dispatchGlobal,
+      shouldOpenMultileg: false,
+    });
+
+    if (data) {
+      const configData = { tabKey: selectedTab, boxId };
+
+      const mountOrderProps = {
+        multilegTabs: data.multileg,
+        selectedAccount: selectedAccount,
+        tabIndex: data.multileg.length - 1,
+        comment: JSON.stringify(configData),
+      };
+
+      const newBoxRequestData = mountMultilegOrder(mountOrderProps);
+
+      setPointerWhileAwaiting({ lockMode: "travar", id: "boxId" });
+
+      if (validateMultilegOrder(mountOrderProps)) {
+        const responseData = await addQuoteBoxAPI(boxId, newBoxRequestData);
+
+        if (responseData) {
+          const addedData = responseData[0];
+
+          dispatch(updateBoxAttrAction(boxId, { tab1Id: addedData.id }));
+
+          // dispatch(addBoxFromAPIAction(responseData));
+        }
+      }
+    }
+
+    setPointerWhileAwaiting({ lockMode: "destravar", id: "boxId" });
   };
 };
 

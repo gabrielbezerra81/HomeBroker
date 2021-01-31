@@ -338,6 +338,7 @@ const QuoteBox: React.FC<QuoteBoxProps> = ({ quoteBox }) => {
               <span className="highlightedText">{formattedBox.max}</span>
             </div>
           </footer>
+       
         </div>
       </div>
     </Draggable>

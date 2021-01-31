@@ -24,6 +24,7 @@ import {
   handleExportBoxToMultilegAction,
   handleSearchBoxSymbolAction,
   handleConcludeTab5Action,
+  addNewBoxIn,
 } from "redux/actions/multiBox/tab5Actions";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 import useStateGlobalStore from "hooks/useStateGlobalStore";
@@ -121,8 +122,9 @@ const Tab5: React.FC<Props> = ({ multiBox }) => {
   }, [dispatch, multiBox.id, strikeViewMode]);
 
   const handleConclude = useCallback(() => {
+    dispatch(addNewBoxIn({ boxId: id, dispatchGlobal, zIndex }));
     dispatch(handleConcludeTab5Action(id));
-  }, [dispatch, id]);
+  }, [dispatch, dispatchGlobal, id, zIndex]);
 
   const strikeOptions = useMemo(() => {
     const dropdownOptions = stockOptions.map((option, index) => {

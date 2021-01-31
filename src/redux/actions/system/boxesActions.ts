@@ -20,7 +20,7 @@ export const addBoxFromAPIAction = (data: any[]): MainThunkAction => {
       systemReducer: { quoteBoxes },
     } = getState();
 
-    const boxesVisibility: BoxVisibility[] = [];
+    // const boxesVisibility: BoxVisibility[] = [];
     const openedBoxes: OpenedBoxes[] = [];
 
     const boxes: BoxProps[] = data.map((boxItem: any) => {
@@ -33,7 +33,7 @@ export const addBoxFromAPIAction = (data: any[]): MainThunkAction => {
         tabKey: configuration.tabKey,
       });
 
-      boxesVisibility.push({ boxKey: `box${boxItem.id}`, visibility: true });
+      // boxesVisibility.push({ boxKey: `box${boxItem.id}`, visibility: true });
 
       const codes = structure.components.map((component: any) => {
         return {

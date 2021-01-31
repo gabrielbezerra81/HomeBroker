@@ -4,24 +4,26 @@ import { UPDATE_MANY_MULTIBOX } from "constants/MenuActionTypes";
 
 const INITIAL_STATE: MultiBoxState = {
   boxes: [
-    {
-      id: "asdasd12312312",
-      activeTab: "5",
-      minimized: false,
-      //tab5
-      symbolInput: "PETR4",
-      searchedSymbol: "",
-      stockSymbol: "",
-      stockOptions: [],
-      expirations: [],
-      selectedStrike: 0,
-      selectedExpiration: "",
-      boxOffers: [],
-      strikeViewMode: "strike",
-      topSymbols: [],
-      //tab5
-    },
+    // {
+    //   id: "asdasd12312312",
+    //   activeTab: "5",
+    //   minimized: false,
+    //   //tab5
+    //   symbolInput: "PETR4",
+    //   searchedSymbol: "",
+    //   stockSymbol: "",
+    //   stockOptions: [],
+    //   expirations: [],
+    //   selectedStrike: 0,
+    //   selectedExpiration: "",
+    //   boxOffers: [],
+    //   strikeViewMode: "strike",
+    //   topSymbols: [],
+    //   tab1Id: -1,
+    //   //tab5
+    // },
   ],
+  boxesTab1Data: [],
 };
 
 export default (

@@ -1,3 +1,5 @@
+import { BoxProps } from "screens/popups/quoteBox/types";
+
 export interface BoxStockOption {
   id: number;
   symbol: string;
@@ -57,8 +59,19 @@ export interface MultiBoxData {
   boxOffers: Array<BoxOffer>;
   strikeViewMode: "code" | "strike";
   topSymbols: Array<TopSymbol>;
+  tab1Id: number;
+}
+
+export interface Tab1Data extends BoxProps {
+  boxId: string;
 }
 
 export default interface MultiBoxState {
   boxes: Array<MultiBoxData>;
+  boxesTab1Data: Array<Tab1Data>;
 }
+
+type Tab1Keys = keyof Omit<Tab1Data, "codes" | "book">;
+
+export type FormattedTab1Data = Record<Tab1Keys, string> &
+  Pick<Tab1Data, "codes" | "book">;

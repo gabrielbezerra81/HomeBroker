@@ -8,7 +8,7 @@ import { MultiBoxData } from "types/multiBox/MultiBoxState";
 import cogIcon from "assets/multiBox/cogIcon.png";
 import openInNewIcon from "assets/multiBox/openInNewIcon.png";
 import zoomIcon from "assets/multiBox/zoomIcon.png";
-import SymbolCard from "./SymbolCard";
+import SymbolCard from "../SymbolCard";
 
 interface Props {
   multiBox: MultiBoxData;

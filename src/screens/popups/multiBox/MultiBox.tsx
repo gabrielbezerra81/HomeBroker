@@ -1,16 +1,16 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Draggable, { DraggableData } from "react-draggable";
 
-import { RiCloseCircleFill } from "react-icons/ri";
-import { AiFillMinusCircle } from "react-icons/ai";
-
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { MultiBoxData } from "types/multiBox/MultiBoxState";
 import { updateBoxAttrAction } from "redux/actions/multiBox/multiBoxActions";
-import Tab5 from "./Tab5/Tab5";
+
+import Tab1 from "./tab1/Tab1";
 import Tab4 from "./tab4/Tab4";
-import SymbolCard from "./tab4/SymbolCard";
+import Tab5 from "./Tab5/Tab5";
+
+import SymbolCard from "./SymbolCard";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -137,6 +137,7 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
 
         {/*minimizedClass  */}
         <div className={`mcontent boxContent `}>
+          {multiBox.activeTab === "1" && <Tab1 multiBox={multiBox} />}
           {multiBox.activeTab === "4" && <Tab4 multiBox={multiBox} />}
           {multiBox.activeTab === "5" && <Tab5 multiBox={multiBox} />}
           <div className="tabButtons">
