@@ -4,7 +4,7 @@ import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import MultiBox from "./MultiBox";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { listQuoteBoxesAPI } from "api/API";
-import { loadMultiBoxFromAPIAction } from "redux/actions/multiBox/multiBoxActions";
+import { addUpdateBoxStructureAction } from "redux/actions/multiBox/multiBoxActions";
 
 const MultiBoxContainer: React.FC = () => {
   const {
@@ -17,7 +17,7 @@ const MultiBoxContainer: React.FC = () => {
     async function loadBoxes() {
       const data = await listQuoteBoxesAPI();
 
-      dispatch(loadMultiBoxFromAPIAction(data));
+      dispatch(addUpdateBoxStructureAction(data));
     }
 
     loadBoxes();

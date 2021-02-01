@@ -2,6 +2,7 @@ import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import usePrevious from "hooks/usePrevious";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import React, { useEffect } from "react";
+import { startProactiveMultiBoxUpdateAction } from "redux/actions/multiBox/multiBoxActions";
 import {
   startReactiveBoxUpdateAction,
   startProactiveBoxUpdateAction,
@@ -11,25 +12,26 @@ import checkIfUpdateConfigChanged from "./utils";
 
 const BoxUpdateManager: React.FC = () => {
   const {
-    systemReducer: { updateMode, updateInterval, quoteBoxes },
+    systemReducer: { updateMode, updateInterval },
+    multiBoxReducer: { boxesTab1Data },
   } = useStateStorePrincipal();
 
   const dispatch = useDispatchStorePrincipal();
 
   const previousUpdateMode = usePrevious(updateMode);
   const previousUpdateInterval = usePrevious(updateInterval);
-  const previousQuoteBoxes = usePrevious(quoteBoxes);
+  const previousBoxesStructureData = usePrevious(boxesTab1Data);
 
   useEffect(() => {
     function checkIfBoxChanged() {
       if (
-        previousQuoteBoxes &&
-        previousQuoteBoxes.length !== quoteBoxes.length
+        previousBoxesStructureData &&
+        previousBoxesStructureData.length !== boxesTab1Data.length
       ) {
         return true;
       }
 
-      if (previousQuoteBoxes === undefined) {
+      if (previousBoxesStructureData === undefined) {
         return true;
       }
 
@@ -38,10 +40,11 @@ const BoxUpdateManager: React.FC = () => {
 
     function startUpdate() {
       if (updateMode === "reactive") {
-        dispatch(startReactiveBoxUpdateAction());
+        // dispatch(startReactiveBoxUpdateAction());
       } //
       else if (updateMode === "proactive") {
-        dispatch(startProactiveBoxUpdateAction());
+        // dispatch(startProactiveBoxUpdateAction());
+        dispatch(startProactiveMultiBoxUpdateAction())
       }
     }
 
@@ -57,7 +60,7 @@ const BoxUpdateManager: React.FC = () => {
       startUpdate();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updateInterval, updateMode, dispatch, quoteBoxes.length]);
+  }, [updateInterval, updateMode, dispatch, boxesTab1Data.length]);
 
   return null;
 };

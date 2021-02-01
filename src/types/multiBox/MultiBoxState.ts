@@ -69,6 +69,8 @@ export interface Tab1Data extends BoxProps {
 export default interface MultiBoxState {
   boxes: Array<MultiBoxData>;
   boxesTab1Data: Array<Tab1Data>;
+  esource_multiBox: EventSource | null;
+  interval_multiBox: NodeJS.Timeout | null;
 }
 
 type Tab1Keys = keyof Omit<Tab1Data, "codes" | "book">;

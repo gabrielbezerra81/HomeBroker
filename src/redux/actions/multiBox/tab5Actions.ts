@@ -27,6 +27,7 @@ import {
 } from "../multileg/utils";
 
 import {
+  addUpdateBoxStructureAction,
   updateBoxAttrAction,
   updateManyMultiBoxAction,
 } from "./multiBoxActions";
@@ -373,17 +374,17 @@ export const handleConcludeTab5Action = (boxId: string): MainThunkAction => {
   };
 };
 
-interface AddNewBoxIn {
+interface addNewBoxStructureAction {
   dispatchGlobal: any;
   zIndex: number;
   boxId: string;
 }
 
-export const addNewBoxIn = ({
+export const addNewBoxStructureAction = ({
   boxId,
   dispatchGlobal,
   zIndex,
-}: AddNewBoxIn): MainThunkAction => {
+}: addNewBoxStructureAction): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
       systemReducer: { selectedAccount, selectedTab },
@@ -417,11 +418,11 @@ export const addNewBoxIn = ({
         const responseData = await addQuoteBoxAPI(boxId, newBoxRequestData);
 
         if (responseData) {
-          const addedData = responseData[0];
+          const boxStructure = responseData[0];
 
-          dispatch(updateBoxAttrAction(boxId, { tab1Id: addedData.id }));
+          dispatch(updateBoxAttrAction(boxId, { tab1Id: boxStructure.id }));
 
-          // dispatch(addBoxFromAPIAction(responseData));
+          dispatch(addUpdateBoxStructureAction(responseData));
         }
       }
     }

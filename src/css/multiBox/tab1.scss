@@ -7,6 +7,23 @@
   overflow: hidden;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+  display: flex;
+  flex-direction: column;
+
+  .highlightedText {
+    color: #fff;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+
+    > section {
+      padding: 0 16px;
+    }
+  }
 
   header {
     display: flex;
@@ -25,13 +42,27 @@
     }
   }
 
-  section,
-  main,
-  footer {
-    padding: 0 16px;
+  section.top {
+    .boxSliderContainer {
+      display: flex;
+      flex-direction: row;
+      padding: 0 0.5rem;
+
+      .sliderEdge {
+        height: 5px;
+        background-color: #4e4f4e;
+        flex: 17;
+      }
+
+      .sliderMiddle {
+        height: 5px;
+        background-color: var(--color-buy-primary-blue);
+        flex: 1;
+      }
+    }
   }
 
-  main {
+  section.middle {
     display: flex;
 
     > div {
@@ -47,10 +78,12 @@
       flex-direction: column;
       font-size: 12px;
       justify-content: flex-start;
+      align-items: center;
 
       > div {
         display: flex;
         width: 100%;
+        max-width: 70px;
 
         > span {
           flex: 1;
@@ -61,6 +94,14 @@
         }
       }
     }
+
+    // .buyBook {
+    //   align-items: flex-start;
+    // }
+
+    // .sellBook {
+    //   align-items: flex-end;
+    // }
 
     .quoteContainer {
       display: flex;
@@ -86,7 +127,7 @@
     }
   }
 
-  footer {
+  section.footer {
     padding-bottom: 4px;
 
     > div:first-child {

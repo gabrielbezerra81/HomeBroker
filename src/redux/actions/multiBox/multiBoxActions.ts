@@ -1,3 +1,4 @@
+import { getProactiveBoxAPI } from "api/proactive/ProativosAPI";
 import { UPDATE_MANY_MULTIBOX } from "constants/MenuActionTypes";
 import produce from "immer";
 import MultiBoxState, {
@@ -77,7 +78,10 @@ export const updateBoxAttrAction = (
   };
 };
 
-export const loadMultiBoxFromAPIAction = (data: any[]): MainThunkAction => {
+export const addUpdateBoxStructureAction = (
+  data: any[],
+  createBoxes = true,
+): MainThunkAction => {
   return (dispatch, getState) => {
     const {
       multiBoxReducer: { boxesTab1Data },
@@ -145,7 +149,10 @@ export const loadMultiBoxFromAPIAction = (data: any[]): MainThunkAction => {
         boxesTab1Data: updatedTab1Data,
       }),
     );
-    dispatch(addMultiBoxesFromTab1DataAction(updatedTab1Data));
+
+    if (createBoxes) {
+      dispatch(addMultiBoxesFromTab1DataAction(updatedTab1Data));
+    }
   };
 };
 
@@ -182,5 +189,101 @@ export const addMultiBoxesFromTab1DataAction = (
         boxes: multiBoxes,
       }),
     );
+  };
+};
+
+// export const startReactiveMultiBoxUpdateAction = (): MainThunkAction => {
+//   return (dispatch, getState) => {
+//     const {
+//       systemReducer: { token, esource_box, interval_box, quoteBoxes },
+//     } = getState();
+
+//     if (esource_box && esource_box.close) {
+//       esource_box.close();
+//     }
+
+//     if (interval_box !== null) {
+//       clearInterval(interval_box);
+//     }
+
+//     const idArray: string[] = [];
+
+//     quoteBoxes.forEach((boxItem) => {
+//       if (!idArray.includes(boxItem.structureID.toString())) {
+//         idArray.push(boxItem.structureID.toString());
+//       }
+//     });
+
+//     const ids = idArray.join(",");
+
+//     if (ids) {
+//       const boxSource = updateBoxDataAPI({ ids, token, dispatch, quoteBoxes });
+
+//       dispatch(updateOneSystemStateAction("esource_box", boxSource));
+//     }
+//   };
+// };
+
+export const startProactiveMultiBoxUpdateAction = (): MainThunkAction => {
+  return (dispatch, getState) => {
+    const {
+      systemReducer: { updateInterval },
+      multiBoxReducer: { boxesTab1Data, esource_multiBox, interval_multiBox },
+    } = getState();
+
+    if (esource_multiBox && esource_multiBox.close) {
+      esource_multiBox.close();
+    }
+
+    if (interval_multiBox !== null) {
+      clearInterval(interval_multiBox);
+    }
+
+    const idArray: string[] = [];
+
+    boxesTab1Data.forEach((boxItem) => {
+      if (!idArray.includes(boxItem.structureID.toString())) {
+        idArray.push(boxItem.structureID.toString());
+      }
+    });
+
+    const ids = idArray.join(",");
+
+    if (ids) {
+      const interval = setInterval(async () => {
+        const structures = await getProactiveBoxAPI(ids);
+
+        if (!structures.length) {
+          return;
+        }
+
+        const updatedBoxesTab1Data = boxesTab1Data.map((boxItem) => {
+          const boxFromAPI: any = {
+            id: boxItem.id,
+            configuration: boxItem.configuration,
+          };
+
+          const updatedStructure = structures.find(
+            (structureItem: any) => structureItem.id === boxItem.structureID,
+          );
+
+          if (updatedStructure) {
+            boxFromAPI.structure = updatedStructure;
+          } else {
+            boxFromAPI.structure = boxItem.structure;
+          }
+
+          return boxFromAPI;
+        });
+
+        dispatch(addUpdateBoxStructureAction(updatedBoxesTab1Data, false));
+      }, updateInterval);
+
+      dispatch(
+        updateManyMultiBoxAction({
+          interval_multiBox: interval,
+        }),
+      );
+    }
   };
 };

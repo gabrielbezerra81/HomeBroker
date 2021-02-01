@@ -179,7 +179,7 @@ class TelaPrincipal extends React.Component {
 
             <MenuOrdens />
 
-            <QuoteBoxContainer />
+            {/* <QuoteBoxContainer /> */}
 
             <MultiBoxContainer />
           </div>

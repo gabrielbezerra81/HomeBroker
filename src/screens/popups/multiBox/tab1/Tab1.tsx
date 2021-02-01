@@ -14,6 +14,10 @@ import {
   Tab1Data,
   FormattedTab1Data,
 } from "types/multiBox/MultiBoxState";
+import { deleteQuoteBoxAPI } from "api/API";
+import produce from "immer";
+import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
+import { updateManyMultiBoxAction } from "redux/actions/multiBox/multiBoxActions";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -21,34 +25,65 @@ interface Props {
 
 const Tab1: React.FC<Props> = ({ multiBox }) => {
   const {
-    multiBoxReducer: { boxesTab1Data },
+    multiBoxReducer: { boxesTab1Data, boxes },
   } = useStateStorePrincipal();
 
-  const handleMinimize = useCallback(() => {}, []);
+  const dispatch = useDispatchStorePrincipal();
 
-  const handleClose = useCallback(() => {}, []);
-
-  const data = useMemo(() => {
+  const structureData = useMemo(() => {
     return boxesTab1Data.find((data) => data.boxId === multiBox.id);
   }, [multiBox.id, boxesTab1Data]);
 
+  const handleMinimize = useCallback(() => {}, []);
+
+  const handleClose = useCallback(async () => {
+    if (!structureData) {
+      return;
+    }
+
+    try {
+      const shouldDelete = await deleteQuoteBoxAPI(structureData.id);
+
+      if (shouldDelete) {
+        const updatedMultiBoxes = produce(boxes, (draft) => {
+          const index = draft.findIndex((box) => box.tab1Id === structureData.id);
+
+          if (index >= 0) draft.splice(index, 1);
+        });
+
+        const updatedBoxesTab1Data = produce(boxesTab1Data, (draft) => {
+          const index = draft.findIndex((tab1Data) => tab1Data.id === structureData.id);
+
+          if (index >= 0) draft.splice(index, 1);
+        });
+
+        dispatch(
+          updateManyMultiBoxAction({
+            boxesTab1Data: updatedBoxesTab1Data,
+            boxes: updatedMultiBoxes,
+          }),
+        );
+      }
+    } catch (error) {}
+  }, [boxes, boxesTab1Data, structureData, dispatch]);
+
   const formattedData: FormattedTab1Data | undefined = useMemo(() => {
-    if (!data) {
+    if (!structureData) {
       return undefined;
     }
 
     const box = {} as FormattedTab1Data;
 
-    Object.keys(data).forEach((key) => {
+    Object.keys(structureData).forEach((key) => {
       const parsedKey = key as keyof Tab1Data;
 
-      if (typeof data[parsedKey] === "number") {
-        box[parsedKey] = formatarNumDecimal(data[parsedKey], 2, 2);
+      if (typeof structureData[parsedKey] === "number") {
+        box[parsedKey] = formatarNumDecimal(structureData[parsedKey], 2, 2);
       } //
-      else if (parsedKey === "book" && data.book) {
+      else if (parsedKey === "book" && structureData.book) {
         box.book = { buy: [], sell: [] };
 
-        box.book.buy = data.book.buy
+        box.book.buy = structureData.book.buy
           .filter(
             (bookLine) =>
               bookLine.price.toString() !== "0.0031415" &&
@@ -59,7 +94,7 @@ const Tab1: React.FC<Props> = ({ multiBox }) => {
             formattedQtty: formatarQuantidadeKMG(bookLine.qtty),
             formattedPrice: formatarNumDecimal(bookLine.price),
           }));
-        box.book.sell = data.book.sell
+        box.book.sell = structureData.book.sell
           .filter(
             (bookLine) =>
               bookLine.price.toString() !== "0.0031415" &&
@@ -71,115 +106,123 @@ const Tab1: React.FC<Props> = ({ multiBox }) => {
             formattedPrice: formatarNumDecimal(bookLine.price),
           }));
       } else {
-        box[parsedKey] = data[parsedKey] as any;
+        box[parsedKey] = structureData[parsedKey] as any;
       }
     });
     return box;
-  }, [data]);
+  }, [structureData]);
 
   const sliderBackgroundColor = useMemo(() => {
-    return data && data.dayOscilation >= 0
+    return structureData && structureData.dayOscilation >= 0
       ? "sliderBuyColor"
       : "sliderSellColor";
-  }, [data]);
+  }, [structureData]);
+
+  if (!structureData) {
+    return null;
+  }
 
   return (
     <div className="multiBoxTab1">
       <header>
         <span style={{ left: 12, position: "absolute" }}>
-          id: {data?.structureID}
+          id: {structureData?.structureID}
         </span>
         <AiFillMinusCircle size={20} fill="#444" onClick={handleMinimize} />
         <RiCloseCircleFill size={20} fill="#444" onClick={handleClose} />
       </header>
 
-      <section>
-        <div className="flexSpaceBetweenCenter">
-          <strong>COMPRA</strong>
-          <strong>Médio</strong>
-          <strong>VENDA</strong>
-        </div>
-        <div className="containerSliderTopo">
-          <div className="sliderTopo"></div>
-          <div className="meioSliderTopo"></div>
-          <div className="sliderTopo"></div>
-        </div>
-        <div className="flexSpaceBetweenCenter">
-          <span className="highlightedText">{formattedData?.buy || "0,00"}</span>
-          <span className="highlightedText">
-            {formattedData?.sell || "0,00"}
-          </span>
-        </div>
-      </section>
+      <div className="content">
+        <section className="top">
+          <div className="flexSpaceBetweenCenter">
+            <strong>COMPRA</strong>
+            <strong>Médio</strong>
+            <strong>VENDA</strong>
+          </div>
+          <div className="boxSliderContainer">
+            <div className="sliderEdge"></div>
+            <div className="sliderMiddle"></div>
+            <div className="sliderEdge"></div>
+          </div>
+          <div className="flexSpaceBetweenCenter">
+            <span className="highlightedText">
+              {formattedData?.buy || "0,00"}
+            </span>
+            <span className="highlightedText">
+              {formattedData?.sell || "0,00"}
+            </span>
+          </div>
+        </section>
 
-      <main>
-        <div className="buyBook">
-          {!!formattedData?.book.buy.length && (
-            <>
-              <div>
-                <span className="highlightedText">Qtde</span>
-                <span className="highlightedText">Preço</span>
-              </div>
-              {formattedData.book.buy.map((book, index) => (
-                <div key={`buyBook${index}`}>
-                  <span>{book.formattedQtty}</span>
-                  <span>{book.formattedPrice}</span>
+        <section className="middle">
+          <div className="buyBook">
+            {!!formattedData?.book.buy.length && (
+              <>
+                <div>
+                  <span className="highlightedText">Qtde</span>
+                  <span className="highlightedText">Preço</span>
                 </div>
-              ))}
-            </>
-          )}
-        </div>
-        <div className="quoteContainer">
-          <strong className="highlightedText">
-            {formattedData?.quote || "0,00"}
-          </strong>
-          <span>
-            {data && (
-              <DayOscilation
-                dayOscilation={data.dayOscilation}
-                formattedDayOscilation={data.dayOscilation}
-              />
+                {formattedData.book.buy.map((book, index) => (
+                  <div key={`buyBook${index}`}>
+                    <span>{book.formattedQtty}</span>
+                    <span>{book.formattedPrice}</span>
+                  </div>
+                ))}
+              </>
             )}
-          </span>
-        </div>
-        <div className="sellBook">
-          {!!formattedData?.book.sell.length && (
-            <>
-              <div>
-                <span className="highlightedText">Qtde</span>
-                <span className="highlightedText">Preço</span>
-              </div>
-              {formattedData.book.sell.map((book, index) => (
-                <div key={`buyBook${index}`}>
-                  <span>{book.formattedQtty}</span>
-                  <span>{book.formattedPrice}</span>
+          </div>
+          <div className="quoteContainer">
+            <strong className="highlightedText">
+              {formattedData?.quote || "0,00"}
+            </strong>
+            <span>
+              {structureData && (
+                <DayOscilation
+                  dayOscilation={structureData.dayOscilation}
+                  formattedDayOscilation={structureData.dayOscilation}
+                />
+              )}
+            </span>
+          </div>
+          <div className="sellBook">
+            {!!formattedData?.book.sell.length && (
+              <>
+                <div>
+                  <span className="highlightedText">Qtde</span>
+                  <span className="highlightedText">Preço</span>
                 </div>
-              ))}
-            </>
-          )}
-        </div>
-      </main>
+                {formattedData.book.sell.map((book, index) => (
+                  <div key={`buyBook${index}`}>
+                    <span>{book.formattedQtty}</span>
+                    <span>{book.formattedPrice}</span>
+                  </div>
+                ))}
+              </>
+            )}
+          </div>
+        </section>
 
-      <footer>
-        <div className="flexSpaceBetweenCenter">
-          <span className="highlightedText">Min</span>
-          <span className="highlightedText">Max</span>
-        </div>
-        <input
-          type="range"
-          className={`custom-range ${sliderBackgroundColor} inputRange`}
-          min={data?.min}
-          max={data?.max}
-          value={data ? (data.min + data.max) / 2 : ""}
-          step={0.01}
-          onChange={() => false}
-          //value={item.valorAcao}
-        />
-        <div className="flexSpaceBetweenCenter">
-          <span className="highlightedText">{formattedData?.min}</span>
-          <span className="highlightedText">{formattedData?.max}</span>
-        </div>
-      </footer>
+        <section className="footer">
+          <div className="flexSpaceBetweenCenter">
+            <span className="highlightedText">Min</span>
+            <span className="highlightedText">Max</span>
+          </div>
+          <input
+            type="range"
+            className={`custom-range ${sliderBackgroundColor} inputRange`}
+            min={structureData?.min}
+            max={structureData?.max}
+            value={structureData ? (structureData.min + structureData.max) / 2 : ""}
+            step={0.01}
+            onChange={() => false}
+            //value={item.valorAcao}
+          />
+          <div className="flexSpaceBetweenCenter">
+            <span className="highlightedText">{formattedData?.min}</span>
+            <span className="highlightedText">{formattedData?.max}</span>
+          </div>
+        </section>
+      </div>
     </div>
   );
 };
