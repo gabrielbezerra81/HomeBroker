@@ -17,7 +17,7 @@ export const addMultiBoxAction = (): MainThunkAction => {
 
     const newMultiBox: MultiBoxData = {
       id: v4(),
-      activeTab: "1",
+      activeTab: "5",
       minimized: false,
       //tab5
       symbolInput: "",
