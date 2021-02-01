@@ -128,6 +128,14 @@
       &:nth-child(1) {
         font-weight: bold;
       }
+
+      &.strikeColumn {
+        min-width: 136px;
+
+        .symbolCardContainer {
+          padding-right: 4px;
+        }
+      }
     }
 
     tbody {
@@ -169,4 +177,3 @@
     margin-top: -2px !important;
   }
 }
-

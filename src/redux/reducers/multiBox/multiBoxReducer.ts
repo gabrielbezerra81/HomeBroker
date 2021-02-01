@@ -10,6 +10,8 @@ const INITIAL_STATE: MultiBoxState = {
   boxesTab1Data: [],
   esource_multiBox: null,
   interval_multiBox: null,
+  esource_tab4Box: null,
+  interval_tab4Box: null,
 };
 
 export default (

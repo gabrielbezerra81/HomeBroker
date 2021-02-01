@@ -15,3 +15,25 @@ export const getSymbolInfoAPI = async (
       return null;
     });
 };
+
+interface SymbolData {
+  symbol: string;
+  ultimo: number;
+  compra: number;
+  compraQtde: number;
+  venda: number;
+  vendaQtde: number;
+}
+
+export const getSymbolsDataAPI = async (symbols: string) => {
+  return api
+    .get<SymbolData[]>(`price/quotes/symbols?symbols=${symbols}`)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.log("symbols batch call error", error);
+
+      return [] as SymbolData[];
+    });
+};

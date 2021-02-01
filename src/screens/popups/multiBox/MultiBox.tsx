@@ -132,12 +132,12 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
         <div className="topSymbolsContainer">
           <div>
             {americanTopSymbols.map((topSymbol, index) => (
-              <SymbolCard data={topSymbol} key={index} showQtty />
+              <SymbolCard showQttyPlus data={topSymbol} key={index} showQtty />
             ))}
           </div>
           <div>
             {europeanTopSymbols.map((topSymbol, index) => (
-              <SymbolCard data={topSymbol} key={index} showQtty />
+              <SymbolCard showQttyPlus data={topSymbol} key={index} showQtty />
             ))}
           </div>
         </div>

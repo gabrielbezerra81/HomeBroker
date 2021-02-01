@@ -71,9 +71,39 @@ export default interface MultiBoxState {
   boxesTab1Data: Array<Tab1Data>;
   esource_multiBox: EventSource | null;
   interval_multiBox: NodeJS.Timeout | null;
+  esource_tab4Box: EventSource | null;
+  interval_tab4Box: NodeJS.Timeout | null;
 }
 
 type Tab1Keys = keyof Omit<Tab1Data, "codes" | "book">;
 
 export type FormattedTab1Data = Record<Tab1Keys, string> &
   Pick<Tab1Data, "codes" | "book">;
+
+export type SingleBook = {
+  buy: {
+    qtty: number;
+    price: number;
+    [key: string]: any;
+  };
+  sell: {
+    qtty: number;
+    price: number;
+    [key: string]: any;
+  };
+};
+
+export type FormattedSingleBook = {
+  buy: {
+    qtty: number;
+    price: number;
+    formattedQtty: string;
+    formattedPrice: string;
+  };
+  sell: {
+    qtty: number;
+    price: number;
+    formattedQtty: string;
+    formattedPrice: string;
+  };
+} | null;

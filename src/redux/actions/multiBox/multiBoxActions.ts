@@ -145,13 +145,10 @@ export const updateStructuresAndLoadBoxesAction = (
         if (index === -1) {
           draft.push(newStructure);
         } else {
-          console.log(newStructure);
           Object.assign(draft[index], newStructure);
         }
       });
     });
-
-    console.log(updatedTab1Data);
 
     // dispatch(handleAddBoxesToTabsAction(openedBoxes));
     dispatch(

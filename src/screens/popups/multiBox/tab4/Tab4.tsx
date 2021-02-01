@@ -1,25 +1,113 @@
-import React, { useCallback, useMemo } from "react";
-import { Form, Table } from "react-bootstrap";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { Table } from "react-bootstrap";
 
 import { IoMdRepeat } from "react-icons/io";
 
-import { MultiBoxData } from "types/multiBox/MultiBoxState";
+import {
+  FormattedSingleBook,
+  MultiBoxData,
+  SingleBook,
+  TopSymbol,
+} from "types/multiBox/MultiBoxState";
 
 import cogIcon from "assets/multiBox/cogIcon.png";
 import openInNewIcon from "assets/multiBox/openInNewIcon.png";
 import zoomIcon from "assets/multiBox/zoomIcon.png";
 import SymbolCard from "../SymbolCard";
+import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
+import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
+import useStateGlobalStore from "hooks/useStateGlobalStore";
+import { getSymbolsDataAPI } from "api/symbolAPI";
+import {
+  formatarNumDecimal,
+  formatarQuantidadeKMG,
+} from "shared/utils/Formatacoes";
+import { updateBoxAttrAction } from "redux/actions/multiBox/multiBoxActions";
 
 interface Props {
   multiBox: MultiBoxData;
 }
 
+interface Tab4Data extends TopSymbol {
+  book: SingleBook | null;
+  last: number | null;
+}
+
 const Tab4: React.FC<Props> = ({ multiBox }) => {
+  const dispatch = useDispatchStorePrincipal();
+
+  const [tab4Data, setTab4Data] = useState<Tab4Data[]>([]);
+
+  const dispatchGlobal = useDispatchGlobalStore();
+
+  const { zIndex } = useStateGlobalStore();
+
+  const { strikeViewMode, stockSymbol } = multiBox;
+
   const handleSearch = useCallback(() => {}, []);
 
-  const handleOpenInMultileg = useCallback(() => {}, []);
+  const handleOpenInMultileg = useCallback(() => {
+    // dispatch(
+    //   handleExportBoxToMultilegAction({
+    //     boxId: multiBox.id,
+    //     globalProps: {
+    //       dispatchGlobal,
+    //       zIndex,
+    //     },
+    //   }),
+    // );
+  }, []);
 
   const handleConfig = useCallback(() => {}, []);
+
+  const handleStrikeViewChange = useCallback(() => {
+    const viewMode = strikeViewMode === "code" ? "strike" : "code";
+
+    dispatch(
+      updateBoxAttrAction(multiBox.id, {
+        strikeViewMode: viewMode,
+      }),
+    );
+  }, [dispatch, multiBox.id, strikeViewMode]);
+
+  useEffect(() => {
+    async function loadData() {
+      const symbols = multiBox.topSymbols
+        .map((topSymbol) => topSymbol.code)
+        .join(",");
+
+      const symbolsData = await getSymbolsDataAPI(symbols);
+
+      const data: Tab4Data[] = multiBox.topSymbols.map((topSymbol) => {
+        const symbolData = symbolsData.find(
+          (data) => data.symbol === topSymbol.code,
+        );
+
+        let book = null;
+        let last = null;
+
+        if (symbolData) {
+          book = {
+            buy: {
+              qtty: symbolData.compraQtde,
+              price: symbolData.compra,
+            },
+            sell: {
+              qtty: symbolData.vendaQtde,
+              price: symbolData.venda,
+            },
+          };
+          last = symbolData.ultimo;
+        }
+
+        return { ...topSymbol, book, last };
+      });
+
+      setTab4Data(data);
+    }
+
+    loadData();
+  }, [multiBox.topSymbols]);
 
   const osc = 2;
 
@@ -32,6 +120,41 @@ const Tab4: React.FC<Props> = ({ multiBox }) => {
 
     return "";
   }, [osc]);
+
+  const formattedTab4Data = useMemo(() => {
+    return tab4Data.map((item) => {
+      let formattedQtty = item.offerType === "C" ? "+" : "-";
+      formattedQtty += `${item.qtty}`;
+
+      const formattedLast = item.last ? formatarNumDecimal(item.last) : "";
+
+      const formattedBook = item.book as FormattedSingleBook;
+
+      if (formattedBook && item.book) {
+        formattedBook.buy.formattedQtty = formatarQuantidadeKMG(
+          item.book.buy.qtty,
+        );
+        formattedBook.buy.formattedPrice = formatarNumDecimal(
+          item.book.buy.price,
+        );
+
+        formattedBook.sell.formattedQtty = formatarQuantidadeKMG(
+          item.book.sell.qtty,
+        );
+        formattedBook.sell.formattedPrice = formatarNumDecimal(
+          item.book.sell.price,
+        );
+      }
+
+      return {
+        ...item,
+        formattedQtty,
+        formattedLast,
+        formattedBook,
+        viewMode: strikeViewMode,
+      };
+    }, []);
+  }, [strikeViewMode, tab4Data]);
 
   return (
     <div className="multiBoxTab4">
@@ -68,7 +191,10 @@ const Tab4: React.FC<Props> = ({ multiBox }) => {
             <th className="yellowColumns">Qtde</th>
             <th className="yellowColumns">
               Strike
-              <button className="brokerCustomButton">
+              <button
+                onClick={handleStrikeViewChange}
+                className="brokerCustomButton"
+              >
                 <IoMdRepeat color="#C4C4C4" />
               </button>
             </th>
@@ -80,50 +206,19 @@ const Tab4: React.FC<Props> = ({ multiBox }) => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td className="buyColor">+1</td>
-            <td>
-              <SymbolCard
-                data={{
-                  qtty: 1,
-                  code: "L260",
-                  offerType: "C",
-                  model: "AMERICAN",
-                  strike: "",
-                  viewMode: "code",
-                  expiration: "25d",
-                  type: "CALL",
-                }}
-              />
-            </td>
-            <td>12,21</td>
-            <td>100k</td>
-            <td>12,21</td>
-            <td>12,21</td>
-            <td>100k</td>
-          </tr>
-          <tr>
-            <td className="sellColor">-1</td>
-            <td>
-              <SymbolCard
-                data={{
-                  qtty: -1,
-                  code: "L260",
-                  offerType: "V",
-                  model: "EUROPEAN",
-                  strike: "26,00",
-                  viewMode: "code",
-                  expiration: "25d",
-                  type: "PUT",
-                }}
-              />
-            </td>
-            <td>12,21</td>
-            <td>100k</td>
-            <td>12,21</td>
-            <td>12,21</td>
-            <td>100k</td>
-          </tr>
+          {formattedTab4Data.map((item, index) => (
+            <tr key={index}>
+              <td className="buyColor">{item.formattedQtty}</td>
+              <td className="strikeColumn">
+                <SymbolCard data={item} />
+              </td>
+              <td>{item.formattedLast}</td>
+              <td>{item.formattedBook?.buy.formattedQtty}</td>
+              <td>{item.formattedBook?.buy.formattedPrice}</td>
+              <td>{item.formattedBook?.sell.formattedPrice}</td>
+              <td>{item.formattedBook?.sell.formattedQtty}</td>
+            </tr>
+          ))}
         </tbody>
       </Table>
 
