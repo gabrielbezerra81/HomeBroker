@@ -25,7 +25,7 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
 
   const dispatch = useDispatchStorePrincipal();
 
-  const { topSymbols } = multiBox;
+  const { topSymbols, strikeViewMode } = multiBox;
 
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -93,15 +93,22 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const formattedTopSymbols = useMemo(() => {
+    return topSymbols.map((topSymbol) => ({
+      ...topSymbol,
+      viewMode: strikeViewMode,
+    }));
+  }, [strikeViewMode, topSymbols]);
+
   const americanTopSymbols = useMemo(() => {
-    return topSymbols.filter(
+    return formattedTopSymbols.filter(
       (item) => item.model === "AMERICAN" || !item.model,
     );
-  }, [topSymbols]);
+  }, [formattedTopSymbols]);
 
   const europeanTopSymbols = useMemo(() => {
-    return topSymbols.filter((item) => item.model === "EUROPEAN");
-  }, [topSymbols]);
+    return formattedTopSymbols.filter((item) => item.model === "EUROPEAN");
+  }, [formattedTopSymbols]);
 
   return (
     <Draggable
