@@ -483,7 +483,7 @@ export const favoritarTHLAPI = async (data) => {
     });
 };
 
-export const addQuoteBoxAPI = async (groupName, data) => {
+export const addBoxStructureAPI = async (groupName, data) => {
   return api
     .post(`${url_addQuoteBox_groupName}${groupName}`, data, {
       timeout,

@@ -1,7 +1,7 @@
 import moment from "moment";
 
 import {
-  addQuoteBoxAPI,
+  addBoxStructureAPI,
   pesquisarAtivoMultilegAPI,
   pesquisarStrikesMultilegAPI,
   setPointerWhileAwaiting,
@@ -27,13 +27,13 @@ import {
 } from "../multileg/utils";
 
 import {
-  addUpdateBoxStructureAction,
+  updateStructuresAndLoadBoxesAction,
   updateBoxAttrAction,
   updateManyMultiBoxAction,
 } from "./multiBoxActions";
 import { exportBoxToMultileg } from "./util";
 
-export const handleSearchBoxSymbolAction = (
+export const handleSearchBoxSymbolOptionsAction = (
   id: string,
   symbol: string,
 ): MainThunkAction => {
@@ -336,13 +336,21 @@ export const handleExportBoxToMultilegAction = ({
   };
 };
 
-export const handleConcludeTab5Action = (boxId: string): MainThunkAction => {
+interface ConcludeTab5 {
+  dispatchGlobal: any;
+  zIndex: number;
+  boxId: string;
+}
+
+export const handleConcludeTab5Action = (
+  data: ConcludeTab5,
+): MainThunkAction => {
   return (dispatch, getState) => {
     const {
       multiBoxReducer: { boxes },
     } = getState();
 
-    const multiBox = boxes.find((box) => box.id === boxId);
+    const multiBox = boxes.find((box) => box.id === data.boxId);
 
     if (multiBox) {
       const topSymbols: TopSymbol[] = multiBox.boxOffers.map((offer) => {
@@ -370,6 +378,7 @@ export const handleConcludeTab5Action = (boxId: string): MainThunkAction => {
       dispatch(
         updateBoxAttrAction(multiBox.id, { topSymbols, activeTab: "1" }),
       );
+      dispatch(addNewMultiBoxStructureAction({ ...data, multiBox }));
     }
   };
 };
@@ -377,18 +386,20 @@ export const handleConcludeTab5Action = (boxId: string): MainThunkAction => {
 interface addNewBoxStructureAction {
   dispatchGlobal: any;
   zIndex: number;
-  boxId: string;
+  multiBox: MultiBoxData;
 }
 
-export const addNewBoxStructureAction = ({
-  boxId,
+export const addNewMultiBoxStructureAction = ({
   dispatchGlobal,
   zIndex,
+  multiBox,
 }: addNewBoxStructureAction): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
       systemReducer: { selectedAccount, selectedTab },
     } = getState();
+
+    const boxId = multiBox.id;
 
     // Obtem os dados no formato do multileg, porém não dispara a abertura da multileg
     const data = await exportBoxToMultileg({
@@ -403,10 +414,15 @@ export const addNewBoxStructureAction = ({
     if (data) {
       const configData = { tabKey: selectedTab, boxId };
 
+      const tabIndex = data.multileg.length - 1;
+
+      data.multileg[tabIndex].editingOrderId =
+        multiBox.tab1Id !== -1 ? multiBox.tab1Id : null;
+
       const mountOrderProps = {
         multilegTabs: data.multileg,
         selectedAccount: selectedAccount,
-        tabIndex: data.multileg.length - 1,
+        tabIndex,
         comment: JSON.stringify(configData),
       };
 
@@ -415,14 +431,14 @@ export const addNewBoxStructureAction = ({
       setPointerWhileAwaiting({ lockMode: "travar", id: "boxId" });
 
       if (validateMultilegOrder(mountOrderProps)) {
-        const responseData = await addQuoteBoxAPI(boxId, newBoxRequestData);
+        const responseData = await addBoxStructureAPI(boxId, newBoxRequestData);
 
         if (responseData) {
           const boxStructure = responseData[0];
 
           dispatch(updateBoxAttrAction(boxId, { tab1Id: boxStructure.id }));
 
-          dispatch(addUpdateBoxStructureAction(responseData));
+          dispatch(updateStructuresAndLoadBoxesAction(responseData, false));
         }
       }
     }

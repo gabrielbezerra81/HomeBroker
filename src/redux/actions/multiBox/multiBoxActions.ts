@@ -7,7 +7,7 @@ import MultiBoxState, {
 } from "types/multiBox/MultiBoxState";
 import { MainThunkAction } from "types/ThunkActions";
 
-import { uuid } from "uuidv4";
+import { v4 } from "uuid";
 
 export const addMultiBoxAction = (): MainThunkAction => {
   return (dispatch, getState) => {
@@ -16,7 +16,7 @@ export const addMultiBoxAction = (): MainThunkAction => {
     } = getState();
 
     const newMultiBox: MultiBoxData = {
-      id: uuid(),
+      id: v4(),
       activeTab: "1",
       minimized: false,
       //tab5
@@ -78,7 +78,7 @@ export const updateBoxAttrAction = (
   };
 };
 
-export const addUpdateBoxStructureAction = (
+export const updateStructuresAndLoadBoxesAction = (
   data: any[],
   createBoxes = true,
 ): MainThunkAction => {
@@ -130,18 +130,23 @@ export const addUpdateBoxStructureAction = (
     });
 
     const updatedTab1Data = produce(boxesTab1Data, (draft) => {
-      newData.forEach((newBoxItem) => {
-        const boxIndex = draft.findIndex(
-          (boxItem) => boxItem.id === newBoxItem.id,
+      newData.forEach((newStructure) => {
+        const index = draft.findIndex(
+          (structure) =>
+            structure.id === newStructure.id ||
+            structure.boxId === newStructure.boxId,
         );
 
-        if (boxIndex === -1) {
-          draft.push(newBoxItem);
+        if (index === -1) {
+          draft.push(newStructure);
         } else {
-          draft[boxIndex] = newBoxItem;
+          console.log(newStructure);
+          Object.assign(draft[index], newStructure);
         }
       });
     });
+
+    console.log(updatedTab1Data);
 
     // dispatch(handleAddBoxesToTabsAction(openedBoxes));
     dispatch(
@@ -151,12 +156,12 @@ export const addUpdateBoxStructureAction = (
     );
 
     if (createBoxes) {
-      dispatch(addMultiBoxesFromTab1DataAction(updatedTab1Data));
+      dispatch(addMultiBoxesFromStructureDataAction(updatedTab1Data));
     }
   };
 };
 
-export const addMultiBoxesFromTab1DataAction = (
+export const addMultiBoxesFromStructureDataAction = (
   tab1Data: Tab1Data[],
 ): MainThunkAction => {
   return (dispatch) => {
@@ -276,7 +281,9 @@ export const startProactiveMultiBoxUpdateAction = (): MainThunkAction => {
           return boxFromAPI;
         });
 
-        dispatch(addUpdateBoxStructureAction(updatedBoxesTab1Data, false));
+        dispatch(
+          updateStructuresAndLoadBoxesAction(updatedBoxesTab1Data, false),
+        );
       }, updateInterval);
 
       dispatch(

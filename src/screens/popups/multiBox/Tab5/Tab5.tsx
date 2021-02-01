@@ -22,9 +22,8 @@ import {
   handleAddOptionOfferAction,
   handleAddStockOfferAction,
   handleExportBoxToMultilegAction,
-  handleSearchBoxSymbolAction,
+  handleSearchBoxSymbolOptionsAction,
   handleConcludeTab5Action,
-  addNewBoxStructureAction,
 } from "redux/actions/multiBox/tab5Actions";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 import useStateGlobalStore from "hooks/useStateGlobalStore";
@@ -86,7 +85,7 @@ const Tab5: React.FC<Props> = ({ multiBox }) => {
   }, [dispatch, id, symbolInput]);
 
   const handleSearchOptions = useCallback(() => {
-    dispatch(handleSearchBoxSymbolAction(id, symbolInput));
+    dispatch(handleSearchBoxSymbolOptionsAction(id, symbolInput));
   }, [dispatch, id, symbolInput]);
 
   const handleOpenInMultileg = useCallback(() => {
@@ -122,8 +121,7 @@ const Tab5: React.FC<Props> = ({ multiBox }) => {
   }, [dispatch, multiBox.id, strikeViewMode]);
 
   const handleConclude = useCallback(() => {
-    dispatch(addNewBoxStructureAction({ boxId: id, dispatchGlobal, zIndex }));
-    dispatch(handleConcludeTab5Action(id));
+    dispatch(handleConcludeTab5Action({ boxId: id, dispatchGlobal, zIndex }));
   }, [dispatch, dispatchGlobal, id, zIndex]);
 
   const strikeOptions = useMemo(() => {

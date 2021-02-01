@@ -4,7 +4,7 @@ import {
   setPointerWhileAwaiting,
   criarAlertaOperacaoAPI,
   criarPosicaoMultilegAPI,
-  addQuoteBoxAPI,
+  addBoxStructureAPI,
   getMultilegExecStrategiesAPI,
 } from "api/API";
 import {
@@ -248,7 +248,7 @@ export const addQuoteBoxFromMultilegAction = (
     setPointerWhileAwaiting({ lockMode: "travar", id: "multileg" });
 
     if (validateMultilegOrder(mountOrderProps)) {
-      const data = await addQuoteBoxAPI(tabName, multilegRequestData);
+      const data = await addBoxStructureAPI(tabName, multilegRequestData);
 
       if (data) {
         dispatch(addBoxFromAPIAction(data));
