@@ -1,10 +1,14 @@
+import moment from "moment";
+
 import { getProactiveBoxAPI } from "api/proactive/ProativosAPI";
 import { updateBoxStructuresAPI } from "api/reactive/ReativosAPI";
+import { getSymbolInfoAPI } from "api/symbolAPI";
 import { UPDATE_MANY_MULTIBOX } from "constants/MenuActionTypes";
 import produce from "immer";
 import MultiBoxState, {
   MultiBoxData,
   Tab1Data,
+  TopSymbol,
 } from "types/multiBox/MultiBoxState";
 import { MainThunkAction } from "types/ThunkActions";
 
@@ -165,8 +169,40 @@ export const updateStructuresAndLoadBoxesAction = (
 export const addMultiBoxesFromStructureDataAction = (
   tab1Data: Tab1Data[],
 ): MainThunkAction => {
-  return (dispatch) => {
-    const multiBoxes = tab1Data.map((data) => {
+  return async (dispatch) => {
+    const promises = tab1Data.map(async (data) => {
+      const topSymbols: TopSymbol[] = [];
+
+      for await (const code of data.codes) {
+        const data = await getSymbolInfoAPI(code.symbol);
+
+        if (data) {
+          const [date] = data.endBusiness.split(" ");
+
+          const [day, month, year] = date
+            .split("/")
+            .map((value) => Number(value));
+
+          const expirationDate = new Date(year, month - 1, day);
+
+          const dateDiff =
+            moment(expirationDate).diff(new Date(), "days") + "d";
+
+          const topSymbol: TopSymbol = {
+            code: code.symbol,
+            qtty: code.qtty,
+            offerType: code.type === "buy" ? "C" : "V",
+            expiration: data.model ? dateDiff : "",
+            model: data.model || ("" as any),
+            strike: data.strike,
+            type: data.type || ("" as any),
+            viewMode: "strike",
+          };
+
+          topSymbols.push(topSymbol);
+        }
+      }
+
       const newMultiBox: MultiBoxData = {
         id: data.boxId,
         activeTab: "1",
@@ -183,12 +219,18 @@ export const addMultiBoxesFromStructureDataAction = (
         //tab5
 
         strikeViewMode: "strike",
-        topSymbols: [],
+        topSymbols,
         tab1Id: data.id,
       };
 
       return newMultiBox;
     });
+
+    const multiBoxes: MultiBoxData[] = [];
+
+    for await (const boxes of promises) {
+      multiBoxes.push(boxes);
+    }
 
     dispatch(
       updateManyMultiBoxAction({

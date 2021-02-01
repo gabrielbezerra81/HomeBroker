@@ -179,6 +179,18 @@ const MultiBoxOffer: React.FC<Props> = ({
     });
   }, [expirations]);
 
+  const strikeColumnValue = useMemo(() => {
+    if (selectedStrike === 0) {
+      return selectedCode;
+    }
+
+    if (strikeViewMode === "strike") {
+      return selectedStrike;
+    }
+
+    return selectedCode;
+  }, [selectedCode, selectedStrike, strikeViewMode]);
+
   return (
     <tr>
       <td className="closeColumn">
@@ -211,7 +223,7 @@ const MultiBoxOffer: React.FC<Props> = ({
           notFoundContent="Strike não encontrado"
           className="strikeSelect offerStrikeSelect"
           suffixIcon={<FaCaretDown color="#ddd" />}
-          value={strikeViewMode === "strike" ? selectedStrike : selectedCode}
+          value={strikeColumnValue}
           onChange={handleStrikeChange}
         >
           {strikeViewMode === "strike" && strikeOptions}

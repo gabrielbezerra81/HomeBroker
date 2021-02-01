@@ -154,7 +154,7 @@ const SymbolCard: React.FC<Props> = ({
         )}
 
         <h6 className={textColorClass}>
-          {viewMode === "strike" && strike !== -1 ? formattedStrike : code}
+          {viewMode === "strike" && strike !== 0 ? formattedStrike : code}
         </h6>
         <h6 className={textColorClass}>{expiration}</h6>
       </button>
