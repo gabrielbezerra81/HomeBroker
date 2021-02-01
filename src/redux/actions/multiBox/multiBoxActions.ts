@@ -1,4 +1,5 @@
 import { getProactiveBoxAPI } from "api/proactive/ProativosAPI";
+import { updateBoxStructuresAPI } from "api/reactive/ReativosAPI";
 import { UPDATE_MANY_MULTIBOX } from "constants/MenuActionTypes";
 import produce from "immer";
 import MultiBoxState, {
@@ -197,37 +198,47 @@ export const addMultiBoxesFromStructureDataAction = (
   };
 };
 
-// export const startReactiveMultiBoxUpdateAction = (): MainThunkAction => {
-//   return (dispatch, getState) => {
-//     const {
-//       systemReducer: { token, esource_box, interval_box, quoteBoxes },
-//     } = getState();
+export const startReactiveMultiBoxUpdateAction = (): MainThunkAction => {
+  return (dispatch, getState) => {
+    const {
+      systemReducer: { token },
+      multiBoxReducer: { esource_multiBox, interval_multiBox, boxesTab1Data },
+    } = getState();
 
-//     if (esource_box && esource_box.close) {
-//       esource_box.close();
-//     }
+    if (esource_multiBox && esource_multiBox.close) {
+      esource_multiBox.close();
+    }
 
-//     if (interval_box !== null) {
-//       clearInterval(interval_box);
-//     }
+    if (interval_multiBox !== null) {
+      clearInterval(interval_multiBox);
+    }
 
-//     const idArray: string[] = [];
+    const idArray: string[] = [];
 
-//     quoteBoxes.forEach((boxItem) => {
-//       if (!idArray.includes(boxItem.structureID.toString())) {
-//         idArray.push(boxItem.structureID.toString());
-//       }
-//     });
+    boxesTab1Data.forEach((structure) => {
+      if (!idArray.includes(structure.structureID.toString())) {
+        idArray.push(structure.structureID.toString());
+      }
+    });
 
-//     const ids = idArray.join(",");
+    const ids = idArray.join(",");
 
-//     if (ids) {
-//       const boxSource = updateBoxDataAPI({ ids, token, dispatch, quoteBoxes });
+    if (ids) {
+      const boxSource = updateBoxStructuresAPI({
+        ids,
+        token,
+        dispatch,
+        boxesTab1Data,
+      });
 
-//       dispatch(updateOneSystemStateAction("esource_box", boxSource));
-//     }
-//   };
-// };
+      dispatch(
+        updateManyMultiBoxAction({
+          esource_multiBox: boxSource,
+        }),
+      );
+    }
+  };
+};
 
 export const startProactiveMultiBoxUpdateAction = (): MainThunkAction => {
   return (dispatch, getState) => {

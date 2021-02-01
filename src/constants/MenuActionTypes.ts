@@ -21,4 +21,5 @@ export const MUDAR_VARIAVEIS_THL = "mudar_variaveis_thl";
 export const UPDATE_MANY_FINANCIAL_PLANNER = "update_many_financial_planner";
 
 // MultiBox
+export const UPDATE_ONE_MULTIBOX = "update_one_multibox"
 export const UPDATE_MANY_MULTIBOX = "update_many_multibox";
