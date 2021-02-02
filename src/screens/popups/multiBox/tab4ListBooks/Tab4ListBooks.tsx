@@ -46,7 +46,7 @@ interface RefStockData {
   max: number;
 }
 
-const Tab4: React.FC<Props> = ({ multiBox }) => {
+const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
   const dispatch = useDispatchStorePrincipal();
 
   const [refStockData, setRefStockData] = useState<RefStockData | null>(null);
@@ -335,4 +335,4 @@ const Tab4: React.FC<Props> = ({ multiBox }) => {
   );
 };
 
-export default Tab4;
+export default Tab4ListBooks;

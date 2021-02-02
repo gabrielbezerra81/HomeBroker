@@ -6,9 +6,9 @@ import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { MultiBoxData } from "types/multiBox/MultiBoxState";
 import { updateBoxAttrAction } from "redux/actions/multiBox/multiBoxActions";
 
-import Tab1 from "./tab1/Tab1";
-import Tab4 from "./tab4/Tab4";
-import Tab5 from "./Tab5/Tab5";
+import Tab1ViewStockBook from "./tab1ViewStockBook/Tab1ViewStockBook";
+import Tab4ListBooks from "./tab4ListBooks/Tab4ListBooks";
+import Tab5IncludeStructure from "./tab5IncludeStructure/Tab5IncludeStructure";
 
 import SymbolCard from "./SymbolCard";
 
@@ -150,11 +150,11 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
 
         {/*minimizedClass  */}
         <div className={`mcontent boxContent ${activeTabClass}`}>
-          <Tab1 multiBox={multiBox} />
+          <Tab1ViewStockBook multiBox={multiBox} />
           <div></div>
           <div></div>
-          <Tab4 multiBox={multiBox} />
-          <Tab5 multiBox={multiBox} />
+          <Tab4ListBooks multiBox={multiBox} />
+          <Tab5IncludeStructure multiBox={multiBox} />
           <div className="tabButtons">
             <button
               className={`brokerCustomButton ${isSelected(

@@ -23,7 +23,7 @@ interface Props {
   multiBox: MultiBoxData;
 }
 
-const Tab1: React.FC<Props> = ({ multiBox }) => {
+const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
   const {
     multiBoxReducer: { boxesTab1Data, boxes },
   } = useStateStorePrincipal();
@@ -227,7 +227,7 @@ const Tab1: React.FC<Props> = ({ multiBox }) => {
   );
 };
 
-export default Tab1;
+export default Tab1ViewStockBook;
 
 const DayOscilation = ({ dayOscilation, formattedDayOscilation }: any) => {
   if (dayOscilation >= 0)

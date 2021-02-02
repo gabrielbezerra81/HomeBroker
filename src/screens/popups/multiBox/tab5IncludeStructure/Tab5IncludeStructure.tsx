@@ -32,7 +32,7 @@ interface Props {
   multiBox: MultiBoxData;
 }
 
-const Tab5: React.FC<Props> = ({ multiBox }) => {
+const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
   const dispatch = useDispatchStorePrincipal();
   const dispatchGlobal = useDispatchGlobalStore();
 
@@ -295,4 +295,4 @@ const Tab5: React.FC<Props> = ({ multiBox }) => {
   );
 };
 
-export default Tab5;
+export default Tab5IncludeStructure;
