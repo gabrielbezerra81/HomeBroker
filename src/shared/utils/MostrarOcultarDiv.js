@@ -4,9 +4,9 @@ const ocultarDIV = (divID) => {
   element.classList.add("hide");
 
   if (divID === "userLeftSideMenu") {
-    var divBarraLateral = document.getElementById("divBarraLateral");
-    if (divBarraLateral) {
-      divBarraLateral.classList.remove("divBarraLateralAfastada");
+    var leftActionBar = document.getElementById("leftActionBar");
+    if (leftActionBar) {
+      leftActionBar.classList.remove("leftBarWithMarginLeft");
     }
 
     var menuTelaPrincipal = document.getElementById("menusTelaPrincipal");
@@ -22,9 +22,9 @@ const mostrarDIV = (divID) => {
   element.classList.add("visible");
 
   if (divID === "userLeftSideMenu") {
-    var divBarraLateral = document.getElementById("divBarraLateral");
-    if (divBarraLateral) {
-      divBarraLateral.classList.add("divBarraLateralAfastada");
+    var leftActionBar = document.getElementById("leftActionBar");
+    if (leftActionBar) {
+      leftActionBar.classList.add("leftBarWithMarginLeft");
     }
 
     var menuTelaPrincipal = document.getElementById("menusTelaPrincipal");

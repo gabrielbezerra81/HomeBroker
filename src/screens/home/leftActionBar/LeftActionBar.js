@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 
 import { AiFillForward } from "react-icons/ai";
 
-import iconeListaCompleta from "assets/iconeListaCompleta.png";
 import { ReactComponent as Icones } from "assets/IconesBarraLateral.svg";
 import { StorePrincipalContext, GlobalContext } from "redux/StoreCreation";
 import {
@@ -24,46 +23,46 @@ Icone Ordens
 
 */
 const margemParaMenuLateral = (isOpenLeftUserMenu) => {
-  if (isOpenLeftUserMenu) return " divBarraLateralAfastada";
+  if (isOpenLeftUserMenu) return " leftBarWithMarginLeft";
   return "";
 };
 
-class BarraLateral extends React.Component {
+class LeftActionBar extends React.Component {
   render() {
     const { props } = this;
     return (
       <div
-        className={`divBarraLateral${margemParaMenuLateral(
+        className={`leftActionBar${margemParaMenuLateral(
           props.isOpenLeftUserMenu,
         )}`}
-        id="divBarraLateral"
+        id="leftActionBar"
       >
         <div
           tabIndex={0}
-          className="itemDivBarraLateral divClicavel"
+          className="popupButton divClicavel"
           onClick={(event) => {
             props.abrirFormAction(event, props);
           }}
           data-name="book"
         >
-          <Icones viewBox="9 0 36 39" className="iconesBarraLateral"></Icones>
+          <Icones viewBox="9 0 36 39"></Icones>
           <h6>BOOK</h6>
         </div>
         <div
           tabIndex={0}
-          className="itemDivBarraLateral divClicavel"
+          className="popupButton divClicavel"
           onClick={() => {
             props.atualizarDivKeyAction("thl");
             props.abrirItemBarraLateralAction(props, "isOpenTHL");
           }}
         >
-          <Icones viewBox="7 70 42 49" className="iconesBarraLateral"></Icones>
+          <Icones viewBox="7 70 42 49"></Icones>
           <h6>ANÁLISE</h6>
         </div>
 
         <div
           tabIndex={0}
-          className="itemDivBarraLateral divClicavel"
+          className="popupButton divClicavel"
           onMouseOver={() => {
             props.atualizarDivKeyAction("divOrdens");
 
@@ -75,52 +74,46 @@ class BarraLateral extends React.Component {
               props.mouseLeaveAction("isOpenOrdersHoverMenu");
           }}
         >
-          <Icones
-            viewBox="11 145 41 45"
-            className="iconesBarraLateral"
-          ></Icones>
+          <Icones viewBox="11 145 41 45"></Icones>
           <h6>ORDENS</h6>
         </div>
         <div
           tabIndex={0}
-          className="itemDivBarraLateral divClicavel"
+          className="popupButton divClicavel"
           onClick={() => {
             props.atualizarDivKeyAction("ordens_execucao");
             props.abrirItemBarraLateralAction(props, "isOpenOrdersExec");
           }}
         >
-          <Icones
-            viewBox="11 233 36 43"
-            className="iconesBarraLateral"
-          ></Icones>
+          <Icones viewBox="11 233 36 43"></Icones>
           <h6>ORDENS EM EXECUÇÃO</h6>
         </div>
         <div
           tabIndex={0}
-          className="itemDivBarraLateral divClicavel"
+          className="popupButton divClicavel"
           onClick={() => {
             props.atualizarDivKeyAction("posicao_custodia");
             props.abrirItemBarraLateralAction(props, "isOpenPosition");
           }}
         >
-          <Icones viewBox="5 326 41 52" className="iconesBarraLateral"></Icones>
+          <Icones viewBox="5 326 41 52"></Icones>
           <h6>POSIÇÃO</h6>
         </div>
         <div
           tabIndex={0}
-          className="itemDivBarraLateral divClicavel"
+          className="popupButton divClicavel"
           onClick={() => {
             props.atualizarDivKeyAction("relatorio_detalhado");
             props.abrirItemBarraLateralAction(props, "isOpenDetailedReport");
           }}
         >
-          <Icones viewBox="8 407 41 52" className="iconesBarraLateral"></Icones>
+          <Icones viewBox="8 407 41 52"></Icones>
           <h6>HISTÓRICO</h6>
         </div>
 
         <div
           tabIndex={0}
-          className="itemDivBarraLateral divClicavel"
+          className="popupButton divClicavel"
           onClick={() => {
             props.atualizarDivKeyAction("initialPlanner");
             props.abrirItemBarraLateralAction(props, "isOpenInitialPlanner");
@@ -172,13 +165,13 @@ export default compose(
     null,
     { context: StorePrincipalContext },
   ),
-)(BarraLateral);
+)(LeftActionBar);
 
 /*
 
  <div
           tabIndex={0}
-          className="itemDivBarraLateral divClicavel"
+          className="popupButton divClicavel"
           onClick={() => {
             props.atualizarDivKeyAction("posicao_custodia");
             props.abrirItemBarraLateralAction(props, "isOpenPosition");

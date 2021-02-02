@@ -8,12 +8,11 @@ import {
   checkIfSystemStateHasChangedShapeAction,
   deslogarUsuarioAction,
 } from "redux/actions/system/SystemActions";
-import BarraLateral from "screens/home/leftBar/BarraLateral";
+import LeftActionBar from "screens/home/leftActionBar/LeftActionBar";
 import MenuOrdens from "screens/home/boletasHoverMenu/MenuOrdens";
 import MainScreenTabs from "./mainScreenTabs/MainScreenTabs";
 import PopupContainer from "./PopupContainer";
 import { compose } from "redux";
-import QuoteBoxContainer from "../popups/quoteBox/QuoteBoxContainer";
 import api from "api/apiConfig";
 import AddBoxMenu from "../popups/quoteBox/AddBoxMenu";
 import RightSideMenu from "./rightSideMenu/RightSideMenu";
@@ -103,7 +102,7 @@ class TelaPrincipal extends React.Component {
         <MenuLateralUsuario />
         <div className="conteudoMenuPrincipal">
           <BarraTopoTelaPrincipal />
-          <BarraLateral />
+          <LeftActionBar />
 
           <div
             id="menusTelaPrincipal"

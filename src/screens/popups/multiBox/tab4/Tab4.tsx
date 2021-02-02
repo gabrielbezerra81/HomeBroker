@@ -42,7 +42,7 @@ const Tab4: React.FC<Props> = ({ multiBox }) => {
 
   const { zIndex } = useStateGlobalStore();
 
-  const { strikeViewMode, stockSymbol } = multiBox;
+  const { strikeViewMode } = multiBox;
 
   const handleSearch = useCallback(() => {}, []);
 

@@ -1,0 +1,34 @@
+.leftActionBar {
+  background: linear-gradient(#333, #222);
+  width: 85px;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 0rem 0rem 0.25rem;
+  position: fixed;
+  height: 100%;
+  margin-top: 45px;
+  margin-left: 0;
+  transition: margin-left 0.4s;
+  z-index: 9999;
+
+  &.leftBarWithMarginLeft {
+    margin-left: 132px !important;
+  }
+
+  .popupButton {
+    margin-bottom: 1rem;
+    text-align: center;
+
+    svg {
+      max-width: 44px;
+      fill: #8ba5c2;
+    }
+
+    h6 {
+      color: #8ba5c2;
+      font-size: 0.7rem;
+    }
+  }
+
+ 
+}
