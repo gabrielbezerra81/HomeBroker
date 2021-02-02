@@ -128,7 +128,7 @@ export const pesquisarAtivoAPI = async (codigo) => {
     });
 };
 
-export const listarBookOfertaAPI = (codigo_ativo) => {
+export const listarBookOfertaAPI = async (codigo_ativo) => {
   let tabelas = {
     tabelaOfertasCompra: [],
     tabelaOfertasVenda: [],

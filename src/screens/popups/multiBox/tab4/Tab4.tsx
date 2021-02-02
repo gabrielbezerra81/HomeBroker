@@ -17,7 +17,12 @@ import SymbolCard from "../SymbolCard";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 import useStateGlobalStore from "hooks/useStateGlobalStore";
-import { getSymbolsDataAPI } from "api/symbolAPI";
+import {
+  getOneSymbolDataAPI,
+  getStockInfoAPI,
+  getSymbolInfoAPI,
+  getSymbolsDataAPI,
+} from "api/symbolAPI";
 import {
   formatarNumDecimal,
   formatarQuantidadeKMG,
@@ -33,9 +38,18 @@ interface Tab4Data extends TopSymbol {
   last: number | null;
 }
 
+interface RefStockData {
+  symbol: string;
+  last: number;
+  oscilation: number;
+  min: number;
+  max: number;
+}
+
 const Tab4: React.FC<Props> = ({ multiBox }) => {
   const dispatch = useDispatchStorePrincipal();
 
+  const [refStockData, setRefStockData] = useState<RefStockData | null>(null);
   const [tab4Data, setTab4Data] = useState<Tab4Data[]>([]);
 
   const dispatchGlobal = useDispatchGlobalStore();
@@ -70,6 +84,7 @@ const Tab4: React.FC<Props> = ({ multiBox }) => {
     );
   }, [dispatch, multiBox.id, strikeViewMode]);
 
+  // Obtém dados da tabela (tab4Data)
   useEffect(() => {
     async function loadData() {
       const symbols = multiBox.topSymbols
@@ -109,17 +124,56 @@ const Tab4: React.FC<Props> = ({ multiBox }) => {
     loadData();
   }, [multiBox.topSymbols]);
 
-  const osc = 2;
+  // Obtem reference stock
+  useEffect(() => {
+    async function getReferenceStock() {
+      const symbol = multiBox.topSymbols.length
+        ? multiBox.topSymbols[0].code
+        : "";
+
+      if (!symbol) {
+        return;
+      }
+
+      const { referenceStock } = (await getSymbolInfoAPI(symbol)) || {};
+
+      if (referenceStock) {
+        const { symbol } = (await getStockInfoAPI(referenceStock)) || {};
+
+        if (symbol) {
+          const data = await getOneSymbolDataAPI(symbol);
+
+          if (data) {
+            const stockData: RefStockData = {
+              symbol,
+              last: data.ultimo,
+              min: data.minimo,
+              max: data.maximo,
+              oscilation: data.oscilacao,
+            };
+
+            setRefStockData(stockData);
+          }
+        }
+      }
+    }
+
+    getReferenceStock();
+  }, [multiBox.topSymbols]);
 
   const oscilationClass = useMemo(() => {
-    if (osc > 0) {
+    if (!refStockData) {
+      return "";
+    }
+
+    if (refStockData.oscilation > 0) {
       return "positiveText";
-    } else if (osc < 0) {
+    } else if (refStockData.oscilation < 0) {
       return "negativeText";
     }
 
     return "";
-  }, [osc]);
+  }, [refStockData]);
 
   const formattedTab4Data = useMemo(() => {
     return tab4Data.map((item) => {
@@ -156,13 +210,48 @@ const Tab4: React.FC<Props> = ({ multiBox }) => {
     }, []);
   }, [strikeViewMode, tab4Data]);
 
+  const formattedRefStockData = useMemo(() => {
+    if (!refStockData) {
+      return null;
+    }
+
+    const { oscilation, min, max, last } = refStockData;
+
+    let formattedOscilation = "";
+
+    if (oscilation > 0) {
+      formattedOscilation += "+";
+    } //
+    else if (oscilation < 0) {
+      formattedOscilation += "-";
+    }
+
+    formattedOscilation += formatarNumDecimal(oscilation || 0) + "%";
+
+    const medium = (max + min) / 2;
+
+    const formattedMedium = formatarNumDecimal(medium, 3);
+
+    return {
+      ...refStockData,
+      formattedLast: formatarNumDecimal(last),
+      formattedOscilation,
+      formattedMin: formatarNumDecimal(min),
+      formattedMax: formatarNumDecimal(max),
+      medium,
+      formattedMedium,
+    };
+  }, [refStockData]);
+
   return (
     <div className="multiBoxTab4">
       <header>
         <div>
-          <h4>PETR4</h4>
-          <span className="quote">12,21</span>
-          <span className={`oscilation ${oscilationClass}`}>+2,5%</span>
+          <h4>{refStockData?.symbol}</h4>
+          <span className="quote">{formattedRefStockData?.formattedLast}</span>
+          <span className={`oscilation ${oscilationClass}`}>
+            {formattedRefStockData?.formattedOscilation}
+          </span>
         </div>
         <div>
           <button className="brokerCustomButton" onClick={handleSearch}>
@@ -232,14 +321,14 @@ const Tab4: React.FC<Props> = ({ multiBox }) => {
           type="range"
           className={`custom-range tab4InputRange`}
           step="0.01"
-          min={0.0}
-          max={1.8}
+          min={refStockData?.min}
+          max={refStockData?.max}
           onChange={(event) => {}}
         />
         <div>
-          <span>12,21</span>
-          <span>12,21</span>
-          <span>12,21</span>
+          <span>{formattedRefStockData?.formattedMin}</span>
+          <span>{formattedRefStockData?.formattedMedium}</span>
+          <span>{formattedRefStockData?.formattedMax}</span>
         </div>
       </div>
     </div>
