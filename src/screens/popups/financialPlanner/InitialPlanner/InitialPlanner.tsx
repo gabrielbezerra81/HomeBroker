@@ -247,6 +247,10 @@ const InitialPlanner: React.FC = () => {
         payload.periodicity = "meses";
       }
 
+      if (name === "ratePeriodicity") {
+        payload.contributionPeriodicity = value;
+      }
+
       dispatch(
         updateManyFinancialPlannerAction({
           initialPlanner: payload,
@@ -335,7 +339,7 @@ const InitialPlanner: React.FC = () => {
           <div>
             <div className="inputsAndGraphContainer">
               <div className="simulatorRow">
-                <h6>Valor inicial:</h6>
+                <h6>Aporte inicial:</h6>
                 <CustomInput
                   value={initialValue}
                   type="preco"
@@ -349,7 +353,7 @@ const InitialPlanner: React.FC = () => {
               </div>
 
               <div className="simulatorRow">
-                <h6>Aporte mensal:</h6>
+                <h6>Aporte:</h6>
                 <CustomInput
                   value={contribution}
                   type="preco"
@@ -365,6 +369,7 @@ const InitialPlanner: React.FC = () => {
                   name="contributionPeriodicity"
                   onChange={(e) => handleInputChange(e.target.value, e)}
                   value={contributionPeriodicity}
+                  disabled
                 >
                   <option value={"por semana"}>por semana</option>
                   <option value={"por mês"}>por mês</option>
@@ -402,7 +407,7 @@ const InitialPlanner: React.FC = () => {
               </div>
 
               <div className="simulatorRow">
-                <h6>Período em:</h6>
+                <h6>Prazo:</h6>
                 <FormControl
                   className="darkSimpleInput"
                   name="periodValue"
