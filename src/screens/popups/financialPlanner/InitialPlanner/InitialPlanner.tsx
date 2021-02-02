@@ -31,6 +31,7 @@ export interface Projection {
   investment: number;
   totalPercent: number;
   period: Date;
+  contribution: number;
   [key: string]: any;
 }
 
@@ -45,6 +46,7 @@ export interface FormattedProjection {
   formattedTotalPercent: string;
   formattedPeriod: string;
   month: number;
+  formattedContribution: string;
 }
 
 const InitialPlanner: React.FC = () => {
@@ -75,6 +77,7 @@ const InitialPlanner: React.FC = () => {
       contribution,
       contributionPeriodicity,
       ratePeriodicity,
+      convertMode: "calculate",
     });
 
     let periods = convertPeriodByRatePeriodicity({
@@ -138,6 +141,7 @@ const InitialPlanner: React.FC = () => {
       contribution,
       contributionPeriodicity,
       ratePeriodicity,
+      convertMode: "calculate",
     });
 
     let investment = initialValue;
@@ -203,6 +207,7 @@ const InitialPlanner: React.FC = () => {
         investment,
         totalPercent,
         period,
+        contribution: monthlyValue,
       };
 
       projections.push(projection);
@@ -293,6 +298,7 @@ const InitialPlanner: React.FC = () => {
         formattedCalcBase: formatarNumDecimal(monthItem.calcBase, 2),
         formattedTotalPercent: formatarNumDecimal(monthItem.totalPercent, 2),
         formattedPeriod,
+        formattedContribution: formatarNumDecimal(monthItem.contribution),
         month: index + 1,
       };
     });

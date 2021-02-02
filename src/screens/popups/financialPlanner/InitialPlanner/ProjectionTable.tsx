@@ -6,7 +6,8 @@ import { Projection, FormattedProjection } from "./InitialPlanner";
 
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
-import { convertInterestRate } from "../utils";
+import { convertContribution, convertInterestRate } from "../utils";
+import { InitialPlannerData } from "types/financialPlanner/FinancialPlannerState";
 
 interface Props {
   data: Array<Projection & FormattedProjection>;
@@ -24,6 +25,8 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
     listing,
     ratePeriodicity,
     interestRate,
+    contributionPeriodicity,
+    initialValue,
   } = initialPlanner;
 
   const formattedContribution = useMemo(
@@ -70,6 +73,10 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
 
     return formatarNumDecimal(interestRate);
   }, [ratePeriodicity, listing, interestRate]);
+
+  const formattedInitialInvest = useMemo(() => {
+    return formatarNumDecimal(initialValue, 2);
+  }, [initialValue]);
 
   return (
     <div className="projectionContainer">
@@ -143,11 +150,28 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
               }
             }
 
+            const viewContribution = getContributionByListing({
+              listing,
+              contribution,
+              contributionPeriodicity,
+              projectionItem: monthItem,
+              index,
+            });
+
+            const formattedContribution = formatarNumDecimal(
+              viewContribution,
+              2,
+            );
+
             return (
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{monthItem.formattedPeriod}</td>
-                <td>{showContribution && formattedContribution}</td>
+                <td>
+                  {showContribution
+                    ? formattedContribution
+                    : formattedInitialInvest}
+                </td>
                 <td>{monthItem.formattedCalcBase}</td>
                 <td>
                   {listing === "anual"
@@ -170,3 +194,50 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
 };
 
 export default ProjectionTable;
+
+interface GetContribution
+  extends Pick<
+    InitialPlannerData,
+    "listing" | "contribution" | "contributionPeriodicity"
+  > {
+  projectionItem: Projection & FormattedProjection;
+  index: number;
+}
+
+const getContributionByListing = ({
+  listing,
+  contribution,
+  contributionPeriodicity,
+  projectionItem,
+  index,
+}: GetContribution) => {
+  let convertContribTo = "";
+  let contribYearDiff = 0;
+
+  if (listing === "mensal") {
+    convertContribTo = "por mês";
+  } else if (listing === "semanal") {
+    convertContribTo = "por semana";
+  } else if (listing === "anual") {
+    convertContribTo = "por ano";
+    const monthNumber = projectionItem.period.getMonth() + 1;
+    contribYearDiff = 12 - monthNumber;
+
+    // o primeiro mês não tem aporte, portanto é excluído
+    if (index === 0) {
+      const monthsPassed = new Date().getMonth();
+      contribYearDiff += 1 + monthsPassed;
+    }
+  }
+
+  const contrib =
+    convertContribution({
+      contribution,
+      contributionPeriodicity,
+      ratePeriodicity: convertContribTo as any,
+      convertMode: "visualize",
+    }) -
+    contribYearDiff * contribution;
+
+  return contrib;
+};

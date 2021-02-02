@@ -18,17 +18,27 @@ export function convertInterestRate(tax: number, from: Period, to: Period) {
   return rate;
 }
 
+type ConvertMode = {
+  convertMode: "visualize" | "calculate";
+};
+
 export function convertContribution({
   contribution,
   contributionPeriodicity,
   ratePeriodicity,
+  convertMode,
 }: Pick<
   InitialPlannerData,
   "contribution" | "contributionPeriodicity" | "ratePeriodicity"
->) {
+> &
+  ConvertMode) {
   // a taxa utilizada no cálculo é transformada para mês
   if (ratePeriodicity === "por ano") {
     if (contributionPeriodicity === "por mês") {
+      if (convertMode === "visualize") {
+        return contribution * 12;
+      }
+
       return contribution;
     } //
     else if (contributionPeriodicity === "por semana") {
