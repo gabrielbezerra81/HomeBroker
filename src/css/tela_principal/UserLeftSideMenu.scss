@@ -1,4 +1,4 @@
-.divMenuLateral {
+.userLeftSideMenu {
   background-color: #1d1d1d;
   height: 100vh;
   transition-property: width opacity;
@@ -7,6 +7,7 @@
   width: 132px;
   position: fixed;
   padding-top: 45px;
+  z-index: 9999;
 
   &.hide {
     opacity: 0;
@@ -27,11 +28,11 @@
   text-align: center;
   width: 100%;
   border-radius: 0;
-}
 
-.itemMenuLateral .row {
-  align-items: center;
-  justify-content: center;
+  .row {
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .colLogout {

@@ -1,9 +1,9 @@
-const ocultarDIV = divID => {
+const ocultarDIV = (divID) => {
   var element = document.getElementById(divID);
   element.classList.remove("visible");
   element.classList.add("hide");
 
-  if (divID === "divMenuLateral") {
+  if (divID === "userLeftSideMenu") {
     var divBarraLateral = document.getElementById("divBarraLateral");
     if (divBarraLateral) {
       divBarraLateral.classList.remove("divBarraLateralAfastada");
@@ -16,12 +16,12 @@ const ocultarDIV = divID => {
   }
 };
 
-const mostrarDIV = divID => {
+const mostrarDIV = (divID) => {
   var element = document.getElementById(divID);
   element.classList.remove("hide");
   element.classList.add("visible");
 
-  if (divID === "divMenuLateral") {
+  if (divID === "userLeftSideMenu") {
     var divBarraLateral = document.getElementById("divBarraLateral");
     if (divBarraLateral) {
       divBarraLateral.classList.add("divBarraLateralAfastada");

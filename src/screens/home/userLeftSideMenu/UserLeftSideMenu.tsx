@@ -67,7 +67,7 @@ const UserLeftSideMenu: React.FC = () => {
   }, [isLeftSideMenuConfigOpen]);
 
   return (
-    <div className={`divMenuLateral${visibilityClass}`}>
+    <div className={`userLeftSideMenu${visibilityClass}`}>
       <div className="itemMenuLateral">
         <h6>MENU</h6>
       </div>
