@@ -46,13 +46,17 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
 
       if (shouldDelete) {
         const updatedMultiBoxes = produce(boxes, (draft) => {
-          const index = draft.findIndex((box) => box.tab1Id === structureData.id);
+          const index = draft.findIndex(
+            (box) => box.tab1Id === structureData.id,
+          );
 
           if (index >= 0) draft.splice(index, 1);
         });
 
         const updatedBoxesTab1Data = produce(boxesTab1Data, (draft) => {
-          const index = draft.findIndex((tab1Data) => tab1Data.id === structureData.id);
+          const index = draft.findIndex(
+            (tab1Data) => tab1Data.id === structureData.id,
+          );
 
           if (index >= 0) draft.splice(index, 1);
         });
@@ -119,7 +123,7 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
   }, [structureData]);
 
   if (!structureData) {
-    return null;
+    return <div></div>;
   }
 
   return (
@@ -212,7 +216,9 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
             className={`custom-range ${sliderBackgroundColor} inputRange`}
             min={structureData?.min}
             max={structureData?.max}
-            value={structureData ? (structureData.min + structureData.max) / 2 : ""}
+            value={
+              structureData ? (structureData.min + structureData.max) / 2 : ""
+            }
             step={0.01}
             onChange={() => false}
             //value={item.valorAcao}

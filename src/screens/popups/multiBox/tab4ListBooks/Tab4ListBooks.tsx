@@ -243,6 +243,10 @@ const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
     };
   }, [refStockData]);
 
+  if (!refStockData || !formattedRefStockData) {
+    return <div></div>;
+  }
+
   return (
     <div className="multiBoxTab4">
       <header>
