@@ -54,7 +54,7 @@
     margin-right: 0;
     background-color: #000;
     transition: height 0.2s;
-    min-height: 227px;
+    min-height: 252px;
 
     padding-bottom: 16px;
 
@@ -93,21 +93,54 @@
       }
     }
 
-    > header {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      border-bottom: 1px solid var(--color-border-light);
-      margin: -1px 0 2px 0;
-      padding: 0 4px 1px;
-
-      svg {
-        cursor: pointer;
-
-        &:hover {
-          fill: #007bff;
-        }
+    @keyframes showTab1 {
+      0% {
+        opacity: 0;
+        height: 0;
       }
+
+      100% {
+        opacity: 1;
+        height: 227px;
+      }
+    }
+
+    @keyframes showTab {
+      0% {
+        opacity: 0;
+        height: 0;
+      }
+
+      100% {
+        opacity: 1;
+        height: unset;
+      }
+    }
+
+    @mixin activeTab($height, $animation) {
+      opacity: 1;
+      height: $height;
+      animation: $animation 0.25s normal;
+      pointer-events: all;
+    }
+
+    & > div:not(.tabButtons) {
+      opacity: 0;
+      transition: opacity 0.1s;
+      height: 0;
+      pointer-events: none;
+    }
+
+    &.activeTab1 > div:nth-child(1) {
+      @include activeTab(227px, showTab1);
+    }
+
+    &.activeTab4 > div:nth-child(4) {
+      @include activeTab(unset, showTab);
+    }
+
+    &.activeTab5 > div:nth-child(5) {
+      @include activeTab(unset, showTab);
     }
   }
 }

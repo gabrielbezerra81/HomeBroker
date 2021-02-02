@@ -110,6 +110,12 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
     return formattedTopSymbols.filter((item) => item.model === "EUROPEAN");
   }, [formattedTopSymbols]);
 
+  const activeTabClass = useMemo(() => {
+    const activeIndex = Number(multiBox.activeTab);
+
+    return `activeTab${activeIndex}`;
+  }, [multiBox.activeTab]);
+
   return (
     <Draggable
       enableUserSelectHack={isDragging}
@@ -143,10 +149,12 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
         </div>
 
         {/*minimizedClass  */}
-        <div className={`mcontent boxContent `}>
-          {multiBox.activeTab === "1" && <Tab1 multiBox={multiBox} />}
-          {multiBox.activeTab === "4" && <Tab4 multiBox={multiBox} />}
-          {multiBox.activeTab === "5" && <Tab5 multiBox={multiBox} />}
+        <div className={`mcontent boxContent ${activeTabClass}`}>
+          <Tab1 multiBox={multiBox} />
+          <div></div>
+          <div></div>
+          <Tab4 multiBox={multiBox} />
+          <Tab5 multiBox={multiBox} />
           <div className="tabButtons">
             <button
               className={`brokerCustomButton ${isSelected(
