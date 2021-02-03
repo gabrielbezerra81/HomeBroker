@@ -7,12 +7,19 @@ import cogIcon from "assets/multiBox/cogIcon.png";
 import openInNewIcon from "assets/multiBox/openInNewIcon.png";
 import zoomIcon from "assets/multiBox/zoomIcon.png";
 import CustomInput from "shared/componentes/CustomInput";
+import BoxDateSelector from "./BoxDateSelector";
+import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
+import { updateBoxAttrAction } from "redux/actions/multiBox/multiBoxActions";
 
 interface Props {
   multiBox: MultiBoxData;
 }
 
 const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
+  const dispatch = useDispatchStorePrincipal();
+
+  const { price, consideredPrice, condition, observation, id } = multiBox;
+
   const handleSearch = useCallback(() => {}, []);
 
   const handleOpenInMultileg = useCallback(() => {
@@ -28,6 +35,32 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
   }, []);
 
   const handleConfig = useCallback(() => {}, []);
+
+  const handleInputChange = useCallback(
+    async (e) => {
+      const { name } = e.currentTarget;
+
+      let value = e.currentTarget.value;
+
+      dispatch(
+        updateBoxAttrAction(id, {
+          [name]: value,
+        }),
+      );
+    },
+    [dispatch, id],
+  );
+
+  const handlePriceChange = useCallback(
+    (value) => {
+      dispatch(
+        updateBoxAttrAction(id, {
+          price: value,
+        }),
+      );
+    },
+    [dispatch, id],
+  );
 
   const oscilation = 2;
 
@@ -102,21 +135,27 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
               theme="dark"
               step={0.01}
               type="preco"
-              value={""}
-              onChange={(value, event) => {}}
+              value={price}
+              onChange={handlePriceChange}
             />
           </Form.Group>
 
           <Form.Group>
             <Form.Label>Validade</Form.Label>
-            <Form.Control className="darkSimpleInput" />
+            <BoxDateSelector multiBox={multiBox} />
           </Form.Group>
         </div>
 
         <div className="formGroupRow">
           <Form.Group>
             <Form.Label>Preço considerado</Form.Label>
-            <Form.Control className="darkInputSelect" as="select">
+            <Form.Control
+              className="darkInputSelect"
+              as="select"
+              name="consideredPrice"
+              value={consideredPrice}
+              onChange={handleInputChange}
+            >
               <option value={"Bid"}>Oferta de compra</option>
               <option value={"Ask"}>Oferta de venda</option>
               <option value={"Last"}>Último negócio</option>
@@ -125,7 +164,13 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
 
           <Form.Group>
             <Form.Label>Condição</Form.Label>
-            <Form.Control className="darkInputSelect" as="select">
+            <Form.Control
+              className="darkInputSelect"
+              as="select"
+              name="condition"
+              value={condition}
+              onChange={handleInputChange}
+            >
               <option value={"Less"}>Menor ou igual {"<="}</option>
               <option value={"Greater"}>Maior ou igual {">="}</option>
             </Form.Control>
@@ -134,7 +179,12 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
 
         <Form.Group>
           <Form.Label>Observação</Form.Label>
-          <Form.Control className="darkSimpleInput" />
+          <Form.Control
+            className="darkSimpleInput"
+            name="observation"
+            value={observation}
+            onChange={handleInputChange}
+          />
         </Form.Group>
 
         <button className="brokerCustomButton">Cadastrar Alerta</button>

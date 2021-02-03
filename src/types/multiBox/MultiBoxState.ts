@@ -60,6 +60,12 @@ export interface MultiBoxData {
   strikeViewMode: "code" | "strike";
   topSymbols: Array<TopSymbol>;
   tab1Id: number;
+  selectedValidity: "DAY" | "SPECIFIED_DAY" | "GTC";
+  selectedDate: Date;
+  condition: "Less" | "Greater";
+  observation: string;
+  consideredPrice: "Bid" | "Ask" | "Last";
+  price: number;
 }
 
 export interface Tab1Data extends BoxProps {

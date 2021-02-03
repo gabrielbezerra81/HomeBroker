@@ -37,6 +37,12 @@ export const addMultiBoxAction = (): MainThunkAction => {
       strikeViewMode: "strike",
       topSymbols: [],
       tab1Id: -1,
+      selectedValidity: "DAY",
+      selectedDate: new Date(),
+      price: 0,
+      consideredPrice: "Bid",
+      condition: "Less",
+      observation: "",
     };
 
     const updatedBoxes = produce(boxes, (draft) => {
@@ -218,6 +224,12 @@ export const addMultiBoxesFromStructureDataAction = (
         strikeViewMode: "strike",
         topSymbols,
         tab1Id: data.id,
+        selectedValidity: "DAY",
+        selectedDate: new Date(),
+        price: 0,
+        consideredPrice: "Bid",
+        condition: "Less",
+        observation: "",
       };
 
       return newMultiBox;
