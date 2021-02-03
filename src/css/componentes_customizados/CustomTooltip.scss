@@ -8,8 +8,11 @@
     border-radius: 6px !important;
   }
 
-  .arrow::before {
-    border-top-color: #f1f1f1;
+  .arrow {
+    &::before {
+      border-bottom-color: #d9d9d9 !important;
+      border-top-color: #f1f1f1 !important;
+    }
   }
 
   &.defaultLayout {
