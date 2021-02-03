@@ -15,11 +15,15 @@ import positionIcon from "assets/menuLateralDireito/posicaoResumida.png";
 import Alert from "./Alert/Alert";
 import ResumedPosition from "./ResumedPosition/ResumedPosition";
 import ResumedOrder from "./ResumedOrder/ResumedOrder";
+import { usePermissions } from "context/PermissionContext";
 
 const RightSideMenu: React.FC = () => {
   const {
     systemReducer: { isOpenRightSideMenu, activeItemRightSideMenu: activeItem },
   } = useStateStorePrincipal();
+
+  const { permissions } = usePermissions();
+
   const dispatch = useDispatchStorePrincipal();
 
   const handleChangeMenuVisibility = useCallback(() => {
@@ -97,48 +101,65 @@ const RightSideMenu: React.FC = () => {
           <MDBIcon className={arrowRotationClass} icon="angle-left" size="lg" />
         </div>
         <div className={`rightSideBar ${hiddenSideBarClass}`}>
-          <div
-            className={`${menuItemOpacity} ${isItemActive("ALERTAS")}`}
-            tabIndex={0}
-            data-name="ALERTAS"
-            onClick={handleMenuItemSelect}
-          >
-            {/* <AlertIcon /> */}
-            <img src={alertIcon} alt="" />
-          </div>
-          <div
-            className={`${menuItemOpacity} ${isItemActive(
-              "ORDENS EM EXECUÇÃO",
-            )}`}
-            tabIndex={0}
-            data-name="ORDENS EM EXECUÇÃO"
-            onClick={handleMenuItemSelect}
-          >
-            {/* <OrdersIcon /> */}
-            <img src={ordersIcon} alt="" />
-          </div>
-          <div
-            className={`${menuItemOpacity} ${isItemActive("POSIÇÃO RESUMIDA")}`}
-            tabIndex={0}
-            data-name="POSIÇÃO RESUMIDA"
-            onClick={handleMenuItemSelect}
-          >
-            {/* <PositionIcon /> */}
-            <img src={positionIcon} alt="" />
-          </div>
+          {permissions.rightSideMenu.alerts && (
+            <div
+              className={`${menuItemOpacity} ${isItemActive("ALERTAS")}`}
+              tabIndex={0}
+              data-name="ALERTAS"
+              onClick={handleMenuItemSelect}
+            >
+              {/* <AlertIcon /> */}
+              <img src={alertIcon} alt="" />
+            </div>
+          )}
+          {permissions.rightSideMenu.ordersExecuting && (
+            <div
+              className={`${menuItemOpacity} ${isItemActive(
+                "ORDENS EM EXECUÇÃO",
+              )}`}
+              tabIndex={0}
+              data-name="ORDENS EM EXECUÇÃO"
+              onClick={handleMenuItemSelect}
+            >
+              {/* <OrdersIcon /> */}
+              <img src={ordersIcon} alt="" />
+            </div>
+          )}
+
+          {permissions.rightSideMenu.position && (
+            <div
+              className={`${menuItemOpacity} ${isItemActive(
+                "POSIÇÃO RESUMIDA",
+              )}`}
+              tabIndex={0}
+              data-name="POSIÇÃO RESUMIDA"
+              onClick={handleMenuItemSelect}
+            >
+              {/* <PositionIcon /> */}
+              <img src={positionIcon} alt="" />
+            </div>
+          )}
         </div>
       </div>
       <div className={`menuContent ${closedMenuContentClass}`}>
-        {activeItem !== "ALERTAS" && (
-          <span style={activeItemTitleStyle}>{activeItem}</span>
-        )}
-        {isOpenRightSideMenu && (
-          <>
-            {activeItem === "ALERTAS" && <Alert />}
+        {activeItem === "ORDENS EM EXECUÇÃO" &&
+          permissions.rightSideMenu.ordersExecuting && (
+            <>
+              <span style={activeItemTitleStyle}>{activeItem}</span>
+              <ResumedOrder />
+            </>
+          )}
 
-            {activeItem === "POSIÇÃO RESUMIDA" && <ResumedPosition />}
-            {activeItem === "ORDENS EM EXECUÇÃO" && <ResumedOrder />}
-          </>
+        {activeItem === "POSIÇÃO RESUMIDA" &&
+          permissions.rightSideMenu.position && (
+            <>
+              <span style={activeItemTitleStyle}>{activeItem}</span>
+              <ResumedPosition />
+            </>
+          )}
+
+        {activeItem === "ALERTAS" && permissions.rightSideMenu.alerts && (
+          <Alert />
         )}
       </div>
     </div>

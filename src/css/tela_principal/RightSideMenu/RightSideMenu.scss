@@ -51,6 +51,12 @@
 
     position: relative;
 
+    &.closedRightMenu {
+      width: 0;
+      opacity: 0;
+      padding: 20px 0;
+    }
+
     > span {
       color: #fff;
       font-size: 14px;
@@ -69,12 +75,6 @@
     //   max-height: 30px;
     //   padding: 0;
     // }
-
-    &.closedRightMenu {
-      width: 0;
-      opacity: 0;
-      padding: 20px 0;
-    }
 
     header.itemHeader {
       display: flex;
