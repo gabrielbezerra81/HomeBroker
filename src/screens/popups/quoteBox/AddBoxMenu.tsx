@@ -7,9 +7,12 @@ import boxMenuArrow from "assets/boxMenuArrow.png";
 
 import { IoMdAddCircle } from "react-icons/io";
 import { addMultiBoxAction } from "redux/actions/multiBox/multiBoxActions";
+import { usePermissions } from "context/PermissionContext";
 
 const AddBoxMenu: React.FC = () => {
   const dispatch = useDispatchStorePrincipal();
+
+  const { permissions } = usePermissions();
 
   const [menuVisibility, setMenuVisibility] = useState(false);
 
@@ -45,6 +48,10 @@ const AddBoxMenu: React.FC = () => {
   const visibilityClass = useMemo(() => {
     return menuVisibility ? "showBoxMenu" : "";
   }, [menuVisibility]);
+
+  if (!permissions.box) {
+    return <div className="hiddenAddBoxMenu"></div>;
+  }
 
   return (
     <div className="BoxMenuMainScreen">

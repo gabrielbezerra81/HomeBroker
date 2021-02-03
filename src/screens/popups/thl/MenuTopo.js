@@ -22,6 +22,7 @@ import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useStateGlobalStore from "hooks/useStateGlobalStore";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
+import { usePermissions } from "context/PermissionContext";
 
 const textoRecalcular =
   "Para recalcular os preços das estruturas é preciso selecionar uma Opção.";
@@ -32,16 +33,22 @@ const textoFavoritar =
   "Para adicionar aos favoritos é preciso selecionar uma Opção.";
 
 export default () => {
+  const { permissions } = usePermissions();
+
   return (
     <>
       <InputPesquisa />
-      <RecalcularPrecos />
-      <Favoritar />
-      <CriarAlerta />
-      <EnviarOrdem />
+      <div className="thlTopButtonsContainer">
+        <RecalcularPrecos />
+        <Favoritar />
+        <CriarAlerta />
+        {permissions.thl.sendOrder && <EnviarOrdem />}
+      </div>
     </>
   );
 };
+
+// permissions.thl.sendOrder &&
 
 const InputPesquisa = () => {
   const {
@@ -167,7 +174,7 @@ const RecalcularPrecos = () => {
   }, [codigoCelulaSelecionada]);
 
   return (
-    <div className="containerBotaoMenuTopo iconeRecalcularPrecos">
+    <div className="containerBotaoMenuTopo">
       <BotaoMenuTopo
         texto={textoRecalcular}
         condicaoVisibilidade={isDisabled}
@@ -190,7 +197,7 @@ const Favoritar = () => {
   }, [idCelulaSelecionada]);
 
   return (
-    <div className="containerBotaoMenuTopo containerBotaoFavoritar">
+    <div className="containerBotaoMenuTopo">
       <BotaoMenuTopo
         texto={textoFavoritar}
         condicaoVisibilidade={isDisabled}

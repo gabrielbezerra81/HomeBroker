@@ -1,3 +1,13 @@
+.hiddenAddBoxMenu {
+  background-color: var(--color-border-light);
+  width: 28px;
+  height: 1px;
+  position: fixed;
+  z-index: 999;
+  margin-top: 23px;
+  margin-left: 5px;
+}
+
 .BoxMenuMainScreen {
   margin-left: 4px;
   position: fixed;

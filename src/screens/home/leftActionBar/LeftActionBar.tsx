@@ -16,6 +16,7 @@ import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useStateGlobalStore from "hooks/useStateGlobalStore";
+import { usePermissions } from "context/PermissionContext";
 
 /*
 <img src={iconeAbrirOrdens} alt="Ordens" />
@@ -36,6 +37,8 @@ const LeftActionBar: React.FC = () => {
   const {
     systemReducer: { isOpenLeftUserMenu, isOpenOrdersHoverMenu },
   } = useStateStorePrincipal();
+
+  const { permissions } = usePermissions();
 
   const globalProps = useStateGlobalStore();
 
@@ -74,76 +77,92 @@ const LeftActionBar: React.FC = () => {
       className={`leftActionBar${margemParaMenuLateral(isOpenLeftUserMenu)}`}
       id="leftActionBar"
     >
-      <div
-        tabIndex={0}
-        className="popupButton divClicavel"
-        onClick={handleOpenBook}
-        data-name="book"
-      >
-        <Icones viewBox="9 0 36 39"></Icones>
-        <h6>BOOK</h6>
-      </div>
-      <div
-        tabIndex={0}
-        className="popupButton divClicavel"
-        onClick={handleOpenMenu}
-        data-name="thl"
-        data-isopen="isOpenTHL"
-      >
-        <Icones viewBox="7 70 42 49"></Icones>
-        <h6>ANÁLISE</h6>
-      </div>
+      {permissions.book && (
+        <div
+          tabIndex={0}
+          className="popupButton divClicavel"
+          onClick={handleOpenBook}
+          data-name="book"
+        >
+          <Icones viewBox="9 0 36 39"></Icones>
+          <h6>BOOK</h6>
+        </div>
+      )}
+      {permissions.thl.listing && (
+        <div
+          tabIndex={0}
+          className="popupButton divClicavel"
+          onClick={handleOpenMenu}
+          data-name="thl"
+          data-isopen="isOpenTHL"
+        >
+          <Icones viewBox="7 70 42 49"></Icones>
+          <h6>ANÁLISE</h6>
+        </div>
+      )}
 
-      <div
-        tabIndex={0}
-        className="popupButton divClicavel"
-        onMouseOver={onOrdersMouseOver}
-        onMouseLeave={onOrdersMouseLeave}
-      >
-        <Icones viewBox="11 145 41 45"></Icones>
-        <h6>ORDENS</h6>
-      </div>
-      <div
-        tabIndex={0}
-        className="popupButton divClicavel"
-        onClick={handleOpenMenu}
-        data-name="ordens_execucao"
-        data-isopen="isOpenOrdersExec"
-      >
-        <Icones viewBox="11 233 36 43"></Icones>
-        <h6>ORDENS EM EXECUÇÃO</h6>
-      </div>
-      <div
-        tabIndex={0}
-        className="popupButton divClicavel"
-        onClick={handleOpenMenu}
-        data-name="posicao_custodia"
-        data-isopen="isOpenPosition"
-      >
-        <Icones viewBox="5 326 41 52"></Icones>
-        <h6>POSIÇÃO</h6>
-      </div>
-      <div
-        tabIndex={0}
-        className="popupButton divClicavel"
-        onClick={handleOpenMenu}
-        data-name="relatorio_detalhado"
-        data-isopen="isOpenDetailedReport"
-      >
-        <Icones viewBox="8 407 41 52"></Icones>
-        <h6>HISTÓRICO</h6>
-      </div>
+      {permissions.boletas && (
+        <div
+          tabIndex={0}
+          className="popupButton divClicavel"
+          onMouseOver={onOrdersMouseOver}
+          onMouseLeave={onOrdersMouseLeave}
+        >
+          <Icones viewBox="11 145 41 45"></Icones>
+          <h6>ORDENS</h6>
+        </div>
+      )}
+      {permissions.ordersExecuting && (
+        <div
+          tabIndex={0}
+          className="popupButton divClicavel"
+          onClick={handleOpenMenu}
+          data-name="ordens_execucao"
+          data-isopen="isOpenOrdersExec"
+        >
+          <Icones viewBox="11 233 36 43"></Icones>
+          <h6>ORDENS EM EXECUÇÃO</h6>
+        </div>
+      )}
 
-      <div
-        tabIndex={0}
-        className="popupButton divClicavel"
-        onClick={handleOpenMenu}
-        data-name="initialPlanner"
-        data-isopen="isOpenInitialPlanner"
-      >
-        <AiFillForward color="#8ba5c2" size={40} />
-        <h6>PROJEÇÕES</h6>
-      </div>
+      {permissions.position && (
+        <div
+          tabIndex={0}
+          className="popupButton divClicavel"
+          onClick={handleOpenMenu}
+          data-name="posicao_custodia"
+          data-isopen="isOpenPosition"
+        >
+          <Icones viewBox="5 326 41 52"></Icones>
+          <h6>POSIÇÃO</h6>
+        </div>
+      )}
+
+      {permissions.history && (
+        <div
+          tabIndex={0}
+          className="popupButton divClicavel"
+          onClick={handleOpenMenu}
+          data-name="relatorio_detalhado"
+          data-isopen="isOpenDetailedReport"
+        >
+          <Icones viewBox="8 407 41 52"></Icones>
+          <h6>HISTÓRICO</h6>
+        </div>
+      )}
+
+      {permissions.planner && (
+        <div
+          tabIndex={0}
+          className="popupButton divClicavel"
+          onClick={handleOpenMenu}
+          data-name="initialPlanner"
+          data-isopen="isOpenInitialPlanner"
+        >
+          <AiFillForward color="#8ba5c2" size={40} />
+          <h6>PROJEÇÕES</h6>
+        </div>
+      )}
     </div>
   );
 };

@@ -2,7 +2,7 @@
 #thl {
   /* width: calc(100% - 95px); */
   margin-bottom: 0 !important;
-  min-width: 871px;
+  min-width: 1000px;
 
   .mheader {
     position: fixed;
@@ -142,10 +142,28 @@
   white-space: nowrap;
 }
 
-.containerBotaoMenuTopo {
-  position: fixed !important;
+.thlTopButtonsContainer {
+  position: fixed;
+  top: 41px;
+  display: flex;
   z-index: 3;
+  right: 45px;
 
+  > div {
+    margin: 0 16px;
+
+    &.containerBotaoEnviarTHL {
+      margin-right: 0;
+      margin-left: 32px;
+    }
+
+    &.containerBotaoCriarAlerta {
+      margin-right: 0;
+    }
+  }
+}
+
+.containerBotaoMenuTopo {
   button {
     border: none !important;
     padding: 0;
@@ -158,26 +176,6 @@
   img {
     z-index: 1;
   }
-}
-
-.containerBotaoEnviarTHL {
-  right: 45px;
-  top: 41px;
-}
-
-.containerBotaoCriarAlerta {
-  right: 161px;
-  top: 41px;
-}
-
-.containerBotaoFavoritar {
-  right: 262px;
-  top: 41px;
-}
-
-.iconeRecalcularPrecos {
-  right: 380px;
-  top: 41px;
 }
 
 .botaoDesabilitado {

@@ -24,7 +24,7 @@ interface PermissionContextData {
   permissions: Permission;
 }
 
-const PermissionContext = React.createContext({} as PermissionContextData);
+export const PermissionContext = React.createContext({} as PermissionContextData);
 
 const PermissionProvider: React.FC = ({ children }) => {
   const {
@@ -52,7 +52,7 @@ const PermissionProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     setPermissions((oldPermissions) => {
-      return changePermissionsByRole(oldPermissions, roles);
+      return changePermissionsByRole(oldPermissions, ["Student"]);
     });
   }, [roles]);
 
