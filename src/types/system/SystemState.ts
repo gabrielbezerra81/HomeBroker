@@ -21,6 +21,7 @@ export default interface SystemState {
   token: Token;
   authData: AuthData | null;
   accounts: Array<Account>;
+  roles: string[];
   selectedAccount: Account;
   mainTabs: Array<{
     tabName: string;

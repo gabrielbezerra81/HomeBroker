@@ -2,7 +2,7 @@
   "realm": "auth_sso",
   "auth-server-url": "https://auth.rendacontinua.com/auth/",
   "ssl-required": "external",
-  "resource": "broker_react",
+  "resource": "homebroker-react",
   "verify-token-audience": true,
   "credentials": {
     "secret": "367afb37-8884-42c3-b5b6-b455b9b7db59"

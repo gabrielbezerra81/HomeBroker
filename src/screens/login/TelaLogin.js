@@ -44,10 +44,6 @@ const TelaLogin = ({ path, keycloakLogin }) => {
               reject(false);
             });
         });
-
-        console.log(keycloak.userInfo);
-        console.log(keycloak.tokenParsed);
-        console.log(keycloak.token ? "token" : "undefined");
       })
       .error(() => {
         console.log("Authenticated Failed");

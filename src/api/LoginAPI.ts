@@ -5,6 +5,8 @@ import {
   url_verificarToken_token,
 } from "api/url";
 
+import keycloak from "Keycloak";
+
 import axios from "axios";
 import qs from "qs";
 
@@ -103,7 +105,7 @@ export const keycloakLoginAPI = async (code: string, redirect_uri: string) => {
         code,
         redirect_uri,
         grant_type: "authorization_code",
-        client_id: "broker_react",
+        client_id: "homebroker-react",
         client_secret: "367afb37-8884-42c3-b5b6-b455b9b7db59",
       }),
       {
@@ -116,6 +118,9 @@ export const keycloakLoginAPI = async (code: string, redirect_uri: string) => {
       const authData = response.data;
 
       const { token_type, access_token } = authData;
+
+      console.log(keycloak.tokenParsed);
+      console.log(authData);
 
       api.defaults.headers.authorization = `${token_type} ${access_token}`;
 
