@@ -6,6 +6,7 @@ import { updateManySystemState } from "redux/actions/system/SystemActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import keycloak from "Keycloak";
 import api from "api/apiConfig";
+import { getUserAccountsAPI } from "api/LoginAPI";
 
 const redirectURL =
   // eslint-disable-next-line no-restricted-globals
@@ -29,7 +30,7 @@ const LoginRedirect: React.FC<RouteComponentProps> = ({ path }) => {
       if (!isLogged) {
         keycloak
           .init({ redirectUri: redirectURL, onLoad: "check-sso" })
-          .success((auth) => {
+          .success(async (auth) => {
             if (!auth) {
               window.location.reload();
             } else {
@@ -65,6 +66,14 @@ const LoginRedirect: React.FC<RouteComponentProps> = ({ path }) => {
 
               api.defaults.headers.authorization = `${data.token_type} ${data.access_token}`;
 
+              const accounts = await getUserAccountsAPI();
+
+              let selectedAccount = {};
+
+              if (accounts.length) {
+                selectedAccount = accounts[0];
+              }
+
               dispatch(
                 updateManySystemState({
                   token: {
@@ -74,6 +83,8 @@ const LoginRedirect: React.FC<RouteComponentProps> = ({ path }) => {
                   authData: data,
                   isLogged: true,
                   roles,
+                  accounts,
+                  selectedAccount,
                 }),
               );
             }

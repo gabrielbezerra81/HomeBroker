@@ -48,6 +48,7 @@ export const url_autenticacao_token = "test/user";
 // export const url_informacoesUsuario_token = "auth/info";
 // export const url_listarContas_token = "account/login";
 export const url_verificarToken_token = "auth/";
+export const url_getAccounts = "account/login"
 
 //Cadastro
 export const url_realizarCadastro_dados = "auth/signup";

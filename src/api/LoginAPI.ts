@@ -3,6 +3,7 @@ import {
   url_autenticacao_token,
   url_realizarCadastro_dados,
   url_verificarToken_token,
+  url_getAccounts,
 } from "api/url";
 
 import keycloak from "Keycloak";
@@ -130,6 +131,17 @@ export const keycloakLoginAPI = async (code: string, redirect_uri: string) => {
       console.log("error", error.response);
 
       return null;
+    });
+};
+
+export const getUserAccountsAPI = async () => {
+  return api
+    .get(url_getAccounts)
+    .then((response) => {
+      return response.data;
+    })
+    .catch(() => {
+      return [];
     });
 };
 
