@@ -135,17 +135,29 @@ const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
         return;
       }
 
-      const { referenceStock } = (await getSymbolInfoAPI(symbol)) || {};
+      const data = await getSymbolInfoAPI(symbol);
 
-      if (referenceStock) {
-        const { symbol } = (await getStockInfoAPI(referenceStock)) || {};
+      if (data) {
+        const { isOption } = data;
 
-        if (symbol) {
-          const data = await getOneSymbolDataAPI(symbol);
+        let stockSymbol = "";
+
+        if (isOption && data.referenceStock) {
+          const { symbol: searchSymbol } =
+            (await getStockInfoAPI(data.referenceStock)) || {};
+
+          stockSymbol = searchSymbol || "";
+        } //
+        else {
+          stockSymbol = symbol;
+        }
+
+        if (stockSymbol) {
+          const data = await getOneSymbolDataAPI(stockSymbol);
 
           if (data) {
             const stockData: RefStockData = {
-              symbol,
+              symbol: stockSymbol,
               last: data.ultimo,
               min: data.minimo,
               max: data.maximo,
@@ -242,6 +254,8 @@ const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
       formattedMedium,
     };
   }, [refStockData]);
+
+  console.log(refStockData);
 
   if (!refStockData || !formattedRefStockData) {
     return <div></div>;

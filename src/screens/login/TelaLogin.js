@@ -33,17 +33,6 @@ const TelaLogin = ({ path, keycloakLogin }) => {
         } else {
           console.log("Authenticated");
         }
-
-        await new Promise((resolve, reject) => {
-          keycloak
-            .loadUserInfo()
-            .success(() => {
-              resolve(true);
-            })
-            .error(() => {
-              reject(false);
-            });
-        });
       })
       .error(() => {
         console.log("Authenticated Failed");
@@ -54,7 +43,7 @@ const TelaLogin = ({ path, keycloakLogin }) => {
     (e) => {
       e.preventDefault();
 
-      if (keycloakLogin) {
+      if (keycloakLogin || location.hostname === "localhost") {
         keycloakAuth();
       } //
       else {

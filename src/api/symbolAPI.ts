@@ -4,6 +4,8 @@ import { url_stockInfo_symbol } from "./url";
 
 interface SymbolInfo extends SymbolToolTipInfo {
   referenceStock?: number;
+  isOption: boolean;
+  symbol: string;
 }
 
 export const getSymbolInfoAPI = async (
