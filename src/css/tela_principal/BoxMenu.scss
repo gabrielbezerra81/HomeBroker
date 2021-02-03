@@ -12,6 +12,7 @@
   margin-left: 4px;
   position: fixed;
   z-index: 999;
+  pointer-events: none;
 
   div:first-child {
     width: 28px;
@@ -23,6 +24,7 @@
     align-items: center;
     justify-content: space-between;
     border-radius: 1px;
+    pointer-events: all;
 
     span {
       color: #fafafa;
@@ -34,6 +36,7 @@
     }
   }
 
+  // Hover menu
   div:last-child {
     background-color: #282828;
     width: 168px;

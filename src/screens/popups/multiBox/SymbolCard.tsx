@@ -1,5 +1,5 @@
 import { getSymbolInfoAPI } from "api/symbolAPI";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { FiX } from "react-icons/fi";
 import CustomTooltip from "shared/componentes/CustomTooltip";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
@@ -17,7 +17,12 @@ const SymbolCard: React.FC<Props> = ({
   showQttyPlus = false,
 }) => {
   const [showTooltip, setShowTooltip] = useState(false);
+  const [tooltipPlacement, setTooltipPlacement] = useState<"top" | "bottom">(
+    "bottom",
+  );
   const [symbolInfo, setSymbolInfo] = useState<SymbolToolTipInfo | null>(null);
+
+  const tooltipId = useMemo(() => Math.random(), []);
 
   const handleCloseTooltip = useCallback((e) => {
     e.stopPropagation();
@@ -30,11 +35,30 @@ const SymbolCard: React.FC<Props> = ({
   }, []);
 
   const handleSearchSymbolInfo = useCallback(async () => {
+    if (showTooltip) {
+      setShowTooltip(false);
+
+      return;
+    }
+
+    const element = document.getElementById("symbolCard" + tooltipId);
+
+    if (element) {
+      const { top } = element.getBoundingClientRect();
+
+      if (top >= 154) {
+        setTooltipPlacement("top");
+      } //
+      else {
+        setTooltipPlacement("bottom");
+      }
+    }
+
     const data = await getSymbolInfoAPI(code);
 
     setShowTooltip(true);
     setSymbolInfo(data);
-  }, [code]);
+  }, [code, showTooltip, tooltipId]);
 
   const textColorClass = useMemo(() => {
     if (offerType === "C") {
@@ -130,15 +154,32 @@ const SymbolCard: React.FC<Props> = ({
     );
   }, [handleCloseTooltip, symbolInfo]);
 
+  useEffect(() => {
+    function getTooltipPlacement() {
+      const element = document.getElementById("symbolCard" + tooltipId);
+
+      if (element) {
+        const { top } = element.getBoundingClientRect();
+
+        if (top >= 154) {
+          setTooltipPlacement("top");
+        }
+      }
+    }
+
+    getTooltipPlacement();
+  }, [tooltipId]);
+
   return (
     <CustomTooltip
-      id={Math.random()}
+      id={tooltipId}
       show={showTooltip}
-      placement="top"
+      placement={tooltipPlacement}
       content={TooltipContent}
       tooltipClassName="boxTopSymbolTooltip"
     >
       <button
+        id={`symbolCard${tooltipId}`}
         onClick={handleSearchSymbolInfo}
         className="brokerCustomButton symbolCardContainer"
       >
