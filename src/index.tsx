@@ -16,6 +16,7 @@ import {
   storeAppPrincipal,
   persistor,
 } from "redux/StoreCreation";
+import PermissionProvider from "context/PermissionContext";
 
 setAutoFreeze(false);
 
@@ -24,7 +25,9 @@ ReactDOM.render(
     <Provider store={storeAppPrincipal} context={StorePrincipalContext}>
       <PersistGate loading={null} persistor={persistor}>
         <PerfectScrollbar id="scrollbarPrincipal">
-          <Routes />
+          <PermissionProvider>
+            <Routes />
+          </PermissionProvider>
         </PerfectScrollbar>
       </PersistGate>
     </Provider>
