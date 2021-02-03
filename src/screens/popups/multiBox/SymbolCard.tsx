@@ -68,7 +68,7 @@ const SymbolCard: React.FC<Props> = ({
   }, [offerType]);
 
   const formattedQtty = useMemo(() => {
-    let formattedQtty = offerType === "C" ? `${qtty}` : `-${qtty}`;
+    let formattedQtty = offerType === "C" ? `${qtty}` : `${qtty}`;
 
     if (showQttyPlus && qtty > 0) {
       formattedQtty = formattedQtty.padStart(2, "+");

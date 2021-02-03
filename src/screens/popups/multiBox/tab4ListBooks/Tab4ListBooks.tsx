@@ -190,7 +190,7 @@ const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
 
   const formattedTab4Data = useMemo(() => {
     return tab4Data.map((item) => {
-      let formattedQtty = item.offerType === "C" ? "+" : "-";
+      let formattedQtty = item.offerType === "C" ? "+" : "";
       formattedQtty += `${item.qtty}`;
 
       const formattedLast = item.last ? formatarNumDecimal(item.last) : "";
@@ -234,9 +234,6 @@ const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
 
     if (oscilation > 0) {
       formattedOscilation += "+";
-    } //
-    else if (oscilation < 0) {
-      formattedOscilation += "-";
     }
 
     formattedOscilation += formatarNumDecimal(oscilation || 0) + "%";
@@ -255,8 +252,6 @@ const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
       formattedMedium,
     };
   }, [refStockData]);
-
-  console.log(refStockData);
 
   if (!refStockData || !formattedRefStockData) {
     return <div></div>;
@@ -316,7 +311,9 @@ const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
         <tbody>
           {formattedTab4Data.map((item, index) => (
             <tr key={index}>
-              <td className="buyColor">{item.formattedQtty}</td>
+              <td className={item.offerType === "C" ? "buyColor" : "sellColor"}>
+                {item.formattedQtty}
+              </td>
               <td className="strikeColumn">
                 <SymbolCard data={item} />
               </td>
