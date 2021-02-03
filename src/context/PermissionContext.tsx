@@ -24,7 +24,9 @@ interface PermissionContextData {
   permissions: Permission;
 }
 
-export const PermissionContext = React.createContext({} as PermissionContextData);
+export const PermissionContext = React.createContext(
+  {} as PermissionContextData,
+);
 
 const PermissionProvider: React.FC = ({ children }) => {
   const {
@@ -52,7 +54,7 @@ const PermissionProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     setPermissions((oldPermissions) => {
-      return changePermissionsByRole(oldPermissions, ["Student"]);
+      return changePermissionsByRole(oldPermissions, roles);
     });
   }, [roles]);
 
@@ -118,7 +120,12 @@ const changePermissionsByRole = (
       ordersExecuting: false,
     };
   } //
+  else if (roles.includes("Trader")) {
+    changePayload.book = false;
+    changePayload.history = false;
+  } //
   else if (roles.includes("Admin")) {
+    // Não faz nada, retorna apenas todas as permissões
   }
 
   Object.assign(permissions, changePayload);
