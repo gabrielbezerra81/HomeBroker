@@ -37,7 +37,19 @@ const LoginRedirect: React.FC<RouteComponentProps> = ({ path }) => {
             }
 
             if (keycloak.token && keycloak.tokenParsed) {
-              const roles = keycloak.tokenParsed.realm_access?.roles || [];
+              let roles: string[] = [];
+
+              if (
+                keycloak.resourceAccess &&
+                keycloak.resourceAccess["homebroker-react"]
+              ) {
+                roles = keycloak.resourceAccess["homebroker-react"].roles;
+              }
+
+              localStorage.setItem(
+                "tokenParsed",
+                JSON.stringify(keycloak.tokenParsed),
+              );
 
               const data = {
                 access_token: keycloak.token || "",
