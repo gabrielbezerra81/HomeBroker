@@ -27,13 +27,26 @@ const TelaLogin = ({ path, keycloakLogin }) => {
   const keycloakAuth = useCallback(() => {
     keycloak
       .init({ onLoad: "login-required", redirectUri: redirectURL })
-      .success((auth) => {
+      .success(async (auth) => {
         if (!auth) {
           window.location.reload();
         } else {
           console.log("Authenticated");
         }
 
+        await new Promise((resolve, reject) => {
+          keycloak
+            .loadUserInfo()
+            .success(() => {
+              resolve(true);
+            })
+            .error(() => {
+              reject(false);
+            });
+        });
+
+        console.log(keycloak.userInfo);
+        console.log(keycloak.tokenParsed);
         console.log(keycloak.token ? "token" : "undefined");
       })
       .error(() => {

@@ -1,0 +1,154 @@
+.multiBoxTab3 {
+  padding: 0 4px;
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: -1px 0 8px 0;
+    padding: 4px 8px;
+
+    .brokerCustomButton {
+      padding: 0;
+    }
+
+    > div {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .quote {
+        color: #bfdce8;
+      }
+
+      .oscilation {
+        &.positiveText {
+          color: #4ec54b;
+        }
+
+        &.negativeText {
+          color: rgb(221, 54, 37);
+        }
+      }
+
+      &:first-child {
+        flex: 1;
+        margin-right: 48px;
+      }
+
+      &:last-child {
+        width: 80px;
+      }
+    }
+
+    h4 {
+      color: #ccae44;
+      margin-bottom: 0;
+    }
+
+    img {
+      height: 20px;
+    }
+
+    .openInNewIcon {
+      height: 14px;
+    }
+  }
+
+  .tab3InputRangeContainer {
+    padding: 0 24px;
+
+    > div {
+      display: flex;
+      justify-content: space-between;
+
+      span {
+        line-height: 14px;
+      }
+    }
+  }
+
+  .tab3InputRange {
+    background-color: transparent !important;
+    height: 11px;
+  }
+
+  .tab3InputRange::-webkit-slider-runnable-track {
+    background-color: #444 !important;
+    height: 8px;
+  }
+
+  .tab3InputRange::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    background: #ffff00 !important;
+    box-shadow: 0 0 1px 2px #eaad15 !important;
+    height: 12px !important;
+    width: 12px !important;
+    margin-top: -2px !important;
+  }
+
+  .titleContainer {
+    position: relative;
+    width: 100%;
+    height: 16px;
+    border-bottom: 1px solid #808080;
+    margin: 8px 0;
+
+    h6 {
+      color: #ccae44;
+      font-weight: 400;
+      font-size: 14px;
+      position: absolute;
+      text-align: center;
+      background-color: #000;
+      bottom: -7px;
+      padding: 0 8px;
+
+      display: inline-block;
+      margin: 0 auto;
+      width: 116px;
+      left: calc(50% - 116px);
+      right: calc(50% - 116px);
+    }
+  }
+
+  .createAlertContainer {
+    padding: 0 40px;
+
+    .formGroupRow {
+      display: flex;
+
+      .form-group {
+        flex: 1;
+
+        &:first-child {
+          margin-right: 16px;
+        }
+      }
+    }
+
+    .form-label {
+      color: #ccae44;
+      font-size: 14px;
+    }
+
+    .darkSimpleInput,
+    .darkInputSelect {
+      border-radius: 4px;
+    }
+
+    .darkCustomInput {
+      input {
+        border-radius: 4px;
+      }
+    }
+
+    .brokerCustomButton {
+      background: #2e5d8c;
+      border-radius: 5px;
+      margin-left: auto;
+      display: block;
+      margin-top: 8px;
+    }
+  }
+}
