@@ -73,9 +73,9 @@ export const calcularTotal = (props) => {
   let total = 0;
   let aba = props.multileg[props.indice];
 
-  const price = aba.preco
-    ? Number(aba.preco.split(".").join("").replace(",", "."))
-    : 0;
+  // const price = aba.preco
+  //   ? Number(aba.preco.split(".").join("").replace(",", "."))
+  //   : 0;
 
   aba.tabelaMultileg.forEach((oferta) => {
     const cotacao = findMultilegQuote({

@@ -114,10 +114,6 @@ export const BookHeader: React.FC<any> = ({ headerClass, resetPosition }) => {
 
   const stateGlobalStore = useStateGlobalStore();
 
-  const {
-    systemReducer: { token },
-  } = useStateStorePrincipal();
-
   const formShow = stateGlobalStore.show;
   const { appkey } = appProps;
 
@@ -182,7 +178,6 @@ export const ModalHeaderSemBook: React.FC<any> = React.memo(
   ({ headerTitle, headerClass, name }) => {
     const dispatchStorePrincipal = useDispatchStorePrincipal();
     const nomeVariavelReducer = getNomeVariavelReducer(headerTitle);
-    const abrirMenuProps = GetAbrirMenuProps();
 
     return (
       <div className={`${headerClass} handle mheader`}>
@@ -198,10 +193,7 @@ export const ModalHeaderSemBook: React.FC<any> = React.memo(
             className="iconesHeader"
             onClick={() =>
               dispatchStorePrincipal(
-                abrirItemBarraLateralAction(
-                  abrirMenuProps,
-                  nomeVariavelReducer,
-                ),
+                abrirItemBarraLateralAction(nomeVariavelReducer),
               )
             }
           >
@@ -283,49 +275,6 @@ const getNomeVariavelReducer = (headerTitle: string) => {
     default:
       return "";
   }
-};
-
-const GetAbrirMenuProps = () => {
-  const {
-    systemReducer: {
-      isOpenOrdersExec,
-      isOpenDetailedReport,
-      isOpenPosition,
-      isOpenMultileg,
-      isOpenTHL,
-    },
-    multilegReducer: { esource_multilegQuotes, interval_multilegQuotes },
-    thlReducer: { esource_thlStructures, interval_thlStructures },
-  } = useStateStorePrincipal();
-
-  const props = {
-    isOpenOrdersExec,
-    isOpenDetailedReport,
-    isOpenPosition,
-    isOpenMultileg,
-    isOpenTHL,
-    eventSourceCotacao_Multileg: esource_multilegQuotes,
-    setIntervalCotacoes_Multileg: interval_multilegQuotes,
-    // esource_emblem_Posicao: esource_emblem,
-    // interval_emblem_Posicao: interval_emblem,
-    // esource_position_Posicao: esource_position,
-    // esource_positionQuote_Posicao: esource_positionQuote,
-    // setIntervalCotacoes_Posicao: interval_positionQuote,
-    // esource_ordersExec_OrdensExec: esource_ordersExec,
-    esource_thlStructures_THL: esource_thlStructures,
-    setIntervalPrecos_THL: interval_thlStructures,
-  };
-
-  return props;
-
-  // const {
-  //   esource_emblem,
-  //   esource_position,
-  //   esource_positionQuote,
-  //   interval_positionQuote,
-  //   interval_emblem,
-  // } = state.positionReducer;
-  // const { esource_ordersExec } = state.ordersExecReducer;
 };
 
 const BotaoAbrirFiltrarOrdens: React.FC<any> = ({ headerTitle }) => {

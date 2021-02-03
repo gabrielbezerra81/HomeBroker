@@ -225,13 +225,8 @@ const InitialPlanner: React.FC = () => {
   ]);
 
   const onClose = useCallback(() => {
-    dispatch(
-      abrirItemBarraLateralAction(
-        { isOpenInitialPlanner },
-        "isOpenInitialPlanner",
-      ),
-    );
-  }, [dispatch, isOpenInitialPlanner]);
+    dispatch(abrirItemBarraLateralAction("isOpenInitialPlanner"));
+  }, [dispatch]);
 
   const handleInputChange = useCallback(
     (value: any, event: any) => {

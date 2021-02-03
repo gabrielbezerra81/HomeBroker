@@ -95,10 +95,8 @@ const CategoryList: React.FC = () => {
   );
 
   const onClose = useCallback(() => {
-    dispatch(
-      abrirItemBarraLateralAction({ isOpenCategoryList }, "isOpenCategoryList"),
-    );
-  }, [dispatch, isOpenCategoryList]);
+    dispatch(abrirItemBarraLateralAction("isOpenCategoryList"));
+  }, [dispatch]);
 
   const formattedCategoryList = useMemo(() => {
     return categoryList.map((category) => {

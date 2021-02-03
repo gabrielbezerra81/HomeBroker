@@ -15,7 +15,6 @@ import iconeVendaAgendada from "assets/venda/iconeVendaAgendada.png";
 import iconeVendaStartStop from "assets/venda/iconeVendaStartStop.png";
 import iconeVendaStopMovel from "assets/venda/iconeVendaStopMovel.png";
 import { Animate } from "react-show";
-import iconeMultileg from "assets/iconeMultileg.png";
 import { GlobalContext, StorePrincipalContext } from "redux/StoreCreation";
 import {
   criarMostrarAppAction,
@@ -186,11 +185,7 @@ class MenuOrdens extends Component {
                 alt="Multileg"
                 onClick={() => {
                   props.atualizarDivKeyAction("multileg");
-                  props.abrirItemBarraLateralAction(
-                    props,
-                    "isOpenMultileg",
-                    true,
-                  );
+                  props.abrirItemBarraLateralAction("isOpenMultileg", true);
 
                   props.updateOneSystemStateAction(
                     "multilegButtonsVisibility",

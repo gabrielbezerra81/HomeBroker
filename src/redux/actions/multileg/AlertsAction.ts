@@ -60,9 +60,7 @@ export const openAlertInMultileg = (
     }
 
     dispatchGlobal(atualizarDivKeyAction("multileg"));
-    dispatch(
-      abrirItemBarraLateralAction({ isOpenMultileg }, "isOpenMultileg", true),
-    );
+    dispatch(abrirItemBarraLateralAction("isOpenMultileg", true));
 
     // Adicionar aba
     let result = addMultilegTab(clonedMultilegTabs);

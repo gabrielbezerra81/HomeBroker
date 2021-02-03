@@ -52,7 +52,7 @@ export const abrirMultilegTHLAction = (props) => {
 
     if (!isOpenMultileg) {
       clonedMultilegTabs.pop();
-      dispatch(abrirItemBarraLateralAction(props, "isOpenMultileg"));
+      dispatch(abrirItemBarraLateralAction("isOpenMultileg"));
     } else {
       //Traz para primeiro plano se já estiver aberto
       document.getElementById("multileg").style.zIndex = zIndex + 1;

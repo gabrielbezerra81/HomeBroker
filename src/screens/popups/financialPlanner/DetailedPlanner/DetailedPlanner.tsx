@@ -17,13 +17,8 @@ const DetailedPlanner: React.FC = () => {
   const dispatch = useDispatchStorePrincipal();
 
   const onClose = useCallback(() => {
-    dispatch(
-      abrirItemBarraLateralAction(
-        { isOpenDetailedPlanner },
-        "isOpenDetailedPlanner",
-      ),
-    );
-  }, [dispatch, isOpenDetailedPlanner]);
+    dispatch(abrirItemBarraLateralAction("isOpenDetailedPlanner"));
+  }, [dispatch]);
 
   return (
     <DraggablePopup
@@ -42,7 +37,7 @@ const DetailedPlanner: React.FC = () => {
             <PlannerProjection />
             <ResultPerformance />
           </div>
-          
+
           <WalletEvolution />
         </div>
       </div>

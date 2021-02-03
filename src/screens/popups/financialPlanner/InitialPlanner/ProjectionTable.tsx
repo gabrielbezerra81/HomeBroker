@@ -29,11 +29,6 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
     initialValue,
   } = initialPlanner;
 
-  const formattedContribution = useMemo(
-    () => formatarNumDecimal(contribution, 2),
-    [contribution],
-  );
-
   const handleInputChange = useCallback(
     (value: any, event: any) => {
       const { name } = event.target;

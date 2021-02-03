@@ -6,7 +6,6 @@ import React, {
   useState,
 } from "react";
 import { FiChevronDown } from "react-icons/fi";
-import { TiPlusOutline } from "react-icons/ti";
 import PerfectScroll from "react-perfect-scrollbar";
 
 import borderedPlusIcon from "assets/borderedPlus.png";
@@ -27,7 +26,6 @@ const Alert: React.FC = () => {
   const dispatchGlobal = useDispatchGlobalStore();
   const dispatch = useDispatchStorePrincipal();
   const {
-    systemReducer: { isOpenMultileg },
     multilegReducer: { alerts },
   } = useStateStorePrincipal();
 
@@ -47,10 +45,8 @@ const Alert: React.FC = () => {
     );
 
     dispatchGlobal(atualizarDivKeyAction("multileg"));
-    dispatch(
-      abrirItemBarraLateralAction({ isOpenMultileg }, "isOpenMultileg", true),
-    );
-  }, [dispatch, dispatchGlobal, isOpenMultileg]);
+    dispatch(abrirItemBarraLateralAction("isOpenMultileg", true));
+  }, [dispatch, dispatchGlobal]);
 
   const handleDisplayArrowChange = useCallback((container: HTMLElement) => {
     const { scrollTop, scrollHeight, clientHeight } = container;

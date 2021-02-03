@@ -2,11 +2,10 @@ import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import usePrevious from "hooks/usePrevious";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import React, { useEffect } from "react";
-import { startProactiveMultiBoxUpdateAction, startReactiveMultiBoxUpdateAction } from "redux/actions/multiBox/multiBoxActions";
 import {
-  startReactiveBoxUpdateAction,
-  startProactiveBoxUpdateAction,
-} from "redux/actions/system/boxesActions";
+  startProactiveMultiBoxUpdateAction,
+  startReactiveMultiBoxUpdateAction,
+} from "redux/actions/multiBox/multiBoxActions";
 
 import checkIfUpdateConfigChanged from "./utils";
 
@@ -41,11 +40,11 @@ const BoxUpdateManager: React.FC = () => {
     function startUpdate() {
       if (updateMode === "reactive") {
         // dispatch(startReactiveBoxUpdateAction());
-        dispatch(startReactiveMultiBoxUpdateAction())
+        dispatch(startReactiveMultiBoxUpdateAction());
       } //
       else if (updateMode === "proactive") {
         // dispatch(startProactiveBoxUpdateAction());
-        dispatch(startProactiveMultiBoxUpdateAction())
+        dispatch(startProactiveMultiBoxUpdateAction());
       }
     }
 

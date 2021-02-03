@@ -131,15 +131,14 @@ export const deslogarUsuarioAction = () => {
 };
 
 export const abrirItemBarraLateralAction = (
-  props,
   nameVariavelReducer,
   forceVisibility = null,
 ) => {
-  const isVisible = props[nameVariavelReducer];
-  let updatedVisibility = !isVisible;
-
   return (dispatch, getState) => {
-    const { selectedTab, openedMenus } = getState().systemReducer;
+    const { selectedTab, openedMenus, ...props } = getState().systemReducer;
+
+    const isVisible = props[nameVariavelReducer];
+    let updatedVisibility = !isVisible;
 
     // Se estiver tentar abrir um popup fora da aba principal e ele já estiver aberto,
     // impede que ele seja fechado e redireciona para a aba principal

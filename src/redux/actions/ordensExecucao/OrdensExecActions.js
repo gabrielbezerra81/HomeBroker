@@ -89,7 +89,7 @@ export const openOrderInMultilegAction = (props, action = "") => {
     //Se o multileg não estiver aberto, remove a primeira aba e abre o mesmo
     if (!isOpenMultileg) {
       clonedMultilegTabs.pop();
-      dispatch(abrirItemBarraLateralAction(props, "isOpenMultileg"));
+      dispatch(abrirItemBarraLateralAction("isOpenMultileg"));
     } else {
       //Traz para primeiro plano se já estiver aberto
       document.getElementById("multileg").style.zIndex = props.zIndex + 1;

@@ -1,6 +1,5 @@
 import produce from "immer";
 import { MainThunkAction } from "types/ThunkActions";
-import { BoxVisibility } from "types/system/system";
 import {
   updateManySystemState,
   updateOneSystemStateAction,

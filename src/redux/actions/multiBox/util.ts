@@ -53,9 +53,7 @@ export const exportBoxToMultileg = async ({
       clonedMultilegTabs.pop();
 
       if (shouldOpenMultileg) {
-        dispatch(
-          abrirItemBarraLateralAction({ isOpenMultileg }, "isOpenMultileg"),
-        );
+        dispatch(abrirItemBarraLateralAction("isOpenMultileg"));
       }
     } else if (shouldOpenMultileg) {
       //Traz para primeiro plano se já estiver aberto
