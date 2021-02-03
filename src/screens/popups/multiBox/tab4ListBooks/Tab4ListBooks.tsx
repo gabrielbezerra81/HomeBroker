@@ -28,6 +28,7 @@ import {
   formatarQuantidadeKMG,
 } from "shared/utils/Formatacoes";
 import { updateBoxAttrAction } from "redux/actions/multiBox/multiBoxActions";
+import { handleExportBoxToMultilegAction } from "redux/actions/multiBox/tab5Actions";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -56,21 +57,21 @@ const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
 
   const { zIndex } = useStateGlobalStore();
 
-  const { strikeViewMode } = multiBox;
+  const { strikeViewMode, id } = multiBox;
 
   const handleSearch = useCallback(() => {}, []);
 
   const handleOpenInMultileg = useCallback(() => {
-    // dispatch(
-    //   handleExportBoxToMultilegAction({
-    //     boxId: multiBox.id,
-    //     globalProps: {
-    //       dispatchGlobal,
-    //       zIndex,
-    //     },
-    //   }),
-    // );
-  }, []);
+    dispatch(
+      handleExportBoxToMultilegAction({
+        boxId: id,
+        globalProps: {
+          dispatchGlobal,
+          zIndex,
+        },
+      }),
+    );
+  }, [dispatch, dispatchGlobal, id, zIndex]);
 
   const handleConfig = useCallback(() => {}, []);
 
