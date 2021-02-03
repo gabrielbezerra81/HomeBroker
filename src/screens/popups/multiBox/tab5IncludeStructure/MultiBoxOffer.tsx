@@ -104,20 +104,6 @@ const MultiBoxOffer: React.FC<Props> = ({
     [boxId, dispatch, offerIndex],
   );
 
-  const qttyInputConfig = useMemo(() => {
-    const config = {
-      step: 100,
-      type: "quantidade",
-    };
-
-    // if (multileg[tabIndex].market === "Forex") {
-    //   config.step = 0.01;
-    //   config.type = "preco";
-    // }
-
-    return config;
-  }, []);
-
   const codeOptions = useMemo(() => {
     const dropdownOptions = stockOptions.map((option, index) => {
       if (index % 2 !== 0) {
@@ -207,8 +193,8 @@ const MultiBoxOffer: React.FC<Props> = ({
       </td>
       <td>
         <CustomInput
-          type={qttyInputConfig.type as any}
-          step={qttyInputConfig.step}
+          type={"quantidade"}
+          step={1}
           autoSelect
           value={qtty}
           onChange={handleQttyChange}
@@ -350,3 +336,21 @@ const Model: React.FC<ModelProps> = ({ model }) => {
   }, [stockOptions]);
 
  */
+
+/*
+
+  const qttyInputConfig = useMemo(() => {
+    const config = {
+      step: 100,
+      type: "quantidade",
+    };
+
+    // if (multileg[tabIndex].market === "Forex") {
+    //   config.step = 0.01;
+    //   config.type = "preco";
+    // }
+
+    return config;
+  }, []);
+
+*/
