@@ -11,10 +11,13 @@ import BoxDateSelector from "./BoxDateSelector";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import {
   handleDeleteBoxAction,
+  handleExportBoxToMultilegAction,
   updateBoxAttrAction,
 } from "redux/actions/multiBox/multiBoxActions";
 
 import closeIcon from "assets/multiBox/closeIcon.png";
+import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
+import useStateGlobalStore from "hooks/useStateGlobalStore";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -23,21 +26,25 @@ interface Props {
 const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
   const dispatch = useDispatchStorePrincipal();
 
+  const dispatchGlobal = useDispatchGlobalStore();
+
+  const { zIndex } = useStateGlobalStore();
+
   const { price, consideredPrice, condition, observation, id } = multiBox;
 
   const handleSearch = useCallback(() => {}, []);
 
   const handleOpenInMultileg = useCallback(() => {
-    // dispatch(
-    //   handleExportBoxToMultilegAction({
-    //     boxId: multiBox.id,
-    //     globalProps: {
-    //       dispatchGlobal,
-    //       zIndex,
-    //     },
-    //   }),
-    // );
-  }, []);
+    dispatch(
+      handleExportBoxToMultilegAction({
+        boxId: id,
+        globalProps: {
+          dispatchGlobal,
+          zIndex,
+        },
+      }),
+    );
+  }, [dispatch, dispatchGlobal, id, zIndex]);
 
   const handleConfig = useCallback(() => {}, []);
 
