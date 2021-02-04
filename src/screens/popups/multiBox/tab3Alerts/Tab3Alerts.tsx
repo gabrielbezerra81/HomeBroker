@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from "react";
 
-import { Form } from "react-bootstrap";
+import { Form, Spinner } from "react-bootstrap";
 
 import { MultiBoxData } from "types/multiBox/MultiBoxState";
 import cogIcon from "assets/multiBox/cogIcon.png";
@@ -18,6 +18,7 @@ import {
 import closeIcon from "assets/multiBox/closeIcon.png";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 import useStateGlobalStore from "hooks/useStateGlobalStore";
+import { createAlertFromBoxAction } from "redux/actions/multiBox/tab3Actions";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -30,7 +31,14 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
 
   const { zIndex } = useStateGlobalStore();
 
-  const { price, consideredPrice, condition, observation, id } = multiBox;
+  const {
+    price,
+    consideredPrice,
+    condition,
+    observation,
+    id,
+    loadingAPI,
+  } = multiBox;
 
   const handleSearch = useCallback(() => {}, []);
 
@@ -77,6 +85,16 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
     },
     [dispatch, id],
   );
+
+  const handleCreateAlert = useCallback(() => {
+    dispatch(
+      createAlertFromBoxAction({
+        multiBox,
+        dispatchGlobal,
+        zIndex,
+      }),
+    );
+  }, [dispatch, dispatchGlobal, multiBox, zIndex]);
 
   const oscilation = 2;
 
@@ -207,7 +225,13 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
           />
         </Form.Group>
 
-        <button className="brokerCustomButton">Cadastrar Alerta</button>
+        <button className="brokerCustomButton createAlert" onClick={handleCreateAlert}>
+          {loadingAPI ? (
+            <Spinner as="span" animation="border" size="sm" variant="light" />
+          ) : (
+            "Cadastrar Alerta"
+          )}
+        </button>
       </div>
     </div>
   );

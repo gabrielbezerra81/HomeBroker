@@ -163,12 +163,23 @@
       }
     }
 
-    .brokerCustomButton {
+    .createAlert {
       background: #2e5d8c;
       border-radius: 5px;
       margin-left: auto;
       display: block;
       margin-top: 8px;
+      width: 118px;
+      height: 22px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .spinner-border {
+        height: 14px;
+        width: 14px;
+      }
     }
   }
 }
