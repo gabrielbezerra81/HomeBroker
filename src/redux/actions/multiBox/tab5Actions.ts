@@ -345,9 +345,8 @@ export const handleConcludeTab5Action = (
       });
 
       dispatch(
-        updateBoxAttrAction(multiBox.id, { topSymbols, activeTab: "1" }),
+        addNewMultiBoxStructureAction({ ...data, multiBox, topSymbols }),
       );
-      dispatch(addNewMultiBoxStructureAction({ ...data, multiBox }));
     }
   };
 };
@@ -356,12 +355,14 @@ interface addNewBoxStructureAction {
   dispatchGlobal: any;
   zIndex: number;
   multiBox: MultiBoxData;
+  topSymbols: TopSymbol[];
 }
 
 export const addNewMultiBoxStructureAction = ({
   dispatchGlobal,
   zIndex,
   multiBox,
+  topSymbols,
 }: addNewBoxStructureAction): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
@@ -369,6 +370,12 @@ export const addNewMultiBoxStructureAction = ({
     } = getState();
 
     const boxId = multiBox.id;
+
+    dispatch(
+      updateBoxAttrAction(multiBox.id, {
+        loadingAPI: true,
+      }),
+    );
 
     // Obtem os dados no formato do multileg, porém não dispara a abertura da multileg
     const data = await exportBoxToMultileg({
@@ -405,11 +412,26 @@ export const addNewMultiBoxStructureAction = ({
         if (responseData) {
           const boxStructure = responseData[0];
 
-          dispatch(updateBoxAttrAction(boxId, { tab1Id: boxStructure.id }));
+          dispatch(
+            updateBoxAttrAction(boxId, {
+              tab1Id: boxStructure.id,
+              activeTab: "1",
+              topSymbols,
+              loadingAPI: false,
+            }),
+          );
 
           dispatch(updateStructuresAndLoadBoxesAction(responseData, false));
         }
       }
+    }
+
+    if (!data) {
+      dispatch(
+        updateBoxAttrAction(multiBox.id, {
+          loadingAPI: false,
+        }),
+      );
     }
 
     setPointerWhileAwaiting({ lockMode: "destravar", id: "boxId" });

@@ -12,6 +12,7 @@ import Tab5IncludeStructure from "./tab5IncludeStructure/Tab5IncludeStructure";
 
 import SymbolCard from "./SymbolCard";
 import Tab3Alerts from "./tab3Alerts/Tab3Alerts";
+import Tab2Position from "./tab2Position/Tab2Position";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -154,7 +155,7 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
         {/*minimizedClass  */}
         <div className={`mcontent boxContent ${activeTabClass}`}>
           <Tab1ViewStockBook multiBox={multiBox} />
-          <div></div>
+          <Tab2Position multiBox={multiBox} />
           <Tab3Alerts multiBox={multiBox} />
           <Tab4ListBooks multiBox={multiBox} />
           <Tab5IncludeStructure multiBox={multiBox} />

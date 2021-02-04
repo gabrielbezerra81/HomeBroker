@@ -1,4 +1,5 @@
 @import "./tab1.scss";
+@import "./tab2.scss";
 @import "./tab3.scss";
 @import "./tab4.scss";
 @import "./tab5.scss";
@@ -134,6 +135,10 @@
 
     &.activeTab1 > div:nth-child(1) {
       @include activeTab(227px, showTab1);
+    }
+
+    &.activeTab2 > div:nth-child(2) {
+      @include activeTab(unset, showTab);
     }
 
     &.activeTab3 > div:nth-child(3) {

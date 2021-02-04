@@ -1,0 +1,148 @@
+.multiBoxTab2 {
+  padding: 0 4px;
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: -1px 0 8px 0;
+    padding: 4px 8px;
+
+    .brokerCustomButton {
+      padding: 0;
+    }
+
+    > div {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .quote {
+        color: #bfdce8;
+      }
+
+      .oscilation {
+        &.positiveText {
+          color: #4ec54b;
+        }
+
+        &.negativeText {
+          color: rgb(221, 54, 37);
+        }
+      }
+
+      &:first-child {
+        flex: 1;
+        margin-right: 48px;
+      }
+
+      &:last-child {
+        width: 110px;
+      }
+    }
+
+    h4 {
+      color: #ccae44;
+      margin-bottom: 0;
+    }
+
+    img {
+      height: 20px;
+    }
+
+    .openInNewIcon {
+      height: 14px;
+    }
+  }
+
+  .titleContainer {
+    position: relative;
+    width: 100%;
+    height: 16px;
+    border-bottom: 1px solid #808080;
+    margin: 8px 0;
+
+    h6 {
+      color: #ccae44;
+      font-weight: 400;
+      font-size: 14px;
+      position: absolute;
+      text-align: center;
+      background-color: #000;
+      bottom: -7px;
+      padding: 0 8px;
+
+      display: inline-block;
+      margin: 0 auto;
+      width: 63px;
+      left: calc(50% - 63px);
+      right: calc(50% - 63px);
+    }
+  }
+
+  table {
+    text-align: center;
+    margin-top: 18px;
+    background-color: transparent !important;
+    border-collapse: separate;
+    border-spacing: 0 6px;
+
+    th {
+      font-weight: 400;
+      color: #bfa340;
+      background-color: #282828;
+    }
+
+    tr:nth-child(odd) td {
+      background-color: transparent !important;
+    }
+
+    td {
+      height: 0;
+
+      &.avgPriceColumn,
+      &.qttyColumn {
+        > div {
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
+
+    .containerInput {
+      max-width: 80px;
+
+      input {
+        background-color: #333;
+        border-color: #333;
+        color: var(--color-text-primary) !important;
+        box-sizing: content-box;
+      }
+    }
+
+    // tbody {
+    //   tr {
+    //     border-top: 5px solid transparent;
+
+    //     &:first-child {
+    //       border-top-width: 12px;
+    //     }
+    //   }
+    // }
+  }
+
+  .saveButton {
+    background: #2e5d8c;
+    border-radius: 6px;
+    height: 28px;
+    margin-left: auto;
+    margin-right: 4px;
+    width: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
