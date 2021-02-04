@@ -13,6 +13,7 @@ import MultiBoxState, {
 import { MainThunkAction } from "types/ThunkActions";
 
 import { v4 } from "uuid";
+import { deleteQuoteBoxAPI } from "api/API";
 
 export const addMultiBoxAction = (): MainThunkAction => {
   return (dispatch, getState) => {
@@ -354,5 +355,48 @@ export const startProactiveMultiBoxUpdateAction = (): MainThunkAction => {
         }),
       );
     }
+  };
+};
+
+export const handleDeleteBoxAction = (boxId: string): MainThunkAction => {
+  return async (dispatch, getState) => {
+    const {
+      multiBoxReducer: { boxesTab1Data, boxes },
+    } = getState();
+
+    const structureData = boxesTab1Data.find((data) => data.boxId === boxId);
+
+    if (!structureData) {
+      return;
+    }
+
+    try {
+      const shouldDelete = await deleteQuoteBoxAPI(structureData.id);
+
+      if (shouldDelete) {
+        const updatedMultiBoxes = produce(boxes, (draft) => {
+          const index = draft.findIndex(
+            (box) => box.tab1Id === structureData.id,
+          );
+
+          if (index >= 0) draft.splice(index, 1);
+        });
+
+        const updatedBoxesTab1Data = produce(boxesTab1Data, (draft) => {
+          const index = draft.findIndex(
+            (tab1Data) => tab1Data.id === structureData.id,
+          );
+
+          if (index >= 0) draft.splice(index, 1);
+        });
+
+        dispatch(
+          updateManyMultiBoxAction({
+            boxesTab1Data: updatedBoxesTab1Data,
+            boxes: updatedMultiBoxes,
+          }),
+        );
+      }
+    } catch (error) {}
   };
 };

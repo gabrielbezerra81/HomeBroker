@@ -15,7 +15,10 @@ import pSellIcon from "assets/multiBox/pSellIcon.png";
 import zoomIcon from "assets/multiBox/zoomIcon.png";
 import MultiBoxOffer from "./MultiBoxOffer";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
-import { updateBoxAttrAction } from "redux/actions/multiBox/multiBoxActions";
+import {
+  handleDeleteBoxAction,
+  updateBoxAttrAction,
+} from "redux/actions/multiBox/multiBoxActions";
 import { formatExpiration } from "shared/utils/Formatacoes";
 import {
   getUpdatedOptionsWhenExpirationChanges,
@@ -27,6 +30,8 @@ import {
 } from "redux/actions/multiBox/tab5Actions";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 import useStateGlobalStore from "hooks/useStateGlobalStore";
+
+import closeIcon from "assets/multiBox/closeIcon.png";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -101,6 +106,10 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
   }, [dispatch, dispatchGlobal, id, zIndex]);
 
   const handleConfig = useCallback(() => {}, []);
+
+  const handleClose = useCallback(async () => {
+    dispatch(handleDeleteBoxAction(multiBox.id));
+  }, [dispatch, multiBox.id]);
 
   const handleCall = useCallback(() => {
     dispatch(handleAddOptionOfferAction(id, "CALL"));
@@ -198,6 +207,10 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
 
         <button className="brokerCustomButton" onClick={handleConfig}>
           <img src={cogIcon} alt="" />
+        </button>
+
+        <button className="brokerCustomButton" onClick={handleClose}>
+          <img src={closeIcon} alt="" />
         </button>
       </header>
 

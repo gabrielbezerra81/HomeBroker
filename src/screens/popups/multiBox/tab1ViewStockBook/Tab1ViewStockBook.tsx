@@ -17,7 +17,12 @@ import {
 import { deleteQuoteBoxAPI } from "api/API";
 import produce from "immer";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
-import { updateManyMultiBoxAction } from "redux/actions/multiBox/multiBoxActions";
+import {
+  handleDeleteBoxAction,
+  updateManyMultiBoxAction,
+} from "redux/actions/multiBox/multiBoxActions";
+
+import closeIcon from "assets/multiBox/closeIcon.png";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -37,39 +42,8 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
   const handleMinimize = useCallback(() => {}, []);
 
   const handleClose = useCallback(async () => {
-    if (!structureData) {
-      return;
-    }
-
-    try {
-      const shouldDelete = await deleteQuoteBoxAPI(structureData.id);
-
-      if (shouldDelete) {
-        const updatedMultiBoxes = produce(boxes, (draft) => {
-          const index = draft.findIndex(
-            (box) => box.tab1Id === structureData.id,
-          );
-
-          if (index >= 0) draft.splice(index, 1);
-        });
-
-        const updatedBoxesTab1Data = produce(boxesTab1Data, (draft) => {
-          const index = draft.findIndex(
-            (tab1Data) => tab1Data.id === structureData.id,
-          );
-
-          if (index >= 0) draft.splice(index, 1);
-        });
-
-        dispatch(
-          updateManyMultiBoxAction({
-            boxesTab1Data: updatedBoxesTab1Data,
-            boxes: updatedMultiBoxes,
-          }),
-        );
-      }
-    } catch (error) {}
-  }, [boxes, boxesTab1Data, structureData, dispatch]);
+    dispatch(handleDeleteBoxAction(multiBox.id));
+  }, [dispatch, multiBox.id]);
 
   const formattedData: FormattedTab1Data | undefined = useMemo(() => {
     if (!structureData) {
@@ -132,8 +106,11 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
         <span style={{ left: 12, position: "absolute" }}>
           id: {structureData?.structureID}
         </span>
-        <AiFillMinusCircle size={20} fill="#444" onClick={handleMinimize} />
-        <RiCloseCircleFill size={20} fill="#444" onClick={handleClose} />
+        {/* <AiFillMinusCircle size={20} fill="#444" onClick={handleMinimize} /> */}
+        {/* <RiCloseCircleFill size={20} fill="#444" onClick={handleClose} /> */}
+        <button className="brokerCustomButton" onClick={handleClose}>
+          <img src={closeIcon} alt="" />
+        </button>
       </header>
 
       <div className="content">

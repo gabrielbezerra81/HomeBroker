@@ -21,7 +21,7 @@ const limitY = 80;
 
 const MultiBox: React.FC<Props> = ({ multiBox }) => {
   const {
-    systemReducer: { isOpenLeftUserMenu },
+    systemReducer: { isOpenLeftUserMenu, openedMenus, selectedTab },
   } = useStateStorePrincipal();
 
   const dispatch = useDispatchStorePrincipal();
@@ -117,6 +117,16 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
     return `activeTab${activeIndex}`;
   }, [multiBox.activeTab]);
 
+  const visibilityClass = useMemo(() => {
+    const shouldShowBox = openedMenus.some(
+      (menuItem) =>
+        menuItem.menuKey === `box${multiBox.id}` &&
+        menuItem.tabKey === selectedTab,
+    );
+
+    return shouldShowBox ? {} : { display: "none" };
+  }, [openedMenus, multiBox.id, selectedTab]);
+
   return (
     <Draggable
       enableUserSelectHack={isDragging}
@@ -127,15 +137,8 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
       onDrag={onDrag}
       bounds={bounds}
     >
-      <div
-        className="multiBox"
-        style={
-          {
-            // ...visibilityClass,
-          }
-        }
-        id={multiBox.id}
-      >
+      {/* style={visibilityClass} */}
+      <div className="multiBox" id={multiBox.id}>
         <div className="topSymbolsContainer">
           <div>
             {americanTopSymbols.map((topSymbol, index) => (

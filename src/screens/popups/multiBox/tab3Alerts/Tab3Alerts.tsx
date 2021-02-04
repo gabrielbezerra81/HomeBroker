@@ -9,7 +9,12 @@ import zoomIcon from "assets/multiBox/zoomIcon.png";
 import CustomInput from "shared/componentes/CustomInput";
 import BoxDateSelector from "./BoxDateSelector";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
-import { updateBoxAttrAction } from "redux/actions/multiBox/multiBoxActions";
+import {
+  handleDeleteBoxAction,
+  updateBoxAttrAction,
+} from "redux/actions/multiBox/multiBoxActions";
+
+import closeIcon from "assets/multiBox/closeIcon.png";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -35,6 +40,10 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
   }, []);
 
   const handleConfig = useCallback(() => {}, []);
+
+  const handleClose = useCallback(async () => {
+    dispatch(handleDeleteBoxAction(multiBox.id));
+  }, [dispatch, multiBox.id]);
 
   const handleInputChange = useCallback(
     async (e) => {
@@ -97,6 +106,10 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
 
           <button className="brokerCustomButton" onClick={handleConfig}>
             <img src={cogIcon} alt="" />
+          </button>
+
+          <button className="brokerCustomButton" onClick={handleClose}>
+            <img src={closeIcon} alt="" />
           </button>
         </div>
       </header>

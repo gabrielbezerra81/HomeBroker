@@ -27,8 +27,13 @@ import {
   formatarNumDecimal,
   formatarQuantidadeKMG,
 } from "shared/utils/Formatacoes";
-import { updateBoxAttrAction } from "redux/actions/multiBox/multiBoxActions";
+import {
+  handleDeleteBoxAction,
+  updateBoxAttrAction,
+} from "redux/actions/multiBox/multiBoxActions";
 import { handleExportBoxToMultilegAction } from "redux/actions/multiBox/tab5Actions";
+
+import closeIcon from "assets/multiBox/closeIcon.png";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -74,6 +79,10 @@ const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
   }, [dispatch, dispatchGlobal, id, zIndex]);
 
   const handleConfig = useCallback(() => {}, []);
+
+  const handleClose = useCallback(async () => {
+    dispatch(handleDeleteBoxAction(multiBox.id));
+  }, [dispatch, multiBox.id]);
 
   const handleStrikeViewChange = useCallback(() => {
     const viewMode = strikeViewMode === "code" ? "strike" : "code";
@@ -278,6 +287,10 @@ const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
 
           <button className="brokerCustomButton" onClick={handleConfig}>
             <img src={cogIcon} alt="" />
+          </button>
+
+          <button className="brokerCustomButton" onClick={handleClose}>
+            <img src={closeIcon} alt="" />
           </button>
         </div>
       </header>
