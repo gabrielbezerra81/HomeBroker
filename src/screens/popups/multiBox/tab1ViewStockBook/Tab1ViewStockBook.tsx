@@ -213,17 +213,22 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
 export default Tab1ViewStockBook;
 
 const DayOscilation = ({ dayOscilation, formattedDayOscilation }: any) => {
-  if (dayOscilation >= 0)
+  if (dayOscilation > 0) {
     return (
       <>
         <ImArrowUp color="#138342" />
         <span style={{ color: "#138342" }}>+{formattedDayOscilation}%</span>
       </>
     );
-  return (
-    <>
-      <ImArrowDown color="#EC0C00" />
-      <span style={{ color: "#EC0C00" }}>{formattedDayOscilation}%</span>
-    </>
-  );
+  } //
+  else if (dayOscilation < 0) {
+    return (
+      <>
+        <ImArrowDown color="#EC0C00" />
+        <span style={{ color: "#EC0C00" }}>{formattedDayOscilation}%</span>
+      </>
+    );
+  }
+
+  return <span style={{ color: "#ddd" }}>+{formattedDayOscilation}%</span>;
 };

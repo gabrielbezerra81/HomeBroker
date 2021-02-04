@@ -19,6 +19,7 @@ import closeIcon from "assets/multiBox/closeIcon.png";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 import useStateGlobalStore from "hooks/useStateGlobalStore";
 import { createAlertFromBoxAction } from "redux/actions/multiBox/tab3Actions";
+import { formatarNumDecimal } from "shared/utils/Formatacoes";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -38,6 +39,7 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
     observation,
     id,
     loadingAPI,
+    stockSymbolData,
   } = multiBox;
 
   const handleSearch = useCallback(() => {}, []);
@@ -96,29 +98,59 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
     );
   }, [dispatch, dispatchGlobal, multiBox, zIndex]);
 
-  const oscilation = 2;
-
   const oscilationClass = useMemo(() => {
-    // if (!refStockData) {
-    //   return "";
-    // }
+    if (!stockSymbolData) {
+      return "";
+    }
 
-    if (oscilation > 0) {
+    if (stockSymbolData.oscilation > 0) {
       return "positiveText";
-    } else if (oscilation < 0) {
+    } else if (stockSymbolData.oscilation < 0) {
       return "negativeText";
     }
 
     return "";
-  }, []);
+  }, [stockSymbolData]);
+
+  const formattedRefStockData = useMemo(() => {
+    if (!stockSymbolData) {
+      return null;
+    }
+
+    const { oscilation, min, max, last } = stockSymbolData;
+
+    let formattedOscilation = "";
+
+    if (oscilation > 0) {
+      formattedOscilation += "+";
+    }
+
+    formattedOscilation += formatarNumDecimal(oscilation || 0) + "%";
+
+    const medium = (max + min) / 2;
+
+    const formattedMedium = formatarNumDecimal(medium, 3);
+
+    return {
+      ...stockSymbolData,
+      formattedLast: formatarNumDecimal(last),
+      formattedOscilation,
+      formattedMin: formatarNumDecimal(min),
+      formattedMax: formatarNumDecimal(max),
+      medium,
+      formattedMedium,
+    };
+  }, [stockSymbolData]);
 
   return (
     <div className="multiBoxTab3">
       <header>
         <div>
-          <h4>{"PETR4"}</h4>
-          <span className="quote">{"26,32"}</span>
-          <span className={`oscilation ${oscilationClass}`}>{"+2,5%"}</span>
+          <h4>{stockSymbolData?.symbol}</h4>
+          <span className="quote">{formattedRefStockData?.formattedLast}</span>
+          <span className={`oscilation ${oscilationClass}`}>
+            {formattedRefStockData?.formattedOscilation}
+          </span>
         </div>
         <div>
           <button className="brokerCustomButton" onClick={handleSearch}>
@@ -149,14 +181,14 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
           type="range"
           className={`custom-range tab3InputRange`}
           step="0.01"
-          // min={refStockData?.min}
-          // max={refStockData?.max}
+          min={stockSymbolData?.min}
+          max={stockSymbolData?.max}
           onChange={(event) => {}}
         />
         <div>
-          <span>{"12,00"}</span>
-          <span>{"12,50"}</span>
-          <span>{"13,00"}</span>
+          <span>{formattedRefStockData?.formattedMin}</span>
+          <span>{formattedRefStockData?.formattedMedium}</span>
+          <span>{formattedRefStockData?.formattedMax}</span>
         </div>
       </div>
 
@@ -225,7 +257,10 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
           />
         </Form.Group>
 
-        <button className="brokerCustomButton createAlert" onClick={handleCreateAlert}>
+        <button
+          className="brokerCustomButton createAlert"
+          onClick={handleCreateAlert}
+        >
           {loadingAPI ? (
             <Spinner as="span" animation="border" size="sm" variant="light" />
           ) : (

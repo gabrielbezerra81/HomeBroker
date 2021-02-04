@@ -2,11 +2,16 @@ import moment from "moment";
 
 import { getProactiveBoxAPI } from "api/proactive/ProativosAPI";
 import { updateBoxStructuresAPI } from "api/reactive/ReativosAPI";
-import { getSymbolInfoAPI } from "api/symbolAPI";
+import {
+  getOneSymbolDataAPI,
+  getStockInfoAPI,
+  getSymbolInfoAPI,
+} from "api/symbolAPI";
 import { UPDATE_MANY_MULTIBOX } from "constants/MenuActionTypes";
 import produce from "immer";
 import MultiBoxState, {
   MultiBoxData,
+  StockSymbolData,
   Tab1Data,
   TopSymbol,
 } from "types/multiBox/MultiBoxState";
@@ -55,6 +60,7 @@ export const addMultiBoxAction = (): MainThunkAction => {
       condition: "Less",
       observation: "",
       loadingAPI: false,
+      stockSymbolData: null,
     };
 
     const updatedOpenedMenus = produce(openedMenus, (draft) => {
@@ -234,6 +240,8 @@ export const addMultiBoxesFromStructureDataAction = (
         }
       }
 
+      const stockSymbolData = await getStockSymbolData(topSymbols);
+
       const newMultiBox: MultiBoxData = {
         id: data.boxId,
         activeTab: "1",
@@ -259,6 +267,7 @@ export const addMultiBoxesFromStructureDataAction = (
         condition: "Less",
         observation: "",
         loadingAPI: false,
+        stockSymbolData,
       };
 
       return newMultiBox;
@@ -490,4 +499,48 @@ export const handleExportBoxToMultilegAction = ({
 
     dispatch(updateMultilegStateAction("loadingOffers", false));
   };
+};
+
+export const getStockSymbolData = async (topSymbols: TopSymbol[]) => {
+  const symbol = topSymbols.length ? topSymbols[0].code : "";
+
+  if (!symbol) {
+    return null;
+  }
+
+  const data = await getSymbolInfoAPI(symbol);
+
+  if (data) {
+    const { option } = data;
+
+    let stockSymbol = "";
+
+    if (option && data.referenceStock) {
+      const { symbol: searchSymbol } =
+        (await getStockInfoAPI(data.referenceStock)) || {};
+
+      stockSymbol = searchSymbol || "";
+    } //
+    else {
+      stockSymbol = symbol;
+    }
+
+    if (stockSymbol) {
+      const data = await getOneSymbolDataAPI(stockSymbol);
+
+      if (data) {
+        const stockData: StockSymbolData = {
+          symbol: stockSymbol,
+          last: data.ultimo,
+          min: data.minimo,
+          max: data.maximo,
+          oscilation: data.oscilacao,
+        };
+
+        return stockData;
+      }
+    }
+  }
+
+  return null;
 };

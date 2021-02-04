@@ -17,12 +17,7 @@ import SymbolCard from "../SymbolCard";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 import useStateGlobalStore from "hooks/useStateGlobalStore";
-import {
-  getOneSymbolDataAPI,
-  getStockInfoAPI,
-  getSymbolInfoAPI,
-  getSymbolsDataAPI,
-} from "api/symbolAPI";
+import { getSymbolsDataAPI } from "api/symbolAPI";
 import {
   formatarNumDecimal,
   formatarQuantidadeKMG,
@@ -55,14 +50,13 @@ interface RefStockData {
 const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
   const dispatch = useDispatchStorePrincipal();
 
-  const [refStockData, setRefStockData] = useState<RefStockData | null>(null);
   const [tab4Data, setTab4Data] = useState<Tab4Data[]>([]);
 
   const dispatchGlobal = useDispatchGlobalStore();
 
   const { zIndex } = useStateGlobalStore();
 
-  const { strikeViewMode, id } = multiBox;
+  const { strikeViewMode, id, stockSymbolData } = multiBox;
 
   const handleSearch = useCallback(() => {}, []);
 
@@ -134,68 +128,19 @@ const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
     loadData();
   }, [multiBox.topSymbols]);
 
-  // Obtem reference stock
-  useEffect(() => {
-    async function getReferenceStock() {
-      const symbol = multiBox.topSymbols.length
-        ? multiBox.topSymbols[0].code
-        : "";
-
-      if (!symbol) {
-        return;
-      }
-
-      const data = await getSymbolInfoAPI(symbol);
-
-      if (data) {
-        const { option } = data;
-
-        let stockSymbol = "";
-
-        if (option && data.referenceStock) {
-          const { symbol: searchSymbol } =
-            (await getStockInfoAPI(data.referenceStock)) || {};
-
-          stockSymbol = searchSymbol || "";
-        } //
-        else {
-          stockSymbol = symbol;
-        }
-
-        if (stockSymbol) {
-          const data = await getOneSymbolDataAPI(stockSymbol);
-
-          if (data) {
-            const stockData: RefStockData = {
-              symbol: stockSymbol,
-              last: data.ultimo,
-              min: data.minimo,
-              max: data.maximo,
-              oscilation: data.oscilacao,
-            };
-
-            setRefStockData(stockData);
-          }
-        }
-      }
-    }
-
-    getReferenceStock();
-  }, [multiBox.topSymbols]);
-
   const oscilationClass = useMemo(() => {
-    if (!refStockData) {
+    if (!stockSymbolData) {
       return "";
     }
 
-    if (refStockData.oscilation > 0) {
+    if (stockSymbolData.oscilation > 0) {
       return "positiveText";
-    } else if (refStockData.oscilation < 0) {
+    } else if (stockSymbolData.oscilation < 0) {
       return "negativeText";
     }
 
     return "";
-  }, [refStockData]);
+  }, [stockSymbolData]);
 
   const formattedTab4Data = useMemo(() => {
     return tab4Data.map((item) => {
@@ -233,11 +178,11 @@ const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
   }, [strikeViewMode, tab4Data]);
 
   const formattedRefStockData = useMemo(() => {
-    if (!refStockData) {
+    if (!stockSymbolData) {
       return null;
     }
 
-    const { oscilation, min, max, last } = refStockData;
+    const { oscilation, min, max, last } = stockSymbolData;
 
     let formattedOscilation = "";
 
@@ -252,7 +197,7 @@ const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
     const formattedMedium = formatarNumDecimal(medium, 3);
 
     return {
-      ...refStockData,
+      ...stockSymbolData,
       formattedLast: formatarNumDecimal(last),
       formattedOscilation,
       formattedMin: formatarNumDecimal(min),
@@ -260,9 +205,9 @@ const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
       medium,
       formattedMedium,
     };
-  }, [refStockData]);
+  }, [stockSymbolData]);
 
-  if (!refStockData || !formattedRefStockData) {
+  if (!stockSymbolData || !formattedRefStockData) {
     return <div></div>;
   }
 
@@ -270,7 +215,7 @@ const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
     <div className="multiBoxTab4">
       <header>
         <div>
-          <h4>{refStockData?.symbol}</h4>
+          <h4>{stockSymbolData?.symbol}</h4>
           <span className="quote">{formattedRefStockData?.formattedLast}</span>
           <span className={`oscilation ${oscilationClass}`}>
             {formattedRefStockData?.formattedOscilation}
@@ -350,8 +295,8 @@ const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
           type="range"
           className={`custom-range tab4InputRange`}
           step="0.01"
-          min={refStockData?.min}
-          max={refStockData?.max}
+          min={stockSymbolData?.min}
+          max={stockSymbolData?.max}
           onChange={(event) => {}}
         />
         <div>

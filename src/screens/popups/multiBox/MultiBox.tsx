@@ -4,7 +4,10 @@ import Draggable, { DraggableData } from "react-draggable";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { MultiBoxData } from "types/multiBox/MultiBoxState";
-import { updateBoxAttrAction } from "redux/actions/multiBox/multiBoxActions";
+import {
+  getStockSymbolData,
+  updateBoxAttrAction,
+} from "redux/actions/multiBox/multiBoxActions";
 
 import Tab1ViewStockBook from "./tab1ViewStockBook/Tab1ViewStockBook";
 import Tab4ListBooks from "./tab4ListBooks/Tab4ListBooks";
@@ -27,7 +30,7 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
 
   const dispatch = useDispatchStorePrincipal();
 
-  const { topSymbols, strikeViewMode } = multiBox;
+  const { id, topSymbols, strikeViewMode } = multiBox;
 
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -127,6 +130,18 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
 
     return shouldShowBox ? {} : { display: "none" };
   }, [openedMenus, multiBox.id, selectedTab]);
+
+  useEffect(() => {
+    async function updateStockSymbolData() {
+      const stockSymbolData = await getStockSymbolData(topSymbols);
+
+      if (stockSymbolData) {
+        dispatch(updateBoxAttrAction(id, { stockSymbolData }));
+      }
+    }
+
+    updateStockSymbolData();
+  }, [dispatch, id, topSymbols]);
 
   return (
     <Draggable

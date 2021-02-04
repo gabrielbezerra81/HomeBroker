@@ -45,6 +45,14 @@ export interface SymbolToolTipInfo {
   option: boolean;
 }
 
+export interface StockSymbolData {
+  symbol: string;
+  last: number;
+  min: number;
+  max: number;
+  oscilation: number;
+}
+
 export interface MultiBoxData {
   id: string;
   activeTab: "1" | "2" | "3" | "4" | "5";
@@ -67,6 +75,7 @@ export interface MultiBoxData {
   consideredPrice: "Bid" | "Ask" | "Last";
   price: number;
   loadingAPI: boolean;
+  stockSymbolData: StockSymbolData | null;
 }
 
 export interface Tab1Data extends BoxProps {
