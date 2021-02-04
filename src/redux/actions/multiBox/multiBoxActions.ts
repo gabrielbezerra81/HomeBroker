@@ -11,10 +11,14 @@ import MultiBoxState, {
   TopSymbol,
 } from "types/multiBox/MultiBoxState";
 import { MainThunkAction } from "types/ThunkActions";
+import { updateMultilegStateAction } from "../multileg/MultilegActions";
+
 
 import { v4 } from "uuid";
 import { deleteQuoteBoxAPI } from "api/API";
 import { updateManySystemState } from "../system/SystemActions";
+import { updateManyMultilegState } from "../multileg/utils";
+import { exportBoxToMultileg } from "./util";
 
 interface OpenedBoxes {
   menuKey: string;
@@ -456,5 +460,33 @@ export const handleDeleteBoxAction = (boxId: string): MainThunkAction => {
         openedMenus: updatedOpenedMenus,
       }),
     );
+  };
+};
+
+interface ExportToMultilegProps {
+  boxId: string;
+  globalProps: {
+    zIndex: number;
+    dispatchGlobal: any;
+  };
+}
+
+export const handleExportBoxToMultilegAction = ({
+  boxId,
+  globalProps,
+}: ExportToMultilegProps): MainThunkAction => {
+  return async (dispatch, getState) => {
+    dispatch(updateMultilegStateAction("loadingOffers", true));
+
+    const data = await exportBoxToMultileg({
+      boxId,
+      dispatch,
+      getState,
+      ...globalProps,
+    });
+
+    dispatch(updateManyMultilegState(data));
+
+    dispatch(updateMultilegStateAction("loadingOffers", false));
   };
 };

@@ -18,13 +18,13 @@ import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import {
   handleDeleteBoxAction,
   updateBoxAttrAction,
+  handleExportBoxToMultilegAction,
 } from "redux/actions/multiBox/multiBoxActions";
 import { formatExpiration } from "shared/utils/Formatacoes";
 import {
   getUpdatedOptionsWhenExpirationChanges,
   handleAddOptionOfferAction,
   handleAddStockOfferAction,
-  handleExportBoxToMultilegAction,
   handleSearchBoxSymbolOptionsAction,
   handleConcludeTab5Action,
 } from "redux/actions/multiBox/tab5Actions";

@@ -17,12 +17,9 @@ import {
 
 import { MainThunkAction } from "types/ThunkActions";
 
-import { updateMultilegStateAction } from "../multileg/MultilegActions";
-
 import {
   findClosestStrike,
   mountMultilegOrder,
-  updateManyMultilegState,
   validateMultilegOrder,
 } from "../multileg/utils";
 
@@ -306,34 +303,6 @@ export const getUpdatedOptionsWhenExpirationChanges = async ({
   }
 
   return payload;
-};
-
-interface ExportToMultilegProps {
-  boxId: string;
-  globalProps: {
-    zIndex: number;
-    dispatchGlobal: any;
-  };
-}
-
-export const handleExportBoxToMultilegAction = ({
-  boxId,
-  globalProps,
-}: ExportToMultilegProps): MainThunkAction => {
-  return async (dispatch, getState) => {
-    dispatch(updateMultilegStateAction("loadingOffers", true));
-
-    const data = await exportBoxToMultileg({
-      boxId,
-      dispatch,
-      getState,
-      ...globalProps,
-    });
-
-    dispatch(updateManyMultilegState(data));
-
-    dispatch(updateMultilegStateAction("loadingOffers", false));
-  };
 };
 
 interface ConcludeTab5 {

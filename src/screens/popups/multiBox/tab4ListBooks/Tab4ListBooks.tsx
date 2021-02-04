@@ -30,8 +30,8 @@ import {
 import {
   handleDeleteBoxAction,
   updateBoxAttrAction,
+  handleExportBoxToMultilegAction,
 } from "redux/actions/multiBox/multiBoxActions";
-import { handleExportBoxToMultilegAction } from "redux/actions/multiBox/tab5Actions";
 
 import closeIcon from "assets/multiBox/closeIcon.png";
 
