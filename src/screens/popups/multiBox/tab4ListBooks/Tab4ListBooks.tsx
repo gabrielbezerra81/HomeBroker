@@ -148,11 +148,11 @@ const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
       const data = await getSymbolInfoAPI(symbol);
 
       if (data) {
-        const { isOption } = data;
+        const { option } = data;
 
         let stockSymbol = "";
 
-        if (isOption && data.referenceStock) {
+        if (option && data.referenceStock) {
           const { symbol: searchSymbol } =
             (await getStockInfoAPI(data.referenceStock)) || {};
 
