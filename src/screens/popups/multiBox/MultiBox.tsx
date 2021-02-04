@@ -84,16 +84,16 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
     [dispatch, multiBox],
   );
 
-  useEffect(() => {
-    const box = document.getElementById(`${multiBox.id}`);
+  // useEffect(() => {
+  //   const box = document.getElementById(`${multiBox.id}`);
 
-    if (box) {
-      const { x, y } = box.getBoundingClientRect();
-      setPosition({ x: x - 116, y: y - 85 });
-      // box.style.position = "absolute";
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //   if (box) {
+  //     const { x, y } = box.getBoundingClientRect();
+  //     setPosition({ x: x - 116, y: y - 85 });
+  //     // box.style.position = "absolute";
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   const formattedTopSymbols = useMemo(() => {
     return topSymbols.map((topSymbol) => ({
@@ -229,61 +229,6 @@ function isSelected(tabKey: string, activeTab: string) {
 //   );
 // }, [boxesVisibility]);
 
-// const formattedBox: FormattedBox = useMemo(() => {
-//   const box = {} as FormattedBox;
-
-//   Object.keys(quoteBox).forEach((key) => {
-//     const parsedKey = key as keyof BoxProps;
-
-//     if (typeof quoteBox[parsedKey] === "number") {
-//       box[parsedKey] = formatarNumDecimal(quoteBox[parsedKey], 2, 2);
-//     } //
-//     else if (parsedKey === "book" && quoteBox.book) {
-//       box.book = { buy: [], sell: [] };
-
-//       box.book.buy = quoteBox.book.buy
-//         .filter(
-//           (bookLine) =>
-//             bookLine.price.toString() !== "0.0031415" &&
-//             bookLine.qtty.toString() !== "0.0031415",
-//         )
-//         .map((bookLine) => ({
-//           ...bookLine,
-//           formattedQtty: formatarQuantidadeKMG(bookLine.qtty),
-//           formattedPrice: formatarNumDecimal(bookLine.price),
-//         }));
-//       box.book.sell = quoteBox.book.sell
-//         .filter(
-//           (bookLine) =>
-//             bookLine.price.toString() !== "0.0031415" &&
-//             bookLine.qtty.toString() !== "0.0031415",
-//         )
-//         .map((bookLine) => ({
-//           ...bookLine,
-//           formattedQtty: formatarQuantidadeKMG(bookLine.qtty),
-//           formattedPrice: formatarNumDecimal(bookLine.price),
-//         }));
-//     } else {
-//       box[parsedKey] = quoteBox[parsedKey] as any;
-//     }
-//   });
-//   return box;
-// }, []);
-
-// const sliderBackgroundColor = useMemo(() => {
-//   return quoteBox.dayOscilation >= 0 ? "sliderBuyColor" : "sliderSellColor";
-// }, []);
-
-// const visibilityClass = useMemo(() => {
-//   const shouldShowBox = openedMenus.some(
-//     (menuItem) =>
-//       menuItem.menuKey === `box${quoteBox.id}` &&
-//       menuItem.tabKey === selectedTab,
-//   );
-
-//   return shouldShowBox ? {} : { display: "none" };
-// }, [openedMenus, selectedTab]);
-
 // const minimizedClass = useMemo(() => {
 //   return boxesVisibility[boxIndex]?.visibility ? "" : "hiddenBoxContent";
 // }, [boxIndex, boxesVisibility]);
@@ -297,37 +242,3 @@ function isSelected(tabKey: string, activeTab: string) {
 //     updateOneSystemStateAction("boxesVisibility", updatedBoxesVisibility),
 //   );
 // }, [boxesVisibility, dispatch, boxIndex]);
-
-// const handleClose = useCallback(async () => {
-//   try {
-//     const shouldDelete = await deleteQuoteBoxAPI(quoteBox.id);
-
-//     if (shouldDelete) {
-//       const updatedOpenedMenus = produce(openedMenus, (draft) => {
-//         return draft.filter(
-//           (menuItem) => menuItem.menuKey !== `box${quoteBox.id}`,
-//         );
-//       });
-
-//       const updatedBoxesVisibility = produce(boxesVisibility, (draft) => {
-//         draft.splice(boxIndex, 1);
-//       });
-
-//       const updatedQuoteBoxes = produce(quoteBoxes, (draft) => {
-//         const index = draft.findIndex(
-//           (boxItem) => boxItem.id === quoteBox.id,
-//         );
-
-//         if (index >= 0) draft.splice(index, 1);
-//       });
-
-//       dispatch(
-//         updateManySystemState({
-//           openedMenus: updatedOpenedMenus,
-//           boxesVisibility: updatedBoxesVisibility,
-//           quoteBoxes: updatedQuoteBoxes,
-//         }),
-//       );
-//     }
-//   } catch (error) {}
-// }, [boxIndex, boxesVisibility, openedMenus, quoteBoxes, dispatch]);
