@@ -1,7 +1,9 @@
 import { erro_exportar_ordens_multileg } from "constants/AlertaErros";
+import { Dispatch } from "redux";
 import { MainStoreState } from "redux/reducers";
 import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
 import { calculoPreco } from "screens/popups/multileg_/CalculoPreco";
+import { MultiBoxData } from "types/multiBox/MultiBoxState";
 import {
   atualizarDivKeyAction,
   aumentarZindexAction,
@@ -14,6 +16,7 @@ import {
   updateMultilegTab,
 } from "../multileg/MultilegActions";
 import { searchMultilegSymbolData } from "../multileg/MultilegAPIAction";
+import { mountMultilegOrder, validateMultilegOrder } from "../multileg/utils";
 import {
   abrirItemBarraLateralAction,
   updateManySystemState,
@@ -152,4 +155,56 @@ export const exportBoxToMultileg = async ({
       cotacoesMultileg: updatedMultilegQuotes,
     };
   }
+};
+
+interface MountOrderForOperations
+  extends Omit<ExportBoxProps, "shouldOpenMultileg" | "boxId"> {
+  multiBox: MultiBoxData;
+  commentConfig: string;
+}
+
+export const mountOrderForOperations = async ({
+  multiBox,
+  dispatch,
+  getState,
+  zIndex,
+  dispatchGlobal,
+  commentConfig,
+}: MountOrderForOperations) => {
+  const {
+    systemReducer: { selectedAccount },
+  } = getState();
+
+  const { id: boxId } = multiBox;
+
+  const data = await exportBoxToMultileg({
+    boxId,
+    dispatch,
+    getState,
+    zIndex,
+    dispatchGlobal,
+    shouldOpenMultileg: false,
+  });
+
+  if (data) {
+    const tabIndex = data.multileg.length - 1;
+
+    data.multileg[tabIndex].editingOrderId =
+      multiBox.tab1Id !== -1 ? multiBox.tab1Id : null;
+
+    const mountOrderProps = {
+      multilegTabs: data.multileg,
+      selectedAccount: selectedAccount,
+      tabIndex,
+      comment: commentConfig,
+    };
+
+    if (validateMultilegOrder(mountOrderProps)) {
+      const newBoxRequestData = mountMultilegOrder(mountOrderProps);
+
+      return newBoxRequestData;
+    }
+  }
+
+  return null;
 };

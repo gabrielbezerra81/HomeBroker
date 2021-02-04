@@ -28,7 +28,7 @@ import {
   updateBoxAttrAction,
   updateManyMultiBoxAction,
 } from "./multiBoxActions";
-import { exportBoxToMultileg } from "./util";
+import { exportBoxToMultileg, mountOrderForOperations } from "./util";
 
 export const handleSearchBoxSymbolOptionsAction = (
   id: string,
@@ -366,7 +366,7 @@ export const addNewMultiBoxStructureAction = ({
 }: addNewBoxStructureAction): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
-      systemReducer: { selectedAccount, selectedTab },
+      systemReducer: { selectedTab },
     } = getState();
 
     const boxId = multiBox.id;
@@ -377,56 +377,42 @@ export const addNewMultiBoxStructureAction = ({
       }),
     );
 
-    // Obtem os dados no formato do multileg, porém não dispara a abertura da multileg
-    const data = await exportBoxToMultileg({
-      boxId,
+    const configData = { tabKey: selectedTab, boxId };
+
+    const newBoxRequestData = await mountOrderForOperations({
+      multiBox,
       dispatch,
       getState,
       zIndex,
       dispatchGlobal,
-      shouldOpenMultileg: false,
+      commentConfig: JSON.stringify(configData),
     });
 
-    if (data) {
-      const configData = { tabKey: selectedTab, boxId };
+    setPointerWhileAwaiting({ lockMode: "travar", id: "boxId" });
 
-      const tabIndex = data.multileg.length - 1;
+    let wasSuccessful = false;
 
-      data.multileg[tabIndex].editingOrderId =
-        multiBox.tab1Id !== -1 ? multiBox.tab1Id : null;
+    if (newBoxRequestData) {
+      const responseData = await addBoxStructureAPI(boxId, newBoxRequestData);
 
-      const mountOrderProps = {
-        multilegTabs: data.multileg,
-        selectedAccount: selectedAccount,
-        tabIndex,
-        comment: JSON.stringify(configData),
-      };
+      if (responseData) {
+        const boxStructure = responseData[0];
 
-      const newBoxRequestData = mountMultilegOrder(mountOrderProps);
+        dispatch(
+          updateBoxAttrAction(boxId, {
+            tab1Id: boxStructure.id,
+            activeTab: "1",
+            topSymbols,
+            loadingAPI: false,
+          }),
+        );
 
-      setPointerWhileAwaiting({ lockMode: "travar", id: "boxId" });
-
-      if (validateMultilegOrder(mountOrderProps)) {
-        const responseData = await addBoxStructureAPI(boxId, newBoxRequestData);
-
-        if (responseData) {
-          const boxStructure = responseData[0];
-
-          dispatch(
-            updateBoxAttrAction(boxId, {
-              tab1Id: boxStructure.id,
-              activeTab: "1",
-              topSymbols,
-              loadingAPI: false,
-            }),
-          );
-
-          dispatch(updateStructuresAndLoadBoxesAction(responseData, false));
-        }
+        dispatch(updateStructuresAndLoadBoxesAction(responseData, false));
+        wasSuccessful = true;
       }
-    }
+    } //
 
-    if (!data) {
+    if (!wasSuccessful) {
       dispatch(
         updateBoxAttrAction(multiBox.id, {
           loadingAPI: false,
