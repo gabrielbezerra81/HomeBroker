@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from "react";
-import { Form, Table } from "react-bootstrap";
+import { Form, Table, Spinner } from "react-bootstrap";
 import { Select } from "antd";
 
 import { MultiBoxData } from "types/multiBox/MultiBoxState";
@@ -52,6 +52,7 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
     id,
     strikeViewMode,
     stockSymbol,
+    loadingAPI,
   } = multiBox;
 
   const handleInputChange = useCallback(
@@ -302,7 +303,11 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
         onClick={handleConclude}
         className="brokerCustomButton finishButton"
       >
-        Concluir
+        {loadingAPI ? (
+          <Spinner as="span" animation="border" size="sm" variant="light" />
+        ) : (
+          "Concluir"
+        )}
       </button>
     </div>
   );

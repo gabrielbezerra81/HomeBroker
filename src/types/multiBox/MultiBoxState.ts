@@ -66,6 +66,7 @@ export interface MultiBoxData {
   observation: string;
   consideredPrice: "Bid" | "Ask" | "Last";
   price: number;
+  loadingAPI: boolean;
 }
 
 export interface Tab1Data extends BoxProps {

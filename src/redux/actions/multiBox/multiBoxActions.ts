@@ -13,7 +13,6 @@ import MultiBoxState, {
 import { MainThunkAction } from "types/ThunkActions";
 import { updateMultilegStateAction } from "../multileg/MultilegActions";
 
-
 import { v4 } from "uuid";
 import { deleteQuoteBoxAPI } from "api/API";
 import { updateManySystemState } from "../system/SystemActions";
@@ -55,6 +54,7 @@ export const addMultiBoxAction = (): MainThunkAction => {
       consideredPrice: "Bid",
       condition: "Less",
       observation: "",
+      loadingAPI: false,
     };
 
     const updatedOpenedMenus = produce(openedMenus, (draft) => {
@@ -258,6 +258,7 @@ export const addMultiBoxesFromStructureDataAction = (
         consideredPrice: "Bid",
         condition: "Less",
         observation: "",
+        loadingAPI: false,
       };
 
       return newMultiBox;
