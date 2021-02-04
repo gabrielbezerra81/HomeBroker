@@ -120,7 +120,7 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
   const visibilityClass = useMemo(() => {
     const shouldShowBox = openedMenus.some(
       (menuItem) =>
-        menuItem.menuKey === `box${multiBox.id}` &&
+        menuItem.menuKey === `multiBox${multiBox.id}` &&
         menuItem.tabKey === selectedTab,
     );
 
@@ -137,8 +137,7 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
       onDrag={onDrag}
       bounds={bounds}
     >
-      {/* style={visibilityClass} */}
-      <div className="multiBox" id={multiBox.id}>
+      <div className="multiBox" id={multiBox.id} style={visibilityClass}>
         <div className="topSymbolsContainer">
           <div>
             {americanTopSymbols.map((topSymbol, index) => (

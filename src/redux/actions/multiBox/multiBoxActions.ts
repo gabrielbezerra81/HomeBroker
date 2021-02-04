@@ -14,11 +14,18 @@ import { MainThunkAction } from "types/ThunkActions";
 
 import { v4 } from "uuid";
 import { deleteQuoteBoxAPI } from "api/API";
+import { updateManySystemState } from "../system/SystemActions";
+
+interface OpenedBoxes {
+  menuKey: string;
+  tabKey: string;
+}
 
 export const addMultiBoxAction = (): MainThunkAction => {
   return (dispatch, getState) => {
     const {
       multiBoxReducer: { boxes },
+      systemReducer: { openedMenus, selectedTab },
     } = getState();
 
     const newMultiBox: MultiBoxData = {
@@ -46,6 +53,10 @@ export const addMultiBoxAction = (): MainThunkAction => {
       observation: "",
     };
 
+    const updatedOpenedMenus = produce(openedMenus, (draft) => {
+      draft.push({ menuKey: `multiBox${newMultiBox.id}`, tabKey: selectedTab });
+    });
+
     const updatedBoxes = produce(boxes, (draft) => {
       draft.push(newMultiBox);
     });
@@ -53,6 +64,11 @@ export const addMultiBoxAction = (): MainThunkAction => {
     dispatch(
       updateManyMultiBoxAction({
         boxes: updatedBoxes,
+      }),
+    );
+    dispatch(
+      updateManySystemState({
+        openedMenus: updatedOpenedMenus,
       }),
     );
   };
@@ -99,17 +115,17 @@ export const updateStructuresAndLoadBoxesAction = (
       multiBoxReducer: { boxesTab1Data },
     } = getState();
 
-    // const openedBoxes: OpenedBoxes[] = [];
+    const openedBoxes: OpenedBoxes[] = [];
 
     const newData: Tab1Data[] = data.map((boxItem: any) => {
       const { structure } = boxItem;
 
       const configuration = JSON.parse(boxItem.configuration);
 
-      // openedBoxes.push({
-      //   menuKey: `box${boxItem.id}`,
-      //   tabKey: configuration.tabKey,
-      // });
+      openedBoxes.push({
+        menuKey: `multiBox${configuration.boxId}`,
+        tabKey: configuration.tabKey,
+      });
 
       const codes = structure.components.map((component: any) => {
         return {
@@ -165,15 +181,22 @@ export const updateStructuresAndLoadBoxesAction = (
     );
 
     if (createBoxes) {
-      dispatch(addMultiBoxesFromStructureDataAction(updatedTab1Data));
+      dispatch(
+        addMultiBoxesFromStructureDataAction(updatedTab1Data, openedBoxes),
+      );
     }
   };
 };
 
 export const addMultiBoxesFromStructureDataAction = (
   tab1Data: Tab1Data[],
+  openedBoxes: OpenedBoxes[],
 ): MainThunkAction => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const {
+      systemReducer: { openedMenus },
+    } = getState();
+
     const promises = tab1Data.map(async (data) => {
       const topSymbols: TopSymbol[] = [];
 
@@ -242,9 +265,27 @@ export const addMultiBoxesFromStructureDataAction = (
       multiBoxes.push(boxes);
     }
 
+    const updatedOpenedMenus = produce(openedMenus, (draft) => {
+      openedBoxes.forEach((boxItem) => {
+        const alreadyAdded = openedMenus.some(
+          (menuItem) => menuItem.menuKey === boxItem.menuKey,
+        );
+
+        if (!alreadyAdded) {
+          draft.push(boxItem);
+        }
+      });
+    });
+
     dispatch(
       updateManyMultiBoxAction({
         boxes: multiBoxes,
+      }),
+    );
+
+    dispatch(
+      updateManySystemState({
+        openedMenus: updatedOpenedMenus,
       }),
     );
   };
@@ -362,26 +403,32 @@ export const handleDeleteBoxAction = (boxId: string): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
       multiBoxReducer: { boxesTab1Data, boxes },
+      systemReducer: { openedMenus },
     } = getState();
 
     const structureData = boxesTab1Data.find((data) => data.boxId === boxId);
 
-    if (!structureData) {
-      return;
-    }
+    const updatedMultiBoxes = produce(boxes, (draft) => {
+      const index = draft.findIndex((box) => box.id === boxId);
 
-    try {
+      if (index >= 0) draft.splice(index, 1);
+    });
+
+    const updatedOpenedMenus = produce(openedMenus, (draft) => {
+      const index = draft.findIndex(
+        (item) => item.menuKey === `multiBox${boxId}`,
+      );
+
+      if (index >= 0) {
+        draft.splice(index, 1);
+      }
+    });
+
+    if (structureData) {
+      // Remover box e estrutura adicionada
       const shouldDelete = await deleteQuoteBoxAPI(structureData.id);
 
       if (shouldDelete) {
-        const updatedMultiBoxes = produce(boxes, (draft) => {
-          const index = draft.findIndex(
-            (box) => box.tab1Id === structureData.id,
-          );
-
-          if (index >= 0) draft.splice(index, 1);
-        });
-
         const updatedBoxesTab1Data = produce(boxesTab1Data, (draft) => {
           const index = draft.findIndex(
             (tab1Data) => tab1Data.id === structureData.id,
@@ -393,10 +440,21 @@ export const handleDeleteBoxAction = (boxId: string): MainThunkAction => {
         dispatch(
           updateManyMultiBoxAction({
             boxesTab1Data: updatedBoxesTab1Data,
-            boxes: updatedMultiBoxes,
           }),
         );
       }
-    } catch (error) {}
+    }
+
+    dispatch(
+      updateManyMultiBoxAction({
+        boxes: updatedMultiBoxes,
+      }),
+    );
+
+    dispatch(
+      updateManySystemState({
+        openedMenus: updatedOpenedMenus,
+      }),
+    );
   };
 };
