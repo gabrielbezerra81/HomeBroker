@@ -8,7 +8,7 @@ import {
   startProactiveBoletaQuoteUpdateAction,
   startReactiveBoletaQuoteUpdateAction,
 } from "redux/actions/boletas/boletasAPIActions";
-import checkIfUpdateConfigChanged from "updateManager/utils";
+import checkIfUpdateConfigChanged from "managers/updateManager/utils";
 
 interface BoletaUpdateManagerProps {
   namespace: BoletaNamespace;

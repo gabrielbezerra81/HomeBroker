@@ -11,6 +11,7 @@ export interface AuthData {
   refresh_expires_in: number;
   refresh_token: string;
   session_state: string;
+  token_date: number;
 }
 
 export interface Account {

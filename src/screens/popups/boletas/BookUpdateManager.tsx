@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import useDispatchBoletas from "hooks/useDispatchBoletas";
 import usePrevious from "hooks/usePrevious";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
-import checkIfUpdateConfigChanged from "updateManager/utils";
+import checkIfUpdateConfigChanged from "managers/updateManager/utils";
 import useStateBoletas from "hooks/useStateBoletas";
 import {
   startProactiveOffersBookUpdateAction,

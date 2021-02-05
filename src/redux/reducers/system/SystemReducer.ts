@@ -164,6 +164,7 @@ export const INITIAL_STATE: SystemState = {
   isOpenTHL: false,
   isOpenRightSideMenu: false,
   isOpenCategoryList: false,
+  isOpenOptionsTable: false,
   token: {} as Token,
   roles: [],
   authData: null,

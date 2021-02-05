@@ -120,9 +120,6 @@ export const keycloakLoginAPI = async (code: string, redirect_uri: string) => {
 
       const { token_type, access_token } = authData;
 
-      console.log(keycloak.tokenParsed);
-      console.log(authData);
-
       api.defaults.headers.authorization = `${token_type} ${access_token}`;
 
       return authData;

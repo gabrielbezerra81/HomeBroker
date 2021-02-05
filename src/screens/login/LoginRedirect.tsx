@@ -7,6 +7,7 @@ import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import keycloak from "Keycloak";
 import api from "api/apiConfig";
 import { getUserAccountsAPI } from "api/LoginAPI";
+import { AuthData } from "types/system/system";
 
 const redirectURL =
   // eslint-disable-next-line no-restricted-globals
@@ -52,7 +53,9 @@ const LoginRedirect: React.FC<RouteComponentProps> = ({ path }) => {
                 JSON.stringify(keycloak.tokenParsed),
               );
 
-              const data = {
+              const token_date = new Date().getTime();
+
+              const data: AuthData = {
                 access_token: keycloak.token || "",
                 id_token: keycloak.idToken || "",
                 refresh_token: keycloak.refreshToken || "",
@@ -60,8 +63,7 @@ const LoginRedirect: React.FC<RouteComponentProps> = ({ path }) => {
                 expires_in: 3600,
                 refresh_expires_in: 1800,
                 session_state: "",
-                scope: "",
-                "not-before-policy": 0,
+                token_date,
               };
 
               api.defaults.headers.authorization = `${data.token_type} ${data.access_token}`;

@@ -6,7 +6,7 @@ import TelaCadastro from "screens/signUp/TelaCadastro";
 import TelaPrincipal from "screens/home/TelaPrincipal";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import api from "api/apiConfig";
-import UpdateManager from "updateManager/UpdateManager";
+import MainManager from "managers";
 import LoginRedirect from "screens/login/LoginRedirect";
 import OpenAlert from "./OpenAlert";
 
@@ -29,7 +29,7 @@ export const Routes = () => {
         <LoginRedirect path="/logged" />
         <OpenAlert path="/alerta/:id" />
       </Router>
-      <UpdateManager />
+      <MainManager />
     </>
   );
 };
