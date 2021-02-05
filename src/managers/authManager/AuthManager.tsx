@@ -21,6 +21,12 @@ const AuthManager = () => {
 
   const [requestInterceptor, setRequestInterceptor] = useState(-1);
   const [responseInterceptor, setResponseInterceptor] = useState(-1);
+  const [shouldAlertSessionExpired, setShouldAlertSessionExpired] = useState(
+    false,
+  );
+  const [previousShouldAlert, setPreviousShouldAlert] = useState<
+    boolean | null
+  >(null);
 
   const updateAuthData = useCallback(
     (data: any) => {
@@ -59,10 +65,11 @@ const AuthManager = () => {
       );
       updateAuthData(response.data);
     } catch (error) {
-      alert("Falha ao manter sua sessão aberta, Faça login novamente");
-      console.log(error);
+      setShouldAlertSessionExpired(true);
+      setPreviousShouldAlert(false);
+      dispatch(deslogarUsuarioAction());
     }
-  }, [authData, updateAuthData]);
+  }, [authData, dispatch, updateAuthData]);
 
   // Verifica se o token está a 40 minutos de expirar. Caso esteja, será renovado.
   useEffect(() => {
@@ -97,10 +104,9 @@ const AuthManager = () => {
       (response) => response,
       async (error) => {
         if (error.response.status === 401) {
-          //   signOut();
           dispatch(deslogarUsuarioAction());
-
-          alert("Sua sessão expirou! Faça login novamente.");
+          setShouldAlertSessionExpired(true);
+          setPreviousShouldAlert(false);
         }
 
         return Promise.reject(error);
@@ -110,6 +116,15 @@ const AuthManager = () => {
     setResponseInterceptor(interceptor);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
+
+  useEffect(() => {
+    if (
+      shouldAlertSessionExpired !== previousShouldAlert &&
+      shouldAlertSessionExpired
+    ) {
+    }
+    alert("Sua sessão expirou! Faça login novamente.");
+  }, [previousShouldAlert, shouldAlertSessionExpired]);
 
   return null;
 };
