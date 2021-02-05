@@ -20,6 +20,7 @@ import CategoryList from "screens/popups/categoryList/CategoryList";
 import InitialPlanner from "screens/popups/financialPlanner/InitialPlanner/InitialPlanner";
 import DetailedPlanner from "screens/popups/financialPlanner/DetailedPlanner/DetailedPlanner";
 import MultiBoxContainer from "screens/popups/multiBox/MultiBoxContainer";
+import OptionsTable from "screens/popups/optionsTable/OptionsTable";
 
 const OrdensExecucao = React.lazy(() =>
   import("screens/popups/ordens_em_execucao/OrdensExecucao"),
@@ -51,20 +52,20 @@ class TelaPrincipal extends React.Component {
   componentDidMount() {
     this.props.checkIfSystemStateHasChangedShapeAction();
 
-    api.interceptors.response.use(
-      function (response) {
-        return response;
-      },
-      (error) => {
-        if (error.response.status === 401) {
-          this.setState({
-            shouldAlertSessionExpired: true,
-            previousShouldAlert: this.state.shouldAlertSessionExpired,
-          });
-        }
-        return Promise.reject(error);
-      },
-    );
+    // api.interceptors.response.use(
+    //   function (response) {
+    //     return response;
+    //   },
+    //   (error) => {
+    //     if (error.response.status === 401) {
+    //       this.setState({
+    //         shouldAlertSessionExpired: true,
+    //         previousShouldAlert: this.state.shouldAlertSessionExpired,
+    //       });
+    //     }
+    //     return Promise.reject(error);
+    //   },
+    // );
 
     // LogRocket.identify(this.props.connectedUser, {
     //   name: this.props.connectedUser,
@@ -72,15 +73,15 @@ class TelaPrincipal extends React.Component {
   }
 
   componentDidUpdate() {
-    const { deslogarUsuarioAction } = this.props;
+    // const { deslogarUsuarioAction } = this.props;
 
-    if (
-      this.state.shouldAlertSessionExpired !== this.state.previousShouldAlert &&
-      this.state.shouldAlertSessionExpired
-    ) {
-      alert("Sua sessão expirou! Faça login novamente.");
-      deslogarUsuarioAction();
-    }
+    // if (
+    //   this.state.shouldAlertSessionExpired !== this.state.previousShouldAlert &&
+    //   this.state.shouldAlertSessionExpired
+    // ) {
+    //   alert("Sua sessão expirou! Faça login novamente.");
+    //   deslogarUsuarioAction();
+    // }
   }
 
   render() {
@@ -94,6 +95,7 @@ class TelaPrincipal extends React.Component {
       isOpenCategoryList,
       isOpenInitialPlanner,
       isOpenDetailedPlanner,
+      isOpenOptionsTable,
       apps: AppBoletas,
     } = this.props;
 
@@ -168,6 +170,14 @@ class TelaPrincipal extends React.Component {
               >
                 <DetailedPlanner />
               </PopupContainer>
+
+              <PopupContainer
+                isOpen={isOpenOptionsTable}
+                divKey="optionsTable"
+                key="optionsTable"
+              >
+                <OptionsTable />
+              </PopupContainer>
             </MainScreenTabs>
 
             <RightSideMenu />
@@ -203,6 +213,7 @@ const mapStateToPropsAppPrincipal = (state) => ({
   isOpenCategoryList: state.systemReducer.isOpenCategoryList,
   isOpenInitialPlanner: state.systemReducer.isOpenInitialPlanner,
   isOpenDetailedPlanner: state.systemReducer.isOpenDetailedPlanner,
+  isOpenOptionsTable: state.systemReducer.isOpenOptionsTable,
 });
 
 export default compose(

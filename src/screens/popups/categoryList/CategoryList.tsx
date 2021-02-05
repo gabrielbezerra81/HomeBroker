@@ -196,7 +196,11 @@ const CategoryList: React.FC = () => {
     >
       <div id="categoryList">
         <div className="mcontent">
-          <ModalHeaderClean headerClass="border-green" onClose={onClose} />
+          <ModalHeaderClean onClose={onClose}>
+            <button className="brokerCustomButton">
+              + Incluir nova categoria
+            </button>
+          </ModalHeaderClean>
 
           <div className="listHeader">
             <table className="categoryTable">

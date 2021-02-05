@@ -212,11 +212,20 @@ export const ModalHeaderSemBook: React.FC<any> = React.memo(
   },
 );
 
+interface ModalHeaderCleanProps {
+  titulo?: string;
+  name?: string;
+  onClose?: (...data: any) => any;
+  className?: string;
+}
+
 // form configurar ordem start stop
-export const ModalHeaderClean: React.FC<any> = ({
+export const ModalHeaderClean: React.FC<ModalHeaderCleanProps> = ({
   titulo,
   name = "",
   onClose,
+  children,
+  className = "",
 }) => {
   let funcaoFechar: any;
 
@@ -237,7 +246,8 @@ export const ModalHeaderClean: React.FC<any> = ({
   }
 
   return (
-    <div className="border-green mheader">
+    <div className={`border-green mheader ${className}`}>
+      {children}
       <h6 className="mtitle">{titulo}</h6>
       <div className="wrapperIconesHeader">
         <Button

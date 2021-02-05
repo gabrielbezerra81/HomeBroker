@@ -18,6 +18,7 @@ export default interface SystemState {
   isOpenCategoryList: boolean;
   isOpenInitialPlanner: boolean;
   isOpenDetailedPlanner: boolean;
+  isOpenOptionsTable: boolean;
   token: Token;
   authData: AuthData | null;
   accounts: Array<Account>;

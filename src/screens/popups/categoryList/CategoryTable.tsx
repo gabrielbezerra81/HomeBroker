@@ -1,6 +1,6 @@
 import usePrevious from "hooks/usePrevious";
 import React, { useMemo, useState } from "react";
-import { Table } from "react-bootstrap";
+import { Form, Table } from "react-bootstrap";
 import _ from "lodash";
 import produce from "immer";
 
@@ -60,7 +60,13 @@ const CategoryTable: React.FC<CategoryTableProps> = ({ category, order }) => {
     <Table className="categoryTable" striped={false} style={{ order }}>
       <tbody>
         <tr className="categoryTitle">
-          <td colSpan={4}>{category.title}</td>
+          <td colSpan={4}>
+            <Form.Control
+              defaultValue={category.title}
+              className="darkSimpleInput"
+            />
+            <button className="brokerCustomButton addCodeButton">+</button>
+          </td>
         </tr>
         {category.lines.map((line, index) => {
           const previousLine = lineDifferences.find(

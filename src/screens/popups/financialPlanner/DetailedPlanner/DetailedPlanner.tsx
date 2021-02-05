@@ -29,7 +29,6 @@ const DetailedPlanner: React.FC = () => {
         <div className="mcontent">
           <ModalHeaderClean
             titulo="Carteira de investimentos"
-            headerClass="border-green"
             onClose={onClose}
           />
 

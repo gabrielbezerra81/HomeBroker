@@ -327,7 +327,6 @@ const InitialPlanner: React.FC = () => {
         <div className="mcontent">
           <ModalHeaderClean
             titulo="Carregando simulador"
-            headerClass="border-green"
             onClose={onClose}
           />
 
