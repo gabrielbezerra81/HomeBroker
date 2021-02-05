@@ -119,6 +119,7 @@ const AuthManager = () => {
 
   useEffect(() => {
     if (
+      previousShouldAlert !== null &&
       shouldAlertSessionExpired !== previousShouldAlert &&
       shouldAlertSessionExpired
     ) {
