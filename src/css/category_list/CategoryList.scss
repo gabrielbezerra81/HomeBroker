@@ -10,6 +10,11 @@
 
   .mheader {
     background-color: #000;
+    padding-left: 0;
+
+    .brokerCustomButton {
+      font-size: 13px;
+    }
   }
 
   .listHeader {
@@ -134,11 +139,27 @@
 
     .categoryTitle {
       td {
-        text-align: center;
-        font-weight: 500;
-        color: #f7e39c;
         border-top: 3px solid var(--color-border-light);
         border-bottom: 3px solid var(--color-border-light);
+        position: relative;
+
+        .darkSimpleInput {
+          text-align: center;
+          font-weight: 500 !important;
+          color: #f7e39c !important;
+          font-size: 14px;
+          height: 18px;
+        }
+
+        .addCodeButton {
+          position: absolute;
+          padding: 0;
+          font-weight: bold !important;
+          color: #f7e39c;
+          right: 8px;
+          top: -3px;
+          font-size: 16px;
+        }
       }
     }
 
