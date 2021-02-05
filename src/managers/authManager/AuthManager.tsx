@@ -123,8 +123,8 @@ const AuthManager = () => {
       shouldAlertSessionExpired !== previousShouldAlert &&
       shouldAlertSessionExpired
     ) {
+      alert("Sua sessão expirou! Faça login novamente.");
     }
-    alert("Sua sessão expirou! Faça login novamente.");
   }, [previousShouldAlert, shouldAlertSessionExpired]);
 
   return null;
