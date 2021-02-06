@@ -13,7 +13,7 @@ import MenuOrdens from "screens/home/boletasHoverMenu/MenuOrdens";
 import MainScreenTabs from "./mainScreenTabs/MainScreenTabs";
 import PopupContainer from "./PopupContainer";
 import { compose } from "redux";
-import AddBoxMenu from "../popups/quoteBox/AddBoxMenu";
+import AddBoxMenu from "./tabBarHoverMenu/AddBoxMenu";
 import RightSideMenu from "./rightSideMenu/RightSideMenu";
 import CategoryList from "modules/categoryList/screens/CategoryList";
 import InitialPlanner from "modules/financialPlanner/screens/initialPlanner/InitialPlanner";
@@ -22,14 +22,12 @@ import MultiBoxContainer from "modules/multiBox/screens/MultiBoxContainer";
 import OptionsTable from "modules/optionsTable/screens/OptionsTable";
 
 const OrdensExecucao = React.lazy(() =>
-  import("screens/popups/ordens_em_execucao/OrdensExecucao"),
+  import("modules/ordersExec/screens/OrdensExecucao"),
 );
 const Multileg = React.lazy(() => import("modules/multileg/screens/Multileg"));
-const PosicaoEmCustodia = React.lazy(() =>
-  import("screens/popups/posicao_custodia/PosicaoEmCustodia"),
-);
+const Position = React.lazy(() => import("modules/position/screens/Position"));
 const RelatorioDetalhado = React.lazy(() =>
-  import("screens/popups/relatorio_detalhado/RelatorioDetalhado"),
+  import("modules/history/screens/RelatorioDetalhado"),
 );
 const TelaTHL = React.lazy(() => import("modules/thl/screens/Tela_THL"));
 
@@ -73,7 +71,6 @@ class TelaPrincipal extends React.Component {
 
   componentDidUpdate() {
     // const { deslogarUsuarioAction } = this.props;
-
     // if (
     //   this.state.shouldAlertSessionExpired !== this.state.previousShouldAlert &&
     //   this.state.shouldAlertSessionExpired
@@ -123,7 +120,7 @@ class TelaPrincipal extends React.Component {
                 key="posicao_custodia"
                 divKey={"posicao_custodia"}
               >
-                <PosicaoEmCustodia headerTitle="POSIÇÃO EM CUSTÓDIA" />
+                <Position headerTitle="POSIÇÃO EM CUSTÓDIA" />
               </PopupContainer>
 
               <PopupContainer

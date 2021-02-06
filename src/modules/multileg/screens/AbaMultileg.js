@@ -35,7 +35,7 @@ class AbaMultileg extends React.Component {
             <div className="divColunaDetalhes">
               <InputGroup className="inputGroupPesquisaMultileg">
                 <Form.Control
-                  className="inputAtivo"
+                  className="inputWithSearchIcon"
                   type="text"
                   value={props.multileg[indice].ativo}
                   onChange={(event) =>
@@ -51,9 +51,9 @@ class AbaMultileg extends React.Component {
                       props.searchMultilegSymbolAPIAction(indice);
                   }}
                 />
-                <InputGroup.Append className="inputAtivoAppend">
+                <InputGroup.Append >
                   <span
-                    className="input-group-text iconeProcurar divClicavel"
+                    className="input-group-text appendedSearchIcon divClicavel"
                     onClick={() => {
                       props.searchMultilegSymbolAPIAction(indice);
                     }}

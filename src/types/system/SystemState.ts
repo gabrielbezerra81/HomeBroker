@@ -1,5 +1,4 @@
-import { BoxProps } from "screens/popups/quoteBox/types";
-import { Token, Account, BoxVisibility, AuthData } from "./system";
+import { Token, Account, AuthData } from "./system";
 
 export default interface SystemState {
   connectedUser: string | null;
@@ -32,8 +31,6 @@ export default interface SystemState {
     tabKey: string;
   }>;
   selectedTab: string;
-  quoteBoxes: Array<BoxProps>;
-  boxesVisibility: Array<BoxVisibility>;
   esource_box: EventSource | null;
   interval_box: NodeJS.Timeout | null;
   activeItemRightSideMenu: string;

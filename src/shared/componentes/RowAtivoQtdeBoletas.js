@@ -68,9 +68,9 @@ const InputPesquisa = ({ props, namespace }) => {
           }
         }}
       />
-      <InputGroup.Append className="inputAtivoAppend">
+      <InputGroup.Append>
         <span
-          className="iconeProcurar divClicavel iconePesquisarBoletas"
+          className="appendedSearchIcon divClicavel iconePesquisarBoletas"
           onClick={() => props.pesquisarAtivoOnEnterAction(namespace)}
         >
           {pesquisandoAtivo ? (

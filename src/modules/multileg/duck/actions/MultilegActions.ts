@@ -5,7 +5,6 @@ import {
   pesquisarStrikesMultilegAPI,
 } from "api/API";
 import { calculoPreco } from "modules/multileg/screens/CalculoPreco";
-import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
 import { MainThunkAction, MainThunkDispatch } from "types/ThunkActions";
 import {
   MultilegTab,
@@ -21,6 +20,7 @@ import {
   updateOneMultilegState,
   updateManyMultilegState,
 } from "./utils";
+import { formatarNumero } from "shared/utils/Formatacoes";
 
 export const updateMultilegStateAction = (
   attributeName: string,

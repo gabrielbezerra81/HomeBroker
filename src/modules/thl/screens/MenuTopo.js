@@ -80,7 +80,7 @@ const InputPesquisa = () => {
     <div className="containerPesquisaAtivo inverted-border-radius">
       <InputGroup>
         <Form.Control
-          className="inputAtivo"
+          className="inputWithSearchIcon"
           type="text"
           value={ativoPesquisa.toUpperCase()}
           onKeyPress={(e) => {
@@ -97,9 +97,9 @@ const InputPesquisa = () => {
             )
           }
         />
-        <InputGroup.Append className="inputAtivoAppend">
+        <InputGroup.Append>
           <span
-            className="input-group-text iconeProcurar divClicavel"
+            className="input-group-text appendedSearchIcon divClicavel"
             onClick={handleSearchThlTables}
           >
             {pesquisandoAtivo ? (

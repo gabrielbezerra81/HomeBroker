@@ -17,7 +17,7 @@ import {
 import { erro_exportar_ordens_multileg } from "constants/AlertaErros";
 import { searchMultilegSymbolData } from "modules/multileg/duck/actions/MultilegAPIAction";
 import { calculoPreco } from "modules/multileg/screens/CalculoPreco";
-import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
+import { formatarNumero } from "shared/utils/Formatacoes";
 import { updateManyTHLState } from "./utils";
 import { updateManyMultilegState } from "modules/multileg/duck/actions/utils";
 

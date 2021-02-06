@@ -19,6 +19,7 @@ import {
   removeMultilegOfferAction,
   updateMultilegOfferAction,
 } from "../duck/actions/MultilegActions";
+import { FiX } from "react-icons/fi";
 
 interface MultilegOfferProps {
   lineIndex: number;
@@ -94,7 +95,7 @@ const MultilegOfferItem: React.FC<MultilegOfferProps> = ({
   return (
     <tr key={lineIndex} id={`ofertaMultileg${lineIndex}`}>
       <td
-        className="divClicavel"
+        className="divClicavel closeColumn"
         onClick={() =>
           dispatch(
             removeMultilegOfferAction({
@@ -104,7 +105,7 @@ const MultilegOfferItem: React.FC<MultilegOfferProps> = ({
           )
         }
       >
-        <MDBIcon icon="times" className="saldoOpNegativo" />
+        <FiX size={12} strokeWidth={3} color="#666" />
       </td>
       <td>
         <CV offerCV={offer.cv} lineIndex={lineIndex} tabIndex={tabIndex} />

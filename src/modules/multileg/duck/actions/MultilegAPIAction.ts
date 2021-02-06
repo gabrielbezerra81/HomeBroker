@@ -25,7 +25,6 @@ import {
   MultilegTab,
   MultilegOption,
 } from "modules/multileg/types/multileg";
-import { addBoxFromAPIAction } from "redux/actions/system/boxesActions";
 import produce from "immer";
 import { LISTAR_ORDENS_EXECUCAO } from "constants/ApiActionTypes";
 import { atualizarCotacaoMultilegAPI } from "api/reactive/ReativosAPI";
@@ -251,7 +250,8 @@ export const addQuoteBoxFromMultilegAction = (
       const data = await addBoxStructureAPI(tabName, multilegRequestData);
 
       if (data) {
-        dispatch(addBoxFromAPIAction(data));
+        // TODO: adicionar novo box pela multileg
+        // dispatch(addBoxFromAPIAction(data));
       }
     }
 

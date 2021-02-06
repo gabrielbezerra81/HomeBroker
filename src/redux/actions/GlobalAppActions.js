@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
-import { mudarInputHeaderAction } from "redux/actions/boletas/bookOfertaActions";
-import { listarBookOfertaOnEnterAction } from "redux/actions/boletas/bookOfertaAPIActions";
+import { mudarInputHeaderAction } from "modules/boletas/duck/actions/bookOfertaActions";
+import { listarBookOfertaOnEnterAction } from "modules/boletas/duck/actions/bookOfertaAPIActions";
 import {
   AUMENTAR_ZINDEX,
   CRIAR_APP,
@@ -16,7 +16,7 @@ import { MUDAR_ORDEM_EXEC_MAIN_REDUCER } from "constants/MenuActionTypes";
 import { globalStore } from "redux/StoreCreation";
 
 const ContainerAppBoletas = React.lazy(() =>
-  import("screens/popups/boletas/ContainerAppBoletas"),
+  import("modules/boletas/screens/ContainerAppBoletas"),
 );
 
 export const criarMostrarAppAction = (apps, show, zindex) => {

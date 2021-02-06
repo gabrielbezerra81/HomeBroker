@@ -1,4 +1,32 @@
-import { BoxProps } from "screens/popups/quoteBox/types";
+export interface Tab1Data {
+  boxId: string;
+  id: number;
+  structureID: number;
+  buy: number;
+  sell: number;
+  quote: number;
+  min: number;
+  max: number;
+  book: {
+    buy: Array<{ qtty: number; price: number; [key: string]: any }>;
+    sell: Array<{ qtty: number; price: number; [key: string]: any }>;
+  };
+  dayOscilation: number;
+  codes: Array<Code>;
+  configuration: string;
+  structure: any;
+}
+
+export interface Code {
+  symbol: string;
+  type: "buy" | "sell";
+  qtty: number;
+}
+
+type BoxKeys = keyof Omit<Tab1Data, "codes" | "book">;
+
+export type FormattedBox = Record<BoxKeys, string> &
+  Pick<Tab1Data, "codes" | "book">;
 
 export interface BoxStockOption {
   id: number;
@@ -78,19 +106,6 @@ export interface MultiBoxData {
   stockSymbolData: StockSymbolData | null;
 }
 
-export interface Tab1Data extends BoxProps {
-  boxId: string;
-}
-
-export default interface MultiBoxState {
-  boxes: Array<MultiBoxData>;
-  boxesTab1Data: Array<Tab1Data>;
-  esource_multiBox: EventSource | null;
-  interval_multiBox: NodeJS.Timeout | null;
-  esource_tab4Box: EventSource | null;
-  interval_tab4Box: NodeJS.Timeout | null;
-}
-
 type Tab1Keys = keyof Omit<Tab1Data, "codes" | "book">;
 
 export type FormattedTab1Data = Record<Tab1Keys, string> &
@@ -123,3 +138,12 @@ export type FormattedSingleBook = {
     formattedPrice: string;
   };
 } | null;
+
+export default interface MultiBoxState {
+  boxes: Array<MultiBoxData>;
+  boxesTab1Data: Array<Tab1Data>;
+  esource_multiBox: EventSource | null;
+  interval_multiBox: NodeJS.Timeout | null;
+  esource_tab4Box: EventSource | null;
+  interval_tab4Box: NodeJS.Timeout | null;
+}

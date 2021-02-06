@@ -3,7 +3,7 @@
 import {
   adicionaPosicao,
   updateOnePositionState,
-} from "redux/actions/posicao/utils";
+} from "modules/position/duck/actions/utils";
 import {
   url_emblemaReativo_ids,
   url_base_reativa,

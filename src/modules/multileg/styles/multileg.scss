@@ -36,6 +36,19 @@
   }
 
   .tableMultileg {
+    .closeColumn {
+      &:hover {
+        opacity: 1;
+        svg {
+          stroke: #ce202a;
+        }
+      }
+
+      svg {
+        transition: stroke 0.2s;
+      }
+    }
+
     .qtdeColumn {
       input {
         color: #ff9a2c !important;
@@ -345,35 +358,6 @@ a.botaoAddAba.active {
   max-width: 230px;
 }
 
-.inputAtivo {
-  height: 30px;
-  font-size: 0.8rem;
-  background-color: var(--color-background) !important;
-  border-color: #4d4c4c !important;
-  color: var(--color-text-primary) !important;
-  text-align: center;
-  box-sizing: border-box !important;
-}
-
-.inputAtivo:focus {
-  background-color: var(--color-background);
-  box-shadow: 0 0 0px 3.5px var(--color-input-box-shadow);
-}
-
-/* .inputAtivoAppend {
-} */
-
-.iconeProcurar {
-  border-color: #4d4c4c !important;
-  border-top-right-radius: 0.25rem;
-  border-bottom-right-radius: 0.25rem;
-  background-color: #4d4c4c;
-}
-
-.iconeProcurar i {
-  color: var(--color-background);
-}
-
 .wrapperVencimento {
   display: flex;
   flex-direction: column;
@@ -491,11 +475,15 @@ a.botaoAddAba.active {
   align-items: center;
   width: 100%;
   padding: 0 5px;
-}
 
-.containerTituloAba i {
-  font-size: 12px;
-  margin-top: 4px;
+  svg {
+    margin-top: 2px;
+    transition: stroke 0.2s;
+
+    &:hover {
+      stroke: #ce202a;
+    }
+  }
 }
 
 .inputTituloAba {

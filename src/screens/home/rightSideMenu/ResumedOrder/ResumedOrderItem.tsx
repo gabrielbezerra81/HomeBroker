@@ -5,8 +5,8 @@ import {
   formatarNumDecimal,
   formatarQuantidadeKMG,
 } from "shared/utils/Formatacoes";
-import { Order } from "types/ordersExec/ordersExec";
-import { updateManyOrdersExecStateAction } from "redux/actions/ordensExecucao/OrdensExecActions";
+import { Order } from "modules/ordersExec/types/ordersExec";
+import { updateManyOrdersExecStateAction } from "modules/ordersExec/duck/actions/OrdensExecActions";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { updateOneSystemStateAction } from "redux/actions/system/SystemActions";
 import CustomTooltip from "shared/componentes/CustomTooltip";

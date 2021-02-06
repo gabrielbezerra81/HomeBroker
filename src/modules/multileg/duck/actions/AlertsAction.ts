@@ -1,7 +1,7 @@
 import { setPointerWhileAwaiting } from "api/API";
 import { error_open_alert } from "constants/AlertaErros";
 import { Dispatch } from "redux";
-import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
+import { formatarNumero } from "shared/utils/Formatacoes";
 import { AlertAPI } from "modules/multileg/types/multileg";
 import { MainThunkAction } from "types/ThunkActions";
 import { atualizarDivKeyAction } from "redux/actions/GlobalAppActions";

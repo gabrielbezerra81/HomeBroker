@@ -13,7 +13,7 @@ import {
   verificaCalculoSemBook,
 } from "../CalculoPreco";
 import CustomInput from "shared/componentes/CustomInput";
-import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
+import { formatarNumero } from "shared/utils/Formatacoes";
 import DateSelector from "./DateSelector";
 import NumberFormat from "react-number-format";
 import { aviso_calculo_preco_multileg } from "constants/AlertaErros";

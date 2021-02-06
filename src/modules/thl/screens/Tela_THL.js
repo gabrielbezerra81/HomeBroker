@@ -16,6 +16,8 @@ import ContainerTabelaCombinacoes, {
 import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopupZIndexFromSecondaryTab";
 import { compose } from "redux";
 
+import "../styles/thl.scss";
+
 class Tela_THL extends React.Component {
   componentDidMount() {
     if (this.props.divkey !== "" && this.props.divkey === "thl") {

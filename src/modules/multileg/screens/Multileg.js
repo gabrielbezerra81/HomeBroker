@@ -21,8 +21,6 @@ import {
   multilegWithAlertHeight,
 } from "./constants";
 
-import "../styles/multileg.scss";
-
 class Multileg extends React.Component {
   constructor(props) {
     super(props);

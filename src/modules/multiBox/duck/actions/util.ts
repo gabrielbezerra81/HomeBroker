@@ -5,7 +5,7 @@ import { searchMultilegSymbolData } from "modules/multileg/duck/actions/Multileg
 import { mountMultilegOrder, validateMultilegOrder } from "modules/multileg/duck/actions/utils";
 import { abrirItemBarraLateralAction, updateManySystemState } from "redux/actions/system/SystemActions";
 import { MainStoreState } from "redux/reducers";
-import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
+import { formatarNumero } from "shared/utils/Formatacoes";
 import { calculoPreco } from "modules/multileg/screens/CalculoPreco";
 import { MultiBoxData } from "modules/multiBox/types/MultiBoxState";
 

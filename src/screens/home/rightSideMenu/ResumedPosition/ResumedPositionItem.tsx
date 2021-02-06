@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
-import { PositionItem } from "types/position/position";
+import { PositionItem } from "modules/position/types/position";
 
 interface ResumedPositionItemProps {
   position: PositionItem;

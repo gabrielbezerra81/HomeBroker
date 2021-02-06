@@ -1,4 +1,4 @@
-import { OrderExecOpenPopupData } from "types/ordersExec/ordersExec";
+import { OrderExecOpenPopupData } from "modules/ordersExec/types/ordersExec";
 import { AppShow } from "./global";
 import { ReactNode } from "react";
 

@@ -1,6 +1,5 @@
 import { combineReducers } from "redux";
-import bookOfertaReducer from "./boletas/bookOfertaReducer";
-import formInputReducer from "./boletas/formInputReducer";
+
 import {
   COMPRA_AGENDADA_NAMESPACE,
   COMPRA_MERCADO_NAMESPACE,
@@ -15,13 +14,16 @@ import {
   VENDA_STOPMOVEL_NAMESPACE,
   VENDA_GAINREDUCAO_NAMESPACE,
 } from "constants/ActionTypes";
-import appBoletasReducer from "./boletas/appBoletasReducer";
-import THLReducer from "../../modules/thl/duck/THLReducer";
+
+import bookOfertaReducer from "modules/boletas/duck/reducers/bookOfertaReducer";
+import formInputReducer from "modules/boletas/duck/reducers/formInputReducer";
+import appBoletasReducer from "modules/boletas/duck/reducers/appBoletasReducer";
+import THLReducer from "modules/thl/duck/THLReducer";
 import SystemReducer from "redux/reducers/system/SystemReducer";
 import MultilegReducer from "modules/multileg/duck/MultilegReducer";
-import PositionReducer from "redux/reducers/position/PositionReducer";
-import OrdensExecucaoReducer from "redux/reducers/ordersExecuting/OrdensExecReducer";
-import FinancialPlannerReducer from "../../modules/financialPlanner/duck/FinancialPlannerReducer";
+import PositionReducer from "modules/position/duck/PositionReducer";
+import OrdensExecucaoReducer from "modules/ordersExec/duck/OrdensExecReducer";
+import FinancialPlannerReducer from "modules/financialPlanner/duck/FinancialPlannerReducer";
 import multiBoxReducer from "modules/multiBox/duck/multiBoxReducer";
 
 export const BoletasReducer = combineReducers({

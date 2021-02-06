@@ -1,3 +1,6 @@
+@import "./vencimentos.scss";
+@import "./combinacoes.scss";
+
 /* Abrange a tela thl, tabela de vencimento e mapa de calor */
 #thl {
   /* width: calc(100% - 95px); */
@@ -22,6 +25,21 @@
     background-color: #333;
     border-color: #333;
     color: var(--color-text-primary);
+  }
+}
+
+.inputAtivo {
+  height: 30px;
+  font-size: 0.8rem;
+  background-color: var(--color-background) !important;
+  border-color: #4d4c4c !important;
+  color: var(--color-text-primary) !important;
+  text-align: center;
+  box-sizing: border-box !important;
+
+  &:focus {
+    background-color: var(--color-background);
+    box-shadow: 0 0 0px 3.5px var(--color-input-box-shadow);
   }
 }
 

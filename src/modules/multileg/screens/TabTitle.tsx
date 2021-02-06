@@ -7,6 +7,7 @@ import {
   updateMultilegTabAction,
 } from "../duck/actions/MultilegActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
+import { FiX } from "react-icons/fi";
 
 interface TabTitleProps {
   tabIndex: number;
@@ -28,9 +29,10 @@ const TabTitle: React.FC<TabTitleProps> = ({ tabIndex }) => {
           active={false}
         >
           <div className="containerTituloAba">
-            <MDBIcon
-              icon="times"
-              className="saldoOpNegativo"
+            <FiX
+              size={12}
+              strokeWidth={3}
+              color="#666"
               onClick={(e) => {
                 dispatch(removeMultilegTabAction(tabIndex));
                 e.stopPropagation();
