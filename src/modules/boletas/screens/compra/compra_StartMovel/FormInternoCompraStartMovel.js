@@ -16,10 +16,10 @@ import {
 } from "modules/boletas/duck/actions/formInputActions";
 import { COMPRA_STARTMOVEL_NAMESPACE } from "constants/ActionTypes";
 import TabelaOrdens from "./TabelaOrdens";
-import RowFormValidade from "shared/componentes/RowFormValidade";
-import RowFormAssinatura from "shared/componentes/RowFormAssinatura";
+import RowFormValidade from "modules/boletas/components/RowFormValidade";
+import RowFormAssinatura from "modules/boletas/components/RowFormAssinatura";
 import { compraStartMovelAction } from "modules/boletas/duck/actions/AppBoletasActions";
-import RowAtivoQtdeBoletas from "shared/componentes/RowAtivoQtdeBoletas";
+import RowAtivoQtdeBoletas from "modules/boletas/components/RowAtivoQtdeBoletas";
 import {
   pesquisarAtivoOnEnterAction,
   enviarOrdemAction,

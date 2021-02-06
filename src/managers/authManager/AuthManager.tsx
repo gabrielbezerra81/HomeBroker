@@ -16,7 +16,7 @@ const AuthManager = () => {
   const dispatch = useDispatchStorePrincipal();
 
   const {
-    systemReducer: { authData },
+    systemReducer: { authData, token },
   } = useStateStorePrincipal();
 
   const [requestInterceptor, setRequestInterceptor] = useState(-1);
@@ -117,6 +117,7 @@ const AuthManager = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
+  // Alertar sessão expirada
   useEffect(() => {
     if (
       previousShouldAlert !== null &&
@@ -126,6 +127,11 @@ const AuthManager = () => {
       alert("Sua sessão expirou! Faça login novamente.");
     }
   }, [previousShouldAlert, shouldAlertSessionExpired]);
+
+  // Atualizar token na instãncia do Axios
+  useEffect(() => {
+    api.defaults.headers.authorization = `${token.tokenType} ${token.accessToken}`;
+  }, [token]);
 
   return null;
 };

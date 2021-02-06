@@ -4,7 +4,6 @@ import { Form, Button } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import { clearReduxStateFromStorageAction } from "redux/actions/system/SystemActions";
 import FloatingLabelInput from "react-floating-label-input";
-import { navigate } from "@reach/router";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import keycloak from "Keycloak";
 
@@ -106,13 +105,13 @@ const TelaLogin = ({ path, keycloakLogin }) => {
                 <MDBIcon icon="lock" className="mr-1" />
                 <h6 className="ml-1">Esqueci minha senha</h6>
               </div>
-              <Button
+              {/* <Button
                 variant="primary"
                 className="flexJustifyCenter"
                 onClick={() => navigate("/cadastro")}
               >
                 <h6 className="ml-1">Cadastre-se</h6>
-              </Button>
+              </Button> */}
             </div>
           </Form>
         </div>

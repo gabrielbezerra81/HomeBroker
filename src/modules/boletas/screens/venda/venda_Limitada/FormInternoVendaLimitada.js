@@ -12,11 +12,11 @@ import {
   mudarCheckSalvarAssinaturaAction,
   mudarAtributoBoletaAction,
 } from "modules/boletas/duck/actions/formInputActions";
-import RowFormValidade from "shared/componentes/RowFormValidade";
-import RowFormAssinatura from "shared/componentes/RowFormAssinatura";
+import RowFormValidade from "modules/boletas/components/RowFormValidade";
+import RowFormAssinatura from "modules/boletas/components/RowFormAssinatura";
 import { VENDA_LIMITADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalLimitada } from "shared/utils/CalculoValorTotal";
-import RowAtivoQtdeBoletas from "shared/componentes/RowAtivoQtdeBoletas";
+import RowAtivoQtdeBoletas from "modules/boletas/components/RowAtivoQtdeBoletas";
 import {
   pesquisarAtivoOnEnterAction,
   enviarOrdemAction,

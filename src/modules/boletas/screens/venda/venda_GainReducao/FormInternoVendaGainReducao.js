@@ -11,8 +11,8 @@ import {
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction,
 } from "modules/boletas/duck/actions/formInputActions";
-import RowFormValidade from "shared/componentes/RowFormValidade";
-import RowFormAssinatura from "shared/componentes/RowFormAssinatura";
+import RowFormValidade from "modules/boletas/components/RowFormValidade";
+import RowFormAssinatura from "modules/boletas/components/RowFormAssinatura";
 import { VENDA_GAINREDUCAO_NAMESPACE } from "constants/ActionTypes";
 import TabelaGainReducao from "./TabelaGainReducao";
 import { pesquisarAtivoOnEnterAction } from "modules/boletas/duck/actions/boletasAPIActions";

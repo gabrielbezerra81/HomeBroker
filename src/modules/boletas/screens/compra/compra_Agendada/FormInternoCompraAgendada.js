@@ -12,12 +12,12 @@ import {
   mudarQtdAction,
   mudarAtributoBoletaAction,
 } from "modules/boletas/duck/actions/formInputActions";
-import RowFormValidade from "shared/componentes/RowFormValidade";
-import RowFormAssinatura from "shared/componentes/RowFormAssinatura";
+import RowFormValidade from "modules/boletas/components/RowFormValidade";
+import RowFormAssinatura from "modules/boletas/components/RowFormAssinatura";
 import { COMPRA_AGENDADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalAgendada } from "shared/utils/CalculoValorTotal";
 import { compraAgendadaAction } from "modules/boletas/duck/actions/AppBoletasActions";
-import RowAtivoQtdeBoletas from "shared/componentes/RowAtivoQtdeBoletas";
+import RowAtivoQtdeBoletas from "modules/boletas/components/RowAtivoQtdeBoletas";
 import {
   pesquisarAtivoOnEnterAction,
   enviarOrdemAction,

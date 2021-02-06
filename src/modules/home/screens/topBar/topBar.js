@@ -10,7 +10,7 @@ import { ReactComponent as IconeAbrirMenu } from "assets/more.svg";
 import { ReactComponent as IconeHome } from "assets/IconeHome.svg";
 import { StorePrincipalContext } from "redux/StoreCreation";
 
-class BarraTopoTelaPrincipal extends React.Component {
+class topBar extends React.Component {
   render() {
     const { props } = this;
     const {
@@ -119,4 +119,4 @@ export default connect(
   },
   null,
   { context: StorePrincipalContext },
-)(BarraTopoTelaPrincipal);
+)(topBar);

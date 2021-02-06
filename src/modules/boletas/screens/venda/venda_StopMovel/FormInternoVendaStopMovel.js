@@ -16,9 +16,9 @@ import {
 } from "modules/boletas/duck/actions/formInputActions";
 import { VENDA_STOPMOVEL_NAMESPACE } from "constants/ActionTypes";
 import TabelaOrdens from "./TabelaOrdens";
-import RowFormValidade from "shared/componentes/RowFormValidade";
-import RowFormAssinatura from "shared/componentes/RowFormAssinatura";
-import RowAtivoQtdeBoletas from "shared/componentes/RowAtivoQtdeBoletas";
+import RowFormValidade from "modules/boletas/components/RowFormValidade";
+import RowFormAssinatura from "modules/boletas/components/RowFormAssinatura";
+import RowAtivoQtdeBoletas from "modules/boletas/components/RowAtivoQtdeBoletas";
 import {
   pesquisarAtivoOnEnterAction,
   enviarOrdemAction,

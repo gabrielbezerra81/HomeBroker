@@ -1,15 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 // import LogRocket from "logrocket";
-import MenuLateralUsuario from "screens/home/userLeftSideMenu/UserLeftSideMenu";
-import BarraTopoTelaPrincipal from "screens/home/topBar/BarraTopoTelaPrincipal";
+import MenuLateralUsuario from "./userLeftSideMenu/UserLeftSideMenu";
+import BarraTopoTelaPrincipal from "./topBar/topBar";
 import { StorePrincipalContext, GlobalContext } from "redux/StoreCreation";
 import {
   checkIfSystemStateHasChangedShapeAction,
   deslogarUsuarioAction,
 } from "redux/actions/system/SystemActions";
-import LeftActionBar from "screens/home/leftActionBar/LeftActionBar";
-import MenuOrdens from "screens/home/boletasHoverMenu/MenuOrdens";
+import LeftActionBar from "./leftActionBar/LeftActionBar";
+import MenuOrdens from "./boletasHoverMenu/MenuOrdens";
 import MainScreenTabs from "./mainScreenTabs/MainScreenTabs";
 import PopupContainer from "./PopupContainer";
 import { compose } from "redux";
@@ -20,6 +20,8 @@ import InitialPlanner from "modules/financialPlanner/screens/initialPlanner/Init
 import DetailedPlanner from "modules/financialPlanner/screens/detailedPlanner/DetailedPlanner";
 import MultiBoxContainer from "modules/multiBox/screens/MultiBoxContainer";
 import OptionsTable from "modules/optionsTable/screens/OptionsTable";
+import useStateStorePrincipal from "hooks/useStateStorePrincipal";
+import { Redirect } from "@reach/router";
 
 const OrdensExecucao = React.lazy(() =>
   import("modules/ordersExec/screens/OrdensExecucao"),
@@ -36,16 +38,7 @@ const margemParaMenuLateral = (isOpenLeftUserMenu) => {
   return "";
 };
 
-class TelaPrincipal extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      shouldAlertSessionExpired: false,
-      previousShouldAlert: null,
-    };
-  }
-
+class Home extends React.Component {
   componentDidMount() {
     this.props.checkIfSystemStateHasChangedShapeAction();
 
@@ -184,8 +177,6 @@ class TelaPrincipal extends React.Component {
 
             <MenuOrdens />
 
-            {/* <QuoteBoxContainer /> */}
-
             <MultiBoxContainer />
           </div>
         </div>
@@ -212,7 +203,7 @@ const mapStateToPropsAppPrincipal = (state) => ({
   isOpenOptionsTable: state.systemReducer.isOpenOptionsTable,
 });
 
-export default compose(
+const ConnectedHome = compose(
   connect(mapStateToPropsGlobalStore, {}, null, { context: GlobalContext }),
   connect(
     mapStateToPropsAppPrincipal,
@@ -225,7 +216,19 @@ export default compose(
       context: StorePrincipalContext,
     },
   ),
-)(TelaPrincipal);
+)(Home);
+
+const SecuredHome = ({ path }) => {
+  const {
+    systemReducer: { isLogged },
+  } = useStateStorePrincipal();
+
+  if (isLogged) return <ConnectedHome />;
+
+  return <Redirect to="/" noThrow />;
+};
+
+export default SecuredHome;
 
 /*
 
