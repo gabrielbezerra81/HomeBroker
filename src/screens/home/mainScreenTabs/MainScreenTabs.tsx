@@ -133,7 +133,7 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
       const initialRightMenu = isOpenRightSideMenu ? " - 214px" : "";
 
       navContainer.style.width =
-        "calc(100% - 43px - 81px - 32px - 3px" +
+        "calc(100% - 50px - 81px - 32px - 3px" +
         initialLeftMenu +
         initialRightMenu +
         ")";

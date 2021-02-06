@@ -3,6 +3,7 @@ import React, { useMemo, useState } from "react";
 import { Form, Table } from "react-bootstrap";
 import _ from "lodash";
 import produce from "immer";
+import { IoMdAddCircle } from "react-icons/io";
 
 interface CategoryTableProps {
   category: {
@@ -65,7 +66,9 @@ const CategoryTable: React.FC<CategoryTableProps> = ({ category, order }) => {
               defaultValue={category.title}
               className="darkSimpleInput"
             />
-            <button className="brokerCustomButton addCodeButton">+</button>
+            <button className="brokerCustomButton addCodeButton">
+              <IoMdAddCircle size={18} fill="#C4C4C4" />
+            </button>
           </td>
         </tr>
         {category.lines.map((line, index) => {

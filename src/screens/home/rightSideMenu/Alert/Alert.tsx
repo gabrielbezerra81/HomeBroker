@@ -8,8 +8,8 @@ import React, {
 import { FiChevronDown } from "react-icons/fi";
 import PerfectScroll from "react-perfect-scrollbar";
 
-import borderedPlusIcon from "assets/borderedPlus.png";
-import { AiFillPlusCircle } from "react-icons/ai";
+// import borderedPlusIcon from "assets/borderedPlus.png";
+import { IoMdAddCircle } from "react-icons/io";
 
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
@@ -105,7 +105,7 @@ const Alert: React.FC = () => {
         className="brokerCustomButton newAlertButton"
       >
         <h6>ALERTAS</h6>
-        <AiFillPlusCircle fill="#333333" />
+        <IoMdAddCircle fill="#333333" size={22} />
         {/* <div>
           <img src={borderedPlusIcon} alt="+" />
         </div> */}

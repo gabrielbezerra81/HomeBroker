@@ -15,7 +15,7 @@
   .barVisibilityButton {
     background: linear-gradient(#333, #222);
     height: 32px;
-    width: 43px;
+    width: 50px;
     border-bottom: 1px solid #000;
     display: flex;
     align-items: center;
@@ -108,7 +108,7 @@
 .rightSideBar {
   background: linear-gradient(#333, #222);
   transition: opacity 0.2s;
-  width: 43px;
+  width: 50px;
   flex: 1;
   height: 100%;
 
@@ -118,21 +118,22 @@
 
   > div {
     height: 65px;
-    width: 43px;
+    width: 50px;
     border-bottom: 1px solid #000;
     display: flex;
     align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-around;
     transition: opacity 0.2s;
     cursor: pointer;
 
-    svg path {
-      transition: stroke 0.2s;
-    }
+    font-size: 10px;
+    color: #8ba5c2;
+    font-weight: 500;
 
     &.activeItem {
       img {
-        filter: brightness(1.2);
+        filter: brightness(1.3);
       }
 
       svg path {
@@ -141,6 +142,7 @@
     }
 
     img {
+      filter: brightness(1.1);
       max-width: 32px;
     }
 

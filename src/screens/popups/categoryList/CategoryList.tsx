@@ -8,6 +8,9 @@ import React, {
   useRef,
   useEffect,
 } from "react";
+
+import { IoMdAddCircle } from "react-icons/io";
+
 import Draggable, { DraggableData } from "react-draggable";
 import { ModalHeaderClean } from "shared/componentes/PopupHeader";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
@@ -198,7 +201,7 @@ const CategoryList: React.FC = () => {
         <div className="mcontent">
           <ModalHeaderClean onClose={onClose}>
             <button className="brokerCustomButton">
-              + Incluir nova categoria
+              <IoMdAddCircle size={18} fill="#C4C4C4" /> Incluir nova categoria
             </button>
           </ModalHeaderClean>
 
