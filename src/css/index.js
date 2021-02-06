@@ -28,8 +28,7 @@ import "./tela_principal/UserLeftSideMenu.scss";
 import "./tela_principal/MainScreenTabs.scss";
 import "./ordens_execucao/OrdensExecucao.css";
 import "./ordens_execucao/OpcoesOrdemExec.css";
-import "./multileg_/multileg.scss";
-import "./multileg_/multilegAlert.scss";
+
 import "./posicao_custodia/PosicaoCustodia.css";
 import "./posicao_custodia/PosicaoDetalhada.css";
 import "./relatorio_detalhado/RelatorioDetalhado.css";
@@ -59,8 +58,6 @@ import "./componentes_customizados/EmblemaSimples.css";
 import "./componentes_customizados/IconeSeta.css";
 import "./componentes_customizados/CustomButton.scss";
 import "./componentes_customizados/CustomTooltip.scss";
-
-import "./multiBox/multiBox.scss";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./componentes_customizados/SelectANTD.css";

@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import ConfigurarStop from "screens/popups/boletas/compra/compra_StartStop/ConfigurarStop";
 import ConfigurarStopVenda from "screens/popups/boletas/venda/venda_StartStop/ConfigurarStopVenda";
 import FiltrarOrdens from "screens/popups/ordens_em_execucao/FiltrarOrdens"; //posicaoFormCompraVenda
-import ConfigComplementar from "screens/popups/multileg_/ConfigComplementar";
+import ConfigComplementar from "modules/multileg/screens/ConfigComplementar";
 import { Resizable } from "re-resizable";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import { StorePrincipalContext } from "redux/StoreCreation";

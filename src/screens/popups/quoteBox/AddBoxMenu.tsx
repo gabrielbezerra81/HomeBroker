@@ -6,7 +6,7 @@ import boxIcon from "assets/boxIcon.png";
 import boxMenuArrow from "assets/boxMenuArrow.png";
 
 import { IoMdAddCircle } from "react-icons/io";
-import { addMultiBoxAction } from "redux/actions/multiBox/multiBoxActions";
+import { addMultiBoxAction } from "modules/multiBox/duck/actions/multiBoxActions";
 import { usePermissions } from "context/PermissionContext";
 
 const AddBoxMenu: React.FC = () => {

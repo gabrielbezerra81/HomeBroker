@@ -20,20 +20,20 @@ import {
   cloneMultilegTabs,
   cloneMultilegQuotes,
   updateMultilegStateAction,
-} from "redux/actions/multileg/MultilegActions";
-import { searchMultilegSymbolData } from "redux/actions/multileg/MultilegAPIAction";
+} from "modules/multileg/duck/actions/MultilegActions";
+import { searchMultilegSymbolData } from "modules/multileg/duck/actions/MultilegAPIAction";
 import { erro_exportar_ordens_multileg } from "constants/AlertaErros";
 import {
   calculoPreco,
   calculoMDC,
-} from "screens/popups/multileg_/CalculoPreco";
+} from "modules/multileg/screens/CalculoPreco";
 import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
 import { getReducerStateStorePrincipal } from "hooks/utils";
 import {
   abrirItemBarraLateralAction,
   updateManySystemState,
 } from "../system/SystemActions";
-import { updateManyMultilegState } from "../multileg/utils";
+import { updateManyMultilegState } from "modules/multileg/duck/actions/utils";
 import * as ActionTypes from "constants/ActionTypes";
 import { getProactiveOrdersExecAPI } from "api/proactive/ProativosAPI";
 

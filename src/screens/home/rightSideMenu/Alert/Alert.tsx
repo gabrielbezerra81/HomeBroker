@@ -21,7 +21,7 @@ import {
 } from "redux/actions/system/SystemActions";
 import AlertItem from "./AlertItem";
 import { listAlertsAPI } from "api/API";
-import { updateOneMultilegState } from "redux/actions/multileg/utils";
+import { updateOneMultilegState } from "modules/multileg/duck/actions/utils";
 
 const Alert: React.FC = () => {
   const dispatchGlobal = useDispatchGlobalStore();

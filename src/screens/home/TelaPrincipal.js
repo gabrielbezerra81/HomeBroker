@@ -13,19 +13,18 @@ import MenuOrdens from "screens/home/boletasHoverMenu/MenuOrdens";
 import MainScreenTabs from "./mainScreenTabs/MainScreenTabs";
 import PopupContainer from "./PopupContainer";
 import { compose } from "redux";
-import api from "api/apiConfig";
 import AddBoxMenu from "../popups/quoteBox/AddBoxMenu";
 import RightSideMenu from "./rightSideMenu/RightSideMenu";
 import CategoryList from "screens/popups/categoryList/CategoryList";
 import InitialPlanner from "screens/popups/financialPlanner/InitialPlanner/InitialPlanner";
 import DetailedPlanner from "screens/popups/financialPlanner/DetailedPlanner/DetailedPlanner";
-import MultiBoxContainer from "screens/popups/multiBox/MultiBoxContainer";
+import MultiBoxContainer from "modules/multiBox/screens/MultiBoxContainer";
 import OptionsTable from "screens/popups/optionsTable/OptionsTable";
 
 const OrdensExecucao = React.lazy(() =>
   import("screens/popups/ordens_em_execucao/OrdensExecucao"),
 );
-const Multileg = React.lazy(() => import("screens/popups/multileg_/Multileg"));
+const Multileg = React.lazy(() => import("modules/multileg/screens/Multileg"));
 const PosicaoEmCustodia = React.lazy(() =>
   import("screens/popups/posicao_custodia/PosicaoEmCustodia"),
 );

@@ -2,10 +2,7 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
-import {
-  logarUsuarioAction,
-  clearReduxStateFromStorageAction,
-} from "redux/actions/system/SystemActions";
+import { clearReduxStateFromStorageAction } from "redux/actions/system/SystemActions";
 import FloatingLabelInput from "react-floating-label-input";
 import { navigate } from "@reach/router";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";

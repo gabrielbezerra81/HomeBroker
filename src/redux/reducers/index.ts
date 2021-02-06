@@ -18,11 +18,11 @@ import {
 import appBoletasReducer from "./boletas/appBoletasReducer";
 import THLReducer from "./thl/THLReducer";
 import SystemReducer from "redux/reducers/system/SystemReducer";
-import MultilegReducer from "redux/reducers/multileg/MultilegReducer";
+import MultilegReducer from "modules/multileg/duck/MultilegReducer";
 import PositionReducer from "redux/reducers/position/PositionReducer";
 import OrdensExecucaoReducer from "redux/reducers/ordersExecuting/OrdensExecReducer";
 import FinancialPlannerReducer from "./financialPlanner/FinancialPlannerReducer";
-import multiBoxReducer from "./multiBox/multiBoxReducer";
+import multiBoxReducer from "modules/multiBox/duck/multiBoxReducer";
 
 export const BoletasReducer = combineReducers({
   bookOfertaReducer: bookOfertaReducer,

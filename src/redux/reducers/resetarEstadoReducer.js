@@ -2,7 +2,7 @@ import _ from "lodash";
 import {
   cloneMultilegTabs,
   cloneMultilegQuotes,
-} from "redux/actions/multileg/MultilegActions";
+} from "modules/multileg/duck/actions/MultilegActions";
 
 export const resetarEstadoRedux = ({
   state,

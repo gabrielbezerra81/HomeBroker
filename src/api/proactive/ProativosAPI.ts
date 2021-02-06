@@ -5,7 +5,7 @@ import {
   url_multiStructure_ids,
   url_ordersExec_ids,
 } from "api/url";
-import { MultilegQuote } from "types/multileg/multileg";
+import { MultilegQuote } from "modules/multileg/types/multileg";
 import { THLQuote } from "types/thl/thl";
 import proactiveAPI from "./proactiveConfig";
 

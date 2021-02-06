@@ -13,13 +13,13 @@ import {
   cloneMultilegQuotes,
   cloneMultilegTabs,
   updateMultilegStateAction,
-} from "redux/actions/multileg/MultilegActions";
+} from "modules/multileg/duck/actions/MultilegActions";
 import { erro_exportar_ordens_multileg } from "constants/AlertaErros";
-import { searchMultilegSymbolData } from "redux/actions/multileg/MultilegAPIAction";
-import { calculoPreco } from "screens/popups/multileg_/CalculoPreco";
+import { searchMultilegSymbolData } from "modules/multileg/duck/actions/MultilegAPIAction";
+import { calculoPreco } from "modules/multileg/screens/CalculoPreco";
 import { formatarNumero } from "redux/reducers/boletas/formInputReducer";
 import { updateManyTHLState, updateOneTHLState } from "./utils";
-import { updateManyMultilegState } from "../multileg/utils";
+import { updateManyMultilegState } from "modules/multileg/duck/actions/utils";
 
 export const mudarVariavelTHLAction = (nome, valor) => {
   return (dispatch) => {

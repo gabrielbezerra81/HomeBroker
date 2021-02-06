@@ -4,15 +4,15 @@ import { RiCloseCircleFill } from "react-icons/ri";
 import { FiSearch } from "react-icons/fi";
 import moment from "moment";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
-import { AlertAPI } from "types/multileg/multileg";
+import { AlertAPI } from "modules/multileg/types/multileg";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { updateAlertAPI } from "api/API";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 import {} from "redux/actions/system/SystemActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import produce from "immer";
-import { updateOneMultilegState } from "redux/actions/multileg/utils";
-import { openAlertInMultileg } from "redux/actions/multileg/AlertsAction";
+import { updateOneMultilegState } from "modules/multileg/duck/actions/utils";
+import { openAlertInMultileg } from "modules/multileg/duck/actions/AlertsAction";
 
 interface AlertItemProps {
   alert: AlertAPI;

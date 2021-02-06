@@ -1,4 +1,4 @@
-import { SymbolToolTipInfo } from "types/multiBox/MultiBoxState";
+import { SymbolToolTipInfo } from "modules/multiBox/types/MultiBoxState";
 import api from "./apiConfig";
 import { url_stockInfo_symbol } from "./url";
 
