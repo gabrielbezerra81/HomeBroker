@@ -1,3 +1,5 @@
+@import "../../constants";
+
 .rightSideMenu {
   position: fixed;
   height: 100vh;
@@ -15,7 +17,7 @@
   .barVisibilityButton {
     background: linear-gradient(#333, #222);
     height: 32px;
-    width: 50px;
+    width: $rightSideBarWidth;
     border-bottom: 1px solid #000;
     display: flex;
     align-items: center;
@@ -108,7 +110,7 @@
 .rightSideBar {
   background: linear-gradient(#333, #222);
   transition: opacity 0.2s;
-  width: 50px;
+  width: $rightSideBarWidth;
   flex: 1;
   height: 100%;
 
@@ -118,7 +120,7 @@
 
   > div {
     height: 65px;
-    width: 50px;
+    width: $rightSideBarWidth;
     border-bottom: 1px solid #000;
     display: flex;
     align-items: center;

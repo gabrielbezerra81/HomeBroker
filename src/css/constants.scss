@@ -1,0 +1,9 @@
+$rightSideBarWidth: 50px;
+$leftSideBarWidth: 81px;
+$tabsMarginToLeftSideBar: 32px;
+
+:export {
+  rightSideBarWidth: $rightSideBarWidth;
+  leftSideBarWidth: $leftSideBarWidth;
+  tabsMarginToLeftSideBar: $tabsMarginToLeftSideBar;
+}

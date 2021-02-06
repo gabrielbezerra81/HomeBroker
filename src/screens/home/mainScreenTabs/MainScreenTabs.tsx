@@ -10,6 +10,8 @@ import {
 import usePrevious from "hooks/usePrevious";
 import TabButton from "./TabButton";
 
+import styles from "css/constants.scss";
+
 interface TabChild {
   key: string;
   index: number;
@@ -21,6 +23,8 @@ interface TabChild {
 interface MainScreenTabsProps {
   children: Array<React.ReactNode>;
 }
+
+const { rightSideBarWidth, leftSideBarWidth, tabsMarginToLeftSideBar } = styles;
 
 const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
   const {
@@ -133,7 +137,7 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
       const initialRightMenu = isOpenRightSideMenu ? " - 214px" : "";
 
       navContainer.style.width =
-        "calc(100% - 50px - 81px - 32px - 3px" +
+        `calc(100% - ${rightSideBarWidth} - ${leftSideBarWidth} - ${tabsMarginToLeftSideBar} - 3px` +
         initialLeftMenu +
         initialRightMenu +
         ")";
