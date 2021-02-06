@@ -68,6 +68,21 @@ const LoginRedirect: React.FC<RouteComponentProps> = ({ path }) => {
 
               api.defaults.headers.authorization = `${data.token_type} ${data.access_token}`;
 
+              await new Promise((resolve, reject) => {
+                keycloak
+                  .loadUserInfo()
+                  .success(() => {
+                    resolve(true);
+                  })
+                  .error(() => {
+                    reject(false);
+                  });
+              });
+
+              const { given_name } = (keycloak.userInfo as any) || {
+                given_name: "",
+              };
+
               const accounts = await getUserAccountsAPI();
 
               let selectedAccount = {};
@@ -87,6 +102,7 @@ const LoginRedirect: React.FC<RouteComponentProps> = ({ path }) => {
                   roles,
                   accounts,
                   selectedAccount,
+                  connectedUser: given_name,
                 }),
               );
             }
