@@ -9,8 +9,8 @@ import { updateOneSystemStateAction } from "redux/actions/system/SystemActions";
 // import { ReactComponent as OrdersIcon } from "assets/menuLateralDireito/ordens.svg";
 // import { ReactComponent as PositionIcon } from "assets/menuLateralDireito/posicao.svg";
 
-import alertIcon from "assets/menuLateralDireito/alerta2.png";
-import ordersIcon from "assets/menuLateralDireito/ordensExecucao2.png";
+import alertIcon from "assets/menuLateralDireito/alerta.png";
+import ordersIcon from "assets/menuLateralDireito/ordensExecucao.png";
 import positionIcon from "assets/menuLateralDireito/carteira.png";
 
 import Alert from "./Alert/Alert";

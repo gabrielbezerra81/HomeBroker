@@ -6,8 +6,6 @@ import {
   url_getAccounts,
 } from "api/url";
 
-import keycloak from "Keycloak";
-
 import axios from "axios";
 import qs from "qs";
 
