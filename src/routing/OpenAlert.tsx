@@ -6,12 +6,12 @@ import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import React, { useState, useEffect } from "react";
-import { openAlertInMultileg } from "redux/actions/multileg/AlertsAction";
+import { openAlertInMultileg } from "modules/multileg/duck/actions/AlertsAction";
 import { updateManySystemState } from "redux/actions/system/SystemActions";
 
 import keycloak from "Keycloak";
 
-import { AlertAPI } from "types/multileg/multileg";
+import { AlertAPI } from "modules/multileg/types/multileg";
 
 const redirectURL =
   // eslint-disable-next-line no-restricted-globals

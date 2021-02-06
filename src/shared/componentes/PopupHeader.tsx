@@ -1,8 +1,8 @@
 import React from "react";
 import { Button, Col, Row, Form } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
-import { mudarInputHeaderAction } from "redux/actions/boletas/bookOfertaActions";
-import { listarBookOfertaOnEnterAction } from "redux/actions/boletas/bookOfertaAPIActions";
+import { mudarInputHeaderAction } from "modules/boletas/duck/actions/bookOfertaActions";
+import { listarBookOfertaOnEnterAction } from "modules/boletas/duck/actions/bookOfertaAPIActions";
 import {
   fecharFormAction,
   abrirFormAction,
@@ -10,8 +10,8 @@ import {
 } from "redux/actions/GlobalAppActions";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
-import { openCloseMultilegExtraConfigsAction } from "redux/actions/multileg/MultilegActions";
-import { updateOneOrdersExecStateAction } from "redux/actions/ordensExecucao/OrdensExecActions";
+import { openCloseMultilegExtraConfigsAction } from "modules/multileg/duck/actions/MultilegActions";
+import { updateOneOrdersExecStateAction } from "modules/ordersExec/duck/actions/OrdensExecActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useStateGlobalStore from "hooks/useStateGlobalStore";
 import useDispatchBoletas from "hooks/useDispatchBoletas";

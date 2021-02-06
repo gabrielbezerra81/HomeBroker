@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import Draggable from "react-draggable";
 import { connect } from "react-redux";
 
-import ConfigurarStop from "screens/popups/boletas/compra/compra_StartStop/ConfigurarStop";
-import ConfigurarStopVenda from "screens/popups/boletas/venda/venda_StartStop/ConfigurarStopVenda";
-import FiltrarOrdens from "screens/popups/ordens_em_execucao/FiltrarOrdens"; //posicaoFormCompraVenda
-import ConfigComplementar from "screens/popups/multileg_/ConfigComplementar";
+import ConfigurarStop from "modules/boletas/screens/compra/compra_StartStop/ConfigurarStop";
+import ConfigurarStopVenda from "modules/boletas/screens/venda/venda_StartStop/ConfigurarStopVenda";
+import FiltrarOrdens from "modules/ordersExec/screens/FiltrarOrdens"; //posicaoFormCompraVenda
+import ConfigComplementar from "modules/multileg/screens/ConfigComplementar";
 import { Resizable } from "re-resizable";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import { StorePrincipalContext } from "redux/StoreCreation";

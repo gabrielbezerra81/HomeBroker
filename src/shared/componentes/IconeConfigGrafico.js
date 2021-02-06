@@ -6,7 +6,7 @@ import {
   abrirFormAction,
   abrirFormConfigurarAction,
 } from "redux/actions/GlobalAppActions";
-import { openCloseMultilegExtraConfigsAction } from "redux/actions/multileg/MultilegActions";
+import { openCloseMultilegExtraConfigsAction } from "modules/multileg/duck/actions/MultilegActions";
 import useStateGlobalStore from "hooks/useStateGlobalStore";
 import useDispatchBoletas from "hooks/useDispatchBoletas";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";

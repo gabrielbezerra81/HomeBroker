@@ -1,0 +1,583 @@
+@import "./multilegAlert.scss";
+
+#multileg {
+  width: 1255px;
+
+  .mcontent {
+    font-size: 0.75rem;
+    padding: 0;
+    overflow: hidden;
+    transition: height 0.3s ease;
+    height: auto;
+  }
+
+  .tab-content,
+  .tab-pane {
+    height: 100%;
+  }
+
+  input,
+  select {
+    background-color: #333;
+    border-color: #333;
+    color: var(--color-text-primary) !important;
+    font-size: 0.73rem;
+    box-sizing: content-box;
+  }
+
+  select {
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
+  }
+
+  button {
+    padding-top: 0.1rem !important;
+  }
+
+  .tableMultileg {
+    .closeColumn {
+      &:hover {
+        opacity: 1;
+        svg {
+          stroke: #ce202a;
+        }
+      }
+
+      svg {
+        transition: stroke 0.2s;
+      }
+    }
+
+    .qtdeColumn {
+      input {
+        color: #ff9a2c !important;
+      }
+    }
+
+    .multilegOffersSpinners {
+      padding: 6px 0 !important;
+      vertical-align: middle;
+
+      > span {
+        margin-right: 6px;
+        vertical-align: text-bottom;
+      }
+
+      > div {
+        height: 22px;
+        width: 22px;
+      }
+    }
+  }
+}
+
+.divBook {
+  max-width: 229.25px;
+
+  .rowPrecoTotal {
+    padding-bottom: 18px;
+
+    .col:nth-child(2) {
+      > span {
+        width: 124px;
+        position: absolute;
+        right: 17px;
+      }
+    }
+  }
+
+  .multilegInputGroup {
+    > div:first-child {
+      padding-right: 0;
+
+      h6 {
+        font-size: 0.9rem;
+      }
+    }
+
+    > div:nth-child(2) {
+      padding: 0;
+
+      &.inputPaddingRight {
+        padding-right: 11px;
+      }
+    }
+  }
+}
+
+.operationButtonRow {
+  padding: 0 23px 0 24px;
+  justify-content: space-between;
+  display: flex;
+  margin-bottom: 8px;
+
+  button {
+    flex: 1;
+  }
+
+  button + button {
+    margin-left: 8px;
+  }
+}
+
+.navTabMultileg {
+  height: 24px;
+  text-align: center;
+  padding: 0 0.5rem;
+  border-color: var(--color-border-light);
+  margin: 0 !important;
+  margin-top: 0.5rem !important;
+  border-bottom: 1px solid var(--color-border-light) !important;
+}
+
+.navTabMultileg a {
+  width: 85px;
+  height: 24px;
+  font-size: 0.95rem;
+  padding: 0;
+  background-color: rgb(40, 40, 40);
+  margin-right: 3px;
+  color: var(--color-text-primary);
+  border: none;
+  border-bottom: 1px solid var(--color-border-light);
+  text-align: center;
+}
+
+.navTabMultileg a:focus {
+  outline: none !important;
+}
+
+.navTabMultileg .col {
+  padding: 0 4px;
+}
+
+.abaAtiva {
+  color: var(--color-text-primary) !important;
+  background-color: rgb(40, 40, 40) !important;
+  border: 1px solid var(--color-border-light) !important;
+  border-bottom: none !important;
+}
+
+a.botaoAddAba.active {
+  color: var(--color-text-primary) !important;
+  background-color: rgb(40, 40, 40) !important;
+}
+
+.containerPrecoCustoModo {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 4rem;
+  height: 24px;
+  min-width: 600px;
+}
+
+.containerPrecoCustoModo .form-group {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+}
+
+.colPrecoCustoModo {
+  margin-right: 15px;
+}
+
+.containerPrecoCustoModo input {
+  max-width: 70px;
+  margin-left: 5px;
+  height: 17px !important ;
+  font-size: 0.7rem;
+}
+
+.containerPrecoCustoModo .form-label {
+  font-size: 0.9rem;
+  height: 22px;
+}
+
+.containerAbaMultileg {
+  display: flex;
+  color: #be9117;
+  height: 100%;
+}
+
+.containerAbaMultileg > div:first-child {
+  flex: 8;
+  border-right: 1px solid var(--color-border-light);
+}
+
+.containerAbaMultileg > div:last-child {
+  flex: 2;
+}
+
+.divDetalhesAbaMultileg {
+  display: flex;
+  flex-direction: row;
+}
+
+.divDetalhesAbaMultileg .divColunaDetalhes:nth-child(2) {
+  flex: 7;
+}
+
+.divDetalhesAbaMultileg .divColunaDetalhes:nth-child(3) {
+  flex: 6;
+}
+
+.divColunaDetalhes {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  padding: 0 0.5rem;
+  flex: 8;
+  justify-content: space-evenly;
+  height: 53px;
+  padding-bottom: 7px;
+}
+
+.divColunaDetalhes .form-label {
+  font-size: 0.9rem;
+}
+
+.divColunaDetalhes .textoValor {
+  margin: 0 1rem;
+  color: #ff9a2c;
+}
+
+.textoLaranja {
+  color: var(--color-orange-primary) !important;
+}
+
+.divFlexRowDetalhesAba {
+  flex: 1;
+  text-align: center;
+}
+
+.divFlexRowDetalhesAba > div {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1px;
+}
+
+.divFlexRowDetalhesAba button {
+  flex: 1;
+  max-width: 65px;
+  background-color: var(--color-buy-primary-blue);
+  border-color: var(--color-buy-primary-blue);
+}
+
+.tableMultileg {
+  color: #ddd;
+  padding: 20px;
+
+  thead {
+    color: #be9117;
+
+    th:last-child {
+      min-width: 100px;
+    }
+  }
+
+  tbody tr {
+    height: 27px;
+  }
+
+  td {
+    padding: 3px !important;
+
+    > .form-group {
+      display: flex;
+      justify-content: center;
+    }
+
+    // Coluna Ult.Neg.
+    &:nth-child(11) {
+      padding: 0 !important;
+      vertical-align: middle;
+
+      span {
+        border-radius: 4px;
+        border: 1px solid transparent;
+        width: 100%;
+        display: flex;
+        height: 25px;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+.divCV {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.divCV h6 {
+  background-color: #444;
+  font-size: 0.67rem !important;
+  font-weight: 600;
+  width: 16px;
+  height: 16px;
+  padding-top: 2px;
+  border-radius: 5px;
+  margin: 1px 1px 0 1px;
+}
+
+.cvCompra {
+  background-color: #28a745 !important;
+}
+
+.cvVenda {
+  background-color: red !important;
+}
+
+.formPrioridade {
+  width: 50px;
+}
+
+.formDespernamento {
+  width: 75px;
+}
+
+.imgModelo {
+  height: 20px;
+}
+
+.divColunaDetalhes select {
+  font-size: 0.7rem !important;
+}
+
+.inputBackgroundTransparente {
+  background-color: transparent;
+}
+
+.inputGroupPesquisaMultileg {
+  max-width: 230px;
+}
+
+.wrapperVencimento {
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapperVencimento > div {
+  display: flex;
+  width: 113.52px;
+}
+
+.tabelaBook {
+  color: #ddd;
+  padding: 20px;
+
+  thead {
+    color: #be9117;
+  }
+
+  tbody tr {
+    height: 27px;
+  }
+
+  td {
+    padding: 4px !important;
+    height: 26px !important;
+  }
+
+  .priceColumn {
+    padding: 0 !important;
+    vertical-align: middle;
+
+    span {
+      border-radius: 4px;
+      border: 1px solid transparent;
+      width: 100%;
+      display: flex;
+      height: 25px;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+.textoCompra {
+  color: #098fc7;
+  margin-bottom: 7px;
+}
+
+.textoVenda {
+  color: #a5746b;
+}
+
+.colInputRange {
+  height: 15px;
+  padding-right: 9px;
+}
+
+.inputRangeMultileg {
+  background-color: transparent !important;
+  height: 11px;
+}
+
+.inputRangeMultileg::-webkit-slider-runnable-track {
+  background-color: #444 !important;
+}
+
+.inputRangeMultileg::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  background: #ffff00 !important;
+  box-shadow: 0 0 1px 2px #eaad15 !important;
+  height: 8px !important;
+  width: 8px !important;
+  margin-top: 0px !important;
+}
+
+.rowTextoInputRange > div {
+  height: 14px;
+  color: var(--color-text-primary);
+  text-align: center;
+}
+
+.icone_config_complementar {
+  right: 20px;
+  top: 5px;
+}
+
+.config_complementar {
+  width: 331px;
+  position: absolute;
+  left: 99.5%;
+  top: 0px;
+  padding-bottom: 0.5rem;
+}
+.bodyConfigComplementar h6 {
+  font-size: 0.9rem;
+}
+
+.divBotoesInput {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-color: #aaa;
+  position: relative;
+  left: -5px;
+  border-radius: 4px;
+  color: #000;
+  padding: 2px 2px;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  font-size: 11px;
+}
+
+.containerTituloAba {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0 5px;
+
+  svg {
+    margin-top: 2px;
+    transition: stroke 0.2s;
+
+    &:hover {
+      stroke: #ce202a;
+    }
+  }
+}
+
+.inputTituloAba {
+  height: 11px;
+  background-color: transparent !important;
+  border: none;
+  width: 54px;
+  border-radius: 0;
+  padding: 5px 0px 5px 4px;
+  text-align: center;
+  flex: 1;
+}
+
+.inputTituloAba:focus {
+  box-shadow: none;
+}
+
+.formDatepicker {
+  width: 100px !important;
+  margin-left: 1px !important;
+}
+
+.inputValidade {
+  width: 113.52px !important;
+}
+
+.inputDate {
+  position: relative;
+  top: -2px;
+  left: -3px;
+  width: 113.52px !important;
+}
+
+.inputSerie {
+  width: 87px;
+}
+
+.inputCodigo {
+  > div {
+    background-color: #333 !important;
+    color: var(--color-text-primary) !important;
+    width: 175px !important;
+    border: none;
+    height: 17px !important;
+    text-align: center !important;
+    font-size: 0.73rem !important;
+  }
+
+  .ant-select-selection__rendered {
+    height: 17px !important;
+    line-height: 16px !important;
+  }
+
+  input {
+    height: 17px !important;
+    text-align: center !important;
+  }
+
+  i {
+    color: #ddd !important;
+  }
+}
+
+.inputCodigoDropdown {
+  background-color: #333 !important;
+}
+
+.optionInputCodigo {
+  font-size: 0.73rem !important;
+  padding: 5px 7px !important;
+}
+
+.inputGroupStrike {
+  display: flex;
+  flex-direction: column;
+}
+
+.textoAvisoCalculoSemBook {
+  font-size: 9px;
+  color: var(--color-text-primary);
+}
+
+.strategyInput {
+  width: 113.52px;
+}
+
+.buyBorderColor {
+  border-color: var(--color-buy-primary-blue) !important;
+}
+
+.sellBorderColor {
+  border-color: var(--color-sell-primary-red) !important;
+}
+
+.neutralBorderColor {
+  border-color: #ddd !important;
+}

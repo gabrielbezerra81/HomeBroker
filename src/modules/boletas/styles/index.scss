@@ -1,0 +1,23 @@
+@import "./AppBoletas.scss";
+@import "./BookOfertas.scss";
+
+@import "./common/FormGenerico.css";
+@import "./common/FormInterno.css";
+@import "./common/Grafico.css";
+@import "./common/BodyHeader.css";
+
+@import "./buy/CompraAgendada.css";
+@import "./buy/CompraLimitada.css";
+@import "./buy/CompraMercado.css";
+@import "./buy/CompraStartStop.css";
+@import "./buy/CompraStartMovel.css";
+@import "./buy/CompraGainReducao.css";
+@import "./buy/CompraFormConfigurar.css";
+
+@import "./sell/VendaAgendada.css";
+@import "./sell/VendaLimitada.css";
+@import "./sell/VendaMercado.css";
+@import "./sell/VendaStartStop.css";
+@import "./sell/VendaStopMovel.css";
+@import "./sell/VendaGainReducao.css";
+@import "./sell/VendaFormConfigurar.css";

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
 import axios from "axios";
 import qs from "qs";
 
@@ -16,7 +16,7 @@ const AuthManager = () => {
   const dispatch = useDispatchStorePrincipal();
 
   const {
-    systemReducer: { authData },
+    systemReducer: { authData, token },
   } = useStateStorePrincipal();
 
   const [requestInterceptor, setRequestInterceptor] = useState(-1);
@@ -117,6 +117,7 @@ const AuthManager = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
+  // Alertar sessão expirada
   useEffect(() => {
     if (
       previousShouldAlert !== null &&
@@ -127,6 +128,11 @@ const AuthManager = () => {
     }
   }, [previousShouldAlert, shouldAlertSessionExpired]);
 
+  // Atualizar token na instãncia do Axios
+  useEffect(() => {
+    api.defaults.headers.authorization = `${token.tokenType} ${token.accessToken}`;
+  }, [token]);
+
   return null;
 };
 
@@ -134,7 +140,7 @@ export default AuthManager;
 
 function isTokenExpired(tokenDate: number, expiresIn: number) {
   const expireDate = new Date(tokenDate);
-  expireDate.setSeconds(expireDate.getSeconds() + expiresIn - 2400); // dura 1h, se faltar 40 minutos pra expirar já renova.
+  expireDate.setSeconds(expireDate.getSeconds() + expiresIn - 2600); // dura 1h, se faltar 40 minutos pra expirar já renova.
   const currentDate = new Date();
 
   const isExpired = moment(currentDate).isAfter(expireDate, "milliseconds");

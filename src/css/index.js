@@ -1,38 +1,16 @@
 import "./global.scss";
-import "./AppBoletas.scss";
-import "./estilo_geral_formCompraVenda/FormGenerico.css";
-import "./BookOfertas.css";
-import "./estilo_geral_formCompraVenda/FormInterno.css";
-import "./estilo_geral_formCompraVenda/Grafico.css";
-import "./estilo_geral_formCompraVenda/BodyHeader.css";
 
-import "./compra/CompraAgendada.css";
-import "./compra/CompraLimitada.css";
-import "./compra/CompraMercado.css";
-import "./compra/CompraStartStop.css";
-import "./compra/CompraStartMovel.css";
-import "./compra/CompraGainReducao.css";
-import "./compra/CompraFormConfigurar.css";
-
-import "./venda/VendaAgendada.css";
-import "./venda/VendaLimitada.css";
-import "./venda/VendaMercado.css";
-import "./venda/VendaStartStop.css";
-import "./venda/VendaStopMovel.css";
-import "./venda/VendaGainReducao.css";
-import "./venda/VendaFormConfigurar.css";
+import "modules/boletas/styles/index.scss";
+import "modules/multileg/styles/multileg.scss";
+import "modules/ordersExec/styles/OrdensExecucao.scss";
+import "modules/position/styles/Position.scss";
+import "modules/history/styles/history.scss"
 
 import "./tela_principal/TelaPrincipal.css";
 import "./tela_principal/LeftActionBar/LeftActionBar.scss";
 import "./tela_principal/UserLeftSideMenu.scss";
 import "./tela_principal/MainScreenTabs.scss";
-import "./ordens_execucao/OrdensExecucao.css";
-import "./ordens_execucao/OpcoesOrdemExec.css";
-import "./multileg_/multileg.scss";
-import "./multileg_/multilegAlert.scss";
-import "./posicao_custodia/PosicaoCustodia.css";
-import "./posicao_custodia/PosicaoDetalhada.css";
-import "./relatorio_detalhado/RelatorioDetalhado.css";
+
 import "./tela_principal/TelaLogin.css";
 import "./tela_principal/TelaCadastro.css";
 import "./tela_principal/QuoteBox.scss";
@@ -41,16 +19,6 @@ import "./tela_principal/RightSideMenu/RightSideMenu.scss";
 import "./tela_principal/RightSideMenu/ResumedPosition.scss";
 import "./tela_principal/RightSideMenu/ResumedOrder.scss";
 import "./tela_principal/RightSideMenu/Alert.scss";
-import "./tela_thl/thl.scss";
-import "./tela_thl/combinacoes.scss";
-import "./tela_thl/vencimentos.scss";
-
-import "./category_list/CategoryList.scss";
-
-import "./financialPlanner/initialPlanner/initialPlanner.scss";
-import "./financialPlanner/detailedPlanner/detailedPlanner.scss";
-
-import "./optionsTable/OptionsTable.scss";
 
 import "./componentes_customizados/CustomCheckbox.css";
 import "./componentes_customizados/CustomInput.scss";
@@ -59,8 +27,6 @@ import "./componentes_customizados/EmblemaSimples.css";
 import "./componentes_customizados/IconeSeta.css";
 import "./componentes_customizados/CustomButton.scss";
 import "./componentes_customizados/CustomTooltip.scss";
-
-import "./multiBox/multiBox.scss";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./componentes_customizados/SelectANTD.css";

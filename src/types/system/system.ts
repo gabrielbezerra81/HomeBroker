@@ -25,7 +25,7 @@ export interface Account {
   id: number;
 }
 
-export interface BoxVisibility {
-  boxKey: string;
-  visibility: boolean;
-}
+// export interface BoxVisibility {
+//   boxKey: string;
+//   visibility: boolean;
+// }

@@ -163,4 +163,41 @@ h6 {
   z-index: 99999999999 !important;
 }
 
+.inputWithSearchIcon {
+  height: 30px;
+  font-size: 0.8rem;
+  background-color: var(--color-background) !important;
+  border-color: #4d4c4c !important;
+  color: var(--color-text-primary) !important;
+  text-align: center;
+  box-sizing: border-box !important;
+
+  &:focus {
+    background-color: var(--color-background);
+    box-shadow: 0 0 0px 3.5px var(--color-input-box-shadow);
+  }
+}
+
+.appendedSearchIcon {
+  border-color: #4d4c4c !important;
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+  background-color: #4d4c4c;
+
+  i {
+    color: var(--color-background);
+  }
+}
+
+.colunaDividida {
+  display: flex;
+  flex-direction: row;
+
+  div {
+    flex: 1;
+    border-right: none;
+  }
+}
+
+
 // In your global style.css file, try: @import '~antd/dist/antd.css';
