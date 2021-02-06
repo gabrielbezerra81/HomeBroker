@@ -5,7 +5,7 @@ import BoxUpdateManager from "modules/multiBox/manager/BoxUpdateManager";
 import MultilegUpdateManager from "modules/multileg/manager/MultilegUpdateManager";
 import OrdersUpdateManager from "./updateManager/OrdersUpdateManager";
 import PositionUpdateManager from "./updateManager/PositionUpdateManager";
-import THLUpdateManager from "./updateManager/THLUpdateManager";
+import THLUpdateManager from "../modules/thl/manager/THLUpdateManager";
 
 const MainManager: React.FC = () => {
   const {

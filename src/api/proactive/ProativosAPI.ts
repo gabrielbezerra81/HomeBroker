@@ -6,7 +6,7 @@ import {
   url_ordersExec_ids,
 } from "api/url";
 import { MultilegQuote } from "modules/multileg/types/multileg";
-import { THLQuote } from "types/thl/thl";
+import { THLQuote } from "modules/thl/types/thl";
 import proactiveAPI from "./proactiveConfig";
 
 interface BoletaResponse {

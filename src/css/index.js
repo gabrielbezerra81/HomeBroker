@@ -40,16 +40,6 @@ import "./tela_principal/RightSideMenu/RightSideMenu.scss";
 import "./tela_principal/RightSideMenu/ResumedPosition.scss";
 import "./tela_principal/RightSideMenu/ResumedOrder.scss";
 import "./tela_principal/RightSideMenu/Alert.scss";
-import "./tela_thl/thl.scss";
-import "./tela_thl/combinacoes.scss";
-import "./tela_thl/vencimentos.scss";
-
-import "./category_list/CategoryList.scss";
-
-import "./financialPlanner/initialPlanner/initialPlanner.scss";
-import "./financialPlanner/detailedPlanner/detailedPlanner.scss";
-
-import "./optionsTable/OptionsTable.scss";
 
 import "./componentes_customizados/CustomCheckbox.css";
 import "./componentes_customizados/CustomInput.scss";

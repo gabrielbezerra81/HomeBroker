@@ -134,7 +134,7 @@ export default AuthManager;
 
 function isTokenExpired(tokenDate: number, expiresIn: number) {
   const expireDate = new Date(tokenDate);
-  expireDate.setSeconds(expireDate.getSeconds() + expiresIn - 2400); // dura 1h, se faltar 40 minutos pra expirar já renova.
+  expireDate.setSeconds(expireDate.getSeconds() + expiresIn - 2600); // dura 1h, se faltar 40 minutos pra expirar já renova.
   const currentDate = new Date();
 
   const isExpired = moment(currentDate).isAfter(expireDate, "milliseconds");

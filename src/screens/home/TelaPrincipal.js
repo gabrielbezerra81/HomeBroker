@@ -15,11 +15,11 @@ import PopupContainer from "./PopupContainer";
 import { compose } from "redux";
 import AddBoxMenu from "../popups/quoteBox/AddBoxMenu";
 import RightSideMenu from "./rightSideMenu/RightSideMenu";
-import CategoryList from "screens/popups/categoryList/CategoryList";
-import InitialPlanner from "screens/popups/financialPlanner/InitialPlanner/InitialPlanner";
-import DetailedPlanner from "screens/popups/financialPlanner/DetailedPlanner/DetailedPlanner";
+import CategoryList from "modules/categoryList/screens/CategoryList";
+import InitialPlanner from "modules/financialPlanner/screens/initialPlanner/InitialPlanner";
+import DetailedPlanner from "modules/financialPlanner/screens/detailedPlanner/DetailedPlanner";
 import MultiBoxContainer from "modules/multiBox/screens/MultiBoxContainer";
-import OptionsTable from "screens/popups/optionsTable/OptionsTable";
+import OptionsTable from "modules/optionsTable/screens/OptionsTable";
 
 const OrdensExecucao = React.lazy(() =>
   import("screens/popups/ordens_em_execucao/OrdensExecucao"),
@@ -31,7 +31,7 @@ const PosicaoEmCustodia = React.lazy(() =>
 const RelatorioDetalhado = React.lazy(() =>
   import("screens/popups/relatorio_detalhado/RelatorioDetalhado"),
 );
-const TelaTHL = React.lazy(() => import("screens/popups/thl/Tela_THL"));
+const TelaTHL = React.lazy(() => import("modules/thl/screens/Tela_THL"));
 
 const margemParaMenuLateral = (isOpenLeftUserMenu) => {
   if (isOpenLeftUserMenu) return "menuLateralAfastado";
