@@ -9,6 +9,7 @@ import { FiChevronDown } from "react-icons/fi";
 import PerfectScroll from "react-perfect-scrollbar";
 
 import borderedPlusIcon from "assets/borderedPlus.png";
+import { AiFillPlusCircle } from "react-icons/ai";
 
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
@@ -104,9 +105,10 @@ const Alert: React.FC = () => {
         className="brokerCustomButton newAlertButton"
       >
         <h6>ALERTAS</h6>
-        <div>
+        <AiFillPlusCircle fill="#333333" />
+        {/* <div>
           <img src={borderedPlusIcon} alt="+" />
-        </div>
+        </div> */}
       </button>
       <PerfectScroll
         containerRef={(ref) => {

@@ -5,7 +5,7 @@
 }
 
 .newAlertButton {
-  border: 3px solid #ecc849;
+  background-color: #ccae44;
   margin: -20px -8px 24px;
   height: 32px;
   display: flex;
@@ -13,18 +13,23 @@
   justify-content: center;
   position: relative;
 
-  color: #ecc849;
+  color: #fff;
   font-size: 20px;
 
   &:hover {
     opacity: 0.8;
   }
 
+  > svg {
+    position: absolute;
+    right: 14px;
+  }
+
   > div {
     height: 17px;
     width: 17px;
     // border-radius: 50%;
-    background-color: #ecc849;
+    background-color: #333333;
     position: absolute;
     right: 14px;
     border-radius: 50%;
