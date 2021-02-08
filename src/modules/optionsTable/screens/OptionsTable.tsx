@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 import moment from "moment";
+import { Spin } from "antd";
 
 import { Form, InputGroup, Spinner } from "react-bootstrap";
 import PerfectScrollbar from "react-perfect-scrollbar";
@@ -350,6 +351,7 @@ const OptionsTable: React.FC = () => {
                 type="text"
                 name="symbol"
                 value={symbol}
+                autoComplete="off"
                 onKeyPress={(e: any) => {
                   if (e.key === "Enter") {
                     handleSearchOptions();

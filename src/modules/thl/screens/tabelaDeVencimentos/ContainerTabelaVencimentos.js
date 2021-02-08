@@ -86,9 +86,7 @@ export default () => {
     <div className="containerSpinnerVencimentos">
       <Spin
         className="spinnerHomebroker"
-        indicator={
-          <Spinner className="asdas" animation="border" variant="light" />
-        }
+        indicator={<Spinner animation="border" variant="light" />}
         spinning={carregandoTabelaVencimentos}
       >
         <PerfectScrollbar

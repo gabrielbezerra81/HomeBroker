@@ -119,7 +119,7 @@ export default React.memo(() => {
       <Spin
         className="spinnerHomebroker"
         indicator={
-          <Spinner className="asdas" animation="border" variant="light" />
+          <Spinner animation="border" variant="light" />
         }
         spinning={carregandoCombinacoes}
       >
