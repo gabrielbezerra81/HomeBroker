@@ -11,6 +11,11 @@ export function convertInterestRate(tax: number, from: Period, to: Period) {
   } //
   else if (from === "month" && to === "week") {
     exp = 7 / 30;
+  } //
+  else if (from === "week" && to === "month") {
+    exp = 30 / 7;
+  } else if (from === "week" && to === "year") {
+    exp = 365 / 7;
   }
 
   const rate = (1 + tax) ** exp - 1;
@@ -42,6 +47,10 @@ export function convertContribution({
       return contribution;
     } //
     else if (contributionPeriodicity === "por semana") {
+      if (convertMode === "visualize") {
+        return contribution * 12 * 4.3571;
+      }
+
       return contribution * 4.3571;
     } //
     else if (contributionPeriodicity === "por ano") {
@@ -87,13 +96,15 @@ export function filterWeeklyProjections(
 
     if (compareFunction === "getFullYear") {
       const hasFullYear = (index + 1) % 52 === 0;
-      if (!hasFullYear) {
-        if (index + 1 === projections.length) {
-          return true;
-        }
 
-        return false;
+      if (hasFullYear) {
+        return true;
+      } //
+      else if (index + 1 === projections.length) {
+        return true;
       }
+
+      return false;
     }
 
     if (nextProjection) {

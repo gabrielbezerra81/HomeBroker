@@ -21,11 +21,11 @@ import {
   filterWeeklyProjections,
 } from "../utils";
 
-import "../../styles/initialPlanner/initialPlanner.scss"
+import "../../styles/initialPlanner/initialPlanner.scss";
 
 export interface Projection {
   rentability: number;
-  monthIncome: number;
+  periodIncome: number;
   totalIncome: number;
   result: number;
   total: number;
@@ -40,7 +40,7 @@ export interface Projection {
 export interface FormattedProjection {
   formattedInvestment: string;
   formattedRentability: string;
-  formattedMonthIncome: string;
+  formattedPeriodIncome: string;
   formattedTotalIncome: string;
   formattedResult: string;
   formattedTotal: string;
@@ -168,16 +168,20 @@ const InitialPlanner: React.FC = () => {
 
     let total = initialValue;
 
-    const date = moment(new Date()).startOf("month").startOf("day").toDate();
+    let date = moment(new Date()).startOf("month").startOf("day").toDate();
+
+    if (ratePeriodicity !== "por semana") {
+      date = moment(date).endOf("month").toDate();
+    }
 
     for (let index = 1; index <= periods; index++) {
       let calcBase = total;
 
-      const monthIncome = total * monthRate ** 1;
+      const periodIncome = total * monthRate ** 1;
 
       // const monthPercent = (monthIncome / calcBase) * 100;
 
-      total += monthIncome;
+      total += periodIncome;
 
       if (index > excludedPeriodsFromContrib) {
         calcBase += monthlyValue;
@@ -201,7 +205,7 @@ const InitialPlanner: React.FC = () => {
 
       const projection = {
         rentability: interestRate,
-        monthIncome,
+        periodIncome,
         totalIncome: totalIncome,
         result: 0,
         total: investment + totalIncome,
@@ -257,7 +261,7 @@ const InitialPlanner: React.FC = () => {
     [dispatch, initialPlanner],
   );
 
-  const formattedMonthsProjection = useMemo(() => {
+  const formattedProjections = useMemo(() => {
     let filtered = projections;
 
     if (
@@ -278,8 +282,8 @@ const InitialPlanner: React.FC = () => {
       filtered = filterWeeklyProjections(filtered, listing);
     }
 
-    return filtered.map((monthItem, index) => {
-      let formattedPeriod = moment(monthItem.period).format("MMM/YYYY");
+    return filtered.map((projectionItem, index) => {
+      let formattedPeriod = moment(projectionItem.period).format("MMM/YYYY");
 
       formattedPeriod =
         formattedPeriod.substr(0, 1).toUpperCase() + formattedPeriod.substr(1);
@@ -289,17 +293,23 @@ const InitialPlanner: React.FC = () => {
       }
 
       return {
-        ...monthItem,
-        formattedInvestment: formatarNumDecimal(monthItem.investment, 2),
-        formattedRentability: formatarNumDecimal(monthItem.rentability, 2),
-        formattedMonthIncome: formatarNumDecimal(monthItem.monthIncome, 2),
-        formattedTotalIncome: formatarNumDecimal(monthItem.totalIncome, 2),
-        formattedResult: formatarNumDecimal(monthItem.result, 2),
-        formattedTotal: formatarNumDecimal(monthItem.total, 2),
-        formattedCalcBase: formatarNumDecimal(monthItem.calcBase, 2),
-        formattedTotalPercent: formatarNumDecimal(monthItem.totalPercent, 2),
+        ...projectionItem,
+        formattedInvestment: formatarNumDecimal(projectionItem.investment, 2),
+        formattedRentability: formatarNumDecimal(projectionItem.rentability, 2),
+        formattedPeriodIncome: formatarNumDecimal(
+          projectionItem.periodIncome,
+          2,
+        ),
+        formattedTotalIncome: formatarNumDecimal(projectionItem.totalIncome, 2),
+        formattedResult: formatarNumDecimal(projectionItem.result, 2),
+        formattedTotal: formatarNumDecimal(projectionItem.total, 2),
+        formattedCalcBase: formatarNumDecimal(projectionItem.calcBase, 2),
+        formattedTotalPercent: formatarNumDecimal(
+          projectionItem.totalPercent,
+          2,
+        ),
         formattedPeriod,
-        formattedContribution: formatarNumDecimal(monthItem.contribution),
+        formattedContribution: formatarNumDecimal(projectionItem.contribution),
         month: index + 1,
       };
     });
@@ -309,12 +319,20 @@ const InitialPlanner: React.FC = () => {
     const options = [];
 
     if (ratePeriodicity === "por semana") {
-      options.push(<option value={"semanas"}>semana(s)</option>);
+      options.push(
+        <option key="semanas" value={"semanas"}>
+          semana(s)
+        </option>,
+      );
     }
 
     options.push(
-      <option value={"meses"}>mês(es)</option>,
-      <option value={"anos"}>ano(s)</option>,
+      <option key="meses" value={"meses"}>
+        mês(es)
+      </option>,
+      <option key="anos" value={"anos"}>
+        ano(s)
+      </option>,
     );
 
     return options;
@@ -437,10 +455,10 @@ const InitialPlanner: React.FC = () => {
                 <span></span>
               </div>
 
-              <ProjectionGraph data={formattedMonthsProjection} />
+              <ProjectionGraph data={formattedProjections} />
             </div>
 
-            <ProjectionTable data={formattedMonthsProjection} />
+            <ProjectionTable data={formattedProjections} />
           </div>
         </div>
       </div>

@@ -1,3 +1,4 @@
+import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import React, { useMemo } from "react";
 
 import {
@@ -19,6 +20,12 @@ interface Props {
   data: Array<Projection & FormattedProjection>;
 }
 const ProjectionGraph: React.FC<Props> = ({ data }) => {
+  const {
+    financialPlannerReducer: {
+      initialPlanner: { listing },
+    },
+  } = useStateStorePrincipal();
+
   const tickCount = useMemo(() => {
     let interval = 2;
 
@@ -37,6 +44,19 @@ const ProjectionGraph: React.FC<Props> = ({ data }) => {
     return Math.ceil(data.length / interval);
   }, [data]);
 
+  const xAxisTitle = useMemo(() => {
+    switch (listing) {
+      case "anual":
+        return "Ano";
+      case "mensal":
+        return "Mês";
+      case "semanal":
+        return "Semana";
+      default:
+        return "";
+    }
+  }, [listing]);
+
   if (!data.length) {
     return null;
   }
@@ -51,7 +71,7 @@ const ProjectionGraph: React.FC<Props> = ({ data }) => {
         />
         <XAxis
           label={{
-            value: "Mês",
+            value: xAxisTitle,
             fill: "#D2D5D2",
             position: "insideBottom",
             offset: -1,
