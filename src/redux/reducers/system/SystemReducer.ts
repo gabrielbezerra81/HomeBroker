@@ -24,7 +24,7 @@ export const INITIAL_STATE: SystemState = {
   isOpenMultileg: false,
   isOpenTHL: false,
   isOpenRightSideMenu: false,
-  isOpenCategoryList: true,
+  isOpenCategoryList: false,
   isOpenOptionsTable: false,
   token: {} as Token,
   roles: [],
