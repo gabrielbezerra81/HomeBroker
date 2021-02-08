@@ -9,9 +9,9 @@ const INITIAL_STATE: FinancialPlannerState = {
     contributionPeriodicity: "por semana",
     interestRate: 0.23,
     ratePeriodicity: "por semana",
-    periodValue: 1,
+    periodValue: 2,
     periodicity: "meses",
-    listing: "anual",
+    listing: "mensal",
   },
 };
 

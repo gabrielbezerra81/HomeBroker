@@ -48,7 +48,7 @@ export function convertContribution({
     } //
     else if (contributionPeriodicity === "por semana") {
       if (convertMode === "visualize") {
-        return contribution * 12 * 4.3571;
+        return contribution * 12 * 4;
       }
 
       return contribution * 4.3571;
@@ -63,6 +63,10 @@ export function convertContribution({
       return contribution / 12;
     } //
     else if (contributionPeriodicity === "por semana") {
+      if (convertMode === "visualize") {
+        return contribution * 4;
+      }
+
       return contribution * 4.3571;
     }
   }
@@ -72,6 +76,9 @@ export function convertContribution({
       return contribution / 52.1429;
     } //
     if (contributionPeriodicity === "por mês") {
+      if (convertMode === "visualize") {
+        return contribution / 4;
+      }
       return contribution / 4.3571;
     } //
   }

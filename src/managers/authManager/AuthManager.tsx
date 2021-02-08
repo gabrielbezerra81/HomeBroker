@@ -89,6 +89,7 @@ const AuthManager = () => {
         const isExpired = isTokenExpired(token_date, expires_in);
 
         if (isExpired) {
+          console.log("isExpired", isExpired);
           handleTokenRefresh();
         }
       }, 60000);

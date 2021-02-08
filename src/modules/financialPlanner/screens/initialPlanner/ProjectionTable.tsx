@@ -1,16 +1,13 @@
 import React, { useMemo, useCallback } from "react";
 import { FormControl, Table } from "react-bootstrap";
 
-import moment from "moment";
-
 import { updateManyFinancialPlannerAction } from "modules/financialPlanner/duck/actions/financialPlannerActions";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { Projection, FormattedProjection } from "./InitialPlanner";
 
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
-import { convertContribution, convertInterestRate } from "../utils";
-import { InitialPlannerData } from "modules/financialPlanner/types/FinancialPlannerState";
+import { convertInterestRate } from "../utils";
 
 interface Props {
   data: Array<Projection & FormattedProjection>;
@@ -23,14 +20,7 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
 
   const dispatch = useDispatchStorePrincipal();
 
-  const {
-    contribution,
-    listing,
-    ratePeriodicity,
-    interestRate,
-    contributionPeriodicity,
-    initialValue,
-  } = initialPlanner;
+  const { listing, ratePeriodicity, interestRate } = initialPlanner;
 
   const handleInputChange = useCallback(
     (value: any, event: any) => {
@@ -88,39 +78,13 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
     return formatarNumDecimal(rate, 2);
   }, [ratePeriodicity, listing, interestRate]);
 
-  const formattedInitialInvest = useMemo(() => {
-    return formatarNumDecimal(initialValue, 2);
-  }, [initialValue]);
-
   const formattedData = useMemo(() => {
     const formatted = data.map((projectionItem, index) => {
-      let showContribution = true;
-
       let viewedRate = formattedRate;
 
       let viewedPeriodIncome: any = projectionItem.periodIncome;
 
-      if (
-        ["por mês", "por ano"].includes(ratePeriodicity) &&
-        listing === "mensal" &&
-        index === 0
-      ) {
-        showContribution = false;
-      }
-
       if (ratePeriodicity === "por semana") {
-        if (listing === "semanal") {
-          if (index < 1) {
-            showContribution = false;
-          }
-        }
-
-        if (listing === "mensal") {
-          if (index === 0) {
-            showContribution = false;
-          }
-        }
-
         viewedPeriodIncome = projectionItem.totalIncome;
 
         if (data[index - 1]) {
@@ -128,24 +92,15 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
         }
       }
 
-      const viewContribution = getContributionByListing({
-        listing,
-        contribution,
-        contributionPeriodicity,
-        projectionItem,
-        index,
-        data,
-      });
+      let viewContribution = projectionItem.investment;
+
+      if (data[index - 1]) {
+        viewContribution -= data[index - 1].investment;
+      }
 
       const formattedContribution = formatarNumDecimal(viewContribution, 2);
 
-      const viewedContribution = showContribution
-        ? formattedContribution
-        : formattedInitialInvest;
-
-      if (listing === "anual") {
-        // viewedRate = projectionItem.formattedTotalPercent;
-      } //
+      const viewedContribution = formattedContribution;
 
       viewedPeriodIncome = formatarNumDecimal(viewedPeriodIncome);
 
@@ -159,15 +114,7 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
     });
 
     return formatted;
-  }, [
-    contribution,
-    contributionPeriodicity,
-    data,
-    formattedInitialInvest,
-    formattedRate,
-    listing,
-    ratePeriodicity,
-  ]);
+  }, [data, formattedRate, ratePeriodicity]);
 
   return (
     <div className="projectionContainer">
@@ -240,80 +187,3 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
 };
 
 export default ProjectionTable;
-
-interface GetContribution
-  extends Pick<
-    InitialPlannerData,
-    "listing" | "contribution" | "contributionPeriodicity"
-  > {
-  projectionItem: Projection & FormattedProjection;
-  index: number;
-  data: (Projection & FormattedProjection)[];
-}
-
-const getContributionByListing = ({
-  listing,
-  contribution,
-  contributionPeriodicity,
-  projectionItem,
-  index,
-  data,
-}: GetContribution) => {
-  let convertContribTo = "";
-  let periodInMonths = 0;
-
-  if (listing === "mensal") {
-    convertContribTo = "por mês";
-  } else if (listing === "semanal") {
-    convertContribTo = "por semana";
-  } else if (listing === "anual") {
-    convertContribTo = "por ano";
-
-    let previousDate = (null as unknown) as Date;
-
-    // o primeiro período não tem aporte, portanto é excluído
-    if (index === 0) {
-      previousDate = moment().startOf("month").toDate();
-
-      if (contributionPeriodicity === "por semana") {
-        periodInMonths -= 1 / 4.3571;
-      } //
-      else {
-        periodInMonths -= 1;
-      }
-    } //
-    else {
-      previousDate = moment(data[index - 1].period)
-        .endOf("month")
-        .toDate();
-    }
-
-    const duration = moment.duration(
-      moment(projectionItem.period).diff(previousDate),
-    );
-
-    periodInMonths += duration.asMonths();
-
-    if (contributionPeriodicity !== "por semana") {
-      periodInMonths = +periodInMonths.toFixed(0);
-    }
-  }
-
-  const contrib = convertContribution({
-    contribution,
-    contributionPeriodicity,
-    ratePeriodicity: convertContribTo as any,
-    convertMode: "visualize",
-  });
-
-  // console.log(periodInMonths);
-  // console.log(projectionItem);
-
-  if (listing === "anual") {
-    return (contrib / 12) * periodInMonths;
-  }
-
-  // console.log(contrib);
-
-  return contrib;
-};
