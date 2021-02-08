@@ -27,6 +27,7 @@ const AuthManager = () => {
   const [previousShouldAlert, setPreviousShouldAlert] = useState<
     boolean | null
   >(null);
+  const [timerId, setTimerId] = useState<NodeJS.Timeout | null>(null);
 
   const updateAuthData = useCallback(
     (data: any) => {
@@ -80,6 +81,18 @@ const AuthManager = () => {
         api.interceptors.request.eject(requestInterceptor);
       }
 
+      if (timerId) {
+        clearInterval(timerId);
+      }
+
+      const timer = setInterval(() => {
+        const isExpired = isTokenExpired(token_date, expires_in);
+
+        if (isExpired) {
+          handleTokenRefresh();
+        }
+      }, 60000);
+
       const interceptor = api.interceptors.request.use(async (config) => {
         const isExpired = isTokenExpired(token_date, expires_in);
 
@@ -90,6 +103,7 @@ const AuthManager = () => {
         return config;
       });
 
+      setTimerId(timer);
       setRequestInterceptor(interceptor);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -140,7 +154,7 @@ export default AuthManager;
 
 function isTokenExpired(tokenDate: number, expiresIn: number) {
   const expireDate = new Date(tokenDate);
-  expireDate.setSeconds(expireDate.getSeconds() + expiresIn - 2600); // dura 1h, se faltar 40 minutos pra expirar já renova.
+  expireDate.setSeconds(expireDate.getSeconds() + expiresIn - 2600); // dura 1h, se faltar 44 minutos pra expirar já renova.
   const currentDate = new Date();
 
   const isExpired = moment(currentDate).isAfter(expireDate, "milliseconds");
