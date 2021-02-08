@@ -48,7 +48,7 @@ export const url_autenticacao_token = "test/user";
 // export const url_informacoesUsuario_token = "auth/info";
 // export const url_listarContas_token = "account/login";
 export const url_verificarToken_token = "auth/";
-export const url_getAccounts = "account/login"
+export const url_getAccounts = "account/login";
 
 //Cadastro
 export const url_realizarCadastro_dados = "auth/signup";
@@ -72,4 +72,8 @@ export const url_singleStructure_id = "structures/";
 export const url_multiStructure_ids = "structures/ids?ids=";
 export const url_ordersExec_ids = "order/working/ids?ids=";
 
+// Symbol
 export const url_stockInfo_symbol = "stocks/info/";
+
+// Matriz de opções
+export const url_optionsTable_symbol_type = "structure/thl/matrix/";
