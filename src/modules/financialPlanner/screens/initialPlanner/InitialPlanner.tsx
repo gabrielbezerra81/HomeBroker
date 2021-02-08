@@ -193,11 +193,12 @@ const InitialPlanner: React.FC = () => {
 
       const totalPercent = (totalIncome / investment) * 100;
 
+      let period = new Date(date);
+
       if (ratePeriodicity === "por semana") {
+        period.setDate(period.getDate() + 6); // A data é o final da semana
         date.setDate(date.getDate() + 7);
       }
-
-      let period = new Date(date);
 
       if (["por mês", "por ano"].includes(ratePeriodicity)) {
         date.setMonth(date.getMonth() + 1);
@@ -283,7 +284,7 @@ const InitialPlanner: React.FC = () => {
     }
 
     return filtered.map((projectionItem, index) => {
-      let formattedPeriod = moment(projectionItem.period).format("MMM/YYYY");
+      let formattedPeriod = moment(projectionItem.period).format("DD/MM/YYYY");
 
       formattedPeriod =
         formattedPeriod.substr(0, 1).toUpperCase() + formattedPeriod.substr(1);
