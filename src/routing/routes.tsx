@@ -4,7 +4,7 @@ import TelaLogin from "screens/login/TelaLogin";
 // import TelaCadastro from "screens/signUp/TelaCadastro";
 import Home from "modules/home/screens/Home";
 import MainManager from "managers";
-import LoginRedirect from "screens/login/LoginRedirect";
+import LoginRedirect from "routing/LoginRedirect";
 import OpenAlert from "./OpenAlert";
 
 export const Routes = () => {

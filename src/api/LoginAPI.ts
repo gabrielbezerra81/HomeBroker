@@ -15,8 +15,9 @@ import {
   erro_sessaoExpirada,
 } from "constants/AlertaErros";
 import { showAPIErrorAndAlert } from "api/API";
-import { Token, Account } from "types/system/system";
+import { Token, Account, AuthData } from "types/system/system";
 import api from "./apiConfig";
+import keycloak from "Keycloak";
 
 const timeout = 30000;
 
@@ -96,37 +97,91 @@ export const verificarTokenAPI = (token: Token) => {
     });
 };
 
-export const keycloakLoginAPI = async (code: string, redirect_uri: string) => {
-  return axios
-    .post(
-      `https://auth.rendacontinua.com/auth/realms/auth_sso/protocol/openid-connect/token`,
-      qs.stringify({
-        code,
-        redirect_uri,
-        grant_type: "authorization_code",
-        client_id: "homebroker-react",
-        client_secret: "367afb37-8884-42c3-b5b6-b455b9b7db59",
-      }),
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      },
-    )
-    .then((response) => {
-      const authData = response.data;
+export const getKeycloakAuthDataAPI = async (redirectUri: string) => {
+  const payload = await new Promise((resolve, reject) => {
+    keycloak
+      .init({ redirectUri, onLoad: "check-sso" })
+      .success(async (auth) => {
+        if (!auth) {
+          window.location.reload();
+        } else {
+          console.log("Authenticated");
+        }
 
-      const { token_type, access_token } = authData;
+        if (keycloak.token && keycloak.tokenParsed) {
+          let roles: string[] = [];
 
-      api.defaults.headers.authorization = `${token_type} ${access_token}`;
+          if (
+            keycloak.resourceAccess &&
+            keycloak.resourceAccess["homebroker-react"]
+          ) {
+            roles = keycloak.resourceAccess["homebroker-react"].roles;
+          }
 
-      return authData;
-    })
-    .catch((error) => {
-      console.log("error", error.response);
+          localStorage.setItem(
+            "tokenParsed",
+            JSON.stringify(keycloak.tokenParsed),
+          );
 
-      return null;
-    });
+          const token_date = new Date().getTime();
+
+          const data: AuthData = {
+            access_token: keycloak.token || "",
+            id_token: keycloak.idToken || "",
+            refresh_token: keycloak.refreshToken || "",
+            token_type: "bearer",
+            expires_in: 3600,
+            refresh_expires_in: 1800,
+            session_state: "",
+            token_date,
+          };
+
+          api.defaults.headers.authorization = `${data.token_type} ${data.access_token}`;
+
+          await new Promise((resolve, reject) => {
+            keycloak
+              .loadUserInfo()
+              .success(() => {
+                resolve(true);
+              })
+              .error(() => {
+                reject(false);
+              });
+          });
+
+          const { given_name } = (keycloak.userInfo as any) || {
+            given_name: "",
+          };
+
+          const accounts = await getUserAccountsAPI();
+
+          let selectedAccount = {};
+
+          if (accounts.length) {
+            selectedAccount = accounts[0];
+          }
+
+          resolve({
+            token: {
+              tokenType: "bearer",
+              accessToken: keycloak.token,
+            },
+            authData: data,
+            isLogged: true,
+            roles,
+            accounts,
+            selectedAccount,
+            connectedUser: given_name,
+          });
+        }
+      })
+      .error((error: any) => {
+        console.log("Authenticated Failed");
+        reject(null);
+      });
+  });
+
+  return payload;
 };
 
 export const getUserAccountsAPI = async () => {
@@ -167,3 +222,40 @@ export const getUserAccountsAPI = async () => {
 //       return null;
 //     });
 // };
+
+//
+/*
+
+  // return axios
+  //   .post(
+  //     `https://auth.rendacontinua.com/auth/realms/auth_sso/protocol/openid-connect/token`,
+  //     qs.stringify({
+  //       code,
+  //       redirect_uri,
+  //       grant_type: "authorization_code",
+  //       client_id: "homebroker-react",
+  //       client_secret: "367afb37-8884-42c3-b5b6-b455b9b7db59",
+  //     }),
+  //     {
+  //       headers: {
+  //         "Content-Type": "application/x-www-form-urlencoded",
+  //       },
+  //     },
+  //   )
+  //   .then((response) => {
+  //     const authData = response.data;
+
+  //     const { token_type, access_token } = authData;
+
+  //     api.defaults.headers.authorization = `${token_type} ${access_token}`;
+
+  //     return authData;
+  //   })
+  //   .catch((error) => {
+  //     console.log("error", error.response);
+
+  //     return null;
+  //   });
+
+
+*/

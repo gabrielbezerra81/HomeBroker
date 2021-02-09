@@ -1,7 +1,7 @@
 import { Redirect, RouteComponentProps, useLocation } from "@reach/router";
 import { Spinner } from "react-bootstrap";
 import { listAlertsAPI } from "api/API";
-import { keycloakLoginAPI } from "api/LoginAPI";
+import { getKeycloakAuthDataAPI } from "api/LoginAPI";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
@@ -20,19 +20,15 @@ const redirectURL =
     : "https://homebroker-react.herokuapp.com/alerta/";
 
 // http://localhost:3000/alerta/95
-const OpenAlert: React.FC<RouteComponentProps & { id?: string }> = ({
-  path,
-  location,
-  id,
-}) => {
-  const routerLocation = useLocation();
-
+const OpenAlert: React.FC<RouteComponentProps & { id?: string }> = ({ id }) => {
   const dispatch = useDispatchStorePrincipal();
   const dispatchGlobal = useDispatchGlobalStore();
 
   const {
-    systemReducer: { isLogged },
+    systemReducer: { isLogged, authData },
   } = useStateStorePrincipal();
+
+  const routerLocation = useLocation();
 
   const [fetchingAlerts, setFetchingAlerts] = useState(true);
 
@@ -40,43 +36,43 @@ const OpenAlert: React.FC<RouteComponentProps & { id?: string }> = ({
 
   // Iniciar keycloak
   useEffect(() => {
-    keycloak
-      .init({ onLoad: "login-required", redirectUri: redirectURL + id })
-      .success((auth) => {
-        if (!auth) {
-          window.location.reload();
-        } else {
-          console.log("Authenticated");
-        }
-      })
-      .error(() => {
-        console.log("Authenticated Failed");
-      });
-  }, [id]);
+    // authData estando null permite que entre apenas 1 vez
+    if (!authData) {
+      // authData estando truthy impede que execute mais de 1 vez
+      dispatch(
+        updateManySystemState({
+          authData: {},
+        }),
+      );
+
+      keycloak
+        .init({ onLoad: "login-required", redirectUri: redirectURL + id })
+        .success((auth) => {
+          if (!auth) {
+            // window.location.reload();
+          } else {
+            console.log("Authenticated");
+          }
+        })
+        .error(() => {
+          console.log("Authenticated Failed");
+        });
+    }
+  }, [authData, dispatch, id]);
 
   // Buscar token
   useEffect(() => {
-    async function login() {
-      if (code) {
-        const authData = await keycloakLoginAPI(code, redirectURL + id);
+    async function getData() {
+      // Verificar pelo code assegura que só seja executado após realizar o login e não ao montar
+      if (!isLogged && code) {
+        const payload = await getKeycloakAuthDataAPI(redirectURL + id);
 
-        const { token_type, access_token } = authData;
-
-        dispatch(
-          updateManySystemState({
-            token: {
-              tokenType: token_type,
-              accessToken: access_token,
-            },
-            authData,
-            isLogged: true,
-          }),
-        );
+        dispatch(updateManySystemState(payload));
       }
     }
 
-    login();
-  }, [code, dispatch, id]);
+    getData();
+  }, [code, dispatch, id, isLogged]);
 
   // Abrir alerta na multileg
   useEffect(() => {
