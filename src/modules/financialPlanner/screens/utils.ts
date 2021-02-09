@@ -1,4 +1,6 @@
+import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import { InitialPlannerData } from "modules/financialPlanner/types/FinancialPlannerState";
+import { useMemo } from "react";
 import { Projection } from "./initialPlanner/InitialPlanner";
 
 type Period = "year" | "month" | "week";
@@ -170,4 +172,44 @@ export function convertPeriodByRatePeriodicity({
   //   }
 
   return periodValue;
+}
+
+export function IncludeInitialLine() {
+  const {
+    financialPlannerReducer: {
+      initialPlanner: { initialValue, contribution },
+    },
+  } = useStateStorePrincipal();
+
+  const investment = useMemo(() => {
+    return initialValue.toString();
+  }, [initialValue]);
+
+  return {
+    rentability: 0,
+    periodIncome: 0,
+    totalIncome: 0,
+    result: 0,
+    total: 1000,
+    calcBase: 1000,
+    investment: 1000,
+    totalPercent: 0,
+    period: new Date(),
+    contribution: 100,
+    formattedContribution: contribution.toString(),
+    viewedContribution: investment,
+    formattedCalcBase: investment,
+    formattedInvestment: investment,
+    formattedPeriod: new Date(2020, 1, 1).toLocaleDateString(),
+    formattedPeriodIncome: "0",
+    formattedRentability: "0",
+    formattedResult: "0",
+    formattedTotal: investment,
+    formattedTotalIncome: "",
+    formattedTotalPercent: "",
+    month: 0,
+    order: 0,
+    viewedPeriodIncome: "",
+    viewedRate: "",
+  };
 }

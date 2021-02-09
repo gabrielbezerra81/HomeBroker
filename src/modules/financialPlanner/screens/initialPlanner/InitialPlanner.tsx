@@ -283,7 +283,7 @@ const InitialPlanner: React.FC = () => {
       filtered = filterWeeklyProjections(filtered, listing);
     }
 
-    return filtered.map((projectionItem, index) => {
+    const formatted = filtered.map((projectionItem, index) => {
       let formattedPeriod = moment(projectionItem.period).format("DD/MM/YYYY");
 
       formattedPeriod =
@@ -314,6 +314,8 @@ const InitialPlanner: React.FC = () => {
         month: index + 1,
       };
     });
+
+    return formatted;
   }, [listing, projections, ratePeriodicity]);
 
   const periodOptions = useMemo(() => {
@@ -468,3 +470,36 @@ const InitialPlanner: React.FC = () => {
 };
 
 export default InitialPlanner;
+
+/*
+
+
+  {
+                    rentability: 0,
+                    periodIncome: 0,
+                    totalIncome: 0,
+                    result: 0,
+                    total: 1000,
+                    calcBase: 1000,
+                    investment: 1000,
+                    totalPercent: 0,
+                    period: new Date(),
+                    contribution: 100,
+                    formattedContribution: "100",
+                    viewedContribution: "1000",
+                    formattedCalcBase: "1000",
+                    formattedInvestment: "1000",
+                    formattedPeriod: new Date(2020, 1, 1).toLocaleDateString(),
+                    formattedPeriodIncome: "0",
+                    formattedRentability: "0",
+                    formattedResult: "0",
+                    formattedTotal: "1000",
+                    formattedTotalIncome: "",
+                    formattedTotalPercent: "",
+                    month: 0,
+                    order: 0,
+                    viewedPeriodIncome: "",
+                    viewedRate: "",
+                  },
+
+*/

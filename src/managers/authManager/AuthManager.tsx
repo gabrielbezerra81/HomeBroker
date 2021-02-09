@@ -90,6 +90,10 @@ const AuthManager = () => {
 
         if (isExpired) {
           console.log("isExpired", isExpired);
+          // eslint-disable-next-line no-restricted-globals
+          if (location.hostname === "localhost") {
+            alert("isExpired === " + isExpired);
+          }
           handleTokenRefresh();
         }
       }, 60000);
