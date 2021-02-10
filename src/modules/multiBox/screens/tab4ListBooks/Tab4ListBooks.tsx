@@ -270,7 +270,7 @@ const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
                 onClick={handleStrikeViewChange}
                 className="brokerCustomButton"
               >
-                <IoMdRepeat color="#C4C4C4" />
+                <IoMdRepeat size={17} color="#C4C4C4" />
               </button>
             </th>
             <th>Ult</th>

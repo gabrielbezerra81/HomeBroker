@@ -73,6 +73,14 @@
       font-weight: 400;
       color: #bfa340;
       background-color: #282828;
+
+      .brokerCustomButton {
+        padding: 0;
+        svg {
+          margin-bottom: 2px;
+          margin-left: 2px;
+        }
+      }
     }
 
     tr:nth-child(odd) td {

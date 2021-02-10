@@ -271,7 +271,7 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
                   className="brokerCustomButton"
                   onClick={handleStrikeViewChange}
                 >
-                  <IoMdRepeat color="#C4C4C4" />
+                  <IoMdRepeat size={17} color="#C4C4C4" />
                 </button>
               </th>
               <th>Vencimento</th>

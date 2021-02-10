@@ -16,6 +16,7 @@ import Tab5IncludeStructure from "./tab5IncludeStructure/Tab5IncludeStructure";
 import SymbolCard from "./SymbolCard";
 import Tab3Alerts from "./tab3Alerts/Tab3Alerts";
 import Tab2Position from "./tab2Position/Tab2Position";
+import { IoMdRepeat } from "react-icons/io";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -87,6 +88,16 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
     [dispatch, multiBox],
   );
 
+  const handleStrikeViewChange = useCallback(() => {
+    const viewMode = strikeViewMode === "code" ? "strike" : "code";
+
+    dispatch(
+      updateBoxAttrAction(multiBox.id, {
+        strikeViewMode: viewMode,
+      }),
+    );
+  }, [dispatch, multiBox.id, strikeViewMode]);
+
   // useEffect(() => {
   //   const box = document.getElementById(`${multiBox.id}`);
 
@@ -154,6 +165,13 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
       bounds={bounds}
     >
       <div className="multiBox" id={multiBox.id} style={visibilityClass}>
+        <button
+          onClick={handleStrikeViewChange}
+          className="brokerCustomButton changeStrikeViewButton"
+        >
+          <IoMdRepeat size={19} color="#C4C4C4" />
+        </button>
+
         <div className="topSymbolsContainer">
           <div>
             {americanTopSymbols.map((topSymbol, index) => (

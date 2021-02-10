@@ -33,6 +33,12 @@
     height: 37px !important;
   }
 
+  .changeStrikeViewButton {
+    position: absolute;
+    top: 4px;
+    right: 10px;
+  }
+
   .topSymbolsContainer {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

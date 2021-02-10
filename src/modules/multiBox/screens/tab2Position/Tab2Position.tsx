@@ -15,6 +15,7 @@ import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import {
   handleDeleteBoxAction,
   handleExportBoxToMultilegAction,
+  updateBoxAttrAction,
 } from "modules/multiBox/duck/actions/multiBoxActions";
 
 import closeIcon from "assets/multiBox/closeIcon.png";
@@ -25,6 +26,7 @@ import {
   handleSearchBoxSymbolOptionsAction,
 } from "modules/multiBox/duck/actions/tab5Actions";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
+import { IoMdRepeat } from "react-icons/io";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -56,6 +58,16 @@ const Tab2Position: React.FC<Props> = ({ multiBox }) => {
   const handleClose = useCallback(async () => {
     dispatch(handleDeleteBoxAction(multiBox.id));
   }, [dispatch, multiBox.id]);
+
+  const handleStrikeViewChange = useCallback(() => {
+    const viewMode = strikeViewMode === "code" ? "strike" : "code";
+
+    dispatch(
+      updateBoxAttrAction(multiBox.id, {
+        strikeViewMode: viewMode,
+      }),
+    );
+  }, [dispatch, multiBox.id, strikeViewMode]);
 
   const formattedRefStockData = useMemo(() => {
     if (!stockSymbolData) {
@@ -158,7 +170,15 @@ const Tab2Position: React.FC<Props> = ({ multiBox }) => {
       <Table borderless striped={false}>
         <thead>
           <tr>
-            <th>Código</th>
+            <th>
+              Código
+              <button
+                onClick={handleStrikeViewChange}
+                className="brokerCustomButton"
+              >
+                <IoMdRepeat size={17} color="#C4C4C4" />
+              </button>
+            </th>
             <th>Qtde</th>
             <th>Preço méd.</th>
             <th>Ordens exec.</th>
