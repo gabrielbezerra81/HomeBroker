@@ -127,36 +127,4 @@
       }
     }
   }
-
-  .tab4InputRangeContainer {
-    padding: 0 24px;
-
-    > div {
-      display: flex;
-      justify-content: space-between;
-
-      span {
-        line-height: 14px;
-      }
-    }
-  }
-
-  .tab4InputRange {
-    background-color: transparent !important;
-    height: 11px;
-  }
-
-  .tab4InputRange::-webkit-slider-runnable-track {
-    background-color: #444 !important;
-    height: 8px;
-  }
-
-  .tab4InputRange::-webkit-slider-thumb {
-    -webkit-appearance: none !important;
-    background: #ffff00 !important;
-    box-shadow: 0 0 1px 2px #eaad15 !important;
-    height: 12px !important;
-    width: 12px !important;
-    margin-top: -2px !important;
-  }
 }

@@ -19,7 +19,6 @@
     flex-direction: column;
     justify-content: center;
     flex: 1;
-    margin-top: 24px;
 
     > section {
       padding: 0 16px;
@@ -62,28 +61,9 @@
     }
   }
 
-  section.top {
-    .boxSliderContainer {
-      display: flex;
-      flex-direction: row;
-      padding: 0 0.5rem;
-
-      .sliderEdge {
-        height: 5px;
-        background-color: #4e4f4e;
-        flex: 17;
-      }
-
-      .sliderMiddle {
-        height: 5px;
-        background-color: var(--color-buy-primary-blue);
-        flex: 1;
-      }
-    }
-  }
-
   section.middle {
     display: flex;
+    margin-top: 12px;
 
     > div {
       flex: 1;
@@ -115,14 +95,6 @@
       }
     }
 
-    // .buyBook {
-    //   align-items: flex-start;
-    // }
-
-    // .sellBook {
-    //   align-items: flex-end;
-    // }
-
     .quoteContainer {
       display: flex;
       flex-direction: column;
@@ -148,31 +120,51 @@
   }
 
   section.footer {
-    padding-bottom: 4px;
+    margin-top: 12px;
 
-    > div:first-child {
-      margin-bottom: -6px;
-    }
-    > div:last-child {
-      margin-top: -12px;
+    .boxSliderContainer {
+      display: flex;
+      flex-direction: row;
+      padding: 0 0.5rem;
+
+      .sliderEdge {
+        height: 5px;
+        background-color: #4e4f4e;
+        flex: 17;
+      }
+
+      .sliderMiddle {
+        height: 5px;
+        background-color: var(--color-buy-primary-blue);
+        flex: 1;
+      }
     }
 
-    .sliderBuyColor::-webkit-slider-runnable-track,
-    .sliderSellColor::-webkit-slider-runnable-track {
-      border-radius: 0;
-      height: 6px;
-    }
+    // padding-bottom: 4px;
 
-    .sliderBuyColor::-webkit-slider-thumb,
-    .sliderSellColor::-webkit-slider-thumb {
-      margin-top: -2px;
-    }
+    // > div:first-child {
+    //   margin-bottom: -6px;
+    // }
+    // > div:last-child {
+    //   margin-top: -12px;
+    // }
 
-    .sliderBuyColor::-webkit-slider-runnable-track {
-      background-color: #336699;
-    }
-    .sliderSellColor::-webkit-slider-runnable-track {
-      background-color: #996666;
-    }
+    // .sliderBuyColor::-webkit-slider-runnable-track,
+    // .sliderSellColor::-webkit-slider-runnable-track {
+    //   border-radius: 0;
+    //   height: 6px;
+    // }
+
+    // .sliderBuyColor::-webkit-slider-thumb,
+    // .sliderSellColor::-webkit-slider-thumb {
+    //   margin-top: -2px;
+    // }
+
+    // .sliderBuyColor::-webkit-slider-runnable-track {
+    //   background-color: #336699;
+    // }
+    // .sliderSellColor::-webkit-slider-runnable-track {
+    //   background-color: #996666;
+    // }
   }
 }

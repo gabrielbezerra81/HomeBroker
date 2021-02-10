@@ -108,7 +108,7 @@
 
       100% {
         opacity: 1;
-        height: 250px;
+        height: 260px;
       }
     }
 
@@ -139,7 +139,7 @@
     }
 
     &.activeTab1 > div:nth-child(1) {
-      @include activeTab(250px, showTab1);
+      @include activeTab(260px, showTab1);
     }
 
     &.activeTab2 > div:nth-child(2) {
@@ -298,5 +298,38 @@ header.boxContentHeader {
         }
       }
     }
+  }
+}
+
+.boxInputRangeContainer {
+  padding: 0 24px;
+  margin-top: 8px;
+
+  > div {
+    display: flex;
+    justify-content: space-between;
+
+    span {
+      line-height: 14px;
+    }
+  }
+
+  .boxInputRange {
+    background-color: transparent !important;
+    height: 11px;
+  }
+
+  .boxInputRange::-webkit-slider-runnable-track {
+    background-color: #444 !important;
+    height: 8px;
+  }
+
+  .boxInputRange::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    background: #ffff00 !important;
+    box-shadow: 0 0 1px 2px #eaad15 !important;
+    height: 12px !important;
+    width: 12px !important;
+    margin-top: -2px !important;
   }
 }

@@ -181,7 +181,7 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
         </div>
       </header>
 
-      <div className="tab3InputRangeContainer">
+      <div className="boxInputRangeContainer">
         <div>
           <span>Mín</span>
           <span>Médio</span>
@@ -189,7 +189,7 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
         </div>
         <input
           type="range"
-          className={`custom-range tab3InputRange`}
+          className={`custom-range boxInputRange`}
           step="0.01"
           min={stockSymbolData?.min}
           max={stockSymbolData?.max}

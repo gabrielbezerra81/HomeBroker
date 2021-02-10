@@ -254,6 +254,27 @@ const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
         </div>
       </header>
 
+      <div className="boxInputRangeContainer">
+        <div>
+          <span>Mín</span>
+          <span>Médio</span>
+          <span>Máx</span>
+        </div>
+        <input
+          type="range"
+          className={`custom-range boxInputRange`}
+          step="0.01"
+          min={stockSymbolData?.min}
+          max={stockSymbolData?.max}
+          onChange={(event) => {}}
+        />
+        <div>
+          <span>{formattedRefStockData?.formattedMin}</span>
+          <span>{formattedRefStockData?.formattedMedium}</span>
+          <span>{formattedRefStockData?.formattedMax}</span>
+        </div>
+      </div>
+
       <Table borderless striped={false}>
         <thead>
           <tr>
@@ -298,27 +319,6 @@ const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
           ))}
         </tbody>
       </Table>
-
-      <div className="tab4InputRangeContainer">
-        <div>
-          <span>Mín</span>
-          <span>Médio</span>
-          <span>Máx</span>
-        </div>
-        <input
-          type="range"
-          className={`custom-range tab4InputRange`}
-          step="0.01"
-          min={stockSymbolData?.min}
-          max={stockSymbolData?.max}
-          onChange={(event) => {}}
-        />
-        <div>
-          <span>{formattedRefStockData?.formattedMin}</span>
-          <span>{formattedRefStockData?.formattedMedium}</span>
-          <span>{formattedRefStockData?.formattedMax}</span>
-        </div>
-      </div>
     </div>
   );
 };

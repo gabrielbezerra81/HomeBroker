@@ -24,7 +24,10 @@ import {
 } from "modules/multiBox/duck/actions/multiBoxActions";
 
 import closeIcon from "assets/multiBox/closeIcon.png";
-import { handleAddStockOfferAction, handleSearchBoxSymbolOptionsAction } from "modules/multiBox/duck/actions/tab5Actions";
+import {
+  handleAddStockOfferAction,
+  handleSearchBoxSymbolOptionsAction,
+} from "modules/multiBox/duck/actions/tab5Actions";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -180,7 +183,10 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
           </button>
 
           <div className="searchOptionsButton">
-            <button className="brokerCustomButton" onClick={handleSearchOptions} >
+            <button
+              className="brokerCustomButton"
+              onClick={handleSearchOptions}
+            >
               <img src={cBuyIcon} alt="" />
               <img src={pSellIcon} alt="" />
             </button>
@@ -200,28 +206,37 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
         </div>
       </header>
 
-      <div className="content">
-        <section className="top">
-          <div className="flexSpaceBetweenCenter">
-            <strong>COMPRA</strong>
-            <strong>Médio</strong>
-            <strong>VENDA</strong>
-          </div>
-          <div className="boxSliderContainer">
-            <div className="sliderEdge"></div>
-            <div className="sliderMiddle"></div>
-            <div className="sliderEdge"></div>
-          </div>
-          <div className="flexSpaceBetweenCenter">
-            <span className="highlightedText">
-              {formattedData?.buy || "0,00"}
-            </span>
-            <span className="highlightedText">
-              {formattedData?.sell || "0,00"}
-            </span>
-          </div>
-        </section>
+      <div className="boxInputRangeContainer">
+        <div>
+          <span className="highlightedText">Mín</span>
+          <span className="highlightedText">Médio</span>
+          <span className="highlightedText">Máx</span>
+        </div>
+        <input
+          type="range"
+          className={`custom-range boxInputRange`}
+          min={structureData?.min}
+          max={structureData?.max}
+          value={
+            structureData ? (structureData.min + structureData.max) / 2 : ""
+          }
+          step={0.01}
+          onChange={() => false}
+        />
+        <div>
+          <span className="highlightedText">
+            {formattedRefStockData?.formattedMin}
+          </span>
+          <span className="highlightedText">
+            {formattedRefStockData?.formattedMedium}
+          </span>
+          <span className="highlightedText">
+            {formattedRefStockData?.formattedMax}
+          </span>
+        </div>
+      </div>
 
+      <div className="content">
         <section className="middle">
           <div className="buyBook">
             {!!formattedData?.book.buy.length && (
@@ -272,24 +287,22 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
 
         <section className="footer">
           <div className="flexSpaceBetweenCenter">
-            <span className="highlightedText">Min</span>
-            <span className="highlightedText">Max</span>
+            <strong>COMPRA</strong>
+            <strong>Médio</strong>
+            <strong>VENDA</strong>
           </div>
-          <input
-            type="range"
-            className={`custom-range ${sliderBackgroundColor} inputRange`}
-            min={structureData?.min}
-            max={structureData?.max}
-            value={
-              structureData ? (structureData.min + structureData.max) / 2 : ""
-            }
-            step={0.01}
-            onChange={() => false}
-            //value={item.valorAcao}
-          />
+          <div className="boxSliderContainer">
+            <div className="sliderEdge"></div>
+            <div className="sliderMiddle"></div>
+            <div className="sliderEdge"></div>
+          </div>
           <div className="flexSpaceBetweenCenter">
-            <span className="highlightedText">{formattedData?.min}</span>
-            <span className="highlightedText">{formattedData?.max}</span>
+            <span className="highlightedText">
+              {formattedData?.buy || "0,00"}
+            </span>
+            <span className="highlightedText">
+              {formattedData?.sell || "0,00"}
+            </span>
           </div>
         </section>
       </div>

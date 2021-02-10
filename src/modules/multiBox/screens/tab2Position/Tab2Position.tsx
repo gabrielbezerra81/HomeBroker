@@ -163,6 +163,27 @@ const Tab2Position: React.FC<Props> = ({ multiBox }) => {
         </div>
       </header>
 
+      <div className="boxInputRangeContainer">
+        <div>
+          <span>Mín</span>
+          <span>Médio</span>
+          <span>Máx</span>
+        </div>
+        <input
+          type="range"
+          className={`custom-range boxInputRange`}
+          step="0.01"
+          min={stockSymbolData?.min}
+          max={stockSymbolData?.max}
+          onChange={(event) => {}}
+        />
+        <div>
+          <span>{formattedRefStockData?.formattedMin}</span>
+          <span>{formattedRefStockData?.formattedMedium}</span>
+          <span>{formattedRefStockData?.formattedMax}</span>
+        </div>
+      </div>
+
       <div className="titleContainer">
         <h6>Posição</h6>
       </div>
