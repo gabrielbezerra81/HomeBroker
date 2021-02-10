@@ -10,7 +10,7 @@ const CVStartStop = ["Compra Start Stop", "Venda Start Stop"];
 const CVStopMovel = ["Compra Stop Móvel", "Venda Stop Móvel"];
 
 export const validarOrdemBoleta = (props, selectedAccount) => {
-  const { dadosPesquisa, qtde } = props;
+  const { dadosPesquisa, qtde, orderInfo } = props;
   let valido = true;
 
   if (!dadosPesquisa.ativo) {
@@ -22,7 +22,7 @@ export const validarOrdemBoleta = (props, selectedAccount) => {
     alert(erro_validar_qtde);
   }
 
-  if (CVStopMovel.includes(props.ordem.nome)) {
+  if (CVStopMovel.includes(orderInfo.nome)) {
     if (props.inicioDisparo > props.stopDisparo) {
       valido = false;
       alert(erro_validar_disparo_start_movel);
@@ -38,7 +38,14 @@ export const validarOrdemBoleta = (props, selectedAccount) => {
 };
 
 export const montaOrdemPrincipal = (props, selectedAccount) => {
-  const { date, ordem, gainDisparo, stopDisparo, validadeSelect } = props;
+  const {
+    date,
+    orderInfo,
+    gainDisparo,
+    stopDisparo,
+    validadeSelect,
+    orderId,
+  } = props;
 
   let json = {
     account: {},
@@ -46,6 +53,10 @@ export const montaOrdemPrincipal = (props, selectedAccount) => {
     offers: [],
     next: [],
   };
+
+  if (orderId) {
+    json.id = orderId;
+  }
 
   //Dados da ordem
   json.account.id = selectedAccount.id;
@@ -57,11 +68,11 @@ export const montaOrdemPrincipal = (props, selectedAccount) => {
 
   json.status = "Nova";
   json.priority = 0;
-  json.tradeName.name = ordem.nome;
-  json.formName = ordem.nome;
+  json.tradeName.name = orderInfo.nome;
+  json.formName = orderInfo.nome;
 
   //StartStop pode ter 2 ordens principais e até 4 ordens next
-  if (CVStartStop.includes(ordem.nome)) {
+  if (CVStartStop.includes(orderInfo.nome)) {
     montaOfertaPrincipal(props, "start", json);
     montaOfertaPrincipal(props, "stop", json);
     const {
@@ -81,7 +92,7 @@ export const montaOrdemPrincipal = (props, selectedAccount) => {
     montaOfertaNext(props, stopDisparoConfig2, stopExecConfig2, "stop", json);
   }
   //CV Stop Movel
-  else if (CVStopMovel.includes(ordem.nome)) {
+  else if (CVStopMovel.includes(orderInfo.nome)) {
     const { tabelaOrdens } = props;
 
     montaOfertaPrincipal(props, "", json);
@@ -103,7 +114,7 @@ export const montaOrdemPrincipal = (props, selectedAccount) => {
 };
 
 const montaOfertaPrincipal = (props, tipoAuxiliar, json, numAjuste = 0) => {
-  const { validadeSelect, date, qtde, dadosPesquisa, ordem } = props;
+  const { validadeSelect, date, qtde, dadosPesquisa, orderInfo } = props;
 
   let ofertaPrincipal = {
     stock: {},
@@ -139,7 +150,7 @@ const montaOfertaPrincipal = (props, tipoAuxiliar, json, numAjuste = 0) => {
       if (tamTabela === 0) disparo = Number(inicioDisparo);
       else {
         const ultimaLinha = tabelaOrdens[tamTabela - 1];
-        if (ordem.tipoOferta === "C")
+        if (orderInfo.tipoOferta === "C")
           disparo = ultimaLinha.disparo - ultimaLinha.ajuste;
         else disparo = ultimaLinha.disparo + ultimaLinha.ajuste;
       }
@@ -157,8 +168,8 @@ const montaOfertaPrincipal = (props, tipoAuxiliar, json, numAjuste = 0) => {
   if (validadeSelect === "DAY")
     ofertaPrincipal.expiration = getformatedDate(new Date()) + " 22:00:00";
   ofertaPrincipal.qtty = Number(qtde);
-  ofertaPrincipal.orderType = ordem.tipoOrdem;
-  ofertaPrincipal.offerType = ordem.tipoOferta;
+  ofertaPrincipal.orderType = orderInfo.tipoOrdem;
+  ofertaPrincipal.offerType = orderInfo.tipoOferta;
 
   //Limitada
   if (props.preco) ofertaPrincipal.price = Number(props.preco);
@@ -170,7 +181,7 @@ const montaOfertaPrincipal = (props, tipoAuxiliar, json, numAjuste = 0) => {
     }
   }
   //StartStop
-  else if (CVStartStop.includes(ordem.nome)) {
+  else if (CVStartStop.includes(orderInfo.nome)) {
     //Ordem 1 Start
     if (tipoAuxiliar === "start") {
       if (!props.gainDisparo) return;
@@ -185,7 +196,7 @@ const montaOfertaPrincipal = (props, tipoAuxiliar, json, numAjuste = 0) => {
     }
   }
   //CV Stop Movel 1ª ordem
-  else if (CVStopMovel.includes(ordem.nome)) {
+  else if (CVStopMovel.includes(orderInfo.nome)) {
     ofertaPrincipal.priority = -1;
     ofertaPrincipal.trigger = Number(props.stopDisparo);
     ofertaPrincipal.price = Number(props.stopExec);
@@ -195,7 +206,7 @@ const montaOfertaPrincipal = (props, tipoAuxiliar, json, numAjuste = 0) => {
 };
 
 export const montaOfertaNext = (props, disparo, execucao, tipo, json) => {
-  const { qtde, dadosPesquisa, ordem } = props;
+  const { qtde, dadosPesquisa, orderInfo } = props;
 
   let ordemNext = {
     action: "Enable",
@@ -230,28 +241,28 @@ export const montaOfertaNext = (props, disparo, execucao, tipo, json) => {
   ofertaNext.status = "Suspensa";
   ofertaNext.enabled = false;
 
-  if (ordem.tipoOferta === "C") {
+  if (orderInfo.tipoOferta === "C") {
     ofertaNext.offerType = "V";
     ofertaNext.orderType = "sellWait";
-  } else if (ordem.tipoOferta === "V") {
+  } else if (orderInfo.tipoOferta === "V") {
     ofertaNext.offerType = "C";
     ofertaNext.orderType = "buyWait";
   }
 
   if (disparo) {
     if (tipo === "gain") {
-      if (ordem.tipoOferta === "C")
+      if (orderInfo.tipoOferta === "C")
         ordemNext.order.tradeName.name = "Venda Stop Gain";
-      else if (ordem.tipoOferta === "V")
+      else if (orderInfo.tipoOferta === "V")
         ordemNext.order.tradeName.name = "Compra Stop Gain";
 
       ofertaNext.trigger = Number(disparo);
       if (execucao) ofertaNext.price = Number(execucao);
       ordemNext.order.offers.push(ofertaNext);
     } else if (tipo === "stop") {
-      if (ordem.tipoOferta === "C")
+      if (orderInfo.tipoOferta === "C")
         ordemNext.order.tradeName.name = "Venda Stop Loss";
-      else if (ordem.tipoOferta === "V")
+      else if (orderInfo.tipoOferta === "V")
         ordemNext.order.tradeName.name = "Compra Stop Loss";
 
       ofertaNext.trigger = Number(disparo);

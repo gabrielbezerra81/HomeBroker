@@ -12,16 +12,13 @@ import {
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction,
 } from "modules/boletas/duck/actions/boletaActions";
-import RowFormValidade from "modules/boletas/components/RowFormValidade";
+import BoletaDateSelector from "modules/boletas/components/BoletaDateSelector";
 import RowFormAssinatura from "modules/boletas/components/RowFormAssinatura";
 import { COMPRA_STARTSTOP_NAMESPACE } from "constants/ActionTypes";
-import RowAtivoQtdeBoletas from "modules/boletas/components/RowAtivoQtdeBoletas";
-import {
-  pesquisarAtivoOnEnterAction,
-  enviarOrdemAction,
-} from "modules/boletas/duck/actions/boletasAPIActions";
+import BoletaSymbolQttyRow from "modules/boletas/components/BoletaSymbolQttyRow";
+import { pesquisarAtivoOnEnterAction } from "modules/boletas/duck/actions/boletasAPIActions";
 import { mapStateToPropsConfigurarStop } from "./ConfigurarStop";
-import { BotaoEnviarOrdem } from "modules/boletas/components/BotaoEnviarOrdem";
+import { BoletaSendOrderButton } from "modules/boletas/components/BoletaSendOrderButton";
 import InputGroupBoleta from "modules/boletas/components/InternalForm/InputGroupBoleta";
 
 class FormInternoCompraStartStop extends React.Component {
@@ -30,7 +27,7 @@ class FormInternoCompraStartStop extends React.Component {
       <Col className="colFormInterno">
         <div className="divAsModalContainer">
           <Form>
-            {RowAtivoQtdeBoletas(this.props, COMPRA_STARTSTOP_NAMESPACE)}
+            <BoletaSymbolQttyRow namespace={COMPRA_STARTSTOP_NAMESPACE} />
           </Form>
           <InputGroupBoleta
             namespace={COMPRA_STARTSTOP_NAMESPACE}
@@ -39,7 +36,7 @@ class FormInternoCompraStartStop extends React.Component {
             popupToOpenStop="venda_stopmovel"
           />
 
-          {RowFormValidade(this.props, COMPRA_STARTSTOP_NAMESPACE)}
+          <BoletaDateSelector namespace={COMPRA_STARTSTOP_NAMESPACE} />
 
           <div className="customFooter">
             {RowFormAssinatura(this.props, COMPRA_STARTSTOP_NAMESPACE)}
@@ -56,9 +53,8 @@ class FormInternoCompraStartStop extends React.Component {
                 </Button>
               </Col>
               <Col md={6}>
-                <BotaoEnviarOrdem
-                  props={this.props}
-                  tipoCompraVenda="Comprar"
+                <BoletaSendOrderButton
+                  orderInfo={this.props.ordem}
                   namespace={COMPRA_STARTSTOP_NAMESPACE}
                 />
               </Col>
@@ -96,7 +92,6 @@ export default compose(
     mudarCheckSalvarAssinaturaAction,
     mostrarErroQtdeOnBlurAction,
     pesquisarAtivoOnEnterAction,
-    enviarOrdemAction,
   }),
   connect(mapStateToPropsConfigurarStop, {}),
 )(FormInternoCompraStartStop);

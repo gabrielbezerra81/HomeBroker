@@ -12,17 +12,14 @@ import {
   mudarCheckSalvarAssinaturaAction,
   mudarAtributoBoletaAction,
 } from "modules/boletas/duck/actions/boletaActions";
-import RowFormValidade from "modules/boletas/components/RowFormValidade";
+import BoletaDateSelector from "modules/boletas/components/BoletaDateSelector";
 import RowFormAssinatura from "modules/boletas/components/RowFormAssinatura";
 import { COMPRA_LIMITADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalLimitada } from "shared/utils/CalculoValorTotal";
-import RowAtivoQtdeBoletas from "modules/boletas/components/RowAtivoQtdeBoletas";
-import {
-  pesquisarAtivoOnEnterAction,
-  enviarOrdemAction,
-} from "modules/boletas/duck/actions/boletasAPIActions";
+import BoletaSymbolQttyRow from "modules/boletas/components/BoletaSymbolQttyRow";
+import { pesquisarAtivoOnEnterAction } from "modules/boletas/duck/actions/boletasAPIActions";
 import CustomInput from "shared/componentes/CustomInput";
-import { BotaoEnviarOrdem } from "modules/boletas/components/BotaoEnviarOrdem";
+import { BoletaSendOrderButton } from "modules/boletas/components/BoletaSendOrderButton";
 import { BoletasState } from "redux/reducers";
 import BoletasOrderType from "modules/boletas/types/boletasOrderType";
 import InputGroupBoleta from "modules/boletas/components/InternalForm/InputGroupBoleta";
@@ -64,7 +61,7 @@ class FormInternoCompraLimitada extends React.Component<Props, State> {
       <Col className="colFormInterno">
         <div className="divAsModalContainer">
           <Form>
-            {RowAtivoQtdeBoletas(this.props, COMPRA_LIMITADA_NAMESPACE)}
+            <BoletaSymbolQttyRow namespace={COMPRA_LIMITADA_NAMESPACE} />
 
             <Row>
               <Col md={2} className="colLabelInput">
@@ -104,7 +101,7 @@ class FormInternoCompraLimitada extends React.Component<Props, State> {
             popupToOpenStop="venda_stopmovel"
           />
 
-          {RowFormValidade(this.props, COMPRA_LIMITADA_NAMESPACE)}
+          <BoletaDateSelector namespace={COMPRA_LIMITADA_NAMESPACE} />
 
           <div className="customFooter">
             {RowFormAssinatura(this.props, COMPRA_LIMITADA_NAMESPACE)}
@@ -121,9 +118,8 @@ class FormInternoCompraLimitada extends React.Component<Props, State> {
                 </Button>
               </Col>
               <Col md={6}>
-                <BotaoEnviarOrdem
-                  props={this.props}
-                  tipoCompraVenda="Comprar"
+                <BoletaSendOrderButton
+                  orderInfo={this.props.ordem}
                   namespace={COMPRA_LIMITADA_NAMESPACE}
                 />
               </Col>
@@ -162,7 +158,6 @@ const mapDispatch = {
   mudarCheckSalvarAssinaturaAction,
   mostrarErroQtdeOnBlurAction,
   pesquisarAtivoOnEnterAction,
-  enviarOrdemAction,
   mudarAtributoBoletaAction,
 };
 

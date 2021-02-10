@@ -84,15 +84,24 @@ export const startReactiveBoletaQuoteUpdateAction = (namespace) => {
   };
 };
 
-export const enviarOrdemAction = (props, selectedAccount) => {
-  return async () => {
+export const enviarOrdemAction = ({
+  selectedAccount,
+  namespace,
+  orderInfo,
+}) => {
+  return async (dispatch, getState) => {
     const {
       ordersExecReducer: { tabelaOrdensExecucao },
     } = storeAppPrincipal.getState();
 
-    let json = [montaOrdemPrincipal(props, selectedAccount)];
-    if (validarOrdemBoleta(props, selectedAccount)) {
-      const data = await enviarOrdemAPI(json);
+    const boletaState = { ...getState()[namespace], orderInfo };
+
+    const orderPayload = [montaOrdemPrincipal(boletaState, selectedAccount)];
+
+    dispatch(mudarAtributoBoletaAction(0, namespace, "orderId"));
+
+    if (validarOrdemBoleta(boletaState, selectedAccount)) {
+      const data = await enviarOrdemAPI(orderPayload);
 
       if (data && data.length) {
         const updatedOrders = produce(tabelaOrdensExecucao, (draft) => {

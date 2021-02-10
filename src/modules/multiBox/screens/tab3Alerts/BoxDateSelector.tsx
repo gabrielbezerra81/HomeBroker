@@ -21,7 +21,7 @@ const BoxDateSelector: React.FC<DateSelectorProps> = ({ multiBox }) => {
       dispatch,
     })
   ) : (
-    <BoxDatePickerProps multiBox={multiBox} />
+    <BoxDatePicker multiBox={multiBox} />
   );
 };
 
@@ -31,7 +31,7 @@ interface BoxDatePickerProps {
   multiBox: MultiBoxData;
 }
 
-const BoxDatePickerProps: React.FC<BoxDatePickerProps> = ({ multiBox }) => {
+const BoxDatePicker: React.FC<BoxDatePickerProps> = ({ multiBox }) => {
   const dispatch = useDispatchStorePrincipal();
 
   const { id, selectedValidity, selectedDate } = multiBox;

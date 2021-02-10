@@ -1,37 +1,42 @@
 import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
-import { mostrarErroQtdeOnBlurAction } from "modules/boletas/duck/actions/bookOfertaActions";
 import {
-  mudarValidadeSelectAction,
-  mudarDataAction,
-  limparAction,
-  mudarAtivoAction,
-  mudarAssinaturaAction,
-  mudarCheckSalvarAssinaturaAction,
-  mudarQtdAction,
+  // mudarValidadeSelectAction,
+  // mudarDataAction,
+  // mudarAtivoAction,
+  // mudarAssinaturaAction,
+  // mudarCheckSalvarAssinaturaAction,
+  // mudarQtdAction,
   mudarAtributoBoletaAction,
+  limparAction,
 } from "modules/boletas/duck/actions/boletaActions";
-import RowFormValidade from "modules/boletas/components/RowFormValidade";
+import BoletaDateSelector from "modules/boletas/components/BoletaDateSelector";
 import RowFormAssinatura from "modules/boletas/components/RowFormAssinatura";
 import { COMPRA_AGENDADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalAgendada } from "shared/utils/CalculoValorTotal";
-import RowAtivoQtdeBoletas from "modules/boletas/components/RowAtivoQtdeBoletas";
-import {
-  pesquisarAtivoOnEnterAction,
-  enviarOrdemAction,
-} from "modules/boletas/duck/actions/boletasAPIActions";
+import BoletaSymbolQttyRow from "modules/boletas/components/BoletaSymbolQttyRow";
 import CustomInput from "shared/componentes/CustomInput";
-import { BotaoEnviarOrdem } from "modules/boletas/components/BotaoEnviarOrdem";
+import { BoletaSendOrderButton } from "modules/boletas/components/BoletaSendOrderButton";
 import InputGroupBoleta from "modules/boletas/components/InternalForm/InputGroupBoleta";
 
 class FormInternoCompraAgendada extends React.Component {
   render() {
+    const {
+      entradaDisparo,
+      entradaExec,
+      qtde,
+      ordem,
+      mudarAtributoBoletaAction,
+      limparAction,
+    } = this.props;
+
     return (
       <Col className="colFormInterno">
         <div className="divAsModalContainer">
           <Form>
-            {RowAtivoQtdeBoletas(this.props, COMPRA_AGENDADA_NAMESPACE)}
+            <BoletaSymbolQttyRow namespace={COMPRA_AGENDADA_NAMESPACE} />
+
             <Row>
               <Col md={2} className="colLabelInput">
                 <h6 className="labelInput-verticalAlign">Entr.</h6>
@@ -42,9 +47,9 @@ class FormInternoCompraAgendada extends React.Component {
                   <CustomInput
                     type="preco"
                     step={0.01}
-                    value={this.props.entradaDisparo}
+                    value={entradaDisparo}
                     onChange={(valor) =>
-                      this.props.mudarAtributoBoletaAction(
+                      mudarAtributoBoletaAction(
                         valor,
                         COMPRA_AGENDADA_NAMESPACE,
                         "entradaDisparo",
@@ -59,9 +64,9 @@ class FormInternoCompraAgendada extends React.Component {
                   <CustomInput
                     type="preco"
                     step={0.01}
-                    value={this.props.entradaExec}
+                    value={entradaExec}
                     onChange={(valor) =>
-                      this.props.mudarAtributoBoletaAction(
+                      mudarAtributoBoletaAction(
                         valor,
                         COMPRA_AGENDADA_NAMESPACE,
                         "entradaExec",
@@ -76,11 +81,7 @@ class FormInternoCompraAgendada extends React.Component {
           <Row>
             <Col className="colValorTotal">
               <h6 className="valorTotalText">
-                {CalculoValorTotalAgendada(
-                  this.props.entradaDisparo,
-                  this.props.entradaExec,
-                  this.props.qtde,
-                )}
+                {CalculoValorTotalAgendada(entradaDisparo, entradaExec, qtde)}
               </h6>
             </Col>
           </Row>
@@ -92,7 +93,7 @@ class FormInternoCompraAgendada extends React.Component {
             popupToOpenStop="venda_stopmovel"
           />
 
-          {RowFormValidade(this.props, COMPRA_AGENDADA_NAMESPACE)}
+          <BoletaDateSelector namespace={COMPRA_AGENDADA_NAMESPACE} />
 
           <div className="customFooter">
             {RowFormAssinatura(this.props, COMPRA_AGENDADA_NAMESPACE)}
@@ -101,17 +102,14 @@ class FormInternoCompraAgendada extends React.Component {
                 <Button
                   variant="secondary"
                   size="sm"
-                  onClick={() =>
-                    this.props.limparAction(COMPRA_AGENDADA_NAMESPACE)
-                  }
+                  onClick={() => limparAction(COMPRA_AGENDADA_NAMESPACE)}
                 >
                   <h6>Limpar</h6>
                 </Button>
               </Col>
               <Col md={6}>
-                <BotaoEnviarOrdem
-                  props={this.props}
-                  tipoCompraVenda="Comprar"
+                <BoletaSendOrderButton
+                  orderInfo={ordem}
                   namespace={COMPRA_AGENDADA_NAMESPACE}
                 />
               </Col>
@@ -142,15 +140,6 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  mudarQtdAction,
-  mudarValidadeSelectAction,
-  mudarDataAction,
   limparAction,
-  mudarAtivoAction,
-  mudarAssinaturaAction,
-  mudarCheckSalvarAssinaturaAction,
-  mostrarErroQtdeOnBlurAction,
-  pesquisarAtivoOnEnterAction,
-  enviarOrdemAction,
   mudarAtributoBoletaAction,
 })(FormInternoCompraAgendada);

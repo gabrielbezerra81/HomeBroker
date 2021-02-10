@@ -12,17 +12,14 @@ import {
   mudarCheckSalvarAssinaturaAction,
   mudarAtributoBoletaAction,
 } from "modules/boletas/duck/actions/boletaActions";
-import RowFormValidade from "modules/boletas/components/RowFormValidade";
+import BoletaDateSelector from "modules/boletas/components/BoletaDateSelector";
 import RowFormAssinatura from "modules/boletas/components/RowFormAssinatura";
 import { VENDA_LIMITADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalLimitada } from "shared/utils/CalculoValorTotal";
-import RowAtivoQtdeBoletas from "modules/boletas/components/RowAtivoQtdeBoletas";
-import {
-  pesquisarAtivoOnEnterAction,
-  enviarOrdemAction,
-} from "modules/boletas/duck/actions/boletasAPIActions";
+import BoletaSymbolQttyRow from "modules/boletas/components/BoletaSymbolQttyRow";
+import { pesquisarAtivoOnEnterAction } from "modules/boletas/duck/actions/boletasAPIActions";
 import CustomInput from "shared/componentes/CustomInput";
-import { BotaoEnviarOrdem } from "modules/boletas/components/BotaoEnviarOrdem";
+import { BoletaSendOrderButton } from "modules/boletas/components/BoletaSendOrderButton";
 import InputGroupBoleta from "modules/boletas/components/InternalForm/InputGroupBoleta";
 
 class FormInternoVendaLimitada extends React.Component {
@@ -53,7 +50,7 @@ class FormInternoVendaLimitada extends React.Component {
       <Col className="colFormInterno">
         <div className="divAsModalContainer">
           <Form>
-            {RowAtivoQtdeBoletas(this.props, VENDA_LIMITADA_NAMESPACE)}
+            <BoletaSymbolQttyRow namespace={VENDA_LIMITADA_NAMESPACE} />
 
             <Row>
               <Col md={2} className="colLabelInput">
@@ -92,7 +89,7 @@ class FormInternoVendaLimitada extends React.Component {
             popupToOpenStop="venda_stopmovel"
           />
 
-          {RowFormValidade(this.props, VENDA_LIMITADA_NAMESPACE)}
+          <BoletaDateSelector namespace={VENDA_LIMITADA_NAMESPACE} />
 
           <div className="customFooter">
             {RowFormAssinatura(this.props, VENDA_LIMITADA_NAMESPACE)}
@@ -109,9 +106,8 @@ class FormInternoVendaLimitada extends React.Component {
                 </Button>
               </Col>
               <Col md={6}>
-                <BotaoEnviarOrdem
-                  props={this.props}
-                  tipoCompraVenda="Vender"
+                <BoletaSendOrderButton
+                  orderInfo={this.props.ordem}
                   namespace={VENDA_LIMITADA_NAMESPACE}
                 />
               </Col>
@@ -150,6 +146,5 @@ export default connect(mapStateToProps, {
   mudarCheckSalvarAssinaturaAction,
   mostrarErroQtdeOnBlurAction,
   pesquisarAtivoOnEnterAction,
-  enviarOrdemAction,
   mudarAtributoBoletaAction,
 })(FormInternoVendaLimitada);

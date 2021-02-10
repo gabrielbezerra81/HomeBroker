@@ -11,12 +11,12 @@ import {
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction,
 } from "modules/boletas/duck/actions/boletaActions";
-import RowFormValidade from "modules/boletas/components/RowFormValidade";
+import BoletaDateSelector from "modules/boletas/components/BoletaDateSelector";
 import RowFormAssinatura from "modules/boletas/components/RowFormAssinatura";
 import { VENDA_GAINREDUCAO_NAMESPACE } from "constants/ActionTypes";
 import TabelaGainReducao from "./TabelaGainReducao";
 import { pesquisarAtivoOnEnterAction } from "modules/boletas/duck/actions/boletasAPIActions";
-import { BotaoEnviarOrdem } from "modules/boletas/components/BotaoEnviarOrdem";
+import { BoletaSendOrderButton } from "modules/boletas/components/BoletaSendOrderButton";
 import InputGroupGainReducao from "modules/boletas/components/InternalForm/InputGroupGainReducao";
 
 class FormInternoVendaGainReducao extends React.Component {
@@ -34,7 +34,8 @@ class FormInternoVendaGainReducao extends React.Component {
           <Form className="item">
             <InputGroupGainReducao namespace={VENDA_GAINREDUCAO_NAMESPACE} />
           </Form>
-          {RowFormValidade(this.props, VENDA_GAINREDUCAO_NAMESPACE)}
+
+          <BoletaDateSelector namespace={VENDA_GAINREDUCAO_NAMESPACE} />
 
           <Row className="rowTabelaGainReducao">
             <Col className="colTabelaOrdens">
@@ -59,9 +60,8 @@ class FormInternoVendaGainReducao extends React.Component {
                 </Button>
               </Col>
               <Col md={6}>
-                <BotaoEnviarOrdem
-                  props={this.props}
-                  tipoCompraVenda="Vender"
+                <BoletaSendOrderButton
+                  orderInfo={this.props.ordem}
                   namespace={VENDA_GAINREDUCAO_NAMESPACE}
                 />
               </Col>
