@@ -85,7 +85,7 @@ const OpenAlert: React.FC<RouteComponentProps & { id?: string }> = ({ id }) => {
         );
 
         if (alertItem) {
-          dispatch(openAlertInMultileg(alertItem, dispatchGlobal));
+          dispatch(openAlertInMultileg(alertItem));
         }
 
         setFetchingAlerts(false);

@@ -297,25 +297,19 @@ export const getUpdatedOptionsWhenExpirationChanges = async ({
       symbolQuote: selectedStrike,
     });
   }
-
-  return payload;
 };
 
 interface ConcludeTab5 {
-  dispatchGlobal: any;
-  zIndex: number;
   boxId: string;
 }
 
-export const handleConcludeTab5Action = (
-  data: ConcludeTab5,
-): MainThunkAction => {
+export const handleConcludeTab5Action = (boxId: string): MainThunkAction => {
   return (dispatch, getState) => {
     const {
       multiBoxReducer: { boxes },
     } = getState();
 
-    const multiBox = boxes.find((box) => box.id === data.boxId);
+    const multiBox = boxes.find((box) => box.id === boxId);
 
     if (multiBox) {
       const topSymbols: TopSymbol[] = multiBox.boxOffers.map((offer) => {
@@ -340,23 +334,17 @@ export const handleConcludeTab5Action = (
         return topSymbol;
       });
 
-      dispatch(
-        addNewMultiBoxStructureAction({ ...data, multiBox, topSymbols }),
-      );
+      dispatch(addNewMultiBoxStructureAction({ multiBox, topSymbols }));
     }
   };
 };
 
 interface addNewBoxStructureAction {
-  dispatchGlobal: any;
-  zIndex: number;
   multiBox: MultiBoxData;
   topSymbols: TopSymbol[];
 }
 
 export const addNewMultiBoxStructureAction = ({
-  dispatchGlobal,
-  zIndex,
   multiBox,
   topSymbols,
 }: addNewBoxStructureAction): MainThunkAction => {
@@ -379,8 +367,6 @@ export const addNewMultiBoxStructureAction = ({
       multiBox,
       dispatch,
       getState,
-      zIndex,
-      dispatchGlobal,
       commentConfig: JSON.stringify(configData),
     });
 

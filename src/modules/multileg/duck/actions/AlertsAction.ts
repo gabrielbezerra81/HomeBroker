@@ -19,11 +19,9 @@ import {
 } from "./MultilegActions";
 import { searchMultilegSymbolData } from "./MultilegAPIAction";
 import { updateManyMultilegState } from "./utils";
+import { globalStore } from "redux/StoreCreation";
 
-export const openAlertInMultileg = (
-  alertItem: AlertAPI,
-  dispatchGlobal: Dispatch<any>,
-): MainThunkAction => {
+export const openAlertInMultileg = (alertItem: AlertAPI): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
       multilegReducer: { multileg, cotacoesMultileg },
@@ -59,7 +57,7 @@ export const openAlertInMultileg = (
       clonedMultilegTabs.pop();
     }
 
-    dispatchGlobal(atualizarDivKeyAction("multileg"));
+    globalStore.dispatch(atualizarDivKeyAction("multileg") as any);
     dispatch(abrirItemBarraLateralAction("isOpenMultileg", true));
 
     // Adicionar aba

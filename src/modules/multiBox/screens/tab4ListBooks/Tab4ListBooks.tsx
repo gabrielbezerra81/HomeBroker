@@ -15,8 +15,6 @@ import openInNewIcon from "assets/multiBox/openInNewIcon.png";
 import zoomIcon from "assets/multiBox/zoomIcon.png";
 import SymbolCard from "../SymbolCard";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
-import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
-import useStateGlobalStore from "hooks/useStateGlobalStore";
 import { getSymbolsDataAPI } from "api/symbolAPI";
 import {
   formatarNumDecimal,
@@ -52,10 +50,6 @@ const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
 
   const [tab4Data, setTab4Data] = useState<Tab4Data[]>([]);
 
-  const dispatchGlobal = useDispatchGlobalStore();
-
-  const { zIndex } = useStateGlobalStore();
-
   const { strikeViewMode, id, stockSymbolData } = multiBox;
 
   const handleSearch = useCallback(() => {}, []);
@@ -64,13 +58,9 @@ const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
     dispatch(
       handleExportBoxToMultilegAction({
         boxId: id,
-        globalProps: {
-          dispatchGlobal,
-          zIndex,
-        },
       }),
     );
-  }, [dispatch, dispatchGlobal, id, zIndex]);
+  }, [dispatch, id]);
 
   const handleConfig = useCallback(() => {}, []);
 

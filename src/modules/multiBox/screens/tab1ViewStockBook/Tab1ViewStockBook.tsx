@@ -32,8 +32,6 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
     return boxesTab1Data.find((data) => data.boxId === multiBox.id);
   }, [multiBox.id, boxesTab1Data]);
 
-  const handleMinimize = useCallback(() => {}, []);
-
   const handleClose = useCallback(async () => {
     dispatch(handleDeleteBoxAction(multiBox.id));
   }, [dispatch, multiBox.id]);

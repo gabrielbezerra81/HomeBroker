@@ -20,6 +20,7 @@ import { calculoPreco } from "modules/multileg/screens/CalculoPreco";
 import { formatarNumero } from "shared/utils/Formatacoes";
 import { updateManyTHLState } from "./utils";
 import { updateManyMultilegState } from "modules/multileg/duck/actions/utils";
+import { globalStore } from "redux/StoreCreation";
 
 export const mudarVariavelTHLAction = (nome, valor) => {
   return (dispatch) => {
@@ -33,7 +34,7 @@ export const mudarVariaveisTHLAction = (payload) => {
   };
 };
 
-export const abrirMultilegTHLAction = (props) => {
+export const abrirMultilegTHLAction = () => {
   // Actions
   return async (dispatch, getState) => {
     const {
@@ -42,13 +43,15 @@ export const abrirMultilegTHLAction = (props) => {
       thlReducer: { booksSelecionados },
     } = getState();
 
-    let { zIndex, dispatchGlobal } = props;
+    const {
+      GlobalReducer: { zIndex },
+    } = globalStore.getState();
 
     dispatch(updateMultilegStateAction("loadingOffers", true));
 
     const clonedMultilegTabs = cloneMultilegTabs(multileg);
 
-    dispatchGlobal(atualizarDivKeyAction("multileg"));
+    globalStore.dispatch(atualizarDivKeyAction("multileg"));
 
     if (!isOpenMultileg) {
       clonedMultilegTabs.pop();
@@ -56,7 +59,7 @@ export const abrirMultilegTHLAction = (props) => {
     } else {
       //Traz para primeiro plano se já estiver aberto
       document.getElementById("multileg").style.zIndex = zIndex + 1;
-      dispatchGlobal(aumentarZindexAction("multileg", zIndex, true));
+      globalStore.dispatch(aumentarZindexAction("multileg", zIndex, true));
     }
 
     dispatch(

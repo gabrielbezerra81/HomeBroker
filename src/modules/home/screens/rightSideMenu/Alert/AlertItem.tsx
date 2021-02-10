@@ -7,7 +7,6 @@ import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { AlertAPI } from "modules/multileg/types/multileg";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { updateAlertAPI } from "api/API";
-import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 import {} from "redux/actions/system/SystemActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import produce from "immer";
@@ -19,7 +18,6 @@ interface AlertItemProps {
 }
 
 const AlertItem: React.FC<AlertItemProps> = ({ alert: alertItem }) => {
-  const dispatchGlobal = useDispatchGlobalStore();
   const dispatch = useDispatchStorePrincipal();
 
   const {
@@ -63,8 +61,8 @@ const AlertItem: React.FC<AlertItemProps> = ({ alert: alertItem }) => {
   }, [alertItem.id, alerts, dispatch]);
 
   const handleSearch = useCallback(() => {
-    dispatch(openAlertInMultileg(alertItem, dispatchGlobal));
-  }, [alertItem, dispatch, dispatchGlobal]);
+    dispatch(openAlertInMultileg(alertItem));
+  }, [alertItem, dispatch]);
 
   const formattedData = useMemo(() => {
     return {

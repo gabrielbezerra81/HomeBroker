@@ -28,8 +28,6 @@ import {
   handleSearchBoxSymbolOptionsAction,
   handleConcludeTab5Action,
 } from "modules/multiBox/duck/actions/tab5Actions";
-import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
-import useStateGlobalStore from "hooks/useStateGlobalStore";
 
 import closeIcon from "assets/multiBox/closeIcon.png";
 
@@ -39,9 +37,6 @@ interface Props {
 
 const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
   const dispatch = useDispatchStorePrincipal();
-  const dispatchGlobal = useDispatchGlobalStore();
-
-  const { zIndex } = useStateGlobalStore();
 
   const {
     symbolInput,
@@ -98,13 +93,9 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
     dispatch(
       handleExportBoxToMultilegAction({
         boxId: id,
-        globalProps: {
-          dispatchGlobal,
-          zIndex,
-        },
       }),
     );
-  }, [dispatch, dispatchGlobal, id, zIndex]);
+  }, [dispatch, id]);
 
   const handleConfig = useCallback(() => {}, []);
 
@@ -131,8 +122,8 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
   }, [dispatch, multiBox.id, strikeViewMode]);
 
   const handleConclude = useCallback(() => {
-    dispatch(handleConcludeTab5Action({ boxId: id, dispatchGlobal, zIndex }));
-  }, [dispatch, dispatchGlobal, id, zIndex]);
+    dispatch(handleConcludeTab5Action(id));
+  }, [dispatch, id]);
 
   const strikeOptions = useMemo(() => {
     const dropdownOptions = stockOptions.map((option, index) => {

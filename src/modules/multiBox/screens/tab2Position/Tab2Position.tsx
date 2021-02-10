@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from "react";
 
-import { Form, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 
 import { MultiBoxData } from "modules/multiBox/types/MultiBoxState";
 import cogIcon from "assets/multiBox/cogIcon.png";
@@ -11,12 +11,10 @@ import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import {
   handleDeleteBoxAction,
   handleExportBoxToMultilegAction,
-  updateBoxAttrAction,
 } from "modules/multiBox/duck/actions/multiBoxActions";
 
 import closeIcon from "assets/multiBox/closeIcon.png";
-import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
-import useStateGlobalStore from "hooks/useStateGlobalStore";
+
 import SymbolCard from "../SymbolCard";
 
 interface Props {
@@ -26,10 +24,6 @@ interface Props {
 const Tab2Position: React.FC<Props> = ({ multiBox }) => {
   const dispatch = useDispatchStorePrincipal();
 
-  const dispatchGlobal = useDispatchGlobalStore();
-
-  const { zIndex } = useStateGlobalStore();
-
   const { id, strikeViewMode } = multiBox;
 
   const handleSearch = useCallback(() => {}, []);
@@ -38,13 +32,9 @@ const Tab2Position: React.FC<Props> = ({ multiBox }) => {
     dispatch(
       handleExportBoxToMultilegAction({
         boxId: id,
-        globalProps: {
-          dispatchGlobal,
-          zIndex,
-        },
       }),
     );
-  }, [dispatch, dispatchGlobal, id, zIndex]);
+  }, [dispatch, id]);
 
   const handleConfig = useCallback(() => {}, []);
 
@@ -52,16 +42,16 @@ const Tab2Position: React.FC<Props> = ({ multiBox }) => {
     dispatch(handleDeleteBoxAction(multiBox.id));
   }, [dispatch, multiBox.id]);
 
-  const handleQttyChange = useCallback(
-    (value) => {
-      dispatch(
-        updateBoxAttrAction(id, {
-          price: value,
-        }),
-      );
-    },
-    [dispatch, id],
-  );
+  // const handleQttyChange = useCallback(
+  //   (value) => {
+  //     dispatch(
+  //       updateBoxAttrAction(id, {
+  //         price: value,
+  //       }),
+  //     );
+  //   },
+  //   [dispatch, id],
+  // );
 
   const oscilation = 2;
 

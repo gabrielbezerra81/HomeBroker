@@ -1,29 +1,40 @@
 import { erro_exportar_ordens_multileg } from "constants/AlertaErros";
-import { atualizarDivKeyAction, aumentarZindexAction } from "redux/actions/GlobalAppActions";
-import { addMultilegOffer, addMultilegTab, cloneMultilegQuotes, cloneMultilegTabs, updateMultilegTab } from "modules/multileg/duck/actions/MultilegActions";
+import {
+  atualizarDivKeyAction,
+  aumentarZindexAction,
+} from "redux/actions/GlobalAppActions";
+import {
+  addMultilegOffer,
+  addMultilegTab,
+  cloneMultilegQuotes,
+  cloneMultilegTabs,
+  updateMultilegTab,
+} from "modules/multileg/duck/actions/MultilegActions";
 import { searchMultilegSymbolData } from "modules/multileg/duck/actions/MultilegAPIAction";
-import { mountMultilegOrder, validateMultilegOrder } from "modules/multileg/duck/actions/utils";
-import { abrirItemBarraLateralAction, updateManySystemState } from "redux/actions/system/SystemActions";
+import {
+  mountMultilegOrder,
+  validateMultilegOrder,
+} from "modules/multileg/duck/actions/utils";
+import {
+  abrirItemBarraLateralAction,
+  updateManySystemState,
+} from "redux/actions/system/SystemActions";
 import { MainStoreState } from "redux/reducers";
 import { formatarNumero } from "shared/utils/Formatacoes";
 import { calculoPreco } from "modules/multileg/screens/CalculoPreco";
 import { MultiBoxData } from "modules/multiBox/types/MultiBoxState";
-
+import { globalStore } from "redux/StoreCreation";
 
 interface ExportBoxProps {
   dispatch: any;
-  dispatchGlobal: any;
   getState: () => MainStoreState;
-  zIndex: number;
   boxId: string;
   shouldOpenMultileg?: boolean;
 }
 
 export const exportBoxToMultileg = async ({
   dispatch,
-  dispatchGlobal,
   getState,
-  zIndex,
   boxId,
   shouldOpenMultileg = true,
 }: ExportBoxProps) => {
@@ -33,12 +44,16 @@ export const exportBoxToMultileg = async ({
     systemReducer: { isOpenMultileg },
   } = getState();
 
+  const {
+    GlobalReducer: { zIndex },
+  } = globalStore.getState();
+
   const box = boxes.find((box) => box.id === boxId);
 
   if (box) {
     const clonedMultilegTabs = cloneMultilegTabs(multileg);
 
-    dispatchGlobal(atualizarDivKeyAction("multileg"));
+    globalStore.dispatch(atualizarDivKeyAction("multileg") as any);
 
     if (!isOpenMultileg) {
       clonedMultilegTabs.pop();
@@ -46,12 +61,15 @@ export const exportBoxToMultileg = async ({
       if (shouldOpenMultileg) {
         dispatch(abrirItemBarraLateralAction("isOpenMultileg"));
       }
-    } else if (shouldOpenMultileg) {
+    } //
+    else if (shouldOpenMultileg) {
       //Traz para primeiro plano se já estiver aberto
       const multilegPopup = document.getElementById("multileg");
       if (multilegPopup) {
         multilegPopup.style.zIndex = `${zIndex + 1}`;
-        dispatchGlobal(aumentarZindexAction("multileg", zIndex, true));
+        globalStore.dispatch(
+          aumentarZindexAction("multileg", zIndex, true) as any,
+        );
       }
     }
 
@@ -155,8 +173,6 @@ export const mountOrderForOperations = async ({
   multiBox,
   dispatch,
   getState,
-  zIndex,
-  dispatchGlobal,
   commentConfig,
 }: MountOrderForOperations) => {
   const {
@@ -169,8 +185,6 @@ export const mountOrderForOperations = async ({
     boxId,
     dispatch,
     getState,
-    zIndex,
-    dispatchGlobal,
     shouldOpenMultileg: false,
   });
 

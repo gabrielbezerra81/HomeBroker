@@ -295,7 +295,7 @@ export const addMultiBoxesFromStructureDataAction = (
       updateManyMultiBoxAction({
         boxes: multiBoxes,
       }),
-    )
+    );
 
     dispatch(
       updateManySystemState({
@@ -475,15 +475,10 @@ export const handleDeleteBoxAction = (boxId: string): MainThunkAction => {
 
 interface ExportToMultilegProps {
   boxId: string;
-  globalProps: {
-    zIndex: number;
-    dispatchGlobal: any;
-  };
 }
 
 export const handleExportBoxToMultilegAction = ({
   boxId,
-  globalProps,
 }: ExportToMultilegProps): MainThunkAction => {
   return async (dispatch, getState) => {
     dispatch(updateMultilegStateAction("loadingOffers", true));
@@ -492,7 +487,6 @@ export const handleExportBoxToMultilegAction = ({
       boxId,
       dispatch,
       getState,
-      ...globalProps,
     });
 
     dispatch(updateManyMultilegState(data));

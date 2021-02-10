@@ -10,14 +10,12 @@ import { mountOrderForOperations } from "./util";
 
 interface CreateAlertFromBox {
   multiBox: MultiBoxData;
-  dispatchGlobal: any;
-  zIndex: number;
+
 }
 
 export const createAlertFromBoxAction = ({
   multiBox,
-  dispatchGlobal,
-  zIndex,
+
 }: CreateAlertFromBox): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
@@ -45,8 +43,6 @@ export const createAlertFromBoxAction = ({
       multiBox,
       dispatch,
       getState,
-      zIndex,
-      dispatchGlobal,
       commentConfig: observation,
     });
 

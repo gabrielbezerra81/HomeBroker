@@ -16,8 +16,6 @@ import {
 } from "modules/multiBox/duck/actions/multiBoxActions";
 
 import closeIcon from "assets/multiBox/closeIcon.png";
-import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
-import useStateGlobalStore from "hooks/useStateGlobalStore";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { createAlertFromBoxAction } from "modules/multiBox/duck/actions/tab3Actions";
 
@@ -27,10 +25,6 @@ interface Props {
 
 const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
   const dispatch = useDispatchStorePrincipal();
-
-  const dispatchGlobal = useDispatchGlobalStore();
-
-  const { zIndex } = useStateGlobalStore();
 
   const {
     price,
@@ -48,13 +42,9 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
     dispatch(
       handleExportBoxToMultilegAction({
         boxId: id,
-        globalProps: {
-          dispatchGlobal,
-          zIndex,
-        },
       }),
     );
-  }, [dispatch, dispatchGlobal, id, zIndex]);
+  }, [dispatch, id]);
 
   const handleConfig = useCallback(() => {}, []);
 
@@ -92,11 +82,9 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
     dispatch(
       createAlertFromBoxAction({
         multiBox,
-        dispatchGlobal,
-        zIndex,
       }),
     );
-  }, [dispatch, dispatchGlobal, multiBox, zIndex]);
+  }, [dispatch, multiBox]);
 
   const oscilationClass = useMemo(() => {
     if (!stockSymbolData) {

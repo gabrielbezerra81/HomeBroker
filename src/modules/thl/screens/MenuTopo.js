@@ -159,7 +159,7 @@ const EnviarOrdem = () => {
         icone={iconeEnviarOrdem}
         onClick={(e) => {
           e.stopPropagation();
-          dispatchStorePrincipal(abrirMultilegTHLAction(props));
+          dispatchStorePrincipal(abrirMultilegTHLAction());
         }}
       />
     </div>
