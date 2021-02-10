@@ -13,7 +13,7 @@ import {
   mudarAtributoBoletaAction,
 } from "modules/boletas/duck/actions/boletaActions";
 import BoletaDateSelector from "modules/boletas/components/BoletaDateSelector";
-import RowFormAssinatura from "modules/boletas/components/RowFormAssinatura";
+import BoletaSignature from "modules/boletas/components/BoletaSignature";
 import { COMPRA_LIMITADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalLimitada } from "shared/utils/CalculoValorTotal";
 import BoletaSymbolQttyRow from "modules/boletas/components/BoletaSymbolQttyRow";
@@ -21,7 +21,7 @@ import { pesquisarAtivoOnEnterAction } from "modules/boletas/duck/actions/boleta
 import CustomInput from "shared/componentes/CustomInput";
 import { BoletaSendOrderButton } from "modules/boletas/components/BoletaSendOrderButton";
 import { BoletasState } from "redux/reducers";
-import BoletasOrderType from "modules/boletas/types/boletasOrderType";
+import BoletaOrderInfo from "modules/boletas/types/BoletaOrderInfo";
 import InputGroupBoleta from "modules/boletas/components/InternalForm/InputGroupBoleta";
 
 interface State {
@@ -104,7 +104,8 @@ class FormInternoCompraLimitada extends React.Component<Props, State> {
           <BoletaDateSelector namespace={COMPRA_LIMITADA_NAMESPACE} />
 
           <div className="customFooter">
-            {RowFormAssinatura(this.props, COMPRA_LIMITADA_NAMESPACE)}
+            <BoletaSignature namespace={COMPRA_LIMITADA_NAMESPACE} />
+
             <Row>
               <Col md={3}>
                 <Button
@@ -165,6 +166,6 @@ const connector = connect(mapStateToProps, mapDispatch);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-type Props = PropsFromRedux & { ordem: BoletasOrderType };
+type Props = PropsFromRedux & { ordem: BoletaOrderInfo };
 
 export default connector(FormInternoCompraLimitada);

@@ -8,7 +8,7 @@ import GraficoCompraLimitada from "./GraficoCompraLimitada";
 import BodyHeaderCompraLimitada from "./BodyHeaderCompraLimitada";
 import { ModalHeader } from "shared/componentes/PopupHeader";
 import { BoletasState } from "redux/reducers";
-import BoletasOrderType from "modules/boletas/types/boletasOrderType";
+import BoletaOrderInfo from "modules/boletas/types/BoletaOrderInfo";
 import { COMPRA_LIMITADA_NAMESPACE } from "constants/ActionTypes";
 
 class CompraLimitada extends React.Component<Props> {
@@ -56,7 +56,7 @@ type Props = PropsFromRedux & { headerTitle: string; name: string };
 
 export default connector(CompraLimitada);
 
-const ordem: BoletasOrderType = {
+const ordem: BoletaOrderInfo = {
   nome: "Compra Limitada",
   tipoOrdem: "buyLimit",
   tipoOferta: "C",

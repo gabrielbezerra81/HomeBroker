@@ -22,8 +22,6 @@ import iconeEnviarOrdem from "assets/THL/iconeEnviarOrdem.svg";
 import iconeFavorito from "assets/THL/iconeFavorito.svg";
 import iconeCriarAlerta from "assets/THL/iconeCriarAlerta.svg";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
-import useStateGlobalStore from "hooks/useStateGlobalStore";
-import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { usePermissions } from "context/PermissionContext";
 
@@ -131,25 +129,11 @@ const InputPesquisa = () => {
 };
 
 const EnviarOrdem = () => {
-  const { divkey, zIndex } = useStateGlobalStore();
   const {
-    systemReducer: { isOpenMultileg },
-    multilegReducer: { multileg, cotacoesMultileg },
     thlReducer: { booksSelecionados },
   } = useStateStorePrincipal();
 
-  const dispatchGlobal = useDispatchGlobalStore();
   const dispatchStorePrincipal = useDispatchStorePrincipal();
-
-  const props = {
-    multileg,
-    isOpenMultileg,
-    cotacoesMultileg,
-    divkey,
-    zIndex,
-    dispatchGlobal,
-    booksSelecionados,
-  };
 
   return (
     <div className="containerBotaoMenuTopo containerBotaoEnviarTHL">

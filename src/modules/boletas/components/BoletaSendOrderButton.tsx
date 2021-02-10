@@ -9,17 +9,17 @@ import {
   COMPRA_GAINREDUCAO_NAMESPACE,
   VENDA_GAINREDUCAO_NAMESPACE,
 } from "constants/ActionTypes";
+import BoletaOrderInfo from "../types/BoletaOrderInfo";
 
 interface Props {
   namespace: BoletaNamespace;
-  orderInfo?: {
-    nome: string;
-    tipoOrdem: string;
-    tipoOferta: "C" | "V";
-  };
+  orderInfo?: BoletaOrderInfo;
 }
 
-export const BoletaSendOrderButton: React.FC<Props> = ({ orderInfo, namespace }) => {
+export const BoletaSendOrderButton: React.FC<Props> = ({
+  orderInfo,
+  namespace,
+}) => {
   const { systemReducer } = useStateStorePrincipal();
 
   const dispatch = useDispatchBoletas();
