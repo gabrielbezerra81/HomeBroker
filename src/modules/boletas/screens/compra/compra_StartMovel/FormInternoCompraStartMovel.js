@@ -13,12 +13,11 @@ import {
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction,
   mudarAtributoBoletaAction,
-} from "modules/boletas/duck/actions/formInputActions";
+} from "modules/boletas/duck/actions/boletaActions";
 import { COMPRA_STARTMOVEL_NAMESPACE } from "constants/ActionTypes";
 import TabelaOrdens from "./TabelaOrdens";
 import RowFormValidade from "modules/boletas/components/RowFormValidade";
 import RowFormAssinatura from "modules/boletas/components/RowFormAssinatura";
-import { compraStartMovelAction } from "modules/boletas/duck/actions/AppBoletasActions";
 import RowAtivoQtdeBoletas from "modules/boletas/components/RowAtivoQtdeBoletas";
 import {
   pesquisarAtivoOnEnterAction,
@@ -134,6 +133,7 @@ class FormInternoCompraStartMovel extends React.Component {
                 <BotaoEnviarOrdem
                   props={this.props}
                   tipoCompraVenda="Comprar"
+                  namespace={COMPRA_STARTMOVEL_NAMESPACE}
                 />
               </Col>
               <Col md={4}>
@@ -188,7 +188,6 @@ export default connect(mapStateToProps, {
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction,
   limparAction,
-  compraStartMovelAction,
   pesquisarAtivoOnEnterAction,
   enviarOrdemAction,
   mudarAtributoBoletaAction,

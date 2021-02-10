@@ -20,6 +20,7 @@ import {
 import { PESQUISAR_ATIVO_BOLETA_API } from "constants/ApiActionTypes";
 
 const INITIAL_STATE = {
+  orderId: 0,
   dadosPesquisa: {
     resultadoAtivo: "",
     strike: 19.02,

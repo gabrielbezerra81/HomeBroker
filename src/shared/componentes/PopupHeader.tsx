@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import { Button, Col, Row, Form } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import { mudarInputHeaderAction } from "modules/boletas/duck/actions/bookOfertaActions";
@@ -19,6 +19,7 @@ import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 
 import useStateBoletas from "hooks/useStateBoletas";
 import { BoletaNamespace } from "constants/ActionTypes";
+import { mudarAtributoBoletaAction } from "modules/boletas/duck/actions/boletaActions";
 
 interface ModalHeaderProps {
   headerTitle?: any;
@@ -26,7 +27,7 @@ interface ModalHeaderProps {
   resetPosition?: any;
   name?: any;
   ativo?: any;
-  namespace?: any;
+  namespace?: BoletaNamespace;
 }
 
 // Apenas para boletas de compra e venda
@@ -62,6 +63,38 @@ export const ModalHeader: React.FC<ModalHeaderProps> = ({
     dispatch,
     token,
   };
+
+  const handleOpenBook = useCallback(
+    (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+      event.stopPropagation();
+      dispatchGlobal(abrirFormAction(event, abrirBookProps, ativo));
+    },
+    [abrirBookProps, ativo, dispatchGlobal],
+  );
+
+  const handleCloseBoleta = useCallback(() => {
+    resetPosition();
+    dispatchGlobal(fecharFormAction(formShow, name, appkey));
+    dispatch(mudarAtributoBoletaAction(0, namespace, "orderId"));
+
+    if (esource_boletaQuote) {
+      esource_boletaQuote.close();
+    }
+    if (interval_boletaQuote) {
+      clearInterval(interval_boletaQuote);
+    }
+  }, [
+    appkey,
+    dispatch,
+    dispatchGlobal,
+    esource_boletaQuote,
+    formShow,
+    interval_boletaQuote,
+    name,
+    namespace,
+    resetPosition,
+  ]);
+
   return (
     <div className={`${headerClass} handle mheader`}>
       <h6 className="mtitle">{headerTitle}</h6>
@@ -69,10 +102,7 @@ export const ModalHeader: React.FC<ModalHeaderProps> = ({
         <Button
           variant="link"
           className="iconesHeader"
-          onClick={(event) => {
-            event.stopPropagation();
-            dispatchGlobal(abrirFormAction(event, abrirBookProps, ativo));
-          }}
+          onClick={handleOpenBook}
           data-name="book"
         >
           <MDBIcon icon="book" size="2x" data-name="book" />
@@ -85,12 +115,7 @@ export const ModalHeader: React.FC<ModalHeaderProps> = ({
         <Button
           variant="link"
           className="iconesHeader"
-          onClick={() => {
-            resetPosition();
-            dispatchGlobal(fecharFormAction(formShow, name, appkey));
-            if (esource_boletaQuote) esource_boletaQuote.close();
-            if (interval_boletaQuote) clearInterval(interval_boletaQuote);
-          }}
+          onClick={handleCloseBoleta}
         >
           <span className="fa-stack">
             <MDBIcon icon="circle" className="fa-stack-2x" />

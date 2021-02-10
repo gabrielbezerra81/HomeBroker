@@ -26,7 +26,7 @@ import {
 } from "redux/actions/GlobalAppActions";
 import { listarBookOfertaOnEnterAction } from "../duck/actions/bookOfertaAPIActions";
 import { mudarInputHeaderAction } from "../duck/actions/bookOfertaActions";
-import { montarBoletaFromOrdemExecAction } from "../duck/actions/formInputActions";
+import { openBoletaFromOrdersExecAction } from "../duck/actions/boletaActions";
 import Boleta from "modules/boletas/screens/Boleta";
 import {
   COMPRA_AGENDADA_NAMESPACE,
@@ -67,7 +67,7 @@ class AppBoletas extends React.Component {
       });
     }
     //Disparar montagem de ordem vinda das ordens em execução ao criar App Local
-    if (props.dadosOrdemExec) props.montarBoletaFromOrdemExecAction(props);
+    if (props.dadosOrdemExec) props.openBoletaFromOrdersExecAction(props);
   }
 
   componentDidUpdate(prevProps) {
@@ -90,7 +90,7 @@ class AppBoletas extends React.Component {
       prevProps.show[props.appkey] !== props.show[props.appkey] &&
       props.dadosOrdemExec
     ) {
-      props.montarBoletaFromOrdemExecAction(props);
+      props.openBoletaFromOrdersExecAction(props);
     }
 
     if (prevProps !== props) {
@@ -286,6 +286,6 @@ export default compose(
     receberAppPropsAction,
     listarBookOfertaOnEnterAction,
     mudarInputHeaderAction,
-    montarBoletaFromOrdemExecAction,
+    openBoletaFromOrdersExecAction,
   }),
 )(AppBoletas);

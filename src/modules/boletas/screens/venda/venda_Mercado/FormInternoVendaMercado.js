@@ -11,7 +11,7 @@ import {
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction,
   mudarAtributoBoletaAction,
-} from "modules/boletas/duck/actions/formInputActions";
+} from "modules/boletas/duck/actions/boletaActions";
 import RowFormValidade from "modules/boletas/components/RowFormValidade";
 import RowFormAssinatura from "modules/boletas/components/RowFormAssinatura";
 import { VENDA_MERCADO_NAMESPACE } from "constants/ActionTypes";
@@ -68,7 +68,11 @@ class FormInternoVendaMercado extends React.Component {
                 </Button>
               </Col>
               <Col md={6}>
-                <BotaoEnviarOrdem props={this.props} tipoCompraVenda="Vender" />
+                <BotaoEnviarOrdem
+                  props={this.props}
+                  tipoCompraVenda="Vender"
+                  namespace={VENDA_MERCADO_NAMESPACE}
+                />
               </Col>
             </Row>
           </div>

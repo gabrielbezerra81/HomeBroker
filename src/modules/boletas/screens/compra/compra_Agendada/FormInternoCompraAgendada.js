@@ -11,12 +11,11 @@ import {
   mudarCheckSalvarAssinaturaAction,
   mudarQtdAction,
   mudarAtributoBoletaAction,
-} from "modules/boletas/duck/actions/formInputActions";
+} from "modules/boletas/duck/actions/boletaActions";
 import RowFormValidade from "modules/boletas/components/RowFormValidade";
 import RowFormAssinatura from "modules/boletas/components/RowFormAssinatura";
 import { COMPRA_AGENDADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalAgendada } from "shared/utils/CalculoValorTotal";
-import { compraAgendadaAction } from "modules/boletas/duck/actions/AppBoletasActions";
 import RowAtivoQtdeBoletas from "modules/boletas/components/RowAtivoQtdeBoletas";
 import {
   pesquisarAtivoOnEnterAction,
@@ -113,6 +112,7 @@ class FormInternoCompraAgendada extends React.Component {
                 <BotaoEnviarOrdem
                   props={this.props}
                   tipoCompraVenda="Comprar"
+                  namespace={COMPRA_AGENDADA_NAMESPACE}
                 />
               </Col>
             </Row>
@@ -150,7 +150,6 @@ export default connect(mapStateToProps, {
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction,
   mostrarErroQtdeOnBlurAction,
-  compraAgendadaAction,
   pesquisarAtivoOnEnterAction,
   enviarOrdemAction,
   mudarAtributoBoletaAction,

@@ -27,6 +27,7 @@ export interface OrderExecOffer {
 }
 
 export interface OrderExecOpenPopupData {
+  orderId: number;
   dadosPesquisa: {
     resuladoAtivo: string;
     codigoEspecificacao: string;
@@ -42,7 +43,6 @@ export interface OrderExecOpenPopupData {
   entradaDisparo: number | null;
   entradaExec: number | null;
   preco: string;
-
   inicioDisparo: number | "";
   gainDisparo: number | "";
   gainExec: number | "";

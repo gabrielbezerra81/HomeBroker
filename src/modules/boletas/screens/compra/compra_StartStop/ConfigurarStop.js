@@ -9,7 +9,7 @@ import {
   TextoGainStopGrafico,
   TextoValorTotalGrafico,
 } from "modules/boletas/components/TextoGraficoBoletas";
-import { mudarInputConfigAction } from "modules/boletas/duck/actions/formInputActions";
+import { mudarInputConfigAction } from "modules/boletas/duck/actions/boletaActions";
 import { CalculoValorTotalAgendada } from "shared/utils/CalculoValorTotal";
 import { fecharFormConfigurarAction } from "redux/actions/GlobalAppActions";
 import { ModalHeaderClean } from "shared/componentes/PopupHeader";

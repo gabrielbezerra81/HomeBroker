@@ -10,12 +10,11 @@ import {
   mudarAtivoAction,
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction,
-} from "modules/boletas/duck/actions/formInputActions";
+} from "modules/boletas/duck/actions/boletaActions";
 import RowFormValidade from "modules/boletas/components/RowFormValidade";
 import RowFormAssinatura from "modules/boletas/components/RowFormAssinatura";
 import { COMPRA_MERCADO_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorAproximadoMercado } from "shared/utils/CalculoValorTotal";
-import { compraMercadoAction } from "modules/boletas/duck/actions/AppBoletasActions";
 import RowAtivoQtdeBoletas from "modules/boletas/components/RowAtivoQtdeBoletas";
 import {
   pesquisarAtivoOnEnterAction,
@@ -71,6 +70,7 @@ class FormInternoCompraMercado extends React.Component {
                 <BotaoEnviarOrdem
                   props={this.props}
                   tipoCompraVenda="Comprar"
+                  namespace={COMPRA_MERCADO_NAMESPACE}
                 />
               </Col>
             </Row>
@@ -106,7 +106,6 @@ export default connect(mapStateToProps, {
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction,
   mostrarErroQtdeOnBlurAction,
-  compraMercadoAction,
   pesquisarAtivoOnEnterAction,
   enviarOrdemAction,
 })(FormInternoCompraMercado);

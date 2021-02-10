@@ -16,7 +16,7 @@ import {
 } from "constants/ActionTypes";
 
 import bookOfertaReducer from "modules/boletas/duck/reducers/bookOfertaReducer";
-import formInputReducer from "modules/boletas/duck/reducers/formInputReducer";
+import boletaReducer from "modules/boletas/duck/reducers/boletaReducer";
 import appBoletasReducer from "modules/boletas/duck/reducers/appBoletasReducer";
 import THLReducer from "modules/thl/duck/THLReducer";
 import SystemReducer from "redux/reducers/system/SystemReducer";
@@ -28,18 +28,18 @@ import multiBoxReducer from "modules/multiBox/duck/multiBoxReducer";
 
 export const BoletasReducer = combineReducers({
   bookOfertaReducer: bookOfertaReducer,
-  compraAgendadaReducer: formInputReducer(COMPRA_AGENDADA_NAMESPACE),
-  compraLimitadaReducer: formInputReducer(COMPRA_LIMITADA_NAMESPACE),
-  compraMercadoReducer: formInputReducer(COMPRA_MERCADO_NAMESPACE),
-  compraStartStopReducer: formInputReducer(COMPRA_STARTSTOP_NAMESPACE),
-  compraStartMovelReducer: formInputReducer(COMPRA_STARTMOVEL_NAMESPACE),
-  compraGainReducao: formInputReducer(COMPRA_GAINREDUCAO_NAMESPACE),
-  vendaAgendadaReducer: formInputReducer(VENDA_AGENDADA_NAMESPACE),
-  vendaLimitadaReducer: formInputReducer(VENDA_LIMITADA_NAMESPACE),
-  vendaMercadoReducer: formInputReducer(VENDA_MERCADO_NAMESPACE),
-  vendaStartStopReducer: formInputReducer(VENDA_STARTSTOP_NAMESPACE),
-  vendaStopMovel: formInputReducer(VENDA_STOPMOVEL_NAMESPACE),
-  vendaGainReducao: formInputReducer(VENDA_GAINREDUCAO_NAMESPACE),
+  compraAgendadaReducer: boletaReducer(COMPRA_AGENDADA_NAMESPACE),
+  compraLimitadaReducer: boletaReducer(COMPRA_LIMITADA_NAMESPACE),
+  compraMercadoReducer: boletaReducer(COMPRA_MERCADO_NAMESPACE),
+  compraStartStopReducer: boletaReducer(COMPRA_STARTSTOP_NAMESPACE),
+  compraStartMovelReducer: boletaReducer(COMPRA_STARTMOVEL_NAMESPACE),
+  compraGainReducao: boletaReducer(COMPRA_GAINREDUCAO_NAMESPACE),
+  vendaAgendadaReducer: boletaReducer(VENDA_AGENDADA_NAMESPACE),
+  vendaLimitadaReducer: boletaReducer(VENDA_LIMITADA_NAMESPACE),
+  vendaMercadoReducer: boletaReducer(VENDA_MERCADO_NAMESPACE),
+  vendaStartStopReducer: boletaReducer(VENDA_STARTSTOP_NAMESPACE),
+  vendaStopMovel: boletaReducer(VENDA_STOPMOVEL_NAMESPACE),
+  vendaGainReducao: boletaReducer(VENDA_GAINREDUCAO_NAMESPACE),
   appBoletasReducer: appBoletasReducer,
 });
 

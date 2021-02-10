@@ -6,7 +6,7 @@ import {
   VENDA_STOPMOVEL_NAMESPACE,
   REMOVE_ITEM_TABELA_ORDENS_MOVEL,
 } from "constants/ActionTypes";
-import { removerItemTabelaAction } from "modules/boletas/duck/actions/formInputActions";
+import { removerItemTabelaAction } from "modules/boletas/duck/actions/boletaActions";
 
 class TabelaOrdens extends React.Component {
   renderItems(tableData) {

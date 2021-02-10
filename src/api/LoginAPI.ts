@@ -6,9 +6,6 @@ import {
   url_getAccounts,
 } from "api/url";
 
-import axios from "axios";
-import qs from "qs";
-
 import {
   erro_realizar_login,
   erro_realizar_cadastro,

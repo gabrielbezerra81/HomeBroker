@@ -5,7 +5,7 @@ import useDispatchBoletas from "hooks/useDispatchBoletas";
 import useStateBoletas from "hooks/useStateBoletas";
 import { Row, Col, Form } from "react-bootstrap";
 import CustomInput, { boxShadowInput } from "../../../../shared/componentes/CustomInput";
-import { mudarAtributoBoletaAction } from "modules/boletas/duck/actions/formInputActions";
+import { mudarAtributoBoletaAction } from "modules/boletas/duck/actions/boletaActions";
 
 interface Props {
   namespace: BoletaNamespace;

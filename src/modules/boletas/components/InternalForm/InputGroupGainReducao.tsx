@@ -9,7 +9,7 @@ import {
   adicionarItemTabelaGainReducaoAction,
   mudarQtdAction,
   mudarAtributoBoletaAction,
-} from "modules/boletas/duck/actions/formInputActions";
+} from "modules/boletas/duck/actions/boletaActions";
 import CustomInput from "../../../../shared/componentes/CustomInput";
 
 interface Props {

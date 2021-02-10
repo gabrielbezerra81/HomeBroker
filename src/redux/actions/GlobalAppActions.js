@@ -142,13 +142,12 @@ const criarMostrarApp = (name, props, codigo_ativo) => {
   //escolher o que vai ser mostrado
   show[length - 1][name] = true;
 
-  let sub = adicionarContainerAppBoletas({
+  let appBoleta = addAppBoleta({
     numeroAppsAbertos: apps.length,
-    context: props.context,
     codigoBook: codigo_ativo,
   });
 
-  apps.push(sub);
+  apps.push(appBoleta);
   criarMostrarAppAction(apps, show, props.zIndex);
 };
 
@@ -212,23 +211,22 @@ export const receberAppPropsAction = (appProps) => {
   };
 };
 
-export const receberDadosOrdemExecMainReducerAction = (dados) => {
+export const receberDadosOrdemExecMainReducerAction = ({
+  dadosOrdemExec,
+  ultimaBoletaAbertaOrdemExec,
+}) => {
   return (dispatch) => {
     dispatch({
       type: MUDAR_ORDEM_EXEC_MAIN_REDUCER,
       payload: {
-        dadosOrdemExec: dados.dadosOrdemExec,
-        ultimaBoletaAbertaOrdemExec: dados.ultimaBoletaAbertaOrdemExec,
+        dadosOrdemExec,
+        ultimaBoletaAbertaOrdemExec,
       },
     });
   };
 };
 
-const adicionarContainerAppBoletas = ({
-  numeroAppsAbertos,
-  context,
-  codigoBook,
-}) => {
+const addAppBoleta = ({ numeroAppsAbertos, codigoBook }) => {
   const key = `containerBoleta${numeroAppsAbertos}`;
 
   const containerApp = (

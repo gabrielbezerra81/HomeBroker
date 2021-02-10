@@ -297,17 +297,16 @@ export const mudarQtdAction = (valor, namespace) => {
   };
 };
 //todo
-export const montarBoletaFromOrdemExecAction = (props) => {
+export const openBoletaFromOrdersExecAction = (props) => {
   return (dispatch) => {
-    const dados = props.dadosOrdemExec;
+    const data = props.dadosOrdemExec;
     const namespace = props.ultimaBoletaAbertaOrdemExec;
 
-    Object.keys(dados).forEach((prop) => {
-      // console.log(prop, dados[prop]);
+    Object.keys(data).forEach((prop) => {
       dispatch({
         type: `${MUDAR_ATRIBUTO_BOLETA}${namespace}`,
         atributo: prop,
-        valor: dados[prop],
+        valor: data[prop],
       });
     });
 

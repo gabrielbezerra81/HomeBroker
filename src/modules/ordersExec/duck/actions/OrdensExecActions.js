@@ -228,6 +228,7 @@ export const openOrderInBoletaAction = (props, event, menuAction) => {
 
     const boletaPopupData = {
       dadosOrdemExec: {
+        orderId: ordemAtual.id,
         dadosPesquisa: symbolData,
         ativo: offer.ativo,
         qtde: qtty,

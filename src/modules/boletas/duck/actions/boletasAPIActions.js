@@ -12,7 +12,7 @@ import {
   ATUALIZAR_EVENT_SOURCE_BOLETAS,
   UPDATE_MANY_BOLETA,
 } from "constants/ActionTypes";
-import { mudarAtributoBoletaAction } from "modules/boletas/duck/actions/formInputActions";
+import { mudarAtributoBoletaAction } from "modules/boletas/duck/actions/boletaActions";
 import produce from "immer";
 import { storeAppPrincipal } from "redux/StoreCreation";
 import { getProactiveBoletaQuoteAPI } from "api/proactive/ProativosAPI";

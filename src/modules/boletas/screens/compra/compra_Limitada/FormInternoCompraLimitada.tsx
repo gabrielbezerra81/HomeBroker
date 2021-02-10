@@ -11,12 +11,11 @@ import {
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction,
   mudarAtributoBoletaAction,
-} from "modules/boletas/duck/actions/formInputActions";
+} from "modules/boletas/duck/actions/boletaActions";
 import RowFormValidade from "modules/boletas/components/RowFormValidade";
 import RowFormAssinatura from "modules/boletas/components/RowFormAssinatura";
 import { COMPRA_LIMITADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalLimitada } from "shared/utils/CalculoValorTotal";
-import { compraLimitadaAction } from "modules/boletas/duck/actions/AppBoletasActions";
 import RowAtivoQtdeBoletas from "modules/boletas/components/RowAtivoQtdeBoletas";
 import {
   pesquisarAtivoOnEnterAction,
@@ -125,6 +124,7 @@ class FormInternoCompraLimitada extends React.Component<Props, State> {
                 <BotaoEnviarOrdem
                   props={this.props}
                   tipoCompraVenda="Comprar"
+                  namespace={COMPRA_LIMITADA_NAMESPACE}
                 />
               </Col>
             </Row>
@@ -161,7 +161,6 @@ const mapDispatch = {
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction,
   mostrarErroQtdeOnBlurAction,
-  compraLimitadaAction,
   pesquisarAtivoOnEnterAction,
   enviarOrdemAction,
   mudarAtributoBoletaAction,

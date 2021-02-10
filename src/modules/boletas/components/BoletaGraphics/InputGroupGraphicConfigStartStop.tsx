@@ -3,7 +3,7 @@ import useDispatchBoletas from "hooks/useDispatchBoletas";
 import useStateBoletas from "hooks/useStateBoletas";
 import React, { useMemo } from "react";
 import { Form } from "react-bootstrap";
-import { mudarAtributoBoletaAction } from "modules/boletas/duck/actions/formInputActions";
+import { mudarAtributoBoletaAction } from "modules/boletas/duck/actions/boletaActions";
 import CustomInput from "shared/componentes/CustomInput";
 
 interface Props {

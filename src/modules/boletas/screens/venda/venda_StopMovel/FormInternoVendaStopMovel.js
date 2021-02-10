@@ -13,7 +13,7 @@ import {
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction,
   mudarAtributoBoletaAction,
-} from "modules/boletas/duck/actions/formInputActions";
+} from "modules/boletas/duck/actions/boletaActions";
 import { VENDA_STOPMOVEL_NAMESPACE } from "constants/ActionTypes";
 import TabelaOrdens from "./TabelaOrdens";
 import RowFormValidade from "modules/boletas/components/RowFormValidade";
@@ -128,7 +128,11 @@ class FormInternoVendaStopMovel extends React.Component {
                 </Button>
               </Col>
               <Col md={4}>
-                <BotaoEnviarOrdem props={this.props} tipoCompraVenda="Vender" />
+                <BotaoEnviarOrdem
+                  props={this.props}
+                  tipoCompraVenda="Vender"
+                  namespace={VENDA_STOPMOVEL_NAMESPACE}
+                />
               </Col>
               <Col md={4}>
                 <Button

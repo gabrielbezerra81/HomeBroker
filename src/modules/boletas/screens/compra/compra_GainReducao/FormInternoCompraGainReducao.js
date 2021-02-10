@@ -10,12 +10,11 @@ import {
   mudarAtivoAction,
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction,
-} from "modules/boletas/duck/actions/formInputActions";
+} from "modules/boletas/duck/actions/boletaActions";
 import RowFormValidade from "modules/boletas/components/RowFormValidade";
 import RowFormAssinatura from "modules/boletas/components/RowFormAssinatura";
 import { COMPRA_GAINREDUCAO_NAMESPACE } from "constants/ActionTypes";
 import TabelaGainReducao from "./TabelaGainReducao";
-import { compraGainReducaoAction } from "modules/boletas/duck/actions/AppBoletasActions";
 import { pesquisarAtivoOnEnterAction } from "modules/boletas/duck/actions/boletasAPIActions";
 import { BotaoEnviarOrdem } from "modules/boletas/components/BotaoEnviarOrdem";
 import InputGroupGainReducao from "modules/boletas/components/InternalForm/InputGroupGainReducao";
@@ -63,6 +62,7 @@ class FormInternoCompraGainReducao extends React.Component {
                 <BotaoEnviarOrdem
                   props={this.props}
                   tipoCompraVenda="Comprar"
+                  namespace={COMPRA_GAINREDUCAO_NAMESPACE}
                 />
               </Col>
             </Row>
@@ -96,6 +96,5 @@ export default connect(mapStateToProps, {
   mudarAssinaturaAction,
   mudarCheckSalvarAssinaturaAction,
   mostrarErroQtdeOnBlurAction,
-  compraGainReducaoAction,
   pesquisarAtivoOnEnterAction,
 })(FormInternoCompraGainReducao);
