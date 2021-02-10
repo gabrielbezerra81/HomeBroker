@@ -53,18 +53,25 @@ const OrdersUpdateManager: React.FC = () => {
 
   // Atualização inicial
   useEffect(() => {
-    if (
+    const initialCondition =
       Array.isArray(previousOrdersExecList) &&
       previousOrdersExecList.length === 0 &&
-      ordersExecList.length
-    ) {
+      ordersExecList.length;
+
+    const hasAddedOrder =
+      Array.isArray(previousOrdersExecList) &&
+      previousOrdersExecList.length !== 0 &&
+      previousOrdersExecList.length !== ordersExecList.length;
+
+    if (initialCondition || hasAddedOrder) {
       if (updateMode === "reactive") {
         dispatch(startReactiveOrdersUpdateAction());
       } //
       else {
         dispatch(startProactiveOrdersUpdateAction());
       }
-    }
+    } //
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, ordersExecList]);
 

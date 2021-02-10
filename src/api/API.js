@@ -169,7 +169,8 @@ export const enviarOrdemAPI = async (data) => {
   return api
     .post(`${url_enviarOrdem}`, data, { timeout })
     .then((response) => {
-      alert(sucesso_enviar_ordem);
+      timedAlert(sucesso_enviar_ordem);
+
       return response.data;
     })
     .catch((erro) => {
@@ -293,8 +294,11 @@ export const criarPosicaoMultilegAPI = async (data) => {
     })
     .then((response) => {
       console.log("response", response);
-      if (response.status === 201) alert(sucesso_criar_posicao);
-      else alert(erro_criar_posicao);
+      if (response.status === 201) {
+        timedAlert(sucesso_criar_posicao);
+      } else {
+        timedAlert(erro_criar_posicao);
+      }
     })
     .catch((erro) => {
       showAPIErrorAndAlert(erro, erro_criar_posicao);
@@ -315,7 +319,7 @@ export const criarAlertaOperacaoAPI = async ({ param, operator, data }) => {
       },
     )
     .then((response) => {
-      alert(sucesso_criar_alerta);
+      timedAlert(sucesso_criar_alerta);
       return response.data;
     })
     .catch((erro) => {
@@ -329,7 +333,7 @@ export const cancelarOrdemExecAPI = async (id) => {
       timeout,
     })
     .then(() => {
-      alert(sucesso_cancelar_ordem);
+      timedAlert(sucesso_cancelar_ordem);
     })
     .catch((erro) => {
       showAPIErrorAndAlert(erro, erro_cancelar_ordem);
@@ -342,7 +346,7 @@ export const finalizarAMercadoAPI = async (id) => {
       timeout,
     })
     .then(() => {
-      alert(sucesso_finalizar_a_mercado);
+      timedAlert(sucesso_finalizar_a_mercado);
     })
     .catch((erro) => {
       showAPIErrorAndAlert(erro, erro_finalizar_a_mercado);
@@ -355,7 +359,7 @@ export const incrementarQtdeOrdemExecAPI = async (id, qtde) => {
       timeout,
     })
     .then(() => {
-      alert(sucesso_modificar_ordemExec);
+      timedAlert(sucesso_modificar_ordemExec);
     })
     .catch((erro) => {
       showAPIErrorAndAlert(erro, erro_modificar_ordemExec);
@@ -368,7 +372,7 @@ export const incrementarPrecoOrdemExecAPI = async (id, preco) => {
       timeout,
     })
     .then(() => {
-      alert(sucesso_modificar_ordemExec);
+      timedAlert(sucesso_modificar_ordemExec);
     })
     .catch((erro) => {
       showAPIErrorAndAlert(erro, erro_modificar_ordemExec);
@@ -477,7 +481,7 @@ export const favoritarTHLAPI = async (data) => {
     .post(`${url_favoritarTHL_}`, data, {
       timeout,
     })
-    .then(() => alert(sucesso_favoritar_thl))
+    .then(() => timedAlert(sucesso_favoritar_thl))
     .catch((erro) => {
       showAPIErrorAndAlert(erro, erro_favoritar_thl);
     });
@@ -489,7 +493,7 @@ export const addBoxStructureAPI = async (groupName, data) => {
       timeout,
     })
     .then((response) => {
-      alert(success_add_box);
+      timedAlert(success_add_box);
 
       return response.data;
     })
@@ -588,4 +592,10 @@ export const showAPIErrorAndAlert = (erro, mensagem) => {
   if (erro.timeout) {
     alert(erro_timeout);
   } else if (mensagem) alert(mensagem);
+};
+
+const timedAlert = (message) => {
+  setTimeout(() => {
+    alert(message);
+  }, 1);
 };
