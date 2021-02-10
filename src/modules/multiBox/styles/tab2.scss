@@ -2,16 +2,6 @@
   padding: 0 4px;
 
   header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: -1px 0 8px 0;
-    padding: 4px 8px;
-
-    .brokerCustomButton {
-      padding: 0;
-    }
-
     > div {
       display: flex;
       align-items: center;
@@ -33,25 +23,17 @@
 
       &:first-child {
         flex: 1;
-        margin-right: 48px;
+        margin-right: 32px;
       }
 
       &:last-child {
-        width: 110px;
+        width: 195px;
       }
     }
 
     h4 {
       color: #ccae44;
       margin-bottom: 0;
-    }
-
-    img {
-      height: 20px;
-    }
-
-    .openInNewIcon {
-      height: 14px;
     }
   }
 

@@ -2,6 +2,11 @@ import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import React, { useMemo, useCallback } from "react";
 
 import { ImArrowUp, ImArrowDown } from "react-icons/im";
+import cBuyIcon from "assets/multiBox/cBuyIcon.png";
+import pSellIcon from "assets/multiBox/pSellIcon.png";
+import cogIcon from "assets/multiBox/cogIcon.png";
+import openInNewIcon from "assets/multiBox/openInNewIcon.png";
+import zoomIcon from "assets/multiBox/zoomIcon.png";
 
 import {
   formatarNumDecimal,
@@ -13,9 +18,13 @@ import {
   FormattedTab1Data,
 } from "modules/multiBox/types/MultiBoxState";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
-import { handleDeleteBoxAction } from "modules/multiBox/duck/actions/multiBoxActions";
+import {
+  handleDeleteBoxAction,
+  handleExportBoxToMultilegAction,
+} from "modules/multiBox/duck/actions/multiBoxActions";
 
 import closeIcon from "assets/multiBox/closeIcon.png";
+import { handleAddStockOfferAction, handleSearchBoxSymbolOptionsAction } from "modules/multiBox/duck/actions/tab5Actions";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -28,9 +37,29 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
 
   const dispatch = useDispatchStorePrincipal();
 
+  const { stockSymbolData, id, symbolInput } = multiBox;
+
   const structureData = useMemo(() => {
     return boxesTab1Data.find((data) => data.boxId === multiBox.id);
   }, [multiBox.id, boxesTab1Data]);
+
+  const handleSearchStock = useCallback(() => {
+    dispatch(handleAddStockOfferAction(id, symbolInput));
+  }, [dispatch, id, symbolInput]);
+
+  const handleSearchOptions = useCallback(() => {
+    dispatch(handleSearchBoxSymbolOptionsAction(id, symbolInput));
+  }, [dispatch, id, symbolInput]);
+
+  const handleOpenInMultileg = useCallback(() => {
+    dispatch(
+      handleExportBoxToMultilegAction({
+        boxId: multiBox.id,
+      }),
+    );
+  }, [dispatch, multiBox.id]);
+
+  const handleConfig = useCallback(() => {}, []);
 
   const handleClose = useCallback(async () => {
     dispatch(handleDeleteBoxAction(multiBox.id));
@@ -87,21 +116,88 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
       : "sliderSellColor";
   }, [structureData]);
 
+  const oscilationClass = useMemo(() => {
+    if (!stockSymbolData) {
+      return "";
+    }
+
+    if (stockSymbolData.oscilation > 0) {
+      return "positiveText";
+    } else if (stockSymbolData.oscilation < 0) {
+      return "negativeText";
+    }
+
+    return "";
+  }, [stockSymbolData]);
+
+  const formattedRefStockData = useMemo(() => {
+    if (!stockSymbolData) {
+      return null;
+    }
+
+    const { oscilation, min, max, last } = stockSymbolData;
+
+    let formattedOscilation = "";
+
+    if (oscilation > 0) {
+      formattedOscilation += "+";
+    }
+
+    formattedOscilation += formatarNumDecimal(oscilation || 0) + "%";
+
+    const medium = (max + min) / 2;
+
+    const formattedMedium = formatarNumDecimal(medium, 3);
+
+    return {
+      ...stockSymbolData,
+      formattedLast: formatarNumDecimal(last),
+      formattedOscilation,
+      formattedMin: formatarNumDecimal(min),
+      formattedMax: formatarNumDecimal(max),
+      medium,
+      formattedMedium,
+    };
+  }, [stockSymbolData]);
+
   if (!structureData) {
     return <div></div>;
   }
 
   return (
     <div className="multiBoxTab1">
-      <header>
-        <span style={{ left: 12, position: "absolute" }}>
-          id: {structureData?.structureID}
-        </span>
-        {/* <AiFillMinusCircle size={20} fill="#444" onClick={handleMinimize} /> */}
-        {/* <RiCloseCircleFill size={20} fill="#444" onClick={handleClose} /> */}
-        <button className="brokerCustomButton" onClick={handleClose}>
-          <img src={closeIcon} alt="" />
-        </button>
+      <header className="boxContentHeader">
+        <div>
+          <h4>{stockSymbolData?.symbol}</h4>
+          <span className="quote">{formattedRefStockData?.formattedLast}</span>
+          <span className={`oscilation ${oscilationClass}`}>
+            {formattedRefStockData?.formattedOscilation}
+          </span>
+        </div>
+        <div>
+          <button className="brokerCustomButton" onClick={handleSearchStock}>
+            <img src={zoomIcon} alt="" />
+          </button>
+
+          <div className="searchOptionsButton">
+            <button className="brokerCustomButton" onClick={handleSearchOptions} >
+              <img src={cBuyIcon} alt="" />
+              <img src={pSellIcon} alt="" />
+            </button>
+          </div>
+
+          <button className="brokerCustomButton" onClick={handleOpenInMultileg}>
+            <img className="openInNewIcon" src={openInNewIcon} alt="" />
+          </button>
+
+          <button className="brokerCustomButton" onClick={handleConfig}>
+            <img src={cogIcon} alt="" />
+          </button>
+
+          <button className="brokerCustomButton" onClick={handleClose}>
+            <img src={closeIcon} alt="" />
+          </button>
+        </div>
       </header>
 
       <div className="content">

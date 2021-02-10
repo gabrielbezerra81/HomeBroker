@@ -3,9 +3,13 @@ import React, { useCallback, useMemo } from "react";
 import { Form, Spinner } from "react-bootstrap";
 
 import { MultiBoxData } from "modules/multiBox/types/MultiBoxState";
+
+import cBuyIcon from "assets/multiBox/cBuyIcon.png";
+import pSellIcon from "assets/multiBox/pSellIcon.png";
 import cogIcon from "assets/multiBox/cogIcon.png";
 import openInNewIcon from "assets/multiBox/openInNewIcon.png";
 import zoomIcon from "assets/multiBox/zoomIcon.png";
+
 import CustomInput from "shared/componentes/CustomInput";
 import BoxDateSelector from "./BoxDateSelector";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
@@ -18,6 +22,7 @@ import {
 import closeIcon from "assets/multiBox/closeIcon.png";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { createAlertFromBoxAction } from "modules/multiBox/duck/actions/tab3Actions";
+import { handleAddStockOfferAction, handleSearchBoxSymbolOptionsAction } from "modules/multiBox/duck/actions/tab5Actions";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -34,9 +39,16 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
     id,
     loadingAPI,
     stockSymbolData,
+    symbolInput,
   } = multiBox;
 
-  const handleSearch = useCallback(() => {}, []);
+  const handleSearchStock = useCallback(() => {
+    dispatch(handleAddStockOfferAction(id, symbolInput));
+  }, [dispatch, id, symbolInput]);
+
+  const handleSearchOptions = useCallback(() => {
+    dispatch(handleSearchBoxSymbolOptionsAction(id, symbolInput));
+  }, [dispatch, id, symbolInput]);
 
   const handleOpenInMultileg = useCallback(() => {
     dispatch(
@@ -132,7 +144,7 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
 
   return (
     <div className="multiBoxTab3">
-      <header>
+      <header className="boxContentHeader">
         <div>
           <h4>{stockSymbolData?.symbol}</h4>
           <span className="quote">{formattedRefStockData?.formattedLast}</span>
@@ -141,9 +153,19 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
           </span>
         </div>
         <div>
-          <button className="brokerCustomButton" onClick={handleSearch}>
+          <button className="brokerCustomButton" onClick={handleSearchStock}>
             <img src={zoomIcon} alt="" />
           </button>
+
+          <div className="searchOptionsButton">
+            <button
+              className="brokerCustomButton"
+              onClick={handleSearchOptions}
+            >
+              <img src={cBuyIcon} alt="" />
+              <img src={pSellIcon} alt="" />
+            </button>
+          </div>
 
           <button className="brokerCustomButton" onClick={handleOpenInMultileg}>
             <img className="openInNewIcon" src={openInNewIcon} alt="" />

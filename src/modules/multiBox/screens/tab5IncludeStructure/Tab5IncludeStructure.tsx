@@ -9,9 +9,10 @@ import { FaCaretDown } from "react-icons/fa";
 import { IoMdRepeat } from "react-icons/io";
 
 import cBuyIcon from "assets/multiBox/cBuyIcon.png";
+import pSellIcon from "assets/multiBox/pSellIcon.png";
 import cogIcon from "assets/multiBox/cogIcon.png";
 import openInNewIcon from "assets/multiBox/openInNewIcon.png";
-import pSellIcon from "assets/multiBox/pSellIcon.png";
+
 import zoomIcon from "assets/multiBox/zoomIcon.png";
 import MultiBoxOffer from "./MultiBoxOffer";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
@@ -171,7 +172,7 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
 
   return (
     <div className="multiBoxTab5">
-      <header>
+      <header className="boxContentHeader">
         <Form.Control
           className="darkSimpleInput"
           name="symbolInput"
@@ -184,6 +185,7 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
             }
           }}
         />
+
         <button className="brokerCustomButton" onClick={handleSearchStock}>
           <img src={zoomIcon} alt="" />
         </button>
