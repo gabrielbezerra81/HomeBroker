@@ -96,7 +96,7 @@ const AuthManager = () => {
           }
           handleTokenRefresh();
         }
-      }, 60000);
+      }, 20000);
 
       const interceptor = api.interceptors.request.use(async (config) => {
         const isExpired = isTokenExpired(token_date, expires_in);
