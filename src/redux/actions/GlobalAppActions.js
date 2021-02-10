@@ -50,10 +50,6 @@ export const atualizarDivKeyAction = (divkey) => {
   };
 };
 
-export const atualizarDivKeyAction2 = (divkey) => {
-  globalStore.dispatch({ type: ATUALIZAR_DIVKEY, payload: divkey });
-};
-
 export const fecharFormAction = (show, divkey, appkey) => {
   const showModificado = [...show];
   showModificado[appkey][divkey] = false;
@@ -117,7 +113,7 @@ const criarMostrarApp = (name, props, codigo_ativo) => {
   let apps = [...props.apps];
   let show = [...props.show];
 
-  atualizarDivKeyAction2(`${name}${apps.length}`);
+  globalStore.dispatch(atualizarDivKeyAction(`${name}${apps.length}`));
   show.push({
     book: false,
     compra_agendada: false,
@@ -166,7 +162,7 @@ const mostrarApp = (name, index, props, codigo_ativo) => {
 
   let apps = [...props.apps];
   let show = [...props.show];
-  atualizarDivKeyAction2(`${name}${index}`);
+  globalStore.dispatch(atualizarDivKeyAction(`${name}${index}`));
   show[index] = { ...show[index] };
   show[index][name] = true;
   mostrarAppAction(apps, show, props.zIndex);
