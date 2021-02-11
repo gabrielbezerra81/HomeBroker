@@ -43,6 +43,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #000; //#0f0f0f;
+
+  input:-internal-autofill-selected {
+    background-color: #272827 !important;
+  }
 }
 
 .blockSelection {
@@ -107,24 +111,19 @@ h6 {
   margin-bottom: 0rem;
 }
 
-  .form-control:disabled{
-     background-color: #272827 !important;
-  }
+.form-control:disabled {
+  background-color: #272827 !important;
+}
 
-.darkSimpleInput {
-  &:-webkit-autofill {
-    box-shadow: 0 0 0px 1000px #272827 inset;
-    -webkit-text-fill-color: #d2d5d2 !important;
-    -webkit-box-shadow: 0 0 0px 1000px #272827 inset;
-  }
-
-  &.form-control:disabled{
-     background-color: #272827 !important;
-  }
-
-  &:disabled{
-     background-color: #272827 !important;
-  }
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  box-shadow: 0 0 0px 1000px #272827 inset;
+  background-color: #272827 !important;
+  color: #000 !important;
+  -webkit-box-shadow: 0 0 0 40px #272827 inset !important;
+  -webkit-text-fill-color: #d2d5d2 !important;
 }
 
 .darkInputSelect,
@@ -198,6 +197,5 @@ h6 {
     border-right: none;
   }
 }
-
 
 // In your global style.css file, try: @import '~antd/dist/antd.css';

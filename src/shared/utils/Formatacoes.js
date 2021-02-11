@@ -39,6 +39,8 @@ export const getDiaSemana = () => {
   return diaSemana;
 };
 
+
+
 export const getDiaEMes = () => {
   const date = new Date();
   var mes = "";

@@ -2,8 +2,6 @@ import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import React, { useMemo, useCallback } from "react";
 
 import { ImArrowUp, ImArrowDown } from "react-icons/im";
-import cBuyIcon from "assets/multiBox/cBuyIcon.png";
-import pSellIcon from "assets/multiBox/pSellIcon.png";
 import cogIcon from "assets/multiBox/cogIcon.png";
 import openInNewIcon from "assets/multiBox/openInNewIcon.png";
 import zoomIcon from "assets/multiBox/zoomIcon.png";
@@ -23,12 +21,8 @@ import {
   handleExportBoxToMultilegAction,
 } from "modules/multiBox/duck/actions/multiBoxActions";
 
-import closeIcon from "assets/multiBox/closeIcon.png";
-import {
-  handleAddStockOfferAction,
-  handleSearchBoxSymbolOptionsAction,
-} from "modules/multiBox/duck/actions/tab5Actions";
-
+import closeIcon from "assets/closeIcon.png";
+import { handleAddStockOfferAction } from "modules/multiBox/duck/actions/tab5Actions";
 interface Props {
   multiBox: MultiBoxData;
 }
@@ -48,10 +42,6 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
 
   const handleSearchStock = useCallback(() => {
     dispatch(handleAddStockOfferAction(id, symbolInput));
-  }, [dispatch, id, symbolInput]);
-
-  const handleSearchOptions = useCallback(() => {
-    dispatch(handleSearchBoxSymbolOptionsAction(id, symbolInput));
   }, [dispatch, id, symbolInput]);
 
   const handleOpenInMultileg = useCallback(() => {
@@ -113,12 +103,6 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
     return box;
   }, [structureData]);
 
-  const sliderBackgroundColor = useMemo(() => {
-    return structureData && structureData.dayOscilation >= 0
-      ? "sliderBuyColor"
-      : "sliderSellColor";
-  }, [structureData]);
-
   const oscilationClass = useMemo(() => {
     if (!stockSymbolData) {
       return "";
@@ -177,20 +161,10 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
             {formattedRefStockData?.formattedOscilation}
           </span>
         </div>
-        <div>
+        <div className="buttonsContainer">
           <button className="brokerCustomButton" onClick={handleSearchStock}>
             <img src={zoomIcon} alt="" />
           </button>
-
-          <div className="searchOptionsButton">
-            <button
-              className="brokerCustomButton"
-              onClick={handleSearchOptions}
-            >
-              <img src={cBuyIcon} alt="" />
-              <img src={pSellIcon} alt="" />
-            </button>
-          </div>
 
           <button className="brokerCustomButton" onClick={handleOpenInMultileg}>
             <img className="openInNewIcon" src={openInNewIcon} alt="" />

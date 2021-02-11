@@ -6,7 +6,7 @@
     text-align: center;
   }
 
-  header {
+  header.boxContentHeader {
     .darkSimpleInput {
       border-radius: 4px;
       max-width: 45%;
@@ -16,7 +16,7 @@
     .searchRow {
       .inputWithSearchIcon {
         height: 26px;
-        width: 100px;
+        width: 90px;
         padding: 6px 8px;
       }
 
@@ -26,11 +26,25 @@
 
       .appendedSearchIcon {
         padding: 0;
-        width: 36px;
+        width: 32px;
         display: flex;
         align-items: center;
         justify-content: center;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
       }
+
+      .searchOptionsButton {
+        margin-left: 2px;
+
+        img {
+          height: 26px;
+        }
+      }
+    }
+
+    > div.buttonsContainer {
+      width: 65px;
     }
   }
 
@@ -40,11 +54,19 @@
     justify-content: space-between;
     border-bottom: 1px solid var(--color-border-light);
     margin: -1px 0 2px 0;
-    padding: 4px 0px 8px;
+    padding: 6px 0px;
 
     .form-group {
       padding: 0;
-      max-width: 165px;
+      max-width: 170px;
+
+      &:first-child {
+        margin-right: 0px;
+      }
+
+      &:last-child {
+        margin-left: 8px;
+      }
 
       .darkInputSelect {
         border-radius: 4px;
@@ -70,10 +92,6 @@
         }
       }
 
-      &:first-child {
-        margin-right: 0px;
-      }
-
       .form-label {
         color: #ccae44;
       }
@@ -83,56 +101,61 @@
       display: flex;
       flex-direction: row;
       align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 3px;
+
+      .form-label {
+        line-height: 15px;
+      }
 
       > button {
         border-radius: 6px;
         height: 20px;
-        padding: 0 6px;
+        padding: 0 4px;
+        font-size: 14px;
       }
 
       button:first-child {
         background: #0d6721;
-        margin-right: 6px;
       }
 
       button:last-child {
         background: #9c243a;
       }
     }
-  }
 
-  .finishButton {
-    background: #7095df;
-    border-radius: 6px;
-    height: 28px;
-    margin-left: auto;
-    margin-right: 4px;
-    width: 70px;
+    .finishButton {
+      background: #7095df;
+      border-radius: 5px;
+      height: 28px;
+      padding: 0 3px;
+      font-size: 14px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   .offersContainer {
-    padding: 8px 0 0;
+    padding: 4px 0 0;
 
     > table {
       text-align: center;
       background-color: transparent !important;
       margin-bottom: 0px;
-
-      tbody {
-        tr:not(:first-child) {
-          border-top: 5px solid transparent;
-        }
-      }
+      border-collapse: separate;
+      border-spacing: 0 2px;
 
       th {
         background-color: transparent;
         color: #ccae44;
         font-weight: 400;
-        padding: 3.2px 0 !important;
+        padding: 0 !important;
+
+        &.expirationColumn {
+          min-width: 66px;
+        }
 
         .brokerCustomButton {
           padding: 0;
@@ -148,8 +171,14 @@
         padding-top: 0 !important;
         padding-bottom: 0 !important;
 
+        // C/V column
+        &:nth-child(2) {
+          padding: 0 !important;
+        }
+
+        // qtty column
         &:nth-child(3) {
-          padding: 0 3px !important;
+          padding: 0 2px !important;
         }
 
         &.closeColumn {
@@ -164,11 +193,16 @@
 
         &.strikeColumn {
           position: relative;
-          min-width: 90px;
+          min-width: 92px;
+          padding-right: 2px !important;
         }
 
         &.typeColumn {
-          min-width: 47px;
+          min-width: 40px;
+
+          button {
+            padding: 0;
+          }
         }
       }
 
@@ -214,9 +248,10 @@
         color: #c4c4c4;
       }
 
-      img.modelImg {
+      img.modelImg,
+      svg.modelImg {
         height: 18px;
-        vertical-align: bottom;
+        vertical-align: sub;
       }
 
       .dueDateSelect {

@@ -4,8 +4,6 @@ import { Table } from "react-bootstrap";
 
 import { MultiBoxData } from "modules/multiBox/types/MultiBoxState";
 
-import cBuyIcon from "assets/multiBox/cBuyIcon.png";
-import pSellIcon from "assets/multiBox/pSellIcon.png";
 import cogIcon from "assets/multiBox/cogIcon.png";
 import openInNewIcon from "assets/multiBox/openInNewIcon.png";
 import zoomIcon from "assets/multiBox/zoomIcon.png";
@@ -18,13 +16,10 @@ import {
   updateBoxAttrAction,
 } from "modules/multiBox/duck/actions/multiBoxActions";
 
-import closeIcon from "assets/multiBox/closeIcon.png";
+import closeIcon from "assets/closeIcon.png";
 
 import SymbolCard from "../SymbolCard";
-import {
-  handleAddStockOfferAction,
-  handleSearchBoxSymbolOptionsAction,
-} from "modules/multiBox/duck/actions/tab5Actions";
+import { handleAddStockOfferAction } from "modules/multiBox/duck/actions/tab5Actions";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { IoMdRepeat } from "react-icons/io";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
@@ -48,10 +43,6 @@ const Tab2Position: React.FC<Props> = ({ multiBox }) => {
 
   const handleSearchStock = useCallback(() => {
     dispatch(handleAddStockOfferAction(id, symbolInput));
-  }, [dispatch, id, symbolInput]);
-
-  const handleSearchOptions = useCallback(() => {
-    dispatch(handleSearchBoxSymbolOptionsAction(id, symbolInput));
   }, [dispatch, id, symbolInput]);
 
   const handleOpenInMultileg = useCallback(() => {
@@ -143,20 +134,10 @@ const Tab2Position: React.FC<Props> = ({ multiBox }) => {
             {formattedRefStockData?.formattedOscilation}
           </span>
         </div>
-        <div>
+        <div className="buttonsContainer">
           <button className="brokerCustomButton" onClick={handleSearchStock}>
             <img src={zoomIcon} alt="" />
           </button>
-
-          <div className="searchOptionsButton">
-            <button
-              className="brokerCustomButton"
-              onClick={handleSearchOptions}
-            >
-              <img src={cBuyIcon} alt="" />
-              <img src={pSellIcon} alt="" />
-            </button>
-          </div>
 
           <button className="brokerCustomButton" onClick={handleOpenInMultileg}>
             <img className="openInNewIcon" src={openInNewIcon} alt="" />

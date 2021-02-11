@@ -165,13 +165,6 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
       bounds={bounds}
     >
       <div className="multiBox" id={multiBox.id} style={visibilityClass}>
-        <button
-          onClick={handleStrikeViewChange}
-          className="brokerCustomButton changeStrikeViewButton"
-        >
-          <IoMdRepeat size={19} color="#C4C4C4" />
-        </button>
-
         <div className="topSymbolsContainer">
           <div>
             {americanTopSymbols.map((topSymbol, index) => (
@@ -187,6 +180,13 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
 
         {/*minimizedClass  */}
         <div className={`mcontent boxContent ${activeTabClass}`}>
+          <button
+            onClick={handleStrikeViewChange}
+            className="brokerCustomButton changeStrikeViewButton"
+          >
+            <IoMdRepeat size={19} color="#C4C4C4" />
+          </button>
+
           <Tab1ViewStockBook multiBox={multiBox} />
           <Tab2Position multiBox={multiBox} />
           <Tab3Alerts multiBox={multiBox} />

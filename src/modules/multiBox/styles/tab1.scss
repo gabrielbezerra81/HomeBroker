@@ -10,8 +10,6 @@
   flex-direction: column;
   padding: 0 4px;
 
-
-
   .content {
     display: flex;
     flex-direction: column;
@@ -23,34 +21,18 @@
     }
   }
 
-  header {
+  header.boxContentHeader {
     > div {
-      display: flex;
-      align-items: center;
       justify-content: space-between;
-
-      .quote {
-        color: #bfdce8;
-      }
-
-      .oscilation {
-        &.positiveText {
-          color: #4ec54b;
-        }
-
-        &.negativeText {
-          color: rgb(221, 54, 37);
-        }
-      }
 
       &:first-child {
         flex: 1;
         margin-right: 32px;
       }
+    }
 
-      &:last-child {
-        width: 195px;
-      }
+    div.buttonsContainer {
+      width: 105px;
     }
 
     h4 {

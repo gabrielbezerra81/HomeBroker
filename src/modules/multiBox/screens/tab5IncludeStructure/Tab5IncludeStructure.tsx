@@ -7,9 +7,7 @@ import { MultiBoxData } from "modules/multiBox/types/MultiBoxState";
 import { FaCaretDown } from "react-icons/fa";
 
 import { IoMdRepeat } from "react-icons/io";
-
-import cBuyIcon from "assets/multiBox/cBuyIcon.png";
-import pSellIcon from "assets/multiBox/pSellIcon.png";
+import searchOptionsIcon from "assets/multiBox/searchOptionsIcon.png";
 import cogIcon from "assets/multiBox/cogIcon.png";
 import openInNewIcon from "assets/multiBox/openInNewIcon.png";
 
@@ -21,7 +19,7 @@ import {
   updateBoxAttrAction,
   handleExportBoxToMultilegAction,
 } from "modules/multiBox/duck/actions/multiBoxActions";
-import { formatExpiration } from "shared/utils/Formatacoes";
+import { formatarNumDecimal, formatExpiration } from "shared/utils/Formatacoes";
 import {
   getUpdatedOptionsWhenExpirationChanges,
   handleAddOptionOfferAction,
@@ -30,7 +28,7 @@ import {
   handleConcludeTab5Action,
 } from "modules/multiBox/duck/actions/tab5Actions";
 
-import closeIcon from "assets/multiBox/closeIcon.png";
+import closeIcon from "assets/closeIcon.png";
 import { GrFormSearch } from "react-icons/gr";
 
 interface Props {
@@ -50,6 +48,7 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
     strikeViewMode,
     stockSymbol,
     loadingAPI,
+    stockSymbolData,
   } = multiBox;
 
   const handleInputChange = useCallback(
@@ -171,6 +170,22 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
     });
   }, [expirations]);
 
+  const formattedQuote = useMemo(() => {
+    if (!stockSymbolData) {
+      return "0,00";
+    }
+
+    return formatarNumDecimal(stockSymbolData.last || 0, 2);
+  }, [stockSymbolData]);
+
+  const formattedOscilation = useMemo(() => {
+    if (!stockSymbolData) {
+      return "0,00%";
+    }
+
+    return `${formatarNumDecimal(stockSymbolData.oscilation || 0, 2)}%`;
+  }, [stockSymbolData]);
+
   return (
     <div className="multiBoxTab5">
       <header className="boxContentHeader">
@@ -184,7 +199,7 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
               // autoComplete="off"
               onKeyPress={(e: any) => {
                 if (e.key === "Enter") {
-                  handleSearchOptions();
+                  handleSearchStock();
                 }
               }}
               onChange={handleInputChange}
@@ -192,7 +207,7 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
             <InputGroup.Append>
               <span
                 className="input-group-text appendedSearchIcon divClicavel"
-                onClick={handleSearchOptions}
+                onClick={handleSearchStock}
               >
                 {false ? (
                   <Spinner animation="border" variant="light" size="sm" />
@@ -203,35 +218,45 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
             </InputGroup.Append>
           </InputGroup>
 
-          {/* <span className="quote">{formattedData.quote}</span>
-      <span className="dayOscilation">{formattedData.dayOscilation}</span> */}
+          <button
+            className="brokerCustomButton searchOptionsButton"
+            onClick={handleSearchOptions}
+          >
+            <img src={searchOptionsIcon} alt="" />
+          </button>
+          <span className="quote">{formattedQuote}</span>
+          <span className="oscilation">{formattedOscilation}</span>
         </div>
 
-        <button className="brokerCustomButton" onClick={handleSearchStock}>
-          <img src={zoomIcon} alt="" />
-        </button>
-        <div className="searchOptionsButton">
-          <button className="brokerCustomButton" onClick={handleSearchOptions}>
-            <img src={cBuyIcon} alt="" />
-            <img src={pSellIcon} alt="" />
+        <div className="buttonsContainer">
+          <button className="brokerCustomButton" onClick={handleOpenInMultileg}>
+            <img className="openInNewIcon" src={openInNewIcon} alt="" />
+          </button>
+
+          <button className="brokerCustomButton" onClick={handleConfig}>
+            <img src={cogIcon} alt="" />
+          </button>
+
+          <button className="brokerCustomButton" onClick={handleClose}>
+            <img src={closeIcon} alt="" />
           </button>
         </div>
-        <button className="brokerCustomButton" onClick={handleOpenInMultileg}>
-          <img className="openInNewIcon" src={openInNewIcon} alt="" />
-        </button>
-
-        <button className="brokerCustomButton" onClick={handleConfig}>
-          <img src={cogIcon} alt="" />
-        </button>
-
-        <button className="brokerCustomButton" onClick={handleClose}>
-          <img src={closeIcon} alt="" />
-        </button>
       </header>
 
       <div className="strikeDateRow">
         <Form.Group>
-          <Form.Label>Strike</Form.Label>
+          <div className="callPutContainer">
+            <button className="brokerCustomButton" onClick={handleCall}>
+              + Call
+            </button>
+
+            <Form.Label>Strike</Form.Label>
+
+            <button className="brokerCustomButton" onClick={handlePut}>
+              + Put
+            </button>
+          </div>
+
           <Select
             className="strikeSelect optionStrikeSelect"
             value={selectedStrike || ""}
@@ -269,14 +294,17 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
             {expirationOptions}
           </Form.Control>
         </Form.Group>
-        <div className="callPutContainer">
-          <button className="brokerCustomButton" onClick={handleCall}>
-            + Call
-          </button>
-          <button className="brokerCustomButton" onClick={handlePut}>
-            + Put
-          </button>
-        </div>
+
+        <button
+          onClick={handleConclude}
+          className="brokerCustomButton finishButton"
+        >
+          {loadingAPI ? (
+            <Spinner as="span" animation="border" size="sm" variant="light" />
+          ) : (
+            "Concluir"
+          )}
+        </button>
       </div>
 
       <div className="offersContainer">
@@ -295,7 +323,7 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
                   <IoMdRepeat size={17} color="#C4C4C4" />
                 </button>
               </th>
-              <th>Vencimento</th>
+              <th className="expirationColumn">Vcto.</th>
               <th>Tipo</th>
               <th></th>
             </tr>
@@ -313,16 +341,6 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
           </tbody>
         </Table>
       </div>
-      {/* <button
-        onClick={handleConclude}
-        className="brokerCustomButton finishButton"
-      >
-        {loadingAPI ? (
-          <Spinner as="span" animation="border" size="sm" variant="light" />
-        ) : (
-          "Concluir"
-        )}
-      </button> */}
     </div>
   );
 };

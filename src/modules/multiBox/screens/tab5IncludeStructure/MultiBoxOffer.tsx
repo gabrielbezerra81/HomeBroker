@@ -3,12 +3,15 @@ import React, { useCallback, useMemo } from "react";
 
 import { FaCaretDown } from "react-icons/fa";
 
+import moment from "moment";
+
 import { Select } from "antd";
 
 import CustomInput from "shared/componentes/CustomInput";
 
 import modelEUImage from "assets/modeloEU.png";
-import modelUSAImage from "assets/modeloUSA2.svg";
+// import ModelUSAImage from "assets/modeloUSA2.svg";
+import { ReactComponent as ModelUSAImage } from "assets/modeloUSA2.svg";
 import { FormControl } from "react-bootstrap";
 import { BoxOffer } from "modules/multiBox/types/MultiBoxState";
 import { formatExpiration } from "shared/utils/Formatacoes";
@@ -156,7 +159,7 @@ const MultiBoxOffer: React.FC<Props> = ({
 
   const expirationOptions = useMemo(() => {
     return expirations.map((expiration) => {
-      const formattedExpiration = formatExpiration(expiration);
+      const formattedExpiration = moment(expiration).format("DD/MM/YY");
       return (
         <option key={expiration} value={expiration}>
           {formattedExpiration}
@@ -314,7 +317,15 @@ const Model: React.FC<ModelProps> = ({ model }) => {
   if (model === "EUROPEAN")
     return <img className="modelImg" src={modelEUImage} alt="EUROPEAN" />;
   else if (model === "AMERICAN")
-    return <img className="modelImg" src={modelUSAImage} alt="AMERICAN" />;
+    return (
+      <ModelUSAImage className="modelImg" viewBox="6 -1 17 17" />
+      // <img
+      //   className="modelImg"
+      //   // viewBox="6 -1 17 17"
+      //   src={ModelUSAImage + "#svgView(viewBox(6,-1,17,17))"}
+      //   alt="AMERICAN"
+      // />
+    );
   else return null;
 };
 
