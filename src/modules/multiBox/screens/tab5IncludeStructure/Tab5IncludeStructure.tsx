@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { Form, Table, Spinner, InputGroup } from "react-bootstrap";
 import { Select } from "antd";
 
@@ -11,7 +11,6 @@ import searchOptionsIcon from "assets/multiBox/searchOptionsIcon.png";
 import cogIcon from "assets/multiBox/cogIcon.png";
 import openInNewIcon from "assets/multiBox/openInNewIcon.png";
 
-import zoomIcon from "assets/multiBox/zoomIcon.png";
 import MultiBoxOffer from "./MultiBoxOffer";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import {
@@ -47,9 +46,11 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
     id,
     strikeViewMode,
     stockSymbol,
-    loadingAPI,
     stockSymbolData,
   } = multiBox;
+
+  const [searchingSymbolAPI, setSearchingSymbolAPI] = useState(false);
+  const [addingStructureAPI, setAddingStructureAPI] = useState(false);
 
   const handleInputChange = useCallback(
     async (e) => {
@@ -82,12 +83,20 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
     [dispatch, id, selectedStrike, stockSymbol],
   );
 
-  const handleSearchStock = useCallback(() => {
-    dispatch(handleAddStockOfferAction(id, symbolInput));
+  const handleSearchStock = useCallback(async () => {
+    setSearchingSymbolAPI(true);
+
+    await dispatch(handleAddStockOfferAction(id, symbolInput));
+
+    setSearchingSymbolAPI(false);
   }, [dispatch, id, symbolInput]);
 
-  const handleSearchOptions = useCallback(() => {
-    dispatch(handleSearchBoxSymbolOptionsAction(id, symbolInput));
+  const handleSearchOptions = useCallback(async () => {
+    setSearchingSymbolAPI(true);
+
+    await dispatch(handleSearchBoxSymbolOptionsAction(id, symbolInput));
+
+    setSearchingSymbolAPI(false);
   }, [dispatch, id, symbolInput]);
 
   const handleOpenInMultileg = useCallback(() => {
@@ -122,8 +131,12 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
     );
   }, [dispatch, multiBox.id, strikeViewMode]);
 
-  const handleConclude = useCallback(() => {
-    dispatch(handleConcludeTab5Action(id));
+  const handleConclude = useCallback(async () => {
+    setAddingStructureAPI(true);
+
+    await dispatch(handleConcludeTab5Action(id));
+
+    setAddingStructureAPI(false);
   }, [dispatch, id]);
 
   const strikeOptions = useMemo(() => {
@@ -209,7 +222,7 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
                 className="input-group-text appendedSearchIcon divClicavel"
                 onClick={handleSearchStock}
               >
-                {false ? (
+                {searchingSymbolAPI ? (
                   <Spinner animation="border" variant="light" size="sm" />
                 ) : (
                   <GrFormSearch size={24} />
@@ -299,7 +312,7 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
           onClick={handleConclude}
           className="brokerCustomButton finishButton"
         >
-          {loadingAPI ? (
+          {addingStructureAPI ? (
             <Spinner as="span" animation="border" size="sm" variant="light" />
           ) : (
             "Concluir"

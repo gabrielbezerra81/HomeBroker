@@ -61,7 +61,6 @@ export const addMultiBoxAction = (): MainThunkAction => {
       consideredPrice: "Bid",
       condition: "Less",
       observation: "",
-      loadingAPI: false,
       stockSymbolData: null,
     };
 
@@ -268,7 +267,6 @@ export const addMultiBoxesFromStructureDataAction = (
         consideredPrice: "Bid",
         condition: "Less",
         observation: "",
-        loadingAPI: false,
         stockSymbolData,
       };
 

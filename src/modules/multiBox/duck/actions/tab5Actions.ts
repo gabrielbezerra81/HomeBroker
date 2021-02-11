@@ -126,7 +126,11 @@ export const handleAddStockOfferAction = (
       } as any;
 
       dispatch(
-        updateBoxAttrAction(id, { boxOffers: [...multiBox.boxOffers, offers] }),
+        updateBoxAttrAction(id, {
+          boxOffers: [...multiBox.boxOffers, offers],
+          searchedSymbol: symbol,
+          stockSymbol: symbol,
+        }),
       );
     } //
     else {
@@ -299,10 +303,6 @@ export const getUpdatedOptionsWhenExpirationChanges = async ({
   }
 };
 
-interface ConcludeTab5 {
-  boxId: string;
-}
-
 export const handleConcludeTab5Action = (boxId: string): MainThunkAction => {
   return (dispatch, getState) => {
     const {
@@ -334,7 +334,7 @@ export const handleConcludeTab5Action = (boxId: string): MainThunkAction => {
         return topSymbol;
       });
 
-      dispatch(addNewMultiBoxStructureAction({ multiBox, topSymbols }));
+      return dispatch(addNewMultiBoxStructureAction({ multiBox, topSymbols }));
     }
   };
 };
@@ -354,12 +354,6 @@ export const addNewMultiBoxStructureAction = ({
     } = getState();
 
     const boxId = multiBox.id;
-
-    dispatch(
-      updateBoxAttrAction(multiBox.id, {
-        loadingAPI: true,
-      }),
-    );
 
     const configData = { tabKey: selectedTab, boxId };
 
@@ -385,7 +379,6 @@ export const addNewMultiBoxStructureAction = ({
             tab1Id: boxStructure.id,
             activeTab: "1",
             topSymbols,
-            loadingAPI: false,
           }),
         );
 
@@ -393,14 +386,6 @@ export const addNewMultiBoxStructureAction = ({
         wasSuccessful = true;
       }
     } //
-
-    if (!wasSuccessful) {
-      dispatch(
-        updateBoxAttrAction(multiBox.id, {
-          loadingAPI: false,
-        }),
-      );
-    }
 
     setPointerWhileAwaiting({ lockMode: "destravar", id: "boxId" });
   };

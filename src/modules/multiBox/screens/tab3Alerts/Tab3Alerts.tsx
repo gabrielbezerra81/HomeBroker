@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 
 import { Form, Spinner } from "react-bootstrap";
 
@@ -44,10 +44,12 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
     condition,
     observation,
     id,
-    loadingAPI,
+
     stockSymbolData,
     symbolInput,
   } = multiBox;
+
+  const [addingAlertAPI, setAddingAlertAPI] = useState(false);
 
   const handleSearchStock = useCallback(() => {
     dispatch(handleAddStockOfferAction(id, symbolInput));
@@ -93,12 +95,16 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
     [dispatch, id],
   );
 
-  const handleCreateAlert = useCallback(() => {
-    dispatch(
+  const handleCreateAlert = useCallback(async () => {
+    setAddingAlertAPI(true);
+
+    await dispatch(
       createAlertFromBoxAction({
         multiBox,
       }),
     );
+
+    setAddingAlertAPI(false);
   }, [dispatch, multiBox]);
 
   const oscilationClass = useMemo(() => {
@@ -269,7 +275,7 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
           className="brokerCustomButton createAlert"
           onClick={handleCreateAlert}
         >
-          {loadingAPI ? (
+          {addingAlertAPI ? (
             <Spinner as="span" animation="border" size="sm" variant="light" />
           ) : (
             "Cadastrar Alerta"

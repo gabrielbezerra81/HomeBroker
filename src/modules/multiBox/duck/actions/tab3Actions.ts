@@ -5,17 +5,14 @@ import { MultiBoxData } from "modules/multiBox/types/MultiBoxState";
 import { MultilegPayload } from "modules/multileg/types/multileg";
 import { MainThunkAction } from "types/ThunkActions";
 import { updateOneMultilegState } from "modules/multileg/duck/actions/utils";
-import { updateBoxAttrAction } from "./multiBoxActions";
 import { mountOrderForOperations } from "./util";
 
 interface CreateAlertFromBox {
   multiBox: MultiBoxData;
-
 }
 
 export const createAlertFromBoxAction = ({
   multiBox,
-
 }: CreateAlertFromBox): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
@@ -32,12 +29,6 @@ export const createAlertFromBoxAction = ({
     } = multiBox;
 
     setPointerWhileAwaiting({ lockMode: "travar", id: "multileg" });
-
-    dispatch(
-      updateBoxAttrAction(multiBox.id, {
-        loadingAPI: true,
-      }),
-    );
 
     const partialPayload = await mountOrderForOperations({
       multiBox,
@@ -77,12 +68,6 @@ export const createAlertFromBoxAction = ({
         );
       }
     }
-
-    dispatch(
-      updateBoxAttrAction(multiBox.id, {
-        loadingAPI: false,
-      }),
-    );
 
     setPointerWhileAwaiting({ lockMode: "destravar", id: "multileg" });
   };

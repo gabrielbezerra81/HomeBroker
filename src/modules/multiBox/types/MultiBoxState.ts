@@ -102,7 +102,6 @@ export interface MultiBoxData {
   observation: string;
   consideredPrice: "Bid" | "Ask" | "Last";
   price: number;
-  loadingAPI: boolean;
   stockSymbolData: StockSymbolData | null;
 }
 
