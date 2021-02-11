@@ -66,9 +66,17 @@ const AuthManager = () => {
       );
       updateAuthData(response.data);
     } catch (error) {
-      setShouldAlertSessionExpired(true);
-      setPreviousShouldAlert(false);
-      dispatch(deslogarUsuarioAction());
+      if (authData) {
+        const { token_date, expires_in } = authData;
+
+        const isExpired = isTokenExpired(token_date, expires_in, 5);
+
+        if (isExpired) {
+          setShouldAlertSessionExpired(true);
+          setPreviousShouldAlert(false);
+          dispatch(deslogarUsuarioAction());
+        }
+      }
     }
   }, [authData, dispatch, updateAuthData]);
 
@@ -86,7 +94,7 @@ const AuthManager = () => {
       }
 
       const timer = setInterval(() => {
-        const isExpired = isTokenExpired(token_date, expires_in);
+        const isExpired = isTokenExpired(token_date, expires_in, 40);
 
         if (isExpired) {
           console.log("isExpired", isExpired);
@@ -99,7 +107,7 @@ const AuthManager = () => {
       }, 20000);
 
       const interceptor = api.interceptors.request.use(async (config) => {
-        const isExpired = isTokenExpired(token_date, expires_in);
+        const isExpired = isTokenExpired(token_date, expires_in, 40);
 
         if (isExpired) {
           await handleTokenRefresh();
@@ -157,9 +165,16 @@ const AuthManager = () => {
 
 export default AuthManager;
 
-function isTokenExpired(tokenDate: number, expiresIn: number) {
+function isTokenExpired(
+  tokenDate: number,
+  expiresIn: number,
+  minutesLeft: number,
+) {
   const expireDate = new Date(tokenDate);
-  expireDate.setSeconds(expireDate.getSeconds() + expiresIn - 2600); // dura 1h, se faltar 44 minutos pra expirar já renova.
+
+  const secondsLeft = minutesLeft * 60;
+
+  expireDate.setSeconds(expireDate.getSeconds() + expiresIn - secondsLeft); // dura 1h, se faltar 44 minutos pra expirar já renova.
   const currentDate = new Date();
 
   const isExpired = moment(currentDate).isAfter(expireDate, "milliseconds");
