@@ -24,8 +24,6 @@ export const pesquisarAtivoOnEnterAction = (namespace) => {
 
     const { ativo } = appBoletasState[namespace];
 
-    dispatch(mudarAtributoBoletaAction(true, namespace, "pesquisandoAtivo"));
-
     const dadosPesquisa = await pesquisarAtivoAPI(ativo);
 
     if (dadosPesquisa) {
@@ -42,8 +40,6 @@ export const pesquisarAtivoOnEnterAction = (namespace) => {
       //     erro: "",
       //   },
       // });
-
-      dispatch(mudarAtributoBoletaAction(false, namespace, "pesquisandoAtivo"));
     }
   };
 };

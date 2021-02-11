@@ -17,7 +17,6 @@ const INITIAL_STATE: THLState = {
   dayOscilation: 0,
   ativoPesquisa: "",
   ativoPesquisado: "",
-  pesquisandoAtivo: false,
   tipo: "CALL",
   opcoesStrike: mapearTabelaVencimentos([]),
   codigoCelulaSelecionada: "",

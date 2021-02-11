@@ -40,12 +40,7 @@ export const searchMultilegSymbolAPIAction = (
       multilegReducer: { multileg, cotacoesMultileg },
     } = getState();
 
-    dispatch(
-      updateOneMultilegState({
-        attributeName: "pesquisandoAtivo",
-        attributeValue: true,
-      }),
-    );
+ 
     const data = await searchMultilegSymbolData({
       multilegTabs: multileg,
       tabIndex,
@@ -59,12 +54,7 @@ export const searchMultilegSymbolAPIAction = (
       }),
     );
 
-    dispatch(
-      updateOneMultilegState({
-        attributeName: "pesquisandoAtivo",
-        attributeValue: false,
-      }),
-    );
+ 
   };
 };
 

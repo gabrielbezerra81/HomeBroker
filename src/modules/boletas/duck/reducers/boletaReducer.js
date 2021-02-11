@@ -34,7 +34,6 @@ const INITIAL_STATE = {
     market: "",
     ativo: "",
   },
-  pesquisandoAtivo: false,
   ativo: "PETR4",
   entradaDisparo: "",
   entradaExec: "",

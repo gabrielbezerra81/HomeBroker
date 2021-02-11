@@ -12,7 +12,6 @@ export default interface THLState {
   dayOscilation: number;
   ativoPesquisa: string;
   ativoPesquisado: string;
-  pesquisandoAtivo: boolean;
   tipo: "CALL" | "PUT";
   opcoesStrike: Array<DueDatesTableItem>;
   codigoCelulaSelecionada: string;

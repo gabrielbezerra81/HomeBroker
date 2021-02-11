@@ -18,9 +18,29 @@ import { Select } from "antd";
 import { StorePrincipalContext } from "redux/StoreCreation";
 
 class AbaMultileg extends React.Component {
+  constructor(props) {
+    super();
+
+    this.state = {
+      searchingAPI: false,
+    };
+
+    this.searchMultilegSymbol = this.searchMultilegSymbol.bind(this);
+  }
+
+  async searchMultilegSymbol() {
+    this.setState({ searchingAPI: true });
+
+    const tabIndex = this.props.indice;
+
+    await this.props.searchMultilegSymbolAPIAction(tabIndex);
+
+    this.setState({ searchingAPI: false });
+  }
+
   render() {
     const { props } = this;
-    const { indice, pesquisandoAtivo } = props;
+    const { indice } = props;
     const arrayStrike = renderSerie(props);
 
     const cotacao = findMultilegQuote({
@@ -38,27 +58,26 @@ class AbaMultileg extends React.Component {
                   className="inputWithSearchIcon"
                   type="text"
                   value={props.multileg[indice].ativo}
-                  onChange={(event) =>
+                  onChange={(event) => {
                     props.updateMultilegTabAction({
                       tabIndex: indice,
                       attributeName: "ativo",
                       attributeValue: event.target.value,
-                    })
-                  }
+                    });
+                  }}
                   onKeyPress={(event) => {
                     //event.preventDefault();
-                    if (event.key === "Enter")
-                      props.searchMultilegSymbolAPIAction(indice);
+                    if (event.key === "Enter") {
+                      this.searchMultilegSymbol();
+                    }
                   }}
                 />
-                <InputGroup.Append >
+                <InputGroup.Append>
                   <span
                     className="input-group-text appendedSearchIcon divClicavel"
-                    onClick={() => {
-                      props.searchMultilegSymbolAPIAction(indice);
-                    }}
+                    onClick={this.searchMultilegSymbol}
                   >
-                    {pesquisandoAtivo ? (
+                    {this.state.searchingAPI ? (
                       <Spinner animation="border" variant="light" size="sm" />
                     ) : (
                       <MDBIcon icon="search" />
@@ -184,7 +203,6 @@ const mapStateToProps = (state) => ({
   configComplementarAberto: state.multilegReducer.configComplementarAberto,
   multileg: state.multilegReducer.multileg,
   cotacoesMultileg: state.multilegReducer.cotacoesMultileg,
-  pesquisandoAtivo: state.multilegReducer.pesquisandoAtivo,
   cotacoesMultilegID: state.multilegReducer.cotacoesMultilegID,
 });
 

@@ -53,16 +53,23 @@ export default () => {
 
 const InputPesquisa = () => {
   const {
-    thlReducer: { ativoPesquisa, tipo, pesquisandoAtivo, quote, dayOscilation },
+    thlReducer: { ativoPesquisa, tipo, quote, dayOscilation },
   } = useStateStorePrincipal();
+
   const dispatch = useDispatchStorePrincipal();
 
-  const handleSearchThlTables = useCallback(() => {
-    if (!pesquisandoAtivo) {
-      dispatch(pesquisarAtivoTHLAPIAction());
-      dispatch(pesquisarCombinacoesTHLAPIAction());
+  const [searchingAPI, setSearchingAPI] = useState(false);
+
+  const handleSearchThlTables = useCallback(async () => {
+    if (!searchingAPI) {
+      setSearchingAPI(true);
+
+      await dispatch(pesquisarAtivoTHLAPIAction());
+      await dispatch(pesquisarCombinacoesTHLAPIAction());
+
+      setSearchingAPI(false);
     }
-  }, [dispatch, pesquisandoAtivo]);
+  }, [dispatch, searchingAPI]);
 
   const formattedData = useMemo(() => {
     const formattedQuote = formatarNumDecimal(quote);
@@ -100,7 +107,7 @@ const InputPesquisa = () => {
             className="input-group-text appendedSearchIcon divClicavel"
             onClick={handleSearchThlTables}
           >
-            {pesquisandoAtivo ? (
+            {searchingAPI ? (
               <Spinner animation="border" variant="light" size="sm" />
             ) : (
               <MDBIcon icon="search" />

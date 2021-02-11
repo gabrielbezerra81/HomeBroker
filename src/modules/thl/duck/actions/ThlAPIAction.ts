@@ -295,7 +295,6 @@ export const pesquisarCombinacoesTHLAPIAction = (): MainThunkAction => {
     dispatch(
       updateManyTHLState({
         booksSelecionados: [],
-        pesquisandoAtivo: true,
         carregandoCombinacoes: true,
         codigoCelulaSelecionada: "",
         idCelulaSelecionada: null,
@@ -315,7 +314,6 @@ export const pesquisarCombinacoesTHLAPIAction = (): MainThunkAction => {
 
     dispatch(
       updateManyTHLState({
-        pesquisandoAtivo: false,
         carregandoCombinacoes: false,
         combinacoesTabela: tabelaCombinacoes,
         arrayCotacoes,

@@ -9,7 +9,6 @@ import Action from "types/Action";
 
 const INITIAL_STATE: MultilegState = {
   configComplementarAberto: false,
-  pesquisandoAtivo: false,
   abaSelecionada: "tab0",
   horaInicial: "",
   horaFinal: "",

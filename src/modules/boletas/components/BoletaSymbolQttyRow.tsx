@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { Row, Col, Form, InputGroup, Spinner } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import CustomInput from "shared/componentes/CustomInput";
@@ -100,7 +100,9 @@ const InputPesquisa: React.FC<SearchInputProps> = ({ namespace }) => {
 
   const dispatch = useDispatchBoletas();
 
-  const { pesquisandoAtivo, ativo } = boletaState;
+  const { ativo } = boletaState;
+
+  const [searchingAPI, setSearchingAPI] = useState(false);
 
   const handleSymbolChange = useCallback(
     (event) => {
@@ -109,8 +111,12 @@ const InputPesquisa: React.FC<SearchInputProps> = ({ namespace }) => {
     [dispatch, namespace],
   );
 
-  const handleSearchSymbol = useCallback(() => {
-    dispatch(pesquisarAtivoOnEnterAction(namespace));
+  const handleSearchSymbol = useCallback(async () => {
+    setSearchingAPI(true);
+
+    await dispatch(pesquisarAtivoOnEnterAction(namespace));
+
+    setSearchingAPI(false);
   }, [dispatch, namespace]);
 
   return (
@@ -134,7 +140,7 @@ const InputPesquisa: React.FC<SearchInputProps> = ({ namespace }) => {
           className="appendedSearchIcon divClicavel iconePesquisarBoletas"
           onClick={handleSearchSymbol}
         >
-          {pesquisandoAtivo ? (
+          {searchingAPI ? (
             <Spinner
               className="spinnerBoleta"
               animation="border"
