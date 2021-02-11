@@ -29,6 +29,8 @@ interface OpenedBoxes {
   tabKey: string;
 }
 
+const initialTab = "5";
+
 export const addMultiBoxAction = (): MainThunkAction => {
   return (dispatch, getState) => {
     const {
@@ -244,7 +246,7 @@ export const addMultiBoxesFromStructureDataAction = (
 
       const newMultiBox: MultiBoxData = {
         id: data.boxId,
-        activeTab: "1",
+        activeTab: initialTab,
         minimized: false,
         //tab5
         symbolInput: "",

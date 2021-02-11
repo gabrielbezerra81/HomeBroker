@@ -27,15 +27,24 @@ import {
 } from "modules/multiBox/duck/actions/tab5Actions";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { IoMdRepeat } from "react-icons/io";
+import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 interface Props {
   multiBox: MultiBoxData;
 }
 
 const Tab2Position: React.FC<Props> = ({ multiBox }) => {
+  const {
+    multiBoxReducer: { boxesTab1Data },
+  } = useStateStorePrincipal();
+
   const dispatch = useDispatchStorePrincipal();
 
   const { id, strikeViewMode, symbolInput, stockSymbolData } = multiBox;
+
+  const structureData = useMemo(() => {
+    return boxesTab1Data.find((data) => data.boxId === multiBox.id);
+  }, [multiBox.id, boxesTab1Data]);
 
   const handleSearchStock = useCallback(() => {
     dispatch(handleAddStockOfferAction(id, symbolInput));
@@ -165,22 +174,30 @@ const Tab2Position: React.FC<Props> = ({ multiBox }) => {
 
       <div className="boxInputRangeContainer">
         <div>
-          <span>Mín</span>
-          <span>Médio</span>
-          <span>Máx</span>
+          <span className="whiteText">Mín</span>
+          <span className="whiteText">Médio</span>
+          <span className="whiteText">Máx</span>
         </div>
         <input
           type="range"
           className={`custom-range boxInputRange`}
-          step="0.01"
-          min={stockSymbolData?.min}
-          max={stockSymbolData?.max}
-          onChange={(event) => {}}
+          min={structureData?.min || undefined}
+          max={structureData?.max || undefined}
+          // value={
+          //   structureData ? (structureData.min + structureData.max) / 2 : ""
+          // }
+          step={0.01}
         />
         <div>
-          <span>{formattedRefStockData?.formattedMin}</span>
-          <span>{formattedRefStockData?.formattedMedium}</span>
-          <span>{formattedRefStockData?.formattedMax}</span>
+          <button className="brokerCustomButton whiteText">
+            {formattedRefStockData?.formattedMin}
+          </button>
+          <button className="brokerCustomButton whiteText">
+            {formattedRefStockData?.formattedMedium}
+          </button>
+          <button className="brokerCustomButton whiteText">
+            {formattedRefStockData?.formattedMax}
+          </button>
         </div>
       </div>
 

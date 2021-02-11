@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from "react";
-import { Form, Table, Spinner } from "react-bootstrap";
+import { Form, Table, Spinner, InputGroup } from "react-bootstrap";
 import { Select } from "antd";
 
 import { MultiBoxData } from "modules/multiBox/types/MultiBoxState";
@@ -31,6 +31,7 @@ import {
 } from "modules/multiBox/duck/actions/tab5Actions";
 
 import closeIcon from "assets/multiBox/closeIcon.png";
+import { GrFormSearch } from "react-icons/gr";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -173,18 +174,38 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
   return (
     <div className="multiBoxTab5">
       <header className="boxContentHeader">
-        <Form.Control
-          className="darkSimpleInput"
-          name="symbolInput"
-          value={symbolInput}
-          onChange={handleInputChange}
-          onKeyPress={(event: any) => {
-            //event.preventDefault();
-            if (event.key === "Enter") {
-              handleSearchOptions();
-            }
-          }}
-        />
+        <div className="searchRow">
+          <InputGroup>
+            <Form.Control
+              className="inputWithSearchIcon"
+              // darkSimpleInput
+              name="symbolInput"
+              value={symbolInput}
+              // autoComplete="off"
+              onKeyPress={(e: any) => {
+                if (e.key === "Enter") {
+                  handleSearchOptions();
+                }
+              }}
+              onChange={handleInputChange}
+            />
+            <InputGroup.Append>
+              <span
+                className="input-group-text appendedSearchIcon divClicavel"
+                onClick={handleSearchOptions}
+              >
+                {false ? (
+                  <Spinner animation="border" variant="light" size="sm" />
+                ) : (
+                  <GrFormSearch size={24} />
+                )}
+              </span>
+            </InputGroup.Append>
+          </InputGroup>
+
+          {/* <span className="quote">{formattedData.quote}</span>
+      <span className="dayOscilation">{formattedData.dayOscilation}</span> */}
+        </div>
 
         <button className="brokerCustomButton" onClick={handleSearchStock}>
           <img src={zoomIcon} alt="" />
@@ -276,7 +297,7 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
               </th>
               <th>Vencimento</th>
               <th>Tipo</th>
-              <th>Modelo</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -292,7 +313,7 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
           </tbody>
         </Table>
       </div>
-      <button
+      {/* <button
         onClick={handleConclude}
         className="brokerCustomButton finishButton"
       >
@@ -301,7 +322,7 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
         ) : (
           "Concluir"
         )}
-      </button>
+      </button> */}
     </div>
   );
 };

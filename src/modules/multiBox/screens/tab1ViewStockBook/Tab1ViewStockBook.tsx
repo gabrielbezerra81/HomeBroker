@@ -208,31 +208,30 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
 
       <div className="boxInputRangeContainer">
         <div>
-          <span className="highlightedText">Mín</span>
-          <span className="highlightedText">Médio</span>
-          <span className="highlightedText">Máx</span>
+          <span className="whiteText">Mín</span>
+          <span className="whiteText">Médio</span>
+          <span className="whiteText">Máx</span>
         </div>
         <input
           type="range"
           className={`custom-range boxInputRange`}
-          min={structureData?.min}
-          max={structureData?.max}
-          value={
-            structureData ? (structureData.min + structureData.max) / 2 : ""
-          }
+          min={structureData?.min || undefined}
+          max={structureData?.max || undefined}
+          // value={
+          //   structureData ? (structureData.min + structureData.max) / 2 : ""
+          // }
           step={0.01}
-          onChange={() => false}
         />
         <div>
-          <span className="highlightedText">
+          <button className="brokerCustomButton whiteText">
             {formattedRefStockData?.formattedMin}
-          </span>
-          <span className="highlightedText">
+          </button>
+          <button className="brokerCustomButton whiteText">
             {formattedRefStockData?.formattedMedium}
-          </span>
-          <span className="highlightedText">
+          </button>
+          <button className="brokerCustomButton whiteText">
             {formattedRefStockData?.formattedMax}
-          </span>
+          </button>
         </div>
       </div>
 
@@ -242,8 +241,8 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
             {!!formattedData?.book.buy.length && (
               <>
                 <div>
-                  <span className="highlightedText">Qtde</span>
-                  <span className="highlightedText">Preço</span>
+                  <span className="whiteText">Qtde</span>
+                  <span className="whiteText">Preço</span>
                 </div>
                 {formattedData.book.buy.map((book, index) => (
                   <div key={`buyBook${index}`}>
@@ -255,7 +254,7 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
             )}
           </div>
           <div className="quoteContainer">
-            <strong className="highlightedText">
+            <strong className="whiteText">
               {formattedData?.quote || "0,00"}
             </strong>
             <span>
@@ -271,8 +270,8 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
             {!!formattedData?.book.sell.length && (
               <>
                 <div>
-                  <span className="highlightedText">Qtde</span>
-                  <span className="highlightedText">Preço</span>
+                  <span className="whiteText">Qtde</span>
+                  <span className="whiteText">Preço</span>
                 </div>
                 {formattedData.book.sell.map((book, index) => (
                   <div key={`buyBook${index}`}>
@@ -297,12 +296,8 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
             <div className="sliderEdge"></div>
           </div>
           <div className="flexSpaceBetweenCenter">
-            <span className="highlightedText">
-              {formattedData?.buy || "0,00"}
-            </span>
-            <span className="highlightedText">
-              {formattedData?.sell || "0,00"}
-            </span>
+            <span className="whiteText">{formattedData?.buy || "0,00"}</span>
+            <span className="whiteText">{formattedData?.sell || "0,00"}</span>
           </div>
         </section>
       </div>
