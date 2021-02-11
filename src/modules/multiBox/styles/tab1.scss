@@ -10,127 +10,116 @@
   flex-direction: column;
   padding: 0 4px;
 
-  .content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex: 1;
-
-    > section {
-      padding: 0 16px;
-    }
-  }
-
   header.boxContentHeader {
     div.buttonsContainer {
       width: 89px;
     }
   }
 
-  section.middle {
+  .boxInputRangeContainer {
+    margin-top: 16px;
+  }
+
+  div.quoteContainer {
     display: flex;
-    margin-top: 12px;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 24px;
 
-    > div {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    strong {
+      color: #bfdce8;
+      font-size: 42px;
+      font-weight: 500 !important;
     }
 
-    .buyBook,
-    .sellBook {
+    span {
       display: flex;
-      flex-direction: column;
-      font-size: 12px;
-      justify-content: flex-start;
       align-items: center;
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 4px;
 
-      > div {
-        display: flex;
-        width: 100%;
-        max-width: 70px;
+      svg {
+        max-width: 16px;
+        margin-right: 2px;
+        margin-top: 1px;
 
-        > span {
-          flex: 1;
-
-          &:nth-child(2) {
-            padding-left: 4px;
-          }
+        &.arrowDown {
+          margin-top: 5px;
         }
       }
     }
 
-    .quoteContainer {
-      display: flex;
-      flex-direction: column;
-      margin-right: 10px;
-      margin-left: 10px;
+    // .buyBook,
+    // .sellBook {
+    //   display: flex;
+    //   flex-direction: column;
+    //   font-size: 12px;
+    //   justify-content: flex-start;
+    //   align-items: center;
 
-      strong {
-        font-size: 28px;
-      }
+    //   > div {
+    //     display: flex;
+    //     width: 100%;
+    //     max-width: 70px;
 
-      span {
-        display: flex;
-        align-items: center;
-        font-size: 14px;
-        font-weight: 500;
+    //     > span {
+    //       flex: 1;
 
-        svg {
-          max-width: 16px;
-          margin-right: 2px;
-        }
-      }
-    }
-  }
-
-  section.footer {
-    margin-top: 12px;
-
-    .boxSliderContainer {
-      display: flex;
-      flex-direction: row;
-      padding: 0 0.5rem;
-
-      .sliderEdge {
-        height: 5px;
-        background-color: #4e4f4e;
-        flex: 17;
-      }
-
-      .sliderMiddle {
-        height: 5px;
-        background-color: var(--color-buy-primary-blue);
-        flex: 1;
-      }
-    }
-
-    // padding-bottom: 4px;
-
-    // > div:first-child {
-    //   margin-bottom: -6px;
-    // }
-    // > div:last-child {
-    //   margin-top: -12px;
-    // }
-
-    // .sliderBuyColor::-webkit-slider-runnable-track,
-    // .sliderSellColor::-webkit-slider-runnable-track {
-    //   border-radius: 0;
-    //   height: 6px;
-    // }
-
-    // .sliderBuyColor::-webkit-slider-thumb,
-    // .sliderSellColor::-webkit-slider-thumb {
-    //   margin-top: -2px;
-    // }
-
-    // .sliderBuyColor::-webkit-slider-runnable-track {
-    //   background-color: #336699;
-    // }
-    // .sliderSellColor::-webkit-slider-runnable-track {
-    //   background-color: #996666;
+    //       &:nth-child(2) {
+    //         padding-left: 4px;
+    //       }
+    //     }
+    //   }
     // }
   }
+
+  // section.footer {
+  //   margin-top: 12px;
+
+  //   .boxSliderContainer {
+  //     display: flex;
+  //     flex-direction: row;
+  //     padding: 0 0.5rem;
+
+  //     .sliderEdge {
+  //       height: 5px;
+  //       background-color: #4e4f4e;
+  //       flex: 17;
+  //     }
+
+  //     .sliderMiddle {
+  //       height: 5px;
+  //       background-color: var(--color-buy-primary-blue);
+  //       flex: 1;
+  //     }
+  //   }
+
+  //   // padding-bottom: 4px;
+
+  //   // > div:first-child {
+  //   //   margin-bottom: -6px;
+  //   // }
+  //   // > div:last-child {
+  //   //   margin-top: -12px;
+  //   // }
+
+  //   // .sliderBuyColor::-webkit-slider-runnable-track,
+  //   // .sliderSellColor::-webkit-slider-runnable-track {
+  //   //   border-radius: 0;
+  //   //   height: 6px;
+  //   // }
+
+  //   // .sliderBuyColor::-webkit-slider-thumb,
+  //   // .sliderSellColor::-webkit-slider-thumb {
+  //   //   margin-top: -2px;
+  //   // }
+
+  //   // .sliderBuyColor::-webkit-slider-runnable-track {
+  //   //   background-color: #336699;
+  //   // }
+  //   // .sliderSellColor::-webkit-slider-runnable-track {
+  //   //   background-color: #996666;
+  //   // }
+  // }
 }

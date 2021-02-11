@@ -222,71 +222,16 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
         </div>
       </div>
 
-      <div className="content">
-        <section className="middle">
-          <div className="buyBook">
-            {!!formattedData?.book.buy.length && (
-              <>
-                <div>
-                  <span className="whiteText">Qtde</span>
-                  <span className="whiteText">Preço</span>
-                </div>
-                {formattedData.book.buy.map((book, index) => (
-                  <div key={`buyBook${index}`}>
-                    <span>{book.formattedQtty}</span>
-                    <span>{book.formattedPrice}</span>
-                  </div>
-                ))}
-              </>
-            )}
-          </div>
-          <div className="quoteContainer">
-            <strong className="whiteText">
-              {formattedData?.quote || "0,00"}
-            </strong>
-            <span>
-              {structureData && (
-                <DayOscilation
-                  dayOscilation={structureData.dayOscilation}
-                  formattedDayOscilation={structureData.dayOscilation}
-                />
-              )}
-            </span>
-          </div>
-          <div className="sellBook">
-            {!!formattedData?.book.sell.length && (
-              <>
-                <div>
-                  <span className="whiteText">Qtde</span>
-                  <span className="whiteText">Preço</span>
-                </div>
-                {formattedData.book.sell.map((book, index) => (
-                  <div key={`buyBook${index}`}>
-                    <span>{book.formattedQtty}</span>
-                    <span>{book.formattedPrice}</span>
-                  </div>
-                ))}
-              </>
-            )}
-          </div>
-        </section>
-
-        <section className="footer">
-          <div className="flexSpaceBetweenCenter">
-            <strong>COMPRA</strong>
-            <strong>Médio</strong>
-            <strong>VENDA</strong>
-          </div>
-          <div className="boxSliderContainer">
-            <div className="sliderEdge"></div>
-            <div className="sliderMiddle"></div>
-            <div className="sliderEdge"></div>
-          </div>
-          <div className="flexSpaceBetweenCenter">
-            <span className="whiteText">{formattedData?.buy || "0,00"}</span>
-            <span className="whiteText">{formattedData?.sell || "0,00"}</span>
-          </div>
-        </section>
+      <div className="quoteContainer">
+        <strong className="whiteText">{formattedData?.quote || "0,00"}</strong>
+        <span>
+          {structureData && (
+            <DayOscilation
+              dayOscilation={structureData.dayOscilation}
+              formattedDayOscilation={structureData.dayOscilation}
+            />
+          )}
+        </span>
       </div>
     </div>
   );
@@ -306,7 +251,7 @@ const DayOscilation = ({ dayOscilation, formattedDayOscilation }: any) => {
   else if (dayOscilation < 0) {
     return (
       <>
-        <ImArrowDown color="#EC0C00" />
+        <ImArrowDown className="arrowDown" color="#EC0C00" />
         <span style={{ color: "#EC0C00" }}>{formattedDayOscilation}%</span>
       </>
     );
@@ -314,3 +259,61 @@ const DayOscilation = ({ dayOscilation, formattedDayOscilation }: any) => {
 
   return <span style={{ color: "#ddd" }}>+{formattedDayOscilation}%</span>;
 };
+
+/*
+
+   <div className="buyBook">
+            {!!formattedData?.book.buy.length && (
+              <>
+                <div>
+                  <span className="whiteText">Qtde</span>
+                  <span className="whiteText">Preço</span>
+                </div>
+                {formattedData.book.buy.map((book, index) => (
+                  <div key={`buyBook${index}`}>
+                    <span>{book.formattedQtty}</span>
+                    <span>{book.formattedPrice}</span>
+                  </div>
+                ))}
+              </>
+            )}
+          </div>
+
+            <div className="sellBook">
+            {!!formattedData?.book.sell.length && (
+              <>
+                <div>
+                  <span className="whiteText">Qtde</span>
+                  <span className="whiteText">Preço</span>
+                </div>
+                {formattedData.book.sell.map((book, index) => (
+                  <div key={`buyBook${index}`}>
+                    <span>{book.formattedQtty}</span>
+                    <span>{book.formattedPrice}</span>
+                  </div>
+                ))}
+              </>
+            )}
+          </div>
+      
+
+
+ <section className="footer">
+          <div className="flexSpaceBetweenCenter">
+            <strong>COMPRA</strong>
+            <strong>Médio</strong>
+            <strong>VENDA</strong>
+          </div>
+          <div className="boxSliderContainer">
+            <div className="sliderEdge"></div>
+            <div className="sliderMiddle"></div>
+            <div className="sliderEdge"></div>
+          </div>
+          <div className="flexSpaceBetweenCenter">
+            <span className="whiteText">{formattedData?.buy || "0,00"}</span>
+            <span className="whiteText">{formattedData?.sell || "0,00"}</span>
+          </div>
+        </section>
+      
+
+*/
