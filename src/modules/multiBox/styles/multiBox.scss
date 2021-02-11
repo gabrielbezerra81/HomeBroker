@@ -252,12 +252,18 @@ header.boxContentHeader {
   border-radius: 5px;
   padding-right: 4px;
   align-items: center;
-  margin-right: 4px;
+  height: 21px;
+  min-width: 55px;
 
   border-top-left-radius: 6px;
   border-bottom-left-radius: 6px;
   position: relative;
   background-color: #000;
+
+  &:not(.american):not(.european) {
+    justify-content: center;
+    padding-right: 0;
+  }
 
   &:hover {
     opacity: 1;
@@ -300,6 +306,10 @@ header.boxContentHeader {
     &.american {
       background-image: url("../../../assets/multiBox/americanCardIcon.png");
       color: #2b3561;
+    }
+
+    &:not(.american):not(.european) {
+      display: none;
     }
   }
 

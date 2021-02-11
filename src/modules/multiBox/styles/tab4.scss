@@ -14,7 +14,6 @@
   > table {
     text-align: center;
     background-color: transparent !important;
-    margin-top: 4px;
 
     .brokerCustomButton {
       padding: 0;
@@ -30,6 +29,7 @@
 
     th {
       font-weight: 400;
+      padding: 0px 1px !important;
 
       &.yellowColumns {
         color: #ccae44;
@@ -47,33 +47,27 @@
       }
     }
 
-    .buyColor {
-      color: #098abf;
-    }
-
-    .sellColor {
-      color: #a5746b;
-    }
-
-    td:nth-child(3) {
+    td:nth-child(2) {
       color: #bfdce8;
     }
 
-    th:nth-child(3) {
-      color: #fff;
+    tr:not(:first-child) {
+      th:nth-child(2) {
+        color: #fff;
+      }
     }
 
+    th:nth-child(3),
     th:nth-child(4),
-    th:nth-child(5),
-    td:nth-child(4),
-    td:nth-child(5) {
+    td:nth-child(3),
+    td:nth-child(4) {
       color: #80c7e4;
     }
 
+    th:nth-child(5),
     th:nth-child(6),
-    th:nth-child(7),
-    td:nth-child(6),
-    td:nth-child(7) {
+    td:nth-child(5),
+    td:nth-child(6) {
       color: #fda6f4;
     }
 
@@ -81,23 +75,35 @@
       background-color: transparent !important;
     }
 
-    td {
-      &:nth-child(1) {
-        font-weight: bold;
-      }
-
-      &.strikeColumn {
-        min-width: 136px;
-
-        .symbolCardContainer {
-          padding-right: 4px;
-        }
+    tr:not(:first-child) {
+      td {
+        border-top: 2px solid transparent !important;
       }
     }
 
-    tbody {
-      tr:not(:first-child) {
-        border-top: 5px solid transparent;
+    td {
+      &.strikeColumn {
+        min-width: 119px;
+        max-width: 119px;
+        padding: 0 !important;
+
+        .symbolCardContainer {
+          padding-right: 4px;
+          margin-right: 0;
+          max-width: 119px;
+
+          div {
+            font-size: 13px;
+          }
+
+          &:not(.american):not(.european) {
+            padding-right: 0px;
+          }
+
+          h6 {
+            font-size: 13px;
+          }
+        }
       }
     }
   }

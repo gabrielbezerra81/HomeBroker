@@ -3,7 +3,10 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { FiX } from "react-icons/fi";
 import CustomTooltip from "shared/componentes/CustomTooltip";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
-import { SymbolToolTipInfo, TopSymbol } from "modules/multiBox/types/MultiBoxState";
+import {
+  SymbolToolTipInfo,
+  TopSymbol,
+} from "modules/multiBox/types/MultiBoxState";
 
 interface Props {
   data: TopSymbol;
@@ -79,9 +82,12 @@ const SymbolCard: React.FC<Props> = ({
   const modelClass = useMemo(() => {
     if (model === "AMERICAN") {
       return "american";
+    } //
+    else if (model === "EUROPEAN") {
+      return "european";
     }
 
-    return "european";
+    return "";
   }, [model]);
 
   const modelStyle = useMemo(() => {
@@ -181,7 +187,7 @@ const SymbolCard: React.FC<Props> = ({
       <button
         id={`symbolCard${tooltipId}`}
         onClick={handleSearchSymbolInfo}
-        className="brokerCustomButton symbolCardContainer"
+        className={`brokerCustomButton symbolCardContainer ${modelClass}`}
       >
         {showQtty && (
           <span className={`cardQtty ${textColorClass}`}>{formattedQtty}</span>
