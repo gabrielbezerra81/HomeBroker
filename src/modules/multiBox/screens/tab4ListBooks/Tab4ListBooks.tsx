@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Table } from "react-bootstrap";
+import { Form, InputGroup, Table } from "react-bootstrap";
 
 import { IoMdRepeat } from "react-icons/io";
 
@@ -25,8 +25,6 @@ import {
   updateBoxAttrAction,
   handleExportBoxToMultilegAction,
 } from "modules/multiBox/duck/actions/multiBoxActions";
-
-import { handleAddStockOfferAction } from "modules/multiBox/duck/actions/tab5Actions";
 
 import closeIcon from "assets/closeIcon.png";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
@@ -62,6 +60,17 @@ const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
   const structureData = useMemo(() => {
     return boxesTab1Data.find((data) => data.boxId === multiBox.id);
   }, [multiBox.id, boxesTab1Data]);
+
+  const handleSymbolChange = useCallback(
+    (e) => {
+      let value = e.currentTarget.value;
+
+      value = value.toLocaleUpperCase();
+
+      dispatch(updateBoxAttrAction(id, { symbolInput: value }));
+    },
+    [dispatch, id],
+  );
 
   const handleSearchStock = useCallback(() => {
     dispatch(updateBoxAttrAction(id, { activeTab: "5" }));
@@ -130,20 +139,6 @@ const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
 
     loadData();
   }, [multiBox.topSymbols]);
-
-  const oscilationClass = useMemo(() => {
-    if (!stockSymbolData) {
-      return "";
-    }
-
-    if (stockSymbolData.oscilation > 0) {
-      return "positiveText";
-    } else if (stockSymbolData.oscilation < 0) {
-      return "negativeText";
-    }
-
-    return "";
-  }, [stockSymbolData]);
 
   const formattedTab4Data = useMemo(() => {
     return tab4Data.map((item) => {
@@ -217,14 +212,29 @@ const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
   return (
     <div className="multiBoxTab4">
       <header className="boxContentHeader">
-        <div>
-          <h4>{stockSymbolData?.symbol}</h4>
-          <span className="quote">{formattedRefStockData?.formattedLast}</span>
-          <span className={`oscilation ${oscilationClass}`}>
-            {formattedRefStockData?.formattedOscilation}
+        <div className="searchRow">
+          <InputGroup>
+            <Form.Control
+              className="inputWithSearchIcon"
+              name="symbolInput"
+              value={symbolInput}
+              // autoComplete="off"
+              onKeyPress={(e: any) => {
+                if (e.key === "Enter") {
+                  handleSearchStock();
+                }
+              }}
+              onChange={handleSymbolChange}
+            />
+          </InputGroup>
+
+          <span className="quote">{formattedRefStockData.formattedLast}</span>
+          <span className="oscilation">
+            {formattedRefStockData.formattedOscilation}
           </span>
         </div>
-        <div className="buttonsContainer" >
+
+        <div className="buttonsContainer">
           <button className="brokerCustomButton" onClick={handleSearchStock}>
             <img src={zoomIcon} alt="" />
           </button>

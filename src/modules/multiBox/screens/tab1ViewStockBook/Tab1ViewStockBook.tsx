@@ -19,10 +19,11 @@ import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import {
   handleDeleteBoxAction,
   handleExportBoxToMultilegAction,
+  updateBoxAttrAction,
 } from "modules/multiBox/duck/actions/multiBoxActions";
 
 import closeIcon from "assets/closeIcon.png";
-import { handleAddStockOfferAction } from "modules/multiBox/duck/actions/tab5Actions";
+import { Form, InputGroup } from "react-bootstrap";
 interface Props {
   multiBox: MultiBoxData;
 }
@@ -40,9 +41,20 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
     return boxesTab1Data.find((data) => data.boxId === multiBox.id);
   }, [multiBox.id, boxesTab1Data]);
 
+  const handleSymbolChange = useCallback(
+    (e) => {
+      let value = e.currentTarget.value;
+
+      value = value.toLocaleUpperCase();
+
+      dispatch(updateBoxAttrAction(id, { symbolInput: value }));
+    },
+    [dispatch, id],
+  );
+
   const handleSearchStock = useCallback(() => {
-    dispatch(handleAddStockOfferAction(id, symbolInput));
-  }, [dispatch, id, symbolInput]);
+    dispatch(updateBoxAttrAction(id, { activeTab: "5" }));
+  }, [dispatch, id]);
 
   const handleOpenInMultileg = useCallback(() => {
     dispatch(
@@ -103,20 +115,6 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
     return box;
   }, [structureData]);
 
-  const oscilationClass = useMemo(() => {
-    if (!stockSymbolData) {
-      return "";
-    }
-
-    if (stockSymbolData.oscilation > 0) {
-      return "positiveText";
-    } else if (stockSymbolData.oscilation < 0) {
-      return "negativeText";
-    }
-
-    return "";
-  }, [stockSymbolData]);
-
   const formattedRefStockData = useMemo(() => {
     if (!stockSymbolData) {
       return null;
@@ -154,13 +152,28 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
   return (
     <div className="multiBoxTab1">
       <header className="boxContentHeader">
-        <div>
-          <h4>{stockSymbolData?.symbol}</h4>
+        <div className="searchRow">
+          <InputGroup>
+            <Form.Control
+              className="inputWithSearchIcon"
+              name="symbolInput"
+              value={symbolInput}
+              // autoComplete="off"
+              onKeyPress={(e: any) => {
+                if (e.key === "Enter") {
+                  handleSearchStock();
+                }
+              }}
+              onChange={handleSymbolChange}
+            />
+          </InputGroup>
+
           <span className="quote">{formattedRefStockData?.formattedLast}</span>
-          <span className={`oscilation ${oscilationClass}`}>
+          <span className="oscilation">
             {formattedRefStockData?.formattedOscilation}
           </span>
         </div>
+
         <div className="buttonsContainer">
           <button className="brokerCustomButton" onClick={handleSearchStock}>
             <img src={zoomIcon} alt="" />

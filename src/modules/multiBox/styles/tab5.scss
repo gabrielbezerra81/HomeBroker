@@ -13,36 +13,6 @@
       height: 20px;
     }
 
-    .searchRow {
-      .inputWithSearchIcon {
-        height: 26px;
-        width: 90px;
-        padding: 6px 8px;
-      }
-
-      .input-group-append {
-        height: 26px;
-      }
-
-      .appendedSearchIcon {
-        padding: 0;
-        width: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-top-right-radius: 3px;
-        border-bottom-right-radius: 3px;
-      }
-
-      .searchOptionsButton {
-        margin-left: 2px;
-
-        img {
-          height: 26px;
-        }
-      }
-    }
-
     > div.buttonsContainer {
       width: 65px;
     }

@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
 
-import { Form, Spinner } from "react-bootstrap";
+import { Form, InputGroup, Spinner } from "react-bootstrap";
 
 import { MultiBoxData } from "modules/multiBox/types/MultiBoxState";
 
@@ -20,7 +20,6 @@ import {
 import closeIcon from "assets/closeIcon.png";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { createAlertFromBoxAction } from "modules/multiBox/duck/actions/tab3Actions";
-import { handleAddStockOfferAction } from "modules/multiBox/duck/actions/tab5Actions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 interface Props {
@@ -52,8 +51,8 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
   const [addingAlertAPI, setAddingAlertAPI] = useState(false);
 
   const handleSearchStock = useCallback(() => {
-    dispatch(handleAddStockOfferAction(id, symbolInput));
-  }, [dispatch, id, symbolInput]);
+    dispatch(updateBoxAttrAction(id, { activeTab: "5" }));
+  }, [dispatch, id]);
 
   const handleOpenInMultileg = useCallback(() => {
     dispatch(
@@ -74,6 +73,10 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
       const { name } = e.currentTarget;
 
       let value = e.currentTarget.value;
+
+      if (name === "symbolInput") {
+        value = value.toLocaleUpperCase();
+      }
 
       dispatch(
         updateBoxAttrAction(id, {
@@ -106,20 +109,6 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
 
     setAddingAlertAPI(false);
   }, [dispatch, multiBox]);
-
-  const oscilationClass = useMemo(() => {
-    if (!stockSymbolData) {
-      return "";
-    }
-
-    if (stockSymbolData.oscilation > 0) {
-      return "positiveText";
-    } else if (stockSymbolData.oscilation < 0) {
-      return "negativeText";
-    }
-
-    return "";
-  }, [stockSymbolData]);
 
   const formattedRefStockData = useMemo(() => {
     if (!stockSymbolData) {
@@ -154,13 +143,28 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
   return (
     <div className="multiBoxTab3">
       <header className="boxContentHeader">
-        <div>
-          <h4>{stockSymbolData?.symbol}</h4>
+        <div className="searchRow">
+          <InputGroup>
+            <Form.Control
+              className="inputWithSearchIcon"
+              name="symbolInput"
+              value={symbolInput}
+              // autoComplete="off"
+              onKeyPress={(e: any) => {
+                if (e.key === "Enter") {
+                  handleSearchStock();
+                }
+              }}
+              onChange={handleInputChange}
+            />
+          </InputGroup>
+
           <span className="quote">{formattedRefStockData?.formattedLast}</span>
-          <span className={`oscilation ${oscilationClass}`}>
+          <span className="oscilation">
             {formattedRefStockData?.formattedOscilation}
           </span>
         </div>
+
         <div className="buttonsContainer">
           <button className="brokerCustomButton" onClick={handleSearchStock}>
             <img src={zoomIcon} alt="" />
@@ -179,7 +183,6 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
           </button>
         </div>
       </header>
-
       <div className="boxInputRangeContainer">
         <div>
           <span className="whiteText">Mín</span>

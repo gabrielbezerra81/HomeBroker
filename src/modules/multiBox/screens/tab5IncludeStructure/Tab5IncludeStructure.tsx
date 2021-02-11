@@ -206,7 +206,6 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
           <InputGroup>
             <Form.Control
               className="inputWithSearchIcon"
-              // darkSimpleInput
               name="symbolInput"
               value={symbolInput}
               // autoComplete="off"

@@ -2,22 +2,8 @@
   padding: 0 4px;
 
   header.boxContentHeader {
-    > div {
-      justify-content: space-between;
-
-      &:first-child {
-        flex: 1;
-        margin-right: 32px;
-      }
-    }
-
     div.buttonsContainer {
-      width: 105px;
-    }
-
-    h4 {
-      color: #ccae44;
-      margin-bottom: 0;
+      width: 89px;
     }
   }
 
