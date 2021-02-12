@@ -38,17 +38,47 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
   }, [multiBox.id, boxesTab1Data]);
 
   const {
-    price,
+    alertPrice,
     consideredPrice,
     condition,
     observation,
     id,
-
     stockSymbolData,
     symbolInput,
+    selectedValidity,
   } = multiBox;
 
   const [addingAlertAPI, setAddingAlertAPI] = useState(false);
+
+  const {
+    formattedMin,
+    formattedMedium,
+    formattedMax,
+    medium,
+  } = useMemo(() => {
+    const formatted = {
+      formattedMin: "0,00",
+      formattedMax: "0,00",
+      formattedMedium: "",
+      medium: 0,
+    };
+
+    if (!structureData) {
+      return formatted;
+    }
+
+    const { min, max } = structureData;
+
+    formatted.formattedMin = formatarNumDecimal(min || 0);
+    formatted.formattedMax = formatarNumDecimal(max || 0);
+
+    if (typeof min === "number" && typeof max === "number") {
+      formatted.medium = (max + min) / 2;
+      formatted.formattedMedium = formatarNumDecimal(formatted.medium || 0);
+    }
+
+    return formatted;
+  }, [structureData]);
 
   const handleSearchStock = useCallback(() => {
     dispatch(updateBoxAttrAction(id, { activeTab: "5" }));
@@ -89,13 +119,19 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
 
   const handlePriceChange = useCallback(
     (value) => {
+      let price = value;
+
+      if (Number(value) - 0.01 === 0 && structureData?.min) {
+        price = structureData?.min || 0;
+      }
+
       dispatch(
         updateBoxAttrAction(id, {
-          price: value,
+          alertPrice: price,
         }),
       );
     },
-    [dispatch, id],
+    [dispatch, id, structureData],
   );
 
   const handleCreateAlert = useCallback(async () => {
@@ -109,6 +145,55 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
 
     setAddingAlertAPI(false);
   }, [dispatch, multiBox]);
+
+  const handleClickBarPrice = useCallback(
+    (event) => {
+      const { name } = event.currentTarget;
+
+      let price = alertPrice;
+      let validity = selectedValidity;
+      let considered = consideredPrice;
+      let cond = condition;
+
+      if (name === "max") {
+        price = structureData?.max || 0;
+        validity = "DAY";
+        considered = "Last";
+        cond = "Less";
+      } //
+      else if (name === "min") {
+        price = structureData?.min || 0;
+        validity = "DAY";
+        considered = "Last";
+        cond = "Greater";
+      } //
+      else if (name === "med") {
+        price = medium || 0;
+        validity = "DAY";
+        considered = "Last";
+        cond = "Greater";
+      }
+
+      dispatch(
+        updateBoxAttrAction(id, {
+          alertPrice: price,
+          selectedValidity: validity,
+          consideredPrice: considered,
+          condition: cond,
+        }),
+      );
+    },
+    [
+      alertPrice,
+      condition,
+      consideredPrice,
+      dispatch,
+      id,
+      medium,
+      selectedValidity,
+      structureData,
+    ],
+  );
 
   const formattedRefStockData = useMemo(() => {
     if (!stockSymbolData) {
@@ -197,14 +282,26 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
           step={0.01}
         />
         <div>
-          <button className="brokerCustomButton whiteText">
-            {formattedRefStockData?.formattedMin}
+          <button
+            onClick={handleClickBarPrice}
+            name="min"
+            className="brokerCustomButton whiteText"
+          >
+            {formattedMin}
           </button>
-          <button className="brokerCustomButton whiteText">
-            {formattedRefStockData?.formattedMedium}
+          <button
+            onClick={handleClickBarPrice}
+            name="med"
+            className="brokerCustomButton whiteText"
+          >
+            {formattedMedium}
           </button>
-          <button className="brokerCustomButton whiteText">
-            {formattedRefStockData?.formattedMax}
+          <button
+            onClick={handleClickBarPrice}
+            name="max"
+            className="brokerCustomButton whiteText"
+          >
+            {formattedMax}
           </button>
         </div>
       </div>
@@ -222,7 +319,7 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
               theme="dark"
               step={0.01}
               type="preco"
-              value={price}
+              value={alertPrice}
               onChange={handlePriceChange}
             />
           </Form.Group>

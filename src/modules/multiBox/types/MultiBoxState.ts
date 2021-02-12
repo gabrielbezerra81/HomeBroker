@@ -101,7 +101,7 @@ export interface MultiBoxData {
   condition: "Less" | "Greater";
   observation: string;
   consideredPrice: "Bid" | "Ask" | "Last";
-  price: number;
+  alertPrice: number;
   stockSymbolData: StockSymbolData | null;
 }
 

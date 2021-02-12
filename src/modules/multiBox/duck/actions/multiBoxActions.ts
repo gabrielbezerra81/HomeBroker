@@ -29,7 +29,7 @@ interface OpenedBoxes {
   tabKey: string;
 }
 
-const initialTab = "1";
+const initialTab = "3";
 
 export const addMultiBoxAction = (): MainThunkAction => {
   return (dispatch, getState) => {
@@ -57,7 +57,7 @@ export const addMultiBoxAction = (): MainThunkAction => {
       tab1Id: -1,
       selectedValidity: "DAY",
       selectedDate: new Date(),
-      price: 0,
+      alertPrice: 0,
       consideredPrice: "Bid",
       condition: "Less",
       observation: "",
@@ -263,7 +263,7 @@ export const addMultiBoxesFromStructureDataAction = (
         tab1Id: data.id,
         selectedValidity: "DAY",
         selectedDate: new Date(),
-        price: 0,
+        alertPrice: 0,
         consideredPrice: "Bid",
         condition: "Less",
         observation: "",

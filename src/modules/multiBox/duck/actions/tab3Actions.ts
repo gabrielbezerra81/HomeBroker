@@ -25,7 +25,7 @@ export const createAlertFromBoxAction = ({
       observation,
       selectedValidity,
       selectedDate,
-      price,
+      alertPrice,
     } = multiBox;
 
     setPointerWhileAwaiting({ lockMode: "travar", id: "multileg" });
@@ -45,7 +45,7 @@ export const createAlertFromBoxAction = ({
         order,
         selectedValidity,
         selectedDate,
-        price,
+        price: alertPrice,
       });
 
       const alertPayload = [updatedOrder];

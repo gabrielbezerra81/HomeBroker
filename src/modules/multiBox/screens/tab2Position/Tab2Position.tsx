@@ -79,6 +79,19 @@ const Tab2Position: React.FC<Props> = ({ multiBox }) => {
     );
   }, [dispatch, multiBox.id, strikeViewMode]);
 
+  const handlePriceChange = useCallback(
+    (value) => {
+      let price = value;
+
+      if (Number(value) - 0.01 === 0 && structureData?.min) {
+        price = structureData?.min || 0;
+      }
+
+      dispatch(updateBoxAttrAction(id, {}));
+    },
+    [dispatch, id, structureData],
+  );
+
   const formattedRefStockData = useMemo(() => {
     if (!stockSymbolData) {
       return null;

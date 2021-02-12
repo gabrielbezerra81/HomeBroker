@@ -7,12 +7,22 @@
     }
   }
 
+  .boxInputRangeContainer {
+    // margin-top: 8px;
+
+    div:first-child {
+      span {
+        line-height: 14px;
+      }
+    }
+  }
+
   .titleContainer {
     position: relative;
     width: 100%;
     height: 16px;
     border-bottom: 1px solid #808080;
-    margin: 8px 0;
+    margin: 2px 0 6px;
 
     h6 {
       color: #ccae44;
@@ -33,7 +43,7 @@
   }
 
   .createAlertContainer {
-    padding: 0 40px;
+    padding: 0 32px;
 
     .formGroupRow {
       display: flex;
@@ -55,12 +65,17 @@
     .darkSimpleInput,
     .darkInputSelect {
       border-radius: 4px;
-      height: 15px;
+      height: 19px;
+    }
+
+    .darkInputSelect {
+      padding: 0 4px;
     }
 
     .darkCustomInput {
       input {
         border-radius: 4px;
+        height: 19px;
       }
     }
 

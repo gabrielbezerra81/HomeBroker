@@ -145,6 +145,31 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
     };
   }, [stockSymbolData]);
 
+  const { formattedMin, formattedMedium, formattedMax } = useMemo(() => {
+    const formatted = {
+      formattedMin: "0,00",
+      formattedMax: "0,00",
+      formattedMedium: "",
+      medium: 0,
+    };
+
+    if (!structureData) {
+      return formatted;
+    }
+
+    const { min, max } = structureData;
+
+    formatted.formattedMin = formatarNumDecimal(min || 0);
+    formatted.formattedMax = formatarNumDecimal(max || 0);
+
+    if (typeof min === "number" && typeof max === "number") {
+      formatted.medium = (max + min) / 2;
+      formatted.formattedMedium = formatarNumDecimal(formatted.medium || 0);
+    }
+
+    return formatted;
+  }, [structureData]);
+
   if (!structureData) {
     return <div></div>;
   }
@@ -211,13 +236,13 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
         />
         <div>
           <button className="brokerCustomButton whiteText">
-            {formattedRefStockData?.formattedMin}
+            {formattedMin}
           </button>
           <button className="brokerCustomButton whiteText">
-            {formattedRefStockData?.formattedMedium}
+            {formattedMedium}
           </button>
           <button className="brokerCustomButton whiteText">
-            {formattedRefStockData?.formattedMax}
+            {formattedMax}
           </button>
         </div>
       </div>
