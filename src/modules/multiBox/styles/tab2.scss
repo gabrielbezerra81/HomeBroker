@@ -7,17 +7,27 @@
     }
   }
 
+  .boxInputRangeContainer {
+    margin-top: 8px;
+
+    div:first-child {
+      span {
+        line-height: 6px;
+      }
+    }
+  }
+
   .titleContainer {
     position: relative;
     width: 100%;
     height: 16px;
     border-bottom: 1px solid #808080;
-    margin: 8px 0;
+    margin-top: 4px;
 
     h6 {
       color: #ccae44;
       font-weight: 400;
-      font-size: 14px;
+      font-size: 15px;
       position: absolute;
       text-align: center;
       background-color: #000;
@@ -26,23 +36,25 @@
 
       display: inline-block;
       margin: 0 auto;
-      width: 63px;
-      left: calc(50% - 63px);
-      right: calc(50% - 63px);
+      width: 65px;
+      left: calc(50% - 65px);
+      right: calc(50% - 65px);
     }
   }
 
   table {
     text-align: center;
-    margin-top: 18px;
+    margin-top: 12px;
     background-color: transparent !important;
     border-collapse: separate;
-    border-spacing: 0 6px;
+    border-spacing: 0 4px;
+    margin-bottom: 1px;
 
     th {
       font-weight: 400;
       color: #bfa340;
       background-color: #282828;
+      padding: 2px 0 !important;
 
       .brokerCustomButton {
         padding: 0;
@@ -61,6 +73,25 @@
       height: 0;
       color: #cec9c9;
 
+      .symbolCardContainer {
+        height: 18px;
+        overflow: hidden;
+        min-width: 87px;
+
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+
+        .model {
+          font-size: 14px;
+          height: 17px;
+          width: 17px;
+        }
+
+        h6 {
+          font-size: 13px;
+        }
+      }
+
       &.avgPriceColumn,
       &.qttyColumn {
         > div {
@@ -69,6 +100,10 @@
           justify-content: center;
           align-items: center;
         }
+      }
+
+      &.qttyColumn {
+        max-width: 60px;
       }
     }
 
@@ -97,10 +132,12 @@
   .saveButton {
     background: #2e5d8c;
     border-radius: 6px;
-    height: 28px;
+    height: 20px;
     margin-left: auto;
     margin-right: 4px;
     width: 70px;
+    line-height: 14px;
+    font-size: 13px;
 
     display: flex;
     align-items: center;

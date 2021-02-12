@@ -164,35 +164,6 @@ const Tab2Position: React.FC<Props> = ({ multiBox }) => {
         </div>
       </header>
 
-      <div className="boxInputRangeContainer">
-        <div>
-          <span className="whiteText">Mín</span>
-          <span className="whiteText">Médio</span>
-          <span className="whiteText">Máx</span>
-        </div>
-        <input
-          type="range"
-          className={`custom-range boxInputRange`}
-          min={structureData?.min || undefined}
-          max={structureData?.max || undefined}
-          // value={
-          //   structureData ? (structureData.min + structureData.max) / 2 : ""
-          // }
-          step={0.01}
-        />
-        <div>
-          <button className="brokerCustomButton whiteText">
-            {formattedRefStockData?.formattedMin}
-          </button>
-          <button className="brokerCustomButton whiteText">
-            {formattedRefStockData?.formattedMedium}
-          </button>
-          <button className="brokerCustomButton whiteText">
-            {formattedRefStockData?.formattedMax}
-          </button>
-        </div>
-      </div>
-
       <div className="titleContainer">
         <h6>Posição</h6>
       </div>
@@ -226,6 +197,154 @@ const Tab2Position: React.FC<Props> = ({ multiBox }) => {
                   offerType: "C",
                   qtty: 1,
                   type: "PUT",
+                  viewMode: strikeViewMode,
+                }}
+              />
+            </td>
+            <td className="qttyColumn">
+              <CustomInput
+                type={"quantidade"}
+                step={1}
+                autoSelect
+                value={""}
+                onChange={() => {}}
+              />
+            </td>
+            <td className="avgPriceColumn">
+              <div>
+                <CustomInput
+                  name="price"
+                  step={0.01}
+                  type="preco"
+                  value={""}
+                  onChange={() => {}}
+                />
+              </div>
+            </td>
+            <td>C 1.8K/25</td>
+          </tr>
+          <tr>
+            <td>
+              <SymbolCard
+                data={{
+                  code: "L260",
+                  strike: 26,
+                  expiration: "25d",
+                  model: "AMERICAN",
+                  offerType: "C",
+                  qtty: 1,
+                  type: "CALL",
+                  viewMode: strikeViewMode,
+                }}
+              />
+            </td>
+            <td className="qttyColumn">
+              <CustomInput
+                type={"quantidade"}
+                step={1}
+                autoSelect
+                value={""}
+                onChange={() => {}}
+              />
+            </td>
+            <td className="avgPriceColumn">
+              <div>
+                <CustomInput
+                  name="price"
+                  step={0.01}
+                  type="preco"
+                  value={""}
+                  onChange={() => {}}
+                />
+              </div>
+            </td>
+            <td>C 1.8K/25</td>
+          </tr>
+          <tr>
+            <td>
+              <SymbolCard
+                data={{
+                  code: "L260",
+                  strike: 26,
+                  expiration: "25d",
+                  model: "AMERICAN",
+                  offerType: "C",
+                  qtty: 1,
+                  type: "CALL",
+                  viewMode: strikeViewMode,
+                }}
+              />
+            </td>
+            <td className="qttyColumn">
+              <CustomInput
+                type={"quantidade"}
+                step={1}
+                autoSelect
+                value={""}
+                onChange={() => {}}
+              />
+            </td>
+            <td className="avgPriceColumn">
+              <div>
+                <CustomInput
+                  name="price"
+                  step={0.01}
+                  type="preco"
+                  value={""}
+                  onChange={() => {}}
+                />
+              </div>
+            </td>
+            <td>C 1.8K/25</td>
+          </tr>
+          <tr>
+            <td>
+              <SymbolCard
+                data={{
+                  code: "L260",
+                  strike: 26,
+                  expiration: "25d",
+                  model: "AMERICAN",
+                  offerType: "C",
+                  qtty: 1,
+                  type: "CALL",
+                  viewMode: strikeViewMode,
+                }}
+              />
+            </td>
+            <td className="qttyColumn">
+              <CustomInput
+                type={"quantidade"}
+                step={1}
+                autoSelect
+                value={""}
+                onChange={() => {}}
+              />
+            </td>
+            <td className="avgPriceColumn">
+              <div>
+                <CustomInput
+                  name="price"
+                  step={0.01}
+                  type="preco"
+                  value={""}
+                  onChange={() => {}}
+                />
+              </div>
+            </td>
+            <td>C 1.8K/25</td>
+          </tr>
+          <tr>
+            <td>
+              <SymbolCard
+                data={{
+                  code: "L260",
+                  strike: 26,
+                  expiration: "25d",
+                  model: "AMERICAN",
+                  offerType: "C",
+                  qtty: 1,
+                  type: "CALL",
                   viewMode: strikeViewMode,
                 }}
               />
