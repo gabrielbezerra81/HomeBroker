@@ -90,13 +90,6 @@ const SymbolCard: React.FC<Props> = ({
     return "";
   }, [model]);
 
-  const modelStyle = useMemo(() => {
-    if (offerType === "C") {
-      return { fontSize: 16 };
-    }
-    return {};
-  }, [offerType]);
-
   const formattedQtty = useMemo(() => {
     let formattedQtty = offerType === "C" ? `${qtty}` : `${qtty}`;
 
@@ -193,17 +186,18 @@ const SymbolCard: React.FC<Props> = ({
           <span className={`cardQtty ${textColorClass}`}>{formattedQtty}</span>
         )}
         {model === "AMERICAN" ? (
-          <div style={modelStyle} className={`model ${modelClass}`}>
-            {typeLetter}
-          </div>
+          <div className={`model ${modelClass}`}>{typeLetter}</div>
         ) : (
           <div className={`model ${modelClass}`}>{typeLetter}</div>
         )}
 
-        <h6 className={textColorClass}>
-          {viewMode === "strike" && strike !== 0 ? formattedStrike : code}
-        </h6>
-        <h6 className={textColorClass}>{expiration}</h6>
+        <div className="symbolContainer">
+          <h6 className={textColorClass}>
+            {viewMode === "strike" && strike !== 0 ? formattedStrike : code}
+          </h6>
+
+          {!!expiration && <h6 className={textColorClass}>{expiration}</h6>}
+        </div>
       </button>
     </CustomTooltip>
   );

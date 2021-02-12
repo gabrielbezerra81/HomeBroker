@@ -250,7 +250,7 @@ header.boxContentHeader {
   display: inline-flex;
   border: 1px solid #b0b0b0;
   border-radius: 5px;
-  padding-right: 4px;
+  // padding-right: 4px;
   align-items: center;
   height: 21px;
   min-width: 55px;
@@ -284,6 +284,23 @@ header.boxContentHeader {
 
     font-weight: bold;
     text-align: right;
+  }
+
+  .symbolContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex: 1;
+    height: 100%;
+    padding: 0 3px;
+
+    h6 {
+      line-height: 13px;
+    }
+
+    h6:nth-child(2) {
+      margin-left: 4px;
+    }
   }
 
   .model {
@@ -324,7 +341,7 @@ header.boxContentHeader {
   }
 
   div + h6 {
-    margin: 0 4px;
+    // margin: 0 4px;
   }
 }
 
