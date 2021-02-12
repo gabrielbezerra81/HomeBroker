@@ -14,7 +14,6 @@ import modelEUImage from "assets/modeloEU.png";
 import { ReactComponent as ModelUSAImage } from "assets/modeloUSA2.svg";
 import { FormControl } from "react-bootstrap";
 import { BoxOffer } from "modules/multiBox/types/MultiBoxState";
-import { formatExpiration } from "shared/utils/Formatacoes";
 import {
   handleChangeBoxOfferAction,
   handleRemoveOfferAction,
@@ -113,18 +112,31 @@ const MultiBoxOffer: React.FC<Props> = ({
         return null;
       }
 
-      const label =
-        option.type === "CALL"
-          ? option.symbol +
-            " " +
-            option.strike +
-            " " +
-            stockOptions[index + 1].symbol
-          : stockOptions[index + 1].symbol +
-            " " +
-            option.strike +
-            " " +
-            option.symbol;
+      let symbol = "";
+
+      if (option.type === type) {
+        symbol = option.symbol;
+      } //
+      else {
+        symbol = stockOptions[index + 1].symbol;
+      }
+
+      const symbolPrefix = symbol.substr(0, 4);
+
+      const label = `${symbol.substr(4)} (${option.strike})`;
+
+      // const label =
+      //   option.type === "CALL"
+      //     ? option.symbol +
+      //       " " +
+      //       option.strike +
+      //       " " +
+      //       stockOptions[index + 1].symbol
+      //     : stockOptions[index + 1].symbol +
+      //       " " +
+      //       option.strike +
+      //       " " +
+      //       option.symbol;
 
       return (
         <Select.Option
@@ -132,13 +144,14 @@ const MultiBoxOffer: React.FC<Props> = ({
           key={Math.random()}
           value={option.strike}
         >
-          {label}
+          <span style={{ fontSize: 10 }}>{symbolPrefix}</span>
+          <span style={{ fontSize: 14 }}>{label}</span>
         </Select.Option>
       );
     });
 
     return dropdownOptions;
-  }, [stockOptions]);
+  }, [stockOptions, type]);
 
   const strikeOptions = useMemo(() => {
     return stockOptions.map((option, index) => {
