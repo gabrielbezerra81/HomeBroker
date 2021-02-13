@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 import moment from "moment";
-import { Spin } from "antd";
 
 import { Form, InputGroup, Spinner } from "react-bootstrap";
 import PerfectScrollbar from "react-perfect-scrollbar";
@@ -18,6 +17,8 @@ import api from "api/apiConfig";
 import { url_optionsTable_symbol_type } from "api/url";
 import { Table } from "react-bootstrap";
 import { GrFormSearch } from "react-icons/gr";
+import { getOneSymbolDataAPI } from "api/symbolAPI";
+import { formatarNumDecimal } from "shared/utils/Formatacoes";
 
 interface GetOptionsAPI {
   lines: Array<OptionTableItem>;
@@ -26,6 +27,11 @@ interface GetOptionsAPI {
 interface TableLine {
   strike: number;
   [key: string]: any;
+}
+
+interface SymbolData {
+  last: number;
+  oscilation: number;
 }
 
 // const data: OptionTableItem[] = [
@@ -140,6 +146,7 @@ const OptionsTable: React.FC = () => {
   });
   const [symbol, setSymbol] = useState("");
   const [type, setType] = useState<"CALL" | "PUT">("CALL");
+  const [symbolData, setSymbolData] = useState<SymbolData | null>(null);
 
   const [mouseDown, setMouseDown] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -259,6 +266,15 @@ const OptionsTable: React.FC = () => {
         `${url_optionsTable_symbol_type}${symbol}/${type}`,
       );
 
+      const data = await getOneSymbolDataAPI(symbol);
+
+      if (data) {
+        setSymbolData({
+          last: data.ultimo || 0,
+          oscilation: data.oscilacao || 0,
+        });
+      }
+
       setOptionsData(response.data.lines);
     } catch (error) {
     } finally {
@@ -335,6 +351,21 @@ const OptionsTable: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const { formattedQuote, formattedOscilation } = useMemo(() => {
+    const formatted = {
+      formattedQuote: "0,00",
+      formattedOscilation: "0,00%",
+    };
+
+    if (symbolData) {
+      formatted.formattedQuote = formatarNumDecimal(symbolData.last);
+      formatted.formattedOscilation =
+        formatarNumDecimal(symbolData.oscilation) + "%";
+    }
+
+    return formatted;
+  }, [symbolData]);
+
   return (
     <DraggablePopup
       popupDivKey="optionsTable"
@@ -372,6 +403,9 @@ const OptionsTable: React.FC = () => {
                 </span>
               </InputGroup.Append>
             </InputGroup>
+
+            <span className="quote">{formattedQuote}</span>
+            <span className="oscilation">{formattedOscilation}</span>
 
             <Form.Check
               custom
