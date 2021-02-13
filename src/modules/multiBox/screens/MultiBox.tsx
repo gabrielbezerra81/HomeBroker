@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import Draggable, { DraggableData } from "react-draggable";
+import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
@@ -17,6 +17,8 @@ import SymbolCard from "./SymbolCard";
 import Tab3Alerts from "./tab3Alerts/Tab3Alerts";
 import Tab2Position from "./tab2Position/Tab2Position";
 import { IoMdRepeat } from "react-icons/io";
+import api from "api/apiConfig";
+import { url_updateBoxConfig_id } from "api/url";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -27,13 +29,28 @@ const limitY = 80;
 const MultiBox: React.FC<Props> = ({ multiBox }) => {
   const {
     systemReducer: { isOpenLeftUserMenu, openedMenus, selectedTab },
+    multiBoxReducer: { boxesTab1Data },
   } = useStateStorePrincipal();
 
   const dispatch = useDispatchStorePrincipal();
 
   const { id, topSymbols, strikeViewMode } = multiBox;
 
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const structureData = useMemo(() => {
+    return boxesTab1Data.find((data) => data.boxId === multiBox.id);
+  }, [multiBox.id, boxesTab1Data]);
+
+  const [position, setPosition] = useState(() => {
+    const defaultPosition = { x: 0, y: 0 };
+
+    if (structureData) {
+      const configuration = JSON.parse(structureData.configuration);
+
+      return configuration.position || defaultPosition;
+    }
+
+    return defaultPosition;
+  });
   const [isDragging, setIsDragging] = useState(false);
   const [bounds, setBounds] = useState<
     | {
@@ -62,12 +79,50 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
 
   const onStopDragging = useCallback(() => {
     setIsDragging(false);
-  }, []);
+
+    try {
+      if (structureData) {
+        const configuration = JSON.parse(structureData.configuration);
+
+        configuration.position = position;
+
+        api.put(`${url_updateBoxConfig_id}${structureData.id}`, {
+          configuration: JSON.stringify(configuration),
+        });
+      }
+    } catch (error) {
+      //
+    }
+  }, [position, structureData]);
 
   const onDrag = useCallback(
-    (e, data: DraggableData) => {
+    (e: DraggableEvent, data: DraggableData) => {
       if (!bounds) {
         return;
+      }
+
+      const excludedClasses = [
+        "react-datepicker__week",
+        "ant-select-selection__rendered",
+        "symbolContainer",
+        "react-datepicker__tab-loop",
+        "react-datepicker-wrapper",
+      ];
+
+      if (e.target) {
+        for (const element of (e as any).path) {
+          if (excludedClasses.includes(element.className)) {
+            return false;
+          }
+        }
+
+        if (
+          ["BUTTON", "INPUT", "SELECT", "IMG", "I", "svg", "path"].includes(
+            (e.target as any).nodeName,
+          )
+        ) {
+          return false;
+        }
       }
 
       setPosition({ x: data.x, y: data.y });
@@ -163,6 +218,7 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
       onStop={onStopDragging}
       onDrag={onDrag}
       bounds={bounds}
+      grid={[3, 3]}
     >
       <div className="multiBox" id={multiBox.id} style={visibilityClass}>
         <div className="topSymbolsContainer">

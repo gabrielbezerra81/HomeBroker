@@ -20,6 +20,7 @@ import {
   url_favoritarTHL_,
   url_addQuoteBox_groupName,
   url_listarAlertas,
+  url_box,
 } from "api/url";
 
 import {
@@ -504,7 +505,7 @@ export const addBoxStructureAPI = async (groupName, data) => {
 
 export const listQuoteBoxesAPI = async () => {
   return api
-    .get(`favorite`)
+    .get(url_box)
     .then((response) => response.data)
     .catch((error) => {
       showAPIErrorAndAlert(error, "");
@@ -514,7 +515,7 @@ export const listQuoteBoxesAPI = async () => {
 
 export const deleteQuoteBoxAPI = async (boxID) => {
   return api
-    .delete(`favorite/${boxID}`)
+    .delete(`${url_box}/${boxID}`)
     .then(() => true)
     .catch((error) => {
       showAPIErrorAndAlert(error, error_delete_box);

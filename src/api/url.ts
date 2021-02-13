@@ -77,3 +77,7 @@ export const url_stockInfo_symbol = "stocks/info/";
 
 // Matriz de opções
 export const url_optionsTable_symbol_type = "structure/thl/matrix/";
+
+// Box
+export const url_box = "favorite";
+export const url_updateBoxConfig_id = "favorite/config/";
