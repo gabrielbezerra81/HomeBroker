@@ -1,8 +1,4 @@
-import {
-  createBoxAlertAPI,
-  criarAlertaOperacaoAPI,
-  setPointerWhileAwaiting,
-} from "api/API";
+import { createBoxAlertAPI, listAlertsAPI } from "api/API";
 
 import moment from "moment";
 import produce from "immer";
@@ -12,7 +8,6 @@ import { MultiBoxData } from "modules/multiBox/types/MultiBoxState";
 import { MultilegPayload } from "modules/multileg/types/multileg";
 import { MainThunkAction } from "types/ThunkActions";
 import { updateOneMultilegState } from "modules/multileg/duck/actions/utils";
-import { mountOrderForOperations } from "./util";
 import { AlertCreateRequestData } from "modules/multiBox/types/BoxAPI";
 
 interface CreateAlertFromBox {
@@ -24,7 +19,7 @@ export const createAlertFromBoxAction = ({
 }: CreateAlertFromBox): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
-      multilegReducer: { alerts },
+      multiBoxReducer: { boxesTab1Data },
     } = getState();
 
     const {
@@ -36,25 +31,43 @@ export const createAlertFromBoxAction = ({
       alertPrice,
     } = multiBox;
 
-    let expiration = "31/12/9999 23:59:00";
+    const structureData = boxesTab1Data.find(
+      (structure) => structure.boxId === multiBox.id,
+    );
 
-    if (selectedValidity === "DAY") {
-      expiration = moment(new Date()).format("DD/MM/YYYY") + " 23:59:00";
-    } //
-    else if (selectedValidity === "SPECIFIED_DAY") {
-      expiration = moment(selectedDate).format("DD/MM/YYYY") + " 23:59:00";
+    if (structureData) {
+      let expiration = "31/12/9999 23:59:00";
+
+      if (selectedValidity === "DAY") {
+        expiration = moment(new Date()).format("DD/MM/YYYY") + " 23:59:00";
+      } //
+      else if (selectedValidity === "SPECIFIED_DAY") {
+        expiration = moment(selectedDate).format("DD/MM/YYYY") + " 23:59:00";
+      }
+
+      const payload: AlertCreateRequestData = {
+        price: alertPrice,
+        status: "Enabled",
+        expiration,
+        operator: condition,
+        param: consideredPrice,
+        structure: { id: structureData.structureID },
+        observation,
+      };
+
+      const data = await createBoxAlertAPI(payload);
+
+      if (data) {
+        const alertData = await listAlertsAPI();
+
+        dispatch(
+          updateOneMultilegState({
+            attributeName: "alerts",
+            attributeValue: alertData,
+          }),
+        );
+      }
     }
-
-    const payload: AlertCreateRequestData = {
-      price: alertPrice,
-      status: "Enabled",
-      expiration,
-      operator: condition,
-      param: consideredPrice,
-      structure: { id: 0 },
-    };
-
-    const data = await createBoxAlertAPI(payload);
 
     // const partialPayload = await mountOrderForOperations({
     //   multiBox,

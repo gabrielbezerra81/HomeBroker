@@ -583,14 +583,10 @@ export const createBoxAlertAPI = async (payload) => {
   return api
     .post(url_createBoxAlert, payload)
     .then((response) => {
-      if (response.data && Array.isArray(response.data)) {
-        return response.data;
-      }
-
-      return [];
+      return response.data;
     })
     .catch((error) => {
-      return [];
+      return null;
     });
 };
 

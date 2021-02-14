@@ -2,7 +2,10 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
-import { clearReduxStateFromStorageAction } from "redux/actions/system/SystemActions";
+import {
+  clearReduxStateFromStorageAction,
+  logarUsuarioAction,
+} from "redux/actions/system/SystemActions";
 import FloatingLabelInput from "react-floating-label-input";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import keycloak from "Keycloak";
@@ -14,7 +17,7 @@ const redirectURL =
 
 const TelaLogin = ({ path, keycloakLogin }) => {
   const [user, setUser] = useState({
-    username: location.hostname === "localhost" ? "gabrielAB" : "",
+    username: location.hostname === "localhost" ? "adrianolourenco" : "",
     password: location.hostname === "localhost" ? "123456789" : "",
   });
 
@@ -39,16 +42,15 @@ const TelaLogin = ({ path, keycloakLogin }) => {
     (e) => {
       e.preventDefault();
 
-      keycloakAuth();
-
-      // if (keycloakLogin || location.hostname === "localhost") {
-      // } //
-      // else {
-      //   dispatch(logarUsuarioAction(user.username, user.password));
-      //   setUser({ ...user, password: "" });
-      // }
+      if (location.hostname === "localhost") {
+        dispatch(logarUsuarioAction(user.username, user.password));
+        setUser({ ...user, password: "" });
+      } //
+      else {
+        keycloakAuth();
+      }
     },
-    [keycloakAuth],
+    [dispatch, keycloakAuth, user],
   );
 
   const handleInputChange = useCallback((e) => {

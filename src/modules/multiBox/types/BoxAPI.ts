@@ -20,4 +20,5 @@ export interface AlertCreateRequestData {
     id: number;
   };
   expiration: string;
+  observation?: string;
 }
