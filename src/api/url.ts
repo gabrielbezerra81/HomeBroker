@@ -81,3 +81,6 @@ export const url_optionsTable_symbol_type = "structure/thl/matrix/";
 // Box
 export const url_box = "favorite";
 export const url_updateBoxConfig_id = "favorite/config/";
+export const url_listPositionBox = "position2";
+export const url_createPositionBox = "position2/list";
+export const url_createBoxAlert = "advice";

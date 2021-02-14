@@ -10,6 +10,7 @@ import produce from "immer";
 
 import {
   BoxOffer,
+  BoxPosition,
   BoxStockOption,
   MultiBoxData,
   TopSymbol,
@@ -25,6 +26,7 @@ import {
   updateManyMultiBoxAction,
 } from "./multiBoxActions";
 import { mountOrderForOperations } from "./util";
+import { getSymbolInfoAPI } from "api/symbolAPI";
 
 export const handleSearchBoxSymbolOptionsAction = (
   id: string,
@@ -304,7 +306,7 @@ export const getUpdatedOptionsWhenExpirationChanges = async ({
 };
 
 export const handleConcludeTab5Action = (boxId: string): MainThunkAction => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const {
       multiBoxReducer: { boxes },
     } = getState();
@@ -312,7 +314,10 @@ export const handleConcludeTab5Action = (boxId: string): MainThunkAction => {
     const multiBox = boxes.find((box) => box.id === boxId);
 
     if (multiBox) {
-      const topSymbols: TopSymbol[] = multiBox.boxOffers.map((offer) => {
+      const topSymbols: TopSymbol[] = [];
+      const boxPositions: BoxPosition[] = [];
+
+      for await (const offer of multiBox.boxOffers) {
         const [year, month, day] = offer.selectedExpiration
           .split("-")
           .map((value) => Number(value));
@@ -320,6 +325,8 @@ export const handleConcludeTab5Action = (boxId: string): MainThunkAction => {
         const expirationDate = new Date(year, month - 1, day);
 
         const dateDiff = moment(expirationDate).diff(new Date(), "days") + "d";
+
+        const symbolData = await getSymbolInfoAPI(offer.selectedCode);
 
         const topSymbol: TopSymbol = {
           qtty: offer.qtty,
@@ -331,10 +338,26 @@ export const handleConcludeTab5Action = (boxId: string): MainThunkAction => {
           expiration: offer.model ? dateDiff : "",
           type: offer.type,
         };
-        return topSymbol;
-      });
 
-      return dispatch(addNewMultiBoxStructureAction({ multiBox, topSymbols }));
+        topSymbols.push(topSymbol);
+
+        if (symbolData) {
+          boxPositions.push({
+            account: null as any,
+            groupPositions: null as any,
+            id: null as any,
+            structure: null as any,
+            stock: symbolData,
+            price: 0,
+            qtty: 0,
+            symbol: offer.selectedCode,
+          });
+        }
+      }
+
+      return dispatch(
+        addNewMultiBoxStructureAction({ multiBox, topSymbols, boxPositions }),
+      );
     }
   };
 };
@@ -342,11 +365,13 @@ export const handleConcludeTab5Action = (boxId: string): MainThunkAction => {
 interface addNewBoxStructureAction {
   multiBox: MultiBoxData;
   topSymbols: TopSymbol[];
+  boxPositions: BoxPosition[];
 }
 
 export const addNewMultiBoxStructureAction = ({
   multiBox,
   topSymbols,
+  boxPositions,
 }: addNewBoxStructureAction): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
@@ -364,10 +389,6 @@ export const addNewMultiBoxStructureAction = ({
       commentConfig: JSON.stringify(configData),
     });
 
-    setPointerWhileAwaiting({ lockMode: "travar", id: "boxId" });
-
-    let wasSuccessful = false;
-
     if (newBoxRequestData) {
       const responseData = await addBoxStructureAPI(boxId, newBoxRequestData);
 
@@ -379,15 +400,13 @@ export const addNewMultiBoxStructureAction = ({
             tab1Id: boxStructure.id,
             activeTab: "1",
             topSymbols,
+            boxPositions,
           }),
         );
 
         dispatch(updateStructuresAndLoadBoxesAction(responseData, false));
-        wasSuccessful = true;
       }
     } //
-
-    setPointerWhileAwaiting({ lockMode: "destravar", id: "boxId" });
   };
 };
 

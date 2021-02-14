@@ -21,6 +21,9 @@ import {
   url_addQuoteBox_groupName,
   url_listarAlertas,
   url_box,
+  url_createPositionBox,
+  url_createBoxAlert,
+  url_listPositionBox,
 } from "api/url";
 
 import {
@@ -551,6 +554,51 @@ export const getMultilegExecStrategiesAPI = async () => {
     .get("execucao")
     .then((response) => {
       if (response.data && response.data.length) {
+        return response.data;
+      }
+
+      return [];
+    })
+    .catch((error) => {
+      return [];
+    });
+};
+
+export const saveBoxPositionsAPI = async (payload) => {
+  return api
+    .put(url_createPositionBox, payload)
+    .then((response) => {
+      if (response.data && Array.isArray(response.data)) {
+        return response.data;
+      }
+
+      return [];
+    })
+    .catch((error) => {
+      return [];
+    });
+};
+
+export const createBoxAlertAPI = async (payload) => {
+  return api
+    .post(url_createBoxAlert, payload)
+    .then((response) => {
+      if (response.data && Array.isArray(response.data)) {
+        return response.data;
+      }
+
+      return [];
+    })
+    .catch((error) => {
+      return [];
+    });
+};
+
+export const listBoxPositionAPI = async () => {
+  return api
+    .get(url_listPositionBox)
+    .then((response) => {
+      if (response.data && Array.isArray(response.data)) {
         return response.data;
       }
 

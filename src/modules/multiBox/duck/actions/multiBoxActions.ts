@@ -10,6 +10,7 @@ import {
 import { UPDATE_MANY_MULTIBOX } from "constants/MenuActionTypes";
 import produce from "immer";
 import MultiBoxState, {
+  BoxPosition,
   MultiBoxData,
   StockSymbolData,
   Tab1Data,
@@ -19,17 +20,18 @@ import { MainThunkAction } from "types/ThunkActions";
 import { updateMultilegStateAction } from "modules/multileg/duck/actions/MultilegActions";
 
 import { v4 } from "uuid";
-import { deleteQuoteBoxAPI } from "api/API";
+import { deleteQuoteBoxAPI, listBoxPositionAPI } from "api/API";
 import { updateManySystemState } from "redux/actions/system/SystemActions";
 import { updateManyMultilegState } from "modules/multileg/duck/actions/utils";
 import { exportBoxToMultileg } from "./util";
+import getSymbolExpirationInDays from "shared/utils/getSymbolExpirationInDays";
 
 interface OpenedBoxes {
   menuKey: string;
   tabKey: string;
 }
 
-const initialTab = "5";
+const initialTab = "2";
 
 export const addMultiBoxAction = (): MainThunkAction => {
   return (dispatch, getState) => {
@@ -40,7 +42,7 @@ export const addMultiBoxAction = (): MainThunkAction => {
 
     const newMultiBox: MultiBoxData = {
       id: v4(),
-      activeTab: "5",
+      activeTab: initialTab,
       minimized: false,
       //tab5
       symbolInput: "",
@@ -62,6 +64,7 @@ export const addMultiBoxAction = (): MainThunkAction => {
       condition: "Less",
       observation: "",
       stockSymbolData: null,
+      boxPositions: [], // TODO: carregar posições?
     };
 
     const updatedOpenedMenus = produce(openedMenus, (draft) => {
@@ -208,23 +211,29 @@ export const addMultiBoxesFromStructureDataAction = (
       systemReducer: { openedMenus },
     } = getState();
 
+    // Posições de todos os boxes
+    const allPositions = (await listBoxPositionAPI()) as BoxPosition[];
+
+    // Monta a lista de boxes a partir das estruturas incluídas
     const promises = tab1Data.map(async (data) => {
       const topSymbols: TopSymbol[] = [];
 
+      let boxPositions = allPositions.filter(
+        (position) => position.groupPositions === data.id,
+      );
+
+      let hasPositionsAdded = true;
+
+      if (boxPositions.length === 0) {
+        hasPositionsAdded = false;
+      }
+
+      // Para montar os atributos "topSymbols" e as posições do box é necessário pesquisar as informações dos ativos
       for await (const code of data.codes) {
         const data = await getSymbolInfoAPI(code.symbol);
 
         if (data) {
-          const [date] = data.endBusiness.split(" ");
-
-          const [day, month, year] = date
-            .split("/")
-            .map((value) => Number(value));
-
-          const expirationDate = new Date(year, month - 1, day);
-
-          const dateDiff =
-            moment(expirationDate).diff(new Date(), "days") + "d";
+          const dateDiff = getSymbolExpirationInDays(data.endBusiness);
 
           const topSymbol: TopSymbol = {
             code: code.symbol,
@@ -238,6 +247,19 @@ export const addMultiBoxesFromStructureDataAction = (
           };
 
           topSymbols.push(topSymbol);
+
+          if (!hasPositionsAdded) {
+            boxPositions.push({
+              account: null as any,
+              groupPositions: null as any,
+              id: null as any,
+              structure: null as any,
+              stock: data,
+              price: 0,
+              qtty: 0,
+              symbol: data.symbol,
+            });
+          }
         }
       }
 
@@ -268,6 +290,7 @@ export const addMultiBoxesFromStructureDataAction = (
         condition: "Less",
         observation: "",
         stockSymbolData,
+        boxPositions,
       };
 
       return newMultiBox;

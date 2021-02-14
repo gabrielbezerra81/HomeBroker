@@ -1,6 +1,6 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 
-import { Form, InputGroup, Table } from "react-bootstrap";
+import { Form, InputGroup, Spinner, Table } from "react-bootstrap";
 
 import { MultiBoxData } from "modules/multiBox/types/MultiBoxState";
 
@@ -8,7 +8,6 @@ import cogIcon from "assets/multiBox/cogIcon.png";
 import openInNewIcon from "assets/multiBox/openInNewIcon.png";
 import zoomIcon from "assets/multiBox/zoomIcon.png";
 
-import CustomInput from "shared/componentes/CustomInput";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import {
   handleDeleteBoxAction,
@@ -18,27 +17,28 @@ import {
 
 import closeIcon from "assets/closeIcon.png";
 
-import SymbolCard from "../SymbolCard";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { IoMdRepeat } from "react-icons/io";
-import useStateStorePrincipal from "hooks/useStateStorePrincipal";
+import getSymbolExpirationInDays from "shared/utils/getSymbolExpirationInDays";
+import PositionTableItem from "./PositionTableItem";
+import { handleSaveBoxPositionsAction } from "modules/multiBox/duck/actions/tab2Actions";
 
 interface Props {
   multiBox: MultiBoxData;
 }
 
 const Tab2Position: React.FC<Props> = ({ multiBox }) => {
-  const {
-    multiBoxReducer: { boxesTab1Data },
-  } = useStateStorePrincipal();
-
   const dispatch = useDispatchStorePrincipal();
 
-  const { id, strikeViewMode, symbolInput, stockSymbolData } = multiBox;
+  const {
+    id,
+    strikeViewMode,
+    symbolInput,
+    stockSymbolData,
+    boxPositions,
+  } = multiBox;
 
-  const structureData = useMemo(() => {
-    return boxesTab1Data.find((data) => data.boxId === multiBox.id);
-  }, [multiBox.id, boxesTab1Data]);
+  const [savingPositions, setSavingPositions] = useState(false);
 
   const handleSymbolChange = useCallback(
     (e) => {
@@ -50,10 +50,6 @@ const Tab2Position: React.FC<Props> = ({ multiBox }) => {
     },
     [dispatch, id],
   );
-
-  const handleSearchStock = useCallback(() => {
-    dispatch(updateBoxAttrAction(id, { activeTab: "5" }));
-  }, [dispatch, id]);
 
   const handleOpenInMultileg = useCallback(() => {
     dispatch(
@@ -79,18 +75,21 @@ const Tab2Position: React.FC<Props> = ({ multiBox }) => {
     );
   }, [dispatch, multiBox.id, strikeViewMode]);
 
-  const handlePriceChange = useCallback(
-    (value) => {
-      let price = value;
+  const handleSearchStock = useCallback(() => {
+    dispatch(
+      updateBoxAttrAction(multiBox.id, {
+        activeTab: "5",
+      }),
+    );
+  }, [dispatch, multiBox.id]);
 
-      if (Number(value) - 0.01 === 0 && structureData?.min) {
-        price = structureData?.min || 0;
-      }
+  const handleSavePositions = useCallback(async () => {
+    setSavingPositions(true);
 
-      dispatch(updateBoxAttrAction(id, {}));
-    },
-    [dispatch, id, structureData],
-  );
+    await dispatch(handleSaveBoxPositionsAction(id));
+
+    setSavingPositions(false);
+  }, [dispatch, id]);
 
   const formattedRefStockData = useMemo(() => {
     if (!stockSymbolData) {
@@ -122,6 +121,16 @@ const Tab2Position: React.FC<Props> = ({ multiBox }) => {
     };
   }, [stockSymbolData]);
 
+  const formattedBoxPositions = useMemo(() => {
+    return boxPositions.map((position) => ({
+      ...position,
+      formattedExpiration: getSymbolExpirationInDays(
+        position.stock.endBusiness,
+      ),
+      formattedSymbol: position.symbol.substr(4),
+    }));
+  }, [boxPositions]);
+
   // const handleQttyChange = useCallback(
   //   (value) => {
   //     dispatch(
@@ -142,7 +151,6 @@ const Tab2Position: React.FC<Props> = ({ multiBox }) => {
               className="inputWithSearchIcon"
               name="symbolInput"
               value={symbolInput}
-              // autoComplete="off"
               onKeyPress={(e: any) => {
                 if (e.key === "Enter") {
                   handleSearchStock();
@@ -199,232 +207,27 @@ const Tab2Position: React.FC<Props> = ({ multiBox }) => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              <SymbolCard
-                data={{
-                  code: "L260",
-                  strike: 26,
-                  expiration: "25d",
-                  model: "EUROPEAN",
-                  offerType: "C",
-                  qtty: 1,
-                  type: "PUT",
-                  viewMode: strikeViewMode,
-                }}
-              />
-            </td>
-            <td className="qttyColumn">
-              <CustomInput
-                type={"quantidade"}
-                step={1}
-                autoSelect
-                value={""}
-                onChange={() => {}}
-              />
-            </td>
-            <td className="avgPriceColumn">
-              <div>
-                <CustomInput
-                  name="price"
-                  step={0.01}
-                  type="preco"
-                  value={""}
-                  onChange={() => {}}
-                />
-              </div>
-            </td>
-            <td>C 1.8K/25</td>
-          </tr>
-          <tr>
-            <td>
-              <SymbolCard
-                data={{
-                  code: "L260",
-                  strike: 26,
-                  expiration: "25d",
-                  model: "AMERICAN",
-                  offerType: "C",
-                  qtty: 1,
-                  type: "CALL",
-                  viewMode: strikeViewMode,
-                }}
-              />
-            </td>
-            <td className="qttyColumn">
-              <CustomInput
-                type={"quantidade"}
-                step={1}
-                autoSelect
-                value={""}
-                onChange={() => {}}
-              />
-            </td>
-            <td className="avgPriceColumn">
-              <div>
-                <CustomInput
-                  name="price"
-                  step={0.01}
-                  type="preco"
-                  value={""}
-                  onChange={() => {}}
-                />
-              </div>
-            </td>
-            <td>C 1.8K/25</td>
-          </tr>
-          <tr>
-            <td>
-              <SymbolCard
-                data={{
-                  code: "L260",
-                  strike: 26,
-                  expiration: "25d",
-                  model: "AMERICAN",
-                  offerType: "C",
-                  qtty: 1,
-                  type: "CALL",
-                  viewMode: strikeViewMode,
-                }}
-              />
-            </td>
-            <td className="qttyColumn">
-              <CustomInput
-                type={"quantidade"}
-                step={1}
-                autoSelect
-                value={""}
-                onChange={() => {}}
-              />
-            </td>
-            <td className="avgPriceColumn">
-              <div>
-                <CustomInput
-                  name="price"
-                  step={0.01}
-                  type="preco"
-                  value={""}
-                  onChange={() => {}}
-                />
-              </div>
-            </td>
-            <td>C 1.8K/25</td>
-          </tr>
-          <tr>
-            <td>
-              <SymbolCard
-                data={{
-                  code: "L260",
-                  strike: 26,
-                  expiration: "25d",
-                  model: "AMERICAN",
-                  offerType: "C",
-                  qtty: 1,
-                  type: "CALL",
-                  viewMode: strikeViewMode,
-                }}
-              />
-            </td>
-            <td className="qttyColumn">
-              <CustomInput
-                type={"quantidade"}
-                step={1}
-                autoSelect
-                value={""}
-                onChange={() => {}}
-              />
-            </td>
-            <td className="avgPriceColumn">
-              <div>
-                <CustomInput
-                  name="price"
-                  step={0.01}
-                  type="preco"
-                  value={""}
-                  onChange={() => {}}
-                />
-              </div>
-            </td>
-            <td>C 1.8K/25</td>
-          </tr>
-          <tr>
-            <td>
-              <SymbolCard
-                data={{
-                  code: "L260",
-                  strike: 26,
-                  expiration: "25d",
-                  model: "AMERICAN",
-                  offerType: "C",
-                  qtty: 1,
-                  type: "CALL",
-                  viewMode: strikeViewMode,
-                }}
-              />
-            </td>
-            <td className="qttyColumn">
-              <CustomInput
-                type={"quantidade"}
-                step={1}
-                autoSelect
-                value={""}
-                onChange={() => {}}
-              />
-            </td>
-            <td className="avgPriceColumn">
-              <div>
-                <CustomInput
-                  name="price"
-                  step={0.01}
-                  type="preco"
-                  value={""}
-                  onChange={() => {}}
-                />
-              </div>
-            </td>
-            <td>C 1.8K/25</td>
-          </tr>
-          <tr>
-            <td>
-              <SymbolCard
-                data={{
-                  code: "L260",
-                  strike: 26,
-                  expiration: "25d",
-                  model: "AMERICAN",
-                  offerType: "C",
-                  qtty: 1,
-                  type: "CALL",
-                  viewMode: strikeViewMode,
-                }}
-              />
-            </td>
-            <td className="qttyColumn">
-              <CustomInput
-                type={"quantidade"}
-                step={1}
-                autoSelect
-                value={""}
-                onChange={() => {}}
-              />
-            </td>
-            <td className="avgPriceColumn">
-              <div>
-                <CustomInput
-                  name="price"
-                  step={0.01}
-                  type="preco"
-                  value={""}
-                  onChange={() => {}}
-                />
-              </div>
-            </td>
-            <td>C 1.8K/25</td>
-          </tr>
+          {formattedBoxPositions.map((position, index) => (
+            <PositionTableItem
+              key={index}
+              multiBox={multiBox}
+              position={position}
+              positionIndex={index}
+            />
+          ))}
         </tbody>
       </Table>
 
-      <button className="brokerCustomButton saveButton">Salvar</button>
+      <button
+        className="brokerCustomButton saveButton"
+        onClick={handleSavePositions}
+      >
+        {savingPositions ? (
+          <Spinner animation="border" variant="light" size="sm" />
+        ) : (
+          "Salvar"
+        )}
+      </button>
     </div>
   );
 };

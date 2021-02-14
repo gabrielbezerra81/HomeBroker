@@ -6,6 +6,7 @@ interface SymbolInfo extends SymbolToolTipInfo {
   referenceStock?: number;
   isOption: boolean;
   symbol: string;
+  id: number;
 }
 
 export const getSymbolInfoAPI = async (

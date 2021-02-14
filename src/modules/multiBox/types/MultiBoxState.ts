@@ -81,6 +81,21 @@ export interface StockSymbolData {
   oscilation: number;
 }
 
+type BoxPositionStock = SymbolToolTipInfo & {
+  id: number;
+};
+
+export interface BoxPosition {
+  id: number;
+  account: number;
+  groupPositions: number;
+  structure: number;
+  symbol: string;
+  qtty: number;
+  price: number;
+  stock: BoxPositionStock;
+}
+
 export interface MultiBoxData {
   id: string;
   activeTab: "1" | "2" | "3" | "4" | "5";
@@ -103,6 +118,7 @@ export interface MultiBoxData {
   consideredPrice: "Bid" | "Ask" | "Last";
   alertPrice: number;
   stockSymbolData: StockSymbolData | null;
+  boxPositions: Array<BoxPosition>;
 }
 
 type Tab1Keys = keyof Omit<Tab1Data, "codes" | "book">;

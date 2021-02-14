@@ -9,13 +9,23 @@ import {
 } from "modules/multiBox/types/MultiBoxState";
 
 interface Props {
-  data: TopSymbol;
+  data: TopSymbol & { formattedCode?: string };
   showQtty?: boolean;
   showQttyPlus?: boolean;
 }
 
 const SymbolCard: React.FC<Props> = ({
-  data: { offerType, strike, expiration, viewMode, code, model, qtty, type },
+  data: {
+    offerType,
+    strike,
+    expiration,
+    viewMode,
+    code,
+    model,
+    qtty,
+    type,
+    formattedCode,
+  },
   showQtty = false,
   showQttyPlus = false,
 }) => {
@@ -169,6 +179,18 @@ const SymbolCard: React.FC<Props> = ({
     getTooltipPlacement();
   }, [tooltipId]);
 
+  const viwedInfo = useMemo(() => {
+    if (viewMode === "strike" && strike !== 0) {
+      return formattedStrike;
+    }
+
+    if (formattedCode) {
+      return formattedCode;
+    }
+
+    return code;
+  }, [code, formattedCode, formattedStrike, strike, viewMode]);
+
   return (
     <CustomTooltip
       id={tooltipId}
@@ -192,9 +214,7 @@ const SymbolCard: React.FC<Props> = ({
         )}
 
         <div className="symbolContainer">
-          <h6 className={textColorClass}>
-            {viewMode === "strike" && strike !== 0 ? formattedStrike : code}
-          </h6>
+          <h6 className={textColorClass}>{viwedInfo}</h6>
 
           {!!expiration && <h6 className={textColorClass}>{expiration}</h6>}
         </div>

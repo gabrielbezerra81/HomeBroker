@@ -134,7 +134,7 @@
     border-radius: 6px;
     height: 20px;
     margin-left: auto;
-    margin-right: 4px;
+
     width: 70px;
     line-height: 14px;
     font-size: 13px;
@@ -142,5 +142,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    position: absolute;
+    bottom: 16px;
+    right: 8px;
+
+    .spinner-border {
+      width: 14px;
+      height: 14px;
+    }
   }
 }
