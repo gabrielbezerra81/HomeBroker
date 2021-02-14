@@ -380,7 +380,23 @@ export const addNewMultiBoxStructureAction = ({
 
     const boxId = multiBox.id;
 
-    const configData = { tabKey: selectedTab, boxId };
+    const configData = {
+      tabKey: selectedTab,
+      boxId,
+      position: {
+        x: 0,
+        y: 0,
+      },
+    };
+
+    const element = document.getElementById(multiBox.id);
+
+    if (element) {
+      const { x, y } = element.getBoundingClientRect();
+
+      configData.position.x = x - 116;
+      configData.position.y = y - 85;
+    }
 
     const newBoxRequestData = await mountOrderForOperations({
       multiBox,
