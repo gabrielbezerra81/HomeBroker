@@ -13,7 +13,7 @@ import "./tela_principal/MainScreenTabs.scss";
 
 import "./tela_principal/TelaLogin.css";
 import "./tela_principal/TelaCadastro.css";
-import "./tela_principal/BoxMenu.scss";
+import "./tela_principal/tabBarHoverMenu.scss";
 import "./tela_principal/RightSideMenu/RightSideMenu.scss";
 import "./tela_principal/RightSideMenu/ResumedPosition.scss";
 import "./tela_principal/RightSideMenu/ResumedOrder.scss";

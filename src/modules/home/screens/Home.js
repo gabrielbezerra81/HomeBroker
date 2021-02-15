@@ -13,7 +13,7 @@ import MenuOrdens from "./boletasHoverMenu/MenuOrdens";
 import MainScreenTabs from "./mainScreenTabs/MainScreenTabs";
 import PopupContainer from "./PopupContainer";
 import { compose } from "redux";
-import AddBoxMenu from "./tabBarHoverMenu/AddBoxMenu";
+import TabBarHoverMenu from "./tabBarHoverMenu/TabBarHoverMenu";
 import RightSideMenu from "./rightSideMenu/RightSideMenu";
 import CategoryList from "modules/categoryList/screens/CategoryList";
 import InitialPlanner from "modules/financialPlanner/screens/initialPlanner/InitialPlanner";
@@ -171,7 +171,7 @@ class Home extends React.Component {
 
             <RightSideMenu />
 
-            <AddBoxMenu />
+            <TabBarHoverMenu />
 
             {AppBoletas}
 

@@ -382,7 +382,6 @@ const OptionsTable: React.FC = () => {
                 type="text"
                 name="symbol"
                 value={symbol}
-                autoComplete="off"
                 onKeyPress={(e: any) => {
                   if (e.key === "Enter") {
                     handleSearchOptions();

@@ -8,8 +8,9 @@ import boxMenuArrow from "assets/boxMenuArrow.png";
 import { IoMdAddCircle } from "react-icons/io";
 import { addMultiBoxAction } from "modules/multiBox/duck/actions/multiBoxActions";
 import { usePermissions } from "context/PermissionContext";
+import { updateManySystemState } from "redux/actions/system/SystemActions";
 
-const AddBoxMenu: React.FC = () => {
+const TabBarHoverMenu: React.FC = () => {
   const dispatch = useDispatchStorePrincipal();
 
   const { permissions } = usePermissions();
@@ -31,6 +32,14 @@ const AddBoxMenu: React.FC = () => {
     // );
   }, [dispatch]);
 
+  const handleOpenCategoryList = useCallback(() => {
+    dispatch(updateManySystemState({ isOpenCategoryList: true }));
+  }, [dispatch]);
+
+  const handleOpenOptionsTable = useCallback(() => {
+    dispatch(updateManySystemState({ isOpenOptionsTable: true }));
+  }, [dispatch]);
+
   // useEffect(() => {
   //   if (!multilegButtonsVisibility) {
   //     dispatchGlobal(atualizarDivKeyAction("multileg"));
@@ -46,15 +55,15 @@ const AddBoxMenu: React.FC = () => {
   const handleHideOnLeave = useCallback(() => setMenuVisibility(false), []);
 
   const visibilityClass = useMemo(() => {
-    return menuVisibility ? "showBoxMenu" : "";
+    return menuVisibility ? "showTabBarHoverMenu" : "";
   }, [menuVisibility]);
 
   if (!permissions.box) {
-    return <div className="hiddenAddBoxMenu"></div>;
+    return <div className="hiddenTabBarHoverMenu"></div>;
   }
 
   return (
-    <div className="BoxMenuMainScreen">
+    <div className="tabBarHoverMenu">
       <div onMouseOver={handleShowOnHover} onMouseLeave={handleHideOnLeave}>
         <img src={boxMenuArrow} alt="" />
         <span>MENU</span>
@@ -69,8 +78,28 @@ const AddBoxMenu: React.FC = () => {
         <span>Box de Cotação</span>
         <IoMdAddCircle size={16} />
       </div>
+
+      <div
+        className={visibilityClass}
+        onMouseOver={handleShowOnHover}
+        onMouseLeave={handleHideOnLeave}
+        onClick={handleOpenCategoryList}
+      >
+        <span>Mapa de Ativos</span>
+        <IoMdAddCircle size={16} />
+      </div>
+
+      <div
+        className={visibilityClass}
+        onMouseOver={handleShowOnHover}
+        onMouseLeave={handleHideOnLeave}
+        onClick={handleOpenOptionsTable}
+      >
+        <span>Matriz de Opções</span>
+        <IoMdAddCircle size={16} />
+      </div>
     </div>
   );
 };
 
-export default AddBoxMenu;
+export default TabBarHoverMenu;
