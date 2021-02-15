@@ -65,7 +65,9 @@ const AuthManager = () => {
         },
       );
       updateAuthData(response.data);
+      console.log("refreshed");
     } catch (error) {
+      console.log(error.response);
       if (authData) {
         const { token_date, expires_in } = authData;
 
@@ -93,11 +95,20 @@ const AuthManager = () => {
         clearInterval(timerId);
       }
 
+      const isExpired = isTokenExpired(token_date, expires_in, 50);
+
+      console.log("isExpired", isExpired);
+
+      if (isExpired) {
+        handleTokenRefresh();
+      }
+
       const timer = setInterval(() => {
-        const isExpired = isTokenExpired(token_date, expires_in, 40);
+        const isExpired = isTokenExpired(token_date, expires_in, 50);
+
+        console.log("isExpired", isExpired);
 
         if (isExpired) {
-          console.log("isExpired", isExpired);
           // eslint-disable-next-line no-restricted-globals
           if (location.hostname === "localhost") {
             alert("isExpired === " + isExpired);

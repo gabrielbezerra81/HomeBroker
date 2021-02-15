@@ -42,15 +42,17 @@ const TelaLogin = ({ path, keycloakLogin }) => {
     (e) => {
       e.preventDefault();
 
-      if (location.hostname === "localhost") {
-        dispatch(logarUsuarioAction(user.username, user.password));
-        setUser({ ...user, password: "" });
-      } //
-      else {
-        keycloakAuth();
-      }
+      // if (location.hostname === "localhost") {
+      // dispatch(logarUsuarioAction(user.username, user.password));
+      // setUser({ ...user, password: "" });
+      // } //
+      // else {
+      // keycloakAuth();
+      // }
+
+      keycloakAuth();
     },
-    [dispatch, keycloakAuth, user],
+    [keycloakAuth],
   );
 
   const handleInputChange = useCallback((e) => {
