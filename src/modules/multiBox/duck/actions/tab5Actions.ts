@@ -303,6 +303,8 @@ export const getUpdatedOptionsWhenExpirationChanges = async ({
       symbolQuote: selectedStrike,
     });
   }
+
+  return payload;
 };
 
 export const handleConcludeTab5Action = (boxId: string): MainThunkAction => {

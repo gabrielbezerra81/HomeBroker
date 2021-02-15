@@ -106,13 +106,15 @@ const PositionTableItem: React.FC<Props> = ({
         <SymbolCard data={symbolCardData} />
       </td>
       <td className="qttyColumn">
-        <CustomInput
-          type={"quantidade"}
-          step={1}
-          autoSelect
-          value={position.qtty}
-          onChange={handleQttyChange}
-        />
+        <div>
+          <CustomInput
+            type={"quantidade"}
+            step={100}
+            autoSelect
+            value={position.qtty}
+            onChange={handleQttyChange}
+          />
+        </div>
       </td>
       <td className="avgPriceColumn">
         <div>

@@ -83,21 +83,13 @@
 
     td {
       &.strikeColumn {
-        min-width: 119px;
-        max-width: 119px;
         padding: 0 !important;
 
         .symbolCardContainer {
-          padding-right: 4px;
-          margin-right: 0;
-          max-width: 119px;
+          min-width: 80px;
 
           div {
             font-size: 13px;
-          }
-
-          &:not(.american):not(.european) {
-            padding-right: 0px;
           }
 
           h6 {

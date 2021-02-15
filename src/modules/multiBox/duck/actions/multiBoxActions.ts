@@ -1,5 +1,3 @@
-import moment from "moment";
-
 import { getProactiveBoxAPI } from "api/proactive/ProativosAPI";
 import { updateBoxStructuresAPI } from "api/reactive/ReativosAPI";
 import {
@@ -31,7 +29,8 @@ interface OpenedBoxes {
   tabKey: string;
 }
 
-const initialTab = "1";
+const initialOnLoad = "1";
+const initialEmpty = "5";
 
 export const addMultiBoxAction = (): MainThunkAction => {
   return (dispatch, getState) => {
@@ -42,7 +41,7 @@ export const addMultiBoxAction = (): MainThunkAction => {
 
     const newMultiBox: MultiBoxData = {
       id: v4(),
-      activeTab: initialTab,
+      activeTab: initialEmpty,
       minimized: false,
       //tab5
       symbolInput: "",
@@ -267,7 +266,7 @@ export const addMultiBoxesFromStructureDataAction = (
 
       const newMultiBox: MultiBoxData = {
         id: data.boxId,
-        activeTab: initialTab,
+        activeTab: initialOnLoad,
         minimized: false,
         //tab5
         symbolInput: "",

@@ -256,6 +256,7 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
               )}`}
               name="tab1"
               onClick={handleBoxTabChange}
+              disabled={!structureData}
             >
               <div className="selectedCircle" />
             </button>
@@ -266,6 +267,7 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
               )}`}
               name="tab2"
               onClick={handleBoxTabChange}
+              disabled={!structureData}
             >
               <div className="selectedCircle" />
             </button>
@@ -276,6 +278,7 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
               )}`}
               name="tab3"
               onClick={handleBoxTabChange}
+              disabled={!structureData}
             >
               <div className="selectedCircle" />
             </button>
@@ -286,6 +289,7 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
               )}`}
               name="tab4"
               onClick={handleBoxTabChange}
+              disabled={!structureData}
             >
               <div className="selectedCircle" />
             </button>

@@ -171,6 +171,7 @@ const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
         formattedLast,
         formattedBook,
         viewMode: strikeViewMode,
+        formattedCode: item.model ? item.code.substr(4) : "",
       };
     }, []);
   }, [strikeViewMode, tab4Data]);
