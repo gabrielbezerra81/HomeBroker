@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 
+// import _ from "lodash";
+
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { MultiBoxData } from "modules/multiBox/types/MultiBoxState";
@@ -66,6 +68,30 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
 
   const onStartDragging = useCallback(
     (e, data: DraggableData) => {
+      const excludedClasses = [
+        "react-datepicker__week",
+        "ant-select-selection__rendered",
+        "symbolContainer",
+        "react-datepicker__tab-loop",
+        "react-datepicker-wrapper",
+      ];
+
+      if (e.target) {
+        for (const element of e.nativeEvent.path) {
+          if (excludedClasses.includes(element.className)) {
+            return false;
+          }
+        }
+
+        if (
+          ["BUTTON", "INPUT", "SELECT", "IMG", "I", "svg", "path"].includes(
+            (e.target as any).nodeName,
+          )
+        ) {
+          return false;
+        }
+      }
+
       setIsDragging(true);
 
       if (!bounds) {
@@ -99,30 +125,6 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
     (e: DraggableEvent, data: DraggableData) => {
       if (!bounds) {
         return;
-      }
-
-      const excludedClasses = [
-        "react-datepicker__week",
-        "ant-select-selection__rendered",
-        "symbolContainer",
-        "react-datepicker__tab-loop",
-        "react-datepicker-wrapper",
-      ];
-
-      if (e.target) {
-        for (const element of (e as any).path) {
-          if (excludedClasses.includes(element.className)) {
-            return false;
-          }
-        }
-
-        if (
-          ["BUTTON", "INPUT", "SELECT", "IMG", "I", "svg", "path"].includes(
-            (e.target as any).nodeName,
-          )
-        ) {
-          return false;
-        }
       }
 
       setPosition({ x: data.x, y: data.y });
@@ -159,16 +161,20 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
   //   if (box) {
   //     const { x, y } = box.getBoundingClientRect();
   //     setPosition({ x: x - 116, y: y - 85 });
-  //     // box.style.position = "absolute";
+  //     box.style.position = "absolute";
   //   }
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
 
   const formattedTopSymbols = useMemo(() => {
-    return topSymbols.map((topSymbol) => ({
+    let formatted = topSymbols.map((topSymbol) => ({
       ...topSymbol,
       viewMode: strikeViewMode,
     }));
+
+    // formatted = _.orderBy(formatted, ["type"]);
+
+    return formatted;
   }, [strikeViewMode, topSymbols]);
 
   const americanTopSymbols = useMemo(() => {

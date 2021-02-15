@@ -41,13 +41,13 @@
   .changeStrikeViewButton {
     position: absolute;
     top: -40px;
-    right: 6px;
+    right: 2px;
   }
 
   .topSymbolsContainer {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    padding: 0 26px 6px;
+    padding: 0 36px 6px 22px;
     align-items: flex-end;
     pointer-events: none;
 
@@ -55,7 +55,7 @@
       pointer-events: all;
 
       &:last-child {
-        padding-left: 3px;
+        padding-left: 14px;
       }
 
       .symbolCardContainer {
