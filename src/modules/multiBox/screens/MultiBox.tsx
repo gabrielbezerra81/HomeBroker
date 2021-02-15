@@ -26,11 +26,11 @@ interface Props {
   multiBox: MultiBoxData;
 }
 
-const limitY = 80;
+const bounds = { left: 0, top: 0 };
 
 const MultiBox: React.FC<Props> = ({ multiBox }) => {
   const {
-    systemReducer: { isOpenLeftUserMenu, openedMenus, selectedTab },
+    systemReducer: { openedMenus, selectedTab },
     multiBoxReducer: { boxesTab1Data },
   } = useStateStorePrincipal();
 
@@ -54,54 +54,34 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
     return defaultPosition;
   });
   const [isDragging, setIsDragging] = useState(false);
-  const [bounds, setBounds] = useState<
-    | {
-        left: number;
-        top: number;
-      }
-    | undefined
-  >(undefined);
 
-  const limitX = useMemo(() => {
-    return isOpenLeftUserMenu ? 220 : 88;
-  }, [isOpenLeftUserMenu]);
+  const onStartDragging = useCallback((e, data: DraggableData) => {
+    const excludedClasses = [
+      "react-datepicker__week",
+      "ant-select-selection__rendered",
+      "symbolContainer",
+      "react-datepicker__tab-loop",
+      "react-datepicker-wrapper",
+    ];
 
-  const onStartDragging = useCallback(
-    (e, data: DraggableData) => {
-      const excludedClasses = [
-        "react-datepicker__week",
-        "ant-select-selection__rendered",
-        "symbolContainer",
-        "react-datepicker__tab-loop",
-        "react-datepicker-wrapper",
-      ];
-
-      if (e.target) {
-        for (const element of e.nativeEvent.path) {
-          if (excludedClasses.includes(element.className)) {
-            return false;
-          }
-        }
-
-        if (
-          ["BUTTON", "INPUT", "SELECT", "IMG", "I", "svg", "path"].includes(
-            (e.target as any).nodeName,
-          )
-        ) {
+    if (e.target) {
+      for (const element of e.nativeEvent.path) {
+        if (excludedClasses.includes(element.className)) {
           return false;
         }
       }
 
-      setIsDragging(true);
-
-      if (!bounds) {
-        const bound = data.node.getBoundingClientRect();
-
-        setBounds({ left: -1 * bound.x + limitX, top: -1 * bound.y + limitY });
+      if (
+        ["BUTTON", "INPUT", "SELECT", "IMG", "I", "svg", "path"].includes(
+          (e.target as any).nodeName,
+        )
+      ) {
+        return false;
       }
-    },
-    [bounds, limitX],
-  );
+    }
+
+    setIsDragging(true);
+  }, []);
 
   const onStopDragging = useCallback(() => {
     setIsDragging(false);
@@ -121,16 +101,9 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
     }
   }, [position, structureData]);
 
-  const onDrag = useCallback(
-    (e: DraggableEvent, data: DraggableData) => {
-      if (!bounds) {
-        return;
-      }
-
-      setPosition({ x: data.x, y: data.y });
-    },
-    [bounds],
-  );
+  const onDrag = useCallback((e: DraggableEvent, data: DraggableData) => {
+    setPosition({ x: data.x, y: data.y });
+  }, []);
 
   const handleBoxTabChange = useCallback(
     (e) => {
@@ -154,17 +127,6 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
       }),
     );
   }, [dispatch, multiBox.id, strikeViewMode]);
-
-  // useEffect(() => {
-  //   const box = document.getElementById(`${multiBox.id}`);
-
-  //   if (box) {
-  //     const { x, y } = box.getBoundingClientRect();
-  //     setPosition({ x: x - 116, y: y - 85 });
-  //     box.style.position = "absolute";
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
 
   const formattedTopSymbols = useMemo(() => {
     let formatted = topSymbols.map((topSymbol) => ({
@@ -341,3 +303,15 @@ function isSelected(tabKey: string, activeTab: string) {
 //     updateOneSystemStateAction("boxesVisibility", updatedBoxesVisibility),
 //   );
 // }, [boxesVisibility, dispatch, boxIndex]);
+
+// useEffect(() => {
+//   const box = document.getElementById(`${multiBox.id}`);
+
+//   if (box) {
+//     console.log(box);
+//     const { x, y } = box.getBoundingClientRect();
+//     // setBounds({ left: -1 * bound.x + limitX, top: -1 * bound.y + limitY });
+//     // box.style.position = "absolute";
+//   }
+//   // eslint-disable-next-line react-hooks/exhaustive-deps
+// }, []);
