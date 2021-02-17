@@ -126,33 +126,20 @@ type Tab1Keys = keyof Omit<Tab1Data, "codes" | "book">;
 export type FormattedTab1Data = Record<Tab1Keys, string> &
   Pick<Tab1Data, "codes" | "book">;
 
-export type SingleBook = {
-  buy: {
-    qtty: number;
-    price: number;
-    [key: string]: any;
-  };
-  sell: {
-    qtty: number;
-    price: number;
-    [key: string]: any;
-  };
-};
+export interface BoxSymbolData {
+  symbol: string;
+  last: number;
+  buy: number;
+  buyQtty: number;
+  sell: number;
+  sellQtty: number;
 
-export type FormattedSingleBook = {
-  buy: {
-    qtty: number;
-    price: number;
-    formattedQtty: string;
-    formattedPrice: string;
-  };
-  sell: {
-    qtty: number;
-    price: number;
-    formattedQtty: string;
-    formattedPrice: string;
-  };
-} | null;
+  formattedLast: string;
+  formattedBuy: string;
+  formattedBuyQtty: string;
+  formattedSell: string;
+  formattedSellQtty: string;
+}
 
 export default interface MultiBoxState {
   boxes: Array<MultiBoxData>;
@@ -161,4 +148,5 @@ export default interface MultiBoxState {
   interval_multiBox: NodeJS.Timeout | null;
   esource_tab4Box: EventSource | null;
   interval_tab4Box: NodeJS.Timeout | null;
+  symbolsData: Array<BoxSymbolData>;
 }

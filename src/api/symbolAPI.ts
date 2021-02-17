@@ -88,3 +88,16 @@ export const getOneSymbolDataAPI = async (symbol: string) => {
       return null;
     });
 };
+
+interface Structure {
+  id: number;
+}
+
+export const getStructureBySymbolAPI = async (symbol: string) => {
+  return api
+    .post<Structure>(`structure/${symbol}`)
+    .then((response) => response.data)
+    .catch((error) => {
+      return null;
+    });
+};

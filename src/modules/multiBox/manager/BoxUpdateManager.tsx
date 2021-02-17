@@ -1,18 +1,22 @@
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import usePrevious from "hooks/usePrevious";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
+
+import _ from "lodash";
+
 import {
   startProactiveMultiBoxUpdateAction,
   startReactiveMultiBoxUpdateAction,
 } from "modules/multiBox/duck/actions/multiBoxActions";
 
 import checkIfUpdateConfigChanged from "../../../managers/updateManager/utils";
+import { startProactiveBoxSymbolsUpdateAction } from "../duck/actions/tab4Actions";
 
 const BoxUpdateManager: React.FC = () => {
   const {
     systemReducer: { updateMode, updateInterval },
-    multiBoxReducer: { boxesTab1Data },
+    multiBoxReducer: { boxesTab1Data, boxes },
   } = useStateStorePrincipal();
 
   const dispatch = useDispatchStorePrincipal();
@@ -21,6 +25,23 @@ const BoxUpdateManager: React.FC = () => {
   const previousUpdateInterval = usePrevious(updateInterval);
   const previousBoxesStructureData = usePrevious(boxesTab1Data);
 
+  const symbols = useMemo(() => {
+    const symbols: string[] = [];
+
+    boxes.forEach((multiBox) => {
+      multiBox.topSymbols.forEach((topSymbol) => {
+        if (!symbols.includes(topSymbol.code)) {
+          symbols.push(topSymbol.code);
+        }
+      });
+    });
+
+    return symbols;
+  }, [boxes]);
+
+  const previousSymbols = usePrevious(symbols);
+
+  // Atualização da estrutura
   useEffect(() => {
     function checkIfBoxChanged() {
       if (
@@ -61,6 +82,42 @@ const BoxUpdateManager: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateInterval, updateMode, dispatch, boxesTab1Data.length]);
+
+  // Atualizar books e cotações da 4ª aba
+  useEffect(() => {
+    function checkIfSymbolsChanged() {
+      if (!_.isEqual(previousSymbols, symbols)) {
+        return true;
+      }
+
+      if (previousSymbols === undefined) {
+        return true;
+      }
+
+      return false;
+    }
+
+    function startUpdate() {
+      if (updateMode === "reactive") {
+      } //
+      else if (updateMode === "proactive") {
+        dispatch(startProactiveBoxSymbolsUpdateAction(symbols));
+      }
+    }
+
+    const hasSymbolsChanged = checkIfSymbolsChanged();
+    const hasUpdateConfigChanged = checkIfUpdateConfigChanged({
+      previousUpdateMode,
+      updateMode,
+      previousUpdateInterval,
+      updateInterval,
+    });
+
+    if (hasUpdateConfigChanged || hasSymbolsChanged) {
+      startUpdate();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [symbols, updateInterval, updateMode]);
 
   return null;
 };

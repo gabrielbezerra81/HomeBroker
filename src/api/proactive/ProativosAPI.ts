@@ -1,9 +1,9 @@
-import api from "api/apiConfig";
 import {
   url_singleQuote_quote,
   url_multiQuote_quotes,
   url_multiStructure_ids,
   url_ordersExec_ids,
+  url_multiBookOneLine_symbols,
 } from "api/url";
 import { MultilegQuote } from "modules/multileg/types/multileg";
 import { THLQuote } from "modules/thl/types/thl";
@@ -180,6 +180,32 @@ interface PositionQuoteResponse {
   ultimo: number;
 }
 
+interface BoxSymbolsBookResponse {
+  symbol: string;
+  ultimo: number;
+  compra: number;
+  compraQtde: number;
+  venda: number;
+  vendaQtde: number;
+}
+
+export const getProactiveBoxSymbolsBookAPI = async (
+  symbols: string,
+): Promise<BoxSymbolsBookResponse[]> => {
+  return proactiveAPI
+    .get<BoxSymbolsBookResponse[]>(`${url_multiBookOneLine_symbols}${symbols}`)
+    .then((response) => {
+      if (response.data && Array.isArray(response.data)) {
+        return response.data;
+      }
+
+      return [];
+    })
+    .catch((error) => {
+      return [];
+    });
+};
+
 export const getProactivePositionQuotesAPI = async (symbols: string) => {
   return proactiveAPI
     .get<PositionQuoteResponse[]>(`${url_multiQuote_quotes}${symbols}`)
@@ -232,8 +258,29 @@ export const getProactivePositionEmblemsAPI = async (structureIds: string) => {
 };
 
 export const getProactiveOrdersExecAPI = async (ids: string) => {
-  return api
+  return proactiveAPI
     .get(`${url_ordersExec_ids}${ids}`)
+    .then((response) => {
+      if (response.data && response.data.length) {
+        return response.data;
+      }
+
+      return [];
+    })
+    .catch(() => {
+      return [];
+    });
+};
+
+interface CategorySymbolData {
+  symbol: string;
+  ultimo: number;
+  oscilacao?: number;
+}
+
+export const getProactiveCategoriesSymbolDataAPI = async (symbols: string) => {
+  return proactiveAPI
+    .get<CategorySymbolData[]>(`${url_multiQuote_quotes}${symbols}`)
     .then((response) => {
       if (response.data && response.data.length) {
         return response.data;
