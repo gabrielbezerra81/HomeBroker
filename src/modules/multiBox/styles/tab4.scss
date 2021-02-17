@@ -62,6 +62,7 @@
     td:nth-child(3),
     td:nth-child(4) {
       color: #80c7e4;
+      min-width: 43px;
     }
 
     th:nth-child(5),
@@ -69,6 +70,7 @@
     td:nth-child(5),
     td:nth-child(6) {
       color: #fda6f4;
+      min-width: 43px;
     }
 
     tr:nth-child(odd) td {

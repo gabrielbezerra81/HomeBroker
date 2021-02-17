@@ -29,7 +29,7 @@ interface OpenedBoxes {
   tabKey: string;
 }
 
-const initialOnLoad = "4";
+const initialOnLoad = "0";
 const initialEmpty = "5";
 
 export const addMultiBoxAction = (): MainThunkAction => {
