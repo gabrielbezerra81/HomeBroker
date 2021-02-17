@@ -77,7 +77,6 @@ export const createAlertFromBoxAction = ({
     // });
 
     // if (partialPayload) {
-    //   // TODO: alterar data e preço para os valores da aba 4
     //   const [order] = partialPayload;
 
     //   const updatedOrder = changeOrderExpirationAndPrice({

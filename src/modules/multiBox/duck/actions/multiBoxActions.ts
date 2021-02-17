@@ -29,7 +29,7 @@ interface OpenedBoxes {
   tabKey: string;
 }
 
-const initialOnLoad = "1";
+const initialOnLoad = "0";
 const initialEmpty = "5";
 
 export const addMultiBoxAction = (): MainThunkAction => {
@@ -63,7 +63,7 @@ export const addMultiBoxAction = (): MainThunkAction => {
       condition: "Less",
       observation: "",
       stockSymbolData: null,
-      boxPositions: [], // TODO: carregar posições?
+      boxPositions: [],
     };
 
     const updatedOpenedMenus = produce(openedMenus, (draft) => {
@@ -151,8 +151,8 @@ export const updateStructuresAndLoadBoxesAction = (
       const box: Tab1Data = {
         id: boxItem.id,
         structureID: structure.id,
-        max: 0,
-        min: 0,
+        max: structure.max,
+        min: structure.min,
         quote: structure.last,
         codes,
         dayOscilation: structure.change || 0,

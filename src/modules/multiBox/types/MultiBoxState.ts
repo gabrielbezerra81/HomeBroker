@@ -98,7 +98,7 @@ export interface BoxPosition {
 
 export interface MultiBoxData {
   id: string;
-  activeTab: "1" | "2" | "3" | "4" | "5";
+  activeTab: "0" | "1" | "2" | "3" | "4" | "5";
   minimized: boolean;
   symbolInput: string;
   searchedSymbol: string;

@@ -11,7 +11,7 @@ import {
   updateBoxAttrAction,
 } from "modules/multiBox/duck/actions/multiBoxActions";
 
-import Tab1ViewStockBook from "./tab1ViewStockBook/Tab1ViewStockBook";
+import Tab1StructureBook from "./tab1StructureBook/Tab1StructureBook";
 import Tab4ListBooks from "./tab4ListBooks/Tab4ListBooks";
 import Tab5IncludeStructure from "./tab5IncludeStructure/Tab5IncludeStructure";
 
@@ -21,6 +21,7 @@ import Tab2Position from "./tab2Position/Tab2Position";
 import { IoMdRepeat } from "react-icons/io";
 import api from "api/apiConfig";
 import { url_updateBoxConfig_id } from "api/url";
+import Tab0 from "./tab0/Tab0";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -211,12 +212,24 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
             <IoMdRepeat size={19} color="#C4C4C4" />
           </button>
 
-          <Tab1ViewStockBook multiBox={multiBox} />
+          <Tab0 multiBox={multiBox} />
+          <Tab1StructureBook multiBox={multiBox} />
           <Tab2Position multiBox={multiBox} />
           <Tab3Alerts multiBox={multiBox} />
           <Tab4ListBooks multiBox={multiBox} />
           <Tab5IncludeStructure multiBox={multiBox} />
           <div className="tabButtons">
+            <button
+              className={`brokerCustomButton ${isSelected(
+                "0",
+                multiBox.activeTab,
+              )}`}
+              name="tab0"
+              onClick={handleBoxTabChange}
+              disabled={!structureData}
+            >
+              <div className="selectedCircle" />
+            </button>
             <button
               className={`brokerCustomButton ${isSelected(
                 "1",

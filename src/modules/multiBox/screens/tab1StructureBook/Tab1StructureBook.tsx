@@ -28,7 +28,7 @@ interface Props {
   multiBox: MultiBoxData;
 }
 
-const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
+const Tab1StructureBook: React.FC<Props> = ({ multiBox }) => {
   const {
     multiBoxReducer: { boxesTab1Data },
   } = useStateStorePrincipal();
@@ -220,9 +220,9 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
 
       <div className="boxInputRangeContainer">
         <div>
-          <span className="whiteText">Mín</span>
-          <span className="whiteText">Médio</span>
-          <span className="whiteText">Máx</span>
+          <span>Mín</span>
+          <span>Médio</span>
+          <span>Máx</span>
         </div>
         <input
           type="range"
@@ -235,34 +235,66 @@ const Tab1ViewStockBook: React.FC<Props> = ({ multiBox }) => {
           step={0.01}
         />
         <div>
-          <button className="brokerCustomButton whiteText">
-            {formattedMin}
-          </button>
-          <button className="brokerCustomButton whiteText">
-            {formattedMedium}
-          </button>
-          <button className="brokerCustomButton whiteText">
-            {formattedMax}
-          </button>
+          <button className="brokerCustomButton">{formattedMin}</button>
+          <button className="brokerCustomButton">{formattedMedium}</button>
+          <button className="brokerCustomButton">{formattedMax}</button>
         </div>
       </div>
 
-      <div className="quoteContainer">
-        <strong className="whiteText">{formattedData?.quote || "0,00"}</strong>
-        <span>
-          {structureData && (
-            <DayOscilation
-              dayOscilation={structureData.dayOscilation}
-              formattedDayOscilation={structureData.dayOscilation}
-            />
+      <section className="middle">
+        <div className="buyBook">
+          {!!formattedData?.book.buy.length && (
+            <>
+              <div>
+                <span className="bookHead">Qtde</span>
+                <span className="bookHead">Preço</span>
+              </div>
+              {formattedData.book.buy.map((book, index) => (
+                <div key={`buyBook${index}`}>
+                  <span>{book.formattedQtty}</span>
+                  <span>{book.formattedPrice}</span>
+                </div>
+              ))}
+            </>
           )}
-        </span>
-      </div>
+        </div>
+
+        <div className="quoteContainer">
+          <strong className="whiteText">
+            {formattedData?.quote || "0,00"}
+          </strong>
+          <span>
+            {structureData && (
+              <DayOscilation
+                dayOscilation={structureData.dayOscilation}
+                formattedDayOscilation={structureData.dayOscilation}
+              />
+            )}
+          </span>
+        </div>
+
+        <div className="sellBook">
+          {!!formattedData?.book.sell.length && (
+            <>
+              <div>
+                <span className="bookHead">Qtde</span>
+                <span className="bookHead">Preço</span>
+              </div>
+              {formattedData.book.sell.map((book, index) => (
+                <div key={`buyBook${index}`}>
+                  <span>{book.formattedQtty}</span>
+                  <span>{book.formattedPrice}</span>
+                </div>
+              ))}
+            </>
+          )}
+        </div>
+      </section>
     </div>
   );
 };
 
-export default Tab1ViewStockBook;
+export default Tab1StructureBook;
 
 const DayOscilation = ({ dayOscilation, formattedDayOscilation }: any) => {
   if (dayOscilation > 0) {
@@ -287,39 +319,7 @@ const DayOscilation = ({ dayOscilation, formattedDayOscilation }: any) => {
 
 /*
 
-   <div className="buyBook">
-            {!!formattedData?.book.buy.length && (
-              <>
-                <div>
-                  <span className="whiteText">Qtde</span>
-                  <span className="whiteText">Preço</span>
-                </div>
-                {formattedData.book.buy.map((book, index) => (
-                  <div key={`buyBook${index}`}>
-                    <span>{book.formattedQtty}</span>
-                    <span>{book.formattedPrice}</span>
-                  </div>
-                ))}
-              </>
-            )}
-          </div>
-
-            <div className="sellBook">
-            {!!formattedData?.book.sell.length && (
-              <>
-                <div>
-                  <span className="whiteText">Qtde</span>
-                  <span className="whiteText">Preço</span>
-                </div>
-                {formattedData.book.sell.map((book, index) => (
-                  <div key={`buyBook${index}`}>
-                    <span>{book.formattedQtty}</span>
-                    <span>{book.formattedPrice}</span>
-                  </div>
-                ))}
-              </>
-            )}
-          </div>
+  
       
 
 

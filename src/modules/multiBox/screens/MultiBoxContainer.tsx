@@ -17,7 +17,17 @@ const MultiBoxContainer: React.FC = () => {
 
   useEffect(() => {
     async function loadBoxes() {
-      const data = await listQuoteBoxesAPI();
+      let data = await listQuoteBoxesAPI();
+
+      data = data.filter((item: any) => {
+        if (item.configuration) {
+          const configuration = JSON.parse(item.configuration);
+
+          return !configuration.isCategory;
+        }
+
+        return false;
+      });
 
       dispatch(updateStructuresAndLoadBoxesAction(data));
     }
