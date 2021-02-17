@@ -7,6 +7,7 @@ import OrdersUpdateManager from "../modules/ordersExec/manager/OrdersUpdateManag
 import PositionUpdateManager from "../modules/position/manager/PositionUpdateManager";
 import THLUpdateManager from "../modules/thl/manager/THLUpdateManager";
 import api from "api/apiConfig";
+import CategoryListUpdateManager from "modules/categoryList/manager/CategoryListUpdateManager";
 
 const MainManager: React.FC = () => {
   const {
@@ -23,12 +24,13 @@ const MainManager: React.FC = () => {
 
   return (
     <>
+      <AuthManager />
       <MultilegUpdateManager />
       <OrdersUpdateManager />
       <PositionUpdateManager />
       <THLUpdateManager />
       <BoxUpdateManager />
-      <AuthManager />
+      <CategoryListUpdateManager />
     </>
   );
 };

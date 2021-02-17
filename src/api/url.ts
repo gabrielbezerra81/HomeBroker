@@ -85,3 +85,6 @@ export const url_updateBoxConfig_id = "favorite/config/";
 export const url_listPositionBox = "position2";
 export const url_createPositionBox = "position2/list";
 export const url_createBoxAlert = "advice";
+
+// Lista de categorias
+export const url_updateCategoryTitle_title_ids = "favorite/groups/";

@@ -31,15 +31,6 @@ export const pesquisarAtivoOnEnterAction = (namespace) => {
         type: `${PESQUISAR_ATIVO_BOLETA_API}${namespace}`,
         payload: dadosPesquisa,
       });
-      // TODO: Incluir essa validação dentro do input
-      // const newQtde = mudarTipoInputQtde(dadosPesquisa, qtde);
-      // dispatch({
-      //   type: `${MUDAR_QTDE}${namespace}`,
-      //   payload: {
-      //     qtde: newQtde,
-      //     erro: "",
-      //   },
-      // });
     }
   };
 };

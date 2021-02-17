@@ -1,61 +1,79 @@
-import usePrevious from "hooks/usePrevious";
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Form, Table } from "react-bootstrap";
-import _ from "lodash";
-import produce from "immer";
 import { IoMdAddCircle } from "react-icons/io";
+import {
+  addNewLocalLineToCategoryAction,
+  handleCategoryTitleChangeAction,
+  handleCatTitleLocalUpdateAction,
+} from "../duck/actions/categoryListActions";
+import { Category } from "../types/CategoryListState";
+import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
+import CategoryLine from "./CategoryLine";
+import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 interface CategoryTableProps {
-  category: {
-    title: string;
-    lines: Array<{
-      symbol: string;
-      price: number;
-      oscilation: number;
-      yearOscilation: number;
-      [key: string]: any;
-    }>;
-  };
+  category: Category;
+  categoryIndex: number;
   order: number;
 }
 
-const CategoryTable: React.FC<CategoryTableProps> = ({ category, order }) => {
-  const previousLines = usePrevious(category.lines);
+const CategoryTable: React.FC<CategoryTableProps> = ({
+  category,
+  order,
+  categoryIndex,
+}) => {
+  const {
+    categoryListReducer: { categories },
+  } = useStateStorePrincipal();
 
-  const [lineKeys, setLineKeys] = useState(
-    Array(category.lines.length).fill(Math.random()),
+  const dispatch = useDispatchStorePrincipal();
+
+  const [autoFocusTitle, setAutoFocusTitle] = useState(true);
+  const [currentTitle, setCurrentTitle] = useState(category.title);
+
+  const handleChangeTitle = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = event.currentTarget;
+
+      dispatch(
+        handleCatTitleLocalUpdateAction({
+          categoryIndex,
+          attr: name as keyof Category,
+          value,
+        }),
+      );
+    },
+    [categoryIndex, dispatch],
   );
 
-  const lineDifferences = useMemo(() => {
-    if (!previousLines) return [];
+  const onEndTitleEditing = useCallback(() => {
+    const titleAlreadyUsed = categories.some(
+      (item, index) => item.title === category.title && index !== categoryIndex,
+    );
 
-    const diff = _.differenceWith(previousLines, category.lines, _.isEqual);
-
-    const changedIndexes = diff.map((diffItem) => {
-      const index = category.lines.findIndex(
-        (lineItem) => lineItem.symbol === diffItem.symbol,
+    if (!titleAlreadyUsed) {
+      setCurrentTitle(category.title);
+      dispatch(handleCategoryTitleChangeAction(categoryIndex));
+    } //
+    else {
+      dispatch(
+        handleCatTitleLocalUpdateAction({
+          categoryIndex,
+          attr: "title",
+          value: currentTitle,
+        }),
       );
+      alert("Já existe uma categoria com o mesmo título");
+    }
+  }, [categories, category.title, categoryIndex, currentTitle, dispatch]);
 
-      return index;
-    });
+  const handleAddLine = useCallback(() => {
+    dispatch(addNewLocalLineToCategoryAction(categoryIndex));
+  }, [categoryIndex, dispatch]);
 
-    setLineKeys((oldKeys) => {
-      const updatedLineKeys = produce(oldKeys, (draft) => {
-        changedIndexes.forEach((index) => {
-          draft[index] = Math.random();
-        });
-      });
-
-      return updatedLineKeys;
-    });
-
-    return diff;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [category]);
-
-  // let lineDifferences = !previousLines
-  //   ? []
-  //   : _.differenceWith(previousLines, category.lines, _.isEqual);
+  useEffect(() => {
+    setAutoFocusTitle(false);
+  }, []);
 
   return (
     <Table className="categoryTable" striped={false} style={{ order }}>
@@ -63,61 +81,30 @@ const CategoryTable: React.FC<CategoryTableProps> = ({ category, order }) => {
         <tr className="categoryTitle">
           <td colSpan={4}>
             <Form.Control
-              defaultValue={category.title}
+              value={category.title}
               className="darkSimpleInput"
+              autoFocus={autoFocusTitle}
+              onChange={handleChangeTitle}
+              onBlur={onEndTitleEditing}
+              name="title"
+              autoComplete="off"
             />
-            <button className="brokerCustomButton addCodeButton">
+            <button
+              className="brokerCustomButton addCodeButton"
+              onClick={handleAddLine}
+            >
               <IoMdAddCircle size={18} fill="#C4C4C4" />
             </button>
           </td>
         </tr>
-        {category.lines.map((line, index) => {
-          const previousLine = lineDifferences.find(
-            (lineDiffItem) => lineDiffItem.symbol === line.symbol,
-          );
-
-          let flashColor = "";
-
-          if (previousLine) {
-            if (line.price > previousLine.price) {
-              flashColor = "flashPositive";
-            } else if (line.price < previousLine.price) {
-              flashColor = "flashNegative";
-            }
-          }
-
-          return (
-            <tr key={line.symbol}>
-              <td>{line.symbol}</td>
-              <td>
-                <span key={lineKeys[index]} className={flashColor}>
-                  {line.formattedPrice}
-                </span>
-              </td>
-              <td>
-                <span
-                  key={`osc${lineKeys[index]}`}
-                  className={`${
-                    line.oscilation >= 0 ? "positiveColor " : "negativeColor"
-                  } ${flashColor}`}
-                >
-                  {line.formattedOscilation}
-                </span>
-              </td>
-              <td className="yearOscColumn">
-                <div
-                  className={
-                    line.yearOscilation >= 0
-                      ? "positiveBackground"
-                      : "negativeBackground"
-                  }
-                  style={{ width: 91 * (line.yearOscilation / 100) }}
-                />
-                <span>{line.formattedYearOscilation}</span>
-              </td>
-            </tr>
-          );
-        })}
+        {category.lines.map((line, index) => (
+          <CategoryLine
+            key={index}
+            lineData={line}
+            categoryIndex={categoryIndex}
+            lineIndex={index}
+          />
+        ))}
       </tbody>
     </Table>
   );

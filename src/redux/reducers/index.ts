@@ -25,6 +25,7 @@ import PositionReducer from "modules/position/duck/PositionReducer";
 import OrdensExecucaoReducer from "modules/ordersExec/duck/OrdensExecReducer";
 import FinancialPlannerReducer from "modules/financialPlanner/duck/FinancialPlannerReducer";
 import multiBoxReducer from "modules/multiBox/duck/multiBoxReducer";
+import CategoryListReducer from "modules/categoryList/duck/CategoryListReducer";
 
 export const BoletasReducer = combineReducers({
   bookOfertaReducer: bookOfertaReducer,
@@ -51,6 +52,7 @@ export const reducersAppPrincipal = combineReducers({
   thlReducer: THLReducer,
   financialPlannerReducer: FinancialPlannerReducer,
   multiBoxReducer,
+  categoryListReducer: CategoryListReducer,
 });
 
 export type BoletasState = ReturnType<typeof BoletasReducer>;
