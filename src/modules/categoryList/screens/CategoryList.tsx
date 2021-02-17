@@ -130,14 +130,14 @@ const CategoryList: React.FC = () => {
       const colHeights = Array(numCols).fill(0);
       const container = ReactDOM.findDOMNode(masonryRef.current) as any;
 
-      if (container) {
-        Array.from(container.children).forEach((child: any, i) => {
-          const order = i % numCols;
-          child.style.order = order;
-          colHeights[order] += parseFloat(child.clientHeight);
-        });
-        container.style.height = Math.max(...colHeights) + "px";
-      }
+      // if (container) {
+      //   Array.from(container.children).forEach((child: any, i) => {
+      //     const order = i % numCols;
+      //     child.style.order = order;
+      //     colHeights[order] += parseFloat(child.clientHeight);
+      //   });
+      //   container.style.height = Math.max(...colHeights) + "px";
+      // }
     }
   }, [categories.length, selectedTab]);
 
@@ -256,7 +256,7 @@ const CategoryList: React.FC = () => {
                   key={index}
                   category={categoryItem}
                   categoryIndex={index}
-                  order={order}
+                  // order={order}
                 />
               );
             })}

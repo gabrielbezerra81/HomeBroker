@@ -14,12 +14,12 @@ import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 interface CategoryTableProps {
   category: Category;
   categoryIndex: number;
-  order: number;
+  // order: number;
 }
 
 const CategoryTable: React.FC<CategoryTableProps> = ({
   category,
-  order,
+  // order,
   categoryIndex,
 }) => {
   const {
@@ -76,7 +76,8 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
   }, []);
 
   return (
-    <Table className="categoryTable" striped={false} style={{ order }}>
+    <Table className="categoryTable" striped={false}>
+      {/*  style={{ order }} */}
       <tbody>
         <tr className="categoryTitle">
           <td colSpan={4}>
