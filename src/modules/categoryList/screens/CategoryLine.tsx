@@ -13,9 +13,11 @@ import { CategoryLine as LineProps } from "../types/CategoryListState";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import {
   addSymbolToCategoryAction,
+  handleDeleteSymbolLineAction,
   handleLineSymbolChangeAction,
 } from "../duck/actions/categoryListActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
+import { FiX } from "react-icons/fi";
 
 interface Props {
   categoryIndex: number;
@@ -97,6 +99,10 @@ const CategoryLine: React.FC<Props> = ({
     lineIndex,
   ]);
 
+  const handleDeleteLine = useCallback(() => {
+    dispatch(handleDeleteSymbolLineAction({ categoryIndex, lineIndex }));
+  }, [categoryIndex, dispatch, lineIndex]);
+
   const lineHasChanged = useMemo(() => {
     if (!previousLineData) {
       return false;
@@ -136,6 +142,11 @@ const CategoryLine: React.FC<Props> = ({
 
   return (
     <tr>
+      <td className="deleteColumn">
+        <button className="brokerCustomButton" onClick={handleDeleteLine}>
+          <FiX color="#666" size={10} strokeWidth={3} />
+        </button>
+      </td>
       <td>
         <Form.Control
           className="darkSimpleInput symbolInput"

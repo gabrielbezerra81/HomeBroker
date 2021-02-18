@@ -215,6 +215,7 @@ const CategoryList: React.FC = () => {
             <table className="categoryTable">
               <thead>
                 <tr>
+                  <th></th>
                   <th>Ativo</th>
                   <th>Preço</th>
                   <th>Oscilação</th>
@@ -225,6 +226,7 @@ const CategoryList: React.FC = () => {
             <table className="categoryTable">
               <thead>
                 <tr>
+                  <th></th>
                   <th>Ativo</th>
                   <th>Preço</th>
                   <th>Oscilação</th>
@@ -235,6 +237,7 @@ const CategoryList: React.FC = () => {
             <table className="categoryTable">
               <thead>
                 <tr>
+                  <th className="deleteColumnTh" ></th>
                   <th>Ativo</th>
                   <th>Preço</th>
                   <th>Oscilação</th>

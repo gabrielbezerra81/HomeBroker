@@ -1,6 +1,9 @@
 import api from "api/apiConfig";
 import { getStructureBySymbolAPI } from "api/symbolAPI";
-import { url_updateCategoryTitle_title_ids } from "api/url";
+import {
+  url_deleteCategories_ids,
+  url_updateCategoryTitle_title_ids,
+} from "api/url";
 import produce from "immer";
 import { CategoryListAPI } from "modules/categoryList/types/CategoryAPI";
 import {
@@ -230,7 +233,6 @@ export const addSymbolToCategoryAction = ({
           await api.delete(`favorite/${line.id}`);
         }
 
-
         const updatedCategories = produce(categories, (draft) => {
           draft[categoryIndex].lines[lineIndex] = {
             id: data.id,
@@ -251,6 +253,67 @@ export const addSymbolToCategoryAction = ({
     } catch (error) {
       alert("Erro ao adicionar ativo à categoria, tente novamente!");
       return false;
+    }
+  };
+};
+
+export const handleDeleteCategoryAction = (
+  categoryIndex: number,
+): MainThunkAction => {
+  return async (dispatch, getState) => {
+    const {
+      categoryListReducer: { categories },
+    } = getState();
+
+    const ids = categories[categoryIndex].lines
+      .filter((line) => !!line.id)
+      .map((line) => line.id)
+      .join(",");
+
+    try {
+      if (ids) {
+        await api.delete(`${url_deleteCategories_ids}${ids}`);
+      }
+
+      const updatedCategories = produce(categories, (draft) => {
+        draft.splice(categoryIndex, 1);
+      });
+
+      dispatch(updateCategoryListAction({ categories: updatedCategories }));
+    } catch (error) {
+      alert("Falha ao excluir categoria");
+    }
+  };
+};
+
+interface DeleteSymbolLine {
+  categoryIndex: number;
+  lineIndex: number;
+}
+
+export const handleDeleteSymbolLineAction = ({
+  categoryIndex,
+  lineIndex,
+}: DeleteSymbolLine): MainThunkAction => {
+  return async (dispatch, getState) => {
+    const {
+      categoryListReducer: { categories },
+    } = getState();
+
+    const id = categories[categoryIndex].lines[lineIndex].id;
+
+    try {
+      if (id) {
+        await api.delete(`favorite/${id}`);
+      }
+      
+      const updatedCategories = produce(categories, (draft) => {
+        draft[categoryIndex].lines.splice(lineIndex, 1);
+      });
+
+      dispatch(updateCategoryListAction({ categories: updatedCategories }));
+    } catch (error) {
+      alert("Falha ao excluir ativo da categoria");
     }
   };
 };

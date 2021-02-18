@@ -88,3 +88,4 @@ export const url_createBoxAlert = "advice";
 
 // Lista de categorias
 export const url_updateCategoryTitle_title_ids = "favorite/groups/";
+export const url_deleteCategories_ids = "favorite/list?ids=";

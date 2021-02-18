@@ -5,11 +5,13 @@ import {
   addNewLocalLineToCategoryAction,
   handleCategoryTitleChangeAction,
   handleCatTitleLocalUpdateAction,
+  handleDeleteCategoryAction,
 } from "../duck/actions/categoryListActions";
 import { Category } from "../types/CategoryListState";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import CategoryLine from "./CategoryLine";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
+import { FiX } from "react-icons/fi";
 
 interface CategoryTableProps {
   category: Category;
@@ -73,6 +75,10 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
     dispatch(addNewLocalLineToCategoryAction(categoryIndex));
   }, [categoryIndex, dispatch]);
 
+  const handleDeleteCategory = useCallback(() => {
+    dispatch(handleDeleteCategoryAction(categoryIndex));
+  }, [categoryIndex, dispatch]);
+
   useEffect(() => {
     setAutoFocusTitle(false);
   }, []);
@@ -82,6 +88,14 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
       {/*  style={{ order }} */}
       <tbody>
         <tr className="categoryTitle">
+          <td className="deleteColumn">
+            <button
+              className="brokerCustomButton deleteCatButton"
+              onClick={handleDeleteCategory}
+            >
+              <FiX color="#666" size={10} strokeWidth={3} />
+            </button>
+          </td>
           <td colSpan={4}>
             <Form.Control
               value={category.title}

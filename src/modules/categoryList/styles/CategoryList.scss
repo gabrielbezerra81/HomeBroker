@@ -129,6 +129,10 @@
       &:last-child {
         border-right: 0px solid transparent;
       }
+
+      &.deleteColumnTh {
+        width: 25px;
+      }
     }
 
     td {
@@ -148,6 +152,21 @@
         font-weight: 500;
         font-size: 14.4px;
         height: 21px;
+      }
+
+      &.deleteColumn {
+        width: 25px;
+
+        button {
+          padding: 0;
+
+          &:hover {
+            opacity: 1;
+            svg {
+              stroke: #ce202a;
+            }
+          }
+        }
       }
     }
 
@@ -173,6 +192,16 @@
         border-bottom: 1px solid #ccae44;
         position: relative;
 
+        &.deleteColumn {
+          button {
+            height: 18px;
+            width: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+
         .darkSimpleInput {
           text-align: center;
           font-weight: 500 !important;
@@ -180,6 +209,7 @@
           font-size: 14px;
           height: 18px;
           background-color: transparent;
+          border: none;
         }
 
         .addCodeButton {
