@@ -91,6 +91,7 @@ export const getOneSymbolDataAPI = async (symbol: string) => {
 
 interface Structure {
   id: number;
+  last: number;
 }
 
 export const getStructureBySymbolAPI = async (symbol: string) => {

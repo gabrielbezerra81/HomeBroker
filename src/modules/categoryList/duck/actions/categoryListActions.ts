@@ -211,26 +211,37 @@ export const addSymbolToCategoryAction = ({
 
       const { symbol } = line;
 
-      const data = await getStructureBySymbolAPI(symbol);
+      const structureData = await getStructureBySymbolAPI(symbol);
 
-      if (data) {
+      if (structureData) {
         const payload = {
           group: category.title,
           configuration: JSON.stringify({
             isCategory: true,
           }),
           structure: {
-            id: data.id,
+            id: structureData.id,
           },
         };
 
-        await api.post("favorite", payload);
+        const { data } = await api.post("favorite", payload);
 
         if (line.id) {
           await api.delete(`favorite/${line.id}`);
         }
 
-        await dispatch(listCategoriesAction());
+
+        const updatedCategories = produce(categories, (draft) => {
+          draft[categoryIndex].lines[lineIndex] = {
+            id: data.id,
+            symbol,
+            price: structureData.last || 0,
+            oscilation: 0,
+            yearOscilation: 0,
+          };
+        });
+
+        dispatch(updateCategoryListAction({ categories: updatedCategories }));
 
         return true;
       } //
