@@ -1,5 +1,11 @@
 import usePrevious from "hooks/usePrevious";
-import React, { useCallback, useMemo, useState, useEffect } from "react";
+import React, {
+  useCallback,
+  useMemo,
+  useState,
+  useEffect,
+  useRef,
+} from "react";
 import { Form } from "react-bootstrap";
 
 import _ from "lodash";
@@ -28,8 +34,10 @@ const CategoryLine: React.FC<Props> = ({
 
   const dispatch = useDispatchStorePrincipal();
 
+  const symbolInputRef = useRef<any | null>(null);
+
   const [lineKey, setLineKey] = useState(Math.random());
-  const [autoFocusTitle, setAutoFocusTitle] = useState(true);
+  const [autoFocusTitle, setAutoFocusTitle] = useState(!lineData.symbol);
 
   const [currentSymbol, setCurrentSymbol] = useState(lineData.symbol);
 
@@ -54,6 +62,10 @@ const CategoryLine: React.FC<Props> = ({
     if (currentSymbol !== lineData.symbol) {
       const lines = categories[categoryIndex].lines;
 
+      if (!lineData.symbol) {
+        return;
+      }
+
       const alreadyHasSymbol = lines.some((item, index) => {
         return item.symbol === lineData.symbol && index !== lineIndex;
       });
@@ -73,9 +85,7 @@ const CategoryLine: React.FC<Props> = ({
       }
 
       setCurrentSymbol(lineData.symbol);
-      dispatch(
-        addSymbolToCategoryAction({ categoryIndex, lineIndex}),
-      );
+      dispatch(addSymbolToCategoryAction({ categoryIndex, lineIndex }));
       // TODO: Disparar busca por dados do novo ativo
     }
   }, [
@@ -135,6 +145,12 @@ const CategoryLine: React.FC<Props> = ({
           onBlur={onEndSymbolEditing}
           autoFocus={autoFocusTitle}
           autoComplete="off"
+          ref={symbolInputRef}
+          onKeyPress={(e: any) => {
+            if (e.key === "Enter" && symbolInputRef.current) {
+              symbolInputRef.current.blur();
+            }
+          }}
         />
       </td>
       <td>

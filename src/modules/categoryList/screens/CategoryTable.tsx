@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 import { Form, Table } from "react-bootstrap";
 import { IoMdAddCircle } from "react-icons/io";
 import {
@@ -28,7 +28,9 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
 
   const dispatch = useDispatchStorePrincipal();
 
-  const [autoFocusTitle, setAutoFocusTitle] = useState(true);
+  const titleInputRef = useRef<any | null>(null);
+
+  const [autoFocusTitle, setAutoFocusTitle] = useState(!category.title);
   const [currentTitle, setCurrentTitle] = useState(category.title);
 
   const handleChangeTitle = useCallback(
@@ -89,6 +91,12 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
               onBlur={onEndTitleEditing}
               name="title"
               autoComplete="off"
+              ref={titleInputRef}
+              onKeyPress={(e: any) => {
+                if (e.key === "Enter" && titleInputRef.current) {
+                  titleInputRef.current.blur();
+                }
+              }}
             />
             <button
               className="brokerCustomButton addCodeButton"
