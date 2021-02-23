@@ -77,22 +77,22 @@ class topBar extends React.Component {
             </div>
           </Col>
           <Col md={"0"}>
-            <img src={imgCaraFeliz} alt="cara feliz" className="mr-1" />
+            {/* <img src={imgCaraFeliz} alt="cara feliz" className="mr-1" /> */}
           </Col>
           <Col md={"0"}>
-            <h6 className="">VALOR LIQUIDO:</h6>
+            {/* <h6 className="">VALOR LIQUIDO:</h6> */}
           </Col>
           <Col md={2}>
-            <h6 className="valorLiquido">{liquidValue} R$</h6>
+            {/* <h6 className="valorLiquido">{liquidValue} R$</h6> */}
           </Col>
           <Col md={"0"}>
-            <h6>COMPRAR:</h6>
+            {/* <h6>COMPRAR:</h6> */}
           </Col>
           <Col>
-            <h6 className="valorComprar">{buyingValue} R$</h6>
+            {/* <h6 className="valorComprar">{buyingValue} R$</h6> */}
           </Col>
           <Col md={"0"}>
-            <h4>{broker}</h4>
+            {/* <h4>{broker}</h4> */}
           </Col>
         </Row>
       </div>
