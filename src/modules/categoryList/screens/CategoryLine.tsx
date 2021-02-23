@@ -31,7 +31,7 @@ const CategoryLine: React.FC<Props> = ({
   lineData,
 }) => {
   const {
-    categoryListReducer: { categories },
+    categoryListReducer: { categories, removeMode },
   } = useStateStorePrincipal();
 
   const dispatch = useDispatchStorePrincipal();
@@ -143,9 +143,11 @@ const CategoryLine: React.FC<Props> = ({
   return (
     <tr>
       <td className="deleteColumn">
-        <button className="brokerCustomButton" onClick={handleDeleteLine}>
-          <FiX color="#666" size={10} strokeWidth={3} />
-        </button>
+        {removeMode && (
+          <button className="brokerCustomButton" onClick={handleDeleteLine}>
+            <FiX color="#ce202a" size={10} strokeWidth={3} />
+          </button>
+        )}
       </td>
       <td>
         <Form.Control

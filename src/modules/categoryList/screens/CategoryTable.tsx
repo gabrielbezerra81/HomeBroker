@@ -25,7 +25,7 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
   categoryIndex,
 }) => {
   const {
-    categoryListReducer: { categories },
+    categoryListReducer: { categories, removeMode },
   } = useStateStorePrincipal();
 
   const dispatch = useDispatchStorePrincipal();
@@ -89,12 +89,14 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
       <tbody>
         <tr className="categoryTitle">
           <td className="deleteColumn">
-            <button
-              className="brokerCustomButton deleteCatButton"
-              onClick={handleDeleteCategory}
-            >
-              <FiX color="#666" size={10} strokeWidth={3} />
-            </button>
+            {removeMode && (
+              <button
+                className="brokerCustomButton"
+                onClick={handleDeleteCategory}
+              >
+                <FiX color="#ce202a" size={10} strokeWidth={3} />
+              </button>
+            )}
           </td>
           <td colSpan={4}>
             <Form.Control

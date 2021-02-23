@@ -22,4 +22,5 @@ export interface Category {
 export interface CategoryListState {
   categories: Array<Category>;
   symbolsData: Array<CategoryLineSymbolData>;
+  removeMode: boolean;
 }

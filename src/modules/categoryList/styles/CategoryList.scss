@@ -17,6 +17,7 @@
   .mheader {
     padding-left: 0;
     border-bottom-width: 0;
+    position: relative;
 
     .brokerCustomButton {
       font-size: 14px;
@@ -28,6 +29,17 @@
 
       svg {
         margin-right: 6px;
+      }
+    }
+
+    .toggleRemoveButton {
+      position: absolute;
+      right: 32px;
+      top: 2px;
+
+      svg {
+        color: #afafaf;
+        stroke-width: 2px;
       }
     }
   }

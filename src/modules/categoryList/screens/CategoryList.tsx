@@ -27,15 +27,17 @@ import "../styles/CategoryList.scss";
 import {
   addCategoryAction,
   listCategoriesAction,
+  updateCategoryListAction,
 } from "../duck/actions/categoryListActions";
 import api from "api/apiConfig";
+import { FiEdit } from "react-icons/fi";
 
 const limitY = 80;
 
 const CategoryList: React.FC = () => {
   const {
     systemReducer: { isOpenLeftUserMenu, selectedTab, isOpenCategoryList },
-    categoryListReducer: { categories },
+    categoryListReducer: { categories, removeMode },
   } = useStateStorePrincipal();
 
   const dispatchGlobal = useDispatchGlobalStore();
@@ -99,6 +101,10 @@ const CategoryList: React.FC = () => {
   const handleAddCategory = useCallback(() => {
     dispatch(addCategoryAction());
   }, [dispatch]);
+
+  const handleToggleRemoveMode = useCallback(() => {
+    dispatch(updateCategoryListAction({ removeMode: !removeMode }));
+  }, [dispatch, removeMode]);
 
   const formattedCategoryList = useMemo(() => {
     return categories.map((category) => {
@@ -209,6 +215,13 @@ const CategoryList: React.FC = () => {
             <button className="brokerCustomButton" onClick={handleAddCategory}>
               <IoMdAddCircle size={18} fill="#C4C4C4" /> Incluir nova categoria
             </button>
+
+            <button
+              className="brokerCustomButton toggleRemoveButton"
+              onClick={handleToggleRemoveMode}
+            >
+              <FiEdit size={16} />
+            </button>
           </ModalHeaderClean>
 
           <div className="listHeader">
@@ -237,7 +250,7 @@ const CategoryList: React.FC = () => {
             <table className="categoryTable">
               <thead>
                 <tr>
-                  <th className="deleteColumnTh" ></th>
+                  <th className="deleteColumnTh"></th>
                   <th>Ativo</th>
                   <th>Preço</th>
                   <th>Oscilação</th>

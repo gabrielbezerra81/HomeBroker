@@ -5,6 +5,7 @@ import { CategoryListState } from "../types/CategoryListState";
 const INITIAL_STATE: CategoryListState = {
   categories: [],
   symbolsData: [],
+  removeMode: false,
 };
 
 export default (
