@@ -26,7 +26,7 @@ interface Props {
   multiBox: MultiBoxData;
 }
 
-const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
+const Tab4Alerts: React.FC<Props> = ({ multiBox }) => {
   const {
     multiBoxReducer: { boxesTab1Data },
   } = useStateStorePrincipal();
@@ -386,4 +386,4 @@ const Tab3Alerts: React.FC<Props> = ({ multiBox }) => {
   );
 };
 
-export default Tab3Alerts;
+export default Tab4Alerts;

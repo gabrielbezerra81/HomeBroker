@@ -11,13 +11,20 @@ import {
   updateBoxAttrAction,
 } from "modules/multiBox/duck/actions/multiBoxActions";
 
+import { ReactComponent as Tab0QuoteIcon } from "assets/multiBox/tab0QuoteIcon.svg";
+import { ReactComponent as Tab1StructureIcon } from "assets/multiBox/tab1StructureIcon.svg";
+import { ReactComponent as Tab2SymbolsIcon } from "assets/multiBox/tab2SymbolsIcon.svg";
+import { ReactComponent as Tab3PositionIcon } from "assets/multiBox/tab3PositionIcon.svg";
+import { ReactComponent as Tab4AlertIcon } from "assets/multiBox/tab4AlertIcon.svg";
+import { ReactComponent as Tab5SearchIcon } from "assets/multiBox/tab5SearchIcon.svg";
+
 import Tab1StructureBook from "./tab1StructureBook/Tab1StructureBook";
-import Tab4ListBooks from "./tab4ListBooks/Tab4ListBooks";
+import Tab2ListBooks from "./tab2ListBooks/Tab2ListBooks";
+import Tab3Position from "./tab3Position/Tab3Position";
+import Tab4Alerts from "./tab4Alerts/Tab4Alerts";
 import Tab5IncludeStructure from "./tab5IncludeStructure/Tab5IncludeStructure";
 
 import SymbolCard from "./SymbolCard";
-import Tab3Alerts from "./tab3Alerts/Tab3Alerts";
-import Tab2Position from "./tab2Position/Tab2Position";
 import { IoMdRepeat } from "react-icons/io";
 import api from "api/apiConfig";
 import { url_updateBoxConfig_id } from "api/url";
@@ -214,9 +221,9 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
 
           <Tab0 multiBox={multiBox} />
           <Tab1StructureBook multiBox={multiBox} />
-          <Tab2Position multiBox={multiBox} />
-          <Tab3Alerts multiBox={multiBox} />
-          <Tab4ListBooks multiBox={multiBox} />
+          <Tab2ListBooks multiBox={multiBox} />
+          <Tab3Position multiBox={multiBox} />
+          <Tab4Alerts multiBox={multiBox} />
           <Tab5IncludeStructure multiBox={multiBox} />
           <div className="tabButtons">
             <button
@@ -228,7 +235,7 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
               onClick={handleBoxTabChange}
               disabled={!structureData}
             >
-              <div className="selectedCircle" />
+              <Tab0QuoteIcon className="tab0" />
             </button>
             <button
               className={`brokerCustomButton ${isSelected(
@@ -239,7 +246,7 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
               onClick={handleBoxTabChange}
               disabled={!structureData}
             >
-              <div className="selectedCircle" />
+              <Tab1StructureIcon className="tab1" />
             </button>
             <button
               className={`brokerCustomButton ${isSelected(
@@ -250,7 +257,7 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
               onClick={handleBoxTabChange}
               disabled={!structureData}
             >
-              <div className="selectedCircle" />
+              <Tab2SymbolsIcon className="tab2" />
             </button>
             <button
               className={`brokerCustomButton ${isSelected(
@@ -261,7 +268,7 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
               onClick={handleBoxTabChange}
               disabled={!structureData}
             >
-              <div className="selectedCircle" />
+              <Tab3PositionIcon className="tab3" />
             </button>
             <button
               className={`brokerCustomButton ${isSelected(
@@ -272,7 +279,7 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
               onClick={handleBoxTabChange}
               disabled={!structureData}
             >
-              <div className="selectedCircle" />
+              <Tab4AlertIcon className="tab4" />
             </button>
             <button
               className={`brokerCustomButton ${isSelected(
@@ -282,7 +289,7 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
               name="tab5"
               onClick={handleBoxTabChange}
             >
-              <div className="selectedCircle" />
+              <Tab5SearchIcon className="tab5" />
             </button>
           </div>
         </div>

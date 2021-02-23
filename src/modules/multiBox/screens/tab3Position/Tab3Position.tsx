@@ -27,7 +27,7 @@ interface Props {
   multiBox: MultiBoxData;
 }
 
-const Tab2Position: React.FC<Props> = ({ multiBox }) => {
+const Tab3Position: React.FC<Props> = ({ multiBox }) => {
   const dispatch = useDispatchStorePrincipal();
 
   const {
@@ -232,4 +232,4 @@ const Tab2Position: React.FC<Props> = ({ multiBox }) => {
   );
 };
 
-export default Tab2Position;
+export default Tab3Position;

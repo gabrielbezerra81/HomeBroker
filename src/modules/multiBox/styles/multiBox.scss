@@ -76,23 +76,34 @@
     transition: height 0.2s;
     height: 300px;
     position: relative;
+    border-color: #373739;
 
     padding-bottom: 16px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 
     .tabButtons {
       position: absolute;
       display: flex;
-      justify-content: space-around;
-      left: 0;
-      right: 0;
-      bottom: -10px;
+      left: -4.8px;
+      right: -4.8px;
+      bottom: -25px;
+      border-bottom-left-radius: 16px;
+      border-bottom-right-radius: 16px;
+      overflow: hidden;
 
       > .brokerCustomButton {
-        width: 16px;
-        height: 16px;
-        background: var(--color-border-light);
-        border-radius: 50%;
+        background: #373739;
         padding: 0;
+        flex: 1;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:not(:last-child) {
+          border-right: 1px solid #000;
+        }
 
         &:disabled {
           opacity: 0;
@@ -102,18 +113,66 @@
           opacity: 1;
         }
 
-        &.selected {
-          .selectedCircle {
-            background: #c910a0;
+        svg {
+          height: 16px;
+
+          &.tab0 {
+            path {
+              &:not(:nth-child(2)) {
+                fill: #757373;
+              }
+            }
           }
         }
 
-        .selectedCircle {
-          width: 10px;
-          height: 10px;
-          border-radius: 50%;
-          margin: auto;
-          transition: background-color 0.2s;
+        &.selected {
+          svg.tab0 {
+            path {
+              &:not(:nth-child(2)) {
+                fill: #ccae44;
+              }
+            }
+          }
+
+          svg.tab1,
+          svg.tab2 {
+            path {
+              fill: #ccae44;
+            }
+
+            rect {
+              &:first-child {
+                stroke: #ccae44;
+              }
+
+              &:not(:nth-child(1)) {
+                fill: #ccae44;
+              }
+            }
+          }
+
+          svg.tab3 {
+            path {
+              stroke: #ccae44;
+            }
+          }
+
+          svg.tab4 {
+            path {
+              fill: #ccae44;
+            }
+          }
+
+          svg.tab5 {
+            path:first-child,
+            path:nth-child(2) {
+              fill: #ccae44;
+            }
+
+            circle {
+              fill: #ccae44;
+            }
+          }
         }
       }
     }

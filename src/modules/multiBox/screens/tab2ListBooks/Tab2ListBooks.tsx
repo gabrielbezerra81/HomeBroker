@@ -24,7 +24,7 @@ interface Props {
   multiBox: MultiBoxData;
 }
 
-const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
+const Tab2ListBooks: React.FC<Props> = ({ multiBox }) => {
   const {
     multiBoxReducer: { boxesTab1Data, symbolsData },
   } = useStateStorePrincipal();
@@ -275,4 +275,4 @@ const Tab4ListBooks: React.FC<Props> = ({ multiBox }) => {
   );
 };
 
-export default Tab4ListBooks;
+export default Tab2ListBooks;
