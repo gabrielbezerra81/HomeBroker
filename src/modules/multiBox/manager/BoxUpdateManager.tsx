@@ -30,7 +30,7 @@ const BoxUpdateManager: React.FC = () => {
 
     boxes.forEach((multiBox) => {
       multiBox.topSymbols.forEach((topSymbol) => {
-        if (!symbols.includes(topSymbol.code)) {
+        if (!symbols.includes(topSymbol.code) && multiBox.activeTab === "2") {
           symbols.push(topSymbol.code);
         }
       });
@@ -83,7 +83,7 @@ const BoxUpdateManager: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateInterval, updateMode, dispatch, boxesTab1Data.length]);
 
-  // Atualizar books e cotações da 4ª aba
+  // Atualizar books e cotações da 2ª aba (books dos ativos)
   useEffect(() => {
     function checkIfSymbolsChanged() {
       if (!_.isEqual(previousSymbols, symbols)) {
