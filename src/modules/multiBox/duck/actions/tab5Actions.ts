@@ -416,7 +416,7 @@ export const addNewMultiBoxStructureAction = ({
         dispatch(
           updateBoxAttrAction(boxId, {
             tab1Id: boxStructure.id,
-            activeTab: "1",
+            activeTab: "0",
             topSymbols,
             boxPositions,
           }),
