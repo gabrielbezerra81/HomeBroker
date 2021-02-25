@@ -373,7 +373,7 @@ const OptionsTable: React.FC = () => {
     >
       <div id="optionsTable">
         <div className="mcontent">
-          <ModalHeaderClean titulo="Matriz de Opções" onClose={onClose} />
+          <ModalHeaderClean titulo="Mapa Panorâmico" onClose={onClose} />
 
           <div className="searchRow">
             <InputGroup>
