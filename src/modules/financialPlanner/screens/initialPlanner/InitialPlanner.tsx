@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from "react";
+import React, { useMemo, useCallback, useState } from "react";
 
 import moment from "moment";
 import "moment/locale/pt-br";
@@ -6,10 +6,13 @@ import "moment/locale/pt-br";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import DraggablePopup from "shared/componentes/DraggablePopup/DraggablePopup";
-import { ModalHeaderClean } from "shared/componentes/PopupHeader";
+import { PopupHeader } from "shared/componentes/PopupHeader";
 import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 import CustomInput from "shared/componentes/CustomInput";
-import { updateManyFinancialPlannerAction } from "modules/financialPlanner/duck/actions/financialPlannerActions";
+import {
+  handleSaveSimulationAction,
+  updateManyFinancialPlannerAction,
+} from "modules/financialPlanner/duck/actions/financialPlannerActions";
 import { FormControl } from "react-bootstrap";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import ProjectionTable from "./ProjectionTable";
@@ -22,6 +25,8 @@ import {
 } from "../utils";
 
 import "../../styles/initialPlanner/initialPlanner.scss";
+import CustomButton from "shared/componentes/CustomButton";
+import RateConverter from "./RateConverter";
 
 export interface Projection {
   rentability: number;
@@ -69,6 +74,9 @@ const InitialPlanner: React.FC = () => {
   } = initialPlanner;
 
   const dispatch = useDispatchStorePrincipal();
+
+  const [savingSimulations, setSavingSimulations] = useState(false);
+  const [converterVisibility, setConverterVisibility] = useState(false);
 
   const result = useMemo(() => {
     if (!initialValue || !interestRate || !periodValue) {
@@ -249,6 +257,10 @@ const InitialPlanner: React.FC = () => {
         payload.periodicity = "meses";
       }
 
+      if (name === "contributionPeriodicity") {
+        payload.ratePeriodicity = value;
+      }
+
       if (name === "ratePeriodicity") {
         payload.contributionPeriodicity = value;
       }
@@ -261,6 +273,14 @@ const InitialPlanner: React.FC = () => {
     },
     [dispatch, initialPlanner],
   );
+
+  const handleSaveSimulation = useCallback(async () => {
+    setSavingSimulations(true);
+
+    await dispatch(handleSaveSimulationAction());
+
+    setSavingSimulations(false);
+  }, [dispatch]);
 
   const formattedProjections = useMemo(() => {
     let filtered = projections;
@@ -348,7 +368,11 @@ const InitialPlanner: React.FC = () => {
     >
       <div id="initialPlanner">
         <div className="mcontent">
-          <ModalHeaderClean titulo="Carregando simulador" onClose={onClose} />
+          <RateConverter
+            visibility={converterVisibility}
+            setVisibility={setConverterVisibility}
+          />
+          <PopupHeader headerTitle="Carregando simulador" onClose={onClose} />
 
           <div>
             <div className="inputsAndGraphContainer">
@@ -383,7 +407,6 @@ const InitialPlanner: React.FC = () => {
                   name="contributionPeriodicity"
                   onChange={(e) => handleInputChange(e.target.value, e)}
                   value={contributionPeriodicity}
-                  disabled
                 >
                   <option value={"por semana"}>por semana</option>
                   <option value={"por mês"}>por mês</option>
@@ -456,6 +479,13 @@ const InitialPlanner: React.FC = () => {
                 <h6 className="totalValueText">Total:</h6>
                 <h6>{result?.formattedTotal}</h6>
                 <span></span>
+                <CustomButton
+                  loading={savingSimulations}
+                  className="brokerCustomButton saveSimulationButton"
+                  onClick={handleSaveSimulation}
+                >
+                  Salvar Simulação
+                </CustomButton>
               </div>
 
               <ProjectionGraph data={formattedProjections} />
