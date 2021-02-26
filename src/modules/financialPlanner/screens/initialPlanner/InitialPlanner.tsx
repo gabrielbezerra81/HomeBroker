@@ -11,7 +11,7 @@ import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions"
 import CustomInput from "shared/componentes/CustomInput";
 import {
   handleSaveSimulationAction,
-  updateManyFinancialPlannerAction,
+  updateInitialPlannerStateAction,
 } from "modules/financialPlanner/duck/actions/financialPlannerActions";
 import { FormControl } from "react-bootstrap";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
@@ -27,6 +27,7 @@ import {
 import "../../styles/initialPlanner/initialPlanner.scss";
 import CustomButton from "shared/componentes/CustomButton";
 import RateConverter from "./RateConverter";
+import { InitialPlannerData } from "modules/financialPlanner/types/FinancialPlannerState";
 
 export interface Projection {
   rentability: number;
@@ -247,12 +248,9 @@ const InitialPlanner: React.FC = () => {
     (value: any, event: any) => {
       const { name } = event.target;
 
-      const payload = { ...initialPlanner, [name]: value };
+      const payload: Partial<InitialPlannerData> = { [name]: value };
 
-      if (
-        name === "ratePeriodicity" &&
-        initialPlanner.ratePeriodicity === "por semana"
-      ) {
+      if (name === "ratePeriodicity" && ratePeriodicity === "por semana") {
         payload.listing = "mensal";
         payload.periodicity = "meses";
       }
@@ -265,14 +263,14 @@ const InitialPlanner: React.FC = () => {
         payload.contributionPeriodicity = value;
       }
 
-      dispatch(
-        updateManyFinancialPlannerAction({
-          initialPlanner: payload,
-        }),
-      );
+      dispatch(updateInitialPlannerStateAction(payload));
     },
-    [dispatch, initialPlanner],
+    [dispatch, ratePeriodicity],
   );
+
+  const handleOpenRateConverter = useCallback(() => {
+    setConverterVisibility((oldValue) => !oldValue);
+  }, []);
 
   const handleSaveSimulation = useCallback(async () => {
     setSavingSimulations(true);
@@ -365,17 +363,22 @@ const InitialPlanner: React.FC = () => {
     <DraggablePopup
       popupDivKey="initialPlanner"
       popupVisibility={isOpenInitialPlanner}
+      handleDragClass=".initialPlannerHeader"
     >
       <div id="initialPlanner">
         <div className="mcontent">
-          <RateConverter
-            visibility={converterVisibility}
-            setVisibility={setConverterVisibility}
+          <PopupHeader
+            headerTitle="Carregando simulador"
+            onClose={onClose}
+            headerClass="initialPlannerHeader"
           />
-          <PopupHeader headerTitle="Carregando simulador" onClose={onClose} />
 
           <div>
             <div className="inputsAndGraphContainer">
+              <RateConverter
+                visibility={converterVisibility}
+                setVisibility={setConverterVisibility}
+              />
               <div className="simulatorRow">
                 <h6>Aporte inicial:</h6>
                 <CustomInput
@@ -461,6 +464,12 @@ const InitialPlanner: React.FC = () => {
                   {periodOptions}
                 </FormControl>
                 {/* <span></span> */}
+                <button
+                  className="brokerCustomButton openConverterButton"
+                  onClick={handleOpenRateConverter}
+                >
+                  Converter taxas de juros
+                </button>
               </div>
 
               <div className="simulatorRow">

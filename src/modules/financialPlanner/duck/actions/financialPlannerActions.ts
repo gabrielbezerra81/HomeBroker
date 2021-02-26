@@ -1,11 +1,14 @@
 import api from "api/apiConfig";
 import { url_saveSimulation } from "api/url";
 import { UPDATE_MANY_FINANCIAL_PLANNER } from "constants/MenuActionTypes";
+import produce from "immer";
 import { convertFrequencyToAPIValues } from "modules/financialPlanner/screens/utils";
-import FinancialPlannerState from "modules/financialPlanner/types/FinancialPlannerState";
+import FinancialPlannerState, {
+  InitialPlannerData,
+} from "modules/financialPlanner/types/FinancialPlannerState";
 import { MainThunkAction } from "types/ThunkActions";
 
-export const updateManyFinancialPlannerAction = (
+const updateFinancialPlannerAction = (
   payload: Partial<FinancialPlannerState>,
 ): MainThunkAction => {
   return (dispatch) => {
@@ -13,6 +16,27 @@ export const updateManyFinancialPlannerAction = (
       type: UPDATE_MANY_FINANCIAL_PLANNER,
       payload,
     });
+  };
+};
+
+export const updateInitialPlannerStateAction = (
+  payload: Partial<InitialPlannerData>,
+): MainThunkAction => {
+  return (dispatch, getState) => {
+    const {
+      financialPlannerReducer: { initialPlanner, ...rest },
+    } = getState();
+
+    const updatedData = produce(initialPlanner, (draft) => {
+      Object.assign(draft, payload);
+    });
+
+    dispatch(
+      updateFinancialPlannerAction({
+        ...rest,
+        initialPlanner: updatedData,
+      }),
+    );
   };
 };
 

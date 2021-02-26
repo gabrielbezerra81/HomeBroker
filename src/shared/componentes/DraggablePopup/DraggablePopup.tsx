@@ -12,6 +12,7 @@ import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopup
 interface Props {
   popupDivKey: string;
   popupVisibility: boolean;
+  handleDragClass?: string;
 }
 
 const limitY = 80;
@@ -20,6 +21,7 @@ const DraggablePopup: React.FC<Props> = ({
   children,
   popupDivKey,
   popupVisibility,
+  handleDragClass = ".mheader",
 }) => {
   const {
     systemReducer: { isOpenLeftUserMenu },
@@ -103,7 +105,7 @@ const DraggablePopup: React.FC<Props> = ({
   return (
     <Draggable
       enableUserSelectHack={isDragging}
-      handle=".mheader"
+      handle={handleDragClass}
       position={position}
       onStart={onStartDragging}
       onStop={onStopDragging}

@@ -1,7 +1,7 @@
 import React, { useMemo, useCallback } from "react";
 import { FormControl, Table } from "react-bootstrap";
 
-import { updateManyFinancialPlannerAction } from "modules/financialPlanner/duck/actions/financialPlannerActions";
+import { updateInitialPlannerStateAction } from "modules/financialPlanner/duck/actions/financialPlannerActions";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { Projection, FormattedProjection } from "./InitialPlanner";
 
@@ -26,13 +26,9 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
     (value: any, event: any) => {
       const { name } = event.target;
 
-      dispatch(
-        updateManyFinancialPlannerAction({
-          initialPlanner: { ...initialPlanner, [name]: value },
-        }),
-      );
+      dispatch(updateInitialPlannerStateAction({ [name]: value }));
     },
-    [dispatch, initialPlanner],
+    [dispatch],
   );
 
   const listingOptions = useMemo(() => {

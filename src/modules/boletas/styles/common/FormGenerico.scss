@@ -29,10 +29,10 @@
   border-bottom: 1px solid var(--color-border-light);
 
   .mtitle {
-    flex: 7;
     font-size: 1rem;
-    text-align: center;
     margin-bottom: 0rem;
+    
+    position: absolute;
   }
 
   .wrapperIconesHeader {
@@ -54,18 +54,18 @@
       }
     }
   }
+
+  .iconesHeader {
+    padding: 0;
+    border: none;
+    color: var(--color-buttons-grey);
+    font-size: 0.65rem;
+    margin: 0 3px;
+  }
 }
 
 input {
   color: black !important;
-}
-
-.iconesHeader {
-  padding: 0;
-  border: none;
-  color: var(--color-buttons-grey);
-  font-size: 0.65rem;
-  margin: 0 3px;
 }
 
 .inputHeader {

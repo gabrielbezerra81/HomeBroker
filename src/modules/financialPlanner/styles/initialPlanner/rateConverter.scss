@@ -1,0 +1,59 @@
+.rateConverterPopup {
+  position: fixed;
+  background-color: #0f0f0f;
+  border: 2px solid var(--color-border-light);
+  border-radius: 6px;
+
+  display: flex;
+  flex-direction: column;
+
+  top: 70px;
+  left: 475px;
+  z-index: 1;
+  min-width: 305px;
+
+  transition: opacity 0.2s;
+
+  &.hidden {
+    opacity: 0;
+  }
+
+  .mheader {
+    .brokerCustomButton {
+      img.closeIcon {
+        height: 16px;
+      }
+    }
+  }
+
+  .content {
+    padding: 4px 6px;
+  }
+
+  .converterRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    & + .converterRow {
+      margin-top: 8px;
+    }
+
+    .containerInput {
+      max-width: 70px;
+    }
+
+    > span {
+      font-size: 13px;
+      width: 126px;
+    }
+
+    .brokerCustomButton {
+      //   color: #ff0080;
+      //   border: 2px solid #ff0080;
+      border-radius: 1px;
+      font-size: 12px;
+      line-height: 14px;
+    }
+  }
+}
