@@ -11,12 +11,19 @@ export function convertInterestRate(tax: number, from: Period, to: Period) {
   if (from === "year" && to === "month") {
     exp = 1 / 12;
   } //
+  else if (from === "year" && to === "week") {
+    exp = 7 / 365;
+  } //
+  else if (from === "month" && to === "year") {
+    exp = 12 / 1;
+  } //
   else if (from === "month" && to === "week") {
     exp = 7 / 30;
   } //
   else if (from === "week" && to === "month") {
     exp = 30 / 7;
-  } else if (from === "week" && to === "year") {
+  } //
+  else if (from === "week" && to === "year") {
     exp = 365 / 7;
   }
 

@@ -8,6 +8,7 @@ import { PopupHeader } from "shared/componentes/PopupHeader";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { updateInitialPlannerStateAction } from "modules/financialPlanner/duck/actions/financialPlannerActions";
 import { InitialPlannerData } from "modules/financialPlanner/types/FinancialPlannerState";
+import { convertInterestRate } from "../utils";
 
 interface Props {
   visibility: boolean;
@@ -28,13 +29,21 @@ const RateConverter: React.FC<Props> = ({ visibility, setVisibility }) => {
   const handleInputChange = useCallback((value, event) => {
     const { name } = event.target;
 
+    const currentRate = value / 100;
+
     if (name === "yearRate") {
       setYearRate(value);
+      setMonthRate(100 * convertInterestRate(currentRate, "year", "month"));
+      setWeekRate(100 * convertInterestRate(currentRate, "year", "week"));
     } //
     else if (name === "monthRate") {
+      setYearRate(100 * convertInterestRate(currentRate, "month", "year"));
       setMonthRate(value);
+      setWeekRate(100 * convertInterestRate(currentRate, "month", "week"));
     } //
     else if (name === "weekRate") {
+      setYearRate(100 * convertInterestRate(currentRate, "week", "year"));
+      setMonthRate(100 * convertInterestRate(currentRate, "week", "month"));
       setWeekRate(value);
     }
   }, []);
