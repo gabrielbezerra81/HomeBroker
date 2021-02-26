@@ -3,7 +3,7 @@ import React, { useCallback } from "react";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import DraggablePopup from "shared/componentes/DraggablePopup/DraggablePopup";
-import { ModalHeaderClean } from "shared/componentes/PopupHeader";
+import { PopupHeader } from "shared/componentes/PopupHeader";
 import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 import WalletEvolution from "./walletEvolution/WalletEvolution";
 import PlannerProjection from "./plannerProjection/PlannerProjection";
@@ -29,8 +29,8 @@ const DetailedPlanner: React.FC = () => {
     >
       <div id="detailedPlanner">
         <div className="mcontent">
-          <ModalHeaderClean
-            titulo="Carteira de investimentos"
+          <PopupHeader
+            headerTitle="Carteira de investimentos"
             onClose={onClose}
           />
 

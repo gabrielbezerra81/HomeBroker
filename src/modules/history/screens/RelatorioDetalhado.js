@@ -13,7 +13,7 @@ import {
   ReferenceLine,
 } from "recharts";
 import DraggableModal from "shared/componentes/DraggableModal";
-import { ModalHeaderSemBook } from "shared/componentes/PopupHeader";
+import { PopupHeader } from "shared/componentes/PopupHeader";
 import Tabela1Custos from "./Tabela1Custos";
 import Tabela2ProximaOrdem from "./Tabela2ProximaOrdem";
 import EmblemaRelatorio from "./EmblemaRelatorio";
@@ -66,10 +66,11 @@ class RelatorioDetalhado extends React.Component {
         renderModalBody={() => this.modalBody(this.props)}
         renderDivFiltrarOrdens={false}
         renderHeader={() => (
-          <ModalHeaderSemBook
+          <PopupHeader
             name={this.props.name}
             headerTitle={this.props.headerTitle}
             headerClass="border-green"
+            onConfig={() => {}}
           />
         )}
       />

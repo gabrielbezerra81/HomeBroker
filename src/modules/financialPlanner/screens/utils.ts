@@ -213,3 +213,18 @@ export function IncludeInitialLine() {
     viewedRate: "",
   };
 }
+
+type Frequency = "por semana" | "por mês" | "por ano";
+
+export function convertFrequencyToAPIValues(frequency: Frequency) {
+  switch (frequency) {
+    case "por semana":
+      return "semanal";
+    case "por mês":
+      return "mensal";
+    case "por ano":
+      return "anual";
+    default:
+      return "";
+  }
+}

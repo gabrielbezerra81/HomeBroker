@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import ReactResizeDetector from "react-resize-detector";
 import DraggableModal from "shared/componentes/DraggableModal";
-import { ModalHeaderSemBook } from "shared/componentes/PopupHeader";
+import { PopupHeader } from "shared/componentes/PopupHeader";
 import MapaCalor from "./MapaCalor";
 import { GlobalContext, StorePrincipalContext } from "redux/StoreCreation";
 import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
@@ -47,10 +47,11 @@ class Tela_THL extends React.Component {
         renderModalBody={() => <ModalBody />}
         renderConfigComplementar={this.props.configComplementarAberto}
         renderHeader={() => (
-          <ModalHeaderSemBook
+          <PopupHeader
             name={this.props.name}
             headerTitle={this.props.headerTitle}
             headerClass="border-green"
+            onConfig={() => {}}
           />
         )}
       />

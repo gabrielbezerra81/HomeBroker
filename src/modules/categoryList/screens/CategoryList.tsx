@@ -12,7 +12,7 @@ import React, {
 import { IoMdAddCircle } from "react-icons/io";
 
 import Draggable, { DraggableData } from "react-draggable";
-import { ModalHeaderClean } from "shared/componentes/PopupHeader";
+import { PopupHeader } from "shared/componentes/PopupHeader";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import CategoryTable from "./CategoryTable";
 import bringToForegroundOnMount from "shared/utils/PopupLifeCycle/bringToForegroundOnMount";
@@ -211,7 +211,7 @@ const CategoryList: React.FC = () => {
     >
       <div id="categoryList">
         <div className="mcontent">
-          <ModalHeaderClean onClose={onClose}>
+          <PopupHeader onClose={onClose}>
             <button className="brokerCustomButton" onClick={handleAddCategory}>
               <IoMdAddCircle size={18} fill="#C4C4C4" /> Incluir nova categoria
             </button>
@@ -220,9 +220,9 @@ const CategoryList: React.FC = () => {
               className="brokerCustomButton toggleRemoveButton"
               onClick={handleToggleRemoveMode}
             >
-              <FiEdit size={16} />
+              <FiEdit size={18} />
             </button>
-          </ModalHeaderClean>
+          </PopupHeader>
 
           <div className="listHeader">
             <table className="categoryTable">

@@ -1,5 +1,8 @@
 import React, { useCallback } from "react";
 import { Button, Col, Row, Form } from "react-bootstrap";
+
+import { FaCog } from "react-icons/fa";
+
 import { MDBIcon } from "mdbreact";
 import { mudarInputHeaderAction } from "modules/boletas/duck/actions/bookOfertaActions";
 import { listarBookOfertaOnEnterAction } from "modules/boletas/duck/actions/bookOfertaAPIActions";
@@ -16,6 +19,8 @@ import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useStateGlobalStore from "hooks/useStateGlobalStore";
 import useDispatchBoletas from "hooks/useDispatchBoletas";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
+
+import closeIcon from "assets/closeIcon.png";
 
 import useStateBoletas from "hooks/useStateBoletas";
 import { BoletaNamespace } from "constants/ActionTypes";
@@ -198,102 +203,80 @@ export const BookHeader: React.FC<any> = ({ headerClass, resetPosition }) => {
   );
 };
 
+interface PopupHeaderProps {
+  headerTitle?: string;
+  headerClass?: string;
+  name?: string;
+  onClose?: (...data: any) => any;
+  onConfig?: (...data: any) => any;
+}
+
 // Menus multileg, posição, thl, ordens exec, relatorio
-export const ModalHeaderSemBook: React.FC<any> = React.memo(
-  ({ headerTitle, headerClass, name }) => {
+export const PopupHeader: React.FC<PopupHeaderProps> = React.memo(
+  ({
+    headerTitle = "",
+    headerClass = "",
+    name = "",
+    children,
+    onClose,
+    onConfig,
+  }) => {
     const dispatchStorePrincipal = useDispatchStorePrincipal();
     const nomeVariavelReducer = getNomeVariavelReducer(headerTitle);
 
+    const handleConfig = useCallback(
+      (event) => {
+        if (onConfig) {
+          onConfig();
+        }
+      },
+      [onConfig],
+    );
+
+    const handleClose = useCallback(
+      (event) => {
+        if (onClose) {
+          onClose(event);
+        } //
+        else if (name === "config_complementar") {
+          dispatchStorePrincipal(openCloseMultilegExtraConfigsAction());
+        } //
+        else {
+          dispatchStorePrincipal(
+            abrirItemBarraLateralAction(nomeVariavelReducer),
+          );
+        }
+      },
+      [dispatchStorePrincipal, name, nomeVariavelReducer, onClose],
+    );
+
     return (
       <div className={`${headerClass} handle mheader`}>
+        {children}
         <h6 className="mtitle">{headerTitle === "THL" ? "" : headerTitle}</h6>
         <div className="wrapperIconesHeader">
           <BotaoAbrirFiltrarOrdens headerTitle={headerTitle} />
-          <Button variant="link" className="iconesHeader">
-            <MDBIcon icon="cog" size="2x" />
-          </Button>
+          {!!onConfig && (
+            <button
+              className="brokerCustomButton iconesHeader"
+              onClick={handleConfig}
+            >
+              <FaCog size={20} />
+            </button>
+          )}
 
-          <Button
-            variant="link"
-            className="iconesHeader"
-            onClick={() =>
-              dispatchStorePrincipal(
-                abrirItemBarraLateralAction(nomeVariavelReducer),
-              )
-            }
+          <button
+            className="brokerCustomButton iconesHeader"
+            name={name}
+            onClick={handleClose}
           >
-            <span className="fa-stack hoverIconeFechar">
-              <MDBIcon icon="circle" className="fa-stack-2x" />
-              <MDBIcon
-                icon="times"
-                className="fa-stack-1x iconeFechar"
-                name={name}
-              />
-            </span>
-          </Button>
+            <img className="closeIcon" src={closeIcon} alt="Fechar" />
+          </button>
         </div>
       </div>
     );
   },
 );
-
-interface ModalHeaderCleanProps {
-  titulo?: string;
-  name?: string;
-  onClose?: (...data: any) => any;
-  className?: string;
-}
-
-// form configurar ordem start stop
-export const ModalHeaderClean: React.FC<ModalHeaderCleanProps> = ({
-  titulo,
-  name = "",
-  onClose,
-  children,
-  className = "",
-}) => {
-  let funcaoFechar: any;
-
-  const dispatchStorePrincipal = useDispatchStorePrincipal();
-
-  if (["config_compra", "config_venda"].includes(name)) {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const dispatch = useDispatchBoletas();
-    funcaoFechar = (e: any) => dispatch(fecharFormConfigurarAction(e));
-  } //
-  else if (name === "config_complementar") {
-    funcaoFechar = (e: any) =>
-      dispatchStorePrincipal(openCloseMultilegExtraConfigsAction());
-  }
-
-  if (onClose) {
-    funcaoFechar = onClose;
-  }
-
-  return (
-    <div className={`border-green mheader ${className}`}>
-      {children}
-      <h6 className="mtitle">{titulo}</h6>
-      <div className="wrapperIconesHeader">
-        <Button
-          variant="link"
-          className="iconesHeader"
-          onClick={(event) => funcaoFechar(event)}
-          name={name}
-        >
-          <span className="fa-stack">
-            <MDBIcon icon="circle" className="fa-stack-2x" />
-            <MDBIcon
-              icon="times"
-              className="fa-stack-1x iconeFechar"
-              name={name}
-            />
-          </span>
-        </Button>
-      </div>
-    </div>
-  );
-};
 
 const getNomeVariavelReducer = (headerTitle: string) => {
   switch (headerTitle) {

@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col, Button, Form } from "react-bootstrap";
-import { ModalHeaderClean } from "shared/componentes/PopupHeader";
+import { PopupHeader } from "shared/componentes/PopupHeader";
 import { connect } from "react-redux";
 import { updateMultilegStateAction } from "../duck/actions/MultilegActions";
 import { StorePrincipalContext } from "redux/StoreCreation";
@@ -9,8 +9,8 @@ class ConfigComplementar extends React.Component {
   render() {
     return (
       <div className="mcontent config_complementar">
-        <ModalHeaderClean
-          titulo="CONFIGURAÇÃO COMPLEMENTAR"
+        <PopupHeader
+          headerTitle="CONFIGURAÇÃO COMPLEMENTAR"
           name="config_complementar"
         />
 

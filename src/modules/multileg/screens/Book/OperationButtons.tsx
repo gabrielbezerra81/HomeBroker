@@ -2,7 +2,7 @@ import React from "react";
 
 import { Button } from "react-bootstrap";
 
-import CustomButton from "shared/componentes/Button";
+import CustomButton from "shared/componentes/CustomButton";
 
 import { updateMultilegTabAction } from "../../duck/actions/MultilegActions";
 import {
@@ -48,6 +48,8 @@ const OperationButtons: React.FC<Props> = ({ tabIndex }) => {
           </Button>
           <CustomButton
             onClick={() => dispatch(sendMultilegOrderAction(tabIndex))}
+            defaultClassName={false}
+            className="btn btn-primary btn-block btn-sm"
           >
             EXECUTAR
           </CustomButton>

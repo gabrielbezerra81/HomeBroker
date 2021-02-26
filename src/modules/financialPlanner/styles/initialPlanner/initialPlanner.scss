@@ -1,13 +1,7 @@
+@import "./rateConverter.scss";
+
 #initialPlanner {
   width: 1200px;
-
-  .mheader {
-    padding-bottom: 2px;
-
-    h6 {
-      font-size: 18px;
-    }
-  }
 
   .mcontent {
     background-color: #0f0f0f;
@@ -15,6 +9,14 @@
 
     > div {
       display: flex;
+    }
+
+    > .mheader {
+      padding-bottom: 2px;
+
+      h6 {
+        font-size: 18px;
+      }
     }
   }
 
@@ -31,6 +33,7 @@
 
     > div.simulatorRow {
       display: flex;
+      position: relative;
 
       & + div {
         margin-top: 8px;
@@ -70,6 +73,22 @@
       .interestRateInput {
         input {
           width: 77%;
+        }
+      }
+
+      .saveSimulationButton {
+        color: #ff8000;
+        border: 2px solid #ff8000;
+        border-radius: 1px;
+        position: absolute;
+        right: 90px;
+        bottom: 0;
+        width: 126px;
+        height: 26px;
+        display: flex;
+
+        > div.spinner-border {
+          color: #ff8000 !important;
         }
       }
     }

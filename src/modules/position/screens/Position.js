@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { MDBIcon } from "mdbreact";
 
 import DraggableModal from "shared/componentes/DraggableModal";
-import { ModalHeaderSemBook } from "shared/componentes/PopupHeader";
+import { PopupHeader } from "shared/componentes/PopupHeader";
 import { IconeConfigAbrirFormulario } from "shared/componentes/IconesConfigFormInterno";
 import { ReactComponent as IconeResumido } from "assets/rounded-rectangle.svg";
 import { ReactComponent as IconeAmpliado } from "assets/check-box-empty.svg";
@@ -113,10 +113,11 @@ class Position extends React.Component {
         renderModalBody={() => this.modalBody(props)}
         renderDivPosicaoEmCustodia={true}
         renderHeader={() => (
-          <ModalHeaderSemBook
+          <PopupHeader
             name={props.name}
             headerTitle={props.headerTitle}
             headerClass="border-green"
+            onConfig={() => {}}
           />
         )}
       />

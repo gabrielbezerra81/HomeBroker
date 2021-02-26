@@ -3,7 +3,7 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import { Tab, Row, Col, Nav } from "react-bootstrap";
 import DraggableModal from "shared/componentes/DraggableModal";
-import { ModalHeaderSemBook } from "shared/componentes/PopupHeader";
+import { PopupHeader } from "shared/componentes/PopupHeader";
 import AbaMultileg from "./AbaMultileg";
 import { StorePrincipalContext, GlobalContext } from "redux/StoreCreation";
 import {
@@ -138,10 +138,11 @@ class Multileg extends React.Component {
         renderModalBody={() => this.ModalBody()}
         renderConfigComplementar={this.props.configComplementarAberto}
         renderHeader={() => (
-          <ModalHeaderSemBook
+          <PopupHeader
             name={this.props.name}
             headerTitle={this.props.headerTitle}
             headerClass="border-green"
+            onConfig={() => {}}
           />
         )}
       />

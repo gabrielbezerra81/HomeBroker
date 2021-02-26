@@ -185,7 +185,7 @@ export const abrirFormConfigurarAction = (event, props) => {
 
 //Usado apenas na store local de cada sub-app para abrir os forms de configuração de start/stop movel
 export const fecharFormConfigurarAction = (event) => {
-  const name = event.target.getAttribute("name");
+  const name = event.currentTarget.getAttribute("name");
   return (dispatch) => {
     dispatch({
       type: FECHAR_FORMULARIO,

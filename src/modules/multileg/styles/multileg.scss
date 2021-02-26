@@ -31,7 +31,7 @@
     text-align: center;
   }
 
-  button {
+  button:not(.brokerCustomButton) {
     padding-top: 0.1rem !important;
   }
 

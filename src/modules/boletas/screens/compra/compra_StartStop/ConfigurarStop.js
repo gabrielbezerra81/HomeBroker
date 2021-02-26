@@ -12,16 +12,16 @@ import {
 import { mudarInputConfigAction } from "modules/boletas/duck/actions/boletaActions";
 import { CalculoValorTotalAgendada } from "shared/utils/CalculoValorTotal";
 import { fecharFormConfigurarAction } from "redux/actions/GlobalAppActions";
-import { ModalHeaderClean } from "shared/componentes/PopupHeader";
+import {  PopupHeader } from "shared/componentes/PopupHeader";
 import InputGroupGraphicConfigStartStop from "modules/boletas/components/BoletaGraphics/InputGroupGraphicConfigStartStop";
 
 class ConfigurarStop extends React.Component {
   render() {
     return (
       <div className="configDiv mcontent">
-        <ModalHeaderClean
-          funcaoFechar={(event) => this.props.fecharFormConfigurarAction(event)}
-          titulo="CONFIGURAR STOP"
+        <PopupHeader
+          onClose={(event) => this.props.fecharFormConfigurarAction(event)}
+          headerTitle="CONFIGURAR STOP"
           name="config_compra"
         />
         {modalBody(this.props)}

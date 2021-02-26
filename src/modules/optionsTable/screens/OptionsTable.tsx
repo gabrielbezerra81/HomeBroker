@@ -9,7 +9,7 @@ import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 import DraggablePopup from "shared/componentes/DraggablePopup/DraggablePopup";
-import { ModalHeaderClean } from "shared/componentes/PopupHeader";
+import { PopupHeader } from "shared/componentes/PopupHeader";
 
 import "../styles/OptionsTable.scss";
 import { OptionTableItem } from "../types/OptionsTableState";
@@ -373,7 +373,7 @@ const OptionsTable: React.FC = () => {
     >
       <div id="optionsTable">
         <div className="mcontent">
-          <ModalHeaderClean titulo="Mapa Panorâmico" onClose={onClose} />
+          <PopupHeader headerTitle="Mapa Panorâmico" onClose={onClose} />
 
           <div className="searchRow">
             <InputGroup>
