@@ -133,7 +133,7 @@ export const exportBoxToMultileg = async ({
         const newOffer =
           updatedMultilegTabs[tabIndex].tabelaMultileg[offerIndex];
 
-        newOffer.qtde = 100;
+        newOffer.qtde = offer.qtty;
         newOffer.cv = offer.offerType === "C" ? "compra" : "venda";
 
         //
