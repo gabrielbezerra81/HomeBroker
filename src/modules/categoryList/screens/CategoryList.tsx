@@ -211,7 +211,10 @@ const CategoryList: React.FC = () => {
     >
       <div id="categoryList">
         <div className="mcontent">
-          <PopupHeader onClose={onClose}>
+          <PopupHeader
+            onClose={onClose}
+            headerTitle="Mapa Panorâmico de Ativos"
+          >
             <button className="brokerCustomButton" onClick={handleAddCategory}>
               <IoMdAddCircle size={18} fill="#C4C4C4" /> Incluir nova categoria
             </button>
