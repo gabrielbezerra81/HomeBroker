@@ -17,7 +17,7 @@ const redirectURL =
 
 const TelaLogin = ({ path, keycloakLogin }) => {
   const [user, setUser] = useState({
-    username: location.hostname === "localhost" ? "adrianolourenco" : "",
+    username: location.hostname === "localhost" ? "gabrielAB" : "", // jcj443
     password: location.hostname === "localhost" ? "123456789" : "",
   });
 
@@ -42,17 +42,15 @@ const TelaLogin = ({ path, keycloakLogin }) => {
     (e) => {
       e.preventDefault();
 
-      // if (location.hostname === "localhost") {
-      // dispatch(logarUsuarioAction(user.username, user.password));
-      // setUser({ ...user, password: "" });
-      // } //
-      // else {
-      // keycloakAuth();
-      // }
-
-      keycloakAuth();
+      if (location.hostname === "localhost") {
+        dispatch(logarUsuarioAction(user.username, user.password));
+        setUser({ ...user, password: "" });
+      } //
+      else {
+        keycloakAuth();
+      }
     },
-    [keycloakAuth],
+    [dispatch, keycloakAuth, user],
   );
 
   const handleInputChange = useCallback((e) => {
