@@ -91,4 +91,4 @@ export const url_updateCategoryTitle_title_ids = "favorite/groups/";
 export const url_deleteCategories_ids = "favorite/list?ids=";
 
 // Planejador financeiro
-export const url_saveSimulation ="projections/user"
+export const url_saveSimulation ="projections"

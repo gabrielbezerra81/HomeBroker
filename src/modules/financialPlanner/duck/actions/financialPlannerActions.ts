@@ -68,6 +68,8 @@ export const handleSaveSimulationAction = (): MainThunkAction => {
 
     try {
       await api.post(url_saveSimulation, payload);
+
+      alert("Simulação salva com sucesso!");
     } catch (error) {
       alert("Falha ao salvar simulação");
     }
