@@ -257,10 +257,22 @@ const InitialPlanner: React.FC = () => {
 
       if (name === "contributionPeriodicity") {
         payload.ratePeriodicity = value;
+
+        setTimeout(() => {
+          alert(
+            "Ao mudar a frequência do aporte também será modificada a frequência dos juros. Ambas devem ser iguais.",
+          );
+        }, 50);
       }
 
       if (name === "ratePeriodicity") {
         payload.contributionPeriodicity = value;
+
+        setTimeout(() => {
+          alert(
+            "Ao mudar a frequência dos juros também será modificada a frequência do aporte. Ambas devem ser iguais.",
+          );
+        }, 50);
       }
 
       dispatch(updateInitialPlannerStateAction(payload));
