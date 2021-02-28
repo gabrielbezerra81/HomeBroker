@@ -8,7 +8,7 @@ import cogIcon from "assets/multiBox/cogIcon.png";
 import openInNewIcon from "assets/multiBox/openInNewIcon.png";
 import zoomIcon from "assets/multiBox/zoomIcon.png";
 
-import SymbolCard from "../SymbolCard";
+import SymbolCard from "../../../../shared/components/SymbolCard/SymbolCard";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import {

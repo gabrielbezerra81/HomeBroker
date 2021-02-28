@@ -24,7 +24,7 @@ import Tab3Position from "./tab3Position/Tab3Position";
 import Tab4Alerts from "./tab4Alerts/Tab4Alerts";
 import Tab5IncludeStructure from "./tab5IncludeStructure/Tab5IncludeStructure";
 
-import SymbolCard from "./SymbolCard";
+import SymbolCard from "../../../shared/components/SymbolCard/SymbolCard";
 import { IoMdRepeat } from "react-icons/io";
 import api from "api/apiConfig";
 import { url_updateBoxConfig_id } from "api/url";
