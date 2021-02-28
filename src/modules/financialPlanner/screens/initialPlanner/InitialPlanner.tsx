@@ -126,7 +126,7 @@ const InitialPlanner: React.FC = () => {
       totalInvested,
       total,
       totalIncome,
-      formattedTotal: `R$ ${formatarNumDecimal(gained + addedValue)}`,
+      formattedTotal: `R$ ${formatarNumDecimal(gained + addedValue, 2)}`,
       formattedTotalInvested: `R$ ${formatarNumDecimal(totalInvested)}`,
       formattedTotalIncome: `R$ ${formatarNumDecimal(totalIncome, 2)}`,
     };
@@ -169,6 +169,8 @@ const InitialPlanner: React.FC = () => {
       periodicity,
       ratePeriodicity,
     });
+
+    console.log(periods);
 
     let excludedPeriodsFromContrib = 1;
 

@@ -150,7 +150,7 @@ export function convertPeriodByRatePeriodicity({
       return periodValue * 12;
     } //
     else if (periodicity === "semanas") {
-      const months = +((periodValue / 52.1429) * 12).toFixed(0);
+      const months = Math.floor((periodValue / 52.1429) * 12);
 
       return months;
     }
@@ -161,12 +161,12 @@ export function convertPeriodByRatePeriodicity({
   // Se tiver calculando com taxa semanal, precisa obter as semanas a partir dos meses ou anos
   if (ratePeriodicity === "por semana") {
     if (periodicity === "anos") {
-      const weeks = +(periodValue * 52.1429).toFixed(0);
+      const weeks = Math.floor(periodValue * 52.1429);
 
       return weeks;
     } //
     else if (periodicity === "meses") {
-      const weeks = +((periodValue / 12) * 52.1429).toFixed(0);
+      const weeks = Math.floor((periodValue / 12) * 52.1429);
 
       return weeks;
     }
