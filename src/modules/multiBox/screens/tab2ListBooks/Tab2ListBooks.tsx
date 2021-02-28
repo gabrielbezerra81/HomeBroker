@@ -37,6 +37,7 @@ const Tab2ListBooks: React.FC<Props> = ({ multiBox }) => {
     stockSymbolData,
     symbolInput,
     topSymbols,
+    toggleShowId,
   } = multiBox;
 
   const structureData = useMemo(() => {
@@ -66,7 +67,13 @@ const Tab2ListBooks: React.FC<Props> = ({ multiBox }) => {
     );
   }, [dispatch, id]);
 
-  const handleConfig = useCallback(() => {}, []);
+  const handleConfig = useCallback(() => {
+    dispatch(
+      updateBoxAttrAction(id, {
+        toggleShowId: !toggleShowId,
+      }),
+    );
+  }, [dispatch, id, toggleShowId]);
 
   const handleClose = useCallback(async () => {
     dispatch(handleDeleteBoxAction(multiBox.id));

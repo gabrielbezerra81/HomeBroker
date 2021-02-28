@@ -34,7 +34,7 @@ interface Props {
   multiBox: MultiBoxData;
 }
 
-const bounds = { left: 0, top: 0 };
+const bounds = { left: -26, top: 0 };
 
 const MultiBox: React.FC<Props> = ({ multiBox }) => {
   const {
@@ -44,7 +44,7 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
 
   const dispatch = useDispatchStorePrincipal();
 
-  const { id, topSymbols, strikeViewMode } = multiBox;
+  const { id, topSymbols, strikeViewMode, toggleShowId } = multiBox;
 
   const structureData = useMemo(() => {
     return boxesTab1Data.find((data) => data.boxId === multiBox.id);
@@ -292,6 +292,19 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
               <Tab5SearchIcon className="tab5" />
             </button>
           </div>
+
+          {toggleShowId && (
+            <span
+              style={{
+                position: "absolute",
+                right: -175,
+                fontWeight: "bold",
+                top: 8,
+              }}
+            >
+              Cód. da estrutura: {structureData?.structureID}
+            </span>
+          )}
         </div>
       </div>
     </Draggable>

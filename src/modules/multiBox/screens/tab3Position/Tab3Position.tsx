@@ -36,6 +36,7 @@ const Tab3Position: React.FC<Props> = ({ multiBox }) => {
     symbolInput,
     stockSymbolData,
     boxPositions,
+    toggleShowId,
   } = multiBox;
 
   const [savingPositions, setSavingPositions] = useState(false);
@@ -59,7 +60,13 @@ const Tab3Position: React.FC<Props> = ({ multiBox }) => {
     );
   }, [dispatch, multiBox.id]);
 
-  const handleConfig = useCallback(() => {}, []);
+  const handleConfig = useCallback(() => {
+    dispatch(
+      updateBoxAttrAction(id, {
+        toggleShowId: !toggleShowId,
+      }),
+    );
+  }, [dispatch, id, toggleShowId]);
 
   const handleClose = useCallback(async () => {
     dispatch(handleDeleteBoxAction(multiBox.id));
@@ -203,7 +210,7 @@ const Tab3Position: React.FC<Props> = ({ multiBox }) => {
             </th>
             <th>Qtde</th>
             <th>Preço méd.</th>
-            <th>Ordens exec.</th>
+            {/* <th>Ordens exec.</th> */}
           </tr>
         </thead>
         <tbody>

@@ -119,12 +119,22 @@ export interface MultiBoxData {
   alertPrice: number;
   stockSymbolData: StockSymbolData | null;
   boxPositions: Array<BoxPosition>;
+  toggleShowId?: boolean;
 }
 
 type Tab1Keys = keyof Omit<Tab1Data, "codes" | "book">;
 
 export type FormattedTab1Data = Record<Tab1Keys, string> &
   Pick<Tab1Data, "codes" | "book">;
+
+export interface ParsedConfiguration {
+  tabKey: string;
+  boxId: string;
+  position: {
+    x: number;
+    y: number;
+  };
+}
 
 export interface BoxSymbolData {
   symbol: string;

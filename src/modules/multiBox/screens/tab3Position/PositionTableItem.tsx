@@ -127,7 +127,7 @@ const PositionTableItem: React.FC<Props> = ({
           />
         </div>
       </td>
-      <td>C 1.8K/25</td>
+      {/* <td>C 1.8K/25</td> */}
     </tr>
   );
 };

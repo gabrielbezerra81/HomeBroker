@@ -47,6 +47,7 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
     strikeViewMode,
     stockSymbol,
     stockSymbolData,
+    toggleShowId,
   } = multiBox;
 
   const [searchingSymbolAPI, setSearchingSymbolAPI] = useState(false);
@@ -107,7 +108,13 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
     );
   }, [dispatch, id]);
 
-  const handleConfig = useCallback(() => {}, []);
+  const handleConfig = useCallback(() => {
+    dispatch(
+      updateBoxAttrAction(id, {
+        toggleShowId: !toggleShowId,
+      }),
+    );
+  }, [dispatch, id, toggleShowId]);
 
   const handleClose = useCallback(async () => {
     dispatch(handleDeleteBoxAction(multiBox.id));

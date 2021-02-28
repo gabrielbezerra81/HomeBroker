@@ -35,7 +35,7 @@ const Tab0: React.FC<Props> = ({ multiBox }) => {
 
   const dispatch = useDispatchStorePrincipal();
 
-  const { stockSymbolData, id, symbolInput } = multiBox;
+  const { stockSymbolData, id, symbolInput, toggleShowId } = multiBox;
 
   const structureData = useMemo(() => {
     return boxesTab1Data.find((data) => data.boxId === multiBox.id);
@@ -64,7 +64,13 @@ const Tab0: React.FC<Props> = ({ multiBox }) => {
     );
   }, [dispatch, multiBox.id]);
 
-  const handleConfig = useCallback(() => {}, []);
+  const handleConfig = useCallback(() => {
+    dispatch(
+      updateBoxAttrAction(id, {
+        toggleShowId: !toggleShowId,
+      }),
+    );
+  }, [dispatch, id, toggleShowId]);
 
   const handleClose = useCallback(async () => {
     dispatch(handleDeleteBoxAction(multiBox.id));
