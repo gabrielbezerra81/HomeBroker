@@ -69,8 +69,8 @@ export const listarTabelaInicialTHLAPIAction = (
       let structures = [];
       if (initialLoad) {
         const data = await getTHLInitialDataAPI(symbol, type);
-        lines = data.lines;
-        structures = data.structures;
+        lines = data.lines || [];
+        structures = data.structures || [];
 
         const integerStrikes = [
           ...new Set(lines.map((line: any) => parseInt(line.strikeLine))),
@@ -95,8 +95,8 @@ export const listarTabelaInicialTHLAPIAction = (
           type,
         );
 
-        structures = data.structures;
-        lines = data.lines;
+        structures = data.structures || [];
+        lines = data.lines || [];
       }
 
       try {

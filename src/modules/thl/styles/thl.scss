@@ -57,9 +57,9 @@
 }
 
 .containerPesquisaAtivo {
-  width: calc(100% - 153px);
+  width: calc(100% - 147px);
   position: fixed; /*  */
-  top: 39px;
+  top: 36px;
   margin-left: 103px;
   display: flex;
   z-index: 1;
@@ -162,7 +162,7 @@
 
 .thlTopButtonsContainer {
   position: fixed;
-  top: 43px;
+  top: 40px;
   display: flex;
   z-index: 3;
   right: 45px;
