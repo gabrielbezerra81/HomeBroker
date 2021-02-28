@@ -2,8 +2,8 @@ import React from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { Tab, Row, Col, Nav } from "react-bootstrap";
-import DraggableModal from "shared/componentes/DraggableModal";
-import { PopupHeader } from "shared/componentes/PopupHeader";
+import DraggableModal from "shared/components/DraggableModal";
+import { PopupHeader } from "shared/components/PopupHeader";
 import AbaMultileg from "./AbaMultileg";
 import { StorePrincipalContext, GlobalContext } from "redux/StoreCreation";
 import {

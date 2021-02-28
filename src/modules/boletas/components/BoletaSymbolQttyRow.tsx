@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { Row, Col, Form, InputGroup, Spinner } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
-import CustomInput from "shared/componentes/CustomInput";
+import CustomInput from "shared/components/CustomInput";
 import { BoletaNamespace } from "constants/ActionTypes";
 import useStateBoletas from "hooks/useStateBoletas";
 import useDispatchBoletas from "hooks/useDispatchBoletas";

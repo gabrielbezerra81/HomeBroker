@@ -6,7 +6,7 @@ import {
   formatarNumDecimal,
   formatarQuantidadeKMG,
 } from "shared/utils/Formatacoes";
-import EmblemaSimples from "shared/componentes/EmblemaSimples";
+import EmblemaSimples from "shared/components/EmblemaSimples";
 import { StorePrincipalContext } from "redux/StoreCreation";
 
 class PosicaoAmpliadaResumida extends React.Component {

@@ -6,7 +6,7 @@ import {
   MultiBoxData,
 } from "modules/multiBox/types/MultiBoxState";
 import React, { useCallback, useMemo } from "react";
-import CustomInput from "shared/componentes/CustomInput";
+import CustomInput from "shared/components/CustomInput";
 import SymbolCard from "../SymbolCard";
 
 interface Props {

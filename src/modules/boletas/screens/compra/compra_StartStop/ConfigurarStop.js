@@ -2,7 +2,7 @@ import React from "react";
 // @ts-ignore
 import { connect } from "react-redux";
 import configurarStop from "assets/compra/configurarStop.PNG";
-import IconeConfigGrafico from "shared/componentes/IconeConfigGrafico";
+import IconeConfigGrafico from "shared/components/IconeConfigGrafico";
 import { COMPRA_STARTSTOP_NAMESPACE } from "constants/ActionTypes";
 import {
   LabelInputGrafico,
@@ -12,7 +12,7 @@ import {
 import { mudarInputConfigAction } from "modules/boletas/duck/actions/boletaActions";
 import { CalculoValorTotalAgendada } from "shared/utils/CalculoValorTotal";
 import { fecharFormConfigurarAction } from "redux/actions/GlobalAppActions";
-import {  PopupHeader } from "shared/componentes/PopupHeader";
+import {  PopupHeader } from "shared/components/PopupHeader";
 import InputGroupGraphicConfigStartStop from "modules/boletas/components/BoletaGraphics/InputGroupGraphicConfigStartStop";
 
 class ConfigurarStop extends React.Component {

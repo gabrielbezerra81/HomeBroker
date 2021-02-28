@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { Form } from "react-bootstrap";
-import CustomInput, { boxShadowInput } from "shared/componentes/CustomInput";
+import CustomInput, { boxShadowInput } from "shared/components/CustomInput";
 import { mudarAtributoBoletaAction } from "modules/boletas/duck/actions/boletaActions";
 import useDispatchBoletas from "hooks/useDispatchBoletas";
 import useStateBoletas from "hooks/useStateBoletas";

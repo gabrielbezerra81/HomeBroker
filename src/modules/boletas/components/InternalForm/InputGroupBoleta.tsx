@@ -1,8 +1,8 @@
 import React, { useMemo } from "react";
 import { Row, Col, Form } from "react-bootstrap";
-import CustomInput, { boxShadowInput } from "shared/componentes/CustomInput";
+import CustomInput, { boxShadowInput } from "shared/components/CustomInput";
 import { mudarAtributoBoletaAction } from "modules/boletas/duck/actions/boletaActions";
-import { IconeConfigAbrirFormulario } from "shared/componentes/IconesConfigFormInterno";
+import { IconeConfigAbrirFormulario } from "shared/components/IconesConfigFormInterno";
 import {
   BoletaNamespace,
   COMPRA_STARTSTOP_NAMESPACE,

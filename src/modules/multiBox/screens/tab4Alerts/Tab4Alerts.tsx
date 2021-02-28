@@ -8,7 +8,7 @@ import cogIcon from "assets/multiBox/cogIcon.png";
 import openInNewIcon from "assets/multiBox/openInNewIcon.png";
 import zoomIcon from "assets/multiBox/zoomIcon.png";
 
-import CustomInput from "shared/componentes/CustomInput";
+import CustomInput from "shared/components/CustomInput";
 import BoxDateSelector from "./BoxDateSelector";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import {

@@ -12,8 +12,8 @@ import {
   Legend,
   ReferenceLine,
 } from "recharts";
-import DraggableModal from "shared/componentes/DraggableModal";
-import { PopupHeader } from "shared/componentes/PopupHeader";
+import DraggableModal from "shared/components/DraggableModal";
+import { PopupHeader } from "shared/components/PopupHeader";
 import Tabela1Custos from "./Tabela1Custos";
 import Tabela2ProximaOrdem from "./Tabela2ProximaOrdem";
 import EmblemaRelatorio from "./EmblemaRelatorio";

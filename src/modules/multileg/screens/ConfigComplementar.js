@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col, Button, Form } from "react-bootstrap";
-import { PopupHeader } from "shared/componentes/PopupHeader";
+import { PopupHeader } from "shared/components/PopupHeader";
 import { connect } from "react-redux";
 import { updateMultilegStateAction } from "../duck/actions/MultilegActions";
 import { StorePrincipalContext } from "redux/StoreCreation";

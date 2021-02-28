@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import { PieChart, Pie, Cell, Legend, ResponsiveContainer } from "recharts";
 
 import { FormControl, Table } from "react-bootstrap";
-import CustomInput from "shared/componentes/CustomInput";
+import CustomInput from "shared/components/CustomInput";
 
 const data = [
   { name: "Pós-fixados", value: 600 },

@@ -2,11 +2,11 @@ import React from "react";
 
 import { connect } from "react-redux";
 import { Row } from "react-bootstrap";
-import DraggableModal from "shared/componentes/DraggableModal";
+import DraggableModal from "shared/components/DraggableModal";
 import FormInternoVendaLimitada from "./FormInternoVendaLimitada";
 import GraficoVendaLimitada from "./GraficoVendaLimitada";
 import BodyHeaderVendaLimitada from "./BodyHeaderVendaLimitada";
-import { ModalHeader } from "shared/componentes/PopupHeader";
+import { ModalHeader } from "shared/components/PopupHeader";
 import { VENDA_LIMITADA_NAMESPACE } from "constants/ActionTypes";
 
 class VendaLimitada extends React.Component {

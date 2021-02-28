@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from "react";
 import { Table, Row, Col, Form } from "react-bootstrap";
-import IconeConfigGrafico from "shared/componentes/IconeConfigGrafico";
+import IconeConfigGrafico from "shared/components/IconeConfigGrafico";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import {
   updateMultilegPriceAction,
@@ -12,7 +12,7 @@ import {
   calcularTotal,
   verificaCalculoSemBook,
 } from "../CalculoPreco";
-import CustomInput from "shared/componentes/CustomInput";
+import CustomInput from "shared/components/CustomInput";
 import { formatarNumero } from "shared/utils/Formatacoes";
 import DateSelector from "./DateSelector";
 import NumberFormat from "react-number-format";

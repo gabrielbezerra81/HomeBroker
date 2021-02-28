@@ -18,7 +18,7 @@ import { COMPRA_LIMITADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalLimitada } from "shared/utils/CalculoValorTotal";
 import BoletaSymbolQttyRow from "modules/boletas/components/BoletaSymbolQttyRow";
 import { pesquisarAtivoOnEnterAction } from "modules/boletas/duck/actions/boletasAPIActions";
-import CustomInput from "shared/componentes/CustomInput";
+import CustomInput from "shared/components/CustomInput";
 import { BoletaSendOrderButton } from "modules/boletas/components/BoletaSendOrderButton";
 import { BoletasState } from "redux/reducers";
 import BoletaOrderInfo from "modules/boletas/types/BoletaOrderInfo";

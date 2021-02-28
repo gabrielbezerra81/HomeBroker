@@ -11,7 +11,7 @@ import TabelaOrdens from "./TabelaOrdens";
 import BoletaDateSelector from "modules/boletas/components/BoletaDateSelector";
 import BoletaSignature from "modules/boletas/components/BoletaSignature";
 import BoletaSymbolQttyRow from "modules/boletas/components/BoletaSymbolQttyRow";
-import CustomInput from "shared/componentes/CustomInput";
+import CustomInput from "shared/components/CustomInput";
 import { BoletaSendOrderButton } from "modules/boletas/components/BoletaSendOrderButton";
 import InputGroupStopMovel from "modules/boletas/components/InternalForm/InputGroupStopMovel";
 import BoletaOrderInfo from "modules/boletas/types/BoletaOrderInfo";

@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 
-import DraggableModal from "shared/componentes/DraggableModal";
+import DraggableModal from "shared/components/DraggableModal";
 import { connect } from "react-redux";
 import {
   mudarQtdAction,
@@ -11,7 +11,7 @@ import {
   mostrarErroQtdeOnBlurAction,
 } from "../../duck/actions/bookOfertaActions";
 import TabelaOfertas from "./TabelaOfertas";
-import { BookHeader } from "shared/componentes/PopupHeader";
+import { BookHeader } from "shared/components/PopupHeader";
 
 class BookOfertas extends React.Component {
   render() {

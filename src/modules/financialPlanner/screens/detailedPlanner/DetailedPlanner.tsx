@@ -2,8 +2,8 @@ import React, { useCallback } from "react";
 
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
-import DraggablePopup from "shared/componentes/DraggablePopup/DraggablePopup";
-import { PopupHeader } from "shared/componentes/PopupHeader";
+import DraggablePopup from "shared/components/DraggablePopup/DraggablePopup";
+import { PopupHeader } from "shared/components/PopupHeader";
 import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 import WalletEvolution from "./walletEvolution/WalletEvolution";
 import PlannerProjection from "./plannerProjection/PlannerProjection";

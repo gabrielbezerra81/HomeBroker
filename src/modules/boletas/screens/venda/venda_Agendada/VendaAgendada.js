@@ -2,11 +2,11 @@ import React from "react";
 
 import { connect } from "react-redux";
 import { Row } from "react-bootstrap";
-import DraggableModal from "shared/componentes/DraggableModal";
+import DraggableModal from "shared/components/DraggableModal";
 import FormInternoVendaAgendada from "./FormInternoVendaAgendada";
 import GraficoVendaAgendada from "./GraficoVendaAgendada";
 import BodyHeaderVendaAgendada from "./BodyHeaderVendaAgendada";
-import { ModalHeader } from "shared/componentes/PopupHeader";
+import { ModalHeader } from "shared/components/PopupHeader";
 import { VENDA_AGENDADA_NAMESPACE } from "constants/ActionTypes";
 
 class VendaAgendada extends React.Component {

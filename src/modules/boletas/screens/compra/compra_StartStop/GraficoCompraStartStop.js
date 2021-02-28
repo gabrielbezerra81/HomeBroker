@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Form } from "react-bootstrap";
 import { connect } from "react-redux";
-import IconeConfigGrafico from "shared/componentes/IconeConfigGrafico";
+import IconeConfigGrafico from "shared/components/IconeConfigGrafico";
 import graficoCompraStartStop from "assets/compra/CompraModeloNovo.png";
 import {
   LabelInputGrafico,

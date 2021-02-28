@@ -2,11 +2,11 @@ import React from "react";
 
 import { connect } from "react-redux";
 import { Row } from "react-bootstrap";
-import DraggableModal from "shared/componentes/DraggableModal";
+import DraggableModal from "shared/components/DraggableModal";
 import FormInternoVendaMercado from "./FormInternoVendaMercado";
 import GraficoVendaMercado from "./GraficoVendaMercado";
 import BodyHeaderVendaMercado from "./BodyHeaderVendaMercado";
-import { ModalHeader } from "shared/componentes/PopupHeader";
+import { ModalHeader } from "shared/components/PopupHeader";
 import { VENDA_MERCADO_NAMESPACE } from "constants/ActionTypes";
 
 class VendaMercado extends React.Component {

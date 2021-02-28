@@ -7,7 +7,7 @@ import moment from "moment";
 
 import { Select } from "antd";
 
-import CustomInput from "shared/componentes/CustomInput";
+import CustomInput from "shared/components/CustomInput";
 
 import modelEUImage from "assets/modeloEU.png";
 // import ModelUSAImage from "assets/modeloUSA2.svg";

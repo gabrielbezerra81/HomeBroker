@@ -2,7 +2,7 @@ import React from "react";
 
 import { Button } from "react-bootstrap";
 
-import CustomButton from "shared/componentes/CustomButton";
+import CustomButton from "shared/components/CustomButton";
 
 import { updateMultilegTabAction } from "../../duck/actions/MultilegActions";
 import {

@@ -3,7 +3,7 @@ import { Form } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import { Select } from "antd";
 
-import CustomInput from "shared/componentes/CustomInput";
+import CustomInput from "shared/components/CustomInput";
 import { findMultilegQuote, findMultilegBook } from "../duck/actions/utils";
 import { formatarNumDecimal, formatExpiration } from "shared/utils/Formatacoes";
 import modelEUImage from "assets/modeloEU.png";

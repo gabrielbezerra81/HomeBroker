@@ -1,11 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Row } from "react-bootstrap";
-import DraggableModal from "shared/componentes/DraggableModal";
+import DraggableModal from "shared/components/DraggableModal";
 import FormInternoCompraAgendada from "./FormInternoCompraAgendada";
 import GraficoCompraAgendada from "./GraficoCompraAgendada";
 import BodyHeaderCompraAgendada from "./BodyHeaderCompraAgendada";
-import { ModalHeader } from "shared/componentes/PopupHeader";
+import { ModalHeader } from "shared/components/PopupHeader";
 import { COMPRA_AGENDADA_NAMESPACE } from "constants/ActionTypes";
 
 class CompraAgendada extends React.Component {

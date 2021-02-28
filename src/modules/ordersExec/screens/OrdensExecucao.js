@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Row, Table, ProgressBar } from "react-bootstrap";
-import DraggableModal from "shared/componentes/DraggableModal";
-import { PopupHeader } from "shared/componentes/PopupHeader";
+import DraggableModal from "shared/components/DraggableModal";
+import { PopupHeader } from "shared/components/PopupHeader";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { compose } from "redux";
 import { connect } from "react-redux";

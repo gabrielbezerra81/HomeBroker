@@ -4,9 +4,9 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import { MDBIcon } from "mdbreact";
 
-import DraggableModal from "shared/componentes/DraggableModal";
-import { PopupHeader } from "shared/componentes/PopupHeader";
-import { IconeConfigAbrirFormulario } from "shared/componentes/IconesConfigFormInterno";
+import DraggableModal from "shared/components/DraggableModal";
+import { PopupHeader } from "shared/components/PopupHeader";
+import { IconeConfigAbrirFormulario } from "shared/components/IconesConfigFormInterno";
 import { ReactComponent as IconeResumido } from "assets/rounded-rectangle.svg";
 import { ReactComponent as IconeAmpliado } from "assets/check-box-empty.svg";
 

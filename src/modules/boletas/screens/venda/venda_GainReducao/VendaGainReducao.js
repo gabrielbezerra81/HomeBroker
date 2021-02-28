@@ -2,11 +2,11 @@ import React from "react";
 
 import { connect } from "react-redux";
 import { Row } from "react-bootstrap";
-import DraggableModal from "shared/componentes/DraggableModal";
+import DraggableModal from "shared/components/DraggableModal";
 import FormInternoVendaGainReducao from "./FormInternoVendaGainReducao";
 import GraficoVendaGainReducao from "./GraficoVendaGainReducao";
 import BodyHeaderVendaGainReducao from "./BodyHeaderVendaGainReducao";
-import { ModalHeader } from "shared/componentes/PopupHeader";
+import { ModalHeader } from "shared/components/PopupHeader";
 import { VENDA_GAINREDUCAO_NAMESPACE } from "constants/ActionTypes";
 
 class VendaGainReducao extends React.Component {

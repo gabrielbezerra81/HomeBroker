@@ -9,7 +9,7 @@ import { Order } from "modules/ordersExec/types/ordersExec";
 import { updateManyOrdersExecStateAction } from "modules/ordersExec/duck/actions/OrdensExecActions";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { updateOneSystemStateAction } from "redux/actions/system/SystemActions";
-import CustomTooltip from "shared/componentes/CustomTooltip";
+import CustomTooltip from "shared/components/CustomTooltip";
 
 interface ResumedOrderItemProps {
   order: Order;

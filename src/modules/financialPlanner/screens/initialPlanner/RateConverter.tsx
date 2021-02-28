@@ -2,8 +2,8 @@ import React, { useCallback, useMemo, useState } from "react";
 
 import Draggable from "react-draggable";
 
-import CustomInput from "shared/componentes/CustomInput";
-import { PopupHeader } from "shared/componentes/PopupHeader";
+import CustomInput from "shared/components/CustomInput";
+import { PopupHeader } from "shared/components/PopupHeader";
 
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { updateInitialPlannerStateAction } from "modules/financialPlanner/duck/actions/financialPlannerActions";

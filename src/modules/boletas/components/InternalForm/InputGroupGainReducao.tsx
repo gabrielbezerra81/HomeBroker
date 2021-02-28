@@ -10,7 +10,7 @@ import {
   mudarQtdAction,
   mudarAtributoBoletaAction,
 } from "modules/boletas/duck/actions/boletaActions";
-import CustomInput from "../../../../shared/componentes/CustomInput";
+import CustomInput from "../../../../shared/components/CustomInput";
 
 interface Props {
   namespace: BoletaNamespace;

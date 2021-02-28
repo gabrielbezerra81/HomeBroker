@@ -2,11 +2,11 @@ import React from "react";
 
 import { connect, ConnectedProps } from "react-redux";
 import { Row } from "react-bootstrap";
-import DraggableModal from "shared/componentes/DraggableModal";
+import DraggableModal from "shared/components/DraggableModal";
 import FormInternoCompraLimitada from "./FormInternoCompraLimitada";
 import GraficoCompraLimitada from "./GraficoCompraLimitada";
 import BodyHeaderCompraLimitada from "./BodyHeaderCompraLimitada";
-import { ModalHeader } from "shared/componentes/PopupHeader";
+import { ModalHeader } from "shared/components/PopupHeader";
 import { BoletasState } from "redux/reducers";
 import BoletaOrderInfo from "modules/boletas/types/BoletaOrderInfo";
 import { COMPRA_LIMITADA_NAMESPACE } from "constants/ActionTypes";

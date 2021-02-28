@@ -2,11 +2,11 @@ import React from "react";
 
 import { connect } from "react-redux";
 import { Row } from "react-bootstrap";
-import DraggableModal from "shared/componentes/DraggableModal";
+import DraggableModal from "shared/components/DraggableModal";
 import FormInternoVendaStartStop from "./FormInternoVendaStartStop";
 import GraficoVendaStartStop from "./GraficoVendaStartStop";
 import BodyHeaderVendaStartStop from "./BodyHeaderVendaStartStop";
-import { ModalHeader } from "shared/componentes/PopupHeader";
+import { ModalHeader } from "shared/components/PopupHeader";
 import { VENDA_STARTSTOP_NAMESPACE } from "constants/ActionTypes";
 
 class VendaStartStop extends React.Component {

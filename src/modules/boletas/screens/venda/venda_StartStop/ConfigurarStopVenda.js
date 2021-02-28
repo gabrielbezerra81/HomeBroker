@@ -1,7 +1,7 @@
 import React from "react";
 import configurarStop from "assets/venda/VendaConfigurar.png";
 import { connect } from "react-redux";
-import IconeConfigGrafico from "shared/componentes/IconeConfigGrafico";
+import IconeConfigGrafico from "shared/components/IconeConfigGrafico";
 import { mostrarConfigurarStopAction } from "modules/boletas/duck/actions/compraStartStopActions";
 import { VENDA_STARTSTOP_NAMESPACE } from "constants/ActionTypes";
 import {
@@ -12,7 +12,7 @@ import {
 import { mudarInputConfigAction } from "modules/boletas/duck/actions/boletaActions";
 import { CalculoValorTotalAgendada } from "shared/utils/CalculoValorTotal";
 import { fecharFormConfigurarAction } from "redux/actions/GlobalAppActions";
-import { PopupHeader } from "shared/componentes/PopupHeader";
+import { PopupHeader } from "shared/components/PopupHeader";
 import InputGroupGraphicConfigStartStop from "modules/boletas/components/BoletaGraphics/InputGroupGraphicConfigStartStop";
 
 class ConfigurarStopVenda extends React.Component {

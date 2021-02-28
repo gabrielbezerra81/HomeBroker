@@ -12,7 +12,7 @@ import React, {
 import { IoMdAddCircle } from "react-icons/io";
 
 import Draggable, { DraggableData } from "react-draggable";
-import { PopupHeader } from "shared/componentes/PopupHeader";
+import { PopupHeader } from "shared/components/PopupHeader";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import CategoryTable from "./CategoryTable";
 import bringToForegroundOnMount from "shared/utils/PopupLifeCycle/bringToForegroundOnMount";

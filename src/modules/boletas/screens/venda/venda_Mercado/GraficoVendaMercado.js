@@ -3,7 +3,7 @@ import { Col, Form } from "react-bootstrap";
 import { connect } from "react-redux";
 
 import img from "assets/venda/VendaAgendada.png";
-import IconeConfigGrafico from "shared/componentes/IconeConfigGrafico";
+import IconeConfigGrafico from "shared/components/IconeConfigGrafico";
 import {
   LabelInputGrafico,
   TextoGainStopGrafico,

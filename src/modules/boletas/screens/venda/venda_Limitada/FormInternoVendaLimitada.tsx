@@ -9,7 +9,7 @@ import BoletaSignature from "modules/boletas/components/BoletaSignature";
 import { VENDA_LIMITADA_NAMESPACE } from "constants/ActionTypes";
 import { CalculoValorTotalLimitada } from "shared/utils/CalculoValorTotal";
 import BoletaSymbolQttyRow from "modules/boletas/components/BoletaSymbolQttyRow";
-import CustomInput from "shared/componentes/CustomInput";
+import CustomInput from "shared/components/CustomInput";
 import { BoletaSendOrderButton } from "modules/boletas/components/BoletaSendOrderButton";
 import InputGroupBoleta from "modules/boletas/components/InternalForm/InputGroupBoleta";
 import BoletaOrderInfo from "modules/boletas/types/BoletaOrderInfo";

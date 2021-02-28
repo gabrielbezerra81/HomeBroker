@@ -1,6 +1,6 @@
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { BodyHeaderCompleto } from "shared/componentes/PopupBodyHeader";
+import { BodyHeaderCompleto } from "shared/components/PopupBodyHeader";
 import { BoletasState } from "redux/reducers";
 
 class BodyHeaderCompraLimitada extends React.Component<PropsFromRedux> {

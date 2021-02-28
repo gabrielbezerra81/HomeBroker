@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { BodyHeaderCompleto } from "shared/componentes/PopupBodyHeader";
+import { BodyHeaderCompleto } from "shared/components/PopupBodyHeader";
 
 class BodyHeaderVendaLimitada extends React.Component {
   render() {

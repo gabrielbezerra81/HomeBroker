@@ -8,8 +8,8 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
-import DraggablePopup from "shared/componentes/DraggablePopup/DraggablePopup";
-import { PopupHeader } from "shared/componentes/PopupHeader";
+import DraggablePopup from "shared/components/DraggablePopup/DraggablePopup";
+import { PopupHeader } from "shared/components/PopupHeader";
 
 import "../styles/OptionsTable.scss";
 import { OptionTableItem } from "../types/OptionsTableState";

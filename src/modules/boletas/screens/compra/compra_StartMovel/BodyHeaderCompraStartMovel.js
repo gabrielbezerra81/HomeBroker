@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { BodyHeaderAtivo } from "shared/componentes/PopupBodyHeader";
+import { BodyHeaderAtivo } from "shared/components/PopupBodyHeader";
 
 class BodyHeaderCompraStartMovel extends React.Component {
   render() {

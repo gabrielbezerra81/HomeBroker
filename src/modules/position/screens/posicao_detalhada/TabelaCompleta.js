@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col, Table } from "react-bootstrap";
-import EmblemaSimples from "shared/componentes/EmblemaSimples";
+import EmblemaSimples from "shared/components/EmblemaSimples";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 
 export default class TabelaCompleta extends React.Component {

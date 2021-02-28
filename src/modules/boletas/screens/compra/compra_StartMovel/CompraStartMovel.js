@@ -2,11 +2,11 @@ import React from "react";
 
 import { connect } from "react-redux";
 import { Row } from "react-bootstrap";
-import DraggableModal from "shared/componentes/DraggableModal";
+import DraggableModal from "shared/components/DraggableModal";
 import FormInternoCompraStartMovel from "./FormInternoCompraStartMovel";
 import GraficoCompraStartMovel from "./GraficoCompraStartMovel";
 import BodyHeaderCompraStartMovel from "./BodyHeaderCompraStartMovel";
-import { ModalHeader } from "shared/componentes/PopupHeader";
+import { ModalHeader } from "shared/components/PopupHeader";
 import { COMPRA_STARTMOVEL_NAMESPACE } from "constants/ActionTypes";
 
 class CompraStarMovel extends React.Component {
