@@ -22,6 +22,7 @@ import {
   convertInterestRate,
   convertPeriodByRatePeriodicity,
   filterWeeklyProjections,
+  IncludeInitialLine,
 } from "../utils";
 
 import "../../styles/initialPlanner/initialPlanner.scss";
@@ -292,6 +293,8 @@ const InitialPlanner: React.FC = () => {
     setSavingSimulations(false);
   }, [dispatch]);
 
+  const initialLine = IncludeInitialLine();
+
   const formattedProjections = useMemo(() => {
     let filtered = projections;
 
@@ -345,8 +348,26 @@ const InitialPlanner: React.FC = () => {
       };
     });
 
+    const shouldAddLine0OnWeekly =
+      ratePeriodicity === "por semana" &&
+      (listing === "mensal" || listing === "anual");
+
+    const shouldAddLine0OnMonthly =
+      ratePeriodicity === "por mês" && listing === "anual";
+
+    const shouldAddLine0OnYearly =
+      ratePeriodicity === "por ano" && listing === "anual";
+
+    if (
+      shouldAddLine0OnWeekly ||
+      shouldAddLine0OnMonthly ||
+      shouldAddLine0OnYearly
+    ) {
+      formatted.unshift(initialLine);
+    }
+
     return formatted;
-  }, [listing, projections, ratePeriodicity]);
+  }, [initialLine, listing, projections, ratePeriodicity]);
 
   const periodOptions = useMemo(() => {
     const options = [];

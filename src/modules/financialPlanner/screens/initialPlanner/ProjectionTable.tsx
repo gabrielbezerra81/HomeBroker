@@ -78,6 +78,17 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
     const formatted = data.map((projectionItem, index) => {
       let viewedRate = formattedRate;
 
+      let startOrder = 1;
+
+      if (data[0].order === 0) {
+        startOrder = 0;
+      }
+
+      if (projectionItem.order === 0) {
+        // impede a formatação da linha inicial com order 0
+        return projectionItem;
+      }
+
       let viewedPeriodIncome: any = projectionItem.periodIncome;
 
       if (ratePeriodicity === "por semana") {
@@ -102,7 +113,7 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
 
       return {
         ...projectionItem,
-        order: index + 1,
+        order: index + startOrder,
         viewedContribution,
         viewedRate,
         viewedPeriodIncome,
@@ -162,7 +173,7 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
           {formattedData.map((projectionItem, index) => {
             return (
               <tr key={index}>
-                <td>{index + 1}</td>
+                <td>{projectionItem.order}</td>
                 <td>{projectionItem.formattedPeriod}</td>
                 <td>{projectionItem.viewedContribution}</td>
                 <td>{projectionItem.formattedCalcBase}</td>

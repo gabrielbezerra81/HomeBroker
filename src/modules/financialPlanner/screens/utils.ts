@@ -1,6 +1,6 @@
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import { InitialPlannerData } from "modules/financialPlanner/types/FinancialPlannerState";
-import { useMemo } from "react";
+import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { Projection } from "./initialPlanner/InitialPlanner";
 
 type Period = "year" | "month" | "week";
@@ -188,10 +188,6 @@ export function IncludeInitialLine() {
     },
   } = useStateStorePrincipal();
 
-  const investment = useMemo(() => {
-    return initialValue.toString();
-  }, [initialValue]);
-
   return {
     rentability: 0,
     periodIncome: 0,
@@ -204,14 +200,14 @@ export function IncludeInitialLine() {
     period: new Date(),
     contribution: 100,
     formattedContribution: contribution.toString(),
-    viewedContribution: investment,
-    formattedCalcBase: investment,
-    formattedInvestment: investment,
+    viewedContribution: formatarNumDecimal(initialValue, 2, 2),
+    formattedCalcBase: "",
+    formattedInvestment: "",
     formattedPeriod: new Date(2020, 1, 1).toLocaleDateString(),
-    formattedPeriodIncome: "0",
-    formattedRentability: "0",
-    formattedResult: "0",
-    formattedTotal: investment,
+    formattedPeriodIncome: "",
+    formattedRentability: "",
+    formattedResult: "",
+    formattedTotal: "",
     formattedTotalIncome: "",
     formattedTotalPercent: "",
     month: 0,
