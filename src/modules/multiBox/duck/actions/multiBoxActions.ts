@@ -327,7 +327,9 @@ export const addMultiBoxesFromStructureDataAction = (
   };
 };
 
-export const startReactiveMultiBoxUpdateAction = (): MainThunkAction => {
+export const startReactiveMultiBoxUpdateAction = (
+  ids: string,
+): MainThunkAction => {
   return (dispatch, getState) => {
     const {
       systemReducer: { token },
@@ -341,16 +343,6 @@ export const startReactiveMultiBoxUpdateAction = (): MainThunkAction => {
     if (interval_multiBox !== null) {
       clearInterval(interval_multiBox);
     }
-
-    const idArray: string[] = [];
-
-    boxesTab1Data.forEach((structure) => {
-      if (!idArray.includes(structure.structureID.toString())) {
-        idArray.push(structure.structureID.toString());
-      }
-    });
-
-    const ids = idArray.join(",");
 
     if (ids) {
       const boxSource = updateBoxStructuresAPI({
@@ -369,7 +361,9 @@ export const startReactiveMultiBoxUpdateAction = (): MainThunkAction => {
   };
 };
 
-export const startProactiveMultiBoxUpdateAction = (): MainThunkAction => {
+export const startProactiveMultiBoxUpdateAction = (
+  ids: string,
+): MainThunkAction => {
   return (dispatch, getState) => {
     const {
       systemReducer: { updateInterval },
@@ -383,16 +377,6 @@ export const startProactiveMultiBoxUpdateAction = (): MainThunkAction => {
     if (interval_multiBox !== null) {
       clearInterval(interval_multiBox);
     }
-
-    const idArray: string[] = [];
-
-    boxesTab1Data.forEach((boxItem) => {
-      if (!idArray.includes(boxItem.structureID.toString())) {
-        idArray.push(boxItem.structureID.toString());
-      }
-    });
-
-    const ids = idArray.join(",");
 
     if (ids) {
       const interval = setInterval(async () => {
