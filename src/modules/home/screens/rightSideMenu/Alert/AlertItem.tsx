@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { FaLongArrowAltUp, FaLongArrowAltDown } from "react-icons/fa";
-import { RiCloseCircleFill } from "react-icons/ri";
-import { FiSearch } from "react-icons/fi";
+
+import closeIcon from "assets/closeIcon.png";
+import openInNewIcon from "assets/multiBox/openInNewIcon.png";
+
 import moment from "moment";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { AlertAPI } from "modules/multileg/types/multileg";
@@ -12,6 +14,9 @@ import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import produce from "immer";
 import { updateOneMultilegState } from "modules/multileg/duck/actions/utils";
 import { openAlertInMultileg } from "modules/multileg/duck/actions/AlertsAction";
+import SymbolCard from "shared/components/SymbolCard/SymbolCard";
+import getSymbolExpirationInDays from "shared/utils/getSymbolExpirationInDays";
+import { Table } from "react-bootstrap";
 
 interface AlertItemProps {
   alert: AlertAPI;
@@ -43,7 +48,7 @@ const AlertItem: React.FC<AlertItemProps> = ({ alert: alertItem }) => {
     [],
   );
 
-  const handleClose = useCallback(async () => {
+  const handleRemove = useCallback(async () => {
     const response = await updateAlertAPI(alertItem.id, { status: "Disabled" });
 
     if (response.success) {
@@ -60,16 +65,33 @@ const AlertItem: React.FC<AlertItemProps> = ({ alert: alertItem }) => {
     }
   }, [alertItem.id, alerts, dispatch]);
 
-  const handleSearch = useCallback(() => {
+  const handleOpenInMultileg = useCallback(() => {
     dispatch(openAlertInMultileg(alertItem));
   }, [alertItem, dispatch]);
 
   const formattedData = useMemo(() => {
+    let condition = "Últ ";
+
+    if (alertItem.param === "Bid") {
+      condition = "Compra ";
+    } //
+    else if (alertItem.param === "Ask") {
+      condition = "Venda ";
+    }
+
+    if (alertItem.operator === "Greater") {
+      condition += ">=";
+    } //
+    else if (alertItem.operator === "Less") {
+      condition += "<=";
+    }
+
     return {
       price: formatarNumDecimal(alertItem.price, 2),
       expiration: moment(alertItem.expiration, "DD/MM/YYYY HH:mm:ss").format(
         "DD/MM/YY",
       ),
+      condition,
     };
   }, [alertItem]);
 
@@ -78,7 +100,7 @@ const AlertItem: React.FC<AlertItemProps> = ({ alert: alertItem }) => {
       case "Bid":
         return "#207FA5";
       case "Ask":
-        return "#996666";
+        return "#FF2A00";
       default:
         return "#ccc";
     }
@@ -92,25 +114,102 @@ const AlertItem: React.FC<AlertItemProps> = ({ alert: alertItem }) => {
     }
   }, [alertItem.id]);
 
-  const headerStyle: React.CSSProperties = useMemo(() => {
-    return headerVisible
-      ? { opacity: 1, pointerEvents: "auto" }
-      : { opacity: 0, pointerEvents: "none" };
-  }, [headerVisible]);
+  const symbolCardsData = useMemo(() => {
+    return alertItem.structure.components.map((component) => {
+      return {
+        code: component.stock.symbol,
+        qtty: component.qtty,
+        model: component.stock.model as any,
+        type: component.stock.type || ("" as any),
+        strike: component.stock.strike,
+        offerType: component.qtty > 0 ? "C" : "V",
+        formattedCode: "",
+        expiration: component.stock.option
+          ? getSymbolExpirationInDays(component.stock.endBusiness)
+          : "",
+        viewMode: "code",
+      };
+    });
+  }, [alertItem.structure.components]);
+
+  const firstSymbolCardData = useMemo(() => {
+    if (symbolCardsData.length) {
+      return symbolCardsData[0];
+    }
+
+    return null;
+  }, [symbolCardsData]);
 
   return (
     <div className="alertItemContainer">
-      <header className="itemHeader" style={headerStyle}>
-        <button onClick={handleSearch}>
-          <FiSearch size={20} stroke="#444" />
+      <div className="symbolCardRow">
+        {!!firstSymbolCardData && (
+          <SymbolCard data={firstSymbolCardData as any} showQtty showQttyPlus />
+        )}
+
+        <button
+          className="brokerCustomButton openInMultilegButton"
+          onClick={handleOpenInMultileg}
+        >
+          <img src={openInNewIcon} alt="" />
         </button>
 
-        <button onClick={handleClose}>
-          <RiCloseCircleFill size={20} fill="#444" />
+        <button className="brokerCustomButton" onClick={handleRemove}>
+          <img src={closeIcon} alt="" />
         </button>
-      </header>
-      {hasOverflow ? (
-        <>
+      </div>
+
+      {symbolCardsData.map((data, index) => {
+        if (index === 0) {
+          return null;
+        }
+
+        return (
+          <div className="symbolCardRow">
+            <SymbolCard data={data as any} showQtty showQttyPlus />
+          </div>
+        );
+      })}
+
+      <Table borderless>
+        <thead>
+          <tr>
+            <th>Condição</th>
+            <th>Preço</th>
+            <th>Validade</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{formattedData.condition}</td>
+            <td className="priceColumn">
+              <div>
+                {formattedData.price}{" "}
+                {alertItem.operator === "Less" ? (
+                  <FaLongArrowAltDown fill={arrowColor} />
+                ) : (
+                  <FaLongArrowAltUp fill={arrowColor} />
+                )}
+              </div>
+            </td>
+            <td className="expirationColumn">
+              <div>{formattedData.expiration}</div>
+            </td>
+          </tr>
+        </tbody>
+      </Table>
+    </div>
+  );
+};
+
+// 5188 1401 8309 7648 11/24 SORAYA M D BEZERRA
+
+export default AlertItem;
+
+/*
+
+
+<>
           {alertItem.structure.components.map((componentItem, index) => (
             <button
               className="alertItem"
@@ -141,13 +240,9 @@ const AlertItem: React.FC<AlertItemProps> = ({ alert: alertItem }) => {
             </button>
           ))}
         </>
-      ) : (
-        <button
-          className="alertItem"
-          id={`alertItem${alertItem.id}`}
-          onClick={handleHeaderVisibilityChange}
-        >
-          {alertItem.structure.components.map((componentItem, index) => (
+
+
+   {alertItem.structure.components.map((componentItem, index) => (
             <div key={`${componentItem.stock.symbol}${index}`}>
               <span style={{ color: "#ddd" }}>
                 {componentItem.stock.symbol}
@@ -170,10 +265,5 @@ const AlertItem: React.FC<AlertItemProps> = ({ alert: alertItem }) => {
             </span>
             <span>val: {formattedData.expiration}</span>
           </div>
-        </button>
-      )}
-    </div>
-  );
-};
 
-export default AlertItem;
+*/

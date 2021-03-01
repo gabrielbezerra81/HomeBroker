@@ -9,7 +9,7 @@ import { FiChevronDown } from "react-icons/fi";
 import PerfectScroll from "react-perfect-scrollbar";
 
 // import borderedPlusIcon from "assets/borderedPlus.png";
-import { IoMdAddCircle } from "react-icons/io";
+import { IoMdAddCircle, IoMdRepeat } from "react-icons/io";
 
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
@@ -22,6 +22,7 @@ import {
 import AlertItem from "./AlertItem";
 import { listAlertsAPI } from "api/API";
 import { updateOneMultilegState } from "modules/multileg/duck/actions/utils";
+import { Table } from "react-bootstrap";
 
 const Alert: React.FC = () => {
   const dispatchGlobal = useDispatchGlobalStore();
@@ -98,6 +99,7 @@ const Alert: React.FC = () => {
     return shouldDisplayArrow ? "" : "hiddenButton";
   }, [shouldDisplayArrow]);
 
+
   return (
     <>
       <button
@@ -119,6 +121,20 @@ const Alert: React.FC = () => {
         onScrollY={handleDisplayArrowChange}
       >
         <div className="alertRightMenuContainer">
+          <Table borderless>
+            <thead>
+              <tr>
+                <th>Qtde</th>
+                <th>Strike</th>
+                <th>
+                  <button className="brokerCustomButton">
+                    <IoMdRepeat size={18} color="#dadada" />
+                  </button>
+                </th>
+                <th>Preço</th>
+              </tr>
+            </thead>
+          </Table>
           {alerts.map((alertItem, index) => (
             <AlertItem key={alertItem.id} alert={alertItem} />
           ))}
