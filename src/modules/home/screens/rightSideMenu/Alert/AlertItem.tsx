@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useMemo } from "react";
 import { FaLongArrowAltUp, FaLongArrowAltDown } from "react-icons/fa";
 
 import closeIcon from "assets/closeIcon.png";
@@ -9,7 +9,6 @@ import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { AlertAPI } from "modules/multileg/types/multileg";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { updateAlertAPI } from "api/API";
-import {} from "redux/actions/system/SystemActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import produce from "immer";
 import { updateOneMultilegState } from "modules/multileg/duck/actions/utils";
@@ -27,26 +26,27 @@ const AlertItem: React.FC<AlertItemProps> = ({ alert: alertItem }) => {
 
   const {
     multilegReducer: { alerts },
+    systemReducer: { strikeViewRightMenu },
   } = useStateStorePrincipal();
 
-  const [hasOverflow, setHasOverflow] = useState(() => {
-    const symbolsArray: string[] = [];
+  // const [hasOverflow, setHasOverflow] = useState(() => {
+  //   const symbolsArray: string[] = [];
 
-    alertItem.structure.components.forEach((componentItem) => {
-      symbolsArray.push(componentItem.stock.symbol);
-    });
+  //   alertItem.structure.components.forEach((componentItem) => {
+  //     symbolsArray.push(componentItem.stock.symbol);
+  //   });
 
-    const symbols = symbolsArray.join("");
+  //   const symbols = symbolsArray.join("");
 
-    return symbols.length > 13;
-  });
+  //   return symbols.length > 13;
+  // });
 
-  const [headerVisible, setHeaderVisible] = useState(false);
+  // const [headerVisible, setHeaderVisible] = useState(false);
 
-  const handleHeaderVisibilityChange = useCallback(
-    () => setHeaderVisible((oldValue) => !oldValue),
-    [],
-  );
+  // const handleHeaderVisibilityChange = useCallback(
+  //   () => setHeaderVisible((oldValue) => !oldValue),
+  //   [],
+  // );
 
   const handleRemove = useCallback(async () => {
     const response = await updateAlertAPI(alertItem.id, { status: "Disabled" });
@@ -106,13 +106,13 @@ const AlertItem: React.FC<AlertItemProps> = ({ alert: alertItem }) => {
     }
   }, [alertItem.param]);
 
-  useEffect(() => {
-    const positionItem = document.getElementById(`alertItem${alertItem.id}`);
+  // useEffect(() => {
+  //   const positionItem = document.getElementById(`alertItem${alertItem.id}`);
 
-    if (positionItem) {
-      setHasOverflow(positionItem.getBoundingClientRect().width > 198);
-    }
-  }, [alertItem.id]);
+  //   if (positionItem) {
+  //     setHasOverflow(positionItem.getBoundingClientRect().width > 198);
+  //   }
+  // }, [alertItem.id]);
 
   const symbolCardsData = useMemo(() => {
     return alertItem.structure.components.map((component) => {
@@ -127,10 +127,10 @@ const AlertItem: React.FC<AlertItemProps> = ({ alert: alertItem }) => {
         expiration: component.stock.option
           ? getSymbolExpirationInDays(component.stock.endBusiness)
           : "",
-        viewMode: "code",
+        viewMode: strikeViewRightMenu,
       };
     });
-  }, [alertItem.structure.components]);
+  }, [alertItem.structure.components, strikeViewRightMenu]);
 
   const firstSymbolCardData = useMemo(() => {
     if (symbolCardsData.length) {

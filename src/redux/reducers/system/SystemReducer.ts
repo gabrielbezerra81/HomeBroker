@@ -55,6 +55,7 @@ export const INITIAL_STATE: SystemState = {
   isLeftSideMenuConfigOpen: false,
   isOpenInitialPlanner: false,
   isOpenDetailedPlanner: false,
+  strikeViewRightMenu: "code",
 };
 
 const {

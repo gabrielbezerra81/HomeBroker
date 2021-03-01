@@ -29,6 +29,7 @@ const Alert: React.FC = () => {
   const dispatch = useDispatchStorePrincipal();
   const {
     multilegReducer: { alerts },
+    systemReducer: { strikeViewRightMenu },
   } = useStateStorePrincipal();
 
   const [hasOverflow, setHasOverflow] = useState(false);
@@ -57,6 +58,14 @@ const Alert: React.FC = () => {
 
     setShouldDisplayArrow(scrollTop !== maxScrollTop);
   }, []);
+
+  const handleChangeStrikeView = useCallback(() => {
+    dispatch(
+      updateManySystemState({
+        strikeViewRightMenu: strikeViewRightMenu === "code" ? "strike" : "code",
+      }),
+    );
+  }, [dispatch, strikeViewRightMenu]);
 
   const handleScrollButton = useCallback(() => {
     if (containerRef.current) {
@@ -99,7 +108,6 @@ const Alert: React.FC = () => {
     return shouldDisplayArrow ? "" : "hiddenButton";
   }, [shouldDisplayArrow]);
 
-
   return (
     <>
       <button
@@ -127,7 +135,10 @@ const Alert: React.FC = () => {
                 <th>Qtde</th>
                 <th>Strike</th>
                 <th>
-                  <button className="brokerCustomButton">
+                  <button
+                    className="brokerCustomButton"
+                    onClick={handleChangeStrikeView}
+                  >
                     <IoMdRepeat size={18} color="#dadada" />
                   </button>
                 </th>

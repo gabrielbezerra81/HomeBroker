@@ -39,4 +39,5 @@ export default interface SystemState {
   updateMode: "reactive" | "proactive";
   updateInterval: number;
   isLeftSideMenuConfigOpen: boolean;
+  strikeViewRightMenu:"code"|"strike"
 }
