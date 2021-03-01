@@ -78,6 +78,7 @@ export interface AlertAPI {
         type: "CALL" | "PUT" | undefined;
         model: string;
         strike: number;
+        endBusiness: string;
       };
     }>;
   };
