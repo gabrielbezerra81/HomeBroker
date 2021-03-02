@@ -51,6 +51,10 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
   );
 
   const onEndTitleEditing = useCallback(() => {
+    if (currentTitle === category.title) {
+      return;
+    }
+
     const titleAlreadyUsed = categories.some(
       (item, index) => item.title === category.title && index !== categoryIndex,
     );
@@ -85,7 +89,6 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
 
   return (
     <Table className="categoryTable" striped={false} style={{ order }}>
-      {/*  style={{ order }} */}
       <tbody>
         <tr className="categoryTitle">
           <td className="deleteColumn">
