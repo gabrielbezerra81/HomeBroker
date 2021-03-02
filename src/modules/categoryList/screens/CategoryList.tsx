@@ -10,6 +10,8 @@ import React, {
 } from "react";
 
 import { IoMdAddCircle } from "react-icons/io";
+import PerfectScroll from "react-perfect-scrollbar";
+import { Resizable } from "re-resizable";
 
 import Draggable, { DraggableData } from "react-draggable";
 import { PopupHeader } from "shared/components/PopupHeader";
@@ -29,10 +31,11 @@ import {
   listCategoriesAction,
   updateCategoryListAction,
 } from "../duck/actions/categoryListActions";
-import api from "api/apiConfig";
 import { FiEdit } from "react-icons/fi";
 
 const limitY = 80;
+
+const savedDimensionsPath = "@homebroker:categoryListDimensions";
 
 const CategoryList: React.FC = () => {
   const {
@@ -106,6 +109,18 @@ const CategoryList: React.FC = () => {
     dispatch(updateCategoryListAction({ removeMode: !removeMode }));
   }, [dispatch, removeMode]);
 
+  const saveDimensionsOnResizeStop = useCallback(
+    (e, d, element: HTMLElement) => {
+      const dimensions = {
+        height: element.clientHeight,
+        width: element.clientWidth,
+      };
+
+      localStorage.setItem(savedDimensionsPath, JSON.stringify(dimensions));
+    },
+    [],
+  );
+
   const formattedCategoryList = useMemo(() => {
     return categories.map((category) => {
       const lines = category.lines.map((lineItem) => {
@@ -129,6 +144,19 @@ const CategoryList: React.FC = () => {
     });
   }, [categories]);
 
+  const popupDimensions = useMemo(() => {
+    const dimensions = localStorage.getItem(savedDimensionsPath);
+
+    if (dimensions) {
+      return JSON.parse(dimensions) as { width: number; height: number };
+    }
+
+    return {
+      width: 1080,
+      height: 605,
+    };
+  }, []);
+
   // Organizar tabelas com masonry layout
   useEffect(() => {
     if (categories.length) {
@@ -140,7 +168,6 @@ const CategoryList: React.FC = () => {
         Array.from(container.children).forEach((child: any, i) => {
           const order = i % numCols;
 
-          console.log(order);
           child.style.order = order;
           colHeights[order] += parseFloat(child.clientHeight);
         });
@@ -183,22 +210,6 @@ const CategoryList: React.FC = () => {
     dispatch(listCategoriesAction());
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     setCategoryList((oldList) => {
-  //       const updatedCategoryList = produce(oldList, (draft) => {
-  //         draft[0].lines[0].price = Math.random();
-  //         draft[0].lines[1].price = Math.random();
-  //         draft[1].lines[0].price = Math.random();
-  //         draft[2].lines[0].price = Math.random();
-  //         draft[3].lines[0].price = Math.random();
-  //       });
-
-  //       return updatedCategoryList;
-  //     });
-  //   }, 4000);
-  // }, []);
-
   return (
     <Draggable
       enableUserSelectHack={isDragging}
@@ -210,74 +221,93 @@ const CategoryList: React.FC = () => {
       bounds={bounds}
       positionOffset={{ y: 27, x: 4 }}
     >
-      <div id="categoryList">
-        <div className="mcontent">
-          <PopupHeader
-            onClose={onClose}
-            headerTitle="Mapa Panorâmico de Ativos"
-          >
-            <button className="brokerCustomButton" onClick={handleAddCategory}>
-              <IoMdAddCircle size={18} fill="#C4C4C4" /> Incluir nova categoria
-            </button>
-
-            <button
-              className="brokerCustomButton toggleRemoveButton"
-              onClick={handleToggleRemoveMode}
+      <Resizable
+        defaultSize={popupDimensions}
+        minWidth={800}
+        minHeight={200}
+        maxHeight={1500}
+        style={{ position: "absolute" }}
+        onResizeStop={saveDimensionsOnResizeStop}
+      >
+        <div id="categoryList">
+          <div className="mcontent">
+            <PopupHeader
+              onClose={onClose}
+              headerTitle="Mapa Panorâmico de Ativos"
             >
-              <FiEdit size={18} />
-            </button>
-          </PopupHeader>
+              <button
+                className="brokerCustomButton"
+                onClick={handleAddCategory}
+              >
+                <IoMdAddCircle size={18} fill="#C4C4C4" /> Incluir nova
+                categoria
+              </button>
 
-          <div className="listHeader">
-            <table className="categoryTable">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Ativo</th>
-                  <th>Preço</th>
-                  <th>Oscilação</th>
-                  <th>Osc YTD</th>
-                </tr>
-              </thead>
-            </table>
-            <table className="categoryTable">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Ativo</th>
-                  <th>Preço</th>
-                  <th>Oscilação</th>
-                  <th>Osc YTD</th>
-                </tr>
-              </thead>
-            </table>
-            <table className="categoryTable">
-              <thead>
-                <tr>
-                  <th className="deleteColumnTh"></th>
-                  <th>Ativo</th>
-                  <th>Preço</th>
-                  <th>Oscilação</th>
-                  <th>Osc YTD</th>
-                </tr>
-              </thead>
-            </table>
+              <button
+                className="brokerCustomButton toggleRemoveButton"
+                onClick={handleToggleRemoveMode}
+              >
+                <FiEdit size={18} />
+              </button>
+            </PopupHeader>
+
+            <div className="listHeader">
+              <table className="categoryTable">
+                <thead>
+                  <tr>
+                    <th className="deleteColumnTh" />
+                    <th>Ativo</th>
+                    <th>Preço</th>
+                    <th>Oscilação</th>
+                    <th>Osc YTD</th>
+                  </tr>
+                </thead>
+              </table>
+              <table className="categoryTable">
+                <thead>
+                  <tr>
+                    <th className="deleteColumnTh" />
+                    <th>Ativo</th>
+                    <th>Preço</th>
+                    <th>Oscilação</th>
+                    <th>Osc YTD</th>
+                  </tr>
+                </thead>
+              </table>
+              <table className="categoryTable">
+                <thead>
+                  <tr>
+                    <th className="deleteColumnTh" />
+                    <th>Ativo</th>
+                    <th>Preço</th>
+                    <th>Oscilação</th>
+                    <th>Osc YTD</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+
+            <PerfectScroll
+              id="categoryListScroll"
+              options={{ wheelPropagation: false }}
+            >
+              <main ref={masonryRef}>
+                {/* ref={masonryRef} */}
+                {formattedCategoryList.map((categoryItem, index) => {
+                  return (
+                    <CategoryTable
+                      key={index}
+                      category={categoryItem}
+                      categoryIndex={index}
+                      order={index % 3}
+                    />
+                  );
+                })}
+              </main>
+            </PerfectScroll>
           </div>
-          <main ref={masonryRef}>
-            {/* ref={masonryRef} */}
-            {formattedCategoryList.map((categoryItem, index) => {
-              return (
-                <CategoryTable
-                  key={index}
-                  category={categoryItem}
-                  categoryIndex={index}
-                  order={index % 3}
-                />
-              );
-            })}
-          </main>
         </div>
-      </div>
+      </Resizable>
     </Draggable>
   );
 };
