@@ -98,7 +98,7 @@ const CategoryList: React.FC = () => {
   );
 
   const onClose = useCallback(() => {
-    dispatch(abrirItemBarraLateralAction("isOpenCategoryList"));
+    dispatch(abrirItemBarraLateralAction("isOpenCategoryList", null, false));
   }, [dispatch]);
 
   const handleAddCategory = useCallback(() => {

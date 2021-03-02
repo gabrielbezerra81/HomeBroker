@@ -158,7 +158,7 @@ const OptionsTable: React.FC = () => {
   const [fetchingAPI, setFetchingAPI] = useState(false);
 
   const onClose = useCallback(() => {
-    dispatch(abrirItemBarraLateralAction("isOpenOptionsTable"));
+    dispatch(abrirItemBarraLateralAction("isOpenOptionsTable", null, false));
   }, [dispatch]);
 
   const onMouseDown = useCallback((e) => {
