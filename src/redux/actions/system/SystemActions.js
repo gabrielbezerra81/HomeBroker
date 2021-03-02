@@ -133,6 +133,7 @@ export const deslogarUsuarioAction = () => {
 export const abrirItemBarraLateralAction = (
   nameVariavelReducer,
   forceVisibility = null,
+  mainTabOnly = true,
 ) => {
   return (dispatch, getState) => {
     const { selectedTab, openedMenus, ...props } = getState().systemReducer;
@@ -143,9 +144,11 @@ export const abrirItemBarraLateralAction = (
     // Se estiver tentar abrir um popup fora da aba principal e ele já estiver aberto,
     // impede que ele seja fechado e redireciona para a aba principal
     const isTryingToOpenFromSecondaryTab = selectedTab !== "tab0";
+
     if (
       isTryingToOpenFromSecondaryTab &&
-      nameVariavelReducer !== "isOpenMultileg"
+      nameVariavelReducer !== "isOpenMultileg" &&
+      mainTabOnly
     ) {
       dispatch(
         updateManySystemState({
@@ -324,6 +327,18 @@ const handleCloseMenusInMainTab = ({
         break;
       case "isOpenTHL":
         menuKey = "thl";
+        break;
+      case "isOpenOptionsTable":
+        menuKey = "optionsTable";
+        break;
+      case "isOpenCategoryList":
+        menuKey = "category_list";
+        break;
+      case "isOpenInitialPlanner":
+        menuKey = "initialPlanner";
+        break;
+      case "isOpenDetailedPlanner":
+        menuKey = "detailedPlanner";
         break;
       default:
         menuKey = isOpenAttribute;
