@@ -136,14 +136,17 @@ const CategoryList: React.FC = () => {
       const colHeights = Array(numCols).fill(0);
       const container = ReactDOM.findDOMNode(masonryRef.current) as any;
 
-      // if (container) {
-      //   Array.from(container.children).forEach((child: any, i) => {
-      //     const order = i % numCols;
-      //     child.style.order = order;
-      //     colHeights[order] += parseFloat(child.clientHeight);
-      //   });
-      //   container.style.height = Math.max(...colHeights) + "px";
-      // }
+      if (container) {
+        Array.from(container.children).forEach((child: any, i) => {
+          const order = i % numCols;
+
+          console.log(order);
+          child.style.order = order;
+          colHeights[order] += parseFloat(child.clientHeight);
+        });
+
+        container.style.height = Math.max(...colHeights) + "px";
+      }
     }
   }, [categories.length, selectedTab]);
 
@@ -179,8 +182,6 @@ const CategoryList: React.FC = () => {
   useEffect(() => {
     dispatch(listCategoriesAction());
   }, [dispatch]);
-
-  let order = -1;
 
   // useEffect(() => {
   //   setInterval(() => {
@@ -263,19 +264,14 @@ const CategoryList: React.FC = () => {
             </table>
           </div>
           <main ref={masonryRef}>
+            {/* ref={masonryRef} */}
             {formattedCategoryList.map((categoryItem, index) => {
-              order += 1;
-
-              if (order === 3) {
-                order = 0;
-              }
-
               return (
                 <CategoryTable
                   key={index}
                   category={categoryItem}
                   categoryIndex={index}
-                  // order={order}
+                  order={index % 3}
                 />
               );
             })}

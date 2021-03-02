@@ -58,9 +58,9 @@
 
   main {
     display: flex;
-    // flex-direction: column;
+    flex-direction: column;
     flex-wrap: wrap;
-    max-height: 1000px;
+    max-height: 238px;
 
     &::after {
       content: "";

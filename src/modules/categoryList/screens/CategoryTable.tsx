@@ -16,12 +16,12 @@ import { FiX } from "react-icons/fi";
 interface CategoryTableProps {
   category: Category;
   categoryIndex: number;
-  // order: number;
+  order: number;
 }
 
 const CategoryTable: React.FC<CategoryTableProps> = ({
   category,
-  // order,
+  order,
   categoryIndex,
 }) => {
   const {
@@ -84,7 +84,7 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
   }, []);
 
   return (
-    <Table className="categoryTable" striped={false}>
+    <Table className="categoryTable" striped={false} style={{ order }}>
       {/*  style={{ order }} */}
       <tbody>
         <tr className="categoryTitle">

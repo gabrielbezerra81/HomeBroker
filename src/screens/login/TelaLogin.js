@@ -17,8 +17,8 @@ const redirectURL =
 
 const TelaLogin = ({ path, keycloakLogin }) => {
   const [user, setUser] = useState({
-    username: location.hostname === "localhost" ? "gabrielAB" : "", // jcj443
-    password: location.hostname === "localhost" ? "123456789" : "",
+    username: location.hostname === "localhost" ? "jcj443" : "", // jcj443
+    password: location.hostname === "localhost" ? "123456" : "",
   });
 
   const dispatch = useDispatchStorePrincipal();
