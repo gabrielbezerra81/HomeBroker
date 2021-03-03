@@ -18,6 +18,9 @@ interface Permission {
     ordersExecuting: boolean;
     position: boolean;
   };
+  optionsTable: {
+    checkSymbols: boolean;
+  };
 }
 
 interface PermissionContextData {
@@ -49,6 +52,9 @@ const PermissionProvider: React.FC = ({ children }) => {
       alerts: true,
       ordersExecuting: true,
       position: true,
+    },
+    optionsTable: {
+      checkSymbols: true,
     },
   });
 
@@ -104,6 +110,11 @@ const changePermissionsByRole = (
     ordersExecuting: true,
     position: true,
   };
+
+  changePayload.optionsTable = {
+    checkSymbols: false,
+  };
+
   // resetPermissions
 
   if (roles.includes("Student")) {
@@ -125,6 +136,7 @@ const changePermissionsByRole = (
     changePayload.history = false;
   } //
   else if (roles.includes("Admin")) {
+    changePayload.optionsTable.checkSymbols = true;
     // Não faz nada, retorna apenas todas as permissões
   }
 

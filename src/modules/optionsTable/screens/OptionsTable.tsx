@@ -12,138 +12,37 @@ import DraggablePopup from "shared/components/DraggablePopup/DraggablePopup";
 import { PopupHeader } from "shared/components/PopupHeader";
 
 import "../styles/OptionsTable.scss";
-import { OptionTableItem } from "../types/OptionsTableState";
+import { TableLine } from "../types/OptionsTableState";
 import api from "api/apiConfig";
 import { url_optionsTable_symbol_type } from "api/url";
 import { Table } from "react-bootstrap";
 import { GrFormSearch } from "react-icons/gr";
-import { getOneSymbolDataAPI } from "api/symbolAPI";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
-
-interface GetOptionsAPI {
-  lines: Array<OptionTableItem>;
-}
-
-interface TableLine {
-  strike: number;
-  [key: string]: any;
-}
+import { usePermissions } from "context/PermissionContext";
+import {
+  handleColumnHeaderSelectionAction,
+  handleLineSelectionAction,
+  handleSearchOptionsAction,
+  handleSymbolSelectionAction,
+  handlSaveSelectionsAction,
+  updateOptionsTableStateAction,
+} from "../duck/actions/optionsTableActions";
 
 interface SymbolData {
   last: number;
   oscilation: number;
 }
 
-// const data: OptionTableItem[] = [
-//   {
-//     strikeLine: 8,
-//     stocks: [
-//       {
-//         symbol: "PETRB8",
-//         market: "EquityCall",
-//         strike: 8,
-//         type: "CALL",
-//         model: "AMERICAN",
-//         referenceStock: 200000452882,
-//         endBusiness: "18/02/2022 23:59:00",
-//         strikeGroup: 8,
-//       },
-//     ],
-//     structuresIds: [3143],
-//   },
-//   {
-//     strikeLine: 9,
-//     stocks: [
-//       {
-//         symbol: "PETRB9",
-//         market: "EquityCall",
-//         strike: 9,
-//         type: "CALL",
-//         model: "AMERICAN",
-//         referenceStock: 200000452882,
-//         endBusiness: "18/02/2022 23:59:00",
-//         strikeGroup: 9,
-//       },
-//     ],
-//     structuresIds: [3144],
-//   },
-//   {
-//     strikeLine: 10,
-//     stocks: [
-//       {
-//         symbol: "PETRB10",
-//         market: "EquityCall",
-//         strike: 10,
-//         type: "CALL",
-//         model: "AMERICAN",
-//         referenceStock: 200000452882,
-//         endBusiness: "18/02/2022 23:59:00",
-//         strikeGroup: 10,
-//       },
-//     ],
-//     structuresIds: [3145],
-//   },
-//   {
-//     strikeLine: 10.25,
-//     stocks: [
-//       {
-//         symbol: "PETRB102",
-//         market: "EquityCall",
-//         strike: 10.25,
-//         type: "CALL",
-//         model: "EUROPEAN",
-//         referenceStock: 200000452882,
-//         endBusiness: "22/02/2021 23:59:00",
-//         strikeGroup: 10.25,
-//       },
-//     ],
-//     structuresIds: [3146],
-//   },
-//   {
-//     strikeLine: 10.5,
-//     stocks: [
-//       {
-//         symbol: "PETRB105",
-//         market: "EquityCall",
-//         strike: 10.5,
-//         type: "CALL",
-//         model: "AMERICAN",
-//         referenceStock: 200000452882,
-//         endBusiness: "22/02/2021 23:59:00",
-//         strikeGroup: 10.5,
-//       },
-//       {
-//         symbol: "PETRC105",
-//         market: "EquityCall",
-//         strike: 10.5,
-//         type: "CALL",
-//         model: "AMERICAN",
-//         referenceStock: 200000452882,
-//         endBusiness: "15/03/2021 23:59:00",
-//         strikeGroup: 10.5,
-//       },
-//     ],
-//     structuresIds: [3147, 3147],
-//   },
-// ];
-
 const OptionsTable: React.FC = () => {
   const dispatch = useDispatchStorePrincipal();
 
   const {
     systemReducer: { isOpenOptionsTable },
+    optionsTableReducer: { checkedItems, options },
   } = useStateStorePrincipal();
 
-  const [optionsData, setOptionsData] = useState<OptionTableItem[]>(() => {
-    const tableJSON = localStorage.getItem("optionsTable");
+  const { permissions } = usePermissions();
 
-    if (tableJSON) {
-      // return JSON.parse(tableJSON);
-      return [];
-    }
-
-    return [];
-  });
   const [symbol, setSymbol] = useState("");
   const [type, setType] = useState<"CALL" | "PUT">("CALL");
   const [symbolData, setSymbolData] = useState<SymbolData | null>(null);
@@ -154,6 +53,8 @@ const OptionsTable: React.FC = () => {
   const [scrollLeft, setScrollLeft] = useState(0);
   const [scrollTop, setScrollTop] = useState(0);
   const [selectBloqueado, setSelectBloqueado] = useState(false);
+
+  const [toggleConfig, setToggleConfig] = useState(false);
 
   const [fetchingAPI, setFetchingAPI] = useState(false);
 
@@ -250,42 +151,64 @@ const OptionsTable: React.FC = () => {
     }
   }, []);
 
+  const handleColumnHeadSelection = useCallback(
+    (expiration: string) => {
+      dispatch(handleColumnHeaderSelectionAction(expiration));
+    },
+    [dispatch],
+  );
+
   const handleSearchOptions = useCallback(async () => {
-    try {
-      if (fetchingAPI) {
-        return;
-      }
-
-      if (!symbol) {
-        return;
-      }
-
-      setFetchingAPI(true);
-
-      const response = await api.get<GetOptionsAPI>(
-        `${url_optionsTable_symbol_type}${symbol}/${type}`,
-      );
-
-      const data = await getOneSymbolDataAPI(symbol);
-
-      if (data) {
-        setSymbolData({
-          last: data.ultimo || 0,
-          oscilation: data.oscilacao || 0,
-        });
-      }
-
-      setOptionsData(response.data.lines);
-    } catch (error) {
-    } finally {
-      setFetchingAPI(false);
+    if (fetchingAPI) {
+      return;
     }
-  }, [fetchingAPI, symbol, type]);
+
+    setFetchingAPI(true);
+
+    const data = ((await dispatch(
+      handleSearchOptionsAction({ symbol, type }),
+    )) as unknown) as SymbolData | null;
+
+    if (data) {
+      setSymbolData(data);
+    }
+
+    setFetchingAPI(false);
+  }, [dispatch, fetchingAPI, symbol, type]);
+
+  const handleLineSelection = useCallback(
+    (tableLine: TableLine) => {
+      dispatch(handleLineSelectionAction(tableLine));
+    },
+    [dispatch],
+  );
+
+  const handleSymbolSelection = useCallback(
+    (symbol: string) => {
+      dispatch(handleSymbolSelectionAction([symbol]));
+    },
+    [dispatch],
+  );
+
+  const handleSaveSelections = useCallback(() => {
+    dispatch(handlSaveSelectionsAction());
+    setToggleConfig(false);
+  }, [dispatch]);
+
+  const handleToggleConfig = useMemo(() => {
+    if (permissions.optionsTable.checkSymbols) {
+      return () => {
+        setToggleConfig((oldValue) => !oldValue);
+      };
+    }
+
+    return undefined;
+  }, [permissions.optionsTable.checkSymbols]);
 
   const columns = useMemo(() => {
     let expirationDates: moment.Moment[] = [];
 
-    optionsData.forEach((optionLine) => {
+    options.forEach((optionLine) => {
       optionLine.stocks.forEach((stockItem) => {
         const [date] = stockItem.endBusiness.split(" ");
 
@@ -318,10 +241,10 @@ const OptionsTable: React.FC = () => {
     }));
 
     return [{ key: "strike", title: "", width: 60 }, ...columns];
-  }, [optionsData]);
+  }, [options]);
 
   const tableData = useMemo(() => {
-    const tableData: TableLine[] = optionsData.map((optionItem) => {
+    const tableData: TableLine[] = options.map((optionItem) => {
       const tableLine = {
         strike: optionItem.strikeLine,
       };
@@ -335,21 +258,36 @@ const OptionsTable: React.FC = () => {
     });
 
     return tableData;
-  }, [optionsData]);
+  }, [options]);
 
-  useEffect(() => {
-    if (symbol) {
-      api
-        .get<GetOptionsAPI>(`${url_optionsTable_symbol_type}${symbol}/${type}`)
-        .then((response) => {
-          setOptionsData(response.data.lines);
-        })
-        .catch((error) => {
-          console.log("get options table error", error);
-        });
+  const saveConfigClass = useMemo(() => {
+    if (toggleConfig) {
+      return "";
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+
+    return "hidden";
+  }, [toggleConfig]);
+
+  // Obter tabela inicial
+  // useEffect(() => {
+  //   if (symbol) {
+  //     api
+  //       .get(`${url_optionsTable_symbol_type}${symbol}/${type}`)
+  //       .then((response) => {
+  //         dispatch(
+  //           updateOptionsTableStateAction({ options: response.data.lines }),
+  //         );
+  //         localStorage.setItem(
+  //           "optionsTable",
+  //           JSON.stringify(response.data.lines),
+  //         );
+  //       })
+  //       .catch((error) => {
+  //         console.log("get options table error", error);
+  //       });
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [dispatch]);
 
   const { formattedQuote, formattedOscilation } = useMemo(() => {
     const formatted = {
@@ -373,7 +311,11 @@ const OptionsTable: React.FC = () => {
     >
       <div id="optionsTable">
         <div className="mcontent">
-          <PopupHeader headerTitle="Matriz de Opções" onClose={onClose} />
+          <PopupHeader
+            headerTitle="Matriz de Opções"
+            onClose={onClose}
+            onConfig={handleToggleConfig}
+          />
 
           <div className="searchRow">
             <InputGroup>
@@ -423,6 +365,13 @@ const OptionsTable: React.FC = () => {
               checked={type === "PUT"}
               onChange={() => setType("PUT")}
             />
+
+            <button
+              className={`brokerCustomButton saveConfigButton ${saveConfigClass}`}
+              onClick={handleSaveSelections}
+            >
+              Salvar Configuração
+            </button>
           </div>
 
           <div className="scrollContainer">
@@ -442,7 +391,20 @@ const OptionsTable: React.FC = () => {
                 <thead>
                   <tr>
                     {columns.map((column) => (
-                      <th key={column.key}>{column.title}</th>
+                      <th key={column.key}>
+                        {toggleConfig && column.key !== "strike" && (
+                          <Form.Check
+                            checked={checkedItems.includes(column.title)}
+                            type="checkbox"
+                            label=""
+                            onChange={() =>
+                              handleColumnHeadSelection(column.title)
+                            }
+                          />
+                        )}
+
+                        {column.title}
+                      </th>
                     ))}
                   </tr>
                 </thead>
@@ -454,12 +416,48 @@ const OptionsTable: React.FC = () => {
 
                         if (column.key === "strike") {
                           value = tableLine.strike;
+
+                          const isChecked = checkedItems.includes(`${value}`);
+
+                          return (
+                            <td key={column.key}>
+                              <div>
+                                {value && toggleConfig && (
+                                  <Form.Check
+                                    checked={isChecked}
+                                    type="checkbox"
+                                    label=""
+                                    onChange={() =>
+                                      handleLineSelection(tableLine)
+                                    }
+                                  />
+                                )}
+                                <span>{value}</span>
+                              </div>
+                            </td>
+                          );
                         } //
                         else if (tableLine[column.key]) {
                           value = tableLine[column.key];
                         }
 
-                        return <td key={column.key}>{value}</td>;
+                        const isChecked = checkedItems.includes(value);
+
+                        return (
+                          <td key={column.key}>
+                            <div>
+                              <span>{value}</span>
+                              {value && toggleConfig && (
+                                <Form.Check
+                                  checked={isChecked}
+                                  type="checkbox"
+                                  label=""
+                                  onChange={() => handleSymbolSelection(value)}
+                                />
+                              )}
+                            </div>
+                          </td>
+                        );
                       })}
                     </tr>
                   ))}

@@ -19,6 +19,7 @@
     padding: 16px 16px 0;
     display: flex;
     align-items: center;
+    position: relative;
 
     .input-group {
       width: 150px;
@@ -57,6 +58,25 @@
       font-size: 16px;
       margin: 0 16px;
     }
+
+    .saveConfigButton {
+      background-color: #f1881d;
+      font-size: 14px;
+      height: 24px;
+      border-radius: 4px;
+      right: 16px;
+      position: absolute;
+      transition: opacity 0.2s;
+      width: 139px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &.hidden {
+        opacity: 0;
+      }
+    }
   }
 
   .scrollContainer {
@@ -78,11 +98,12 @@
         border: none !important;
         padding: 4px 6px !important;
         border-right: 1px solid rgb(30, 30, 30) !important;
+        z-index: 1;
 
         &:first-child {
           left: 0;
           min-width: 60px;
-          z-index: 1;
+          z-index: 2;
 
           &::after {
             content: "";
@@ -120,6 +141,8 @@
           left: 0;
           top: 0;
 
+          z-index: 1;
+
           &::after {
             content: "";
             position: absolute;
@@ -134,6 +157,22 @@
 
         &:last-child {
           border-right: none !important;
+        }
+
+        > div {
+          display: flex;
+          align-items: center;
+          min-width: 86px;
+
+          span {
+            flex: 1;
+          }
+
+          .form-check {
+            input {
+              margin-left: -0.8rem;
+            }
+          }
         }
       }
     }

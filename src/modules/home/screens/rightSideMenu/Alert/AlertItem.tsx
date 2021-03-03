@@ -165,7 +165,7 @@ const AlertItem: React.FC<AlertItemProps> = ({ alert: alertItem }) => {
         }
 
         return (
-          <div className="symbolCardRow">
+          <div className="symbolCardRow" key={data.code}>
             <SymbolCard data={data as any} showQtty showQttyPlus />
           </div>
         );

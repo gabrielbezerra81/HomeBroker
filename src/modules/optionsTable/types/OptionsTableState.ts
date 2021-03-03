@@ -9,6 +9,11 @@ interface Stock {
   strikeGroup: number;
 }
 
+export interface TableLine {
+  strike: number;
+  [key: string]: any;
+}
+
 export interface OptionTableItem {
   strikeLine: number;
   stocks: Array<Stock>;
@@ -16,7 +21,7 @@ export interface OptionTableItem {
 }
 
 export default interface OptionsTableState {
-  symbol: string;
-  type: "CALL" | "PUT";
   options: Array<OptionTableItem>;
+  checkedItems: Array<string>;
+  symbolsToUpdate: Array<string>;
 }
