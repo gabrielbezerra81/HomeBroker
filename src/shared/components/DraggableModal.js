@@ -9,6 +9,8 @@ import ConfigComplementar from "modules/multileg/screens/ConfigComplementar";
 import { Resizable } from "re-resizable";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import { StorePrincipalContext } from "redux/StoreCreation";
+// import loadPopupPosition from "shared/utils/PopupPosition/loadPopupPosition";
+import savePopupPositionOnDragEnd from "shared/utils/PopupPosition/savePopupPositionOnDragEnd";
 
 const limitY = 75;
 
@@ -16,13 +18,17 @@ class DragglableModal extends Component {
   constructor(props) {
     super(props);
 
+    // const position = loadPopupPosition(this.props.id);
+
     this.state = {
-      draggableData: { x: 0, y: 0 },
+      position: { x: 0, y: 0 },
       bounds: undefined,
       limitX: 88,
     };
     this.resetPosition = this.resetPosition.bind(this);
     this.onStartDragging = this.onStartDragging.bind(this);
+    this.onDrag = this.onDrag.bind(this);
+    this.onStopDragging = this.onStopDragging.bind(this);
   }
 
   componentDidMount() {
@@ -48,7 +54,7 @@ class DragglableModal extends Component {
   }
 
   resetPosition() {
-    this.setState({ ...this.state, draggableData: { x: 0, y: 0 } });
+    this.setState({ ...this.state, position: { x: 0, y: 0 } });
   }
 
   onStartDragging(e, data) {
@@ -63,6 +69,28 @@ class DragglableModal extends Component {
         },
       });
     }
+  }
+
+  onDrag(e, data) {
+    e.preventDefault();
+
+    const { x, y } = data;
+
+    this.setState({
+      position: { x, y },
+    });
+  }
+
+  onStopDragging() {
+    const { position } = this.state;
+
+    savePopupPositionOnDragEnd({
+      id: this.props.id,
+      position: {
+        x: position.x,
+        y: position.y,
+      },
+    });
   }
 
   render() {
@@ -93,15 +121,11 @@ class DragglableModal extends Component {
       <Draggable
         enableUserSelectHack={false}
         handle={handle ? handle : ".mheader"}
-        position={this.state.draggableData}
+        position={this.state.position}
         defaultPosition={{ x: 0, y: 0 }}
         onStart={this.onStartDragging}
-        onDrag={(e, draggableData) => {
-          e.preventDefault();
-          this.setState({
-            draggableData: draggableData,
-          });
-        }}
+        onDrag={this.onDrag}
+        onStop={this.onStopDragging}
         bounds={this.state.bounds}
       >
         {this.props.id === "thl" ? (

@@ -8,6 +8,7 @@ import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import usePrevious from "hooks/usePrevious";
 import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopupZIndexFromSecondaryTab";
+import savePopupPositionOnDragEnd from "shared/utils/PopupPosition/savePopupPositionOnDragEnd";
 
 interface Props {
   popupDivKey: string;
@@ -65,7 +66,8 @@ const DraggablePopup: React.FC<Props> = ({
 
   const onStopDragging = useCallback(() => {
     setIsDragging(false);
-  }, []);
+    savePopupPositionOnDragEnd({ id: popupDivKey, position });
+  }, [popupDivKey, position]);
 
   const onDrag = useCallback(
     (e, data: DraggableData) => {
