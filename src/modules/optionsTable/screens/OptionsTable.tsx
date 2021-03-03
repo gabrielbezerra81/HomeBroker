@@ -46,6 +46,7 @@ const OptionsTable: React.FC = () => {
   const [symbol, setSymbol] = useState("");
   const [type, setType] = useState<"CALL" | "PUT">("CALL");
   const [symbolData, setSymbolData] = useState<SymbolData | null>(null);
+  const [strikeView, setStrikeView] = useState<"code" | "strike">("code");
 
   const [mouseDown, setMouseDown] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -195,6 +196,12 @@ const OptionsTable: React.FC = () => {
     setToggleConfig(false);
   }, [dispatch]);
 
+  const handleChangeStrikeView = useCallback(() => {
+    setStrikeView((currentValue) =>
+      currentValue === "code" ? "strike" : "code",
+    );
+  }, []);
+
   const handleToggleConfig = useMemo(() => {
     if (permissions.optionsTable.checkSymbols) {
       return () => {
@@ -251,7 +258,12 @@ const OptionsTable: React.FC = () => {
 
       optionItem.stocks.forEach((stockItem) => {
         const [expiration] = stockItem.endBusiness.split(" ");
-        Object.assign(tableLine, { [expiration]: stockItem.symbol });
+        Object.assign(tableLine, {
+          [expiration]: {
+            symbol: stockItem.symbol,
+            strike: stockItem.strike,
+          },
+        });
       });
 
       return tableLine;
@@ -315,6 +327,7 @@ const OptionsTable: React.FC = () => {
             headerTitle="Matriz de Opções"
             onClose={onClose}
             onConfig={handleToggleConfig}
+            onStrikeViewChange={handleChangeStrikeView}
           />
 
           <div className="searchRow">
@@ -409,18 +422,18 @@ const OptionsTable: React.FC = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {tableData.map((tableLine, index) => (
-                    <tr key={index}>
-                      {columns.map((column) => {
-                        let value: any = "";
+                  {tableData.map((tableLine, lineIndex) => (
+                    <tr key={lineIndex}>
+                      {columns.map((column, columnIndex) => {
+                        const columnData = tableLine[column.key];
 
                         if (column.key === "strike") {
-                          value = tableLine.strike;
+                          const value = columnData;
 
                           const isChecked = checkedItems.includes(`${value}`);
 
                           return (
-                            <td key={column.key}>
+                            <td key={value}>
                               <div>
                                 {value && toggleConfig && (
                                   <Form.Check
@@ -437,27 +450,36 @@ const OptionsTable: React.FC = () => {
                             </td>
                           );
                         } //
-                        else if (tableLine[column.key]) {
-                          value = tableLine[column.key];
+                        else if (columnData) {
+                          const value =
+                            strikeView === "code"
+                              ? columnData.symbol
+                              : columnData.strike;
+
+                          const isChecked = checkedItems.includes(
+                            columnData.symbol,
+                          );
+
+                          return (
+                            <td key={column.key}>
+                              <div>
+                                <span>{value}</span>
+                                {value && toggleConfig && (
+                                  <Form.Check
+                                    checked={isChecked}
+                                    type="checkbox"
+                                    label=""
+                                    onChange={() =>
+                                      handleSymbolSelection(columnData.symbol)
+                                    }
+                                  />
+                                )}
+                              </div>
+                            </td>
+                          );
                         }
 
-                        const isChecked = checkedItems.includes(value);
-
-                        return (
-                          <td key={column.key}>
-                            <div>
-                              <span>{value}</span>
-                              {value && toggleConfig && (
-                                <Form.Check
-                                  checked={isChecked}
-                                  type="checkbox"
-                                  label=""
-                                  onChange={() => handleSymbolSelection(value)}
-                                />
-                              )}
-                            </div>
-                          </td>
-                        );
+                        return <td key={`${lineIndex}${columnIndex}`} />;
                       })}
                     </tr>
                   ))}

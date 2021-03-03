@@ -25,6 +25,7 @@ import closeIcon from "assets/closeIcon.png";
 import useStateBoletas from "hooks/useStateBoletas";
 import { BoletaNamespace } from "constants/ActionTypes";
 import { mudarAtributoBoletaAction } from "modules/boletas/duck/actions/boletaActions";
+import { IoMdRepeat } from "react-icons/io";
 
 interface ModalHeaderProps {
   headerTitle?: any;
@@ -209,6 +210,7 @@ interface PopupHeaderProps {
   name?: string;
   onClose?: (...data: any) => any;
   onConfig?: (...data: any) => any;
+  onStrikeViewChange?: (...data: any) => any;
 }
 
 // Menus multileg, posição, thl, ordens exec, relatorio
@@ -220,6 +222,7 @@ export const PopupHeader: React.FC<PopupHeaderProps> = React.memo(
     children,
     onClose,
     onConfig,
+    onStrikeViewChange,
   }) => {
     const dispatchStorePrincipal = useDispatchStorePrincipal();
     const nomeVariavelReducer = getNomeVariavelReducer(headerTitle);
@@ -256,6 +259,16 @@ export const PopupHeader: React.FC<PopupHeaderProps> = React.memo(
         <h6 className="mtitle">{headerTitle === "THL" ? "" : headerTitle}</h6>
         <div className="wrapperIconesHeader">
           <BotaoAbrirFiltrarOrdens headerTitle={headerTitle} />
+
+          {!!onStrikeViewChange && (
+            <button
+              onClick={onStrikeViewChange}
+              className="brokerCustomButton iconesHeader"
+            >
+              <IoMdRepeat size={19} color="#C4C4C4" />
+            </button>
+          )}
+
           {!!onConfig && (
             <button
               className="brokerCustomButton iconesHeader"
