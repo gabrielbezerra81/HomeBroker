@@ -1,5 +1,6 @@
 import { NamespacesType } from "constants/ActionTypes";
-import { MainStoreState } from "redux/reducers";
+import { MainStoreState } from "redux/StoreCreation";
+
 import { $CombinedState } from "redux";
 
 type reducerName =

@@ -7,18 +7,48 @@ import { persistStore, persistReducer } from "redux-persist";
 import autoMergeLevel1 from "redux-persist/lib/stateReconciler/autoMergeLevel1";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 import GlobalReducer from "redux/reducers/GlobalReducer";
-import { reducersAppPrincipal, MainStoreState } from "redux/reducers";
+import SystemReducer from "./reducers/system/SystemReducer";
 
-const persistConfig = {
+import MultilegReducer from "modules/multileg/duck/MultilegReducer";
+import PositionReducer from "modules/position/duck/PositionReducer";
+import OrdensExecucaoReducer from "modules/ordersExec/duck/OrdensExecReducer";
+import FinancialPlannerReducer from "modules/financialPlanner/duck/FinancialPlannerReducer";
+import multiBoxReducer from "modules/multiBox/duck/multiBoxReducer";
+import CategoryListReducer from "modules/categoryList/duck/CategoryListReducer";
+import optionsTableReducer from "modules/optionsTable/duck/optionsTableReducer";
+import THLReducer from "modules/thl/duck/THLReducer";
+
+const rootPersistConfig = {
   key: "root",
   storage,
   stateReconciler: autoMergeLevel1,
-  whitelist: ["systemReducer"], // "multiBoxReducer"
+  whitelist: [], // "multiBoxReducer"
 };
 
+const systemReducerPersistConfig = {
+  key: "SystemReducer",
+  storage,
+  stateReconciler: autoMergeLevel1,
+  blacklist: ["hasAuthorizationHeader"], // "multiBoxReducer"
+};
+
+const rootReducer = combineReducers({
+  systemReducer: persistReducer(systemReducerPersistConfig, SystemReducer),
+  multilegReducer: MultilegReducer,
+  positionReducer: PositionReducer,
+  ordersExecReducer: OrdensExecucaoReducer,
+  thlReducer: THLReducer,
+  financialPlannerReducer: FinancialPlannerReducer,
+  multiBoxReducer,
+  categoryListReducer: CategoryListReducer,
+  optionsTableReducer,
+});
+
+export type MainStoreState = ReturnType<typeof rootReducer>;
+
 const persistedReducerAppPrincipal = persistReducer<MainStoreState, any>(
-  persistConfig,
-  reducersAppPrincipal,
+  rootPersistConfig,
+  rootReducer,
 );
 
 // @ts-ignore

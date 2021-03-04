@@ -19,7 +19,8 @@ import {
   abrirItemBarraLateralAction,
   updateManySystemState,
 } from "redux/actions/system/SystemActions";
-import { MainStoreState } from "redux/reducers";
+import { MainStoreState } from "redux/StoreCreation";
+
 import { formatarNumero } from "shared/utils/Formatacoes";
 import { calculoPreco } from "modules/multileg/screens/CalculoPreco";
 import { MultiBoxData } from "modules/multiBox/types/MultiBoxState";

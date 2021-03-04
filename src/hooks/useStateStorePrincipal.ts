@@ -1,9 +1,9 @@
 import { StorePrincipalContext } from "redux/StoreCreation";
 import { createSelectorHook, TypedUseSelectorHook } from "react-redux";
-import { MainStoreState } from "redux/reducers";
+import { MainStoreState } from "redux/StoreCreation";
 
 const useSelectorStorePrincipal: TypedUseSelectorHook<MainStoreState> = createSelectorHook(
-  StorePrincipalContext
+  StorePrincipalContext,
 );
 
 const useStateStorePrincipal = (): MainStoreState => {

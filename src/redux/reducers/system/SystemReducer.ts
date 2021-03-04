@@ -27,6 +27,7 @@ export const INITIAL_STATE: SystemState = {
   isOpenCategoryList: false,
   isOpenOptionsTable: false,
   token: {} as Token,
+  hasAuthorizationHeader:false,
   roles: [],
   authData: null,
   accounts: [],

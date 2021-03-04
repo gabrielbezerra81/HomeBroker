@@ -1,6 +1,7 @@
 import { Action } from "redux";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
-import { MainStoreState, BoletasState } from "redux/reducers";
+import { BoletasState } from "redux/reducers";
+import { MainStoreState } from "redux/StoreCreation";
 
 export type GlobalThunkAction = ThunkAction<
   void,

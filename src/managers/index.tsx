@@ -8,17 +8,23 @@ import PositionUpdateManager from "../modules/position/manager/PositionUpdateMan
 import THLUpdateManager from "../modules/thl/manager/THLUpdateManager";
 import api from "api/apiConfig";
 import CategoryListUpdateManager from "modules/categoryList/manager/CategoryListUpdateManager";
+import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
+import { updateManySystemState } from "redux/actions/system/SystemActions";
 
 const MainManager: React.FC = () => {
   const {
-    systemReducer: { isLogged, token },
+    systemReducer: { isLogged, token, hasAuthorizationHeader },
   } = useStateStorePrincipal();
+
+  const dispatch = useDispatchStorePrincipal();
 
   useEffect(() => {
     api.defaults.headers.authorization = `${token.tokenType} ${token.accessToken}`;
-  }, [token]);
 
-  if (!isLogged || !token || !api.defaults.headers.authorization) {
+    dispatch(updateManySystemState({ hasAuthorizationHeader: true }));
+  }, [dispatch, token]);
+
+  if (!isLogged || !token || !hasAuthorizationHeader) {
     return null;
   }
 

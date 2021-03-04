@@ -19,6 +19,7 @@ export default interface SystemState {
   isOpenDetailedPlanner: boolean;
   isOpenOptionsTable: boolean;
   token: Token;
+  hasAuthorizationHeader:boolean;
   authData: AuthData | null;
   accounts: Array<Account>;
   roles: string[];

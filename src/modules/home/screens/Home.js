@@ -22,6 +22,7 @@ import MultiBoxContainer from "modules/multiBox/screens/MultiBoxContainer";
 import OptionsTable from "modules/optionsTable/screens/OptionsTable";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import { Redirect } from "@reach/router";
+import api from "api/apiConfig";
 
 const OrdensExecucao = React.lazy(() =>
   import("modules/ordersExec/screens/OrdensExecucao"),
@@ -220,10 +221,16 @@ const ConnectedHome = compose(
 
 const SecuredHome = ({ path }) => {
   const {
-    systemReducer: { isLogged },
+    systemReducer: { isLogged, token, hasAuthorizationHeader },
   } = useStateStorePrincipal();
 
-  if (isLogged) return <ConnectedHome />;
+  if (isLogged && token) {
+    if (!hasAuthorizationHeader) {
+      return null;
+    }
+
+    return <ConnectedHome />;
+  }
 
   return <Redirect to="/" noThrow />;
 };
