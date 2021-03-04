@@ -320,25 +320,6 @@ const Tab4Alerts: React.FC<Props> = ({ multiBox }) => {
       <div className="createAlertContainer">
         <div className="formGroupRow">
           <Form.Group>
-            <Form.Label>Preço</Form.Label>
-            <CustomInput
-              name="price"
-              theme="dark"
-              step={0.01}
-              type="preco"
-              value={alertPrice}
-              onChange={handlePriceChange}
-            />
-          </Form.Group>
-
-          <Form.Group>
-            <Form.Label>Validade</Form.Label>
-            <BoxDateSelector multiBox={multiBox} />
-          </Form.Group>
-        </div>
-
-        <div className="formGroupRow">
-          <Form.Group>
             <Form.Label>Preço considerado</Form.Label>
             <Form.Control
               className="darkInputSelect"
@@ -365,6 +346,25 @@ const Tab4Alerts: React.FC<Props> = ({ multiBox }) => {
               <option value={"Less"}>Menor ou igual {"<="}</option>
               <option value={"Greater"}>Maior ou igual {">="}</option>
             </Form.Control>
+          </Form.Group>
+        </div>
+
+        <div className="formGroupRow">
+          <Form.Group>
+            <Form.Label>Preço</Form.Label>
+            <CustomInput
+              name="price"
+              theme="dark"
+              step={0.01}
+              type="preco"
+              value={alertPrice}
+              onChange={handlePriceChange}
+            />
+          </Form.Group>
+
+          <Form.Group>
+            <Form.Label>Validade</Form.Label>
+            <BoxDateSelector multiBox={multiBox} />
           </Form.Group>
         </div>
 
