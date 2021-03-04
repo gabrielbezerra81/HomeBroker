@@ -4,10 +4,12 @@ import {
   getOneSymbolDataAPI,
   getStockInfoAPI,
   getSymbolInfoAPI,
+  SymbolInfoAPI,
 } from "api/symbolAPI";
 import { UPDATE_MANY_MULTIBOX } from "constants/MenuActionTypes";
 import produce from "immer";
 import MultiBoxState, {
+  BoxOffer,
   BoxPosition,
   MultiBoxData,
   StockSymbolData,
@@ -23,13 +25,14 @@ import { updateManySystemState } from "redux/actions/system/SystemActions";
 import { updateManyMultilegState } from "modules/multileg/duck/actions/utils";
 import { exportBoxToMultileg } from "./util";
 import getSymbolExpirationInDays from "shared/utils/getSymbolExpirationInDays";
+import { searchBoxOptions, SearchedBoxOptionsData } from "./tab5Actions";
 
 interface OpenedBoxes {
   menuKey: string;
   tabKey: string;
 }
 
-const initialOnLoad = "0";
+const initialOnLoad = "5";
 const initialEmpty = "5";
 
 export const addMultiBoxAction = (): MainThunkAction => {
@@ -121,7 +124,7 @@ export const updateBoxAttrAction = (
 
 export const updateStructuresAndLoadBoxesAction = (
   data: any[],
-  createBoxes = true,
+  createBoxes: boolean,
 ): MainThunkAction => {
   return (dispatch, getState) => {
     const {
@@ -214,74 +217,61 @@ export const addMultiBoxesFromStructureDataAction = (
     const allPositions = (await listBoxPositionAPI()) as BoxPosition[];
 
     // Monta a lista de boxes a partir das estruturas incluídas
-    const promises = tab1Data.map(async (data) => {
-      const topSymbols: TopSymbol[] = [];
+    const boxPromises = tab1Data.map(async (structureData) => {
+      const symbolsData: Array<SymbolInfoAPI & { offerType: "C" | "V" }> = [];
 
-      let boxPositions = allPositions.filter(
-        (position) => position.groupPositions === data.id,
-      );
+      // Para montar os atributos "topSymbols", "boxPositions" e "boxOffers" é necessário pesquisar as informações dos ativos
+      for await (const code of structureData.codes) {
+        const symbolInfo = await getSymbolInfoAPI(code.symbol);
 
-      let hasPositionsAdded = true;
-
-      if (boxPositions.length === 0) {
-        hasPositionsAdded = false;
-      }
-
-      // Para montar os atributos "topSymbols" e as posições do box é necessário pesquisar as informações dos ativos
-      for await (const code of data.codes) {
-        const data = await getSymbolInfoAPI(code.symbol);
-
-        if (data) {
-          const dateDiff = getSymbolExpirationInDays(data.endBusiness);
-
-          const topSymbol: TopSymbol = {
-            code: code.symbol,
-            qtty: code.qtty,
+        if (symbolInfo) {
+          symbolsData.push({
+            ...symbolInfo,
             offerType: code.type === "buy" ? "C" : "V",
-            expiration: data.model ? dateDiff : "",
-            model: data.model || ("" as any),
-            strike: data.strike,
-            type: data.type || ("" as any),
-            viewMode: "strike",
-          };
-
-          topSymbols.push(topSymbol);
-
-          if (!hasPositionsAdded) {
-            boxPositions.push({
-              account: null as any,
-              groupPositions: null as any,
-              id: null as any,
-              structure: null as any,
-              stock: data,
-              price: 0,
-              qtty: 0,
-              symbol: data.symbol,
-            });
-          }
+          });
         }
       }
 
+      const topSymbols: TopSymbol[] = loadInitialTopSymbols({
+        structureData,
+        symbolsData,
+      });
+
       const stockSymbolData = await getStockSymbolData(topSymbols);
 
+      const boxOptionsData = await searchBoxOptions(
+        stockSymbolData?.symbol || "",
+      );
+
+      const boxPositions: BoxPosition[] = loadInitialBoxPositions({
+        allPositions,
+        symbolsData,
+        structureData,
+      });
+
+      const boxOffers: BoxOffer[] = await loadInitialBoxOffers({
+        symbolsData,
+        boxOptionsData,
+      });
+
       const newMultiBox: MultiBoxData = {
-        id: data.boxId,
+        id: structureData.boxId,
         activeTab: initialOnLoad,
         minimized: false,
         //tab5
-        symbolInput: "",
+        symbolInput: stockSymbolData?.symbol || "",
         searchedSymbol: "",
         stockSymbol: "",
         stockOptions: [],
         expirations: [],
         selectedStrike: 0,
         selectedExpiration: "",
-        boxOffers: [],
+        boxOffers,
         //tab5
 
         strikeViewMode: "strike",
         topSymbols,
-        tab1Id: data.id,
+        tab1Id: structureData.id,
         selectedValidity: "DAY",
         selectedDate: new Date(),
         alertPrice: 0,
@@ -292,12 +282,16 @@ export const addMultiBoxesFromStructureDataAction = (
         boxPositions,
       };
 
+      if (boxOptionsData) {
+        Object.assign(newMultiBox, boxOptionsData);
+      }
+
       return newMultiBox;
     });
 
     const multiBoxes: MultiBoxData[] = [];
 
-    for await (const boxes of promises) {
+    for await (const boxes of boxPromises) {
       multiBoxes.push(boxes);
     }
 
@@ -325,6 +319,135 @@ export const addMultiBoxesFromStructureDataAction = (
       }),
     );
   };
+};
+
+interface LoadTopSymbols {
+  symbolsData: Array<SymbolInfoAPI & { offerType: "C" | "V" }>;
+  structureData: Tab1Data;
+}
+
+const loadInitialTopSymbols = ({
+  symbolsData,
+  structureData,
+}: LoadTopSymbols) => {
+  const topSymbols: TopSymbol[] = symbolsData.map((symbolInfo) => {
+    const dateDiff = getSymbolExpirationInDays(symbolInfo.endBusiness);
+
+    const code = structureData.codes.find(
+      (item) => item.symbol === symbolInfo.symbol,
+    );
+
+    const topSymbol: TopSymbol = {
+      code: symbolInfo.symbol,
+      qtty: code?.qtty || 1,
+      offerType: symbolInfo.offerType,
+      expiration: symbolInfo.model ? dateDiff : "",
+      model: symbolInfo.model || ("" as any),
+      strike: symbolInfo.strike,
+      type: symbolInfo.type || ("" as any),
+      viewMode: "strike",
+    };
+
+    return topSymbol;
+  });
+
+  return topSymbols;
+};
+
+interface LoadPositions {
+  allPositions: BoxPosition[];
+  structureData: Tab1Data;
+  symbolsData: SymbolInfoAPI[];
+}
+
+const loadInitialBoxPositions = ({
+  allPositions,
+  structureData,
+  symbolsData,
+}: LoadPositions) => {
+  const boxPositions = allPositions.filter(
+    (position) => position.groupPositions === structureData.id,
+  );
+
+  let hasPositionsAdded = true;
+
+  if (boxPositions.length === 0) {
+    hasPositionsAdded = false;
+  }
+
+  symbolsData.forEach((data) => {
+    if (!hasPositionsAdded) {
+      boxPositions.push({
+        account: null as any,
+        groupPositions: null as any,
+        id: null as any,
+        structure: null as any,
+        stock: data,
+        price: 0,
+        qtty: 0,
+        symbol: data.symbol,
+      });
+    }
+  });
+
+  return boxPositions;
+};
+
+interface LoadBoxOffers {
+  symbolsData: Array<SymbolInfoAPI & { offerType: "C" | "V" }>;
+  boxOptionsData: SearchedBoxOptionsData | null;
+}
+
+const loadInitialBoxOffers = async ({
+  symbolsData,
+  boxOptionsData,
+}: LoadBoxOffers) => {
+  const boxOffers: BoxOffer[] = [];
+
+  for await (const data of symbolsData) {
+    const [day, month, year] = data.endBusiness.split(" ")[0].split("/");
+
+    const offerExpiration = `${year}-${month}-${day}`;
+
+    const offer: BoxOffer = {
+      qtty: 1,
+      model: data.model || ("" as any),
+      type: data.type || ("" as any),
+      selectedCode: data.symbol,
+      offerType: data.offerType,
+      selectedStrike: data.strike,
+      selectedExpiration: offerExpiration,
+      expirations: data.option ? [] : [],
+      stockOptions: data.option ? [] : [],
+      stockSymbol: data.option ? "" : data.symbol,
+    };
+
+    if (data.referenceStock) {
+      const stockInfo = await getStockInfoAPI(data.referenceStock);
+
+      const isSameStockSymbol =
+        stockInfo?.symbol === boxOptionsData?.stockSymbol;
+
+      if (boxOptionsData && isSameStockSymbol) {
+        offer.expirations = boxOptionsData.expirations;
+        offer.stockOptions = boxOptionsData.stockOptions;
+        offer.stockSymbol = boxOptionsData.stockSymbol;
+      } //
+      else if (stockInfo) {
+        const optionsData = await searchBoxOptions(stockInfo.symbol);
+
+        if (optionsData) {
+          offer.expirations = optionsData?.expirations;
+          offer.stockOptions = optionsData?.stockOptions;
+          offer.stockSymbol = optionsData?.stockSymbol;
+        }
+      }
+    }
+
+    boxOffers.push(offer);
+  }
+
+  return boxOffers;
 };
 
 export const startReactiveMultiBoxUpdateAction = (

@@ -4,7 +4,6 @@ import {
   addBoxStructureAPI,
   pesquisarAtivoMultilegAPI,
   pesquisarStrikesMultilegAPI,
-  setPointerWhileAwaiting,
 } from "api/API";
 import produce from "immer";
 
@@ -28,36 +27,59 @@ import {
 import { mountOrderForOperations } from "./util";
 import { getSymbolInfoAPI } from "api/symbolAPI";
 
+export interface SearchedBoxOptionsData {
+  expirations: string[];
+  searchedSymbol: string;
+  stockSymbol: string;
+  selectedExpiration: string;
+  stockOptions: BoxStockOption[];
+  selectedStrike: number;
+}
+
+export const searchBoxOptions = async (
+  symbol: string,
+): Promise<SearchedBoxOptionsData | null> => {
+  const data = await pesquisarAtivoMultilegAPI(symbol);
+
+  if (data) {
+    const payload: SearchedBoxOptionsData = {
+      expirations: data.vencimentos,
+      searchedSymbol: symbol,
+      stockSymbol: data.ativoPrincipal,
+      selectedExpiration: data.vencimentos[0],
+      stockOptions: [],
+      selectedStrike: 0,
+    };
+
+    payload.stockOptions = data.opcoes.sort(
+      (a: BoxStockOption, b: BoxStockOption) => a.strike - b.strike,
+    );
+
+    const symbolIsOption = symbol !== data.ativoPrincipal ? true : false;
+
+    payload.selectedStrike = findClosestStrike({
+      options: data.opcoes,
+      symbolQuote: data.cotacaoAtual,
+      symbol,
+      symbolIsOption,
+    });
+
+    return payload;
+  }
+
+  return null;
+};
+
 export const handleSearchBoxSymbolOptionsAction = (
   id: string,
   symbol: string,
 ): MainThunkAction => {
   return async (dispatch) => {
-    const data = await pesquisarAtivoMultilegAPI(symbol);
+    const payload: Partial<MultiBoxData> | null = await searchBoxOptions(
+      symbol,
+    );
 
-    if (data) {
-      const payload: Partial<MultiBoxData> = {
-        expirations: data.vencimentos,
-        searchedSymbol: symbol,
-        stockSymbol: data.ativoPrincipal,
-        selectedExpiration: data.vencimentos[0],
-        stockOptions: [],
-        selectedStrike: 0,
-      };
-
-      payload.stockOptions = data.opcoes.sort(
-        (a: BoxStockOption, b: BoxStockOption) => a.strike - b.strike,
-      );
-
-      const symbolIsOption = symbol !== data.ativoPrincipal ? true : false;
-
-      payload.selectedStrike = findClosestStrike({
-        options: data.opcoes,
-        symbolQuote: data.cotacaoAtual,
-        symbol,
-        symbolIsOption,
-      });
-
+    if (payload) {
       dispatch(updateBoxAttrAction(id, payload));
     } //
     else {

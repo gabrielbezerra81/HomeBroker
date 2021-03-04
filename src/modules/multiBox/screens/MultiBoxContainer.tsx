@@ -29,7 +29,7 @@ const MultiBoxContainer: React.FC = () => {
         return false;
       });
 
-      dispatch(updateStructuresAndLoadBoxesAction(data));
+      dispatch(updateStructuresAndLoadBoxesAction(data, true));
     }
 
     loadBoxes();

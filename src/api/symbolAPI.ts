@@ -2,16 +2,15 @@ import { SymbolToolTipInfo } from "modules/multiBox/types/MultiBoxState";
 import api from "./apiConfig";
 import { url_stockInfo_symbol } from "./url";
 
-interface SymbolInfo extends SymbolToolTipInfo {
+export interface SymbolInfoAPI extends SymbolToolTipInfo {
   referenceStock?: number;
-  isOption: boolean;
   symbol: string;
   id: number;
 }
 
 export const getSymbolInfoAPI = async (
   symbol: string,
-): Promise<SymbolInfo | null> => {
+): Promise<SymbolInfoAPI | null> => {
   return api
     .get(`${url_stockInfo_symbol}${symbol}`)
     .then((response) => {
