@@ -71,7 +71,8 @@ export const url_multiQuote_quotes = "quotes/symbols?symbols=";
 export const url_singleStructure_id = "structures/";
 export const url_multiStructure_ids = "structures/ids?ids=";
 export const url_ordersExec_ids = "order/working/ids?ids=";
-export const url_multiBookOneLine_symbols = "quotes/bookline/symbols?symbols=";
+export const url_multiBookOneLine_symbols = "quotes/bookline/box?symbols=";
+export const url_multiStructureBox_ids = "structures/box?ids=";
 
 // Symbol
 export const url_stockInfo_symbol = "stocks/info/";
@@ -91,4 +92,4 @@ export const url_updateCategoryTitle_title_ids = "favorite/groups/";
 export const url_deleteCategories_ids = "favorite/list?ids=";
 
 // Planejador financeiro
-export const url_saveSimulation ="projections"
+export const url_saveSimulation = "projections";

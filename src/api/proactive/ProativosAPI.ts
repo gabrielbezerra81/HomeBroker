@@ -4,6 +4,7 @@ import {
   url_multiStructure_ids,
   url_ordersExec_ids,
   url_multiBookOneLine_symbols,
+  url_multiStructureBox_ids,
 } from "api/url";
 import { MultilegQuote } from "modules/multileg/types/multileg";
 import { THLQuote } from "modules/thl/types/thl";
@@ -162,7 +163,7 @@ export const getProactiveThlQuotesAPI = async (
 
 export const getProactiveBoxAPI = async (structureIds: string) => {
   return proactiveAPI
-    .get(`${url_multiStructure_ids}${structureIds}`)
+    .get(`${url_multiStructureBox_ids}${structureIds}`)
     .then((response) => {
       if (response.data && response.data.length) {
         return response.data;
