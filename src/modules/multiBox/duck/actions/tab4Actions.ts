@@ -14,7 +14,7 @@ export const startProactiveBoxSymbolsUpdateAction = (
   return (dispatch, getState) => {
     const {
       systemReducer: { updateInterval },
-      multiBoxReducer: { boxesTab1Data, esource_tab4Box, interval_tab4Box },
+      multiBoxReducer: { esource_tab4Box, interval_tab4Box },
     } = getState();
 
     if (esource_tab4Box && esource_tab4Box.close) {

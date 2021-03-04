@@ -518,7 +518,7 @@ export const startProactiveMultiBoxUpdateAction = (
           const updatedStructure = structures.find(
             (structureItem: any) => structureItem.id === boxItem.structureID,
           );
-
+          // "0.0031415"
           if (updatedStructure) {
             boxFromAPI.structure = updatedStructure;
           } else {

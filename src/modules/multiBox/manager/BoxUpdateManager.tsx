@@ -1,7 +1,7 @@
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import usePrevious from "hooks/usePrevious";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import _ from "lodash";
 
@@ -17,13 +17,15 @@ import { ParsedConfiguration } from "../types/MultiBoxState";
 const BoxUpdateManager: React.FC = () => {
   const {
     systemReducer: { updateMode, updateInterval, selectedTab },
-    multiBoxReducer: { boxesTab1Data, boxes },
+    multiBoxReducer: { boxesTab1Data, boxes, symbolsData },
   } = useStateStorePrincipal();
 
   const dispatch = useDispatchStorePrincipal();
 
   const previousUpdateMode = usePrevious(updateMode);
   const previousUpdateInterval = usePrevious(updateInterval);
+
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
 
   const symbols = useMemo(() => {
     const symbols: string[] = [];
@@ -41,19 +43,22 @@ const BoxUpdateManager: React.FC = () => {
         structureData.configuration,
       ) as ParsedConfiguration;
 
-      if (configuration.tabKey !== selectedTab) {
+      if (configuration.tabKey !== selectedTab && !isInitialLoading) {
         return;
       }
 
       multiBox.topSymbols.forEach((topSymbol) => {
-        if (!symbols.includes(topSymbol.code) && multiBox.activeTab === "2") {
+        if (
+          !symbols.includes(topSymbol.code) &&
+          (multiBox.activeTab === "2" || isInitialLoading)
+        ) {
           symbols.push(topSymbol.code);
         }
       });
     });
 
     return symbols;
-  }, [boxes, boxesTab1Data, selectedTab]);
+  }, [boxes, boxesTab1Data, isInitialLoading, selectedTab]);
 
   const previousSymbols = usePrevious(symbols);
 
@@ -96,7 +101,7 @@ const BoxUpdateManager: React.FC = () => {
       } //
       else if (updateMode === "proactive") {
         // dispatch(startProactiveBoxUpdateAction());
-        dispatch(startProactiveMultiBoxUpdateAction(structureIds));
+        // dispatch(startProactiveMultiBoxUpdateAction(structureIds));
       }
     }
 
@@ -149,6 +154,12 @@ const BoxUpdateManager: React.FC = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [symbols, updateInterval, updateMode, dispatch]);
+
+  useEffect(() => {
+    if (symbolsData.length > 0) {
+      setIsInitialLoading(false);
+    }
+  }, [symbolsData.length]);
 
   return null;
 };
