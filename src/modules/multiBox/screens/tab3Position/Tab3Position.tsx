@@ -189,7 +189,7 @@ const Tab3Position: React.FC<Props> = ({ multiBox }) => {
 
           <PopConfirm
             title="Excluir box"
-            message="Deseja realmente excluir esse box?"
+            message="Tem certeza que deseja excluir este box?"
             onConfirm={handleClose}
           >
             <button className="brokerCustomButton">
