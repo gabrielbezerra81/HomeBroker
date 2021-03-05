@@ -12,6 +12,7 @@ import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import CategoryLine from "./CategoryLine";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import { FiX } from "react-icons/fi";
+import PopConfirm from "shared/components/PopConfirm/PopConfirm";
 
 interface CategoryTableProps {
   category: Category;
@@ -93,12 +94,15 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
         <tr className="categoryTitle">
           <td className="deleteColumn">
             {removeMode && (
-              <button
-                className="brokerCustomButton"
-                onClick={handleDeleteCategory}
+              <PopConfirm
+                title="Excluir categoria"
+                message={`Tem certeza que deseja excluir a categoria "${category.title}"?`}
+                onConfirm={handleDeleteCategory}
               >
-                <FiX color="#ce202a" size={10} strokeWidth={3} />
-              </button>
+                <button className="brokerCustomButton">
+                  <FiX color="#ce202a" size={10} strokeWidth={3} />
+                </button>
+              </PopConfirm>
             )}
           </td>
           <td colSpan={4}>
