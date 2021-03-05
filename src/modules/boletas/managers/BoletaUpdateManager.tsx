@@ -9,19 +9,26 @@ import {
   startReactiveBoletaQuoteUpdateAction,
 } from "../duck/actions/boletasAPIActions";
 import checkIfUpdateConfigChanged from "managers/updateManager/utils";
+import { mudarAtributoBoletaAction } from "../duck/actions/boletaActions";
 
 interface BoletaUpdateManagerProps {
   namespace: BoletaNamespace;
+  visibility: boolean;
 }
 
 const BoletaUpdateManager: React.FC<BoletaUpdateManagerProps> = ({
   namespace,
+  visibility,
 }) => {
   const {
     systemReducer: { updateMode, updateInterval },
   } = useStateStorePrincipal();
 
-  const { dadosPesquisa: symbolData } = useStateBoletas()[namespace];
+  const {
+    dadosPesquisa: symbolData,
+    esource_boletaQuote,
+    interval_boletaQuote,
+  } = useStateBoletas()[namespace];
 
   const dispatch = useDispatchBoletas();
 
@@ -31,7 +38,7 @@ const BoletaUpdateManager: React.FC<BoletaUpdateManagerProps> = ({
 
   useEffect(() => {
     function checkIfBoletaChanged() {
-      if (previousSymbolData && previousSymbolData.ativo !== symbolData.ativo) {
+      if (previousSymbolData && previousSymbolData !== symbolData) {
         return true;
       }
 
@@ -60,6 +67,19 @@ const BoletaUpdateManager: React.FC<BoletaUpdateManagerProps> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateInterval, updateMode, symbolData, dispatch, namespace]);
+
+  useEffect(() => {
+    if (!visibility) {
+      if (esource_boletaQuote) {
+        esource_boletaQuote.close();
+      }
+      if (interval_boletaQuote) {
+        clearInterval(interval_boletaQuote);
+      }
+      dispatch(mudarAtributoBoletaAction(0, namespace, "orderId"));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visibility, namespace, dispatch]);
 
   return null;
 };

@@ -9,7 +9,6 @@ import { listarBookOfertaOnEnterAction } from "modules/boletas/duck/actions/book
 import {
   fecharFormAction,
   abrirFormAction,
-  fecharFormConfigurarAction,
 } from "redux/actions/GlobalAppActions";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
@@ -24,7 +23,6 @@ import closeIcon from "assets/closeIcon.png";
 
 import useStateBoletas from "hooks/useStateBoletas";
 import { BoletaNamespace } from "constants/ActionTypes";
-import { mudarAtributoBoletaAction } from "modules/boletas/duck/actions/boletaActions";
 import { IoMdRepeat } from "react-icons/io";
 
 interface ModalHeaderProps {
@@ -43,16 +41,11 @@ export const ModalHeader: React.FC<ModalHeaderProps> = ({
   resetPosition,
   name,
   ativo,
-  namespace,
 }) => {
   const boletaState = useStateBoletas();
   const {
     appBoletasReducer: { appProps },
   } = boletaState;
-
-  const { esource_boletaQuote, interval_boletaQuote } = boletaState[
-    namespace as BoletaNamespace
-  ];
 
   const {
     systemReducer: { token },
@@ -81,25 +74,7 @@ export const ModalHeader: React.FC<ModalHeaderProps> = ({
   const handleCloseBoleta = useCallback(() => {
     resetPosition();
     dispatchGlobal(fecharFormAction(formShow, name, appkey));
-    dispatch(mudarAtributoBoletaAction(0, namespace, "orderId"));
-
-    if (esource_boletaQuote) {
-      esource_boletaQuote.close();
-    }
-    if (interval_boletaQuote) {
-      clearInterval(interval_boletaQuote);
-    }
-  }, [
-    appkey,
-    dispatch,
-    dispatchGlobal,
-    esource_boletaQuote,
-    formShow,
-    interval_boletaQuote,
-    name,
-    namespace,
-    resetPosition,
-  ]);
+  }, [appkey, dispatchGlobal, formShow, name, resetPosition]);
 
   return (
     <div className={`${headerClass} handle mheader`}>

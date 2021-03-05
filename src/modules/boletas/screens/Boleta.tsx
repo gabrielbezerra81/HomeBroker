@@ -108,7 +108,7 @@ const Boleta: React.FC<BoletaContainerProps> = ({
       {children}
       {boletaName === "book" && <BookUpdateManager />}
       {boletaName !== "book" && namespace && (
-        <BoletaUpdateManager namespace={namespace} />
+        <BoletaUpdateManager namespace={namespace} visibility={visibility} />
       )}
     </Animate>
   );

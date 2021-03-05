@@ -36,7 +36,8 @@
     z-index: 1000;
     background-color: #000;
     width: calc(
-      100% - #{constants.$rightSideBarWidth} - #{constants.$leftSideBarWidth} - #{constants.$tabsMarginToLeftSideBar} - 3px
+      100% - #{constants.$rightSideBarWidth} - #{constants.$leftSideBarWidth} -
+        #{constants.$tabsMarginToLeftSideBar} - 3px
     ); // 43 barra lateral direita - 81 barra lateral esquerda - 32 margem esquerda
     transition: width 0.2s;
 
@@ -80,11 +81,11 @@
     width: 100%;
     padding: 0 5px;
 
-    i {
-      font-size: 12px;
-      margin-top: 4px;
+    svg {
       color: #666;
       transition: color 0.2s;
+      margin-top: 3px;
+      stroke-width: 4px;
 
       &:hover {
         color: #ce202a;

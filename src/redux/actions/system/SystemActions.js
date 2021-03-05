@@ -11,10 +11,12 @@ import {
 import { setPointerWhileAwaiting } from "api/API";
 import { realizarLoginAPI, realizarCadastroAPI } from "api/LoginAPI";
 import { navigate } from "@reach/router";
-import { persistor } from "redux/StoreCreation";
+import { globalStore, persistor } from "redux/StoreCreation";
 import api from "api/apiConfig";
 
 import { INITIAL_STATE as initialSystemState } from "../../reducers/system/SystemReducer";
+import { handleDeleteBoxAction } from "modules/multiBox/duck/actions/multiBoxActions";
+import { fecharFormAction } from "../GlobalAppActions";
 
 const waitDispatch = 1000;
 
@@ -384,11 +386,71 @@ export const handleAddOrSelectTabAction = (eventKey) => {
 };
 
 export const handleRemoveTabAction = (tabIndex) => {
-  return (dispatch, getState) => {
-    const { mainTabs } = getState().systemReducer;
+  return async (dispatch, getState) => {
+    const { mainTabs, openedMenus, selectedTab } = getState().systemReducer;
+
+    const {
+      GlobalReducer: { show: boletasVisibility },
+    } = globalStore.getState();
 
     const updatedMainTabs = produce(mainTabs, (draft) => {
       draft.splice(tabIndex, 1);
+    });
+
+    const openedMenusToRemove = openedMenus
+      .filter((item) => item.tabKey === selectedTab)
+      .map((item) => item.menuKey);
+
+    const boxesToRemove = [];
+    let otherPopupsToRemove = [];
+    const boletasToRemove = []; // compra_mercado0, book0
+
+    openedMenusToRemove.forEach((menuKey) => {
+      if (menuKey.includes("multiBox")) {
+        boxesToRemove.push(menuKey.replace("multiBox", ""));
+      } //
+      else if (
+        ["multileg", "optionsTable", "category_list"].includes(menuKey)
+      ) {
+        otherPopupsToRemove.push(menuKey);
+      } //
+      else {
+        boletasToRemove.push(menuKey);
+      }
+    });
+
+    otherPopupsToRemove = otherPopupsToRemove.map((menuKey) => {
+      switch (menuKey) {
+        case "multileg":
+          return "isOpenMultileg";
+        case "optionsTable":
+          return "isOpenOptionsTable";
+        case "category_list":
+          return "isOpenCategoryList";
+        default:
+          return "";
+      }
+    });
+
+    otherPopupsToRemove.forEach((isOpenAttrKey) => {
+      dispatch(abrirItemBarraLateralAction(isOpenAttrKey, null, false));
+    });
+
+    if (boxesToRemove.length > 0) {
+      Promise.all(
+        boxesToRemove.map(async (boxId) => {
+          await dispatch(handleDeleteBoxAction(boxId));
+        }),
+      );
+    }
+
+    boletasToRemove.forEach((boletaKey) => {
+      const boletaName = boletaKey.substr(0, boletaKey.length - 1);
+      const appKey = boletaKey.substr(boletaKey.length - 1);
+
+      globalStore.dispatch(
+        fecharFormAction(boletasVisibility, boletaName, appKey),
+      );
     });
 
     dispatch(

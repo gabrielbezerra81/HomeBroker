@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Nav, Col, Form } from "react-bootstrap";
-import { MDBIcon } from "mdbreact";
 
 import {
   handleChangeTabPropsAction,
@@ -9,6 +8,8 @@ import {
 
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
+import PopConfirm from "shared/components/PopConfirm/PopConfirm";
+import { FiX } from "react-icons/fi";
 
 interface TabButtonProps {
   tabIndex: number;
@@ -85,7 +86,14 @@ const TabButton: React.FC<TabButtonProps> = ({ tabIndex, tab }, ref) => {
         >
           <div className="titleContainer">
             {tabIndex !== 0 && (
-              <MDBIcon icon="times" onClick={handleRemoveTab} />
+              <PopConfirm
+                title="Excluir aba"
+                message="Tem certeza que deseja excluir esta aba?"
+                onConfirm={handleRemoveTab}
+                placement="bottom"
+              >
+                <FiX size={12} />
+              </PopConfirm>
             )}
             <Form.Control
               disabled={disabledEdit}
