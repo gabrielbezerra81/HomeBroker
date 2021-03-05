@@ -21,6 +21,7 @@ import closeIcon from "assets/closeIcon.png";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { createAlertFromBoxAction } from "modules/multiBox/duck/actions/tab3Actions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
+import PopConfirm from "shared/components/PopConfirm/PopConfirm";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -270,9 +271,15 @@ const Tab4Alerts: React.FC<Props> = ({ multiBox }) => {
             <img src={cogIcon} alt="" />
           </button>
 
-          <button className="brokerCustomButton" onClick={handleClose}>
-            <img src={closeIcon} alt="" />
-          </button>
+          <PopConfirm
+            title="Excluir box"
+            message="Deseja realmente excluir esse box?"
+            onConfirm={handleClose}
+          >
+            <button className="brokerCustomButton">
+              <img src={closeIcon} alt="" />
+            </button>
+          </PopConfirm>
         </div>
       </header>
       <div className="boxInputRangeContainer">

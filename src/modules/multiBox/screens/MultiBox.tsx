@@ -212,13 +212,6 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
 
         {/*minimizedClass  */}
         <div className={`mcontent boxContent ${activeTabClass}`}>
-          <button
-            onClick={handleStrikeViewChange}
-            className="brokerCustomButton changeStrikeViewButton"
-          >
-            <IoMdRepeat size={19} color="#C4C4C4" />
-          </button>
-
           <Tab0 multiBox={multiBox} />
           <Tab1StructureBook multiBox={multiBox} />
           <Tab2ListBooks multiBox={multiBox} />
@@ -292,6 +285,15 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
               <Tab5SearchIcon className="tab5" />
             </button>
           </div>
+
+          {!!structureData && (
+            <button
+              onClick={handleStrikeViewChange}
+              className="brokerCustomButton changeStrikeViewButton"
+            >
+              <IoMdRepeat size={19} color="#C4C4C4" />
+            </button>
+          )}
 
           {toggleShowId && (
             <span

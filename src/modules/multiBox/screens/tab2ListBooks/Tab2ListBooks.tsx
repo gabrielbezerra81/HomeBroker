@@ -19,6 +19,7 @@ import {
 
 import closeIcon from "assets/closeIcon.png";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
+import PopConfirm from "shared/components/PopConfirm/PopConfirm";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -196,9 +197,17 @@ const Tab2ListBooks: React.FC<Props> = ({ multiBox }) => {
             <img src={cogIcon} alt="" />
           </button>
 
-          <button className="brokerCustomButton" onClick={handleClose}>
+          <PopConfirm
+            title="Excluir box"
+            message="Deseja realmente excluir esse box?"
+            onConfirm={handleClose}
+          >
+             <button className="brokerCustomButton" >
             <img src={closeIcon} alt="" />
           </button>
+          </PopConfirm>
+
+         
         </div>
       </header>
 

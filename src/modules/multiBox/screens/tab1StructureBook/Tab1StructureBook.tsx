@@ -6,10 +6,7 @@ import cogIcon from "assets/multiBox/cogIcon.png";
 import openInNewIcon from "assets/multiBox/openInNewIcon.png";
 import zoomIcon from "assets/multiBox/zoomIcon.png";
 
-import {
-  formatarNumDecimal,
-  formatarQuantidadeKMG,
-} from "shared/utils/Formatacoes";
+import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import {
   MultiBoxData,
   Tab1Data,
@@ -24,6 +21,7 @@ import {
 
 import closeIcon from "assets/closeIcon.png";
 import { Form, InputGroup } from "react-bootstrap";
+import PopConfirm from "shared/components/PopConfirm/PopConfirm";
 interface Props {
   multiBox: MultiBoxData;
 }
@@ -159,40 +157,6 @@ const Tab1StructureBook: React.FC<Props> = ({ multiBox }) => {
     return formatted;
   }, [structureData]);
 
-  const formattedBook = useMemo(() => {
-    if (!structureBook) {
-      return;
-    }
-
-    const formatted = { ...structureBook };
-
-    formatted.book.buy = structureBook.book.buy
-      .filter(
-        (bookLine) =>
-          bookLine.price.toString() !== "0.0031415" &&
-          bookLine.qtty.toString() !== "0.0031415",
-      )
-      .map((bookLine) => ({
-        ...bookLine,
-        formattedQtty: formatarQuantidadeKMG(bookLine.qtty),
-        formattedPrice: formatarNumDecimal(bookLine.price),
-      }));
-
-    formatted.book.sell = structureBook.book.sell
-      .filter(
-        (bookLine) =>
-          bookLine.price.toString() !== "0.0031415" &&
-          bookLine.qtty.toString() !== "0.0031415",
-      )
-      .map((bookLine) => ({
-        ...bookLine,
-        formattedQtty: formatarQuantidadeKMG(bookLine.qtty),
-        formattedPrice: formatarNumDecimal(bookLine.price),
-      }));
-
-    return formatted;
-  }, [structureBook]);
-
   if (!structureData) {
     return <div></div>;
   }
@@ -235,9 +199,15 @@ const Tab1StructureBook: React.FC<Props> = ({ multiBox }) => {
             <img src={cogIcon} alt="" />
           </button>
 
-          <button className="brokerCustomButton" onClick={handleClose}>
-            <img src={closeIcon} alt="" />
-          </button>
+          <PopConfirm
+            title="Excluir box"
+            message="Deseja realmente excluir esse box?"
+            onConfirm={handleClose}
+          >
+            <button className="brokerCustomButton">
+              <img src={closeIcon} alt="" />
+            </button>
+          </PopConfirm>
         </div>
       </header>
 

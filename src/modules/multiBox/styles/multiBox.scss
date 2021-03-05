@@ -212,27 +212,27 @@
       pointer-events: none;
     }
 
-    &.activeTab0 > div:nth-child(2) {
+    &.activeTab0 > div:nth-child(1) {
       @include activeTab(270px, showTab1);
     }
 
-    &.activeTab1 > div:nth-child(3) {
+    &.activeTab1 > div:nth-child(2) {
       @include activeTab(270px, showTab1);
     }
 
-    &.activeTab2 > div:nth-child(4) {
+    &.activeTab2 > div:nth-child(3) {
       @include activeTab(unset, showTab);
     }
 
-    &.activeTab3 > div:nth-child(5) {
+    &.activeTab3 > div:nth-child(4) {
       @include activeTab(unset, showTab);
     }
 
-    &.activeTab4 > div:nth-child(6) {
+    &.activeTab4 > div:nth-child(5) {
       @include activeTab(unset, showTab);
     }
 
-    &.activeTab5 > div:nth-child(7) {
+    &.activeTab5 > div:nth-child(6) {
       @include activeTab(unset, showTab);
     }
   }

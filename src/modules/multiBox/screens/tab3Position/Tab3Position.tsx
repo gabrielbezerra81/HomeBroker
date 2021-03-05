@@ -22,6 +22,7 @@ import { IoMdRepeat } from "react-icons/io";
 import getSymbolExpirationInDays from "shared/utils/getSymbolExpirationInDays";
 import PositionTableItem from "./PositionTableItem";
 import { handleSaveBoxPositionsAction } from "modules/multiBox/duck/actions/tab2Actions";
+import PopConfirm from "shared/components/PopConfirm/PopConfirm";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -186,9 +187,15 @@ const Tab3Position: React.FC<Props> = ({ multiBox }) => {
             <img src={cogIcon} alt="" />
           </button>
 
-          <button className="brokerCustomButton" onClick={handleClose}>
-            <img src={closeIcon} alt="" />
-          </button>
+          <PopConfirm
+            title="Excluir box"
+            message="Deseja realmente excluir esse box?"
+            onConfirm={handleClose}
+          >
+            <button className="brokerCustomButton">
+              <img src={closeIcon} alt="" />
+            </button>
+          </PopConfirm>
         </div>
       </header>
 

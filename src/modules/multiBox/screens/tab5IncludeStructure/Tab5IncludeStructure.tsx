@@ -29,6 +29,7 @@ import {
 
 import closeIcon from "assets/closeIcon.png";
 import { GrFormSearch } from "react-icons/gr";
+import PopConfirm from "shared/components/PopConfirm/PopConfirm";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -48,6 +49,7 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
     stockSymbol,
     stockSymbolData,
     toggleShowId,
+    tab1Id,
   } = multiBox;
 
   const [searchingSymbolAPI, setSearchingSymbolAPI] = useState(false);
@@ -256,9 +258,21 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
             <img src={cogIcon} alt="" />
           </button>
 
-          <button className="brokerCustomButton" onClick={handleClose}>
-            <img src={closeIcon} alt="" />
-          </button>
+          {tab1Id === -1 ? (
+            <button className="brokerCustomButton" onClick={handleClose}>
+              <img src={closeIcon} alt="" />
+            </button>
+          ) : (
+            <PopConfirm
+              title="Excluir box"
+              message="Deseja realmente excluir esse box?"
+              onConfirm={handleClose}
+            >
+              <button className="brokerCustomButton">
+                <img src={closeIcon} alt="" />
+              </button>
+            </PopConfirm>
+          )}
         </div>
       </header>
 
