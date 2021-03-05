@@ -4,7 +4,7 @@ import "modules/boletas/styles/index.scss";
 import "modules/multileg/styles/multileg.scss";
 import "modules/ordersExec/styles/OrdensExecucao.scss";
 import "modules/position/styles/Position.scss";
-import "modules/history/styles/history.scss"
+import "modules/history/styles/history.scss";
 
 import "./tela_principal/TelaPrincipal.css";
 import "./tela_principal/LeftActionBar/LeftActionBar.scss";
@@ -26,6 +26,7 @@ import "./componentes_customizados/EmblemaSimples.css";
 import "./componentes_customizados/IconeSeta.css";
 import "./componentes_customizados/CustomButton.scss";
 import "./componentes_customizados/CustomTooltip.scss";
+import "./componentes_customizados/PopConfirm.scss";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "./componentes_customizados/SelectANTD.css";

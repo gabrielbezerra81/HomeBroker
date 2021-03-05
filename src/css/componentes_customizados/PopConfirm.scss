@@ -1,0 +1,28 @@
+.popConfirmContainer {
+  .popover-header {
+    color: #000;
+  }
+
+  .popover-body {
+    > span {
+      color: #000;
+    }
+
+    > div.buttonsContainer {
+      display: flex;
+      margin-top: 10px;
+      align-items: center;
+      justify-content: flex-end;
+
+      button {
+        width: 44px;
+        height: 25px;
+        padding: 0;
+      }
+
+      button:first-child {
+        margin-right: 10px;
+      }
+    }
+  }
+}

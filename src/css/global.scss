@@ -47,6 +47,10 @@ body {
   input:-internal-autofill-selected {
     background-color: #272827 !important;
   }
+
+  .show.popover {
+    z-index: 9999999999999;
+  }
 }
 
 .blockSelection {
