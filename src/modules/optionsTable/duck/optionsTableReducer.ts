@@ -6,6 +6,7 @@ const INITIAL_STATE: OptionsTableState = {
   options: [],
   checkedItems: ["10.5", "11.5"],
   symbolsToUpdate: [],
+  stockSymbolId: null,
 };
 
 export default function (

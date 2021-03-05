@@ -80,6 +80,8 @@ export const url_stockInfo_symbol = "stocks/info/";
 
 // Matriz de opções
 export const url_optionsTable_symbol_type = "structure/thl/matrix/";
+export const url_saveSymbolConfig_stockId = "stocks/watch/";
+export const url_listSymbolConfig_symbol = "stocks/watch/symbol/";
 
 // Box
 export const url_box = "favorite";

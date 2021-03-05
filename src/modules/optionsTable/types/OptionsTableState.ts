@@ -1,4 +1,5 @@
 interface Stock {
+  id: number;
   symbol: string;
   strike: number;
   market: string;
@@ -24,4 +25,5 @@ export default interface OptionsTableState {
   options: Array<OptionTableItem>;
   checkedItems: Array<string>;
   symbolsToUpdate: Array<string>;
+  stockSymbolId: number | null;
 }

@@ -1,6 +1,10 @@
 import api from "api/apiConfig";
-import { getOneSymbolDataAPI } from "api/symbolAPI";
-import { url_optionsTable_symbol_type } from "api/url";
+import { getOneSymbolDataAPI, getSymbolInfoAPI } from "api/symbolAPI";
+import {
+  url_listSymbolConfig_symbol,
+  url_optionsTable_symbol_type,
+  url_saveSymbolConfig_stockId,
+} from "api/url";
 import { UPDATE_STATE_OPTIONS_TABLE } from "constants/MenuActionTypes";
 import produce from "immer";
 import OptionsTableState, {
@@ -34,6 +38,11 @@ interface GetOptionsAPI {
   lines: Array<OptionTableItem>;
 }
 
+interface GetSavedSymbolsAPI {
+  symbol: string;
+  id: string;
+}
+
 export const handleSearchOptionsAction = ({
   symbol,
   type,
@@ -44,13 +53,38 @@ export const handleSearchOptionsAction = ({
         return null;
       }
 
-      const response = await api.get<GetOptionsAPI>(
+      const symbolInfo = await getSymbolInfoAPI(symbol);
+      let stockId: number | null = null;
+
+      if (symbolInfo) {
+        stockId =
+          symbolInfo.option && symbolInfo.referenceStock
+            ? symbolInfo.referenceStock
+            : symbolInfo.id;
+      }
+
+      const optionsResponse = await api.get<GetOptionsAPI>(
         `${url_optionsTable_symbol_type}${symbol}/${type}`,
       );
 
       const data = await getOneSymbolDataAPI(symbol);
 
-      dispatch(updateOptionsTableStateAction({ options: response.data.lines }));
+      const savedSymbolsResponse = await api.get<GetSavedSymbolsAPI[]>(
+        `${url_listSymbolConfig_symbol}${symbol}`,
+      );
+
+      const symbolsToUpdate = savedSymbolsResponse.data.map(
+        (item) => item.symbol,
+      );
+
+      dispatch(
+        updateOptionsTableStateAction({
+          options: optionsResponse.data.lines,
+          stockSymbolId: stockId,
+          symbolsToUpdate,
+          checkedItems: symbolsToUpdate,
+        }),
+      );
 
       if (data) {
         return {
@@ -173,9 +207,14 @@ export const handleSymbolSelectionAction = (
 };
 
 export const handlSaveSelectionsAction = (): MainThunkAction => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const {
-      optionsTableReducer: { checkedItems, symbolsToUpdate },
+      optionsTableReducer: {
+        checkedItems,
+        symbolsToUpdate,
+        stockSymbolId,
+        options,
+      },
     } = getState();
 
     const updatedSymbols = produce(symbolsToUpdate, (draft) => {
@@ -193,9 +232,30 @@ export const handlSaveSelectionsAction = (): MainThunkAction => {
       draft.push(...symbolsArray);
     });
 
-    setTimeout(() => {
-      alert("Configurações salvas!");
-    }, 50);
+    try {
+      const symbolsIds: number[] = [];
+
+      options.forEach((option) => {
+        option.stocks.forEach((stock) => {
+          if (updatedSymbols.includes(stock.symbol)) {
+            symbolsIds.push(stock.id);
+          }
+        });
+      });
+
+      await api.put(
+        `${url_saveSymbolConfig_stockId}${stockSymbolId}`,
+        symbolsIds,
+      );
+
+      setTimeout(() => {
+        alert("Configurações salvas!");
+      }, 50);
+    } catch (error) {
+      setTimeout(() => {
+        alert("Erro ao salvar configurações");
+      }, 50);
+    }
 
     dispatch(
       updateOptionsTableStateAction({ symbolsToUpdate: updatedSymbols }),
