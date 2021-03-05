@@ -6,10 +6,7 @@ import cogIcon from "assets/multiBox/cogIcon.png";
 import openInNewIcon from "assets/multiBox/openInNewIcon.png";
 import zoomIcon from "assets/multiBox/zoomIcon.png";
 
-import {
-  formatarNumDecimal,
-  formatarQuantidadeKMG,
-} from "shared/utils/Formatacoes";
+import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import {
   MultiBoxData,
   Tab1Data,
@@ -89,32 +86,7 @@ const Tab0: React.FC<Props> = ({ multiBox }) => {
       if (typeof structureData[parsedKey] === "number") {
         box[parsedKey] = formatarNumDecimal(structureData[parsedKey], 2, 2);
       } //
-      else if (parsedKey === "book" && structureData.book) {
-        box.book = { buy: [], sell: [] };
-
-        box.book.buy = structureData.book.buy
-          .filter(
-            (bookLine) =>
-              bookLine.price.toString() !== "0.0031415" &&
-              bookLine.qtty.toString() !== "0.0031415",
-          )
-          .map((bookLine) => ({
-            ...bookLine,
-            formattedQtty: formatarQuantidadeKMG(bookLine.qtty),
-            formattedPrice: formatarNumDecimal(bookLine.price),
-          }));
-        box.book.sell = structureData.book.sell
-          .filter(
-            (bookLine) =>
-              bookLine.price.toString() !== "0.0031415" &&
-              bookLine.qtty.toString() !== "0.0031415",
-          )
-          .map((bookLine) => ({
-            ...bookLine,
-            formattedQtty: formatarQuantidadeKMG(bookLine.qtty),
-            formattedPrice: formatarNumDecimal(bookLine.price),
-          }));
-      } else {
+      else {
         box[parsedKey] = structureData[parsedKey] as any;
       }
     });

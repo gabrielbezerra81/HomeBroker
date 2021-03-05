@@ -13,6 +13,9 @@ const INITIAL_STATE: MultiBoxState = {
   esource_tab4Box: null,
   interval_tab4Box: null,
   symbolsData: [],
+  structuresBooks: [],
+  esource_books: null,
+  interval_books: null,
 };
 
 export default (

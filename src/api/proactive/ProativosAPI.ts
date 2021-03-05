@@ -5,6 +5,7 @@ import {
   url_ordersExec_ids,
   url_multiBookOneLine_symbols,
   url_multiStructureBox_ids,
+  url_boxStructureBooks_ids,
 } from "api/url";
 import { MultilegQuote } from "modules/multileg/types/multileg";
 import { THLQuote } from "modules/thl/types/thl";
@@ -161,9 +162,17 @@ export const getProactiveThlQuotesAPI = async (
     });
 };
 
-export const getProactiveBoxAPI = async (structureIds: string) => {
+interface BoxStructureQuotes {
+  id: number;
+  max: number | null;
+  min: number | null;
+  last: number | null;
+  oscilacao: number | null;
+}
+
+export const getProactiveBoxStructQuotesAPI = async (structureIds: string) => {
   return proactiveAPI
-    .get(`${url_multiStructureBox_ids}${structureIds}`)
+    .get<BoxStructureQuotes[]>(`${url_multiStructureBox_ids}${structureIds}`)
     .then((response) => {
       if (response.data && response.data.length) {
         return response.data;
@@ -176,18 +185,16 @@ export const getProactiveBoxAPI = async (structureIds: string) => {
     });
 };
 
-interface PositionQuoteResponse {
-  symbol: string;
-  ultimo: number;
-}
-
 interface BoxSymbolsBookResponse {
-  symbol: string;
-  ultimo: number;
-  compra: number;
-  compraQtde: number;
-  venda: number;
-  vendaQtde: number;
+  id: number;
+  books: Array<{
+    symbol: string;
+    ultimo?: number;
+    compra?: number;
+    compraQtde?: number;
+    venda?: number;
+    vendaQtde?: number;
+  }>;
 }
 
 export const getProactiveBoxSymbolsBookAPI = async (
@@ -206,6 +213,39 @@ export const getProactiveBoxSymbolsBookAPI = async (
       return [];
     });
 };
+
+type StructureBookAPI = {
+  line: number;
+  price?: number;
+  qtty?: number;
+  type: "C" | "V";
+};
+
+interface BoxStructureBookAPI {
+  id: number;
+  bookBuy: Array<StructureBookAPI> | null;
+  bookSell: Array<StructureBookAPI> | null;
+}
+
+export const getProactiveBoxBooksAPI = async (ids: string) => {
+  return proactiveAPI
+    .get<BoxStructureBookAPI[]>(`${url_boxStructureBooks_ids}${ids}`)
+    .then((response) => {
+      if (response.data && Array.isArray(response.data)) {
+        return response.data;
+      }
+
+      return [];
+    })
+    .catch((error) => {
+      return [] as BoxStructureBookAPI[];
+    });
+};
+
+interface PositionQuoteResponse {
+  symbol: string;
+  ultimo: number;
+}
 
 export const getProactivePositionQuotesAPI = async (symbols: string) => {
   return proactiveAPI

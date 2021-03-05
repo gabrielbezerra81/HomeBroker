@@ -7,10 +7,6 @@ export interface Tab1Data {
   quote: number;
   min: number;
   max: number;
-  book: {
-    buy: Array<{ qtty: number; price: number; [key: string]: any }>;
-    sell: Array<{ qtty: number; price: number; [key: string]: any }>;
-  };
   dayOscilation: number;
   codes: Array<Code>;
   configuration: string;
@@ -25,8 +21,7 @@ export interface Code {
 
 type BoxKeys = keyof Omit<Tab1Data, "codes" | "book">;
 
-export type FormattedBox = Record<BoxKeys, string> &
-  Pick<Tab1Data, "codes" | "book">;
+export type FormattedBox = Record<BoxKeys, string> & Pick<Tab1Data, "codes">;
 
 export interface BoxStockOption {
   id: number;
@@ -125,7 +120,7 @@ export interface MultiBoxData {
 type Tab1Keys = keyof Omit<Tab1Data, "codes" | "book">;
 
 export type FormattedTab1Data = Record<Tab1Keys, string> &
-  Pick<Tab1Data, "codes" | "book">;
+  Pick<Tab1Data, "codes">;
 
 export interface ParsedConfiguration {
   tabKey: string;
@@ -151,6 +146,21 @@ export interface BoxSymbolData {
   formattedSellQtty: string;
 }
 
+type Book = {
+  qtty: number;
+  price: number;
+  formattedQtty: string;
+  formattedPrice: string;
+};
+
+export interface StructureBook {
+  structureId: number;
+  book: {
+    buy: Array<Book>;
+    sell: Array<Book>;
+  };
+}
+
 export default interface MultiBoxState {
   boxes: Array<MultiBoxData>;
   boxesTab1Data: Array<Tab1Data>;
@@ -159,4 +169,7 @@ export default interface MultiBoxState {
   esource_tab4Box: EventSource | null;
   interval_tab4Box: NodeJS.Timeout | null;
   symbolsData: Array<BoxSymbolData>;
+  structuresBooks: Array<StructureBook>;
+  esource_books: EventSource | null;
+  interval_books: NodeJS.Timeout | null;
 }

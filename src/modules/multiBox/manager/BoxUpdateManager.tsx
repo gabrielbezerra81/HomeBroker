@@ -7,6 +7,7 @@ import _ from "lodash";
 
 import {
   startProactiveMultiBoxUpdateAction,
+  startProactiveStructureBookUpdateAction,
   startReactiveMultiBoxUpdateAction,
 } from "modules/multiBox/duck/actions/multiBoxActions";
 
@@ -17,7 +18,7 @@ import { ParsedConfiguration } from "../types/MultiBoxState";
 const BoxUpdateManager: React.FC = () => {
   const {
     systemReducer: { updateMode, updateInterval, selectedTab },
-    multiBoxReducer: { boxesTab1Data, boxes, symbolsData },
+    multiBoxReducer: { boxesTab1Data, boxes, symbolsData, structuresBooks },
   } = useStateStorePrincipal();
 
   const dispatch = useDispatchStorePrincipal();
@@ -25,44 +26,10 @@ const BoxUpdateManager: React.FC = () => {
   const previousUpdateMode = usePrevious(updateMode);
   const previousUpdateInterval = usePrevious(updateInterval);
 
-  const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const [isLoadingTab1, setIsLoadingTab1] = useState(true);
+  const [isLoadingTab2, setIsLoadingTab2] = useState(true);
 
-  const symbols = useMemo(() => {
-    const symbols: string[] = [];
-
-    boxes.forEach((multiBox) => {
-      const structureData = boxesTab1Data.find(
-        (data) => data.boxId === multiBox.id,
-      );
-
-      if (!structureData) {
-        return;
-      }
-
-      const configuration = JSON.parse(
-        structureData.configuration,
-      ) as ParsedConfiguration;
-
-      if (configuration.tabKey !== selectedTab && !isInitialLoading) {
-        return;
-      }
-
-      multiBox.topSymbols.forEach((topSymbol) => {
-        if (
-          !symbols.includes(topSymbol.code) &&
-          (multiBox.activeTab === "2" || isInitialLoading)
-        ) {
-          symbols.push(topSymbol.code);
-        }
-      });
-    });
-
-    return symbols;
-  }, [boxes, boxesTab1Data, isInitialLoading, selectedTab]);
-
-  const previousSymbols = usePrevious(symbols);
-
-  const structureIds = useMemo(() => {
+  const filteredStructIds = useMemo(() => {
     const filtered = boxesTab1Data.filter((data) => {
       const configuration = JSON.parse(
         data.configuration,
@@ -78,16 +45,76 @@ const BoxUpdateManager: React.FC = () => {
     return uniqueIdsList.join(",");
   }, [boxesTab1Data, selectedTab]);
 
-  const previousStructureIds = usePrevious(structureIds);
+  const idsTab0 = useMemo(() => {
+    return filteredStructIds;
+  }, [filteredStructIds]);
 
-  // Atualização da estrutura
+  const previousIdsTab0 = usePrevious(idsTab0);
+
+  const idsTab1 = useMemo(() => {
+    const ids: string[] = [];
+
+    boxesTab1Data.forEach((data) => {
+      const boxIsInActiveMainTab = filteredStructIds.includes(
+        data.structureID.toString(),
+      );
+
+      const multiBox = boxes.find((box) => box.id === data.boxId);
+      const alreadyAddedId = ids.includes(data.structureID.toString());
+
+      if (!multiBox) {
+        return;
+      }
+
+      if (
+        !alreadyAddedId &&
+        ((boxIsInActiveMainTab && multiBox.activeTab === "1") || isLoadingTab1)
+      ) {
+        ids.push(data.structureID.toString());
+      }
+    });
+
+    return ids;
+  }, [boxes, boxesTab1Data, filteredStructIds, isLoadingTab1]);
+
+  const previousIdsTab1 = usePrevious(idsTab1);
+
+  const idsTab2 = useMemo(() => {
+    const ids: string[] = [];
+
+    boxesTab1Data.forEach((data) => {
+      const boxIsInActiveMainTab = filteredStructIds.includes(
+        data.structureID.toString(),
+      );
+
+      const multiBox = boxes.find((box) => box.id === data.boxId);
+      const alreadyAddedId = ids.includes(data.structureID.toString());
+
+      if (!multiBox) {
+        return;
+      }
+
+      if (
+        !alreadyAddedId &&
+        ((boxIsInActiveMainTab && multiBox.activeTab === "2") || isLoadingTab2)
+      ) {
+        ids.push(data.structureID.toString());
+      }
+    });
+
+    return ids;
+  }, [boxes, boxesTab1Data, filteredStructIds, isLoadingTab2]);
+
+  const previousIdsTab2 = usePrevious(idsTab2);
+
+  // Atualização das cotações da estrutura
   useEffect(() => {
-    function checkIfBoxChanged() {
-      if (!_.isEqual(previousStructureIds, structureIds)) {
+    function checkIfTab0IdsChanged() {
+      if (!_.isEqual(previousIdsTab0, idsTab0)) {
         return true;
       }
 
-      if (previousStructureIds === undefined) {
+      if (previousIdsTab0 === undefined) {
         return true;
       }
 
@@ -97,15 +124,15 @@ const BoxUpdateManager: React.FC = () => {
     function startUpdate() {
       if (updateMode === "reactive") {
         // dispatch(startReactiveBoxUpdateAction());
-        dispatch(startReactiveMultiBoxUpdateAction(structureIds));
+        dispatch(startReactiveMultiBoxUpdateAction(idsTab0));
       } //
       else if (updateMode === "proactive") {
         // dispatch(startProactiveBoxUpdateAction());
-        // dispatch(startProactiveMultiBoxUpdateAction(structureIds));
+        dispatch(startProactiveMultiBoxUpdateAction(idsTab0));
       }
     }
 
-    const hasBoxesChanged = checkIfBoxChanged();
+    const hasTab0IdsChanged = checkIfTab0IdsChanged();
     const hasUpdateConfigChanged = checkIfUpdateConfigChanged({
       previousUpdateMode,
       updateMode,
@@ -113,20 +140,20 @@ const BoxUpdateManager: React.FC = () => {
       updateInterval,
     });
 
-    if (hasUpdateConfigChanged || hasBoxesChanged) {
+    if (hasUpdateConfigChanged || hasTab0IdsChanged) {
       startUpdate();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updateInterval, updateMode, dispatch, structureIds]);
+  }, [updateInterval, updateMode, dispatch, idsTab0]);
 
-  // Atualizar books e cotações da 2ª aba (books dos ativos)
+  // Atualização do book da estrutura
   useEffect(() => {
-    function checkIfSymbolsChanged() {
-      if (!_.isEqual(previousSymbols, symbols)) {
+    function checkIfTab1IdsChanged() {
+      if (!_.isEqual(previousIdsTab1, idsTab1)) {
         return true;
       }
 
-      if (previousSymbols === undefined) {
+      if (previousIdsTab1 === undefined) {
         return true;
       }
 
@@ -137,11 +164,11 @@ const BoxUpdateManager: React.FC = () => {
       if (updateMode === "reactive") {
       } //
       else if (updateMode === "proactive") {
-        dispatch(startProactiveBoxSymbolsUpdateAction(symbols));
+        dispatch(startProactiveStructureBookUpdateAction(idsTab1.join(",")));
       }
     }
 
-    const hasSymbolsChanged = checkIfSymbolsChanged();
+    const hasTab1IdsChanged = checkIfTab1IdsChanged();
     const hasUpdateConfigChanged = checkIfUpdateConfigChanged({
       previousUpdateMode,
       updateMode,
@@ -149,15 +176,59 @@ const BoxUpdateManager: React.FC = () => {
       updateInterval,
     });
 
-    if (hasUpdateConfigChanged || hasSymbolsChanged) {
+    if (hasUpdateConfigChanged || hasTab1IdsChanged) {
       startUpdate();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [symbols, updateInterval, updateMode, dispatch]);
+  }, [dispatch, idsTab1, updateInterval, updateMode]);
 
+  // Atualizar books e cotações da aba 2 (books dos ativos) - Apenas para carregamento inicial dos books
+  useEffect(() => {
+    function checkIfTab2IdsChanged() {
+      if (!_.isEqual(previousIdsTab2, idsTab2)) {
+        return true;
+      }
+
+      if (previousIdsTab2 === undefined) {
+        return true;
+      }
+
+      return false;
+    }
+
+    function startUpdate() {
+      if (updateMode === "reactive") {
+      } //
+      else if (updateMode === "proactive") {
+        dispatch(startProactiveBoxSymbolsUpdateAction(idsTab2));
+      }
+    }
+
+    const hasTab2IdsChanged = checkIfTab2IdsChanged();
+    const hasUpdateConfigChanged = checkIfUpdateConfigChanged({
+      previousUpdateMode,
+      updateMode,
+      previousUpdateInterval,
+      updateInterval,
+    });
+
+    if (hasUpdateConfigChanged || hasTab2IdsChanged) {
+      startUpdate();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idsTab2, updateInterval, updateMode, dispatch]);
+
+  // Interromper a atualização inicial da aba 1 quando o array for preenchido
+  useEffect(() => {
+    if (structuresBooks.length > 0) {
+      setIsLoadingTab1(false);
+    }
+  }, [structuresBooks.length]);
+
+  // Interromper a atualização inicial da aba 2 quando o array for preenchido
   useEffect(() => {
     if (symbolsData.length > 0) {
-      setIsInitialLoading(false);
+      setIsLoadingTab2(false);
     }
   }, [symbolsData.length]);
 

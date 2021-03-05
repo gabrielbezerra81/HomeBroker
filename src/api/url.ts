@@ -71,8 +71,9 @@ export const url_multiQuote_quotes = "quotes/symbols?symbols=";
 export const url_singleStructure_id = "structures/";
 export const url_multiStructure_ids = "structures/ids?ids=";
 export const url_ordersExec_ids = "order/working/ids?ids=";
-export const url_multiBookOneLine_symbols = "quotes/bookline?symbols=";
+export const url_multiBookOneLine_symbols = "structures/booklines?ids=";
 export const url_multiStructureBox_ids = "structures/box?ids=";
+export const url_boxStructureBooks_ids = "structures/books?ids=";
 
 // Symbol
 export const url_stockInfo_symbol = "stocks/info/";

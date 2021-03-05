@@ -1,4 +1,7 @@
-import { getProactiveBoxAPI } from "api/proactive/ProativosAPI";
+import {
+  getProactiveBoxBooksAPI,
+  getProactiveBoxStructQuotesAPI,
+} from "api/proactive/ProativosAPI";
 import { updateBoxStructuresAPI } from "api/reactive/ReativosAPI";
 import {
   getOneSymbolDataAPI,
@@ -13,6 +16,7 @@ import MultiBoxState, {
   BoxPosition,
   MultiBoxData,
   StockSymbolData,
+  StructureBook,
   Tab1Data,
   TopSymbol,
 } from "modules/multiBox/types/MultiBoxState";
@@ -26,6 +30,10 @@ import { updateManyMultilegState } from "modules/multileg/duck/actions/utils";
 import { exportBoxToMultileg } from "./util";
 import getSymbolExpirationInDays from "shared/utils/getSymbolExpirationInDays";
 import { searchBoxOptions, SearchedBoxOptionsData } from "./tab5Actions";
+import {
+  formatarNumDecimal,
+  formatarQuantidadeKMG,
+} from "shared/utils/Formatacoes";
 
 interface OpenedBoxes {
   menuKey: string;
@@ -158,13 +166,9 @@ export const updateStructuresAndLoadBoxesAction = (
         min: structure.min,
         quote: structure.last,
         codes,
-        dayOscilation: structure.change || 0,
+        dayOscilation: structure.oscilation || 0,
         buy: structure.max,
         sell: structure.min,
-        book: {
-          buy: structure.bookBuy || [],
-          sell: structure.bookSell || [],
-        },
         configuration: boxItem.configuration,
         structure,
         boxId: configuration.boxId,
@@ -503,24 +507,41 @@ export const startProactiveMultiBoxUpdateAction = (
 
     if (ids) {
       const interval = setInterval(async () => {
-        const structures = await getProactiveBoxAPI(ids);
+        const structuresQuotes = await getProactiveBoxStructQuotesAPI(ids);
 
-        if (!structures.length) {
+        if (!structuresQuotes.length) {
           return;
         }
 
         const updatedBoxesTab1Data = boxesTab1Data.map((boxItem) => {
-          const boxFromAPI: any = {
+          const boxFromAPI = {
             id: boxItem.id,
             configuration: boxItem.configuration,
+            structure: boxItem.structure,
           };
 
-          const updatedStructure = structures.find(
+          const structureQuote = structuresQuotes.find(
             (structureItem: any) => structureItem.id === boxItem.structureID,
           );
-          // "0.0031415"
-          if (updatedStructure) {
-            boxFromAPI.structure = updatedStructure;
+          if (structureQuote) {
+            const { id, ...quotes } = structureQuote;
+
+            for (const key in quotes) {
+              const parsedKey = key as "max" | "min" | "last" | "oscilacao";
+
+              const value = quotes[parsedKey];
+
+              const isNumberValid = value?.toString() !== "0.0031415";
+
+              if (typeof value === "number" && isNumberValid) {
+                const boxKey =
+                  parsedKey === "oscilacao" ? "oscilation" : parsedKey;
+
+                Object.assign(boxFromAPI.structure, {
+                  [boxKey]: value,
+                });
+              }
+            }
           } else {
             boxFromAPI.structure = boxItem.structure;
           }
@@ -666,4 +687,94 @@ export const getStockSymbolData = async (topSymbols: TopSymbol[]) => {
   }
 
   return null;
+};
+
+export const startProactiveStructureBookUpdateAction = (
+  ids: string,
+): MainThunkAction => {
+  return (dispatch, getState) => {
+    const {
+      systemReducer: { updateInterval },
+      multiBoxReducer: { structuresBooks, esource_books, interval_books },
+    } = getState();
+
+    if (esource_books && esource_books.close) {
+      esource_books.close();
+    }
+
+    if (interval_books !== null) {
+      clearInterval(interval_books);
+    }
+
+    if (ids) {
+      const interval = setInterval(async () => {
+        const data = await getProactiveBoxBooksAPI(ids);
+
+        const updatedStructureBooks = produce(structuresBooks, (draft) => {
+          data.forEach((updatedBook) => {
+            const bookToUpdate = draft.find(
+              (itemToUpdate) => itemToUpdate.structureId === updatedBook.id,
+            );
+
+            if (updatedBook) {
+              const newBook: StructureBook = {
+                structureId: updatedBook.id,
+                book: {
+                  buy: [],
+                  sell: [],
+                },
+              };
+
+              if (updatedBook.bookBuy) {
+                newBook.book.buy = updatedBook.bookBuy
+                  .filter(
+                    (bookLine) =>
+                      bookLine.price?.toString() !== "0.0031415" &&
+                      bookLine.qtty?.toString() !== "0.0031415",
+                  )
+                  .map((bookLine) => ({
+                    price: bookLine.price || 0,
+                    qtty: bookLine.qtty || 0,
+                    formattedQtty: formatarQuantidadeKMG(bookLine.qtty),
+                    formattedPrice: formatarNumDecimal(bookLine.price),
+                  }));
+              }
+
+              if (updatedBook.bookSell) {
+                newBook.book.sell = updatedBook.bookSell
+                  .filter(
+                    (bookLine) =>
+                      bookLine.price?.toString() !== "0.0031415" &&
+                      bookLine.qtty?.toString() !== "0.0031415",
+                  )
+                  .map((bookLine) => ({
+                    price: bookLine.price || 0,
+                    qtty: bookLine.qtty || 0,
+                    formattedQtty: formatarQuantidadeKMG(bookLine.qtty),
+                    formattedPrice: formatarNumDecimal(bookLine.price),
+                  }));
+              }
+
+              if (bookToUpdate) {
+                bookToUpdate.book = newBook.book;
+              } //
+              else {
+                draft.push(newBook);
+              }
+            }
+          });
+        });
+
+        dispatch(
+          updateManyMultiBoxAction({ structuresBooks: updatedStructureBooks }),
+        );
+      }, updateInterval);
+
+      dispatch(
+        updateManyMultiBoxAction({
+          interval_books: interval,
+        }),
+      );
+    }
+  };
 };

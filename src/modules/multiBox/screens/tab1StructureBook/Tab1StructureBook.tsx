@@ -30,7 +30,7 @@ interface Props {
 
 const Tab1StructureBook: React.FC<Props> = ({ multiBox }) => {
   const {
-    multiBoxReducer: { boxesTab1Data },
+    multiBoxReducer: { boxesTab1Data, structuresBooks },
   } = useStateStorePrincipal();
 
   const dispatch = useDispatchStorePrincipal();
@@ -40,6 +40,14 @@ const Tab1StructureBook: React.FC<Props> = ({ multiBox }) => {
   const structureData = useMemo(() => {
     return boxesTab1Data.find((data) => data.boxId === multiBox.id);
   }, [multiBox.id, boxesTab1Data]);
+
+  const structureId = useMemo(() => {
+    return structureData?.structureID;
+  }, [structureData]);
+
+  const structureBook = useMemo(() => {
+    return structuresBooks.find((item) => item.structureId === structureId);
+  }, [structureId, structuresBooks]);
 
   const handleSymbolChange = useCallback(
     (e) => {
@@ -89,32 +97,7 @@ const Tab1StructureBook: React.FC<Props> = ({ multiBox }) => {
       if (typeof structureData[parsedKey] === "number") {
         box[parsedKey] = formatarNumDecimal(structureData[parsedKey], 2, 2);
       } //
-      else if (parsedKey === "book" && structureData.book) {
-        box.book = { buy: [], sell: [] };
-
-        box.book.buy = structureData.book.buy
-          .filter(
-            (bookLine) =>
-              bookLine.price.toString() !== "0.0031415" &&
-              bookLine.qtty.toString() !== "0.0031415",
-          )
-          .map((bookLine) => ({
-            ...bookLine,
-            formattedQtty: formatarQuantidadeKMG(bookLine.qtty),
-            formattedPrice: formatarNumDecimal(bookLine.price),
-          }));
-        box.book.sell = structureData.book.sell
-          .filter(
-            (bookLine) =>
-              bookLine.price.toString() !== "0.0031415" &&
-              bookLine.qtty.toString() !== "0.0031415",
-          )
-          .map((bookLine) => ({
-            ...bookLine,
-            formattedQtty: formatarQuantidadeKMG(bookLine.qtty),
-            formattedPrice: formatarNumDecimal(bookLine.price),
-          }));
-      } else {
+      else {
         box[parsedKey] = structureData[parsedKey] as any;
       }
     });
@@ -175,6 +158,40 @@ const Tab1StructureBook: React.FC<Props> = ({ multiBox }) => {
 
     return formatted;
   }, [structureData]);
+
+  const formattedBook = useMemo(() => {
+    if (!structureBook) {
+      return;
+    }
+
+    const formatted = { ...structureBook };
+
+    formatted.book.buy = structureBook.book.buy
+      .filter(
+        (bookLine) =>
+          bookLine.price.toString() !== "0.0031415" &&
+          bookLine.qtty.toString() !== "0.0031415",
+      )
+      .map((bookLine) => ({
+        ...bookLine,
+        formattedQtty: formatarQuantidadeKMG(bookLine.qtty),
+        formattedPrice: formatarNumDecimal(bookLine.price),
+      }));
+
+    formatted.book.sell = structureBook.book.sell
+      .filter(
+        (bookLine) =>
+          bookLine.price.toString() !== "0.0031415" &&
+          bookLine.qtty.toString() !== "0.0031415",
+      )
+      .map((bookLine) => ({
+        ...bookLine,
+        formattedQtty: formatarQuantidadeKMG(bookLine.qtty),
+        formattedPrice: formatarNumDecimal(bookLine.price),
+      }));
+
+    return formatted;
+  }, [structureBook]);
 
   if (!structureData) {
     return <div></div>;
@@ -249,13 +266,13 @@ const Tab1StructureBook: React.FC<Props> = ({ multiBox }) => {
 
       <section className="middle">
         <div className="buyBook">
-          {!!formattedData?.book.buy.length && (
+          {!!structureBook?.book.buy.length && (
             <>
               <div>
                 <span className="bookHead">Qtde</span>
                 <span className="bookHead">Preço</span>
               </div>
-              {formattedData.book.buy.map((book, index) => (
+              {structureBook.book.buy.map((book, index) => (
                 <div key={`buyBook${index}`}>
                   <span>{book.formattedQtty}</span>
                   <span>{book.formattedPrice}</span>
@@ -280,13 +297,13 @@ const Tab1StructureBook: React.FC<Props> = ({ multiBox }) => {
         </div>
 
         <div className="sellBook">
-          {!!formattedData?.book.sell.length && (
+          {!!structureBook?.book.sell.length && (
             <>
               <div>
                 <span className="bookHead">Qtde</span>
                 <span className="bookHead">Preço</span>
               </div>
-              {formattedData.book.sell.map((book, index) => (
+              {structureBook.book.sell.map((book, index) => (
                 <div key={`buyBook${index}`}>
                   <span>{book.formattedQtty}</span>
                   <span>{book.formattedPrice}</span>

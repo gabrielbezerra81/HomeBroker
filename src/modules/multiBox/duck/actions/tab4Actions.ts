@@ -9,7 +9,7 @@ import { updateManyMultiBoxAction } from "./multiBoxActions";
 import { BoxSymbolData } from "../../types/MultiBoxState";
 
 export const startProactiveBoxSymbolsUpdateAction = (
-  symbolsArray: string[],
+  idsArray: string[],
 ): MainThunkAction => {
   return (dispatch, getState) => {
     const {
@@ -25,55 +25,72 @@ export const startProactiveBoxSymbolsUpdateAction = (
       clearInterval(interval_tab4Box);
     }
 
-    const symbols = symbolsArray.join(",");
+    const ids = idsArray.join(",");
 
-    if (symbols) {
+    if (ids) {
       const interval = setInterval(async () => {
-        const data = await getProactiveBoxSymbolsBookAPI(symbols);
+        const data = await getProactiveBoxSymbolsBookAPI(ids);
 
         if (!data.length) {
           return;
         }
 
-        const symbolsData = data.map((item) => {
-          const symbolData: BoxSymbolData = {
-            symbol: item.symbol,
-            last: item.ultimo || 0,
-            buy: item.compra || 0,
-            buyQtty: item.compraQtde || 0,
-            sell: item.venda || 0,
-            sellQtty: item.vendaQtde || 0,
-            formattedBuy: "",
-            formattedBuyQtty: "",
-            formattedLast: "",
-            formattedSell: "",
-            formattedSellQtty: "",
-          };
+        const symbolsData: BoxSymbolData[] = [];
 
-          Object.keys(symbolData).forEach((key) => {
-            const typedKey = key as keyof BoxSymbolData;
+        data.forEach((item) => {
+          // Atualizar cotações e books dos ativos
+          if (item.books) {
+            item.books.forEach((book) => {
+              const alreadyAddedSymbol = symbolsData.some(
+                (item) => item.symbol === book.symbol,
+              );
 
-            if (typeof symbolData[typedKey] === "number") {
-              const formattedKey =
-                "formatted" +
-                key.substr(0, 1).toLocaleUpperCase() +
-                key.substr(1);
-
-              let value = formatarNumDecimal(symbolData[typedKey]);
-
-              if (
-                ["formattedBuyQtty", "formattedSellQtty"].includes(formattedKey)
-              ) {
-                value = formatarQuantidadeKMG(symbolData[typedKey]);
+              if (alreadyAddedSymbol) {
+                return;
               }
 
-              Object.assign(symbolData, {
-                [formattedKey]: value,
-              });
-            }
-          });
+              const symbolData: BoxSymbolData = {
+                symbol: book.symbol,
+                last: book.ultimo || 0,
+                buy: book.compra || 0,
+                buyQtty: book.compraQtde || 0,
+                sell: book.venda || 0,
+                sellQtty: book.vendaQtde || 0,
+                formattedBuy: "",
+                formattedBuyQtty: "",
+                formattedLast: "",
+                formattedSell: "",
+                formattedSellQtty: "",
+              };
 
-          return symbolData;
+              Object.keys(symbolData).forEach((key) => {
+                const typedKey = key as keyof BoxSymbolData;
+
+                if (typeof symbolData[typedKey] === "number") {
+                  const formattedKey =
+                    "formatted" +
+                    key.substr(0, 1).toLocaleUpperCase() +
+                    key.substr(1);
+
+                  let value = formatarNumDecimal(symbolData[typedKey]);
+
+                  if (
+                    ["formattedBuyQtty", "formattedSellQtty"].includes(
+                      formattedKey,
+                    )
+                  ) {
+                    value = formatarQuantidadeKMG(symbolData[typedKey]);
+                  }
+
+                  Object.assign(symbolData, {
+                    [formattedKey]: value,
+                  });
+                }
+              });
+
+              symbolsData.push(symbolData);
+            });
+          }
         });
 
         dispatch(
