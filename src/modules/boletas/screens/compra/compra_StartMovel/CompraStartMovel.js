@@ -8,14 +8,28 @@ import GraficoCompraStartMovel from "./GraficoCompraStartMovel";
 import BodyHeaderCompraStartMovel from "./BodyHeaderCompraStartMovel";
 import { ModalHeader } from "shared/components/PopupHeader";
 import { COMPRA_STARTMOVEL_NAMESPACE } from "constants/ActionTypes";
+import { shouldResetBoletaPositionForClass } from "modules/boletas/utils/handleBoletaPositionReset";
 
 class CompraStarMovel extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      shouldResetPosition: false,
+    };
+  }
+
+  componentDidUpdate() {
+    shouldResetBoletaPositionForClass(this);
+  }
+
   render() {
     return (
       <DraggableModal
         id="comprastartmovel"
         headerTitle={this.props.headerTitle}
         renderModalBody={() => modalBody()}
+        shouldResetPosition={this.state.shouldResetPosition}
         headerClass="border-green"
         renderHeader={(resetPosition) => (
           <ModalHeader
@@ -44,6 +58,7 @@ const modalBody = () => (
 
 const mapStateToProps = (state) => ({
   ativo: state.compraStartMovelReducer.ativo,
+  appProps: state.appBoletasReducer.appProps,
 });
 
 export default connect(mapStateToProps, {})(CompraStarMovel);

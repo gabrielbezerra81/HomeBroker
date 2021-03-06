@@ -8,8 +8,21 @@ import GraficoVendaStartStop from "./GraficoVendaStartStop";
 import BodyHeaderVendaStartStop from "./BodyHeaderVendaStartStop";
 import { ModalHeader } from "shared/components/PopupHeader";
 import { VENDA_STARTSTOP_NAMESPACE } from "constants/ActionTypes";
+import { shouldResetBoletaPositionForClass } from "modules/boletas/utils/handleBoletaPositionReset";
 
 class VendaStartStop extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      shouldResetPosition: false,
+    };
+  }
+
+  componentDidUpdate() {
+    shouldResetBoletaPositionForClass(this);
+  }
+
   componentDidMount() {
     document.getElementById("vendastartstop").style.zIndex = this.props.zIndex;
   }
@@ -19,6 +32,7 @@ class VendaStartStop extends React.Component {
         id="vendastartstop"
         headerTitle={this.props.headerTitle}
         renderModalBody={() => modalBody(this.props)}
+        shouldResetPosition={this.state.shouldResetPosition}
         headerClass="border-green"
         renderHeader={(resetPosition) => (
           <ModalHeader
@@ -50,6 +64,7 @@ const modalBody = (props) => (
 const mapStateToProps = (state) => ({
   config_venda: state.appBoletasReducer.config_venda,
   ativo: state.vendaStartStopReducer.ativo,
+  appProps: state.appBoletasReducer.appProps,
 });
 
 export default connect(mapStateToProps, {})(VendaStartStop);

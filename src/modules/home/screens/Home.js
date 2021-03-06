@@ -22,7 +22,6 @@ import MultiBoxContainer from "modules/multiBox/screens/MultiBoxContainer";
 import OptionsTable from "modules/optionsTable/screens/OptionsTable";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import { Redirect } from "@reach/router";
-import api from "api/apiConfig";
 
 const OrdensExecucao = React.lazy(() =>
   import("modules/ordersExec/screens/OrdensExecucao"),

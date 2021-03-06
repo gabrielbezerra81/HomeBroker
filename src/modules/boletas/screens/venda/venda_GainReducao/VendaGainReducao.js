@@ -8,12 +8,26 @@ import GraficoVendaGainReducao from "./GraficoVendaGainReducao";
 import BodyHeaderVendaGainReducao from "./BodyHeaderVendaGainReducao";
 import { ModalHeader } from "shared/components/PopupHeader";
 import { VENDA_GAINREDUCAO_NAMESPACE } from "constants/ActionTypes";
+import { shouldResetBoletaPositionForClass } from "modules/boletas/utils/handleBoletaPositionReset";
 
 class VendaGainReducao extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      shouldResetPosition: false,
+    };
+  }
+
+  componentDidUpdate() {
+    shouldResetBoletaPositionForClass(this);
+  }
+
   render() {
     return (
       <DraggableModal
         id="vendagainreducao"
+        shouldResetPosition={this.state.shouldResetPosition}
         renderModalBody={() => modalBody()}
         renderHeader={(resetPosition) => (
           <ModalHeader
@@ -42,6 +56,7 @@ const modalBody = () => (
 
 const mapStateToProps = (state) => ({
   ativo: state.vendaGainReducao.ativo,
+  appProps: state.appBoletasReducer.appProps,
 });
 
 export default connect(mapStateToProps, {})(VendaGainReducao);

@@ -10,14 +10,32 @@ import { ModalHeader } from "shared/components/PopupHeader";
 import { BoletasState } from "redux/reducers";
 import BoletaOrderInfo from "modules/boletas/types/BoletaOrderInfo";
 import { COMPRA_LIMITADA_NAMESPACE } from "constants/ActionTypes";
+import { shouldResetBoletaPositionForClass } from "modules/boletas/utils/handleBoletaPositionReset";
 
-class CompraLimitada extends React.Component<Props> {
+interface State {
+  shouldResetPosition: boolean;
+}
+
+class CompraLimitada extends React.Component<Props, State> {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      shouldResetPosition: false,
+    };
+  }
+
+  componentDidUpdate() {
+    shouldResetBoletaPositionForClass(this);
+  }
+
   render() {
     return (
       <DraggableModal
         id={"compra_limitada"}
         headerTitle={this.props.headerTitle}
         renderModalBody={modalBody}
+        shouldResetPosition={this.state.shouldResetPosition}
         headerClass="border-green"
         renderHeader={(resetPosition: any) => (
           <ModalHeader
@@ -46,6 +64,7 @@ const modalBody = () => (
 
 const mapStateToProps = (state: BoletasState) => ({
   ativo: state.compraLimitadaReducer.ativo,
+  appProps: state.appBoletasReducer.appProps,
 });
 
 const connector = connect(mapStateToProps, {});

@@ -1,9 +1,7 @@
 import { createBoxAlertAPI, listAlertsAPI } from "api/API";
 
 import moment from "moment";
-import produce from "immer";
 
-import { getformatedDate } from "shared/utils/Formatacoes";
 import { MultiBoxData } from "modules/multiBox/types/MultiBoxState";
 import { MultilegPayload } from "modules/multileg/types/multileg";
 import { MainThunkAction } from "types/ThunkActions";
@@ -116,31 +114,31 @@ interface ChangeOrder {
   price: number;
 }
 
-const changeOrderExpirationAndPrice = ({
-  order,
-  selectedValidity,
-  selectedDate,
-  price,
-}: ChangeOrder) => {
-  const updatedOrder = produce(order, (draft) => {
-    let expiration = "";
+// const changeOrderExpirationAndPrice = ({
+//   order,
+//   selectedValidity,
+//   selectedDate,
+//   price,
+// }: ChangeOrder) => {
+//   const updatedOrder = produce(order, (draft) => {
+//     let expiration = "";
 
-    if (selectedValidity === "DAY")
-      expiration = getformatedDate(new Date()) + " 22:00:00";
-    else if (selectedValidity === "GTC") {
-      expiration = "31/12/9999 22:00:00";
-    } else {
-      expiration = selectedDate.toLocaleString("pt-BR");
-    }
+//     if (selectedValidity === "DAY")
+//       expiration = getformatedDate(new Date()) + " 22:00:00";
+//     else if (selectedValidity === "GTC") {
+//       expiration = "31/12/9999 22:00:00";
+//     } else {
+//       expiration = selectedDate.toLocaleString("pt-BR");
+//     }
 
-    draft.expiration = expiration;
+//     draft.expiration = expiration;
 
-    draft.offers.forEach((offer) => {
-      offer.expiration = expiration;
-      offer.expirationType = selectedValidity;
-      offer.price = price;
-    });
-  });
+//     draft.offers.forEach((offer) => {
+//       offer.expiration = expiration;
+//       offer.expirationType = selectedValidity;
+//       offer.price = price;
+//     });
+//   });
 
-  return updatedOrder;
-};
+//   return updatedOrder;
+// };

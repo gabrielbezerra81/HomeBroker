@@ -8,13 +8,27 @@ import GraficoCompraGainReducao from "./GraficoCompraGainReducao";
 import BodyHeaderCompraGainReducao from "./BodyHeaderCompraGainReducao";
 import { ModalHeader } from "shared/components/PopupHeader";
 import { COMPRA_GAINREDUCAO_NAMESPACE } from "constants/ActionTypes";
+import { shouldResetBoletaPositionForClass } from "modules/boletas/utils/handleBoletaPositionReset";
 
 class CompraGainReducao extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      shouldResetPosition: false,
+    };
+  }
+
+  componentDidUpdate() {
+    shouldResetBoletaPositionForClass(this);
+  }
+
   render() {
     return (
       <DraggableModal
         id="compragainreducao"
         renderModalBody={() => modalBody()}
+        shouldResetPosition={this.state.shouldResetPosition}
         renderHeader={(resetPosition) => (
           <ModalHeader
             headerTitle={this.props.headerTitle}
@@ -42,6 +56,7 @@ const modalBody = () => (
 
 const mapStateToProps = (state) => ({
   ativo: state.compraGainReducao.ativo,
+  appProps: state.appBoletasReducer.appProps,
 });
 
 export default connect(mapStateToProps, {})(CompraGainReducao);

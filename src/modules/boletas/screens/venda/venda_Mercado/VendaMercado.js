@@ -8,8 +8,21 @@ import GraficoVendaMercado from "./GraficoVendaMercado";
 import BodyHeaderVendaMercado from "./BodyHeaderVendaMercado";
 import { ModalHeader } from "shared/components/PopupHeader";
 import { VENDA_MERCADO_NAMESPACE } from "constants/ActionTypes";
+import { shouldResetBoletaPositionForClass } from "modules/boletas/utils/handleBoletaPositionReset";
 
 class VendaMercado extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      shouldResetPosition: false,
+    };
+  }
+
+  componentDidUpdate() {
+    shouldResetBoletaPositionForClass(this);
+  }
+
   componentDidMount() {
     document.getElementById("vendamercado").style.zIndex = this.props.zIndex;
   }
@@ -19,6 +32,7 @@ class VendaMercado extends React.Component {
         id={"vendamercado"}
         headerTitle={this.props.headerTitle}
         renderModalBody={() => modalBody(this.props)}
+        shouldResetPosition={this.state.shouldResetPosition}
         headerClass="border-green"
         renderHeader={(resetPosition) => (
           <ModalHeader
@@ -47,6 +61,7 @@ const modalBody = (props) => (
 
 const mapStateToProps = (state) => ({
   ativo: state.vendaMercadoReducer.ativo,
+  appProps: state.appBoletasReducer.appProps,
 });
 
 export default connect(mapStateToProps, {})(VendaMercado);

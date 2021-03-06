@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, FormControl } from "react-bootstrap";
 import { connect } from "react-redux";
-import imgCaraFeliz from "assets/iconeCaraFeliz.png";
+// import imgCaraFeliz from "assets/iconeCaraFeliz.png";
 import {
   abrirFecharMenuLateralAction,
   mudarDadosLoginAction,
@@ -17,9 +17,9 @@ class topBar extends React.Component {
       selectedAccount,
       isOpenLeftUserMenu,
       accounts,
-      liquidValue,
-      buyingValue,
-      broker,
+      // liquidValue,
+      // buyingValue,
+      // broker,
     } = props;
 
     return (

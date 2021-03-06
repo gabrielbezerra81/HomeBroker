@@ -20,6 +20,8 @@ class DragglableModal extends Component {
 
     // const position = loadPopupPosition(this.props.id);
 
+    console.log(this.props.name);
+
     this.state = {
       position: { x: 0, y: 0 },
       bounds: undefined,
@@ -42,7 +44,15 @@ class DragglableModal extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { isOpenLeftUserMenu } = this.props;
+    const { isOpenLeftUserMenu, shouldResetPosition } = this.props;
+
+    if (
+      typeof shouldResetPosition === "boolean" &&
+      shouldResetPosition &&
+      !prevProps.shouldResetPosition
+    ) {
+      this.setState({ ...this.state, position: { x: 0, y: 0 } });
+    }
 
     if (prevProps.isOpenLeftUserMenu !== isOpenLeftUserMenu) {
       let limitX = 88;

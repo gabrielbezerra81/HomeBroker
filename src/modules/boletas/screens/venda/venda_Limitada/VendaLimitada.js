@@ -8,8 +8,21 @@ import GraficoVendaLimitada from "./GraficoVendaLimitada";
 import BodyHeaderVendaLimitada from "./BodyHeaderVendaLimitada";
 import { ModalHeader } from "shared/components/PopupHeader";
 import { VENDA_LIMITADA_NAMESPACE } from "constants/ActionTypes";
+import { shouldResetBoletaPositionForClass } from "modules/boletas/utils/handleBoletaPositionReset";
 
 class VendaLimitada extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      shouldResetPosition: false,
+    };
+  }
+
+  componentDidUpdate() {
+    shouldResetBoletaPositionForClass(this);
+  }
+
   componentDidMount() {
     document.getElementById("vendalimitada").style.zIndex = this.props.zIndex;
   }
@@ -19,6 +32,7 @@ class VendaLimitada extends React.Component {
         id={"vendalimitada"}
         headerTitle={this.props.headerTitle}
         renderModalBody={() => modalBody(this.props)}
+        shouldResetPosition={this.state.shouldResetPosition}
         headerClass="border-green"
         renderHeader={(resetPosition) => (
           <ModalHeader
@@ -47,6 +61,7 @@ const modalBody = (props) => (
 
 const mapStateToProps = (state) => ({
   ativo: state.vendaLimitadaReducer.ativo,
+  appProps: state.appBoletasReducer.appProps,
 });
 
 export default connect(mapStateToProps, {})(VendaLimitada);

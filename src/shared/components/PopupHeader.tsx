@@ -38,7 +38,6 @@ interface ModalHeaderProps {
 export const ModalHeader: React.FC<ModalHeaderProps> = ({
   headerTitle,
   headerClass,
-  resetPosition,
   name,
   ativo,
 }) => {
@@ -72,9 +71,8 @@ export const ModalHeader: React.FC<ModalHeaderProps> = ({
   );
 
   const handleCloseBoleta = useCallback(() => {
-    resetPosition();
     dispatchGlobal(fecharFormAction(formShow, name, appkey));
-  }, [appkey, dispatchGlobal, formShow, name, resetPosition]);
+  }, [appkey, dispatchGlobal, formShow, name]);
 
   return (
     <div className={`${headerClass} handle mheader`}>
