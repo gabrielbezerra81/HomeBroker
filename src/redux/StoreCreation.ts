@@ -18,6 +18,15 @@ import CategoryListReducer from "modules/categoryList/duck/CategoryListReducer";
 import optionsTableReducer from "modules/optionsTable/duck/optionsTableReducer";
 import THLReducer from "modules/thl/duck/THLReducer";
 
+let rehydrationComplete: any;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+let rehydrationFailed: any;
+
+const rehydrationPromise = new Promise((resolve, reject) => {
+  rehydrationComplete = resolve;
+  rehydrationFailed = reject;
+});
+
 const rootPersistConfig = {
   key: "root",
   storage,
@@ -67,7 +76,9 @@ export const storeAppPrincipal = createStore(
   composeEnhancers(applyMiddleware(ReduxThunk)), //, LogRocket.reduxMiddleware()
 );
 
-export const persistor = persistStore(storeAppPrincipal);
+export const persistor = persistStore(storeAppPrincipal, null, () => {
+  rehydrationComplete();
+});
 
 //Usada apenas para gerenciar os estados de mostrar ou não os formulários
 export const globalStore = createStore(
@@ -86,3 +97,13 @@ export const GlobalContext = React.createContext<
   store: globalStore,
   storeState: {} as GlobalStoreState,
 });
+
+export async function rehydration() {
+  return rehydrationPromise;
+}
+
+(async () => {
+  try {
+    await rehydration();
+  } catch (e) {}
+})();
