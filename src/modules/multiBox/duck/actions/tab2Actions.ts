@@ -16,7 +16,7 @@ export const handleAddBoxPositionAction = (boxId: string): MainThunkAction => {
     let addedPosition = false;
 
     const updatedBoxes = await produce(boxes, async (draft) => {
-      const multiBox = draft.find((item) => item.id === boxId);
+      const multiBox = draft.find((item) => item?.id === boxId);
 
       if (multiBox) {
         const data = await getSymbolInfoAPI(multiBox.symbolInput);
@@ -67,7 +67,7 @@ export const handleChangeBoxPositionAction = ({
     } = getState();
 
     const updatedBoxes = produce(boxes, (draft) => {
-      const multiBox = draft.find((item) => item.id === boxId);
+      const multiBox = draft.find((item) => item?.id === boxId);
 
       if (multiBox) {
         Object.assign(multiBox.boxPositions[positionIndex], { [attr]: value });
@@ -87,17 +87,17 @@ export const handleSaveBoxPositionsAction = (
       systemReducer: { selectedAccount },
     } = getState();
 
-    const boxIndex = boxes.findIndex((item) => item.id === boxId);
+    const boxIndex = boxes.findIndex((item) => item?.id === boxId);
 
     const structureData = boxesTab1Data.find((item) => item.boxId === boxId);
 
     if (boxIndex !== -1 && structureData) {
       try {
-        const payload = boxes[boxIndex].boxPositions.map((position) => {
+        const payload = boxes[boxIndex]?.boxPositions.map((position) => {
           const newPositionPayload: PositionCreateRequestData = {
             id: position.id || undefined,
             account: selectedAccount.id,
-            groupPositions: boxes[boxIndex].tab1Id,
+            groupPositions: boxes[boxIndex]?.tab1Id || -1,
             structure: structureData.structureID,
             price: position.price,
             symbol: position.symbol,
@@ -113,7 +113,7 @@ export const handleSaveBoxPositionsAction = (
         let data = (await saveBoxPositionsAPI(payload)) as BoxPosition[];
 
         data = data.map((createdPosition: BoxPosition) => {
-          const position = boxes[boxIndex].boxPositions.find(
+          const position = boxes[boxIndex]?.boxPositions.find(
             (position) => position.symbol === createdPosition.symbol,
           );
 
@@ -125,7 +125,7 @@ export const handleSaveBoxPositionsAction = (
         });
 
         const updatedBoxes = produce(boxes, (draft) => {
-          Object.assign(draft[boxIndex].boxPositions, data);
+          Object.assign(draft[boxIndex]?.boxPositions, data);
         });
 
         dispatch(updateManyMultiBoxAction({ boxes: updatedBoxes }));

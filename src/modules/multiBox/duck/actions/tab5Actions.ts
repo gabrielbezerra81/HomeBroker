@@ -97,7 +97,7 @@ export const handleRemoveOfferAction = (
       multiBoxReducer: { boxes },
     } = getState();
 
-    const multiBox = boxes.find((box) => box.id === boxId);
+    const multiBox = boxes.find((box) => box?.id === boxId);
 
     if (multiBox) {
       const updatedOffers = produce(multiBox.boxOffers, (draft) => {
@@ -124,7 +124,7 @@ export const handleAddStockOfferAction = (
 
     // Adicionar stock symbol às ofertas
 
-    const multiBox = boxes.find((box) => box.id === id);
+    const multiBox = boxes.find((box) => box?.id === id);
 
     if (multiBox && multiBox.boxOffers.length === 6) {
       alert("Número máximo de 6 ofertas atingido");
@@ -172,7 +172,7 @@ export const handleAddOptionOfferAction = (
       multiBoxReducer: { boxes },
     } = getState();
 
-    const multiBox = boxes.find((box) => box.id === id);
+    const multiBox = boxes.find((box) => box?.id === id);
 
     if (multiBox) {
       if (multiBox.boxOffers.length === 6) {
@@ -232,7 +232,7 @@ export const handleChangeBoxOfferAction = ({
     } = getState();
 
     const updatedBoxes = await produce(boxes, async (draft) => {
-      const multiBox = draft.find((box) => box.id === boxId);
+      const multiBox = draft.find((box) => box?.id === boxId);
 
       if (multiBox) {
         const offer = multiBox.boxOffers[offerIndex];
@@ -335,7 +335,7 @@ export const handleConcludeTab5Action = (boxId: string): MainThunkAction => {
       multiBoxReducer: { boxes },
     } = getState();
 
-    const multiBox = boxes.find((box) => box.id === boxId);
+    const multiBox = boxes.find((box) => box?.id === boxId);
 
     if (multiBox) {
       const topSymbols: TopSymbol[] = [];

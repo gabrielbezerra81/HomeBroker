@@ -162,7 +162,7 @@ export interface StructureBook {
 }
 
 export default interface MultiBoxState {
-  boxes: Array<MultiBoxData>;
+  boxes: Array<MultiBoxData | null>;
   boxesTab1Data: Array<Tab1Data>;
   esource_multiBox: EventSource | null;
   interval_multiBox: NodeJS.Timeout | null;

@@ -49,7 +49,7 @@ export const exportBoxToMultileg = async ({
     GlobalReducer: { zIndex },
   } = globalStore.getState();
 
-  const box = boxes.find((box) => box.id === boxId);
+  const box = boxes.find((box) => box?.id === boxId);
 
   if (box) {
     const clonedMultilegTabs = cloneMultilegTabs(multileg);

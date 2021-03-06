@@ -119,7 +119,7 @@ export const updateBoxAttrAction = (
     } = getState();
 
     const updatedBoxes = produce(boxes, (draft) => {
-      const index = draft.findIndex((box) => box.id === id);
+      const index = draft.findIndex((box) => box?.id === id);
 
       if (index !== -1) {
         Object.assign(draft[index], payload);
@@ -217,6 +217,32 @@ export const addMultiBoxesFromStructureDataAction = (
       systemReducer: { openedMenus },
     } = getState();
 
+    const updatedOpenedMenus = produce(openedMenus, (draft) => {
+      openedBoxes.forEach((boxItem) => {
+        const alreadyAdded = openedMenus.some(
+          (menuItem) => menuItem.menuKey === boxItem.menuKey,
+        );
+
+        if (!alreadyAdded) {
+          draft.push(boxItem);
+        }
+      });
+    });
+
+    dispatch(
+      updateManySystemState({
+        openedMenus: updatedOpenedMenus,
+      }),
+    );
+
+    const nullBoxes = tab1Data.map((data) => null);
+
+    dispatch(
+      updateManyMultiBoxAction({
+        boxes: nullBoxes,
+      }),
+    );
+
     // Posições de todos os boxes
     const allPositions = (await listBoxPositionAPI()) as BoxPosition[];
 
@@ -299,27 +325,9 @@ export const addMultiBoxesFromStructureDataAction = (
       multiBoxes.push(boxes);
     }
 
-    const updatedOpenedMenus = produce(openedMenus, (draft) => {
-      openedBoxes.forEach((boxItem) => {
-        const alreadyAdded = openedMenus.some(
-          (menuItem) => menuItem.menuKey === boxItem.menuKey,
-        );
-
-        if (!alreadyAdded) {
-          draft.push(boxItem);
-        }
-      });
-    });
-
     dispatch(
       updateManyMultiBoxAction({
         boxes: multiBoxes,
-      }),
-    );
-
-    dispatch(
-      updateManySystemState({
-        openedMenus: updatedOpenedMenus,
       }),
     );
   };
@@ -573,7 +581,7 @@ export const handleDeleteBoxAction = (boxId: string): MainThunkAction => {
     const structureData = boxesTab1Data.find((data) => data.boxId === boxId);
 
     const updatedMultiBoxes = produce(boxes, (draft) => {
-      const index = draft.findIndex((box) => box.id === boxId);
+      const index = draft.findIndex((box) => box?.id === boxId);
 
       if (index >= 0) draft.splice(index, 1);
     });

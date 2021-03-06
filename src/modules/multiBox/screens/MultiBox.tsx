@@ -29,14 +29,16 @@ import { IoMdRepeat } from "react-icons/io";
 import api from "api/apiConfig";
 import { url_updateBoxConfig_id } from "api/url";
 import Tab0 from "./tab0/Tab0";
+import { Spinner } from "react-bootstrap";
 
 interface Props {
-  multiBox: MultiBoxData;
+  multiBox: MultiBoxData | null;
+  boxIndex: number;
 }
 
 const bounds = { left: -26, top: 0 };
 
-const MultiBox: React.FC<Props> = ({ multiBox }) => {
+const MultiBox: React.FC<Props> = ({ multiBox, boxIndex }) => {
   const {
     systemReducer: { openedMenus, selectedTab },
     multiBoxReducer: { boxesTab1Data },
@@ -44,16 +46,26 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
 
   const dispatch = useDispatchStorePrincipal();
 
-  const { id, topSymbols, strikeViewMode, toggleShowId } = multiBox;
+  const { id, topSymbols, strikeViewMode, toggleShowId, activeTab } =
+    multiBox || {};
 
   const structureData = useMemo(() => {
-    return boxesTab1Data.find((data) => data.boxId === multiBox.id);
-  }, [multiBox.id, boxesTab1Data]);
+    return boxesTab1Data.find((data) => data.boxId === id);
+  }, [boxesTab1Data, id]);
 
   const [position, setPosition] = useState(() => {
     const defaultPosition = { x: 0, y: 0 };
 
-    if (structureData) {
+    if (multiBox === null) {
+      const structure = boxesTab1Data[boxIndex];
+
+      if (structure) {
+        const configuration = JSON.parse(structure.configuration);
+
+        return configuration.position || defaultPosition;
+      }
+    } //
+    else if (structureData) {
       const configuration = JSON.parse(structureData.configuration);
 
       return configuration.position || defaultPosition;
@@ -117,26 +129,38 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
     (e) => {
       const newSelectedTab = e.currentTarget.name.replace("tab", "");
 
+      if (!id) {
+        return;
+      }
+
       dispatch(
-        updateBoxAttrAction(multiBox.id, {
+        updateBoxAttrAction(id, {
           activeTab: newSelectedTab,
         }),
       );
     },
-    [dispatch, multiBox],
+    [dispatch, id],
   );
 
   const handleStrikeViewChange = useCallback(() => {
     const viewMode = strikeViewMode === "code" ? "strike" : "code";
 
+    if (!id) {
+      return;
+    }
+
     dispatch(
-      updateBoxAttrAction(multiBox.id, {
+      updateBoxAttrAction(id, {
         strikeViewMode: viewMode,
       }),
     );
-  }, [dispatch, multiBox.id, strikeViewMode]);
+  }, [dispatch, id, strikeViewMode]);
 
   const formattedTopSymbols = useMemo(() => {
+    if (!topSymbols || !strikeViewMode) {
+      return [];
+    }
+
     let formatted = topSymbols.map((topSymbol) => ({
       ...topSymbol,
       viewMode: strikeViewMode,
@@ -158,23 +182,34 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
   }, [formattedTopSymbols]);
 
   const activeTabClass = useMemo(() => {
-    const activeIndex = Number(multiBox.activeTab);
+    if (!activeTab) {
+      return "";
+    }
+
+    const activeIndex = Number(activeTab);
 
     return `activeTab${activeIndex}`;
-  }, [multiBox.activeTab]);
+  }, [activeTab]);
 
   const visibilityClass = useMemo(() => {
+    if (!id) {
+      return {};
+    }
+
     const shouldShowBox = openedMenus.some(
       (menuItem) =>
-        menuItem.menuKey === `multiBox${multiBox.id}` &&
-        menuItem.tabKey === selectedTab,
+        menuItem.menuKey === `multiBox${id}` && menuItem.tabKey === selectedTab,
     );
 
     return shouldShowBox ? {} : { display: "none" };
-  }, [openedMenus, multiBox.id, selectedTab]);
+  }, [id, openedMenus, selectedTab]);
 
   useEffect(() => {
     async function updateStockSymbolData() {
+      if (!id || !topSymbols) {
+        return;
+      }
+
       const stockSymbolData = await getStockSymbolData(topSymbols);
 
       if (stockSymbolData) {
@@ -196,7 +231,7 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
       bounds={bounds}
       grid={[3, 3]}
     >
-      <div className="multiBox" id={multiBox.id} style={visibilityClass}>
+      <div className="multiBox" id={multiBox?.id} style={visibilityClass}>
         <div className="topSymbolsContainer">
           <div>
             {americanTopSymbols.map((topSymbol, index) => (
@@ -212,18 +247,20 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
 
         {/*minimizedClass  */}
         <div className={`mcontent boxContent ${activeTabClass}`}>
-          <Tab0 multiBox={multiBox} />
-          <Tab1StructureBook multiBox={multiBox} />
-          <Tab2ListBooks multiBox={multiBox} />
-          <Tab3Position multiBox={multiBox} />
-          <Tab4Alerts multiBox={multiBox} />
-          <Tab5IncludeStructure multiBox={multiBox} />
+          {!!multiBox && (
+            <>
+              <Tab0 multiBox={multiBox} />
+              <Tab1StructureBook multiBox={multiBox} />
+              <Tab2ListBooks multiBox={multiBox} />
+              <Tab3Position multiBox={multiBox} />
+              <Tab4Alerts multiBox={multiBox} />
+              <Tab5IncludeStructure multiBox={multiBox} />
+            </>
+          )}
+
           <div className="tabButtons">
             <button
-              className={`brokerCustomButton ${isSelected(
-                "0",
-                multiBox.activeTab,
-              )}`}
+              className={`brokerCustomButton ${isSelected("0", activeTab)}`}
               name="tab0"
               onClick={handleBoxTabChange}
               disabled={!structureData}
@@ -231,10 +268,7 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
               <Tab0QuoteIcon className="tab0" />
             </button>
             <button
-              className={`brokerCustomButton ${isSelected(
-                "1",
-                multiBox.activeTab,
-              )}`}
+              className={`brokerCustomButton ${isSelected("1", activeTab)}`}
               name="tab1"
               onClick={handleBoxTabChange}
               disabled={!structureData}
@@ -242,10 +276,7 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
               <Tab1StructureIcon className="tab1" />
             </button>
             <button
-              className={`brokerCustomButton ${isSelected(
-                "2",
-                multiBox.activeTab,
-              )}`}
+              className={`brokerCustomButton ${isSelected("2", activeTab)}`}
               name="tab2"
               onClick={handleBoxTabChange}
               disabled={!structureData}
@@ -253,10 +284,7 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
               <Tab2SymbolsIcon className="tab2" />
             </button>
             <button
-              className={`brokerCustomButton ${isSelected(
-                "3",
-                multiBox.activeTab,
-              )}`}
+              className={`brokerCustomButton ${isSelected("3", activeTab)}`}
               name="tab3"
               onClick={handleBoxTabChange}
               disabled={!structureData}
@@ -264,10 +292,7 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
               <Tab3PositionIcon className="tab3" />
             </button>
             <button
-              className={`brokerCustomButton ${isSelected(
-                "4",
-                multiBox.activeTab,
-              )}`}
+              className={`brokerCustomButton ${isSelected("4", activeTab)}`}
               name="tab4"
               onClick={handleBoxTabChange}
               disabled={!structureData}
@@ -275,12 +300,10 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
               <Tab4AlertIcon className="tab4" />
             </button>
             <button
-              className={`brokerCustomButton ${isSelected(
-                "5",
-                multiBox.activeTab,
-              )}`}
+              className={`brokerCustomButton ${isSelected("5", activeTab)}`}
               name="tab5"
               onClick={handleBoxTabChange}
+              disabled={!multiBox}
             >
               <Tab5SearchIcon className="tab5" />
             </button>
@@ -293,6 +316,12 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
             >
               <IoMdRepeat size={19} color="#C4C4C4" />
             </button>
+          )}
+
+          {!multiBox && (
+            <div className="loadingBoxSpinner">
+              <Spinner animation="border" variant="light" />
+            </div>
           )}
 
           {toggleShowId && (
@@ -315,7 +344,11 @@ const MultiBox: React.FC<Props> = ({ multiBox }) => {
 
 export default MultiBox;
 
-function isSelected(tabKey: string, activeTab: string) {
+function isSelected(tabKey: string, activeTab: string | undefined) {
+  if (!activeTab) {
+    return "";
+  }
+
   return tabKey === activeTab ? " selected" : "";
 }
 

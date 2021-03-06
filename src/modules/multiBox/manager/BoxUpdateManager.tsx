@@ -59,7 +59,7 @@ const BoxUpdateManager: React.FC = () => {
         data.structureID.toString(),
       );
 
-      const multiBox = boxes.find((box) => box.id === data.boxId);
+      const multiBox = boxes.find((box) => box?.id === data.boxId);
       const alreadyAddedId = ids.includes(data.structureID.toString());
 
       if (!multiBox) {
@@ -87,7 +87,7 @@ const BoxUpdateManager: React.FC = () => {
         data.structureID.toString(),
       );
 
-      const multiBox = boxes.find((box) => box.id === data.boxId);
+      const multiBox = boxes.find((box) => box?.id === data.boxId);
       const alreadyAddedId = ids.includes(data.structureID.toString());
 
       if (!multiBox) {
