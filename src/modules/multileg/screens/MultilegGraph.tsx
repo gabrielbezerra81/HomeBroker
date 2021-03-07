@@ -192,7 +192,7 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
         <CartesianGrid
           strokeDasharray="5 5"
           stroke="#B1B2B1"
-          // horizontal={false}
+          horizontal={false}
         />
         <ReferenceLine
           y={0}
@@ -220,6 +220,10 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
           axisLine={false}
           tickLine={false}
         />
+
+        {typeof cost === "number" && (
+          <ReferenceLine y={-cost} strokeDasharray="5 5" stroke="#B1B2B1" />
+        )}
 
         {!!lastPoint && (
           <ReferenceLine
