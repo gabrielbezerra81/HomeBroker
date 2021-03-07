@@ -75,12 +75,24 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
   const data = useMemo(() => {
     const data: GraphData[] = [];
 
-    pricesRange.forEach((price) => {
+    pricesRange.forEach((price, index) => {
       let result = typeof cost === "number" ? -cost : 0;
 
       callOffers.forEach((offer) => {
         if (price < offer.strikeSelecionado) {
           return;
+        }
+
+        if (Math.floor(offer.strikeSelecionado) !== offer.strikeSelecionado) {
+          if (
+            price > offer.strikeSelecionado &&
+            pricesRange[index - 1] < offer.strikeSelecionado
+          ) {
+            data.push({
+              price: offer.strikeSelecionado,
+              result: typeof cost === "number" ? -cost : 0,
+            });
+          }
         }
 
         if (cost === null) {
@@ -94,7 +106,7 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
         result += multiplier * offerResult;
       });
 
-      data.push({ price, result });
+      data.push({ price, result: +Number(result).toFixed(2) });
     });
 
     // pricesRange.map((price) => ({
@@ -110,6 +122,60 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
     }
 
     return null;
+  }, [data]);
+
+  const yAxisDomain = useMemo(() => {
+    if (data.length > 0 && lastPoint) {
+      const domain: any[] = ["dataMin"];
+
+      if (lastPoint.result >= 0) {
+        domain.push("dataMax");
+      } //
+      else if (typeof cost === "number") {
+        domain.push(Math.floor(cost));
+      } //
+      else {
+        domain.push(3);
+      }
+
+      return domain;
+    }
+
+    return undefined;
+  }, [cost, data.length, lastPoint]);
+
+  const yAxisTicks = useMemo(() => {
+    const ticks: number[] = [];
+
+    if (typeof cost === "number") {
+      ticks.push(-cost);
+    }
+
+    data.forEach((point, index) => {
+      const previousPoint = data[index - 1];
+
+      if (previousPoint && point.result > 0 && previousPoint.result < 0) {
+        ticks.push(0);
+      }
+
+      if (!ticks.includes(point.result)) {
+        ticks.push(point.result);
+      }
+    });
+
+    if (!ticks.includes(0)) {
+      ticks.push(0);
+    }
+
+    return ticks;
+  }, [cost, data]);
+
+  const xAxisLabelValue = useMemo(() => {
+    if (data.every((item) => item.result === 0)) {
+      return "";
+    }
+
+    return "0";
   }, [data]);
 
   if (!data.length) {
@@ -133,8 +199,11 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
           stroke="#d2d5d2"
           opacity={0.6}
           strokeWidth={2}
-          label={{ value: "0", fill: "#d2d5d2", position: "left" }}
-          
+          // label={{
+          //   value: xAxisLabelValue,
+          //   fill: "#d2d5d2",
+          //   position: "insideBottomLeft",
+          // }}
         />
         <XAxis
           label={{
@@ -179,9 +248,12 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
           color="#fff"
         />
         <YAxis
-          domain={["dataMin", "dataMax+10"]}
+          domain={yAxisDomain}
           tick={tickStyle}
           axisLine={false}
+          ticks={yAxisTicks}
+          minTickGap={-1}
+          // scale="sequential"
         />
         <Tooltip
           contentStyle={tooltipContentStyle}
@@ -198,7 +270,7 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
           dataKey="result"
           stroke="#be9117"
           strokeWidth={3}
-          dot={false}
+          dot={{ fill: "#be9117" }}
           name="Lucro"
         />
       </LineChart>
