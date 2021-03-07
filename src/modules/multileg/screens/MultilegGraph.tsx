@@ -109,9 +109,9 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
           return;
         }
 
-        const multiplier = offer.cv === "compra" ? 1 : -1;
+        const multiplier = offer.cv === "compra" ? -1 : 1;
 
-        const offerResult = -offer.qtde * (price - offer.strikeSelecionado);
+        const offerResult = offer.qtde * (price - offer.strikeSelecionado);
 
         result += multiplier * offerResult;
       });
