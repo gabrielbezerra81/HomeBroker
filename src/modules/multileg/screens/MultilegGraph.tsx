@@ -92,11 +92,7 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
     pricesRange.forEach((price, index) => {
       let result = typeof cost === "number" ? -cost : 0;
 
-      callOffers.forEach((offer) => {
-        if (price < offer.strikeSelecionado) {
-          return;
-        }
-
+      putOffers.forEach((offer) => {
         if (Math.floor(offer.strikeSelecionado) !== offer.strikeSelecionado) {
           if (
             price > offer.strikeSelecionado &&
@@ -109,7 +105,31 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
           }
         }
 
-        if (cost === null) {
+        if (price > offer.strikeSelecionado) {
+          return;
+        }
+
+        const multiplier = offer.cv === "compra" ? 1 : -1;
+
+        const offerResult = -offer.qtde * (price - offer.strikeSelecionado);
+
+        result += multiplier * offerResult;
+      });
+
+      callOffers.forEach((offer) => {
+        if (Math.floor(offer.strikeSelecionado) !== offer.strikeSelecionado) {
+          if (
+            price > offer.strikeSelecionado &&
+            pricesRange[index - 1] < offer.strikeSelecionado
+          ) {
+            data.push({
+              price: offer.strikeSelecionado,
+              result: typeof cost === "number" ? -cost : 0,
+            });
+          }
+        }
+
+        if (price < offer.strikeSelecionado) {
           return;
         }
 
@@ -128,7 +148,7 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
     //   result: 0,
     // }));
     return data;
-  }, [callOffers, cost, pricesRange]);
+  }, [callOffers, cost, pricesRange, putOffers]);
 
   const lastPoint = useMemo(() => {
     if (data.length > 0) {
@@ -180,6 +200,8 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
     if (!ticks.includes(0)) {
       ticks.push(0);
     }
+
+    ticks.sort((a, b) => a - b);
 
     return ticks;
   }, [cost, data]);
