@@ -192,7 +192,7 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
         <CartesianGrid
           strokeDasharray="5 5"
           stroke="#B1B2B1"
-          horizontal={false}
+          // horizontal={false}
         />
         <ReferenceLine
           y={0}
@@ -221,23 +221,13 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
           tickLine={false}
         />
 
-        {/* {typeof cost === "number" && (
-          <ReferenceLine
-            y={cost * -1}
-            label={{ value: cost * -1, fill: "#d2d5d2", position: "left" }}
-          />
-        )} */}
-
-        {/* {!!lastPoint && (
+        {!!lastPoint && (
           <ReferenceLine
             y={lastPoint.result}
-            label={{
-              value: formatarNumDecimal(lastPoint.result, 2, 2),
-              fill: "#d2d5d2",
-              position: "left",
-            }}
+            strokeDasharray="5 5"
+            stroke="#B1B2B1"
           />
-        )} */}
+        )}
 
         <ReferenceLine
           x={18}

@@ -11,21 +11,15 @@
   align-items: center;
   justify-content: center;
 
-  //   .recharts-cartesian-grid-vertical {
-  //     line:first-child {
-  //       stroke-opacity: 0;
-  //     }
-  //   }
-
-  //   .recharts-cartesian-grid-horizontal {
-  //     line:not(:last-child) {
-  //       stroke-opacity: 0;
-  //     }
-  //   }
-
   .recharts-cartesian-grid-vertical {
     line:first-child {
-      opacity: 0;
+      stroke-opacity: 0;
+    }
+  }
+
+  .recharts-cartesian-grid-horizontal {
+    line:not([y1="5"]):not([y1="215"]) {
+      stroke-opacity: 0;
     }
   }
 }
