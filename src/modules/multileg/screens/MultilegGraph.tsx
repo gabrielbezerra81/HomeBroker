@@ -1,5 +1,5 @@
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 
 import {
   ResponsiveContainer,
@@ -27,6 +27,20 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
   const {
     multilegReducer: { multileg },
   } = useStateStorePrincipal();
+
+  const tooltipFormatter = useCallback((value: number) => {
+    let formattedName = "Lucro";
+    let formattedValue = value;
+
+    if (value < 1) {
+      formattedName = "Prejuízo";
+      formattedValue = -value;
+    }
+
+    formattedValue = formatarNumDecimal(formattedValue, 2);
+
+    return [formattedValue, formattedName];
+  }, []);
 
   const multilegTab = useMemo(() => {
     return multileg[tabIndex];
@@ -170,14 +184,6 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
     return ticks;
   }, [cost, data]);
 
-  const xAxisLabelValue = useMemo(() => {
-    if (data.every((item) => item.result === 0)) {
-      return "";
-    }
-
-    return "0";
-  }, [data]);
-
   if (!data.length) {
     return null;
   }
@@ -253,11 +259,11 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
           contentStyle={tooltipContentStyle}
           labelStyle={labelStyle}
           labelFormatter={(label: any) => {
-            return ` ${label}`;
+            return `${label}`;
           }}
-          formatter={(value: any) => formatarNumDecimal(value, 2)}
+          formatter={tooltipFormatter}
         />
-        {/* <Legend iconSize={9} iconType="rect" wrapperStyle={labelStyle} /> */}
+        <Legend iconSize={9} iconType="rect" wrapperStyle={labelStyle} />
 
         <Line
           type="linear"
@@ -275,8 +281,6 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
 export default MultilegGraph;
 
 const tickStyle = { fill: "#D2D5D2" };
-
-const axisStyle = { stroke: "#d2d5d2" };
 
 const tooltipContentStyle = {
   backgroundColor: "#333",
