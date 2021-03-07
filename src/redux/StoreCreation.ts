@@ -31,7 +31,7 @@ const rootPersistConfig = {
   key: "root",
   storage,
   stateReconciler: autoMergeLevel1,
-  whitelist: [], // "multiBoxReducer"
+  whitelist: ["multilegReducer"], // "multiBoxReducer"
 };
 
 const systemReducerPersistConfig = {

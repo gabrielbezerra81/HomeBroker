@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
   CartesianGrid,
+  ReferenceLine,
 } from "recharts";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 
@@ -39,6 +40,18 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
     return multilegTab.tabelaMultileg.filter((offer) => offer.tipo === "put");
   }, [multilegTab.tabelaMultileg]);
 
+  const cost = useMemo(() => {
+    const cost = Number(
+      multilegTab.preco.split(".").join("").replace(",", "."),
+    );
+
+    if (Number.isNaN(cost)) {
+      return null;
+    }
+
+    return Math.abs(cost);
+  }, [multilegTab.preco]);
+
   const offersStrike = useMemo(() => {
     return multilegTab.tabelaMultileg.map((offer) => offer.strikeSelecionado);
   }, [multilegTab.tabelaMultileg]);
@@ -62,19 +75,15 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
   const data = useMemo(() => {
     const data: GraphData[] = [];
 
-    pricesRange.forEach((price, index) => {
-      const cost = Math.abs(
-        Number(multilegTab.preco.split(".").join("").replace(",", ".")),
-      );
-
-      let result = Number.isNaN(cost) ? 0 : -cost;
+    pricesRange.forEach((price) => {
+      let result = typeof cost === "number" ? -cost : 0;
 
       callOffers.forEach((offer) => {
         if (price < offer.strikeSelecionado) {
           return;
         }
 
-        if (Number.isNaN(cost)) {
+        if (cost === null) {
           return;
         }
 
@@ -93,7 +102,15 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
     //   result: 0,
     // }));
     return data;
-  }, [callOffers, multilegTab.preco, pricesRange]);
+  }, [callOffers, cost, pricesRange]);
+
+  const lastPoint = useMemo(() => {
+    if (data.length > 0) {
+      return data[data.length - 1];
+    }
+
+    return null;
+  }, [data]);
 
   if (!data.length) {
     return null;
@@ -111,6 +128,14 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
           stroke="#B1B2B1"
           horizontal={false}
         />
+        <ReferenceLine
+          y={0}
+          stroke="#d2d5d2"
+          opacity={0.6}
+          strokeWidth={2}
+          label={{ value: "0", fill: "#d2d5d2", position: "left" }}
+          
+        />
         <XAxis
           label={{
             value: "Preço",
@@ -120,11 +145,44 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
           }}
           dataKey={(item) => item.price}
           type="number"
-          // tickCount={tickCount} // 5 a mais e 5 a menos
+          tickCount={pricesRange.length} // 5 a mais e 5 a menos
           tick={tickStyle}
-          axisLine={axisStyle}
+          domain={["dataMin", "dataMax"]}
+          axisLine={false}
+          tickLine={false}
         />
-        <YAxis tick={tickStyle} axisLine={axisStyle} />
+
+        {/* {typeof cost === "number" && (
+          <ReferenceLine
+            y={cost * -1}
+            label={{ value: cost * -1, fill: "#d2d5d2", position: "left" }}
+          />
+        )} */}
+
+        {/* {!!lastPoint && (
+          <ReferenceLine
+            y={lastPoint.result}
+            label={{
+              value: formatarNumDecimal(lastPoint.result, 2, 2),
+              fill: "#d2d5d2",
+              position: "left",
+            }}
+          />
+        )} */}
+
+        <ReferenceLine
+          x={18}
+          stroke="#d2d5d2"
+          opacity={1}
+          strokeWidth={1}
+          fill="#fff"
+          color="#fff"
+        />
+        <YAxis
+          domain={["dataMin", "dataMax+10"]}
+          tick={tickStyle}
+          axisLine={false}
+        />
         <Tooltip
           contentStyle={tooltipContentStyle}
           labelStyle={labelStyle}
@@ -152,7 +210,7 @@ export default MultilegGraph;
 
 const tickStyle = { fill: "#D2D5D2" };
 
-const axisStyle = { stroke: "#D2D5D2" };
+const axisStyle = { stroke: "#d2d5d2" };
 
 const tooltipContentStyle = {
   backgroundColor: "#333",
