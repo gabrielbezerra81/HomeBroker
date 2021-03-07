@@ -123,6 +123,13 @@ export const getKeycloakAuthDataAPI = async (redirectUri: string) => {
             roles.push("Admin");
           }
 
+          if (!roles.length) {
+            reject(null);
+            return;
+          }
+
+          console.log("continuou");
+
           localStorage.setItem(
             "tokenParsed",
             JSON.stringify(keycloak.tokenParsed),

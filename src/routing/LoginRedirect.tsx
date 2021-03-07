@@ -2,7 +2,10 @@ import { Redirect, RouteComponentProps } from "@reach/router";
 
 import React, { useEffect } from "react";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
-import { updateManySystemState } from "redux/actions/system/SystemActions";
+import {
+  deslogarUsuarioAction,
+  updateManySystemState,
+} from "redux/actions/system/SystemActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import { getKeycloakAuthDataAPI } from "api/LoginAPI";
 import { Spinner } from "react-bootstrap";
@@ -23,9 +26,16 @@ const LoginRedirect: React.FC<RouteComponentProps> = ({ path }) => {
   useEffect(() => {
     async function login() {
       if (!isLogged) {
-        const payload = await getKeycloakAuthDataAPI(redirectURL);
+        try {
+          const payload = await getKeycloakAuthDataAPI(redirectURL);
 
-        dispatch(updateManySystemState(payload));
+          dispatch(updateManySystemState(payload));
+        } catch (error) {
+          dispatch(deslogarUsuarioAction());
+          setTimeout(() => {
+            alert("Você não tem permissão para acessar esta área.");
+          }, 50);
+        }
       }
     }
 
