@@ -37,24 +37,24 @@ const PermissionProvider: React.FC = ({ children }) => {
   } = useStateStorePrincipal();
 
   const [permissions, setPermissions] = useState<Permission>({
-    planner: true,
-    box: true,
-    book: true,
+    planner: false,
+    box: false,
+    book: false,
     thl: {
-      listing: true,
-      sendOrder: true,
+      listing: false,
+      sendOrder: false,
     },
-    boletas: true,
-    ordersExecuting: true,
-    position: true,
-    history: true,
+    boletas: false,
+    ordersExecuting: false,
+    position: false,
+    history: false,
     rightSideMenu: {
-      alerts: true,
-      ordersExecuting: true,
-      position: true,
+      alerts: false,
+      ordersExecuting: false,
+      position: false,
     },
     optionsTable: {
-      checkSymbols: true,
+      checkSymbols: false,
     },
   });
 
@@ -88,6 +88,10 @@ const changePermissionsByRole = (
   const permissions = {
     ...oldPermissions,
   };
+
+  if (!roles.length) {
+    return permissions;
+  }
 
   const changePayload: Partial<Permission> = {};
 
