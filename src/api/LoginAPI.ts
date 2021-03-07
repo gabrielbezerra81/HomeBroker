@@ -115,6 +115,14 @@ export const getKeycloakAuthDataAPI = async (redirectUri: string) => {
             roles = keycloak.resourceAccess["homebroker-react"].roles;
           }
 
+          if (
+            !roles.length &&
+            keycloak.realmAccess &&
+            keycloak.realmAccess.roles.includes("Admin")
+          ) {
+            roles.push("Admin");
+          }
+
           localStorage.setItem(
             "tokenParsed",
             JSON.stringify(keycloak.tokenParsed),
