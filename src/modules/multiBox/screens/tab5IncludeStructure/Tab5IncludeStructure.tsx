@@ -154,16 +154,18 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
         return null;
       }
 
+      const formattedStrike = formatarNumDecimal(option.strike, 2, 2);
+
       const label =
         option.type === "CALL"
           ? option.symbol +
             " " +
-            option.strike +
+            formattedStrike +
             " " +
             stockOptions[index + 1].symbol
           : stockOptions[index + 1].symbol +
             " " +
-            option.strike +
+            formattedStrike +
             " " +
             option.symbol;
 

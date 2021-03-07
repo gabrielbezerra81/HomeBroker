@@ -37,8 +37,12 @@ const MultiBoxContainer: React.FC = () => {
 
   return (
     <div className="multiBoxContainer">
-      {boxes.map((multiBox,index) => (
-        <MultiBox multiBox={multiBox} key={multiBox?.id} boxIndex={index} />
+      {boxes.map((multiBox, index) => (
+        <MultiBox
+          multiBox={multiBox}
+          key={multiBox?.id || index}
+          boxIndex={index}
+        />
       ))}
     </div>
   );

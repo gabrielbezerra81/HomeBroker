@@ -19,6 +19,7 @@ import {
   handleRemoveOfferAction,
 } from "modules/multiBox/duck/actions/tab5Actions";
 import { FiX } from "react-icons/fi";
+import { formatarNumDecimal } from "shared/utils/Formatacoes";
 
 interface Props {
   data: BoxOffer;
@@ -106,6 +107,32 @@ const MultiBoxOffer: React.FC<Props> = ({
     [boxId, dispatch, offerIndex],
   );
 
+  const onSearchStrike = useCallback((inputValue, option) => {
+    if (typeof option.props?.children === "string") {
+      const strike = option.props.children;
+
+      return strike.includes(inputValue);
+    }
+
+    if (Array.isArray(option.props?.children)) {
+      const spans = option.props.children as React.ReactNodeArray;
+
+      let label = "";
+
+      spans.forEach((span) => {
+        const value = span?.valueOf() as any;
+
+        if (typeof value === "object") {
+          label += value.props.children;
+        }
+      });
+
+      return label.toLocaleLowerCase().includes(inputValue.toLocaleLowerCase());
+    }
+
+    return true;
+  }, []);
+
   const codeOptions = useMemo(() => {
     const dropdownOptions = stockOptions.map((option, index) => {
       if (index % 2 !== 0) {
@@ -123,7 +150,9 @@ const MultiBoxOffer: React.FC<Props> = ({
 
       const symbolPrefix = symbol.substr(0, 4);
 
-      const label = `${symbol.substr(4)} (${option.strike})`;
+      const formattedStrike = formatarNumDecimal(option.strike, 2, 2);
+
+      const label = `${symbol.substr(4)} (${formattedStrike})`;
 
       // const label =
       //   option.type === "CALL"
@@ -159,7 +188,7 @@ const MultiBoxOffer: React.FC<Props> = ({
         return null;
       }
 
-      let label = option.strike.toString();
+      let label = formatarNumDecimal(option.strike, 2, 2);
       let value = option.strike;
 
       return (
@@ -221,7 +250,8 @@ const MultiBoxOffer: React.FC<Props> = ({
           size="small"
           dropdownClassName="strikeSelectDropdown"
           showSearch
-          optionFilterProp="children"
+          filterOption={onSearchStrike}
+          optionFilterProp="label"
           notFoundContent="Strike não encontrado"
           className="strikeSelect offerStrikeSelect"
           suffixIcon={<FaCaretDown color="#ddd" />}

@@ -261,10 +261,20 @@ const renderSerie = (props) => {
 };
 
 const renderStrikeSymbol = (item, indice, listaOpcoes) => {
+  const formattedStrike = formatarNumDecimal(item.strike, 2, 2);
+
   const texto =
     item.type === "CALL"
-      ? item.symbol + " " + item.strike + " " + listaOpcoes[indice + 1].symbol
-      : listaOpcoes[indice + 1].symbol + " " + item.strike + " " + item.symbol;
+      ? item.symbol +
+        " " +
+        formattedStrike +
+        " " +
+        listaOpcoes[indice + 1].symbol
+      : listaOpcoes[indice + 1].symbol +
+        " " +
+        formattedStrike +
+        " " +
+        item.symbol;
 
   return (
     <Select.Option

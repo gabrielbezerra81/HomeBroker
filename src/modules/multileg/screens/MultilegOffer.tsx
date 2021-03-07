@@ -423,16 +423,18 @@ const renderSymbolOptionsDropdown = ({
     options.forEach((option, indice) => {
       const parsedOption = option as MultilegOption;
       if (indice % 2 === 0) {
+        const formattedStrike = formatarNumDecimal(parsedOption.strike, 2, 2);
+
         let strikeWithSymbols =
           parsedOption.type === "CALL"
             ? parsedOption.symbol +
               " " +
-              parsedOption.strike +
+              formattedStrike +
               " " +
               options[indice + 1].symbol
             : options[indice + 1].symbol +
               " " +
-              parsedOption.strike +
+              formattedStrike +
               " " +
               parsedOption.symbol;
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
