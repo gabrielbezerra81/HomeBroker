@@ -17,6 +17,8 @@ import Book from "./Book/Book";
 import { Select } from "antd";
 import { StorePrincipalContext } from "redux/StoreCreation";
 
+import MultilegGraph from "./MultilegGraph";
+
 class AbaMultileg extends React.Component {
   constructor(props) {
     super();
@@ -192,6 +194,8 @@ class AbaMultileg extends React.Component {
             </div>
           </div>
           <TabelaMultileg indice={indice}></TabelaMultileg>
+
+          <MultilegGraph tabIndex={indice} />
         </div>
         <Book indice={indice}></Book>
       </div>
