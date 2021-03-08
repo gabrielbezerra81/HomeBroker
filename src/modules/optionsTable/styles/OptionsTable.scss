@@ -60,6 +60,19 @@
       margin: 0 16px;
     }
 
+    .checkAllButton,
+    .uncheckAllButton {
+      background-color: #f1881d;
+      font-size: 14px;
+      border-radius: 4px;
+      height: 24px;
+      margin-left: 12px;
+
+      &.hidden {
+        opacity: 0;
+      }
+    }
+
     .saveConfigButton {
       background-color: #f1881d;
       font-size: 14px;
@@ -67,7 +80,6 @@
       border-radius: 4px;
       right: 16px;
       position: absolute;
-      transition: opacity 0.2s;
       width: 139px;
 
       display: flex;

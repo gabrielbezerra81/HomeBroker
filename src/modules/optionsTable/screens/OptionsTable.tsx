@@ -229,6 +229,18 @@ const OptionsTable: React.FC = () => {
     );
   }, [checkIntersection, dispatch]);
 
+  const handleUncheckAll = useCallback(() => {
+    dispatch(
+      updateOptionsTableStateAction({
+        checkedSymbols: [],
+        checkedColumns: [],
+        checkedLines: [],
+      }),
+    );
+  }, [dispatch]);
+
+  const handleCheckAll = useCallback(() => {}, []);
+
   const handleToggleConfig = useMemo(() => {
     if (permissions.optionsTable.checkSymbols) {
       return () => {
@@ -432,13 +444,28 @@ const OptionsTable: React.FC = () => {
               />
 
               {toggleConfig && (
-                <Form.Check
-                  custom
-                  checked={checkIntersection}
-                  type="checkbox"
-                  label="Marcar intersecção"
-                  onChange={handleChangeIntersectionMode}
-                />
+                <>
+                  <Form.Check
+                    custom
+                    checked={checkIntersection}
+                    type="checkbox"
+                    label="Marcar intersecção"
+                    onChange={handleChangeIntersectionMode}
+                  />
+                  {/* <button
+                    className="brokerCustomButton checkAllButton"
+                    onClick={handleCheckAll}
+                  >
+                    Marcar todos
+                  </button> */}
+
+                  <button
+                    className="brokerCustomButton uncheckAllButton"
+                    onClick={handleUncheckAll}
+                  >
+                    Desmarcar todos
+                  </button>
+                </>
               )}
 
               <button
