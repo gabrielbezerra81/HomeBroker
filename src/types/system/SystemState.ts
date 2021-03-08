@@ -18,8 +18,9 @@ export default interface SystemState {
   isOpenInitialPlanner: boolean;
   isOpenDetailedPlanner: boolean;
   isOpenOptionsTable: boolean;
+  isOpenConditionalMultileg: boolean;
   token: Token;
-  hasAuthorizationHeader:boolean;
+  hasAuthorizationHeader: boolean;
   authData: AuthData | null;
   accounts: Array<Account>;
   roles: string[];
@@ -40,5 +41,5 @@ export default interface SystemState {
   updateMode: "reactive" | "proactive";
   updateInterval: number;
   isLeftSideMenuConfigOpen: boolean;
-  strikeViewRightMenu:"code"|"strike"
+  strikeViewRightMenu: "code" | "strike";
 }

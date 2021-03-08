@@ -22,6 +22,7 @@ import MultiBoxContainer from "modules/multiBox/screens/MultiBoxContainer";
 import OptionsTable from "modules/optionsTable/screens/OptionsTable";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import { Redirect } from "@reach/router";
+import ConditionalMultileg from "modules/conditionalMultileg/screens/ConditionalMultileg";
 
 const OrdensExecucao = React.lazy(() =>
   import("modules/ordersExec/screens/OrdensExecucao"),
@@ -85,6 +86,7 @@ class Home extends React.Component {
       isOpenInitialPlanner,
       isOpenDetailedPlanner,
       isOpenOptionsTable,
+      isOpenConditionalMultileg,
       apps: AppBoletas,
     } = this.props;
 
@@ -130,6 +132,14 @@ class Home extends React.Component {
                 divKey={"multileg"}
               >
                 <Multileg headerTitle="MULTI ATIVOS" />
+              </PopupContainer>
+
+              <PopupContainer
+                isOpen={isOpenConditionalMultileg}
+                key="conditionalMultileg"
+                divKey={"conditionalMultileg"}
+              >
+                <ConditionalMultileg headerTitle="MULTI ATIVOS" />
               </PopupContainer>
 
               <PopupContainer isOpen={isOpenTHL} key="thl" divKey={"thl"}>
@@ -201,6 +211,7 @@ const mapStateToPropsAppPrincipal = (state) => ({
   isOpenInitialPlanner: state.systemReducer.isOpenInitialPlanner,
   isOpenDetailedPlanner: state.systemReducer.isOpenDetailedPlanner,
   isOpenOptionsTable: state.systemReducer.isOpenOptionsTable,
+  isOpenConditionalMultileg: state.systemReducer.isOpenConditionalMultileg,
 });
 
 const ConnectedHome = compose(

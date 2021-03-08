@@ -121,7 +121,8 @@ class DragglableModal extends Component {
         {this.props.renderConfigForm && id === "vendastartstop" ? (
           <ConfigurarStopVenda />
         ) : null}
-        {this.props.renderConfigComplementar && id === "multileg" ? (
+        {this.props.renderConfigComplementar &&
+        ["multileg", "conditionalMultileg"].includes(id) ? (
           <ConfigComplementar />
         ) : null}
       </div>

@@ -1,0 +1,57 @@
+.toggleAlertButton {
+  i {
+    margin-left: 4px;
+    transition: transform 0.5s;
+  }
+}
+
+.openedAlert {
+  i {
+    transform: rotateZ(-180deg);
+  }
+}
+
+.multilegAlertContent {
+  padding: 0 23px 8px 24px;
+  animation: toggleAlert 1s;
+  transition: opacity 0.3s, visibility 0.3s;
+
+  select,
+  input {
+    box-sizing: border-box !important;
+    height: 17px;
+    text-align: start;
+  }
+
+  select + select {
+    margin-top: 8px;
+  }
+
+  input {
+    margin-top: 8px;
+    padding: 0 4px !important;
+  }
+
+  button {
+    width: 100%;
+    margin-top: 8px;
+  }
+}
+
+@keyframes toggleAlert {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes untoggleAlert {
+  to {
+    opacity: 0;
+  }
+  from {
+    opacity: 1;
+  }
+}

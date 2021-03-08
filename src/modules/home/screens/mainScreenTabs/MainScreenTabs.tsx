@@ -43,6 +43,7 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
       isOpenInitialPlanner,
       isOpenDetailedPlanner,
       isOpenOptionsTable,
+      isOpenConditionalMultileg,
     },
   } = useStateStorePrincipal();
 
@@ -59,6 +60,7 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
       { key: "initialPlanner", isOpen: isOpenInitialPlanner },
       { key: "detailedPlanner", isOpen: isOpenDetailedPlanner },
       { key: "optionsTable", isOpen: isOpenOptionsTable },
+      { key: "conditionalMultileg", isOpen: isOpenConditionalMultileg },
     ] as const;
 
     return menus;
@@ -72,6 +74,7 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
     isOpenInitialPlanner,
     isOpenDetailedPlanner,
     isOpenOptionsTable,
+    isOpenConditionalMultileg,
   ]);
 
   useEffect(() => {

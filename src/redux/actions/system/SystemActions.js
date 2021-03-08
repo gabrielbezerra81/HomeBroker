@@ -165,6 +165,7 @@ export const abrirItemBarraLateralAction = (
       (openedMenuItem) => openedMenuItem.menuKey === "multileg",
     );
 
+    // TODO:conditionalMultileg
     // Traz a multileg para a aba atual se estiver tentando abrir com ele já aberto em outra aba
     if (
       nameVariavelReducer === "isOpenMultileg" &&
@@ -342,6 +343,9 @@ const handleCloseMenusInMainTab = ({
       case "isOpenDetailedPlanner":
         menuKey = "detailedPlanner";
         break;
+      case "isOpenConditionalMultileg":
+        menuKey = "conditionalMultileg";
+        break;
       default:
         menuKey = isOpenAttribute;
         break;
@@ -410,7 +414,12 @@ export const handleRemoveTabAction = (tabIndex) => {
         boxesToRemove.push(menuKey.replace("multiBox", ""));
       } //
       else if (
-        ["multileg", "optionsTable", "category_list"].includes(menuKey)
+        [
+          "multileg",
+          "optionsTable",
+          "category_list",
+          "conditionalMultileg",
+        ].includes(menuKey)
       ) {
         otherPopupsToRemove.push(menuKey);
       } //
@@ -423,6 +432,8 @@ export const handleRemoveTabAction = (tabIndex) => {
       switch (menuKey) {
         case "multileg":
           return "isOpenMultileg";
+        case "conditionalMultileg":
+          return "isOpenConditionalMultileg";
         case "optionsTable":
           return "isOpenOptionsTable";
         case "category_list":
