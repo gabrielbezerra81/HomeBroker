@@ -10,12 +10,6 @@ import { Resizable } from "re-resizable";
 import { PopupHeader } from "shared/components/PopupHeader";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import CategoryTable from "./CategoryTable";
-import bringToForegroundOnMount from "shared/utils/PopupLifeCycle/bringToForegroundOnMount";
-import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
-import useStateGlobalStore from "hooks/useStateGlobalStore";
-import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
-import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopupZIndexFromSecondaryTab";
-import usePrevious from "hooks/usePrevious";
 import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 
 import "../styles/CategoryList.scss";
@@ -35,15 +29,7 @@ const CategoryList: React.FC = () => {
     categoryListReducer: { categories, removeMode },
   } = useStateStorePrincipal();
 
-  const dispatchGlobal = useDispatchGlobalStore();
-  const {
-    zIndex: currentZIndex,
-    divkey: currentDivKey,
-  } = useStateGlobalStore();
-
   const masonryRef = useRef<any>(null);
-
-  const previousDivkey = usePrevious(currentDivKey);
 
   const dispatch = useDispatchStorePrincipal();
 
@@ -126,34 +112,6 @@ const CategoryList: React.FC = () => {
       }
     }
   }, [categories.length, selectedTab]);
-
-  // Trazer para primeiro plano ao montar
-  useEffect(() => {
-    bringToForegroundOnMount({
-      popupDivKey: "categoryList",
-      currentDivKey,
-      currentZIndex,
-      increaseZIndex: () =>
-        dispatchGlobal(
-          aumentarZindexAction("categoryList", currentZIndex, true),
-        ),
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // Trazer para primeiro plano ao tentar abrir não estando na aba principal
-  useEffect(() => {
-    setPopupZIndexFromSecondaryTab({
-      zIndex: currentZIndex,
-      previousDivkey,
-      currentDivkey: currentDivKey,
-      divkeyToCheck: "categoryList",
-      popupVisibility: isOpenCategoryList,
-      updateFunction: (...data) =>
-        dispatchGlobal(aumentarZindexAction(...data)),
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentDivKey, isOpenCategoryList]);
 
   // Carregar categorias
   useEffect(() => {

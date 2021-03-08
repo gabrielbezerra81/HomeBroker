@@ -9,9 +9,12 @@ import { IoMdAddCircle } from "react-icons/io";
 import { addMultiBoxAction } from "modules/multiBox/duck/actions/multiBoxActions";
 import { usePermissions } from "context/PermissionContext";
 import { updateManySystemState } from "redux/actions/system/SystemActions";
+import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
+import { atualizarDivKeyAction } from "redux/actions/GlobalAppActions";
 
 const TabBarHoverMenu: React.FC = () => {
   const dispatch = useDispatchStorePrincipal();
+  const dispatchGlobal = useDispatchGlobalStore();
 
   const { permissions } = usePermissions();
 
@@ -33,12 +36,14 @@ const TabBarHoverMenu: React.FC = () => {
   }, [dispatch]);
 
   const handleOpenCategoryList = useCallback(() => {
+    dispatchGlobal(atualizarDivKeyAction("categoryList"));
     dispatch(updateManySystemState({ isOpenCategoryList: true }));
-  }, [dispatch]);
+  }, [dispatch, dispatchGlobal]);
 
   const handleOpenOptionsTable = useCallback(() => {
+    dispatchGlobal(atualizarDivKeyAction("optionsTable"));
     dispatch(updateManySystemState({ isOpenOptionsTable: true }));
-  }, [dispatch]);
+  }, [dispatch, dispatchGlobal]);
 
   // useEffect(() => {
   //   if (!multilegButtonsVisibility) {
