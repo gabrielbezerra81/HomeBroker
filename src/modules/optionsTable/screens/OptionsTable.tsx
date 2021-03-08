@@ -27,11 +27,14 @@ import {
   handlSaveSelectionsAction,
   updateOptionsTableStateAction,
 } from "../duck/actions/optionsTableActions";
+import { Resizable } from "re-resizable";
 
 interface SymbolData {
   last: number;
   oscilation: number;
 }
+
+const savedDimensionsPath = "@homebroker:optionsTableDimensions";
 
 const OptionsTable: React.FC = () => {
   const dispatch = useDispatchStorePrincipal();
@@ -202,6 +205,18 @@ const OptionsTable: React.FC = () => {
     );
   }, []);
 
+  const saveDimensionsOnResizeStop = useCallback(
+    (e, d, element: HTMLElement) => {
+      const dimensions = {
+        height: element.clientHeight,
+        width: element.clientWidth,
+      };
+
+      localStorage.setItem(savedDimensionsPath, JSON.stringify(dimensions));
+    },
+    [],
+  );
+
   const handleToggleConfig = useMemo(() => {
     if (permissions.optionsTable.checkSymbols) {
       return () => {
@@ -280,6 +295,19 @@ const OptionsTable: React.FC = () => {
     return "hidden";
   }, [toggleConfig]);
 
+  const popupDimensions = useMemo(() => {
+    const dimensions = localStorage.getItem(savedDimensionsPath);
+
+    if (dimensions) {
+      return JSON.parse(dimensions) as { width: number; height: number };
+    }
+
+    return {
+      width: 1100,
+      height: 605,
+    };
+  }, []);
+
   // Obter tabela inicial
   // useEffect(() => {
   //   if (symbol) {
@@ -321,177 +349,185 @@ const OptionsTable: React.FC = () => {
       popupDivKey="optionsTable"
       popupVisibility={isOpenOptionsTable}
     >
-      <div id="optionsTable">
-        <div className="mcontent">
-          <PopupHeader
-            headerTitle="Matriz de Opções"
-            onClose={onClose}
-            onConfig={handleToggleConfig}
-            onStrikeViewChange={handleChangeStrikeView}
-          />
+      <Resizable
+        defaultSize={popupDimensions}
+        minWidth={620}
+        minHeight={200}
+        maxHeight={1500}
+        onResizeStop={saveDimensionsOnResizeStop}
+      >
+        <div id="optionsTable">
+          <div className="mcontent">
+            <PopupHeader
+              headerTitle="Matriz de Opções"
+              onClose={onClose}
+              onConfig={handleToggleConfig}
+              onStrikeViewChange={handleChangeStrikeView}
+            />
 
-          <div className="searchRow">
-            <InputGroup>
-              <Form.Control
-                className="inputWithSearchIcon"
-                type="text"
-                name="symbol"
-                value={symbol}
-                onKeyPress={(e: any) => {
-                  if (e.key === "Enter") {
-                    handleSearchOptions();
-                  }
-                }}
-                onChange={handleInputChange}
+            <div className="searchRow">
+              <InputGroup>
+                <Form.Control
+                  className="inputWithSearchIcon"
+                  type="text"
+                  name="symbol"
+                  value={symbol}
+                  onKeyPress={(e: any) => {
+                    if (e.key === "Enter") {
+                      handleSearchOptions();
+                    }
+                  }}
+                  onChange={handleInputChange}
+                />
+                <InputGroup.Append>
+                  <span
+                    className="input-group-text appendedSearchIcon divClicavel"
+                    onClick={handleSearchOptions}
+                  >
+                    {fetchingAPI ? (
+                      <Spinner animation="border" variant="light" size="sm" />
+                    ) : (
+                      <GrFormSearch size={28} />
+                    )}
+                  </span>
+                </InputGroup.Append>
+              </InputGroup>
+
+              <span className="quote">{formattedQuote}</span>
+              <span className="oscilation">{formattedOscilation}</span>
+
+              <Form.Check
+                custom
+                type="radio"
+                name="typeRadio"
+                onChange={() => setType("CALL")}
+                label="CALL"
+                checked={type === "CALL"}
               />
-              <InputGroup.Append>
-                <span
-                  className="input-group-text appendedSearchIcon divClicavel"
-                  onClick={handleSearchOptions}
-                >
-                  {fetchingAPI ? (
-                    <Spinner animation="border" variant="light" size="sm" />
-                  ) : (
-                    <GrFormSearch size={28} />
-                  )}
-                </span>
-              </InputGroup.Append>
-            </InputGroup>
 
-            <span className="quote">{formattedQuote}</span>
-            <span className="oscilation">{formattedOscilation}</span>
+              <Form.Check
+                custom
+                name="typeRadio"
+                type="radio"
+                label="PUT"
+                checked={type === "PUT"}
+                onChange={() => setType("PUT")}
+              />
 
-            <Form.Check
-              custom
-              type="radio"
-              name="typeRadio"
-              onChange={() => setType("CALL")}
-              label="CALL"
-              checked={type === "CALL"}
-            />
+              <button
+                className={`brokerCustomButton saveConfigButton ${saveConfigClass}`}
+                onClick={handleSaveSelections}
+              >
+                Salvar Configuração
+              </button>
+            </div>
 
-            <Form.Check
-              custom
-              name="typeRadio"
-              type="radio"
-              label="PUT"
-              checked={type === "PUT"}
-              onChange={() => setType("PUT")}
-            />
+            <div className="scrollContainer">
+              <PerfectScrollbar
+                options={{
+                  maxScrollbarLength: 40,
+                  minScrollbarLength: 40,
+                  wheelPropagation: false,
+                }}
+                id="scrollOptionsTable"
+                onMouseDown={onMouseDown}
+                onMouseUp={onMouseUp}
+                onMouseLeave={onMouseUp}
+                onMouseMove={onMouseMove}
+              >
+                <Table striped={false}>
+                  <thead>
+                    <tr>
+                      {columns.map((column) => (
+                        <th key={column.key}>
+                          {toggleConfig && column.key !== "strike" && (
+                            <Form.Check
+                              custom
+                              checked={checkedItems.includes(column.title)}
+                              type="checkbox"
+                              label=""
+                              onChange={() =>
+                                handleColumnHeadSelection(column.title)
+                              }
+                            />
+                          )}
 
-            <button
-              className={`brokerCustomButton saveConfigButton ${saveConfigClass}`}
-              onClick={handleSaveSelections}
-            >
-              Salvar Configuração
-            </button>
-          </div>
-
-          <div className="scrollContainer">
-            <PerfectScrollbar
-              options={{
-                maxScrollbarLength: 40,
-                minScrollbarLength: 40,
-                wheelPropagation: false,
-              }}
-              id="scrollOptionsTable"
-              onMouseDown={onMouseDown}
-              onMouseUp={onMouseUp}
-              onMouseLeave={onMouseUp}
-              onMouseMove={onMouseMove}
-            >
-              <Table striped={false}>
-                <thead>
-                  <tr>
-                    {columns.map((column) => (
-                      <th key={column.key}>
-                        {toggleConfig && column.key !== "strike" && (
-                          <Form.Check
-                            custom
-                            checked={checkedItems.includes(column.title)}
-                            type="checkbox"
-                            label=""
-                            onChange={() =>
-                              handleColumnHeadSelection(column.title)
-                            }
-                          />
-                        )}
-
-                        {column.title}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {tableData.map((tableLine, lineIndex) => (
-                    <tr key={lineIndex}>
-                      {columns.map((column, columnIndex) => {
-                        const columnData = tableLine[column.key];
-
-                        if (column.key === "strike") {
-                          const value = columnData;
-
-                          const isChecked = checkedItems.includes(`${value}`);
-
-                          return (
-                            <td key={value}>
-                              <div>
-                                {value && toggleConfig && (
-                                  <Form.Check
-                                    custom
-                                    checked={isChecked}
-                                    type="checkbox"
-                                    label=""
-                                    onChange={() =>
-                                      handleLineSelection(tableLine)
-                                    }
-                                  />
-                                )}
-                                <span>{value}</span>
-                              </div>
-                            </td>
-                          );
-                        } //
-                        else if (columnData) {
-                          const value =
-                            strikeView === "code"
-                              ? columnData.symbol
-                              : columnData.strike;
-
-                          const isChecked = checkedItems.includes(
-                            columnData.symbol,
-                          );
-
-                          return (
-                            <td key={column.key}>
-                              <div>
-                                <span>{value}</span>
-                                {value && toggleConfig && (
-                                  <Form.Check
-                                    custom
-                                    checked={isChecked}
-                                    type="checkbox"
-                                    label=""
-                                    onChange={() =>
-                                      handleSymbolSelection(columnData.symbol)
-                                    }
-                                  />
-                                )}
-                              </div>
-                            </td>
-                          );
-                        }
-
-                        return <td key={`${lineIndex}${columnIndex}`} />;
-                      })}
+                          {column.title}
+                        </th>
+                      ))}
                     </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </PerfectScrollbar>
+                  </thead>
+                  <tbody>
+                    {tableData.map((tableLine, lineIndex) => (
+                      <tr key={lineIndex}>
+                        {columns.map((column, columnIndex) => {
+                          const columnData = tableLine[column.key];
+
+                          if (column.key === "strike") {
+                            const value = columnData;
+
+                            const isChecked = checkedItems.includes(`${value}`);
+
+                            return (
+                              <td key={value}>
+                                <div>
+                                  {value && toggleConfig && (
+                                    <Form.Check
+                                      custom
+                                      checked={isChecked}
+                                      type="checkbox"
+                                      label=""
+                                      onChange={() =>
+                                        handleLineSelection(tableLine)
+                                      }
+                                    />
+                                  )}
+                                  <span>{value}</span>
+                                </div>
+                              </td>
+                            );
+                          } //
+                          else if (columnData) {
+                            const value =
+                              strikeView === "code"
+                                ? columnData.symbol
+                                : columnData.strike;
+
+                            const isChecked = checkedItems.includes(
+                              columnData.symbol,
+                            );
+
+                            return (
+                              <td key={column.key}>
+                                <div>
+                                  <span>{value}</span>
+                                  {value && toggleConfig && (
+                                    <Form.Check
+                                      custom
+                                      checked={isChecked}
+                                      type="checkbox"
+                                      label=""
+                                      onChange={() =>
+                                        handleSymbolSelection(columnData.symbol)
+                                      }
+                                    />
+                                  )}
+                                </div>
+                              </td>
+                            );
+                          }
+
+                          return <td key={`${lineIndex}${columnIndex}`} />;
+                        })}
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </PerfectScrollbar>
+            </div>
           </div>
         </div>
-      </div>
+      </Resizable>
     </DraggablePopup>
   );
 };
