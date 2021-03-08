@@ -4,9 +4,12 @@ import OptionsTableState from "../types/OptionsTableState";
 
 const INITIAL_STATE: OptionsTableState = {
   options: [],
-  checkedItems: ["10.5", "11.5"],
+  checkedSymbols: [],
   symbolsToUpdate: [],
   stockSymbolId: null,
+  checkIntersection: true,
+  checkedColumns: [],
+  checkedLines: [],
 };
 
 export default function (

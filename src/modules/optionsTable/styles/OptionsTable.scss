@@ -2,42 +2,6 @@
   overflow: hidden;
   height: 100%;
 
-  .custom-checkbox {
-    min-width: 24px;
-    padding-left: 0;
-
-    input {
-      z-index: 2;
-
-      margin-left: auto;
-      margin-right: auto;
-
-      left: 0;
-      right: 0;
-      height: 24px;
-      width: 17px;
-    }
-
-    label {
-      display: flex;
-      height: 24px;
-    }
-
-    .custom-control-label::before {
-      left: 0;
-      right: 0;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .custom-control-label::after {
-      left: 0;
-      right: 0;
-      margin-left: auto;
-      margin-right: auto;
-    }
-  }
-
   .mcontent {
     height: calc(100% - 5px);
     color: #ddd;
@@ -123,6 +87,42 @@
     border-radius: 4px;
     margin-top: 16px;
     height: calc(100% - 52px - 46px);
+
+    .custom-checkbox {
+      min-width: 24px;
+      padding-left: 0;
+
+      input {
+        z-index: 2;
+
+        margin-left: auto;
+        margin-right: auto;
+
+        left: 0;
+        right: 0;
+        height: 24px;
+        width: 17px;
+      }
+
+      label {
+        display: flex;
+        height: 24px;
+      }
+
+      .custom-control-label::before {
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .custom-control-label::after {
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
 
     table {
       text-align: center;

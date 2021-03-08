@@ -82,7 +82,7 @@ export const handleSearchOptionsAction = ({
           options: optionsResponse.data.lines,
           stockSymbolId: stockId,
           symbolsToUpdate,
-          checkedItems: symbolsToUpdate,
+          checkedSymbols: symbolsToUpdate,
         }),
       );
 
@@ -103,35 +103,92 @@ export const handleLineSelectionAction = (
 ): MainThunkAction => {
   return (dispatch, getState) => {
     const {
-      optionsTableReducer: { checkedItems },
+      optionsTableReducer: {
+        checkedLines,
+        checkIntersection,
+        checkedSymbols,
+        checkedColumns,
+        options,
+      },
     } = getState();
 
-    const isChecking = !checkedItems.includes(tableLine.strike.toString());
+    const isChecking = !checkedLines.includes(tableLine.strike);
 
-    const itemsToCheck: string[] = [tableLine.strike.toString()];
+    const isAnyColumnChecked = checkedColumns.length > 0;
 
-    const { strike, ...rest } = tableLine;
-    const lineData = { ...rest }; // contém pares expiration:symbol
+    const linesToChange: number[] = [tableLine.strike];
+    const columnsToChange: string[] = [];
+    const symbolsToRemove: string[] = [];
+    const symbolsToCheck: string[] = [];
 
-    Object.keys(lineData).forEach((expirationKey) => {
-      // Se a coluna estiver marcada, então é preciso adicionar o código aos marcados ou removê-los
+    const { strike } = tableLine;
 
-      const { symbol } = lineData[expirationKey];
+    options.forEach((option) => {
+      option.stocks.forEach((stock) => {
+        const { strikeLine } = option;
 
-      const alreadyAddedSymbol = checkedItems.includes(symbol);
+        const [stockDate] = stock.endBusiness.split(" ");
 
-      if (isChecking) {
-        // Se estiver marcando, precisa garantir que o código não está marcado, pois se der o push e mandar um já marcado, ele vai ser desmarcado
-        if (!alreadyAddedSymbol) {
-          itemsToCheck.push(symbol);
+        const alreadyAddedSymbol = checkedSymbols.includes(stock.symbol);
+        const isInSameLine = strikeLine === strike;
+
+        if (isChecking) {
+          if (
+            !alreadyAddedSymbol &&
+            isInSameLine &&
+            (!checkIntersection || !isAnyColumnChecked)
+          ) {
+            symbolsToCheck.push(stock.symbol);
+            return;
+          }
+
+          if (checkIntersection) {
+            const isColumnChecked = checkedColumns.includes(stockDate);
+
+            if (isColumnChecked && isInSameLine) {
+              columnsToChange.push(stockDate);
+
+              if (!alreadyAddedSymbol) {
+                symbolsToCheck.push(stock.symbol);
+              }
+            } //
+            else if (isAnyColumnChecked && alreadyAddedSymbol) {
+              symbolsToRemove.push(stock.symbol);
+            }
+          }
+        } //
+        else if (isInSameLine && alreadyAddedSymbol) {
+          symbolsToCheck.push(stock.symbol);
         }
-      } // Para desmarcar, precisa garantir que estava marcado
-      else if (alreadyAddedSymbol) {
-        itemsToCheck.push(symbol);
-      }
+      });
     });
 
-    dispatch(handleSymbolSelectionAction(itemsToCheck));
+    const updatedLines = handleCheckedListChange({
+      list: checkedLines,
+      changes: linesToChange,
+    });
+    const updatedColumns = handleCheckedListChange({
+      list: checkedColumns,
+      changes: columnsToChange,
+    });
+
+    const removedSymbols = handleCheckedListChange({
+      list: checkedSymbols,
+      changes: symbolsToRemove,
+    });
+
+    const updatedSymbols = handleCheckedListChange({
+      list: removedSymbols,
+      changes: symbolsToCheck,
+    });
+
+    dispatch(
+      updateOptionsTableStateAction({
+        checkedLines: updatedLines,
+        checkedColumns: updatedColumns,
+        checkedSymbols: updatedSymbols,
+      }),
+    );
   };
 };
 
@@ -140,33 +197,94 @@ export const handleColumnHeaderSelectionAction = (
 ): MainThunkAction => {
   return (dispatch, getState) => {
     const {
-      optionsTableReducer: { checkedItems, options },
+      optionsTableReducer: {
+        checkedSymbols,
+        options,
+        checkIntersection,
+        checkedLines,
+        checkedColumns,
+      },
     } = getState();
 
-    const itemsToCheck: string[] = [expiration];
+    const linesToChange: number[] = [];
+    const columnsToChange: string[] = [expiration];
+    const symbolsToRemove: string[] = [];
+    const symbolsToCheck: string[] = [];
 
-    const isChecking = !checkedItems.includes(expiration);
+    const isChecking = !checkedColumns.includes(expiration);
+
+    const isAnyStrikeChecked = checkedLines.length > 0;
 
     options.forEach((option) => {
       option.stocks.forEach((stock) => {
-        const [date] = stock.endBusiness.split(" ");
+        const [stockDate] = stock.endBusiness.split(" ");
 
-        if (date === expiration) {
-          const alreadyAddedSymbol = checkedItems.includes(stock.symbol);
+        const alreadyAddedSymbol = checkedSymbols.includes(stock.symbol);
+        const isInSameColumn = expiration === stockDate;
 
-          if (isChecking) {
-            if (!alreadyAddedSymbol) {
-              itemsToCheck.push(stock.symbol);
-            }
-          } //
-          else if (alreadyAddedSymbol) {
-            itemsToCheck.push(stock.symbol);
+        // Está marcando a coluna
+        if (isChecking) {
+          // Marcando com intersecção desativada ou sem linhas marcadas
+          if (
+            !alreadyAddedSymbol &&
+            isInSameColumn &&
+            (!checkIntersection || !isAnyStrikeChecked)
+          ) {
+            symbolsToCheck.push(stock.symbol);
+            return;
           }
+
+          // Marcando com intersecção ativada
+          if (checkIntersection) {
+            const { strikeLine } = option;
+            const isStrikeChecked = checkedLines.includes(strikeLine);
+
+            // Para marcar um código, é necessário sua linha estar marcada e restringir a marcação apenas à coluna atual
+            if (isStrikeChecked && isInSameColumn) {
+              linesToChange.push(strikeLine);
+
+              if (!alreadyAddedSymbol) {
+                symbolsToCheck.push(stock.symbol);
+              } //
+            } // Ao marcar intersecção, alguns códigos serão removidos das linhas e colunas. Só há remoção se houver intersecção e por isso checa se tem algum
+            // strike marcado
+            else if (isAnyStrikeChecked && alreadyAddedSymbol) {
+              symbolsToRemove.push(stock.symbol);
+            }
+          }
+        } // Está desmarcando os códigos que correspondem a coluna atual
+        else if (isInSameColumn && alreadyAddedSymbol) {
+          symbolsToCheck.push(stock.symbol);
         }
       });
     });
 
-    dispatch(handleSymbolSelectionAction(itemsToCheck));
+    const updatedLines = handleCheckedListChange({
+      list: checkedLines,
+      changes: linesToChange,
+    });
+    const updatedColumns = handleCheckedListChange({
+      list: checkedColumns,
+      changes: columnsToChange,
+    });
+
+    const removedSymbols = handleCheckedListChange({
+      list: checkedSymbols,
+      changes: symbolsToRemove,
+    });
+
+    const updatedSymbols = handleCheckedListChange({
+      list: removedSymbols,
+      changes: symbolsToCheck,
+    });
+
+    dispatch(
+      updateOptionsTableStateAction({
+        checkedLines: updatedLines,
+        checkedColumns: updatedColumns,
+        checkedSymbols: updatedSymbols,
+      }),
+    );
   };
 };
 
@@ -175,31 +293,15 @@ export const handleSymbolSelectionAction = (
 ): MainThunkAction => {
   return (dispatch, getState) => {
     const {
-      optionsTableReducer: { checkedItems },
+      optionsTableReducer: { checkedSymbols },
     } = getState();
 
-    const updatedSymbols = produce(checkedItems, (draft) => {
-      const indexesToRemove: number[] = [];
-
-      itemsToCheck.forEach((itemToCheck) => {
-        const index = draft.findIndex(
-          (checkedItem) => checkedItem === itemToCheck,
-        );
-
-        if (index === -1) {
-          draft.push(itemToCheck);
-        } //
-        else {
-          indexesToRemove.push(index);
-        }
-      });
-
-      if (indexesToRemove.length) {
-        return draft.filter((_, index) => !indexesToRemove.includes(index));
-      }
+    const updatedSymbols = handleCheckedListChange({
+      list: checkedSymbols,
+      changes: itemsToCheck,
     });
 
-    dispatch(updateOptionsTableStateAction({ checkedItems: updatedSymbols }));
+    dispatch(updateOptionsTableStateAction({ checkedSymbols: updatedSymbols }));
   };
 };
 
@@ -207,7 +309,7 @@ export const handlSaveSelectionsAction = (): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
       optionsTableReducer: {
-        checkedItems,
+        checkedSymbols,
         symbolsToUpdate,
         stockSymbolId,
         options,
@@ -215,18 +317,9 @@ export const handlSaveSelectionsAction = (): MainThunkAction => {
     } = getState();
 
     const updatedSymbols = produce(symbolsToUpdate, (draft) => {
-      const symbolsArray = checkedItems.filter((item) => {
-        // Pode ser símbolo, strike ou expiration
-
-        const isSymbol = Number.isNaN(Number(item));
-        const isExpiration = item.includes("/");
-
-        return isSymbol && !isExpiration;
-      });
-
       draft.splice(0);
 
-      draft.push(...symbolsArray);
+      draft.push(...checkedSymbols);
     });
 
     try {
@@ -258,6 +351,39 @@ export const handlSaveSelectionsAction = (): MainThunkAction => {
       updateOptionsTableStateAction({ symbolsToUpdate: updatedSymbols }),
     );
   };
+};
+
+interface HandleCheckedArrayChange {
+  list: any[];
+  changes: any[];
+}
+
+const handleCheckedListChange = ({
+  list,
+  changes,
+}: HandleCheckedArrayChange) => {
+  const updatedList = produce(list, (draft) => {
+    const indexesToRemove: number[] = [];
+
+    changes.forEach((itemsToChange) => {
+      const index = draft.findIndex(
+        (checkedItem) => checkedItem === itemsToChange,
+      );
+
+      if (index === -1) {
+        draft.push(itemsToChange);
+      } //
+      else {
+        indexesToRemove.push(index);
+      }
+    });
+
+    if (indexesToRemove.length) {
+      return draft.filter((_, index) => !indexesToRemove.includes(index));
+    }
+  });
+
+  return updatedList;
 };
 
 // Seleção de coluna antiga

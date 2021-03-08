@@ -23,7 +23,10 @@ export interface OptionTableItem {
 
 export default interface OptionsTableState {
   options: Array<OptionTableItem>;
-  checkedItems: Array<string>;
+  checkedSymbols: Array<string>;
   symbolsToUpdate: Array<string>;
   stockSymbolId: number | null;
+  checkIntersection: boolean;
+  checkedColumns: Array<string>;
+  checkedLines: Array<number>;
 }

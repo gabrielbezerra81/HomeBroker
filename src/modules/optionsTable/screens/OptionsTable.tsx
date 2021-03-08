@@ -41,7 +41,13 @@ const OptionsTable: React.FC = () => {
 
   const {
     systemReducer: { isOpenOptionsTable },
-    optionsTableReducer: { checkedItems, options },
+    optionsTableReducer: {
+      checkedSymbols,
+      options,
+      checkIntersection,
+      checkedLines,
+      checkedColumns,
+    },
   } = useStateStorePrincipal();
 
   const { permissions } = usePermissions();
@@ -217,6 +223,12 @@ const OptionsTable: React.FC = () => {
     [],
   );
 
+  const handleChangeIntersectionMode = useCallback(() => {
+    dispatch(
+      updateOptionsTableStateAction({ checkIntersection: !checkIntersection }),
+    );
+  }, [checkIntersection, dispatch]);
+
   const handleToggleConfig = useMemo(() => {
     if (permissions.optionsTable.checkSymbols) {
       return () => {
@@ -309,25 +321,29 @@ const OptionsTable: React.FC = () => {
   }, []);
 
   // Obter tabela inicial
-  // useEffect(() => {
-  //   if (symbol) {
-  //     api
-  //       .get(`${url_optionsTable_symbol_type}${symbol}/${type}`)
-  //       .then((response) => {
-  //         dispatch(
-  //           updateOptionsTableStateAction({ options: response.data.lines }),
-  //         );
-  //         localStorage.setItem(
-  //           "optionsTable",
-  //           JSON.stringify(response.data.lines),
-  //         );
-  //       })
-  //       .catch((error) => {
-  //         console.log("get options table error", error);
-  //       });
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [dispatch]);
+  useEffect(() => {
+    // const table = localStorage.getItem("optionsTable");
+    // if (table) {
+    //   dispatch(updateOptionsTableStateAction({ options: JSON.parse(table) }));
+    // }
+    // if (symbol) {
+    //   api
+    //     .get(`${url_optionsTable_symbol_type}${symbol}/${type}`)
+    //     .then((response) => {
+    //       dispatch(
+    //         updateOptionsTableStateAction({ options: response.data.lines }),
+    //       );
+    //       localStorage.setItem(
+    //         "optionsTable",
+    //         JSON.stringify(response.data.lines),
+    //       );
+    //     })
+    //     .catch((error) => {
+    //       console.log("get options table error", error);
+    //     });
+    // }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const { formattedQuote, formattedOscilation } = useMemo(() => {
     const formatted = {
@@ -415,6 +431,16 @@ const OptionsTable: React.FC = () => {
                 onChange={() => setType("PUT")}
               />
 
+              {toggleConfig && (
+                <Form.Check
+                  custom
+                  checked={checkIntersection}
+                  type="checkbox"
+                  label="Marcar intersecção"
+                  onChange={handleChangeIntersectionMode}
+                />
+              )}
+
               <button
                 className={`brokerCustomButton saveConfigButton ${saveConfigClass}`}
                 onClick={handleSaveSelections}
@@ -444,7 +470,7 @@ const OptionsTable: React.FC = () => {
                           {toggleConfig && column.key !== "strike" && (
                             <Form.Check
                               custom
-                              checked={checkedItems.includes(column.title)}
+                              checked={checkedColumns.includes(column.title)}
                               type="checkbox"
                               label=""
                               onChange={() =>
@@ -467,7 +493,7 @@ const OptionsTable: React.FC = () => {
                           if (column.key === "strike") {
                             const value = columnData;
 
-                            const isChecked = checkedItems.includes(`${value}`);
+                            const isChecked = checkedLines.includes(value);
 
                             return (
                               <td key={value}>
@@ -494,7 +520,7 @@ const OptionsTable: React.FC = () => {
                                 ? columnData.symbol
                                 : columnData.strike;
 
-                            const isChecked = checkedItems.includes(
+                            const isChecked = checkedSymbols.includes(
                               columnData.symbol,
                             );
 
