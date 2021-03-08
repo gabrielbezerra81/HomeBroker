@@ -1,19 +1,12 @@
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import ReactDOM from "react-dom";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
-import React, {
-  useState,
-  useCallback,
-  useMemo,
-  useRef,
-  useEffect,
-} from "react";
+import React, { useCallback, useMemo, useRef, useEffect } from "react";
 
 import { IoMdAddCircle } from "react-icons/io";
 import PerfectScroll from "react-perfect-scrollbar";
 import { Resizable } from "re-resizable";
 
-import Draggable, { DraggableData } from "react-draggable";
 import { PopupHeader } from "shared/components/PopupHeader";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import CategoryTable from "./CategoryTable";
@@ -32,14 +25,13 @@ import {
   updateCategoryListAction,
 } from "../duck/actions/categoryListActions";
 import { FiEdit } from "react-icons/fi";
-
-const limitY = 80;
+import DraggablePopup from "shared/components/DraggablePopup/DraggablePopup";
 
 const savedDimensionsPath = "@homebroker:categoryListDimensions";
 
 const CategoryList: React.FC = () => {
   const {
-    systemReducer: { isOpenLeftUserMenu, selectedTab, isOpenCategoryList },
+    systemReducer: { selectedTab, isOpenCategoryList },
     categoryListReducer: { categories, removeMode },
   } = useStateStorePrincipal();
 
@@ -54,48 +46,6 @@ const CategoryList: React.FC = () => {
   const previousDivkey = usePrevious(currentDivKey);
 
   const dispatch = useDispatchStorePrincipal();
-
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isDragging, setIsDragging] = useState(false);
-  const [bounds, setBounds] = useState<
-    | {
-        left: number;
-        top: number;
-      }
-    | undefined
-  >(undefined);
-
-  const limitX = useMemo(() => {
-    return isOpenLeftUserMenu ? 220 : 88;
-  }, [isOpenLeftUserMenu]);
-
-  const onStartDragging = useCallback(
-    (e, data: DraggableData) => {
-      setIsDragging(true);
-
-      if (!bounds) {
-        const bound = data.node.getBoundingClientRect();
-
-        setBounds({ left: -1 * bound.x + limitX, top: -1 * bound.y + limitY });
-      }
-    },
-    [bounds, limitX],
-  );
-
-  const onStopDragging = useCallback(() => {
-    setIsDragging(false);
-  }, []);
-
-  const onDrag = useCallback(
-    (e, data: DraggableData) => {
-      if (!bounds) {
-        return;
-      }
-
-      setPosition({ x: data.x, y: data.y });
-    },
-    [bounds],
-  );
 
   const onClose = useCallback(() => {
     dispatch(abrirItemBarraLateralAction("isOpenCategoryList", null, false));
@@ -210,16 +160,14 @@ const CategoryList: React.FC = () => {
     dispatch(listCategoriesAction());
   }, [dispatch]);
 
+  const resizableExtraProps = useMemo(() => {
+    return { id: "categoryList" };
+  }, []);
+
   return (
-    <Draggable
-      enableUserSelectHack={isDragging}
-      handle=".mheader"
-      position={position}
-      onStart={onStartDragging}
-      onStop={onStopDragging}
-      onDrag={onDrag}
-      bounds={bounds}
-      positionOffset={{ y: 27, x: 4 }}
+    <DraggablePopup
+      popupDivKey="categoryList"
+      popupVisibility={isOpenCategoryList}
     >
       <Resizable
         defaultSize={popupDimensions}
@@ -228,87 +176,82 @@ const CategoryList: React.FC = () => {
         maxHeight={1500}
         style={{ position: "absolute" }}
         onResizeStop={saveDimensionsOnResizeStop}
+        {...resizableExtraProps}
       >
-        <div id="categoryList">
-          <div className="mcontent">
-            <PopupHeader
-              onClose={onClose}
-              headerTitle="Mapa Panorâmico de Ativos"
+        <div className="mcontent">
+          <PopupHeader
+            onClose={onClose}
+            headerTitle="Mapa Panorâmico de Ativos"
+          >
+            <button className="brokerCustomButton" onClick={handleAddCategory}>
+              <IoMdAddCircle size={18} fill="#C4C4C4" /> Incluir nova categoria
+            </button>
+
+            <button
+              className="brokerCustomButton toggleRemoveButton"
+              onClick={handleToggleRemoveMode}
             >
-              <button
-                className="brokerCustomButton"
-                onClick={handleAddCategory}
-              >
-                <IoMdAddCircle size={18} fill="#C4C4C4" /> Incluir nova
-                categoria
-              </button>
+              <FiEdit size={18} />
+            </button>
+          </PopupHeader>
 
-              <button
-                className="brokerCustomButton toggleRemoveButton"
-                onClick={handleToggleRemoveMode}
-              >
-                <FiEdit size={18} />
-              </button>
-            </PopupHeader>
-
-            <div className="listHeader">
-              <table className="categoryTable">
-                <thead>
-                  <tr>
-                    <th className="deleteColumnTh" />
-                    <th>Ativo</th>
-                    <th>Preço</th>
-                    <th>Oscilação</th>
-                    <th>Osc YTD</th>
-                  </tr>
-                </thead>
-              </table>
-              <table className="categoryTable">
-                <thead>
-                  <tr>
-                    <th className="deleteColumnTh" />
-                    <th>Ativo</th>
-                    <th>Preço</th>
-                    <th>Oscilação</th>
-                    <th>Osc YTD</th>
-                  </tr>
-                </thead>
-              </table>
-              <table className="categoryTable">
-                <thead>
-                  <tr>
-                    <th className="deleteColumnTh" />
-                    <th>Ativo</th>
-                    <th>Preço</th>
-                    <th>Oscilação</th>
-                    <th>Osc YTD</th>
-                  </tr>
-                </thead>
-              </table>
-            </div>
-
-            <PerfectScroll
-              id="categoryListScroll"
-              options={{ wheelPropagation: false }}
-            >
-              <main ref={masonryRef}>
-                {/* ref={masonryRef} */}
-                {formattedCategoryList.map((categoryItem, index) => {
-                  return (
-                    <CategoryTable
-                      key={index}
-                      category={categoryItem}
-                      categoryIndex={index}
-                      order={index % 3}
-                    />
-                  );
-                })}
-              </main>
-            </PerfectScroll>
+          <div className="listHeader">
+            <table className="categoryTable">
+              <thead>
+                <tr>
+                  <th className="deleteColumnTh" />
+                  <th>Ativo</th>
+                  <th>Preço</th>
+                  <th>Oscilação</th>
+                  <th>Osc YTD</th>
+                </tr>
+              </thead>
+            </table>
+            <table className="categoryTable">
+              <thead>
+                <tr>
+                  <th className="deleteColumnTh" />
+                  <th>Ativo</th>
+                  <th>Preço</th>
+                  <th>Oscilação</th>
+                  <th>Osc YTD</th>
+                </tr>
+              </thead>
+            </table>
+            <table className="categoryTable">
+              <thead>
+                <tr>
+                  <th className="deleteColumnTh" />
+                  <th>Ativo</th>
+                  <th>Preço</th>
+                  <th>Oscilação</th>
+                  <th>Osc YTD</th>
+                </tr>
+              </thead>
+            </table>
           </div>
+
+          <PerfectScroll
+            id="categoryListScroll"
+            options={{ wheelPropagation: false }}
+          >
+            <main ref={masonryRef}>
+              {/* ref={masonryRef} */}
+              {formattedCategoryList.map((categoryItem, index) => {
+                return (
+                  <CategoryTable
+                    key={index}
+                    category={categoryItem}
+                    categoryIndex={index}
+                    order={index % 3}
+                  />
+                );
+              })}
+            </main>
+          </PerfectScroll>
         </div>
       </Resizable>
-    </Draggable>
+    </DraggablePopup>
   );
 };
 

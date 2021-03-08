@@ -372,6 +372,10 @@ const OptionsTable: React.FC = () => {
     return formatted;
   }, [symbolData]);
 
+  const resizableExtraProps = useMemo(() => {
+    return { id: "optionsTable" };
+  }, []);
+
   return (
     <DraggablePopup
       popupDivKey="optionsTable"
@@ -384,201 +388,200 @@ const OptionsTable: React.FC = () => {
         maxHeight={1500}
         style={{ position: "absolute" }}
         onResizeStop={saveDimensionsOnResizeStop}
+        {...resizableExtraProps}
       >
-        <div id="optionsTable">
-          <div className="mcontent">
-            <PopupHeader
-              headerTitle="Matriz de Opções"
-              onClose={onClose}
-              onConfig={handleToggleConfig}
-              onStrikeViewChange={handleChangeStrikeView}
+        <div className="mcontent">
+          <PopupHeader
+            headerTitle="Matriz de Opções"
+            onClose={onClose}
+            onConfig={handleToggleConfig}
+            onStrikeViewChange={handleChangeStrikeView}
+          />
+
+          <div className="searchRow">
+            <InputGroup>
+              <Form.Control
+                className="inputWithSearchIcon"
+                type="text"
+                name="symbol"
+                value={symbol}
+                onKeyPress={(e: any) => {
+                  if (e.key === "Enter") {
+                    handleSearchOptions();
+                  }
+                }}
+                onChange={handleInputChange}
+              />
+              <InputGroup.Append>
+                <span
+                  className="input-group-text appendedSearchIcon divClicavel"
+                  onClick={handleSearchOptions}
+                >
+                  {fetchingAPI ? (
+                    <Spinner animation="border" variant="light" size="sm" />
+                  ) : (
+                    <GrFormSearch size={28} />
+                  )}
+                </span>
+              </InputGroup.Append>
+            </InputGroup>
+
+            <span className="quote">{formattedQuote}</span>
+            <span className="oscilation">{formattedOscilation}</span>
+
+            <Form.Check
+              custom
+              type="radio"
+              name="typeRadio"
+              onChange={() => setType("CALL")}
+              label="CALL"
+              checked={type === "CALL"}
             />
 
-            <div className="searchRow">
-              <InputGroup>
-                <Form.Control
-                  className="inputWithSearchIcon"
-                  type="text"
-                  name="symbol"
-                  value={symbol}
-                  onKeyPress={(e: any) => {
-                    if (e.key === "Enter") {
-                      handleSearchOptions();
-                    }
-                  }}
-                  onChange={handleInputChange}
+            <Form.Check
+              custom
+              name="typeRadio"
+              type="radio"
+              label="PUT"
+              checked={type === "PUT"}
+              onChange={() => setType("PUT")}
+            />
+
+            {toggleConfig && (
+              <>
+                <Form.Check
+                  custom
+                  checked={checkIntersection}
+                  type="checkbox"
+                  label="Marcar intersecção"
+                  onChange={handleChangeIntersectionMode}
                 />
-                <InputGroup.Append>
-                  <span
-                    className="input-group-text appendedSearchIcon divClicavel"
-                    onClick={handleSearchOptions}
-                  >
-                    {fetchingAPI ? (
-                      <Spinner animation="border" variant="light" size="sm" />
-                    ) : (
-                      <GrFormSearch size={28} />
-                    )}
-                  </span>
-                </InputGroup.Append>
-              </InputGroup>
-
-              <span className="quote">{formattedQuote}</span>
-              <span className="oscilation">{formattedOscilation}</span>
-
-              <Form.Check
-                custom
-                type="radio"
-                name="typeRadio"
-                onChange={() => setType("CALL")}
-                label="CALL"
-                checked={type === "CALL"}
-              />
-
-              <Form.Check
-                custom
-                name="typeRadio"
-                type="radio"
-                label="PUT"
-                checked={type === "PUT"}
-                onChange={() => setType("PUT")}
-              />
-
-              {toggleConfig && (
-                <>
-                  <Form.Check
-                    custom
-                    checked={checkIntersection}
-                    type="checkbox"
-                    label="Marcar intersecção"
-                    onChange={handleChangeIntersectionMode}
-                  />
-                  {/* <button
+                {/* <button
                     className="brokerCustomButton checkAllButton"
                     onClick={handleCheckAll}
                   >
                     Marcar todos
                   </button> */}
 
-                  <button
-                    className="brokerCustomButton uncheckAllButton"
-                    onClick={handleUncheckAll}
-                  >
-                    Desmarcar todos
-                  </button>
-                </>
-              )}
+                <button
+                  className="brokerCustomButton uncheckAllButton"
+                  onClick={handleUncheckAll}
+                >
+                  Desmarcar todos
+                </button>
+              </>
+            )}
 
-              <button
-                className={`brokerCustomButton saveConfigButton ${saveConfigClass}`}
-                onClick={handleSaveSelections}
-              >
-                Salvar Configuração
-              </button>
-            </div>
+            <button
+              className={`brokerCustomButton saveConfigButton ${saveConfigClass}`}
+              onClick={handleSaveSelections}
+            >
+              Salvar Configuração
+            </button>
+          </div>
 
-            <div className="scrollContainer">
-              <PerfectScrollbar
-                options={{
-                  maxScrollbarLength: 40,
-                  minScrollbarLength: 40,
-                  wheelPropagation: false,
-                }}
-                id="scrollOptionsTable"
-                onMouseDown={onMouseDown}
-                onMouseUp={onMouseUp}
-                onMouseLeave={onMouseUp}
-                onMouseMove={onMouseMove}
-              >
-                <Table striped={false}>
-                  <thead>
-                    <tr>
-                      {columns.map((column) => (
-                        <th key={column.key}>
-                          {toggleConfig && column.key !== "strike" && (
-                            <Form.Check
-                              custom
-                              checked={checkedColumns.includes(column.title)}
-                              type="checkbox"
-                              label=""
-                              onChange={() =>
-                                handleColumnHeadSelection(column.title)
-                              }
-                            />
-                          )}
+          <div className="scrollContainer">
+            <PerfectScrollbar
+              options={{
+                maxScrollbarLength: 40,
+                minScrollbarLength: 40,
+                wheelPropagation: false,
+              }}
+              id="scrollOptionsTable"
+              onMouseDown={onMouseDown}
+              onMouseUp={onMouseUp}
+              onMouseLeave={onMouseUp}
+              onMouseMove={onMouseMove}
+            >
+              <Table striped={false}>
+                <thead>
+                  <tr>
+                    {columns.map((column) => (
+                      <th key={column.key}>
+                        {toggleConfig && column.key !== "strike" && (
+                          <Form.Check
+                            custom
+                            checked={checkedColumns.includes(column.title)}
+                            type="checkbox"
+                            label=""
+                            onChange={() =>
+                              handleColumnHeadSelection(column.title)
+                            }
+                          />
+                        )}
 
-                          {column.title}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {tableData.map((tableLine, lineIndex) => (
-                      <tr key={lineIndex}>
-                        {columns.map((column, columnIndex) => {
-                          const columnData = tableLine[column.key];
-
-                          if (column.key === "strike") {
-                            const value = columnData;
-
-                            const isChecked = checkedLines.includes(value);
-
-                            return (
-                              <td key={value}>
-                                <div>
-                                  {value && toggleConfig && (
-                                    <Form.Check
-                                      custom
-                                      checked={isChecked}
-                                      type="checkbox"
-                                      label=""
-                                      onChange={() =>
-                                        handleLineSelection(tableLine)
-                                      }
-                                    />
-                                  )}
-                                  <span>{value}</span>
-                                </div>
-                              </td>
-                            );
-                          } //
-                          else if (columnData) {
-                            const value =
-                              strikeView === "code"
-                                ? columnData.symbol
-                                : columnData.strike;
-
-                            const isChecked = checkedSymbols.includes(
-                              columnData.symbol,
-                            );
-
-                            return (
-                              <td key={column.key}>
-                                <div>
-                                  <span>{value}</span>
-                                  {value && toggleConfig && (
-                                    <Form.Check
-                                      custom
-                                      checked={isChecked}
-                                      type="checkbox"
-                                      label=""
-                                      onChange={() =>
-                                        handleSymbolSelection(columnData.symbol)
-                                      }
-                                    />
-                                  )}
-                                </div>
-                              </td>
-                            );
-                          }
-
-                          return <td key={`${lineIndex}${columnIndex}`} />;
-                        })}
-                      </tr>
+                        {column.title}
+                      </th>
                     ))}
-                  </tbody>
-                </Table>
-              </PerfectScrollbar>
-            </div>
+                  </tr>
+                </thead>
+                <tbody>
+                  {tableData.map((tableLine, lineIndex) => (
+                    <tr key={lineIndex}>
+                      {columns.map((column, columnIndex) => {
+                        const columnData = tableLine[column.key];
+
+                        if (column.key === "strike") {
+                          const value = columnData;
+
+                          const isChecked = checkedLines.includes(value);
+
+                          return (
+                            <td key={value}>
+                              <div>
+                                {value && toggleConfig && (
+                                  <Form.Check
+                                    custom
+                                    checked={isChecked}
+                                    type="checkbox"
+                                    label=""
+                                    onChange={() =>
+                                      handleLineSelection(tableLine)
+                                    }
+                                  />
+                                )}
+                                <span>{value}</span>
+                              </div>
+                            </td>
+                          );
+                        } //
+                        else if (columnData) {
+                          const value =
+                            strikeView === "code"
+                              ? columnData.symbol
+                              : columnData.strike;
+
+                          const isChecked = checkedSymbols.includes(
+                            columnData.symbol,
+                          );
+
+                          return (
+                            <td key={column.key}>
+                              <div>
+                                <span>{value}</span>
+                                {value && toggleConfig && (
+                                  <Form.Check
+                                    custom
+                                    checked={isChecked}
+                                    type="checkbox"
+                                    label=""
+                                    onChange={() =>
+                                      handleSymbolSelection(columnData.symbol)
+                                    }
+                                  />
+                                )}
+                              </div>
+                            </td>
+                          );
+                        }
+
+                        return <td key={`${lineIndex}${columnIndex}`} />;
+                      })}
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </PerfectScrollbar>
           </div>
         </div>
       </Resizable>
