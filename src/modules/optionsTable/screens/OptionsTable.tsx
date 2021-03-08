@@ -110,14 +110,14 @@ const OptionsTable: React.FC = () => {
       }
 
       let diferencaXInicial = startX - e.pageX;
-      let thresholdX = 4;
+      let thresholdX = 20;
       if (diferencaXInicial < 1) {
         diferencaXInicial *= -1;
         thresholdX *= -1;
       }
 
       let diferencaYInicial = startY - e.pageY;
-      let thresholdY = 4;
+      let thresholdY = 20;
       if (diferencaYInicial < 1) {
         diferencaYInicial *= -1;
         thresholdY *= -1;
@@ -407,6 +407,7 @@ const OptionsTable: React.FC = () => {
                       <th key={column.key}>
                         {toggleConfig && column.key !== "strike" && (
                           <Form.Check
+                            custom
                             checked={checkedItems.includes(column.title)}
                             type="checkbox"
                             label=""
@@ -437,6 +438,7 @@ const OptionsTable: React.FC = () => {
                               <div>
                                 {value && toggleConfig && (
                                   <Form.Check
+                                    custom
                                     checked={isChecked}
                                     type="checkbox"
                                     label=""
@@ -466,6 +468,7 @@ const OptionsTable: React.FC = () => {
                                 <span>{value}</span>
                                 {value && toggleConfig && (
                                   <Form.Check
+                                    custom
                                     checked={isChecked}
                                     type="checkbox"
                                     label=""

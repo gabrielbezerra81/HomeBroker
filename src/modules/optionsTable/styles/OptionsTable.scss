@@ -2,6 +2,42 @@
   overflow: hidden;
   width: 1100px;
 
+  .custom-checkbox {
+    min-width: 24px;
+    padding-left: 0;
+
+    input {
+      z-index: 2;
+
+      margin-left: auto;
+      margin-right: auto;
+
+      left: 0;
+      right: 0;
+      height: 24px;
+      width: 17px;
+    }
+
+    label {
+      display: flex;
+      height: 24px;
+    }
+
+    .custom-control-label::before {
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .custom-control-label::after {
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
   .mcontent {
     height: calc(100vh - 101px - 50px);
     color: #ddd;
@@ -172,6 +208,10 @@
             input {
               margin-left: -0.8rem;
             }
+          }
+
+          .custom-control {
+            margin-left: 8px;
           }
         }
       }
