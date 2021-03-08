@@ -193,7 +193,17 @@ const MultiBox: React.FC<Props> = ({ multiBox, boxIndex }) => {
 
   const visibilityClass = useMemo(() => {
     if (!id) {
-      return {};
+      const structure = boxesTab1Data[boxIndex];
+
+      if (structure) {
+        const configuration = JSON.parse(structure.configuration);
+
+        if (configuration.tabKey === selectedTab) {
+          return {};
+        }
+      }
+
+      return { display: "none" };
     }
 
     const shouldShowBox = openedMenus.some(
@@ -202,7 +212,7 @@ const MultiBox: React.FC<Props> = ({ multiBox, boxIndex }) => {
     );
 
     return shouldShowBox ? {} : { display: "none" };
-  }, [id, openedMenus, selectedTab]);
+  }, [boxIndex, boxesTab1Data, id, openedMenus, selectedTab]);
 
   useEffect(() => {
     async function updateStockSymbolData() {
