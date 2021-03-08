@@ -116,13 +116,13 @@ export const handleLineSelectionAction = (
     Object.keys(lineData).forEach((expirationKey) => {
       // Se a coluna estiver marcada, então é preciso adicionar o código aos marcados ou removê-los
 
-      const symbol = lineData[expirationKey];
+      const { symbol } = lineData[expirationKey];
 
       const alreadyAddedSymbol = checkedItems.includes(symbol);
 
       if (isChecking) {
         // Se estiver marcando, precisa garantir que o código não está marcado, pois se der o push e mandar um já marcado, ele vai ser desmarcado
-        if (checkedItems.includes(expirationKey) && !alreadyAddedSymbol) {
+        if (!alreadyAddedSymbol) {
           itemsToCheck.push(symbol);
         }
       } // Para desmarcar, precisa garantir que estava marcado
@@ -148,17 +148,14 @@ export const handleColumnHeaderSelectionAction = (
     const isChecking = !checkedItems.includes(expiration);
 
     options.forEach((option) => {
-      const { strikeLine } = option;
-
       option.stocks.forEach((stock) => {
         const [date] = stock.endBusiness.split(" ");
 
         if (date === expiration) {
           const alreadyAddedSymbol = checkedItems.includes(stock.symbol);
-          const isStrikeChecked = checkedItems.includes(strikeLine.toString());
 
           if (isChecking) {
-            if (!alreadyAddedSymbol && isStrikeChecked) {
+            if (!alreadyAddedSymbol) {
               itemsToCheck.push(stock.symbol);
             }
           } //
@@ -262,3 +259,88 @@ export const handlSaveSelectionsAction = (): MainThunkAction => {
     );
   };
 };
+
+// Seleção de coluna antiga
+/*
+
+export const handleColumnHeaderSelectionAction = (
+  expiration: string,
+): MainThunkAction => {
+  return (dispatch, getState) => {
+    const {
+      optionsTableReducer: { checkedItems, options },
+    } = getState();
+
+    const itemsToCheck: string[] = [expiration];
+
+    const isChecking = !checkedItems.includes(expiration);
+
+    options.forEach((option) => {
+      const { strikeLine } = option;
+
+      option.stocks.forEach((stock) => {
+        const [date] = stock.endBusiness.split(" ");
+
+        if (date === expiration) {
+          const alreadyAddedSymbol = checkedItems.includes(stock.symbol);
+          const isStrikeChecked = checkedItems.includes(strikeLine.toString());
+
+          if (isChecking) {
+            if (!alreadyAddedSymbol && isStrikeChecked) {
+              itemsToCheck.push(stock.symbol);
+            }
+          } //
+          else if (alreadyAddedSymbol) {
+            itemsToCheck.push(stock.symbol);
+          }
+        }
+      });
+    });
+
+    dispatch(handleSymbolSelectionAction(itemsToCheck));
+  };
+};
+
+*/
+
+// Seleção de linha antiga
+/*
+
+export const handleLineSelectionAction = (
+  tableLine: TableLine,
+): MainThunkAction => {
+  return (dispatch, getState) => {
+    const {
+      optionsTableReducer: { checkedItems },
+    } = getState();
+
+    const isChecking = !checkedItems.includes(tableLine.strike.toString());
+
+    const itemsToCheck: string[] = [tableLine.strike.toString()];
+
+    const { strike, ...rest } = tableLine;
+    const lineData = { ...rest }; // contém pares expiration:symbol
+
+    Object.keys(lineData).forEach((expirationKey) => {
+      // Se a coluna estiver marcada, então é preciso adicionar o código aos marcados ou removê-los
+
+      const symbol = lineData[expirationKey];
+
+      const alreadyAddedSymbol = checkedItems.includes(symbol);
+
+      if (isChecking) {
+        // Se estiver marcando, precisa garantir que o código não está marcado, pois se der o push e mandar um já marcado, ele vai ser desmarcado
+        if (checkedItems.includes(expirationKey) && !alreadyAddedSymbol) {
+          itemsToCheck.push(symbol);
+        }
+      } // Para desmarcar, precisa garantir que estava marcado
+      else if (alreadyAddedSymbol) {
+        itemsToCheck.push(symbol);
+      }
+    });
+
+    dispatch(handleSymbolSelectionAction(itemsToCheck));
+  };
+};
+
+ */
