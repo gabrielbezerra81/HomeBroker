@@ -354,6 +354,7 @@ const OptionsTable: React.FC = () => {
         minWidth={620}
         minHeight={200}
         maxHeight={1500}
+        style={{ position: "absolute" }}
         onResizeStop={saveDimensionsOnResizeStop}
       >
         <div id="optionsTable">
