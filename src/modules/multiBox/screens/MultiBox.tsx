@@ -30,6 +30,9 @@ import api from "api/apiConfig";
 import { url_updateBoxConfig_id } from "api/url";
 import Tab0 from "./tab0/Tab0";
 import { Spinner } from "react-bootstrap";
+import useStateGlobalStore from "hooks/useStateGlobalStore";
+import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
+import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
 
 interface Props {
   multiBox: MultiBoxData | null;
@@ -43,6 +46,9 @@ const MultiBox: React.FC<Props> = ({ multiBox, boxIndex }) => {
     systemReducer: { openedMenus, selectedTab },
     multiBoxReducer: { boxesTab1Data },
   } = useStateStorePrincipal();
+
+  const { zIndex } = useStateGlobalStore();
+  const dispatchGlobal = useDispatchGlobalStore();
 
   const dispatch = useDispatchStorePrincipal();
 
@@ -74,6 +80,14 @@ const MultiBox: React.FC<Props> = ({ multiBox, boxIndex }) => {
     return defaultPosition;
   });
   const [isDragging, setIsDragging] = useState(false);
+
+  const bringToForegroundOnClick = useCallback(() => {
+    if (!id) {
+      return;
+    }
+
+    dispatchGlobal(aumentarZindexAction(id, zIndex, true));
+  }, [dispatchGlobal, id, zIndex]);
 
   const onStartDragging = useCallback((e, data: DraggableData) => {
     const excludedClasses = [
@@ -241,7 +255,12 @@ const MultiBox: React.FC<Props> = ({ multiBox, boxIndex }) => {
       bounds={bounds}
       grid={[3, 3]}
     >
-      <div className="multiBox" id={multiBox?.id} style={visibilityClass}>
+      <div
+        onClick={bringToForegroundOnClick}
+        className="multiBox"
+        id={multiBox?.id}
+        style={visibilityClass}
+      >
         <div className="topSymbolsContainer">
           <div>
             {americanTopSymbols.map((topSymbol, index) => (
