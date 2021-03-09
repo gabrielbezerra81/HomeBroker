@@ -38,6 +38,8 @@ const BoxUpdateManager: React.FC = () => {
     [],
   );
 
+  const previousSearchedSymbolsIds = usePrevious(searchedSymbolsIds);
+
   const filteredStructIds = useMemo(() => {
     const filtered = boxesTab1Data.filter((data) => {
       const configuration = JSON.parse(
@@ -158,7 +160,15 @@ const BoxUpdateManager: React.FC = () => {
         return true;
       }
 
+      if (!_.isEqual(previousSearchedSymbolsIds, searchedSymbolsIds)) {
+        return true;
+      }
+
       if (previousIdsTab0 === undefined) {
+        return true;
+      }
+
+      if (previousSearchedSymbolsIds === undefined) {
         return true;
       }
 
@@ -193,7 +203,7 @@ const BoxUpdateManager: React.FC = () => {
       startUpdate();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updateInterval, updateMode, dispatch, idsTab0]);
+  }, [updateInterval, updateMode, dispatch, idsTab0, searchedSymbolsIds]);
 
   // Atualização do book da estrutura
   useEffect(() => {
