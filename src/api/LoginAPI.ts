@@ -128,8 +128,6 @@ export const getKeycloakAuthDataAPI = async (redirectUri: string) => {
             return;
           }
 
-          console.log("continuou");
-
           localStorage.setItem(
             "tokenParsed",
             JSON.stringify(keycloak.tokenParsed),

@@ -58,17 +58,17 @@ const BoxUpdateManager: React.FC = () => {
     const symbols: string[] = [];
 
     boxes.forEach((box) => {
-      if (box && !symbols.includes(box.searchedSymbol)) {
+      if (box && box.searchedSymbol && !symbols.includes(box.searchedSymbol)) {
         symbols.push(box.searchedSymbol);
       }
     });
 
-    return [...new Set(symbols)];
+    return symbols;
   }, [boxes]);
 
   useEffect(() => {
     async function getSearchedSymbolsIds() {
-      if (searchedSymbols) {
+      if (searchedSymbols.length) {
         const ids: SymbolIdObj[] = [];
 
         for await (const symbol of searchedSymbols) {
@@ -80,6 +80,9 @@ const BoxUpdateManager: React.FC = () => {
         }
 
         setSearchedSymbolsIds(ids);
+      } //
+      else {
+        setSearchedSymbolsIds([]);
       }
     }
 
@@ -87,16 +90,8 @@ const BoxUpdateManager: React.FC = () => {
   }, [searchedSymbols]);
 
   const idsTab0 = useMemo(() => {
-    const ids = filteredStructIds.split(",");
-
-    searchedSymbolsIds.forEach((item) => {
-      if (!ids.includes(item.id)) {
-        ids.push(item.id);
-      }
-    });
-
-    return ids.join(",");
-  }, [filteredStructIds, searchedSymbolsIds]);
+    return filteredStructIds;
+  }, [filteredStructIds]);
 
   const previousIdsTab0 = usePrevious(idsTab0);
 
@@ -179,7 +174,7 @@ const BoxUpdateManager: React.FC = () => {
         // dispatch(startProactiveBoxUpdateAction());
         dispatch(
           startProactiveMultiBoxUpdateAction({
-            ids: idsTab0,
+            idsTab0,
             searchedSymbolsIds,
           }),
         );

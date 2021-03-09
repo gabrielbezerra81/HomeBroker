@@ -496,11 +496,11 @@ interface ProactiveBox {
     id: string;
     symbol: string;
   }>;
-  ids: string;
+  idsTab0: string;
 }
 
 export const startProactiveMultiBoxUpdateAction = ({
-  ids,
+  idsTab0,
   searchedSymbolsIds,
 }: ProactiveBox): MainThunkAction => {
   return (dispatch, getState) => {
@@ -511,7 +511,6 @@ export const startProactiveMultiBoxUpdateAction = ({
         esource_multiBox,
         interval_multiBox,
         boxes,
-        stockSymbolsData,
       },
     } = getState();
 
@@ -530,6 +529,16 @@ export const startProactiveMultiBoxUpdateAction = ({
     if (interval_multiBox !== null) {
       clearInterval(interval_multiBox);
     }
+
+    const idsArray = idsTab0.split(",");
+
+    searchedSymbolsIds.forEach((item) => {
+      if (!idsArray.includes(item.id)) {
+        idsArray.push(item.id);
+      }
+    });
+
+    const ids = idsArray.join(",");
 
     if (ids) {
       const interval = setInterval(async () => {

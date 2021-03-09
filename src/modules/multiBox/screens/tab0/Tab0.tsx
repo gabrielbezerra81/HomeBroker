@@ -28,7 +28,7 @@ interface Props {
 
 const Tab0: React.FC<Props> = ({ multiBox }) => {
   const {
-    multiBoxReducer: { boxesTab1Data, symbolsData, stockSymbolsData },
+    multiBoxReducer: { boxesTab1Data, stockSymbolsData },
   } = useStateStorePrincipal();
 
   const dispatch = useDispatchStorePrincipal();
