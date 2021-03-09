@@ -264,7 +264,7 @@ const Tab1StructureBook: React.FC<Props> = ({ multiBox }) => {
             {structureData && (
               <DayOscilation
                 dayOscilation={structureData.dayOscilation}
-                formattedDayOscilation={structureData.dayOscilation}
+                formattedDayOscilation={formattedData?.dayOscilation}
               />
             )}
           </span>
