@@ -30,6 +30,7 @@ import {
 import closeIcon from "assets/closeIcon.png";
 import { GrFormSearch } from "react-icons/gr";
 import PopConfirm from "shared/components/PopConfirm/PopConfirm";
+import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -37,6 +38,10 @@ interface Props {
 
 const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
   const dispatch = useDispatchStorePrincipal();
+
+  const {
+    multiBoxReducer: { stockSymbolsData },
+  } = useStateStorePrincipal();
 
   const {
     symbolInput,
@@ -47,10 +52,14 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
     id,
     strikeViewMode,
     stockSymbol,
-    stockSymbolData,
     toggleShowId,
     tab1Id,
+    searchedSymbol,
   } = multiBox;
+
+  const stockSymbolData = useMemo(() => {
+    return stockSymbolsData.find((data) => data.symbol === searchedSymbol);
+  }, [searchedSymbol, stockSymbolsData]);
 
   const [searchingSymbolAPI, setSearchingSymbolAPI] = useState(false);
   const [addingStructureAPI, setAddingStructureAPI] = useState(false);

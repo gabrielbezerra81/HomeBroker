@@ -28,12 +28,16 @@ interface Props {
 
 const Tab1StructureBook: React.FC<Props> = ({ multiBox }) => {
   const {
-    multiBoxReducer: { boxesTab1Data, structuresBooks },
+    multiBoxReducer: { boxesTab1Data, structuresBooks, stockSymbolsData },
   } = useStateStorePrincipal();
 
   const dispatch = useDispatchStorePrincipal();
 
-  const { stockSymbolData, id, symbolInput, toggleShowId } = multiBox;
+  const { id, symbolInput, toggleShowId, searchedSymbol } = multiBox;
+
+  const stockSymbolData = useMemo(() => {
+    return stockSymbolsData.find((data) => data.symbol === searchedSymbol);
+  }, [searchedSymbol, stockSymbolsData]);
 
   const structureData = useMemo(() => {
     return boxesTab1Data.find((data) => data.boxId === multiBox.id);

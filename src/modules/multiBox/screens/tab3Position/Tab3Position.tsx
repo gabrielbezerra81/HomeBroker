@@ -23,6 +23,7 @@ import getSymbolExpirationInDays from "shared/utils/getSymbolExpirationInDays";
 import PositionTableItem from "./PositionTableItem";
 import { handleSaveBoxPositionsAction } from "modules/multiBox/duck/actions/tab2Actions";
 import PopConfirm from "shared/components/PopConfirm/PopConfirm";
+import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -32,13 +33,21 @@ const Tab3Position: React.FC<Props> = ({ multiBox }) => {
   const dispatch = useDispatchStorePrincipal();
 
   const {
+    multiBoxReducer: { stockSymbolsData },
+  } = useStateStorePrincipal();
+
+  const {
     id,
     strikeViewMode,
     symbolInput,
-    stockSymbolData,
+    searchedSymbol,
     boxPositions,
     toggleShowId,
   } = multiBox;
+
+  const stockSymbolData = useMemo(() => {
+    return stockSymbolsData.find((data) => data.symbol === searchedSymbol);
+  }, [searchedSymbol, stockSymbolsData]);
 
   const [savingPositions, setSavingPositions] = useState(false);
 

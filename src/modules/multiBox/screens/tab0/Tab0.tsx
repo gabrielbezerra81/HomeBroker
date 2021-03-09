@@ -28,12 +28,16 @@ interface Props {
 
 const Tab0: React.FC<Props> = ({ multiBox }) => {
   const {
-    multiBoxReducer: { boxesTab1Data },
+    multiBoxReducer: { boxesTab1Data, symbolsData, stockSymbolsData },
   } = useStateStorePrincipal();
 
   const dispatch = useDispatchStorePrincipal();
 
-  const { stockSymbolData, id, symbolInput, toggleShowId } = multiBox;
+  const { id, symbolInput, toggleShowId, searchedSymbol } = multiBox;
+
+  const stockSymbolData = useMemo(() => {
+    return stockSymbolsData.find((data) => data.symbol === searchedSymbol);
+  }, [searchedSymbol, stockSymbolsData]);
 
   const structureData = useMemo(() => {
     return boxesTab1Data.find((data) => data.boxId === multiBox.id);
@@ -99,7 +103,7 @@ const Tab0: React.FC<Props> = ({ multiBox }) => {
       return null;
     }
 
-    const { oscilation, min, max, last } = stockSymbolData;
+    const { oscilation, last } = stockSymbolData;
 
     let formattedOscilation = "";
 
@@ -109,18 +113,9 @@ const Tab0: React.FC<Props> = ({ multiBox }) => {
 
     formattedOscilation += formatarNumDecimal(oscilation || 0) + "%";
 
-    const medium = (max + min) / 2;
-
-    const formattedMedium = formatarNumDecimal(medium, 3);
-
     return {
-      ...stockSymbolData,
       formattedLast: formatarNumDecimal(last),
       formattedOscilation,
-      formattedMin: formatarNumDecimal(min),
-      formattedMax: formatarNumDecimal(max),
-      medium,
-      formattedMedium,
     };
   }, [stockSymbolData]);
 

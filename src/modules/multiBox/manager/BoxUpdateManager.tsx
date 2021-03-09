@@ -14,6 +14,12 @@ import {
 import checkIfUpdateConfigChanged from "../../../managers/updateManager/utils";
 import { startProactiveBoxSymbolsUpdateAction } from "../duck/actions/tab4Actions";
 import { ParsedConfiguration } from "../types/MultiBoxState";
+import { getStructureBySymbolAPI } from "api/symbolAPI";
+
+interface SymbolIdObj {
+  id: string;
+  symbol: string;
+}
 
 const BoxUpdateManager: React.FC = () => {
   const {
@@ -28,6 +34,9 @@ const BoxUpdateManager: React.FC = () => {
 
   const [isLoadingTab1, setIsLoadingTab1] = useState(true);
   const [isLoadingTab2, setIsLoadingTab2] = useState(true);
+  const [searchedSymbolsIds, setSearchedSymbolsIds] = useState<SymbolIdObj[]>(
+    [],
+  );
 
   const filteredStructIds = useMemo(() => {
     const filtered = boxesTab1Data.filter((data) => {
@@ -45,9 +54,49 @@ const BoxUpdateManager: React.FC = () => {
     return uniqueIdsList.join(",");
   }, [boxesTab1Data, selectedTab]);
 
+  const searchedSymbols = useMemo(() => {
+    const symbols: string[] = [];
+
+    boxes.forEach((box) => {
+      if (box && !symbols.includes(box.searchedSymbol)) {
+        symbols.push(box.searchedSymbol);
+      }
+    });
+
+    return [...new Set(symbols)];
+  }, [boxes]);
+
+  useEffect(() => {
+    async function getSearchedSymbolsIds() {
+      if (searchedSymbols) {
+        const ids: SymbolIdObj[] = [];
+
+        for await (const symbol of searchedSymbols) {
+          const data = await getStructureBySymbolAPI(symbol);
+
+          if (data) {
+            ids.push({ id: data.id.toString(), symbol });
+          }
+        }
+
+        setSearchedSymbolsIds(ids);
+      }
+    }
+
+    getSearchedSymbolsIds();
+  }, [searchedSymbols]);
+
   const idsTab0 = useMemo(() => {
-    return filteredStructIds;
-  }, [filteredStructIds]);
+    const ids = filteredStructIds.split(",");
+
+    searchedSymbolsIds.forEach((item) => {
+      if (!ids.includes(item.id)) {
+        ids.push(item.id);
+      }
+    });
+
+    return ids.join(",");
+  }, [filteredStructIds, searchedSymbolsIds]);
 
   const previousIdsTab0 = usePrevious(idsTab0);
 
@@ -128,7 +177,12 @@ const BoxUpdateManager: React.FC = () => {
       } //
       else if (updateMode === "proactive") {
         // dispatch(startProactiveBoxUpdateAction());
-        dispatch(startProactiveMultiBoxUpdateAction(idsTab0));
+        dispatch(
+          startProactiveMultiBoxUpdateAction({
+            ids: idsTab0,
+            searchedSymbolsIds,
+          }),
+        );
       }
     }
 

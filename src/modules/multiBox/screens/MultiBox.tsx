@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 
 // import _ from "lodash";
@@ -6,10 +6,7 @@ import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { MultiBoxData } from "modules/multiBox/types/MultiBoxState";
-import {
-  getStockSymbolData,
-  updateBoxAttrAction,
-} from "modules/multiBox/duck/actions/multiBoxActions";
+import { updateBoxAttrAction } from "modules/multiBox/duck/actions/multiBoxActions";
 
 import { ReactComponent as Tab0QuoteIcon } from "assets/multiBox/tab0QuoteIcon.svg";
 import { ReactComponent as Tab1StructureIcon } from "assets/multiBox/tab1StructureIcon.svg";
@@ -227,22 +224,6 @@ const MultiBox: React.FC<Props> = ({ multiBox, boxIndex }) => {
 
     return shouldShowBox ? {} : { display: "none" };
   }, [boxIndex, boxesTab1Data, id, openedMenus, selectedTab]);
-
-  useEffect(() => {
-    async function updateStockSymbolData() {
-      if (!id || !topSymbols) {
-        return;
-      }
-
-      const stockSymbolData = await getStockSymbolData(topSymbols);
-
-      if (stockSymbolData) {
-        dispatch(updateBoxAttrAction(id, { stockSymbolData }));
-      }
-    }
-
-    updateStockSymbolData();
-  }, [dispatch, id, topSymbols]);
 
   return (
     <Draggable

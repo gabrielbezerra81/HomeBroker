@@ -29,7 +29,7 @@ interface Props {
 
 const Tab4Alerts: React.FC<Props> = ({ multiBox }) => {
   const {
-    multiBoxReducer: { boxesTab1Data },
+    multiBoxReducer: { boxesTab1Data, stockSymbolsData },
   } = useStateStorePrincipal();
 
   const dispatch = useDispatchStorePrincipal();
@@ -44,13 +44,17 @@ const Tab4Alerts: React.FC<Props> = ({ multiBox }) => {
     condition,
     observation,
     id,
-    stockSymbolData,
+    searchedSymbol,
     symbolInput,
     selectedValidity,
     toggleShowId,
   } = multiBox;
 
   const [addingAlertAPI, setAddingAlertAPI] = useState(false);
+
+  const stockSymbolData = useMemo(() => {
+    return stockSymbolsData.find((data) => data.symbol === searchedSymbol);
+  }, [searchedSymbol, stockSymbolsData]);
 
   const {
     formattedMin,

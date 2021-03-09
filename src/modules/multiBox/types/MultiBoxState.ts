@@ -68,14 +68,6 @@ export interface SymbolToolTipInfo {
   option: boolean;
 }
 
-export interface StockSymbolData {
-  symbol: string;
-  last: number;
-  min: number;
-  max: number;
-  oscilation: number;
-}
-
 type BoxPositionStock = SymbolToolTipInfo & {
   id: number;
 };
@@ -112,7 +104,6 @@ export interface MultiBoxData {
   observation: string;
   consideredPrice: "Bid" | "Ask" | "Last";
   alertPrice: number;
-  stockSymbolData: StockSymbolData | null;
   boxPositions: Array<BoxPosition>;
   toggleShowId?: boolean;
 }
@@ -161,6 +152,15 @@ export interface StructureBook {
   };
 }
 
+export interface StockSymbolData {
+  id: number;
+  last: number;
+  symbol: string;
+  min: number;
+  max: number;
+  oscilation: number;
+}
+
 export default interface MultiBoxState {
   boxes: Array<MultiBoxData | null>;
   boxesTab1Data: Array<Tab1Data>;
@@ -172,4 +172,5 @@ export default interface MultiBoxState {
   structuresBooks: Array<StructureBook>;
   esource_books: EventSource | null;
   interval_books: NodeJS.Timeout | null;
+  stockSymbolsData: Array<StockSymbolData>;
 }

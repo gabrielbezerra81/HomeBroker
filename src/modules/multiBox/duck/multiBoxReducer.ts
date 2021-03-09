@@ -16,6 +16,7 @@ const INITIAL_STATE: MultiBoxState = {
   structuresBooks: [],
   esource_books: null,
   interval_books: null,
+  stockSymbolsData: [],
 };
 
 export default (

@@ -27,7 +27,7 @@ interface Props {
 
 const Tab2ListBooks: React.FC<Props> = ({ multiBox }) => {
   const {
-    multiBoxReducer: { boxesTab1Data, symbolsData },
+    multiBoxReducer: { boxesTab1Data, symbolsData, stockSymbolsData },
   } = useStateStorePrincipal();
 
   const dispatch = useDispatchStorePrincipal();
@@ -35,11 +35,15 @@ const Tab2ListBooks: React.FC<Props> = ({ multiBox }) => {
   const {
     strikeViewMode,
     id,
-    stockSymbolData,
+    searchedSymbol,
     symbolInput,
     topSymbols,
     toggleShowId,
   } = multiBox;
+
+  const stockSymbolData = useMemo(() => {
+    return stockSymbolsData.find((data) => data.symbol === searchedSymbol);
+  }, [searchedSymbol, stockSymbolsData]);
 
   const structureData = useMemo(() => {
     return boxesTab1Data.find((data) => data.boxId === multiBox.id);

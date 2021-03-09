@@ -4,7 +4,6 @@ import {
 } from "api/proactive/ProativosAPI";
 import { updateBoxStructuresAPI } from "api/reactive/ReativosAPI";
 import {
-  getOneSymbolDataAPI,
   getStockInfoAPI,
   getSymbolInfoAPI,
   SymbolInfoAPI,
@@ -73,7 +72,6 @@ export const addMultiBoxAction = (): MainThunkAction => {
       consideredPrice: "Bid",
       condition: "Less",
       observation: "",
-      stockSymbolData: null,
       boxPositions: [],
     };
 
@@ -267,11 +265,9 @@ export const addMultiBoxesFromStructureDataAction = (
         symbolsData,
       });
 
-      const stockSymbolData = await getStockSymbolData(topSymbols);
+      const stockSymbol = await findStockSymbol(topSymbols);
 
-      const boxOptionsData = await searchBoxOptions(
-        stockSymbolData?.symbol || "",
-      );
+      const boxOptionsData = await searchBoxOptions(stockSymbol || "");
 
       const boxPositions: BoxPosition[] = loadInitialBoxPositions({
         allPositions,
@@ -289,7 +285,7 @@ export const addMultiBoxesFromStructureDataAction = (
         activeTab: initialOnLoad,
         minimized: false,
         //tab5
-        symbolInput: stockSymbolData?.symbol || "",
+        symbolInput: stockSymbol || "",
         searchedSymbol: "",
         stockSymbol: "",
         stockOptions: [],
@@ -308,7 +304,6 @@ export const addMultiBoxesFromStructureDataAction = (
         consideredPrice: "Bid",
         condition: "Less",
         observation: "",
-        stockSymbolData,
         boxPositions,
       };
 
@@ -496,14 +491,37 @@ export const startReactiveMultiBoxUpdateAction = (
   };
 };
 
-export const startProactiveMultiBoxUpdateAction = (
-  ids: string,
-): MainThunkAction => {
+interface ProactiveBox {
+  searchedSymbolsIds: Array<{
+    id: string;
+    symbol: string;
+  }>;
+  ids: string;
+}
+
+export const startProactiveMultiBoxUpdateAction = ({
+  ids,
+  searchedSymbolsIds,
+}: ProactiveBox): MainThunkAction => {
   return (dispatch, getState) => {
     const {
       systemReducer: { updateInterval },
-      multiBoxReducer: { boxesTab1Data, esource_multiBox, interval_multiBox },
+      multiBoxReducer: {
+        boxesTab1Data,
+        esource_multiBox,
+        interval_multiBox,
+        boxes,
+        stockSymbolsData,
+      },
     } = getState();
+
+    const searchedSymbols: string[] = [];
+
+    boxes.forEach((box) => {
+      if (box && !searchedSymbols.includes(box.searchedSymbol)) {
+        searchedSymbols.push(box.searchedSymbol);
+      }
+    });
 
     if (esource_multiBox && esource_multiBox.close) {
       esource_multiBox.close();
@@ -521,6 +539,27 @@ export const startProactiveMultiBoxUpdateAction = (
           return;
         }
 
+        let updatedStockSymbolsData: StockSymbolData[] = [];
+
+        searchedSymbolsIds.forEach((symbolIdObj) => {
+          const stockData = structuresQuotes.find(
+            (structureItem) => structureItem.id.toString() === symbolIdObj.id,
+          );
+
+          if (stockData) {
+            const data: StockSymbolData = {
+              id: stockData.id,
+              last: stockData.last || 0,
+              symbol: symbolIdObj.symbol,
+              min: stockData.min || 0,
+              max: stockData.max || 0,
+              oscilation: stockData.oscilacao || 0,
+            };
+
+            updatedStockSymbolsData.push(data);
+          }
+        });
+
         const updatedBoxesTab1Data = boxesTab1Data.map((boxItem) => {
           const boxFromAPI = {
             id: boxItem.id,
@@ -529,8 +568,9 @@ export const startProactiveMultiBoxUpdateAction = (
           };
 
           const structureQuote = structuresQuotes.find(
-            (structureItem: any) => structureItem.id === boxItem.structureID,
+            (structureItem) => structureItem.id === boxItem.structureID,
           );
+
           if (structureQuote) {
             const { id, ...quotes } = structureQuote;
 
@@ -559,6 +599,12 @@ export const startProactiveMultiBoxUpdateAction = (
 
         dispatch(
           updateStructuresAndLoadBoxesAction(updatedBoxesTab1Data, false),
+        );
+
+        dispatch(
+          updateManyMultiBoxAction({
+            stockSymbolsData: updatedStockSymbolsData,
+          }),
         );
       }, updateInterval);
 
@@ -653,7 +699,7 @@ export const handleExportBoxToMultilegAction = ({
   };
 };
 
-export const getStockSymbolData = async (topSymbols: TopSymbol[]) => {
+export const findStockSymbol = async (topSymbols: TopSymbol[]) => {
   const symbol = topSymbols.length ? topSymbols[0].code : "";
 
   if (!symbol) {
@@ -678,19 +724,20 @@ export const getStockSymbolData = async (topSymbols: TopSymbol[]) => {
     }
 
     if (stockSymbol) {
-      const data = await getOneSymbolDataAPI(stockSymbol);
+      return stockSymbol;
+      // const data = await getOneSymbolDataAPI(stockSymbol);
 
-      if (data) {
-        const stockData: StockSymbolData = {
-          symbol: stockSymbol,
-          last: data.ultimo,
-          min: data.minimo,
-          max: data.maximo,
-          oscilation: data.oscilacao,
-        };
+      // if (data) {
+      //   const stockData: Omit<StockSymbolData, "id"> = {
+      //     symbol: stockSymbol,
+      //     last: data.ultimo,
+      //     min: data.minimo,
+      //     max: data.maximo,
+      //     oscilation: data.oscilacao,
+      //   };
 
-        return stockData;
-      }
+      //   return stockData;
+      // }
     }
   }
 
