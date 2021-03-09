@@ -24,7 +24,7 @@ export const openAlertInMultileg = (alertItem: AlertAPI): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
       multilegReducer: { multileg, cotacoesMultileg },
-      systemReducer: { isOpenMultileg },
+      systemReducer: { isOpenConditionalMultileg },
     } = getState();
 
     const { price, param, operator, comment } = alertItem;
@@ -52,12 +52,12 @@ export const openAlertInMultileg = (alertItem: AlertAPI): MainThunkAction => {
       };
     });
 
-    if (!isOpenMultileg) {
+    if (!isOpenConditionalMultileg) {
       clonedMultilegTabs.pop();
     }
 
     globalStore.dispatch(atualizarDivKeyAction("conditionalMultileg") as any);
-    dispatch(abrirItemBarraLateralAction("isOpenMultileg", true));
+    dispatch(abrirItemBarraLateralAction("isOpenConditionalMultileg", true));
 
     // Adicionar aba
     let result = addMultilegTab(clonedMultilegTabs);

@@ -6,8 +6,8 @@ import {
 
 import { getformatedDate } from "shared/utils/Formatacoes";
 import {
-  MODIFICAR_VARIAVEL_MULTILEG,
-  MODIFICAR_VARIAVEIS_MULTILEG,
+  UPDATE_ONE_CONDITIONAL_MULTILEG,
+  UPDATE_MANY_CONDITIONAL_MULTILEG,
 } from "constants/MenuActionTypes";
 import MultilegState from "../../types/MultilegState";
 import { MultilegTab, MultilegQuote } from "../../types/multileg";
@@ -23,14 +23,14 @@ export const updateOneMultilegState = ({
   attributeValue,
 }: UpdateMultilegState) => {
   return {
-    type: MODIFICAR_VARIAVEL_MULTILEG,
+    type: UPDATE_ONE_CONDITIONAL_MULTILEG,
     payload: { attributeName, attributeValue },
   };
 };
 
 export const updateManyMultilegState = (payload: any) => {
   return {
-    type: MODIFICAR_VARIAVEIS_MULTILEG,
+    type: UPDATE_MANY_CONDITIONAL_MULTILEG,
     payload,
   };
 };

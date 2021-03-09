@@ -1,7 +1,7 @@
 import { actionType } from "constants/ActionTypes";
 import {
-  MODIFICAR_VARIAVEL_MULTILEG,
-  MODIFICAR_VARIAVEIS_MULTILEG,
+  UPDATE_ONE_CONDITIONAL_MULTILEG,
+  UPDATE_MANY_CONDITIONAL_MULTILEG,
 } from "constants/MenuActionTypes";
 import { resetarEstadoRedux } from "redux/reducers/resetarEstadoReducer";
 import MultilegState from "../types/MultilegState";
@@ -52,11 +52,12 @@ export default (
   { type, payload }: Action,
 ): MultilegState => {
   switch (type) {
-    case MODIFICAR_VARIAVEL_MULTILEG:
+    case UPDATE_ONE_CONDITIONAL_MULTILEG:
       return { ...state, [payload.attributeName]: payload.attributeValue };
-    case MODIFICAR_VARIAVEIS_MULTILEG:
+    case UPDATE_MANY_CONDITIONAL_MULTILEG:
       return { ...state, ...payload };
     case actionType.RESET_REDUX_STATE:
+      //TODO: conditionalMultileg
       if (["isOpenMultileg", "deslogar"].includes(payload.name))
         return {
           ...resetarEstadoRedux({

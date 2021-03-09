@@ -147,6 +147,7 @@ export const abrirItemBarraLateralAction = (
     // impede que ele seja fechado e redireciona para a aba principal
     const isTryingToOpenFromSecondaryTab = selectedTab !== "tab0";
 
+    // TODO: conditionalMultileg
     if (
       isTryingToOpenFromSecondaryTab &&
       nameVariavelReducer !== "isOpenMultileg" &&
@@ -165,7 +166,7 @@ export const abrirItemBarraLateralAction = (
       (openedMenuItem) => openedMenuItem.menuKey === "multileg",
     );
 
-    // TODO:conditionalMultileg
+    // TODO: conditionalMultileg
     // Traz a multileg para a aba atual se estiver tentando abrir com ele já aberto em outra aba
     if (
       nameVariavelReducer === "isOpenMultileg" &&

@@ -78,7 +78,7 @@ class ConditionalMultileg extends React.Component {
   componentDidUpdate(prevProps) {
     const {
       divkey,
-      isOpenMultileg,
+      isOpenConditionalMultileg,
       aumentarZindexAction,
       zIndex,
       multileg,
@@ -91,7 +91,7 @@ class ConditionalMultileg extends React.Component {
       previousDivkey: prevProps.divkey,
       currentDivkey: divkey,
       divkeyToCheck: popupKey,
-      popupVisibility: isOpenMultileg,
+      popupVisibility: isOpenConditionalMultileg,
       updateFunction: aumentarZindexAction,
     });
 
@@ -224,12 +224,13 @@ class ConditionalMultileg extends React.Component {
 }
 
 const mapStateToPropsMultileg = (state) => ({
-  configComplementarAberto: state.multilegReducer.configComplementarAberto,
-  multileg: state.multilegReducer.multileg,
-  abaSelecionada: state.multilegReducer.abaSelecionada,
+  configComplementarAberto:
+    state.conditionalMultilegReducer.configComplementarAberto,
+  multileg: state.conditionalMultilegReducer.multileg,
+  abaSelecionada: state.conditionalMultilegReducer.abaSelecionada,
   multilegButtonsVisibility: state.systemReducer.multilegButtonsVisibility,
   createAlertButtonVisibility: state.systemReducer.createAlertButtonVisibility,
-  isOpenMultileg: state.systemReducer.isOpenMultileg,
+  isOpenConditionalMultileg: state.systemReducer.isOpenConditionalMultileg,
 });
 
 const mapStateToPropsGlobalStore = (state) => {
