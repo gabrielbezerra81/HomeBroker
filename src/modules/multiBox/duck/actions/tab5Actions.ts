@@ -353,7 +353,7 @@ export const handleConcludeTab5Action = (boxId: string): MainThunkAction => {
         const symbolData = await getSymbolInfoAPI(offer.selectedCode);
 
         const topSymbol: TopSymbol = {
-          qtty: offer.qtty,
+          qtty: offer.offerType === "C" ? offer.qtty : -offer.qtty,
           code: offer.selectedCode,
           model: offer.model,
           strike: offer.selectedStrike,
