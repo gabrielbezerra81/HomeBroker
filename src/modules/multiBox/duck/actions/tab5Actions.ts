@@ -113,7 +113,30 @@ export const handleRemoveOfferAction = (
   };
 };
 
-export const handleAddStockOfferAction = (
+export const handleAddOfferDirectlyAction = (
+  id: string,
+  symbol: string,
+): MainThunkAction => {
+  return async (dispatch, getState) => {
+    try {
+      const symbolInfo = await getSymbolInfoAPI(symbol);
+
+      if (!symbolInfo) {
+        alert("Falha ao adicionar código");
+        return;
+      } //
+      if (symbolInfo.option && symbolInfo.type) {
+        await dispatch(handleSearchBoxSymbolOptionsAction(id, symbol));
+        await dispatch(handleAddOptionOfferAction(id, symbolInfo.type));
+      } //
+      else {
+        await dispatch(handleAddStockOffer(id, symbol));
+      }
+    } catch (error) {}
+  };
+};
+
+export const handleAddStockOffer = (
   id: string,
   symbol: string,
 ): MainThunkAction => {
@@ -136,7 +159,7 @@ export const handleAddStockOfferAction = (
     if (data && multiBox) {
       const stockSymbol = data.ativoPrincipal;
 
-      const offers = {
+      const offer = {
         model: "",
         offerType: "C",
         qtty: 1,
@@ -151,21 +174,21 @@ export const handleAddStockOfferAction = (
 
       dispatch(
         updateBoxAttrAction(id, {
-          boxOffers: [...multiBox.boxOffers, offers],
+          boxOffers: [...multiBox.boxOffers, offer],
           searchedSymbol: symbol,
           stockSymbol: symbol,
         }),
       );
     } //
     else {
-      // alert("Falha ao pesquisar código");
+      alert("Falha ao adicionar código");
     }
   };
 };
 
 export const handleAddOptionOfferAction = (
   id: string,
-  type: string,
+  type: "PUT" | "CALL",
 ): MainThunkAction => {
   return (dispatch, getState) => {
     const {
@@ -188,6 +211,8 @@ export const handleAddOptionOfferAction = (
           option.strike === selectedStrike &&
           option.type === type,
       );
+
+      console.log(option);
 
       if (option) {
         const offers = {

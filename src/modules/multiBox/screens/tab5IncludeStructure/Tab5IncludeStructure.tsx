@@ -22,7 +22,7 @@ import { formatarNumDecimal, formatExpiration } from "shared/utils/Formatacoes";
 import {
   getUpdatedOptionsWhenExpirationChanges,
   handleAddOptionOfferAction,
-  handleAddStockOfferAction,
+  handleAddOfferDirectlyAction,
   handleSearchBoxSymbolOptionsAction,
   handleConcludeTab5Action,
 } from "modules/multiBox/duck/actions/tab5Actions";
@@ -95,10 +95,10 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
     [dispatch, id, selectedStrike, stockSymbol],
   );
 
-  const handleSearchStock = useCallback(async () => {
+  const handleIncludeOfferDirectly = useCallback(async () => {
     setSearchingSymbolAPI(true);
 
-    await dispatch(handleAddStockOfferAction(id, symbolInput));
+    await dispatch(handleAddOfferDirectlyAction(id, symbolInput));
 
     setSearchingSymbolAPI(false);
   }, [dispatch, id, symbolInput]);
@@ -231,7 +231,7 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
               // autoComplete="off"
               onKeyPress={(e: any) => {
                 if (e.key === "Enter") {
-                  handleSearchStock();
+                  handleIncludeOfferDirectly();
                 }
               }}
               onChange={handleInputChange}
@@ -239,7 +239,7 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
             <InputGroup.Append>
               <span
                 className="input-group-text appendedSearchIcon divClicavel"
-                onClick={handleSearchStock}
+                onClick={handleIncludeOfferDirectly}
               >
                 {searchingSymbolAPI ? (
                   <Spinner animation="border" variant="light" size="sm" />
