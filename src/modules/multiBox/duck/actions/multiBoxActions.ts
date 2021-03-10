@@ -256,7 +256,6 @@ export const addMultiBoxesFromStructureDataAction = (
       // Para montar os atributos "topSymbols", "boxPositions" e "boxOffers" é necessário pesquisar as informações dos ativos
       for await (const code of structureData.codes) {
         const symbolInfo = await getSymbolInfoAPI(code.symbol);
-
         if (symbolInfo) {
           symbolsData.push({
             ...symbolInfo,
@@ -283,6 +282,7 @@ export const addMultiBoxesFromStructureDataAction = (
       const boxOffers: BoxOffer[] = await loadInitialBoxOffers({
         symbolsData,
         boxOptionsData,
+        structureData,
       });
 
       const newMultiBox: MultiBoxData = {
@@ -409,11 +409,13 @@ const loadInitialBoxPositions = ({
 interface LoadBoxOffers {
   symbolsData: Array<SymbolInfoAPI & { offerType: "C" | "V" }>;
   boxOptionsData: SearchedBoxOptionsData | null;
+  structureData: Tab1Data;
 }
 
 const loadInitialBoxOffers = async ({
   symbolsData,
   boxOptionsData,
+  structureData,
 }: LoadBoxOffers) => {
   const boxOffers: BoxOffer[] = [];
 
@@ -422,8 +424,12 @@ const loadInitialBoxOffers = async ({
 
     const offerExpiration = `${year}-${month}-${day}`;
 
+    const sameSymbolInStructure = structureData.codes.find(
+      (item) => item.symbol === data.symbol,
+    );
+
     const offer: BoxOffer = {
-      qtty: 1,
+      qtty: Math.abs(sameSymbolInStructure?.qtty || 1),
       model: data.model || ("" as any),
       type: data.type || ("" as any),
       selectedCode: data.symbol,
@@ -890,7 +896,7 @@ export const handleDuplicateBoxAction = (id: string): MainThunkAction => {
       );
 
       await dispatch(handleConcludeTab5Action(duplicatedBox.id));
-      
+
       dispatch(
         updateBoxAttrAction(duplicatedBox.id, {
           isLoadingBox: false,
