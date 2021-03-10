@@ -23,7 +23,7 @@ interface SymbolIdObj {
 
 const BoxUpdateManager: React.FC = () => {
   const {
-    systemReducer: { updateMode, updateInterval, selectedTab },
+    systemReducer: { updateMode, updateInterval, selectedTab, openedMenus },
     multiBoxReducer: { boxesTab1Data, boxes, symbolsData, structuresBooks },
   } = useStateStorePrincipal();
 
@@ -40,13 +40,18 @@ const BoxUpdateManager: React.FC = () => {
 
   const previousSearchedSymbolsIds = usePrevious(searchedSymbolsIds);
 
+  const boxesInActiveMainTab = useMemo(() => {
+    return openedMenus
+      .filter(
+        (item) =>
+          item.tabKey === selectedTab && item.menuKey.includes("multiBox"),
+      )
+      .map((item) => item.menuKey.replace("multiBox", ""));
+  }, [openedMenus, selectedTab]);
+
   const filteredStructIds = useMemo(() => {
     const filtered = boxesTab1Data.filter((data) => {
-      const configuration = JSON.parse(
-        data.configuration,
-      ) as ParsedConfiguration;
-
-      return configuration.tabKey === selectedTab;
+      return boxesInActiveMainTab.includes(data.boxId);
     });
 
     const uniqueIdsList = [
@@ -54,19 +59,29 @@ const BoxUpdateManager: React.FC = () => {
     ];
 
     return uniqueIdsList.join(",");
-  }, [boxesTab1Data, selectedTab]);
+  }, [boxesInActiveMainTab, boxesTab1Data]);
 
   const searchedSymbols = useMemo(() => {
     const symbols: string[] = [];
 
     boxes.forEach((box) => {
-      if (box && box.searchedSymbol && !symbols.includes(box.searchedSymbol)) {
+      if (!box) {
+        return;
+      }
+
+      const isBoxInActiveMainTab = boxesInActiveMainTab.includes(box.id);
+
+      if (!isBoxInActiveMainTab) {
+        return;
+      }
+
+      if (box.searchedSymbol && !symbols.includes(box.searchedSymbol)) {
         symbols.push(box.searchedSymbol);
       }
     });
 
     return symbols;
-  }, [boxes]);
+  }, [boxes, boxesInActiveMainTab]);
 
   useEffect(() => {
     async function getSearchedSymbolsIds() {
@@ -101,9 +116,7 @@ const BoxUpdateManager: React.FC = () => {
     const ids: string[] = [];
 
     boxesTab1Data.forEach((data) => {
-      const boxIsInActiveMainTab = filteredStructIds.includes(
-        data.structureID.toString(),
-      );
+      const boxIsInActiveMainTab = boxesInActiveMainTab.includes(data.boxId);
 
       const multiBox = boxes.find((box) => box?.id === data.boxId);
       const alreadyAddedId = ids.includes(data.structureID.toString());
@@ -121,7 +134,7 @@ const BoxUpdateManager: React.FC = () => {
     });
 
     return ids;
-  }, [boxes, boxesTab1Data, filteredStructIds, isLoadingTab1]);
+  }, [boxes, boxesInActiveMainTab, boxesTab1Data, isLoadingTab1]);
 
   const previousIdsTab1 = usePrevious(idsTab1);
 
@@ -129,9 +142,7 @@ const BoxUpdateManager: React.FC = () => {
     const ids: string[] = [];
 
     boxesTab1Data.forEach((data) => {
-      const boxIsInActiveMainTab = filteredStructIds.includes(
-        data.structureID.toString(),
-      );
+      const boxIsInActiveMainTab = boxesInActiveMainTab.includes(data.boxId);
 
       const multiBox = boxes.find((box) => box?.id === data.boxId);
       const alreadyAddedId = ids.includes(data.structureID.toString());
@@ -149,7 +160,7 @@ const BoxUpdateManager: React.FC = () => {
     });
 
     return ids;
-  }, [boxes, boxesTab1Data, filteredStructIds, isLoadingTab2]);
+  }, [boxes, boxesInActiveMainTab, boxesTab1Data, isLoadingTab2]);
 
   const previousIdsTab2 = usePrevious(idsTab2);
 
