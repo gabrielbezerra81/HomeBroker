@@ -39,7 +39,7 @@ interface OpenedBoxes {
   tabKey: string;
 }
 
-const initialOnLoad = "5";
+const initialOnLoad = "0";
 const initialEmpty = "5";
 
 export const addMultiBoxAction = (): MainThunkAction => {
@@ -839,6 +839,19 @@ export const startProactiveStructureBookUpdateAction = (
           interval_books: interval,
         }),
       );
+    }
+  };
+};
+
+export const handleDuplicateBoxAction = (id: string): MainThunkAction => {
+  return async (dispatch, getState) => {
+    const {
+      multiBoxReducer: { boxes },
+    } = getState();
+
+    const multiBox = boxes.find((box) => box?.id === id);
+
+    if (multiBox) {
     }
   };
 };
