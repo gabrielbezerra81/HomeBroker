@@ -543,7 +543,7 @@ export const startProactiveMultiBoxUpdateAction = ({
       clearInterval(interval_multiBox);
     }
 
-    const idsArray = idsTab0.split(",");
+    const idsArray = idsTab0 ? idsTab0.split(",") : [];
 
     searchedSymbolsIds.forEach((item) => {
       if (!idsArray.includes(item.id)) {

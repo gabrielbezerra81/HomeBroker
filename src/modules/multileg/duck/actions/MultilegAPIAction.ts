@@ -249,7 +249,9 @@ export const addQuoteBoxFromMultilegAction = (
   };
 };
 
-export const startReactiveMultilegUpdateAction = (): MainThunkAction => {
+export const startReactiveMultilegUpdateAction = (
+  symbolsArray: string[],
+): MainThunkAction => {
   return (dispatch, getState) => {
     const {
       systemReducer: { token },
@@ -267,11 +269,6 @@ export const startReactiveMultilegUpdateAction = (): MainThunkAction => {
       clearInterval(interval_multilegQuotes);
     }
 
-    const symbolsArray: string[] = [];
-    multilegQuotes.forEach((quote) => {
-      if (!symbolsArray.includes(quote.codigo)) symbolsArray.push(quote.codigo);
-    });
-
     const symbols = symbolsArray.join(",");
 
     if (symbols) {
@@ -287,7 +284,9 @@ export const startReactiveMultilegUpdateAction = (): MainThunkAction => {
   };
 };
 
-export const startProactiveMultilegUpdateAction = (): MainThunkAction => {
+export const startProactiveMultilegUpdateAction = (
+  symbolsArray: string[],
+): MainThunkAction => {
   return (dispatch, getState) => {
     const {
       multilegReducer: {
@@ -305,11 +304,6 @@ export const startProactiveMultilegUpdateAction = (): MainThunkAction => {
     if (interval_multilegQuotes) {
       clearInterval(interval_multilegQuotes);
     }
-
-    const symbolsArray: string[] = [];
-    multilegQuotes.forEach((quote) => {
-      if (!symbolsArray.includes(quote.codigo)) symbolsArray.push(quote.codigo);
-    });
 
     const symbols = symbolsArray.join(",");
 

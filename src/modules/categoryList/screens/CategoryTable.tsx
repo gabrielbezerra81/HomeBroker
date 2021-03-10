@@ -81,8 +81,8 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
     dispatch(addNewLocalLineToCategoryAction(categoryIndex));
   }, [categoryIndex, dispatch]);
 
-  const handleDeleteCategory = useCallback(() => {
-    dispatch(handleDeleteCategoryAction(categoryIndex));
+  const handleDeleteCategory = useCallback(async () => {
+    await dispatch(handleDeleteCategoryAction(categoryIndex));
   }, [categoryIndex, dispatch]);
 
   useEffect(() => {
