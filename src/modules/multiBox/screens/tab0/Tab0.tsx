@@ -75,7 +75,7 @@ const Tab0: React.FC<Props> = ({ multiBox }) => {
   }, [dispatch, id, toggleShowId]);
 
   const handleClose = useCallback(async () => {
-    dispatch(handleDeleteBoxAction(multiBox.id));
+    await dispatch(handleDeleteBoxAction(multiBox.id));
   }, [dispatch, multiBox.id]);
 
   const formattedData: FormattedTab1Data | undefined = useMemo(() => {
