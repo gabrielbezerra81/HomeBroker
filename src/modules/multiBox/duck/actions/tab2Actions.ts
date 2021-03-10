@@ -6,6 +6,7 @@ import { updateManyMultiBoxAction } from "./multiBoxActions";
 import { PositionCreateRequestData } from "modules/multiBox/types/BoxAPI";
 import { saveBoxPositionsAPI } from "api/API";
 import { getSymbolInfoAPI } from "api/symbolAPI";
+import { toast } from "react-toastify";
 
 export const handleAddBoxPositionAction = (boxId: string): MainThunkAction => {
   return async (dispatch, getState) => {
@@ -43,7 +44,7 @@ export const handleAddBoxPositionAction = (boxId: string): MainThunkAction => {
       dispatch(updateManyMultiBoxAction({ boxes: updatedBoxes }));
     } //
     else {
-      alert("Erro ao adicionar nova posição!");
+      toast.error("Erro ao adicionar nova posição!");
     }
   };
 };

@@ -9,14 +9,15 @@ import storage from "redux-persist/lib/storage"; // defaults to localStorage for
 import GlobalReducer from "redux/reducers/GlobalReducer";
 import SystemReducer from "./reducers/system/SystemReducer";
 
-import MultilegReducer from "modules/multileg/duck/MultilegReducer";
-import PositionReducer from "modules/position/duck/PositionReducer";
-import OrdensExecucaoReducer from "modules/ordersExec/duck/OrdensExecReducer";
-import FinancialPlannerReducer from "modules/financialPlanner/duck/FinancialPlannerReducer";
+import multilegReducer from "modules/multileg/duck/MultilegReducer";
+import conditionalMultilegReducer from "modules/conditionalMultileg/duck/ConditionalMultilegReducer";
+import positionReducer from "modules/position/duck/PositionReducer";
+import ordersExecReducer from "modules/ordersExec/duck/OrdensExecReducer";
+import financialPlannerReducer from "modules/financialPlanner/duck/FinancialPlannerReducer";
 import multiBoxReducer from "modules/multiBox/duck/multiBoxReducer";
-import CategoryListReducer from "modules/categoryList/duck/CategoryListReducer";
+import categoryListReducer from "modules/categoryList/duck/CategoryListReducer";
 import optionsTableReducer from "modules/optionsTable/duck/optionsTableReducer";
-import THLReducer from "modules/thl/duck/THLReducer";
+import thlReducer from "modules/thl/duck/THLReducer";
 
 let rehydrationComplete: any;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -43,14 +44,15 @@ const systemReducerPersistConfig = {
 
 const rootReducer = combineReducers({
   systemReducer: persistReducer(systemReducerPersistConfig, SystemReducer),
-  multilegReducer: MultilegReducer,
-  positionReducer: PositionReducer,
-  ordersExecReducer: OrdensExecucaoReducer,
-  thlReducer: THLReducer,
-  financialPlannerReducer: FinancialPlannerReducer,
+  multilegReducer,
+  positionReducer,
+  ordersExecReducer,
+  thlReducer,
+  financialPlannerReducer,
   multiBoxReducer,
-  categoryListReducer: CategoryListReducer,
+  categoryListReducer,
   optionsTableReducer,
+  conditionalMultilegReducer,
 });
 
 export type MainStoreState = ReturnType<typeof rootReducer>;

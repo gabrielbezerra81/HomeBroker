@@ -31,6 +31,7 @@ import {
   aumentarZindexAction,
   receberDadosOrdemExecMainReducerAction,
 } from "redux/actions/GlobalAppActions";
+import { toast } from "react-toastify";
 
 class OpcoesOrdemExec extends React.Component {
   constructor(props) {
@@ -81,10 +82,16 @@ class OpcoesOrdemExec extends React.Component {
           tabIndex={0}
           onClick={() => {
             if (isExpired) {
-              alert("Essa ordem expirou, não é possível realizar essa ação");
-            } else {
-              if (props.ordemAtual) props.cancelarOrdemExecAction(actionProps);
-              else alert(erro_opcoes_ordens_exec);
+              toast.warning(
+                "Essa ordem expirou, não é possível realizar essa ação",
+              );
+            } //
+            else {
+              if (props.ordemAtual) {
+                props.cancelarOrdemExecAction(actionProps);
+              } else {
+                toast.warning(erro_opcoes_ordens_exec);
+              }
             }
           }}
         >
@@ -97,8 +104,13 @@ class OpcoesOrdemExec extends React.Component {
           tabIndex={0}
           onClick={(e) => {
             if (isExpired) {
-              alert("Essa ordem expirou, não é possível realizar essa ação");
-            } else abrirFormOrdem(e, props, "");
+              toast.warning(
+                "Essa ordem expirou, não é possível realizar essa ação",
+              );
+            } //
+            else {
+              abrirFormOrdem(e, props, "");
+            }
           }}
         >
           <img src={iconeEditarOrdem} width="27" alt=""></img>
@@ -120,10 +132,15 @@ class OpcoesOrdemExec extends React.Component {
           tabIndex={0}
           onClick={() => {
             if (isExpired) {
-              alert("Essa ordem expirou, não é possível realizar essa ação");
-            } else {
+              toast.warning(
+                "Essa ordem expirou, não é possível realizar essa ação",
+              );
+            } //
+            else {
               if (props.ordemAtual) props.finalizarAMercadoAction(actionProps);
-              else alert(erro_opcoes_ordens_exec);
+              else {
+                toast.warning(erro_opcoes_ordens_exec);
+              }
             }
           }}
         >
@@ -176,12 +193,16 @@ const abrirFormOrdem = (event, props, acao) => {
   if (props.ordemAtual) {
     event.stopPropagation();
 
-    if (props.ordemAtual.formName === "Multileg")
+    if (props.ordemAtual.formName === "Multileg") {
       props.openOrderInMultilegAction(props, acao);
+    } //
     else {
       props.openOrderInBoletaAction(props, event, acao);
     }
-  } else alert(erro_opcoes_ordens_exec);
+  } //
+  else {
+    toast.warning(erro_opcoes_ordens_exec);
+  }
 };
 
 const mapStateToPropsGlobalStore = (state) => {

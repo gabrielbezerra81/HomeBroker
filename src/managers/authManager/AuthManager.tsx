@@ -11,6 +11,7 @@ import {
   deslogarUsuarioAction,
   updateManySystemState,
 } from "redux/actions/system/SystemActions";
+import { toast } from "react-toastify";
 
 const AuthManager = () => {
   const dispatch = useDispatchStorePrincipal();
@@ -111,7 +112,7 @@ const AuthManager = () => {
         if (isExpired) {
           // eslint-disable-next-line no-restricted-globals
           if (location.hostname === "localhost") {
-            // alert("isExpired === " + isExpired);
+            toast.info("isExpired === " + isExpired);
           }
           handleTokenRefresh();
         }
@@ -162,7 +163,9 @@ const AuthManager = () => {
       shouldAlertSessionExpired !== previousShouldAlert &&
       shouldAlertSessionExpired
     ) {
-      alert("Sua sessão expirou! Faça login novamente.");
+      toast.error("Sua sessão expirou! Faça login novamente.", {
+        autoClose: false,
+      });
     }
   }, [previousShouldAlert, shouldAlertSessionExpired]);
 

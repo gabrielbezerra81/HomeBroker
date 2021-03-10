@@ -6,6 +6,7 @@ import { convertFrequencyToAPIValues } from "modules/financialPlanner/screens/ut
 import FinancialPlannerState, {
   InitialPlannerData,
 } from "modules/financialPlanner/types/FinancialPlannerState";
+import { toast } from "react-toastify";
 import { MainThunkAction } from "types/ThunkActions";
 
 const updateFinancialPlannerAction = (
@@ -69,9 +70,9 @@ export const handleSaveSimulationAction = (): MainThunkAction => {
     try {
       await api.post(url_saveSimulation, payload);
 
-      alert("Simulação salva com sucesso!");
+      toast.success("Simulação salva com sucesso!");
     } catch (error) {
-      alert("Falha ao salvar simulação");
+      toast.error("Falha ao salvar simulação");
     }
   };
 };

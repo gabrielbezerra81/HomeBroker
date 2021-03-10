@@ -29,6 +29,7 @@ import "../../styles/initialPlanner/initialPlanner.scss";
 import CustomButton from "shared/components/CustomButton";
 import RateConverter from "./RateConverter";
 import { InitialPlannerData } from "modules/financialPlanner/types/FinancialPlannerState";
+import { toast } from "react-toastify";
 
 export interface Projection {
   rentability: number;
@@ -261,21 +262,21 @@ const InitialPlanner: React.FC = () => {
       if (name === "contributionPeriodicity") {
         payload.ratePeriodicity = value;
 
-        setTimeout(() => {
-          alert(
-            "Ao mudar a frequência do aporte também será modificada a frequência dos juros. Ambas devem ser iguais.",
-          );
-        }, 50);
+        toast.info(
+          "Ao mudar a frequência do aporte também será modificada a frequência dos juros. Ambas devem ser iguais.",
+          {
+            autoClose: 9000,
+          },
+        );
       }
 
       if (name === "ratePeriodicity") {
         payload.contributionPeriodicity = value;
 
-        setTimeout(() => {
-          alert(
-            "Ao mudar a frequência dos juros também será modificada a frequência do aporte. Ambas devem ser iguais.",
-          );
-        }, 50);
+        toast.info(
+          "Ao mudar a frequência dos juros também será modificada a frequência do aporte. Ambas devem ser iguais.",
+          { autoClose: 9000 },
+        );
       }
 
       dispatch(updateInitialPlannerStateAction(payload));

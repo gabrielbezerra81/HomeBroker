@@ -9,6 +9,7 @@ import {
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import { getKeycloakAuthDataAPI } from "api/LoginAPI";
 import { Spinner } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 const redirectURL =
   // eslint-disable-next-line no-restricted-globals
@@ -32,9 +33,9 @@ const LoginRedirect: React.FC<RouteComponentProps> = ({ path }) => {
           dispatch(updateManySystemState(payload));
         } catch (error) {
           dispatch(deslogarUsuarioAction());
-          setTimeout(() => {
-            alert("Você não tem permissão para acessar esta área.");
-          }, 50);
+          toast.error("Você não tem permissão para acessar esta área.", {
+            autoClose: 7000,
+          });
         }
       }
     }

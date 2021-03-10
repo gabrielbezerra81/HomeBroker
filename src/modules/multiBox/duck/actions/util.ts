@@ -25,6 +25,7 @@ import { formatarNumero } from "shared/utils/Formatacoes";
 import { calculoPreco } from "modules/multileg/screens/CalculoPreco";
 import { MultiBoxData } from "modules/multiBox/types/MultiBoxState";
 import { globalStore } from "redux/StoreCreation";
+import { toast } from "react-toastify";
 
 interface ExportBoxProps {
   dispatch: any;
@@ -150,7 +151,7 @@ export const exportBoxToMultileg = async ({
       updatedMultilegTabs[tabIndex].preco = tabPrice;
     } catch (error) {
       console.log(error);
-      alert(erro_exportar_ordens_multileg);
+      toast.error(erro_exportar_ordens_multileg);
     }
 
     // Efetuar atualizações feitas com objeto multileg no bloco try/catch

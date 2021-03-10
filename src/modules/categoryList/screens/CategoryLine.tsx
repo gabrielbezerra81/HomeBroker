@@ -18,6 +18,7 @@ import {
 } from "../duck/actions/categoryListActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import { FiX } from "react-icons/fi";
+import { toast } from "react-toastify";
 
 interface Props {
   categoryIndex: number;
@@ -73,7 +74,7 @@ const CategoryLine: React.FC<Props> = ({
       });
 
       if (alreadyHasSymbol) {
-        alert("Este ativo já foi adicionado!");
+        toast.warn("Este ativo já foi adicionado!");
 
         dispatch(
           handleLineSymbolChangeAction({

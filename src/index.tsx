@@ -1,10 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { setAutoFreeze } from "immer";
+import { ToastContainer } from "react-toastify";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/index";
 import "@fortawesome/fontawesome-free/css/all.css";
+import "react-toastify/dist/ReactToastify.css";
+
 import { Routes } from "routing/routes";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { Provider } from "react-redux";
@@ -27,6 +30,7 @@ ReactDOM.render(
         <PerfectScrollbar id="scrollbarPrincipal">
           <PermissionProvider>
             <Routes />
+            <ToastContainer position="top-center" draggablePercent={70} />
           </PermissionProvider>
         </PerfectScrollbar>
       </PersistGate>

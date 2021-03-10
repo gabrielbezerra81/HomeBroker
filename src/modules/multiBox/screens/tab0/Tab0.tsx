@@ -22,6 +22,7 @@ import {
 import closeIcon from "assets/closeIcon.png";
 import { Form, InputGroup } from "react-bootstrap";
 import PopConfirm from "shared/components/PopConfirm/PopConfirm";
+
 interface Props {
   multiBox: MultiBoxData;
 }

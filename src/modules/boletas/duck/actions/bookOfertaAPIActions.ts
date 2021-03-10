@@ -3,6 +3,7 @@ import { getProactiveOffersBookAPI } from "api/proactive/ProativosAPI";
 import { atualizarBookAPI } from "api/reactive/ReativosAPI";
 import { UPDATE_MANY_OFFER_BOOK } from "constants/ActionTypes";
 import { ATUALIZAR_SOURCE_EVENT_BOOK_OFERTAS } from "constants/ApiActionTypes";
+import { toast } from "react-toastify";
 import { storeAppPrincipal } from "redux/StoreCreation";
 import { BoletasThunkAction } from "types/ThunkActions";
 
@@ -79,7 +80,7 @@ export const listarBookOfertaOnEnterAction = ({
     });
 
     if (shouldAlert) {
-      alert("Não há book de ofertas disponível");
+      toast.warning("Não há book de ofertas disponível");
     }
   };
 };

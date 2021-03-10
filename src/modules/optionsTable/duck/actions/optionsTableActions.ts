@@ -11,6 +11,7 @@ import OptionsTableState, {
   OptionTableItem,
   TableLine,
 } from "modules/optionsTable/types/OptionsTableState";
+import { toast } from "react-toastify";
 import { MainThunkAction } from "types/ThunkActions";
 
 export const updateOptionsTableStateAction = (
@@ -339,11 +340,11 @@ export const handlSaveSelectionsAction = (): MainThunkAction => {
       );
 
       setTimeout(() => {
-        alert("Configurações salvas!");
+        toast.success("Configurações salvas!");
       }, 50);
     } catch (error) {
       setTimeout(() => {
-        alert("Erro ao salvar configurações");
+        toast.error("Erro ao salvar configurações");
       }, 50);
     }
 

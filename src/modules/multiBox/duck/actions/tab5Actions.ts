@@ -26,6 +26,8 @@ import {
 } from "./multiBoxActions";
 import { mountOrderForOperations } from "./util";
 import { getSymbolInfoAPI } from "api/symbolAPI";
+import { success_add_box } from "constants/AlertaErros";
+import { toast } from "react-toastify";
 
 export interface SearchedBoxOptionsData {
   expirations: string[];
@@ -83,7 +85,7 @@ export const handleSearchBoxSymbolOptionsAction = (
       dispatch(updateBoxAttrAction(id, payload));
     } //
     else {
-      // alert("Falha ao pesquisar código");
+      // toast.error("Falha ao pesquisar código");
     }
   };
 };
@@ -122,7 +124,7 @@ export const handleAddOfferDirectlyAction = (
       const symbolInfo = await getSymbolInfoAPI(symbol);
 
       if (!symbolInfo) {
-        alert("Falha ao adicionar código");
+        toast.error("Falha ao adicionar código");
         return;
       } //
       if (symbolInfo.option && symbolInfo.type) {
@@ -150,7 +152,7 @@ export const handleAddStockOffer = (
     const multiBox = boxes.find((box) => box?.id === id);
 
     if (multiBox && multiBox.boxOffers.length === 6) {
-      alert("Número máximo de 6 ofertas atingido");
+      toast.info("Número máximo de 6 ofertas atingido");
       return;
     }
 
@@ -181,7 +183,7 @@ export const handleAddStockOffer = (
       );
     } //
     else {
-      alert("Falha ao adicionar código");
+      toast.error("Falha ao adicionar código");
     }
   };
 };
@@ -199,7 +201,7 @@ export const handleAddOptionOfferAction = (
 
     if (multiBox) {
       if (multiBox.boxOffers.length === 6) {
-        alert("Número máximo de 6 ofertas atingido");
+        toast.info("Número máximo de 6 ofertas atingido");
         return;
       }
 
@@ -294,7 +296,7 @@ export const handleChangeBoxOfferAction = ({
             }
           } //
           else {
-            alert("Falha ao pesquisar opções");
+            toast.error("Falha ao pesquisar opções");
           }
         }
       }
@@ -462,6 +464,8 @@ export const addNewMultiBoxStructureAction = ({
         payload: newBoxRequestData,
         shouldAlertSuccess: isDuplicating ? false : true,
       });
+
+      toast.success(success_add_box);
 
       if (responseData) {
         const boxStructure = responseData[0];

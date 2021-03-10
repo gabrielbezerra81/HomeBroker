@@ -4,6 +4,7 @@ import {
   erro_validar_disparo_start_movel,
   erro_validar_contaSelecionada,
 } from "constants/AlertaErros";
+import { toast } from "react-toastify";
 import { getformatedDate } from "shared/utils/Formatacoes";
 
 const CVStartStop = ["Compra Start Stop", "Venda Start Stop"];
@@ -15,23 +16,23 @@ export const validarOrdemBoleta = (props, selectedAccount) => {
 
   if (!dadosPesquisa.ativo) {
     valido = false;
-    alert(erro_validar_ativo);
+    toast.error(erro_validar_ativo);
   }
   if (Number(qtde) === 0) {
     valido = false;
-    alert(erro_validar_qtde);
+    toast.error(erro_validar_qtde);
   }
 
   if (CVStopMovel.includes(orderInfo.nome)) {
     if (props.inicioDisparo > props.stopDisparo) {
       valido = false;
-      alert(erro_validar_disparo_start_movel);
+      toast.error(erro_validar_disparo_start_movel);
     }
   }
 
   if (!selectedAccount) {
     valido = false;
-    alert(erro_validar_contaSelecionada);
+    toast.error(erro_validar_contaSelecionada);
   }
 
   return valido;

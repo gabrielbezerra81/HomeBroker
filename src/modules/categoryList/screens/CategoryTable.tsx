@@ -13,6 +13,7 @@ import CategoryLine from "./CategoryLine";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import { FiX } from "react-icons/fi";
 import PopConfirm from "shared/components/PopConfirm/PopConfirm";
+import { toast } from "react-toastify";
 
 interface CategoryTableProps {
   category: Category;
@@ -72,7 +73,7 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
           value: currentTitle,
         }),
       );
-      alert("Já existe uma categoria com o mesmo título");
+      toast.warn("Já existe uma categoria com o mesmo título");
     }
   }, [categories, category.title, categoryIndex, currentTitle, dispatch]);
 

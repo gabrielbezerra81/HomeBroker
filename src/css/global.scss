@@ -202,4 +202,33 @@ input:-webkit-autofill:active {
   }
 }
 
+.Toastify__toast-container--top-center {
+  top: 64px !important;
+  z-index: 999999999999999 !important;
+}
+
+.Toastify__toast--success {
+  background-image: linear-gradient(
+    to right,
+    rgb(3, 85, 58),
+    rgb(63, 134, 99)
+  ) !important;
+}
+
+.Toastify__toast--dark {
+  background-color: rgb(45, 45, 45) !important;
+
+  div {
+    font-weight: 500 !important;
+  }
+}
+
+.Toastify__toast--warning {
+  background: #dab10d !important;
+}
+
+.Toastify__progress-bar--dark {
+  background-color: rgb(139, 165, 194) !important;
+}
+
 // In your global style.css file, try: @import '~antd/dist/antd.css';

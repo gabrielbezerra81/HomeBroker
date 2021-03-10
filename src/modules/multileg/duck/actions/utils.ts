@@ -12,6 +12,7 @@ import {
 import MultilegState from "../../types/MultilegState";
 import { MultilegTab, MultilegQuote } from "modules/multileg/types/multileg";
 import { Account } from "types/system/system";
+import { toast } from "react-toastify";
 
 interface UpdateMultilegState {
   attributeName: string;
@@ -162,7 +163,7 @@ export const validateMultilegOrder = ({
   );
   if (qtty) {
     orderIsValid = false;
-    alert(erro_validar_qtde);
+    toast.error(erro_validar_qtde);
   }
 
   const symbols = multilegTab.tabelaMultileg.map(
@@ -174,11 +175,11 @@ export const validateMultilegOrder = ({
     const repetedSymbols = findRepetedSymbols(symbols);
     const symbolsOfError = repetedSymbols.join(",");
 
-    alert(`${erro_validar_codigo_duplicado_multileg}: ${symbolsOfError}`);
+    toast.error(`${erro_validar_codigo_duplicado_multileg}: ${symbolsOfError}`);
   }
   if (!selectedAccount) {
     orderIsValid = false;
-    alert(erro_validar_contaSelecionada);
+    toast.error(erro_validar_contaSelecionada);
   }
 
   return orderIsValid;

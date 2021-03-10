@@ -19,6 +19,7 @@ import {
 import { searchMultilegSymbolData } from "./ConditionalMultilegAPIAction";
 import { updateManyMultilegState } from "./utils";
 import { globalStore } from "redux/StoreCreation";
+import { toast } from "react-toastify";
 
 export const openAlertInMultileg = (alertItem: AlertAPI): MainThunkAction => {
   return async (dispatch, getState) => {
@@ -136,7 +137,7 @@ export const openAlertInMultileg = (alertItem: AlertAPI): MainThunkAction => {
       updatedMultilegTabs[tabIndex].preco = tabPrice;
     } catch (error) {
       console.log(error);
-      alert(error_open_alert);
+      toast.error(error_open_alert);
       setPointerWhileAwaiting({
         lockMode: "destravar",
         id: "menusTelaPrincipal",

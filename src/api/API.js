@@ -52,6 +52,7 @@ import {
   error_delete_alert,
 } from "constants/AlertaErros";
 import api from "./apiConfig";
+import { toast } from "react-toastify";
 
 const timeout = 45000;
 
@@ -501,10 +502,6 @@ export const addBoxStructureAPI = async ({
       timeout,
     })
     .then((response) => {
-      if (shouldAlertSuccess) {
-        timedAlert(success_add_box);
-      }
-
       return response.data;
     })
     .catch((error) => {
@@ -637,16 +634,16 @@ export const setPointerWhileAwaiting = ({
   }
 };
 
-export const showAPIErrorAndAlert = (erro, mensagem) => {
-  console.log(erro);
-  console.log(erro.response);
-  if (erro.timeout) {
-    alert(erro_timeout);
-  } else if (mensagem) alert(mensagem);
+export const showAPIErrorAndAlert = (error, message) => {
+  console.log(error);
+  console.log(error.response);
+  if (error.timeout) {
+    toast.error(erro_timeout);
+  } else if (message) {
+    toast.error(message);
+  }
 };
 
 export const timedAlert = (message) => {
-  setTimeout(() => {
-    alert(message);
-  }, 1);
+  toast.error(message);
 };

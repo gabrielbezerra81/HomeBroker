@@ -36,6 +36,7 @@ import {
 import { updateManyMultilegState } from "modules/multileg/duck/actions/utils";
 import * as ActionTypes from "constants/ActionTypes";
 import { getProactiveOrdersExecAPI } from "api/proactive/ProativosAPI";
+import { toast } from "react-toastify";
 
 export const updateOneOrdersExecStateAction = (nome, valor) => {
   return (dispatch) => {
@@ -175,7 +176,7 @@ export const openOrderInMultilegAction = (props, action = "") => {
       updatedMultilegTabs[tabIndex].preco = tabPrice;
     } catch (erro) {
       console.log(erro);
-      alert(erro_exportar_ordens_multileg);
+      toast.error(erro_exportar_ordens_multileg);
       setPointerWhileAwaiting({
         lockMode: "destravar",
         id: "menusTelaPrincipal",

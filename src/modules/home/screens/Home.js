@@ -69,7 +69,6 @@ class Home extends React.Component {
     //   this.state.shouldAlertSessionExpired !== this.state.previousShouldAlert &&
     //   this.state.shouldAlertSessionExpired
     // ) {
-    //   alert("Sua sessão expirou! Faça login novamente.");
     //   deslogarUsuarioAction();
     // }
   }

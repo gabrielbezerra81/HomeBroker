@@ -21,6 +21,7 @@ import { formatarNumero } from "shared/utils/Formatacoes";
 import { updateManyTHLState } from "./utils";
 import { updateManyMultilegState } from "modules/multileg/duck/actions/utils";
 import { globalStore } from "redux/StoreCreation";
+import { toast } from "react-toastify";
 
 export const mudarVariavelTHLAction = (nome, valor) => {
   return (dispatch) => {
@@ -130,7 +131,7 @@ export const abrirMultilegTHLAction = () => {
       updatedMultilegTabs[tabIndex].preco = tabPrice;
     } catch (erro) {
       console.log(erro);
-      alert(erro_exportar_ordens_multileg);
+      toast.error(erro_exportar_ordens_multileg);
     }
 
     result.multilegTabs = updatedMultilegTabs;

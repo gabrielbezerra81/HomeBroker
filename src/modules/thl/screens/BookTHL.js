@@ -3,6 +3,7 @@ import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { mudarVariavelTHLAction } from "modules/thl/duck/actions/THLActions";
 import { erro_selecaoBook_THL } from "constants/AlertaErros";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
+import { toast } from "react-toastify";
 
 export default (props) => {
   const { preco, qtde, tipo, ativo } = props;
@@ -71,7 +72,9 @@ export const selecionarBooks = (props) => {
         books.splice(indice, 1);
     }
   });
-  if (mostrarAlerta) alert(erro_selecaoBook_THL);
+  if (mostrarAlerta) {
+    toast.warning(erro_selecaoBook_THL);
+  }
 
   dispatch(mudarVariavelTHLAction("booksSelecionados", books));
 };

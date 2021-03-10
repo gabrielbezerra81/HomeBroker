@@ -11,6 +11,7 @@ import {
   CategoryLine,
   CategoryListState,
 } from "modules/categoryList/types/CategoryListState";
+import { toast } from "react-toastify";
 import { MainThunkAction } from "types/ThunkActions";
 
 import { UPDATE_CATEGORY_LIST_STATE } from "./actionsTypes";
@@ -142,7 +143,7 @@ export const handleCategoryTitleChangeAction = (
           },
         );
       } catch (error) {
-        alert("Falha ao editar título da categoria");
+        toast.error("Falha ao editar título da categoria");
       }
     }
   };
@@ -251,7 +252,7 @@ export const addSymbolToCategoryAction = ({
         throw new Error("");
       }
     } catch (error) {
-      alert("Erro ao adicionar ativo à categoria, tente novamente!");
+      toast.error("Erro ao adicionar ativo à categoria, tente novamente!");
       return false;
     }
   };
@@ -281,7 +282,7 @@ export const handleDeleteCategoryAction = (
 
       dispatch(updateCategoryListAction({ categories: updatedCategories }));
     } catch (error) {
-      alert("Falha ao excluir categoria");
+      toast.error("Falha ao excluir categoria");
     }
   };
 };
@@ -306,14 +307,14 @@ export const handleDeleteSymbolLineAction = ({
       if (id) {
         await api.delete(`favorite/${id}`);
       }
-      
+
       const updatedCategories = produce(categories, (draft) => {
         draft[categoryIndex].lines.splice(lineIndex, 1);
       });
 
       dispatch(updateCategoryListAction({ categories: updatedCategories }));
     } catch (error) {
-      alert("Falha ao excluir ativo da categoria");
+      toast.error("Falha ao excluir ativo da categoria");
     }
   };
 };

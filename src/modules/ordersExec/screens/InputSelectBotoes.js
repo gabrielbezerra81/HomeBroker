@@ -8,6 +8,7 @@ import {
   aumentarQtdePrecoAction,
 } from "modules/ordersExec/duck/actions/OrdensExecActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
+import { toast } from "react-toastify";
 
 export default (props) => {
   const dispatch = useDispatchStorePrincipal();
@@ -28,7 +29,7 @@ export default (props) => {
           className="input-group-text appendedSearchIcon divClicavel botoesInputSelect"
           onClick={() => {
             if (disabled) {
-              alert("Essa ordem expirou, não é possível realizar essa ação");
+              toast.warning("Essa ordem expirou, não é possível realizar essa ação");
             } else {
               dispatch(updateOneOrdersExecStateAction(nomeOpen, !open));
               dispatch(updateOneOrdersExecStateAction("sinalInputSelect", "-"));
@@ -49,7 +50,7 @@ export default (props) => {
         className="selectQtde"
         onSelect={(valorSomar) => {
           if (disabled) {
-            alert("Essa ordem expirou, não é possível realizar essa ação");
+            toast.warning("Essa ordem expirou, não é possível realizar essa ação");
           } else {
             if (ordemAtual) {
               dispatch(
@@ -61,7 +62,7 @@ export default (props) => {
                 }),
               );
             } else {
-              alert(erro_opcoes_ordens_exec);
+              toast.warning(erro_opcoes_ordens_exec);
             }
           }
         }}
@@ -77,7 +78,7 @@ export default (props) => {
           className="input-group-text appendedSearchIcon divClicavel botoesInputSelect"
           onClick={() => {
             if (disabled) {
-              alert("Essa ordem expirou, não é possível realizar essa ação");
+              toast.warning("Essa ordem expirou, não é possível realizar essa ação");
             } else {
               dispatch(updateOneOrdersExecStateAction(nomeOpen, !open));
               dispatch(updateOneOrdersExecStateAction("sinalInputSelect", "+"));

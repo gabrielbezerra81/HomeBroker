@@ -37,6 +37,7 @@ import {
   formatarNumDecimal,
   formatarQuantidadeKMG,
 } from "shared/utils/Formatacoes";
+import { success_add_box } from "constants/AlertaErros";
 
 interface OpenedBoxes {
   menuKey: string;
