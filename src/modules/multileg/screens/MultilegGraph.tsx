@@ -32,7 +32,7 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
     let formattedName = "Lucro";
     let formattedValue = value;
 
-    if (value < 1) {
+    if (value < 0) {
       formattedName = "Prejuízo";
       formattedValue = -value;
     }
@@ -90,9 +90,14 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
     const data: GraphData[] = [];
 
     pricesRange.forEach((price, index) => {
-      let result = typeof cost === "number" ? -cost : 0;
+      // let result = typeof cost === "number" ? -cost : 0;
+      let result = 0;
+      const effectiveCost = typeof cost === "number" ? Math.abs(cost) : 0;
 
       putOffers.forEach((offer) => {
+        const qttyMultiplier = offer.cv === "compra" ? -1 : 1;
+        const costMultiplier = offer.cv === "compra" ? -1 : 1;
+
         if (Math.floor(offer.strikeSelecionado) !== offer.strikeSelecionado) {
           if (
             price > offer.strikeSelecionado &&
@@ -100,7 +105,7 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
           ) {
             data.push({
               price: offer.strikeSelecionado,
-              result: typeof cost === "number" ? -cost : 0,
+              result: typeof cost === "number" ? costMultiplier * cost : 0,
             });
           }
         }
@@ -109,14 +114,16 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
           return;
         }
 
-        const multiplier = offer.cv === "compra" ? -1 : 1;
+        const offerResult =
+          qttyMultiplier * (offer.qtde * (price - offer.strikeSelecionado));
 
-        const offerResult = offer.qtde * (price - offer.strikeSelecionado);
-
-        result += multiplier * offerResult;
+        result += offerResult + costMultiplier * effectiveCost;
       });
 
       callOffers.forEach((offer) => {
+        const qttyMultiplier = offer.cv === "compra" ? 1 : -1;
+        const costMultiplier = offer.cv === "compra" ? -1 : 1;
+
         if (Math.floor(offer.strikeSelecionado) !== offer.strikeSelecionado) {
           if (
             price > offer.strikeSelecionado &&
@@ -124,7 +131,7 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
           ) {
             data.push({
               price: offer.strikeSelecionado,
-              result: typeof cost === "number" ? -cost : 0,
+              result: typeof cost === "number" ? costMultiplier * cost : 0,
             });
           }
         }
@@ -133,11 +140,10 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
           return;
         }
 
-        const multiplier = offer.cv === "compra" ? 1 : -1;
+        const offerResult =
+          qttyMultiplier * offer.qtde * (price - offer.strikeSelecionado);
 
-        const offerResult = offer.qtde * (price - offer.strikeSelecionado);
-
-        result += multiplier * offerResult;
+        result += offerResult + costMultiplier * effectiveCost;
       });
 
       data.push({ price, result: +Number(result).toFixed(2) });
