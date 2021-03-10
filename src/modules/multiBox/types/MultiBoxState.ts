@@ -106,6 +106,7 @@ export interface MultiBoxData {
   alertPrice: number;
   boxPositions: Array<BoxPosition>;
   toggleShowId?: boolean;
+  isLoadingBox: boolean;
 }
 
 type Tab1Keys = keyof Omit<Tab1Data, "codes" | "book">;

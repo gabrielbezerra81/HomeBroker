@@ -240,7 +240,7 @@ export const addQuoteBoxFromMultilegAction = (
     setPointerWhileAwaiting({ lockMode: "travar", id: "conditionalMultileg" });
 
     if (validateMultilegOrder(mountOrderProps)) {
-      const data = await addBoxStructureAPI(tabName, multilegRequestData);
+      const data = await addBoxStructureAPI({groupName: tabName,payload: multilegRequestData});
 
       if (data) {
         // TODO: adicionar novo box pela multileg

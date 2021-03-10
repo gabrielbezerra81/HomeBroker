@@ -440,6 +440,8 @@ export const addNewMultiBoxStructureAction = ({
 
     const element = document.getElementById(multiBox.id);
 
+    let isDuplicating = false;
+
     if (element) {
       const { x, y } = element.getBoundingClientRect();
 
@@ -455,7 +457,11 @@ export const addNewMultiBoxStructureAction = ({
     });
 
     if (newBoxRequestData) {
-      const responseData = await addBoxStructureAPI(boxId, newBoxRequestData);
+      const responseData = await addBoxStructureAPI({
+        groupName: boxId,
+        payload: newBoxRequestData,
+        shouldAlertSuccess: isDuplicating ? false : true,
+      });
 
       if (responseData) {
         const boxStructure = responseData[0];

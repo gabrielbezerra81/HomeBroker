@@ -40,7 +40,6 @@ export const searchMultilegSymbolAPIAction = (
       multilegReducer: { multileg, cotacoesMultileg },
     } = getState();
 
- 
     const data = await searchMultilegSymbolData({
       multilegTabs: multileg,
       tabIndex,
@@ -53,8 +52,6 @@ export const searchMultilegSymbolAPIAction = (
         multileg: data.multilegTabs,
       }),
     );
-
- 
   };
 };
 
@@ -237,7 +234,10 @@ export const addQuoteBoxFromMultilegAction = (
     setPointerWhileAwaiting({ lockMode: "travar", id: "multileg" });
 
     if (validateMultilegOrder(mountOrderProps)) {
-      const data = await addBoxStructureAPI(tabName, multilegRequestData);
+      const data = await addBoxStructureAPI({
+        groupName: tabName,
+        payload: multilegRequestData,
+      });
 
       if (data) {
         // TODO: adicionar novo box pela multileg

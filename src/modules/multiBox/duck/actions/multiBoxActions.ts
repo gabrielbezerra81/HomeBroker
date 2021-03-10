@@ -28,7 +28,11 @@ import { updateManySystemState } from "redux/actions/system/SystemActions";
 import { updateManyMultilegState } from "modules/multileg/duck/actions/utils";
 import { exportBoxToMultileg } from "./util";
 import getSymbolExpirationInDays from "shared/utils/getSymbolExpirationInDays";
-import { searchBoxOptions, SearchedBoxOptionsData } from "./tab5Actions";
+import {
+  handleConcludeTab5Action,
+  searchBoxOptions,
+  SearchedBoxOptionsData,
+} from "./tab5Actions";
 import {
   formatarNumDecimal,
   formatarQuantidadeKMG,
@@ -73,6 +77,7 @@ export const addMultiBoxAction = (): MainThunkAction => {
       condition: "Less",
       observation: "",
       boxPositions: [],
+      isLoadingBox: false,
     };
 
     const updatedOpenedMenus = produce(openedMenus, (draft) => {
@@ -305,6 +310,7 @@ export const addMultiBoxesFromStructureDataAction = (
         condition: "Less",
         observation: "",
         boxPositions,
+        isLoadingBox: false,
       };
 
       if (boxOptionsData) {
@@ -847,11 +853,49 @@ export const handleDuplicateBoxAction = (id: string): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
       multiBoxReducer: { boxes },
+      systemReducer: { openedMenus, selectedTab },
     } = getState();
 
     const multiBox = boxes.find((box) => box?.id === id);
 
     if (multiBox) {
+      const duplicatedBox = produce(multiBox, (draft) => {
+        draft.id = v4();
+        draft.tab1Id = -1;
+        draft.toggleShowId = false;
+        draft.isLoadingBox = true;
+      });
+
+      const updatedOpenedMenus = produce(openedMenus, (draft) => {
+        draft.push({
+          menuKey: `multiBox${duplicatedBox.id}`,
+          tabKey: selectedTab,
+        });
+      });
+
+      const updatedBoxes = produce(boxes, (draft) => {
+        draft.push(duplicatedBox);
+      });
+
+      dispatch(
+        updateManySystemState({
+          openedMenus: updatedOpenedMenus,
+        }),
+      );
+
+      dispatch(
+        updateManyMultiBoxAction({
+          boxes: updatedBoxes,
+        }),
+      );
+
+      await dispatch(handleConcludeTab5Action(duplicatedBox.id));
+      
+      dispatch(
+        updateBoxAttrAction(duplicatedBox.id, {
+          isLoadingBox: false,
+        }),
+      );
     }
   };
 };

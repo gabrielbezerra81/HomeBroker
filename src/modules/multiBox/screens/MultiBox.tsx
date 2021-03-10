@@ -6,7 +6,10 @@ import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { MultiBoxData } from "modules/multiBox/types/MultiBoxState";
-import { updateBoxAttrAction } from "modules/multiBox/duck/actions/multiBoxActions";
+import {
+  handleDuplicateBoxAction,
+  updateBoxAttrAction,
+} from "modules/multiBox/duck/actions/multiBoxActions";
 
 import { ReactComponent as Tab0QuoteIcon } from "assets/multiBox/tab0QuoteIcon.svg";
 import { ReactComponent as Tab1StructureIcon } from "assets/multiBox/tab1StructureIcon.svg";
@@ -49,8 +52,14 @@ const MultiBox: React.FC<Props> = ({ multiBox, boxIndex }) => {
 
   const dispatch = useDispatchStorePrincipal();
 
-  const { id, topSymbols, strikeViewMode, toggleShowId, activeTab } =
-    multiBox || {};
+  const {
+    id,
+    topSymbols,
+    strikeViewMode,
+    toggleShowId,
+    activeTab,
+    isLoadingBox,
+  } = multiBox || {};
 
   const structureData = useMemo(() => {
     return boxesTab1Data.find((data) => data.boxId === id);
@@ -166,6 +175,14 @@ const MultiBox: React.FC<Props> = ({ multiBox, boxIndex }) => {
       }),
     );
   }, [dispatch, id, strikeViewMode]);
+
+  const handleDuplicateBox = useCallback(() => {
+    if (!id) {
+      return;
+    }
+
+    dispatch(handleDuplicateBoxAction(id));
+  }, [dispatch, id]);
 
   const formattedTopSymbols = useMemo(() => {
     if (!topSymbols || !strikeViewMode) {
@@ -328,23 +345,37 @@ const MultiBox: React.FC<Props> = ({ multiBox, boxIndex }) => {
             </button>
           )}
 
-          {!multiBox && (
+          {(!multiBox || isLoadingBox) && (
             <div className="loadingBoxSpinner">
               <Spinner animation="border" variant="light" />
             </div>
           )}
 
           {toggleShowId && (
-            <span
-              style={{
-                position: "absolute",
-                right: -175,
-                fontWeight: "bold",
-                top: 8,
-              }}
-            >
-              Cód. da estrutura: {structureData?.structureID}
-            </span>
+            <>
+              <span
+                style={{
+                  position: "absolute",
+                  right: -175,
+                  fontWeight: "bold",
+                  top: 8,
+                }}
+              >
+                Cód. da estrutura: {structureData?.structureID}
+              </span>
+              <button
+                style={{
+                  position: "absolute",
+                  right: -107,
+                  fontWeight: "bold",
+                  top: 38,
+                }}
+                className="brokerCustomButton"
+                onClick={handleDuplicateBox}
+              >
+                Duplicar box
+              </button>
+            </>
           )}
         </div>
       </div>

@@ -1,9 +1,10 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import {
   OverlayTrigger,
   Popover,
   OverlayTriggerProps,
   Button,
+  Spinner,
 } from "react-bootstrap";
 
 interface Props extends Omit<OverlayTriggerProps, "overlay"> {
@@ -22,12 +23,22 @@ const PopConfirm: React.FC<Props> = ({
   onCancel,
   ...rest
 }) => {
+  const [waitingConfirm, setWaitingConfirm] = useState(false);
+
   const handleCancel = useCallback(() => {
     if (onCancel) {
       onCancel();
     }
     document.body.click();
   }, [onCancel]);
+
+  const handleConfirm = useCallback(async () => {
+    setWaitingConfirm(true);
+
+    await onConfirm();
+
+    setWaitingConfirm(false);
+  }, [onConfirm]);
 
   return (
     <OverlayTrigger
@@ -48,8 +59,12 @@ const PopConfirm: React.FC<Props> = ({
               <Button size="sm" variant="danger" onClick={handleCancel}>
                 Não
               </Button>
-              <Button size="sm" variant="primary" onClick={onConfirm}>
-                Sim
+              <Button size="sm" variant="primary" onClick={handleConfirm}>
+                {waitingConfirm ? (
+                  <Spinner size="sm" animation="border" variant={"light"} />
+                ) : (
+                  "Sim"
+                )}
               </Button>
             </div>
           </Popover.Content>

@@ -491,13 +491,19 @@ export const favoritarTHLAPI = async (data) => {
     });
 };
 
-export const addBoxStructureAPI = async (groupName, data) => {
+export const addBoxStructureAPI = async ({
+  groupName,
+  payload,
+  shouldAlertSuccess = true,
+}) => {
   return api
-    .post(`${url_addQuoteBox_groupName}${groupName}`, data, {
+    .post(`${url_addQuoteBox_groupName}${groupName}`, payload, {
       timeout,
     })
     .then((response) => {
-      timedAlert(success_add_box);
+      if (shouldAlertSuccess) {
+        timedAlert(success_add_box);
+      }
 
       return response.data;
     })
@@ -639,7 +645,7 @@ export const showAPIErrorAndAlert = (erro, mensagem) => {
   } else if (mensagem) alert(mensagem);
 };
 
-const timedAlert = (message) => {
+export const timedAlert = (message) => {
   setTimeout(() => {
     alert(message);
   }, 1);
