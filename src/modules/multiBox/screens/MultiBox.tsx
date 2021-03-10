@@ -356,6 +356,17 @@ const MultiBox: React.FC<Props> = ({ multiBox, boxIndex }) => {
               <span
                 style={{
                   position: "absolute",
+                  width: 130,
+                  right: -147,
+                  fontWeight: "bold",
+                  top: -22,
+                }}
+              >
+                Cód. do Box: {structureData?.id}
+              </span>
+              <span
+                style={{
+                  position: "absolute",
                   right: -175,
                   fontWeight: "bold",
                   top: 8,
