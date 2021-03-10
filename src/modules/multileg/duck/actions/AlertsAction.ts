@@ -6,6 +6,7 @@ import { MainThunkAction } from "types/ThunkActions";
 import { atualizarDivKeyAction } from "redux/actions/GlobalAppActions";
 import {
   abrirItemBarraLateralAction,
+  sendMultilegToCurrentTabAction,
   updateManySystemState,
 } from "redux/actions/system/SystemActions";
 import {
@@ -56,6 +57,8 @@ export const openAlertInMultileg = (alertItem: AlertAPI): MainThunkAction => {
     if (!isOpenMultileg) {
       clonedMultilegTabs.pop();
     }
+
+    dispatch(sendMultilegToCurrentTabAction());
 
     globalStore.dispatch(atualizarDivKeyAction("multileg") as any);
     dispatch(abrirItemBarraLateralAction("isOpenMultileg", true));

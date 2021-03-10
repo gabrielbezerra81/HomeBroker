@@ -64,7 +64,13 @@ export const aumentarZindexAction = (div_id, zIndex, show) => {
   return (dispatch) => {
     if (show) {
       zIndex = zIndex + 1;
-      document.getElementById(div_id).style.zIndex = zIndex;
+
+      const element = document.getElementById(div_id);
+
+      if (element) {
+        element.style.zIndex = zIndex;
+      }
+
       dispatch({ type: AUMENTAR_ZINDEX, payload: zIndex, divkey: div_id });
     }
   };

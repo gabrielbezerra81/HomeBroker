@@ -4,6 +4,7 @@ import {
 } from "redux/actions/GlobalAppActions";
 import {
   abrirItemBarraLateralAction,
+  sendMultilegToCurrentTabAction,
   updateManySystemState,
 } from "redux/actions/system/SystemActions";
 import {
@@ -48,19 +49,21 @@ export const abrirMultilegTHLAction = () => {
       GlobalReducer: { zIndex },
     } = globalStore.getState();
 
+    dispatch(sendMultilegToCurrentTabAction());
+
     dispatch(updateMultilegStateAction("loadingOffers", true));
 
     const clonedMultilegTabs = cloneMultilegTabs(multileg);
 
     globalStore.dispatch(atualizarDivKeyAction("multileg"));
 
-    if (!isOpenMultileg) {
+    if (isOpenMultileg) {
+      //Traz para primeiro plano se já estiver aberto
+      globalStore.dispatch(aumentarZindexAction("multileg", zIndex + 1, true));
+    } //
+    else {
       clonedMultilegTabs.pop();
       dispatch(abrirItemBarraLateralAction("isOpenMultileg"));
-    } else {
-      //Traz para primeiro plano se já estiver aberto
-      document.getElementById("multileg").style.zIndex = zIndex + 1;
-      globalStore.dispatch(aumentarZindexAction("multileg", zIndex, true));
     }
 
     dispatch(

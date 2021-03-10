@@ -31,6 +31,7 @@ import { formatarNumero } from "shared/utils/Formatacoes";
 import { getReducerStateStorePrincipal } from "hooks/utils";
 import {
   abrirItemBarraLateralAction,
+  sendMultilegToCurrentTabAction,
   updateManySystemState,
 } from "redux/actions/system/SystemActions";
 import { updateManyMultilegState } from "modules/multileg/duck/actions/utils";
@@ -80,6 +81,8 @@ export const openOrderInMultilegAction = (props, action = "") => {
       ordersExecReducer: { ordemAtual },
     } = getState();
 
+    dispatch(sendMultilegToCurrentTabAction());
+
     dispatch(updateMultilegStateAction("loadingOffers", true));
 
     const clonedMultilegTabs = cloneMultilegTabs(multileg);
@@ -88,13 +91,12 @@ export const openOrderInMultilegAction = (props, action = "") => {
     props.atualizarDivKeyAction("multileg");
 
     //Se o multileg não estiver aberto, remove a primeira aba e abre o mesmo
-    if (!isOpenMultileg) {
+    if (isOpenMultileg) {
+      //Traz para primeiro plano se já estiver aberto
+      props.aumentarZindexAction("multileg", props.zIndex, true);
+    } else {
       clonedMultilegTabs.pop();
       dispatch(abrirItemBarraLateralAction("isOpenMultileg"));
-    } else {
-      //Traz para primeiro plano se já estiver aberto
-      document.getElementById("multileg").style.zIndex = props.zIndex + 1;
-      props.aumentarZindexAction("multileg", props.zIndex, true);
     }
 
     dispatch(

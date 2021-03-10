@@ -17,6 +17,7 @@ import {
 } from "modules/multileg/duck/actions/utils";
 import {
   abrirItemBarraLateralAction,
+  sendMultilegToCurrentTabAction,
   updateManySystemState,
 } from "redux/actions/system/SystemActions";
 import { MainStoreState } from "redux/StoreCreation";
@@ -57,6 +58,8 @@ export const exportBoxToMultileg = async ({
 
     globalStore.dispatch(atualizarDivKeyAction("multileg") as any);
 
+    dispatch(sendMultilegToCurrentTabAction());
+
     if (!isOpenMultileg) {
       clonedMultilegTabs.pop();
 
@@ -66,13 +69,9 @@ export const exportBoxToMultileg = async ({
     } //
     else if (shouldOpenMultileg) {
       //Traz para primeiro plano se já estiver aberto
-      const multilegPopup = document.getElementById("multileg");
-      if (multilegPopup) {
-        multilegPopup.style.zIndex = `${zIndex + 1}`;
-        globalStore.dispatch(
-          aumentarZindexAction("multileg", zIndex, true) as any,
-        );
-      }
+      globalStore.dispatch(
+        aumentarZindexAction("multileg", zIndex, true) as any,
+      );
     }
 
     if (shouldOpenMultileg) {

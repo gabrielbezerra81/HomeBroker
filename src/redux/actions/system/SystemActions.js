@@ -16,7 +16,7 @@ import api from "api/apiConfig";
 
 import { INITIAL_STATE as initialSystemState } from "../../reducers/system/SystemReducer";
 import { handleDeleteBoxAction } from "modules/multiBox/duck/actions/multiBoxActions";
-import { fecharFormAction } from "../GlobalAppActions";
+import { aumentarZindexAction, fecharFormAction } from "../GlobalAppActions";
 
 const waitDispatch = 1000;
 
@@ -546,4 +546,24 @@ const combineMainStoreStateFromReducers = (reducers) => {
   });
 
   return combinedMainStoreState;
+};
+
+export const sendMultilegToCurrentTabAction = () => {
+  return (dispatch, getState) => {
+    const {
+      systemReducer: { selectedTab, openedMenus, isOpenMultileg },
+    } = getState();
+
+    if (isOpenMultileg) {
+      const updatedMenus = produce(openedMenus, (draft) => {
+        const menuItem = draft.find((item) => item.menuKey === "multileg");
+
+        if (menuItem) {
+          menuItem.tabKey = selectedTab;
+        }
+      });
+
+      dispatch(updateManySystemState({ openedMenus: updatedMenus }));
+    }
+  };
 };

@@ -44,12 +44,13 @@ class Multileg extends React.Component {
       createAlertButtonVisibility,
     } = this.props;
 
+    this.props.aumentarZindexAction("multileg", this.props.zIndex, true);
+
     this.props.getMultilegExecStrategiesAPIAction();
 
-    if (this.props.divkey !== "" && this.props.divkey === "multileg") {
-      document.getElementById("multileg").style.zIndex = this.props.zIndex + 1;
-      this.props.aumentarZindexAction("multileg", this.props.zIndex, true);
-    }
+    // if (this.props.divkey !== "" && this.props.divkey === "multileg") {
+    //   // document.getElementById("multileg").style.zIndex = this.props.zIndex + 1;
+    // }
 
     const multilegElement = document.getElementById("multileg");
     var section = multilegElement?.querySelector(".mcontent");
