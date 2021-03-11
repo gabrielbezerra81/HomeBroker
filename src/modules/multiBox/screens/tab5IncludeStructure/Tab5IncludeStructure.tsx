@@ -25,7 +25,7 @@ import {
   handleAddOfferDirectlyAction,
   handleSearchBoxSymbolOptionsAction,
   handleConcludeTab5Action,
-} from "modules/multiBox/duck/actions/tab5Actions";
+} from "modules/multiBox/duck/actions/tab5IncludeStructureActions";
 
 import closeIcon from "assets/closeIcon.png";
 import { GrFormSearch } from "react-icons/gr";

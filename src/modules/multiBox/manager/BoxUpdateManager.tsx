@@ -12,7 +12,7 @@ import {
 } from "modules/multiBox/duck/actions/multiBoxActions";
 
 import checkIfUpdateConfigChanged from "../../../managers/updateManager/utils";
-import { startProactiveBoxSymbolsUpdateAction } from "../duck/actions/tab4Actions";
+import { startProactiveBoxSymbolsUpdateAction } from "../duck/actions/tab2ListBooksActions";
 import { getStructureBySymbolAPI } from "api/symbolAPI";
 
 interface SymbolIdObj {

@@ -32,7 +32,7 @@ import {
   handleConcludeTab5Action,
   searchBoxOptions,
   SearchedBoxOptionsData,
-} from "./tab5Actions";
+} from "./tab5IncludeStructureActions";
 import {
   formatarNumDecimal,
   formatarQuantidadeKMG,

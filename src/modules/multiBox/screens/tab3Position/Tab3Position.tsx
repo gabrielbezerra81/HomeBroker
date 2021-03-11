@@ -21,7 +21,7 @@ import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { IoMdRepeat } from "react-icons/io";
 import getSymbolExpirationInDays from "shared/utils/getSymbolExpirationInDays";
 import PositionTableItem from "./PositionTableItem";
-import { handleSaveBoxPositionsAction } from "modules/multiBox/duck/actions/tab2Actions";
+import { handleSaveBoxPositionsAction } from "modules/multiBox/duck/actions/tab3PositionActions";
 import PopConfirm from "shared/components/PopConfirm/PopConfirm";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 

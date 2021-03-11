@@ -17,7 +17,7 @@ import { BoxOffer } from "modules/multiBox/types/MultiBoxState";
 import {
   handleChangeBoxOfferAction,
   handleRemoveOfferAction,
-} from "modules/multiBox/duck/actions/tab5Actions";
+} from "modules/multiBox/duck/actions/tab5IncludeStructureActions";
 import { FiX } from "react-icons/fi";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 

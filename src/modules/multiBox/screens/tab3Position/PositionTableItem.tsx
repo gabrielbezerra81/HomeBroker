@@ -1,6 +1,6 @@
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
-import { handleChangeBoxPositionAction } from "modules/multiBox/duck/actions/tab2Actions";
+import { handleChangeBoxPositionAction } from "modules/multiBox/duck/actions/tab3PositionActions";
 import {
   BoxPosition,
   MultiBoxData,

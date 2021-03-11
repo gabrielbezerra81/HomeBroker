@@ -19,7 +19,7 @@ import {
 
 import closeIcon from "assets/closeIcon.png";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
-import { createAlertFromBoxAction } from "modules/multiBox/duck/actions/tab3Actions";
+import { createAlertFromBoxAction } from "modules/multiBox/duck/actions/tab4AlertsActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import PopConfirm from "shared/components/PopConfirm/PopConfirm";
 
