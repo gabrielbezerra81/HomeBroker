@@ -1,18 +1,18 @@
 import {
-  findMultilegBook,
-  findMultilegQuote,
-} from "../duck/actions/utils"
+  cond_findMultilegBook,
+  cond_findMultilegQuote,
+} from "./utils";
 
 export const calculoPreco = (aba, tipo, cotacoesMultileg) => {
   let preco = 0;
   let arrayQtde = [];
 
   aba.tabelaMultileg.forEach((oferta, index) => {
-    let book = findMultilegBook({
+    let book = cond_findMultilegBook({
       multilegQuotes: cotacoesMultileg,
       symbol: oferta.codigoSelecionado,
     });
-    const cotacao = findMultilegQuote({
+    const cotacao = cond_findMultilegQuote({
       multilegQuotes: cotacoesMultileg,
       symbol: oferta.codigoSelecionado,
     });
@@ -26,11 +26,11 @@ export const calculoPreco = (aba, tipo, cotacoesMultileg) => {
   if (mdc > 0)
     aba.tabelaMultileg.forEach((oferta, index) => {
       const codigo = oferta.codigoSelecionado;
-      const cotacao = findMultilegQuote({
+      const cotacao = cond_findMultilegQuote({
         multilegQuotes: cotacoesMultileg,
         symbol: codigo,
       });
-      let book = findMultilegBook({
+      let book = cond_findMultilegBook({
         multilegQuotes: cotacoesMultileg,
         symbol: codigo,
       });
@@ -78,7 +78,7 @@ export const calcularTotal = (props) => {
   //   : 0;
 
   aba.tabelaMultileg.forEach((oferta) => {
-    const cotacao = findMultilegQuote({
+    const cotacao = cond_findMultilegQuote({
       multilegQuotes: props.cotacoesMultileg,
       symbol: oferta.codigoSelecionado,
     });
@@ -104,11 +104,11 @@ const gcd2 = (a, b) => {
 
 export const verificaCalculoSemBook = (tabelaMultileg, cotacoesMultileg) => {
   return tabelaMultileg.some((oferta, index) => {
-    const book = findMultilegBook({
+    const book = cond_findMultilegBook({
       multilegQuotes: cotacoesMultileg,
       symbol: oferta.codigoSelecionado,
     });
-    const cotacao = findMultilegQuote({
+    const cotacao = cond_findMultilegQuote({
       multilegQuotes: cotacoesMultileg,
       symbol: oferta.codigoSelecionado,
     });

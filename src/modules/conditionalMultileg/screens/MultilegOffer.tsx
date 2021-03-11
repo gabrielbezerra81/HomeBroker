@@ -4,27 +4,30 @@ import { MDBIcon } from "mdbreact";
 import { Select } from "antd";
 
 import CustomInput from "shared/components/CustomInput";
-import { findMultilegQuote, findMultilegBook } from "../duck/actions/utils";
+import {
+  cond_findMultilegQuote,
+  cond_findMultilegBook,
+} from "../duck/actions/utils";
 import { formatarNumDecimal, formatExpiration } from "shared/utils/Formatacoes";
 import modelEUImage from "assets/modeloEU.png";
 import modelUSAImage from "assets/modeloUSA2.svg";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import {
-  MultilegQuote,
-  MultilegOffer,
-  MultilegOption,
-} from "../types/multileg";
+  ConditionalMultilegQuote,
+  ConditionalMultilegOffer,
+  ConditionalMultilegOption,
+} from "../types/conditionalMultileg";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import {
-  removeMultilegOfferAction,
-  updateMultilegOfferAction,
+  cond_removeMultilegOfferAction,
+  cond_updateMultilegOfferAction,
 } from "../duck/actions/ConditionalMultilegActions";
 import { FiX } from "react-icons/fi";
 
 interface MultilegOfferProps {
   lineIndex: number;
   tabIndex: number;
-  offer: MultilegOffer;
+  offer: ConditionalMultilegOffer;
 }
 
 const MultilegOfferItem: React.FC<MultilegOfferProps> = ({
@@ -35,7 +38,7 @@ const MultilegOfferItem: React.FC<MultilegOfferProps> = ({
   const dispatch = useDispatchStorePrincipal();
 
   const {
-    multilegReducer: { cotacoesMultileg, multileg },
+    conditionalMultilegReducer: { cotacoesMultileg, multileg },
   } = useStateStorePrincipal();
 
   const [isOpenCodeDropdown, setIsOpenCodeDropdown] = useState(false);
@@ -61,7 +64,7 @@ const MultilegOfferItem: React.FC<MultilegOfferProps> = ({
       offer.opcoes
         .filter((_, index) => offer.tipo && index % 2 === 0)
         .map((option, index) => {
-          const parsedOption = option as MultilegOption;
+          const parsedOption = option as ConditionalMultilegOption;
           if (parsedOption.strike) {
             return (
               <option key={index} value={parsedOption.strike}>
@@ -98,7 +101,7 @@ const MultilegOfferItem: React.FC<MultilegOfferProps> = ({
         className="divClicavel closeColumn"
         onClick={() =>
           dispatch(
-            removeMultilegOfferAction({
+            cond_removeMultilegOfferAction({
               tabIndex,
               lineIndex,
             }),
@@ -119,7 +122,7 @@ const MultilegOfferItem: React.FC<MultilegOfferProps> = ({
             value={offer.qtde}
             onChange={(value: any) =>
               dispatch(
-                updateMultilegOfferAction({
+                cond_updateMultilegOfferAction({
                   tabIndex,
                   attributeName: "qtde",
                   attributeValue: value,
@@ -139,7 +142,7 @@ const MultilegOfferItem: React.FC<MultilegOfferProps> = ({
             value={offer.serieSelecionada}
             onChange={(event) =>
               dispatch(
-                updateMultilegOfferAction({
+                cond_updateMultilegOfferAction({
                   tabIndex,
                   attributeName: "serieSelecionada",
                   attributeValue: event.currentTarget.value,
@@ -164,7 +167,7 @@ const MultilegOfferItem: React.FC<MultilegOfferProps> = ({
             value={offer.strikeSelecionado}
             onChange={(event) =>
               dispatch(
-                updateMultilegOfferAction({
+                cond_updateMultilegOfferAction({
                   tabIndex,
                   attributeName: "strikeSelecionado",
                   attributeValue: Number(event.currentTarget.value),
@@ -189,7 +192,7 @@ const MultilegOfferItem: React.FC<MultilegOfferProps> = ({
           suffixIcon={<MDBIcon icon="caret-down" />}
           onChange={(value: any) => {
             dispatch(
-              updateMultilegOfferAction({
+              cond_updateMultilegOfferAction({
                 tabIndex,
                 attributeName: "codigoSelecionado",
                 attributeValue: value,
@@ -209,7 +212,7 @@ const MultilegOfferItem: React.FC<MultilegOfferProps> = ({
             tabIndex={0}
             onClick={() =>
               dispatch(
-                updateMultilegOfferAction({
+                cond_updateMultilegOfferAction({
                   tabIndex,
                   attributeName: "tipo",
                   attributeValue: offer.tipo,
@@ -231,7 +234,7 @@ const MultilegOfferItem: React.FC<MultilegOfferProps> = ({
             value={offer.despernamento}
             onChange={(value: any) =>
               dispatch(
-                updateMultilegOfferAction({
+                cond_updateMultilegOfferAction({
                   tabIndex,
                   attributeName: "despernamento",
                   attributeValue: value,
@@ -251,7 +254,7 @@ const MultilegOfferItem: React.FC<MultilegOfferProps> = ({
             value={offer.prioridade}
             onChange={(event) => {
               dispatch(
-                updateMultilegOfferAction({
+                cond_updateMultilegOfferAction({
                   tabIndex,
                   attributeName: "prioridade",
                   attributeValue: Number(event.currentTarget.value),
@@ -286,12 +289,12 @@ const MultilegOfferItem: React.FC<MultilegOfferProps> = ({
 export default MultilegOfferItem;
 
 const calculateOfferValue = (
-  multilegQuotes: MultilegQuote[],
-  offer: MultilegOffer,
+  multilegQuotes: ConditionalMultilegQuote[],
+  offer: ConditionalMultilegOffer,
 ) => {
   let value;
   let highlightLast = false;
-  const book = findMultilegBook({
+  const book = cond_findMultilegBook({
     multilegQuotes,
     symbol: offer.codigoSelecionado,
   });
@@ -314,7 +317,7 @@ const calculateOfferValue = (
 };
 
 interface CVProps {
-  offerCV: MultilegOffer["cv"];
+  offerCV: ConditionalMultilegOffer["cv"];
   tabIndex: number;
   lineIndex: number;
 }
@@ -340,7 +343,7 @@ const CV: React.FC<CVProps> = ({ offerCV, tabIndex, lineIndex }) => {
         className={`${cv.buy} divClicavel`}
         onClick={() =>
           dispatch(
-            updateMultilegOfferAction({
+            cond_updateMultilegOfferAction({
               tabIndex,
               attributeName: "cv",
               attributeValue: "compra",
@@ -355,7 +358,7 @@ const CV: React.FC<CVProps> = ({ offerCV, tabIndex, lineIndex }) => {
         className={`${cv.sell} divClicavel`}
         onClick={() =>
           dispatch(
-            updateMultilegOfferAction({
+            cond_updateMultilegOfferAction({
               tabIndex,
               attributeName: "cv",
               attributeValue: "venda",
@@ -371,7 +374,7 @@ const CV: React.FC<CVProps> = ({ offerCV, tabIndex, lineIndex }) => {
 };
 
 interface ModelProps {
-  model: MultilegOffer["modelo"];
+  model: ConditionalMultilegOffer["modelo"];
 }
 
 const Model: React.FC<ModelProps> = ({ model }) => {
@@ -392,8 +395,8 @@ const Model: React.FC<ModelProps> = ({ model }) => {
 
 interface SymbolOptionsDropdownProps {
   isDropdownOpen: boolean;
-  options: MultilegOffer["opcoes"];
-  type: MultilegOffer["tipo"];
+  options: ConditionalMultilegOffer["opcoes"];
+  type: ConditionalMultilegOffer["tipo"];
 }
 
 const renderSymbolOptionsDropdown = ({
@@ -421,7 +424,7 @@ const renderSymbolOptionsDropdown = ({
   // mostra os códigos de call e put junto com o strike. Caso contrário, mostra apenas o código selecionado.
   else if (isDropdownOpen) {
     options.forEach((option, indice) => {
-      const parsedOption = option as MultilegOption;
+      const parsedOption = option as ConditionalMultilegOption;
       if (indice % 2 === 0) {
         const formattedStrike = formatarNumDecimal(parsedOption.strike, 2, 2);
 
@@ -470,8 +473,11 @@ const renderSymbolOptionsDropdown = ({
   return symbolList;
 };
 
-const getQuote = (multilegQuotes: MultilegQuote[], offer: MultilegOffer) => {
-  const quote = findMultilegQuote({
+const getQuote = (
+  multilegQuotes: ConditionalMultilegQuote[],
+  offer: ConditionalMultilegOffer,
+) => {
+  const quote = cond_findMultilegQuote({
     multilegQuotes,
     symbol: offer.codigoSelecionado,
   });

@@ -4,11 +4,11 @@ import { Col, Row, Form } from "react-bootstrap";
 import { getformatedDate } from "shared/utils/Formatacoes";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
-import { updateMultilegTabAction } from "../../duck/actions/ConditionalMultilegActions";
+import { cond_updateMultilegTabAction } from "../../duck/actions/ConditionalMultilegActions";
 
 const DateSelector = ({ tabIndex }) => {
   const {
-    multilegReducer: { multileg },
+    conditionalMultilegReducer: { multileg },
   } = useStateStorePrincipal();
 
   const multilegTab = multileg[tabIndex];
@@ -41,7 +41,7 @@ export default DateSelector;
 
 const MultilegDatePicker = ({ tabIndex }) => {
   const {
-    multilegReducer: { multileg },
+    conditionalMultilegReducer: { multileg },
   } = useStateStorePrincipal();
 
   const multilegTab = multileg[tabIndex];
@@ -56,7 +56,7 @@ const MultilegDatePicker = ({ tabIndex }) => {
       selected={multilegTab.date}
       onChange={(data) =>
         dispatch(
-          updateMultilegTabAction({
+          cond_updateMultilegTabAction({
             tabIndex,
             attributeName: "date",
             attributeValue: data,
@@ -89,7 +89,7 @@ const Select = ({ dateOptionLabel, tabIndex, dispatch, multilegTab }) => {
         value={multilegTab.validadeSelect}
         onChange={(event) =>
           dispatch(
-            updateMultilegTabAction({
+            cond_updateMultilegTabAction({
               tabIndex,
               attributeName: "validadeSelect",
               attributeValue: event.currentTarget.value,

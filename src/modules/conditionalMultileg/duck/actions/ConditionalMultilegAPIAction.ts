@@ -2,29 +2,28 @@ import {
   pesquisarAtivoMultilegAPI,
   enviarOrdemAPI,
   setPointerWhileAwaiting,
-  criarAlertaOperacaoAPI,
   criarPosicaoMultilegAPI,
   addBoxStructureAPI,
   getMultilegExecStrategiesAPI,
 } from "api/API";
 import {
-  cloneMultilegTabs,
-  updateMultilegStateAction,
+  cond_cloneMultilegTabs,
+  updateConditionalMultilegStateAction,
 } from "./ConditionalMultilegActions";
 import {
-  mountMultilegOrder,
-  validateMultilegOrder,
-  AddNewMultilegQuote,
-  findClosestStrike,
-  updateOneMultilegState,
-  updateManyMultilegState,
+  cond_mountMultilegOrder,
+  cond_validateMultilegOrder,
+  cond_addNewMultilegQuote,
+  cond_findClosestStrike,
+  updateOneConditionalMultilegState,
+  updateManyConditionalMultilegState,
 } from "./utils";
 import { MainThunkAction } from "types/ThunkActions";
 import {
-  MultilegQuote,
-  MultilegTab,
-  MultilegOption,
-} from "../../types/multileg";
+  ConditionalMultilegQuote,
+  ConditionalMultilegTab,
+  ConditionalMultilegOption,
+} from "../../types/conditionalMultileg";
 import produce from "immer";
 import { LISTAR_ORDENS_EXECUCAO } from "constants/ApiActionTypes";
 import { atualizarCotacaoMultilegAPI } from "api/reactive/ReativosAPI";
@@ -32,22 +31,22 @@ import { getProactiveMultilegQuotesAPI } from "api/proactive/ProativosAPI";
 
 ////
 
-export const searchMultilegSymbolAPIAction = (
+export const cond_searchMultilegSymbolAPIAction = (
   tabIndex: number,
 ): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
-      multilegReducer: { multileg, cotacoesMultileg },
+      conditionalMultilegReducer: { multileg, cotacoesMultileg },
     } = getState();
 
-    const data = await searchMultilegSymbolData({
+    const data = await cond_searchMultilegSymbolData({
       multilegTabs: multileg,
       tabIndex,
       multilegQuotes: cotacoesMultileg,
     });
 
     dispatch(
-      updateManyMultilegState({
+      updateManyConditionalMultilegState({
         cotacoesMultileg: data.multilegQuotes,
         multileg: data.multilegTabs,
       }),
@@ -56,24 +55,24 @@ export const searchMultilegSymbolAPIAction = (
 };
 
 interface searchSymbolData {
-  multilegTabs: MultilegTab[];
+  multilegTabs: ConditionalMultilegTab[];
   tabIndex: number;
-  multilegQuotes: MultilegQuote[];
+  multilegQuotes: ConditionalMultilegQuote[];
 }
 
-export const searchMultilegSymbolData = async ({
+export const cond_searchMultilegSymbolData = async ({
   multilegQuotes,
   multilegTabs,
   tabIndex,
 }: searchSymbolData) => {
-  let updatedMultilegTabs = cloneMultilegTabs(multilegTabs);
+  let updatedMultilegTabs = cond_cloneMultilegTabs(multilegTabs);
   let multilegTab = updatedMultilegTabs[tabIndex];
   const symbol = multilegTab.ativo;
 
   const data = await pesquisarAtivoMultilegAPI(symbol);
 
   if (data) {
-    AddNewMultilegQuote({
+    cond_addNewMultilegQuote({
       multilegQuotes,
       symbol,
       quote: data.cotacaoAtual,
@@ -82,12 +81,13 @@ export const searchMultilegSymbolData = async ({
     const symbolIsOption = symbol !== data.ativoPrincipal ? true : false;
 
     multilegTab.opcoes = [...data.opcoes].sort(
-      (a: MultilegOption, b: MultilegOption) => a.strike - b.strike,
+      (a: ConditionalMultilegOption, b: ConditionalMultilegOption) =>
+        a.strike - b.strike,
     );
     multilegTab.vencimento = [...data.vencimentos];
     multilegTab.variacao = data.variacao;
     multilegTab.vencimentoSelecionado = multilegTab.opcoes[0].expiration;
-    multilegTab.strikeSelecionado = findClosestStrike({
+    multilegTab.strikeSelecionado = cond_findClosestStrike({
       options: data.opcoes,
       symbolQuote: data.cotacaoAtual,
       symbol,
@@ -100,10 +100,12 @@ export const searchMultilegSymbolData = async ({
   return { multilegTabs: updatedMultilegTabs, multilegQuotes };
 };
 
-export const sendMultilegOrderAction = (tabIndex: number): MainThunkAction => {
+export const cond_sendMultilegOrderAction = (
+  tabIndex: number,
+): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
-      multilegReducer: { multileg },
+      conditionalMultilegReducer: { multileg },
       systemReducer: { selectedAccount },
       ordersExecReducer: { tabelaOrdensExecucao },
     } = getState();
@@ -114,7 +116,7 @@ export const sendMultilegOrderAction = (tabIndex: number): MainThunkAction => {
       tabIndex,
     };
 
-    const multilegRequestData = mountMultilegOrder(mountOrderProps);
+    const multilegRequestData = cond_mountMultilegOrder(mountOrderProps);
 
     setPointerWhileAwaiting({
       lockMode: "travar",
@@ -122,7 +124,7 @@ export const sendMultilegOrderAction = (tabIndex: number): MainThunkAction => {
       parentID: "body",
     });
 
-    if (validateMultilegOrder(mountOrderProps)) {
+    if (cond_validateMultilegOrder(mountOrderProps)) {
       const data = await enviarOrdemAPI(multilegRequestData);
 
       if (data && data.length) {
@@ -141,72 +143,72 @@ export const sendMultilegOrderAction = (tabIndex: number): MainThunkAction => {
   };
 };
 
-export const createMultilegAlertAction = (
+// export const createMultilegAlertAction = (
+//   tabIndex: number,
+// ): MainThunkAction => {
+//   return async (dispatch, getState) => {
+//     const {
+//       conditionalMultilegReducer: { multileg, alerts },
+//       systemReducer: { selectedAccount },
+//     } = getState();
+
+//     const { param, operator, comment } = multileg[tabIndex];
+
+//     const mountOrderProps = {
+//       multilegTabs: multileg,
+//       selectedAccount: selectedAccount,
+//       tabIndex,
+//       comment,
+//     };
+
+//     const multilegRequestData = cond_mountMultilegOrder(mountOrderProps);
+
+//     setPointerWhileAwaiting({ lockMode: "travar", id: "conditionalMultileg" });
+//     if (cond_validateMultilegOrder(mountOrderProps)) {
+//       const data = await criarAlertaOperacaoAPI({
+//         param,
+//         operator,
+//         data: multilegRequestData,
+//       });
+
+//       if (data && data.length) {
+//         const updatedAlerts = produce(alerts, (draft) => {
+//           draft.push(data[0]);
+//         });
+//         dispatch(
+//           updateOneConditionalMultilegState({
+//             attributeName: "alerts",
+//             attributeValue: updatedAlerts,
+//           }),
+//         );
+//       }
+//     }
+//     setPointerWhileAwaiting({
+//       lockMode: "destravar",
+//       id: "conditionalMultileg",
+//     });
+//   };
+// };
+
+export const cond_createMultilegPositionAction = (
   tabIndex: number,
 ): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
-      multilegReducer: { multileg, alerts },
+      conditionalMultilegReducer: { multileg },
       systemReducer: { selectedAccount },
     } = getState();
-
-    const { param, operator, comment } = multileg[tabIndex];
 
     const mountOrderProps = {
       multilegTabs: multileg,
       selectedAccount: selectedAccount,
       tabIndex,
-      comment,
     };
 
-    const multilegRequestData = mountMultilegOrder(mountOrderProps);
+    const multilegRequestData = cond_mountMultilegOrder(mountOrderProps);
 
     setPointerWhileAwaiting({ lockMode: "travar", id: "conditionalMultileg" });
-    if (validateMultilegOrder(mountOrderProps)) {
-      const data = await criarAlertaOperacaoAPI({
-        param,
-        operator,
-        data: multilegRequestData,
-      });
-
-      if (data && data.length) {
-        const updatedAlerts = produce(alerts, (draft) => {
-          draft.push(data[0]);
-        });
-        dispatch(
-          updateOneMultilegState({
-            attributeName: "alerts",
-            attributeValue: updatedAlerts,
-          }),
-        );
-      }
-    }
-    setPointerWhileAwaiting({
-      lockMode: "destravar",
-      id: "conditionalMultileg",
-    });
-  };
-};
-
-export const createMultilegPositionAction = (
-  tabIndex: number,
-): MainThunkAction => {
-  return async (dispatch, getState) => {
-    const {
-      multilegReducer: { multileg },
-      systemReducer: { selectedAccount },
-    } = getState();
-
-    const mountOrderProps = {
-      multilegTabs: multileg,
-      selectedAccount: selectedAccount,
-      tabIndex,
-    };
-
-    const multilegRequestData = mountMultilegOrder(mountOrderProps);
-
-    setPointerWhileAwaiting({ lockMode: "travar", id: "conditionalMultileg" });
-    if (validateMultilegOrder(mountOrderProps))
+    if (cond_validateMultilegOrder(mountOrderProps))
       await criarPosicaoMultilegAPI(multilegRequestData);
     setPointerWhileAwaiting({
       lockMode: "destravar",
@@ -215,12 +217,12 @@ export const createMultilegPositionAction = (
   };
 };
 
-export const addQuoteBoxFromMultilegAction = (
+export const cond_addQuoteBoxFromMultilegAction = (
   tabIndex: number,
 ): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
-      multilegReducer: { multileg },
+      conditionalMultilegReducer: { multileg },
       systemReducer: { selectedAccount, selectedTab },
     } = getState();
 
@@ -235,12 +237,15 @@ export const addQuoteBoxFromMultilegAction = (
       comment: JSON.stringify(configData),
     };
 
-    const multilegRequestData = mountMultilegOrder(mountOrderProps);
+    const multilegRequestData = cond_mountMultilegOrder(mountOrderProps);
 
     setPointerWhileAwaiting({ lockMode: "travar", id: "conditionalMultileg" });
 
-    if (validateMultilegOrder(mountOrderProps)) {
-      const data = await addBoxStructureAPI({groupName: tabName,payload: multilegRequestData});
+    if (cond_validateMultilegOrder(mountOrderProps)) {
+      const data = await addBoxStructureAPI({
+        groupName: tabName,
+        payload: multilegRequestData,
+      });
 
       if (data) {
         // TODO: adicionar novo box pela multileg
@@ -255,11 +260,11 @@ export const addQuoteBoxFromMultilegAction = (
   };
 };
 
-export const startReactiveMultilegUpdateAction = (): MainThunkAction => {
+export const cond_startReactiveMultilegUpdateAction = (): MainThunkAction => {
   return (dispatch, getState) => {
     const {
       systemReducer: { token },
-      multilegReducer: {
+      conditionalMultilegReducer: {
         cotacoesMultileg: multilegQuotes,
         esource_multilegQuotes,
         interval_multilegQuotes,
@@ -288,15 +293,20 @@ export const startReactiveMultilegUpdateAction = (): MainThunkAction => {
         token,
       });
 
-      dispatch(updateMultilegStateAction("esource_multilegQuotes", newSource));
+      dispatch(
+        updateConditionalMultilegStateAction(
+          "esource_multilegQuotes",
+          newSource,
+        ),
+      );
     }
   };
 };
 
-export const startProactiveMultilegUpdateAction = (): MainThunkAction => {
+export const cond_startProactiveMultilegUpdateAction = (): MainThunkAction => {
   return (dispatch, getState) => {
     const {
-      multilegReducer: {
+      conditionalMultilegReducer: {
         cotacoesMultileg: multilegQuotes,
         esource_multilegQuotes,
         interval_multilegQuotes,
@@ -338,7 +348,7 @@ export const startProactiveMultilegUpdateAction = (): MainThunkAction => {
         });
 
         dispatch(
-          updateOneMultilegState({
+          updateOneConditionalMultilegState({
             attributeName: "cotacoesMultileg",
             attributeValue: updatedQuotes,
           }),
@@ -346,7 +356,7 @@ export const startProactiveMultilegUpdateAction = (): MainThunkAction => {
       }, updateInterval);
 
       dispatch(
-        updateOneMultilegState({
+        updateOneConditionalMultilegState({
           attributeName: "interval_multilegQuotes",
           attributeValue: interval,
         }),
@@ -355,12 +365,12 @@ export const startProactiveMultilegUpdateAction = (): MainThunkAction => {
   };
 };
 
-export const getMultilegExecStrategiesAPIAction = (): MainThunkAction => {
+export const cond_getMultilegExecStrategiesAPIAction = (): MainThunkAction => {
   return async (dispatch) => {
     const executionStrategies = await getMultilegExecStrategiesAPI();
 
     dispatch(
-      updateOneMultilegState({
+      updateOneConditionalMultilegState({
         attributeName: "executionStrategies",
         attributeValue: executionStrategies,
       }),

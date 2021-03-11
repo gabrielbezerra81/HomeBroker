@@ -2,11 +2,11 @@ import React, { useCallback, useEffect, useMemo } from "react";
 import { Button, Form } from "react-bootstrap";
 import { MDBIcon } from "mdbreact";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
-import { createMultilegAlertAction } from "../../duck/actions/ConditionalMultilegAPIAction";
+// import { createMultilegAlertAction } from "../../duck/actions/ConditionalMultilegAPIAction";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import usePrevious from "hooks/usePrevious";
 import { updateHeight } from "shared/utils/AnimateHeight";
-import { updateMultilegTabAction } from "../../duck/actions/ConditionalMultilegActions";
+import { cond_updateMultilegTabAction } from "../../duck/actions/ConditionalMultilegActions";
 import { multilegNormalHeight, multilegWithAlertHeight } from "../constants";
 
 interface MultilegAlertProps {
@@ -17,7 +17,7 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
   const dispatch = useDispatchStorePrincipal();
 
   const {
-    multilegReducer: { multileg },
+    conditionalMultilegReducer: { multileg },
     systemReducer: { multilegButtonsVisibility, createAlertButtonVisibility },
   } = useStateStorePrincipal();
 
@@ -35,7 +35,7 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
     const { isAlertOpen } = multileg[tabIndex];
 
     dispatch(
-      updateMultilegTabAction({
+      cond_updateMultilegTabAction({
         tabIndex,
         attributeName: "isAlertOpen",
         attributeValue: !isAlertOpen,
@@ -44,13 +44,13 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
   }, [dispatch, multileg, tabIndex]);
 
   const handleCreateAlert = useCallback(() => {
-    dispatch(createMultilegAlertAction(tabIndex));
-  }, [dispatch, tabIndex]);
+    // dispatch(createMultilegAlertAction(tabIndex));
+  }, []);
 
   const handleInputChange = useCallback(
     (e) => {
       dispatch(
-        updateMultilegTabAction({
+        cond_updateMultilegTabAction({
           tabIndex,
           attributeName: e.target.name,
           attributeValue: e.target.value,
@@ -150,7 +150,7 @@ const MultilegAlert: React.FC<MultilegAlertProps> = ({ tabIndex }) => {
   const shouldDisplayToggleButton = useMemo(() => {
     if (!multilegButtonsVisibility && createAlertButtonVisibility) {
       dispatch(
-        updateMultilegTabAction({
+        cond_updateMultilegTabAction({
           tabIndex,
           attributeName: "isAlertOpen",
           attributeValue: true,

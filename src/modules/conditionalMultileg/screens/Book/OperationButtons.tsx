@@ -4,11 +4,11 @@ import { Button } from "react-bootstrap";
 
 import CustomButton from "shared/components/CustomButton";
 
-import { updateMultilegTabAction } from "../../duck/actions/ConditionalMultilegActions";
+import { cond_updateMultilegTabAction } from "../../duck/actions/ConditionalMultilegActions";
 import {
-  addQuoteBoxFromMultilegAction,
-  createMultilegPositionAction,
-  sendMultilegOrderAction,
+  cond_addQuoteBoxFromMultilegAction,
+  cond_createMultilegPositionAction,
+  cond_sendMultilegOrderAction,
 } from "../../duck/actions/ConditionalMultilegAPIAction";
 
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
@@ -36,7 +36,7 @@ const OperationButtons: React.FC<Props> = ({ tabIndex }) => {
             size="sm"
             onClick={() =>
               dispatch(
-                updateMultilegTabAction({
+                cond_updateMultilegTabAction({
                   tabIndex,
                   attributeName: "limpar",
                   attributeValue: "",
@@ -47,7 +47,7 @@ const OperationButtons: React.FC<Props> = ({ tabIndex }) => {
             LIMPAR
           </Button>
           <CustomButton
-            onClick={() => dispatch(sendMultilegOrderAction(tabIndex))}
+            onClick={() => dispatch(cond_sendMultilegOrderAction(tabIndex))}
             defaultClassName={false}
             className="btn btn-primary btn-block btn-sm"
           >
@@ -58,7 +58,9 @@ const OperationButtons: React.FC<Props> = ({ tabIndex }) => {
           <Button
             variant="primary"
             size="sm"
-            onClick={() => dispatch(createMultilegPositionAction(tabIndex))}
+            onClick={() =>
+              dispatch(cond_createMultilegPositionAction(tabIndex))
+            }
             block
           >
             CRIAR POSIÇÃO
@@ -78,7 +80,7 @@ const OperationButtons: React.FC<Props> = ({ tabIndex }) => {
           block
           className={`toggleAlertButton`}
           onClick={() => {
-            dispatch(addQuoteBoxFromMultilegAction(tabIndex));
+            dispatch(cond_addQuoteBoxFromMultilegAction(tabIndex));
           }}
         >
           ADICIONAR BOX

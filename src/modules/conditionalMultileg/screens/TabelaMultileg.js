@@ -2,8 +2,8 @@ import React from "react";
 import { Spinner, Table } from "react-bootstrap";
 import { connect } from "react-redux";
 import {
-  updateMultilegOfferAction,
-  removeMultilegOfferAction,
+  cond_updateMultilegOfferAction,
+  cond_removeMultilegOfferAction,
 } from "../duck/actions/ConditionalMultilegActions";
 import { StorePrincipalContext } from "redux/StoreCreation";
 import MultilegOfferItem from "./MultilegOffer";
@@ -80,15 +80,15 @@ class TabelaMultileg extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  multileg: state.multilegReducer.multileg,
-  loadingOffers: state.multilegReducer.loadingOffers,
+  multileg: state.conditionalMultilegReducer.multileg,
+  loadingOffers: state.conditionalMultilegReducer.loadingOffers,
 });
 
 export default connect(
   mapStateToProps,
   {
-    updateMultilegOfferAction,
-    removeMultilegOfferAction,
+    cond_updateMultilegOfferAction,
+    cond_removeMultilegOfferAction,
   },
   null,
   { context: StorePrincipalContext },

@@ -1,23 +1,21 @@
 import {
-  MultilegTab,
-  MultilegQuote,
-  AlertAPI,
+  ConditionalMultilegTab,
+  ConditionalMultilegQuote,
   ExecutionStrategy,
-} from "./multileg";
+} from "./conditionalMultileg";
 
-export default interface MultilegState {
+export default interface ConditionalMultilegState {
   configComplementarAberto: boolean;
   abaSelecionada: string;
   horaInicial: string;
   horaFinal: string;
   modoExec: string;
   apregoarOferta: boolean;
-  multileg: Array<MultilegTab>;
+  multileg: Array<ConditionalMultilegTab>;
   esource_multilegQuotes: EventSource | null;
   interval_multilegQuotes: NodeJS.Timeout | null;
-  cotacoesMultileg: Array<MultilegQuote>;
+  cotacoesMultileg: Array<ConditionalMultilegQuote>;
   cotacoesMultilegID: number;
-  alerts: Array<AlertAPI>;
   executionStrategies: Array<ExecutionStrategy>;
   loadingOffers: boolean;
 }

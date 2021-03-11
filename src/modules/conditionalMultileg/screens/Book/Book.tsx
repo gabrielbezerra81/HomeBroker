@@ -3,15 +3,15 @@ import { Table, Row, Col, Form } from "react-bootstrap";
 import IconeConfigGrafico from "shared/components/IconeConfigGrafico";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import {
-  updateMultilegPriceAction,
-  updateMultilegTabAction,
+  cond_updateMultilegPriceAction,
+  cond_updateMultilegTabAction,
 } from "../../duck/actions/ConditionalMultilegActions";
-import { findMultilegBook } from "../../duck/actions/utils";
+import { cond_findMultilegBook } from "../../duck/actions/utils";
 import {
   calculoPreco,
   calcularTotal,
   verificaCalculoSemBook,
-} from "../CalculoPreco";
+} from "../../duck/actions/CalculoPreco";
 import CustomInput from "shared/components/CustomInput";
 import { formatarNumero } from "shared/utils/Formatacoes";
 import DateSelector from "./DateSelector";
@@ -28,7 +28,11 @@ interface Props {
 
 const Book: React.FC<Props> = ({ indice: tabIndex }) => {
   const {
-    multilegReducer: { cotacoesMultileg, executionStrategies, multileg },
+    conditionalMultilegReducer: {
+      cotacoesMultileg,
+      executionStrategies,
+      multileg,
+    },
   } = useStateStorePrincipal();
 
   const dispatch = useDispatchStorePrincipal();
@@ -106,7 +110,7 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
       previousMultileg[tabIndex].tabelaMultileg.length >
         multileg[tabIndex].tabelaMultileg.length
     ) {
-      dispatch(updateMultilegPriceAction(tabIndex));
+      dispatch(cond_updateMultilegPriceAction(tabIndex));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, multileg, tabIndex]);
@@ -126,7 +130,7 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
         },
       };
 
-      const symbolBook = findMultilegBook({
+      const symbolBook = cond_findMultilegBook({
         multilegQuotes: cotacoesMultileg,
         symbol: offerItem.codigoSelecionado,
       });
@@ -241,13 +245,13 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
             value={rangeValue}
             onChange={(event) => {
               dispatch(
-                updateMultilegTabAction({
+                cond_updateMultilegTabAction({
                   tabIndex,
                   attributeName: "preco",
                   attributeValue: formatarNumDecimal(
-                    Number(event.currentTarget.value)
+                    Number(event.currentTarget.value),
                   ),
-                })
+                }),
               );
             }}
           />
@@ -258,16 +262,16 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
           <span
             onClick={() =>
               dispatch(
-                updateMultilegTabAction({
+                cond_updateMultilegTabAction({
                   tabIndex,
                   attributeName: "preco",
                   attributeValue: formatarNumero(
                     Number(min).toFixed(2),
                     2,
                     ".",
-                    ","
+                    ",",
                   ),
-                })
+                }),
               )
             }
             className="divClicavel"
@@ -281,16 +285,16 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
               condicaoMed
                 ? () =>
                     dispatch(
-                      updateMultilegTabAction({
+                      cond_updateMultilegTabAction({
                         tabIndex,
                         attributeName: "preco",
                         attributeValue: formatarNumero(
                           Number((max + min) / 2).toFixed(2),
                           2,
                           ".",
-                          ","
+                          ",",
                         ),
-                      })
+                      }),
                     )
                 : () => false
             }
@@ -303,16 +307,16 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
           <span
             onClick={() =>
               dispatch(
-                updateMultilegTabAction({
+                cond_updateMultilegTabAction({
                   tabIndex,
                   attributeName: "preco",
                   attributeValue: formatarNumero(
                     Number(max).toFixed(2),
                     2,
                     ".",
-                    ","
+                    ",",
                   ),
-                })
+                }),
               )
             }
             className="divClicavel"
@@ -343,11 +347,11 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
             value={renderPlaceholder ? "" : price}
             onChange={(valor) =>
               dispatch(
-                updateMultilegTabAction({
+                cond_updateMultilegTabAction({
                   tabIndex,
                   attributeName: "preco",
                   attributeValue: valor,
-                })
+                }),
               )
             }
           />
@@ -399,11 +403,11 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
             className="textInput strategyInput"
             onChange={(e) =>
               dispatch(
-                updateMultilegTabAction({
+                cond_updateMultilegTabAction({
                   tabIndex,
                   attributeName: "selectedStrategy",
                   attributeValue: Number(e.target.value),
-                })
+                }),
               )
             }
           >

@@ -4,10 +4,10 @@ import {
   UPDATE_MANY_CONDITIONAL_MULTILEG,
 } from "constants/MenuActionTypes";
 import { resetarEstadoRedux } from "redux/reducers/resetarEstadoReducer";
-import MultilegState from "../types/MultilegState";
+import ConditionalMultilegReducer from "../types/ConditionalMultilegState";
 import Action from "types/Action";
 
-const INITIAL_STATE: MultilegState = {
+const INITIAL_STATE: ConditionalMultilegReducer = {
   configComplementarAberto: false,
   abaSelecionada: "tab0",
   horaInicial: "",
@@ -42,7 +42,6 @@ const INITIAL_STATE: MultilegState = {
   interval_multilegQuotes: null,
   cotacoesMultileg: [],
   cotacoesMultilegID: 0,
-  alerts: [],
   executionStrategies: [],
   loadingOffers: false,
 };
@@ -50,7 +49,7 @@ const INITIAL_STATE: MultilegState = {
 export default (
   state = INITIAL_STATE,
   { type, payload }: Action,
-): MultilegState => {
+): ConditionalMultilegReducer => {
   switch (type) {
     case UPDATE_ONE_CONDITIONAL_MULTILEG:
       return { ...state, [payload.attributeName]: payload.attributeValue };
@@ -63,11 +62,10 @@ export default (
           ...resetarEstadoRedux({
             state,
             initialState: INITIAL_STATE,
-            omitions: ["multileg", "cotacoesMultileg", "alerts"],
+            omitions: ["multileg", "cotacoesMultileg"],
             reducerName: "conditionalMultileg",
             shouldClearAllProps: payload.limparReducer,
           }),
-          alerts: state.alerts,
         };
       else return state;
     default:

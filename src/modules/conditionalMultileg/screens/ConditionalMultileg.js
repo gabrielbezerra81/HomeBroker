@@ -4,29 +4,33 @@ import { connect } from "react-redux";
 import { Tab, Row, Col, Nav } from "react-bootstrap";
 import DraggableModal from "shared/components/DraggableModal";
 import { PopupHeader } from "shared/components/PopupHeader";
-import AbaMultileg from "./AbaMultileg";
+import ConditionalMultilegTab from "./ConditionalMultilegTab";
 import { StorePrincipalContext, GlobalContext } from "redux/StoreCreation";
 import {
-  selectOrAddMultilegTabAction,
-  updateMultilegTabAction,
+  cond_selectOrAddMultilegTabAction,
+  cond_updateMultilegTabAction,
 } from "../duck/actions/ConditionalMultilegActions";
 import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
 import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopupZIndexFromSecondaryTab";
 import TabTitle from "./TabTitle";
 import { collapseElement, updateHeight } from "shared/utils/AnimateHeight";
-import { getMultilegExecStrategiesAPIAction } from "../duck/actions/ConditionalMultilegAPIAction";
+import { cond_getMultilegExecStrategiesAPIAction } from "../duck/actions/ConditionalMultilegAPIAction";
 import {
   multilegBaseHeight,
   multilegNormalHeight,
   multilegWithAlertHeight,
 } from "./constants";
+import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 
 const popupKey = "conditionalMultileg";
 
 class ConditionalMultileg extends React.Component {
   constructor(props) {
     super(props);
+
     this.handleMultilegTabSelect = this.handleMultilegTabSelect.bind(this);
+
+    this.onClose = this.onClose.bind(this);
   }
   // shouldComponentUpdate(nextProps, nextState) {
   //   const multileg = this.props.multileg !== nextProps.multileg;
@@ -46,7 +50,7 @@ class ConditionalMultileg extends React.Component {
       createAlertButtonVisibility,
     } = this.props;
 
-    this.props.getMultilegExecStrategiesAPIAction();
+    this.props.cond_getMultilegExecStrategiesAPIAction();
 
     if (this.props.divkey !== "" && this.props.divkey === popupKey) {
       document.getElementById(popupKey).style.zIndex = this.props.zIndex + 1;
@@ -133,6 +137,10 @@ class ConditionalMultileg extends React.Component {
     }
   }
 
+  onClose() {
+    this.props.abrirItemBarraLateralAction("isOpenConditionalMultileg");
+  }
+
   render() {
     return (
       <DraggableModal
@@ -145,6 +153,7 @@ class ConditionalMultileg extends React.Component {
             headerTitle={this.props.headerTitle}
             headerClass="border-green"
             onConfig={() => {}}
+            onClose={this.onClose}
           />
         )}
       />
@@ -170,14 +179,14 @@ class ConditionalMultileg extends React.Component {
         targetElement.setSelectionRange(selectionStart + 1, selectionStart + 1);
       });
 
-      this.props.updateMultilegTabAction({
+      this.props.cond_updateMultilegTabAction({
         tabIndex,
         attributeName: "nomeAba",
         attributeValue: newTabName,
       });
     } //
     else {
-      this.props.selectOrAddMultilegTabAction(key);
+      this.props.cond_selectOrAddMultilegTabAction(key);
     }
   }
 
@@ -211,7 +220,7 @@ class ConditionalMultileg extends React.Component {
               {this.props.multileg.map((_, index) => {
                 return (
                   <Tab.Pane eventKey={`tab${index}`} key={index + "tabpane"}>
-                    <AbaMultileg indice={index} />
+                    <ConditionalMultilegTab indice={index} />
                   </Tab.Pane>
                 );
               })}
@@ -225,9 +234,9 @@ class ConditionalMultileg extends React.Component {
 
 const mapStateToPropsMultileg = (state) => ({
   configComplementarAberto:
-    state.conditionalMultilegReducer.configComplementarAberto,
-  multileg: state.conditionalMultilegReducer.multileg,
-  abaSelecionada: state.conditionalMultilegReducer.abaSelecionada,
+    state.conditionalconditionalMultilegReducer.configComplementarAberto,
+  multileg: state.conditionalconditionalMultilegReducer.multileg,
+  abaSelecionada: state.conditionalconditionalMultilegReducer.abaSelecionada,
   multilegButtonsVisibility: state.systemReducer.multilegButtonsVisibility,
   createAlertButtonVisibility: state.systemReducer.createAlertButtonVisibility,
   isOpenConditionalMultileg: state.systemReducer.isOpenConditionalMultileg,
@@ -247,9 +256,10 @@ export default compose(
   connect(
     mapStateToPropsMultileg,
     {
-      selectOrAddMultilegTabAction,
-      updateMultilegTabAction,
-      getMultilegExecStrategiesAPIAction,
+      cond_selectOrAddMultilegTabAction,
+      cond_updateMultilegTabAction,
+      cond_getMultilegExecStrategiesAPIAction,
+      abrirItemBarraLateralAction,
       // atualizarBookAction,
     },
     null,

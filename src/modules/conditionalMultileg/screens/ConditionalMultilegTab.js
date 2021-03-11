@@ -7,17 +7,17 @@ import { MDBIcon } from "mdbreact";
 import TabelaMultileg from "./TabelaMultileg";
 import { connect } from "react-redux";
 import {
-  updateMultilegTabAction,
-  addMultilegOfferAction,
+  cond_updateMultilegTabAction,
+  cond_addMultilegOfferAction,
 } from "../duck/actions/ConditionalMultilegActions";
-import { findMultilegQuote } from "../duck/actions/utils";
+import { cond_findMultilegQuote } from "../duck/actions/utils";
 import { formatarNumDecimal, formatExpiration } from "shared/utils/Formatacoes";
-import { searchMultilegSymbolAPIAction } from "../duck/actions/ConditionalMultilegAPIAction";
+import { cond_searchMultilegSymbolAPIAction } from "../duck/actions/ConditionalMultilegAPIAction";
 import Book from "./Book/Book";
 import { Select } from "antd";
 import { StorePrincipalContext } from "redux/StoreCreation";
 
-class AbaMultileg extends React.Component {
+class ConditionalMultilegTab extends React.Component {
   constructor(props) {
     super();
 
@@ -33,7 +33,7 @@ class AbaMultileg extends React.Component {
 
     const tabIndex = this.props.indice;
 
-    await this.props.searchMultilegSymbolAPIAction(tabIndex);
+    await this.props.cond_searchMultilegSymbolAPIAction(tabIndex);
 
     this.setState({ searchingAPI: false });
   }
@@ -43,7 +43,7 @@ class AbaMultileg extends React.Component {
     const { indice } = props;
     const arrayStrike = renderSerie(props);
 
-    const cotacao = findMultilegQuote({
+    const cotacao = cond_findMultilegQuote({
       multilegQuotes: props.cotacoesMultileg,
       symbol: props.multileg[indice].ativo,
     });
@@ -59,7 +59,7 @@ class AbaMultileg extends React.Component {
                   type="text"
                   value={props.multileg[indice].ativo}
                   onChange={(event) => {
-                    props.updateMultilegTabAction({
+                    props.cond_updateMultilegTabAction({
                       tabIndex: indice,
                       attributeName: "ativo",
                       attributeValue: event.target.value,
@@ -109,7 +109,7 @@ class AbaMultileg extends React.Component {
                   className="inputCodigo"
                   suffixIcon={<MDBIcon icon="caret-down" />}
                   onChange={(value) => {
-                    props.updateMultilegTabAction({
+                    props.cond_updateMultilegTabAction({
                       tabIndex: indice,
                       attributeName: "strikeSelecionado",
                       attributeValue: value,
@@ -127,7 +127,7 @@ class AbaMultileg extends React.Component {
                   className="textInput"
                   value={props.multileg[indice].vencimentoSelecionado}
                   onChange={(event) =>
-                    props.updateMultilegTabAction({
+                    props.cond_updateMultilegTabAction({
                       tabIndex: indice,
                       attributeName: "vencimentoSelecionado",
                       attributeValue: event.currentTarget.value,
@@ -155,7 +155,7 @@ class AbaMultileg extends React.Component {
                     variant="primary"
                     size="sm"
                     onClick={() => {
-                      props.addMultilegOfferAction({
+                      props.cond_addMultilegOfferAction({
                         tabIndex: props.indice,
                         offerType: "acao",
                       });
@@ -167,7 +167,7 @@ class AbaMultileg extends React.Component {
                     variant="primary"
                     size="sm"
                     onClick={() => {
-                      props.addMultilegOfferAction({
+                      props.cond_addMultilegOfferAction({
                         tabIndex: props.indice,
                         offerType: "call",
                       });
@@ -179,7 +179,7 @@ class AbaMultileg extends React.Component {
                     variant="primary"
                     size="sm"
                     onClick={() => {
-                      props.addMultilegOfferAction({
+                      props.cond_addMultilegOfferAction({
                         tabIndex: props.indice,
                         offerType: "put",
                       });
@@ -200,22 +200,23 @@ class AbaMultileg extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  configComplementarAberto: state.multilegReducer.configComplementarAberto,
-  multileg: state.multilegReducer.multileg,
-  cotacoesMultileg: state.multilegReducer.cotacoesMultileg,
-  cotacoesMultilegID: state.multilegReducer.cotacoesMultilegID,
+  configComplementarAberto:
+    state.conditionalMultilegReducer.configComplementarAberto,
+  multileg: state.conditionalMultilegReducer.multileg,
+  cotacoesMultileg: state.conditionalMultilegReducer.cotacoesMultileg,
+  cotacoesMultilegID: state.conditionalMultilegReducer.cotacoesMultilegID,
 });
 
 export default connect(
   mapStateToProps,
   {
-    updateMultilegTabAction,
-    searchMultilegSymbolAPIAction,
-    addMultilegOfferAction,
+    cond_updateMultilegTabAction,
+    cond_searchMultilegSymbolAPIAction,
+    cond_addMultilegOfferAction,
   },
   null,
   { context: StorePrincipalContext },
-)(AbaMultileg);
+)(ConditionalMultilegTab);
 
 const renderSeta = (valor) => {
   valor = Number(valor);

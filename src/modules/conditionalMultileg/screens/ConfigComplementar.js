@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Col, Button, Form } from "react-bootstrap";
 import { PopupHeader } from "shared/components/PopupHeader";
 import { connect } from "react-redux";
-import { updateMultilegStateAction } from "../duck/actions/ConditionalMultilegActions";
+import { updateConditionalMultilegStateAction } from "../duck/actions/ConditionalMultilegActions";
 import { StorePrincipalContext } from "redux/StoreCreation";
 
 class ConfigComplementar extends React.Component {
@@ -11,7 +11,7 @@ class ConfigComplementar extends React.Component {
       <div className="mcontent config_complementar">
         <PopupHeader
           headerTitle="CONFIGURAÇÃO COMPLEMENTAR"
-          name="config_complementar"
+          name="config_complementar_conditional_multileg"
         />
 
         <div className="p-1 pl-3 pr-3 bodyConfigComplementar">
@@ -25,7 +25,7 @@ class ConfigComplementar extends React.Component {
                 className="textInput"
                 value={this.props.horaInicial}
                 onChange={(event) =>
-                  this.props.updateMultilegStateAction(
+                  this.props.updateConditionalMultilegStateAction(
                     "horaInicial",
                     event.currentTarget.value,
                   )
@@ -43,7 +43,7 @@ class ConfigComplementar extends React.Component {
                 className="textInput"
                 value={this.props.horaFinal}
                 onChange={(event) =>
-                  this.props.updateMultilegStateAction(
+                  this.props.updateConditionalMultilegStateAction(
                     "horaFinal",
                     event.currentTarget.value,
                   )
@@ -61,7 +61,7 @@ class ConfigComplementar extends React.Component {
                 className="textInput"
                 value={this.props.modoExec}
                 onChange={(event) =>
-                  this.props.updateMultilegStateAction(
+                  this.props.updateConditionalMultilegStateAction(
                     "modoExec",
                     event.currentTarget.value,
                   )
@@ -80,7 +80,7 @@ class ConfigComplementar extends React.Component {
                 type="checkbox"
                 checked={this.props.apregoarOferta}
                 onChange={(event) =>
-                  this.props.updateMultilegStateAction(
+                  this.props.updateConditionalMultilegStateAction(
                     "apregoarOferta",
                     event.currentTarget.checked,
                   )
@@ -107,14 +107,20 @@ class ConfigComplementar extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  configComplementarAberto: state.multilegReducer.configComplementarAberto,
-  multileg: state.multilegReducer.multileg,
-  horaInicial: state.multilegReducer.horaInicial,
-  horaFinal: state.multilegReducer.horaFinal,
-  modoExec: state.multilegReducer.modoExec,
-  apregoarOferta: state.multilegReducer.apregoarOferta,
+  configComplementarAberto:
+    state.conditionalMultilegReducer.configComplementarAberto,
+  multileg: state.conditionalMultilegReducer.multileg,
+  horaInicial: state.conditionalMultilegReducer.horaInicial,
+  horaFinal: state.conditionalMultilegReducer.horaFinal,
+  modoExec: state.conditionalMultilegReducer.modoExec,
+  apregoarOferta: state.conditionalMultilegReducer.apregoarOferta,
 });
 
-export default connect(mapStateToProps, { updateMultilegStateAction }, null, {
-  context: StorePrincipalContext,
-})(ConfigComplementar);
+export default connect(
+  mapStateToProps,
+  { updateConditionalMultilegStateAction },
+  null,
+  {
+    context: StorePrincipalContext,
+  },
+)(ConfigComplementar);

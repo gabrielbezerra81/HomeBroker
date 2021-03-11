@@ -8,7 +8,7 @@ import checkIfUpdateConfigChanged from "../../../managers/updateManager/utils";
 const MultilegUpdateManager: React.FC = () => {
   const {
     systemReducer: { updateMode, updateInterval, isOpenConditionalMultileg },
-    multilegReducer: {
+    conditionalMultilegReducer: {
       multileg,
       abaSelecionada,
       esource_multilegQuotes,
@@ -18,7 +18,9 @@ const MultilegUpdateManager: React.FC = () => {
 
   const dispatch = useDispatchStorePrincipal();
 
-  const previousIsOpenConditionalMultileg = usePrevious(isOpenConditionalMultileg);
+  const previousIsOpenConditionalMultileg = usePrevious(
+    isOpenConditionalMultileg,
+  );
   const previousUpdateMode = usePrevious(updateMode);
   const previousUpdateInterval = usePrevious(updateInterval);
   const previousMultileg = usePrevious(multileg);
@@ -90,12 +92,21 @@ const MultilegUpdateManager: React.FC = () => {
       updateInterval,
     });
 
-    if (isOpenConditionalMultileg && (hasMultilegChanged || hasUpdateConfigChanged)) {
+    if (
+      isOpenConditionalMultileg &&
+      (hasMultilegChanged || hasUpdateConfigChanged)
+    ) {
       startUpdate();
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpenConditionalMultileg, multileg, updateMode, updateInterval, dispatch]);
+  }, [
+    isOpenConditionalMultileg,
+    multileg,
+    updateMode,
+    updateInterval,
+    dispatch,
+  ]);
 
   // Para atualização ao fechar multileg
   useEffect(() => {

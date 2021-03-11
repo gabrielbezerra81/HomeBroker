@@ -9,46 +9,49 @@ import {
   UPDATE_ONE_CONDITIONAL_MULTILEG,
   UPDATE_MANY_CONDITIONAL_MULTILEG,
 } from "constants/MenuActionTypes";
-import MultilegState from "../../types/MultilegState";
-import { MultilegTab, MultilegQuote } from "../../types/multileg";
+import ConditionalMultilegState from "../../types/ConditionalMultilegState";
+import {
+  ConditionalMultilegTab,
+  ConditionalMultilegQuote,
+} from "../../types/conditionalMultileg";
 import { Account } from "types/system/system";
 import { toast } from "react-toastify";
 
-interface UpdateMultilegState {
+interface UpdateConditionalMultilegState {
   attributeName: string;
-  attributeValue: MultilegState[keyof MultilegState];
+  attributeValue: ConditionalMultilegState[keyof ConditionalMultilegState];
 }
 
-export const updateOneMultilegState = ({
+export const updateOneConditionalMultilegState = ({
   attributeName,
   attributeValue,
-}: UpdateMultilegState) => {
+}: UpdateConditionalMultilegState) => {
   return {
     type: UPDATE_ONE_CONDITIONAL_MULTILEG,
     payload: { attributeName, attributeValue },
   };
 };
 
-export const updateManyMultilegState = (payload: any) => {
+export const updateManyConditionalMultilegState = (payload: any) => {
   return {
     type: UPDATE_MANY_CONDITIONAL_MULTILEG,
     payload,
   };
 };
 
-interface FindClosestStrikeToQuote {
+interface cond_findClosestStrikeToQuote {
   options: any[];
   symbolQuote?: number;
   symbol?: string;
   symbolIsOption?: boolean;
 }
 
-export const findClosestStrike = ({
+export const cond_findClosestStrike = ({
   options,
   symbolQuote,
   symbol,
   symbolIsOption,
-}: FindClosestStrikeToQuote) => {
+}: cond_findClosestStrikeToQuote) => {
   if (options.length > 0) {
     if (symbolIsOption && symbol) {
       const option = options.find((optionItem) => optionItem.symbol === symbol);
@@ -67,19 +70,19 @@ export const findClosestStrike = ({
   return 0;
 };
 
-interface MountMultilegOrder {
-  multilegTabs: MultilegTab[];
+interface cond_mountMultilegOrder {
+  multilegTabs: ConditionalMultilegTab[];
   selectedAccount: Account;
   tabIndex: number;
   comment?: any;
 }
 
-export const mountMultilegOrder = ({
+export const cond_mountMultilegOrder = ({
   multilegTabs,
   selectedAccount,
   tabIndex,
   comment,
-}: MountMultilegOrder) => {
+}: cond_mountMultilegOrder) => {
   let multilegTab = [...multilegTabs][tabIndex];
 
   let multilegOrder: any = {
@@ -144,17 +147,17 @@ export const mountMultilegOrder = ({
   return [multilegOrder];
 };
 
-interface ValidateMultilegOrder {
-  multilegTabs: MultilegTab[];
+interface cond_validateMultilegOrder {
+  multilegTabs: ConditionalMultilegTab[];
   selectedAccount: Account;
   tabIndex: number;
 }
 
-export const validateMultilegOrder = ({
+export const cond_validateMultilegOrder = ({
   multilegTabs,
   selectedAccount,
   tabIndex,
-}: ValidateMultilegOrder) => {
+}: cond_validateMultilegOrder) => {
   let multilegTab = [...multilegTabs][tabIndex];
   let orderIsValid = true;
 
@@ -186,17 +189,20 @@ export const validateMultilegOrder = ({
 };
 
 interface AddNewMultilegQuote {
-  multilegQuotes: MultilegQuote[];
+  multilegQuotes: ConditionalMultilegQuote[];
   symbol: string;
   quote?: number | string;
 }
 
-export const AddNewMultilegQuote = ({
+export const cond_addNewMultilegQuote = ({
   multilegQuotes,
   symbol,
   quote = 0,
 }: AddNewMultilegQuote) => {
-  const quoteAlreadyAdded = checkQuoteAlreadyAdded({ multilegQuotes, symbol });
+  const quoteAlreadyAdded = cond_checkQuoteAlreadyAdded({
+    multilegQuotes,
+    symbol,
+  });
 
   if (!quoteAlreadyAdded) {
     multilegQuotes.push({
@@ -226,27 +232,27 @@ const findRepetedSymbols = (symbols: string[]) => {
   }, result);
 };
 
-interface CheckQuoteAlreadyAdded {
-  multilegQuotes: MultilegQuote[];
+interface cond_checkQuoteAlreadyAdded {
+  multilegQuotes: ConditionalMultilegQuote[];
   symbol: string;
 }
 
-export const checkQuoteAlreadyAdded = ({
+export const cond_checkQuoteAlreadyAdded = ({
   multilegQuotes,
   symbol,
-}: CheckQuoteAlreadyAdded) => {
+}: cond_checkQuoteAlreadyAdded) => {
   return multilegQuotes.find((quoteItem) => quoteItem.codigo === symbol);
 };
 
-interface FindMultilegQuote {
-  multilegQuotes: MultilegQuote[];
+interface cond_findMultilegQuote {
+  multilegQuotes: ConditionalMultilegQuote[];
   symbol: string;
 }
 
-export const findMultilegQuote = ({
+export const cond_findMultilegQuote = ({
   multilegQuotes,
   symbol,
-}: FindMultilegQuote) => {
+}: cond_findMultilegQuote) => {
   const quote = multilegQuotes.find((quoteItem) => quoteItem.codigo === symbol);
 
   if (quote) return quote.valor;
@@ -254,11 +260,11 @@ export const findMultilegQuote = ({
 };
 
 interface FindMultilegBook {
-  multilegQuotes: MultilegQuote[];
+  multilegQuotes: ConditionalMultilegQuote[];
   symbol: string;
 }
 
-export const findMultilegBook = ({
+export const cond_findMultilegBook = ({
   multilegQuotes,
   symbol,
 }: FindMultilegBook) => {

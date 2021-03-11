@@ -1,10 +1,10 @@
-export interface MultilegTab {
+export interface ConditionalMultilegTab {
   nomeAba: string;
   ativo: string;
   ativoAtual: string;
   market: string;
   variacao: number;
-  opcoes: Array<MultilegOption>;
+  opcoes: Array<ConditionalMultilegOption>;
   codigoAberto: boolean;
   strikeSelecionado: number | undefined;
   vencimento: Array<string>;
@@ -12,7 +12,7 @@ export interface MultilegTab {
   preco: string;
   validadeSelect: "DAY" | "SPECIFIED_DAY" | "GTC";
   date: Date;
-  tabelaMultileg: Array<MultilegOffer>;
+  tabelaMultileg: Array<ConditionalMultilegOffer>;
   isAlertOpen: boolean;
   param: "Bid" | "Ask" | "Last";
   operator: "Less" | "Greater";
@@ -21,7 +21,7 @@ export interface MultilegTab {
   editingOrderId: number | null;
 }
 
-export interface MultilegOption {
+export interface ConditionalMultilegOption {
   id: number;
   symbol: string;
   expiration: string;
@@ -30,7 +30,7 @@ export interface MultilegOption {
   type: "PUT" | "CALL";
 }
 
-export interface MultilegQuote {
+export interface ConditionalMultilegQuote {
   codigo: string;
   valor: number;
   compra: {
@@ -45,8 +45,8 @@ export interface MultilegQuote {
   };
 }
 
-export interface MultilegOffer {
-  opcoes: Array<MultilegOption> | Array<{ symbol: string }>;
+export interface ConditionalMultilegOffer {
+  opcoes: Array<ConditionalMultilegOption> | Array<{ symbol: string }>;
   strikeSelecionado: number;
   cv: "compra" | "venda";
   qtde: number;
@@ -60,30 +60,6 @@ export interface MultilegOffer {
   ativoAtual: string;
 }
 
-export interface AlertAPI {
-  id: number;
-  param: "Bid" | "Ask" | "Last";
-  operator: "Less" | "Greater";
-  comment: string;
-  expiration: string;
-  price: number;
-  structure: {
-    id: number;
-    symbol: string;
-    components: Array<{
-      qtty: number;
-      stock: {
-        symbol: string;
-        option: boolean;
-        type: "CALL" | "PUT" | undefined;
-        model: string;
-        strike: number;
-        endBusiness: string;
-      };
-    }>;
-  };
-}
-
 export interface ExecutionStrategy {
   id: number;
   boleta: string;
@@ -92,13 +68,3 @@ export interface ExecutionStrategy {
   trigger: number | null;
 }
 
-interface MultilegPartialPayload {
-  expiration: string;
-  offers: Array<{
-    expiration: string;
-    expirationType: "DAY" | "SPECIFIED_DAY" | "GTC";
-    price: number;
-  }>;
-}
-
-export interface MultilegPayload extends MultilegPartialPayload {}

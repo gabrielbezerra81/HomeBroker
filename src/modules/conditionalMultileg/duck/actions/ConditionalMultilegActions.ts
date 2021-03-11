@@ -4,70 +4,71 @@ import {
   setPointerWhileAwaiting,
   pesquisarStrikesMultilegAPI,
 } from "api/API";
-import { calculoPreco } from "../../screens/CalculoPreco";
+import { calculoPreco } from "./CalculoPreco";
 import { MainThunkAction, MainThunkDispatch } from "types/ThunkActions";
 import {
-  MultilegTab,
-  MultilegQuote,
-  MultilegOffer,
-  MultilegOption,
-} from "../../types/multileg";
-import ConditionalMultilegState from "../../types/MultilegState";
+  ConditionalMultilegTab,
+  ConditionalMultilegQuote,
+  ConditionalMultilegOffer,
+  ConditionalMultilegOption,
+} from "../../types/conditionalMultileg";
+import ConditionalMultilegState from "../../types/ConditionalMultilegState";
 import {
-  findClosestStrike,
-  AddNewMultilegQuote,
-  checkQuoteAlreadyAdded,
-  updateOneMultilegState,
-  updateManyMultilegState,
+  cond_findClosestStrike,
+  cond_addNewMultilegQuote,
+  cond_checkQuoteAlreadyAdded,
+  updateOneConditionalMultilegState,
+  updateManyConditionalMultilegState,
 } from "./utils";
 import { formatarNumero } from "shared/utils/Formatacoes";
 
-export const updateMultilegStateAction = (
+export const updateConditionalMultilegStateAction = (
   attributeName: string,
   attributeValue: ConditionalMultilegState[keyof ConditionalMultilegState],
 ): MainThunkAction => (dispatch) => {
-  dispatch(updateOneMultilegState({ attributeName, attributeValue }));
+  dispatch(
+    updateOneConditionalMultilegState({ attributeName, attributeValue }),
+  );
 };
 
-export const openCloseMultilegExtraConfigsAction = (): MainThunkAction => (
+export const cond_openCloseMultilegExtraConfigsAction = (): MainThunkAction => (
   dispatch,
   getState,
 ) => {
   const {
-    multilegReducer: { configComplementarAberto },
+    conditionalMultilegReducer: { configComplementarAberto },
   } = getState();
 
   dispatch(
-    updateMultilegStateAction(
+    updateConditionalMultilegStateAction(
       "configComplementarAberto",
       !configComplementarAberto,
     ),
   );
 };
 
-export const selectOrAddMultilegTabAction = (key: string): MainThunkAction => (
-  dispatch,
-  getState,
-) => {
+export const cond_selectOrAddMultilegTabAction = (
+  key: string,
+): MainThunkAction => (dispatch, getState) => {
   const {
-    multilegReducer: { multileg },
+    conditionalMultilegReducer: { multileg },
   } = getState();
 
   if (key === "adicionar") {
-    const { multilegTabs, currentTab } = addMultilegTab(multileg);
+    const { multilegTabs, currentTab } = cond_addMultilegTab(multileg);
     dispatch(
-      updateManyMultilegState({
+      updateManyConditionalMultilegState({
         multileg: multilegTabs,
         abaSelecionada: currentTab,
       }),
     );
   } else {
-    dispatch(updateMultilegStateAction("abaSelecionada", key));
+    dispatch(updateConditionalMultilegStateAction("abaSelecionada", key));
   }
 };
 
-export const addMultilegTab = (multilegTabs: MultilegTab[]) => {
-  const updatedMultilegTabs = cloneMultilegTabs(multilegTabs);
+export const cond_addMultilegTab = (multilegTabs: ConditionalMultilegTab[]) => {
+  const updatedMultilegTabs = cond_cloneMultilegTabs(multilegTabs);
 
   const newTab = cloneDeep(newMultilegTab);
   newTab.nomeAba = `Ordem ${updatedMultilegTabs.length + 1}`;
@@ -78,44 +79,46 @@ export const addMultilegTab = (multilegTabs: MultilegTab[]) => {
   return { multilegTabs: updatedMultilegTabs, currentTab };
 };
 
-export const removeMultilegTabAction = (tabIndex: number): MainThunkAction => (
-  dispatch,
-  getState,
-) => {
+export const cond_removeMultilegTabAction = (
+  tabIndex: number,
+): MainThunkAction => (dispatch, getState) => {
   const {
-    multilegReducer: { multileg },
+    conditionalMultilegReducer: { multileg },
   } = getState();
 
-  const updatedMultilegTabs = cloneMultilegTabs(multileg);
+  const updatedMultilegTabs = cond_cloneMultilegTabs(multileg);
 
   if (tabIndex > 0) {
     const key = `tab${tabIndex - 1}`;
-    dispatch(updateMultilegStateAction("abaSelecionada", key));
+    dispatch(updateConditionalMultilegStateAction("abaSelecionada", key));
   }
 
   updatedMultilegTabs.splice(tabIndex, 1);
 
   dispatch(
-    updateMultilegStateAction("conditionalMultileg", updatedMultilegTabs),
+    updateConditionalMultilegStateAction(
+      "conditionalMultileg",
+      updatedMultilegTabs,
+    ),
   );
 };
 
 interface ChangeTabAttributeAction {
   tabIndex: number;
-  attributeName: keyof MultilegTab | "limpar";
+  attributeName: keyof ConditionalMultilegTab | "limpar";
   attributeValue: any;
 }
 
-export const updateMultilegTabAction = ({
+export const cond_updateMultilegTabAction = ({
   tabIndex,
   attributeName,
   attributeValue,
 }: ChangeTabAttributeAction): MainThunkAction => async (dispatch, getState) => {
   const {
-    multilegReducer: { multileg, cotacoesMultileg },
+    conditionalMultilegReducer: { multileg, cotacoesMultileg },
   } = getState();
 
-  const data = await updateMultilegTab({
+  const data = await cond_updateMultilegTab({
     multilegTabs: multileg,
     tabIndex,
     attributeName,
@@ -123,23 +126,31 @@ export const updateMultilegTabAction = ({
     multilegQuotes: cotacoesMultileg,
   });
 
-  dispatch(updateMultilegStateAction("conditionalMultileg", data.multilegTabs));
+  dispatch(
+    updateConditionalMultilegStateAction(
+      "conditionalMultileg",
+      data.multilegTabs,
+    ),
+  );
   if (data.multilegQuotes) {
     dispatch(
-      updateMultilegStateAction("cotacoesMultileg", data.multilegQuotes),
+      updateConditionalMultilegStateAction(
+        "cotacoesMultileg",
+        data.multilegQuotes,
+      ),
     );
   }
 };
 
 interface ChangeTabAttribute {
-  multilegTabs: Array<MultilegTab>;
+  multilegTabs: Array<ConditionalMultilegTab>;
   tabIndex: number;
-  attributeName: keyof MultilegTab | "limpar";
+  attributeName: keyof ConditionalMultilegTab | "limpar";
   attributeValue: any;
-  multilegQuotes?: Array<MultilegQuote>;
+  multilegQuotes?: Array<ConditionalMultilegQuote>;
 }
 
-export const updateMultilegTab = async ({
+export const cond_updateMultilegTab = async ({
   multilegTabs,
   tabIndex,
   attributeName,
@@ -150,7 +161,7 @@ export const updateMultilegTab = async ({
 
   let value = attributeValue;
 
-  const updatedMultilegtabs = cloneMultilegTabs(multilegTabs);
+  const updatedMultilegtabs = cond_cloneMultilegTabs(multilegTabs);
   let updatedMultilegQuotes;
 
   if (attributeName === "limpar") {
@@ -169,13 +180,13 @@ export const updateMultilegTab = async ({
 
     if (attributeName === "vencimentoSelecionado" && multilegQuotes) {
       // TODO: possível side effect
-      updatedMultilegQuotes = cloneMultilegQuotes(multilegQuotes);
+      updatedMultilegQuotes = cond_cloneMultilegQuotes(multilegQuotes);
       const symbol = multilegTabs[tabIndex].ativoAtual;
 
       updatedMultilegtabs[tabIndex].ativo = symbol;
 
       if (
-        !checkQuoteAlreadyAdded({
+        !cond_checkQuoteAlreadyAdded({
           multilegQuotes: updatedMultilegQuotes,
           symbol,
         })
@@ -184,7 +195,7 @@ export const updateMultilegTab = async ({
 
         const quote = symbolData.cotacaoAtual;
 
-        AddNewMultilegQuote({
+        cond_addNewMultilegQuote({
           multilegQuotes: updatedMultilegQuotes,
           symbol,
           quote,
@@ -194,7 +205,9 @@ export const updateMultilegTab = async ({
       const options = await pesquisarStrikesMultilegAPI(symbol, attributeValue);
       if (options) {
         updatedMultilegtabs[tabIndex].opcoes = [...options];
-        updatedMultilegtabs[tabIndex].strikeSelecionado = findClosestStrike({
+        updatedMultilegtabs[
+          tabIndex
+        ].strikeSelecionado = cond_findClosestStrike({
           options,
           symbolQuote: updatedMultilegtabs[tabIndex].strikeSelecionado,
         });
@@ -211,11 +224,14 @@ export const updateMultilegTab = async ({
 interface ChangeTableOfferAttributeAction {
   tabIndex: number;
   lineIndex: number;
-  attributeName: keyof Omit<MultilegOffer, "opcoes">;
-  attributeValue: MultilegOffer[keyof Omit<MultilegOffer, "opcoes">];
+  attributeName: keyof Omit<ConditionalMultilegOffer, "opcoes">;
+  attributeValue: ConditionalMultilegOffer[keyof Omit<
+    ConditionalMultilegOffer,
+    "opcoes"
+  >];
 }
 
-export const updateMultilegOfferAction = ({
+export const cond_updateMultilegOfferAction = ({
   tabIndex,
   attributeName,
   attributeValue,
@@ -227,12 +243,12 @@ export const updateMultilegOfferAction = ({
   setPointerWhileAwaiting({ lockMode: "travar", id: "conditionalMultileg" });
 
   const {
-    multilegReducer: { multileg, cotacoesMultileg },
+    conditionalMultilegReducer: { multileg, cotacoesMultileg },
   } = getState();
 
-  const updatedMultilegTabs = cloneMultilegTabs(multileg);
+  const updatedMultilegTabs = cond_cloneMultilegTabs(multileg);
   const multilegOffer = updatedMultilegTabs[tabIndex].tabelaMultileg[lineIndex];
-  let updatedMultilegQuotes: MultilegQuote[] = cloneMultilegQuotes(
+  let updatedMultilegQuotes: ConditionalMultilegQuote[] = cond_cloneMultilegQuotes(
     cotacoesMultileg,
   );
 
@@ -256,7 +272,7 @@ export const updateMultilegOfferAction = ({
         multilegOffer.opcoes = [...options];
 
         const foundOption = multilegOffer.opcoes.find((optionsItem) => {
-          const option = optionsItem as MultilegOption;
+          const option = optionsItem as ConditionalMultilegOption;
           return option.strike === multilegOffer.strikeSelecionado;
         });
         // const cotacaoAnterior = cotacoesMultileg.find(
@@ -264,13 +280,13 @@ export const updateMultilegOfferAction = ({
         // );
 
         if (!foundOption) {
-          multilegOffer.strikeSelecionado = findClosestStrike({
+          multilegOffer.strikeSelecionado = cond_findClosestStrike({
             options,
             symbolQuote: multilegOffer.strikeSelecionado,
           });
         }
         setOfferSymbolAndModel(multilegOffer);
-        // TODO: fazendo dispatchs nas linhas 271, 291 (quote) e 302
+        // fazendo dispatchs nas linhas 271, 291 (quote) e 302
       }
     } //
     else if (attributeName === "strikeSelecionado") {
@@ -283,9 +299,9 @@ export const updateMultilegOfferAction = ({
 
   if (previousSymbol !== multilegOffer.codigoSelecionado) {
     // Se o código mudar, deve ser verificado se o novo código já está presente nos books
-    updatedMultilegQuotes = cloneMultilegQuotes(updatedMultilegQuotes);
+    updatedMultilegQuotes = cond_cloneMultilegQuotes(updatedMultilegQuotes);
 
-    AddNewMultilegQuote({
+    cond_addNewMultilegQuote({
       multilegQuotes: updatedMultilegQuotes,
       symbol: multilegOffer.codigoSelecionado,
     });
@@ -298,7 +314,7 @@ export const updateMultilegOfferAction = ({
   tab.preco = tabPrice;
 
   dispatch(
-    updateManyMultilegState({
+    updateManyConditionalMultilegState({
       cotacoesMultileg: updatedMultilegQuotes,
       multileg: updatedMultilegTabs,
     }),
@@ -312,18 +328,22 @@ interface RemoveMultilegOffer {
   lineIndex: number;
 }
 
-export const removeMultilegOfferAction = ({
+export const cond_removeMultilegOfferAction = ({
   tabIndex,
   lineIndex,
 }: RemoveMultilegOffer): MainThunkAction => (dispatch, getState) => {
   const {
-    multilegReducer: { multileg },
+    conditionalMultilegReducer: { multileg },
   } = getState();
 
-  const multilegTabs: MultilegTab[] = cloneMultilegTabs(multileg);
+  const multilegTabs: ConditionalMultilegTab[] = cond_cloneMultilegTabs(
+    multileg,
+  );
   multilegTabs[tabIndex].tabelaMultileg.splice(lineIndex, 1);
 
-  dispatch(updateMultilegStateAction("conditionalMultileg", multilegTabs));
+  dispatch(
+    updateConditionalMultilegStateAction("conditionalMultileg", multilegTabs),
+  );
 };
 
 interface AddMultilegOfferAction {
@@ -331,7 +351,7 @@ interface AddMultilegOfferAction {
   offerType: "acao" | "call" | "put";
 }
 
-export const addMultilegOfferAction = ({
+export const cond_addMultilegOfferAction = ({
   tabIndex,
   offerType,
 }: AddMultilegOfferAction): MainThunkAction => async (dispatch, getState) => {
@@ -342,11 +362,11 @@ export const addMultilegOfferAction = ({
   });
 
   const {
-    multilegReducer: { multileg, cotacoesMultileg },
+    conditionalMultilegReducer: { multileg, cotacoesMultileg },
   } = getState();
 
   if (multileg[tabIndex].tabelaMultileg.length < 6) {
-    const data = await addMultilegOffer({
+    const data = await cond_addMultilegOffer({
       multilegTabs: multileg,
       offerType,
       tabIndex,
@@ -354,7 +374,7 @@ export const addMultilegOfferAction = ({
     });
 
     dispatch(
-      updateManyMultilegState({
+      updateManyConditionalMultilegState({
         multileg: data.multilegTabs,
         cotacoesMultileg: data.multilegQuotes,
       }),
@@ -369,22 +389,24 @@ export const addMultilegOfferAction = ({
 };
 
 interface AddMultilegOffer {
-  multilegTabs: MultilegTab[];
+  multilegTabs: ConditionalMultilegTab[];
   offerType: "acao" | "call" | "put";
   tabIndex: number;
-  multilegQuotes: MultilegQuote[];
+  multilegQuotes: ConditionalMultilegQuote[];
 }
 
-export const addMultilegOffer = async ({
+export const cond_addMultilegOffer = async ({
   multilegTabs,
   offerType,
   tabIndex,
   multilegQuotes,
 }: AddMultilegOffer) => {
-  const updatedTabs: MultilegTab[] = cloneMultilegTabs(multilegTabs);
-  multilegQuotes = cloneMultilegQuotes(multilegQuotes);
+  const updatedTabs: ConditionalMultilegTab[] = cond_cloneMultilegTabs(
+    multilegTabs,
+  );
+  multilegQuotes = cond_cloneMultilegQuotes(multilegQuotes);
 
-  const offer: MultilegOffer = cloneDeep(newOffer);
+  const offer: ConditionalMultilegOffer = cloneDeep(newOffer);
   let quote = 0;
 
   offer.ativoAtual = updatedTabs[tabIndex].ativoAtual;
@@ -408,14 +430,14 @@ export const addMultilegOffer = async ({
   }
   const newSymbol = offer.codigoSelecionado;
 
-  if (!checkQuoteAlreadyAdded({ multilegQuotes, symbol: newSymbol })) {
+  if (!cond_checkQuoteAlreadyAdded({ multilegQuotes, symbol: newSymbol })) {
     const symbolData = await pesquisarAtivoAPI(offer.codigoSelecionado);
     if (symbolData) {
       quote = Number(symbolData.cotacaoAtual);
     }
   }
 
-  AddNewMultilegQuote({
+  cond_addNewMultilegQuote({
     multilegQuotes,
     symbol: newSymbol,
     quote,
@@ -448,7 +470,7 @@ export const addMultilegOffer = async ({
   return { multilegTabs: updatedTabs, multilegQuotes };
 };
 
-export const newOffer: MultilegOffer = {
+const newOffer: ConditionalMultilegOffer = {
   opcoes: [],
   strikeSelecionado: 0,
   cv: "compra",
@@ -463,7 +485,7 @@ export const newOffer: MultilegOffer = {
   ativoAtual: "",
 };
 
-export const newMultilegTab: MultilegTab = {
+const newMultilegTab: ConditionalMultilegTab = {
   nomeAba: "",
   ativo: "",
   ativoAtual: "",
@@ -486,9 +508,9 @@ export const newMultilegTab: MultilegTab = {
   editingOrderId: null,
 };
 
-const setOfferSymbolAndModel = (multilegOffer: MultilegOffer) => {
+const setOfferSymbolAndModel = (multilegOffer: ConditionalMultilegOffer) => {
   multilegOffer.opcoes.forEach((optionsItem) => {
-    const option = optionsItem as MultilegOption;
+    const option = optionsItem as ConditionalMultilegOption;
     if (
       option.strike === multilegOffer.strikeSelecionado &&
       option.type === multilegOffer.tipo.toUpperCase()
@@ -499,9 +521,11 @@ const setOfferSymbolAndModel = (multilegOffer: MultilegOffer) => {
   });
 };
 
-const setOfferModelTypeStrikeAndSeries = (multilegOffer: MultilegOffer) => {
+const setOfferModelTypeStrikeAndSeries = (
+  multilegOffer: ConditionalMultilegOffer,
+) => {
   multilegOffer.opcoes.forEach((optionsItem) => {
-    const option = optionsItem as MultilegOption;
+    const option = optionsItem as ConditionalMultilegOption;
 
     if (option.symbol === multilegOffer.codigoSelecionado) {
       multilegOffer.modelo = option.model;
@@ -512,15 +536,9 @@ const setOfferModelTypeStrikeAndSeries = (multilegOffer: MultilegOffer) => {
   });
 };
 
-interface UpdateMultilegQuotesProps {
-  dispatch: MainThunkDispatch;
-  multilegQuotes: MultilegQuote[];
-  token: { accessToken: string; tokenType: string };
-  eventSourceMultilegQuotes: EventSource | null;
-  setIntervalMultilegQuotes: NodeJS.Timeout | null;
-}
-
-export const cloneMultilegTabs = (multilegTabs: MultilegTab[]) =>
+export const cond_cloneMultilegTabs = (
+  multilegTabs: ConditionalMultilegTab[],
+) =>
   multilegTabs.map((multilegTab) => ({
     ...multilegTab,
     opcoes: multilegTab.opcoes.map((option) => ({ ...option })),
@@ -528,15 +546,16 @@ export const cloneMultilegTabs = (multilegTabs: MultilegTab[]) =>
     tabelaMultileg: multilegTab.tabelaMultileg.map((offer) => ({ ...offer })),
   }));
 
-export const cloneMultilegQuotes = (multilegQuotes: MultilegQuote[]) =>
-  multilegQuotes.map((quote) => ({ ...quote }));
+export const cond_cloneMultilegQuotes = (
+  multilegQuotes: ConditionalMultilegQuote[],
+) => multilegQuotes.map((quote) => ({ ...quote }));
 
-export const updateMultilegPriceAction = (
+export const cond_updateMultilegPriceAction = (
   tabIndex: number,
 ): MainThunkAction => {
   return (dispatch, getState) => {
     const {
-      multilegReducer: { multileg, cotacoesMultileg },
+      conditionalMultilegReducer: { multileg, cotacoesMultileg },
     } = getState();
 
     const tab = multileg[tabIndex];
@@ -550,7 +569,7 @@ export const updateMultilegPriceAction = (
 
     if (price !== newPrice && !Number.isNaN(newPrice)) {
       dispatch(
-        updateMultilegTabAction({
+        cond_updateMultilegTabAction({
           tabIndex,
           attributeName: "preco",
           attributeValue: newPrice,

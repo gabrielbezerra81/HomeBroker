@@ -2,8 +2,8 @@ import React from "react";
 import { Col, Nav, Form } from "react-bootstrap";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import {
-  removeMultilegTabAction,
-  updateMultilegTabAction,
+  cond_removeMultilegTabAction,
+  cond_updateMultilegTabAction,
 } from "../duck/actions/ConditionalMultilegActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import { FiX } from "react-icons/fi";
@@ -14,7 +14,7 @@ interface TabTitleProps {
 
 const TabTitle: React.FC<TabTitleProps> = ({ tabIndex }) => {
   const {
-    multilegReducer: { multileg, abaSelecionada },
+    conditionalMultilegReducer: { multileg, abaSelecionada },
   } = useStateStorePrincipal();
 
   const dispatch = useDispatchStorePrincipal();
@@ -33,7 +33,7 @@ const TabTitle: React.FC<TabTitleProps> = ({ tabIndex }) => {
               strokeWidth={3}
               color="#666"
               onClick={(e) => {
-                dispatch(removeMultilegTabAction(tabIndex));
+                dispatch(cond_removeMultilegTabAction(tabIndex));
                 e.stopPropagation();
               }}
             />
@@ -46,7 +46,7 @@ const TabTitle: React.FC<TabTitleProps> = ({ tabIndex }) => {
                 const { selectionStart, value } = targetElement;
 
                 dispatch(
-                  updateMultilegTabAction({
+                  cond_updateMultilegTabAction({
                     tabIndex: tabIndex,
                     attributeName: "nomeAba",
                     attributeValue: value,
