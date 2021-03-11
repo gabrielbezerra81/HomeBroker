@@ -13,7 +13,6 @@ import {
 
 import checkIfUpdateConfigChanged from "../../../managers/updateManager/utils";
 import { startProactiveBoxSymbolsUpdateAction } from "../duck/actions/tab4Actions";
-import { ParsedConfiguration } from "../types/MultiBoxState";
 import { getStructureBySymbolAPI } from "api/symbolAPI";
 
 interface SymbolIdObj {
