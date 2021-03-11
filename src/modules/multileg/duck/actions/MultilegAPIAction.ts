@@ -289,11 +289,7 @@ export const startProactiveMultilegUpdateAction = (
 ): MainThunkAction => {
   return (dispatch, getState) => {
     const {
-      multilegReducer: {
-        cotacoesMultileg: multilegQuotes,
-        esource_multilegQuotes,
-        interval_multilegQuotes,
-      },
+      multilegReducer: { esource_multilegQuotes, interval_multilegQuotes },
       systemReducer: { updateInterval },
     } = getState();
 
@@ -310,6 +306,10 @@ export const startProactiveMultilegUpdateAction = (
     if (symbols) {
       const interval = setInterval(async () => {
         const data = await getProactiveMultilegQuotesAPI(symbols);
+
+        const {
+          multilegReducer: { cotacoesMultileg: multilegQuotes },
+        } = getState();
 
         const updatedQuotes = produce(multilegQuotes, (draft) => {
           draft.forEach((quoteToUpdateItem) => {

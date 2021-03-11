@@ -112,8 +112,8 @@ export const startProactiveBoletaQuoteUpdateAction = (namespace) => {
 
     const {
       esource_boletaQuote,
-      dadosPesquisa,
       interval_boletaQuote,
+      dadosPesquisa,
     } = appBoletasState[namespace];
 
     if (esource_boletaQuote) {
@@ -128,12 +128,18 @@ export const startProactiveBoletaQuoteUpdateAction = (namespace) => {
 
     if (symbol) {
       const interval = setInterval(async () => {
+        const appBoletasState = getState();
+
+        const { dadosPesquisa: searchData } = appBoletasState[namespace];
+
+        const { ativo: symbol } = searchData;
+
         const data = await getProactiveBoletaQuoteAPI(symbol);
 
         if (data) {
           const { quote, lastDate } = data;
 
-          const updatedSearchData = produce(dadosPesquisa, (draft) => {
+          const updatedSearchData = produce(searchData, (draft) => {
             draft.cotacaoAtual = quote;
             draft.ultimoHorario = formatarDataDaAPI(
               lastDate,
