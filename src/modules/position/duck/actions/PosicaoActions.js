@@ -215,11 +215,15 @@ export const startReactivePositionQuoteUpdateAction = () => {
 export const startProactivePositionUpdateAction = () => {
   return (dispatch, getState) => {
     const {
-      positionReducer: { esource_position },
+      positionReducer: { esource_position, interval_position },
     } = getState();
 
     if (esource_position && esource_position.close) {
       esource_position.close();
+    }
+
+    if (interval_position) {
+      clearInterval(interval_position);
     }
   };
 };

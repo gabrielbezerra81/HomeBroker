@@ -9,6 +9,7 @@ export default interface PositionState {
   esource_emblem: EventSource | null;
   interval_emblem: NodeJS.Timeout | null;
   esource_position: EventSource | null;
+  interval_position:NodeJS.Timeout|null;
   esource_positionQuote: EventSource | null;
   interval_positionQuote: NodeJS.Timeout | null;
   arrayPrecos: PositionPrice[];

@@ -82,7 +82,7 @@ const BoxUpdateManager: React.FC = () => {
     return symbols;
   }, [boxes, boxesInActiveMainTab]);
 
-  // Obtém id referente aos códigos pesquisados no input
+  // Obtém ids referente aos códigos pesquisados no input
   useEffect(() => {
     async function getSearchedSymbolsIds() {
       if (searchedSymbols.length) {

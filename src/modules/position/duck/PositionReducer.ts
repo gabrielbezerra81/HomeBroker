@@ -14,6 +14,7 @@ const INITIAL_STATE: PositionState = {
   esource_emblem: null,
   interval_emblem: null,
   esource_position: null,
+  interval_position: null,
   esource_positionQuote: null,
   interval_positionQuote: null,
   arrayPrecos: [],
