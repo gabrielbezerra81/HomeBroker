@@ -77,7 +77,9 @@ const AuthManager = () => {
         if (isExpired) {
           setShouldAlertSessionExpired(true);
           setPreviousShouldAlert(false);
-          dispatch(deslogarUsuarioAction());
+          setTimeout(() => {
+            dispatch(deslogarUsuarioAction());
+          }, 6000);
         }
       }
     }
@@ -164,7 +166,8 @@ const AuthManager = () => {
       shouldAlertSessionExpired
     ) {
       toast.error("Sua sessão expirou! Faça login novamente.", {
-        autoClose: false,
+        autoClose: 6000,
+        pauseOnFocusLoss: false,
       });
     }
   }, [previousShouldAlert, shouldAlertSessionExpired]);
