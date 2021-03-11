@@ -512,6 +512,7 @@ interface ProactiveBox {
   idsTab0: string;
 }
 
+// atualiza cotações da estrutura e dos códigos pesquisados
 export const startProactiveMultiBoxUpdateAction = ({
   idsTab0,
   searchedSymbolsIds,
@@ -519,12 +520,7 @@ export const startProactiveMultiBoxUpdateAction = ({
   return (dispatch, getState) => {
     const {
       systemReducer: { updateInterval },
-      multiBoxReducer: {
-        boxesTab1Data,
-        esource_multiBox,
-        interval_multiBox,
-        boxes,
-      },
+      multiBoxReducer: { esource_multiBox, interval_multiBox, boxes },
     } = getState();
 
     const searchedSymbols: string[] = [];
@@ -561,25 +557,40 @@ export const startProactiveMultiBoxUpdateAction = ({
           return;
         }
 
-        let updatedStockSymbolsData: StockSymbolData[] = [];
+        const {
+          multiBoxReducer: { stockSymbolsData, boxesTab1Data },
+        } = getState();
 
-        searchedSymbolsIds.forEach((symbolIdObj) => {
-          const stockData = structuresQuotes.find(
-            (structureItem) => structureItem.id.toString() === symbolIdObj.id,
-          );
+        let updatedStockSymbolsData: StockSymbolData[] = [...stockSymbolsData];
 
-          if (stockData) {
-            const data: StockSymbolData = {
-              id: stockData.id,
-              last: stockData.last || 0,
-              symbol: symbolIdObj.symbol,
-              min: stockData.min || 0,
-              max: stockData.max || 0,
-              oscilation: stockData.oscilacao || 0,
-            };
+        updatedStockSymbolsData = produce(updatedStockSymbolsData, (draft) => {
+          searchedSymbolsIds.forEach((symbolIdObj) => {
+            const updatedStockData = structuresQuotes.find(
+              (structureItem) => structureItem.id.toString() === symbolIdObj.id,
+            );
 
-            updatedStockSymbolsData.push(data);
-          }
+            const itemToUpdate = draft.find(
+              (item) => item.symbol === symbolIdObj.symbol,
+            );
+
+            if (updatedStockData) {
+              const updatedItem: StockSymbolData = {
+                id: updatedStockData.id,
+                last: updatedStockData.last || 0,
+                symbol: symbolIdObj.symbol,
+                min: updatedStockData.min || 0,
+                max: updatedStockData.max || 0,
+                oscilation: updatedStockData.oscilacao || 0,
+              };
+
+              if (itemToUpdate) {
+                Object.assign(itemToUpdate, updatedItem);
+              } //
+              else {
+                updatedStockSymbolsData.push(updatedItem);
+              }
+            }
+          });
         });
 
         const updatedBoxesTab1Data = boxesTab1Data.map((boxItem) => {
@@ -766,13 +777,14 @@ export const findStockSymbol = async (topSymbols: TopSymbol[]) => {
   return null;
 };
 
+// atualiza books das estruturas
 export const startProactiveStructureBookUpdateAction = (
   ids: string,
 ): MainThunkAction => {
   return (dispatch, getState) => {
     const {
       systemReducer: { updateInterval },
-      multiBoxReducer: { structuresBooks, esource_books, interval_books },
+      multiBoxReducer: { esource_books, interval_books },
     } = getState();
 
     if (esource_books && esource_books.close) {
@@ -786,6 +798,10 @@ export const startProactiveStructureBookUpdateAction = (
     if (ids) {
       const interval = setInterval(async () => {
         const data = await getProactiveBoxBooksAPI(ids);
+
+        const {
+          multiBoxReducer: { structuresBooks },
+        } = getState();
 
         const updatedStructureBooks = produce(structuresBooks, (draft) => {
           data.forEach((updatedBook) => {
