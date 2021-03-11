@@ -20,8 +20,6 @@ class DragglableModal extends Component {
 
     // const position = loadPopupPosition(this.props.id);
 
-    console.log(this.props.name);
-
     this.state = {
       position: { x: 0, y: 0 },
       bounds: undefined,

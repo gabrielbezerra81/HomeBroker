@@ -79,7 +79,7 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
 
     const pricesRange = [];
 
-    for (var i = minValueCompare; i <= maxValueCompare; i++) {
+    for (var i = minValueCompare; i <= maxValueCompare; i += 1) {
       pricesRange.push(i);
     }
 
@@ -110,12 +110,13 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
           }
         }
 
-        if (price > offer.strikeSelecionado) {
+        if (price >= offer.strikeSelecionado) {
+          result += costMultiplier * effectiveCost;
           return;
         }
 
         const offerResult =
-          qttyMultiplier * (offer.qtde * (price - offer.strikeSelecionado));
+          qttyMultiplier * offer.qtde * (price - offer.strikeSelecionado);
 
         result += offerResult + costMultiplier * effectiveCost;
       });
@@ -136,7 +137,8 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
           }
         }
 
-        if (price < offer.strikeSelecionado) {
+        if (price <= offer.strikeSelecionado) {
+          result += costMultiplier * effectiveCost;
           return;
         }
 
