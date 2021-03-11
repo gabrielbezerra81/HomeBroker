@@ -13,6 +13,7 @@ import {
   ReferenceLine,
 } from "recharts";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
+import { MultilegOffer } from "../types/multileg";
 
 interface Props {
   tabIndex: number;
@@ -25,7 +26,7 @@ interface GraphData {
 
 const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
   const {
-    multilegReducer: { multileg },
+    multilegReducer: { multileg, cotacoesMultileg },
   } = useStateStorePrincipal();
 
   const tooltipFormatter = useCallback((value: number) => {
@@ -47,12 +48,30 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
   }, [multileg, tabIndex]);
 
   const callOffers = useMemo(() => {
-    return multilegTab.tabelaMultileg.filter((offer) => offer.tipo === "call");
+    return multilegTab.tabelaMultileg.filter(
+      (offer) =>
+        offer.tipo === "call" && offer.ativoAtual !== offer.codigoSelecionado,
+    );
   }, [multilegTab.tabelaMultileg]);
 
   const putOffers = useMemo(() => {
-    return multilegTab.tabelaMultileg.filter((offer) => offer.tipo === "put");
+    return multilegTab.tabelaMultileg.filter(
+      (offer) =>
+        offer.tipo === "put" && offer.ativoAtual !== offer.codigoSelecionado,
+    );
   }, [multilegTab.tabelaMultileg]);
+
+  const stockOffers = useMemo(() => {
+    return multilegTab.tabelaMultileg
+      .filter((offer) => offer.ativoAtual === offer.codigoSelecionado)
+      .map((offer) => {
+        const symbolQuote = cotacoesMultileg.find(
+          (item) => item.codigo === offer.codigoSelecionado,
+        );
+
+        return { ...offer, quote: symbolQuote?.valor || 0 };
+      });
+  }, [cotacoesMultileg, multilegTab.tabelaMultileg]);
 
   const cost = useMemo(() => {
     const cost = Number(
@@ -67,96 +86,74 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
   }, [multilegTab.preco]);
 
   const offersStrike = useMemo(() => {
-    return multilegTab.tabelaMultileg.map((offer) => offer.strikeSelecionado);
+    return multilegTab.tabelaMultileg
+      .filter((offer) => offer.ativoAtual !== offer.codigoSelecionado)
+      .map((offer) => offer.strikeSelecionado);
   }, [multilegTab.tabelaMultileg]);
 
   const pricesRange = useMemo(() => {
-    const minStrike = Math.min(...offersStrike);
-    const maxStrike = Math.max(...offersStrike);
+    const stockOffersPrices = stockOffers.map((offer) => offer.quote);
+
+    const minStrike = Math.min(...offersStrike, ...stockOffersPrices);
+    const maxStrike = Math.max(...offersStrike, ...stockOffersPrices);
 
     const minValueCompare = Math.floor(minStrike * 0.8);
     const maxValueCompare = Math.ceil(maxStrike * 1.2);
 
-    const pricesRange = [];
+    const pricesRange: number[] = [];
 
     for (var i = minValueCompare; i <= maxValueCompare; i += 1) {
       pricesRange.push(i);
     }
 
-    return pricesRange;
-  }, [offersStrike]);
+    offersStrike.forEach((strike) => {
+      if (!pricesRange.includes(strike)) {
+        pricesRange.push(strike);
+      }
+    });
+
+    return pricesRange.sort((a, b) => a - b);
+  }, [offersStrike, stockOffers]);
 
   const data = useMemo(() => {
     const data: GraphData[] = [];
 
-    pricesRange.forEach((price, index) => {
-      // let result = typeof cost === "number" ? -cost : 0;
+    pricesRange.forEach((price) => {
       let result = 0;
       const effectiveCost = typeof cost === "number" ? Math.abs(cost) : 0;
 
-      putOffers.forEach((offer) => {
-        const qttyMultiplier = offer.cv === "compra" ? -1 : 1;
+      stockOffers.forEach((offer) => {
+        const qttyMultiplier = offer.cv === "compra" ? 1 : -1;
         const costMultiplier = offer.cv === "compra" ? -1 : 1;
-
-        if (Math.floor(offer.strikeSelecionado) !== offer.strikeSelecionado) {
-          if (
-            price > offer.strikeSelecionado &&
-            pricesRange[index - 1] < offer.strikeSelecionado
-          ) {
-            data.push({
-              price: offer.strikeSelecionado,
-              result: typeof cost === "number" ? costMultiplier * cost : 0,
-            });
-          }
-        }
-
-        if (price >= offer.strikeSelecionado) {
-          result += costMultiplier * effectiveCost;
-          return;
-        }
-
-        const offerResult =
-          qttyMultiplier * offer.qtde * (price - offer.strikeSelecionado);
-
-        result += offerResult + costMultiplier * effectiveCost;
+        result +=
+          qttyMultiplier * offer.qtde * price + costMultiplier * effectiveCost;
       });
 
       callOffers.forEach((offer) => {
-        const qttyMultiplier = offer.cv === "compra" ? 1 : -1;
-        const costMultiplier = offer.cv === "compra" ? -1 : 1;
+        const offerResult = getCallOfferResult({
+          offer,
+          price,
+          cost: effectiveCost,
+        });
 
-        if (Math.floor(offer.strikeSelecionado) !== offer.strikeSelecionado) {
-          if (
-            price > offer.strikeSelecionado &&
-            pricesRange[index - 1] < offer.strikeSelecionado
-          ) {
-            data.push({
-              price: offer.strikeSelecionado,
-              result: typeof cost === "number" ? costMultiplier * cost : 0,
-            });
-          }
-        }
+        result += offerResult;
+      });
 
-        if (price <= offer.strikeSelecionado) {
-          result += costMultiplier * effectiveCost;
-          return;
-        }
+      putOffers.forEach((offer) => {
+        const offerResult = getPutOfferResult({
+          offer,
+          price,
+          cost: effectiveCost,
+        });
 
-        const offerResult =
-          qttyMultiplier * offer.qtde * (price - offer.strikeSelecionado);
-
-        result += offerResult + costMultiplier * effectiveCost;
+        result += offerResult;
       });
 
       data.push({ price, result: +Number(result).toFixed(2) });
     });
 
-    // pricesRange.map((price) => ({
-    //   price,
-    //   result: 0,
-    // }));
     return data;
-  }, [callOffers, cost, pricesRange, putOffers]);
+  }, [callOffers, cost, pricesRange, putOffers, stockOffers]);
 
   const lastPoint = useMemo(() => {
     if (data.length > 0) {
@@ -320,4 +317,42 @@ const tooltipContentStyle = {
 
 const labelStyle = {
   color: "#D2D5D2",
+};
+
+interface GetOfferResultProps {
+  offer: MultilegOffer;
+  cost: number;
+  price: number;
+}
+
+const getCallOfferResult = ({ offer, cost, price }: GetOfferResultProps) => {
+  const qttyMultiplier = offer.cv === "compra" ? 1 : -1;
+  const costMultiplier = offer.cv === "compra" ? -1 : 1;
+
+  if (price <= offer.strikeSelecionado) {
+    return costMultiplier * cost;
+  }
+
+  let offerResult =
+    qttyMultiplier * offer.qtde * (price - offer.strikeSelecionado);
+
+  offerResult += costMultiplier * cost;
+
+  return offerResult;
+};
+
+const getPutOfferResult = ({ offer, cost, price }: GetOfferResultProps) => {
+  const qttyMultiplier = offer.cv === "compra" ? -1 : 1;
+  const costMultiplier = offer.cv === "compra" ? -1 : 1;
+
+  if (price >= offer.strikeSelecionado) {
+    return costMultiplier * cost;
+  }
+
+  let offerResult =
+    qttyMultiplier * offer.qtde * (price - offer.strikeSelecionado);
+
+  offerResult += costMultiplier * cost;
+
+  return offerResult;
 };
