@@ -268,7 +268,7 @@ export const updateMultilegOfferAction = ({
           });
         }
         setOfferSymbolAndModel(multilegOffer);
-        // TODO: fazendo dispatchs nas linhas 271, 291 (quote) e 302
+        // fazendo dispatchs nas linhas 271, 291 (quote) e 302
       }
     } //
     else if (attributeName === "strikeSelecionado") {
@@ -446,7 +446,7 @@ export const addMultilegOffer = async ({
   return { multilegTabs: updatedTabs, multilegQuotes };
 };
 
-export const newOffer: MultilegOffer = {
+const newOffer: MultilegOffer = {
   opcoes: [],
   strikeSelecionado: 0,
   cv: "compra",
@@ -461,7 +461,7 @@ export const newOffer: MultilegOffer = {
   ativoAtual: "",
 };
 
-export const newMultilegTab: MultilegTab = {
+const newMultilegTab: MultilegTab = {
   nomeAba: "",
   ativo: "",
   ativoAtual: "",

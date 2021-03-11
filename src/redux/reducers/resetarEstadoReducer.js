@@ -16,7 +16,7 @@ export const resetarEstadoRedux = ({
 
   if (shouldClearAllProps)
     switch (reducerName) {
-      // TODO:conditionalMultileg
+      //TODO: conditionalMultileg
       case "conditionalMultileg":
         break;
       case "multileg":

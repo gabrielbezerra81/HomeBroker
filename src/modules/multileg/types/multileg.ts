@@ -91,14 +91,3 @@ export interface ExecutionStrategy {
   sigla: string;
   trigger: number | null;
 }
-
-interface MultilegPartialPayload {
-  expiration: string;
-  offers: Array<{
-    expiration: string;
-    expirationType: "DAY" | "SPECIFIED_DAY" | "GTC";
-    price: number;
-  }>;
-}
-
-export interface MultilegPayload extends MultilegPartialPayload {}

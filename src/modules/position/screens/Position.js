@@ -18,8 +18,15 @@ import { mudarVariavelPosicaoAction } from "../duck/actions/PosicaoActions";
 import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
 import PosicaoDetalhada from "./posicao_detalhada/PosicaoDetalhada";
 import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopupZIndexFromSecondaryTab";
+import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 
 class Position extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.onClose = this.onClose.bind(this);
+  }
+
   componentDidMount() {
     const { props } = this;
 
@@ -105,6 +112,10 @@ class Position extends React.Component {
     // }
   }
 
+  onClose() {
+    this.props.abrirItemBarraLateralAction("isOpenPosition");
+  }
+
   render() {
     const { props } = this;
     return (
@@ -118,6 +129,7 @@ class Position extends React.Component {
             headerTitle={props.headerTitle}
             headerClass="border-green"
             onConfig={() => {}}
+            onClose={this.onClose}
           />
         )}
       />
@@ -173,6 +185,7 @@ export default compose(
     mapStateToPropsPosicao,
     {
       mudarVariavelPosicaoAction,
+      abrirItemBarraLateralAction,
     },
     null,
     { context: StorePrincipalContext },

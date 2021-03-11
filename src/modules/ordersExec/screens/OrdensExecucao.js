@@ -15,8 +15,15 @@ import OpcoesOrdemExec from "./OpcoesOrdemExec";
 import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopupZIndexFromSecondaryTab";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
+import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 
 class OrdensExecucao extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.onClose = this.onClose.bind(this);
+  }
+
   componentDidMount() {
     if (this.props.divkey !== "" && this.props.divkey === "ordens_execucao") {
       document.getElementById("ordens_execucao").style.zIndex =
@@ -47,6 +54,10 @@ class OrdensExecucao extends React.Component {
     });
   }
 
+  onClose() {
+    this.props.abrirItemBarraLateralAction("isOpenOrdersExec");
+  }
+
   render() {
     return (
       <DraggableModal
@@ -59,6 +70,7 @@ class OrdensExecucao extends React.Component {
             headerTitle={this.props.headerTitle}
             headerClass="border-green"
             onConfig={() => {}}
+            onClose={this.onClose}
           />
         )}
       />
@@ -349,6 +361,7 @@ export default compose(
     mapStateToPropsOrdensExec,
     {
       updateOneOrdersExecStateAction,
+      abrirItemBarraLateralAction,
     },
     null,
     { context: StorePrincipalContext },

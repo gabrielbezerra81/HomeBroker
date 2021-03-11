@@ -3,7 +3,6 @@ import { createBoxAlertAPI, listAlertsAPI } from "api/API";
 import moment from "moment";
 
 import { MultiBoxData } from "modules/multiBox/types/MultiBoxState";
-import { MultilegPayload } from "modules/multileg/types/multileg";
 import { MainThunkAction } from "types/ThunkActions";
 import { updateOneMultilegState } from "modules/multileg/duck/actions/utils";
 import { AlertCreateRequestData } from "modules/multiBox/types/BoxAPI";
@@ -107,12 +106,12 @@ export const createAlertFromBoxAction = ({
   };
 };
 
-interface ChangeOrder {
-  order: MultilegPayload;
-  selectedValidity: "DAY" | "SPECIFIED_DAY" | "GTC";
-  selectedDate: Date;
-  price: number;
-}
+// interface ChangeOrder {
+//   order: MultilegPayload;
+//   selectedValidity: "DAY" | "SPECIFIED_DAY" | "GTC";
+//   selectedDate: Date;
+//   price: number;
+// }
 
 // const changeOrderExpirationAndPrice = ({
 //   order,

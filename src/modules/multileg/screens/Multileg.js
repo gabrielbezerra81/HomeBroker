@@ -20,11 +20,15 @@ import {
   multilegNormalHeight,
   multilegWithAlertHeight,
 } from "./constants";
+import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 
 class Multileg extends React.Component {
   constructor(props) {
     super(props);
+
     this.handleMultilegTabSelect = this.handleMultilegTabSelect.bind(this);
+
+    this.onClose = this.onClose.bind(this);
   }
   // shouldComponentUpdate(nextProps, nextState) {
   //   const multileg = this.props.multileg !== nextProps.multileg;
@@ -132,6 +136,10 @@ class Multileg extends React.Component {
     }
   }
 
+  onClose() {
+    this.props.abrirItemBarraLateralAction("isOpenMultileg");
+  }
+
   render() {
     return (
       <DraggableModal
@@ -144,6 +152,7 @@ class Multileg extends React.Component {
             headerTitle={this.props.headerTitle}
             headerClass="border-green"
             onConfig={() => {}}
+            onClose={this.onClose}
           />
         )}
       />
@@ -248,6 +257,7 @@ export default compose(
       selectOrAddMultilegTabAction,
       updateMultilegTabAction,
       getMultilegExecStrategiesAPIAction,
+      abrirItemBarraLateralAction,
       // atualizarBookAction,
     },
     null,

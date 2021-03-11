@@ -24,8 +24,15 @@ import { GlobalContext, StorePrincipalContext } from "redux/StoreCreation";
 import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
 import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopupZIndexFromSecondaryTab";
 import { compose } from "redux";
+import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 
 class RelatorioDetalhado extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.onClose = this.onClose.bind(this);
+  }
+
   componentDidMount() {
     if (
       this.props.divkey !== "" &&
@@ -59,6 +66,10 @@ class RelatorioDetalhado extends React.Component {
     });
   }
 
+  onClose() {
+    this.props.abrirItemBarraLateralAction("isOpenDetailedReport");
+  }
+
   render() {
     return (
       <DraggableModal
@@ -71,6 +82,7 @@ class RelatorioDetalhado extends React.Component {
             headerTitle={this.props.headerTitle}
             headerClass="border-green"
             onConfig={() => {}}
+            onClose={this.onClose}
           />
         )}
       />
@@ -268,7 +280,7 @@ export default compose(
   connect(mapStateToPropsGlobalStore, { aumentarZindexAction }, null, {
     context: GlobalContext,
   }),
-  connect(mapStateToPropsRelatorio, {}, null, {
+  connect(mapStateToPropsRelatorio, { abrirItemBarraLateralAction }, null, {
     context: StorePrincipalContext,
   }),
 )(RelatorioDetalhado);

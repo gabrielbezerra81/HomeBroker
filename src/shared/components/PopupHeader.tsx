@@ -24,6 +24,7 @@ import closeIcon from "assets/closeIcon.png";
 import useStateBoletas from "hooks/useStateBoletas";
 import { BoletaNamespace } from "constants/ActionTypes";
 import { IoMdRepeat } from "react-icons/io";
+import { cond_openCloseMultilegExtraConfigsAction } from "modules/conditionalMultileg/duck/actions/ConditionalMultilegActions";
 
 interface ModalHeaderProps {
   headerTitle?: any;
@@ -198,7 +199,6 @@ export const PopupHeader: React.FC<PopupHeaderProps> = React.memo(
     onStrikeViewChange,
   }) => {
     const dispatchStorePrincipal = useDispatchStorePrincipal();
-    const nomeVariavelReducer = getNomeVariavelReducer(headerTitle);
 
     const handleConfig = useCallback(
       (event) => {
@@ -217,13 +217,13 @@ export const PopupHeader: React.FC<PopupHeaderProps> = React.memo(
         else if (name === "config_complementar") {
           dispatchStorePrincipal(openCloseMultilegExtraConfigsAction());
         } //
-        else {
+        else if (name === "config_complementar_conditional_multileg") {
           dispatchStorePrincipal(
-            abrirItemBarraLateralAction(nomeVariavelReducer),
+            cond_openCloseMultilegExtraConfigsAction(),
           );
         }
       },
-      [dispatchStorePrincipal, name, nomeVariavelReducer, onClose],
+      [dispatchStorePrincipal, name, onClose],
     );
 
     return (
@@ -263,23 +263,6 @@ export const PopupHeader: React.FC<PopupHeaderProps> = React.memo(
     );
   },
 );
-
-const getNomeVariavelReducer = (headerTitle: string) => {
-  switch (headerTitle) {
-    case "HISTÓRICO DE OPERAÇÕES":
-      return "isOpenOrdersExec";
-    case "RELATÓRIO DETALHADO":
-      return "isOpenDetailedReport";
-    case "POSIÇÃO EM CUSTÓDIA":
-      return "isOpenPosition";
-    case "MULTI ATIVOS":
-      return "isOpenMultileg";
-    case "THL":
-      return "isOpenTHL";
-    default:
-      return "";
-  }
-};
 
 const BotaoAbrirFiltrarOrdens: React.FC<any> = ({ headerTitle }) => {
   let botaoAbrirFiltrarOrdens = <div></div>;

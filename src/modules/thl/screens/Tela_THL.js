@@ -17,8 +17,15 @@ import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopup
 import { compose } from "redux";
 
 import "../styles/thl.scss";
+import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 
 class Tela_THL extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.onClose = this.onClose.bind(this);
+  }
+
   componentDidMount() {
     if (this.props.divkey !== "" && this.props.divkey === "thl") {
       document.getElementById("thl").style.zIndex = this.props.zIndex + 1;
@@ -39,6 +46,10 @@ class Tela_THL extends React.Component {
     });
   }
 
+  onClose() {
+    this.props.abrirItemBarraLateralAction("isOpenTHL");
+  }
+
   render() {
     const { ModalBody } = this;
     return (
@@ -52,6 +63,7 @@ class Tela_THL extends React.Component {
             headerTitle={this.props.headerTitle}
             headerClass="border-green"
             onConfig={() => {}}
+            onClose={this.onClose}
           />
         )}
       />
@@ -105,7 +117,7 @@ export default compose(
   connect(mapDateToPropsGlobal, { aumentarZindexAction }, null, {
     context: GlobalContext,
   }),
-  connect(mapStateToPropsTHL, {}, null, {
+  connect(mapStateToPropsTHL, { abrirItemBarraLateralAction }, null, {
     context: StorePrincipalContext,
   }),
 )(Tela_THL);
