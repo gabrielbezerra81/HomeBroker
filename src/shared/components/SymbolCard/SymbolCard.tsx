@@ -12,6 +12,7 @@ interface Props {
   data: TopSymbol & { formattedCode?: string };
   showQtty?: boolean;
   showQttyPlus?: boolean;
+  showExpirationWithCode?: boolean;
 }
 
 const SymbolCard: React.FC<Props> = ({
@@ -28,6 +29,7 @@ const SymbolCard: React.FC<Props> = ({
   },
   showQtty = false,
   showQttyPlus = false,
+  showExpirationWithCode = true,
 }) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [tooltipPlacement, setTooltipPlacement] = useState<"top" | "bottom">(
@@ -216,7 +218,10 @@ const SymbolCard: React.FC<Props> = ({
         <div className="symbolContainer">
           <h6 className={textColorClass}>{viwedInfo}</h6>
 
-          {!!expiration && <h6 className={textColorClass}>{expiration}</h6>}
+          {!!expiration &&
+            (showExpirationWithCode || viewMode === "strike") && (
+              <h6 className={textColorClass}>{expiration}</h6>
+            )}
         </div>
       </button>
     </CustomTooltip>

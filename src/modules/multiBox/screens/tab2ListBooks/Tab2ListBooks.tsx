@@ -159,9 +159,9 @@ const Tab2ListBooks: React.FC<Props> = ({ multiBox }) => {
         return null;
       }
 
-      return { ...symbolData, ...topSymbol };
+      return { ...symbolData, ...topSymbol, viewMode: strikeViewMode };
     });
-  }, [symbolsData, topSymbols]);
+  }, [strikeViewMode, symbolsData, topSymbols]);
 
   return (
     <div className="multiBoxTab4">
@@ -277,7 +277,10 @@ const Tab2ListBooks: React.FC<Props> = ({ multiBox }) => {
                   {item.formattedQtty}
                 </td> */}
                 <td className="strikeColumn">
-                  <SymbolCard data={symbolData} />
+                  <SymbolCard
+                    data={symbolData}
+                    showExpirationWithCode={false}
+                  />
                 </td>
                 <td>{symbolData?.formattedLast}</td>
                 <td>{symbolData?.formattedBuyQtty}</td>
