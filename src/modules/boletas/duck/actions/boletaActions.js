@@ -296,7 +296,6 @@ export const mudarQtdAction = (valor, namespace) => {
     });
   };
 };
-//todo
 export const openBoletaFromOrdersExecAction = (props) => {
   return (dispatch) => {
     const data = props.dadosOrdemExec;

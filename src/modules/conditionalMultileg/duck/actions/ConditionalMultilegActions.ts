@@ -97,7 +97,7 @@ export const cond_removeMultilegTabAction = (
 
   dispatch(
     updateConditionalMultilegStateAction(
-      "conditionalMultileg",
+      "multileg",
       updatedMultilegTabs,
     ),
   );
@@ -128,7 +128,7 @@ export const cond_updateMultilegTabAction = ({
 
   dispatch(
     updateConditionalMultilegStateAction(
-      "conditionalMultileg",
+      "multileg",
       data.multilegTabs,
     ),
   );
@@ -342,7 +342,7 @@ export const cond_removeMultilegOfferAction = ({
   multilegTabs[tabIndex].tabelaMultileg.splice(lineIndex, 1);
 
   dispatch(
-    updateConditionalMultilegStateAction("conditionalMultileg", multilegTabs),
+    updateConditionalMultilegStateAction("multileg", multilegTabs),
   );
 };
 

@@ -28,6 +28,7 @@ import produce from "immer";
 import { LISTAR_ORDENS_EXECUCAO } from "constants/ApiActionTypes";
 import { atualizarCotacaoMultilegAPI } from "api/reactive/ReativosAPI";
 import { getProactiveMultilegQuotesAPI } from "api/proactive/ProativosAPI";
+import { UPDATE_ONE_CONDITIONAL_MULTILEG } from "constants/MenuActionTypes";
 
 ////
 
@@ -260,7 +261,9 @@ export const cond_addQuoteBoxFromMultilegAction = (
   };
 };
 
-export const cond_startReactiveMultilegUpdateAction = (): MainThunkAction => {
+export const cond_startReactiveMultilegUpdateAction = (
+  symbolsArray: string[],
+): MainThunkAction => {
   return (dispatch, getState) => {
     const {
       systemReducer: { token },
@@ -278,11 +281,6 @@ export const cond_startReactiveMultilegUpdateAction = (): MainThunkAction => {
       clearInterval(interval_multilegQuotes);
     }
 
-    const symbolsArray: string[] = [];
-    multilegQuotes.forEach((quote) => {
-      if (!symbolsArray.includes(quote.codigo)) symbolsArray.push(quote.codigo);
-    });
-
     const symbols = symbolsArray.join(",");
 
     if (symbols) {
@@ -291,6 +289,7 @@ export const cond_startReactiveMultilegUpdateAction = (): MainThunkAction => {
         codigos: symbols,
         arrayCotacoes: multilegQuotes,
         token,
+        actionType: UPDATE_ONE_CONDITIONAL_MULTILEG,
       });
 
       dispatch(
@@ -303,11 +302,12 @@ export const cond_startReactiveMultilegUpdateAction = (): MainThunkAction => {
   };
 };
 
-export const cond_startProactiveMultilegUpdateAction = (): MainThunkAction => {
+export const cond_startProactiveMultilegUpdateAction = (
+  symbolsArray: string[],
+): MainThunkAction => {
   return (dispatch, getState) => {
     const {
       conditionalMultilegReducer: {
-        cotacoesMultileg: multilegQuotes,
         esource_multilegQuotes,
         interval_multilegQuotes,
       },
@@ -322,16 +322,15 @@ export const cond_startProactiveMultilegUpdateAction = (): MainThunkAction => {
       clearInterval(interval_multilegQuotes);
     }
 
-    const symbolsArray: string[] = [];
-    multilegQuotes.forEach((quote) => {
-      if (!symbolsArray.includes(quote.codigo)) symbolsArray.push(quote.codigo);
-    });
-
     const symbols = symbolsArray.join(",");
 
     if (symbols) {
       const interval = setInterval(async () => {
         const data = await getProactiveMultilegQuotesAPI(symbols);
+
+        const {
+          conditionalMultilegReducer: { cotacoesMultileg: multilegQuotes },
+        } = getState();
 
         const updatedQuotes = produce(multilegQuotes, (draft) => {
           draft.forEach((quoteToUpdateItem) => {

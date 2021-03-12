@@ -46,7 +46,6 @@ export default (
       return { ...state, divkey: payload };
     case FECHAR_FORM:
       return { ...state, show: payload, divkey: "" };
-    //todo
     case MUDAR_ORDEM_EXEC_MAIN_REDUCER:
       return {
         ...state,

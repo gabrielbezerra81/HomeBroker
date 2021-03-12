@@ -53,7 +53,7 @@
 //       };
 //     });
 
-//     if (isOpenConditionalMultileg) {
+//     if (!isOpenConditionalMultileg) {
 //       clonedMultilegTabs.pop();
 //     }
 

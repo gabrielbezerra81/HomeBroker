@@ -163,7 +163,7 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
           <h6>Book</h6>
         </Col>
         <IconeConfigGrafico
-          name="config_complementar"
+          name="config_complementar_conditional_multileg"
           className="icone_config_complementar"
         />
       </Row>

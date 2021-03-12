@@ -10,6 +10,7 @@ import { openCloseMultilegExtraConfigsAction } from "modules/multileg/duck/actio
 import useStateGlobalStore from "hooks/useStateGlobalStore";
 import useDispatchBoletas from "hooks/useDispatchBoletas";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
+import { cond_openCloseMultilegExtraConfigsAction } from "modules/conditionalMultileg/duck/actions/ConditionalMultilegActions";
 
 export default ({ className, name = "" }) => {
   let handleShow;
@@ -20,14 +21,20 @@ export default ({ className, name = "" }) => {
     const dispatch = useDispatchBoletas();
     handleShow = (e) =>
       dispatch(
-        abrirFormConfigurarAction(e, { zIndex: stateGlobalStore.zIndex })
+        abrirFormConfigurarAction(e, { zIndex: stateGlobalStore.zIndex }),
       );
   } //
-  else if (name === "config_complementar") {
+  else if (name.includes("config_complementar")) {
     const dispatchStorePrincipal = useDispatchStorePrincipal();
 
-    handleShow = () =>
-      dispatchStorePrincipal(openCloseMultilegExtraConfigsAction());
+    if (name === "config_complementar") {
+      handleShow = () =>
+        dispatchStorePrincipal(openCloseMultilegExtraConfigsAction());
+    } //
+    else if (name === "config_complementar_conditional_multileg") {
+      handleShow = () =>
+        dispatchStorePrincipal(cond_openCloseMultilegExtraConfigsAction());
+    }
   } //
   else {
     const dispatchGlobal = useDispatchGlobalStore();

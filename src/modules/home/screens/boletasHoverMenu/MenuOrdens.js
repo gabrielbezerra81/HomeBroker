@@ -27,7 +27,7 @@ import {
 import {
   mouseOverAction,
   mouseLeaveAction,
-  updateOneSystemStateAction,
+  updateManySystemState,
 } from "redux/actions/system/SystemActions";
 import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 
@@ -187,17 +187,28 @@ class MenuOrdens extends Component {
                   props.atualizarDivKeyAction("multileg");
                   props.abrirItemBarraLateralAction("isOpenMultileg", true);
 
-                  props.updateOneSystemStateAction(
-                    "multilegButtonsVisibility",
-                    true,
-                  );
-                  props.updateOneSystemStateAction(
-                    "createAlertButtonVisibility",
-                    false,
-                  );
+                  props.updateManySystemState({
+                    multilegButtonsVisibility: true,
+                    createAlertButtonVisibility: false,
+                  });
                 }}
                 className="divClicavel"
               />
+            </div>
+
+            <div className="divBotaoFormulario" style={{ marginLeft: 24 }}>
+              <button
+                className="brokerCustomButton"
+                onClick={() => {
+                  props.atualizarDivKeyAction("conditionalMultileg");
+                  props.abrirItemBarraLateralAction(
+                    "isOpenConditionalMultileg",
+                    true,
+                  );
+                }}
+              >
+                Multileg condicional
+              </button>
             </div>
           </Row>
         </div>
@@ -248,7 +259,7 @@ export default compose(
       mouseOverAction,
       mouseLeaveAction,
       abrirItemBarraLateralAction,
-      updateOneSystemStateAction,
+      updateManySystemState,
     },
     null,
     { context: StorePrincipalContext },

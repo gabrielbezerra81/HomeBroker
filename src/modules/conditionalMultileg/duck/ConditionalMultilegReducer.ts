@@ -56,8 +56,7 @@ export default (
     case UPDATE_MANY_CONDITIONAL_MULTILEG:
       return { ...state, ...payload };
     case actionType.RESET_REDUX_STATE:
-      //TODO: conditionalMultileg
-      if (["isOpenMultileg", "deslogar"].includes(payload.name))
+      if (["isOpenConditionalMultileg", "deslogar"].includes(payload.name))
         return {
           ...resetarEstadoRedux({
             state,

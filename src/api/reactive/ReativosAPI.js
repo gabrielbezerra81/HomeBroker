@@ -87,6 +87,7 @@ export const atualizarCotacaoMultilegAPI = ({
   codigos,
   arrayCotacoes,
   token,
+  actionType
 }) => {
   var source = new EventSource(
     `${url_base_reativa}${url_cotacaoReativa_codigos}${codigos}`,
@@ -102,7 +103,7 @@ export const atualizarCotacaoMultilegAPI = ({
   atualizaListaReativa(
     dispatch,
     listaCotacoes,
-    MODIFICAR_VARIAVEL_MULTILEG,
+    actionType ,
     "cotacoesMultileg",
     "interval_multilegQuotes",
     () => listaCotacoes,

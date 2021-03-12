@@ -10,6 +10,7 @@ import api from "api/apiConfig";
 import CategoryListUpdateManager from "modules/categoryList/manager/CategoryListUpdateManager";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { updateManySystemState } from "redux/actions/system/SystemActions";
+import ConditionalMultilegUpdateManager from "modules/conditionalMultileg/manager/ConditionalMultilegUpdateManager";
 
 const MainManager: React.FC = () => {
   const {
@@ -37,6 +38,7 @@ const MainManager: React.FC = () => {
       <THLUpdateManager />
       <BoxUpdateManager />
       <CategoryListUpdateManager />
+      <ConditionalMultilegUpdateManager />
     </>
   );
 };

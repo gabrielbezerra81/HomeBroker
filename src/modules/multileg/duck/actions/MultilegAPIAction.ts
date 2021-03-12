@@ -29,6 +29,7 @@ import produce from "immer";
 import { LISTAR_ORDENS_EXECUCAO } from "constants/ApiActionTypes";
 import { atualizarCotacaoMultilegAPI } from "api/reactive/ReativosAPI";
 import { getProactiveMultilegQuotesAPI } from "api/proactive/ProativosAPI";
+import { MODIFICAR_VARIAVEL_MULTILEG } from "constants/MenuActionTypes";
 
 ////
 
@@ -277,6 +278,7 @@ export const startReactiveMultilegUpdateAction = (
         codigos: symbols,
         arrayCotacoes: multilegQuotes,
         token,
+        actionType: MODIFICAR_VARIAVEL_MULTILEG,
       });
 
       dispatch(updateMultilegStateAction("esource_multilegQuotes", newSource));

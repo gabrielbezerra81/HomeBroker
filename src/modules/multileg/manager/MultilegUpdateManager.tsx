@@ -37,17 +37,19 @@ const MultilegUpdateManager: React.FC = () => {
         tabelaMultileg: offers,
       } = multilegTab;
 
-      if (abaSelecionada === `tab${index}`) {
-        if (!symbols.includes(searchedSymbol)) {
-          symbols.push(searchedSymbol);
-        }
-
-        offers.forEach((offer) => {
-          if (!symbols.includes(offer.codigoSelecionado)) {
-            symbols.push(offer.codigoSelecionado);
-          }
-        });
+      if (abaSelecionada !== `tab${index}`) {
+        return;
       }
+
+      if (!symbols.includes(searchedSymbol)) {
+        symbols.push(searchedSymbol);
+      }
+
+      offers.forEach((offer) => {
+        if (!symbols.includes(offer.codigoSelecionado)) {
+          symbols.push(offer.codigoSelecionado);
+        }
+      });
     });
 
     return symbols;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 
 import { Button } from "react-bootstrap";
 
@@ -26,28 +26,38 @@ const OperationButtons: React.FC<Props> = ({ tabIndex }) => {
 
   const dispatch = useDispatchStorePrincipal();
 
+  const handleClean = useCallback(() => {
+    dispatch(
+      updateMultilegTabAction({
+        tabIndex,
+        attributeName: "limpar",
+        attributeValue: "",
+      }),
+    );
+  }, [dispatch, tabIndex]);
+
+  const handleExecute = useCallback(() => {
+    dispatch(sendMultilegOrderAction(tabIndex));
+  }, [dispatch, tabIndex]);
+
+  const handleCreatePosition = useCallback(() => {
+    dispatch(createMultilegPositionAction(tabIndex));
+  }, [dispatch, tabIndex]);
+
+  const handleAddBox = useCallback(() => {
+    dispatch(addQuoteBoxFromMultilegAction(tabIndex));
+  }, [dispatch, tabIndex]);
+
   // botões padrões com envio de ordem
   if (multilegButtonsVisibility && !createAlertButtonVisibility) {
     return (
       <>
         <div className="operationButtonRow">
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={() =>
-              dispatch(
-                updateMultilegTabAction({
-                  tabIndex,
-                  attributeName: "limpar",
-                  attributeValue: "",
-                }),
-              )
-            }
-          >
+          <Button variant="secondary" size="sm" onClick={handleClean}>
             LIMPAR
           </Button>
           <CustomButton
-            onClick={() => dispatch(sendMultilegOrderAction(tabIndex))}
+            onClick={handleExecute}
             defaultClassName={false}
             className="btn btn-primary btn-block btn-sm"
           >
@@ -58,7 +68,7 @@ const OperationButtons: React.FC<Props> = ({ tabIndex }) => {
           <Button
             variant="primary"
             size="sm"
-            onClick={() => dispatch(createMultilegPositionAction(tabIndex))}
+            onClick={handleCreatePosition}
             block
           >
             CRIAR POSIÇÃO
@@ -77,9 +87,7 @@ const OperationButtons: React.FC<Props> = ({ tabIndex }) => {
           size="sm"
           block
           className={`toggleAlertButton`}
-          onClick={() => {
-            dispatch(addQuoteBoxFromMultilegAction(tabIndex));
-          }}
+          onClick={handleAddBox}
         >
           ADICIONAR BOX
         </Button>

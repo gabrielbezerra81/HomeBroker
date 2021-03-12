@@ -16,7 +16,7 @@ import api from "api/apiConfig";
 
 import { INITIAL_STATE as initialSystemState } from "../../reducers/system/SystemReducer";
 import { handleDeleteBoxAction } from "modules/multiBox/duck/actions/multiBoxActions";
-import { aumentarZindexAction, fecharFormAction } from "../GlobalAppActions";
+import { fecharFormAction } from "../GlobalAppActions";
 
 const waitDispatch = 1000;
 
@@ -146,13 +146,12 @@ export const abrirItemBarraLateralAction = (
     // Se estiver tentar abrir um popup fora da aba principal e ele já estiver aberto,
     // impede que ele seja fechado e redireciona para a aba principal
     const isTryingToOpenFromSecondaryTab = selectedTab !== "tab0";
+    const isOpeningMultileg = [
+      "isOpenMultileg",
+      "isOpenConditionalMultileg",
+    ].includes(nameVariavelReducer);
 
-    //TODO: conditionalMultileg
-    if (
-      isTryingToOpenFromSecondaryTab &&
-      nameVariavelReducer !== "isOpenMultileg" &&
-      mainTabOnly
-    ) {
+    if (isTryingToOpenFromSecondaryTab && !isOpeningMultileg && mainTabOnly) {
       dispatch(
         updateManySystemState({
           selectedTab: "tab0",
@@ -162,29 +161,35 @@ export const abrirItemBarraLateralAction = (
       return;
     } //
 
-    const multilegIndex = openedMenus.findIndex(
-      (openedMenuItem) => openedMenuItem.menuKey === "multileg",
-    );
-
-    //TODO: conditionalMultileg
     // Traz a multileg para a aba atual se estiver tentando abrir com ele já aberto em outra aba
-    if (
-      nameVariavelReducer === "isOpenMultileg" &&
-      isVisible &&
-      multilegIndex !== -1 &&
-      openedMenus[multilegIndex].tabKey !== selectedTab
-    ) {
-      const updatedOpenedMenus = produce(openedMenus, (draft) => {
-        draft[multilegIndex].tabKey = selectedTab;
-      });
+    if (isOpeningMultileg && isVisible) {
+      let multilegKey = "multileg";
 
-      dispatch(
-        updateManySystemState({
-          openedMenus: updatedOpenedMenus,
-          [nameVariavelReducer]: true,
-        }),
+      if (nameVariavelReducer === "isOpenConditionalMultileg") {
+        multilegKey = "conditionalMultileg";
+      }
+
+      const multilegIndex = openedMenus.findIndex(
+        (openedMenuItem) => openedMenuItem.menuKey === multilegKey,
       );
-      return;
+
+      if (
+        multilegIndex !== -1 &&
+        openedMenus[multilegIndex].tabKey !== selectedTab
+      ) {
+        const updatedOpenedMenus = produce(openedMenus, (draft) => {
+          draft[multilegIndex].tabKey = selectedTab;
+        });
+
+        dispatch(
+          updateManySystemState({
+            openedMenus: updatedOpenedMenus,
+            [nameVariavelReducer]: true,
+          }),
+        );
+
+        return;
+      }
     }
 
     let updateOpenedMenus = handleCloseMenusInMainTab({

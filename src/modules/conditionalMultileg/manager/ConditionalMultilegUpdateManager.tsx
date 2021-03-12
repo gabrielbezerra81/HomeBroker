@@ -1,11 +1,16 @@
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import usePrevious from "hooks/usePrevious";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
-import React, { useEffect } from "react";
-import {} from "../duck/actions/ConditionalMultilegAPIAction";
+import React, { useEffect, useMemo } from "react";
 import checkIfUpdateConfigChanged from "../../../managers/updateManager/utils";
 
-const MultilegUpdateManager: React.FC = () => {
+import _ from "lodash";
+import {
+  cond_startProactiveMultilegUpdateAction,
+  cond_startReactiveMultilegUpdateAction,
+} from "../duck/actions/ConditionalMultilegAPIAction";
+
+const ConditionalMultilegUpdateManager: React.FC = () => {
   const {
     systemReducer: { updateMode, updateInterval, isOpenConditionalMultileg },
     conditionalMultilegReducer: {
@@ -23,54 +28,44 @@ const MultilegUpdateManager: React.FC = () => {
   );
   const previousUpdateMode = usePrevious(updateMode);
   const previousUpdateInterval = usePrevious(updateInterval);
-  const previousMultileg = usePrevious(multileg);
+
+  const symbols = useMemo(() => {
+    const symbols: string[] = [];
+
+    multileg.forEach((multilegTab, index) => {
+      const {
+        ativoAtual: searchedSymbol,
+        tabelaMultileg: offers,
+      } = multilegTab;
+
+      if (abaSelecionada !== `tab${index}`) {
+        return;
+      }
+
+      if (!symbols.includes(searchedSymbol)) {
+        symbols.push(searchedSymbol);
+      }
+
+      offers.forEach((offer) => {
+        if (!symbols.includes(offer.codigoSelecionado)) {
+          symbols.push(offer.codigoSelecionado);
+        }
+      });
+    });
+
+    return symbols;
+  }, [abaSelecionada, multileg]);
+
+  const previousSymbols = usePrevious(symbols);
 
   // Iniciar atualização
   useEffect(() => {
     function checkIfMultilegChanged() {
-      const tabIndex = Number(abaSelecionada.replace("tab", ""));
-
-      if (!previousMultileg) {
-        return false;
-      }
-
-      const exportedOrdersToMultileg =
-        previousMultileg.length < multileg.length &&
-        !!multileg[tabIndex].tabelaMultileg.length;
-
-      if (exportedOrdersToMultileg) {
+      if (!_.isEqual(previousSymbols, symbols)) {
         return true;
       }
 
-      if (!previousMultileg[tabIndex]) {
-        return false;
-      }
-
-      const codeDiff =
-        previousMultileg[tabIndex].ativoAtual !== multileg[tabIndex].ativoAtual;
-
-      if (codeDiff) {
-        return true;
-      }
-
-      const addedOffer =
-        previousMultileg[tabIndex].tabelaMultileg.length !==
-        multileg[tabIndex].tabelaMultileg.length;
-
-      if (addedOffer) {
-        return true;
-      }
-
-      const changedOfferSymbol = multileg[tabIndex].tabelaMultileg.some(
-        (offer, index) => {
-          return (
-            previousMultileg[tabIndex].tabelaMultileg[index]
-              .codigoSelecionado !== offer.codigoSelecionado
-          );
-        },
-      );
-
-      if (changedOfferSymbol) {
+      if (previousSymbols === undefined) {
         return true;
       }
 
@@ -79,8 +74,10 @@ const MultilegUpdateManager: React.FC = () => {
 
     function startUpdate() {
       if (updateMode === "reactive") {
+        dispatch(cond_startReactiveMultilegUpdateAction(symbols));
       } //
       else {
+        dispatch(cond_startProactiveMultilegUpdateAction(symbols));
       }
     }
 
@@ -98,11 +95,10 @@ const MultilegUpdateManager: React.FC = () => {
     ) {
       startUpdate();
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     isOpenConditionalMultileg,
-    multileg,
+    symbols,
     updateMode,
     updateInterval,
     dispatch,
@@ -125,4 +121,4 @@ const MultilegUpdateManager: React.FC = () => {
   return null;
 };
 
-export default MultilegUpdateManager;
+export default ConditionalMultilegUpdateManager;

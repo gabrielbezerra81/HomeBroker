@@ -218,9 +218,7 @@ export const PopupHeader: React.FC<PopupHeaderProps> = React.memo(
           dispatchStorePrincipal(openCloseMultilegExtraConfigsAction());
         } //
         else if (name === "config_complementar_conditional_multileg") {
-          dispatchStorePrincipal(
-            cond_openCloseMultilegExtraConfigsAction(),
-          );
+          dispatchStorePrincipal(cond_openCloseMultilegExtraConfigsAction());
         }
       },
       [dispatchStorePrincipal, name, onClose],

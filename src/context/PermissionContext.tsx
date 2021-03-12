@@ -21,6 +21,7 @@ interface Permission {
   optionsTable: {
     checkSymbols: boolean;
   };
+  conditionalMultileg: boolean;
 }
 
 interface PermissionContextData {
@@ -56,6 +57,7 @@ const PermissionProvider: React.FC = ({ children }) => {
     optionsTable: {
       checkSymbols: false,
     },
+    conditionalMultileg: false,
   });
 
   useEffect(() => {
@@ -141,6 +143,7 @@ const changePermissionsByRole = (
   } //
   else if (roles.includes("Admin")) {
     changePayload.optionsTable.checkSymbols = true;
+    changePayload.conditionalMultileg = true;
     // Não faz nada, retorna apenas todas as permissões
   }
 
