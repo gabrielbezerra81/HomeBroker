@@ -40,6 +40,12 @@ export const cond_searchMultilegSymbolAPIAction = (
       conditionalMultilegReducer: { multileg, cotacoesMultileg },
     } = getState();
 
+    setPointerWhileAwaiting({
+      lockMode: "travar",
+      id: "conditionalMultileg",
+      parentID: "body",
+    });
+
     const data = await cond_searchMultilegSymbolData({
       multilegTabs: multileg,
       tabIndex,
@@ -52,6 +58,12 @@ export const cond_searchMultilegSymbolAPIAction = (
         multileg: data.multilegTabs,
       }),
     );
+
+    setPointerWhileAwaiting({
+      lockMode: "destravar",
+      id: "conditionalMultileg",
+      parentID: "body",
+    });
   };
 };
 

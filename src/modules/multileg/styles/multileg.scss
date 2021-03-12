@@ -203,12 +203,12 @@ a.botaoAddAba.active {
   height: 100%;
 }
 
-.containerAbaMultileg > div:first-child {
+.containerAbaMultileg > div.tabMainContent {
   flex: 8;
   border-right: 1px solid var(--color-border-light);
 }
 
-.containerAbaMultileg > div:last-child {
+.containerAbaMultileg > div.divBook {
   flex: 2;
 }
 

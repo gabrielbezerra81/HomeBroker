@@ -17,8 +17,11 @@ export const resetarEstadoRedux = ({
   if (shouldClearAllProps)
     switch (reducerName) {
       case "conditionalMultileg":
+        const [tab0] = cloneMultilegTabs(multileg.multileg);
+        const [tab1] = cloneMultilegTabs(multileg.multileg);
+
         mutableProps = {
-          multileg: cloneMultilegTabs(multileg.multileg),
+          multileg: [tab0, tab1],
           cotacoesMultileg: cloneMultilegQuotes(multileg.cotacoesMultileg), // cotacoes está sendo mutado
         };
         break;

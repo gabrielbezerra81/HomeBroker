@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from "react";
-import { Table, Row, Col, Form } from "react-bootstrap";
+import { Table, Row, Col } from "react-bootstrap";
 import IconeConfigGrafico from "shared/components/IconeConfigGrafico";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import {
@@ -9,13 +9,9 @@ import {
 import { cond_findMultilegBook } from "../../duck/actions/utils";
 import {
   calculoPreco,
-  calcularTotal,
   verificaCalculoSemBook,
 } from "../../duck/actions/CalculoPreco";
-import CustomInput from "shared/components/CustomInput";
 import { formatarNumero } from "shared/utils/Formatacoes";
-import DateSelector from "./DateSelector";
-import NumberFormat from "react-number-format";
 import { aviso_calculo_preco_multileg } from "constants/AlertaErros";
 import OperationButtons from "./OperationButtons";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
@@ -28,11 +24,7 @@ interface Props {
 
 const Book: React.FC<Props> = ({ indice: tabIndex }) => {
   const {
-    conditionalMultilegReducer: {
-      cotacoesMultileg,
-      executionStrategies,
-      multileg,
-    },
+    conditionalMultilegReducer: { cotacoesMultileg, multileg },
   } = useStateStorePrincipal();
 
   const dispatch = useDispatchStorePrincipal();
@@ -40,10 +32,6 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
   const tab = useMemo(() => {
     return multileg[tabIndex];
   }, [multileg, tabIndex]);
-
-  const total = useMemo(() => {
-    return calcularTotal({ multileg, cotacoesMultileg, indice: tabIndex });
-  }, [cotacoesMultileg, multileg, tabIndex]);
 
   const min = useMemo(() => {
     return calculoPreco(tab, "min", cotacoesMultileg);
@@ -65,32 +53,6 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
   const calculoSemBook = useMemo(() => {
     return verificaCalculoSemBook(tab.tabelaMultileg, cotacoesMultileg);
   }, [cotacoesMultileg, tab.tabelaMultileg]);
-
-  const priceInputConfig = useMemo(() => {
-    const config = {
-      step: 0.01,
-      precision: 2,
-    };
-
-    if (tab.market === "Forex") {
-      config.step = 0.00001;
-      config.precision = 5;
-    }
-
-    return config;
-  }, [tab.market]);
-
-  const renderPlaceholder = useMemo(() => {
-    return renderPlaceholderPreco({ multileg, indice: tabIndex });
-  }, [multileg, tabIndex]);
-
-  const price = useMemo(() => {
-    let preco = multileg[tabIndex].preco;
-
-    if (["0.00"].includes(preco)) return "";
-
-    return preco;
-  }, [multileg, tabIndex]);
 
   const previousMultileg = usePrevious(multileg);
 
@@ -164,7 +126,7 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
         </Col>
         <IconeConfigGrafico
           name="config_complementar_conditional_multileg"
-          className="icone_config_complementar"
+          className="configIcon"
         />
       </Row>
       <Row>
@@ -332,93 +294,6 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
           </Col>
         </Row>
       ) : null}
-      <Row className="mr-2 mb-2 multilegInputGroup">
-        <Col md={5} className="ml-2">
-          <h6>Preço</h6>
-        </Col>
-        <Col className="mr-1 inputPaddingRight">
-          <CustomInput
-            placeholder={renderPlaceholder ? "Informe as qtdes" : ""}
-            allowNegative
-            autoSelect
-            type="precoNegativo"
-            step={priceInputConfig.step}
-            precision={priceInputConfig.precision}
-            value={renderPlaceholder ? "" : price}
-            onChange={(valor) =>
-              dispatch(
-                cond_updateMultilegTabAction({
-                  tabIndex,
-                  attributeName: "preco",
-                  attributeValue: valor,
-                }),
-              )
-            }
-          />
-        </Col>
-      </Row>
-      <Row className="mr-2 rowPrecoTotal multilegInputGroup">
-        <Col md={5} className="ml-2">
-          <h6>Total</h6>
-        </Col>
-        <Col className="mr-0 text-align-center">
-          <NumberFormat
-            style={{ width: "112.28px" }}
-            className={`form-control textInput`}
-            thousandSeparator="."
-            decimalSeparator=","
-            readOnly
-            value={
-              renderPlaceholder
-                ? ""
-                : total < 0
-                ? formatarNumDecimal(total * -1)
-                : formatarNumDecimal(total)
-            }
-          />
-          <span>
-            {renderPlaceholder
-              ? "Débito de R$ 0,00"
-              : total < 0
-              ? "Crédito de R$ " + formatarNumDecimal(total * -1)
-              : "Débito de R$ " + formatarNumDecimal(total)}
-          </span>
-        </Col>
-      </Row>
-      <Row className="mr-2 mb-2">
-        <Col className="mr-1"></Col>
-      </Row>
-
-      <DateSelector tabIndex={tabIndex} />
-
-      <Row className="mr-2 mb-2 multilegInputGroup">
-        <Col md={5} className="ml-2">
-          <h6>Modo Exec.</h6>
-        </Col>
-
-        <Col>
-          <Form.Control
-            as="select"
-            value={multileg[tabIndex].selectedStrategy}
-            className="textInput strategyInput"
-            onChange={(e) =>
-              dispatch(
-                cond_updateMultilegTabAction({
-                  tabIndex,
-                  attributeName: "selectedStrategy",
-                  attributeValue: Number(e.target.value),
-                }),
-              )
-            }
-          >
-            {executionStrategies.map((strategyItem) => (
-              <option key={strategyItem.sigla} value={strategyItem.id}>
-                {strategyItem.sigla}
-              </option>
-            ))}
-          </Form.Control>
-        </Col>
-      </Row>
 
       <OperationButtons tabIndex={tabIndex} />
     </div>

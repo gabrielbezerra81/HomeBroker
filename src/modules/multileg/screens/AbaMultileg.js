@@ -52,7 +52,7 @@ class AbaMultileg extends React.Component {
 
     return (
       <div className="containerAbaMultileg">
-        <div>
+        <div className="tabMainContent">
           <div className="divDetalhesAbaMultileg">
             <div className="divColunaDetalhes">
               <InputGroup className="inputGroupPesquisaMultileg">

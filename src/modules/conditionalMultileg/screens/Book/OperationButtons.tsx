@@ -34,7 +34,7 @@ const OperationButtons: React.FC<Props> = ({ tabIndex }) => {
 
   return (
     <>
-      <div className="operationButtonRow">
+      <div className="operationButtonRow firstRow">
         <Button variant="secondary" size="sm" onClick={handleClean}>
           LIMPAR
         </Button>

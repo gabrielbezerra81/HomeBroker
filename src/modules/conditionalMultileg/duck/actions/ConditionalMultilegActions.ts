@@ -5,7 +5,7 @@ import {
   pesquisarStrikesMultilegAPI,
 } from "api/API";
 import { calculoPreco } from "./CalculoPreco";
-import { MainThunkAction, MainThunkDispatch } from "types/ThunkActions";
+import { MainThunkAction } from "types/ThunkActions";
 import {
   ConditionalMultilegTab,
   ConditionalMultilegQuote,
@@ -96,10 +96,7 @@ export const cond_removeMultilegTabAction = (
   updatedMultilegTabs.splice(tabIndex, 1);
 
   dispatch(
-    updateConditionalMultilegStateAction(
-      "multileg",
-      updatedMultilegTabs,
-    ),
+    updateConditionalMultilegStateAction("multileg", updatedMultilegTabs),
   );
 };
 
@@ -126,12 +123,7 @@ export const cond_updateMultilegTabAction = ({
     multilegQuotes: cotacoesMultileg,
   });
 
-  dispatch(
-    updateConditionalMultilegStateAction(
-      "multileg",
-      data.multilegTabs,
-    ),
-  );
+  dispatch(updateConditionalMultilegStateAction("multileg", data.multilegTabs));
   if (data.multilegQuotes) {
     dispatch(
       updateConditionalMultilegStateAction(
@@ -157,7 +149,11 @@ export const cond_updateMultilegTab = async ({
   attributeValue,
   multilegQuotes,
 }: ChangeTabAttribute) => {
-  setPointerWhileAwaiting({ lockMode: "travar", id: "conditionalMultileg" });
+  setPointerWhileAwaiting({
+    lockMode: "travar",
+    id: "conditionalMultileg",
+    parentID: "body",
+  });
 
   let value = attributeValue;
 
@@ -214,7 +210,12 @@ export const cond_updateMultilegTab = async ({
       }
     }
   }
-  setPointerWhileAwaiting({ lockMode: "destravar", id: "conditionalMultileg" });
+  setPointerWhileAwaiting({
+    lockMode: "destravar",
+    id: "conditionalMultileg",
+    parentID: "body",
+  });
+
   return {
     multilegTabs: updatedMultilegtabs,
     multilegQuotes: updatedMultilegQuotes,
@@ -341,9 +342,7 @@ export const cond_removeMultilegOfferAction = ({
   );
   multilegTabs[tabIndex].tabelaMultileg.splice(lineIndex, 1);
 
-  dispatch(
-    updateConditionalMultilegStateAction("multileg", multilegTabs),
-  );
+  dispatch(updateConditionalMultilegStateAction("multileg", multilegTabs));
 };
 
 interface AddMultilegOfferAction {

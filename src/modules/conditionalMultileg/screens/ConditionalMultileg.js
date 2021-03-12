@@ -1,7 +1,6 @@
 import React from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { Tab, Row, Col, Nav } from "react-bootstrap";
 import DraggableModal from "shared/components/DraggableModal";
 import { PopupHeader } from "shared/components/PopupHeader";
 import ConditionalMultilegTab from "./ConditionalMultilegTab";
@@ -12,7 +11,6 @@ import {
 } from "../duck/actions/ConditionalMultilegActions";
 import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
 import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopupZIndexFromSecondaryTab";
-import TabTitle from "./TabTitle";
 import { collapseElement, updateHeight } from "shared/utils/AnimateHeight";
 import { cond_getMultilegExecStrategiesAPIAction } from "../duck/actions/ConditionalMultilegAPIAction";
 import { cond_multilegNormalHeight } from "./constants";
@@ -24,8 +22,6 @@ const popupKey = "conditionalMultileg";
 class ConditionalMultileg extends React.Component {
   constructor(props) {
     super(props);
-
-    this.handleMultilegTabSelect = this.handleMultilegTabSelect.bind(this);
 
     this.onClose = this.onClose.bind(this);
   }
@@ -129,76 +125,23 @@ class ConditionalMultileg extends React.Component {
       />
     );
   }
-  /*
- 
-  */
-  handleMultilegTabSelect(key, event) {
-    if (event.keyCode === 32) {
-      const targetElement = event.target;
-      const { selectionStart, value } = targetElement;
-
-      const tabIndex = +this.props.abaSelecionada.substr(3);
-
-      const newTabName = [
-        value.slice(0, selectionStart),
-        event.key,
-        value.slice(selectionStart),
-      ].join("");
-
-      requestAnimationFrame(() => {
-        targetElement.setSelectionRange(selectionStart + 1, selectionStart + 1);
-      });
-
-      this.props.cond_updateMultilegTabAction({
-        tabIndex,
-        attributeName: "nomeAba",
-        attributeValue: newTabName,
-      });
-    } //
-    else {
-      this.props.cond_selectOrAddMultilegTabAction(key);
-    }
-  }
 
   ModalBody = () => {
     return (
-      <Tab.Container
-        onSelect={this.handleMultilegTabSelect}
-        activeKey={this.props.abaSelecionada}
-      >
+      <div>
         <HeightAdjuster />
-        <Row className="navTabMultileg">
-          <Nav>
-            {this.props.multileg.map((_, index) => {
-              return <TabTitle tabIndex={index} key={`tabTitle${index}`} />;
-            })}
 
-            <Col>
-              <Nav.Item>
-                <Nav.Link
-                  eventKey="adicionar"
-                  className="botaoAddAba divClicavel"
-                >
-                  +
-                </Nav.Link>
-              </Nav.Item>
-            </Col>
-          </Nav>
-        </Row>
-        <Row style={{ height: "100%" }}>
-          <Col md={12}>
-            <Tab.Content>
-              {this.props.multileg.map((_, index) => {
-                return (
-                  <Tab.Pane eventKey={`tab${index}`} key={index + "tabpane"}>
-                    <ConditionalMultilegTab indice={index} />
-                  </Tab.Pane>
-                );
-              })}
-            </Tab.Content>
-          </Col>
-        </Row>
-      </Tab.Container>
+        <ConditionalMultilegTab
+          tabIndex={0}
+          tabTitle="CONDIÇÃO"
+          titleColor="#BBE2C6"
+        />
+        <ConditionalMultilegTab
+          tabIndex={1}
+          tabTitle="ORDEM"
+          titleColor="#8CA6C3"
+        />
+      </div>
     );
   };
 }
