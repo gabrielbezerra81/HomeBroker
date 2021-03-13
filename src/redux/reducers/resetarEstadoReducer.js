@@ -1,8 +1,5 @@
 import _ from "lodash";
-import {
-  cloneMultilegTabs,
-  cloneMultilegQuotes,
-} from "modules/multileg/duck/actions/MultilegActions";
+import { cloneMultilegTabs } from "modules/multileg/duck/actions/MultilegActions";
 
 export const resetarEstadoRedux = ({
   state,
@@ -17,18 +14,18 @@ export const resetarEstadoRedux = ({
   if (shouldClearAllProps)
     switch (reducerName) {
       case "conditionalMultileg":
-        const [tab0] = cloneMultilegTabs(multileg.multileg);
-        const [tab1] = cloneMultilegTabs(multileg.multileg);
+        const [tab0] = cloneMultilegTabs(conditionalMultileg("CONDIÇÃO"));
+        const [tab1] = cloneMultilegTabs(conditionalMultileg("ORDEM"));
 
         mutableProps = {
           multileg: [tab0, tab1],
-          cotacoesMultileg: cloneMultilegQuotes(multileg.cotacoesMultileg), // cotacoes está sendo mutado
+          cotacoesMultileg: [], // cotacoes está sendo mutado
         };
         break;
       case "multileg":
         mutableProps = {
-          multileg: cloneMultilegTabs(multileg.multileg),
-          cotacoesMultileg: cloneMultilegQuotes(multileg.cotacoesMultileg), // cotacoes está sendo mutado
+          multileg: cloneMultilegTabs(multileg),
+          cotacoesMultileg: [], // cotacoes está sendo mutado
         };
         break;
       case "ordensExec":
@@ -55,8 +52,34 @@ export const resetarEstadoRedux = ({
 };
 
 // MultilegTab
-const multileg = {
-  multileg: [
+const multileg = [
+  {
+    nomeAba: "Ordem 1",
+    ativo: "",
+    ativoAtual: "",
+    valor: 0,
+    variacao: 0,
+    opcoes: [],
+    strikeSelecionado: "",
+    vencimento: [],
+    vencimentoSelecionado: "",
+    preco: "",
+    total: "",
+    validadeSelect: "DAY",
+    date: new Date(),
+    tabelaMultileg: [],
+    isAlertOpen: false,
+    operator: "Less",
+    param: "Bid",
+    comment: "",
+    selectedStrategy: 1,
+    market: "",
+    editingOrderId: null,
+  },
+];
+
+const conditionalMultileg = (tabType) => {
+  return [
     {
       nomeAba: "Ordem 1",
       ativo: "",
@@ -79,7 +102,7 @@ const multileg = {
       selectedStrategy: 1,
       market: "",
       editingOrderId: null,
+      tabType,
     },
-  ],
-  cotacoesMultileg: [],
+  ];
 };

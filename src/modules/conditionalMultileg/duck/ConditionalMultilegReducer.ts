@@ -36,6 +36,7 @@ const INITIAL_STATE: ConditionalMultilegReducer = {
       selectedStrategy: 1,
       market: "",
       editingOrderId: null,
+      tabType: "CONDIÇÃO",
     },
     {
       nomeAba: "Ordem 2",
@@ -58,6 +59,7 @@ const INITIAL_STATE: ConditionalMultilegReducer = {
       selectedStrategy: 1,
       market: "",
       editingOrderId: null,
+      tabType: "ORDEM",
     },
   ],
   esource_multilegQuotes: null,

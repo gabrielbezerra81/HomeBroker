@@ -23,15 +23,10 @@ import {
 
 interface Props {
   tabIndex: number;
-  tabTitle: string;
   titleColor: string;
 }
 
-const ConditionalMultilegTab: React.FC<Props> = ({
-  tabIndex,
-  tabTitle,
-  titleColor,
-}) => {
+const ConditionalMultilegTab: React.FC<Props> = ({ tabIndex, titleColor }) => {
   const {
     conditionalMultilegReducer: {
       multileg,
@@ -44,6 +39,8 @@ const ConditionalMultilegTab: React.FC<Props> = ({
   const tab = useMemo(() => {
     return multileg[tabIndex];
   }, [multileg, tabIndex]);
+
+  const { tabType } = tab;
 
   const dispatch = useDispatchStorePrincipal();
 
@@ -71,7 +68,7 @@ const ConditionalMultilegTab: React.FC<Props> = ({
   return (
     <div className="containerAbaMultileg">
       <div style={{ backgroundColor: titleColor }} className="sectionTitle">
-        {tabTitle}
+        {tabType}
       </div>
       <div className="tabMainContent">
         <div className="divDetalhesAbaMultileg">

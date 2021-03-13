@@ -505,6 +505,7 @@ const newMultilegTab: ConditionalMultilegTab = {
   selectedStrategy: 1,
   market: "",
   editingOrderId: null,
+  tabType: "CONDIÇÃO",
 };
 
 const setOfferSymbolAndModel = (multilegOffer: ConditionalMultilegOffer) => {

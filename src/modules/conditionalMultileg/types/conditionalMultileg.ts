@@ -19,6 +19,8 @@ export interface ConditionalMultilegTab {
   comment: string;
   selectedStrategy: number;
   editingOrderId: number | null;
+  // diferenças para multileg
+  tabType: "CONDIÇÃO" | "ORDEM";
 }
 
 export interface ConditionalMultilegOption {
@@ -67,4 +69,3 @@ export interface ExecutionStrategy {
   sigla: string;
   trigger: number | null;
 }
-
