@@ -11,7 +11,7 @@ import {
 } from "../duck/actions/ConditionalMultilegActions";
 import { aumentarZindexAction } from "redux/actions/GlobalAppActions";
 import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopupZIndexFromSecondaryTab";
-import { collapseElement, updateHeight } from "shared/utils/AnimateHeight";
+import { collapseElement } from "shared/utils/AnimateHeight";
 import { cond_getMultilegExecStrategiesAPIAction } from "../duck/actions/ConditionalMultilegAPIAction";
 import { cond_multilegNormalHeight } from "./constants";
 import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
@@ -65,9 +65,6 @@ class ConditionalMultileg extends React.Component {
       isOpenConditionalMultileg,
       aumentarZindexAction,
       zIndex,
-      multileg,
-      multilegButtonsVisibility,
-      createAlertButtonVisibility,
     } = this.props;
 
     setPopupZIndexFromSecondaryTab({
@@ -78,29 +75,6 @@ class ConditionalMultileg extends React.Component {
       popupVisibility: isOpenConditionalMultileg,
       updateFunction: aumentarZindexAction,
     });
-
-    const previousNumberOfOffers = Math.max(
-      ...prevProps.multileg.map((tab) => tab.tabelaMultileg.length),
-    );
-
-    const maxNumberOfOffers = Math.max(
-      ...multileg.map((tab) => tab.tabelaMultileg.length),
-    );
-
-    if (
-      previousNumberOfOffers !== maxNumberOfOffers ||
-      prevProps.multilegButtonsVisibility !== multilegButtonsVisibility ||
-      prevProps.createAlertButtonVisibility !== createAlertButtonVisibility
-    ) {
-      if (previousNumberOfOffers || previousNumberOfOffers === 0) {
-        const multilegElement = document.getElementById(popupKey);
-        var section = multilegElement?.querySelector(".mcontent");
-
-        let popupHeight = cond_multilegNormalHeight; //multilegBaseHeight;
-
-        updateHeight(section, popupHeight, 27 * maxNumberOfOffers);
-      }
-    }
   }
 
   onClose() {
@@ -131,16 +105,8 @@ class ConditionalMultileg extends React.Component {
       <div>
         <HeightAdjuster />
 
-        <ConditionalMultilegTab
-          tabIndex={0}
-          tabTitle="CONDIÇÃO"
-          titleColor="#BBE2C6"
-        />
-        <ConditionalMultilegTab
-          tabIndex={1}
-          tabTitle="ORDEM"
-          titleColor="#8CA6C3"
-        />
+        <ConditionalMultilegTab tabIndex={0} titleColor="#BBE2C6" />
+        <ConditionalMultilegTab tabIndex={1} titleColor="#8CA6C3" />
       </div>
     );
   };
@@ -149,8 +115,6 @@ class ConditionalMultileg extends React.Component {
 const mapStateToPropsMultileg = (state) => ({
   configComplementarAberto:
     state.conditionalMultilegReducer.configComplementarAberto,
-  multileg: state.conditionalMultilegReducer.multileg,
-  abaSelecionada: state.conditionalMultilegReducer.abaSelecionada,
   isOpenConditionalMultileg: state.systemReducer.isOpenConditionalMultileg,
 });
 
