@@ -83,6 +83,10 @@
   .containerAbaMultileg {
     position: relative;
 
+    & + .containerAbaMultileg {
+      margin-top: 16px;
+    }
+
     .sectionTitle {
       position: absolute;
       left: 1px;
@@ -113,6 +117,47 @@
     .configIcon {
       right: 5px;
       top: 5px;
+    }
+  }
+
+  .alertCondition {
+    display: flex;
+    padding: 0 32px;
+    position: relative;
+
+    .form-group {
+      text-align: center;
+      font-weight: bold;
+      display: flex;
+      flex-direction: column;
+
+      & + .form-group {
+        margin-left: 16px;
+      }
+
+      .form-label {
+        margin-bottom: 5px;
+      }
+
+      select {
+        text-align-last: center;
+      }
+
+      &.observationInputGroup {
+        text-align: unset;
+        width: 215px;
+      }
+    }
+
+    > button {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      height: 18px;
+      width: 81px;
+      padding: 0 !important;
+      line-height: 12px;
+      font-size: 12px;
     }
   }
 }

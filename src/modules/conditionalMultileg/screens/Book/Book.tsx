@@ -295,27 +295,12 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
         </Row>
       ) : null}
 
-      <OperationButtons tabIndex={tabIndex} />
+      {tab.tabType === "ORDEM" && <OperationButtons tabIndex={tabIndex} />}
     </div>
   );
 };
 
 export default Book;
-
-const renderPlaceholderPreco = (props: any) => {
-  let renderPlaceholder = false;
-  let tabelaMultileg = props.multileg[props.indice].tabelaMultileg;
-
-  tabelaMultileg.forEach((oferta: any) => {
-    let qtde = oferta.qtde + "";
-    qtde = qtde.split(".").join("");
-    if (qtde === "" || qtde === "0") {
-      renderPlaceholder = true;
-    }
-  });
-
-  return renderPlaceholder;
-};
 
 const renderQtdeBook = (itemBook: any) => {
   if (itemBook) {

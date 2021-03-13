@@ -20,6 +20,7 @@ import {
   ConditionalMultilegOption,
   ConditionalMultilegTab as CondMultilegTabType,
 } from "../types/conditionalMultileg";
+import AlertCondition from "./AlertCondition";
 
 interface Props {
   tabIndex: number;
@@ -222,6 +223,7 @@ const ConditionalMultilegTab: React.FC<Props> = ({ tabIndex, titleColor }) => {
           </div>
         </div>
         <TabelaMultileg indice={tabIndex}></TabelaMultileg>
+        {tab.tabType === "CONDIÇÃO" && <AlertCondition tabIndex={tabIndex} />}
       </div>
       <Book indice={tabIndex}></Book>
     </div>

@@ -15,25 +15,15 @@ const DateSelector = ({ tabIndex }) => {
 
   const dispatch = useDispatchStorePrincipal();
 
-  return (
-    <Row className="mr-2 mb-2 multilegInputGroup">
-      <Col md={5} className="ml-2">
-        <h6>Validade</h6>
-      </Col>
-
-      <Col>
-        {multilegTab.validadeSelect !== "SPECIFIED_DAY" ? (
-          Select({
-            dateOptionLabel: "ATÉ O DIA",
-            multilegTab,
-            tabIndex,
-            dispatch,
-          })
-        ) : (
-          <MultilegDatePicker tabIndex={tabIndex} />
-        )}
-      </Col>
-    </Row>
+  return multilegTab.validadeSelect !== "SPECIFIED_DAY" ? (
+    Select({
+      dateOptionLabel: "ATÉ O DIA",
+      multilegTab,
+      tabIndex,
+      dispatch,
+    })
+  ) : (
+    <MultilegDatePicker tabIndex={tabIndex} />
   );
 };
 
@@ -64,7 +54,7 @@ const MultilegDatePicker = ({ tabIndex }) => {
         )
       }
       dateFormat="dd/MM/yyyy"
-      popperPlacement="top-end"
+      popperPlacement="auto"
       autoFocus
       customInput={Select({
         dateOptionLabel: getformatedDate(multilegTab.date),
