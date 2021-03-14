@@ -78,8 +78,6 @@
       }
 
       .openConverterButton {
-        // color: #ff0080;
-        // border: 2px solid #ff0080;
         border-radius: 1px;
         position: absolute;
 
@@ -92,8 +90,6 @@
       }
 
       .saveSimulationButton {
-        // color: #ff8000;
-        // border: 2px solid #ff8000;
         border-radius: 1px;
         position: absolute;
         right: 90px;
@@ -186,6 +182,39 @@
           background-color: #272827 !important;
         }
       }
+    }
+  }
+}
+
+.saveSimulationPopConfirm {
+  background-color: #333;
+
+  .arrow {
+    &::after {
+      border-top-color: #333;
+    }
+  }
+
+  .popover-header {
+    background-color: #444;
+    color: #fff;
+    border-bottom: none;
+  }
+
+  .popover-body {
+    span {
+      color: #fff;
+    }
+
+    .form-control {
+      margin-top: 4px;
+      height: 24px;
+      border-radius: 4px;
+      padding: 0 4px;
+      background-color: transparent;
+      border: 1px solid #666;
+      color: #ddd !important;
+      font-size: 14px;
     }
   }
 }

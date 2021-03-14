@@ -6,12 +6,20 @@ import {
   Button,
   Spinner,
 } from "react-bootstrap";
+import { ButtonVariant } from "react-bootstrap/esm/types";
 
 interface Props extends Omit<OverlayTriggerProps, "overlay"> {
   title: string;
   message?: string;
   onConfirm: (...data: any) => any;
   onCancel?: (...data: any) => any;
+  confirmText?: string;
+  cancelText?: string;
+  cancelButtonStyle?: {
+    variant: ButtonVariant;
+  };
+  content?: React.ReactNode;
+  className?: string;
 }
 
 const PopConfirm: React.FC<Props> = ({
@@ -21,6 +29,11 @@ const PopConfirm: React.FC<Props> = ({
   message = "",
   onConfirm,
   onCancel,
+  confirmText = "Sim",
+  cancelText = "Não",
+  cancelButtonStyle = {},
+  content = null,
+  className,
   ...rest
 }) => {
   const [waitingConfirm, setWaitingConfirm] = useState(false);
@@ -49,21 +62,27 @@ const PopConfirm: React.FC<Props> = ({
       {...rest}
       overlay={
         <Popover
-          className="popConfirmContainer"
+          className={`popConfirmContainer ${className}`}
           id={`popover-positioned-${placement}`}
         >
           <Popover.Title as="h3">{title}</Popover.Title>
           <Popover.Content>
             <span>{message}</span>
+            {content}
             <div className="buttonsContainer">
-              <Button size="sm" variant="danger" onClick={handleCancel}>
-                Não
+              <Button
+                size="sm"
+                variant="danger"
+                {...cancelButtonStyle}
+                onClick={handleCancel}
+              >
+                {cancelText}
               </Button>
               <Button size="sm" variant="primary" onClick={handleConfirm}>
                 {waitingConfirm ? (
                   <Spinner size="sm" animation="border" variant={"light"} />
                 ) : (
-                  "Sim"
+                  confirmText
                 )}
               </Button>
             </div>

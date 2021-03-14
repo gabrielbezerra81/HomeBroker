@@ -41,7 +41,9 @@ export const updateInitialPlannerStateAction = (
   };
 };
 
-export const handleSaveSimulationAction = (): MainThunkAction => {
+export const handleSaveSimulationAction = (
+  simulationTitle: string,
+): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
       financialPlannerReducer: {
@@ -65,12 +67,15 @@ export const handleSaveSimulationAction = (): MainThunkAction => {
       rateFrequency: convertFrequencyToAPIValues(ratePeriodicity),
       period: periodValue,
       periodType: periodicity,
+      title: simulationTitle,
+      startDate: new Date().toLocaleDateString(),
     };
 
     try {
       await api.post(url_saveSimulation, payload);
 
       toast.success("Simulação salva com sucesso!");
+      document.body.click();
     } catch (error) {
       toast.error("Falha ao salvar simulação");
     }

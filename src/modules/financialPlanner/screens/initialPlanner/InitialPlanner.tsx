@@ -30,6 +30,7 @@ import CustomButton from "shared/components/CustomButton";
 import RateConverter from "./RateConverter";
 import { InitialPlannerData } from "modules/financialPlanner/types/FinancialPlannerState";
 import { toast } from "react-toastify";
+import PopConfirm from "shared/components/PopConfirm/PopConfirm";
 
 export interface Projection {
   rentability: number;
@@ -80,6 +81,8 @@ const InitialPlanner: React.FC = () => {
 
   const [savingSimulations, setSavingSimulations] = useState(false);
   const [converterVisibility, setConverterVisibility] = useState(false);
+
+  const [simulationTitle, setSimulationTitle] = useState("");
 
   const result = useMemo(() => {
     if (!initialValue || !interestRate || !periodValue) {
@@ -291,10 +294,13 @@ const InitialPlanner: React.FC = () => {
   const handleSaveSimulation = useCallback(async () => {
     setSavingSimulations(true);
 
-    await dispatch(handleSaveSimulationAction());
+    await dispatch(handleSaveSimulationAction(simulationTitle));
+
+    setSimulationTitle("");
+ 
 
     setSavingSimulations(false);
-  }, [dispatch]);
+  }, [dispatch, simulationTitle]);
 
   const initialLine = IncludeInitialLine();
 
@@ -524,13 +530,28 @@ const InitialPlanner: React.FC = () => {
                 <h6 className="totalValueText">Total:</h6>
                 <h6>{result?.formattedTotal}</h6>
                 <span></span>
-                <CustomButton
-                  loading={savingSimulations}
-                  className="brokerCustomButton saveSimulationButton"
-                  onClick={handleSaveSimulation}
+                <PopConfirm
+                  className="saveSimulationPopConfirm"
+                  title="Salvar simulação"
+                  onConfirm={handleSaveSimulation}
+                  message="Título"
+                  cancelText="Cancelar"
+                  confirmText="Confirmar"
+                  cancelButtonStyle={{ variant: "secondary" }}
+                  content={
+                    <FormControl
+                      onChange={(e) => setSimulationTitle(e.target.value)}
+                      value={simulationTitle}
+                    />
+                  }
                 >
-                  Salvar Simulação
-                </CustomButton>
+                  <CustomButton
+                    loading={savingSimulations}
+                    className="brokerCustomButton saveSimulationButton"
+                  >
+                    Salvar Simulação
+                  </CustomButton>
+                </PopConfirm>
               </div>
 
               <ProjectionGraph data={formattedProjections} />
