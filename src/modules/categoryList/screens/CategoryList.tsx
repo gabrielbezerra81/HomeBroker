@@ -111,7 +111,7 @@ const CategoryList: React.FC = () => {
         container.style.height = Math.max(...colHeights) + "px";
       }
     }
-  }, [categories.length, selectedTab]);
+  }, [categories, selectedTab]);
 
   // Carregar categorias
   useEffect(() => {
