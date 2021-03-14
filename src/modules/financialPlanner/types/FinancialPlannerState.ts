@@ -9,6 +9,15 @@ export interface InitialPlannerData {
   listing: "semanal" | "mensal" | "anual";
 }
 
+
+interface Simulation{}
+
+
+export interface DetailedPlannerData {
+  simulations:Array<Simulation>
+}
+
 export default interface FinancialPlannerState {
   initialPlanner: InitialPlannerData;
+  detailedPlanner:DetailedPlannerData
 }

@@ -1,24 +1,14 @@
 import api from "api/apiConfig";
 import { url_saveSimulation } from "api/url";
-import { UPDATE_MANY_FINANCIAL_PLANNER } from "constants/MenuActionTypes";
 import produce from "immer";
 import { convertFrequencyToAPIValues } from "modules/financialPlanner/screens/utils";
-import FinancialPlannerState, {
-  InitialPlannerData,
-} from "modules/financialPlanner/types/FinancialPlannerState";
+import { InitialPlannerData } from "modules/financialPlanner/types/FinancialPlannerState";
 import { toast } from "react-toastify";
+import { atualizarDivKeyAction } from "redux/actions/GlobalAppActions";
+import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
+import { globalStore } from "redux/StoreCreation";
 import { MainThunkAction } from "types/ThunkActions";
-
-const updateFinancialPlannerAction = (
-  payload: Partial<FinancialPlannerState>,
-): MainThunkAction => {
-  return (dispatch) => {
-    dispatch({
-      type: UPDATE_MANY_FINANCIAL_PLANNER,
-      payload,
-    });
-  };
-};
+import { updateFinancialPlannerAction } from "./utils";
 
 export const updateInitialPlannerStateAction = (
   payload: Partial<InitialPlannerData>,
@@ -72,7 +62,14 @@ export const handleSaveSimulationAction = (
     };
 
     try {
-      await api.post(url_saveSimulation, payload);
+      const response = await api.post(url_saveSimulation, payload);
+
+      if (response.data) {
+      }
+
+      globalStore.dispatch(atualizarDivKeyAction("detailedPlanner") as any);
+
+      dispatch(abrirItemBarraLateralAction("isOpenDetailedPlanner", true));
 
       toast.success("Simulação salva com sucesso!");
       document.body.click();

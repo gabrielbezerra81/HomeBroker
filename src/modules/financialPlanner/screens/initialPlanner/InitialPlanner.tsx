@@ -12,7 +12,7 @@ import CustomInput from "shared/components/CustomInput";
 import {
   handleSaveSimulationAction,
   updateInitialPlannerStateAction,
-} from "modules/financialPlanner/duck/actions/financialPlannerActions";
+} from "modules/financialPlanner/duck/actions/initialPlannerActions";
 import { FormControl } from "react-bootstrap";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import ProjectionTable from "./ProjectionTable";

@@ -1,7 +1,7 @@
 import React, { useMemo, useCallback } from "react";
 import { FormControl, Table } from "react-bootstrap";
 
-import { updateInitialPlannerStateAction } from "modules/financialPlanner/duck/actions/financialPlannerActions";
+import { updateInitialPlannerStateAction } from "modules/financialPlanner/duck/actions/initialPlannerActions";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { Projection, FormattedProjection } from "./InitialPlanner";
 

@@ -45,13 +45,18 @@ const PopConfirm: React.FC<Props> = ({
     document.body.click();
   }, [onCancel]);
 
-  const handleConfirm = useCallback(async () => {
-    setWaitingConfirm(true);
+  const handleConfirm = useCallback(
+    async (e) => {
+      e.stopPropagation();
 
-    await onConfirm();
+      setWaitingConfirm(true);
 
-    setWaitingConfirm(false);
-  }, [onConfirm]);
+      await onConfirm();
+
+      setWaitingConfirm(false);
+    },
+    [onConfirm],
+  );
 
   return (
     <OverlayTrigger

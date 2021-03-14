@@ -13,6 +13,9 @@ const INITIAL_STATE: FinancialPlannerState = {
     periodicity: "meses",
     listing: "mensal",
   },
+  detailedPlanner: {
+    simulations: [],
+  },
 };
 
 export default (

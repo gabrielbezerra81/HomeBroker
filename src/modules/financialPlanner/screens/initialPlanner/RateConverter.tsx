@@ -6,7 +6,7 @@ import CustomInput from "shared/components/CustomInput";
 import { PopupHeader } from "shared/components/PopupHeader";
 
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
-import { updateInitialPlannerStateAction } from "modules/financialPlanner/duck/actions/financialPlannerActions";
+import { updateInitialPlannerStateAction } from "modules/financialPlanner/duck/actions/initialPlannerActions";
 import { InitialPlannerData } from "modules/financialPlanner/types/FinancialPlannerState";
 import { convertInterestRate } from "../utils";
 
