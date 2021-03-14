@@ -1,5 +1,5 @@
 .plannerProjection {
-  padding: 0 6px;
+  padding: 0 5px;
   border-right: 1px solid #b7b7b7;
   margin-bottom: 8px;
 
@@ -92,6 +92,8 @@
       font-weight: 500;
       color: #aa88bc;
       text-align: center;
+      font-size: 14px;
+      padding: 3.2px 0 !important;
     }
 
     th,
@@ -127,12 +129,20 @@
         }
 
         select {
-          min-width: 55px;
+          min-width: 56px;
+        }
+      }
+
+      &.contributionCell {
+        .containerInput {
+          input {
+            padding-right: 0px !important;
+          }
         }
       }
 
       > select {
-        min-width: 44px;
+        min-width: 45px;
       }
 
       .containerInput {

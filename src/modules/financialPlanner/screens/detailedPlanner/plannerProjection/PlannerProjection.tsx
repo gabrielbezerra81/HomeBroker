@@ -242,7 +242,7 @@ const PlannerProjection: React.FC = () => {
                   </div>
                 </td>
                 <td>
-                  <div className="cellContent">
+                  <div className="cellContent contributionCell">
                     {/* aporte */}
                     <CustomInput
                       type="preco"
