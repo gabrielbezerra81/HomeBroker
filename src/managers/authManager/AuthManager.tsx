@@ -17,7 +17,7 @@ const AuthManager = () => {
   const dispatch = useDispatchStorePrincipal();
 
   const {
-    systemReducer: { authData, token },
+    systemReducer: { authData, token, isLogged },
   } = useStateStorePrincipal();
 
   const [requestInterceptor, setRequestInterceptor] = useState(-1);
@@ -77,9 +77,10 @@ const AuthManager = () => {
         if (isExpired) {
           setShouldAlertSessionExpired(true);
           setPreviousShouldAlert(false);
+
           setTimeout(() => {
             dispatch(deslogarUsuarioAction());
-          }, 6000);
+          }, 2000);
         }
       }
     }
@@ -87,7 +88,7 @@ const AuthManager = () => {
 
   // Verifica se o token está a 40 minutos de expirar. Caso esteja, será renovado.
   useEffect(() => {
-    if (authData) {
+    if (authData && isLogged) {
       const { token_date, expires_in } = authData;
 
       if (requestInterceptor !== -1) {
@@ -134,9 +135,12 @@ const AuthManager = () => {
 
       setTimerId(timer);
       setRequestInterceptor(interceptor);
+    } //
+    else if (timerId) {
+      clearInterval(timerId);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authData, handleTokenRefresh]);
+  }, [authData, handleTokenRefresh, isLogged]);
 
   useEffect(() => {
     if (responseInterceptor !== -1) {
