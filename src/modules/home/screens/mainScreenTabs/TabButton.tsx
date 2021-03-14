@@ -27,13 +27,9 @@ const TabButton: React.FC<TabButtonProps> = ({ tabIndex, tab }, ref) => {
 
   const dispatch = useDispatchStorePrincipal();
 
-  const handleRemoveTab = useCallback(
-    (e) => {
-      e.stopPropagation();
-      dispatch(handleRemoveTabAction(tabIndex));
-    },
-    [dispatch, tabIndex],
-  );
+  const handleRemoveTab = useCallback(() => {
+    dispatch(handleRemoveTabAction(tabIndex));
+  }, [dispatch, tabIndex]);
 
   const handleTabNameChange = useCallback(
     (e: any) => {
