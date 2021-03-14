@@ -1,5 +1,6 @@
 import produce from "immer";
 import _ from "lodash";
+import qs from "qs";
 
 import {
   ABRIR_FECHAR_MENU_LATERAL,
@@ -17,6 +18,7 @@ import api from "api/apiConfig";
 import { INITIAL_STATE as initialSystemState } from "../../reducers/system/SystemReducer";
 import { handleDeleteBoxAction } from "modules/multiBox/duck/actions/multiBoxActions";
 import { fecharFormAction } from "../GlobalAppActions";
+import axios from "axios";
 
 const waitDispatch = 1000;
 
@@ -119,13 +121,31 @@ export const deslogarUsuarioAction = () => {
   return async (dispatch, getState) => {
     try {
       const state = getState();
+      const {
+        systemReducer: { authData },
+      } = state;
       const combinedMainStore = combineMainStoreStateFromReducers(state);
 
-      dispatch(clearReduxStateFromStorageAction(combinedMainStore));
-      navigate(
-        "https://auth.rendacontinua.com/auth/realms/auth_sso/protocol/openid-connect/logout?redirect_uri=" +
-          redirectURL,
+      await axios.post(
+        "https://auth.rendacontinua.com/auth/realms/auth_sso/protocol/openid-connect/logout",
+        qs.stringify({
+          client_id: "homebroker-react",
+          refresh_token: authData?.refresh_token,
+        }),
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        },
       );
+
+      dispatch(
+        updateManySystemState({
+          authData: null,
+        }),
+      );
+
+      dispatch(clearReduxStateFromStorageAction(combinedMainStore));
     } catch (error) {
       console.log("error when wiping redux data", error.response);
     }
@@ -508,13 +528,13 @@ export const clearReduxStateFromStorageAction = (props) => {
         }
       }
     });
-    dispatch({
-      type: LOGAR_DESLOGAR_USUARIO,
-      payload: {
+
+    dispatch(
+      updateManySystemState({
         connectedUser: "",
         isLogged: false,
-      },
-    });
+      }),
+    );
 
     resetarDadosReducerAction({
       nameVariavelReducer: "deslogar",
