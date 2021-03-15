@@ -465,9 +465,9 @@ export const addNewMultiBoxStructureAction = ({
         shouldAlertSuccess: isDuplicating ? false : true,
       });
 
-      toast.success(success_add_box);
-
       if (responseData) {
+        toast.success(success_add_box);
+
         const boxStructure = responseData[0];
 
         dispatch(
