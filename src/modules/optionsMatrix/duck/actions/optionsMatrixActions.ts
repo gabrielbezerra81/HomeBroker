@@ -46,7 +46,6 @@ interface GetSavedSymbolsAPI {
 
 export const handleSearchOptionsAction = ({
   symbol,
-  type,
 }: SearchProps): MainThunkAction => {
   return async (dispatch) => {
     try {
@@ -65,7 +64,7 @@ export const handleSearchOptionsAction = ({
       }
 
       const optionsResponse = await api.get<GetOptionsAPI>(
-        `${url_optionsMatrix_symbol_type}${symbol}/${type}`,
+        `${url_optionsMatrix_symbol_type}${symbol}/CALL`,
       );
 
       const data = await getOneSymbolDataAPI(symbol);
@@ -351,7 +350,10 @@ export const handleSaveSelectionsAction = (): MainThunkAction => {
     }
 
     dispatch(
-      updateOptionsMatrixStateAction({ symbolsToUpdate: updatedSymbols }),
+      updateOptionsMatrixStateAction({
+        symbolsToUpdate: updatedSymbols,
+        toggleConfig: false,
+      }),
     );
   };
 };

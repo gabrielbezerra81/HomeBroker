@@ -10,6 +10,9 @@ const INITIAL_STATE: OptionsMatrixState = {
   checkIntersection: true,
   checkedColumns: [],
   checkedLines: [],
+  strikeView: "code",
+  toggleConfig: false,
+  type: "CALL",
 };
 
 export default function (

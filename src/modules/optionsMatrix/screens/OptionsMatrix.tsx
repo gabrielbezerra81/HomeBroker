@@ -21,13 +21,12 @@ import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { usePermissions } from "context/PermissionContext";
 import {
   handleColumnHeaderSelectionAction,
-  handleLineSelectionAction,
   handleSearchOptionsAction,
-  handleSymbolSelectionAction,
   handleSaveSelectionsAction,
   updateOptionsMatrixStateAction,
 } from "../duck/actions/optionsMatrixActions";
 import { Resizable } from "re-resizable";
+import TableCell from "./TableCell";
 
 interface SymbolData {
   last: number;
@@ -42,20 +41,19 @@ const OptionsMatrix: React.FC = () => {
   const {
     systemReducer: { isOpenOptionsMatrix },
     optionsMatrixReducer: {
-      checkedSymbols,
       options,
       checkIntersection,
-      checkedLines,
       checkedColumns,
+      toggleConfig,
+      strikeView,
+      type,
     },
   } = useStateStorePrincipal();
 
   const { permissions } = usePermissions();
 
   const [symbol, setSymbol] = useState("");
-  const [type, setType] = useState<"CALL" | "PUT">("CALL");
   const [symbolData, setSymbolData] = useState<SymbolData | null>(null);
-  const [strikeView, setStrikeView] = useState<"code" | "strike">("code");
 
   const [mouseDown, setMouseDown] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -63,8 +61,6 @@ const OptionsMatrix: React.FC = () => {
   const [scrollLeft, setScrollLeft] = useState(0);
   const [scrollTop, setScrollTop] = useState(0);
   const [selectBloqueado, setSelectBloqueado] = useState(false);
-
-  const [toggleConfig, setToggleConfig] = useState(false);
 
   const [fetchingAPI, setFetchingAPI] = useState(false);
 
@@ -161,6 +157,17 @@ const OptionsMatrix: React.FC = () => {
     }
   }, []);
 
+  const handleTypeChange = useCallback(
+    (e) => {
+      dispatch(
+        updateOptionsMatrixStateAction({
+          type: e.target.name,
+        }),
+      );
+    },
+    [dispatch],
+  );
+
   const handleColumnHeadSelection = useCallback(
     (expiration: string) => {
       dispatch(handleColumnHeaderSelectionAction(expiration));
@@ -186,30 +193,17 @@ const OptionsMatrix: React.FC = () => {
     setFetchingAPI(false);
   }, [dispatch, fetchingAPI, symbol, type]);
 
-  const handleLineSelection = useCallback(
-    (tableLine: TableLine) => {
-      dispatch(handleLineSelectionAction(tableLine));
-    },
-    [dispatch],
-  );
-
-  const handleSymbolSelection = useCallback(
-    (symbol: string) => {
-      dispatch(handleSymbolSelectionAction([symbol]));
-    },
-    [dispatch],
-  );
-
   const handleSaveSelections = useCallback(() => {
     dispatch(handleSaveSelectionsAction());
-    setToggleConfig(false);
   }, [dispatch]);
 
   const handleChangeStrikeView = useCallback(() => {
-    setStrikeView((currentValue) =>
-      currentValue === "code" ? "strike" : "code",
+    dispatch(
+      updateOptionsMatrixStateAction({
+        strikeView: strikeView === "code" ? "strike" : "code",
+      }),
     );
-  }, []);
+  }, [dispatch, strikeView]);
 
   const saveDimensionsOnResizeStop = useCallback(
     (e, d, element: HTMLElement) => {
@@ -244,12 +238,14 @@ const OptionsMatrix: React.FC = () => {
   const handleToggleConfig = useMemo(() => {
     if (permissions.optionsMatrix.checkSymbols) {
       return () => {
-        setToggleConfig((oldValue) => !oldValue);
+        dispatch(
+          updateOptionsMatrixStateAction({ toggleConfig: !toggleConfig }),
+        );
       };
     }
 
     return undefined;
-  }, [permissions.optionsMatrix.checkSymbols]);
+  }, [dispatch, permissions.optionsMatrix.checkSymbols, toggleConfig]);
 
   const columns = useMemo(() => {
     let expirationDates: moment.Moment[] = [];
@@ -301,6 +297,7 @@ const OptionsMatrix: React.FC = () => {
           [expiration]: {
             symbol: stockItem.symbol,
             strike: stockItem.strike,
+            model: stockItem.model,
           },
         });
       });
@@ -334,26 +331,26 @@ const OptionsMatrix: React.FC = () => {
 
   // Obter tabela inicial
   useEffect(() => {
-    // const table = localStorage.getItem("optionsMatrix");
-    // if (table) {
-    //   dispatch(updateOptionsMatrixStateAction({ options: JSON.parse(table) }));
-    // }
-    // if (symbol) {
-    //   api
-    //     .get(`${url_optionsMatrix_symbol_type}${symbol}/${type}`)
-    //     .then((response) => {
-    //       dispatch(
-    //         updateOptionsMatrixStateAction({ options: response.data.lines }),
-    //       );
-    //       localStorage.setItem(
-    //         "optionsMatrix",
-    //         JSON.stringify(response.data.lines),
-    //       );
-    //     })
-    //     .catch((error) => {
-    //       console.log("get options table error", error);
-    //     });
-    // }
+    const table = localStorage.getItem("optionsMatrix");
+    if (table) {
+      dispatch(updateOptionsMatrixStateAction({ options: JSON.parse(table) }));
+    }
+    if (symbol) {
+      api
+        .get(`${url_optionsMatrix_symbol_type}${symbol}/${type}`)
+        .then((response) => {
+          dispatch(
+            updateOptionsMatrixStateAction({ options: response.data.lines }),
+          );
+          localStorage.setItem(
+            "optionsMatrix",
+            JSON.stringify(response.data.lines),
+          );
+        })
+        .catch((error) => {
+          console.log("get options table error", error);
+        });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -375,6 +372,20 @@ const OptionsMatrix: React.FC = () => {
   const resizableExtraProps = useMemo(() => {
     return { id: "optionsMatrix" };
   }, []);
+
+  const renderedLines = useMemo(() => {
+    return tableData.map((tableLine, lineIndex) => (
+      <tr key={lineIndex}>
+        {columns.map((column, columnIndex) => (
+          <TableCell
+            tableLine={tableLine}
+            column={column}
+            key={`${lineIndex}${columnIndex}`}
+          />
+        ))}
+      </tr>
+    ));
+  }, [columns, tableData]);
 
   return (
     <DraggablePopup
@@ -432,19 +443,19 @@ const OptionsMatrix: React.FC = () => {
             <Form.Check
               custom
               type="radio"
-              name="typeRadio"
-              onChange={() => setType("CALL")}
+              name="CALL"
+              onChange={handleTypeChange}
               label="CALL"
               checked={type === "CALL"}
             />
 
             <Form.Check
               custom
-              name="typeRadio"
+              name="PUT"
               type="radio"
               label="PUT"
               checked={type === "PUT"}
-              onChange={() => setType("PUT")}
+              onChange={handleTypeChange}
             />
 
             {toggleConfig && (
@@ -515,71 +526,7 @@ const OptionsMatrix: React.FC = () => {
                     ))}
                   </tr>
                 </thead>
-                <tbody>
-                  {tableData.map((tableLine, lineIndex) => (
-                    <tr key={lineIndex}>
-                      {columns.map((column, columnIndex) => {
-                        const columnData = tableLine[column.key];
-
-                        if (column.key === "strike") {
-                          const value = columnData;
-
-                          const isChecked = checkedLines.includes(value);
-
-                          return (
-                            <td key={value}>
-                              <div>
-                                {value && toggleConfig && (
-                                  <Form.Check
-                                    custom
-                                    checked={isChecked}
-                                    type="checkbox"
-                                    label=""
-                                    onChange={() =>
-                                      handleLineSelection(tableLine)
-                                    }
-                                  />
-                                )}
-                                <span>{value}</span>
-                              </div>
-                            </td>
-                          );
-                        } //
-                        else if (columnData) {
-                          const value =
-                            strikeView === "code"
-                              ? columnData.symbol
-                              : columnData.strike;
-
-                          const isChecked = checkedSymbols.includes(
-                            columnData.symbol,
-                          );
-
-                          return (
-                            <td key={column.key}>
-                              <div>
-                                <span>{value}</span>
-                                {value && toggleConfig && (
-                                  <Form.Check
-                                    custom
-                                    checked={isChecked}
-                                    type="checkbox"
-                                    label=""
-                                    onChange={() =>
-                                      handleSymbolSelection(columnData.symbol)
-                                    }
-                                  />
-                                )}
-                              </div>
-                            </td>
-                          );
-                        }
-
-                        return <td key={`${lineIndex}${columnIndex}`} />;
-                      })}
-                    </tr>
-                  ))}
-                </tbody>
+                <tbody>{renderedLines}</tbody>
               </Table>
             </PerfectScrollbar>
           </div>

@@ -29,4 +29,7 @@ export default interface OptionsMatrixState {
   checkIntersection: boolean;
   checkedColumns: Array<string>;
   checkedLines: Array<number>;
+  strikeView: "code" | "strike";
+  toggleConfig: boolean;
+  type:"CALL" | "PUT"
 }

@@ -217,6 +217,17 @@
             flex: 1;
           }
 
+          .modelContainer {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+
+            img,
+            svg {
+              height: 19px;
+            }
+          }
+
           .form-check {
             input {
               margin-left: -0.8rem;
