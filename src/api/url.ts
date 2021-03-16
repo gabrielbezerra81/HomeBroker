@@ -79,7 +79,7 @@ export const url_boxStructureBooks_ids = "structures/books?ids=";
 export const url_stockInfo_symbol = "stocks/info/";
 
 // Matriz de opções
-export const url_optionsTable_symbol_type = "structure/thl/matrix/";
+export const url_optionsMatrix_symbol_type = "structure/thl/matrix/";
 export const url_saveSymbolConfig_stockId = "stocks/watch/";
 export const url_listSymbolConfig_symbol = "stocks/watch/symbol/";
 
@@ -96,3 +96,4 @@ export const url_deleteCategories_ids = "favorite/list?ids=";
 
 // Planejador financeiro
 export const url_saveSimulation = "projections";
+export const url_listSimulations = "projections/user";
