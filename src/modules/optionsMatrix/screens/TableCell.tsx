@@ -10,6 +10,7 @@ import { TableLine } from "../types/OptionsMatrixState";
 
 import modelEUImage from "assets/modeloEU.png";
 import { ReactComponent as ModelUSAImage } from "assets/modeloUSA2.svg";
+import { getSymbolByType } from "../duck/actions/utils";
 
 interface Props {
   tableLine: TableLine;
@@ -57,17 +58,7 @@ const TableCell: React.FC<Props> = ({ tableLine, column }) => {
 
   const symbol = useMemo(() => {
     if (columnData && typeof columnData !== "number") {
-      if (type === "CALL") {
-        return columnData.symbol;
-      }
-
-      const prefix = columnData.symbol.substr(0, 4);
-      const callSymbolLetter = columnData.symbol.charAt(4);
-      const symbolNumbers = columnData.symbol.substr(5);
-
-      let putSymbolLetter = convertCallLetterToPut(callSymbolLetter);
-
-      return `${prefix}${putSymbolLetter}${symbolNumbers}`;
+      return getSymbolByType({ type, symbol: columnData.symbol });
     }
 
     return "";
@@ -144,35 +135,4 @@ const Model: React.FC<ModelProps> = ({ model }) => {
   else if (model === "AMERICAN")
     return <ModelUSAImage className="modelImg" viewBox="6 -1 17 17" />;
   else return null;
-};
-
-const convertCallLetterToPut = (callLetter: string) => {
-  switch (callLetter) {
-    case "A":
-      return "M";
-    case "B":
-      return "N";
-    case "C":
-      return "O";
-    case "D":
-      return "P";
-    case "E":
-      return "Q";
-    case "F":
-      return "R";
-    case "G":
-      return "S";
-    case "H":
-      return "T";
-    case "I":
-      return "U";
-    case "J":
-      return "V";
-    case "K":
-      return "W";
-    case "L":
-      return "X";
-    default:
-      return callLetter;
-  }
 };

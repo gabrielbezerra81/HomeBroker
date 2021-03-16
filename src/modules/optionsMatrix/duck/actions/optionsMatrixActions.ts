@@ -13,6 +13,7 @@ import OptionsMatrixState, {
 } from "modules/optionsMatrix/types/OptionsMatrixState";
 import { toast } from "react-toastify";
 import { MainThunkAction } from "types/ThunkActions";
+import { getSymbolByType } from "./utils";
 
 export const updateOptionsMatrixStateAction = (
   payload: Partial<OptionsMatrixState>,
@@ -109,6 +110,7 @@ export const handleLineSelectionAction = (
         checkedSymbols,
         checkedColumns,
         options,
+        type,
       },
     } = getState();
 
@@ -127,9 +129,11 @@ export const handleLineSelectionAction = (
       option.stocks.forEach((stock) => {
         const { strikeLine } = option;
 
+        const symbol = getSymbolByType({ type, symbol: stock.symbol });
+
         const [stockDate] = stock.endBusiness.split(" ");
 
-        const alreadyAddedSymbol = checkedSymbols.includes(stock.symbol);
+        const alreadyAddedSymbol = checkedSymbols.includes(symbol);
         const isInSameLine = strikeLine === strike;
 
         if (isChecking) {
@@ -138,7 +142,7 @@ export const handleLineSelectionAction = (
             isInSameLine &&
             (!checkIntersection || !isAnyColumnChecked)
           ) {
-            symbolsToCheck.push(stock.symbol);
+            symbolsToCheck.push(symbol);
             return;
           }
 
@@ -149,16 +153,16 @@ export const handleLineSelectionAction = (
               columnsToChange.push(stockDate);
 
               if (!alreadyAddedSymbol) {
-                symbolsToCheck.push(stock.symbol);
+                symbolsToCheck.push(symbol);
               }
             } //
             else if (isAnyColumnChecked && alreadyAddedSymbol) {
-              symbolsToRemove.push(stock.symbol);
+              symbolsToRemove.push(symbol);
             }
           }
         } //
         else if (isInSameLine && alreadyAddedSymbol) {
-          symbolsToCheck.push(stock.symbol);
+          symbolsToCheck.push(symbol);
         }
       });
     });
@@ -203,6 +207,7 @@ export const handleColumnHeaderSelectionAction = (
         checkIntersection,
         checkedLines,
         checkedColumns,
+        type,
       },
     } = getState();
 
@@ -219,7 +224,9 @@ export const handleColumnHeaderSelectionAction = (
       option.stocks.forEach((stock) => {
         const [stockDate] = stock.endBusiness.split(" ");
 
-        const alreadyAddedSymbol = checkedSymbols.includes(stock.symbol);
+        const symbol = getSymbolByType({ type, symbol: stock.symbol });
+
+        const alreadyAddedSymbol = checkedSymbols.includes(symbol);
         const isInSameColumn = expiration === stockDate;
 
         // Está marcando a coluna
@@ -230,7 +237,7 @@ export const handleColumnHeaderSelectionAction = (
             isInSameColumn &&
             (!checkIntersection || !isAnyStrikeChecked)
           ) {
-            symbolsToCheck.push(stock.symbol);
+            symbolsToCheck.push(symbol);
             return;
           }
 
@@ -244,17 +251,17 @@ export const handleColumnHeaderSelectionAction = (
               linesToChange.push(strikeLine);
 
               if (!alreadyAddedSymbol) {
-                symbolsToCheck.push(stock.symbol);
+                symbolsToCheck.push(symbol);
               } //
             } // Ao marcar intersecção, alguns códigos serão removidos das linhas e colunas. Só há remoção se houver intersecção e por isso checa se tem algum
             // strike marcado
             else if (isAnyStrikeChecked && alreadyAddedSymbol) {
-              symbolsToRemove.push(stock.symbol);
+              symbolsToRemove.push(symbol);
             }
           }
         } // Está desmarcando os códigos que correspondem a coluna atual
         else if (isInSameColumn && alreadyAddedSymbol) {
-          symbolsToCheck.push(stock.symbol);
+          symbolsToCheck.push(symbol);
         }
       });
     });
@@ -315,6 +322,7 @@ export const handleSaveSelectionsAction = (): MainThunkAction => {
         symbolsToUpdate,
         stockSymbolId,
         options,
+        type,
       },
     } = getState();
 
@@ -329,7 +337,9 @@ export const handleSaveSelectionsAction = (): MainThunkAction => {
 
       options.forEach((option) => {
         option.stocks.forEach((stock) => {
-          if (updatedSymbols.includes(stock.symbol)) {
+          const symbol = getSymbolByType({ type, symbol: stock.symbol });
+
+          if (updatedSymbols.includes(symbol)) {
             symbolsIds.push(stock.id);
           }
         });
