@@ -40,9 +40,9 @@ const TabBarHoverMenu: React.FC = () => {
     dispatch(updateManySystemState({ isOpenCategoryList: true }));
   }, [dispatch, dispatchGlobal]);
 
-  const handleOpenOptionsTable = useCallback(() => {
-    dispatchGlobal(atualizarDivKeyAction("optionsTable"));
-    dispatch(updateManySystemState({ isOpenOptionsTable: true }));
+  const handleOpenOptionsMatrix = useCallback(() => {
+    dispatchGlobal(atualizarDivKeyAction("optionsMatrix"));
+    dispatch(updateManySystemState({ isOpenOptionsMatrix: true }));
   }, [dispatch, dispatchGlobal]);
 
   // useEffect(() => {
@@ -98,7 +98,7 @@ const TabBarHoverMenu: React.FC = () => {
         className={visibilityClass}
         onMouseOver={handleShowOnHover}
         onMouseLeave={handleHideOnLeave}
-        onClick={handleOpenOptionsTable}
+        onClick={handleOpenOptionsMatrix}
       >
         <span>Matriz de Opções</span>
         <IoMdAddCircle size={16} />

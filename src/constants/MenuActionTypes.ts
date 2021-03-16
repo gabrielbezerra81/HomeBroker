@@ -25,7 +25,7 @@ export const UPDATE_ONE_MULTIBOX = "update_one_multibox";
 export const UPDATE_MANY_MULTIBOX = "update_many_multibox";
 
 // Matriz de opções
-export const UPDATE_STATE_OPTIONS_TABLE = "update_state_options_table";
+export const UPDATE_STATE_OPTIONS_MATRIX = "update_state_options_matrix";
 
 // Multileg condicional
 export const UPDATE_ONE_CONDITIONAL_MULTILEG =

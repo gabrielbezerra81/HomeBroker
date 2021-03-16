@@ -18,7 +18,7 @@ interface Permission {
     ordersExecuting: boolean;
     position: boolean;
   };
-  optionsTable: {
+  optionsMatrix: {
     checkSymbols: boolean;
   };
   conditionalMultileg: boolean;
@@ -54,7 +54,7 @@ const PermissionProvider: React.FC = ({ children }) => {
       ordersExecuting: false,
       position: false,
     },
-    optionsTable: {
+    optionsMatrix: {
       checkSymbols: false,
     },
     conditionalMultileg: false,
@@ -117,7 +117,7 @@ const changePermissionsByRole = (
     position: true,
   };
 
-  changePayload.optionsTable = {
+  changePayload.optionsMatrix = {
     checkSymbols: false,
   };
 
@@ -142,7 +142,7 @@ const changePermissionsByRole = (
     changePayload.history = false;
   } //
   else if (roles.includes("Admin")) {
-    changePayload.optionsTable.checkSymbols = true;
+    changePayload.optionsMatrix.checkSymbols = true;
     changePayload.conditionalMultileg = true;
     // Não faz nada, retorna apenas todas as permissões
   }

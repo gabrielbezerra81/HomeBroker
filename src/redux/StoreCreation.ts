@@ -16,7 +16,7 @@ import ordersExecReducer from "modules/ordersExec/duck/OrdensExecReducer";
 import financialPlannerReducer from "modules/financialPlanner/duck/FinancialPlannerReducer";
 import multiBoxReducer from "modules/multiBox/duck/multiBoxReducer";
 import categoryListReducer from "modules/categoryList/duck/CategoryListReducer";
-import optionsTableReducer from "modules/optionsTable/duck/optionsTableReducer";
+import optionsMatrixReducer from "modules/optionsMatrix/duck/optionsMatrixReducer";
 import thlReducer from "modules/thl/duck/THLReducer";
 
 let rehydrationComplete: any;
@@ -51,7 +51,7 @@ const rootReducer = combineReducers({
   financialPlannerReducer,
   multiBoxReducer,
   categoryListReducer,
-  optionsTableReducer,
+  optionsMatrixReducer,
   conditionalMultilegReducer,
 });
 

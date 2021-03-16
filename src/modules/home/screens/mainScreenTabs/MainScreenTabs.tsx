@@ -42,7 +42,7 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
       isOpenCategoryList,
       isOpenInitialPlanner,
       isOpenDetailedPlanner,
-      isOpenOptionsTable,
+      isOpenOptionsMatrix,
       isOpenConditionalMultileg,
     },
   } = useStateStorePrincipal();
@@ -59,7 +59,7 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
       { key: "category_list", isOpen: isOpenCategoryList },
       { key: "initialPlanner", isOpen: isOpenInitialPlanner },
       { key: "detailedPlanner", isOpen: isOpenDetailedPlanner },
-      { key: "optionsTable", isOpen: isOpenOptionsTable },
+      { key: "optionsMatrix", isOpen: isOpenOptionsMatrix },
       { key: "conditionalMultileg", isOpen: isOpenConditionalMultileg },
     ] as const;
 
@@ -73,7 +73,7 @@ const MainScreenTabs: React.FC<MainScreenTabsProps> = ({ children }) => {
     isOpenCategoryList,
     isOpenInitialPlanner,
     isOpenDetailedPlanner,
-    isOpenOptionsTable,
+    isOpenOptionsMatrix,
     isOpenConditionalMultileg,
   ]);
 

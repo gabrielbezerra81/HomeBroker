@@ -2,24 +2,24 @@ import api from "api/apiConfig";
 import { getOneSymbolDataAPI, getSymbolInfoAPI } from "api/symbolAPI";
 import {
   url_listSymbolConfig_symbol,
-  url_optionsTable_symbol_type,
+  url_optionsMatrix_symbol_type,
   url_saveSymbolConfig_stockId,
 } from "api/url";
-import { UPDATE_STATE_OPTIONS_TABLE } from "constants/MenuActionTypes";
+import { UPDATE_STATE_OPTIONS_MATRIX } from "constants/MenuActionTypes";
 import produce from "immer";
-import OptionsTableState, {
+import OptionsMatrixState, {
   OptionTableItem,
   TableLine,
-} from "modules/optionsTable/types/OptionsTableState";
+} from "modules/optionsMatrix/types/OptionsMatrixState";
 import { toast } from "react-toastify";
 import { MainThunkAction } from "types/ThunkActions";
 
-export const updateOptionsTableStateAction = (
-  payload: Partial<OptionsTableState>,
+export const updateOptionsMatrixStateAction = (
+  payload: Partial<OptionsMatrixState>,
 ): MainThunkAction => {
   return (dispatch) => {
     dispatch({
-      type: UPDATE_STATE_OPTIONS_TABLE,
+      type: UPDATE_STATE_OPTIONS_MATRIX,
       payload,
     });
   };
@@ -65,7 +65,7 @@ export const handleSearchOptionsAction = ({
       }
 
       const optionsResponse = await api.get<GetOptionsAPI>(
-        `${url_optionsTable_symbol_type}${symbol}/${type}`,
+        `${url_optionsMatrix_symbol_type}${symbol}/${type}`,
       );
 
       const data = await getOneSymbolDataAPI(symbol);
@@ -79,7 +79,7 @@ export const handleSearchOptionsAction = ({
       );
 
       dispatch(
-        updateOptionsTableStateAction({
+        updateOptionsMatrixStateAction({
           options: optionsResponse.data.lines,
           stockSymbolId: stockId,
           symbolsToUpdate,
@@ -104,7 +104,7 @@ export const handleLineSelectionAction = (
 ): MainThunkAction => {
   return (dispatch, getState) => {
     const {
-      optionsTableReducer: {
+      optionsMatrixReducer: {
         checkedLines,
         checkIntersection,
         checkedSymbols,
@@ -184,7 +184,7 @@ export const handleLineSelectionAction = (
     });
 
     dispatch(
-      updateOptionsTableStateAction({
+      updateOptionsMatrixStateAction({
         checkedLines: updatedLines,
         checkedColumns: updatedColumns,
         checkedSymbols: updatedSymbols,
@@ -198,7 +198,7 @@ export const handleColumnHeaderSelectionAction = (
 ): MainThunkAction => {
   return (dispatch, getState) => {
     const {
-      optionsTableReducer: {
+      optionsMatrixReducer: {
         checkedSymbols,
         options,
         checkIntersection,
@@ -280,7 +280,7 @@ export const handleColumnHeaderSelectionAction = (
     });
 
     dispatch(
-      updateOptionsTableStateAction({
+      updateOptionsMatrixStateAction({
         checkedLines: updatedLines,
         checkedColumns: updatedColumns,
         checkedSymbols: updatedSymbols,
@@ -294,7 +294,7 @@ export const handleSymbolSelectionAction = (
 ): MainThunkAction => {
   return (dispatch, getState) => {
     const {
-      optionsTableReducer: { checkedSymbols },
+      optionsMatrixReducer: { checkedSymbols },
     } = getState();
 
     const updatedSymbols = handleCheckedListChange({
@@ -302,14 +302,16 @@ export const handleSymbolSelectionAction = (
       changes: itemsToCheck,
     });
 
-    dispatch(updateOptionsTableStateAction({ checkedSymbols: updatedSymbols }));
+    dispatch(
+      updateOptionsMatrixStateAction({ checkedSymbols: updatedSymbols }),
+    );
   };
 };
 
-export const handlSaveSelectionsAction = (): MainThunkAction => {
+export const handleSaveSelectionsAction = (): MainThunkAction => {
   return async (dispatch, getState) => {
     const {
-      optionsTableReducer: {
+      optionsMatrixReducer: {
         checkedSymbols,
         symbolsToUpdate,
         stockSymbolId,
@@ -349,7 +351,7 @@ export const handlSaveSelectionsAction = (): MainThunkAction => {
     }
 
     dispatch(
-      updateOptionsTableStateAction({ symbolsToUpdate: updatedSymbols }),
+      updateOptionsMatrixStateAction({ symbolsToUpdate: updatedSymbols }),
     );
   };
 };
@@ -395,7 +397,7 @@ export const handleColumnHeaderSelectionAction = (
 ): MainThunkAction => {
   return (dispatch, getState) => {
     const {
-      optionsTableReducer: { checkedItems, options },
+      optionsMatrixReducer: { checkedItems, options },
     } = getState();
 
     const itemsToCheck: string[] = [expiration];
@@ -438,7 +440,7 @@ export const handleLineSelectionAction = (
 ): MainThunkAction => {
   return (dispatch, getState) => {
     const {
-      optionsTableReducer: { checkedItems },
+      optionsMatrixReducer: { checkedItems },
     } = getState();
 
     const isChecking = !checkedItems.includes(tableLine.strike.toString());

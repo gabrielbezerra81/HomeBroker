@@ -21,7 +21,7 @@ export interface OptionTableItem {
   structuresIds: Array<number>;
 }
 
-export default interface OptionsTableState {
+export default interface OptionsMatrixState {
   options: Array<OptionTableItem>;
   checkedSymbols: Array<string>;
   symbolsToUpdate: Array<string>;

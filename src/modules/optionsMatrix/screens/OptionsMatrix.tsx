@@ -11,10 +11,10 @@ import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions"
 import DraggablePopup from "shared/components/DraggablePopup/DraggablePopup";
 import { PopupHeader } from "shared/components/PopupHeader";
 
-import "../styles/OptionsTable.scss";
-import { TableLine } from "../types/OptionsTableState";
+import "../styles/OptionsMatrix.scss";
+import { TableLine } from "../types/OptionsMatrixState";
 import api from "api/apiConfig";
-import { url_optionsTable_symbol_type } from "api/url";
+import { url_optionsMatrix_symbol_type } from "api/url";
 import { Table } from "react-bootstrap";
 import { GrFormSearch } from "react-icons/gr";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
@@ -24,9 +24,9 @@ import {
   handleLineSelectionAction,
   handleSearchOptionsAction,
   handleSymbolSelectionAction,
-  handlSaveSelectionsAction,
-  updateOptionsTableStateAction,
-} from "../duck/actions/optionsTableActions";
+  handleSaveSelectionsAction,
+  updateOptionsMatrixStateAction,
+} from "../duck/actions/optionsMatrixActions";
 import { Resizable } from "re-resizable";
 
 interface SymbolData {
@@ -34,14 +34,14 @@ interface SymbolData {
   oscilation: number;
 }
 
-const savedDimensionsPath = "@homebroker:optionsTableDimensions";
+const savedDimensionsPath = "@homebroker:optionsMatrixDimensions";
 
-const OptionsTable: React.FC = () => {
+const OptionsMatrix: React.FC = () => {
   const dispatch = useDispatchStorePrincipal();
 
   const {
-    systemReducer: { isOpenOptionsTable },
-    optionsTableReducer: {
+    systemReducer: { isOpenOptionsMatrix },
+    optionsMatrixReducer: {
       checkedSymbols,
       options,
       checkIntersection,
@@ -69,11 +69,11 @@ const OptionsTable: React.FC = () => {
   const [fetchingAPI, setFetchingAPI] = useState(false);
 
   const onClose = useCallback(() => {
-    dispatch(abrirItemBarraLateralAction("isOpenOptionsTable", null, false));
+    dispatch(abrirItemBarraLateralAction("isOpenOptionsMatrix", null, false));
   }, [dispatch]);
 
   const onMouseDown = useCallback((e) => {
-    const container = document.getElementById("scrollOptionsTable");
+    const container = document.getElementById("scrollOptionsMatrix");
 
     if (container) {
       setMouseDown(true);
@@ -86,13 +86,13 @@ const OptionsTable: React.FC = () => {
   }, []);
 
   const onMouseUp = useCallback((e) => {
-    const optionsTable = document.getElementById("optionsTable");
-    const container = document.getElementById("scrollOptionsTable");
+    const optionsMatrix = document.getElementById("optionsMatrix");
+    const container = document.getElementById("scrollOptionsMatrix");
 
-    if (container && optionsTable) {
+    if (container && optionsMatrix) {
       setMouseDown(false);
       setSelectBloqueado(false);
-      optionsTable.classList.remove("blockSelection");
+      optionsMatrix.classList.remove("blockSelection");
       container.classList.remove("dragScrollPointer");
 
       if (container.hasPointerCapture(1)) {
@@ -107,13 +107,13 @@ const OptionsTable: React.FC = () => {
       e.preventDefault();
 
       if (!selectBloqueado) {
-        const container = document.getElementById("scrollOptionsTable");
-        const optionsTable = document.getElementById("optionsTable");
+        const container = document.getElementById("scrollOptionsMatrix");
+        const optionsMatrix = document.getElementById("optionsMatrix");
 
-        if (container && optionsTable) {
+        if (container && optionsMatrix) {
           container.setPointerCapture(1);
 
-          optionsTable.classList.add("blockSelection");
+          optionsMatrix.classList.add("blockSelection");
           setSelectBloqueado(true);
         }
       }
@@ -132,7 +132,7 @@ const OptionsTable: React.FC = () => {
         thresholdY *= -1;
       }
 
-      const container = document.getElementById("scrollOptionsTable");
+      const container = document.getElementById("scrollOptionsMatrix");
 
       if (!container) {
         return;
@@ -201,7 +201,7 @@ const OptionsTable: React.FC = () => {
   );
 
   const handleSaveSelections = useCallback(() => {
-    dispatch(handlSaveSelectionsAction());
+    dispatch(handleSaveSelectionsAction());
     setToggleConfig(false);
   }, [dispatch]);
 
@@ -225,13 +225,13 @@ const OptionsTable: React.FC = () => {
 
   const handleChangeIntersectionMode = useCallback(() => {
     dispatch(
-      updateOptionsTableStateAction({ checkIntersection: !checkIntersection }),
+      updateOptionsMatrixStateAction({ checkIntersection: !checkIntersection }),
     );
   }, [checkIntersection, dispatch]);
 
   const handleUncheckAll = useCallback(() => {
     dispatch(
-      updateOptionsTableStateAction({
+      updateOptionsMatrixStateAction({
         checkedSymbols: [],
         checkedColumns: [],
         checkedLines: [],
@@ -242,14 +242,14 @@ const OptionsTable: React.FC = () => {
   const handleCheckAll = useCallback(() => {}, []);
 
   const handleToggleConfig = useMemo(() => {
-    if (permissions.optionsTable.checkSymbols) {
+    if (permissions.optionsMatrix.checkSymbols) {
       return () => {
         setToggleConfig((oldValue) => !oldValue);
       };
     }
 
     return undefined;
-  }, [permissions.optionsTable.checkSymbols]);
+  }, [permissions.optionsMatrix.checkSymbols]);
 
   const columns = useMemo(() => {
     let expirationDates: moment.Moment[] = [];
@@ -334,19 +334,19 @@ const OptionsTable: React.FC = () => {
 
   // Obter tabela inicial
   useEffect(() => {
-    // const table = localStorage.getItem("optionsTable");
+    // const table = localStorage.getItem("optionsMatrix");
     // if (table) {
-    //   dispatch(updateOptionsTableStateAction({ options: JSON.parse(table) }));
+    //   dispatch(updateOptionsMatrixStateAction({ options: JSON.parse(table) }));
     // }
     // if (symbol) {
     //   api
-    //     .get(`${url_optionsTable_symbol_type}${symbol}/${type}`)
+    //     .get(`${url_optionsMatrix_symbol_type}${symbol}/${type}`)
     //     .then((response) => {
     //       dispatch(
-    //         updateOptionsTableStateAction({ options: response.data.lines }),
+    //         updateOptionsMatrixStateAction({ options: response.data.lines }),
     //       );
     //       localStorage.setItem(
-    //         "optionsTable",
+    //         "optionsMatrix",
     //         JSON.stringify(response.data.lines),
     //       );
     //     })
@@ -373,13 +373,13 @@ const OptionsTable: React.FC = () => {
   }, [symbolData]);
 
   const resizableExtraProps = useMemo(() => {
-    return { id: "optionsTable" };
+    return { id: "optionsMatrix" };
   }, []);
 
   return (
     <DraggablePopup
-      popupDivKey="optionsTable"
-      popupVisibility={isOpenOptionsTable}
+      popupDivKey="optionsMatrix"
+      popupVisibility={isOpenOptionsMatrix}
     >
       <Resizable
         defaultSize={popupDimensions}
@@ -487,7 +487,7 @@ const OptionsTable: React.FC = () => {
                 minScrollbarLength: 40,
                 wheelPropagation: false,
               }}
-              id="scrollOptionsTable"
+              id="scrollOptionsMatrix"
               onMouseDown={onMouseDown}
               onMouseUp={onMouseUp}
               onMouseLeave={onMouseUp}
@@ -589,4 +589,4 @@ const OptionsTable: React.FC = () => {
   );
 };
 
-export default OptionsTable;
+export default OptionsMatrix;

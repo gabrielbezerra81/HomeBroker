@@ -19,7 +19,7 @@ import CategoryList from "modules/categoryList/screens/CategoryList";
 import InitialPlanner from "modules/financialPlanner/screens/initialPlanner/InitialPlanner";
 import DetailedPlanner from "modules/financialPlanner/screens/detailedPlanner/DetailedPlanner";
 import MultiBoxContainer from "modules/multiBox/screens/MultiBoxContainer";
-import OptionsTable from "modules/optionsTable/screens/OptionsTable";
+import OptionsMatrix from "modules/optionsMatrix/screens/OptionsMatrix";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import { Redirect } from "@reach/router";
 import ConditionalMultileg from "modules/conditionalMultileg/screens/ConditionalMultileg";
@@ -84,7 +84,7 @@ class Home extends React.Component {
       isOpenCategoryList,
       isOpenInitialPlanner,
       isOpenDetailedPlanner,
-      isOpenOptionsTable,
+      isOpenOptionsMatrix,
       isOpenConditionalMultileg,
       apps: AppBoletas,
     } = this.props;
@@ -170,11 +170,11 @@ class Home extends React.Component {
               </PopupContainer>
 
               <PopupContainer
-                isOpen={isOpenOptionsTable}
-                divKey="optionsTable"
-                key="optionsTable"
+                isOpen={isOpenOptionsMatrix}
+                divKey="optionsMatrix"
+                key="optionsMatrix"
               >
-                <OptionsTable />
+                <OptionsMatrix />
               </PopupContainer>
             </MainScreenTabs>
 
@@ -209,7 +209,7 @@ const mapStateToPropsAppPrincipal = (state) => ({
   isOpenCategoryList: state.systemReducer.isOpenCategoryList,
   isOpenInitialPlanner: state.systemReducer.isOpenInitialPlanner,
   isOpenDetailedPlanner: state.systemReducer.isOpenDetailedPlanner,
-  isOpenOptionsTable: state.systemReducer.isOpenOptionsTable,
+  isOpenOptionsMatrix: state.systemReducer.isOpenOptionsMatrix,
   isOpenConditionalMultileg: state.systemReducer.isOpenConditionalMultileg,
 });
 

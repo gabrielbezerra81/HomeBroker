@@ -17,7 +17,7 @@ export default interface SystemState {
   isOpenCategoryList: boolean;
   isOpenInitialPlanner: boolean;
   isOpenDetailedPlanner: boolean;
-  isOpenOptionsTable: boolean;
+  isOpenOptionsMatrix: boolean;
   isOpenConditionalMultileg: boolean;
   token: Token;
   hasAuthorizationHeader: boolean;

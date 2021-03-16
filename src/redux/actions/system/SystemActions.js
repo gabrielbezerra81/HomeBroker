@@ -357,8 +357,8 @@ const handleCloseMenusInMainTab = ({
       case "isOpenTHL":
         menuKey = "thl";
         break;
-      case "isOpenOptionsTable":
-        menuKey = "optionsTable";
+      case "isOpenOptionsMatrix":
+        menuKey = "optionsMatrix";
         break;
       case "isOpenCategoryList":
         menuKey = "category_list";
@@ -442,7 +442,7 @@ export const handleRemoveTabAction = (tabIndex) => {
       else if (
         [
           "multileg",
-          "optionsTable",
+          "optionsMatrix",
           "category_list",
           "conditionalMultileg",
         ].includes(menuKey)
@@ -460,8 +460,8 @@ export const handleRemoveTabAction = (tabIndex) => {
           return "isOpenMultileg";
         case "conditionalMultileg":
           return "isOpenConditionalMultileg";
-        case "optionsTable":
-          return "isOpenOptionsTable";
+        case "optionsMatrix":
+          return "isOpenOptionsMatrix";
         case "category_list":
           return "isOpenCategoryList";
         default:
