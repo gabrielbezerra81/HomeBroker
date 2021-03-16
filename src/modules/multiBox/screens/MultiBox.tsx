@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Draggable, { DraggableData, DraggableEvent } from "react-draggable";
 
 // import _ from "lodash";
@@ -241,6 +241,13 @@ const MultiBox: React.FC<Props> = ({ multiBox, boxIndex }) => {
 
     return shouldShowBox ? {} : { display: "none" };
   }, [boxIndex, boxesTab1Data, id, openedMenus, selectedTab]);
+
+  useEffect(() => {
+    if (multiBox && multiBox.tab1Id === -1) {
+      dispatchGlobal(aumentarZindexAction(multiBox.id, undefined, true));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Draggable

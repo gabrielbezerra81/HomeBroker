@@ -61,17 +61,23 @@ export const fecharFormAction = (show, divkey, appkey) => {
 
 //Usado para aumentar o Zindex e dar foco ao clicar em uma div.
 export const aumentarZindexAction = (div_id, zIndex, show) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const {
+      GlobalReducer: { zIndex: currentZIndex },
+    } = getState();
+
+    let newZIndex = typeof zIndex === "number" ? zIndex : currentZIndex;
+
     if (show) {
-      zIndex = zIndex + 1;
+      newZIndex = newZIndex + 1;
 
       const element = document.getElementById(div_id);
 
       if (element) {
-        element.style.zIndex = zIndex;
+        element.style.zIndex = newZIndex;
       }
 
-      dispatch({ type: AUMENTAR_ZINDEX, payload: zIndex, divkey: div_id });
+      dispatch({ type: AUMENTAR_ZINDEX, payload: newZIndex, divkey: div_id });
     }
   };
 };
