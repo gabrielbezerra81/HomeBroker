@@ -8,6 +8,7 @@ import { atualizarDivKeyAction } from "redux/actions/GlobalAppActions";
 import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 import { globalStore } from "redux/StoreCreation";
 import { MainThunkAction } from "types/ThunkActions";
+import { listSimulationsAction } from "./detailedPlannerActions";
 import { updateFinancialPlannerAction } from "./utils";
 
 export const updateInitialPlannerStateAction = (
@@ -62,10 +63,9 @@ export const handleSaveSimulationAction = (
     };
 
     try {
-      const response = await api.post(url_saveSimulation, payload);
+      await api.post(url_saveSimulation, payload);
 
-      if (response.data) {
-      }
+      await dispatch(listSimulationsAction());
 
       globalStore.dispatch(atualizarDivKeyAction("detailedPlanner") as any);
 

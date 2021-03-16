@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import React, { useCallback } from "react";
 
 import { AiFillForward } from "react-icons/ai";
@@ -35,7 +36,7 @@ const LeftActionBar: React.FC = () => {
   const dispatchGlobal = useDispatchGlobalStore();
 
   const {
-    systemReducer: { isOpenLeftUserMenu, isOpenOrdersHoverMenu },
+    systemReducer: { isOpenLeftUserMenu, isOpenOrdersHoverMenu, connectedUser },
   } = useStateStorePrincipal();
 
   const { permissions } = usePermissions();
@@ -153,7 +154,6 @@ const LeftActionBar: React.FC = () => {
 
       {permissions.planner && (
         <div
-          tabIndex={0}
           className="popupButton divClicavel"
           onClick={handleOpenMenu}
           data-name="initialPlanner"
@@ -163,6 +163,19 @@ const LeftActionBar: React.FC = () => {
           <h6>PROJEÇÕES</h6>
         </div>
       )}
+
+      {permissions.optionsTable &&
+        location.hostname === "localhost" &&
+        connectedUser === "Gabriel" && (
+          <div
+            className="popupButton divClicavel"
+            data-name="optionsTable"
+            data-isopen="isOpenOptionsTable"
+            onClick={handleOpenMenu}
+          >
+            <h6>TÁBUA DE OPÇÕES</h6>
+          </div>
+        )}
     </div>
   );
 };

@@ -19,6 +19,7 @@ export default interface SystemState {
   isOpenDetailedPlanner: boolean;
   isOpenOptionsMatrix: boolean;
   isOpenConditionalMultileg: boolean;
+  isOpenOptionsTable: boolean;
   token: Token;
   hasAuthorizationHeader: boolean;
   authData: AuthData | null;

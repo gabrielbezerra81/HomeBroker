@@ -23,6 +23,7 @@ import OptionsMatrix from "modules/optionsMatrix/screens/OptionsMatrix";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import { Redirect } from "@reach/router";
 import ConditionalMultileg from "modules/conditionalMultileg/screens/ConditionalMultileg";
+import OptionsTable from "modules/optionsTable/screens/OptionsTable";
 
 const OrdensExecucao = React.lazy(() =>
   import("modules/ordersExec/screens/OrdensExecucao"),
@@ -86,6 +87,7 @@ class Home extends React.Component {
       isOpenDetailedPlanner,
       isOpenOptionsMatrix,
       isOpenConditionalMultileg,
+      isOpenOptionsTable,
       apps: AppBoletas,
     } = this.props;
 
@@ -176,6 +178,14 @@ class Home extends React.Component {
               >
                 <OptionsMatrix />
               </PopupContainer>
+
+              <PopupContainer
+                isOpen={isOpenOptionsTable}
+                divKey="optionsTable"
+                key="optionsTable"
+              >
+                <OptionsTable />
+              </PopupContainer>
             </MainScreenTabs>
 
             <RightSideMenu />
@@ -211,6 +221,7 @@ const mapStateToPropsAppPrincipal = (state) => ({
   isOpenDetailedPlanner: state.systemReducer.isOpenDetailedPlanner,
   isOpenOptionsMatrix: state.systemReducer.isOpenOptionsMatrix,
   isOpenConditionalMultileg: state.systemReducer.isOpenConditionalMultileg,
+  isOpenOptionsTable: state.systemReducer.isOpenOptionsTable,
 });
 
 const ConnectedHome = compose(

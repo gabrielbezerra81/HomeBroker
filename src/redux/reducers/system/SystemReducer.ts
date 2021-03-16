@@ -29,6 +29,7 @@ export const INITIAL_STATE: SystemState = {
   isOpenConditionalMultileg: false,
   isOpenInitialPlanner: false,
   isOpenDetailedPlanner: false,
+  isOpenOptionsTable: false,
   token: {} as Token,
   hasAuthorizationHeader: false,
   roles: [],
