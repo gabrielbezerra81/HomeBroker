@@ -19,13 +19,12 @@ interface Props {
   };
 }
 
-type ColumnData =
-  | {
-      symbol: string;
-      strike: number;
-      model: "AMERICAN" | "EUROPEAN";
-    }
-  | number;
+type OptionColumn = {
+  symbol: string;
+  strike: number;
+  model: "AMERICAN" | "EUROPEAN";
+  formattedStrike: string;
+};
 
 const TableCell: React.FC<Props> = ({ tableLine, column }) => {
   const {
@@ -40,7 +39,7 @@ const TableCell: React.FC<Props> = ({ tableLine, column }) => {
 
   const dispatch = useDispatchStorePrincipal();
 
-  const columnData: ColumnData | undefined = tableLine[column.key];
+  const columnData: OptionColumn | number | undefined = tableLine[column.key];
 
   const handleLineSelection = useCallback(
     (tableLine: TableLine) => {
@@ -80,13 +79,19 @@ const TableCell: React.FC<Props> = ({ tableLine, column }) => {
     return { justifyContent: "center" };
   }, [strikeView]);
 
-  if (typeof columnData === "number") {
-    const isChecked = checkedLines.includes(columnData);
+  if (!columnData) {
+    return <td />;
+  }
+
+  if (column.key === "strike") {
+    const { strike, formattedStrike } = tableLine;
+
+    const isChecked = checkedLines.includes(strike);
 
     return (
       <td>
         <div>
-          {columnData && toggleConfig && (
+          {strike && toggleConfig && (
             <Form.Check
               custom
               checked={isChecked}
@@ -95,13 +100,14 @@ const TableCell: React.FC<Props> = ({ tableLine, column }) => {
               onChange={() => handleLineSelection(tableLine)}
             />
           )}
-          <span>{columnData}</span>
+          <span>{formattedStrike}</span>
         </div>
       </td>
     );
   } //
-  else if (columnData) {
-    const cellText = strikeView === "code" ? symbol : columnData.strike;
+  else if (columnData && typeof columnData !== "number") {
+    const cellText =
+      strikeView === "code" ? symbol : columnData.formattedStrike;
 
     const isChecked = checkedSymbols.includes(symbol);
 

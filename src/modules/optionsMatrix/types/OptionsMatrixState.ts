@@ -2,6 +2,7 @@ interface Stock {
   id: number;
   symbol: string;
   strike: number;
+  formattedStrike: string;
   market: string;
   type: "CALL" | "PUT";
   model: "AMERICAN" | "EUROPEAN";
@@ -12,6 +13,7 @@ interface Stock {
 
 export interface TableLine {
   strike: number;
+  formattedStrike: string;
   [key: string]: any;
 }
 
@@ -31,5 +33,5 @@ export default interface OptionsMatrixState {
   checkedLines: Array<number>;
   strikeView: "code" | "strike";
   toggleConfig: boolean;
-  type:"CALL" | "PUT"
+  type: "CALL" | "PUT";
 }

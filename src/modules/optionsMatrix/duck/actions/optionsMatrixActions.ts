@@ -15,6 +15,8 @@ import { toast } from "react-toastify";
 import { MainThunkAction } from "types/ThunkActions";
 import { getSymbolByType } from "./utils";
 
+import formatObjectNumberProps from "shared/utils/formatObjectNumberProps";
+
 export const updateOptionsMatrixStateAction = (
   payload: Partial<OptionsMatrixState>,
 ): MainThunkAction => {
@@ -78,9 +80,17 @@ export const handleSearchOptionsAction = ({
         (item) => item.symbol,
       );
 
+      const formattedLines = produce(optionsResponse.data.lines, (draft) => {
+        draft.forEach((line) => {
+          line.stocks.forEach((stock) => {
+            formatObjectNumberProps({ object: stock, shouldReturn: false });
+          });
+        });
+      });
+
       dispatch(
         updateOptionsMatrixStateAction({
-          options: optionsResponse.data.lines,
+          options: formattedLines,
           stockSymbolId: stockId,
           symbolsToUpdate,
           checkedSymbols: symbolsToUpdate,

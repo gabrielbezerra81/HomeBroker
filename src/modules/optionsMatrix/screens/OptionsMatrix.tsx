@@ -289,6 +289,9 @@ const OptionsMatrix: React.FC = () => {
     const tableData: TableLine[] = options.map((optionItem) => {
       const tableLine = {
         strike: optionItem.strikeLine,
+        formattedStrike: formatarNumDecimal(optionItem.strikeLine, 2, 2),
+        // "19/02/2021": {}
+        // "19/03/2021": {}
       };
 
       optionItem.stocks.forEach((stockItem) => {
@@ -298,6 +301,7 @@ const OptionsMatrix: React.FC = () => {
             symbol: stockItem.symbol,
             strike: stockItem.strike,
             model: stockItem.model,
+            formattedStrike: stockItem.formattedStrike,
           },
         });
       });
@@ -331,26 +335,26 @@ const OptionsMatrix: React.FC = () => {
 
   // Obter tabela inicial
   useEffect(() => {
-    const table = localStorage.getItem("optionsMatrix");
-    if (table) {
-      dispatch(updateOptionsMatrixStateAction({ options: JSON.parse(table) }));
-    }
-    if (symbol) {
-      api
-        .get(`${url_optionsMatrix_symbol_type}${symbol}/${type}`)
-        .then((response) => {
-          dispatch(
-            updateOptionsMatrixStateAction({ options: response.data.lines }),
-          );
-          localStorage.setItem(
-            "optionsMatrix",
-            JSON.stringify(response.data.lines),
-          );
-        })
-        .catch((error) => {
-          console.log("get options table error", error);
-        });
-    }
+    // const table = localStorage.getItem("optionsMatrix");
+    // if (table) {
+    //   dispatch(updateOptionsMatrixStateAction({ options: JSON.parse(table) }));
+    // }
+    // if (symbol) {
+    //   api
+    //     .get(`${url_optionsMatrix_symbol_type}${symbol}/${type}`)
+    //     .then((response) => {
+    //       dispatch(
+    //         updateOptionsMatrixStateAction({ options: response.data.lines }),
+    //       );
+    //       localStorage.setItem(
+    //         "optionsMatrix",
+    //         JSON.stringify(response.data.lines),
+    //       );
+    //     })
+    //     .catch((error) => {
+    //       console.log("get options table error", error);
+    //     });
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
