@@ -220,7 +220,7 @@
           .modelContainer {
             flex: 1;
             display: flex;
-            justify-content: center;
+            min-width: 25px;
 
             img,
             svg {

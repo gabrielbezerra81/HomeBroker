@@ -5,7 +5,6 @@ import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions"
 import DraggablePopup from "shared/components/DraggablePopup/DraggablePopup";
 
 import TableOptionsModule from "table-options";
-// "table-options": "https://github.com/adrianolsa/optiontable.git",
 
 import "../styles/OptionsTable.scss";
 

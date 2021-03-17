@@ -72,6 +72,14 @@ const TableCell: React.FC<Props> = ({ tableLine, column }) => {
     return "EUROPEAN";
   }, [columnData, type]);
 
+  const modelStyle = useMemo(() => {
+    if (strikeView === "code") {
+      return { justifyContent: "flex-end" };
+    }
+
+    return { justifyContent: "center" };
+  }, [strikeView]);
+
   if (typeof columnData === "number") {
     const isChecked = checkedLines.includes(columnData);
 
@@ -110,11 +118,9 @@ const TableCell: React.FC<Props> = ({ tableLine, column }) => {
               onChange={() => handleSymbolSelection(symbol)}
             />
           )}
-          {strikeView === "strike" && (
-            <div className="modelContainer">
-              <Model model={model} />
-            </div>
-          )}
+          <div style={modelStyle} className="modelContainer">
+            <Model model={model} />
+          </div>
         </div>
       </td>
     );
