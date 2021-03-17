@@ -50,7 +50,7 @@
     "redux-thunk": "^2.3.0",
     "sass": "^1.32.6",
     "styled-components": "4.4.1",
-    "table-options": "git+https://888e7f774cc8038cd11053ba82b473f3e7f76da9:x-oauth-basic@github.com/gabrielbezerra81/optiontable.git",
+    "table-options": "git+https://gabrielbezerra81@github.com/gabrielbezerra81/optiontable.git",
     "typescript": "~3.9.6",
     "uuid": "^8.3.2",
     "window-table": "^0.13.2"
