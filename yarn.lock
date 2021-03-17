@@ -12298,9 +12298,9 @@ tabbable@^3.1.2:
   resolved "https://registry.yarnpkg.com/tabbable/-/tabbable-3.1.2.tgz#f2d16cccd01f400e38635c7181adfe0ad965a4a2"
   integrity sha512-wjB6puVXTYO0BSFtCmWQubA/KIn7Xvajw0x0l6eJUudMG/EAiJvIUnyNX6xO4NpGrJ16lbD0eUseB9WxW0vlpQ==
 
-"table-options@git+https://888e7f774cc8038cd11053ba82b473f3e7f76da9:x-oauth-basic@github.com/gabrielbezerra81/optiontable.git":
+"table-options@git+https://gabrielbezerra81@github.com/gabrielbezerra81/optiontable.git":
   version "1.0.0"
-  resolved "git+https://888e7f774cc8038cd11053ba82b473f3e7f76da9:x-oauth-basic@github.com/gabrielbezerra81/optiontable.git#7b059e66b35b298f226bd52d605fa4630c69ffaf"
+  resolved "git+https://gabrielbezerra81@github.com/gabrielbezerra81/optiontable.git#7b059e66b35b298f226bd52d605fa4630c69ffaf"
   dependencies:
     axios "^0.19.2"
     prop-types "^15.7.2"
