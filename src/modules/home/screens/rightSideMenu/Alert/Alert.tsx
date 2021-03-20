@@ -142,7 +142,7 @@ const Alert: React.FC = () => {
                     <IoMdRepeat size={18} color="#dadada" />
                   </button>
                 </th>
-                <th>Preço</th>
+                <th className="priceColumn"></th>
               </tr>
             </thead>
           </Table>
