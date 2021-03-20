@@ -82,10 +82,15 @@ const BoxUpdateManager: React.FC = () => {
     return symbols;
   }, [boxes, boxesInActiveMainTab]);
 
+  const previousSearchedSymbols = usePrevious(searchedSymbols);
+
   // Obtém ids referente aos códigos pesquisados no input
   useEffect(() => {
     async function getSearchedSymbolsIds() {
-      if (searchedSymbols.length) {
+      if (
+        searchedSymbols.length &&
+        !_.isEqual(previousSearchedSymbols, searchedSymbols)
+      ) {
         const ids: SymbolIdObj[] = [];
 
         for await (const symbol of searchedSymbols) {
@@ -104,9 +109,10 @@ const BoxUpdateManager: React.FC = () => {
     }
 
     getSearchedSymbolsIds();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchedSymbols]);
 
-  const idsTab0 = useMemo(() => {
+  const idsTab0: string = useMemo(() => {
     return filteredStructIds;
   }, [filteredStructIds]);
 
