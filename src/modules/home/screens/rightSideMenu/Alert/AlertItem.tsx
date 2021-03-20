@@ -16,6 +16,7 @@ import { openAlertInMultileg } from "modules/multileg/duck/actions/AlertsAction"
 import SymbolCard from "shared/components/SymbolCard/SymbolCard";
 import getSymbolExpirationInDays from "shared/utils/getSymbolExpirationInDays";
 import { Table } from "react-bootstrap";
+import PopConfirm from "shared/components/PopConfirm/PopConfirm";
 
 interface AlertItemProps {
   alert: AlertAPI;
@@ -154,9 +155,16 @@ const AlertItem: React.FC<AlertItemProps> = ({ alert: alertItem }) => {
           <img src={openInNewIcon} alt="" />
         </button>
 
-        <button className="brokerCustomButton" onClick={handleRemove}>
-          <img src={closeIcon} alt="" />
-        </button>
+        <PopConfirm
+          title="Excluir alerta"
+          message={`Tem certeza que deseja excluir este alerta?`}
+          onConfirm={handleRemove}
+          
+        >
+          <button className="brokerCustomButton">
+            <img src={closeIcon} alt="" />
+          </button>
+        </PopConfirm>
       </div>
 
       {symbolCardsData.map((data, index) => {
