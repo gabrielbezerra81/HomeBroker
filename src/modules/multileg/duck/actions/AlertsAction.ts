@@ -75,6 +75,13 @@ export const openAlertInMultileg = (alertItem: AlertAPI): MainThunkAction => {
     updatedMultilegTabs[tabIndex].operator = operator;
     updatedMultilegTabs[tabIndex].comment = comment;
 
+    dispatch(
+      updateManyMultilegState({
+        abaSelecionada: result.currentTab,
+        multileg: result.multilegTabs,
+      }),
+    );
+
     try {
       for (const [offerIndex, offer] of symbols.entries()) {
         //Alterar ativo

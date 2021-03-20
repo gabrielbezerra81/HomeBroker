@@ -114,6 +114,13 @@ export const openOrderInMultilegAction = (props, action = "") => {
     const tabIndex = updatedMultilegTabs.length - 1;
     //const arrayCodigos = [...new Set(item.offers.map(oferta => oferta.ativo))];
 
+    dispatch(
+      updateManyMultilegState({
+        abaSelecionada: result.currentTab,
+        multileg: result.multilegTabs,
+      }),
+    );
+
     try {
       for (const [offerIndex, offer] of ordemAtual.offers.entries()) {
         //Alterar ativo

@@ -13,6 +13,7 @@ import {
 import { searchMultilegSymbolData } from "modules/multileg/duck/actions/MultilegAPIAction";
 import {
   mountMultilegOrder,
+  updateManyMultilegState,
   validateMultilegOrder,
 } from "modules/multileg/duck/actions/utils";
 import {
@@ -74,6 +75,13 @@ export const exportBoxToMultileg = async ({
       );
     }
 
+    // Adicionar nova aba
+    let result = addMultilegTab(clonedMultilegTabs);
+
+    let updatedMultilegTabs = result.multilegTabs;
+    let updatedMultilegQuotes = cloneMultilegQuotes(cotacoesMultileg);
+    const tabIndex = updatedMultilegTabs.length - 1;
+
     if (shouldOpenMultileg) {
       dispatch(
         updateManySystemState({
@@ -81,14 +89,13 @@ export const exportBoxToMultileg = async ({
           createAlertButtonVisibility: false,
         }),
       );
+      dispatch(
+        updateManyMultilegState({
+          abaSelecionada: result.currentTab,
+          multileg: result.multilegTabs,
+        }),
+      );
     }
-
-    // Adicionar nova aba
-    let result = addMultilegTab(clonedMultilegTabs);
-
-    let updatedMultilegTabs = result.multilegTabs;
-    let updatedMultilegQuotes = cloneMultilegQuotes(cotacoesMultileg);
-    const tabIndex = updatedMultilegTabs.length - 1;
 
     try {
       for (const [offerIndex, offer] of box.boxOffers.entries()) {

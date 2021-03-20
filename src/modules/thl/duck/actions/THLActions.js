@@ -79,6 +79,13 @@ export const abrirMultilegTHLAction = () => {
     let updatedMultilegQuotes = cloneMultilegQuotes(cotacoesMultileg);
     const tabIndex = updatedMultilegTabs.length - 1;
 
+    dispatch(
+      updateManyMultilegState({
+        abaSelecionada: result.currentTab,
+        multileg: result.multilegTabs,
+      }),
+    );
+
     try {
       for (const [offerIndex, book] of booksSelecionados.entries()) {
         let updatedData = await updateMultilegTab({
