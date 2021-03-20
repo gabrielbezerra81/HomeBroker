@@ -64,7 +64,7 @@ const PermissionProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     setPermissions((oldPermissions) => {
-      return changePermissionsByRole(oldPermissions, roles);
+      return changePermissionsByRole(oldPermissions, roles); // ["Student"]
     });
   }, [roles]);
 

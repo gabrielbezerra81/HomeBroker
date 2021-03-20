@@ -1,4 +1,4 @@
-export const multilegBaseHeight = 366;
+export const multilegBaseHeight = 410;
 
 export const multilegNormalHeight = 431;
 
