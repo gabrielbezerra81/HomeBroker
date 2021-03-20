@@ -14,6 +14,7 @@ import {
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import MultilegAlertButtons from "./MultilegAlertButtons";
+import { usePermissions } from "context/PermissionContext";
 
 interface Props {
   tabIndex: number;
@@ -23,6 +24,8 @@ const OperationButtons: React.FC<Props> = ({ tabIndex }) => {
   const {
     systemReducer: { createAlertButtonVisibility, multilegButtonsVisibility },
   } = useStateStorePrincipal();
+
+  const { permissions } = usePermissions();
 
   const dispatch = useDispatchStorePrincipal();
 
@@ -49,7 +52,11 @@ const OperationButtons: React.FC<Props> = ({ tabIndex }) => {
   }, [dispatch, tabIndex]);
 
   // botões padrões com envio de ordem
-  if (multilegButtonsVisibility && !createAlertButtonVisibility) {
+  if (
+    multilegButtonsVisibility &&
+    !createAlertButtonVisibility &&
+    permissions.boletas
+  ) {
     return (
       <>
         <div className="operationButtonRow">
@@ -79,20 +86,24 @@ const OperationButtons: React.FC<Props> = ({ tabIndex }) => {
     );
   }
 
-  if (!multilegButtonsVisibility && !createAlertButtonVisibility) {
-    return (
-      <div className="operationButtonRow">
-        <Button
-          variant="primary"
-          size="sm"
-          block
-          className={`toggleAlertButton`}
-          onClick={handleAddBox}
-        >
-          ADICIONAR BOX
-        </Button>
-      </div>
-    );
+  if (
+    (!multilegButtonsVisibility && !createAlertButtonVisibility) ||
+    !permissions.boletas
+  ) {
+    return null;
+    // return (
+    //   <div className="operationButtonRow">
+    //     <Button
+    //       variant="primary"
+    //       size="sm"
+    //       block
+    //       className={`toggleAlertButton`}
+    //       onClick={handleAddBox}
+    //     >
+    //       ADICIONAR BOX
+    //     </Button>
+    //   </div>
+    // );
   }
 
   if (!multilegButtonsVisibility && createAlertButtonVisibility) {

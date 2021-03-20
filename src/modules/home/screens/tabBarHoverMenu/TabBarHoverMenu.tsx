@@ -8,7 +8,10 @@ import boxMenuArrow from "assets/boxMenuArrow.png";
 import { IoMdAddCircle } from "react-icons/io";
 import { addMultiBoxAction } from "modules/multiBox/duck/actions/multiBoxActions";
 import { usePermissions } from "context/PermissionContext";
-import { updateManySystemState } from "redux/actions/system/SystemActions";
+import {
+  abrirItemBarraLateralAction,
+  updateManySystemState,
+} from "redux/actions/system/SystemActions";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 import { atualizarDivKeyAction } from "redux/actions/GlobalAppActions";
 
@@ -20,20 +23,21 @@ const TabBarHoverMenu: React.FC = () => {
 
   const [menuVisibility, setMenuVisibility] = useState(false);
 
-  const handleOpenMultileg = useCallback(() => {
+  const handleAddEmptyBox = useCallback(() => {
     dispatch(addMultiBoxAction());
-    // dispatch(
-    //   updateManySystemState({
-    //     multilegButtonsVisibility: false,
-    //     createAlertButtonVisibility: false,
-    //   }),
-    // );
-
-    // dispatchGlobal(atualizarDivKeyAction("multileg"));
-    // dispatch(
-    //   abrirItemBarraLateralAction("isOpenMultileg", true),
-    // );
   }, [dispatch]);
+
+  const handleOpenMultileg = useCallback(() => {
+    dispatch(
+      updateManySystemState({
+        multilegButtonsVisibility: false,
+        createAlertButtonVisibility: false,
+      }),
+    );
+
+    dispatchGlobal(atualizarDivKeyAction("multileg"));
+    dispatch(abrirItemBarraLateralAction("isOpenMultileg", true));
+  }, [dispatch, dispatchGlobal]);
 
   const handleOpenCategoryList = useCallback(() => {
     dispatchGlobal(atualizarDivKeyAction("categoryList"));
@@ -77,10 +81,20 @@ const TabBarHoverMenu: React.FC = () => {
         className={visibilityClass}
         onMouseOver={handleShowOnHover}
         onMouseLeave={handleHideOnLeave}
-        onClick={handleOpenMultileg}
+        onClick={handleAddEmptyBox}
       >
         <img src={boxIcon} height={17} alt="" color="#b1b2b1" />
         <span>Box de Cotação</span>
+        <IoMdAddCircle size={16} />
+      </div>
+
+      <div
+        className={visibilityClass}
+        onMouseOver={handleShowOnHover}
+        onMouseLeave={handleHideOnLeave}
+        onClick={handleOpenMultileg}
+      >
+        <span>Multileg</span>
         <IoMdAddCircle size={16} />
       </div>
 
