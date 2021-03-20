@@ -82,7 +82,7 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
       return null;
     }
 
-    return Math.abs(cost);
+    return cost;
   }, [multilegTab.preco]);
 
   const offersStrike = useMemo(() => {
@@ -119,14 +119,12 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
     const data: GraphData[] = [];
 
     pricesRange.forEach((price) => {
-      let result = 0;
       const effectiveCost = typeof cost === "number" ? Math.abs(cost) : 0;
+      let result = typeof cost === "number" ? -1 * cost : 0;
 
       stockOffers.forEach((offer) => {
         const qttyMultiplier = offer.cv === "compra" ? 1 : -1;
-        const costMultiplier = offer.cv === "compra" ? -1 : 1;
-        result +=
-          qttyMultiplier * offer.qtde * price + costMultiplier * effectiveCost;
+        result += qttyMultiplier * offer.qtde * price;
       });
 
       callOffers.forEach((offer) => {
@@ -147,6 +145,10 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
         });
 
         result += offerResult;
+
+        if (price === 21) {
+          console.log(offerResult);
+        }
       });
 
       data.push({ price, result: +Number(result).toFixed(2) });
@@ -327,32 +329,29 @@ interface GetOfferResultProps {
 
 const getCallOfferResult = ({ offer, cost, price }: GetOfferResultProps) => {
   const qttyMultiplier = offer.cv === "compra" ? 1 : -1;
-  const costMultiplier = offer.cv === "compra" ? -1 : 1;
 
   if (price <= offer.strikeSelecionado) {
-    return costMultiplier * cost;
+    return 0;
   }
 
   let offerResult =
     qttyMultiplier * offer.qtde * (price - offer.strikeSelecionado);
-
-  offerResult += costMultiplier * cost;
 
   return offerResult;
 };
 
 const getPutOfferResult = ({ offer, cost, price }: GetOfferResultProps) => {
   const qttyMultiplier = offer.cv === "compra" ? -1 : 1;
-  const costMultiplier = offer.cv === "compra" ? -1 : 1;
 
   if (price >= offer.strikeSelecionado) {
-    return costMultiplier * cost;
+    return 0;
   }
 
   let offerResult =
     qttyMultiplier * offer.qtde * (price - offer.strikeSelecionado);
 
-  offerResult += costMultiplier * cost;
-
   return offerResult;
 };
+
+// se for comprar => book de venda
+// se for vender => book de compra
