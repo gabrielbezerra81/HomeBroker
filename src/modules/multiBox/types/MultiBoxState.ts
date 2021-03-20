@@ -103,7 +103,7 @@ export interface MultiBoxData {
   condition: "Less" | "Greater";
   observation: string;
   consideredPrice: "Bid" | "Ask" | "Last";
-  alertPrice: number;
+  alertPrice: string;
   boxPositions: Array<BoxPosition>;
   toggleShowId?: boolean;
   isLoadingBox: boolean;

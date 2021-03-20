@@ -43,7 +43,7 @@ export const createAlertFromBoxAction = ({
       }
 
       const payload: AlertCreateRequestData = {
-        price: alertPrice,
+        price: Number(alertPrice.split(".").join("").replace(",", ".")),
         status: "Enabled",
         expiration,
         operator: condition,

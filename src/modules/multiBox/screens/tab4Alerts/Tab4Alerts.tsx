@@ -134,7 +134,7 @@ const Tab4Alerts: React.FC<Props> = ({ multiBox }) => {
       let price = value;
 
       if (Number(value) - 0.01 === 0 && structureData?.min) {
-        price = structureData?.min || 0;
+        price = formatarNumDecimal(structureData.min, 2, 2) || "";
       }
 
       dispatch(
@@ -168,19 +168,19 @@ const Tab4Alerts: React.FC<Props> = ({ multiBox }) => {
       let cond = condition;
 
       if (name === "max") {
-        price = structureData?.max || 0;
+        price = formatarNumDecimal(structureData?.max || 0);
         validity = "DAY";
         considered = "Last";
         cond = "Less";
       } //
       else if (name === "min") {
-        price = structureData?.min || 0;
+        price = formatarNumDecimal(structureData?.min || 0);
         validity = "DAY";
         considered = "Last";
         cond = "Greater";
       } //
       else if (name === "med") {
-        price = medium || 0;
+        price = formatarNumDecimal(medium || 0);
         validity = "DAY";
         considered = "Last";
         cond = "Greater";
@@ -367,9 +367,10 @@ const Tab4Alerts: React.FC<Props> = ({ multiBox }) => {
               name="price"
               theme="dark"
               step={0.01}
-              type="preco"
+              type="precoNegativo"
               value={alertPrice}
               onChange={handlePriceChange}
+              allowNegative
             />
           </Form.Group>
 
