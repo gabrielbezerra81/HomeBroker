@@ -86,6 +86,10 @@
       .brokerCustomButton {
         padding: 0;
       }
+
+      &.priceColumn {
+        min-width: 42px;
+      }
     }
   }
 }
