@@ -12,6 +12,7 @@ import {
   BoxPosition,
   BoxStockOption,
   MultiBoxData,
+  ParsedConfiguration,
   TopSymbol,
 } from "modules/multiBox/types/MultiBoxState";
 
@@ -429,13 +430,14 @@ export const addNewMultiBoxStructureAction = ({
 
     const boxId = multiBox.id;
 
-    const configData = {
+    const configData: ParsedConfiguration = {
       tabKey: selectedTab,
       boxId,
       position: {
         x: 0,
         y: 0,
       },
+      title: multiBox.title,
     };
 
     const element = document.getElementById(multiBox.id);

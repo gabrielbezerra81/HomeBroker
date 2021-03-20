@@ -55,6 +55,7 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
     toggleShowId,
     tab1Id,
     searchedSymbol,
+    title,
   } = multiBox;
 
   const stockSymbolData = useMemo(() => {
@@ -385,6 +386,14 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
           </tbody>
         </Table>
       </div>
+
+      <Form.Control
+        placeholder="Título/Descrição"
+        className="darkSimpleInput titleInput"
+        value={title}
+        name="title"
+        onChange={handleInputChange}
+      />
     </div>
   );
 };

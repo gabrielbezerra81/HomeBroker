@@ -34,7 +34,7 @@ const Tab0: React.FC<Props> = ({ multiBox }) => {
 
   const dispatch = useDispatchStorePrincipal();
 
-  const { id, symbolInput, toggleShowId, searchedSymbol } = multiBox;
+  const { id, symbolInput, toggleShowId, searchedSymbol, title } = multiBox;
 
   const stockSymbolData = useMemo(() => {
     return stockSymbolsData.find((data) => data.symbol === searchedSymbol);
@@ -97,7 +97,9 @@ const Tab0: React.FC<Props> = ({ multiBox }) => {
       }
     });
 
-    box.quote = box?.quote.replace("-", "");
+    if (box.quote) {
+      box.quote = box.quote.replace("-", "");
+    }
 
     return box;
   }, [structureData]);
@@ -265,6 +267,8 @@ const Tab0: React.FC<Props> = ({ multiBox }) => {
           )}
         </span>
       </div>
+
+      <h5 className="boxTitle">{title}</h5>
     </div>
   );
 };

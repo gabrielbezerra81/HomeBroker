@@ -107,6 +107,7 @@ export interface MultiBoxData {
   boxPositions: Array<BoxPosition>;
   toggleShowId?: boolean;
   isLoadingBox: boolean;
+  title: string;
 }
 
 type Tab1Keys = keyof Omit<Tab1Data, "codes" | "book">;
@@ -121,6 +122,7 @@ export interface ParsedConfiguration {
     x: number;
     y: number;
   };
+  title: string;
 }
 
 export interface BoxSymbolData {

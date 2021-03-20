@@ -14,6 +14,7 @@ import MultiBoxState, {
   BoxOffer,
   BoxPosition,
   MultiBoxData,
+  ParsedConfiguration,
   StockSymbolData,
   StructureBook,
   Tab1Data,
@@ -37,7 +38,6 @@ import {
   formatarNumDecimal,
   formatarQuantidadeKMG,
 } from "shared/utils/Formatacoes";
-import { success_add_box } from "constants/AlertaErros";
 
 interface OpenedBoxes {
   menuKey: string;
@@ -79,6 +79,7 @@ export const addMultiBoxAction = (): MainThunkAction => {
       observation: "",
       boxPositions: [],
       isLoadingBox: false,
+      title: "",
     };
 
     const updatedOpenedMenus = produce(openedMenus, (draft) => {
@@ -286,6 +287,10 @@ export const addMultiBoxesFromStructureDataAction = (
         structureData,
       });
 
+      const parsedConfiguration = JSON.parse(
+        structureData.configuration,
+      ) as ParsedConfiguration;
+
       const newMultiBox: MultiBoxData = {
         id: structureData.boxId,
         activeTab: initialOnLoad,
@@ -312,6 +317,7 @@ export const addMultiBoxesFromStructureDataAction = (
         observation: "",
         boxPositions,
         isLoadingBox: false,
+        title: parsedConfiguration.title || "",
       };
 
       if (boxOptionsData) {
