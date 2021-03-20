@@ -96,6 +96,9 @@ const Tab0: React.FC<Props> = ({ multiBox }) => {
         box[parsedKey] = structureData[parsedKey] as any;
       }
     });
+
+    box.quote = box?.quote.replace("-", "");
+
     return box;
   }, [structureData]);
 
@@ -144,6 +147,31 @@ const Tab0: React.FC<Props> = ({ multiBox }) => {
 
     return formatted;
   }, [structureData]);
+
+  const isMinMaxNegative = useMemo(() => {
+    if (!structureData) {
+      return false;
+    }
+
+    if (structureData.min < 0 && structureData.max < 0) {
+      return true;
+    }
+
+    return false;
+  }, [structureData]);
+
+  const rangeBarValues = useMemo(() => {
+    if (!structureData) {
+      return { min: undefined, max: undefined };
+    }
+
+    const values = {
+      min: isMinMaxNegative ? structureData.max : structureData.min,
+      max: isMinMaxNegative ? structureData.min : structureData.max,
+    };
+
+    return values;
+  }, [isMinMaxNegative, structureData]);
 
   if (!structureData) {
     return <div></div>;
@@ -207,20 +235,26 @@ const Tab0: React.FC<Props> = ({ multiBox }) => {
         <input
           type="range"
           className={`custom-range boxInputRange`}
-          min={structureData?.min || undefined}
-          max={structureData?.max || undefined}
+          min={rangeBarValues.min}
+          max={rangeBarValues.max}
           // value={
           //   structureData ? (structureData.min + structureData.max) / 2 : ""
           // }
           step={0.01}
         />
         <div>
-          <button className="brokerCustomButton">{formattedMin}</button>
-          <button className="brokerCustomButton">{formattedMax}</button>
+          <button className="brokerCustomButton">
+            {isMinMaxNegative ? formattedMax : formattedMin}
+          </button>
+          <button className="brokerCustomButton">
+            {isMinMaxNegative ? formattedMin : formattedMax}
+          </button>
         </div>
       </div>
 
       <div className="quoteContainer">
+        {structureData.quote < 0 && <span className="quoteInfo">crédito</span>}
+
         <strong className="whiteText">{formattedData?.quote || "0,00"}</strong>
         <span>
           {structureData && (

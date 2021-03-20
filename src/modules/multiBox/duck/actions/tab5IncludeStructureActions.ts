@@ -214,8 +214,6 @@ export const handleAddOptionOfferAction = (
           option.type === type,
       );
 
-      console.log(option);
-
       if (option) {
         const offers = {
           offerType: "C",
