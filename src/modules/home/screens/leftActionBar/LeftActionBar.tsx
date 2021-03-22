@@ -55,10 +55,21 @@ const LeftActionBar: React.FC = () => {
       const divKey = e.currentTarget.getAttribute("data-name");
       const isOpen = e.currentTarget.getAttribute("data-isopen");
 
+      if (
+        divKey === "initialPlanner" &&
+        connectedUser === "Gabriel" &&
+        location.hostname === "localhost"
+      ) {
+        setTimeout(() => {
+          dispatchGlobal(atualizarDivKeyAction("detailedPlanner"));
+          dispatch(abrirItemBarraLateralAction("isOpenDetailedPlanner"));
+        }, 250);
+      }
+
       dispatchGlobal(atualizarDivKeyAction(divKey));
       dispatch(abrirItemBarraLateralAction(isOpen));
     },
-    [dispatch, dispatchGlobal],
+    [connectedUser, dispatch, dispatchGlobal],
   );
 
   const onOrdersMouseOver = useCallback(() => {
@@ -164,18 +175,16 @@ const LeftActionBar: React.FC = () => {
         </div>
       )}
 
-      {permissions.optionsTable &&
-        location.hostname === "localhost" &&
-        connectedUser === "Gabriel" && (
-          <div
-            className="popupButton divClicavel"
-            data-name="optionsTable"
-            data-isopen="isOpenOptionsTable"
-            onClick={handleOpenMenu}
-          >
-            <h6>TÁBUA DE OPÇÕES</h6>
-          </div>
-        )}
+      {permissions.optionsTable && (
+        <div
+          className="popupButton divClicavel"
+          data-name="optionsTable"
+          data-isopen="isOpenOptionsTable"
+          onClick={handleOpenMenu}
+        >
+          <h6>TÁBUA DE OPÇÕES</h6>
+        </div>
+      )}
     </div>
   );
 };
