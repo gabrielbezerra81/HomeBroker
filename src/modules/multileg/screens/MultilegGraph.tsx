@@ -14,6 +14,7 @@ import {
 } from "recharts";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { MultilegOffer } from "../types/multileg";
+import { calcularTotal } from "./CalculoPreco";
 
 interface Props {
   tabIndex: number;
@@ -41,6 +42,14 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
     formattedValue = formatarNumDecimal(formattedValue, 2);
 
     return [formattedValue, formattedName];
+  }, []);
+
+  const tickFormatter = useCallback((value) => {
+    if (value === +Number(value).toFixed(0)) {
+      return value;
+    }
+
+    return formatarNumDecimal(value, 2, 2);
   }, []);
 
   const multilegTab = useMemo(() => {
@@ -85,6 +94,14 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
     return cost;
   }, [multilegTab.preco]);
 
+  const totalCost = useMemo(() => {
+    return calcularTotal({
+      multileg,
+      cotacoesMultileg,
+      indice: tabIndex,
+    });
+  }, [cotacoesMultileg, multileg, tabIndex]);
+
   const offersStrike = useMemo(() => {
     return multilegTab.tabelaMultileg
       .filter((offer) => offer.ativoAtual !== offer.codigoSelecionado)
@@ -112,15 +129,26 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
       }
     });
 
+    if (
+      callOffers.length === 0 &&
+      putOffers.length === 0 &&
+      stockOffers.length === 1
+    ) {
+      if (typeof cost === "number" && !pricesRange.includes(Math.abs(cost))) {
+        pricesRange.push(Math.abs(cost));
+      }
+    }
+
     return pricesRange.sort((a, b) => a - b);
-  }, [offersStrike, stockOffers]);
+  }, [callOffers.length, cost, offersStrike, putOffers.length, stockOffers]);
 
   const data = useMemo(() => {
     const data: GraphData[] = [];
 
     pricesRange.forEach((price) => {
-      const effectiveCost = typeof cost === "number" ? Math.abs(cost) : 0;
-      let result = typeof cost === "number" ? -1 * cost : 0;
+      const effectiveCost =
+        typeof totalCost === "number" ? Math.abs(totalCost) : 0;
+      let result = typeof totalCost === "number" ? -1 * totalCost : 0;
 
       stockOffers.forEach((offer) => {
         const qttyMultiplier = offer.cv === "compra" ? 1 : -1;
@@ -145,17 +173,23 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
         });
 
         result += offerResult;
-
-        if (price === 21) {
-          console.log(offerResult);
-        }
       });
 
       data.push({ price, result: +Number(result).toFixed(2) });
     });
 
+    if (
+      callOffers.length === 0 &&
+      putOffers.length === 0 &&
+      stockOffers.length === 1
+    ) {
+      if (typeof cost === "number") {
+        data.push({ price: Math.abs(cost), result: 0 });
+      }
+    }
+
     return data;
-  }, [callOffers, cost, pricesRange, putOffers, stockOffers]);
+  }, [callOffers, cost, pricesRange, putOffers, stockOffers, totalCost]);
 
   const lastPoint = useMemo(() => {
     if (data.length > 0) {
@@ -254,6 +288,9 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
           domain={["dataMin", "dataMax"]}
           axisLine={false}
           tickLine={false}
+          minTickGap={0}
+          ticks={pricesRange}
+          tickFormatter={tickFormatter}
         />
 
         {typeof cost === "number" && (
@@ -299,7 +336,7 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
           dataKey="result"
           stroke="#be9117"
           strokeWidth={3}
-          dot={{ fill: "#be9117" }}
+          dot={false} //{ fill: "#be9117" }
           name="Lucro"
         />
       </LineChart>
