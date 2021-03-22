@@ -21,6 +21,7 @@ import OperationButtons from "./OperationButtons";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import usePrevious from "hooks/usePrevious";
+import { usePermissions } from "context/PermissionContext";
 
 interface Props {
   indice: number;
@@ -32,6 +33,8 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
   } = useStateStorePrincipal();
 
   const dispatch = useDispatchStorePrincipal();
+
+  const { permissions } = usePermissions();
 
   const tab = useMemo(() => {
     return multileg[tabIndex];
@@ -245,9 +248,9 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
                   tabIndex,
                   attributeName: "preco",
                   attributeValue: formatarNumDecimal(
-                    Number(event.currentTarget.value)
+                    Number(event.currentTarget.value),
                   ),
-                })
+                }),
               );
             }}
           />
@@ -265,9 +268,9 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
                     Number(min).toFixed(2),
                     2,
                     ".",
-                    ","
+                    ",",
                   ),
-                })
+                }),
               )
             }
             className="divClicavel"
@@ -288,9 +291,9 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
                           Number((max + min) / 2).toFixed(2),
                           2,
                           ".",
-                          ","
+                          ",",
                         ),
-                      })
+                      }),
                     )
                 : () => false
             }
@@ -310,9 +313,9 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
                     Number(max).toFixed(2),
                     2,
                     ".",
-                    ","
+                    ",",
                   ),
-                })
+                }),
               )
             }
             className="divClicavel"
@@ -347,7 +350,7 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
                   tabIndex,
                   attributeName: "preco",
                   attributeValue: valor,
-                })
+                }),
               )
             }
           />
@@ -384,37 +387,40 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
       <Row className="mr-2 mb-2">
         <Col className="mr-1"></Col>
       </Row>
+      {permissions.boletas && (
+        <>
+          <DateSelector tabIndex={tabIndex} />
 
-      <DateSelector tabIndex={tabIndex} />
+          <Row className="mr-2 mb-2 multilegInputGroup">
+            <Col md={5} className="ml-2">
+              <h6>Modo Exec.</h6>
+            </Col>
 
-      <Row className="mr-2 mb-2 multilegInputGroup">
-        <Col md={5} className="ml-2">
-          <h6>Modo Exec.</h6>
-        </Col>
-
-        <Col>
-          <Form.Control
-            as="select"
-            value={multileg[tabIndex].selectedStrategy}
-            className="textInput strategyInput"
-            onChange={(e) =>
-              dispatch(
-                updateMultilegTabAction({
-                  tabIndex,
-                  attributeName: "selectedStrategy",
-                  attributeValue: Number(e.target.value),
-                })
-              )
-            }
-          >
-            {executionStrategies.map((strategyItem) => (
-              <option key={strategyItem.sigla} value={strategyItem.id}>
-                {strategyItem.sigla}
-              </option>
-            ))}
-          </Form.Control>
-        </Col>
-      </Row>
+            <Col>
+              <Form.Control
+                as="select"
+                value={multileg[tabIndex].selectedStrategy}
+                className="textInput strategyInput"
+                onChange={(e) =>
+                  dispatch(
+                    updateMultilegTabAction({
+                      tabIndex,
+                      attributeName: "selectedStrategy",
+                      attributeValue: Number(e.target.value),
+                    }),
+                  )
+                }
+              >
+                {executionStrategies.map((strategyItem) => (
+                  <option key={strategyItem.sigla} value={strategyItem.id}>
+                    {strategyItem.sigla}
+                  </option>
+                ))}
+              </Form.Control>
+            </Col>
+          </Row>
+        </>
+      )}
 
       <OperationButtons tabIndex={tabIndex} />
     </div>

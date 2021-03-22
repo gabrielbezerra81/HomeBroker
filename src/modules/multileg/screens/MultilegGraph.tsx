@@ -183,7 +183,9 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
       putOffers.length === 0 &&
       stockOffers.length === 1
     ) {
-      if (typeof cost === "number") {
+      const hasPointZero = data.some((point) => point.result === 0);
+
+      if (typeof cost === "number" && !hasPointZero) {
         data.push({ price: Math.abs(cost), result: 0 });
       }
     }
