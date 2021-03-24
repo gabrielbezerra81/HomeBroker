@@ -15,5 +15,7 @@ URL de testes: http://homebroker-react.herokuapp.com/
     
     Senha: 123456789
 
+### Screenshots
+
 <img width="1920" alt="homebroker1" src="https://user-images.githubusercontent.com/24686314/112385156-0a5dc080-8cce-11eb-989d-46ee3f0f3c0a.png">
 <img width="1920" alt="homebroker3" src="https://user-images.githubusercontent.com/24686314/112385231-206b8100-8cce-11eb-81ed-d4dbdd6ca60d.png">
