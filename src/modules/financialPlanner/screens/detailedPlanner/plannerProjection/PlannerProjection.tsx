@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo } from "react";
 import { PieChart, Pie, Cell, Legend, ResponsiveContainer } from "recharts";
 
 import { FormControl, Table } from "react-bootstrap";
@@ -9,10 +9,8 @@ import {
 } from "../../utils";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import SimulationLine from "./SimulationLine";
-import {
-  Simulation,
-  SimulationResult,
-} from "modules/financialPlanner/types/FinancialPlannerState";
+import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
+import { updateDetailedPlannerStateAction } from "modules/financialPlanner/duck/actions/detailedPlannerActions";
 
 const COLORS = [
   "#9999CC",
@@ -28,14 +26,26 @@ const PlannerProjection: React.FC = () => {
     financialPlannerReducer: { detailedPlanner },
   } = useStateStorePrincipal();
 
-  const { simulations } = detailedPlanner;
+  const dispatch = useDispatchStorePrincipal();
 
-  const [addedSimulations, setAddedSimulations] = useState<
-    Array<Simulation & SimulationResult>
-  >([]);
+  const { simulations, selectedSimulation } = detailedPlanner;
 
-  const simulationsResult = useMemo(() => {
-    return simulations.map((simulation) => {
+  const handleInputChange = useCallback(
+    (e) => {
+      const { name, value } = e.currentTarget;
+
+      dispatch(updateDetailedPlannerStateAction({ [name]: value }));
+    },
+    [dispatch],
+  );
+
+  const simulationResults = useMemo(() => {
+    const filteredSimulations = simulations.filter(
+      (sim) =>
+        sim.title === selectedSimulation || selectedSimulation === "todos",
+    );
+
+    return filteredSimulations.map((simulation) => {
       const result = calculateSimulationResult({
         contribution: simulation.periodicDeposit,
         contributionPeriodicity: convertFrequencyToLocalValues(
@@ -55,21 +65,21 @@ const PlannerProjection: React.FC = () => {
         ...simulation,
       };
     });
-  }, [simulations]);
+  }, [selectedSimulation, simulations]);
 
   const totalInvested = useMemo(() => {
-    const total = simulationsResult.reduce((prev, curr) => {
+    const total = simulationResults.reduce((prev, curr) => {
       return prev + curr.totalInvested;
     }, 0);
 
     return total;
-  }, [simulationsResult]);
+  }, [simulationResults]);
 
   const totalResult = useMemo(() => {
-    return simulationsResult.reduce((prev, curr) => {
+    return simulationResults.reduce((prev, curr) => {
       return prev + curr.total;
     }, 0);
-  }, [simulationsResult]);
+  }, [simulationResults]);
 
   const formattedTotalInvested = useMemo(() => {
     return formatarNumDecimal(totalInvested, 2, 2);
@@ -80,11 +90,11 @@ const PlannerProjection: React.FC = () => {
   }, [totalResult]);
 
   const graphData = useMemo(() => {
-    return simulationsResult.map((res) => ({
+    return simulationResults.map((res) => ({
       name: res.title,
       value: res.total,
     }));
-  }, [simulationsResult]);
+  }, [simulationResults]);
 
   const renderLegend = useCallback((props: any) => {
     const { payload } = props;
@@ -123,7 +133,13 @@ const PlannerProjection: React.FC = () => {
         <div>
           <div className="inputGroup">
             <span>Investimento: </span>
-            <FormControl as="select" className="darkInputSelect">
+            <FormControl
+              as="select"
+              className="darkInputSelect"
+              value={selectedSimulation}
+              name="selectedSimulation"
+              onChange={handleInputChange}
+            >
               <option value="todos">TODOS</option>
               {investmentOptions}
             </FormControl>
@@ -131,7 +147,11 @@ const PlannerProjection: React.FC = () => {
 
           <div className="inputGroup">
             <span>Referência: </span>
-            <FormControl as="select" className="darkInputSelect">
+            <FormControl
+              as="select"
+              className="darkInputSelect"
+              name="reference"
+            >
               <option value="atual">Mês atual</option>
             </FormControl>
           </div>
@@ -197,10 +217,11 @@ const PlannerProjection: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {simulationsResult.map((simulation) => (
+            {simulationResults.map((simulation, simIndex) => (
               <SimulationLine
                 totalResult={totalResult}
                 simulation={simulation}
+                simIndex={simIndex}
               />
             ))}
 

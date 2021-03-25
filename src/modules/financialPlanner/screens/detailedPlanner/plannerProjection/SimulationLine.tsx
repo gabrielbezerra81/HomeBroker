@@ -1,8 +1,10 @@
+import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
+import { changeSimulationAction } from "modules/financialPlanner/duck/actions/detailedPlannerActions";
 import {
   Simulation,
   SimulationResult,
 } from "modules/financialPlanner/types/FinancialPlannerState";
-import React from "react";
+import React, { useCallback } from "react";
 import { FormControl } from "react-bootstrap";
 import CustomInput from "shared/components/CustomInput";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
@@ -10,9 +12,34 @@ import { formatarNumDecimal } from "shared/utils/Formatacoes";
 interface Props {
   totalResult: number;
   simulation: Simulation & SimulationResult;
+  simIndex: number;
 }
 
-const SimulationLine: React.FC<Props> = ({ totalResult, simulation }) => {
+const SimulationLine: React.FC<Props> = ({
+  totalResult,
+  simulation,
+  simIndex,
+}) => {
+  const dispatch = useDispatchStorePrincipal();
+
+  const handleInputChange = useCallback(
+    (e) => {
+      const { name, value } = e.currentTarget;
+
+      dispatch(changeSimulationAction({ attr: name, value, simIndex }));
+    },
+    [dispatch, simIndex],
+  );
+
+  const handlePriceInputChange = useCallback(
+    (value, event) => {
+      const { name } = event.target;
+
+      dispatch(changeSimulationAction({ attr: name, value, simIndex }));
+    },
+    [dispatch, simIndex],
+  );
+
   return (
     <tr key={simulation.id}>
       <td>
@@ -23,12 +50,14 @@ const SimulationLine: React.FC<Props> = ({ totalResult, simulation }) => {
             maxLength={2}
             placeholder="0"
             value={simulation.period}
+            onChange={handleInputChange}
           />
           <FormControl
             as="select"
             className="darkInputSelect"
             name="periodType"
             value={simulation.periodType}
+            onChange={handleInputChange}
           >
             <option value={"anos"}>anos</option>
             <option value={"meses"}>meses</option>
@@ -43,6 +72,7 @@ const SimulationLine: React.FC<Props> = ({ totalResult, simulation }) => {
             name="title"
             placeholder="Investimento"
             value={simulation.title}
+            onChange={handleInputChange}
           />
         </div>
       </td>
@@ -55,7 +85,7 @@ const SimulationLine: React.FC<Props> = ({ totalResult, simulation }) => {
             renderArrows={false}
             theme="dark"
             suffix="%"
-            onChange={() => {}}
+            onChange={handlePriceInputChange}
             value=""
           />
         </div>
@@ -70,7 +100,7 @@ const SimulationLine: React.FC<Props> = ({ totalResult, simulation }) => {
             renderArrows={false}
             theme="dark"
             suffix="%"
-            onChange={() => {}}
+            onChange={handlePriceInputChange}
             value={simulation.rate}
           />
           <FormControl
@@ -78,6 +108,7 @@ const SimulationLine: React.FC<Props> = ({ totalResult, simulation }) => {
             className="darkInputSelect"
             name="rateFrequency"
             value={simulation.rateFrequency}
+            onChange={handleInputChange}
           >
             <option value={"anual"}>ano</option>
             <option value={"mensal"}>mês</option>
@@ -94,7 +125,7 @@ const SimulationLine: React.FC<Props> = ({ totalResult, simulation }) => {
             step={0.01}
             renderArrows={false}
             theme="dark"
-            onChange={() => {}}
+            onChange={handlePriceInputChange}
             value={simulation.periodicDeposit}
           />
           <FormControl
@@ -102,6 +133,7 @@ const SimulationLine: React.FC<Props> = ({ totalResult, simulation }) => {
             className="darkInputSelect"
             name="depositFrequency"
             value={simulation.depositFrequency}
+            onChange={handleInputChange}
           >
             <option value="anual">ano</option>
             <option value="mensal">mês</option>
@@ -119,6 +151,7 @@ const SimulationLine: React.FC<Props> = ({ totalResult, simulation }) => {
             theme="dark"
             onChange={() => {}}
             value={simulation.total}
+            disabled
           />
         </div>
       </td>

@@ -15,6 +15,7 @@ const INITIAL_STATE: FinancialPlannerState = {
   },
   detailedPlanner: {
     simulations: [],
+    selectedSimulation:"todos"
   },
 };
 

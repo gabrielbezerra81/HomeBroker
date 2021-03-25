@@ -26,6 +26,7 @@ interface Props {
   theme?: "light" | "dark";
   suffix?: string;
   suffixStyle?: React.CSSProperties;
+  disabled?: boolean;
 }
 
 const CustomInput: React.FC<Props> = ({
@@ -48,6 +49,7 @@ const CustomInput: React.FC<Props> = ({
   theme = "light",
   suffix = "",
   suffixStyle = {},
+  disabled = false,
 }) => {
   var input: React.ReactNode;
 
@@ -130,6 +132,7 @@ const CustomInput: React.FC<Props> = ({
   if (type === "preco")
     input = (
       <CurrencyInput
+        disabled={disabled}
         placeholder={placeholder}
         locale="pt-BR"
         className={`form-control textInput inputFormatado ${className}`}

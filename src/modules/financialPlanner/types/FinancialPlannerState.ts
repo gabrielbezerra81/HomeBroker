@@ -34,6 +34,7 @@ export interface SimulationResult {
 
 export interface DetailedPlannerData {
   simulations: Array<Simulation>;
+  selectedSimulation: string;
 }
 
 export default interface FinancialPlannerState {
