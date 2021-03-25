@@ -1,5 +1,8 @@
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
-import { InitialPlannerData } from "modules/financialPlanner/types/FinancialPlannerState";
+import {
+  InitialPlannerData,
+  SimulationResult,
+} from "modules/financialPlanner/types/FinancialPlannerState";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { Projection } from "./initialPlanner/InitialPlanner";
 
@@ -217,9 +220,13 @@ export function IncludeInitialLine() {
   };
 }
 
-type Frequency = "por semana" | "por mês" | "por ano";
+type LocalFrequency = "por semana" | "por mês" | "por ano";
 
-export function convertFrequencyToAPIValues(frequency: Frequency) {
+type APIFrequency = "semanal" | "mensal" | "anual";
+
+export function convertFrequencyToAPIValues(
+  frequency: LocalFrequency,
+): APIFrequency {
   switch (frequency) {
     case "por semana":
       return "semanal";
@@ -228,6 +235,81 @@ export function convertFrequencyToAPIValues(frequency: Frequency) {
     case "por ano":
       return "anual";
     default:
-      return "";
+      return "semanal";
   }
 }
+
+export function convertFrequencyToLocalValues(
+  frequency: APIFrequency,
+): LocalFrequency {
+  switch (frequency) {
+    case "semanal":
+      return "por semana";
+    case "mensal":
+      return "por mês";
+    case "anual":
+      return "por ano";
+    default:
+      return "por semana";
+  }
+}
+
+type CalculateProps = Omit<InitialPlannerData, "listing">;
+
+export const calculateSimulationResult = ({
+  contribution,
+  contributionPeriodicity,
+  ratePeriodicity,
+  initialValue,
+  interestRate,
+  periodValue,
+  periodicity,
+}: CalculateProps): SimulationResult => {
+  const monthlyValue = convertContribution({
+    contribution,
+    contributionPeriodicity,
+    ratePeriodicity,
+    convertMode: "calculate",
+  });
+
+  let periods = convertPeriodByRatePeriodicity({
+    periodValue,
+    periodicity,
+    ratePeriodicity,
+  });
+
+  let excludedPeriodsFromContrib = 1;
+
+  let rate = interestRate / 100;
+
+  // conversão de anual para mensal
+  if (ratePeriodicity === "por ano") {
+    rate = convertInterestRate(rate, "year", "month");
+  }
+
+  if (ratePeriodicity === "por semana") {
+    excludedPeriodsFromContrib = 1;
+  }
+
+  const gained = initialValue * (1 + rate) ** periods;
+  const addedValue =
+    (monthlyValue *
+      ((1 + rate) ** (periods - excludedPeriodsFromContrib) - 1)) /
+    rate;
+
+  const total = gained + addedValue;
+  const totalInvested =
+    initialValue + monthlyValue * (periods - excludedPeriodsFromContrib);
+  const totalIncome = total - totalInvested;
+
+  const res = {
+    totalInvested,
+    total,
+    totalIncome,
+    formattedTotal: `R$ ${formatarNumDecimal(gained + addedValue, 2)}`,
+    formattedTotalInvested: `R$ ${formatarNumDecimal(totalInvested)}`,
+    formattedTotalIncome: `R$ ${formatarNumDecimal(totalIncome, 2)}`,
+  };
+
+  return res;
+};

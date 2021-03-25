@@ -9,15 +9,34 @@ export interface InitialPlannerData {
   listing: "semanal" | "mensal" | "anual";
 }
 
+export interface Simulation {
+  id: number;
+  initialDeposit: number;
+  periodicDeposit: number;
+  depositFrequency: "semanal" | "mensal" | "anual";
+  rate: number;
+  rateFrequency: "semanal" | "mensal" | "anual";
+  period: number;
+  periodType: "semanas" | "meses" | "anos";
+  update: string;
+  startDate: string;
+  title: string;
+}
 
-interface Simulation{}
-
+export interface SimulationResult {
+  totalInvested: number;
+  total: number;
+  totalIncome: number;
+  formattedTotal: string;
+  formattedTotalInvested: string;
+  formattedTotalIncome: string;
+}
 
 export interface DetailedPlannerData {
-  simulations:Array<Simulation>
+  simulations: Array<Simulation>;
 }
 
 export default interface FinancialPlannerState {
   initialPlanner: InitialPlannerData;
-  detailedPlanner:DetailedPlannerData
+  detailedPlanner: DetailedPlannerData;
 }

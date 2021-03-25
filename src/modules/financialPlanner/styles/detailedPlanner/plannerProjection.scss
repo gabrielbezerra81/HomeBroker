@@ -1,6 +1,5 @@
 .plannerProjection {
-  padding: 0 5px;
-  border-right: 1px solid #b7b7b7;
+  padding: 0 6px;
   margin-bottom: 8px;
 
   > div.firstRow {
@@ -12,7 +11,8 @@
     }
 
     select,
-    .containerInput {
+    .containerInput,
+    .darkSimpleInput {
       max-width: 100px;
       text-align-last: center;
     }
@@ -99,10 +99,6 @@
     th,
     td {
       border: none;
-
-      &:first-child {
-        // padding-left: 2px !important;
-      }
     }
 
     td {
@@ -124,12 +120,8 @@
 
       &.periodCell {
         > .darkSimpleInput {
-          width: 14px;
+          width: 40px;
           padding-top: 2px;
-        }
-
-        select {
-          min-width: 56px;
         }
       }
 
@@ -141,16 +133,28 @@
         }
       }
 
-      > select {
-        min-width: 45px;
-      }
-
       .containerInput {
-        // max-width: 50px;
         padding-top: 0;
         padding-bottom: 0;
         border: 1px solid transparent;
       }
+    }
+
+    .column100 {
+      .containerInput {
+        max-width: 100px;
+      }
+    }
+
+    .incomeColumn,
+    .taxColumn {
+      input {
+        padding-right: 0 !important;
+      }
+    }
+
+    select {
+      max-width: 120px;
     }
 
     tr {

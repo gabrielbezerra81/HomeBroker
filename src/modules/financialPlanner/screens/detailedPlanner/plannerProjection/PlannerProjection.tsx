@@ -1,73 +1,90 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { PieChart, Pie, Cell, Legend, ResponsiveContainer } from "recharts";
 
 import { FormControl, Table } from "react-bootstrap";
-import CustomInput from "shared/components/CustomInput";
+import useStateStorePrincipal from "hooks/useStateStorePrincipal";
+import {
+  calculateSimulationResult,
+  convertFrequencyToLocalValues,
+} from "../../utils";
+import { formatarNumDecimal } from "shared/utils/Formatacoes";
+import SimulationLine from "./SimulationLine";
+import {
+  Simulation,
+  SimulationResult,
+} from "modules/financialPlanner/types/FinancialPlannerState";
 
-const data = [
-  { name: "Pós-fixados", value: 600 },
-  { name: "Prefixados", value: 100 },
-  { name: "IPCA+Juros", value: 150 },
-  { name: "Renda Variável", value: 200 },
+const COLORS = [
+  "#9999CC",
+  "#FF9933",
+  "#8AA5C2",
+  "#339999",
+  "#0254be",
+  "#770a72",
 ];
 
-const COLORS = ["#9999CC", "#FF9933", "#8AA5C2", "#339999"];
-
 const PlannerProjection: React.FC = () => {
-  const [planningData, setPlanningData] = useState<PlanningLine[]>([
-    {
-      periodValue: "05",
-      period: "anos",
-      investmentType: "Pós-fixados",
-      "100%": "75%",
-      rentability: 5.9,
-      rentabilityPeriod: "ano",
-      monthlyValue: 4425,
-      monthlyValuePeriod: "ano",
-      income: 4425,
-      tax: 4425,
-      result: 65.31,
-    },
-    {
-      periodValue: "23",
-      period: "meses",
-      investmentType: "Prefixados",
-      "100%": "10%",
-      rentability: 7,
-      rentabilityPeriod: "ano",
-      monthlyValue: 700,
-      monthlyValuePeriod: "ano",
-      income: 700,
-      tax: 700,
-      result: 10.33,
-    },
-    {
-      periodValue: "10",
-      period: "anos",
-      investmentType: "ICPA+Juros",
-      "100%": "10%",
-      rentability: 6.5,
-      rentabilityPeriod: "ano",
-      monthlyValue: 650,
-      monthlyValuePeriod: "ano",
-      income: 650,
-      tax: 650,
-      result: 9.59,
-    },
-    {
-      periodValue: "60",
-      period: "meses",
-      investmentType: "Renda Variável",
-      "100%": "5%",
-      rentability: 20,
-      rentabilityPeriod: "ano",
-      monthlyValue: 1000,
-      monthlyValuePeriod: "ano",
-      income: 1000,
-      tax: 1000,
-      result: 14.76,
-    },
-  ]);
+  const {
+    financialPlannerReducer: { detailedPlanner },
+  } = useStateStorePrincipal();
+
+  const { simulations } = detailedPlanner;
+
+  const [addedSimulations, setAddedSimulations] = useState<
+    Array<Simulation & SimulationResult>
+  >([]);
+
+  const simulationsResult = useMemo(() => {
+    return simulations.map((simulation) => {
+      const result = calculateSimulationResult({
+        contribution: simulation.periodicDeposit,
+        contributionPeriodicity: convertFrequencyToLocalValues(
+          simulation.depositFrequency,
+        ),
+        initialValue: simulation.initialDeposit,
+        interestRate: simulation.rate,
+        ratePeriodicity: convertFrequencyToLocalValues(
+          simulation.rateFrequency,
+        ),
+        periodValue: simulation.period,
+        periodicity: simulation.periodType,
+      });
+
+      return {
+        ...result,
+        ...simulation,
+      };
+    });
+  }, [simulations]);
+
+  const totalInvested = useMemo(() => {
+    const total = simulationsResult.reduce((prev, curr) => {
+      return prev + curr.totalInvested;
+    }, 0);
+
+    return total;
+  }, [simulationsResult]);
+
+  const totalResult = useMemo(() => {
+    return simulationsResult.reduce((prev, curr) => {
+      return prev + curr.total;
+    }, 0);
+  }, [simulationsResult]);
+
+  const formattedTotalInvested = useMemo(() => {
+    return formatarNumDecimal(totalInvested, 2, 2);
+  }, [totalInvested]);
+
+  const formattedTotalResult = useMemo(() => {
+    return formatarNumDecimal(totalResult, 2, 2);
+  }, [totalResult]);
+
+  const graphData = useMemo(() => {
+    return simulationsResult.map((res) => ({
+      name: res.title,
+      value: res.total,
+    }));
+  }, [simulationsResult]);
 
   const renderLegend = useCallback((props: any) => {
     const { payload } = props;
@@ -79,7 +96,7 @@ const PlannerProjection: React.FC = () => {
           {payload.map((entry: any, index: any) => (
             <div key={`item-${index}`}>
               <span
-                style={{ borderColor: COLORS[index % COLORS.length] }}
+                style={{ borderColor: COLORS[index] }}
                 className="inner-circle"
               />
               <span>{entry.value}</span>
@@ -92,6 +109,14 @@ const PlannerProjection: React.FC = () => {
 
   const handleIncludeLine = useCallback(() => {}, []);
 
+  const investmentOptions = useMemo(() => {
+    return simulations.map((sim) => (
+      <option key={sim.title} value={sim.title}>
+        {sim.title}
+      </option>
+    ));
+  }, [simulations]);
+
   return (
     <div className="plannerProjection">
       <div className="firstRow">
@@ -100,6 +125,7 @@ const PlannerProjection: React.FC = () => {
             <span>Investimento: </span>
             <FormControl as="select" className="darkInputSelect">
               <option value="todos">TODOS</option>
+              {investmentOptions}
             </FormControl>
           </div>
 
@@ -112,14 +138,10 @@ const PlannerProjection: React.FC = () => {
 
           <div className="inputGroup">
             <span>Total Investido:</span>
-            <CustomInput
-              type="preco"
-              name="initialValue"
-              step={1}
-              renderArrows={false}
-              theme="dark"
-              onChange={() => {}}
-              value={100000}
+            <FormControl
+              value={formattedTotalInvested}
+              className="darkSimpleInput"
+              disabled
             />
           </div>
         </div>
@@ -132,7 +154,7 @@ const PlannerProjection: React.FC = () => {
           >
             <PieChart>
               <Pie
-                data={data}
+                data={graphData}
                 cx={120}
                 cy={48}
                 innerRadius={34}
@@ -140,7 +162,7 @@ const PlannerProjection: React.FC = () => {
                 paddingAngle={2}
                 dataKey="value"
               >
-                {data.map((entry, index) => (
+                {graphData.map((entry, index) => (
                   <Cell
                     key={`cell-${index}`}
                     fill={COLORS[index % COLORS.length]}
@@ -175,122 +197,11 @@ const PlannerProjection: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {planningData.map((planningLine, index) => (
-              <tr key={index}>
-                <td>
-                  <div className="cellContent periodCell">
-                    <FormControl
-                      className="darkSimpleInput"
-                      name="periodValue"
-                      maxLength={2}
-                      placeholder="0"
-                    />
-                    <FormControl
-                      as="select"
-                      className="darkInputSelect"
-                      name="period"
-                    >
-                      <option value={"anos"}>anos</option>
-                      <option value={"meses"}>meses</option>
-                    </FormControl>
-                  </div>
-                </td>
-                <td>
-                  <div className="cellContent">
-                    <FormControl
-                      className="darkSimpleInput"
-                      name="investmentType"
-                      placeholder="Investimento"
-                    />
-                  </div>
-                </td>
-                <td>
-                  <div className="cellContent">
-                    <CustomInput
-                      type="preco"
-                      name="100%"
-                      step={0.01}
-                      renderArrows={false}
-                      theme="dark"
-                      suffix="%"
-                      onChange={() => {}}
-                      value=""
-                    />
-                  </div>
-                </td>
-                <td>
-                  <div className="cellContent">
-                    {/* rentabilidade */}
-                    <CustomInput
-                      type="preco"
-                      name="rentability"
-                      step={0.01}
-                      renderArrows={false}
-                      theme="dark"
-                      suffix="%"
-                      onChange={() => {}}
-                      value=""
-                    />
-                    <FormControl
-                      as="select"
-                      className="darkInputSelect"
-                      name="rentabilityPeriod"
-                    >
-                      <option value={"ano"}>ano</option>
-                      <option value={"mês"}>mês</option>
-                    </FormControl>
-                  </div>
-                </td>
-                <td>
-                  <div className="cellContent contributionCell">
-                    {/* aporte */}
-                    <CustomInput
-                      type="preco"
-                      name="monthlyValue"
-                      step={0.01}
-                      renderArrows={false}
-                      theme="dark"
-                      onChange={() => {}}
-                      value=""
-                    />
-                    <FormControl
-                      as="select"
-                      className="darkInputSelect"
-                      name="monthlyValuePeriod"
-                    >
-                      <option value={"ano"}>ano</option>
-                      <option value={"mês"}>mês</option>
-                    </FormControl>
-                  </div>
-                </td>
-                <td>
-                  <div className="cellContent">
-                    <CustomInput
-                      type="preco"
-                      name="income"
-                      step={0.01}
-                      renderArrows={false}
-                      theme="dark"
-                      onChange={() => {}}
-                      value=""
-                    />
-                  </div>
-                </td>
-                <td>
-                  <div className="cellContent">
-                    <CustomInput
-                      type="preco"
-                      name="tax"
-                      step={0.01}
-                      renderArrows={false}
-                      theme="dark"
-                      onChange={() => {}}
-                      value=""
-                    />
-                  </div>
-                </td>
-                <td>{planningLine.result}%</td>
-              </tr>
+            {simulationsResult.map((simulation) => (
+              <SimulationLine
+                totalResult={totalResult}
+                simulation={simulation}
+              />
             ))}
 
             <tr>
@@ -305,8 +216,8 @@ const PlannerProjection: React.FC = () => {
               <td></td>
               <td></td>
               <td>Total:</td>
-              <td>6.775,00</td>
-              <td>6.775,00</td>
+              <td>{formattedTotalResult}</td>
+              <td>0,00</td>
               <td>100,00%</td>
             </tr>
           </tbody>
@@ -321,21 +232,3 @@ const PlannerProjection: React.FC = () => {
 };
 
 export default PlannerProjection;
-
-interface PlanningLine {
-  periodValue: string;
-  period: "anos" | "meses";
-  investmentType:
-    | "Pós-fixados"
-    | "Prefixados"
-    | "ICPA+Juros"
-    | "Renda Variável";
-  "100%": string;
-  rentability: number;
-  rentabilityPeriod: "ano" | "mês";
-  monthlyValue: number;
-  monthlyValuePeriod: "ano" | "mês";
-  income: number;
-  tax: number;
-  result: number;
-}

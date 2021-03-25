@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
@@ -7,20 +7,30 @@ import { PopupHeader } from "shared/components/PopupHeader";
 import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 import WalletEvolution from "./walletEvolution/WalletEvolution";
 import PlannerProjection from "./plannerProjection/PlannerProjection";
-import ResultPerformance from "./resultPerformance/ResultPerformance";
 
-import "../../styles/detailedPlanner/detailedPlanner.scss"
+import "../../styles/detailedPlanner/detailedPlanner.scss";
+import { listSimulationsAction } from "modules/financialPlanner/duck/actions/detailedPlannerActions";
 
 const DetailedPlanner: React.FC = () => {
   const {
     systemReducer: { isOpenDetailedPlanner },
+    financialPlannerReducer: { detailedPlanner },
   } = useStateStorePrincipal();
+
+  const { simulations } = detailedPlanner;
 
   const dispatch = useDispatchStorePrincipal();
 
   const onClose = useCallback(() => {
     dispatch(abrirItemBarraLateralAction("isOpenDetailedPlanner"));
   }, [dispatch]);
+
+  useEffect(() => {
+    if (simulations.length === 0) {
+      dispatch(listSimulationsAction());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <DraggablePopup
@@ -36,7 +46,6 @@ const DetailedPlanner: React.FC = () => {
 
           <div className="topContent">
             <PlannerProjection />
-            <ResultPerformance />
           </div>
 
           <WalletEvolution />

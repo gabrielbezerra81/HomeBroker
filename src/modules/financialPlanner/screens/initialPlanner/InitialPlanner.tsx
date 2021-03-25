@@ -18,6 +18,7 @@ import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import ProjectionTable from "./ProjectionTable";
 import ProjectionGraph from "./ProjectionGraph";
 import {
+  calculateSimulationResult,
   convertContribution,
   convertInterestRate,
   convertPeriodByRatePeriodicity,
@@ -77,6 +78,8 @@ const InitialPlanner: React.FC = () => {
     listing,
   } = initialPlanner;
 
+  const { listing: _, ...calcResultProps } = initialPlanner;
+
   const dispatch = useDispatchStorePrincipal();
 
   const [savingSimulations, setSavingSimulations] = useState(false);
@@ -89,62 +92,8 @@ const InitialPlanner: React.FC = () => {
       return null;
     }
 
-    const monthlyValue = convertContribution({
-      contribution,
-      contributionPeriodicity,
-      ratePeriodicity,
-      convertMode: "calculate",
-    });
-
-    let periods = convertPeriodByRatePeriodicity({
-      periodValue,
-      periodicity,
-      ratePeriodicity,
-    });
-
-    let excludedPeriodsFromContrib = 1;
-
-    let rate = interestRate / 100;
-
-    // conversão de anual para mensal
-    if (ratePeriodicity === "por ano") {
-      rate = convertInterestRate(rate, "year", "month");
-    }
-
-    if (ratePeriodicity === "por semana") {
-      excludedPeriodsFromContrib = 1;
-    }
-
-    const gained = initialValue * (1 + rate) ** periods;
-    const addedValue =
-      (monthlyValue *
-        ((1 + rate) ** (periods - excludedPeriodsFromContrib) - 1)) /
-      rate;
-
-    const total = gained + addedValue;
-    const totalInvested =
-      initialValue + monthlyValue * (periods - excludedPeriodsFromContrib);
-    const totalIncome = total - totalInvested;
-
-    const res = {
-      totalInvested,
-      total,
-      totalIncome,
-      formattedTotal: `R$ ${formatarNumDecimal(gained + addedValue, 2)}`,
-      formattedTotalInvested: `R$ ${formatarNumDecimal(totalInvested)}`,
-      formattedTotalIncome: `R$ ${formatarNumDecimal(totalIncome, 2)}`,
-    };
-
-    return res;
-  }, [
-    initialValue,
-    interestRate,
-    periodValue,
-    contribution,
-    contributionPeriodicity,
-    ratePeriodicity,
-    periodicity,
-  ]);
+    return calculateSimulationResult(calcResultProps);
+  }, [initialValue, interestRate, periodValue, calcResultProps]);
 
   const projections = useMemo(() => {
     const projections: Projection[] = [];
@@ -297,7 +246,6 @@ const InitialPlanner: React.FC = () => {
     await dispatch(handleSaveSimulationAction(simulationTitle));
 
     setSimulationTitle("");
- 
 
     setSavingSimulations(false);
   }, [dispatch, simulationTitle]);
