@@ -287,6 +287,17 @@ export const calculateSimulationResult = ({
     rate = convertInterestRate(rate, "year", "month");
   }
 
+  if (!rate) {
+    return {
+      totalInvested: 0,
+      total: 0,
+      totalIncome: 0,
+      formattedTotal: "",
+      formattedTotalInvested: "",
+      formattedTotalIncome: "",
+    };
+  }
+
   if (ratePeriodicity === "por semana") {
     excludedPeriodsFromContrib = 1;
   }

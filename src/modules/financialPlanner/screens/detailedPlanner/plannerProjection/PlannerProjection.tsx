@@ -10,7 +10,10 @@ import {
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import SimulationLine from "./SimulationLine";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
-import { updateDetailedPlannerStateAction } from "modules/financialPlanner/duck/actions/detailedPlannerActions";
+import {
+  addNewSimulationAction,
+  updateDetailedPlannerStateAction,
+} from "modules/financialPlanner/duck/actions/detailedPlannerActions";
 
 const COLORS = [
   "#9999CC",
@@ -29,15 +32,6 @@ const PlannerProjection: React.FC = () => {
   const dispatch = useDispatchStorePrincipal();
 
   const { simulations, selectedSimulation } = detailedPlanner;
-
-  const handleInputChange = useCallback(
-    (e) => {
-      const { name, value } = e.currentTarget;
-
-      dispatch(updateDetailedPlannerStateAction({ [name]: value }));
-    },
-    [dispatch],
-  );
 
   const simulationResults = useMemo(() => {
     const filteredSimulations = simulations.filter(
@@ -67,6 +61,48 @@ const PlannerProjection: React.FC = () => {
     });
   }, [selectedSimulation, simulations]);
 
+  const handleInputChange = useCallback(
+    (e) => {
+      const { name, value } = e.currentTarget;
+
+      dispatch(updateDetailedPlannerStateAction({ [name]: value }));
+    },
+    [dispatch],
+  );
+
+  const renderLegend = useCallback((props: any) => {
+    const { payload } = props;
+    return (
+      <>
+        <span className="legendTitle">Planejamento</span>
+
+        <div className="customLegendContainer">
+          {payload.map((entry: any, index: any) => (
+            <div key={`item-${index}`}>
+              <span
+                style={{ borderColor: COLORS[index] }}
+                className="inner-circle"
+              />
+              <span>{entry.value}</span>
+            </div>
+          ))}
+        </div>
+      </>
+    );
+  }, []);
+
+  const handleIncludeLine = useCallback(() => {
+    dispatch(addNewSimulationAction());
+  }, [dispatch]);
+
+  const investmentOptions = useMemo(() => {
+    return simulations.map((sim) => (
+      <option key={sim.title} value={sim.title}>
+        {sim.title}
+      </option>
+    ));
+  }, [simulations]);
+
   const totalInvested = useMemo(() => {
     const total = simulationResults.reduce((prev, curr) => {
       return prev + curr.totalInvested;
@@ -95,37 +131,6 @@ const PlannerProjection: React.FC = () => {
       value: res.total,
     }));
   }, [simulationResults]);
-
-  const renderLegend = useCallback((props: any) => {
-    const { payload } = props;
-    return (
-      <>
-        <span className="legendTitle">Planejamento</span>
-
-        <div className="customLegendContainer">
-          {payload.map((entry: any, index: any) => (
-            <div key={`item-${index}`}>
-              <span
-                style={{ borderColor: COLORS[index] }}
-                className="inner-circle"
-              />
-              <span>{entry.value}</span>
-            </div>
-          ))}
-        </div>
-      </>
-    );
-  }, []);
-
-  const handleIncludeLine = useCallback(() => {}, []);
-
-  const investmentOptions = useMemo(() => {
-    return simulations.map((sim) => (
-      <option key={sim.title} value={sim.title}>
-        {sim.title}
-      </option>
-    ));
-  }, [simulations]);
 
   return (
     <div className="plannerProjection">
@@ -244,7 +249,10 @@ const PlannerProjection: React.FC = () => {
           </tbody>
         </Table>
 
-        <button className="brokerCustomButton simulationButton">
+        <button
+          className="brokerCustomButton simulationButton"
+          onClick={handleIncludeLine}
+        >
           Executar simulação
         </button>
       </div>

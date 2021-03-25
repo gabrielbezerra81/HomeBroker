@@ -78,4 +78,34 @@ export const changeSimulationAction = ({
   };
 };
 
+export const addNewSimulationAction = (): MainThunkAction => {
+  return (dispatch, getState) => {
+    const {
+      financialPlannerReducer: {
+        detailedPlanner: { simulations },
+      },
+    } = getState();
+
+    const updatedSimulations = produce(simulations, (draft) => {
+      draft.push({
+        depositFrequency: "mensal",
+        id: -1,
+        initialDeposit: 0,
+        period: "" as any,
+        periodType: "meses",
+        periodicDeposit: 0,
+        rate: 0,
+        rateFrequency: "mensal",
+        startDate: "",
+        title: "",
+        update: "",
+      });
+    });
+
+    dispatch(
+      updateDetailedPlannerStateAction({ simulations: updatedSimulations }),
+    );
+  };
+};
+
 export const executeSimulationAction = () => {};
