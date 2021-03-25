@@ -125,6 +125,18 @@ const Tab0: React.FC<Props> = ({ multiBox }) => {
     };
   }, [stockSymbolData]);
 
+  const isMinMaxNegative = useMemo(() => {
+    if (!structureData) {
+      return false;
+    }
+
+    if (structureData.min < 0 && structureData.max < 0) {
+      return true;
+    }
+
+    return false;
+  }, [structureData]);
+
   const { formattedMin, formattedMax } = useMemo(() => {
     const formatted = {
       formattedMin: "0,00",
@@ -139,8 +151,11 @@ const Tab0: React.FC<Props> = ({ multiBox }) => {
 
     const { min, max } = structureData;
 
-    formatted.formattedMin = formatarNumDecimal(min || 0);
-    formatted.formattedMax = formatarNumDecimal(max || 0);
+    const minValue = isMinMaxNegative ? Math.abs(min || 0) : min || 0;
+    const maxValue = isMinMaxNegative ? Math.abs(max || 0) : max || 0;
+
+    formatted.formattedMin = formatarNumDecimal(minValue);
+    formatted.formattedMax = formatarNumDecimal(maxValue);
 
     if (typeof min === "number" && typeof max === "number") {
       formatted.medium = (max + min) / 2;
@@ -148,19 +163,7 @@ const Tab0: React.FC<Props> = ({ multiBox }) => {
     }
 
     return formatted;
-  }, [structureData]);
-
-  const isMinMaxNegative = useMemo(() => {
-    if (!structureData) {
-      return false;
-    }
-
-    if (structureData.min < 0 && structureData.max < 0) {
-      return true;
-    }
-
-    return false;
-  }, [structureData]);
+  }, [isMinMaxNegative, structureData]);
 
   const rangeBarValues = useMemo(() => {
     if (!structureData) {
