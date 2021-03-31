@@ -24,10 +24,10 @@ const OrdersUpdateManager: React.FC = () => {
   useEffect(() => {
     function startUpdate() {
       if (updateMode === "reactive") {
-        dispatch(startReactiveOrdersUpdateAction());
+        // dispatch(startReactiveOrdersUpdateAction());
       } //
       else {
-        dispatch(startProactiveOrdersUpdateAction());
+        // dispatch(startProactiveOrdersUpdateAction());
       }
     }
 
@@ -46,6 +46,7 @@ const OrdersUpdateManager: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateInterval, updateMode, dispatch]);
 
+  // Listagem das ordens
   useEffect(() => {
     dispatch(listOrdersExecAction());
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -65,10 +66,10 @@ const OrdersUpdateManager: React.FC = () => {
 
     if (initialCondition || hasAddedOrder) {
       if (updateMode === "reactive") {
-        dispatch(startReactiveOrdersUpdateAction());
+        // dispatch(startReactiveOrdersUpdateAction());
       } //
       else {
-        dispatch(startProactiveOrdersUpdateAction());
+        // dispatch(startProactiveOrdersUpdateAction());
       }
     } //
 
