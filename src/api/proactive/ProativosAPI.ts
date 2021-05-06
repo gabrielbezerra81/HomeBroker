@@ -304,7 +304,7 @@ export const getProactiveOrdersExecAPI = async (ids: string) => {
     .get(`${url_ordersExec_ids}${ids}`)
     .then((response) => {
       if (response.data && response.data.length) {
-        return response.data; ''
+        return response.data;
       }
 
       return [];
