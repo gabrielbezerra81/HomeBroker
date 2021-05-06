@@ -25,6 +25,8 @@ import useStateBoletas from "hooks/useStateBoletas";
 import { BoletaNamespace } from "constants/ActionTypes";
 import { IoMdRepeat } from "react-icons/io";
 import { cond_openCloseMultilegExtraConfigsAction } from "modules/conditionalMultileg/duck/actions/ConditionalMultilegActions";
+import { GrFormSearch } from "react-icons/gr";
+import { FiSearch } from "react-icons/fi";
 
 interface ModalHeaderProps {
   headerTitle?: any;
@@ -185,6 +187,7 @@ interface PopupHeaderProps {
   onClose?: (...data: any) => any;
   onConfig?: (...data: any) => any;
   onStrikeViewChange?: (...data: any) => any;
+  icons?: React.ReactNode;
 }
 
 // Menus multileg, posição, thl, ordens exec, relatorio
@@ -197,6 +200,7 @@ export const PopupHeader: React.FC<PopupHeaderProps> = React.memo(
     onClose,
     onConfig,
     onStrikeViewChange,
+    icons,
   }) => {
     const dispatchStorePrincipal = useDispatchStorePrincipal();
 
@@ -229,6 +233,8 @@ export const PopupHeader: React.FC<PopupHeaderProps> = React.memo(
         {children}
         <h6 className="mtitle">{headerTitle === "THL" ? "" : headerTitle}</h6>
         <div className="wrapperIconesHeader">
+          {!!icons && icons}
+
           <BotaoAbrirFiltrarOrdens headerTitle={headerTitle} />
 
           {!!onStrikeViewChange && (
@@ -285,7 +291,8 @@ const BotaoAbrirFiltrarOrdens: React.FC<any> = ({ headerTitle }) => {
           )
         }
       >
-        <MDBIcon icon="search" size="2x"></MDBIcon>
+        <FiSearch size={20} strokeWidth={3} />
+        {/* <MDBIcon icon="search" size="2x"></MDBIcon> */}
       </Button>
     );
   }

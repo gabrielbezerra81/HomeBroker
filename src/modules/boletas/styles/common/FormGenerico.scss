@@ -44,6 +44,9 @@
     .brokerCustomButton {
       padding: 0;
       height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       &:hover {
         opacity: 0.6;
@@ -61,6 +64,12 @@
     color: var(--color-buttons-grey);
     font-size: 0.65rem;
     margin: 0 3px;
+
+    svg {
+      path {
+        stroke: var(--color-buttons-grey);
+      }
+    }
   }
 }
 

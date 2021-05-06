@@ -69,7 +69,7 @@ const OrdersUpdateManager: React.FC = () => {
         // dispatch(startReactiveOrdersUpdateAction());
       } //
       else {
-        // dispatch(startProactiveOrdersUpdateAction());
+        dispatch(startProactiveOrdersUpdateAction());
       }
     } //
 

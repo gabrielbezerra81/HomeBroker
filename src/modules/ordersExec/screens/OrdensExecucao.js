@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Row, Table, ProgressBar } from "react-bootstrap";
 import DraggableModal from "shared/components/DraggableModal";
 import { PopupHeader } from "shared/components/PopupHeader";
@@ -6,7 +6,10 @@ import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { GlobalContext, StorePrincipalContext } from "redux/StoreCreation";
-import { updateOneOrdersExecStateAction } from "../duck/actions/OrdensExecActions";
+import {
+  listOrdersExecAction,
+  updateOneOrdersExecStateAction,
+} from "../duck/actions/OrdensExecActions";
 import {
   atualizarDivKeyAction,
   aumentarZindexAction,
@@ -16,6 +19,8 @@ import setPopupZIndexFromSecondaryTab from "shared/utils/PopupLifeCycle/setPopup
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
+
+import { MdRefresh } from "react-icons/md";
 
 class OrdensExecucao extends React.Component {
   constructor(props) {
@@ -71,6 +76,11 @@ class OrdensExecucao extends React.Component {
             headerClass="border-green"
             onConfig={() => {}}
             onClose={this.onClose}
+            icons={
+              <>
+                <RefreshButton />
+              </>
+            }
           />
         )}
       />
@@ -332,6 +342,37 @@ const abrirOpcoesOrdem = (props, item) => {
     props.updateOneOrdersExecStateAction("ordemAtual", item);
     props.updateOneOrdersExecStateAction("opcoesOrdemAberto", true);
   }
+};
+
+const RefreshButton = () => {
+  const dispatch = useDispatchStorePrincipal();
+
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const handleRefresh = useCallback(async () => {
+    setIsRefreshing(true);
+
+    await dispatch(listOrdersExecAction());
+
+    setIsRefreshing(false);
+  }, [dispatch]);
+
+  const refreshingClass = useMemo(() => {
+    if (isRefreshing) {
+      return "isRefreshing";
+    }
+
+    return "";
+  }, [isRefreshing]);
+
+  return (
+    <button
+      onClick={handleRefresh}
+      className={`brokerCustomButton iconesHeader headerRefreshButton ${refreshingClass}`}
+    >
+      <MdRefresh size={24} />
+    </button>
+  );
 };
 
 const mapStateToPropsGlobalStore = (state) => {

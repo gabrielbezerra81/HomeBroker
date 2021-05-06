@@ -231,4 +231,22 @@ input:-webkit-autofill:active {
   background-color: rgb(139, 165, 194) !important;
 }
 
+@keyframes rotating {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotating {
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+
+@keyframes rotating {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
 // In your global style.css file, try: @import '~antd/dist/antd.css';

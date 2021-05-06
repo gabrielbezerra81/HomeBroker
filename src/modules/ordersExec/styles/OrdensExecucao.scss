@@ -107,3 +107,11 @@ span.colunasOfertaVenda {
 .rowTabelaOrdensExec:hover {
   opacity: 1;
 }
+
+.headerRefreshButton {
+  transition: transform 0.5s;
+
+  &.isRefreshing {
+    animation: rotating 0.5s linear normal;
+  }
+}
