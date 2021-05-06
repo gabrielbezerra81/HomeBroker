@@ -1,3 +1,4 @@
+import api from "api/apiConfig";
 import {
   url_singleQuote_quote,
   url_multiQuote_quotes,
@@ -299,11 +300,11 @@ export const getProactivePositionEmblemsAPI = async (structureIds: string) => {
 };
 
 export const getProactiveOrdersExecAPI = async (ids: string) => {
-  return proactiveAPI
+  return api
     .get(`${url_ordersExec_ids}${ids}`)
     .then((response) => {
       if (response.data && response.data.length) {
-        return response.data;
+        return response.data; ''
       }
 
       return [];
