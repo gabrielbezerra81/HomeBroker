@@ -209,6 +209,16 @@ const CustomInput: React.FC<Props> = ({
           if (autoSelect) event.target.select();
         }}
         onKeyUp={(event) => {
+          if (event.key === "Backspace") {
+            const previousValueHasMinus = `${value}`.includes("-");
+            const hasErasedMinus =
+              event.currentTarget.value.includes("-") === false;
+
+            if (previousValueHasMinus && hasErasedMinus) {
+              handleChange(event.currentTarget.value);
+            }
+          }
+
           if (event.key === "ArrowUp") {
             onUp(event);
           } else if (event.key === "ArrowDown") {
