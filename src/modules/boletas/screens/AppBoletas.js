@@ -55,8 +55,13 @@ class AppBoletas extends React.Component {
       props.divkey !== "multileg" &&
       props.divkey !== "relatorio_detalhado" &&
       props.divKey !== "conditionalMultileg"
-    )
-      document.getElementById(props.divkey).style.zIndex = props.zIndex + 1;
+    ) {
+      const element = document.getElementById(props.divkey);
+
+      if (element) {
+        element.style.zIndex = props.zIndex + 1;
+      }
+    }
     props.receberAppPropsAction(props);
 
     if (props.appkey !== 0 && props.codigoBook) {

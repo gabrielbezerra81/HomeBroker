@@ -196,7 +196,9 @@ export const openOrderInMultilegAction = (props, action = "") => {
     //Disparar atualizações feitas com objeto multileg
     result.multilegTabs = updatedMultilegTabs;
 
-    result.multilegTabs[tabIndex].editingOrderId = ordemAtual.id;
+    if (["duplicar", "oposta"].includes(action) === false) {
+      result.multilegTabs[tabIndex].c = ordemAtual.id;
+    }
 
     dispatch(
       updateManyMultilegState({
@@ -236,17 +238,25 @@ export const openOrderInBoletaAction = (props, event, menuAction) => {
       boletaName = [type, popupName].join("");
     }
 
+    const shouldDeleteOrderId = ["duplicar", "oposta"].includes(menuAction);
+
+    const orderData = {
+      orderId: ordemAtual.id,
+      dadosPesquisa: symbolData,
+      ativo: offer.ativo,
+      qtde: qtty,
+      entradaDisparo: offer.precoDisparo,
+      entradaExec: offer.precoEnvio,
+      preco: offer.precoEnvio ? offer.precoEnvio.toString() : "",
+      ...retornaDadosOferta(ordemAtual, boletaName),
+    };
+
+    if (shouldDeleteOrderId) {
+      orderData.orderId = 0;
+    }
+
     const boletaPopupData = {
-      dadosOrdemExec: {
-        orderId: ordemAtual.id,
-        dadosPesquisa: symbolData,
-        ativo: offer.ativo,
-        qtde: qtty,
-        entradaDisparo: offer.precoDisparo,
-        entradaExec: offer.precoEnvio,
-        preco: offer.precoEnvio ? offer.precoEnvio.toString() : "",
-        ...retornaDadosOferta(ordemAtual, boletaName),
-      },
+      dadosOrdemExec: orderData,
       ultimaBoletaAbertaOrdemExec: namespace,
     };
 
