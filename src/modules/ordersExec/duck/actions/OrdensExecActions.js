@@ -2,6 +2,10 @@ import {
   MUDAR_VARIAVEL_ORDENS_EXEC,
   MUDA_VARIAVEIS_ORDENS_EXEC,
 } from "constants/MenuActionTypes";
+
+import { setIntervalAsync } from "set-interval-async/dynamic";
+import { clearIntervalAsync } from "set-interval-async";
+
 import {
   listarOrdensExecAPI,
   setPointerWhileAwaiting,
@@ -23,6 +27,9 @@ import {
 } from "modules/multileg/duck/actions/MultilegActions";
 import { searchMultilegSymbolData } from "modules/multileg/duck/actions/MultilegAPIAction";
 import { erro_exportar_ordens_multileg } from "constants/AlertaErros";
+
+import isEqual from "lodash/isEqual";
+
 import {
   calculoPreco,
   calculoMDC,
@@ -496,7 +503,7 @@ export const startReactiveOrdersUpdateAction = () => {
 };
 
 export const startProactiveOrdersUpdateAction = () => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const {
       ordersExecReducer: {
         esource_ordersExec,
@@ -506,25 +513,54 @@ export const startProactiveOrdersUpdateAction = () => {
       systemReducer: { updateInterval },
     } = getState();
 
+    if (interval_ordersExec && interval_ordersExec.stopped === false) {
+      await clearIntervalAsync(interval_ordersExec);
+    }
+
     if (esource_ordersExec && esource_ordersExec.close) {
       esource_ordersExec.close();
     }
 
-    if (interval_ordersExec) {
-      clearInterval(interval_ordersExec);
-    }
+    const ids = tabelaOrdensExecucao.map((order) => order.id).join(",");
 
-    const idsList = tabelaOrdensExecucao.map((order) => order.id);
+    const hasOrders = tabelaOrdensExecucao.length > 0;
 
-    const ids = idsList.join(",");
+    if (hasOrders) {
+      const updateOrders = async (promises) => {
+        const thisPromiseId = Object.keys(promises)[0] || "";
 
-    if (ids) {
-      const interval = setInterval(async () => {
         const data = await getProactiveOrdersExecAPI(ids);
 
-        dispatch(
-          updateManyOrdersExecStateAction({ tabelaOrdensExecucao: data }),
-        );
+        const {
+          ordersExecReducer: { interval_ordersExec },
+        } = getState();
+
+        if (interval_ordersExec) {
+          const promiseInState =
+            Object.keys(interval_ordersExec.promises)[0] || "";
+
+          // when interval is cancelled, a new one is started right after. this check ensures that the last promise
+          // of the old interval only dispatches if interval_ordersExec variable has not been updated in redux yet
+          const isTheSamePromise = thisPromiseId === promiseInState;
+
+          if (isTheSamePromise === false) {
+            console.log("not the same timer, preventing a inconsistent state");
+            return;
+          }
+        }
+
+        if (
+          !interval_ordersExec ||
+          (interval_ordersExec && interval_ordersExec.stopped === false)
+        ) {
+          dispatch(
+            updateManyOrdersExecStateAction({ tabelaOrdensExecucao: data }),
+          );
+        }
+      };
+
+      const interval = setIntervalAsync(async () => {
+        await updateOrders(interval.promises);
       }, updateInterval);
 
       dispatch(updateOneOrdersExecStateAction("interval_ordersExec", interval));

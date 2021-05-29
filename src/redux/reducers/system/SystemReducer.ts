@@ -56,16 +56,13 @@ export const INITIAL_STATE: SystemState = {
   multilegButtonsVisibility: true,
   createAlertButtonVisibility: false,
   updateMode: "proactive",
-  updateInterval: 3000,
+  updateInterval: 5000,
   isLeftSideMenuConfigOpen: false,
   strikeViewRightMenu: "code",
 };
 
-const {
-  RESET_REDUX_STATE,
-  UPDATE_ONE_SYSTEM_STATE,
-  UPDATE_MANY_SYSTEM_STATE,
-} = actionType;
+const { RESET_REDUX_STATE, UPDATE_ONE_SYSTEM_STATE, UPDATE_MANY_SYSTEM_STATE } =
+  actionType;
 
 export default (
   state = INITIAL_STATE,
