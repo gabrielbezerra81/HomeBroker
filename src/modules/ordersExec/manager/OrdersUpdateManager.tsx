@@ -71,10 +71,10 @@ const OrdersUpdateManager: React.FC = () => {
       else {
         dispatch(startProactiveOrdersUpdateAction());
       }
-    } //
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, ordersExecList]);
+  }, [dispatch, ordersExecList.length, updateMode]);
 
   return null;
 };

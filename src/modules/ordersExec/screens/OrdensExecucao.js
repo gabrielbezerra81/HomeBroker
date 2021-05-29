@@ -42,12 +42,8 @@ class OrdensExecucao extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      divkey,
-      isOpenOrdersExec,
-      aumentarZindexAction,
-      zIndex,
-    } = this.props;
+    const { divkey, isOpenOrdersExec, aumentarZindexAction, zIndex } =
+      this.props;
 
     setPopupZIndexFromSecondaryTab({
       zIndex,
@@ -178,6 +174,7 @@ const ModalBody = () => {
               <th>Qtde Oferta</th>
               <th>Qtde Executada</th>
               <th>Qtde Cancelada</th>
+              <th>Preço</th>
               <th>Preço Disparo</th>
               <th>Preço Envio</th>
               <th>Preço Limite</th>
@@ -258,14 +255,18 @@ const renderOferta = (order, index, props, tipo) => {
       </td>
       <td>{order.corretora}</td>
       <td>{order.conta}</td>
-      <td>{order.operacao}</td>
+      <td>
+        {order.operacao}
+        <br></br>
+        {order.offers[0]?.modoExec}
+      </td>
       <td>{listarAtributoComposto(order.offers, "modoExec", "nao")}</td>
       <td>{listarAtributoComposto(order.offers, "ativo", "sim")}</td>
       <td>{listarAtributoComposto(order.offers, "oferta", "sim")}</td>
       <td>{listarAtributoComposto(order.offers, "qtdeOferta", "sim")}</td>
       <td>{listarAtributoComposto(order.offers, "qtdeExecutada", "sim")}</td>
       <td>{listarAtributoComposto(order.offers, "qtdeCancelada", "sim")}</td>
-
+      <td>20,20</td>
       <td>{listarAtributoComposto(order.offers, "precoDisparo", "sim")}</td>
       <td>
         {order.formName === "Multileg"
