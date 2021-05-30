@@ -476,6 +476,12 @@ const loadInitialBoxOffers = async ({
       }
     }
 
+    const expirationIsValid = offer.expirations.includes(offerExpiration);
+
+    if (!expirationIsValid && offer.expirations.length) {
+      offer.selectedExpiration = offer.expirations[0];
+    }
+
     boxOffers.push(offer);
   }
 
