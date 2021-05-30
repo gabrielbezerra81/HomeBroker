@@ -9,6 +9,7 @@ import {
   cond_startProactiveMultilegUpdateAction,
   cond_startReactiveMultilegUpdateAction,
 } from "../duck/actions/ConditionalMultilegAPIAction";
+import { clearIntervalAsync } from "set-interval-async/dynamic";
 
 const ConditionalMultilegUpdateManager: React.FC = () => {
   const {
@@ -112,7 +113,7 @@ const ConditionalMultilegUpdateManager: React.FC = () => {
       }
 
       if (interval_multilegQuotes) {
-        clearInterval(interval_multilegQuotes);
+        clearIntervalAsync(interval_multilegQuotes);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

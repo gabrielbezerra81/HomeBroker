@@ -1,3 +1,4 @@
+import { SetIntervalAsyncTimer } from "set-interval-async/dynamic";
 import {
   FilterOperation,
   THLBook,
@@ -28,7 +29,7 @@ export default interface THLState {
   strikeSelecionado: number | "";
   precosTabelaVencimentos: Array<PriceStructure>;
   esource_thlStructures: EventSource | null;
-  interval_thlStructures: NodeJS.Timeout | null;
+  interval_thlStructures: SetIntervalAsyncTimer | null;
   precosTabelaVencimentosID: number; // Como são enviados arrays mutados no setInterval, será enviado um id que muda a cada dispatch
 
   /* Tabela de combinações */
@@ -55,7 +56,7 @@ export default interface THLState {
   arrayCotacoes: Array<THLQuote>;
   arrayCotacoesID: number;
   esource_thlQuotes: EventSource | null;
-  interval_thlQuotes: NodeJS.Timeout | null;
+  interval_thlQuotes: SetIntervalAsyncTimer | null;
   ordenacao: {
     key: string;
     valor: 0 | 1 | 2;

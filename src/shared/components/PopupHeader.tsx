@@ -10,8 +10,10 @@ import {
   fecharFormAction,
   abrirFormAction,
 } from "redux/actions/GlobalAppActions";
+
+import { clearIntervalAsync } from "set-interval-async";
+
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
-import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 import { openCloseMultilegExtraConfigsAction } from "modules/multileg/duck/actions/MultilegActions";
 import { updateOneOrdersExecStateAction } from "modules/ordersExec/duck/actions/OrdensExecActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
@@ -25,7 +27,6 @@ import useStateBoletas from "hooks/useStateBoletas";
 import { BoletaNamespace } from "constants/ActionTypes";
 import { IoMdRepeat } from "react-icons/io";
 import { cond_openCloseMultilegExtraConfigsAction } from "modules/conditionalMultileg/duck/actions/ConditionalMultilegActions";
-import { GrFormSearch } from "react-icons/gr";
 import { FiSearch } from "react-icons/fi";
 
 interface ModalHeaderProps {
@@ -127,6 +128,42 @@ export const BookHeader: React.FC<any> = ({ headerClass, resetPosition }) => {
   const dispatch = useDispatchBoletas();
   const dispatchGlobal = useDispatchGlobalStore();
 
+  const handleClose = useCallback(() => {
+    dispatchGlobal(fecharFormAction(formShow, "book", appkey));
+    resetPosition();
+    if (esource_offersBook) {
+      esource_offersBook.close();
+    }
+    if (interval_offersBook) {
+      clearIntervalAsync(interval_offersBook);
+    }
+  }, [
+    appkey,
+    dispatchGlobal,
+    esource_offersBook,
+    formShow,
+    interval_offersBook,
+    resetPosition,
+  ]);
+
+  const onInputChange = useCallback(
+    (event) => dispatch(mudarInputHeaderAction(event.target.value)),
+    [dispatch],
+  );
+
+  const onSearchByEnter = useCallback(
+    (event: any) => {
+      //event.preventDefault();
+      if (event.key === "Enter")
+        dispatch(
+          listarBookOfertaOnEnterAction({
+            codigoAtivo: event.target.value,
+          }),
+        );
+    },
+    [dispatch],
+  );
+
   return (
     <div className={`${headerClass} handle mheader`}>
       <Row>
@@ -136,35 +173,12 @@ export const BookHeader: React.FC<any> = ({ headerClass, resetPosition }) => {
             placeholder=""
             className="inputHeader"
             value={inputHeader}
-            onChange={(event) =>
-              dispatch(mudarInputHeaderAction(event.target.value))
-            }
-            onKeyUp={(event: any) => {
-              //event.preventDefault();
-              if (event.key === "Enter")
-                dispatch(
-                  listarBookOfertaOnEnterAction({
-                    codigoAtivo: event.target.value,
-                  }),
-                );
-            }}
+            onChange={onInputChange}
+            onKeyUp={onSearchByEnter}
           />
         </Col>
         <Col md={2} className="wrapperIconesHeader">
-          <Button
-            variant="link"
-            className="iconesHeader"
-            onClick={() => {
-              dispatchGlobal(fecharFormAction(formShow, "book", appkey));
-              resetPosition();
-              if (esource_offersBook) {
-                esource_offersBook.close();
-              }
-              if (interval_offersBook) {
-                clearInterval(interval_offersBook);
-              }
-            }}
-          >
+          <Button variant="link" className="iconesHeader" onClick={handleClose}>
             <span className="fa-stack hoverIconeFechar">
               <MDBIcon icon="circle" className="fa-stack-2x" />
               <MDBIcon

@@ -10,6 +10,7 @@ import {
 } from "../duck/actions/boletasAPIActions";
 import checkIfUpdateConfigChanged from "managers/updateManager/utils";
 import { mudarAtributoBoletaAction } from "../duck/actions/boletaActions";
+import { clearIntervalAsync } from "set-interval-async";
 
 interface BoletaUpdateManagerProps {
   namespace: BoletaNamespace;
@@ -36,6 +37,7 @@ const BoletaUpdateManager: React.FC<BoletaUpdateManagerProps> = ({
   const previousUpdateInterval = usePrevious(updateInterval);
   const previousSymbolData = usePrevious(symbolData);
 
+  // start updates
   useEffect(() => {
     function checkIfBoletaChanged() {
       if (previousSymbolData && previousSymbolData !== symbolData) {
@@ -68,13 +70,14 @@ const BoletaUpdateManager: React.FC<BoletaUpdateManagerProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateInterval, updateMode, symbolData, dispatch, namespace]);
 
+  // cancel updates when close
   useEffect(() => {
     if (!visibility) {
       if (esource_boletaQuote) {
         esource_boletaQuote.close();
       }
       if (interval_boletaQuote) {
-        clearInterval(interval_boletaQuote);
+        clearIntervalAsync(interval_boletaQuote);
       }
       dispatch(mudarAtributoBoletaAction(0, namespace, "orderId"));
     }

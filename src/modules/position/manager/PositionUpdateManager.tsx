@@ -12,6 +12,7 @@ import {
   startProactiveEmblemUpdateAction,
   startProactivePositionQuoteUpdateAction,
 } from "modules/position/duck/actions/PosicaoActions";
+import { clearIntervalAsync } from "set-interval-async/dynamic";
 
 const PositionUpdateManager: React.FC = () => {
   const {
@@ -122,7 +123,7 @@ const PositionUpdateManager: React.FC = () => {
       }
 
       if (interval_emblem) {
-        clearInterval(interval_emblem);
+        clearIntervalAsync(interval_emblem);
       }
 
       if (esource_positionQuote && esource_positionQuote.close) {
@@ -130,7 +131,7 @@ const PositionUpdateManager: React.FC = () => {
       }
 
       if (interval_positionQuote) {
-        clearInterval(interval_positionQuote);
+        clearIntervalAsync(interval_positionQuote);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

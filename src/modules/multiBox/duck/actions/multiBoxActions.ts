@@ -38,6 +38,12 @@ import {
   formatarNumDecimal,
   formatarQuantidadeKMG,
 } from "shared/utils/Formatacoes";
+import {
+  clearIntervalAsync,
+  setIntervalAsync,
+  SetIntervalAsyncTimer,
+} from "set-interval-async/dynamic";
+import shouldDispatchAsyncUpdate from "shared/utils/shouldDispatchAsyncUpdate";
 
 interface OpenedBoxes {
   menuKey: string;
@@ -479,7 +485,7 @@ const loadInitialBoxOffers = async ({
 export const startReactiveMultiBoxUpdateAction = (
   ids: string,
 ): MainThunkAction => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const {
       systemReducer: { token },
       multiBoxReducer: { esource_multiBox, interval_multiBox, boxesTab1Data },
@@ -490,7 +496,7 @@ export const startReactiveMultiBoxUpdateAction = (
     }
 
     if (interval_multiBox !== null) {
-      clearInterval(interval_multiBox);
+      await clearIntervalAsync(interval_multiBox);
     }
 
     if (ids) {
@@ -523,7 +529,7 @@ export const startProactiveMultiBoxUpdateAction = ({
   idsTab0,
   searchedSymbolsIds,
 }: ProactiveBox): MainThunkAction => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const {
       systemReducer: { updateInterval },
       multiBoxReducer: { esource_multiBox, interval_multiBox, boxes },
@@ -542,7 +548,7 @@ export const startProactiveMultiBoxUpdateAction = ({
     }
 
     if (interval_multiBox !== null) {
-      clearInterval(interval_multiBox);
+      await clearIntervalAsync(interval_multiBox);
     }
 
     const idsArray = idsTab0 ? idsTab0.split(",") : [];
@@ -556,7 +562,7 @@ export const startProactiveMultiBoxUpdateAction = ({
     const ids = idsArray.join(",");
 
     if (ids) {
-      const interval = setInterval(async () => {
+      const updateBox = async (interval: SetIntervalAsyncTimer) => {
         const structuresQuotes = await getProactiveBoxStructQuotesAPI(ids);
 
         if (!structuresQuotes.length) {
@@ -564,7 +570,11 @@ export const startProactiveMultiBoxUpdateAction = ({
         }
 
         const {
-          multiBoxReducer: { stockSymbolsData, boxesTab1Data },
+          multiBoxReducer: {
+            stockSymbolsData,
+            boxesTab1Data,
+            interval_multiBox,
+          },
         } = getState();
 
         let updatedStockSymbolsData: StockSymbolData[] = [...stockSymbolsData];
@@ -636,15 +646,26 @@ export const startProactiveMultiBoxUpdateAction = ({
           return boxFromAPI;
         });
 
-        dispatch(
-          updateStructuresAndLoadBoxesAction(updatedBoxesTab1Data, false),
+        const shouldDispatch = shouldDispatchAsyncUpdate(
+          interval,
+          interval_multiBox,
         );
 
-        dispatch(
-          updateManyMultiBoxAction({
-            stockSymbolsData: updatedStockSymbolsData,
-          }),
-        );
+        if (shouldDispatch) {
+          dispatch(
+            updateStructuresAndLoadBoxesAction(updatedBoxesTab1Data, false),
+          );
+
+          dispatch(
+            updateManyMultiBoxAction({
+              stockSymbolsData: updatedStockSymbolsData,
+            }),
+          );
+        }
+      };
+
+      const interval = setIntervalAsync(async () => {
+        await updateBox(interval);
       }, updateInterval);
 
       dispatch(
@@ -787,7 +808,7 @@ export const findStockSymbol = async (topSymbols: TopSymbol[]) => {
 export const startProactiveStructureBookUpdateAction = (
   ids: string,
 ): MainThunkAction => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const {
       systemReducer: { updateInterval },
       multiBoxReducer: { esource_books, interval_books },
@@ -798,15 +819,15 @@ export const startProactiveStructureBookUpdateAction = (
     }
 
     if (interval_books !== null) {
-      clearInterval(interval_books);
+      await clearIntervalAsync(interval_books);
     }
 
     if (ids) {
-      const interval = setInterval(async () => {
+      const updateStructureBook = async (interval: SetIntervalAsyncTimer) => {
         const data = await getProactiveBoxBooksAPI(ids);
 
         const {
-          multiBoxReducer: { structuresBooks },
+          multiBoxReducer: { structuresBooks, interval_books },
         } = getState();
 
         const updatedStructureBooks = produce(structuresBooks, (draft) => {
@@ -864,9 +885,22 @@ export const startProactiveStructureBookUpdateAction = (
           });
         });
 
-        dispatch(
-          updateManyMultiBoxAction({ structuresBooks: updatedStructureBooks }),
+        const shouldDispatch = shouldDispatchAsyncUpdate(
+          interval,
+          interval_books,
         );
+
+        if (shouldDispatch) {
+          dispatch(
+            updateManyMultiBoxAction({
+              structuresBooks: updatedStructureBooks,
+            }),
+          );
+        }
+      };
+
+      const interval = setIntervalAsync(async () => {
+        await updateStructureBook(interval);
       }, updateInterval);
 
       dispatch(

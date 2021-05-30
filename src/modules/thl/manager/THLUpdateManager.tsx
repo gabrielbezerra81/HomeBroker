@@ -10,6 +10,8 @@ import {
   startReactiveThlStructuresUpdateAction,
 } from "modules/thl/duck/actions/ThlAPIAction";
 
+import { clearIntervalAsync } from "set-interval-async";
+
 const THLUpdateManager: React.FC = () => {
   const {
     systemReducer: { updateMode, updateInterval, isOpenTHL },
@@ -100,7 +102,7 @@ const THLUpdateManager: React.FC = () => {
       }
 
       if (interval_thlQuotes) {
-        clearInterval(interval_thlQuotes);
+        clearIntervalAsync(interval_thlQuotes);
       }
 
       if (esource_thlStructures && esource_thlStructures.close) {
@@ -108,7 +110,7 @@ const THLUpdateManager: React.FC = () => {
       }
 
       if (interval_thlStructures) {
-        clearInterval(interval_thlStructures);
+        clearIntervalAsync(interval_thlStructures);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -10,6 +10,7 @@ import {
   startReactiveMultilegUpdateAction,
 } from "../duck/actions/MultilegAPIAction";
 import checkIfUpdateConfigChanged from "../../../managers/updateManager/utils";
+import { clearIntervalAsync } from "set-interval-async/dynamic";
 
 const MultilegUpdateManager: React.FC = () => {
   const {
@@ -32,10 +33,8 @@ const MultilegUpdateManager: React.FC = () => {
     const symbols: string[] = [];
 
     multileg.forEach((multilegTab, index) => {
-      const {
-        ativoAtual: searchedSymbol,
-        tabelaMultileg: offers,
-      } = multilegTab;
+      const { ativoAtual: searchedSymbol, tabelaMultileg: offers } =
+        multilegTab;
 
       if (abaSelecionada !== `tab${index}`) {
         return;
@@ -102,7 +101,7 @@ const MultilegUpdateManager: React.FC = () => {
       }
 
       if (interval_multilegQuotes) {
-        clearInterval(interval_multilegQuotes);
+        clearIntervalAsync(interval_multilegQuotes);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

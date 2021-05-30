@@ -1,3 +1,4 @@
+import { SetIntervalAsyncTimer } from "set-interval-async/dynamic";
 import {
   MultilegTab,
   MultilegQuote,
@@ -14,7 +15,7 @@ export default interface MultilegState {
   apregoarOferta: boolean;
   multileg: Array<MultilegTab>;
   esource_multilegQuotes: EventSource | null;
-  interval_multilegQuotes: NodeJS.Timeout | null;
+  interval_multilegQuotes: SetIntervalAsyncTimer | null;
   cotacoesMultileg: Array<MultilegQuote>;
   cotacoesMultilegID: number;
   alerts: Array<AlertAPI>;

@@ -22,6 +22,12 @@ import {
   getProactiveThlQuotesAPI,
   getProactiveThlStructureAPI,
 } from "api/proactive/ProativosAPI";
+import {
+  clearIntervalAsync,
+  setIntervalAsync,
+  SetIntervalAsyncTimer,
+} from "set-interval-async/dynamic";
+import shouldDispatchAsyncUpdate from "shared/utils/shouldDispatchAsyncUpdate";
 
 export const pesquisarAtivoTHLAPIAction = (): MainThunkAction => {
   return async (dispatch, getState) => {
@@ -169,7 +175,7 @@ export const recalcularPrecosTHLAPIAction = (): MainThunkAction => {
 };
 
 export const startReactiveThlStructuresUpdateAction = (): MainThunkAction => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const {
       thlReducer: {
         esource_thlStructures,
@@ -184,7 +190,7 @@ export const startReactiveThlStructuresUpdateAction = (): MainThunkAction => {
       esource_thlStructures.close();
     }
     if (interval_thlStructures) {
-      clearInterval(interval_thlStructures);
+      await clearIntervalAsync(interval_thlStructures);
     }
 
     const idList = thlLines.reduce((acc: number[], curr) => {
@@ -212,7 +218,7 @@ export const startReactiveThlStructuresUpdateAction = (): MainThunkAction => {
 };
 
 export const startProactiveThlStructuresUpdateAction = (): MainThunkAction => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const {
       thlReducer: {
         esource_thlStructures,
@@ -226,7 +232,7 @@ export const startProactiveThlStructuresUpdateAction = (): MainThunkAction => {
       esource_thlStructures.close();
     }
     if (interval_thlStructures) {
-      clearInterval(interval_thlStructures);
+      await clearIntervalAsync(interval_thlStructures);
     }
 
     const idList = thlLines.reduce((acc: number[], curr) => {
@@ -238,14 +244,29 @@ export const startProactiveThlStructuresUpdateAction = (): MainThunkAction => {
     const ids = [...new Set(idList)].join(",");
 
     if (ids) {
-      const interval = setInterval(async () => {
+      const updateStructures = async (interval: SetIntervalAsyncTimer) => {
         const data = await getProactiveThlStructureAPI(ids);
 
-        dispatch(
-          updateManyTHLState({
-            precosTabelaVencimentos: data,
-          }),
+        const {
+          thlReducer: { interval_thlStructures },
+        } = getState();
+
+        const shouldDispatch = shouldDispatchAsyncUpdate(
+          interval,
+          interval_thlStructures,
         );
+
+        if (shouldDispatch) {
+          dispatch(
+            updateManyTHLState({
+              precosTabelaVencimentos: data,
+            }),
+          );
+        }
+      };
+
+      const interval = setIntervalAsync(async () => {
+        await updateStructures(interval);
       }, updateInterval);
 
       dispatch(
@@ -323,7 +344,7 @@ export const pesquisarCombinacoesTHLAPIAction = (): MainThunkAction => {
 };
 
 export const startReactiveThlQuoteUpdateAction = (): MainThunkAction => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const {
       thlReducer: {
         esource_thlQuotes,
@@ -334,7 +355,7 @@ export const startReactiveThlQuoteUpdateAction = (): MainThunkAction => {
     } = getState();
 
     if (interval_thlQuotes) {
-      clearInterval(interval_thlQuotes);
+      await clearIntervalAsync(interval_thlQuotes);
     }
     if (esource_thlQuotes && esource_thlQuotes.close) {
       esource_thlQuotes.close();
@@ -364,7 +385,7 @@ export const startReactiveThlQuoteUpdateAction = (): MainThunkAction => {
 };
 
 export const startProactiveThlQuoteUpdateAction = (): MainThunkAction => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const {
       thlReducer: {
         esource_thlQuotes,
@@ -375,7 +396,7 @@ export const startProactiveThlQuoteUpdateAction = (): MainThunkAction => {
     } = getState();
 
     if (interval_thlQuotes) {
-      clearInterval(interval_thlQuotes);
+      await clearIntervalAsync(interval_thlQuotes);
     }
     if (esource_thlQuotes && esource_thlQuotes.close) {
       esource_thlQuotes.close();
@@ -390,14 +411,29 @@ export const startProactiveThlQuoteUpdateAction = (): MainThunkAction => {
     const symbols = symbolArray.join(",");
 
     if (symbols) {
-      const interval = setInterval(async () => {
+      const updateQuotes = async (interval: SetIntervalAsyncTimer) => {
         const data = await getProactiveThlQuotesAPI(symbols);
 
-        dispatch(
-          updateManyTHLState({
-            arrayCotacoes: data,
-          }),
+        const {
+          thlReducer: { interval_thlQuotes },
+        } = getState();
+
+        const shouldDispatch = shouldDispatchAsyncUpdate(
+          interval,
+          interval_thlQuotes,
         );
+
+        if (shouldDispatch) {
+          dispatch(
+            updateManyTHLState({
+              arrayCotacoes: data,
+            }),
+          );
+        }
+      };
+
+      const interval = setIntervalAsync(async () => {
+        await updateQuotes(interval);
       }, updateInterval);
 
       dispatch(

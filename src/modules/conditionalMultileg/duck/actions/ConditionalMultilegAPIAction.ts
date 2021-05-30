@@ -29,6 +29,12 @@ import { LISTAR_ORDENS_EXECUCAO } from "constants/ApiActionTypes";
 import { atualizarCotacaoMultilegAPI } from "api/reactive/ReativosAPI";
 import { getProactiveMultilegQuotesAPI } from "api/proactive/ProativosAPI";
 import { UPDATE_ONE_CONDITIONAL_MULTILEG } from "constants/MenuActionTypes";
+import {
+  clearIntervalAsync,
+  setIntervalAsync,
+  SetIntervalAsyncTimer,
+} from "set-interval-async/dynamic";
+import shouldDispatchAsyncUpdate from "shared/utils/shouldDispatchAsyncUpdate";
 
 ////
 
@@ -276,7 +282,7 @@ export const cond_addQuoteBoxFromMultilegAction = (
 export const cond_startReactiveMultilegUpdateAction = (
   symbolsArray: string[],
 ): MainThunkAction => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const {
       systemReducer: { token },
       conditionalMultilegReducer: {
@@ -290,7 +296,7 @@ export const cond_startReactiveMultilegUpdateAction = (
       esource_multilegQuotes.close();
     }
     if (interval_multilegQuotes) {
-      clearInterval(interval_multilegQuotes);
+      await clearIntervalAsync(interval_multilegQuotes);
     }
 
     const symbols = symbolsArray.join(",");
@@ -317,7 +323,7 @@ export const cond_startReactiveMultilegUpdateAction = (
 export const cond_startProactiveMultilegUpdateAction = (
   symbolsArray: string[],
 ): MainThunkAction => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const {
       conditionalMultilegReducer: {
         esource_multilegQuotes,
@@ -331,17 +337,20 @@ export const cond_startProactiveMultilegUpdateAction = (
     }
 
     if (interval_multilegQuotes) {
-      clearInterval(interval_multilegQuotes);
+      await clearIntervalAsync(interval_multilegQuotes);
     }
 
     const symbols = symbolsArray.join(",");
 
     if (symbols) {
-      const interval = setInterval(async () => {
+      const updateQuotes = async (interval: SetIntervalAsyncTimer) => {
         const data = await getProactiveMultilegQuotesAPI(symbols);
 
         const {
-          conditionalMultilegReducer: { cotacoesMultileg: multilegQuotes },
+          conditionalMultilegReducer: {
+            cotacoesMultileg: multilegQuotes,
+            interval_multilegQuotes,
+          },
         } = getState();
 
         const updatedQuotes = produce(multilegQuotes, (draft) => {
@@ -358,12 +367,23 @@ export const cond_startProactiveMultilegUpdateAction = (
           });
         });
 
-        dispatch(
-          updateOneConditionalMultilegState({
-            attributeName: "cotacoesMultileg",
-            attributeValue: updatedQuotes,
-          }),
+        const shouldDispatch = shouldDispatchAsyncUpdate(
+          interval,
+          interval_multilegQuotes,
         );
+
+        if (shouldDispatch) {
+          dispatch(
+            updateOneConditionalMultilegState({
+              attributeName: "cotacoesMultileg",
+              attributeValue: updatedQuotes,
+            }),
+          );
+        }
+      };
+
+      const interval = setIntervalAsync(async () => {
+        updateQuotes(interval);
       }, updateInterval);
 
       dispatch(

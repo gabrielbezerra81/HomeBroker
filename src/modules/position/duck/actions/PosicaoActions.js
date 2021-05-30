@@ -14,6 +14,11 @@ import {
   getProactivePositionEmblemsAPI,
   getProactivePositionQuotesAPI,
 } from "api/proactive/ProativosAPI";
+import {
+  clearIntervalAsync,
+  setIntervalAsync,
+} from "set-interval-async/dynamic";
+import shouldDispatchAsyncUpdate from "shared/utils/shouldDispatchAsyncUpdate";
 
 export const mudarVariavelPosicaoAction = (attributeName, attributeValue) => {
   return (dispatch) => {
@@ -126,7 +131,7 @@ export const startReactivePositionUpdateAction = () => {
 
 // emblem
 export const startReactiveEmblemUpdateAction = () => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const {
       positionReducer: {
         posicoesCustodia: positionList,
@@ -142,7 +147,7 @@ export const startReactiveEmblemUpdateAction = () => {
       esource_emblem.close();
     }
     if (interval_emblem) {
-      clearInterval(interval_emblem);
+      await clearIntervalAsync(interval_emblem);
     }
 
     positionList.forEach((posicao) => {
@@ -188,7 +193,7 @@ export const startReactivePositionQuoteUpdateAction = () => {
     }
     if (interval_positionQuote) {
       // quem disparar pela segunda vez deve ter essa var no connect
-      clearInterval(interval_positionQuote);
+      await clearIntervalAsync(interval_positionQuote);
     }
 
     const symbols = symbolList.map((quoteItem) => quoteItem.codigo).join(",");
@@ -213,7 +218,7 @@ export const startReactivePositionQuoteUpdateAction = () => {
 
 // position
 export const startProactivePositionUpdateAction = () => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const {
       positionReducer: { esource_position, interval_position },
     } = getState();
@@ -223,14 +228,14 @@ export const startProactivePositionUpdateAction = () => {
     }
 
     if (interval_position) {
-      clearInterval(interval_position);
+      await clearIntervalAsync(interval_position);
     }
   };
 };
 
 // emblem
 export const startProactiveEmblemUpdateAction = () => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const {
       positionReducer: {
         posicoesCustodia: positionList,
@@ -246,7 +251,7 @@ export const startProactiveEmblemUpdateAction = () => {
       esource_emblem.close();
     }
     if (interval_emblem) {
-      clearInterval(interval_emblem);
+      await clearIntervalAsync(interval_emblem);
     }
 
     positionList.forEach((posicao) => {
@@ -255,15 +260,30 @@ export const startProactiveEmblemUpdateAction = () => {
     const ids = idArray.join(",");
 
     if (ids) {
-      const interval = setInterval(async () => {
+      const updateEmblems = async (interval) => {
         const updatedEmblems = await getProactivePositionEmblemsAPI(ids);
 
-        dispatch(
-          updateOnePositionState({
-            attributeName: "arrayPrecos",
-            attributeValue: updatedEmblems,
-          }),
+        const {
+          positionReducer: { interval_emblem },
+        } = getState();
+
+        const shouldDispatch = shouldDispatchAsyncUpdate(
+          interval,
+          interval_emblem,
         );
+
+        if (shouldDispatch) {
+          dispatch(
+            updateOnePositionState({
+              attributeName: "arrayPrecos",
+              attributeValue: updatedEmblems,
+            }),
+          );
+        }
+      };
+
+      const interval = setIntervalAsync(async () => {
+        await updateEmblems(interval);
       }, updateInterval);
 
       dispatch(
@@ -294,21 +314,36 @@ export const startProactivePositionQuoteUpdateAction = () => {
       esource_positionQuote.close();
     }
     if (interval_positionQuote) {
-      clearInterval(interval_positionQuote);
+      await clearIntervalAsync(interval_positionQuote);
     }
 
     const symbols = symbolList.map((quoteItem) => quoteItem.codigo).join(",");
 
     if (symbols) {
-      const interval = setInterval(async () => {
+      const updatePositionQuotes = async (interval) => {
         const updatedQuotes = await getProactivePositionQuotesAPI(symbols);
 
-        dispatch(
-          updateOnePositionState({
-            attributeName: "arrayCotacoes",
-            attributeValue: updatedQuotes,
-          }),
+        const {
+          positionReducer: { interval_positionQuote },
+        } = getState();
+
+        const shouldDispatch = shouldDispatchAsyncUpdate(
+          interval,
+          interval_positionQuote,
         );
+
+        if (shouldDispatch) {
+          dispatch(
+            updateOnePositionState({
+              attributeName: "arrayCotacoes",
+              attributeValue: updatedQuotes,
+            }),
+          );
+        }
+      };
+
+      const interval = setIntervalAsync(async () => {
+        await updatePositionQuotes(interval);
       }, updateInterval);
 
       dispatch(
