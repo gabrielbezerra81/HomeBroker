@@ -9,6 +9,7 @@ export interface Order {
   formName: string;
   validade: string;
   roteador: string;
+  initialPrice: number | null;
 }
 
 export interface OrderExecOffer {

@@ -1,3 +1,4 @@
+import { SetIntervalAsyncTimer } from "set-interval-async/dynamic";
 import { Order } from "./ordersExec";
 
 export default interface OrdersExecState {
@@ -14,6 +15,6 @@ export default interface OrdersExecState {
   selectPrecoAberto: boolean;
   sinalInputSelect: "+" | "-";
   esource_ordersExec: EventSource | null;
-  interval_ordersExec: NodeJS.Timeout | null;
+  interval_ordersExec: SetIntervalAsyncTimer | null;
   filtrarOrdensAberto: boolean;
 }

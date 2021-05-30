@@ -28,8 +28,6 @@ import {
 import { searchMultilegSymbolData } from "modules/multileg/duck/actions/MultilegAPIAction";
 import { erro_exportar_ordens_multileg } from "constants/AlertaErros";
 
-import isEqual from "lodash/isEqual";
-
 import {
   calculoPreco,
   calculoMDC,
