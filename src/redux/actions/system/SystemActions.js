@@ -19,6 +19,7 @@ import { INITIAL_STATE as initialSystemState } from "../../reducers/system/Syste
 import { handleDeleteBoxAction } from "modules/multiBox/duck/actions/multiBoxActions";
 import { fecharFormAction } from "../GlobalAppActions";
 import axios from "axios";
+import { clearIntervalAsync } from "set-interval-async/dynamic";
 
 const waitDispatch = 1000;
 
@@ -523,8 +524,14 @@ export const clearReduxStateFromStorageAction = (props) => {
       if (props[key]) {
         if (key.toLowerCase().includes("esource") && props[key].close) {
           props[key].close();
-        } else if (key.toLowerCase().includes("interval")) {
-          clearInterval(props[key]);
+        } //
+        else if (key.toLowerCase().includes("interval")) {
+          if (Number.isInteger(props[key])) {
+            clearInterval(props[key]);
+          } //
+          else {
+            clearIntervalAsync(props[key]);
+          }
         }
       }
     });

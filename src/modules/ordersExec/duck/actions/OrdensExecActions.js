@@ -474,7 +474,7 @@ const retornaDadosOferta = (ordemAtual, tipo) => {
 };
 
 export const startReactiveOrdersUpdateAction = () => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const {
       systemReducer: { token },
       ordersExecReducer: {
@@ -489,7 +489,7 @@ export const startReactiveOrdersUpdateAction = () => {
     }
 
     if (interval_ordersExec) {
-      clearInterval(interval_ordersExec);
+      await clearIntervalAsync(interval_ordersExec);
     }
 
     const source = atualizarOrdensExecAPI({
