@@ -43,6 +43,7 @@ import { updateManyMultilegState } from "modules/multileg/duck/actions/utils";
 import * as ActionTypes from "constants/ActionTypes";
 import { getProactiveOrdersExecAPI } from "api/proactive/ProativosAPI";
 import { toast } from "react-toastify";
+import isSamePromisesIdAsyncInterval from "shared/utils/isSamePromisesIdAsyncInterval";
 
 export const updateOneOrdersExecStateAction = (nome, valor) => {
   return (dispatch) => {
@@ -524,9 +525,7 @@ export const startProactiveOrdersUpdateAction = () => {
     const hasOrders = tabelaOrdensExecucao.length > 0;
 
     if (hasOrders) {
-      const updateOrders = async (promises) => {
-        const thisPromiseId = Object.keys(promises)[0] || "";
-
+      const updateOrders = async (interval) => {
         const data = await getProactiveOrdersExecAPI(ids);
 
         const {
@@ -534,15 +533,14 @@ export const startProactiveOrdersUpdateAction = () => {
         } = getState();
 
         if (interval_ordersExec) {
-          const promiseInState =
-            Object.keys(interval_ordersExec.promises)[0] || "";
-
           // when interval is cancelled, a new one is started right after. this check ensures that the last promise
           // of the old interval only dispatches if interval_ordersExec variable has not been updated in redux yet
-          const isTheSamePromise = thisPromiseId === promiseInState;
+          const isTheSamePromise = isSamePromisesIdAsyncInterval(
+            interval,
+            interval_ordersExec,
+          );
 
           if (isTheSamePromise === false) {
-            console.log("not the same timer, preventing a inconsistent state");
             return;
           }
         }
@@ -558,7 +556,7 @@ export const startProactiveOrdersUpdateAction = () => {
       };
 
       const interval = setIntervalAsync(async () => {
-        await updateOrders(interval.promises);
+        await updateOrders(interval);
       }, updateInterval);
 
       dispatch(updateOneOrdersExecStateAction("interval_ordersExec", interval));

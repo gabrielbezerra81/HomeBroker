@@ -17,6 +17,9 @@ import produce from "immer";
 import { storeAppPrincipal } from "redux/StoreCreation";
 import { getProactiveBoletaQuoteAPI } from "api/proactive/ProativosAPI";
 import { formatarDataDaAPI } from "shared/utils/Formatacoes";
+import { clearIntervalAsync } from "set-interval-async";
+import { setIntervalAsync } from "set-interval-async/dynamic";
+import isSamePromisesIdAsyncInterval from "shared/utils/isSamePromisesIdAsyncInterval";
 
 export const pesquisarAtivoOnEnterAction = (namespace) => {
   return async (dispatch, getState) => {
@@ -36,21 +39,18 @@ export const pesquisarAtivoOnEnterAction = (namespace) => {
 };
 
 export const startReactiveBoletaQuoteUpdateAction = (namespace) => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const appBoletasState = getState();
 
-    const {
-      esource_boletaQuote,
-      dadosPesquisa,
-      interval_boletaQuote,
-    } = appBoletasState[namespace];
+    const { esource_boletaQuote, dadosPesquisa, interval_boletaQuote } =
+      appBoletasState[namespace];
 
     if (esource_boletaQuote) {
       esource_boletaQuote.close();
     }
 
     if (interval_boletaQuote) {
-      clearInterval(interval_boletaQuote);
+      await clearIntervalAsync(interval_boletaQuote);
     }
 
     const codigo = dadosPesquisa.ativo;
@@ -110,40 +110,48 @@ export const startProactiveBoletaQuoteUpdateAction = (namespace) => {
       systemReducer: { updateInterval },
     } = storeAppPrincipal.getState();
 
-    const {
-      esource_boletaQuote,
-      interval_boletaQuote,
-      dadosPesquisa,
-    } = appBoletasState[namespace];
+    const { esource_boletaQuote, interval_boletaQuote, dadosPesquisa } =
+      appBoletasState[namespace];
 
     if (esource_boletaQuote) {
       esource_boletaQuote.close();
     }
 
     if (interval_boletaQuote) {
-      clearInterval(interval_boletaQuote);
+      await clearIntervalAsync(interval_boletaQuote);
     }
 
     const { ativo: symbol } = dadosPesquisa;
 
     if (symbol) {
-      const interval = setInterval(async () => {
+      const updateBoletas = async (interval) => {
         const appBoletasState = getState();
 
-        const { dadosPesquisa: searchData } = appBoletasState[namespace];
+        const { dadosPesquisa: searchData, interval_boletaQuote } =
+          appBoletasState[namespace];
 
         const { ativo: symbol } = searchData;
 
         const data = await getProactiveBoletaQuoteAPI(symbol);
+
+        if (interval_boletaQuote) {
+          const isTheSamePromise = isSamePromisesIdAsyncInterval(
+            interval,
+            interval_boletaQuote,
+          );
+
+          if (isTheSamePromise === false) {
+            return;
+          }
+        }
 
         if (data) {
           const { quote, lastDate } = data;
 
           const updatedSearchData = produce(searchData, (draft) => {
             draft.cotacaoAtual = quote;
-            draft.ultimoHorario = formatarDataDaAPI(
-              lastDate,
-            ).toLocaleTimeString();
+            draft.ultimoHorario =
+              formatarDataDaAPI(lastDate).toLocaleTimeString();
           });
 
           dispatch({
@@ -151,6 +159,10 @@ export const startProactiveBoletaQuoteUpdateAction = (namespace) => {
             payload: updatedSearchData,
           });
         }
+      };
+
+      const interval = setIntervalAsync(async () => {
+        await updateBoletas(interval);
       }, updateInterval);
 
       dispatch({
