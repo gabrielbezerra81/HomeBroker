@@ -1,3 +1,5 @@
+import { SetIntervalAsyncTimer } from "set-interval-async/dynamic";
+
 export interface Tab1Data {
   boxId: string;
   id: number;
@@ -168,12 +170,12 @@ export default interface MultiBoxState {
   boxes: Array<MultiBoxData | null>;
   boxesTab1Data: Array<Tab1Data>;
   esource_multiBox: EventSource | null;
-  interval_multiBox: NodeJS.Timeout | null;
+  interval_multiBox: SetIntervalAsyncTimer | null;
   esource_tab4Box: EventSource | null;
-  interval_tab4Box: NodeJS.Timeout | null;
+  interval_tab4Box: SetIntervalAsyncTimer | null;
   symbolsData: Array<BoxSymbolData>;
   structuresBooks: Array<StructureBook>;
   esource_books: EventSource | null;
-  interval_books: NodeJS.Timeout | null;
+  interval_books: SetIntervalAsyncTimer | null;
   stockSymbolsData: Array<StockSymbolData>;
 }

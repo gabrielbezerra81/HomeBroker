@@ -43,7 +43,7 @@ import { updateManyMultilegState } from "modules/multileg/duck/actions/utils";
 import * as ActionTypes from "constants/ActionTypes";
 import { getProactiveOrdersExecAPI } from "api/proactive/ProativosAPI";
 import { toast } from "react-toastify";
-import isSamePromisesIdAsyncInterval from "shared/utils/isSamePromisesIdAsyncInterval";
+import shouldDispatchAsyncUpdate from "shared/utils/shouldDispatchAsyncUpdate";
 
 export const updateOneOrdersExecStateAction = (nome, valor) => {
   return (dispatch) => {
@@ -532,23 +532,12 @@ export const startProactiveOrdersUpdateAction = () => {
           ordersExecReducer: { interval_ordersExec },
         } = getState();
 
-        if (interval_ordersExec) {
-          // when interval is cancelled, a new one is started right after. this check ensures that the last promise
-          // of the old interval only dispatches if interval_ordersExec variable has not been updated in redux yet
-          const isTheSamePromise = isSamePromisesIdAsyncInterval(
-            interval,
-            interval_ordersExec,
-          );
+        const shouldDispatch = shouldDispatchAsyncUpdate(
+          interval,
+          interval_ordersExec,
+        );
 
-          if (isTheSamePromise === false) {
-            return;
-          }
-        }
-
-        if (
-          !interval_ordersExec ||
-          (interval_ordersExec && interval_ordersExec.stopped === false)
-        ) {
+        if (shouldDispatch) {
           dispatch(
             updateManyOrdersExecStateAction({ tabelaOrdensExecucao: data }),
           );

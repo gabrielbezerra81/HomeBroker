@@ -68,14 +68,14 @@ class Position extends React.Component {
   //     esource_emblem.close();
   //   }
   //   if (interval_emblem) {
-  //     clearInterval(interval_emblem);
+  //     clearIntervalAsync(interval_emblem);
   //   }
 
   //   if (esource_positionQuote && esource_positionQuote.close) {
   //     esource_positionQuote.close();
   //   }
   //   if (interval_positionQuote) {
-  //     clearInterval(interval_positionQuote);
+  //     clearIntervalAsync(interval_positionQuote);
   //   }
   // }
 

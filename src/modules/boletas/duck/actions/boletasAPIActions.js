@@ -19,7 +19,7 @@ import { getProactiveBoletaQuoteAPI } from "api/proactive/ProativosAPI";
 import { formatarDataDaAPI } from "shared/utils/Formatacoes";
 import { clearIntervalAsync } from "set-interval-async";
 import { setIntervalAsync } from "set-interval-async/dynamic";
-import isSamePromisesIdAsyncInterval from "shared/utils/isSamePromisesIdAsyncInterval";
+import shouldDispatchAsyncUpdate from "shared/utils/shouldDispatchAsyncUpdate";
 
 export const pesquisarAtivoOnEnterAction = (namespace) => {
   return async (dispatch, getState) => {
@@ -134,18 +134,12 @@ export const startProactiveBoletaQuoteUpdateAction = (namespace) => {
 
         const data = await getProactiveBoletaQuoteAPI(symbol);
 
-        if (interval_boletaQuote) {
-          const isTheSamePromise = isSamePromisesIdAsyncInterval(
-            interval,
-            interval_boletaQuote,
-          );
+        const shouldDispatch = shouldDispatchAsyncUpdate(
+          interval,
+          interval_boletaQuote,
+        );
 
-          if (isTheSamePromise === false) {
-            return;
-          }
-        }
-
-        if (data) {
+        if (data && shouldDispatch) {
           const { quote, lastDate } = data;
 
           const updatedSearchData = produce(searchData, (draft) => {

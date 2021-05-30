@@ -8,11 +8,17 @@ import { updateManyMultiBoxAction } from "./multiBoxActions";
 
 import { BoxSymbolData } from "../../types/MultiBoxState";
 import produce from "immer";
+import {
+  clearIntervalAsync,
+  setIntervalAsync,
+  SetIntervalAsyncTimer,
+} from "set-interval-async/dynamic";
+import shouldDispatchAsyncUpdate from "shared/utils/shouldDispatchAsyncUpdate";
 
 export const startProactiveBoxSymbolsUpdateAction = (
   idsArray: string[],
 ): MainThunkAction => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const {
       systemReducer: { updateInterval },
       multiBoxReducer: { esource_tab4Box, interval_tab4Box },
@@ -23,13 +29,13 @@ export const startProactiveBoxSymbolsUpdateAction = (
     }
 
     if (interval_tab4Box !== null) {
-      clearInterval(interval_tab4Box);
+      await clearIntervalAsync(interval_tab4Box);
     }
 
     const ids = idsArray.join(",");
 
     if (ids) {
-      const interval = setInterval(async () => {
+      const updateBoxSymbols = async (interval: SetIntervalAsyncTimer) => {
         const data = await getProactiveBoxSymbolsBookAPI(ids);
 
         if (!data.length) {
@@ -37,7 +43,7 @@ export const startProactiveBoxSymbolsUpdateAction = (
         }
 
         const {
-          multiBoxReducer: { symbolsData },
+          multiBoxReducer: { symbolsData, interval_tab4Box },
         } = getState();
 
         let updatedSymbolsData: BoxSymbolData[] = [...symbolsData];
@@ -101,11 +107,22 @@ export const startProactiveBoxSymbolsUpdateAction = (
           });
         });
 
-        dispatch(
-          updateManyMultiBoxAction({
-            symbolsData: updatedSymbolsData,
-          }),
+        const shouldDispatch = shouldDispatchAsyncUpdate(
+          interval,
+          interval_tab4Box,
         );
+
+        if (shouldDispatch) {
+          dispatch(
+            updateManyMultiBoxAction({
+              symbolsData: updatedSymbolsData,
+            }),
+          );
+        }
+      };
+
+      const interval = setIntervalAsync(async () => {
+        await updateBoxSymbols(interval);
       }, updateInterval);
 
       dispatch(

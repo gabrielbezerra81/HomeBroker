@@ -1,3 +1,4 @@
+import { SetIntervalAsyncTimer } from "set-interval-async/dynamic";
 import { PositionItem, PositionPrice, PositionQuote } from "../types/position";
 
 export default interface PositionState {
@@ -7,11 +8,11 @@ export default interface PositionState {
   inputSelect: string;
   posicoesCustodia: PositionItem[];
   esource_emblem: EventSource | null;
-  interval_emblem: NodeJS.Timeout | null;
+  interval_emblem: SetIntervalAsyncTimer | null;
   esource_position: EventSource | null;
-  interval_position:NodeJS.Timeout|null;
+  interval_position: SetIntervalAsyncTimer | null;
   esource_positionQuote: EventSource | null;
-  interval_positionQuote: NodeJS.Timeout | null;
+  interval_positionQuote: SetIntervalAsyncTimer | null;
   arrayPrecos: PositionPrice[];
   arrayPrecosID: number;
   arrayCotacoes: PositionQuote[];

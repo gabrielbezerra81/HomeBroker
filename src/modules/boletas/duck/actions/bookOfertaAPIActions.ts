@@ -7,6 +7,13 @@ import { toast } from "react-toastify";
 import { storeAppPrincipal } from "redux/StoreCreation";
 import { BoletasThunkAction } from "types/ThunkActions";
 
+import {
+  setIntervalAsync,
+  SetIntervalAsyncTimer,
+} from "set-interval-async/dynamic";
+import { clearIntervalAsync } from "set-interval-async";
+import shouldDispatchAsyncUpdate from "shared/utils/shouldDispatchAsyncUpdate";
+
 interface ListBookProps {
   codigoAtivo: string;
 }
@@ -86,7 +93,7 @@ export const listarBookOfertaOnEnterAction = ({
 };
 
 export const startReactiveOffersBookUpdateAction = (): BoletasThunkAction => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const {
       bookOfertaReducer: {
         esource_offersBook,
@@ -104,7 +111,7 @@ export const startReactiveOffersBookUpdateAction = (): BoletasThunkAction => {
     }
 
     if (interval_offersBook) {
-      clearInterval(interval_offersBook);
+      await clearIntervalAsync(interval_offersBook);
     }
 
     if (searchedSymbol) {
@@ -124,7 +131,7 @@ export const startReactiveOffersBookUpdateAction = (): BoletasThunkAction => {
 };
 
 export const startProactiveOffersBookUpdateAction = (): BoletasThunkAction => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const {
       bookOfertaReducer: {
         esource_offersBook,
@@ -142,14 +149,23 @@ export const startProactiveOffersBookUpdateAction = (): BoletasThunkAction => {
     }
 
     if (interval_offersBook) {
-      clearInterval(interval_offersBook);
+      await clearIntervalAsync(interval_offersBook);
     }
 
     if (searchedSymbol) {
-      const interval = setInterval(async () => {
+      const updateBook = async (interval: SetIntervalAsyncTimer) => {
         const data = await getProactiveOffersBookAPI(searchedSymbol);
 
-        if (data) {
+        const {
+          bookOfertaReducer: { interval_offersBook },
+        } = getState();
+
+        const shouldDispatch = shouldDispatchAsyncUpdate(
+          interval,
+          interval_offersBook,
+        );
+
+        if (data && shouldDispatch) {
           dispatch({
             type: UPDATE_MANY_OFFER_BOOK,
             payload: {
@@ -158,6 +174,10 @@ export const startProactiveOffersBookUpdateAction = (): BoletasThunkAction => {
             },
           });
         }
+      };
+
+      const interval = setIntervalAsync(async () => {
+        await updateBook(interval);
       }, updateInterval);
 
       dispatch({
