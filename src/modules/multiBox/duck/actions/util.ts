@@ -207,7 +207,8 @@ export const mountOrderForOperations = async ({
       selectedAccount: selectedAccount,
       tabIndex,
       comment: commentConfig,
-    };
+      triggeredBy: "box",
+    } as const;
 
     if (validateMultilegOrder(mountOrderProps)) {
       const newBoxRequestData = mountMultilegOrder(mountOrderProps);

@@ -2,6 +2,7 @@ import {
   erro_validar_qtde,
   erro_validar_codigo_duplicado_multileg,
   erro_validar_contaSelecionada,
+  VALIDACAO_QTDE,
 } from "constants/AlertaErros";
 
 import { getformatedDate } from "shared/utils/Formatacoes";
@@ -148,38 +149,70 @@ interface ValidateMultilegOrder {
   multilegTabs: MultilegTab[];
   selectedAccount: Account;
   tabIndex: number;
+  triggeredBy: "multileg" | "box";
 }
 
 export const validateMultilegOrder = ({
   multilegTabs,
   selectedAccount,
   tabIndex,
+  triggeredBy,
 }: ValidateMultilegOrder) => {
   let multilegTab = [...multilegTabs][tabIndex];
   let orderIsValid = true;
+  const shouldValidateQttyMultiple100 = multilegTab.market !== "Forex";
 
-  const qtty = multilegTab.tabelaMultileg.some(
-    (offer, index) => offer.qtde === 0,
-  );
-  if (qtty) {
-    orderIsValid = false;
+  let isQttyValid = true;
+  let isValidByMultiple100 = true;
+
+  multilegTab.tabelaMultileg.forEach((offer, index) => {
+    const validQtty = offer.qtde !== 0;
+
+    if (!validQtty) {
+      isQttyValid = false;
+    }
+
+    if (shouldValidateQttyMultiple100) {
+      const isMultiple = offer.qtde % 100 === 0;
+
+      if (!isMultiple) {
+        isValidByMultiple100 = false;
+      }
+    }
+  });
+
+  // qtty < 0
+  if (!isQttyValid) {
     toast.error(erro_validar_qtde);
+
+    return false;
+  }
+
+  // qtty is not multiple 100
+  if (!isValidByMultiple100 && triggeredBy === "multileg") {
+    toast.error(VALIDACAO_QTDE);
+
+    return false;
   }
 
   const symbols = multilegTab.tabelaMultileg.map(
     (offer) => offer.codigoSelecionado,
   );
 
+  // has repeated symbols
   if (new Set(symbols).size !== symbols.length) {
-    orderIsValid = false;
     const repetedSymbols = findRepetedSymbols(symbols);
     const symbolsOfError = repetedSymbols.join(",");
 
     toast.error(`${erro_validar_codigo_duplicado_multileg}: ${symbolsOfError}`);
+
+    return false;
   }
+
   if (!selectedAccount) {
-    orderIsValid = false;
     toast.error(erro_validar_contaSelecionada);
+
+    return false;
   }
 
   return orderIsValid;

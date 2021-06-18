@@ -119,7 +119,8 @@ export const sendMultilegOrderAction = (tabIndex: number): MainThunkAction => {
       multilegTabs: multileg,
       selectedAccount: selectedAccount,
       tabIndex,
-    };
+      triggeredBy: "multileg",
+    } as const;
 
     const multilegRequestData = mountMultilegOrder(mountOrderProps);
 
@@ -164,7 +165,8 @@ export const createMultilegAlertAction = (
       selectedAccount: selectedAccount,
       tabIndex,
       comment,
-    };
+      triggeredBy: "multileg",
+    } as const;
 
     const multilegRequestData = mountMultilegOrder(mountOrderProps);
 
@@ -205,7 +207,8 @@ export const createMultilegPositionAction = (
       multilegTabs: multileg,
       selectedAccount: selectedAccount,
       tabIndex,
-    };
+      triggeredBy: "multileg",
+    } as const;
 
     const multilegRequestData = mountMultilegOrder(mountOrderProps);
 
@@ -234,7 +237,8 @@ export const addQuoteBoxFromMultilegAction = (
       selectedAccount: selectedAccount,
       tabIndex,
       comment: JSON.stringify(configData),
-    };
+      triggeredBy: "multileg",
+    } as const;
 
     const multilegRequestData = mountMultilegOrder(mountOrderProps);
 
