@@ -54,6 +54,8 @@ const PopConfirm: React.FC<Props> = ({
       await onConfirm();
 
       setWaitingConfirm(false);
+
+      document.body.click();
     },
     [onConfirm],
   );

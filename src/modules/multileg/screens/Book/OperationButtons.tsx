@@ -2,6 +2,8 @@ import React, { useCallback } from "react";
 
 import { Button } from "react-bootstrap";
 
+import { Popconfirm } from "antd";
+
 import CustomButton from "shared/components/CustomButton";
 
 import { updateMultilegTabAction } from "../../duck/actions/MultilegActions";
@@ -15,6 +17,7 @@ import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import MultilegAlertButtons from "./MultilegAlertButtons";
 import { usePermissions } from "context/PermissionContext";
+import PopConfirm from "shared/components/PopConfirm/PopConfirm";
 
 interface Props {
   tabIndex: number;
@@ -39,12 +42,12 @@ const OperationButtons: React.FC<Props> = ({ tabIndex }) => {
     );
   }, [dispatch, tabIndex]);
 
-  const handleExecute = useCallback(() => {
-    dispatch(sendMultilegOrderAction(tabIndex));
+  const handleExecute = useCallback(async () => {
+    await dispatch(sendMultilegOrderAction(tabIndex));
   }, [dispatch, tabIndex]);
 
-  const handleCreatePosition = useCallback(() => {
-    dispatch(createMultilegPositionAction(tabIndex));
+  const handleCreatePosition = useCallback(async () => {
+    await dispatch(createMultilegPositionAction(tabIndex));
   }, [dispatch, tabIndex]);
 
   const handleAddBox = useCallback(() => {
@@ -63,23 +66,38 @@ const OperationButtons: React.FC<Props> = ({ tabIndex }) => {
           <Button variant="secondary" size="sm" onClick={handleClean}>
             LIMPAR
           </Button>
-          <CustomButton
-            onClick={handleExecute}
-            defaultClassName={false}
-            className="btn btn-primary btn-block btn-sm"
+
+          <PopConfirm
+            onConfirm={handleExecute}
+            title="Confirmar conta"
+            message="Você possui mais de uma conta ativa. Tem certeza que a ordem é para
+          esta conta?"
+            cancelButtonStyle={{
+              variant: "secondary",
+            }}
           >
-            EXECUTAR
-          </CustomButton>
+            <CustomButton
+              defaultClassName={false}
+              className="btn btn-primary btn-block btn-sm"
+            >
+              EXECUTAR
+            </CustomButton>
+          </PopConfirm>
         </div>
         <div className="operationButtonRow">
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={handleCreatePosition}
-            block
+          <PopConfirm
+            onConfirm={handleCreatePosition}
+            title="Confirmar conta"
+            message="Você possui mais de uma conta ativa. Tem certeza que a posição é para
+          esta conta?"
+            cancelButtonStyle={{
+              variant: "secondary",
+            }}
           >
-            CRIAR POSIÇÃO
-          </Button>
+            <Button variant="primary" size="sm" block>
+              CRIAR POSIÇÃO
+            </Button>
+          </PopConfirm>
         </div>
         <MultilegAlertButtons tabIndex={tabIndex} />
       </>
@@ -114,3 +132,21 @@ const OperationButtons: React.FC<Props> = ({ tabIndex }) => {
 };
 
 export default OperationButtons;
+
+const ConfirmAlert: React.FC<any> = ({ children, onConfirm }: any) => {
+  return (
+    <Popconfirm
+      okText="Sim"
+      cancelText="Não"
+      onConfirm={onConfirm}
+      title={
+        <div style={{ width: "260px" }}>
+          Você possui mais de uma conta ativa. Tem certeza que a ordem é para
+          esta conta?
+        </div>
+      }
+    >
+      {children}
+    </Popconfirm>
+  );
+};
