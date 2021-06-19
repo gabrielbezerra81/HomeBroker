@@ -8,9 +8,9 @@ import {
 } from "../../duck/actions/MultilegActions";
 import { findMultilegBook } from "../../duck/actions/utils";
 import {
-  calculoPreco,
-  calcularTotal,
-  verificaCalculoSemBook,
+  calculatePrice,
+  calculateTotal,
+  isPriceCalcWithoutBook,
 } from "../CalculoPreco";
 import CustomInput from "shared/components/CustomInput";
 import { formatarNumero } from "shared/utils/Formatacoes";
@@ -41,15 +41,27 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
   }, [multileg, tabIndex]);
 
   const total = useMemo(() => {
-    return calcularTotal({ multileg, cotacoesMultileg, indice: tabIndex });
+    return calculateTotal({
+      multileg,
+      multilegQuotes: cotacoesMultileg,
+      tabIndex,
+    });
   }, [cotacoesMultileg, multileg, tabIndex]);
 
   const min = useMemo(() => {
-    return calculoPreco(tab, "min", cotacoesMultileg);
+    return calculatePrice({
+      multilegTab: tab,
+      type: "min",
+      multilegQuotes: cotacoesMultileg,
+    });
   }, [cotacoesMultileg, tab]);
 
   const max = useMemo(() => {
-    return calculoPreco(tab, "max", cotacoesMultileg);
+    return calculatePrice({
+      multilegTab: tab,
+      type: "max",
+      multilegQuotes: cotacoesMultileg,
+    });
   }, [cotacoesMultileg, tab]);
 
   const condicaoMed = useMemo(() => {
@@ -62,7 +74,10 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
   }, [max, min]);
 
   const calculoSemBook = useMemo(() => {
-    return verificaCalculoSemBook(tab.tabelaMultileg, cotacoesMultileg);
+    return isPriceCalcWithoutBook({
+      multilegOffers: tab.tabelaMultileg,
+      multilegQuotes: cotacoesMultileg,
+    });
   }, [cotacoesMultileg, tab.tabelaMultileg]);
 
   const priceInputConfig = useMemo(() => {
@@ -154,6 +169,30 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
       return offerBook;
     });
   }, [cotacoesMultileg, multileg, tabIndex]);
+
+  const formattedTotal = useMemo(() => {
+    if (renderPlaceholder) {
+      return "";
+    }
+
+    if (total < 0) {
+      return formatarNumDecimal(total * -1);
+    }
+
+    return formatarNumDecimal(total);
+  }, [renderPlaceholder, total]);
+
+  const totalLabel = useMemo(() => {
+    if (renderPlaceholder) {
+      return "Débito de R$ 0,00";
+    }
+
+    if (total < 0) {
+      return "Crédito de R$ " + formattedTotal;
+    }
+
+    return "Débito de R$ " + formattedTotal;
+  }, [formattedTotal, renderPlaceholder, total]);
 
   return (
     <div className="divBook">
@@ -367,21 +406,9 @@ const Book: React.FC<Props> = ({ indice: tabIndex }) => {
             thousandSeparator="."
             decimalSeparator=","
             readOnly
-            value={
-              renderPlaceholder
-                ? ""
-                : total < 0
-                ? formatarNumDecimal(total * -1)
-                : formatarNumDecimal(total)
-            }
+            value={formattedTotal}
           />
-          <span>
-            {renderPlaceholder
-              ? "Débito de R$ 0,00"
-              : total < 0
-              ? "Crédito de R$ " + formatarNumDecimal(total * -1)
-              : "Débito de R$ " + formatarNumDecimal(total)}
-          </span>
+          <span>{totalLabel}</span>
         </Col>
       </Row>
       <Row className="mr-2 mb-2">

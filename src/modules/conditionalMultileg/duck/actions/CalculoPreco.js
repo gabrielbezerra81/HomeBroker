@@ -1,7 +1,4 @@
-import {
-  cond_findMultilegBook,
-  cond_findMultilegQuote,
-} from "./utils";
+import { cond_findMultilegBook, cond_findMultilegQuote } from "./utils";
 
 export const calculoPreco = (aba, tipo, cotacoesMultileg) => {
   let preco = 0;
@@ -21,7 +18,7 @@ export const calculoPreco = (aba, tipo, cotacoesMultileg) => {
     }
     if (book || tipo === "ultimo") arrayQtde.push(oferta.qtde);
   });
-  const mdc = calculoMDC(arrayQtde);
+  const mdc = calculateMDC(arrayQtde);
 
   if (mdc > 0)
     aba.tabelaMultileg.forEach((oferta, index) => {
@@ -90,7 +87,7 @@ export const calcularTotal = (props) => {
   return total;
 };
 
-export const calculoMDC = (nums) => {
+export const calculateMDC = (nums) => {
   var factor = nums[0];
   for (var i = 1; i < nums.length; i++) {
     factor = gcd2(factor, nums[i]);

@@ -17,7 +17,7 @@ import {
 } from "modules/multileg/duck/actions/MultilegActions";
 import { erro_exportar_ordens_multileg } from "constants/AlertaErros";
 import { searchMultilegSymbolData } from "modules/multileg/duck/actions/MultilegAPIAction";
-import { calculoPreco } from "modules/multileg/screens/CalculoPreco";
+import { calculatePrice } from "modules/multileg/screens/CalculoPreco";
 import { formatarNumero } from "shared/utils/Formatacoes";
 import { updateManyTHLState } from "./utils";
 import { updateManyMultilegState } from "modules/multileg/duck/actions/utils";
@@ -131,11 +131,11 @@ export const abrirMultilegTHLAction = () => {
         newOffer.cv = book.tipo;
       }
 
-      let tabPrice = calculoPreco(
-        updatedMultilegTabs[tabIndex],
-        "ultimo",
-        updatedMultilegQuotes,
-      ).toFixed(2);
+      let tabPrice = calculatePrice({
+        multilegTab: updatedMultilegTabs[tabIndex],
+        type: "ultimo",
+        multilegQuotes: updatedMultilegQuotes,
+      }).toFixed(2);
 
       tabPrice = formatarNumero(tabPrice, 2, ".", ",");
       updatedMultilegTabs[tabIndex].preco = tabPrice;

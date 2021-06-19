@@ -24,7 +24,7 @@ import {
 import { MainStoreState } from "redux/StoreCreation";
 
 import { formatarNumero } from "shared/utils/Formatacoes";
-import { calculoPreco } from "modules/multileg/screens/CalculoPreco";
+import { calculatePrice } from "modules/multileg/screens/CalculoPreco";
 import { MultiBoxData } from "modules/multiBox/types/MultiBoxState";
 import { globalStore } from "redux/StoreCreation";
 import { toast } from "react-toastify";
@@ -147,11 +147,11 @@ export const exportBoxToMultileg = async ({
         //
       }
 
-      let tabPrice = calculoPreco(
-        updatedMultilegTabs[tabIndex],
-        "ultimo",
-        updatedMultilegQuotes,
-      ).toFixed(2);
+      let tabPrice = calculatePrice({
+        multilegTab: updatedMultilegTabs[tabIndex],
+        type: "ultimo",
+        multilegQuotes: updatedMultilegQuotes,
+      }).toFixed(2);
 
       tabPrice = formatarNumero(tabPrice, 2, ".", ",");
       updatedMultilegTabs[tabIndex].preco = tabPrice;

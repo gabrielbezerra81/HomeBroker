@@ -29,8 +29,8 @@ import { searchMultilegSymbolData } from "modules/multileg/duck/actions/Multileg
 import { erro_exportar_ordens_multileg } from "constants/AlertaErros";
 
 import {
-  calculoPreco,
-  calculoMDC,
+  calculatePrice,
+  calculateMDC,
 } from "modules/multileg/screens/CalculoPreco";
 import { formatarNumero } from "shared/utils/Formatacoes";
 import { getReducerStateStorePrincipal } from "hooks/utils";
@@ -181,11 +181,11 @@ export const openOrderInMultilegAction = (props, action = "") => {
         else newOffer.cv = offer.oferta === "C" ? "compra" : "venda";
       }
 
-      let tabPrice = calculoPreco(
-        updatedMultilegTabs[tabIndex],
-        "ultimo",
-        updatedMultilegQuotes,
-      ).toFixed(2);
+      let tabPrice = calculatePrice({
+        multilegTab: updatedMultilegTabs[tabIndex],
+        type: "ultimo",
+        multilegQuotes: updatedMultilegQuotes,
+      }).toFixed(2);
 
       tabPrice = formatarNumero(tabPrice, 2, ".", ",");
       updatedMultilegTabs[tabIndex].preco = tabPrice;
@@ -311,7 +311,7 @@ export const aumentarQtdePrecoAction = (actionProps) => {
     const { id } = ordemAtual;
     const ofertas = [...ordemAtual.offers];
     const arrayQtde = ofertas.map((oferta) => oferta.qtdeOferta);
-    const mdc = calculoMDC(arrayQtde);
+    const mdc = calculateMDC(arrayQtde);
 
     if (modo === "qtde") {
       let acrescimo = 0;

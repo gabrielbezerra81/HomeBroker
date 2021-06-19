@@ -14,7 +14,7 @@ import {
 } from "recharts";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { MultilegOffer } from "../types/multileg";
-import { calcularTotal } from "./CalculoPreco";
+import { calculateTotal } from "./CalculoPreco";
 
 interface Props {
   tabIndex: number;
@@ -95,10 +95,10 @@ const MultilegGraph: React.FC<Props> = ({ tabIndex }) => {
   }, [multilegTab.preco]);
 
   const totalCost = useMemo(() => {
-    return calcularTotal({
+    return calculateTotal({
       multileg,
-      cotacoesMultileg,
-      indice: tabIndex,
+      multilegQuotes: cotacoesMultileg,
+      tabIndex,
     });
   }, [cotacoesMultileg, multileg, tabIndex]);
 
