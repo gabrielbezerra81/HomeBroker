@@ -29,6 +29,8 @@ class Multileg extends React.Component {
     this.handleMultilegTabSelect = this.handleMultilegTabSelect.bind(this);
 
     this.onClose = this.onClose.bind(this);
+    this.renderHeader = this.renderHeader.bind(this);
+    this.renderModalBody = this.renderModalBody.bind(this);
   }
   // shouldComponentUpdate(nextProps, nextState) {
   //   const multileg = this.props.multileg !== nextProps.multileg;
@@ -43,10 +45,8 @@ class Multileg extends React.Component {
   // }
 
   componentDidMount() {
-    const {
-      multilegButtonsVisibility,
-      createAlertButtonVisibility,
-    } = this.props;
+    const { multilegButtonsVisibility, createAlertButtonVisibility } =
+      this.props;
 
     this.props.aumentarZindexAction("multileg", this.props.zIndex, true);
 
@@ -140,22 +140,28 @@ class Multileg extends React.Component {
     this.props.abrirItemBarraLateralAction("isOpenMultileg");
   }
 
+  renderHeader() {
+    return (
+      <PopupHeader
+        name={this.props.name}
+        headerTitle={this.props.headerTitle}
+        headerClass="border-green"
+        onConfig={() => {}}
+        onClose={this.onClose}
+      />
+    );
+  }
+
   render() {
     return (
-      <DraggableModal
-        id="multileg"
-        renderModalBody={() => this.ModalBody()}
-        renderConfigComplementar={this.props.configComplementarAberto}
-        renderHeader={() => (
-          <PopupHeader
-            name={this.props.name}
-            headerTitle={this.props.headerTitle}
-            headerClass="border-green"
-            onConfig={() => {}}
-            onClose={this.onClose}
-          />
-        )}
-      />
+      <>
+        <DraggableModal
+          id="multileg"
+          renderModalBody={this.renderModalBody}
+          renderConfigComplementar={this.props.configComplementarAberto}
+          renderHeader={this.renderHeader}
+        />
+      </>
     );
   }
   /*
@@ -189,7 +195,7 @@ class Multileg extends React.Component {
     }
   }
 
-  ModalBody = () => {
+  renderModalBody = () => {
     return (
       <Tab.Container
         onSelect={this.handleMultilegTabSelect}
