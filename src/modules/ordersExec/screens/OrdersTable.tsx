@@ -2,16 +2,18 @@ import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import React, { useState, useMemo, useEffect } from "react";
 import { Row, Table } from "react-bootstrap";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
+import { Order } from "../types/ordersExec";
 import OpcoesOrdemExec from "./OpcoesOrdemExec";
 import OrderItem from "./OrderItem";
 
-const OrdersTable: React.FC = () => {
+interface Props {
+  data: Order[];
+  allowOpenOptions: boolean;
+}
+
+const OrdersTable: React.FC<Props> = ({ data, allowOpenOptions }) => {
   const {
-    ordersExecReducer: {
-      ordemAtual: selectedOrder,
-      tabelaOrdensExecucao,
-      opcoesOrdemAberto,
-    },
+    ordersExecReducer: { ordemAtual: selectedOrder, opcoesOrdemAberto },
   } = useStateStorePrincipal();
 
   const [initialTop, setInitialTop] = useState<number | null>(null);
@@ -47,7 +49,7 @@ const OrdersTable: React.FC = () => {
   }, [selectedOrder]);
 
   const formattedOrders = useMemo(() => {
-    return tabelaOrdensExecucao.map((orderItem) => {
+    return data.map((orderItem) => {
       const offers = orderItem.offers.map((offerItem) => {
         const formattedPrices = {};
 
@@ -70,7 +72,7 @@ const OrdersTable: React.FC = () => {
         initialPrice: formatarNumDecimal(orderItem.initialPrice),
       };
     });
-  }, [tabelaOrdensExecucao]);
+  }, [data]);
 
   const shouldDisplayOrdersOptions = useMemo(() => {
     return opcoesOrdemAberto && selectedOrder && !!(top || initialTop);
@@ -79,7 +81,12 @@ const OrdersTable: React.FC = () => {
   const renderedOrders = useMemo(() => {
     return formattedOrders.map((orderItem, index) => {
       const ofertaPrincipal = (
-        <OrderItem order={orderItem} key={index} type="mainOffer" />
+        <OrderItem
+          allowOpenOptions={allowOpenOptions}
+          order={orderItem}
+          key={index}
+          type="mainOffer"
+        />
       );
 
       const ordensNext = orderItem.nextOrders.map((nextOrder, nextIndex) => (
@@ -87,6 +94,7 @@ const OrdersTable: React.FC = () => {
           order={nextOrder as any}
           key={`ON${nextIndex}` as any}
           type="nextOffer"
+          allowOpenOptions={false}
         />
       ));
 
@@ -98,7 +106,7 @@ const OrdersTable: React.FC = () => {
         </>
       );
     });
-  }, [formattedOrders]);
+  }, [allowOpenOptions, formattedOrders]);
 
   return (
     <div className="bodyOrdensExecucao">
@@ -136,7 +144,7 @@ const OrdersTable: React.FC = () => {
           </thead>
           <tbody className="verticalAlignColunaTabela">{renderedOrders}</tbody>
         </Table>
-        {shouldDisplayOrdersOptions && (
+        {shouldDisplayOrdersOptions && allowOpenOptions && (
           <OpcoesOrdemExec
             style={{
               top: `${top || initialTop}px`,

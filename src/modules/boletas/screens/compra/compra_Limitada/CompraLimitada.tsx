@@ -33,10 +33,8 @@ class CompraLimitada extends React.Component<Props, State> {
     return (
       <DraggableModal
         id={"compra_limitada"}
-        headerTitle={this.props.headerTitle}
         renderModalBody={modalBody}
         shouldResetPosition={this.state.shouldResetPosition}
-        headerClass="border-green"
         renderHeader={(resetPosition: any) => (
           <ModalHeader
             headerTitle={this.props.headerTitle}

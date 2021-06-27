@@ -1,11 +1,21 @@
 @import "./OpcoesOrdemExec.scss";
 
-#ordens_execucao {
+#ordens_execucao,
+.ordens_execucao {
   width: 1060px;
 
   .mcontent {
     font-size: 0.7rem;
     padding-bottom: 1rem;
+  }
+}
+
+.ordens_execucao {
+  transition: opacity 0.2s;
+  width: 1100px;
+
+  &.hidden {
+    opacity: 0;
   }
 }
 

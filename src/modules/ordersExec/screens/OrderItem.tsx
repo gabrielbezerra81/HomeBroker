@@ -12,9 +12,10 @@ interface FormattedOrder extends Order {}
 interface Props {
   order: FormattedOrder;
   type: "mainOffer" | "nextOffer";
+  allowOpenOptions: boolean;
 }
 
-const OrderItem: React.FC<Props> = ({ order, type }) => {
+const OrderItem: React.FC<Props> = ({ order, type, allowOpenOptions }) => {
   const {
     ordersExecReducer: { ordemAtual: selectedOrder },
   } = useStateStorePrincipal();
@@ -72,8 +73,12 @@ const OrderItem: React.FC<Props> = ({ order, type }) => {
   const orderClassName = useMemo(() => {
     let classe = "";
 
-    if (type === "mainOffer") classe += " divClicavel rowTabelaOrdensExec ";
-    else classe += " ";
+    if (type === "mainOffer" && allowOpenOptions) {
+      classe += " divClicavel rowTabelaOrdensExec ";
+    } //
+    else {
+      classe += " ";
+    }
 
     if (selectedOrder) {
       if (order.id === selectedOrder.id) classe += "ordemSelecionada";
@@ -81,7 +86,7 @@ const OrderItem: React.FC<Props> = ({ order, type }) => {
     } else classe += " ";
 
     return classe;
-  }, [order.id, selectedOrder, type]);
+  }, [allowOpenOptions, order.id, selectedOrder, type]);
 
   const { qtdeExecutada, qtdeOferta } = useMemo(() => {
     let qtdeOferta = 0;
@@ -95,18 +100,22 @@ const OrderItem: React.FC<Props> = ({ order, type }) => {
     return { qtdeOferta, qtdeExecutada };
   }, [order.offers]);
 
+  const orderProgress = useMemo(() => {
+    return (qtdeExecutada / qtdeOferta) * 100;
+  }, [qtdeExecutada, qtdeOferta]);
+
   return (
     <tr
       id={order.id.toString()}
       className={orderClassName}
-      onClick={openOrdersOptions}
+      onClick={allowOpenOptions ? openOrdersOptions : undefined}
     >
       <td>
         <ProgressBar
           animated
           variant="success"
-          now={(qtdeExecutada / qtdeOferta) * 100}
-          label={(qtdeExecutada / qtdeOferta) * 100 + "%"}
+          now={orderProgress}
+          label={orderProgress + "%"}
           className="barraProgresso"
         />
       </td>

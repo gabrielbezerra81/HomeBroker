@@ -108,7 +108,10 @@ class Home extends React.Component {
                 key="ordens_execucao"
                 divKey={"ordens_execucao"}
               >
-                <OrdensExecucao headerTitle="HISTÓRICO DE OPERAÇÕES" />
+                <OrdensExecucao
+                  type="mainPopup"
+                  headerTitle="HISTÓRICO DE OPERAÇÕES"
+                />
               </PopupContainer>
 
               <PopupContainer
