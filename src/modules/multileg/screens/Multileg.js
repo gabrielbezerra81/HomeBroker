@@ -21,6 +21,7 @@ import {
   multilegWithAlertHeight,
 } from "./constants";
 import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
+import BottomOrders from "./BottomOrders";
 
 class Multileg extends React.Component {
   constructor(props) {
@@ -31,6 +32,7 @@ class Multileg extends React.Component {
     this.onClose = this.onClose.bind(this);
     this.renderHeader = this.renderHeader.bind(this);
     this.renderModalBody = this.renderModalBody.bind(this);
+    this.renderBottomPopup = this.renderBottomPopup.bind(this);
   }
   // shouldComponentUpdate(nextProps, nextState) {
   //   const multileg = this.props.multileg !== nextProps.multileg;
@@ -152,6 +154,10 @@ class Multileg extends React.Component {
     );
   }
 
+  renderBottomPopup() {
+    return <BottomOrders />;
+  }
+
   render() {
     return (
       <>
@@ -160,6 +166,7 @@ class Multileg extends React.Component {
           renderModalBody={this.renderModalBody}
           renderConfigComplementar={this.props.configComplementarAberto}
           renderHeader={this.renderHeader}
+          renderBottomPopupComponent={this.renderBottomPopup}
         />
       </>
     );
