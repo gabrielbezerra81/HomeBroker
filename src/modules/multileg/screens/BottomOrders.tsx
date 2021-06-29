@@ -1,7 +1,7 @@
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
-import OrdensExecucao from "modules/ordersExec/screens/OrdensExecucao";
 import React from "react";
 import { useMemo } from "react";
+import BottomOrdersExecHelper from "shared/components/BottomOrdersExecHelper/BottomOrdersExecHelper";
 
 interface Props {}
 
@@ -39,7 +39,7 @@ const BottomOrders: React.FC<Props> = ({}) => {
     });
   }, [multileg, tabIndex, tabelaOrdensExecucao]);
 
-  return <OrdensExecucao data={ordersData} headerTitle="" type="helperPopup" />;
+  return <BottomOrdersExecHelper data={ordersData} />;
 };
 
 export default BottomOrders;

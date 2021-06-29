@@ -21,13 +21,12 @@ interface Props {
   headerTitle: string;
   // mainPopup is the one opened by left side menu
   // helperPopup is showed bellow multileg and boletas
-  type: "mainPopup" | "helperPopup";
   data?: Order[];
 }
 
 const popupDivKey = "ordens_execucao";
 
-const OrdensExecucao: React.FC<Props> = ({ headerTitle, type, data = [] }) => {
+const OrdensExecucao: React.FC<Props> = ({ headerTitle, data = [] }) => {
   const dispatch = useDispatchStorePrincipal();
   const dispatchGlobal = useDispatchGlobalStore();
 
@@ -69,19 +68,9 @@ const OrdensExecucao: React.FC<Props> = ({ headerTitle, type, data = [] }) => {
     dispatch(abrirItemBarraLateralAction("isOpenOrdersExec"));
   }, [dispatch]);
 
-  const ordersData = useMemo(() => {
-    if (type === "mainPopup") {
-      return tabelaOrdensExecucao;
-    }
-
-    return data;
-  }, [data, tabelaOrdensExecucao, type]);
-
   const renderModalBody = useCallback(() => {
-    return (
-      <OrdersTable data={ordersData} allowOpenOptions={type === "mainPopup"} />
-    );
-  }, [ordersData, type]);
+    return <OrdersTable allowOpenOptions data={tabelaOrdensExecucao} />;
+  }, [tabelaOrdensExecucao]);
 
   const renderHeader = useCallback(() => {
     return (
@@ -98,18 +87,6 @@ const OrdensExecucao: React.FC<Props> = ({ headerTitle, type, data = [] }) => {
       />
     );
   }, [headerTitle, onClose]);
-
-  if (type === "helperPopup") {
-    if (data.length === 0) {
-      return <div className="ordens_execucao hidden"></div>;
-    }
-
-    return (
-      <div className="ordens_execucao">
-        <div className="mcontent">{renderModalBody()}</div>
-      </div>
-    );
-  }
 
   return (
     <DraggableModal

@@ -10,6 +10,7 @@ export interface Order {
   validade: string;
   roteador: string;
   initialPrice: number | null;
+  group?: number;
 }
 
 export interface OrderExecOffer {

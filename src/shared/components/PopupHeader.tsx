@@ -202,6 +202,8 @@ interface PopupHeaderProps {
   onConfig?: (...data: any) => any;
   onStrikeViewChange?: (...data: any) => any;
   icons?: React.ReactNode;
+  showCloseButton?: boolean;
+  showSearchButton?: boolean;
 }
 
 // Menus multileg, posição, thl, ordens exec, relatorio
@@ -215,6 +217,8 @@ export const PopupHeader: React.FC<PopupHeaderProps> = React.memo(
     onConfig,
     onStrikeViewChange,
     icons,
+    showCloseButton = true,
+    showSearchButton = true,
   }) => {
     const dispatchStorePrincipal = useDispatchStorePrincipal();
 
@@ -249,7 +253,9 @@ export const PopupHeader: React.FC<PopupHeaderProps> = React.memo(
         <div className="wrapperIconesHeader">
           {!!icons && icons}
 
-          <BotaoAbrirFiltrarOrdens headerTitle={headerTitle} />
+          {showSearchButton && (
+            <BotaoAbrirFiltrarOrdens headerTitle={headerTitle} />
+          )}
 
           {!!onStrikeViewChange && (
             <button
@@ -269,13 +275,15 @@ export const PopupHeader: React.FC<PopupHeaderProps> = React.memo(
             </button>
           )}
 
-          <button
-            className="brokerCustomButton iconesHeader"
-            name={name}
-            onClick={handleClose}
-          >
-            <img className="closeIcon" src={closeIcon} alt="Fechar" />
-          </button>
+          {showCloseButton && (
+            <button
+              className="brokerCustomButton iconesHeader"
+              name={name}
+              onClick={handleClose}
+            >
+              <img className="closeIcon" src={closeIcon} alt="Fechar" />
+            </button>
+          )}
         </div>
       </div>
     );
