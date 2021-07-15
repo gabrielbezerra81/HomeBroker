@@ -285,12 +285,17 @@ export const handleChangeBoxOfferAction = ({
               return option.strike === offer.selectedStrike;
             });
 
-            if (!foundOption) {
+            if (foundOption) {
+              offer.selectedCode = foundOption.symbol;
+            }
+            // if does not have a matching strike, needs to find the closest
+            else {
               offer.selectedStrike = findClosestStrike({
                 options,
                 symbolQuote: offer.selectedStrike,
               });
 
+              // set the symbol and model for the updated closest strike
               setOfferSymbolAndModel(offer);
             }
           } //
