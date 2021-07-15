@@ -60,6 +60,17 @@ export const searchBoxOptions = async (
 
     const symbolIsOption = symbol !== data.ativoPrincipal ? true : false;
 
+    // searching options selects the respective expiration. Non option selects the first available date 'data.vencimentos[0]'
+    if (symbolIsOption) {
+      const option = payload.stockOptions.find(
+        (option) => option.symbol === symbol,
+      );
+
+      if (option) {
+        payload.selectedExpiration = option?.expiration;
+      }
+    }
+
     payload.selectedStrike = findClosestStrike({
       options: data.opcoes,
       symbolQuote: data.cotacaoAtual,
