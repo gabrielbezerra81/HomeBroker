@@ -22,6 +22,7 @@ import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { createAlertFromBoxAction } from "modules/multiBox/duck/actions/tab4AlertsActions";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import PopConfirm from "shared/components/PopConfirm/PopConfirm";
+import PriceRangeBar from "modules/multiBox/components/PriceRangeBar/PriceRangeBar";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -56,12 +57,7 @@ const Tab4Alerts: React.FC<Props> = ({ multiBox }) => {
     return stockSymbolsData.find((data) => data.symbol === searchedSymbol);
   }, [searchedSymbol, stockSymbolsData]);
 
-  const {
-    formattedMin,
-    formattedMedium,
-    formattedMax,
-    medium,
-  } = useMemo(() => {
+  const { medium } = useMemo(() => {
     const formatted = {
       formattedMin: "0,00",
       formattedMax: "0,00",
@@ -159,7 +155,7 @@ const Tab4Alerts: React.FC<Props> = ({ multiBox }) => {
   }, [dispatch, multiBox]);
 
   const handleClickBarPrice = useCallback(
-    (event) => {
+    (event, { min, medium, max }) => {
       const { name } = event.currentTarget;
 
       let price = alertPrice;
@@ -168,13 +164,13 @@ const Tab4Alerts: React.FC<Props> = ({ multiBox }) => {
       let cond = condition;
 
       if (name === "max") {
-        price = formatarNumDecimal(structureData?.max || 0);
+        price = formatarNumDecimal(max || 0);
         validity = "DAY";
         considered = "Last";
         cond = "Less";
       } //
       else if (name === "min") {
-        price = formatarNumDecimal(structureData?.min || 0);
+        price = formatarNumDecimal(min || 0);
         validity = "DAY";
         considered = "Last";
         cond = "Greater";
@@ -195,16 +191,7 @@ const Tab4Alerts: React.FC<Props> = ({ multiBox }) => {
         }),
       );
     },
-    [
-      alertPrice,
-      condition,
-      consideredPrice,
-      dispatch,
-      id,
-      medium,
-      selectedValidity,
-      structureData,
-    ],
+    [alertPrice, condition, consideredPrice, dispatch, id, selectedValidity],
   );
 
   const formattedRefStockData = useMemo(() => {
@@ -286,43 +273,13 @@ const Tab4Alerts: React.FC<Props> = ({ multiBox }) => {
           </PopConfirm>
         </div>
       </header>
-      <div className="boxInputRangeContainer">
-        <div>
-          <span className="whiteText">Mín</span>
-          <span className="whiteText">Médio</span>
-          <span className="whiteText">Máx</span>
-        </div>
-        <input
-          type="range"
-          className={`custom-range boxInputRange`}
-          min={structureData?.min || undefined}
-          max={structureData?.max || undefined}
-          step={0.01}
-        />
-        <div>
-          <button
-            onClick={handleClickBarPrice}
-            name="min"
-            className="brokerCustomButton whiteText"
-          >
-            {formattedMin}
-          </button>
-          <button
-            onClick={handleClickBarPrice}
-            name="med"
-            className="brokerCustomButton whiteText"
-          >
-            {formattedMedium}
-          </button>
-          <button
-            onClick={handleClickBarPrice}
-            name="max"
-            className="brokerCustomButton whiteText"
-          >
-            {formattedMax}
-          </button>
-        </div>
-      </div>
+
+      <PriceRangeBar
+        min={structureData?.min}
+        max={structureData?.max}
+        textClassName="whiteText"
+        onBarClick={handleClickBarPrice}
+      />
 
       <div className="titleContainer">
         <h6>Cadastrar Alerta</h6>

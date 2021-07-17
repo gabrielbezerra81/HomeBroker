@@ -20,6 +20,7 @@ import {
 import closeIcon from "assets/closeIcon.png";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import PopConfirm from "shared/components/PopConfirm/PopConfirm";
+import PriceRangeBar from "modules/multiBox/components/PriceRangeBar/PriceRangeBar";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -124,31 +125,6 @@ const Tab2ListBooks: React.FC<Props> = ({ multiBox }) => {
     };
   }, [stockSymbolData]);
 
-  const { formattedMin, formattedMedium, formattedMax } = useMemo(() => {
-    const formatted = {
-      formattedMin: "0,00",
-      formattedMax: "0,00",
-      formattedMedium: "",
-      medium: 0,
-    };
-
-    if (!structureData) {
-      return formatted;
-    }
-
-    const { min, max } = structureData;
-
-    formatted.formattedMin = formatarNumDecimal(min || 0);
-    formatted.formattedMax = formatarNumDecimal(max || 0);
-
-    if (typeof min === "number" && typeof max === "number") {
-      formatted.medium = (max + min) / 2;
-      formatted.formattedMedium = formatarNumDecimal(formatted.medium || 0);
-    }
-
-    return formatted;
-  }, [structureData]);
-
   const tab4Data = useMemo(() => {
     return topSymbols.map((topSymbol) => {
       const symbolData = symbolsData.find(
@@ -213,31 +189,11 @@ const Tab2ListBooks: React.FC<Props> = ({ multiBox }) => {
         </div>
       </header>
 
-      <div className="boxInputRangeContainer">
-        <div>
-          <span className="whiteText">Mín</span>
-          <span className="whiteText">Médio</span>
-          <span className="whiteText">Máx</span>
-        </div>
-        <input
-          type="range"
-          className={`custom-range boxInputRange`}
-          min={structureData?.min || undefined}
-          max={structureData?.max || undefined}
-          step={0.01}
-        />
-        <div>
-          <button className="brokerCustomButton whiteText">
-            {formattedMin}
-          </button>
-          <button className="brokerCustomButton whiteText">
-            {formattedMedium}
-          </button>
-          <button className="brokerCustomButton whiteText">
-            {formattedMax}
-          </button>
-        </div>
-      </div>
+      <PriceRangeBar
+        min={structureData?.min}
+        max={structureData?.max}
+        textClassName="whiteText"
+      />
 
       <Table borderless striped={false}>
         <thead>

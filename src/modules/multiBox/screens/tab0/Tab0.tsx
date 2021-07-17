@@ -22,6 +22,7 @@ import {
 import closeIcon from "assets/closeIcon.png";
 import { Form, InputGroup } from "react-bootstrap";
 import PopConfirm from "shared/components/PopConfirm/PopConfirm";
+import PriceRangeBar from "modules/multiBox/components/PriceRangeBar/PriceRangeBar";
 
 interface Props {
   multiBox: MultiBoxData;
@@ -125,59 +126,6 @@ const Tab0: React.FC<Props> = ({ multiBox }) => {
     };
   }, [stockSymbolData]);
 
-  const isMinMaxNegative = useMemo(() => {
-    if (!structureData) {
-      return false;
-    }
-
-    if (structureData.min < 0 && structureData.max < 0) {
-      return true;
-    }
-
-    return false;
-  }, [structureData]);
-
-  const { formattedMin, formattedMax } = useMemo(() => {
-    const formatted = {
-      formattedMin: "0,00",
-      formattedMax: "0,00",
-      formattedMedium: "",
-      medium: 0,
-    };
-
-    if (!structureData) {
-      return formatted;
-    }
-
-    const { min, max } = structureData;
-
-    const minValue = isMinMaxNegative ? Math.abs(min || 0) : min || 0;
-    const maxValue = isMinMaxNegative ? Math.abs(max || 0) : max || 0;
-
-    formatted.formattedMin = formatarNumDecimal(minValue);
-    formatted.formattedMax = formatarNumDecimal(maxValue);
-
-    if (typeof min === "number" && typeof max === "number") {
-      formatted.medium = (max + min) / 2;
-      formatted.formattedMedium = formatarNumDecimal(formatted.medium || 0);
-    }
-
-    return formatted;
-  }, [isMinMaxNegative, structureData]);
-
-  const rangeBarValues = useMemo(() => {
-    if (!structureData) {
-      return { min: undefined, max: undefined };
-    }
-
-    const values = {
-      min: isMinMaxNegative ? structureData.max : structureData.min,
-      max: isMinMaxNegative ? structureData.min : structureData.max,
-    };
-
-    return values;
-  }, [isMinMaxNegative, structureData]);
-
   if (!structureData) {
     return <div></div>;
   }
@@ -232,30 +180,12 @@ const Tab0: React.FC<Props> = ({ multiBox }) => {
         </div>
       </header>
 
-      <div className="boxInputRangeContainer">
-        <div>
-          <span>Mín</span>
-          <span>Máx</span>
-        </div>
-        <input
-          type="range"
-          className={`custom-range boxInputRange`}
-          min={rangeBarValues.min}
-          max={rangeBarValues.max}
-          // value={
-          //   structureData ? (structureData.min + structureData.max) / 2 : ""
-          // }
-          step={0.01}
-        />
-        <div>
-          <button className="brokerCustomButton">
-            {isMinMaxNegative ? formattedMax : formattedMin}
-          </button>
-          <button className="brokerCustomButton">
-            {isMinMaxNegative ? formattedMin : formattedMax}
-          </button>
-        </div>
-      </div>
+      <PriceRangeBar
+        showMedium={false}
+        showCreditDebitText
+        min={structureData.min}
+        max={structureData.max}
+      />
 
       <div className="quoteContainer">
         {structureData.quote < 0 && <span className="quoteInfo">crédito</span>}

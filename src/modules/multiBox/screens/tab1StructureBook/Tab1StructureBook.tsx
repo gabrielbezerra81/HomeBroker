@@ -22,6 +22,7 @@ import {
 import closeIcon from "assets/closeIcon.png";
 import { Form, InputGroup } from "react-bootstrap";
 import PopConfirm from "shared/components/PopConfirm/PopConfirm";
+import PriceRangeBar from "modules/multiBox/components/PriceRangeBar/PriceRangeBar";
 interface Props {
   multiBox: MultiBoxData;
 }
@@ -136,31 +137,6 @@ const Tab1StructureBook: React.FC<Props> = ({ multiBox }) => {
     };
   }, [stockSymbolData]);
 
-  const { formattedMin, formattedMedium, formattedMax } = useMemo(() => {
-    const formatted = {
-      formattedMin: "0,00",
-      formattedMax: "0,00",
-      formattedMedium: "",
-      medium: 0,
-    };
-
-    if (!structureData) {
-      return formatted;
-    }
-
-    const { min, max } = structureData;
-
-    formatted.formattedMin = formatarNumDecimal(min || 0);
-    formatted.formattedMax = formatarNumDecimal(max || 0);
-
-    if (typeof min === "number" && typeof max === "number") {
-      formatted.medium = (max + min) / 2;
-      formatted.formattedMedium = formatarNumDecimal(formatted.medium || 0);
-    }
-
-    return formatted;
-  }, [structureData]);
-
   if (!structureData) {
     return <div></div>;
   }
@@ -215,7 +191,13 @@ const Tab1StructureBook: React.FC<Props> = ({ multiBox }) => {
         </div>
       </header>
 
-      <div className="boxInputRangeContainer">
+      <PriceRangeBar
+        showCreditDebitText
+        min={structureData?.min}
+        max={structureData?.max}
+      />
+
+      {/* <div className="boxInputRangeContainer">
         <div>
           <span>Mín</span>
           <span>Médio</span>
@@ -236,7 +218,7 @@ const Tab1StructureBook: React.FC<Props> = ({ multiBox }) => {
           <button className="brokerCustomButton">{formattedMedium}</button>
           <button className="brokerCustomButton">{formattedMax}</button>
         </div>
-      </div>
+      </div> */}
 
       <section className="middle">
         <div className="buyBook">
