@@ -56,8 +56,10 @@ const PriceRangeBar: React.FC<Props> = ({
       formatted.formattedMax = formatarNumDecimal(maxValue);
 
       if (typeof min === "number" && typeof max === "number") {
-        formatted.medium = Math.abs((max + min) / 2);
-        formatted.formattedMedium = formatarNumDecimal(formatted.medium || 0);
+        formatted.medium = (max + min) / 2;
+        formatted.formattedMedium = formatarNumDecimal(
+          Math.abs(formatted.medium) || 0,
+        );
       }
 
       return formatted;
@@ -65,12 +67,19 @@ const PriceRangeBar: React.FC<Props> = ({
 
   const rangeBarValues = useMemo(() => {
     if (min === undefined || max === undefined) {
-      return { min: undefined, max: undefined };
+      return {
+        min: undefined,
+        signedMin: undefined,
+        max: undefined,
+        signedMax: undefined,
+      };
     }
 
     const values = {
       min: Math.abs(isMinMaxNegative ? max : min),
+      signedMin: isMinMaxNegative ? max : min,
       max: Math.abs(isMinMaxNegative ? min : max),
+      signedMax: isMinMaxNegative ? min : max,
       // min,
       // max,
     };
@@ -114,13 +123,13 @@ const PriceRangeBar: React.FC<Props> = ({
     (e) => {
       if (onBarClick) {
         onBarClick(e, {
-          min: rangeBarValues.min,
+          min: rangeBarValues.signedMin,
           medium,
-          max: rangeBarValues.max,
+          max: rangeBarValues.signedMax,
         });
       }
     },
-    [medium, onBarClick, rangeBarValues.max, rangeBarValues.min],
+    [medium, onBarClick, rangeBarValues],
   );
 
   return (
