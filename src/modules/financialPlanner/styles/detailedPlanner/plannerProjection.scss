@@ -60,8 +60,15 @@
 
         .customLegendContainer {
           margin-top: 4px;
+          max-height: 130px;
+          display: flex;
+          flex-direction: column;
+          flex-wrap: wrap;
+          align-content: flex-start;
 
           > div {
+            margin-right: 32px;
+
             > .inner-circle {
               display: inline-block;
               width: 14px;

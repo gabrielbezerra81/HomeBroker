@@ -22,6 +22,9 @@ const COLORS = [
   "#339999",
   "#0254be",
   "#770a72",
+  "#0f6d27",
+  "#940d0d",
+  "#6b6a11",
 ];
 
 const PlannerProjection: React.FC = () => {
