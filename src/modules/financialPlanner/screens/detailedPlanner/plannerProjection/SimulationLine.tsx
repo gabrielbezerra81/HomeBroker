@@ -155,8 +155,8 @@ const SimulationLine: React.FC<Props> = ({
           />
         </div>
       </td>
-      <td>
-        <div className="cellContent taxColumn">
+      <td className="taxColumn">
+        <div className="cellContent">
           <CustomInput
             type="preco"
             name="tax"
@@ -165,6 +165,7 @@ const SimulationLine: React.FC<Props> = ({
             theme="dark"
             onChange={() => {}}
             value=""
+            suffix="%"
           />
         </div>
       </td>

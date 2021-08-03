@@ -117,6 +117,10 @@
       line-height: 14px;
     }
 
+    .taxColumn {
+      max-width: 60px;
+    }
+
     .cellContent {
       display: flex;
       justify-content: center;
@@ -153,8 +157,7 @@
       }
     }
 
-    .incomeColumn,
-    .taxColumn {
+    .incomeColumn {
       input {
         padding-right: 0 !important;
       }
