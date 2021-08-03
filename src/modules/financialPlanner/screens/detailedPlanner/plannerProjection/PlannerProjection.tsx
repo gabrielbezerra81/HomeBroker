@@ -98,6 +98,8 @@ const PlannerProjection: React.FC = () => {
     dispatch(addNewSimulationAction());
   }, [dispatch]);
 
+  const handleSimulate = useCallback(() => {}, []);
+
   const investmentOptions = useMemo(() => {
     return simulations.map((sim) => (
       <option key={sim.title} value={sim.title}>
@@ -254,7 +256,7 @@ const PlannerProjection: React.FC = () => {
 
         <button
           className="brokerCustomButton simulationButton"
-          onClick={handleIncludeLine}
+          onClick={handleSimulate}
         >
           Executar simulação
         </button>
