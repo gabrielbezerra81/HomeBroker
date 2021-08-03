@@ -206,7 +206,7 @@ export function IncludeInitialLine() {
     viewedContribution: formatarNumDecimal(initialValue, 2, 2),
     formattedCalcBase: "",
     formattedInvestment: "",
-    formattedPeriod: new Date(2020, 1, 1).toLocaleDateString(),
+    formattedPeriod: new Date().toLocaleDateString(),
     formattedPeriodIncome: "",
     formattedRentability: "",
     formattedResult: "",
@@ -323,4 +323,36 @@ export const calculateSimulationResult = ({
   };
 
   return res;
+};
+
+interface ShouldDisplayTaxMetricProps {
+  frequency: LocalFrequency;
+  listing: Listing;
+}
+
+export const isGroupingListing = ({
+  listing,
+  frequency,
+}: ShouldDisplayTaxMetricProps) => {
+  if (
+    (frequency === "por semana" && listing === "semanal") ||
+    (frequency === "por mês" && listing === "mensal") ||
+    (frequency === "por ano" && listing === "anual")
+  ) {
+    return false;
+  }
+
+  return true;
+};
+
+export const getTaxMetricSuffix = (listing: Listing) => {
+  if (listing === "anual") {
+    return " a.a";
+  }
+
+  if (listing === "mensal") {
+    return " a.m";
+  }
+
+  return " p.s";
 };

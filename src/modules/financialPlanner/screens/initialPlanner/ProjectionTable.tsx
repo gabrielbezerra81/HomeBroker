@@ -7,7 +7,11 @@ import { Projection, FormattedProjection } from "./InitialPlanner";
 
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
-import { convertInterestRate } from "../utils";
+import {
+  convertInterestRate,
+  getTaxMetricSuffix,
+  isGroupingListing,
+} from "../utils";
 
 interface Props {
   data: Array<Projection & FormattedProjection>;
@@ -54,6 +58,15 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
     return options;
   }, [ratePeriodicity]);
 
+  const isGrouping = useMemo(
+    () =>
+      isGroupingListing({
+        frequency: ratePeriodicity,
+        listing,
+      }),
+    [listing, ratePeriodicity],
+  );
+
   const formattedRate = useMemo(() => {
     let rate = interestRate;
 
@@ -69,14 +82,22 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
       else if (listing === "anual") {
         rate = convertInterestRate(interestRate / 100, "week", "year") * 100;
       }
+    } //
+    else if (ratePeriodicity === "por mês" && listing === "anual") {
+      rate = convertInterestRate(interestRate / 100, "month", "year") * 100;
     }
 
     return formatarNumDecimal(rate, 2);
   }, [ratePeriodicity, listing, interestRate]);
 
+  const taxMetricSuffix = useMemo(
+    () => (isGrouping ? getTaxMetricSuffix(listing) : ""),
+    [isGrouping, listing],
+  );
+
   const formattedData = useMemo(() => {
     const formatted = data.map((projectionItem, index) => {
-      let viewedRate = formattedRate;
+      let viewedRate = formattedRate + taxMetricSuffix;
 
       let startOrder = 1;
 
@@ -89,14 +110,13 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
         return projectionItem;
       }
 
+      // calculate the period income based on the listing
       let viewedPeriodIncome: any = projectionItem.periodIncome;
 
-      if (ratePeriodicity === "por semana") {
-        viewedPeriodIncome = projectionItem.totalIncome;
+      viewedPeriodIncome = projectionItem.totalIncome;
 
-        if (data[index - 1]) {
-          viewedPeriodIncome -= data[index - 1].totalIncome;
-        }
+      if (data[index - 1]) {
+        viewedPeriodIncome -= data[index - 1].totalIncome;
       }
 
       let viewContribution = projectionItem.investment;
@@ -117,11 +137,34 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
         viewedContribution,
         viewedRate,
         viewedPeriodIncome,
+        taxMetric: taxMetricSuffix,
       };
     });
 
     return formatted;
-  }, [data, formattedRate, ratePeriodicity]);
+  }, [data, formattedRate, taxMetricSuffix]);
+
+  const renderedLines = useMemo(
+    () =>
+      formattedData.map((projectionItem, index) => {
+        return (
+          <tr key={index}>
+            <td>{projectionItem.order}</td>
+            <td>{projectionItem.formattedPeriod}</td>
+            <td>{projectionItem.viewedContribution}</td>
+            <td>{isGrouping ? "" : projectionItem.formattedCalcBase}</td>
+            <td>{projectionItem.viewedRate}</td>
+            <td>{projectionItem.viewedPeriodIncome}</td>
+
+            <td>{projectionItem.formattedTotalPercent}</td>
+            <td>{projectionItem.formattedTotalIncome}</td>
+
+            <td>{projectionItem.formattedTotal}</td>
+          </tr>
+        );
+      }),
+    [formattedData, isGrouping],
+  );
 
   return (
     <div className="projectionContainer">
@@ -169,25 +212,7 @@ const ProjectionTable: React.FC<Props> = ({ data }) => {
             <th>Acumulado</th>
           </tr>
         </thead>
-        <tbody>
-          {formattedData.map((projectionItem, index) => {
-            return (
-              <tr key={index}>
-                <td>{projectionItem.order}</td>
-                <td>{projectionItem.formattedPeriod}</td>
-                <td>{projectionItem.viewedContribution}</td>
-                <td>{projectionItem.formattedCalcBase}</td>
-                <td>{projectionItem.viewedRate}</td>
-                <td>{projectionItem.viewedPeriodIncome}</td>
-
-                <td>{projectionItem.formattedTotalPercent}</td>
-                <td>{projectionItem.formattedTotalIncome}</td>
-
-                <td>{projectionItem.formattedTotal}</td>
-              </tr>
-            );
-          })}
-        </tbody>
+        <tbody>{renderedLines}</tbody>
       </Table>
     </div>
   );
