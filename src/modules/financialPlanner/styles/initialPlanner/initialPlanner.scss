@@ -78,7 +78,7 @@
       }
 
       .openConverterButton {
-        border-radius: 1px;
+        border-radius: 4px;
         position: absolute;
 
         right: -4px;
@@ -87,10 +87,14 @@
 
         line-height: 16px;
         font-size: 14px;
+
+        background-color: #272827;
+
+        padding: 3px 6px;
       }
 
       .saveSimulationButton {
-        border-radius: 1px;
+        border-radius: 4px;
         position: absolute;
         right: 90px;
         bottom: 0;
@@ -98,6 +102,7 @@
         height: 26px;
         display: flex;
         font-size: 14px;
+        background-color: #272827;
       }
     }
 
