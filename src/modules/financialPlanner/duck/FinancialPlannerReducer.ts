@@ -6,12 +6,12 @@ const INITIAL_STATE: FinancialPlannerState = {
   initialPlanner: {
     initialValue: 1000,
     contribution: 100,
-    contributionPeriodicity: "por semana",
-    interestRate: 0.23,
-    ratePeriodicity: "por semana",
-    periodValue: 2,
-    periodicity: "meses",
-    listing: "mensal",
+    contributionPeriodicity: "por mês",
+    interestRate: 2,
+    ratePeriodicity: "por mês",
+    periodValue: 25,
+    periodicity: "anos",
+    listing: "anual",
   },
   detailedPlanner: {
     simulations: [],
