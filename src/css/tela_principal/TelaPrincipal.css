@@ -92,7 +92,8 @@
   border-radius: 2px;
 }
 
-.divOrdens {
+.divOrdens,
+.projectionsHoverMenu {
   position: fixed;
   width: 605px;
   border: 2px solid #888;
@@ -106,13 +107,19 @@
   background-color: rgb(15, 15, 15) !important;
 }
 
-#divOrdens.hide {
+.projectionsHoverMenu {
+  margin-top: 520px;
+}
+
+#divOrdens.hide,
+#projectionsHoverMenu.hide {
   opacity: 0;
   pointer-events: none;
   overflow: hidden;
 }
 
-#divOrdens.visible {
+#divOrdens.visible,
+#projectionsHoverMenu.visible {
   opacity: 1;
   pointer-events: all;
   width: 605px;
@@ -123,7 +130,8 @@
   border-bottom: 1px solid #888;
 }
 
-.divOrdens > .row {
+.divOrdens > .row,
+.projectionsHoverMenu > .row {
   flex: 1;
   margin-left: 0;
   margin-right: 0;
@@ -152,7 +160,8 @@
   text-align: end !important;
 }
 
-.divOrdens > .row img {
+.divOrdens > .row img,
+.projectionsHoverMenu > .row img {
   max-height: 50px;
 }
 
@@ -163,8 +172,6 @@
 .defaultDraggable {
   position: relative;
 }
-
-
 
 .containerSelectConta {
   display: flex;

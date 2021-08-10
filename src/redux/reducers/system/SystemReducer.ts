@@ -18,6 +18,7 @@ export const INITIAL_STATE: SystemState = {
   buyingValue: "3.500,00",
   broker: "Bender",
   isOpenOrdersHoverMenu: false,
+  isOpenProjectionsHoverMenu: false,
   isOpenOrdersExec: false,
   isOpenDetailedReport: false,
   isOpenPosition: false,
@@ -38,7 +39,7 @@ export const INITIAL_STATE: SystemState = {
   selectedAccount: {} as Account,
   mainTabs: [{ tabName: "Principal" }, { tabName: "Aba 2" }],
   selectedTab: "tab0",
-  openedMenus: [              
+  openedMenus: [
     // { menuKey: "initialPlanner", tabKey: "tab0" },
     // { menuKey: "detailedPlanner", tabKey: "tab0" },
     // { menuKey: "category_list", tabKey: "tab0" },

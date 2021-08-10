@@ -24,6 +24,7 @@ import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import { Redirect } from "@reach/router";
 import ConditionalMultileg from "modules/conditionalMultileg/screens/ConditionalMultileg";
 import OptionsTable from "modules/optionsTable/screens/OptionsTable";
+import ProjectionsHoverMenu from "./projectionsHoverMenu/ProjectionsHoverMenu";
 
 const OrdensExecucao = React.lazy(() =>
   import("modules/ordersExec/screens/OrdensExecucao"),
@@ -195,6 +196,8 @@ class Home extends React.Component {
             {AppBoletas}
 
             <MenuOrdens />
+
+            <ProjectionsHoverMenu />
 
             <MultiBoxContainer />
           </div>

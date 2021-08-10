@@ -36,7 +36,12 @@ const LeftActionBar: React.FC = () => {
   const dispatchGlobal = useDispatchGlobalStore();
 
   const {
-    systemReducer: { isOpenLeftUserMenu, isOpenOrdersHoverMenu, connectedUser },
+    systemReducer: {
+      isOpenLeftUserMenu,
+      isOpenOrdersHoverMenu,
+      connectedUser,
+      isOpenProjectionsHoverMenu,
+    },
   } = useStateStorePrincipal();
 
   const { permissions } = usePermissions();
@@ -83,6 +88,20 @@ const LeftActionBar: React.FC = () => {
     if (isOpenOrdersHoverMenu)
       dispatch(mouseLeaveAction("isOpenOrdersHoverMenu"));
   }, [dispatch, isOpenOrdersHoverMenu]);
+
+  const onProjectionsMouseOver = useCallback(() => {
+    dispatchGlobal(atualizarDivKeyAction("projectionsHoverMenu"));
+
+    if (!isOpenProjectionsHoverMenu) {
+      dispatch(mouseOverAction("isOpenProjectionsHoverMenu"));
+    }
+  }, [dispatch, dispatchGlobal, isOpenProjectionsHoverMenu]);
+
+  const onProjectionsMouseLeave = useCallback(() => {
+    if (isOpenProjectionsHoverMenu) {
+      dispatch(mouseLeaveAction("isOpenProjectionsHoverMenu"));
+    }
+  }, [dispatch, isOpenProjectionsHoverMenu]);
 
   return (
     <div
@@ -166,9 +185,8 @@ const LeftActionBar: React.FC = () => {
       {permissions.planner && (
         <div
           className="popupButton divClicavel"
-          onClick={handleOpenMenu}
-          data-name="initialPlanner"
-          data-isopen="isOpenInitialPlanner"
+          onMouseOver={onProjectionsMouseOver}
+          onMouseLeave={onProjectionsMouseLeave}
         >
           <AiFillForward color="#8ba5c2" size={40} />
           <h6>PROJEÇÕES</h6>

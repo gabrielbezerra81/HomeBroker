@@ -20,6 +20,7 @@ export default interface SystemState {
   isOpenOptionsMatrix: boolean;
   isOpenConditionalMultileg: boolean;
   isOpenOptionsTable: boolean;
+  isOpenProjectionsHoverMenu: boolean;
   token: Token;
   hasAuthorizationHeader: boolean;
   authData: AuthData | null;
