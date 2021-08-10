@@ -50,25 +50,33 @@ const ProjectionsHoverMenu = () => {
     [dispatch, dispatchGlobal],
   );
 
+  // open on mouse over
   const onMouseOver = useCallback(() => {
     if (isOpenProjectionsHoverMenu === false) {
       dispatch(mouseOverAction("isOpenProjectionsHoverMenu"));
     }
   }, [dispatch, isOpenProjectionsHoverMenu]);
 
+  // close on mouse leave
   const onMouseLeave = useCallback(() => {
     if (isOpenProjectionsHoverMenu) {
       dispatch(mouseLeaveAction("isOpenProjectionsHoverMenu"));
     }
   }, [dispatch, isOpenProjectionsHoverMenu]);
 
+  // increase zIndex on mount
   useEffect(() => {
     if (
       divkey !== "" &&
       divkey === "projectionsHoverMenu" &&
       isOpenProjectionsHoverMenu === true
     ) {
-      document.getElementById("projectionsHoverMenu").style.zIndex = zIndex + 1;
+      const element = document.getElementById("projectionsHoverMenu");
+
+      if (element) {
+        element.style.zIndex = zIndex + 1;
+      }
+
       dispatchGlobal(
         aumentarZindexAction("projectionsHoverMenu", zIndex, true),
       );
