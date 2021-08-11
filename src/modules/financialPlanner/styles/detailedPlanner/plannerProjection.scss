@@ -115,6 +115,12 @@
       padding-top: 2px !important;
       padding-bottom: 2px !important;
       line-height: 14px;
+
+      &:first-child {
+        .brokerCustomButton {
+          padding-top: 0;
+        }
+      }
     }
 
     .taxColumn {

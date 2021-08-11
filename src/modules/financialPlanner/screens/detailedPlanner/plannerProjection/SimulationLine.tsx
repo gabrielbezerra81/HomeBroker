@@ -1,13 +1,20 @@
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
-import { changeSimulationAction } from "modules/financialPlanner/duck/actions/detailedPlannerActions";
+import {
+  changeSimulationAction,
+  removeSimulationAction,
+} from "modules/financialPlanner/duck/actions/detailedPlannerActions";
 import {
   Simulation,
   SimulationResult,
 } from "modules/financialPlanner/types/FinancialPlannerState";
+
+import { FiX } from "react-icons/fi";
+
 import React, { useCallback } from "react";
 import { FormControl } from "react-bootstrap";
 import CustomInput from "shared/components/CustomInput";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
+import PopConfirm from "shared/components/PopConfirm/PopConfirm";
 
 interface Props {
   totalResult: number;
@@ -40,8 +47,26 @@ const SimulationLine: React.FC<Props> = ({
     [dispatch, simIndex],
   );
 
+  const handleRemoveSimulation = useCallback(async () => {
+    await dispatch(removeSimulationAction(simulation.id));
+  }, [dispatch, simulation.id]);
+
   return (
     <tr key={simulation.id}>
+      <td>
+        <PopConfirm
+          onConfirm={handleRemoveSimulation}
+          title="Excluir simulação"
+          message="Tem certeza que deseja excluir esta simulação?"
+          cancelButtonStyle={{
+            variant: "secondary",
+          }}
+        >
+          <button className="brokerCustomButton">
+            <FiX color="#ce202a" size={10} strokeWidth={3} />
+          </button>
+        </PopConfirm>
+      </td>
       <td>
         <div className="cellContent periodCell">
           <FormControl
@@ -76,6 +101,11 @@ const SimulationLine: React.FC<Props> = ({
           />
         </div>
       </td>
+
+      <td>
+        <div className="cellContent"></div>
+      </td>
+
       <td>
         <div className="cellContent column100">
           <CustomInput
@@ -172,6 +202,10 @@ const SimulationLine: React.FC<Props> = ({
       <td>
         {formatarNumDecimal(100 * (simulation.total / totalResult), 2, 2)}%
       </td>
+
+      {/* <td></td>
+      <td></td>
+      <td></td> */}
     </tr>
   );
 };

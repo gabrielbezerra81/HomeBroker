@@ -5,6 +5,9 @@ import {
   DetailedPlannerData,
   Simulation,
 } from "modules/financialPlanner/types/FinancialPlannerState";
+
+import { toast } from "react-toastify";
+
 import { MainThunkAction } from "types/ThunkActions";
 import { updateFinancialPlannerAction } from "./utils";
 
@@ -36,6 +39,8 @@ export const listSimulationsAction = (): MainThunkAction => {
 
       if (response.data && Array.isArray(response.data)) {
         const { data } = response;
+
+        console.log(data);
 
         dispatch(updateDetailedPlannerStateAction({ simulations: data }));
       }
@@ -109,3 +114,31 @@ export const addNewSimulationAction = (): MainThunkAction => {
 };
 
 export const executeSimulationAction = () => {};
+
+export const removeSimulationAction = (id: number): MainThunkAction => {
+  return async (dispatch, getState) => {
+    const {
+      financialPlannerReducer: {
+        detailedPlanner: { simulations },
+      },
+    } = getState();
+
+    try {
+      await api.delete(`projections/${id}`);
+
+      const updatedSimulations = produce(simulations, (draft) => {
+        const index = draft.findIndex((simulation) => simulation.id === id);
+
+        if (index !== -1) {
+          draft.splice(index, 1);
+        }
+      });
+
+      dispatch(
+        updateDetailedPlannerStateAction({ simulations: updatedSimulations }),
+      );
+    } catch (error) {
+      toast.error("Falha ao tentar remover esta simulação");
+    }
+  };
+};

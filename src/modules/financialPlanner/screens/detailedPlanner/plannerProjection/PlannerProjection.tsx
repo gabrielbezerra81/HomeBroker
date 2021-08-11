@@ -216,14 +216,20 @@ const PlannerProjection: React.FC = () => {
         <Table className="planningTable" borderless striped={false}>
           <thead>
             <tr>
+              <th></th>
               <th>Prazo</th>
               <th>Investimento</th>
+              <th>Valor financeiro</th>
               <th>100%</th>
               <th>Rentabilidade</th>
               <th>Aporte</th>
               <th>Rendimento</th>
               <th>Imposto</th>
               <th>Resultado</th>
+              {/* <th>R$ imposto</th>
+              <th>Acumulado</th>
+              <td>Rendimento %</td>
+              <th>Resultado</th> */}
             </tr>
           </thead>
           <tbody>
