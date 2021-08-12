@@ -225,11 +225,10 @@ const PlannerProjection: React.FC = () => {
               <th>Aporte</th>
               <th>Rendimento</th>
               <th>Imposto</th>
-              <th>Resultado</th>
-              {/* <th>R$ imposto</th>
+              <th>Taxa real R$</th>
               <th>Acumulado</th>
-              <td>Rendimento %</td>
-              <th>Resultado</th> */}
+              <th>Taxa real %</th>
+              <th>Resultado</th>
             </tr>
           </thead>
           <tbody>
@@ -252,9 +251,16 @@ const PlannerProjection: React.FC = () => {
               </td>
               <td></td>
               <td></td>
+              <td></td>
+              <td></td>
+
               <td>Total:</td>
+
               <td>{formattedTotalResult}</td>
               <td>0,00</td>
+              <td></td>
+              <td></td>
+              <td></td>
               <td>100,00%</td>
             </tr>
           </tbody>

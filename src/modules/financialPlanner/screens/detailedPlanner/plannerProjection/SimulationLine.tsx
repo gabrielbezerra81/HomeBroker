@@ -199,6 +199,9 @@ const SimulationLine: React.FC<Props> = ({
           />
         </div>
       </td>
+      <td></td>
+      <td></td>
+      <td></td>
       <td>
         {formatarNumDecimal(100 * (simulation.total / totalResult), 2, 2)}%
       </td>
