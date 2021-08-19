@@ -3,10 +3,7 @@ import {
   changeSimulationAction,
   removeSimulationAction,
 } from "modules/financialPlanner/duck/actions/detailedPlannerActions";
-import {
-  Simulation,
-  SimulationResult,
-} from "modules/financialPlanner/types/FinancialPlannerState";
+import { DetailedProjection } from "modules/financialPlanner/types/FinancialPlannerState";
 
 import { FiX } from "react-icons/fi";
 
@@ -18,7 +15,7 @@ import PopConfirm from "shared/components/PopConfirm/PopConfirm";
 
 interface Props {
   totalResult: number;
-  simulation: Simulation & SimulationResult;
+  simulation: DetailedProjection;
   simIndex: number;
 }
 
@@ -74,7 +71,7 @@ const SimulationLine: React.FC<Props> = ({
             name="period"
             maxLength={2}
             placeholder="0"
-            value={simulation.period}
+            value={simulation.periodValue}
             onChange={handleInputChange}
           />
           <FormControl
@@ -103,7 +100,17 @@ const SimulationLine: React.FC<Props> = ({
       </td>
 
       <td>
-        <div className="cellContent"></div>
+        <div className="cellContent financialValueCell">
+          <CustomInput
+            type="preco"
+            name="financialValue"
+            step={0.01}
+            renderArrows={false}
+            theme="dark"
+            onChange={handlePriceInputChange}
+            value={simulation.financialValue || simulation.calcBase}
+          />
+        </div>
       </td>
 
       <td>
@@ -173,16 +180,7 @@ const SimulationLine: React.FC<Props> = ({
       </td>
       <td>
         <div className="cellContent incomeColumn">
-          <CustomInput
-            type="preco"
-            name="income"
-            step={0.01}
-            renderArrows={false}
-            theme="dark"
-            onChange={() => {}}
-            value={simulation.total}
-            disabled
-          />
+          {simulation?.formattedTotalIncome}
         </div>
       </td>
       <td className="taxColumn">
@@ -194,16 +192,30 @@ const SimulationLine: React.FC<Props> = ({
             renderArrows={false}
             theme="dark"
             onChange={() => {}}
-            value=""
+            value={simulation?.formattedTax}
+            disabled
             suffix="%"
           />
         </div>
       </td>
-      <td></td>
-      <td></td>
-      <td></td>
       <td>
-        {formatarNumDecimal(100 * (simulation.total / totalResult), 2, 2)}%
+        <div className="cellContent incomeColumn">
+          {simulation?.formattedRealIncomePercentage}
+        </div>
+      </td>
+      <td>
+        <div className="cellContent incomeColumn">
+          {simulation?.formattedRealIncome}
+        </div>
+      </td>
+      <td>{simulation?.formattedTotal}</td>
+      <td>
+        {formatarNumDecimal(
+          100 * ((simulation?.total || 0) / totalResult),
+          2,
+          2,
+        )}
+        %
       </td>
 
       {/* <td></td>

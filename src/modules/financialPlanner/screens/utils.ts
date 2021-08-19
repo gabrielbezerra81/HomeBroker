@@ -3,6 +3,7 @@ import {
   InitialPlannerData,
   SimulationResult,
 } from "modules/financialPlanner/types/FinancialPlannerState";
+import moment from "moment";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import { Projection } from "./initialPlanner/InitialPlanner";
 
@@ -254,7 +255,26 @@ export function convertFrequencyToLocalValues(
   }
 }
 
-type CalculateProps = Omit<InitialPlannerData, "listing">;
+type APIContributionPeriod = "semanas" | "meses" | "anos";
+
+// export function convertPeriodToLocalValues(
+//   contributionPeriod: APIContributionPeriod,
+// ) {
+//   switch (contributionPeriod) {
+//     case "semanas":
+//       return "por ";
+//     case "meses":
+//       return "por mês";
+//     case "anos":
+//       return "por ano";
+//     default:
+//       return "por semana";
+//   }
+// }
+
+type CalculateProps = Omit<InitialPlannerData, "listing"> & {
+  numberOfPeriods: number;
+};
 
 export const calculateSimulationResult = ({
   contribution,
@@ -262,20 +282,13 @@ export const calculateSimulationResult = ({
   ratePeriodicity,
   initialValue,
   interestRate,
-  periodValue,
-  periodicity,
+  numberOfPeriods,
 }: CalculateProps): SimulationResult => {
   const monthlyValue = convertContribution({
     contribution,
     contributionPeriodicity,
     ratePeriodicity,
     convertMode: "calculate",
-  });
-
-  let periods = convertPeriodByRatePeriodicity({
-    periodValue,
-    periodicity,
-    ratePeriodicity,
   });
 
   let excludedPeriodsFromContrib = 1;
@@ -302,15 +315,15 @@ export const calculateSimulationResult = ({
     excludedPeriodsFromContrib = 1;
   }
 
-  const gained = initialValue * (1 + rate) ** periods;
+  const gained = initialValue * (1 + rate) ** numberOfPeriods;
   const addedValue =
     (monthlyValue *
-      ((1 + rate) ** (periods - excludedPeriodsFromContrib) - 1)) /
+      ((1 + rate) ** (numberOfPeriods - excludedPeriodsFromContrib) - 1)) /
     rate;
 
   const total = gained + addedValue;
   const totalInvested =
-    initialValue + monthlyValue * (periods - excludedPeriodsFromContrib);
+    initialValue + monthlyValue * (numberOfPeriods - excludedPeriodsFromContrib);
   const totalIncome = total - totalInvested;
 
   const res = {
@@ -355,4 +368,125 @@ export const getTaxMetricSuffix = (listing: Listing) => {
   }
 
   return " p.s";
+};
+
+interface CalculateProjectionsParams
+  extends Pick<
+    InitialPlannerData,
+    | "initialValue"
+    | "interestRate"
+    | "periodValue"
+    | "contribution"
+    | "contributionPeriodicity"
+    | "ratePeriodicity"
+    | "periodicity"
+  > {
+  startDate: Date;
+  // weeks, months or years
+  numberOfPeriods: number;
+}
+
+export const calculateProjections = ({
+  initialValue,
+  interestRate,
+  periodValue,
+  contribution,
+  contributionPeriodicity,
+  ratePeriodicity,
+  periodicity,
+  numberOfPeriods,
+  startDate,
+}: CalculateProjectionsParams) => {
+  const projections: Projection[] = [];
+
+  if (!initialValue || !interestRate || !periodValue) {
+    return [];
+  }
+
+  const convertedContributedValue = convertContribution({
+    contribution,
+    contributionPeriodicity,
+    ratePeriodicity,
+    convertMode: "calculate",
+  });
+
+  let investment = initialValue;
+
+  let monthRate = interestRate / 100;
+
+  // year calculation is converted to months
+  if (ratePeriodicity === "por ano") {
+    monthRate = convertInterestRate(monthRate, "year", "month");
+  }
+
+  // first month has no contribution
+  let excludedPeriodsFromContrib = 1;
+
+  if (ratePeriodicity === "por semana") {
+    excludedPeriodsFromContrib = 1;
+  }
+
+  let total = initialValue;
+
+  let date = moment(startDate).startOf("month").startOf("day").toDate();
+
+  if (ratePeriodicity !== "por semana") {
+    // using last day of month for monthly and yearly calculation
+    date = moment(date).endOf("month").toDate();
+  }
+
+  // indexes represents each period and starts from 1
+  for (let index = 1; index <= numberOfPeriods; index++) {
+    let calcBase = total;
+
+    const periodIncome = total * monthRate ** 1;
+
+    // const monthPercent = (monthIncome / calcBase) * 100;
+
+    total += periodIncome;
+
+    // the first period (week, month, year) has not contribution
+    if (index > excludedPeriodsFromContrib) {
+      calcBase += convertedContributedValue;
+      total += convertedContributedValue;
+      investment += convertedContributedValue;
+    }
+
+    const totalIncome = +Number(total - investment).toFixed(2);
+
+    const totalPercent = (totalIncome / investment) * 100;
+
+    let period = new Date(date);
+
+    if (ratePeriodicity === "por semana") {
+      // period is the current week with today + 6 days
+      period.setDate(period.getDate() + 6);
+
+      // increases 7 so the next period starts in the next day after the
+      // week ends.
+      date.setDate(date.getDate() + 7);
+    }
+
+    // increases 1 month in each iteration
+    if (["por mês", "por ano"].includes(ratePeriodicity)) {
+      date.setMonth(date.getMonth() + 1);
+    }
+
+    const projection = {
+      rentability: interestRate,
+      periodIncome,
+      totalIncome: totalIncome,
+      result: 0,
+      total: investment + totalIncome,
+      calcBase,
+      investment,
+      totalPercent,
+      period,
+      contribution: convertedContributedValue,
+    };
+
+    projections.push(projection);
+  }
+
+  return projections;
 };

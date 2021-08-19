@@ -1,3 +1,5 @@
+import { Projection } from "../screens/initialPlanner/InitialPlanner";
+
 export interface InitialPlannerData {
   initialValue: number;
   contribution: number;
@@ -21,6 +23,25 @@ export interface Simulation {
   update: string;
   startDate: string;
   title: string;
+  tax?: number;
+  financialValue?: number;
+}
+
+export interface DetailedProjection
+  extends Partial<Projection>,
+    Omit<Simulation, "period" | "startDate"> {
+  startDate: Date;
+  periodValue: number;
+  totalInvested: number;
+  realIncome: number;
+  realIncomePercentage: number;
+  formattedTotalInvested: string;
+  formattedTotal: string;
+  formattedTotalIncome: string;
+  formattedRealIncome: string;
+  formattedTax: number;
+  formattedRealIncomePercentage: string;
+  [key: string]: any;
 }
 
 export interface SimulationResult {

@@ -18,6 +18,7 @@ import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import ProjectionTable from "./ProjectionTable";
 import ProjectionGraph from "./ProjectionGraph";
 import {
+  calculateProjections,
   calculateSimulationResult,
   convertContribution,
   convertInterestRate,
@@ -92,98 +93,40 @@ const InitialPlanner: React.FC = () => {
       return null;
     }
 
-    return calculateSimulationResult(calcResultProps);
-  }, [initialValue, interestRate, periodValue, calcResultProps]);
-
-  const projections = useMemo(() => {
-    const projections: Projection[] = [];
-
-    if (!initialValue || !interestRate || !periodValue) {
-      return [];
-    }
-
-    const monthlyValue = convertContribution({
-      contribution,
-      contributionPeriodicity,
-      ratePeriodicity,
-      convertMode: "calculate",
-    });
-
-    let investment = initialValue;
-
-    let monthRate = interestRate / 100;
-
-    if (ratePeriodicity === "por ano") {
-      monthRate = convertInterestRate(monthRate, "year", "month");
-    }
-
-    let periods = convertPeriodByRatePeriodicity({
+    const numberOfPeriods = convertPeriodByRatePeriodicity({
       periodValue,
       periodicity,
       ratePeriodicity,
     });
 
-    console.log(periods);
+    return calculateSimulationResult({ ...calcResultProps, numberOfPeriods });
+  }, [
+    initialValue,
+    interestRate,
+    periodValue,
+    periodicity,
+    ratePeriodicity,
+    calcResultProps,
+  ]);
 
-    let excludedPeriodsFromContrib = 1;
+  const projections = useMemo(() => {
+    const numberOfPeriods = convertPeriodByRatePeriodicity({
+      periodValue,
+      periodicity,
+      ratePeriodicity,
+    });
 
-    if (ratePeriodicity === "por semana") {
-      excludedPeriodsFromContrib = 1;
-    }
-
-    let total = initialValue;
-
-    let date = moment(new Date()).startOf("month").startOf("day").toDate();
-
-    if (ratePeriodicity !== "por semana") {
-      date = moment(date).endOf("month").toDate();
-    }
-
-    for (let index = 1; index <= periods; index++) {
-      let calcBase = total;
-
-      const periodIncome = total * monthRate ** 1;
-
-      // const monthPercent = (monthIncome / calcBase) * 100;
-
-      total += periodIncome;
-
-      if (index > excludedPeriodsFromContrib) {
-        calcBase += monthlyValue;
-        total += monthlyValue;
-        investment += monthlyValue;
-      }
-
-      const totalIncome = +Number(total - investment).toFixed(2);
-
-      const totalPercent = (totalIncome / investment) * 100;
-
-      let period = new Date(date);
-
-      if (ratePeriodicity === "por semana") {
-        period.setDate(period.getDate() + 6); // A data é o final da semana
-        date.setDate(date.getDate() + 7);
-      }
-
-      if (["por mês", "por ano"].includes(ratePeriodicity)) {
-        date.setMonth(date.getMonth() + 1);
-      }
-
-      const projection = {
-        rentability: interestRate,
-        periodIncome,
-        totalIncome: totalIncome,
-        result: 0,
-        total: investment + totalIncome,
-        calcBase,
-        investment,
-        totalPercent,
-        period,
-        contribution: monthlyValue,
-      };
-
-      projections.push(projection);
-    }
+    const projections = calculateProjections({
+      initialValue,
+      interestRate,
+      periodValue,
+      contribution,
+      contributionPeriodicity,
+      ratePeriodicity,
+      periodicity,
+      numberOfPeriods,
+      startDate: new Date(),
+    });
 
     return projections;
   }, [

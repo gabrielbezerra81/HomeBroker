@@ -69,12 +69,20 @@ export const changeSimulationAction = ({
     const updatedSimulations = produce(simulations, (draft) => {
       let newValue: any = value;
 
+      const simulation = draft[simIndex];
+
       switch (attr) {
         case "period":
           newValue = Number(value);
       }
 
-      Object.assign(draft[simIndex], { [attr]: newValue });
+      if (attr === "rateFrequency" || attr === "depositFrequency") {
+        simulation.rateFrequency = newValue;
+        simulation.depositFrequency = newValue;
+      } //
+      else {
+        Object.assign(simulation, { [attr]: newValue });
+      }
     });
 
     dispatch(

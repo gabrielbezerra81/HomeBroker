@@ -4,6 +4,7 @@ import { PieChart, Pie, Cell, Legend, ResponsiveContainer } from "recharts";
 import { FormControl, Table } from "react-bootstrap";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import {
+  calculateProjections,
   calculateSimulationResult,
   convertFrequencyToLocalValues,
 } from "../../utils";
@@ -14,6 +15,9 @@ import {
   addNewSimulationAction,
   updateDetailedPlannerStateAction,
 } from "modules/financialPlanner/duck/actions/detailedPlannerActions";
+import { DetailedProjection } from "modules/financialPlanner/types/FinancialPlannerState";
+import moment from "moment";
+import { Projection } from "../../initialPlanner/InitialPlanner";
 
 const COLORS = [
   "#9999CC",
@@ -36,13 +40,48 @@ const PlannerProjection: React.FC = () => {
 
   const { simulations, selectedSimulation } = detailedPlanner;
 
-  const simulationResults = useMemo(() => {
+  const simulationResults: DetailedProjection[] = useMemo(() => {
     const filteredSimulations = simulations.filter(
       (sim) =>
         sim.title === selectedSimulation || selectedSimulation === "todos",
     );
 
     return filteredSimulations.map((simulation) => {
+      const [day, month, year] = simulation.startDate.split("/");
+
+      const startDate = new Date(Number(year), Number(month) - 1, Number(day));
+
+      let unitOfTime: moment.unitOfTime.Diff = "months";
+
+      if (simulation.rateFrequency === "semanal") {
+        unitOfTime = "weeks";
+      } //
+
+      const diff = moment(new Date()).diff(startDate, unitOfTime);
+
+      // marks end date
+      const numberOfPeriods = Math.round(diff);
+
+      const projections = calculateProjections({
+        startDate,
+        numberOfPeriods,
+        initialValue: simulation.initialDeposit,
+        periodValue: simulation.period,
+        interestRate: simulation.rate,
+        ratePeriodicity: convertFrequencyToLocalValues(
+          simulation.rateFrequency,
+        ),
+        contribution: simulation.periodicDeposit,
+        contributionPeriodicity: convertFrequencyToLocalValues(
+          simulation.depositFrequency,
+        ),
+        periodicity: simulation.periodType,
+      });
+
+      const lastProjection = projections[projections.length - 1] as
+        | Projection
+        | undefined;
+
       const result = calculateSimulationResult({
         contribution: simulation.periodicDeposit,
         contributionPeriodicity: convertFrequencyToLocalValues(
@@ -55,11 +94,50 @@ const PlannerProjection: React.FC = () => {
         ),
         periodValue: simulation.period,
         periodicity: simulation.periodType,
+        numberOfPeriods,
       });
 
+      const {
+        totalInvested,
+        formattedTotalInvested,
+        formattedTotalIncome,
+        totalIncome,
+      } = result;
+
+      const { period: _, ...simulationRest } = simulation;
+
+      const tax = simulation?.tax || 0;
+
+      const realIncome = totalIncome * (1 - tax);
+      const realIncomePercentage = lastProjection
+        ? (realIncome / lastProjection?.calcBase) * 100
+        : 0;
+
       return {
-        ...result,
-        ...simulation,
+        ...lastProjection,
+        ...simulationRest,
+        totalInvested,
+        formattedTotalInvested,
+        formattedTotal: lastProjection?.total
+          ? formatarNumDecimal(lastProjection?.total, 2, 2)
+          : "",
+        formattedTotalIncome: formattedTotalIncome.replace("R$ ", ""),
+        startDate,
+        periodValue: simulation.period,
+        formattedCalcBase: lastProjection?.calcBase
+          ? formatarNumDecimal(lastProjection.calcBase, 2, 2)
+          : "",
+        timePassed: diff,
+        tax,
+        formattedTax: simulation?.tax ? simulation?.tax * 100 : 0,
+        realIncome,
+        formattedRealIncome: formatarNumDecimal(realIncome, 2, 2),
+        realIncomePercentage,
+        formattedRealIncomePercentage: formatarNumDecimal(
+          realIncomePercentage,
+          2,
+          2,
+        ),
       };
     });
   }, [selectedSimulation, simulations]);
@@ -118,7 +196,7 @@ const PlannerProjection: React.FC = () => {
 
   const totalResult = useMemo(() => {
     return simulationResults.reduce((prev, curr) => {
-      return prev + curr.total;
+      return prev + (curr?.total || 0);
     }, 0);
   }, [simulationResults]);
 
@@ -217,6 +295,20 @@ const PlannerProjection: React.FC = () => {
           <thead>
             <tr>
               <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th className="realTaxHead" colSpan={2}>Taxa real</th>
+              <th></th>
+              <th></th>
+            </tr>
+            <tr>
+              <th></th>
               <th>Prazo</th>
               <th>Investimento</th>
               <th>Valor financeiro</th>
@@ -225,9 +317,9 @@ const PlannerProjection: React.FC = () => {
               <th>Aporte</th>
               <th>Rendimento</th>
               <th>Imposto</th>
-              <th>Taxa real R$</th>
+              <th>%</th>
+              <th>Valor</th>
               <th>Acumulado</th>
-              <th>Taxa real %</th>
               <th>Resultado</th>
             </tr>
           </thead>
