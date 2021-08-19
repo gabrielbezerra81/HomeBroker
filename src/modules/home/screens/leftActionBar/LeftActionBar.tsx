@@ -187,6 +187,7 @@ const LeftActionBar: React.FC = () => {
           className="popupButton divClicavel"
           onMouseOver={onProjectionsMouseOver}
           onMouseLeave={onProjectionsMouseLeave}
+          id="projectionsHoverButton"
         >
           <AiFillForward color="#8ba5c2" size={40} />
           <h6>PROJEÇÕES</h6>

@@ -21,11 +21,15 @@ import {
   aumentarZindexAction,
 } from "redux/actions/GlobalAppActions";
 import useStateGlobalStore from "hooks/useStateGlobalStore";
+import { useState } from "react";
+import { useMemo } from "react";
 
 const startStyle = {
   opacity: 0,
   pointerEvents: "none",
 };
+
+const hoverButtonId = "projectionsHoverButton";
 
 //Possui o menu de ordens e encapsula todos os sub-apps.
 const ProjectionsHoverMenu = () => {
@@ -38,6 +42,8 @@ const ProjectionsHoverMenu = () => {
   } = useStateStorePrincipal();
 
   const { divkey, zIndex } = useStateGlobalStore();
+
+  const [offsetTop, setOffsetTop] = useState(0);
 
   const handleOpenMenu = useCallback(
     (e) => {
@@ -83,6 +89,22 @@ const ProjectionsHoverMenu = () => {
     }
   }, [dispatchGlobal, divkey, isOpenProjectionsHoverMenu, zIndex]);
 
+  // get distance to top of hover button that opens this menu
+  useEffect(() => {
+    const hoverButton = document.getElementById(hoverButtonId);
+
+    if (hoverButton) {
+      setOffsetTop(hoverButton.offsetTop);
+    }
+  }, []);
+
+  const style = useMemo(
+    () => ({
+      marginTop: offsetTop,
+    }),
+    [offsetTop],
+  );
+
   return (
     <Animate
       show={isOpenProjectionsHoverMenu}
@@ -97,6 +119,7 @@ const ProjectionsHoverMenu = () => {
         id="projectionsHoverMenu"
         onMouseOver={onMouseOver}
         onMouseLeave={onMouseLeave}
+        style={style}
       >
         <Row>
           <div

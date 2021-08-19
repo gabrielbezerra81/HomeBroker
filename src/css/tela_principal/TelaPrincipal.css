@@ -107,10 +107,6 @@
   background-color: rgb(15, 15, 15) !important;
 }
 
-.projectionsHoverMenu {
-  margin-top: 520px;
-}
-
 #divOrdens.hide,
 #projectionsHoverMenu.hide {
   opacity: 0;
