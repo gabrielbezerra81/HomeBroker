@@ -129,13 +129,29 @@ const CustomInput: React.FC<Props> = ({
     return theme === "light" ? "" : "darkCustomInput";
   }, [theme]);
 
+  const hasArrowClassName = useMemo(() => {
+    if (renderArrows) {
+      return "arrowsInput";
+    }
+
+    return "";
+  }, [renderArrows]);
+
+  const hasSuffixClassName = useMemo(() => {
+    if (suffix) {
+      return "suffixInput";
+    }
+
+    return "";
+  }, [suffix]);
+
   if (type === "preco")
     input = (
       <CurrencyInput
         disabled={disabled}
         placeholder={placeholder}
         locale="pt-BR"
-        className={`form-control textInput inputFormatado ${className}`}
+        className={`form-control textInput ${className} ${hasArrowClassName} ${hasSuffixClassName}`}
         precision={precision}
         step={step}
         value={value}
@@ -164,7 +180,7 @@ const CustomInput: React.FC<Props> = ({
         thousandSeparator="."
         decimalSeparator=","
         decimalScale={0}
-        className={`form-control textInput inputFormatado ${className}`}
+        className={`form-control textInput  ${hasArrowClassName} ${className} ${hasSuffixClassName}`}
         value={value}
         onChange={(event) => {
           const parsedValue = event.target.value.split(".").join("");
@@ -189,7 +205,7 @@ const CustomInput: React.FC<Props> = ({
     input = (
       <NumberFormat
         placeholder={placeholder}
-        className={`form-control textInput`}
+        className={`form-control textInput ${hasSuffixClassName}`}
         thousandSeparator="."
         decimalSeparator=","
         value={value}

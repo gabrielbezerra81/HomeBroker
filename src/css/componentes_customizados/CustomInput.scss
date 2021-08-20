@@ -5,7 +5,7 @@
   .suffix {
     font-size: 10px;
     position: absolute;
-    right: 4px;
+    right: 3px;
   }
 
   &.containerInputGrafico {
@@ -23,8 +23,14 @@
     }
   }
 
-  .inputFormatado {
+  .arrowsInput {
+    // padding to arrows
     padding-right: 12px !important;
+  }
+
+  .suffixInput {
+    // padding to suffix
+    padding-right: 13px !important;
   }
 
   .divContainerBotoes {
