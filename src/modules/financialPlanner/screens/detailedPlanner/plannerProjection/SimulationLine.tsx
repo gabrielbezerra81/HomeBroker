@@ -7,7 +7,7 @@ import { DetailedProjection } from "modules/financialPlanner/types/FinancialPlan
 
 import { FiX } from "react-icons/fi";
 
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { FormControl } from "react-bootstrap";
 import CustomInput from "shared/components/CustomInput";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
@@ -17,12 +17,14 @@ interface Props {
   totalResult: number;
   simulation: DetailedProjection;
   simIndex: number;
+  totalInvested: number;
 }
 
 const SimulationLine: React.FC<Props> = ({
   totalResult,
   simulation,
   simIndex,
+  totalInvested,
 }) => {
   const dispatch = useDispatchStorePrincipal();
 
@@ -48,6 +50,39 @@ const SimulationLine: React.FC<Props> = ({
     await dispatch(removeSimulationAction(simulation.id));
   }, [dispatch, simulation.id]);
 
+  const periodTypeOptions = useMemo(() => {
+    const options = [
+      <option key="anos" value={"anos"}>
+        anos
+      </option>,
+      <option key="meses" value={"meses"}>
+        meses
+      </option>,
+    ];
+
+    if (simulation.rateFrequency === "semanal") {
+      options.push(
+        <option key="semanas" value={"semanas"}>
+          semanas
+        </option>,
+      );
+    }
+
+    return options;
+  }, [simulation.rateFrequency]);
+
+  // financial is editable and has the initial value of calcBase
+  const financialValue = useMemo(
+    () => simulation.financialValue || simulation.calcBase,
+    [simulation.calcBase, simulation.financialValue],
+  );
+
+  const percent100 = useMemo(() => {
+    const value = (financialValue || 0) / totalInvested;
+
+    return value * 100;
+  }, [financialValue, totalInvested]);
+
   return (
     <tr key={simulation.id}>
       <td>
@@ -64,6 +99,8 @@ const SimulationLine: React.FC<Props> = ({
           </button>
         </PopConfirm>
       </td>
+      <td>{simulation.formattedStartDate}</td>
+      <td>{simulation.formattedEndDate}</td>
       <td>
         <div className="cellContent periodCell">
           <FormControl
@@ -81,9 +118,7 @@ const SimulationLine: React.FC<Props> = ({
             value={simulation.periodType}
             onChange={handleInputChange}
           >
-            <option value={"anos"}>anos</option>
-            <option value={"meses"}>meses</option>
-            <option value={"semanas"}>semanas</option>
+            {periodTypeOptions}
           </FormControl>
         </div>
       </td>
@@ -108,7 +143,7 @@ const SimulationLine: React.FC<Props> = ({
             renderArrows={false}
             theme="dark"
             onChange={handlePriceInputChange}
-            value={simulation.financialValue || simulation.calcBase}
+            value={financialValue}
           />
         </div>
       </td>
@@ -123,7 +158,7 @@ const SimulationLine: React.FC<Props> = ({
             theme="dark"
             suffix="%"
             onChange={handlePriceInputChange}
-            value=""
+            value={percent100}
           />
         </div>
       </td>

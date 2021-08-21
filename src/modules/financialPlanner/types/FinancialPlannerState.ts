@@ -41,6 +41,7 @@ export interface DetailedProjection
   formattedRealIncome: string;
   formattedTax: number;
   formattedRealIncomePercentage: string;
+  endDate: Date;
   [key: string]: any;
 }
 

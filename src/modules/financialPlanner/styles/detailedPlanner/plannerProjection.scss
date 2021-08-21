@@ -95,6 +95,18 @@
     background-color: transparent !important;
     margin-bottom: 8px;
 
+    select {
+      width: 75px;
+    }
+
+    .suffixInput {
+      max-width: 70px;
+    }
+
+    input {
+      text-align: center;
+    }
+
     th {
       font-weight: 500;
       color: #aa88bc;
@@ -135,10 +147,6 @@
       display: flex;
       justify-content: center;
 
-      input {
-        text-align: center;
-      }
-
       &.periodCell {
         > .darkSimpleInput {
           width: 40px;
@@ -166,9 +174,7 @@
     }
 
     .column100 {
-      .containerInput {
-        max-width: 100px;
-      }
+      max-width: 65px;
     }
 
     .incomeColumn {
@@ -177,15 +183,12 @@
       }
     }
 
-    select {
-      max-width: 120px;
-    }
-
     tr {
       &:not(:first-child) {
         border-top: 6px solid #0f0f0f;
       }
 
+      // last line
       &:last-child {
         td {
           background-color: transparent !important;
@@ -195,7 +198,7 @@
             text-align: left;
           }
 
-          &:nth-child(n + 6) {
+          &:nth-child(n + 7) {
             border-bottom: 1px solid #b7b7b7;
           }
 

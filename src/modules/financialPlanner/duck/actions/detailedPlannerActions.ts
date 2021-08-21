@@ -40,8 +40,6 @@ export const listSimulationsAction = (): MainThunkAction => {
       if (response.data && Array.isArray(response.data)) {
         const { data } = response;
 
-        console.log(data);
-
         dispatch(updateDetailedPlannerStateAction({ simulations: data }));
       }
     } catch (error) {}
@@ -79,6 +77,11 @@ export const changeSimulationAction = ({
       if (attr === "rateFrequency" || attr === "depositFrequency") {
         simulation.rateFrequency = newValue;
         simulation.depositFrequency = newValue;
+
+        // only simulations with weekly rate can have period in weeks
+        if (newValue !== "semanal" && simulation.periodType === "semanas") {
+          simulation.periodType = "meses";
+        }
       } //
       else {
         Object.assign(simulation, { [attr]: newValue });

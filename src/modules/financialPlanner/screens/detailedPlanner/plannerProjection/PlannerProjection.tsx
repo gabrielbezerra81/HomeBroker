@@ -49,15 +49,35 @@ const PlannerProjection: React.FC = () => {
     return filteredSimulations.map((simulation) => {
       const [day, month, year] = simulation.startDate.split("/");
 
+      let periodUnit: moment.unitOfTime.Diff = "months";
+
+      if (simulation.periodType === "semanas") {
+        periodUnit = "weeks";
+      } //
+      else if (simulation.periodType === "anos") {
+        periodUnit = "years";
+      }
+
       const startDate = new Date(Number(year), Number(month) - 1, Number(day));
 
-      let unitOfTime: moment.unitOfTime.Diff = "months";
+      const currentDate = new Date();
+
+      const endDate = moment(startDate)
+        .add(periodUnit, simulation.period)
+        .toDate();
+
+      const isCurrentAfterEnd = moment(currentDate).isAfter(endDate);
+
+      // end date for the this calculation is the current date limited by the max duration.
+      const calculationEndDate = isCurrentAfterEnd ? endDate : currentDate;
+
+      let rateUnit: moment.unitOfTime.Diff = "months";
 
       if (simulation.rateFrequency === "semanal") {
-        unitOfTime = "weeks";
+        rateUnit = "weeks";
       } //
 
-      const diff = moment(new Date()).diff(startDate, unitOfTime);
+      const diff = moment(calculationEndDate).diff(startDate, rateUnit);
 
       // marks end date
       const numberOfPeriods = Math.round(diff);
@@ -116,13 +136,12 @@ const PlannerProjection: React.FC = () => {
       return {
         ...lastProjection,
         ...simulationRest,
-        totalInvested,
+        totalInvested: totalInvested || 0,
         formattedTotalInvested,
         formattedTotal: lastProjection?.total
           ? formatarNumDecimal(lastProjection?.total, 2, 2)
           : "",
         formattedTotalIncome: formattedTotalIncome.replace("R$ ", ""),
-        startDate,
         periodValue: simulation.period,
         formattedCalcBase: lastProjection?.calcBase
           ? formatarNumDecimal(lastProjection.calcBase, 2, 2)
@@ -138,6 +157,10 @@ const PlannerProjection: React.FC = () => {
           2,
           2,
         ),
+        startDate,
+        formattedStartDate: moment(startDate).format("DD/MM/YY"),
+        endDate: calculationEndDate,
+        formattedEndDate: moment(calculationEndDate).format("DD/MM/YY"),
       };
     });
   }, [selectedSimulation, simulations]);
@@ -179,8 +202,8 @@ const PlannerProjection: React.FC = () => {
   const handleSimulate = useCallback(() => {}, []);
 
   const investmentOptions = useMemo(() => {
-    return simulations.map((sim) => (
-      <option key={sim.title} value={sim.title}>
+    return simulations.map((sim, index) => (
+      <option key={index as any} value={sim.title}>
         {sim.title}
       </option>
     ));
@@ -295,6 +318,7 @@ const PlannerProjection: React.FC = () => {
           <thead>
             <tr>
               <th></th>
+              <th colSpan={2}>Data</th>
               <th></th>
               <th></th>
               <th></th>
@@ -303,12 +327,16 @@ const PlannerProjection: React.FC = () => {
               <th></th>
               <th></th>
               <th></th>
-              <th className="realTaxHead" colSpan={2}>Taxa real</th>
+              <th className="realTaxHead" colSpan={2}>
+                Taxa real
+              </th>
               <th></th>
               <th></th>
             </tr>
             <tr>
               <th></th>
+              <th>Início</th>
+              <th>Fim</th>
               <th>Prazo</th>
               <th>Investimento</th>
               <th>Valor financeiro</th>
@@ -329,11 +357,13 @@ const PlannerProjection: React.FC = () => {
                 totalResult={totalResult}
                 simulation={simulation}
                 simIndex={simIndex}
+                totalInvested={totalInvested}
+                key={simIndex as any}
               />
             ))}
 
             <tr>
-              <td colSpan={2}>
+              <td colSpan={3}>
                 <button
                   className="brokerCustomButton"
                   onClick={handleIncludeLine}
@@ -341,6 +371,7 @@ const PlannerProjection: React.FC = () => {
                   + Incluir linha
                 </button>
               </td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
