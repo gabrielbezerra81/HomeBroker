@@ -4,7 +4,6 @@ import qs from "qs";
 
 import {
   ABRIR_FECHAR_MENU_LATERAL,
-  LOGAR_DESLOGAR_USUARIO,
   ABRIR_FECHAR_ITEM_BARRA_LATERAL,
   MUDAR_DADOS_LOGIN,
   actionType,
@@ -23,11 +22,11 @@ import { clearIntervalAsync } from "set-interval-async/dynamic";
 
 const waitDispatch = 1000;
 
-const redirectURL =
-  // eslint-disable-next-line no-restricted-globals
-  location.hostname === "localhost"
-    ? "http://localhost:3000/"
-    : "https://homebroker-react.herokuapp.com/";
+// const redirectURL =
+//   // eslint-disable-next-line no-restricted-globals
+//   location.hostname === "localhost"
+//     ? "http://localhost:3000/"
+//     : "https://homebroker-react.herokuapp.com/";
 
 export const updateOneSystemStateAction = (attributeName, attributeValue) => {
   return (dispatch) => {

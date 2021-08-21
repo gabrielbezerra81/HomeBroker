@@ -5,7 +5,7 @@ import BottomOrdersExecHelper from "shared/components/BottomOrdersExecHelper/Bot
 
 interface Props {}
 
-const BottomOrders: React.FC<Props> = ({}) => {
+const BottomOrders: React.FC<Props> = () => {
   const {
     multilegReducer: { multileg, abaSelecionada },
     ordersExecReducer: { tabelaOrdensExecucao },

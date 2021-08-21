@@ -1,7 +1,6 @@
-import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import OrdersTable from "./OrdersTable";
 import { Order } from "modules/ordersExec/types/ordersExec";
-import React, { useCallback } from "react";
+import React from "react";
 import { useMemo } from "react";
 import { PopupHeader } from "../PopupHeader";
 
@@ -14,10 +13,6 @@ const BottomOrdersExecHelper: React.FC<Props> = ({
   data,
   headerTitle = "HISTÓRICO DE OPERAÇÕES",
 }) => {
-  const {
-    positionReducer: { posicoesCustodia },
-  } = useStateStorePrincipal();
-
   const renderedHeader = useMemo(() => {
     return (
       <PopupHeader

@@ -2,13 +2,10 @@ import React, { useCallback } from "react";
 
 import { Button } from "react-bootstrap";
 
-import { Popconfirm } from "antd";
-
 import CustomButton from "shared/components/CustomButton";
 
 import { updateMultilegTabAction } from "../../duck/actions/MultilegActions";
 import {
-  addQuoteBoxFromMultilegAction,
   createMultilegPositionAction,
   sendMultilegOrderAction,
 } from "../../duck/actions/MultilegAPIAction";
@@ -50,9 +47,9 @@ const OperationButtons: React.FC<Props> = ({ tabIndex }) => {
     await dispatch(createMultilegPositionAction(tabIndex));
   }, [dispatch, tabIndex]);
 
-  const handleAddBox = useCallback(() => {
-    dispatch(addQuoteBoxFromMultilegAction(tabIndex));
-  }, [dispatch, tabIndex]);
+  // const handleAddBox = useCallback(() => {
+  //   dispatch(addQuoteBoxFromMultilegAction(tabIndex));
+  // }, [dispatch, tabIndex]);
 
   // botões padrões com envio de ordem
   if (
@@ -133,20 +130,20 @@ const OperationButtons: React.FC<Props> = ({ tabIndex }) => {
 
 export default OperationButtons;
 
-const ConfirmAlert: React.FC<any> = ({ children, onConfirm }: any) => {
-  return (
-    <Popconfirm
-      okText="Sim"
-      cancelText="Não"
-      onConfirm={onConfirm}
-      title={
-        <div style={{ width: "260px" }}>
-          Você possui mais de uma conta ativa. Tem certeza que a ordem é para
-          esta conta?
-        </div>
-      }
-    >
-      {children}
-    </Popconfirm>
-  );
-};
+// const ConfirmAlert: React.FC<any> = ({ children, onConfirm }: any) => {
+//   return (
+//     <Popconfirm
+//       okText="Sim"
+//       cancelText="Não"
+//       onConfirm={onConfirm}
+//       title={
+//         <div style={{ width: "260px" }}>
+//           Você possui mais de uma conta ativa. Tem certeza que a ordem é para
+//           esta conta?
+//         </div>
+//       }
+//     >
+//       {children}
+//     </Popconfirm>
+//   );
+// };

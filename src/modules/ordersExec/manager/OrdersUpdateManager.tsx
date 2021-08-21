@@ -6,7 +6,6 @@ import checkIfUpdateConfigChanged from "../../../managers/updateManager/utils";
 import {
   listOrdersExecAction,
   startProactiveOrdersUpdateAction,
-  startReactiveOrdersUpdateAction,
 } from "modules/ordersExec/duck/actions/OrdensExecActions";
 
 const OrdersUpdateManager: React.FC = () => {

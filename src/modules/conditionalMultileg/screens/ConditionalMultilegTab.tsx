@@ -29,12 +29,7 @@ interface Props {
 
 const ConditionalMultilegTab: React.FC<Props> = ({ tabIndex, titleColor }) => {
   const {
-    conditionalMultilegReducer: {
-      multileg,
-      cotacoesMultileg,
-      cotacoesMultilegID,
-      configComplementarAberto,
-    },
+    conditionalMultilegReducer: { multileg, cotacoesMultileg },
   } = useStateStorePrincipal();
 
   const tab = useMemo(() => {

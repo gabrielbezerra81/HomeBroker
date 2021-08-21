@@ -311,7 +311,7 @@ const validateValueOnPrecisionChange = ({
 }: ValidateProps) => {
   let newValue = value;
 
-  const [_, fractionDigits] = step.toString().split(".");
+  const [, fractionDigits] = step.toString().split(".");
 
   const precision = fractionDigits ? fractionDigits.length : 0;
 

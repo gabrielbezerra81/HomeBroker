@@ -47,7 +47,6 @@ import {
   sucesso_favoritar_thl,
   erro_favoritar_thl,
   error_add_box,
-  success_add_box,
   error_delete_box,
   error_delete_alert,
 } from "constants/AlertaErros";

@@ -57,30 +57,30 @@ const Tab4Alerts: React.FC<Props> = ({ multiBox }) => {
     return stockSymbolsData.find((data) => data.symbol === searchedSymbol);
   }, [searchedSymbol, stockSymbolsData]);
 
-  const { medium } = useMemo(() => {
-    const formatted = {
-      formattedMin: "0,00",
-      formattedMax: "0,00",
-      formattedMedium: "",
-      medium: 0,
-    };
+  // const {} = useMemo(() => {
+  //   const formatted = {
+  //     formattedMin: "0,00",
+  //     formattedMax: "0,00",
+  //     formattedMedium: "",
+  //     medium: 0,
+  //   };
 
-    if (!structureData) {
-      return formatted;
-    }
+  //   if (!structureData) {
+  //     return formatted;
+  //   }
 
-    const { min, max } = structureData;
+  //   const { min, max } = structureData;
 
-    formatted.formattedMin = formatarNumDecimal(min || 0);
-    formatted.formattedMax = formatarNumDecimal(max || 0);
+  //   formatted.formattedMin = formatarNumDecimal(min || 0);
+  //   formatted.formattedMax = formatarNumDecimal(max || 0);
 
-    if (typeof min === "number" && typeof max === "number") {
-      formatted.medium = (max + min) / 2;
-      formatted.formattedMedium = formatarNumDecimal(formatted.medium || 0);
-    }
+  //   if (typeof min === "number" && typeof max === "number") {
+  //     formatted.medium = (max + min) / 2;
+  //     formatted.formattedMedium = formatarNumDecimal(formatted.medium || 0);
+  //   }
 
-    return formatted;
-  }, [structureData]);
+  //   return formatted;
+  // }, [structureData]);
 
   const handleSearchStock = useCallback(() => {
     dispatch(updateBoxAttrAction(id, { activeTab: "5" }));
