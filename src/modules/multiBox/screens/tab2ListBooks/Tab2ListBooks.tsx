@@ -126,6 +126,10 @@ const Tab2ListBooks: React.FC<Props> = ({ multiBox }) => {
   }, [stockSymbolData]);
 
   const tab4Data = useMemo(() => {
+    if (!topSymbols) {
+      return null;
+    }
+
     return topSymbols?.map((topSymbol) => {
       const symbolData = symbolsData.find(
         (item) => item.symbol === topSymbol.code,
@@ -138,6 +142,30 @@ const Tab2ListBooks: React.FC<Props> = ({ multiBox }) => {
       return { ...symbolData, ...topSymbol, viewMode: strikeViewMode };
     });
   }, [strikeViewMode, symbolsData, topSymbols]);
+
+  const renderedData = useMemo(() => {
+    return tab4Data?.map((symbolData, index) => {
+      if (!symbolData) {
+        return null;
+      }
+
+      return (
+        <tr key={index}>
+          {/* <td className={item.offerType === "C" ? "buyColor" : "sellColor"}>
+            {item.formattedQtty}
+          </td> */}
+          <td className="strikeColumn">
+            <SymbolCard data={symbolData} showExpirationWithCode={false} />
+          </td>
+          <td>{symbolData?.formattedLast}</td>
+          <td>{symbolData?.formattedBuyQtty}</td>
+          <td>{symbolData?.formattedBuy}</td>
+          <td>{symbolData?.formattedSell}</td>
+          <td>{symbolData?.formattedSellQtty}</td>
+        </tr>
+      );
+    });
+  }, [tab4Data]);
 
   return (
     <div className="multiBoxTab4">
@@ -221,32 +249,7 @@ const Tab2ListBooks: React.FC<Props> = ({ multiBox }) => {
             <th>Qtde</th>
           </tr>
         </thead>
-        <tbody>
-          {tab4Data.map((symbolData, index) => {
-            if (!symbolData) {
-              return null;
-            }
-
-            return (
-              <tr key={index}>
-                {/* <td className={item.offerType === "C" ? "buyColor" : "sellColor"}>
-                  {item.formattedQtty}
-                </td> */}
-                <td className="strikeColumn">
-                  <SymbolCard
-                    data={symbolData}
-                    showExpirationWithCode={false}
-                  />
-                </td>
-                <td>{symbolData?.formattedLast}</td>
-                <td>{symbolData?.formattedBuyQtty}</td>
-                <td>{symbolData?.formattedBuy}</td>
-                <td>{symbolData?.formattedSell}</td>
-                <td>{symbolData?.formattedSellQtty}</td>
-              </tr>
-            );
-          })}
-        </tbody>
+        <tbody>{renderedData}</tbody>
       </Table>
     </div>
   );
