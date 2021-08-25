@@ -96,6 +96,7 @@ const PlannerProjection: React.FC = () => {
           simulation.depositFrequency,
         ),
         periodicity: simulation.periodType,
+        lastCalcBase: simulation?.financialValue,
       });
 
       const lastProjection = projections[projections.length - 1] as
@@ -117,18 +118,13 @@ const PlannerProjection: React.FC = () => {
         numberOfPeriods,
       });
 
-      const {
-        totalInvested,
-        formattedTotalInvested,
-        formattedTotalIncome,
-        totalIncome,
-      } = result;
+      const { totalInvested, formattedTotalInvested } = result;
 
       const { period: _, ...simulationRest } = simulation;
 
       const tax = simulation?.tax || 0;
 
-      const realIncome = totalIncome * (1 - tax);
+      const realIncome = (lastProjection?.totalIncome || 0) * (1 - tax);
       const realIncomePercentage = lastProjection
         ? (realIncome / lastProjection?.calcBase) * 100
         : 0;
@@ -141,7 +137,11 @@ const PlannerProjection: React.FC = () => {
         formattedTotal: lastProjection?.total
           ? formatarNumDecimal(lastProjection?.total, 2, 2)
           : "",
-        formattedTotalIncome: formattedTotalIncome.replace("R$ ", ""),
+        formattedTotalIncome: formatarNumDecimal(
+          lastProjection?.totalIncome || 0,
+          2,
+          2,
+        ),
         periodValue: simulation.period,
         formattedCalcBase: lastProjection?.calcBase
           ? formatarNumDecimal(lastProjection.calcBase, 2, 2)

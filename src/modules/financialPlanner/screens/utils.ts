@@ -386,6 +386,9 @@ interface CalculateProjectionsParams
   startDate: Date;
   // weeks, months or years
   numberOfPeriods: number;
+
+  // used to modify the value in the last period of the projection
+  lastCalcBase?: number;
 }
 
 export const calculateProjections = ({
@@ -398,6 +401,7 @@ export const calculateProjections = ({
   periodicity,
   numberOfPeriods,
   startDate,
+  lastCalcBase,
 }: CalculateProjectionsParams) => {
   const projections: Projection[] = [];
 
@@ -439,13 +443,23 @@ export const calculateProjections = ({
 
   // indexes represents each period and starts from 1
   for (let index = 1; index <= numberOfPeriods; index++) {
+    // acumulated value until here
     let calcBase = total;
+    let calcBaseDifference = 0;
 
-    const periodIncome = total * monthRate ** 1;
+    if (lastCalcBase && index === numberOfPeriods) {
+      calcBaseDifference = lastCalcBase - calcBase;
+
+      calcBase = lastCalcBase;
+    }
+
+    const periodIncome = calcBase * monthRate ** 1;
 
     // const monthPercent = (monthIncome / calcBase) * 100;
 
-    total += periodIncome;
+    investment += calcBaseDifference;
+
+    total += periodIncome + calcBaseDifference;
 
     // the first period (week, month, year) has not contribution
     if (index > excludedPeriodsFromContrib) {
@@ -477,7 +491,7 @@ export const calculateProjections = ({
     const projection = {
       rentability: interestRate,
       periodIncome,
-      totalIncome: totalIncome,
+      totalIncome,
       result: 0,
       total: investment + totalIncome,
       calcBase,
