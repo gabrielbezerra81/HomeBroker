@@ -126,7 +126,7 @@ const Tab2ListBooks: React.FC<Props> = ({ multiBox }) => {
   }, [stockSymbolData]);
 
   const tab4Data = useMemo(() => {
-    return topSymbols.map((topSymbol) => {
+    return topSymbols?.map((topSymbol) => {
       const symbolData = symbolsData.find(
         (item) => item.symbol === topSymbol.code,
       );
