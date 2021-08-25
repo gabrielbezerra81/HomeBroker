@@ -139,7 +139,7 @@ const Tab3Position: React.FC<Props> = ({ multiBox }) => {
   }, [stockSymbolData]);
 
   const formattedBoxPositions = useMemo(() => {
-    return boxPositions.map((position) => ({
+    return boxPositions?.map((position) => ({
       ...position,
       formattedExpiration: getSymbolExpirationInDays(
         position.stock.endBusiness,
@@ -230,7 +230,7 @@ const Tab3Position: React.FC<Props> = ({ multiBox }) => {
           </tr>
         </thead>
         <tbody>
-          {formattedBoxPositions.map((position, index) => (
+          {formattedBoxPositions?.map((position, index) => (
             <PositionTableItem
               key={index}
               multiBox={multiBox}
