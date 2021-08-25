@@ -159,7 +159,7 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
   }, [dispatch, id]);
 
   const strikeOptions = useMemo(() => {
-    const dropdownOptions = stockOptions.map((option, index) => {
+    const dropdownOptions = stockOptions?.map((option, index) => {
       if (index % 2 !== 0) {
         return null;
       }
@@ -194,7 +194,7 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
   }, [stockOptions]);
 
   const expirationOptions = useMemo(() => {
-    return expirations.map((expiration) => {
+    return expirations?.map((expiration) => {
       const formattedExpiration = formatExpiration(expiration);
       return (
         <option key={expiration} value={expiration}>
@@ -374,7 +374,7 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
             </tr>
           </thead>
           <tbody>
-            {multiBox.boxOffers.map((offer, index) => (
+            {multiBox.boxOffers?.map((offer, index) => (
               <MultiBoxOffer
                 data={offer}
                 strikeViewMode={strikeViewMode}
