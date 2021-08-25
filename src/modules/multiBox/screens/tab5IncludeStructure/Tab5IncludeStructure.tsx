@@ -318,7 +318,7 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
             showSearch
             optionFilterProp="children"
             notFoundContent={
-              strikeOptions.length > 0
+              strikeOptions?.length > 0
                 ? "Código não encontrado"
                 : "Pesquise um ativo"
             }
