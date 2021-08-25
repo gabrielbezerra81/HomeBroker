@@ -316,6 +316,7 @@ export const calculateSimulationResult = ({
   }
 
   const gained = initialValue * (1 + rate) ** numberOfPeriods;
+
   const addedValue =
     (monthlyValue *
       ((1 + rate) ** (numberOfPeriods - excludedPeriodsFromContrib) - 1)) /
@@ -323,7 +324,8 @@ export const calculateSimulationResult = ({
 
   const total = gained + addedValue;
   const totalInvested =
-    initialValue + monthlyValue * (numberOfPeriods - excludedPeriodsFromContrib);
+    initialValue +
+    monthlyValue * (numberOfPeriods - excludedPeriodsFromContrib);
   const totalIncome = total - totalInvested;
 
   const res = {

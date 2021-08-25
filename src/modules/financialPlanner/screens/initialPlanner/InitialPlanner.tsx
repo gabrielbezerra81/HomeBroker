@@ -10,6 +10,7 @@ import { PopupHeader } from "shared/components/PopupHeader";
 import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 import CustomInput from "shared/components/CustomInput";
 import {
+  calculateRateFromTotalAction,
   handleSaveSimulationAction,
   updateInitialPlannerStateAction,
 } from "modules/financialPlanner/duck/actions/initialPlannerActions";
@@ -20,12 +21,12 @@ import ProjectionGraph from "./ProjectionGraph";
 import {
   calculateProjections,
   calculateSimulationResult,
-  convertContribution,
-  convertInterestRate,
   convertPeriodByRatePeriodicity,
   filterWeeklyProjections,
   IncludeInitialLine,
 } from "../utils";
+
+import areEqual from "shared/utils/areEqual";
 
 import "../../styles/initialPlanner/initialPlanner.scss";
 import CustomButton from "shared/components/CustomButton";
@@ -79,7 +80,26 @@ const InitialPlanner: React.FC = () => {
     listing,
   } = initialPlanner;
 
-  const { listing: _, ...calcResultProps } = initialPlanner;
+  const calcResultProps = useMemo(
+    () => ({
+      initialValue,
+      contribution,
+      contributionPeriodicity,
+      interestRate,
+      ratePeriodicity,
+      periodValue,
+      periodicity,
+    }),
+    [
+      contribution,
+      contributionPeriodicity,
+      initialValue,
+      interestRate,
+      periodValue,
+      periodicity,
+      ratePeriodicity,
+    ],
+  );
 
   const dispatch = useDispatchStorePrincipal();
 
@@ -87,6 +107,8 @@ const InitialPlanner: React.FC = () => {
   const [converterVisibility, setConverterVisibility] = useState(false);
 
   const [simulationTitle, setSimulationTitle] = useState("");
+
+  const [total, setTotal] = useState(0);
 
   const result = useMemo(() => {
     if (!initialValue || !interestRate || !periodValue) {
@@ -99,23 +121,34 @@ const InitialPlanner: React.FC = () => {
       ratePeriodicity,
     });
 
-    return calculateSimulationResult({ ...calcResultProps, numberOfPeriods });
+    const result = calculateSimulationResult({
+      ...calcResultProps,
+      numberOfPeriods,
+    });
+
+    setTotal(result.total);
+
+    return result;
   }, [
+    calcResultProps,
     initialValue,
     interestRate,
     periodValue,
     periodicity,
     ratePeriodicity,
-    calcResultProps,
   ]);
 
-  const projections = useMemo(() => {
-    const numberOfPeriods = convertPeriodByRatePeriodicity({
-      periodValue,
-      periodicity,
-      ratePeriodicity,
-    });
+  const numberOfPeriods = useMemo(
+    () =>
+      convertPeriodByRatePeriodicity({
+        periodValue,
+        periodicity,
+        ratePeriodicity,
+      }),
+    [periodValue, periodicity, ratePeriodicity],
+  );
 
+  const projections = useMemo(() => {
     const projections = calculateProjections({
       initialValue,
       interestRate,
@@ -137,6 +170,7 @@ const InitialPlanner: React.FC = () => {
     contributionPeriodicity,
     ratePeriodicity,
     periodicity,
+    numberOfPeriods,
   ]);
 
   const onClose = useCallback(() => {
@@ -179,6 +213,10 @@ const InitialPlanner: React.FC = () => {
     [dispatch, ratePeriodicity],
   );
 
+  const handleChangeTotal = useCallback((value, event) => {
+    setTotal(value);
+  }, []);
+
   const handleOpenRateConverter = useCallback(() => {
     setConverterVisibility((oldValue) => !oldValue);
   }, []);
@@ -192,6 +230,10 @@ const InitialPlanner: React.FC = () => {
 
     setSavingSimulations(false);
   }, [dispatch, simulationTitle]);
+
+  const handleCalculateRate = useCallback(() => {
+    dispatch(calculateRateFromTotalAction({ total, numberOfPeriods }));
+  }, [dispatch, total, numberOfPeriods]);
 
   const initialLine = IncludeInitialLine();
 
@@ -419,8 +461,22 @@ const InitialPlanner: React.FC = () => {
 
               <div className="simulatorRow">
                 <h6 className="totalValueText">Total:</h6>
-                <h6>{result?.formattedTotal}</h6>
+                <CustomInput
+                  type="preco"
+                  name="total"
+                  value={total}
+                  step={0.01}
+                  theme="dark"
+                  renderArrows={false}
+                  onChange={handleChangeTotal}
+                />
                 <span></span>
+                <CustomButton
+                  onClick={handleCalculateRate}
+                  className="brokerCustomButton calculateRateButton"
+                >
+                  Calcular Juros
+                </CustomButton>
                 <PopConfirm
                   className="saveSimulationPopConfirm"
                   title="Salvar simulação"
@@ -456,7 +512,7 @@ const InitialPlanner: React.FC = () => {
   );
 };
 
-export default InitialPlanner;
+export default React.memo(InitialPlanner, areEqual);
 
 /*
 

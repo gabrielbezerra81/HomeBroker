@@ -93,6 +93,17 @@
         padding: 3px 6px;
       }
 
+      .calculateRateButton {
+        border-radius: 4px;
+        position: absolute;
+        right: 90px;
+        bottom: 32px;
+        width: 126px;
+        height: 26px;
+        font-size: 14px;
+        background-color: #272827;
+      }
+
       .saveSimulationButton {
         border-radius: 4px;
         position: absolute;
@@ -100,7 +111,6 @@
         bottom: 0;
         width: 126px;
         height: 26px;
-        display: flex;
         font-size: 14px;
         background-color: #272827;
       }
