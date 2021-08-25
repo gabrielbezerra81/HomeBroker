@@ -227,7 +227,7 @@ const SimulationLine: React.FC<Props> = ({
             renderArrows={false}
             theme="dark"
             onChange={() => {}}
-            value={simulation?.formattedTax}
+            value={simulation?.taxPercent}
             disabled
             suffix="%"
           />

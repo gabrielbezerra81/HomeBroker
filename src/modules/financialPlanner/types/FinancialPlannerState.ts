@@ -11,6 +11,14 @@ export interface InitialPlannerData {
   listing: "semanal" | "mensal" | "anual";
 }
 
+export interface SimulationTax {
+  type: "tax" | "profit" | "loss";
+  description: string;
+  value: number;
+  credit: boolean;
+  created: string;
+}
+
 export interface Simulation {
   id: number;
   initialDeposit: number;
@@ -23,7 +31,7 @@ export interface Simulation {
   update: string;
   startDate: string;
   title: string;
-  tax?: number;
+  taxes?: Array<SimulationTax>;
   financialValue?: number;
 }
 
@@ -39,7 +47,7 @@ export interface DetailedProjection
   formattedTotal: string;
   formattedTotalIncome: string;
   formattedRealIncome: string;
-  formattedTax: number;
+  taxPercent: number;
   formattedRealIncomePercentage: string;
   endDate: Date;
   [key: string]: any;

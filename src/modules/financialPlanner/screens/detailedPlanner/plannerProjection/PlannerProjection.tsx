@@ -122,9 +122,21 @@ const PlannerProjection: React.FC = () => {
 
       const { period: _, ...simulationRest } = simulation;
 
-      const tax = simulation?.tax || 0;
+      let taxesValues = 0;
 
-      const realIncome = (lastProjection?.totalIncome || 0) * (1 - tax);
+      if (simulation?.taxes) {
+        simulation.taxes.forEach((tax) => {
+          taxesValues += tax.value;
+        });
+      }
+
+      const taxPercent = taxesValues / (lastProjection?.totalIncome || 1);
+
+      const realIncome = +(
+        (lastProjection?.totalIncome || 0) *
+        (1 - taxPercent)
+      ).toFixed(2);
+
       const realIncomePercentage = lastProjection
         ? (realIncome / lastProjection?.calcBase) * 100
         : 0;
@@ -147,8 +159,8 @@ const PlannerProjection: React.FC = () => {
           ? formatarNumDecimal(lastProjection.calcBase, 2, 2)
           : "",
         timePassed: diff,
-        tax,
-        formattedTax: simulation?.tax ? simulation?.tax * 100 : 0,
+        tax: taxesValues,
+        taxPercent,
         realIncome,
         formattedRealIncome: formatarNumDecimal(realIncome, 2, 2),
         realIncomePercentage,
