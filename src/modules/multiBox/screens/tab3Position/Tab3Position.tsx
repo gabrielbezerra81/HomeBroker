@@ -160,7 +160,7 @@ const Tab3Position: React.FC<Props> = ({ multiBox }) => {
   // );
 
   return (
-    <div className="multiBoxTab2">
+    <div className="multiBoxPositionTab">
       <header className="boxContentHeader">
         <div className="searchRow">
           <InputGroup>

@@ -225,7 +225,7 @@ const Tab4Alerts: React.FC<Props> = ({ multiBox }) => {
   }, [stockSymbolData]);
 
   return (
-    <div className="multiBoxTab3">
+    <div className="multiBoxAlertsTab">
       <header className="boxContentHeader">
         <div className="searchRow">
           <InputGroup>

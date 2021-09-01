@@ -125,7 +125,7 @@ const Tab2ListBooks: React.FC<Props> = ({ multiBox }) => {
     };
   }, [stockSymbolData]);
 
-  const tab4Data = useMemo(() => {
+  const booksData = useMemo(() => {
     if (!topSymbols) {
       return null;
     }
@@ -144,7 +144,7 @@ const Tab2ListBooks: React.FC<Props> = ({ multiBox }) => {
   }, [strikeViewMode, symbolsData, topSymbols]);
 
   const renderedData = useMemo(() => {
-    return tab4Data?.map((symbolData, index) => {
+    return booksData?.map((symbolData, index) => {
       if (!symbolData) {
         return null;
       }
@@ -165,10 +165,10 @@ const Tab2ListBooks: React.FC<Props> = ({ multiBox }) => {
         </tr>
       );
     });
-  }, [tab4Data]);
+  }, [booksData]);
 
   return (
-    <div className="multiBoxTab4">
+    <div className="multiBoxBooksTab">
       <header className="boxContentHeader">
         <div className="searchRow">
           <InputGroup>

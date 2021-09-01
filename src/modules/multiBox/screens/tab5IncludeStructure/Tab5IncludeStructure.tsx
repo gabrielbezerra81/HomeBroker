@@ -221,7 +221,7 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
   }, [stockSymbolData]);
 
   return (
-    <div className="multiBoxTab5">
+    <div className="multiBoxOffersTab">
       <header className="boxContentHeader">
         <div className="searchRow">
           <InputGroup>
