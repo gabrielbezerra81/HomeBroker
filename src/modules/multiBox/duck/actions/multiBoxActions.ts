@@ -143,6 +143,7 @@ export const updateBoxAttrAction = (
 
 export const updateStructuresAndLoadBoxesAction = (
   data: any[],
+  // true value allows to create the box square in the screen
   createBoxes: boolean,
 ): MainThunkAction => {
   return (dispatch, getState) => {
@@ -152,6 +153,7 @@ export const updateStructuresAndLoadBoxesAction = (
 
     const openedBoxes: OpenedBoxes[] = [];
 
+    // map api data from box (favorites) to structure and general info of the box
     const newData: Tab1Data[] = data.map((boxItem: any) => {
       const { structure } = boxItem;
 
@@ -188,6 +190,7 @@ export const updateStructuresAndLoadBoxesAction = (
       return box;
     });
 
+    // this updates or pushes news boxes to the current data
     const updatedTab1Data = produce(boxesTab1Data, (draft) => {
       newData.forEach((newStructure) => {
         const index = draft.findIndex(
@@ -336,7 +339,7 @@ export const addMultiBoxesFromStructureDataAction = (
     const multiBoxes: MultiBoxData[] = [];
 
     for await (const boxes of boxPromises) {
-      multiBoxes.push(boxes);
+      multiBoxes.push(await boxes);
     }
 
     dispatch(
