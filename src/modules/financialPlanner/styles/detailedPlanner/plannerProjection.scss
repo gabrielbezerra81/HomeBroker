@@ -229,4 +229,71 @@
     border-radius: 4px;
     font-size: 14px;
   }
+
+  .configButton {
+    padding: 0 4px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    > img {
+      height: 15px;
+      width: 15px;
+    }
+  }
 }
+
+.simulationConfigMenu {
+  margin-bottom: 2px !important;
+
+  header {
+    justify-content: flex-end;
+
+    .brokerCustomButton {
+      padding: 0;
+      margin-top: 1px;
+
+      svg {
+        vertical-align: baseline;
+      }
+    }
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 4px;
+    background-color: #444;
+    border-radius: 4px;
+
+    .brokerCustomButton {
+      display: flex;
+      align-items: center;
+
+      & + .brokerCustomButton {
+        margin-top: 4px;
+      }
+
+      span {
+        text-align: left;
+        margin-left: 6px;
+      }
+
+      img.export {
+        height: 12px;
+        margin-right: 4px;
+        filter: brightness(0.5);
+      }
+
+      svg {
+        margin-right: 4px;
+      }
+    }
+  }
+}
+
+// .simulationConfigMenu {
+//   .tooltip-inner .content {
+//   }
+// }

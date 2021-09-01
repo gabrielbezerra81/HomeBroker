@@ -250,6 +250,20 @@ const PlannerProjection: React.FC = () => {
     }));
   }, [simulationResults]);
 
+  const renderedSimulations = useMemo(
+    () =>
+      simulationResults.map((simulation, simIndex) => (
+        <SimulationLine
+          totalResult={totalResult}
+          simulation={simulation}
+          simIndex={simIndex}
+          totalInvested={totalInvested}
+          key={simIndex as any}
+        />
+      )),
+    [simulationResults, totalInvested, totalResult],
+  );
+
   return (
     <div className="plannerProjection">
       <div className="firstRow">
@@ -364,15 +378,7 @@ const PlannerProjection: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {simulationResults.map((simulation, simIndex) => (
-              <SimulationLine
-                totalResult={totalResult}
-                simulation={simulation}
-                simIndex={simIndex}
-                totalInvested={totalInvested}
-                key={simIndex as any}
-              />
-            ))}
+            {renderedSimulations}
 
             <tr>
               <td colSpan={3}>

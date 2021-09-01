@@ -7,11 +7,20 @@ import { DetailedProjection } from "modules/financialPlanner/types/FinancialPlan
 
 import { FiX } from "react-icons/fi";
 
-import React, { useCallback, useMemo } from "react";
+import cogIcon from "assets/multiBox/cogIcon.png";
+import openInNewIcon from "assets/multiBox/openInNewIcon.png";
+
+import React, { useCallback, useMemo, useState } from "react";
 import { FormControl } from "react-bootstrap";
 import CustomInput from "shared/components/CustomInput";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import PopConfirm from "shared/components/PopConfirm/PopConfirm";
+import CustomTooltip from "shared/components/CustomTooltip";
+import { updateInitialPlannerStateAction } from "modules/financialPlanner/duck/actions/initialPlannerActions";
+import { convertFrequencyToLocalValues } from "../../utils";
+import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
+import { atualizarDivKeyAction } from "redux/actions/GlobalAppActions";
+import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
 
 interface Props {
   totalResult: number;
@@ -26,7 +35,10 @@ const SimulationLine: React.FC<Props> = ({
   simIndex,
   totalInvested,
 }) => {
+  const dispatchGlobal = useDispatchGlobalStore();
   const dispatch = useDispatchStorePrincipal();
+
+  const [showMenu, setShowMenu] = useState(false);
 
   const handleInputChange = useCallback(
     (e) => {
@@ -46,8 +58,57 @@ const SimulationLine: React.FC<Props> = ({
     [dispatch, simIndex],
   );
 
+  const handleOpenConfigMenu = useCallback(() => {
+    setShowMenu((value) => !value);
+  }, []);
+
+  const handleDetailInvestment = useCallback(() => {
+    setShowMenu(false);
+  }, []);
+
+  const handleExportToInitialPlanner = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      // prevent zIndex increase on detailed planner
+      e.stopPropagation();
+
+      setShowMenu(false);
+
+      dispatch(
+        updateInitialPlannerStateAction({
+          initialValue: simulation.initialDeposit,
+          interestRate: simulation.rate,
+          ratePeriodicity: convertFrequencyToLocalValues(
+            simulation.rateFrequency,
+          ),
+          contribution: simulation.periodicDeposit,
+          contributionPeriodicity: convertFrequencyToLocalValues(
+            simulation.depositFrequency,
+          ),
+          listing: simulation.rateFrequency,
+          periodValue: simulation.periodValue,
+          periodicity: simulation.periodType,
+        }),
+      );
+
+      dispatchGlobal(atualizarDivKeyAction("initialPlanner"));
+      dispatch(abrirItemBarraLateralAction("isOpenInitialPlanner", true));
+    },
+    [
+      dispatch,
+      dispatchGlobal,
+      simulation.depositFrequency,
+      simulation.initialDeposit,
+      simulation.periodType,
+      simulation.periodValue,
+      simulation.periodicDeposit,
+      simulation.rate,
+      simulation.rateFrequency,
+    ],
+  );
+
   const handleRemoveSimulation = useCallback(async () => {
     await dispatch(removeSimulationAction(simulation.id));
+    setShowMenu(false);
   }, [dispatch, simulation.id]);
 
   const periodTypeOptions = useMemo(() => {
@@ -83,21 +144,70 @@ const SimulationLine: React.FC<Props> = ({
     return value * 100;
   }, [financialValue, totalInvested]);
 
+  const configMenuContent = useMemo(() => {
+    return (
+      <div>
+        <header>
+          <button onClick={handleOpenConfigMenu} className="brokerCustomButton">
+            <FiX color="#ce202a" size={10} strokeWidth={3} />
+          </button>
+        </header>
+
+        <main>
+          <button
+            onClick={handleDetailInvestment}
+            className="brokerCustomButton"
+          >
+            <img className="export" src={openInNewIcon} alt="" />
+            <span>Detalhar Investimento</span>
+          </button>
+
+          <button
+            onClick={handleExportToInitialPlanner}
+            className="brokerCustomButton"
+          >
+            <img className="export" src={openInNewIcon} alt="" />
+            <span>Carregar no simulador</span>
+          </button>
+          <PopConfirm
+            onConfirm={handleRemoveSimulation}
+            title="Excluir simulação"
+            message="Tem certeza que deseja excluir esta simulação?"
+            cancelButtonStyle={{
+              variant: "secondary",
+            }}
+          >
+            <button className="brokerCustomButton">
+              <FiX color="#ce202a" size={13} strokeWidth={3} />
+              <span>Excluir</span>
+            </button>
+          </PopConfirm>
+        </main>
+      </div>
+    );
+  }, [
+    handleDetailInvestment,
+    handleExportToInitialPlanner,
+    handleOpenConfigMenu,
+    handleRemoveSimulation,
+  ]);
+
   return (
     <tr key={simulation.id}>
       <td>
-        <PopConfirm
-          onConfirm={handleRemoveSimulation}
-          title="Excluir simulação"
-          message="Tem certeza que deseja excluir esta simulação?"
-          cancelButtonStyle={{
-            variant: "secondary",
-          }}
+        <CustomTooltip
+          id={`simulation${simIndex}`}
+          show={showMenu}
+          content={configMenuContent}
+          tooltipClassName="simulationConfigMenu"
         >
-          <button className="brokerCustomButton">
-            <FiX color="#ce202a" size={10} strokeWidth={3} />
+          <button
+            onClick={handleOpenConfigMenu}
+            className="brokerCustomButton configButton"
+          >
+            <img src={cogIcon} alt="config" />
           </button>
-        </PopConfirm>
+        </CustomTooltip>
       </td>
       <td>{simulation.formattedStartDate}</td>
       <td>{simulation.formattedEndDate}</td>
@@ -158,6 +268,7 @@ const SimulationLine: React.FC<Props> = ({
             theme="dark"
             suffix="%"
             onChange={handlePriceInputChange}
+            disabled
             value={percent100}
           />
         </div>

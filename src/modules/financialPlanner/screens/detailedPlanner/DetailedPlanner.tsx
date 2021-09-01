@@ -9,6 +9,8 @@ import WalletEvolution from "./walletEvolution/WalletEvolution";
 import PlannerProjection from "./plannerProjection/PlannerProjection";
 
 import "../../styles/detailedPlanner/detailedPlanner.scss";
+import "../../styles/detailedPlanner/plannerProjection.scss";
+
 import { listSimulationsAction } from "modules/financialPlanner/duck/actions/detailedPlannerActions";
 
 const DetailedPlanner: React.FC = () => {
