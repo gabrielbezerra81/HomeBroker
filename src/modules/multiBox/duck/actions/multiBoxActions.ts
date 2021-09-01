@@ -338,9 +338,9 @@ export const addMultiBoxesFromStructureDataAction = (
 
     const multiBoxes: MultiBoxData[] = [];
 
-    for await (const boxes of boxPromises) {
-      multiBoxes.push(await boxes);
-    }
+    const boxes = await Promise.all(boxPromises);
+
+    multiBoxes.push(...boxes);
 
     dispatch(
       updateManyMultiBoxAction({
