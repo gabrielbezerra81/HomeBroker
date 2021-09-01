@@ -220,6 +220,20 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
     return `${formatarNumDecimal(stockSymbolData.oscilation || 0, 2)}%`;
   }, [stockSymbolData]);
 
+  const renderedOffers = useMemo(
+    () =>
+      multiBox.boxOffers?.map((offer, index) => (
+        <MultiBoxOffer
+          data={offer}
+          strikeViewMode={strikeViewMode}
+          key={index}
+          boxId={id}
+          offerIndex={index}
+        />
+      )),
+    [id, multiBox.boxOffers, strikeViewMode],
+  );
+
   return (
     <div className="multiBoxOffersTab">
       <header className="boxContentHeader">
@@ -373,17 +387,7 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
               <th></th>
             </tr>
           </thead>
-          <tbody>
-            {multiBox.boxOffers?.map((offer, index) => (
-              <MultiBoxOffer
-                data={offer}
-                strikeViewMode={strikeViewMode}
-                key={index}
-                boxId={id}
-                offerIndex={index}
-              />
-            ))}
-          </tbody>
+          <tbody>{renderedOffers}</tbody>
         </Table>
       </div>
 

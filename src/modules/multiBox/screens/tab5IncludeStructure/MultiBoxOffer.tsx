@@ -1,5 +1,5 @@
 import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 
 import { FaCaretDown } from "react-icons/fa";
 
@@ -45,6 +45,8 @@ const MultiBoxOffer: React.FC<Props> = ({
   boxId,
 }) => {
   const dispatch = useDispatchStorePrincipal();
+
+  const originalExpiration = useRef(selectedExpiration);
 
   const handleRemoveOffer = useCallback(() => {
     dispatch(handleRemoveOfferAction(boxId, offerIndex));
@@ -200,14 +202,33 @@ const MultiBoxOffer: React.FC<Props> = ({
   }, [stockOptions]);
 
   const expirationOptions = useMemo(() => {
-    return expirations.map((expiration) => {
+    const options = [];
+
+    if (expirations.includes(originalExpiration.current) === false) {
+      const formatted = moment(originalExpiration.current).format("DD/MM/YY");
+
+      options.push(
+        <option
+          key={originalExpiration.current}
+          value={originalExpiration.current}
+          disabled
+        >
+          {formatted}
+        </option>,
+      );
+    }
+
+    expirations.forEach((expiration) => {
       const formattedExpiration = moment(expiration).format("DD/MM/YY");
-      return (
+
+      options.push(
         <option key={expiration} value={expiration}>
           {formattedExpiration}
-        </option>
+        </option>,
       );
     });
+
+    return options;
   }, [expirations]);
 
   const strikeColumnValue = useMemo(() => {

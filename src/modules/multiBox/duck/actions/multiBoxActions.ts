@@ -452,8 +452,8 @@ const loadInitialBoxOffers = async ({
       offerType: data.offerType,
       selectedStrike: data.strike,
       selectedExpiration: offerExpiration,
-      expirations: data.option ? [] : [],
-      stockOptions: data.option ? [] : [],
+      expirations: [],
+      stockOptions: [],
       stockSymbol: data.option ? "" : data.symbol,
     };
 
@@ -477,12 +477,6 @@ const loadInitialBoxOffers = async ({
           offer.stockSymbol = optionsData?.stockSymbol;
         }
       }
-    }
-
-    const expirationIsValid = offer.expirations.includes(offerExpiration);
-
-    if (!expirationIsValid && offer.expirations.length) {
-      offer.selectedExpiration = offer.expirations[0];
     }
 
     boxOffers.push(offer);
