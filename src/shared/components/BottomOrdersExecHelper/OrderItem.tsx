@@ -1,4 +1,3 @@
-import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import { Order, OrderExecOffer } from "modules/ordersExec/types/ordersExec";
 import React, { useCallback, useMemo } from "react";
@@ -19,7 +18,7 @@ const OrderItem: React.FC<Props> = ({ order, type, allowOpenOptions }) => {
     ordersExecReducer: { ordemAtual: selectedOrder },
   } = useStateStorePrincipal();
 
-  const dispatch = useDispatchStorePrincipal();
+  // const dispatch = useDispatchStorePrincipal();
 
   const openOrdersOptions = useCallback(() => {
     if (type !== "mainOffer") {

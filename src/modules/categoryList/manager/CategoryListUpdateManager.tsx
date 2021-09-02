@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 
-import useDispatchStorePrincipal from "hooks/useDispatchStorePrincipal";
 import usePrevious from "hooks/usePrevious";
 import useStateStorePrincipal from "hooks/useStateStorePrincipal";
 import checkIfUpdateConfigChanged from "managers/updateManager/utils";
@@ -8,14 +7,13 @@ import checkIfUpdateConfigChanged from "managers/updateManager/utils";
 const CategoryListUpdateManager: React.FC = () => {
   const {
     systemReducer: { updateMode, updateInterval },
-    categoryListReducer: { categories },
   } = useStateStorePrincipal();
 
-  const dispatch = useDispatchStorePrincipal();
+  // const dispatch = useDispatchStorePrincipal();
 
   const previousUpdateMode = usePrevious(updateMode);
   const previousUpdateInterval = usePrevious(updateInterval);
-  const previousCategories = usePrevious(categories);
+  // const previousCategories = usePrevious(categories);
 
   useEffect(() => {
     function checkIfCategoriesChanged() {

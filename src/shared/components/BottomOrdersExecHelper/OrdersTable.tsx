@@ -12,10 +12,10 @@ interface Props {
 
 const OrdersTable: React.FC<Props> = ({ data, allowOpenOptions }) => {
   const {
-    ordersExecReducer: { ordemAtual: selectedOrder, opcoesOrdemAberto },
+    ordersExecReducer: { ordemAtual: selectedOrder },
   } = useStateStorePrincipal();
 
-  const [initialTop, setInitialTop] = useState<number | null>(null);
+  const [, setInitialTop] = useState<number | null>(null);
 
   // if pages updates with a selected order, gets offset top of order to position order options menu
   useEffect(() => {

@@ -15,7 +15,6 @@ import {
 } from "api/url";
 import {
   MUDAR_VARIAVEL_POSICAO_CUSTODIA,
-  MODIFICAR_VARIAVEL_MULTILEG,
   MUDAR_VARIAVEL_THL,
   UPDATE_ONE_MULTIBOX,
 } from "constants/MenuActionTypes";
@@ -87,7 +86,7 @@ export const atualizarCotacaoMultilegAPI = ({
   codigos,
   arrayCotacoes,
   token,
-  actionType
+  actionType,
 }) => {
   var source = new EventSource(
     `${url_base_reativa}${url_cotacaoReativa_codigos}${codigos}`,
@@ -103,7 +102,7 @@ export const atualizarCotacaoMultilegAPI = ({
   atualizaListaReativa(
     dispatch,
     listaCotacoes,
-    actionType ,
+    actionType,
     "cotacoesMultileg",
     "interval_multilegQuotes",
     () => listaCotacoes,
