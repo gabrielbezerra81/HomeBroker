@@ -140,7 +140,12 @@
     }
 
     .taxColumn {
-      max-width: 60px;
+      min-width: 60px;
+      button {
+        span {
+          font-weight: 400;
+        }
+      }
     }
 
     .cellContent {
@@ -243,7 +248,8 @@
   }
 }
 
-.simulationConfigMenu {
+.simulationConfigMenu,
+.simulationTaxTooltip {
   margin-bottom: 2px !important;
 
   header {
@@ -290,6 +296,13 @@
         margin-right: 4px;
       }
     }
+  }
+}
+
+.simulationTaxTooltip {
+  main {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
   }
 }
 

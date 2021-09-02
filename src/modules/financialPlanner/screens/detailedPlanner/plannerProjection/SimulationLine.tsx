@@ -39,6 +39,7 @@ const SimulationLine: React.FC<Props> = ({
   const dispatch = useDispatchStorePrincipal();
 
   const [showMenu, setShowMenu] = useState(false);
+  const [showTaxTooltip, setShowTaxTooltip] = useState(false);
 
   const handleInputChange = useCallback(
     (e) => {
@@ -58,9 +59,26 @@ const SimulationLine: React.FC<Props> = ({
     [dispatch, simIndex],
   );
 
-  const handleOpenConfigMenu = useCallback(() => {
-    setShowMenu((value) => !value);
+  const dismissTooltipOnLineClick = useCallback(() => {
+    setShowMenu(false);
+    setShowTaxTooltip(false);
   }, []);
+
+  const handleOpenConfigMenu = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      e.stopPropagation();
+      setShowMenu((value) => !value);
+    },
+    [],
+  );
+
+  const handleOpenTaxTooltip = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      e.stopPropagation();
+      setShowTaxTooltip((value) => !value);
+    },
+    [],
+  );
 
   const handleDetailInvestment = useCallback(() => {
     setShowMenu(false);
@@ -192,8 +210,32 @@ const SimulationLine: React.FC<Props> = ({
     handleRemoveSimulation,
   ]);
 
+  const taxTooltipContent = useMemo(() => {
+    return (
+      <div>
+        <header>
+          <button onClick={handleOpenTaxTooltip} className="brokerCustomButton">
+            <FiX color="#ce202a" size={10} strokeWidth={3} />
+          </button>
+        </header>
+        <main>
+          {simulation.taxes?.map((tax, index) => (
+            <div key={`${tax.description}${index as any}`}>
+              <span>{tax.description}: </span>
+              <span>R$ {formatarNumDecimal(tax.value, 2, 2)}</span>
+            </div>
+          ))}
+          <div>
+            <span>Total: </span>
+            <span>R$ {simulation.formattedTaxTotal}</span>
+          </div>
+        </main>
+      </div>
+    );
+  }, [handleOpenTaxTooltip, simulation.formattedTaxTotal, simulation.taxes]);
+
   return (
-    <tr key={simulation.id}>
+    <tr onClick={dismissTooltipOnLineClick} key={simulation.id}>
       <td>
         <CustomTooltip
           id={`simulation${simIndex}`}
@@ -331,17 +373,19 @@ const SimulationLine: React.FC<Props> = ({
       </td>
       <td className="taxColumn">
         <div className="cellContent">
-          <CustomInput
-            type="preco"
-            name="tax"
-            step={0.01}
-            renderArrows={false}
-            theme="dark"
-            onChange={() => {}}
-            value={simulation?.taxPercent}
-            disabled
-            suffix="%"
-          />
+          <CustomTooltip
+            id={`taxTooltip${simIndex}`}
+            show={showTaxTooltip}
+            content={taxTooltipContent}
+            tooltipClassName="simulationTaxTooltip"
+          >
+            <button
+              onClick={handleOpenTaxTooltip}
+              className="brokerCustomButton"
+            >
+              <span>{simulation?.taxPercent} %</span>
+            </button>
+          </CustomTooltip>
         </div>
       </td>
       <td>

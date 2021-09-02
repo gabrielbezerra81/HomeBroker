@@ -47,7 +47,8 @@ export interface DetailedProjection
   formattedTotal: string;
   formattedTotalIncome: string;
   formattedRealIncome: string;
-  taxPercent: number;
+  taxTotal: number;
+  taxPercent: string;
   formattedRealIncomePercentage: string;
   endDate: Date;
   [key: string]: any;
