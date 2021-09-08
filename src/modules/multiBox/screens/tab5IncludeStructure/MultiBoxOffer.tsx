@@ -141,6 +141,10 @@ const MultiBoxOffer: React.FC<Props> = ({
         return null;
       }
 
+      if (!option) {
+        return null;
+      }
+
       let symbol = "";
 
       if (option.type === type) {

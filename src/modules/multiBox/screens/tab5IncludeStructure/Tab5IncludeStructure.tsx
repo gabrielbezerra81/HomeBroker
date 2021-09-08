@@ -164,6 +164,10 @@ const Tab5IncludeStructure: React.FC<Props> = ({ multiBox }) => {
         return null;
       }
 
+      if (!option || !stockOptions[index + 1]) {
+        return null;
+      }
+
       const formattedStrike = formatarNumDecimal(option.strike, 2, 2);
 
       const label =
