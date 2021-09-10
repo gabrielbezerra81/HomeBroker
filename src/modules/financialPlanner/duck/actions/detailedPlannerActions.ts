@@ -4,6 +4,7 @@ import produce from "immer";
 import {
   DetailedPlannerData,
   Simulation,
+  SimulationIncomeResultTax,
 } from "modules/financialPlanner/types/FinancialPlannerState";
 
 import { toast } from "react-toastify";
@@ -150,6 +151,80 @@ export const removeSimulationAction = (id: number): MainThunkAction => {
       );
     } catch (error) {
       toast.error("Falha ao tentar remover esta simulação");
+    }
+  };
+};
+
+interface LaunchParams {
+  payload: {
+    type: "tax" | "profit" | "loss";
+    description: string;
+    value: number;
+    credit: string;
+    created: string;
+    update: string;
+  };
+  simIndex: number;
+  addingType: "income" | "tax" | "result";
+}
+
+// cadastrar impostos, rendimentos e resultados
+export const launchSimulationDataAction = ({
+  payload,
+  simIndex,
+  addingType,
+}: LaunchParams): MainThunkAction => {
+  return async (dispatch, getState) => {
+    const {
+      financialPlannerReducer: {
+        detailedPlanner: { simulations },
+      },
+    } = getState();
+
+    try {
+      // await api.post("projections", payload);
+
+      const updatedSimulations = produce(simulations, (draft) => {
+        const newItem: SimulationIncomeResultTax = {
+          ...payload,
+          credit: payload.credit === "credit",
+        };
+
+        const simulation = draft[simIndex];
+
+        if (addingType === "tax") {
+          if (simulation.taxes) {
+            simulation.taxes.push(newItem);
+          } //
+          else {
+            simulation.taxes = [newItem];
+          }
+        } //
+        else if (addingType === "income") {
+          if (simulation.incomes) {
+            simulation.incomes.push(newItem);
+          } //
+          else {
+            simulation.incomes = [newItem];
+          }
+        } //
+        else if (addingType === "result") {
+          if (simulation.results) {
+            simulation.results.push(newItem);
+          } //
+          else {
+            simulation.results = [newItem];
+          }
+        }
+      });
+
+      dispatch(
+        updateDetailedPlannerStateAction({ simulations: updatedSimulations }),
+      );
+
+      return true;
+    } catch (error) {
+      return false;
     }
   };
 };

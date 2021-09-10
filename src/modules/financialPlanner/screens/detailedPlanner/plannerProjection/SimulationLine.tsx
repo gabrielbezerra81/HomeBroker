@@ -6,6 +6,7 @@ import {
 import { DetailedProjection } from "modules/financialPlanner/types/FinancialPlannerState";
 
 import { FiX } from "react-icons/fi";
+import { IoMdAddCircle } from "react-icons/io";
 
 import cogIcon from "assets/multiBox/cogIcon.png";
 import openInNewIcon from "assets/multiBox/openInNewIcon.png";
@@ -21,6 +22,7 @@ import { convertFrequencyToLocalValues } from "../../utils";
 import { abrirItemBarraLateralAction } from "redux/actions/system/SystemActions";
 import { atualizarDivKeyAction } from "redux/actions/GlobalAppActions";
 import useDispatchGlobalStore from "hooks/useDispatchGlobalStore";
+import LaunchSimulationDataMenu from "./LaunchSimulationDataMenu";
 
 interface Props {
   totalResult: number;
@@ -40,6 +42,10 @@ const SimulationLine: React.FC<Props> = ({
 
   const [showMenu, setShowMenu] = useState(false);
   const [showTaxTooltip, setShowTaxTooltip] = useState(false);
+
+  const [showAddIncomeMenu, setShowAddIncomeMenu] = useState(false);
+  const [showAddTaxMenu, setShowAddTaxMenu] = useState(false);
+  const [showAddResultMenu, setShowAddResultMenu] = useState(false);
 
   const handleInputChange = useCallback(
     (e) => {
@@ -84,6 +90,26 @@ const SimulationLine: React.FC<Props> = ({
     setShowMenu(false);
   }, []);
 
+  const handleShowAddMenus = useCallback((e) => {
+    const { name } = e.currentTarget;
+
+    if (name === "taxMenu") {
+      setShowAddTaxMenu(true);
+      setShowAddIncomeMenu(false);
+      setShowAddResultMenu(false);
+    } //
+    else if (name === "incomeMenu") {
+      setShowAddTaxMenu(false);
+      setShowAddIncomeMenu(true);
+      setShowAddResultMenu(false);
+    } //
+    else if (name === "resultMenu") {
+      setShowAddTaxMenu(false);
+      setShowAddIncomeMenu(false);
+      setShowAddResultMenu(true);
+    }
+  }, []);
+
   const handleExportToInitialPlanner = useCallback(
     (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       // prevent zIndex increase on detailed planner
@@ -109,7 +135,9 @@ const SimulationLine: React.FC<Props> = ({
       );
 
       dispatchGlobal(atualizarDivKeyAction("initialPlanner"));
-      dispatch(abrirItemBarraLateralAction("isOpenInitialPlanner", true));
+      dispatch(
+        abrirItemBarraLateralAction("isOpenInitialPlanner", true as any),
+      );
     },
     [
       dispatch,
@@ -173,6 +201,24 @@ const SimulationLine: React.FC<Props> = ({
 
         <main>
           <button
+            onClick={handleShowAddMenus}
+            name="incomeMenu"
+            className="brokerCustomButton openLaunchMenuButton"
+          >
+            <IoMdAddCircle size={24} fill="#848484" />
+            <span>Adicionar rendimento</span>
+          </button>
+
+          <button
+            onClick={handleShowAddMenus}
+            name="taxMenu"
+            className="brokerCustomButton openLaunchMenuButton"
+          >
+            <IoMdAddCircle size={20} fill="#848484" />
+            <span>Adicionar imposto</span>
+          </button>
+
+          <button
             onClick={handleDetailInvestment}
             className="brokerCustomButton"
           >
@@ -208,6 +254,7 @@ const SimulationLine: React.FC<Props> = ({
     handleExportToInitialPlanner,
     handleOpenConfigMenu,
     handleRemoveSimulation,
+    handleShowAddMenus,
   ]);
 
   const taxTooltipContent = useMemo(() => {
@@ -368,11 +415,35 @@ const SimulationLine: React.FC<Props> = ({
       </td>
       <td>
         <div className="cellContent incomeColumn">
-          {simulation?.formattedTotalIncome}
+          <LaunchSimulationDataMenu
+            visibility={showAddIncomeMenu}
+            setVisibility={setShowAddIncomeMenu}
+            addingType="income"
+            simIndex={simIndex}
+            headerTitle="Adicionar rendimento"
+          />
+          <button className="brokerCustomButton">
+            <span>{simulation?.formattedTotalIncome}</span>
+          </button>
+
+          <button
+            onClick={handleShowAddMenus}
+            name="incomeMenu"
+            className="brokerCustomButton openLaunchMenuButton"
+          >
+            <IoMdAddCircle size={16} fill="#C4C4C4" />
+          </button>
         </div>
       </td>
       <td className="taxColumn">
         <div className="cellContent">
+          <LaunchSimulationDataMenu
+            visibility={showAddTaxMenu}
+            setVisibility={setShowAddTaxMenu}
+            addingType="tax"
+            simIndex={simIndex}
+            headerTitle="Adicionar imposto"
+          />
           <CustomTooltip
             id={`taxTooltip${simIndex}`}
             show={showTaxTooltip}
@@ -386,6 +457,14 @@ const SimulationLine: React.FC<Props> = ({
               <span>{simulation?.taxPercent} %</span>
             </button>
           </CustomTooltip>
+
+          <button
+            onClick={handleShowAddMenus}
+            name="taxMenu"
+            className="brokerCustomButton openLaunchMenuButton"
+          >
+            <IoMdAddCircle size={16} fill="#C4C4C4" />
+          </button>
         </div>
       </td>
       <td>

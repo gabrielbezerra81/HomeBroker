@@ -2,6 +2,10 @@
   padding: 0 6px;
   margin-bottom: 8px;
 
+  td {
+    vertical-align: middle;
+  }
+
   > div.firstRow {
     display: flex;
 
@@ -141,6 +145,8 @@
 
     .taxColumn {
       min-width: 60px;
+      position: relative;
+
       button {
         span {
           font-weight: 400;
@@ -183,9 +189,8 @@
     }
 
     .incomeColumn {
-      input {
-        padding-right: 0 !important;
-      }
+      position: relative;
+      align-items: center;
     }
 
     tr {
@@ -245,6 +250,10 @@
       height: 15px;
       width: 15px;
     }
+  }
+
+  .openLaunchMenuButton {
+    padding: 0;
   }
 }
 

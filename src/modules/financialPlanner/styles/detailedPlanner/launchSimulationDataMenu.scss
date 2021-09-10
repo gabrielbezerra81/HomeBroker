@@ -1,0 +1,76 @@
+.launchSimulationDataMenu {
+  position: absolute;
+  background-color: #0f0f0f;
+  border: 2px solid var(--color-border-light);
+  border-radius: 6px;
+
+  display: flex;
+  flex-direction: column;
+
+  left: calc(-120px + 50%);
+  z-index: 1;
+  width: 240px;
+  top: 107%;
+
+  transition: opacity 0.2s;
+
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .mheader {
+    .brokerCustomButton {
+      img.closeIcon {
+        height: 16px;
+      }
+    }
+  }
+
+  .content {
+    padding: 6px 8px;
+  }
+
+  .menuRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    & + .menuRow {
+      margin-top: 8px;
+    }
+
+    > span {
+      font-size: 13px;
+      width: 80px;
+      text-align: left;
+    }
+
+    select,
+    input,
+    .containerInput {
+      flex: 1;
+      text-align: center;
+    }
+
+    .brokerCustomButton {
+      border-radius: 1px;
+      font-size: 12px;
+      line-height: 14px;
+    }
+  }
+
+  .addDataButton {
+    background-color: #272827;
+    border-radius: 4px;
+    font-size: 14px;
+    padding: 4px 8px;
+    margin-top: 8px;
+    width: 100%;
+
+    .spinner {
+      height: 19px;
+      width: 19px;
+    }
+  }
+}

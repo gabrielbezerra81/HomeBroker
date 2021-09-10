@@ -10,6 +10,7 @@ import PlannerProjection from "./plannerProjection/PlannerProjection";
 
 import "../../styles/detailedPlanner/detailedPlanner.scss";
 import "../../styles/detailedPlanner/plannerProjection.scss";
+import "../../styles/detailedPlanner/launchSimulationDataMenu.scss";
 
 import { listSimulationsAction } from "modules/financialPlanner/duck/actions/detailedPlannerActions";
 
@@ -38,11 +39,13 @@ const DetailedPlanner: React.FC = () => {
     <DraggablePopup
       popupDivKey="detailedPlanner"
       popupVisibility={isOpenDetailedPlanner}
+      handleDragClass=".detailedPlannerHeader"
     >
       <div id="detailedPlanner">
         <div className="mcontent">
           <PopupHeader
             headerTitle="Carteira de investimentos"
+            headerClass="detailedPlannerHeader"
             onClose={onClose}
           />
 

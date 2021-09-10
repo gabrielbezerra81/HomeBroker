@@ -506,3 +506,52 @@ export const calculateProjections = ({
 
   return projections;
 };
+
+interface PeriodsDifferenceParams {
+  date: string;
+  periodType: "semanas" | "meses" | "anos";
+  period: number;
+  rateFrequency: "semanal" | "mensal" | "anual";
+}
+
+export function periodsDifferenceFromStartToNow({
+  date,
+  periodType,
+  period,
+  rateFrequency,
+}: PeriodsDifferenceParams) {
+  const [day, month, year] = date.split("/");
+
+  let periodUnit: moment.unitOfTime.Diff = "months";
+
+  if (periodType === "semanas") {
+    periodUnit = "weeks";
+  } //
+  else if (periodType === "anos") {
+    periodUnit = "years";
+  }
+
+  const startDate = new Date(Number(year), Number(month) - 1, Number(day));
+
+  const currentDate = new Date();
+
+  const endDate = moment(startDate).add(periodUnit, period).toDate();
+
+  const isCurrentAfterEnd = moment(currentDate).isAfter(endDate);
+
+  // end date for the this calculation is the current date limited by the max duration.
+  const calculationEndDate = isCurrentAfterEnd ? endDate : currentDate;
+
+  let rateUnit: moment.unitOfTime.Diff = "months";
+
+  if (rateFrequency === "semanal") {
+    rateUnit = "weeks";
+  } //
+
+  const diff = moment(calculationEndDate).diff(startDate, rateUnit);
+
+  // marks end date
+  const numberOfPeriods = Math.round(diff);
+
+  return { numberOfPeriods, startDate, calculationEndDate };
+}

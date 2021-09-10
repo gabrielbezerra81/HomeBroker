@@ -7,6 +7,7 @@ import {
   calculateProjections,
   calculateSimulationResult,
   convertFrequencyToLocalValues,
+  periodsDifferenceFromStartToNow,
 } from "../../utils";
 import { formatarNumDecimal } from "shared/utils/Formatacoes";
 import SimulationLine from "./SimulationLine";
@@ -40,47 +41,23 @@ const PlannerProjection: React.FC = () => {
 
   const { simulations, selectedSimulation } = detailedPlanner;
 
-  const simulationResults: DetailedProjection[] = useMemo(() => {
-    const filteredSimulations = simulations.filter(
+  const filteredSimulations = useMemo(() => {
+    return simulations.filter(
       (sim) =>
         sim.title === selectedSimulation || selectedSimulation === "todos",
     );
+  }, [selectedSimulation, simulations]);
 
+  // array of simulation projections. Each element represents all the projections from each simulation
+  const projectionsGroupList = useMemo(() => {
     return filteredSimulations.map((simulation) => {
-      const [day, month, year] = simulation.startDate.split("/");
-
-      let periodUnit: moment.unitOfTime.Diff = "months";
-
-      if (simulation.periodType === "semanas") {
-        periodUnit = "weeks";
-      } //
-      else if (simulation.periodType === "anos") {
-        periodUnit = "years";
-      }
-
-      const startDate = new Date(Number(year), Number(month) - 1, Number(day));
-
-      const currentDate = new Date();
-
-      const endDate = moment(startDate)
-        .add(periodUnit, simulation.period)
-        .toDate();
-
-      const isCurrentAfterEnd = moment(currentDate).isAfter(endDate);
-
-      // end date for the this calculation is the current date limited by the max duration.
-      const calculationEndDate = isCurrentAfterEnd ? endDate : currentDate;
-
-      let rateUnit: moment.unitOfTime.Diff = "months";
-
-      if (simulation.rateFrequency === "semanal") {
-        rateUnit = "weeks";
-      } //
-
-      const diff = moment(calculationEndDate).diff(startDate, rateUnit);
-
-      // marks end date
-      const numberOfPeriods = Math.round(diff);
+      const { numberOfPeriods, calculationEndDate, startDate } =
+        periodsDifferenceFromStartToNow({
+          date: simulation.startDate,
+          period: simulation.period,
+          periodType: simulation.periodType,
+          rateFrequency: simulation.rateFrequency,
+        });
 
       const projections = calculateProjections({
         startDate,
@@ -98,6 +75,23 @@ const PlannerProjection: React.FC = () => {
         periodicity: simulation.periodType,
         lastCalcBase: simulation?.financialValue,
       });
+
+      return projections;
+    });
+  }, [filteredSimulations]);
+
+  const simulationResults: DetailedProjection[] = useMemo(() => {
+    return filteredSimulations.map((simulation, index) => {
+      // marks end date
+      const { numberOfPeriods, calculationEndDate, startDate } =
+        periodsDifferenceFromStartToNow({
+          date: simulation.startDate,
+          period: simulation.period,
+          periodType: simulation.periodType,
+          rateFrequency: simulation.rateFrequency,
+        });
+
+      const projections = projectionsGroupList[index];
 
       const lastProjection = projections[projections.length - 1] as
         | Projection
@@ -160,7 +154,7 @@ const PlannerProjection: React.FC = () => {
         formattedCalcBase: lastProjection?.calcBase
           ? formatarNumDecimal(lastProjection.calcBase, 2, 2)
           : "",
-        timePassed: diff,
+        timePassed: numberOfPeriods,
         taxTotal,
         formattedTaxTotal: formatarNumDecimal(taxTotal, 2, 2),
         taxPercent,
@@ -178,7 +172,7 @@ const PlannerProjection: React.FC = () => {
         formattedEndDate: moment(calculationEndDate).format("DD/MM/YY"),
       };
     });
-  }, [selectedSimulation, simulations]);
+  }, [filteredSimulations, projectionsGroupList]);
 
   const handleInputChange = useCallback(
     (e) => {

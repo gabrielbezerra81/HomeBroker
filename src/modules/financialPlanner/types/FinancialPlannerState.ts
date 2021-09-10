@@ -11,12 +11,13 @@ export interface InitialPlannerData {
   listing: "semanal" | "mensal" | "anual";
 }
 
-export interface SimulationTax {
+export interface SimulationIncomeResultTax {
   type: "tax" | "profit" | "loss";
   description: string;
   value: number;
   credit: boolean;
   created: string;
+  update: string;
 }
 
 export interface Simulation {
@@ -31,7 +32,9 @@ export interface Simulation {
   update: string;
   startDate: string;
   title: string;
-  taxes?: Array<SimulationTax>;
+  taxes?: Array<SimulationIncomeResultTax>;
+  incomes?: Array<SimulationIncomeResultTax>;
+  results?: Array<SimulationIncomeResultTax>;
   financialValue?: number;
 }
 
