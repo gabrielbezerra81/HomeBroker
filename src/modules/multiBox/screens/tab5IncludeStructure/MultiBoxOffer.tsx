@@ -150,7 +150,7 @@ const MultiBoxOffer: React.FC<Props> = ({
       if (option.type === type) {
         symbol = option.symbol;
       } //
-      else {
+      else if (stockOptions[index + 1]) {
         symbol = stockOptions[index + 1].symbol;
       }
 
